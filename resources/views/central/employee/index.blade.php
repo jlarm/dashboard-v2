@@ -4,29 +4,22 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Employees') }}
             </h2>
-            <a href="{{ route('invite.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                {{ __('+ Invite Employee') }}
-            </a>
+            <div class="flex space-x-5">
+                <x-primary-button onclick="Livewire.emit('modal.open', 'central.employee.invite')">Invite Employee</x-primary-button>
+                <a
+                    class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2"
+                    href="{{ route('employees.deleted') }}"
+                >
+                    Deleted Employees
+                </a>
+            </div>
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="px-4 sm:px-6 lg:px-8">
-                        <div class="mt-8 flex flex-col">
-                            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                                        <livewire:central.employee.index />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <livewire:central.employee.index />
             </div>
         </div>
     </div>

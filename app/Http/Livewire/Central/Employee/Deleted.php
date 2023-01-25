@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Http\Livewire\Central\Employee;
+
+use App\Models\User;
+use Livewire\Component;
+
+class Deleted extends Component
+{
+    public function render()
+    {
+        return view('livewire.central.employee.deleted', [
+            'users' => User::latest()->onlyTrashed()->get(),
+        ]);
+    }
+}
