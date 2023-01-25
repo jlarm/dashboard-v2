@@ -17,6 +17,8 @@ class UserController extends Controller
 
         return view('central.employee.register', [
             'email' => $validated['email'],
+            'name' => $validated['name'],
+            'role' => $validated['role'],
         ]);
     }
 
@@ -25,7 +27,14 @@ class UserController extends Controller
         $validated = $request->validated();
 
         // Create user
-        $user = User::create($validated);
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'password' => bcrypt($validated['password']),
+        ]);
+
+        $user->assignRole($validated['role']);
 
         event(new Registered($user));
 

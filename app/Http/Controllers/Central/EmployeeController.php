@@ -30,9 +30,11 @@ class EmployeeController extends Controller
         $validated = $request->validated();
 
         $email = $validated['email'];
+        $name = $validated['name'];
+        $role = $validated['role'];
 
         Notification::route('mail', $email)
-            ->notify(new UserInviteNotification($request->user()));
+            ->notify(new UserInviteNotification($validated));
 
         return redirect()->route('employees.index');
     }

@@ -14,9 +14,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
-Route::get('employees/invite', [EmployeeController::class, 'create'])->name('invite.create');
-Route::post('employees/invite', [EmployeeController::class, 'send'])->name('invite.send');
+Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'verified'])->name('employees.index');
+Route::get('employees/invite', [EmployeeController::class, 'create'])->middleware(['auth', 'verified'])->name('invite.create');
+Route::post('employees/invite', [EmployeeController::class, 'send'])->middleware(['auth', 'verified'])->name('invite.send');
 Route::get('employees/create', [UserController::class, 'create'])->middleware('signed')->name('employees.create');
 Route::post('employees/store', [UserController::class, 'store'])->name('employees.store');
 

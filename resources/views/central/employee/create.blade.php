@@ -11,6 +11,17 @@
                 <div class="p-6 text-gray-900">
                     <form method="POST" action="{{ route('invite.send') }}">
                         @csrf
+
+                        <div class="mt-4">
+                            <x-input-label for="name" :value="__('Name')" />
+                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
+                            @error('name')
+                            <div class="text-red-500 text-sm mt-2">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
                         <div class="mt-4">
                             <x-input-label for="email" :value="__('Email')" />
                             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
@@ -20,6 +31,21 @@
                                 </div>
                             @enderror
                         </div>
+
+                        <div class="mt-4">
+                            <x-input-label for="role" :value="__('Role')" />
+                            <select id="role" name="role" class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                <option></option>
+                                <option>Admin</option>
+                                <option>Consultant</option>
+                            </select>
+                            @error('role')
+                                <div class="text-red-500 text-sm mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
                         <div class="mt-4">
                             <x-primary-button>
                                 {{ __('+ Invite Employee') }}
