@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Central\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,6 +13,12 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+Route::get('employees/invite', [EmployeeController::class, 'create'])->name('invite.create');
+Route::post('employees/invite', [EmployeeController::class, 'send'])->name('invite.send');
+Route::get('employees/create', [UserController::class, 'create'])->middleware('signed')->name('employees.create');
+Route::post('employees/store', [UserController::class, 'store'])->name('employees.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
