@@ -185,6 +185,9 @@ return [
         /*
          * Package Service Providers...
          */
+        WireElements\Pro\WireElementsProServiceProvider::class,
+        WireElements\Pro\Components\SlideOver\SlideOverServiceProvider::class,
+        WireElements\Pro\Components\Modal\ModalServiceProvider::class,
 
         /*
          * Application Service Providers...

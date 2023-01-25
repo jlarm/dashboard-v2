@@ -1,3 +1,5 @@
+import '../../vendor/wire-elements/pro/resources/js/overlay-component.js'
+
 import _ from 'lodash';
 window._ = _;
 
