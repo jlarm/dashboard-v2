@@ -10,7 +10,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.central.employee.index', [
-            'users' => User::orderBy('name')->get()
+            'users' => User::orderBy('name')->with('roles')->get()
         ]);
     }
 }

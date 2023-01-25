@@ -20,6 +20,9 @@
                         {{ __('Employees') }}
                     </x-nav-link>
                     @endrole
+                    <x-nav-link :href="route('dealerships.index')" :active="request()->routeIs('dealerships.index')">
+                        {{ __('Dealerships') }}
+                    </x-nav-link>
                 </div>
             </div>
 

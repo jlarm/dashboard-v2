@@ -21,6 +21,10 @@ Route::get('employees/create', [UserController::class, 'create'])->middleware('s
 Route::post('employees/store', [UserController::class, 'store'])->name('employees.store');
 Route::get('/employees/deleted', function () { return view('central.employee.deleted'); })->middleware(['auth', 'verified'])->name('employees.deleted');
 
+Route::get('/dealerships', function () {
+    return view('central.dealership.index');
+})->name('dealerships.index');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
