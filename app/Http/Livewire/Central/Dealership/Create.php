@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
+use App\Models\User;
+use Hash;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Create extends Modal
@@ -11,12 +13,14 @@ class Create extends Modal
     public $domain;
     public $url;
     public $locations;
+    public $password;
 
     protected $rules = [
         'name' => 'required',
         'domain' => 'required|unique:domains',
         'url' => 'required|url',
         'locations' => 'nullable|boolean',
+        'password' => 'required',
     ];
 
     public function createDealer()
@@ -33,6 +37,16 @@ class Create extends Modal
             'locations' => $validated['locations'],
         ]);
         $dealer->createDomain($tenantDomain);
+
+        $dealer->run(function () {
+            $user = User::create([
+                'name' => auth()->user()->name,
+                'email' => auth()->user()->email,
+                'phone' => auth()->user()->phone,
+                'password' => Hash::make($this->password),
+            ]);
+            $user->assignRole('Consultant');
+        });
 
         $this->close();
     }

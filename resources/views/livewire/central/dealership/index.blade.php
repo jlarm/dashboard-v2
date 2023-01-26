@@ -14,7 +14,12 @@
     <tbody class="divide-y divide-gray-200 bg-white">
     @forelse($dealerships as $dealership)
         <tr>
-            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $dealership->name }}</td>
+            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                {{ $dealership->name }}
+                @role('super-admin')
+                <span class="block font-light text-gray-400">{{ $dealership->id }}</span>
+                @endrole
+            </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $dealership->user->name }}</td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 hover:text-gray-400">
                 <a class="flex items-center space-y-3" target="_blank" href="https://{{ $dealership->domain . '.' . config('tenancy.central_domains')[0] }}/dashboard">

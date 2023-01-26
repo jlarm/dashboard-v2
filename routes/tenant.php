@@ -15,18 +15,6 @@ use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-/*
-|--------------------------------------------------------------------------
-| Tenant Routes
-|--------------------------------------------------------------------------
-|
-| Here you can register the tenant routes for your application.
-| These routes are loaded by the TenantRouteServiceProvider.
-|
-| Feel free to customize them however you want. Good luck!
-|
-*/
-
 Route::group([
     'as' => 'dealer.',
     'middleware' => [
@@ -47,6 +35,10 @@ Route::group([
     Route::get('/dashboard', function () {
         return view('dealer.dashboard');
     })->middleware('auth')->name('dashboard');
+
+    Route::get('stores', function () {
+        return view('dealer.store.index');
+    })->middleware('auth')->name('stores.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

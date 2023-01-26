@@ -18,6 +18,13 @@ class EmployeeController extends Controller
         ]);
     }
 
+    public function show(User $user)
+    {
+        return view('central.employee.view', [
+            'user' => $user,
+        ]);
+    }
+
     public function create()
     {
         return view('central.employee.create', [

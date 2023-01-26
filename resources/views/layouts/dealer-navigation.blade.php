@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dealer.dashboard') }}">
-                        {{ tenant('id') }}
+                        {{ tenant('name') }}
                     </a>
                 </div>
 
@@ -15,6 +15,12 @@
                     <x-nav-link :href="route('dealer.dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if(tenant('locations'))
+                        <x-nav-link :href="route('dealer.stores.index')" :active="request()->routeIs('dashboard')">
+                            {{ __('Stores') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
