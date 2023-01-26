@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    protected $listeners = ['refreshDealerships' => '$refresh'];
     public function render()
     {
         return view('livewire.central.dealership.index', [

@@ -15,8 +15,8 @@
     @forelse($dealerships as $dealership)
         <tr>
             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $dealership->name }}</td>
-            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">{{ $dealership->user->name }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $dealership->user->name }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 hover:text-gray-400">
                 <a class="flex items-center space-y-3" target="_blank" href="https://{{ $dealership->domain . '.' . config('tenancy.central_domains')[0] }}/dashboard">
                     {{ $dealership->domain . '.' . config('tenancy.central_domains')[0] }}
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
@@ -30,8 +30,8 @@
                     {{ $dealership->locations ? 'Yes' : 'No' }}
                 </span>
             </td>
-            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-5">
-               <button wire:click="$emit('slide-over.open', 'central.dealership.edit')">Edit</button>
+            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium text-arm-blue-600 sm:pr-6 space-x-5">
+               <button wire:click="$emit('slide-over.open', 'central.dealership.edit', @js(['dealership' => $dealership->id]))">Edit</button>
             </td>
         </tr>
     @empty

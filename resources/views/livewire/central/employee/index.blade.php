@@ -18,13 +18,15 @@
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->phone }}</td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->roles->first()->name }}</td>
             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-5">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, {{ $user->name }}</span></a>
-                <button
+                @if($user->id !== auth()->user()->id)
+                <a href="#" class="text-arm-blue-600 hover:text-arm-blue-900">Edit<span class="sr-only">, {{ $user->name }}</span></a>
+                    <button
                     class="text-red-500 hover:text-red-700"
                     wire:click="$emit('modal.open', 'central.employee.delete',  @js(['user' => $user->id]))"
                 >
                     Delete
                 </button>
+                @endif
             </td>
         </tr>
     @endforeach

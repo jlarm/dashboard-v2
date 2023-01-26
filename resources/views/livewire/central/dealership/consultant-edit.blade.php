@@ -16,16 +16,6 @@
             <x-input-error :messages="$errors->get('url')" class="mt-2" />
         </div>
 
-        <!-- Consultant -->
-        <div>
-            <label for="user" class="block text-sm font-medium text-gray-700">Consultant</label>
-            <select wire:model.defer="user" id="user" name="user" class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
         <!-- Multiple Locations -->
         <div>
             <x-input-label class="sr-only" for="locations" :value="__('Multiple Locations')" />

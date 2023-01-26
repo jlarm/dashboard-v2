@@ -29,7 +29,7 @@
                 </span>
             </td>
             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-5">
-                edit
+                <button wire:click="$emit('slide-over.open', 'central.dealership.consultant-edit', @js(['dealership' => $dealership->id]))">Edit</button>
             </td>
         </tr>
     @empty

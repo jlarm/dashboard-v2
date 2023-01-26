@@ -3,17 +3,16 @@
 namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
-use App\Models\User;
+use Livewire\Component;
 use WireElements\Pro\Components\SlideOver\SlideOver;
 
-class Edit extends SlideOver
+class ConsultantEdit extends SlideOver
 {
     public $dealership;
     public $name;
     public $domain;
     public $url;
     public $locations;
-    public $user;
 
     public function mount(Dealership $dealership)
     {
@@ -22,7 +21,6 @@ class Edit extends SlideOver
         $this->domain = $dealership->domain;
         $this->url = $dealership->url;
         $this->locations = $dealership->locations;
-        $this->user = $dealership->user_id;
     }
 
     protected $rules = [
@@ -30,7 +28,6 @@ class Edit extends SlideOver
         'domain' => 'required',
         'url' => 'required',
         'locations' => 'required',
-        'user' => 'required',
     ];
 
     public function updateDealership()
@@ -41,7 +38,6 @@ class Edit extends SlideOver
             'domain' => $this->domain,
             'url' => $this->url,
             'locations' => $this->locations,
-            'user_id' => $this->user,
         ]);
 
         $this->emit('refreshDealerships');
@@ -50,8 +46,6 @@ class Edit extends SlideOver
     }
     public function render()
     {
-        return view('livewire.central.dealership.edit', [
-            'users' => User::latest()->get(),
-        ]);
+        return view('livewire.central.dealership.consultant-edit');
     }
 }
