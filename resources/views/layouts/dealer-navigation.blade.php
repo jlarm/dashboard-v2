@@ -17,7 +17,7 @@
                     </x-nav-link>
 
                     @if(tenant('locations'))
-                        <x-nav-link :href="route('dealer.stores.index')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('dealer.stores.index')" :active="request()->routeIs('dealer.stores.index')">
                             {{ __('Stores') }}
                         </x-nav-link>
                     @endif

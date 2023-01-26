@@ -11,6 +11,7 @@ use App\Http\Controllers\Dealer\Auth\PasswordController;
 use App\Http\Controllers\Dealer\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Dealer\Auth\VerifyEmailController;
 use App\Http\Controllers\Dealer\ProfileController;
+use App\Http\Controllers\Dealer\StoreController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -39,6 +40,7 @@ Route::group([
     Route::get('stores', function () {
         return view('dealer.store.index');
     })->middleware('auth')->name('stores.index');
+    Route::get('stores/{store:slug}', [StoreController::class, 'show'])->middleware('auth')->name('stores.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
