@@ -12,8 +12,12 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dealer.dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dealer.dashboard')" :active="request()->routeIs('dealer.dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('dealer.employees.index')" :active="request()->routeIs('dealer.employees.index')">
+                        {{ __('Employees') }}
                     </x-nav-link>
 
                     @if(tenant('locations'))
@@ -21,6 +25,7 @@
                             {{ __('Stores') }}
                         </x-nav-link>
                     @endif
+
                 </div>
             </div>
 

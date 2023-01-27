@@ -12,6 +12,7 @@ use App\Http\Controllers\Dealer\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Dealer\Auth\VerifyEmailController;
 use App\Http\Controllers\Dealer\ProfileController;
 use App\Http\Controllers\Dealer\StoreController;
+use App\Http\Controllers\Dealer\UserController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -37,10 +38,12 @@ Route::group([
         return view('dealer.dashboard');
     })->middleware('auth')->name('dashboard');
 
-    Route::get('stores', function () {
-        return view('dealer.store.index');
-    })->middleware('auth')->name('stores.index');
+    Route::get('stores', function () { return view('dealer.store.index'); })->middleware('auth')->name('stores.index');
     Route::get('stores/{store:slug}', [StoreController::class, 'show'])->middleware('auth')->name('stores.show');
+
+    Route::get('employees', function () { return view('dealer.employee.index'); })->middleware('auth')->name('employees.index');
+    Route::get('employees/create', [UserController::class, 'create'])->middleware('signed')->name('employees.create');
+    Route::post('employees/store', [UserController::class, 'store'])->name('dealer.employees.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

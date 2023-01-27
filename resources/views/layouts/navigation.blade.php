@@ -15,11 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @role('super-admin')
+                    @can('delete-users')
                     <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')">
                         {{ __('Employees') }}
                     </x-nav-link>
-                    @endrole
+                    @endcan
                     <x-nav-link :href="route('dealerships.index')" :active="request()->routeIs('dealerships.index')">
                         {{ __('Dealerships') }}
                     </x-nav-link>
@@ -88,10 +88,11 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                @can('delete-users')
                 <x-responsive-nav-link :href="route('employees.index')">
                     {{ __('Employees') }}
                 </x-responsive-nav-link>
-
+                @endcan
                 <x-responsive-nav-link :href="route('dealerships.index')">
                     {{ __('Dealerships') }}
                 </x-responsive-nav-link>
