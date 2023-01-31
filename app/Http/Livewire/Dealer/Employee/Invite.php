@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Dealer\Employee;
 
+use App\Mail\InviteMail;
+use App\Mail\SendInviteMail;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
-use App\Notifications\DealerUserInviteNotification;
-use App\Notifications\UserInviteNotification;
-use Illuminate\Support\Facades\Notification;
+use Mail;
+use Spatie\Permission\Models\Role;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Invite extends Modal
@@ -26,18 +27,23 @@ class Invite extends Modal
         'role' => ['required', 'string', 'max:255']
     ];
 
-    public function invite()
+    public function sendInvite()
     {
         $validated = $this->validate();
 
-        $this->email = $validated['email'];
-        $this->name = $validated['name'];
-        $this->store = $validated['store'];
-        $this->department = $validated['department'];
-        $this->role = $validated['role'];
+        $invite = \App\Models\Dealer\Invite::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'store_id' => $validated['store'],
+            'department_id' => $validated['department'],
+            'roles' => $validated['role'],
+            'user_id' => auth()->user()->id,
+            'invitation_token' => substr(md5(rand(0, 9) . $this->email . time()), 0, 32),
+        ]);
 
-        Notification::route('mail', $this->email)
-            ->notify(new DealerUserInviteNotification($validated));
+        Mail::to($validated['email'])->send(new InviteMail($invite));
+
+        $this->reset();
 
         $this->close();
     }
@@ -46,6 +52,7 @@ class Invite extends Modal
         return view('livewire.dealer.employee.invite', [
             'stores' => Store::all(),
             'departments' => Department::all(),
+            'roles' => Role::get(),
         ]);
     }
 }

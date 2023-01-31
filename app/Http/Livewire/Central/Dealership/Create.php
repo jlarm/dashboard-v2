@@ -32,7 +32,7 @@ class Create extends Modal
         $dealer = Dealership::create([
             'user_id' => auth()->user()->id,
             'name' => $validated['name'],
-            'domain' => $validated['domain'],
+            'domain' => $tenantDomain,
             'url' => $validated['url'],
             'locations' => $validated['locations'],
         ]);

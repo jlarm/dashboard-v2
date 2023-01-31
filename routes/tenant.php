@@ -42,8 +42,9 @@ Route::group([
     Route::get('stores/{store:slug}', [StoreController::class, 'show'])->middleware('auth')->name('stores.show');
 
     Route::get('employees', function () { return view('dealer.employee.index'); })->middleware('auth')->name('employees.index');
-    Route::get('employees/create', [UserController::class, 'create'])->middleware('signed')->name('employees.create');
-    Route::post('employees/store', [UserController::class, 'store'])->name('dealer.employees.store');
+    Route::get('employees/open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('employees.open-invites');
+    Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'show'])->middleware('web')->name('employees.create');
+    Route::post('employees/dealer/store', [UserController::class, 'store'])->name('dealer.employees.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

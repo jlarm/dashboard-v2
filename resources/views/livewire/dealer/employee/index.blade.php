@@ -1,7 +1,4 @@
-<div class="w-full bg-white rounded-md shadow-sm shadow-gray-200">
-    <div class="px-4 py-4 ">
-        <h2 class="text-base font-semibold text-gray-800">Employees</h2>
-    </div>
+<div class="w-full bg-white rounded-md shadow-sm shadow-gray-300">
     <div class="overflow-x-auto">
         <div class="inline-block min-w-full overflow-hidden align-middle">
             <table class="min-w-full">
@@ -11,6 +8,10 @@
                     <td class="px-4 py-4">Email</td>
                     <td class="px-4 py-4">Phone</td>
                     <td class="px-4 py-4">Role</td>
+                    @if(tenant('locations'))
+                    <td class="px-4 py-4">Store</td>
+                    @endif
+                    <td class="px-4 py-4">Department</td>
                     <td class="px-4 py-4">&nbsp;</td>
                 </tr>
                 </thead>

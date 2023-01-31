@@ -1,4 +1,4 @@
-<x-wire-elements-pro::tailwind.modal on-submit="invite" :content-padding="true">
+<x-wire-elements-pro::tailwind.modal on-submit="sendInvite" :content-padding="true">
     <x-slot name="title">Add Employee</x-slot>
 
     <div class="space-y-5">
@@ -34,7 +34,7 @@
 
             <!-- Department -->
             <div class="col-span-3">
-                <x-input-label for="store_id" :value="__('Select a Department')" />
+                <x-input-label for="department" :value="__('Select a Department')" />
                 <select
                     wire:model.defer="department"
                     name="department"
@@ -69,7 +69,7 @@
                     <option value="Manager">Manager</option>
                     <option value="Employee">Employee</option>
                 @endrole
-                @role('owner')
+                @role('Owner')
                     <option value="Manager">Manager</option>
                     <option value="Employee">Employee</option>
                 @endrole

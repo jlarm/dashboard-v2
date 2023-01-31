@@ -16,15 +16,19 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @can('edit-users')
                     <x-nav-link :href="route('dealer.employees.index')" :active="request()->routeIs('dealer.employees.index')">
                         {{ __('Employees') }}
                     </x-nav-link>
+                    @endcan
 
-                    @if(tenant('locations'))
-                        <x-nav-link :href="route('dealer.stores.index')" :active="request()->routeIs('dealer.stores.index')">
-                            {{ __('Stores') }}
-                        </x-nav-link>
-                    @endif
+                    @can('edit-stores')
+                        @if(tenant('locations'))
+                            <x-nav-link :href="route('dealer.stores.index')" :active="request()->routeIs('dealer.stores.index')">
+                                {{ __('Stores') }}
+                            </x-nav-link>
+                        @endif
+                    @endcan
 
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Employee;
 
+use App\Models\Dealer\Department;
 use App\Models\User;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -16,6 +17,8 @@ class IndexItem extends Component
     }
     public function render()
     {
-        return view('livewire.dealer.employee.index-item');
+        return view('livewire.dealer.employee.index-item', [
+            'department' => Department::where('id', $this->user->department_id)->first(),
+        ]);
     }
 }
