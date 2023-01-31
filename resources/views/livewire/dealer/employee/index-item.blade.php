@@ -6,10 +6,10 @@
             </div>
         </div>
     </td>
-    <td class="text-sm text-gray-700">
+    <td class="px-4 py-4 text-sm text-gray-700">
         <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
     </td>
-    <td class="text-sm text-gray-700">
+    <td class="px-4 py-4 text-sm text-gray-700">
         {{ $user->phone }}
     </td>
     <td class="px-4 py-4">
@@ -25,10 +25,13 @@
             @endif
         @endforeach
     </td>
-    <td class="text-sm text-gray-700">
-        {{ $user->store->name ?? 'null' }}
+    <td class="px-4 py-4 text-sm text-gray-700">
+        {{ $user->store->name ?? '' }}
+    </td>
+    <td class="px-4 py-4 text-sm text-gray-700">
+        {{ $user->department->name ?? '' }}
     </td>
     <td class="px-4 py-4 text-right">
-{{--        <a class="text-arm-blue-600" href="{{ route('tenant.employee.show', $user) }}">View</a>--}}
+
     </td>
 </tr>

@@ -41,9 +41,7 @@ class UserController extends Controller
         $user->markEmailAsVerified();
 
         Invite::where('id', $request['id'])
-            ->update([
-                'registered_at' => now(),
-            ]);
+            ->delete();
 
         Auth::login($user);
 
