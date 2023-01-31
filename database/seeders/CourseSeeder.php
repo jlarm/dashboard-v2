@@ -18,7 +18,8 @@ class CourseSeeder extends Seeder
             $json = json_decode($course);
 
             foreach($json as $key => $value) {
-                Course::create([
+                $course = Course::create([
+                    'department_id' => $value->department,
                     'slug' => $value->slug,
                     'name' => $value->name,
                     'slides' => $value->slides,

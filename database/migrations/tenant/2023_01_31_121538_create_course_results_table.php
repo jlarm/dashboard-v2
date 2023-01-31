@@ -7,15 +7,14 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('course_results', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('department_id')->nullable();
+            $table->integer('percentage');
+            $table->boolean('passed');
 
-            $table->string('slug');
-            $table->string('name');
-            $table->json('slides');
-            $table->json('questions')->nullable();
+            $table->foreignId('course_id')->constrained();
+            $table->foreignId('user_id')->constrained();
 
             $table->timestamps();
         });
@@ -23,6 +22,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('course_results');
     }
 };

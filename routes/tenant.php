@@ -10,6 +10,8 @@ use App\Http\Controllers\Dealer\Auth\NewPasswordController;
 use App\Http\Controllers\Dealer\Auth\PasswordController;
 use App\Http\Controllers\Dealer\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Dealer\Auth\VerifyEmailController;
+use App\Http\Controllers\Dealer\CourseController;
+use App\Http\Controllers\Dealer\CourseResultsController;
 use App\Http\Controllers\Dealer\ProfileController;
 use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
@@ -45,6 +47,10 @@ Route::group([
     Route::get('employees/open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('employees.open-invites');
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'show'])->middleware('web')->name('employees.create');
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('dealer.employees.store');
+
+    Route::get('courses', function () { return view('dealer.course.index'); })->middleware('auth')->name('courses.index');
+    Route::get('courses/{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('courses.show');
+    Route::post('courses/{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('courses.results.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

@@ -27,7 +27,7 @@ Route::get('employees/create', [UserController::class, 'create'])->middleware('s
 
 Route::get('/dealerships', function () {
     return view('central.dealership.index');
-})->name('dealerships.index');
+})->name('dealerships.index')->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
