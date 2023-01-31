@@ -1,0 +1,47 @@
+[{
+    "name": "Can Spam",
+    "slug": "can-spam",
+    "slides": [{
+        "title": "Can Spam",
+        "description": "<p>This Act may be cited as the \"Controlling the Assault of Non-Solicited Pornography and Marketing Act of 2003\", or the \"CAN-SPAM Act of 2003\".</p><p><strong>What it requires;</strong></p><ul><li>The law requires the following for all unsolicited commercial email, regardless of the number of emails sent:</li><li>Include a way to unsubscribe over the Internet<ul><li>Honor unsubscribes within 10 days</li><li>Unsubscribe mechanism must work for at least 30 days after message is sent</li></ul></li><li>Include the sender's valid postal mailing address</li><li>Clearly identify the email as an advertisement in some fashion</li><li>Use an accurate sender name and a valid email address</li><li>Accurately describe the content of the email in the subject line</li></ul>"
+    }],
+    "questions": [
+        {
+            "question": "What does “Can SPAM” Act stand for?",
+            "answers": [{
+                "a:": "Controlling the Annual Number of Solicitations Programs being Administered and Monitored Act of 2003",
+                "b": "Controlling the Assault of Non-Solicited Pornography And Marketing Act of 2003",
+                "c": "Controlling the Assault of Non-Specific Program Act of Marketing of 2003",
+                "d": "Controlling the Assault of Non-Specific Pornography And Marketing Act of 2003"
+            }],
+            "correctAnswer": "b"
+        }, {
+            "question": "The law requires that each email must include a way to unsubscribe over the internet and must honor this unsubscribe within 24 hours.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        }, {
+            "question": "You must always describe the content of the email in the subject line.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "b"
+        }, {
+            "question": "Once you Unsubscribe the mechanism must work for at least 30 days after the message is sent.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        }
+    ]
+}]
