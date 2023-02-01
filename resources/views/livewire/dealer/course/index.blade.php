@@ -12,12 +12,12 @@
                             @else
                                 @if($courses->first()->results->first()->passed === 1)
                                     <span class="text-green-500">
-                                    Passed On: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
-                                </span>
+                                        Passed On: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                    </span>
                                 @else
                                     <span class="text-orange-500">
-                                    Last Attempt: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
-                                </span>
+                                        Last Attempt: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                    </span>
                                 @endif
                             @endif
                         </p>

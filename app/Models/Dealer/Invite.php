@@ -2,7 +2,6 @@
 
 namespace App\Models\Dealer;
 
-use App\Models\Dealer\Store;
 use App\Models\User;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 class Invite extends Model
 {
     protected $fillable = [
-        'name', 'email', 'store_id', 'department_id', 'roles', 'user_id', 'invitation_token', 'registered_at'
+        'name',
+        'email',
+        'store_id',
+        'department_id',
+        'user_id',
+        'roles',
+        'invitation_token',
+        'registered_at'
     ];
 
     protected function serializeDate(DateTimeInterface $date)

@@ -9,11 +9,16 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
-use Request;
 
 class UserController extends Controller
 {
-    public function show(Invite $invite)
+    public function show(User $user)
+    {
+        return view('dealer.employee.show', [
+            'user' => $user,
+        ]);
+    }
+    public function create(Invite $invite)
     {
         return view('dealer.employee.register', [
             'invite' => $invite,

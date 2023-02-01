@@ -11,29 +11,33 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;900&display=swap"
+          rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
-    @include('layouts.dealer-navigation')
+<div x-data="{ open: false }" @keydown.window.escape="open = false">
+    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+    @include('layouts.mobile-navigation')
 
-    <!-- Page Heading -->
-    @if (isset($header))
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
+    <!-- Static sidebar for desktop -->
+    @include('layouts.light-navigation')
+
+    <div class="flex flex-col md:pl-64">
+
+        @include('layouts.top-bar')
+
+        <main class="flex-1">
+            <div class="py-6">
+                <div class="mx-auto px-4 sm:px-6 md:px-8">
+                    {{ $slot }}
+                </div>
             </div>
-        </header>
-    @endif
-
-    <!-- Page Content -->
-    <main>
-        {{ $slot }}
-    </main>
+        </main>
+    </div>
 </div>
 @livewire('slide-over-pro')
 @livewire('modal-pro')

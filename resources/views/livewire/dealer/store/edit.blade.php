@@ -113,3 +113,4 @@
             Cancel
         </button>
     </x-slot>
+</x-wire-elements-pro::tailwind.slide-over>

@@ -1,24 +1,28 @@
 <x-wire-elements-pro::tailwind.modal on-submit="sendInvite" :content-padding="true">
+
     <x-slot name="title">Add Employee</x-slot>
 
     <div class="space-y-5">
         <!-- Name -->
         <div class="col-span-3">
-            <x-input-label for="name" :value="__('Employee Name')" />
-            <x-text-input wire:model.defer="name" id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <x-input-label for="name" :value="__('Employee Name')"/>
+            <x-text-input wire:model.defer="name" id="name" class="block mt-1 w-full" type="text" name="name"
+                          :value="old('name')" required/>
+            <x-input-error :messages="$errors->get('name')" class="mt-2"/>
         </div>
 
         <!-- Email Address -->
         <div class="col-span-3">
-            <x-input-label for="email" :value="__('Employee Email Address')" />
-            <x-text-input wire:model.defer="email" id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-input-label for="email" :value="__('Employee Email Address')"/>
+            <x-text-input wire:model.defer="email" id="email" class="block mt-1 w-full" type="email" name="email"
+                          :value="old('email')" required/>
+            <x-input-error :messages="$errors->get('email')" class="mt-2"/>
         </div>
 
+        @can('create-stores')
             <!-- Store -->
             <div class="col-span-3">
-                <x-input-label for="store_id" :value="__('Select a Store')" />
+                <x-input-label for="store_id" :value="__('Select a Store')"/>
                 <select
                     wire:model.defer="store"
                     name="store"
@@ -34,7 +38,7 @@
 
             <!-- Department -->
             <div class="col-span-3">
-                <x-input-label for="department" :value="__('Select a Department')" />
+                <x-input-label for="department" :value="__('Select a Department')"/>
                 <select
                     wire:model.defer="department"
                     name="department"
@@ -47,16 +51,11 @@
                     @endforeach
                 </select>
             </div>
-
-
-        @cannot('delete-users')
-            <input wire:model.defer="store" type="hidden" name="store" value="{{ Auth::user()->store_id }}">
-            <input wire:model.defer="department" type="hidden" name="department" value="{{ Auth::user()->department_id }}">
-        @endcannot
+        @endcan
 
         <!-- Role -->
         <div class="col-span-3">
-            <x-input-label for="role" :value="__('Select a Role')" />
+            <x-input-label for="role" :value="__('Select a Role')"/>
             <select
                 wire:model.defer="role"
                 name="role"
@@ -65,16 +64,16 @@
             >
                 <option></option>
                 @role('Consultant')
-                    <option value="Owner">Owner</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Employee">Employee</option>
+                <option value="Owner">Owner</option>
+                <option value="Manager">Manager</option>
+                <option value="Employee">Employee</option>
                 @endrole
                 @role('Owner')
-                    <option value="Manager">Manager</option>
-                    <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+                <option value="Employee">Employee</option>
                 @endrole
                 @role('Manager')
-                    <option value="Employee">Employee</option>
+                <option value="Employee">Employee</option>
                 @endrole
             </select>
         </div>

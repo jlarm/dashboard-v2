@@ -42,7 +42,7 @@ class Edit extends SlideOver
             'website' => $this->website,
         ]);
 
-        $this->emit('refreshStores');
+        $this->emitTo('dealer.store.details', 'refreshStoreDetails');
 
         $this->close();
     }

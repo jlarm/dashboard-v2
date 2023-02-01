@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Mail\InviteMail;
-use App\Mail\SendInviteMail;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
 use Mail;
