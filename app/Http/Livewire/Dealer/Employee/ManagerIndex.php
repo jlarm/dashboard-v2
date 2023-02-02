@@ -17,6 +17,9 @@ class ManagerIndex extends Component
                 ->where('department_id', Auth::user()->department_id)
                 ->with('department')
                 ->with('roles')
+//                ->with('results', function($query) {
+//                    $query->where('user_id', $this->user->id)->latest();
+//                })
                 ->paginate(10),
         ]);
     }

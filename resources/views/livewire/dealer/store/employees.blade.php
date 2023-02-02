@@ -50,7 +50,7 @@
                             {{ $user->department->name ?? '' }}
                         </td>
                         <td class="px-4 py-4 text-right">
-                            <a href="#">View</a>
+                            <a href="{{ route('dealer.employees.show', $user) }}">View</a>
                         </td>
                     </tr>
                 @empty

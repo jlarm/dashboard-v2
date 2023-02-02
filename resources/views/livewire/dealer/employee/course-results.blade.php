@@ -21,7 +21,11 @@
                             </div>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700">
-                            {{ $course->results->first()->created_at ?? __('Never') }}
+                            @if($course->results->first())
+                                {{ $course->results->first()->created_at->format('F d, Y') ?? __('-') }}
+                            @else
+                                {{ __('Never') }}
+                            @endif
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700">
                             @if($course->results->first() && $course->results->first()->passed === 1)

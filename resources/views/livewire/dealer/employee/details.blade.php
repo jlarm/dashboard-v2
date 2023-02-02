@@ -1,5 +1,4 @@
 <div class="flex flex-col space-y-3">
-    {{ $user->name }}<br/>
     {{ $user->email }}<br/>
     {{ $user->phone }}<br/>
     {{ $user->store->name ?? tenant('company') }}<br/>
