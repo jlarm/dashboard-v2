@@ -40,8 +40,8 @@ Route::group([
         return view('dealer.dashboard');
     })->middleware('auth')->name('dashboard');
 
-    Route::get('stores', function () { return view('dealer.store.index'); })->middleware('auth')->name('stores.index');
-    Route::get('stores/{store:slug}', [StoreController::class, 'show'])->middleware('auth')->name('stores.show');
+    Route::get('stores', function () { return view('dealer.store.index'); })->middleware(['auth', 'has.stores'])->name('stores.index');
+    Route::get('stores/{store:slug}', [StoreController::class, 'show'])->middleware(['auth', 'has.stores'])->name('stores.show');
 
     Route::get('employees', function () { return view('dealer.employee.index'); })->middleware('auth')->name('employees.index');
     Route::get('employees/open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('employees.open-invites');
