@@ -5,11 +5,11 @@
                 {{ __('Dealerships') }}
             </h2>
             <div class="flex space-x-5">
-        <x-primary-button
-            onclick="Livewire.emit('modal.open', 'central.dealership.create')"
-        >
-            Add Dealership
-        </x-primary-button>
+                <x-primary-button
+                    onclick="Livewire.emit('modal.open', 'central.dealership.create')"
+                >
+                    Add Dealership
+                </x-primary-button>
             </div>
         </div>
     </x-slot>
@@ -17,12 +17,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                @role('super-admin')
-                <livewire:central.dealership.index />
-                @endrole
-                @role('Consultant')
-                <livewire:central.dealership.consultant-index />
-                @endrole
+                @can('delete-users')
+                    <livewire:central.dealership.index/>
+                @endcan
+                @cannot('delete-users')
+                    <livewire:central.dealership.consultant-index/>
+                @endcannot
             </div>
         </div>
     </div>

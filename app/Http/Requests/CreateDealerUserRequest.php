@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class CreateDealerUserRequest extends FormRequest
 {
@@ -16,7 +17,7 @@ class CreateDealerUserRequest extends FormRequest
             'store' => ['required', 'integer'],
             'department' => ['required', 'integer'],
             'role' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', Password::defaults()],
         ];
     }
 
