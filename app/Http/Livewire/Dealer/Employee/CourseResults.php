@@ -11,6 +11,7 @@ class CourseResults extends Component
     public User $user;
 
     protected $listeners = ['refreshEmployeeDetails' => '$refresh'];
+
     public function render()
     {
         return view('livewire.dealer.employee.course-results', [
@@ -20,7 +21,7 @@ class CourseResults extends Component
                 ->with('results', function ($query) {
                     $query->where('user_id', $this->user->id)->latest();
                 })
-                ->get()
+                ->get(),
         ]);
     }
 }

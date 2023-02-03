@@ -10,6 +10,7 @@ class Details extends Component
     public Store $store;
 
     protected $listeners = ['refreshStoreDetails' => '$refresh'];
+
     public function render()
     {
         return view('livewire.dealer.store.details');

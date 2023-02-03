@@ -9,6 +9,7 @@ use Livewire\Component;
 class DealershipList extends Component
 {
     public User $user;
+
     public function render()
     {
         return view('livewire.central.employee.dealership-list', [

@@ -22,6 +22,7 @@ class DeleteInvite extends Modal
 
         $this->close();
     }
+
     public function render()
     {
         return view('livewire.dealer.employee.delete-invite');

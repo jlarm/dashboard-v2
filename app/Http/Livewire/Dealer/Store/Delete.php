@@ -20,6 +20,7 @@ class Delete extends Modal
 
         $this->redirect(route('dealer.stores.index'));
     }
+
     public function render()
     {
         return view('livewire.dealer.store.delete');

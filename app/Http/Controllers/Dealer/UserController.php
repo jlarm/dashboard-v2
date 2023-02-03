@@ -18,6 +18,7 @@ class UserController extends Controller
             'user' => $user,
         ]);
     }
+
     public function create(Invite $invite)
     {
         return view('dealer.employee.register', [

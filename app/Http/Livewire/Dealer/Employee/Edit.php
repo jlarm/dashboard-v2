@@ -11,9 +11,13 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public $user;
+
     public $name;
+
     public $role;
+
     public $store;
+
     public $department;
 
     public function mount(User $user)

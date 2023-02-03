@@ -12,18 +12,21 @@ use WireElements\Pro\Components\Modal\Modal;
 class Invite extends Modal
 {
     public $name;
-    public $email;
-    public $store;
-    public $department;
-    public $role;
 
+    public $email;
+
+    public $store;
+
+    public $department;
+
+    public $role;
 
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'max:255'],
         'store' => ['nullable', 'integer'],
         'department' => ['nullable', 'integer'],
-        'role' => ['required', 'string', 'max:255']
+        'role' => ['required', 'string', 'max:255'],
     ];
 
     public function sendInvite()
@@ -37,7 +40,7 @@ class Invite extends Modal
             'department_id' => $validated['department'],
             'roles' => $validated['role'],
             'user_id' => auth()->user()->id,
-            'invitation_token' => substr(md5(rand(0, 9) . $this->email . time()), 0, 32),
+            'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
         ]);
 
         Mail::to($validated['email'])->send(new InviteMail($invite));
@@ -46,6 +49,7 @@ class Invite extends Modal
 
         $this->close();
     }
+
     public function render()
     {
         return view('livewire.dealer.employee.invite', [

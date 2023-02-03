@@ -3,15 +3,18 @@
 namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
-use Livewire\Component;
 use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class ConsultantEdit extends SlideOver
 {
     public $dealership;
+
     public $name;
+
     public $domain;
+
     public $url;
+
     public $locations;
 
     public function mount(Dealership $dealership)
@@ -32,7 +35,6 @@ class ConsultantEdit extends SlideOver
 
     public function updateDealership()
     {
-
         $this->dealership->update([
             'name' => $this->name,
             'domain' => $this->domain,
@@ -44,6 +46,7 @@ class ConsultantEdit extends SlideOver
 
         $this->close();
     }
+
     public function render()
     {
         return view('livewire.central.dealership.consultant-edit');

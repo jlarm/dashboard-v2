@@ -3,9 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Stancl\Tenancy\Database\Models\Tenant;
 
 class AppServiceProvider extends ServiceProvider
 {

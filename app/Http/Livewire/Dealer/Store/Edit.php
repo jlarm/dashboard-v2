@@ -8,12 +8,19 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public $store;
+
     public $name;
+
     public $address;
+
     public $city;
+
     public $state;
+
     public $postal_code;
+
     public $phone;
+
     public $website;
 
     public function mount(Store $store)

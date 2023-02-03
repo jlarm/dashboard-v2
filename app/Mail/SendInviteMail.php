@@ -22,7 +22,7 @@ class SendInviteMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('noreply@' . tenant('domain')),
+            from: new Address('noreply@'.tenant('domain')),
             subject: 'Send Invite',
         );
     }
@@ -35,7 +35,7 @@ class SendInviteMail extends Mailable
                 'name' => $this->invite->name,
                 'role' => $this->invite->roles,
                 'company' => tenant('name'),
-                'link' => 'https://' . tenant('domain') . '/invite_registration/' . $this->invite->invitation_token,
+                'link' => 'https://'.tenant('domain').'/invite_registration/'.$this->invite->invitation_token,
             ]
         );
     }

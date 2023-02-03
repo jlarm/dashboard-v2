@@ -2,7 +2,6 @@
 
 namespace App\Models\Dealer;
 
-use App\Models\Dealer\Course;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 

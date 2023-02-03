@@ -13,6 +13,7 @@ class View extends Component
     {
         $this->user = $user;
     }
+
     public function render()
     {
         return view('livewire.central.employee.view');

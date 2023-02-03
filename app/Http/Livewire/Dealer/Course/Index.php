@@ -9,9 +9,10 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+
     public function render()
     {
-        if(auth()->user()->department_id) {
+        if (auth()->user()->department_id) {
             return view('livewire.dealer.course.index', [
                 'courses' => Course::query()
                     ->select('id', 'slug', 'name')
@@ -19,10 +20,10 @@ class Index extends Component
                     ->with([
                         'results' => function ($query) {
                             $query->where('user_id', auth()->user()->id)->latest()->take(1);
-                        }
+                        },
                     ])
                     ->orderBy('name')
-                    ->paginate(12)
+                    ->paginate(12),
             ]);
         } else {
             return view('livewire.dealer.course.index', [
@@ -31,10 +32,10 @@ class Index extends Component
                     ->with([
                         'results' => function ($query) {
                             $query->where('user_id', auth()->user()->id)->latest()->take(1);
-                        }
+                        },
                     ])
                     ->orderBy('name')
-                    ->paginate(12)
+                    ->paginate(12),
             ]);
         }
     }

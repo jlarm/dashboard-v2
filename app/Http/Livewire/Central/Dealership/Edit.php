@@ -9,10 +9,15 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public $dealership;
+
     public $name;
+
     public $domain;
+
     public $url;
+
     public $locations;
+
     public $user;
 
     public function mount(Dealership $dealership)
@@ -35,7 +40,6 @@ class Edit extends SlideOver
 
     public function updateDealership()
     {
-
         $this->dealership->update([
             'name' => $this->name,
             'domain' => $this->domain,
@@ -48,6 +52,7 @@ class Edit extends SlideOver
 
         $this->close();
     }
+
     public function render()
     {
         return view('livewire.central.dealership.edit', [

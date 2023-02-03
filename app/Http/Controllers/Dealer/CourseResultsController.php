@@ -18,7 +18,7 @@ class CourseResultsController extends Controller
         $submittedAnswers = Arr::flatten($request->only('question'));
         $score = 0;
 
-        for ($i=0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; $i++) {
             if ($correctAnswers[$i] == $submittedAnswers[$i]) {
                 $score++;
             }

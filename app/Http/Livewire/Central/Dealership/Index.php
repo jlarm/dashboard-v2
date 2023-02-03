@@ -8,12 +8,13 @@ use Livewire\Component;
 class Index extends Component
 {
     public $search = '';
+
     protected $listeners = ['refreshDealerships' => '$refresh'];
 
     public function dashboardLink()
     {
-
     }
+
     public function render()
     {
         return view('livewire.central.dealership.index', [

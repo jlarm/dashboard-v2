@@ -11,6 +11,7 @@ class Index extends Component
     use WithPagination;
 
     protected $listeners = ['refreshStores' => '$refresh'];
+
     public function render()
     {
         return view('livewire.dealer.store.index', [

@@ -2,8 +2,6 @@
 
 namespace App\Enums;
 
-use PhpParser\Node\Scalar\String_;
-
 enum Departments: string
 {
     case  SALES = 'sales';
@@ -14,9 +12,9 @@ enum Departments: string
     case PARTS = 'parts';
     case SERVICE = 'service';
 
-    public function label(): String
+    public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::SALES => 'Sales',
             self::MARKETING => 'Marketing',
             self::FINANCE => 'Finance',

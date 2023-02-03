@@ -17,7 +17,7 @@ class CourseSeeder extends Seeder
             $course = File::get(app_path("courses/{$file}"));
             $json = json_decode($course);
 
-            foreach($json as $key => $value) {
+            foreach ($json as $key => $value) {
                 $course = Course::create([
                     'department_id' => $value->department,
                     'slug' => $value->slug,

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\URL;
 class DealerUserInviteNotification extends Notification
 {
     protected $validated;
+
     public function __construct($validated)
     {
         $this->validated = $validated;
@@ -32,7 +33,6 @@ class DealerUserInviteNotification extends Notification
 
     public function toMail($notifiable): MailMessage
     {
-
         $url = $this->generateInvitationUrl($notifiable->routes['mail']);
 
         return (new MailMessage)

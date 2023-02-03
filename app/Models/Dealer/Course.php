@@ -2,10 +2,8 @@
 
 namespace App\Models\Dealer;
 
-use App\Models\Dealer\CourseResults;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Traits\HasRoles;
 
 class Course extends Model
 {
@@ -30,5 +28,4 @@ class Course extends Model
     {
         return $this->hasMany(CourseResults::class);
     }
-
 }

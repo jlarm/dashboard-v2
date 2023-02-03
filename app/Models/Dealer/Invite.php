@@ -16,7 +16,7 @@ class Invite extends Model
         'user_id',
         'roles',
         'invitation_token',
-        'registered_at'
+        'registered_at',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Central\Employee;
 
-use App\Http\Requests\StoreUserInviteRequest;
 use App\Notifications\UserInviteNotification;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Role;
@@ -11,7 +10,9 @@ use WireElements\Pro\Components\Modal\Modal;
 class Invite extends Modal
 {
     public $name;
+
     public $email;
+
     public $role;
 
     protected $rules = [
@@ -37,7 +38,7 @@ class Invite extends Modal
     public function render()
     {
         return view('livewire.central.employee.invite', [
-            'roles' => Role::all()
+            'roles' => Role::all(),
         ]);
     }
 }

@@ -9,11 +9,13 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+
     public $search = '';
+
     public function render()
     {
         return view('livewire.central.employee.index', [
-            'users' => User::search('name', $this->search)->orderBy('name')->with('roles')->paginate(20)
+            'users' => User::search('name', $this->search)->orderBy('name')->with('roles')->paginate(20),
         ]);
     }
 }

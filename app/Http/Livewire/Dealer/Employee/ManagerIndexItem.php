@@ -9,8 +9,11 @@ use Livewire\Component;
 class ManagerIndexItem extends Component
 {
     public User $user;
+
     public $completed;
+
     public $totalCourses;
+
     public function mount()
     {
         // Get all passed courses within the last year for this user
@@ -29,6 +32,7 @@ class ManagerIndexItem extends Component
         // Get all courses for this user's department
         $this->totalCourses = Course::where('department_id', $this->user->department_id)->count();
     }
+
     public function render()
     {
         return view('livewire.dealer.employee.manager-index-item');

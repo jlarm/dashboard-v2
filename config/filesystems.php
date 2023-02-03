@@ -33,7 +33,7 @@ return [
         'courses' => [
             'driver' => 'local',
             'root' => storage_path('/app/courses'),
-            'url' => env('APP_URL') . '/courses',
+            'url' => env('APP_URL').'/courses',
             'visibility' => 'public',
         ],
 

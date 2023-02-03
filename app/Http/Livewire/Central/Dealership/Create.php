@@ -10,9 +10,13 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
+
     public $domain;
+
     public $url;
+
     public $locations;
+
     public $password;
 
     protected $rules = [
@@ -27,7 +31,7 @@ class Create extends Modal
     {
         $validated = $this->validate();
 
-        $tenantDomain = $validated['domain'] . '.' . config('tenancy.central_domains')[0];
+        $tenantDomain = $validated['domain'].'.'.config('tenancy.central_domains')[0];
 
         $dealer = Dealership::create([
             'user_id' => auth()->user()->id,
@@ -52,6 +56,7 @@ class Create extends Modal
 
         $this->close();
     }
+
     public function render()
     {
         return view('livewire.central.dealership.create');

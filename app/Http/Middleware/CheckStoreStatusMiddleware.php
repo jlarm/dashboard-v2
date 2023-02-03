@@ -12,6 +12,7 @@ class CheckStoreStatusMiddleware
         if (tenant('locations')) {
             return $next($request);
         }
+
         return redirect()->route('dealer.dashboard');
     }
 }

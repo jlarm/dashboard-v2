@@ -8,11 +8,17 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
+
     public $address;
+
     public $city;
+
     public $state;
+
     public $postal_code;
+
     public $phone;
+
     public $website;
 
     protected $rules = [
