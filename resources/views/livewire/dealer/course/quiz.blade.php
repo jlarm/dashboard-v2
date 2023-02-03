@@ -21,8 +21,9 @@
                     $i++
                 @endphp
             @endforeach
-            <div>
+            <div class="space-x-3">
                 <x-primary-button>Submit</x-primary-button>
+                <a href="{{ url()->previous() }}">Cancel</a>
             </div>
         </div>
     </form>

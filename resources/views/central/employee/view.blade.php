@@ -16,7 +16,7 @@
                         <div class="flex flex-col space-y-3">
                             <div class="flex flex-col space-y-1 text-arm-blue-500">
                                 <span><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></span>
-                                <span>{{ $user->phone }}</span>
+                                <span>{{ $user->phoneNumber }}</span>
                                 <span>{{ $user->roles()->first()->name }}</span>
                             </div>
                             <span class="text-gray-500 text-sm">Since: {{ $user->created_at->format('F d, Y') }}</span>
