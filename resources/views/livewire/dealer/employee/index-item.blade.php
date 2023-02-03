@@ -10,7 +10,7 @@
         <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
     </td>
     <td class="px-4 py-4 text-sm text-gray-700">
-        {{ $user->phone }}
+        {{ $user->phoneNumber }}
     </td>
     <td class="px-4 py-4">
         @foreach($user->roles as $role)
@@ -30,10 +30,10 @@
         @endforeach
     </td>
     <td class="px-4 py-4 text-sm text-gray-700">
-        {{ $user->store->name ?? '' }}
+        {{ $user->store->name ?? tenant('name') }}
     </td>
     <td class="px-4 py-4 text-sm text-gray-700">
-        {{ $user->department->name ?? '' }}
+        {{ $user->department->name ?? '-' }}
     </td>
     <td class="px-4 py-4 text-right">
         <a href="{{ route('dealer.employees.show', $user) }}" class="text-sm">View</a>

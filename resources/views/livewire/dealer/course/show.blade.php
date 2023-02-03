@@ -34,14 +34,18 @@
                 </ul>
             </div>
 
-            <div class="glide__arrows pointer-events-none absolute inset-0 flex items-center justify-between" data-glide-el="controls">
+            <div class="glide__arrows pointer-events-none absolute inset-0 flex items-center justify-between"
+                 data-glide-el="controls">
                 <!-- Previous Button -->
                 <button
                     class="glide__arrow glide__arrow--left pointer-events-auto disabled:opacity-50"
                     data-glide-dir="<"
                 >
                 <span aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round"
+                                                                                          stroke-linejoin="round"
+                                                                                          d="M15 19l-7-7 7-7"/></svg>
                 </span>
                     <span class="sr-only">Skip to previous slide page</span>
                 </button>
@@ -52,7 +56,10 @@
                     data-glide-dir=">"
                 >
                 <span aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round"
+                                                                                          stroke-linejoin="round"
+                                                                                          d="M9 5l7 7-7 7"/></svg>
                 </span>
                     <span class="sr-only">Skip to next slide page</span>
                 </button>
@@ -64,38 +71,22 @@
                     @php
                         $i = 0
                     @endphp
-                    <button class="glide__bullet h-3 w-3 rounded-full bg-gray-300 transition-colors" data-glide-dir="={{ $i }}"></button>
+                    <button class="glide__bullet h-3 w-3 rounded-full bg-gray-300 transition-colors"
+                            data-glide-dir="={{ $i }}"></button>
                     @php
                         $i++
                     @endphp
                 @endforeach
             </div>
         </div>
-        <form method="POST" action="{{ route('dealer.courses.results.store', $course) }}">
-            @csrf
-            <div class="questions space-y-10">
-                @php
-                    $i = 1
-                @endphp
-                @foreach($course['questions'] as $c)
-                    <div class="bg-white p-10 border-md">
-                        <p class="mb-5">{{ $i }}. {{ $c['question'] }}</p>
-                        @foreach($c['answers'][0] as $key => $value)
-                            <label class="flex justify-start items-center space-x-3">
-                                <input name="question[{{ $i }}]" type="radio" value="{{ $key }}" />
-                                {{ $value }}
-                            </label>
-                        @endforeach
-                    </div>
-                    @php
-                        $i++
-                    @endphp
-                @endforeach
-                <div>
-                    <x-primary-button>Submit</x-primary-button>
-                </div>
-            </div>
-        </form>
+        <div class="w-full px-5 mt-10 flex justify-center">
+            <a
+                href="{{ route('dealer.courses.quiz', $course) }}"
+                class="inline-flex items-center rounded-md border border-transparent bg-arm-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-arm-green-700 focus:outline-none focus:ring-2 focus:ring-arm-green-500 focus:ring-offset-2"
+            >
+                Start Quiz
+            </a>
+        </div>
     </div>
 
 </div>

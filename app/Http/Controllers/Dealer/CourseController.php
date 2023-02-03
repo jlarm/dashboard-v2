@@ -13,4 +13,11 @@ class CourseController extends Controller
             'course' => $course
         ]);
     }
+
+    public function quiz(Course $course)
+    {
+        return view('dealer.course.quiz', [
+            'course' => $course
+        ]);
+    }
 }

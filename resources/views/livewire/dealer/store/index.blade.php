@@ -27,7 +27,7 @@
                             {{ $store->city }}, {{ $store->state }} {{ $store->postal_code }}
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700">
-                            {{ $store->phone }}
+                            {{ $store->phoneNumber }}
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700">
                             {{ $store->website }}

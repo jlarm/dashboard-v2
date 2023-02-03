@@ -1,15 +1,13 @@
 <x-dealer-app>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ $course->name }}
-            </h2>
+    <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div class="min-w-0 flex-1">
+            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">{{ $course->name }}</h1>
         </div>
-    </x-slot>
+    </div>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <livewire:dealer.course.show :course="$course" />
+            <livewire:dealer.course.show :course="$course"/>
         </div>
     </div>
 </x-dealer-app>

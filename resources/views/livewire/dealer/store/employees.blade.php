@@ -27,7 +27,7 @@
                             <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700">
-                            {{ $user->phone }}
+                            {{ $user->phoneNumber }}
                         </td>
                         <td class="px-4 py-4">
                             @foreach($user->roles as $role)

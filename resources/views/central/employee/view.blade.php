@@ -9,12 +9,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="mx-auto grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-cold-dense lg:grid-cols-3">
+            <div
+                class="mx-auto grid max-w-3xl grid-cols-1 gap-6 lg:max-w-7xl lg:grid-flow-cold-dense lg:grid-cols-3">
                 <aside class="lg:col-span-1">
                     <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
                         <div class="flex flex-col space-y-3">
-                            <div class="flex flex-col">
-                                <span>{{ $user->email }}</span>
+                            <div class="flex flex-col space-y-1 text-arm-blue-500">
+                                <span><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></span>
                                 <span>{{ $user->phone }}</span>
                                 <span>{{ $user->roles()->first()->name }}</span>
                             </div>
@@ -23,7 +24,7 @@
                     </div>
                 </aside>
                 <section class="lg:col-start-2 lg:col-span-2">
-                    <livewire:central.employee.dealership-list :user="$user" />
+                    <livewire:central.employee.dealership-list :user="$user"/>
                 </section>
             </div>
         </div>

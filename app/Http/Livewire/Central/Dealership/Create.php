@@ -48,6 +48,8 @@ class Create extends Modal
             $user->assignRole('Consultant');
         });
 
+        $this->emit('refreshDealerships');
+
         $this->close();
     }
     public function render()

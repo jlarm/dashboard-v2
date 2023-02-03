@@ -18,6 +18,7 @@ class CreateTenantsTable extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->string('id')->primary();
 
+            $table->string('name')->unique();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
             $table->timestamps();

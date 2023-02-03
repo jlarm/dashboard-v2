@@ -5,7 +5,7 @@
             <input type="search" name="search" id="search"
                    wire:model="search"
                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
-                   placeholder="Search Users...">
+                   placeholder="Search Employees...">
         </div>
     </div>
     <div class="overflow-hidden rounded border">

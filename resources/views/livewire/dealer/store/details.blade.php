@@ -4,7 +4,7 @@
         {{ $store->city }}, {{ $store->state }} {{ $store->postal_code }}
     </div>
     <div>
-        {{ $store->phone }}<br/>
+        {{ $store->phoneNumber }}<br/>
         {{ $store->website }}
     </div>
 </div>
