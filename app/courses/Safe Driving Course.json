@@ -1,0 +1,70 @@
+[{
+"name": "Safe Driving Course",
+"slug": "safe-driving-course",
+"department": "1",
+"slides":[{
+        "title": "<strong>Cell phones & Texting</strong>",
+        "description": "<p>The National Safety Council estimates at least 28% of all traffic crashes or at least 1.6 million crashes each year involve drivers using cell phones and texting. NSC estimates that 1.4 million crashes each year involve drivers using cell phones and a minimum of 200,000 additional crashes each year involve drivers who are texting.</p>"
+    },{
+        "title": "<stong>Distracted Drivers</stong>",
+        "description": "<p>Approximately 86% of drivers said they ate or drank while driving at some point, and 57% said they do it \"sometimes\" or “often.”</p><p>41% of adult drivers have set or changed a GPS system while driving and 21% do it “more frequently.”</p><p>Many adult drivers(36%) have read a map while driving, and 10% do it “sometimes or “often.”</p>"
+    },{
+        "title": "<stong>Distracted Drivers II</stong>",
+        "description": "<p>One of Five drivers have combed or styled his or her hair while driving. One in Ten does it regularly.</p><p>Have you ever seen a driver putting on make up? Approximately 14% have done it once, and 7% do it regularly.</p><p>About 13% of adult drivers have surfed the Internet while driving.</p>"
+    },{
+        "title": "<stong>Driving Conditions</stong>",
+        "description": "<p>The most dangerous times of day to drive are at dawn and dusk. </p><p>Hydroplaning occurs on wet pavement when a film of water gets between the road and tires. This causes the vehicle to “float.” Causing lack of control when braking, accelerating, turning and or speeding. Cruise control should not be used on wet pavements.</p>"
+    },{
+        "title": "<strong>Accident Statistics</strong>",
+        "description":"<p>An automobile accident happens every 5 seconds.</p><p>An Injury in an automobile happens every 10 seconds.</p><p>Every 12 minutes a death occurs do to an automobile accident.</p><p>30% of accidents related to driving impaired result in death. This includes drugs .</p>"
+    }],
+    "questions": [
+        {
+            "question": "How often does an automobile crash happen?",
+            "answers": [{
+                "a": "Every 5 seconds .",
+                "b": "Every 10 seconds.",
+                "c": "Every 12 minutes"
+            }],
+            "correctAnswer": "b"
+        }, {
+            "question": "The most dangerous time to drive is?",
+            "answers": [
+                {
+                    "a": "Dawn.",
+                    "b": "Dusk",
+                    "c": "Both"
+                }
+            ],
+            "correctAnswer": "a"
+        }, {
+            "question": "What percentage of accidents are related to cell phone usage or texting?",
+            "answers": [
+                {
+                    "a": "35%",
+                    "b": "28%",
+                    "c": "10%"
+                }
+            ],
+            "correctAnswer": "b"
+        }, {
+            "question": "What percentage of drivers said they ate or drank while driving?",
+            "answers": [
+                {
+                    "a": "86%",
+                    "b": "50%",
+                    "c": "78%"}
+            ],
+            "correctAnswer": "a"
+        }, {
+            "question": "What percent of deaths occur due to drivers being impaired causing an accident",
+            "answers": [
+                {
+                    "a": "40%",
+                    "b": "26%",
+                    "c": "30%"
+                }
+            ],
+            "correctAnswer": "c"
+    }]
+}]

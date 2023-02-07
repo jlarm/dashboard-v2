@@ -7,10 +7,8 @@
         </div>
     </td>
     <td class="px-4 py-4 text-sm text-gray-700">
-        <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-    </td>
-    <td class="px-4 py-4 text-sm text-gray-700">
-        {{ $user->phoneNumber }}
+        <div><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></div>
+        <div>{{ $user->phoneNumber }}</div>
     </td>
     <td class="px-4 py-4">
         @foreach($user->roles as $role)
@@ -34,6 +32,13 @@
     </td>
     <td class="px-4 py-4 text-sm text-gray-700">
         {{ $user->department->name ?? '-' }}
+    </td>
+    <td class="px-4 py-4 text-sm text-gray-700">
+        @if($role->name == 'Consultant')
+            {{ __('-') }}
+        @else
+            {{ $completed }}/{{ $totalCourses }}
+        @endif
     </td>
     <td class="px-4 py-4 text-right">
         <a href="{{ route('dealer.employees.show', $user) }}" class="text-sm">View</a>

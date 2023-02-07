@@ -1,4 +1,5 @@
 <div class="w-full bg-white rounded-md shadow-sm shadow-gray-300">
+    <a href="{{ route('dealer.employees.export') }}">Export Users</a>
     <div class="overflow-x-auto">
         <div class="inline-block min-w-full overflow-hidden align-middle">
             <table class="min-w-full">

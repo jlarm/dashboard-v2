@@ -23,7 +23,7 @@ class Index extends Component
                         },
                     ])
                     ->orderBy('name')
-                    ->paginate(12),
+                    ->paginate(24),
             ]);
         } else {
             return view('livewire.dealer.course.index', [
@@ -35,7 +35,7 @@ class Index extends Component
                         },
                     ])
                     ->orderBy('name')
-                    ->paginate(12),
+                    ->paginate(24),
             ]);
         }
     }

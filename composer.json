@@ -12,6 +12,7 @@
         "laravel/telescope": "^4.13",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.11",
+        "maatwebsite/excel": "^3.1",
         "spatie/laravel-permission": "^5.8",
         "spatie/laravel-sluggable": "^3.4",
         "stancl/tenancy": "^3.6",

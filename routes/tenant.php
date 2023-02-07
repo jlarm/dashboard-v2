@@ -53,6 +53,7 @@ Route::group([
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])->middleware('web')->name('employees.create');
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('dealer.employees.store');
     Route::get('employees/{user:id}', [UserController::class, 'show'])->middleware('auth')->name('employees.show');
+    Route::get('/employees/export', [CourseResultsController::class, 'export'])->middleware('auth')->name('employees.export');
 
     Route::get('courses', function () {
     return view('dealer.course.index');

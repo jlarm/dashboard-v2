@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Dealer;
 
+use App\Exports\UserCourseResultsExport;
 use App\Http\Controllers\Controller;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CourseResultsController extends Controller
 {
+
+    public function export()
+    {
+        return Excel::download(new UserCourseResultsExport, 'users.xlsx');
+    }
     public function store(Request $request, Course $course)
     {
         $count = count($course['questions']);

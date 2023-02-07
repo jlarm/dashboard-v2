@@ -1,0 +1,52 @@
+[{
+    "name": "Discrimination Course",
+    "slug": "discrimination-course",
+    "department": "1",
+    "slides": [{
+        "title": "EEOC Equal Employment",
+        "description": "<p>Opportunity Commission</p><p>The role of the EEOC is to protect employees from unfair treatment.</p><p>The law prohibits discrimination, harassment, retaliation and various other practices.</p>"
+    }, {
+        "title": "Race/Color Discrimination",
+        "description": "<p>Title VII of the Civil Rights Act includes:</p><p>The Rights Act prohibits discrimination, harassment, retaliation and various other practices. It includes:</p><ul><li>the Equal Pay Act</li><li>age discrimination information</li><li>the American Disabilities Act</li><li>the Civil Rights Act</li></ul>"
+    },{
+        "title": "Race/Color Discrimination",
+        "description": "<p>This section of the act protects individuals against employment discrimination based on race and color as well as stating that an individual cannot be denied employment due to perceived race linked characteristics.</p><p>It is unlawful to discriminate against any individual in regard to recruiting, hiring, promoting, transfering, work assignments, performance measurements, job training, discipline and discharge, wages and benefits, or any other term or condition of employment.</p>"
+    }, {
+        "title": "Race Related or Hostile Work Environment",
+        "description": "<p>This act prohibits offensive conduct such as racial or ethnic slurs, racial jokes, derogatory comments or other verbal or physical conduct based on an individual's race/color. The conduct must be unwelcome and offensive and has to be severe or pervasive.</p><p>Employers must take appropriate steps to prevent and correct unlawful harassment.</p>"
+    }, {
+        "title": "National Origin Discrimination",
+        "description": "<p>This law prohibits treating someone less favorably due to where he or she comes from, because of ethnicity or accent, or because it is believed that he or she has a particular ethnic background. This also prohibits discriminating against someone because of marriage or association with someone of a particular nationality.</p>"
+    }, {
+        "title": "Religious Discrimination",
+        "description": "<p>This Act;</p><ul><li>prohibits employers from discriminating against individuals because of their religion in hiring, firing, and other terms and conditions of employment.</li><li>states that employers may not treat employees or applicants more or less favorably because of religious beliefs or practices.</li><li>says that employers must reasonably accommodate employees religious practices unless doing so would impose an undue hardship on the employer.</li></ul>"
+    }, {
+        "title": "Age Discrimination",
+        "description": "<p>Age Discrimination in Employment Act of 1967</p><p>This protects individuals who are 40 years of age or older from employment discrimination. This applies to employees and job applicants and prohibits discrimination pertaining to employment term, condition, or privilege of employment.</p>"
+    }, {
+        "title": "Age Discrimination",
+        "description": "<p>The Age Discrimination Act states that:</p><ul><li>an employer cannot discriminate against individuals 40 years of age or older if apprenticeship program is offered.</li><li>it is unlawful to include age preferences, limitations, or specifications in job notices or advertisements.</li><li>Pre-employment inquiries do not specifically prohibit asking age or date of birth. However, requests for age are closely scrutinized if this becomes an issue.</li></ul>"
+    }, {
+        "title": "Age Discrimination",
+        "description": "<p>Benefits</p><p>The Act states that an employer cannot deny benefits to older employees.</p><p>Waivers of ADEA Rights</p><p>An employer can ask an employee to waive his or her rights or claims under the ADEA either in settlement or an administrative or court claim.</p>"
+    }, {
+        "title": "Disability Discrimination",
+        "description": "<p>Title I of the Americans with Disabilities Act</p><p>This law prohibits discrimination against qualified individuals with disabilities in job application procedures, hiring, firing, advancement, compensation, training and other typical privileges of employment.</p><p>Reasonable accommodations must be made for a qualified applicant. These accommodations include making existing facilities accessible to persons with disabilities, job restructuring and modifying work schedules.</p><p>An employer is not required to lower quality or production standards to accommodate such employee or to provide personal items such as hearing aids or wheelchairs.</p>"
+    }, {
+        "title": "Pregnancy Discrimination",
+        "description": "<p>Pregnancy Discrimination Act</p><p>An employer cannot refuse to hire a pregnant woman because of her pregnancy, related condition or because of prejudices of co-workers, clients or customers.</p><p>Employers must hold open a job for pregnancy related absence for the same length of time jobs are held for employees on sick or disability leave.</p>"
+    }, {
+        "title": "Discrimination",
+        "description": "<p>The Equal Pay Act requires that men and women be given equal pay for equal work in the same establishment. The jobs need not be identical, but must be substantially equal.</p><p>Skill</p><p>Measured by experience, ability, education and training required to perform job.</p><p>Effort</p><p>The amount of physical or mental exertion needed to perform job.</p><p>Responsibility</p><p>The degree of accountability required in performing the job</p><p>Working Conditions</p><p>The physical surroundings and hazards of the job.</p><p>Establishment</p><p>Physically separate places of business must be treated as one establishment.</p>"
+    }, {
+        "title": "Compensation Discrimination",
+        "description": "<p>Title VII, ADEA, and ADA prohibits compensation discrimination on the basis of race, color, religion, sex, national origin, age or disability.</p>"
+    }, {
+        "title": "Quick Quiz",
+        "description": "<p>Test your retention of the covered course materials by answering the following questions. Once you complete a quiz, your score will be recorded and posted for you to see. You may click the PREVIOUS button to review slides prior to submitting your answers. Once you submit your answers, you will be unable to return to the slides. The role of the Equal Employment Opportunity Commission is to:</p><ul><li>To protect employees from unfair treatment.</li><li>To let employees know they are not following work rules.</li><li>To protect employees with learning disabilities.</li></ul><p>Title VII of the Civil Rights Act includes what components:</p><ul><li>Protects employees against all types of discrimination</li><li>Equal Pay Act, Age Discrimination, ADA (American Disabilities ACT) and Civil Rights Act</li></ul>"
+    }, {
+        "title": "Quick Quiz",
+        "description": "<p>What are the various types of discrimination?</p><ul><li>Race/color, national origin, sex, religious discrimination, age discrimination, disability and pregnancy</li><li>Sexual, mental and lack of knowledge</li></ul><p>Race related or hostile work environment acts require that employers take steps to prevent and correct unlawful behavior based on certain conduct. What behavior is prohibited?</p><ul><li>taking time off unnecessarily, calling in sick and being lazy on the job</li><li>offensive behavior such as racial slurs, racial jokes, derogatory comments and other physical or verbal abuse</li></ul><p>What is required so as not to discriminate against an employee based on religion?</p><ul><li>employers must let everyone do what they want and not monitor any behavior if related to employee's religion.</li><li>employers must “reasonably” accommodate employee’s religious practices, unless doing so would impose undue hardship on such employer.</li></ul><p>At what age are employees protected from age discrimination?</p><ul><li>40 years of age or older</li><li>Over 50 years old</li></ul>"
+    }],
+    "questions": []
+}]

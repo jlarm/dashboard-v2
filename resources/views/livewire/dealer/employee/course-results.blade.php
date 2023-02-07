@@ -16,7 +16,8 @@
                         <td class="px-4 py-4">
                             <div class="flex space-x-4 w-max">
                                 <div class="flex-1">
-                                    <span class="text-sm font-semibold text-gray-800">{{ $course->name }}</span>
+                                    <span
+                                        class="text-sm font-semibold text-gray-800">{{ Str::limit($course->name, 40) }}</span>
                                 </div>
                             </div>
                         </td>

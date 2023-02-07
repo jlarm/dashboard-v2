@@ -1,0 +1,37 @@
+[{
+    "name": "PPE - Respirator",
+    "slug": "ppe-respirator",
+    "department": "1",
+    "slides": [{
+        "title": "Personal Protective Equipment/Respirator Protection",
+        "description": "<p>Safety Awareness to reduce work related accidents</p>"
+    },{
+        "title": "Personal Protective Equipment PPE",
+        "description": "<p>Half of all shop injuries can be avoided by using the appropriate PPE</p><p>PPE has taken on a more significant status since a review by OSHA as a result of increased</p><p>workplace injuries</p><p>PPEs not being worn at all</p><p>Wearing incorrect PPE</p><p>Correct PPE being worn improperly</p><p>No enforcement of management for use of PPE</p>"
+    },{
+        "title": "More....",
+        "description": "<p>The following potential hazards require correct use of PPE: Sanding dust, paint spray mists, sparks and hot objects, Asbestos and other dusts, welding fumes, chemicals</p>"
+    },{
+        "title": "Safety Glasses",
+        "description": "<p><strong>As a general rule, anyone in the service bays should wear safety glasses at all times</strong></p><p>Use only industrial-type glasses approved by the American National Standards Institute (ANSI)</p><p>Make sure that you understand when to use additional face protection (welding, working with acid, etc)</p>"
+    },{
+        "title": "More....",
+        "description": "<p>Head Protection: Use \"bump caps\" when under a vehicle to protect you from oil, grease, water, dirt, sparks, sharp objects or falling parts</p><p>Foot Protection: Over 250,000 disabling injuries happen each year in the US. These injuries usually occur from falling wheels, tools, shocks, coils, springs, dies and hoists.</p>"
+    },{
+        "title": "More....",
+        "description": "<p>All maintenance personnel must wear high-top, steel-toed shoes. Fire-resistant, rubber-heeled boots are recommended</p><p>When torch cutting or welding, sparks can fall inside pant cuffs, boot or shoe. Pants should be cuff less and hang over the shoe</p>"
+    },{
+        "title": "Hearing Protection",
+        "description": "<p>Air-powered tools, air compressors, and vehicles with a bad muffler or bad engine exhaust pipe or fittings all produce high levels of noise and should not be taken lightly.</p><p>Noise and sound that exceeds 90 decibels in an 8 hour shift can cause hearing damage or loss (air compressor – 80-85 dB, air impact gun – 105 dB)</p><p>Employees should wear earmuffs or earplugs when exposed to excessive noise</p>"
+    },{
+        "title": "Other protective equipment and clothing:",
+        "description": "<p>Use gloves to protect hands from burns, cuts, abrasions and bruises. If using asbestos gloves, make sure that they are in good repair and not releasing asbestos fibers on to hands</p><p>Wear clothing that is non-synthetic</p><p>Avoid loose fitting clothing that could get caught in machines</p><p>Wear rubber or acid-resistant aprons and gloves when handling battery acid</p>"
+    },{
+        "title": "Respirators",
+        "description":  "<p>You must have a written instruction plan that includes when and why respirators are to be used. How to clean, store and service the respirators</p><p>Vehicle painting requires a National Institute for Occupational Safety and Health (NIOSH)-approved, cartridge-type respirator to eliminate the inhalation of paint vapors. A full-face, self-contained breathing apparatus may also be required</p><p>NIOSH-approved dust respirators must be used when sanding or burnishing for paint preparation (if engineered dust control is not provided)</p>"
+    },{
+        "title": "PUT SAFETY FIRST!",
+        "description": "<p>OSHA now requires tracking and training on correct use and proper equipment - for employee protection.</p>"
+    }],
+    "questions": []
+}]

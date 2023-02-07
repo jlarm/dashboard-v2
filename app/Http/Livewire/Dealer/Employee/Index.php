@@ -13,7 +13,8 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.employee.index', [
-            'users' => User::latest()->paginate(10),
+            'users' => User::latest()
+                ->paginate(10),
         ]);
     }
 }
