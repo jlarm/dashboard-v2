@@ -40,7 +40,8 @@ class Create extends Modal
             'url' => $validated['url'],
             'locations' => $validated['locations'],
         ]);
-        $dealer->createDomain($tenantDomain);
+
+        $dealer->createDomain($tenantDomain, $validated['url']);
 
         $dealer->run(function () {
             $user = User::create([

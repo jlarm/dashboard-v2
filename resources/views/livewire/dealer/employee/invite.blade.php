@@ -21,21 +21,22 @@
 
         @can('create-stores')
             <!-- Store -->
-            <div class="col-span-3">
-                <x-input-label for="store_id" :value="__('Select a Store')"/>
-                <select
-                    wire:model.defer="store"
-                    name="store"
-                    id="store"
-                    class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
-                >
-                    <option></option>
-                    @foreach($stores as $store)
-                        <option value="{{ $store->id }}">{{ $store->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
+            @if($stores->count())
+                <div class="col-span-3">
+                    <x-input-label for="store_id" :value="__('Select a Store')"/>
+                    <select
+                        wire:model.defer="store"
+                        name="store"
+                        id="store"
+                        class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
+                    >
+                        <option></option>
+                        @foreach($stores as $store)
+                            <option value="{{ $store->id }}">{{ $store->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
             <!-- Department -->
             <div class="col-span-3">
                 <x-input-label for="department" :value="__('Select a Department')"/>
@@ -73,7 +74,7 @@
                 <option value="Employee">Employee</option>
                 @endrole
                 @role('Manager')
-                <option value="Employee">Employee</option>
+                {{--                <option value="Employee">Employee</option>--}}
                 @endrole
             </select>
         </div>

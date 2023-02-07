@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Models\Dealer\Course;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CourseResults extends Component
 {
+    use WithPagination;
+
     public User $user;
 
     protected $listeners = ['refreshEmployeeDetails' => '$refresh'];
@@ -21,7 +24,7 @@ class CourseResults extends Component
                 ->with('results', function ($query) {
                     $query->where('user_id', $this->user->id)->latest();
                 })
-                ->get(),
+                ->paginate(15),
         ]);
     }
 }

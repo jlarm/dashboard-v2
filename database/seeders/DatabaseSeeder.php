@@ -20,13 +20,6 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
         ]);
 
-//         $user = \App\Models\User::factory()->create([
-//             'name' => 'Joe Lohr',
-//             'email' => 'jlohr@autorisknow.com',
-//             'phone' => '2243586930',
-//             'password' => \Hash::make('password'),
-//         ]);
-//
-//         $user->assignRole('super-admin');
+//        User::factory()->count(150)->create();
     }
 }

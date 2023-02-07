@@ -29,8 +29,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="p-5 text-center">This employee has no dealerships assigned to
-                                    them.
+                                <td colspan="3" class="p-5 text-center">No assigned dealerships
                                 </td>
                             </tr>
                         @endforelse

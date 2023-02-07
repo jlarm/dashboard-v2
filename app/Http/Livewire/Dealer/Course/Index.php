@@ -10,6 +10,8 @@ class Index extends Component
 {
     use WithPagination;
 
+    public $search = '';
+
     public function render()
     {
         if (auth()->user()->department_id) {
@@ -23,6 +25,7 @@ class Index extends Component
                         },
                     ])
                     ->orderBy('name')
+                    ->search('name', $this->search)
                     ->paginate(24),
             ]);
         } else {
@@ -35,6 +38,7 @@ class Index extends Component
                         },
                     ])
                     ->orderBy('name')
+                    ->search('name', $this->search)
                     ->paginate(24),
             ]);
         }

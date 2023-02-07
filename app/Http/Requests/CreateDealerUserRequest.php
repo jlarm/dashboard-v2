@@ -14,8 +14,8 @@ class CreateDealerUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users'],
             'phone' => ['required', 'string', 'max:255'],
-            'store' => ['required', 'integer'],
-            'department' => ['required', 'integer'],
+            'store' => ['nullable', 'integer'],
+            'department' => ['nullable', 'integer'],
             'role' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8', 'confirmed', Password::defaults()],
         ];

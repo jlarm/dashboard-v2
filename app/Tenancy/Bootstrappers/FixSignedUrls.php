@@ -7,10 +7,10 @@ use Stancl\Tenancy\Contracts\Tenant;
 
 class FixSignedUrls implements TenancyBootstrapper
 {
-    public function bootstrap(Tenant $tenant)
+    public function bootstrap(Tenant $dealer)
     {
-        \URL::formatHostUsing(function () use ($tenant) {
-            return 'https://'.$tenant->domains->first()->domain;
+        \URL::formatHostUsing(function () use ($dealer) {
+            return 'https://'.$dealer->domains->first()->domain;
         });
     }
 
