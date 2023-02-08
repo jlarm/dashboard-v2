@@ -12,11 +12,13 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CourseResultsController extends Controller
 {
-
     public function export()
     {
-        return Excel::download(new UserCourseResultsExport, 'users.xlsx');
+        return Excel::download(new UserCourseResultsExport, 'users.csv', \Maatwebsite\Excel\Excel::CSV, [
+            'Content-Type' => 'text/csv',
+        ]);
     }
+
     public function store(Request $request, Course $course)
     {
         $count = count($course['questions']);

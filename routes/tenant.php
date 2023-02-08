@@ -40,23 +40,23 @@ Route::group([
     })->middleware('auth')->name('dashboard');
 
     Route::get('stores', function () {
-    return view('dealer.store.index');
+        return view('dealer.store.index');
     })->middleware(['auth', 'has.stores'])->name('stores.index');
     Route::get('stores/{store:slug}', [StoreController::class, 'show'])->middleware(['auth', 'has.stores'])->name('stores.show');
 
     Route::get('employees', function () {
-    return view('dealer.employee.index');
+        return view('dealer.employee.index');
     })->middleware('auth')->name('employees.index');
     Route::get('employees/open-invites', function () {
-    return view('dealer.employee.open-invites');
+        return view('dealer.employee.open-invites');
     })->middleware('auth')->name('employees.open-invites');
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])->middleware('web')->name('employees.create');
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('dealer.employees.store');
     Route::get('employees/{user:id}', [UserController::class, 'show'])->middleware('auth')->name('employees.show');
-    Route::get('/employees/export', [CourseResultsController::class, 'export'])->middleware('auth')->name('employees.export');
+    Route::get('abc', [CourseResultsController::class, 'export'])->middleware(['web', 'auth'])->name('dealer.employees.export');
 
     Route::get('courses', function () {
-    return view('dealer.course.index');
+        return view('dealer.course.index');
     })->middleware('auth')->name('courses.index');
     Route::get('courses/{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('courses.show');
     Route::post('courses/{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('courses.results.store');

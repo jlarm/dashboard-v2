@@ -27,9 +27,11 @@
             @endif
         @endforeach
     </td>
-    <td class="px-4 py-4 text-sm text-gray-700">
-        {{ $user->store->name ?? tenant('name') }}
-    </td>
+    @if(tenant('locations'))
+        <td class="px-4 py-4 text-sm text-gray-700">
+            {{ $user->store->name ?? tenant('name') }}
+        </td>
+    @endif
     <td class="px-4 py-4 text-sm text-gray-700">
         {{ $user->department->name ?? '-' }}
     </td>

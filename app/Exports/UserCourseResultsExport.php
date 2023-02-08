@@ -2,24 +2,27 @@
 
 namespace App\Exports;
 
-use App\Models\Course;
-use App\Models\User;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use App\Models\Dealer\Course;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromQuery;
 
-class UserCourseResultsExport implements FromCollection
+class UserCourseResultsExport implements FromQuery
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    use Exportable;
+
+    public function __construct()
     {
-        return User::all();
-//        return \App\Models\Dealer\Course::query()
-//            ->where('department_id', $this->user->department_id)
-//            ->select('id', 'name')
-//            ->with('results', function ($query) {
-//                $query->where('user_id', $this->user->id)->latest();
-//            })
-//            ->get();
+        $this->user = auth()->user();
+    }
+
+    public function query()
+    {
+//        return User::all();
+        return Course::query()
+            ->where('department_id', $this->user->department_id)
+            ->select('id', 'name')
+            ->with('results', function ($query) {
+                $query->where('user_id', $this->user->id)->select('id')->latest();
+            });
     }
 }

@@ -13,7 +13,9 @@ use Mail;
 class SendQueueEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     protected $invite;
+
     public function __construct($invite)
     {
         $this->invite = $invite;
