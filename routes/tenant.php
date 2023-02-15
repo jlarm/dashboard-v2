@@ -55,12 +55,14 @@ Route::group([
     Route::get('employees/{user:id}', [UserController::class, 'show'])->middleware('auth')->name('employees.show');
     Route::get('abc', [CourseResultsController::class, 'export'])->middleware(['web', 'auth'])->name('dealer.employees.export');
 
-    Route::get('courses', function () {
-        return view('dealer.course.index');
-    })->middleware('auth')->name('courses.index');
+    Route::get('courses', function () { return view('dealer.course.index'); })->middleware('auth')->name('courses.index');
     Route::get('courses/{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('courses.show');
     Route::post('courses/{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('courses.results.store');
     Route::get('courses/{course:slug}/quiz', [CourseController::class, 'quiz'])->middleware('auth')->name('courses.quiz');
+
+    Route::get('scans', function () { return view('dealer.scan.index'); })->middleware('auth')->name('scan.index');
+
+    Route::get('/sds', function () { return view('dealer.sds.index'); })->middleware('auth')->name('sds.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
