@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,6 +9,7 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './vendor/wire-elements/pro/config/wire-elements-pro.php',
         './vendor/wire-elements/pro/**/*.blade.php',
+        './vendor/filament/**/*.blade.php',
     ],
 
     theme: {
@@ -16,6 +18,10 @@ module.exports = {
                 sans: ['Outfit', ...defaultTheme.fontFamily.sans],
             },
             colors: {
+                danger: colors.rose,
+                primary: colors.blue,
+                success: colors.green,
+                warning: colors.yellow,
                 'arm-blue': {
                     '50': '#f2f8fa',
                     '100': '#e6f0f5',
