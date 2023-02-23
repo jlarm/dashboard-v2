@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
@@ -19,6 +20,11 @@ class Delete extends Modal
         $this->store->delete();
 
         $this->redirect(route('dealer.stores.index'));
+
+        Notification::make()
+            ->title('Store Deleted Successfully!')
+            ->success()
+            ->send();
     }
 
     public function render()

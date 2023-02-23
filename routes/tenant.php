@@ -65,6 +65,7 @@ Route::group([
     Route::get('/sds', function () { return view('dealer.sds.index'); })->middleware('auth')->name('sds.index');
 
     Route::get('/manuals', function () { return view('dealer.manual.index'); })->middleware('auth')->name('manual.index');
+    Route::get('/glbform', function () { return view('dealer.manual.GlbForm'); })->middleware('auth')->name('manual.glbform');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

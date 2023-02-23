@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Create extends Modal
@@ -55,6 +56,11 @@ class Create extends Modal
         $this->emit('refreshStores');
 
         $this->close();
+
+        Notification::make()
+            ->title('Store Created Successfully!')
+            ->success()
+            ->send();
     }
 
     public function render()

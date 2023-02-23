@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Mail\InviteMail;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use Mail;
 use Spatie\Permission\Models\Role;
 use WireElements\Pro\Components\Modal\Modal;
@@ -48,6 +49,11 @@ class Invite extends Modal
         $this->reset();
 
         $this->close();
+
+        Notification::make()
+            ->title('Invite Successfully Sent!')
+            ->success()
+            ->send();
     }
 
     public function render()

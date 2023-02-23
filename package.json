@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@alpinejs/focus": "^3.11.1",
-        "@alpinejs/mask": "^3.11.1"
+        "@alpinejs/mask": "^3.11.1",
+        "@awcodes/alpine-floating-ui": "^3.5.0"
     }
 }

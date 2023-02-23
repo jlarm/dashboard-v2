@@ -41,6 +41,7 @@
 </div>
 @livewire('slide-over-pro')
 @livewire('modal-pro')
+@livewire('notifications')
 @livewireScripts
 </body>
 </html>
