@@ -1,5 +1,5 @@
-id: 42724
-name: armp-dashboard
+id: 43150
+name: demo
 environments:
   production:
     memory: 1024
@@ -12,11 +12,10 @@ environments:
   staging:
     memory: 1024
     cli-memory: 512
-    database: armpdash
+    database: armpdemo
     runtime: 'php-8.2:al2'
     build:
       - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
       - 'php artisan event:cache'
       - 'npm ci && npm run build && rm -rf node_modules'
-    domain: kaileelohr.com
-    APP_DEBUG: True
+    domain: armpdemo.com

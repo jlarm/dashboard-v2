@@ -10,6 +10,12 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
+    public $address;
+    public $city;
+    public $state;
+    public $zip_code;
+    public $phone;
+    public $fax;
 
     public $domain;
 
@@ -21,6 +27,12 @@ class Create extends Modal
 
     protected $rules = [
         'name' => 'required',
+        'address' => 'required',
+        'city' => 'required',
+        'state' => 'required',
+        'zip_code' => 'required',
+        'phone' => 'required',
+        'fax' => 'nullable',
         'domain' => 'required|unique:domains',
         'url' => 'required|url',
         'locations' => 'nullable|boolean',
@@ -36,6 +48,12 @@ class Create extends Modal
         $dealer = Dealership::create([
             'user_id' => auth()->user()->id,
             'name' => $validated['name'],
+            'address' => $validated['address'],
+            'city' => $validated['city'],
+            'state' => $validated['state'],
+            'zip_code' => $validated['zip_code'],
+            'phone' => $validated['phone'],
+            'fax' => $validated['fax'],
             'domain' => $tenantDomain,
             'url' => $validated['url'],
             'locations' => $validated['locations'],

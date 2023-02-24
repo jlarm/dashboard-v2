@@ -4,15 +4,66 @@
     <div class="space-y-5">
         <!-- Dealership Name -->
         <div>
-            <x-input-label for="name" :value="__('Dealership Name')"/>
+            <x-input-label for="name" :value="__('Name')"/>
             <x-text-input wire:model.lazy="name" id="name" class="block mt-1 w-full" type="text" name="name"
                           :value="old('name')" placeholder="ABC Ford" required/>
             <x-input-error :messages="$errors->get('name')" class="mt-2"/>
         </div>
 
+        <!-- Dealership Address -->
+        <div>
+            <x-input-label for="address" :value="__('Address')"/>
+            <x-text-input wire:model.lazy="address" id="address" class="block mt-1 w-full" type="text" name="address"
+                          :value="old('address')" required/>
+            <x-input-error :messages="$errors->get('address')" class="mt-2"/>
+        </div>
+
+        <!-- Dealership City, State, Zip -->
+        <div class="grid grid-cols-3 gap-5">
+            <div>
+                <x-input-label for="city" :value="__('City')"/>
+                <x-text-input wire:model.lazy="city" id="city" class="block mt-1 w-full" type="text"
+                              name="city"
+                              :value="old('city')" required/>
+                <x-input-error :messages="$errors->get('city')" class="mt-2"/>
+            </div>
+            <div>
+                <x-input-label for="state" :value="__('State')"/>
+                <x-text-input wire:model.lazy="state" id="state" class="block mt-1 w-full" type="text"
+                              name="state"
+                              :value="old('state')" required/>
+                <x-input-error :messages="$errors->get('state')" class="mt-2"/>
+            </div>
+            <div>
+                <x-input-label for="zip_code" :value="__('Zip Code')"/>
+                <x-text-input wire:model.lazy="zip_code" id="zip_code" class="block mt-1 w-full" type="text"
+                              name="zip_code"
+                              :value="old('zip_code')" required/>
+                <x-input-error :messages="$errors->get('zip_code')" class="mt-2"/>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-5">
+            <!-- Dealership Phone Number -->
+            <div>
+                <x-input-label for="phone" :value="__('Phone')"/>
+                <x-text-input wire:model.lazy="phone" id="phone" class="block mt-1 w-full" type="tel" name="phone"
+                              :value="old('phone')" placeholder="555-555-5555" required/>
+                <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
+            </div>
+
+            <!-- Dealership Fax -->
+            <div>
+                <x-input-label for="fax" :value="__('Fax')"/>
+                <x-text-input wire:model.lazy="fax" id="fax" class="block mt-1 w-full" type="tel" name="fax"
+                              :value="old('fax')" placeholder="555-555-5555"/>
+                <x-input-error :messages="$errors->get('fax')" class="mt-2"/>
+            </div>
+        </div>
+
         <!-- Dealership Domain -->
         <div>
-            <x-input-label for="domain" :value="__('Dealership Domain')"/>
+            <x-input-label for="domain" :value="__('Domain')"/>
             <div class="flex items-center">
                 <x-text-input wire:model.defer="domain" id="domain" class="block mt-1 w-full" type="text" name="domain"
                               :value="old('domain')" placeholder="abc-ford" required/>
@@ -23,7 +74,7 @@
 
         <!-- Dealership Website URL -->
         <div>
-            <x-input-label for="url" :value="__('Dealership Website URL')"/>
+            <x-input-label for="url" :value="__('Website URL')"/>
             <x-text-input wire:model.defer="url" id="url" class="block mt-1 w-full" type="url" name="url"
                           :value="old('url')" placeholder="https://abcford.com" required/>
             <x-input-error :messages="$errors->get('url')" class="mt-2"/>

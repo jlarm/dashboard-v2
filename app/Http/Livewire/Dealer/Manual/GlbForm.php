@@ -24,11 +24,11 @@ class GlbForm extends Component implements Forms\Contracts\HasForms
                     ->schema([
                         Forms\Components\Hidden::make('user_id')->default(auth()->user()->id),
                         Forms\Components\TextInput::make('name')->default(tenant('name'))->required(),
-                        Forms\Components\TextInput::make('address')->required(),
+                        Forms\Components\TextInput::make('address')->default(tenant('address'))->required(),
                         Forms\Components\Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('phone')->required(),
-                                Forms\Components\TextInput::make('fax'),
+                                Forms\Components\TextInput::make('phone')->default(tenant('phone'))->required(),
+                                Forms\Components\TextInput::make('fax')->default(tenant('fax')),
                             ]),
                         Forms\Components\TextInput::make('website')->default(tenant('url'))->required(),
                         Forms\Components\TextInput::make('qi', 'Qualified Individual')->label('Qualified Individual')->required(),

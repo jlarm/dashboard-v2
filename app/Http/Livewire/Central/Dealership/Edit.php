@@ -9,6 +9,12 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public $dealership;
+    public $address;
+    public $city;
+    public $state;
+    public $zip_code;
+    public $phone;
+    public $fax;
 
     public $name;
 
@@ -23,6 +29,12 @@ class Edit extends SlideOver
     public function mount(Dealership $dealership)
     {
         $this->dealership = $dealership;
+        $this->address = $dealership->address;
+        $this->city = $dealership->city;
+        $this->state = $dealership->state;
+        $this->zip_code = $dealership->zip_code;
+        $this->phone = $dealership->phone;
+        $this->fax = $dealership->fax;
         $this->name = $dealership->name;
         $this->domain = $dealership->domain;
         $this->url = $dealership->url;
@@ -32,6 +44,12 @@ class Edit extends SlideOver
 
     protected $rules = [
         'name' => 'required',
+        'address' => 'required',
+        'city' => 'required',
+        'state' => 'required',
+        'zip_code' => 'required',
+        'phone' => 'required',
+        'fax' => 'nullable',
         'domain' => 'required',
         'url' => 'required',
         'locations' => 'required',
@@ -42,6 +60,12 @@ class Edit extends SlideOver
     {
         $this->dealership->update([
             'name' => $this->name,
+            'address' => $this->address,
+            'city' => $this->city,
+            'state' => $this->state,
+            'zip_code' => $this->zip_code,
+            'phone' => $this->phone,
+            'fax' => $this->fax,
             'domain' => $this->domain,
             'url' => $this->url,
             'locations' => $this->locations,
