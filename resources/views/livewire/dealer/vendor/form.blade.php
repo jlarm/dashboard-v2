@@ -790,16 +790,6 @@
     </div>
 
     <div>
-        <x-creagia-signature-pad
-            border-color="#eaeaea"
-            pad-classes="rounded-xl border-2"
-            button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
-            clear-name="Clear"
-            submit-name="Submit"
-        />
-    </div>
-
-    <div>
         <button class="bg-arm-blue-500 py-3 px-5 rounded-md text-white">Submit</button>
     </div>
 

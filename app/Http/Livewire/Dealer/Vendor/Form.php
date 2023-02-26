@@ -2,13 +2,10 @@
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
-use Creagia\LaravelSignPad\Concerns\RequiresSignature;
-use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 use Livewire\Component;
 
-class Form extends Component implements CanBeSigned
+class Form extends Component
 {
-    use RequiresSignature;
     public $contact_name;
     public $qia;
     public $q1c;
