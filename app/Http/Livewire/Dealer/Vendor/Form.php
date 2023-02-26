@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
+use App\Models\Dealer\Vendor;
 use Livewire\Component;
 
 class Form extends Component
 {
     public $contact_name;
-    public $qia;
+    public $signature;
+    public $q1a;
     public $q1c;
     public $q2a;
     public $q2c;
@@ -50,6 +52,65 @@ class Form extends Component
     public $q21a;
     public $q21c;
     public $q22a;
+    public $q22c;
+
+    public Vendor $vendor;
+
+    protected $rules = [
+        'contact_name' => 'required',
+        'signature' => 'required',
+        'q1a' => 'required',
+        'q1c' => 'nullable',
+        'q2a' => 'required',
+        'q2c' => 'nullable',
+        'q3a' => 'required',
+        'q3c' => 'nullable',
+        'q4a' => 'required',
+        'q4c' => 'nullable',
+        'q5a' => 'required',
+        'q5c' => 'nullable',
+        'q6a' => 'required',
+        'q6c' => 'nullable',
+        'q7a' => 'required',
+        'q7c' => 'nullable',
+        'q8a' => 'required',
+        'q8c' => 'nullable',
+        'q9a' => 'required',
+        'q9c' => 'nullable',
+        'q10a' => 'required',
+        'q10c' => 'nullable',
+        'q11a' => 'required',
+        'q11c' => 'nullable',
+        'q12a' => 'required',
+        'q12c' => 'nullable',
+        'q13a' => 'required',
+        'q13c' => 'nullable',
+        'q14a' => 'required',
+        'q14c' => 'nullable',
+        'q15a' => 'required',
+        'q15c' => 'nullable',
+        'q16a' => 'required',
+        'q16c' => 'nullable',
+        'q17a' => 'required',
+        'q17c' => 'nullable',
+        'q18a' => 'required',
+        'q18c' => 'nullable',
+        'q19a' => 'required',
+        'q19c' => 'nullable',
+        'q20a' => 'required',
+        'q20c' => 'nullable',
+        'q21a' => 'required',
+        'q21c' => 'nullable',
+        'q22a' => 'required',
+        'q22c' => 'nullable',
+    ];
+
+    public function submit()
+    {
+        $validated = $this->validate();
+        \Storage::put('signatures/'.tenant('name').'/'.$this->contact_name.now().'.png', base64_decode(\Str::of($this->signature)->after(',')));
+        dd($validated);
+    }
 
     public function render()
     {

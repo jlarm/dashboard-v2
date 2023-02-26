@@ -31,6 +31,6 @@
     <livewire:dealer.vendor.form/>
 </div>
 @livewireScripts
-<script src="{{ asset('vendor/sign-pad/sign-pad.min.js') }}"></script>
+
 </body>
 </html>
