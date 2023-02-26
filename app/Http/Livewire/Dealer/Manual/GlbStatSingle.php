@@ -9,6 +9,7 @@ use Livewire\Component;
 class GlbStatSingle extends Component
 {
     public Glb $manual;
+
     public function download()
     {
         $manual = Glb::where('id', $this->manual->id)->first();

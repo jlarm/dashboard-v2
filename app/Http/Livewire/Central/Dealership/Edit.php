@@ -9,11 +9,17 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public $dealership;
+
     public $address;
+
     public $city;
+
     public $state;
+
     public $zip_code;
+
     public $phone;
+
     public $fax;
 
     public $name;

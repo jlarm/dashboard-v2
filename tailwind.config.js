@@ -18,10 +18,6 @@ module.exports = {
                 sans: ['Outfit', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                danger: colors.rose,
-                primary: colors.blue,
-                success: colors.green,
-                warning: colors.yellow,
                 'arm-blue': {
                     '50': '#f2f8fa',
                     '100': '#e6f0f5',
@@ -57,7 +53,11 @@ module.exports = {
                     '700': '#b15900',
                     '800': '#8e4700',
                     '900': '#743a00'
-                }
+                },
+                danger: colors.rose,
+                primary: colors.blue,
+                success: colors.green,
+                warning: colors.yellow,
             }
         },
     },

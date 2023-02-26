@@ -8,24 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('glbs', function (Blueprint $table) {
+        Schema::create('vendors', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->constrained();
-
             $table->string('name');
-            $table->string('address');
-            $table->string('phone');
-            $table->string('fax')->nullable();
-            $table->string('website');
-            $table->string('qi');
-            $table->json('receptacles')->nullable();
+            $table->string('contact_name');
+            $table->string('contact_email');
 
-            $table->json('managers')->nullable();
-
-            $table->string('assessment_company');
-            $table->string('assessment_name');
-            $table->date('assessment_date');
+            $table->foreignId('store_id')
+                ->nullable()
+                ->constrained('stores')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
 
             $table->boolean('q1a');
             $table->text('q1c')->nullable();
@@ -51,6 +45,26 @@ return new class extends Migration
             $table->text('q11c')->nullable();
             $table->boolean('q12a');
             $table->text('q12c')->nullable();
+            $table->boolean('q13a');
+            $table->text('q13c')->nullable();
+            $table->boolean('q14a');
+            $table->text('q14c')->nullable();
+            $table->boolean('q15a');
+            $table->text('q15c')->nullable();
+            $table->boolean('q16a');
+            $table->text('q16c')->nullable();
+            $table->boolean('q17a');
+            $table->text('q17c')->nullable();
+            $table->boolean('q18a');
+            $table->text('q18c')->nullable();
+            $table->boolean('q19a');
+            $table->text('q19c')->nullable();
+            $table->boolean('q20a');
+            $table->text('q20c')->nullable();
+            $table->boolean('q21a');
+            $table->text('q21c')->nullable();
+            $table->boolean('q22a');
+            $table->text('q22c')->nullable();
 
             $table->timestamps();
         });
@@ -58,6 +72,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('glbs');
+        Schema::dropIfExists('vendors');
     }
 };

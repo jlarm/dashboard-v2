@@ -21,7 +21,7 @@
 
         @can('create-stores')
             <!-- Store -->
-            @if($stores->count())
+            @if(tenant('locations'))
                 <div class="col-span-3">
                     <x-input-label for="store_id" :value="__('Select a Store')"/>
                     <select

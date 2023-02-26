@@ -1,12 +1,10 @@
-<x-wire-elements-pro::tailwind.modal on-submit="createDealer" :content-padding="true">
-    <x-slot name="title">Create Dealership</x-slot>
-
+<form wire:submit.prevent="createDealer" class="space-y-5">
     <div class="space-y-5">
         <!-- Dealership Name -->
         <div>
             <x-input-label for="name" :value="__('Name')"/>
             <x-text-input wire:model.lazy="name" id="name" class="block mt-1 w-full" type="text" name="name"
-                          :value="old('name')" placeholder="ABC Ford" required/>
+                          :value="old('name')" required/>
             <x-input-error :messages="$errors->get('name')" class="mt-2"/>
         </div>
 
@@ -48,15 +46,21 @@
             <div>
                 <x-input-label for="phone" :value="__('Phone')"/>
                 <x-text-input wire:model.lazy="phone" id="phone" class="block mt-1 w-full" type="tel" name="phone"
-                              :value="old('phone')" placeholder="555-555-5555" required/>
+                              :value="old('phone')" required/>
                 <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
             </div>
 
             <!-- Dealership Fax -->
             <div>
                 <x-input-label for="fax" :value="__('Fax')"/>
-                <x-text-input wire:model.lazy="fax" id="fax" class="block mt-1 w-full" type="tel" name="fax"
-                              :value="old('fax')" placeholder="555-555-5555"/>
+                <x-text-input
+                    wire:model.lazy="fax"
+                    id="fax"
+                    class="block mt-1 w-full"
+                    type="tel"
+                    name="fax"
+                    :value="old('fax')"
+                />
                 <x-input-error :messages="$errors->get('fax')" class="mt-2"/>
             </div>
         </div>
@@ -65,8 +69,15 @@
         <div>
             <x-input-label for="domain" :value="__('Domain')"/>
             <div class="flex items-center">
-                <x-text-input wire:model.defer="domain" id="domain" class="block mt-1 w-full" type="text" name="domain"
-                              :value="old('domain')" placeholder="abc-ford" required/>
+                <x-text-input
+                    wire:model.defer="domain"
+                    id="domain"
+                    class="block mt-1 w-full"
+                    type="text"
+                    name="domain"
+                    :value="old('domain')"
+                    required
+                />
                 <span>.dashboard.test</span>
             </div>
             <x-input-error :messages="$errors->get('domain')" class="mt-2"/>
@@ -130,19 +141,12 @@
 
     </div>
 
-    <x-slot name="buttons">
+    <div>
         <button
             type="submit"
             class="inline-flex items-center justify-center rounded-md border border-transparent bg-arm-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-arm-blue-700 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:w-auto"
         >
             Submit
         </button>
-        <button
-            type="button"
-            wire:click="$emit('modal.close')"
-            class="inline-flex items-center justify-center rounded-md border border-arm-blue-600 px-4 py-2 text-sm font-medium text-arm-blue-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:w-auto"
-        >
-            Cancel
-        </button>
-    </x-slot>
-</x-wire-elements-pro::tailwind.modal>
+    </div>
+</form>

@@ -18,17 +18,18 @@ Route::post('employees/store', [UserController::class, 'store'])->name('employee
 
 Route::group(['middleware' => ['can:delete-users']], function () {
     Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'verified'])->name('employees.index');
-    Route::get('/employees/deleted', function () {
-    return view('central.employee.deleted');
-    })->middleware(['auth', 'verified'])->name('employees.deleted');
+    Route::get('/employees/deleted', function () { return view('central.employee.deleted'); })->middleware(['auth', 'verified'])->name('employees.deleted');
     Route::get('employees/invite', [EmployeeController::class, 'create'])->middleware(['auth', 'verified'])->name('invite.create');
     Route::post('employees/invite', [EmployeeController::class, 'send'])->middleware(['auth', 'verified'])->name('invite.send');
     Route::get('employees/{user}', [EmployeeController::class, 'show'])->middleware(['auth', 'verified'])->name('employees.view');
 });
 
 Route::get('/dealerships', function () {
-    return view('central.dealership.index');
+return view('central.dealership.index');
 })->name('dealerships.index')->middleware(['auth', 'verified']);
+Route::get('dealerships/create', function () {
+return view('central.dealership.create');
+})->name('dealerships.create')->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

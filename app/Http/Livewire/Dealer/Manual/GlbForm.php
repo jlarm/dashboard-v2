@@ -35,7 +35,7 @@ class GlbForm extends Component implements Forms\Contracts\HasForms
                         Forms\Components\Repeater::make('receptacles', 'Security Receptical Locations')
                             ->schema([
                                 Forms\Components\TextInput::make('name')->required(),
-                            ])->createItemButtonLabel('Add Receptacle')
+                            ])->createItemButtonLabel('Add Receptacle'),
                     ]),
                 Wizard\Step::make('Manager Information')
                     ->schema([
@@ -47,7 +47,7 @@ class GlbForm extends Component implements Forms\Contracts\HasForms
                                         Forms\Components\TextInput::make('title')->required(),
                                         Forms\Components\TextInput::make('email')->required(),
                                     ]),
-                            ])->createItemButtonLabel('Add Manager')
+                            ])->createItemButtonLabel('Add Manager'),
                     ]),
                 Wizard\Step::make('Risk Assessment')
                     ->schema([
@@ -196,7 +196,7 @@ class GlbForm extends Component implements Forms\Contracts\HasForms
                                     ->label('Comments'),
                             ]),
                     ]),
-            ])
+            ]),
         ];
     }
 
@@ -205,8 +205,5 @@ class GlbForm extends Component implements Forms\Contracts\HasForms
         $manual = Glb::create($this->form->getState());
 
         redirect()->route('dashboard');
-
     }
-
-
 }

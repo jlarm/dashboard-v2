@@ -5,9 +5,9 @@ namespace App\Http\Livewire\Central\Dealership;
 use App\Models\Dealership;
 use App\Models\User;
 use Hash;
-use WireElements\Pro\Components\Modal\Modal;
+use Livewire\Component;
 
-class Create extends Modal
+class Create extends Component
 {
     public $name;
     public $address;
@@ -71,17 +71,7 @@ class Create extends Modal
             $user->assignRole('Consultant');
         });
 
-        $this->emit('refreshDealerships');
+        return redirect(route('central.dealership.index'));
 
-        $this->close();
-    }
-
-    public function render()
-    {
-        return view('livewire.central.dealership.create');
-    }
-
-    private function merge(array $array)
-    {
     }
 }
