@@ -28,7 +28,8 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus at cum deleniti eius esse harum, hic ipsa
             labore maiores nisi nostrum odio odit pariatur provident, qui, quidem sequi similique vero.</p>
     </div>
-    <livewire:dealer.vendor.form/>
+    {{--    email: {{ $contact_email }}--}}
+    {{--    <livewire:dealer.vendor.form :vendor="$vendor"/>--}}
 </div>
 @livewireScripts
 

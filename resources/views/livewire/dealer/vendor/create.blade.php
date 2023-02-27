@@ -37,9 +37,9 @@
                 <div class="col-span-3">
                     <x-input-label for="store_id" :value="__('Select a Store')"/>
                     <select
-                        wire:model.defer="store"
-                        name="store"
-                        id="store"
+                        wire:model.defer="store_id"
+                        name="store_id"
+                        id="store_id"
                         class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
                     >
                         <option></option>

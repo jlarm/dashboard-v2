@@ -8,6 +8,7 @@
                     <td class="px-4 py-4">Name</td>
                     <td class="px-4 py-4">Contact Name</td>
                     <td class="px-4 py-4">Contact Email</td>
+                    <td class="px-4 py-4">Store</td>
                     <td class="px-4 py-4">&nbsp;</td>
                 </tr>
                 </thead>

@@ -1,6 +1,6 @@
 <div>
+    {{ $vendor }}
     <form class="space-y-5" wire:submit.prevent="submit">
-
         <div class="bg-gray-100 rounded-md">
             <div class="p-10">
                 <label class="text-base font-medium text-gray-900">Are you an employee or authorized representative of

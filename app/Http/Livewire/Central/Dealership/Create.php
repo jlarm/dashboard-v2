@@ -71,7 +71,7 @@ class Create extends Component
             $user->assignRole('Consultant');
         });
 
-        return redirect(route('central.dealership.index'));
+        return redirect(route('dealerships.index'));
 
     }
 }

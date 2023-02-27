@@ -10,5 +10,6 @@ class Vendor extends Model
         'name',
         'contact_name',
         'contact_email',
+        'store_id',
     ];
 }

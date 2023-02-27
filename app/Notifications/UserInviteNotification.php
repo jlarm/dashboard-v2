@@ -20,7 +20,7 @@ class UserInviteNotification extends Notification
         return ['mail'];
     }
 
-    public function generateInvitationUrl(string $email)
+    protected function generateInvitationUrl(string $email)
     {
         return URL::temporarySignedRoute('employees.create', now()->addDay(), [
             'email' => $email,

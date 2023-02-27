@@ -19,13 +19,13 @@ class Create extends Modal
 
     public $contact_email;
     public $stores;
-    public $store;
+    public $store_id;
 
     protected $rules = [
         'name' => 'required|max:255|unique:vendors,name',
         'contact_name' => 'required|max:255',
         'contact_email' => 'required|max:255',
-        'store' => 'required|max:255',
+        'store_id' => 'nullable|max:255',
     ];
 
     public function mount()
@@ -34,12 +34,13 @@ class Create extends Modal
     }
     public function create()
     {
-        $this->validate();
+        $validated = $this->validate();
 
         $vendor = Vendor::create([
             'name' => $this->name,
             'contact_name' => $this->contact_name,
             'contact_email' => $this->contact_email,
+            'store_id' => $this->store_id ?? null,
         ]);
 
         Notification::route('mail', $this->contact_email)
