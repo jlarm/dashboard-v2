@@ -12,6 +12,7 @@ Alpine.plugin(mask);
 Alpine.plugin(FormsAlpinePlugin)
 Alpine.plugin(AlpineFloatingUI)
 Alpine.plugin(NotificationsAlpinePlugin)
+
 window.Alpine = Alpine;
 
 Alpine.start();
