@@ -18,7 +18,9 @@ class Create extends Modal
     public $contact_name;
 
     public $contact_email;
+
     public $stores;
+
     public $store_id;
 
     protected $rules = [
@@ -32,6 +34,7 @@ class Create extends Modal
     {
         $this->stores = Store::all();
     }
+
     public function create()
     {
         $validated = $this->validate();

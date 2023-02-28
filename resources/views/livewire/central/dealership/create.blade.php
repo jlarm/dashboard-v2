@@ -1,4 +1,4 @@
-<form wire:submit.prevent="createDealer" class="space-y-5">
+<form action="{{ route('central.dealerships.store') }}" method="POST" class="space-y-5">
     <div class="space-y-5">
         <!-- Dealership Name -->
         <div>
@@ -86,8 +86,7 @@
         <!-- Dealership Website URL -->
         <div>
             <x-input-label for="url" :value="__('Website URL')"/>
-            <x-text-input wire:model.defer="url" id="url" class="block mt-1 w-full" type="url" name="url"
-                          :value="old('url')" placeholder="https://abcford.com" required/>
+            <x-text-input wire:model.defer="url" id="url" class="block mt-1 w-full" type="url" name="url" required/>
             <x-input-error :messages="$errors->get('url')" class="mt-2"/>
         </div>
 

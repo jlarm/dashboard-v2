@@ -11,7 +11,7 @@
                 <x-navigation.role/>
             @endenv
             <!-- Notifications Bell -->
-            <x-navigation.notifications/>
+            {{--            <x-navigation.notifications/>--}}
             <!-- Profile dropdown -->
             <x-navigation.user-dropdown/>
         </div>

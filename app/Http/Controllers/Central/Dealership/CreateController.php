@@ -1,53 +1,18 @@
 <?php
 
-namespace App\Http\Livewire\Central\Dealership;
+namespace App\Http\Controllers\Central\Dealership;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Dealership\CreateRequest;
 use App\Models\Dealership;
 use App\Models\User;
-use Hash;
-use Livewire\Component;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class Create extends Component
+class CreateController extends Controller
 {
-    public $name;
-
-    public $address;
-
-    public $city;
-
-    public $state;
-
-    public $zip_code;
-
-    public $phone;
-
-    public $fax;
-
-    public $domain;
-
-    public $url;
-
-    public $locations;
-
-    public $password;
-
-    protected $rules = [
-        'name' => 'required',
-        'address' => 'required',
-        'city' => 'required',
-        'state' => 'required',
-        'zip_code' => 'required',
-        'phone' => 'required',
-        'fax' => 'nullable',
-        'domain' => 'required|unique:domains',
-        'url' => 'required|url',
-        'locations' => 'nullable|boolean',
-        'password' => 'required',
-    ];
-
-    public function createDealer()
+    public function __invoke(CreateRequest $request): RedirectResponse
     {
-        $validated = $this->validate();
+        $validated = $request->validated();
 
         $tenantDomain = $validated['domain'].'.'.config('tenancy.central_domains')[0];
 
@@ -67,12 +32,14 @@ class Create extends Component
 
         $dealer->createDomain($tenantDomain, $validated['url']);
 
-        $dealer->run(function () {
+        $pass = $validated['password'];
+
+        $dealer->run(function ($pass) {
             $user = User::create([
                 'name' => auth()->user()->name,
                 'email' => auth()->user()->email,
                 'phone' => auth()->user()->phone,
-                'password' => Hash::make($this->password),
+                'password' => bcrypt($pass),
             ]);
             $user->assignRole('Consultant');
         });

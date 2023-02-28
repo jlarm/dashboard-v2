@@ -10,6 +10,7 @@
                     <td class="px-4 py-4">Contact Email</td>
                     <td class="px-4 py-4">Store</td>
                     <td class="px-4 py-4">&nbsp;</td>
+                    <td class="px-4 py-4"></td>
                 </tr>
                 </thead>
                 <tbody class="text-gray-700 whitespace-nowrap divide-y divide-gray-100">

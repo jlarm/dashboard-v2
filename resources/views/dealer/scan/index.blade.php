@@ -134,20 +134,24 @@
                 </div>
             </div>
             <div class="grid lg:grid-cols-2 gap-10 justify-center bg-gray-100 p-10 rounded mt-10 drop-shadow-md">
-                <div class="w-[348px] flex flex-col items-center space-y-5 relative mx-auto">
+                <div class="w-[250px] flex flex-col items-center space-y-5 relative mx-auto">
                     <span class="text-4xl">Exploit Severity</span>
-                    <canvas id="exploit"></canvas>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 text-center">
-                        11,303<br/>
-                        Exploits
+                    <div class="w-[250px] relative">
+                        <canvas id="exploit"></canvas>
+                        <div class="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-center">
+                            11,303<br/>
+                            Exploits
+                        </div>
                     </div>
                 </div>
-                <div class="w-[348px] flex flex-col items-center space-y-5 relative mx-auto">
+                <div class="w-[250px] flex flex-col items-center space-y-5 relative mx-auto">
                     <span class="text-4xl">CVE Severity</span>
-                    <canvas id="cve"></canvas>
-                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 text-center">
-                        96<br/>
-                        CVES
+                    <div class="w-[250px] relative">
+                        <canvas id="cve"></canvas>
+                        <div class="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-center">
+                            96<br/>
+                            CVES
+                        </div>
                     </div>
                 </div>
             </div>
