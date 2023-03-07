@@ -24,17 +24,17 @@ class Edit extends SlideOver
     {
         $this->user = $user;
         $this->name = $user->name;
-        $this->role = $user->role;
         $this->store = $user->store_id;
         $this->department = $user->department_id;
+        $this->role = $user->role;
     }
 
     public function updateUser()
     {
         $this->user->update([
-            'role' => $this->role,
             'store_id' => $this->store,
             'department_id' => $this->department,
+            'role' => $this->role,
         ]);
 
         $this->emitTo('dealer.employee.details', 'refreshEmployeeDetails');

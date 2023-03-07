@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Central\Dealership;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealership\CreateRequest;
 use App\Models\Dealership;
-use App\Models\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CreateController extends Controller
@@ -34,15 +33,15 @@ class CreateController extends Controller
 
         $pass = $validated['password'];
 
-        $dealer->run(function ($pass) {
-            $user = User::create([
-                'name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-                'phone' => auth()->user()->phone,
-                'password' => bcrypt($pass),
-            ]);
-            $user->assignRole('Consultant');
-        });
+//        $dealer->run(function () use ($pass) {
+//            $user = User::create([
+//                'name' => auth()->user()->name,
+//                'email' => auth()->user()->email,
+//                'phone' => auth()->user()->phone,
+//                'password' => bcrypt($pass),
+//            ]);
+//            $user->assignRole('Consultant');
+//        });
 
         return redirect(route('dealerships.index'));
     }

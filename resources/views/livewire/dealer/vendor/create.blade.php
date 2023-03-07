@@ -35,7 +35,8 @@
         <div>
             @if(tenant('locations'))
                 <div class="col-span-3">
-                    <x-input-label for="store_id" :value="__('Select a Store')"/>
+                    <x-input-label for="store_id"
+                                   :value="__('Select a Store if the vendor is only used at a specific store')"/>
                     <select
                         wire:model.defer="store_id"
                         name="store_id"

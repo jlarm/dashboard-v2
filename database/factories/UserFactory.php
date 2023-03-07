@@ -19,8 +19,8 @@ class UserFactory extends Factory
     {
         return [
             'department_id' => fake()->numberBetween(1, 5),
-            'store_id' => fake()->numberBetween(1, 2),
-            'name' => fake()->name(),
+            'store_id' => fake()->numberBetween(1, 3),
+            'name' => fake()->firstName() . ' ' . fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
             'email_verified_at' => now(),

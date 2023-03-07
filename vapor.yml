@@ -1,17 +1,20 @@
-id: 43330
+id: 43369
 name: demo
 environments:
   production:
+    warm: 10
+    timeout: 60
+    database: demo
+    domain: '*.armpdemo.com'
     memory: 1024
     cli-memory: 512
+    cache: demo
     runtime: 'php-8.2:al2'
     build:
       - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
       - 'php artisan event:cache'
       - 'npm ci && npm run build && rm -rf node_modules'
   staging:
-    warm: 10
-    database: armpdemo
     memory: 1024
     cli-memory: 512
     runtime: 'php-8.2:al2'
@@ -19,4 +22,3 @@ environments:
       - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
       - 'php artisan event:cache'
       - 'npm ci && npm run build && rm -rf node_modules'
-    domain: '*.armpdemo.com'

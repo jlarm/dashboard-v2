@@ -5,11 +5,9 @@ namespace App\Http\Livewire\Dealer\Vendor;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
 use App\Notifications\VendorFormNotification;
+use Illuminate\Contracts\View\View;
 use Notification;
 use WireElements\Pro\Components\Modal\Modal;
-
-//use App\Notifications\VendorFormNotification;
-//use Filament\Notifications\Notification;
 
 class Create extends Modal
 {
@@ -19,8 +17,6 @@ class Create extends Modal
 
     public $contact_email;
 
-    public $stores;
-
     public $store_id;
 
     protected $rules = [
@@ -29,11 +25,6 @@ class Create extends Modal
         'contact_email' => 'required|max:255',
         'store_id' => 'nullable|max:255',
     ];
-
-    public function mount()
-    {
-        $this->stores = Store::all();
-    }
 
     public function create()
     {
@@ -54,9 +45,12 @@ class Create extends Modal
         $this->emit('refreshVendors');
 
         $this->close();
-//
-//        Notification::make()
-//            ->success('Vendor created successfully.')
-//            ->send();
+    }
+
+    public function render(): View
+    {
+        return view('livewire.dealer.vendor.create', [
+            'stores' => Store::orderBy('name')->get(),
+        ]);
     }
 }

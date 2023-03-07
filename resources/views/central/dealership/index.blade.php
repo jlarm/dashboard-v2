@@ -12,7 +12,7 @@
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 px-5 lg:px-0">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @can('delete-users')
                 <livewire:central.dealership.index/>

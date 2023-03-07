@@ -1,33 +1,26 @@
 <div class="w-full bg-white rounded-md shadow-sm shadow-gray-300">
     <div class="overflow-x-auto">
         <div class="inline-block min-w-full overflow-hidden align-middle">
-            <table class="min-w-full">
+            <table class="min-w-full divide-y divide-gray-200">
                 <thead
                     class="text-xs font-semibold tracking-widest text-gray-600 uppercase border-t border-b border-gray-100 bg-gray-50">
                 <tr>
                     <td class="px-4 py-4">Name</td>
-                    <td class="px-4 py-4">Email</td>
-                    <td class="px-4 py-4">Phone</td>
                     <td class="px-4 py-4">Role</td>
                     <td class="px-4 py-4">Department</td>
                     <td class="px-4 py-4">&nbsp;</td>
                 </tr>
                 </thead>
-                <tbody class="text-gray-700 whitespace-nowrap">
+                <tbody class="text-gray-700 whitespace-nowrap divide-y divide-gray-100">
                 @forelse($users as $user)
                     <tr>
                         <td class="px-4 py-4">
                             <div class="flex space-x-4 w-max">
                                 <div class="flex-1">
                                     <span class="text-sm font-semibold text-gray-800">{{ $user->name }}</span>
+                                    <a class="text-sm block" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                 </div>
                             </div>
-                        </td>
-                        <td class="px-4 py-4 text-sm text-gray-700">
-                            <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-                        </td>
-                        <td class="px-4 py-4 text-sm text-gray-700">
-                            {{ $user->phoneNumber }}
                         </td>
                         <td class="px-4 py-4">
                             @foreach($user->roles as $role)

@@ -1,5 +1,4 @@
 <div>
-    {{ $vendor }}
     <form class="space-y-5" wire:submit.prevent="submit">
         <div class="bg-gray-100 rounded-md">
             <div class="p-10">
@@ -993,32 +992,42 @@
                         </div>
 
                         <div class="flex items-center">
-                            <input wire:model.defer="q22a" name="q22a" value="na" id="q22a" type="radio"
-                                   class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-500">
+                            <input
+                                wire:model.defer="q22a"
+                                name="q22a"
+                                value="na"
+                                id="q22a"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-500">
                             <label for="q22a" class="ml-3 block text-sm font-medium text-gray-700">N/A</label>
                         </div>
                     </div>
                 </fieldset>
                 <div class="mt-5">
-                    <label for="q22a" class="block text-sm font-medium text-gray-700">Comments</label>
+                    <label for="q22c" class="block text-sm font-medium text-gray-700">Comments</label>
                     <div class="mt-1">
-                        <textarea wire:model.defer="q22a" rows="4" id="q22a"
-                                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"></textarea>
+                        <textarea
+                            wire:model.defer="q22c"
+                            rows="4"
+                            id="q22c"
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"></textarea>
                     </div>
                 </div>
             </div>
         </div>
 
         <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Name of Person Completing This
+            <label for="contact_name" class="block text-sm font-medium text-gray-700">Name of Person Completing This
                 Form:</label>
             <div class="mt-1">
                 <input
+                    disabled
                     wire:model.defer="contact_name"
                     type="text"
-                    name="name"
-                    id="name"
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
+                    name="contact_name"
+                    id="contact_name"
+                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500
+                focus:ring-arm-blue-500 sm:text-sm"
                 >
             </div>
         </div>
@@ -1026,8 +1035,14 @@
         <div>
             <label for="company" class="block text-sm font-medium text-gray-700">Company Name:</label>
             <div class="mt-1">
-                <input type="text" name="company" id="company"
-                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
+                <input
+                    disabled
+                    wire:model="name"
+                    type="text"
+                    name="company"
+                    id="company"
+                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500
+                focus:ring-arm-blue-500 sm:text-sm">
             </div>
         </div>
 

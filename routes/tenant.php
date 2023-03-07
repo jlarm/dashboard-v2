@@ -81,7 +81,10 @@ Route::group([
     Route::get('vendors', function () {
     return view('dealer.vendor.index');
     })->middleware('auth')->name('vendor.index');
-    Route::get('vendors/form', [VendorController::class, 'index'])->middleware('signed')->name('vendor.create');
+    Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
+    Route::get('/vendors/thankyou', function () {
+        return view('dealer.vendor.thankyou');
+    })->middleware('web')->name('vendors.thankyou');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

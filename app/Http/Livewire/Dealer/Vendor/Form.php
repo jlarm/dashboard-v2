@@ -3,10 +3,14 @@
 namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\Vendor;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Form extends Component
 {
+    public Vendor $vendor;
+
+    public $name;
     public $contact_name;
 
     public $signature;
@@ -99,65 +103,121 @@ class Form extends Component
 
     public $q22c;
 
-    public Vendor $vendor;
-
     protected $rules = [
-        'contact_name' => 'required',
-        'signature' => 'required',
-        'q1a' => 'required',
-        'q1c' => 'nullable',
-        'q2a' => 'required',
-        'q2c' => 'nullable',
-        'q3a' => 'required',
-        'q3c' => 'nullable',
-        'q4a' => 'required',
-        'q4c' => 'nullable',
-        'q5a' => 'required',
-        'q5c' => 'nullable',
-        'q6a' => 'required',
-        'q6c' => 'nullable',
-        'q7a' => 'required',
-        'q7c' => 'nullable',
-        'q8a' => 'required',
-        'q8c' => 'nullable',
-        'q9a' => 'required',
-        'q9c' => 'nullable',
-        'q10a' => 'required',
-        'q10c' => 'nullable',
-        'q11a' => 'required',
-        'q11c' => 'nullable',
-        'q12a' => 'required',
-        'q12c' => 'nullable',
-        'q13a' => 'required',
-        'q13c' => 'nullable',
-        'q14a' => 'required',
-        'q14c' => 'nullable',
-        'q15a' => 'required',
-        'q15c' => 'nullable',
-        'q16a' => 'required',
-        'q16c' => 'nullable',
-        'q17a' => 'required',
-        'q17c' => 'nullable',
-        'q18a' => 'required',
-        'q18c' => 'nullable',
-        'q19a' => 'required',
-        'q19c' => 'nullable',
-        'q20a' => 'required',
-        'q20c' => 'nullable',
-        'q21a' => 'required',
-        'q21c' => 'nullable',
-        'q22a' => 'required',
-        'q22c' => 'nullable',
+        'name' => ['required', 'string', 'max:255'],
+        'contact_name' => ['required', 'string', 'max:255'],
+        'q1a' => ['required', 'string', 'max:255'],
+        'q1c' => ['nullable', 'string', 'max:255'],
+        'q2a' => ['required', 'string', 'max:255'],
+        'q2c' => ['nullable', 'string', 'max:255'],
+        'q3a' => ['required', 'string', 'max:255'],
+        'q3c' => ['nullable', 'string', 'max:255'],
+        'q4a' => ['required', 'string', 'max:255'],
+        'q4c' => ['nullable', 'string', 'max:255'],
+        'q5a' => ['required', 'string', 'max:255'],
+        'q5c' => ['nullable', 'string', 'max:255'],
+        'q6a' => ['required', 'string', 'max:255'],
+        'q6c' => ['nullable', 'string', 'max:255'],
+        'q7a' => ['required', 'string', 'max:255'],
+        'q7c' => ['nullable', 'string', 'max:255'],
+        'q8a' => ['required', 'string', 'max:255'],
+        'q8c' => ['nullable', 'string', 'max:255'],
+        'q9a' => ['required', 'string', 'max:255'],
+        'q9c' => ['nullable', 'string', 'max:255'],
+        'q10a' => ['required', 'string', 'max:255'],
+        'q10c' => ['nullable', 'string', 'max:255'],
+        'q11a' => ['required', 'string', 'max:255'],
+        'q11c' => ['nullable', 'string', 'max:255'],
+        'q12a' => ['required', 'string', 'max:255'],
+        'q12c' => ['nullable', 'string', 'max:255'],
+        'q13a' => ['required', 'string', 'max:255'],
+        'q13c' => ['nullable', 'string', 'max:255'],
+        'q14a' => ['required', 'string', 'max:255'],
+        'q14c' => ['nullable', 'string', 'max:255'],
+        'q15a' => ['required', 'string', 'max:255'],
+        'q15c' => ['nullable', 'string', 'max:255'],
+        'q16a' => ['required', 'string', 'max:255'],
+        'q16c' => ['nullable', 'string', 'max:255'],
+        'q17a' => ['required', 'string', 'max:255'],
+        'q17c' => ['nullable', 'string', 'max:255'],
+        'q18a' => ['required', 'string', 'max:255'],
+        'q18c' => ['nullable', 'string', 'max:255'],
+        'q19a' => ['required', 'string', 'max:255'],
+        'q19c' => ['nullable', 'string', 'max:255'],
+        'q20a' => ['required', 'string', 'max:255'],
+        'q20c' => ['nullable', 'string', 'max:255'],
+        'q21a' => ['required', 'string', 'max:255'],
+        'q21c' => ['nullable', 'string', 'max:255'],
+        'q22a' => ['required', 'string', 'max:255'],
+        'q22c' => ['nullable', 'string', 'max:255'],
+        'signature' => ['nullable', 'string', 'max:255'],
     ];
+
+    public function mount(Vendor $vendor)
+    {
+        $this->vendor = $vendor;
+        $this->name = $vendor->name;
+        $this->contact_name = $vendor->contact_name;
+    }
 
     public function submit()
     {
-        $validated = $this->validate();
-        \Storage::put('signatures/'.tenant('name').'/'.$this->contact_name.now().'.png', base64_decode(\Str::of($this->signature)->after(',')));
-        dd($validated);
+        $this->validate();
+
+        $this->vendor->update([
+            'q1a' => $this->q1a,
+            'q1c' => $this->q1c,
+            'q2a' => $this->q2a,
+            'q2c' => $this->q2c,
+            'q3a' => $this->q3a,
+            'q3c' => $this->q3c,
+            'q4a' => $this->q4a,
+            'q4c' => $this->q4c,
+            'q5a' => $this->q5a,
+            'q5c' => $this->q5c,
+            'q6a' => $this->q6a,
+            'q6c' => $this->q6c,
+            'q7a' => $this->q7a,
+            'q7c' => $this->q7c,
+            'q8a' => $this->q8a,
+            'q8c' => $this->q8c,
+            'q9a' => $this->q9a,
+            'q9c' => $this->q9c,
+            'q10a' => $this->q10a,
+            'q10c' => $this->q10c,
+            'q11a' => $this->q11a,
+            'q11c' => $this->q11c,
+            'q12a' => $this->q12a,
+            'q12c' => $this->q12c,
+            'q13a' => $this->q13a,
+            'q13c' => $this->q13c,
+            'q14a' => $this->q14a,
+            'q14c' => $this->q14c,
+            'q15a' => $this->q15a,
+            'q15c' => $this->q15c,
+            'q16a' => $this->q16a,
+            'q16c' => $this->q16c,
+            'q17a' => $this->q17a,
+            'q17c' => $this->q17c,
+            'q18a' => $this->q18a,
+            'q18c' => $this->q18c,
+            'q19a' => $this->q19a,
+            'q19c' => $this->q19c,
+            'q20a' => $this->q20a,
+            'q20c' => $this->q20c,
+            'q21a' => $this->q21a,
+            'q21c' => $this->q21c,
+            'q22a' => $this->q22a,
+            'q22c' => $this->q22c,
+            'signature' => $this->signature,
+        ]);
+
+        return redirect(route('dealer.vendors.thankyou'));
+
+//        \Storage::put('signatures/'.tenant('name').'/'.$this->contact_name.now().'.png', base64_decode(\Str::of($this->signature)->after(',')));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.vendor.form');
     }

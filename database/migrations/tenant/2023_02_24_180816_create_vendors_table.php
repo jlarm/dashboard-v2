@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('contact_name');
             $table->string('contact_email');
+            $table->string('signature')->nullable();
 
             $table->foreignId('store_id')
                 ->nullable()

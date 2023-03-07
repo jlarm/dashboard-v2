@@ -23,8 +23,7 @@ class VendorFormNotification extends Notification
     public function generateUrl(string $email)
     {
         return URL::temporarySignedRoute('dealer.vendor.create', now()->addDay(), [
-            'email' => $email,
-            'name' => $this->vendor['contact_name'],
+            'id' => $this->vendor->id,
         ]);
     }
 

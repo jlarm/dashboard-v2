@@ -24,12 +24,12 @@
 </header>
 <div class="max-w-3xl mx-auto py-20">
     <div class="mb-16">
-        <h2 class="font-bold text-2xl text-arm-blue-500">Risk Assessment Form</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus at cum deleniti eius esse harum, hic ipsa
+        <h2 class="font-bold text-2xl text-arm-blue-500">Risk Assessment Form for {{ $vendor->name }}</h2>
+        <p>Hi {{ $vendor->contact_name }}, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus at cum
+            deleniti eius esse harum, hic ipsa
             labore maiores nisi nostrum odio odit pariatur provident, qui, quidem sequi similique vero.</p>
     </div>
-    {{--    email: {{ $contact_email }}--}}
-    {{--    <livewire:dealer.vendor.form :vendor="$vendor"/>--}}
+    <livewire:dealer.vendor.form :vendor="$vendor"/>
 </div>
 @livewireScripts
 

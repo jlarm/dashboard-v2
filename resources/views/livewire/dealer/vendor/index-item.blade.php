@@ -16,8 +16,11 @@
         {{ $vendor->store->name ?? tenant('name') }}
     </td>
     <td class="px-4 py-4 text-sm text-gray-700">
-        <span
-            class="inline-flex items-center rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800">Outdated</span>
+        @if(\Carbon\Carbon::now() > $vendor->updated_at->addYear() || !$vendor->q1a )
+            <span class="inline-flex items-center rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800">Outdated</span>
+        @else
+            <span class="inline-flex items-center rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">Current</span>
+        @endif
     </td>
     <td class="px-4 py-4 text-right">
         <div class="flex space-x-3 justify-end items-end">

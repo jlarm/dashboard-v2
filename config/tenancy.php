@@ -16,7 +16,7 @@ return [
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
     'central_domains' => [
-        'armpdemo.com',
+        'dashboard.test',
     ],
 
     /**
@@ -30,7 +30,7 @@ return [
         Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper::class,
         Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper::class,
         Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper::class,
-        // Stancl\Tenancy\Bootstrappers\RedisTenancyBootstrapper::class, // Note: phpredis is needed
+         Stancl\Tenancy\Bootstrappers\RedisTenancyBootstrapper::class, // Note: phpredis is needed
 
         App\Tenancy\Bootstrappers\FixSignedUrls::class,
     ],
@@ -103,7 +103,7 @@ return [
         'disks' => [
             'local',
             'public',
-            // 's3',
+             's3',
         ],
 
         /**
@@ -164,7 +164,7 @@ return [
      */
     'features' => [
         // Stancl\Tenancy\Features\UserImpersonation::class,
-        // Stancl\Tenancy\Features\TelescopeTags::class,
+         Stancl\Tenancy\Features\TelescopeTags::class,
         Stancl\Tenancy\Features\UniversalRoutes::class,
         // Stancl\Tenancy\Features\TenantConfig::class, // https://tenancyforlaravel.com/docs/v3/features/tenant-config
         // Stancl\Tenancy\Features\CrossDomainRedirect::class, // https://tenancyforlaravel.com/docs/v3/features/cross-domain-redirect
@@ -194,6 +194,6 @@ return [
      */
     'seeder_parameters' => [
         '--class' => 'DatabaseSeeder', // root seeder class
-        // '--force' => true,
+         '--force' => true,
     ],
 ];

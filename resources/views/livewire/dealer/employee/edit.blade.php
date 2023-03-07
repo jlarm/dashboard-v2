@@ -38,6 +38,7 @@
 
         <!-- Role -->
         <div class="col-span-3">
+            {{ $role }}
             <x-input-label for="role" :value="__('Select a Role')"/>
             <select
                 wire:model.defer="role"
