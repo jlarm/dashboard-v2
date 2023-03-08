@@ -32,6 +32,9 @@ class RoleAndPermissionSeeder extends Seeder
         $adminRole = Role::create(['name' => 'Admin']);
         $consultantRole = Role::create(['name' => 'Consultant']);
         $ownerRole = Role::create(['name' => 'Owner']);
+        $gmRole = Role::create(['name' => 'GM']);
+        $cfoRole = Role::create(['name' => 'CFO']);
+        $gsmRole = Role::create(['name' => 'GSM']);
         $managerRole = Role::create(['name' => 'Manager']);
         $employeeRole = Role::create(['name' => 'Employee']);
 
@@ -57,6 +60,33 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
 
         $ownerRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'delete-users',
+            'create-stores',
+            'edit-stores',
+            'delete-stores',
+        ]);
+
+        $gmRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'delete-users',
+            'create-stores',
+            'edit-stores',
+            'delete-stores',
+        ]);
+
+        $cfoRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'delete-users',
+            'create-stores',
+            'edit-stores',
+            'delete-stores',
+        ]);
+
+        $gsmRole->givePermissionTo([
             'create-users',
             'edit-users',
             'delete-users',

@@ -4,6 +4,8 @@ namespace App\Models\Dealer;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Course extends Model
 {
@@ -20,12 +22,12 @@ class Course extends Model
         'questions' => 'array',
     ];
 
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function results()
+    public function results(): HasMany
     {
         return $this->hasMany(CourseResults::class);
     }

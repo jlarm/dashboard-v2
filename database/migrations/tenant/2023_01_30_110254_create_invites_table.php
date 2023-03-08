@@ -13,7 +13,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('email')->unique();
-            $table->foreignId('store_id')->nullable()->constrained();
+            $table->json('stores')->nullable();
             $table->foreignId('department_id')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->string('roles');

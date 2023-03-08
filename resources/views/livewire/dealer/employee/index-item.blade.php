@@ -29,14 +29,18 @@
     </td>
     @if(tenant('locations'))
         <td class="px-4 py-4 text-sm text-gray-700">
-            {{ $user->store->name ?? tenant('name') }}
+            @foreach($user->stores as $store)
+                <div class="flex flex-col">
+                    <span>{{ $store->name }}</span>
+                </div>
+            @endforeach
         </td>
     @endif
     <td class="px-4 py-4 text-sm text-gray-700">
         {{ $user->department->name ?? '-' }}
     </td>
     <td class="px-4 py-4 text-sm text-gray-700">
-        @if($role->name == 'Consultant')
+        @if(!$totalCourses)
             {{ __('-') }}
         @else
             {{ $completed }}/{{ $totalCourses }}

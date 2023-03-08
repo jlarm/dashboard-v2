@@ -17,13 +17,15 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $this->fName = fake()->firstName();
+        $this->lName = fake()->lastName();
+
         return [
-            'department_id' => fake()->numberBetween(1, 5),
-            'store_id' => fake()->numberBetween(1, 3),
-            'name' => fake()->firstName() . ' ' . fake()->lastName(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->fName.' '.$this->lName,
+            'email' => $this->fName.'.'.$this->lName.'@libertyautoplaza.com',
             'phone' => fake()->phoneNumber(),
             'email_verified_at' => now(),
+            'department_id' => fake()->numberBetween(1, 3),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];

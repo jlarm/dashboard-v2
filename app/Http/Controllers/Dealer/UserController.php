@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Dealer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateDealerUserRequest;
 use App\Models\Dealer\Invite;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -26,28 +27,28 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(CreateDealerUserRequest $request)
+    public function store(Request $request): RedirectResponse
     {
-        $request = $request->validated();
+        $invite = Invite::where('id', $request['id'])->first();
 
         // Create user
         $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'store_id' => $request['store'],
-            'department_id' => $request['department'],
-            'password' => bcrypt($request['password']),
+            'name' => $invite['name'],
+            'email' => $invite['email'],
+            'phone' => $request->input('phone'),
+            'department_id' => $invite['department_id'],
+            'password' => bcrypt($request->input('password')),
         ]);
 
-        $user->assignRole($request['role']);
+        foreach ($invite['stores'] as $store) {
+            $user->stores()->attach($store);
+        }
+
+        $user->assignRole($invite['role']);
 
         event(new Registered($user));
 
         $user->markEmailAsVerified();
-
-        Invite::where('id', $request['id'])
-            ->delete();
 
         Auth::login($user);
 

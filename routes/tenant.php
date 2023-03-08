@@ -53,7 +53,7 @@ Route::group([
     })->middleware('auth')->name('employees.open-invites');
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])->middleware('web')->name('employees.create');
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('dealer.employees.store');
-    Route::get('employees/{user:id}', [UserController::class, 'show'])->middleware('auth')->name('employees.show');
+    Route::get('employees/{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('employees.show');
     Route::get('abc', [CourseResultsController::class, 'export'])->middleware(['web', 'auth'])->name('dealer.employees.export');
 
     Route::get('courses', function () {
@@ -79,7 +79,7 @@ Route::group([
     })->middleware('auth')->name('manual.glbform');
 
     Route::get('vendors', function () {
-    return view('dealer.vendor.index');
+        return view('dealer.vendor.index');
     })->middleware('auth')->name('vendor.index');
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
     Route::get('/vendors/thankyou', function () {

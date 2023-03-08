@@ -16,7 +16,7 @@ class Invite extends Modal
 
     public $email;
 
-    public $store;
+    public $dealers = [];
 
     public $department;
 
@@ -25,7 +25,7 @@ class Invite extends Modal
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'max:255'],
-        'store' => ['nullable', 'integer'],
+        'dealers' => ['nullable', 'array'],
         'department' => ['nullable', 'integer'],
         'role' => ['required', 'string', 'max:255'],
     ];
@@ -37,7 +37,7 @@ class Invite extends Modal
         $invite = \App\Models\Dealer\Invite::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'store_id' => $validated['store'],
+            'stores' => $validated['dealers'],
             'department_id' => $validated['department'],
             'roles' => $validated['role'],
             'user_id' => auth()->user()->id,

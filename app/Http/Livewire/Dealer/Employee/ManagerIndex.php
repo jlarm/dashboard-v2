@@ -12,8 +12,7 @@ class ManagerIndex extends Component
     {
         return view('livewire.dealer.employee.manager-index', [
             'users' => User::query()
-                ->select('id', 'name', 'email', 'phone', 'department_id', 'store_id')
-                ->where('store_id', Auth::user()->store_id)
+                ->select('id', 'name', 'email', 'phone', 'department_id')
                 ->where('department_id', Auth::user()->department_id)
                 ->with('department')
                 ->with('roles')

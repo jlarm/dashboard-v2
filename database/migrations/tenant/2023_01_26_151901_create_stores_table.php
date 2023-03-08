@@ -22,15 +22,6 @@ return new class extends Migration
 
             $table->timestamps();
         });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('store_id')
-                ->after('id')
-                ->nullable()
-                ->constrained('stores')
-                ->nullOnDelete()
-                ->cascadeOnUpdate();
-        });
     }
 
     public function down()

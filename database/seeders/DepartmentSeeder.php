@@ -10,28 +10,18 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         Department::create([
+            'name' => 'Fixed Operations',
+            'slug' => 'fixed-operations',
+        ]);
+
+        Department::create([
             'name' => 'Sales',
             'slug' => 'sales',
         ]);
 
         Department::create([
-            'name' => 'Finance',
-            'slug' => 'finance',
-        ]);
-
-        Department::create([
-            'name' => 'Service',
-            'slug' => 'service',
-        ]);
-
-        Department::create([
-            'name' => 'HR',
-            'slug' => 'hr',
-        ]);
-
-        Department::create([
-            'name' => 'Parts',
-            'slug' => 'parts',
+            'name' => 'Office Personnel',
+            'slug' => 'office-personnel',
         ]);
     }
 }

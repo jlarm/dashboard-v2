@@ -33,6 +33,6 @@
         {{ $completed }}/{{ $totalCourses }}
     </td>
     <td class="px-4 py-4 text-right">
-        <a href="{{ route('dealer.employees.show', $user) }}" class="text-sm">View</a>
+        {{--        <a href="{{ route('dealer.employees.show', $user) }}" class="text-sm">View</a>--}}
     </td>
 </tr>
