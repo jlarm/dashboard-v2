@@ -62,16 +62,10 @@
                 <option></option>
                 @role('Consultant')
                 <option value="Owner">Owner</option>
+                @endrole
                 <option value="Manager">Manager</option>
                 <option value="Employee">Employee</option>
-                @endrole
-                @role('Owner')
-                <option value="Manager">Manager</option>
-                <option value="Employee">Employee</option>
-                @endrole
-                @role('Manager')
-                {{--                <option value="Employee">Employee</option>--}}
-                @endrole
+
             </select>
         </div>
     </div>

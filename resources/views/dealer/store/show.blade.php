@@ -1,7 +1,17 @@
-<x-dealer-app>
-    <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+<x-store-app :title="$store->name">
+    <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between">
         <div class="min-w-0 flex-1">
-            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">{{ $store->name }}</h1>
+            <nav class="items-center flex-1 hidden mx-auto space-x-2 text-sm text-gray-700 sm:flex">
+                <a href="#" class="px-3 py-2 font-medium text-gray-700 bg-gray-100 rounded-md ">Employees</a>
+                <a href="#"
+                   class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-blue-600">Vendors</a>
+                <a href="#"
+                   class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-blue-600">Scans</a>
+                <a href="#"
+                   class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-blue-600">Manuals</a>
+                <a href="#"
+                   class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-blue-600">Courses</a>
+            </nav>
         </div>
         <div class="mt-4 flex space-x-5 sm:mt-0 sm:ml-4">
             <button
@@ -34,4 +44,4 @@
             </div>
         </div>
     </div>
-</x-dealer-app>
+</x-store-app>

@@ -13,6 +13,8 @@ use App\Http\Controllers\Dealer\Auth\VerifyEmailController;
 use App\Http\Controllers\Dealer\CourseController;
 use App\Http\Controllers\Dealer\CourseResultsController;
 use App\Http\Controllers\Dealer\ProfileController;
+use App\Http\Controllers\Dealer\Store\EmployeeController;
+use App\Http\Controllers\Dealer\Store\StoreVendorController;
 use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
@@ -55,6 +57,14 @@ Route::group([
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('dealer.employees.store');
     Route::get('employees/{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('employees.show');
     Route::get('abc', [CourseResultsController::class, 'export'])->middleware(['web', 'auth'])->name('dealer.employees.export');
+
+    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.'], function () {
+        Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
+        Route::get('vendors', [StoreVendorController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.vendor.index');
+        Route::get('scans', function () {
+            return view('dealer.store.multi.scan-index');
+        })->middleware(['auth', 'has.stores'])->name('store.scan.index');
+    });
 
     Route::get('courses', function () {
         return view('dealer.course.index');

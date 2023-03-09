@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Livewire\Dealer\Store\Multi;
+
+use App\Models\Dealer\Course;
+use App\Models\User;
+use DB;
+use Livewire\Component;
+
+class EmployeeIndexItem extends Component
+{
+    public User $user;
+
+    public function mount()
+    {
+        $this->user = User::find($this->user->id);
+
+        // Get all passed courses within the last year for this user
+        $this->completed = DB::table('course_results')
+            ->where('user_id', $this->user->id)
+            ->where('created_at', '>=', now()->subYear())
+            ->latest()
+            ->get()
+            ->groupBy('course_id')
+            ->map(function ($item) {
+                return $item->first();
+            });
+
+        $this->completed = collect($this->completed->where('passed', 1))->count();
+
+        // Get all courses for this user's department
+        $this->totalCourses = Course::where('department_id', $this->user->department_id)->count();
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.store.multi.employee-index-item');
+    }
+}

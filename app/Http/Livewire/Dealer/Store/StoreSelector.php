@@ -2,14 +2,21 @@
 
 namespace App\Http\Livewire\Dealer\Store;
 
+use App\Models\Dealer\Store;
 use Livewire\Component;
 
 class StoreSelector extends Component
 {
     public function render()
     {
-        return view('livewire.dealer.store.store-selector', [
-            'stores' => auth()->user()->stores,
-        ]);
+        if (auth()->user()->can('create-stores')) {
+            return view('livewire.dealer.store.store-selector', [
+                'stores' => Store::latest()->get(),
+            ]);
+        } else {
+            return view('livewire.dealer.store.store-selector', [
+                'stores' => auth()->user()->stores,
+            ]);
+        }
     }
 }
