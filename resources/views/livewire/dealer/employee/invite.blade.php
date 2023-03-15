@@ -1,7 +1,9 @@
 <x-wire-elements-pro::tailwind.modal on-submit="sendInvite" :content-padding="true">
 
-    <x-slot name="title">Add Employee to {{ $currentStore->name }}</x-slot>
-
+    <x-slot name="title">Add Employee @if($currentStore->name)
+            to {{ $currentStore->name }}
+        @endif
+    </x-slot>
     <div class="space-y-5">
         <!-- Name -->
         <div class="col-span-3">

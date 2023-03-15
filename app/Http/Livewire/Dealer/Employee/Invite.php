@@ -22,7 +22,7 @@ class Invite extends Modal
 
     public $role;
 
-    public int|Store $currentStore;
+    public $currentStore = null;
 
     public $currentStoreId;
 
@@ -68,7 +68,7 @@ class Invite extends Modal
 
         Mail::to($validated['email'])->send(new InviteMail($invite));
 
-        $this->reset();
+//        $this->reset();
 
         $this->close();
 
