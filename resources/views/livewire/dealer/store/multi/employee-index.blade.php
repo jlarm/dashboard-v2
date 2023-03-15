@@ -17,7 +17,7 @@
                         </thead>
                         <tbody class="text-gray-700 whitespace-nowrap divide-y divide-gray-100">
                         @foreach($users as $user)
-                            <livewire:dealer.store.multi.employee-index-item :user="$user"/>
+                            <livewire:dealer.store.multi.employee-index-item :store="$store" :user="$user"/>
                         @endforeach
                         </tbody>
                     </table>

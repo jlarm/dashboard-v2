@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@props(['title'])
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -18,7 +19,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased bg-gray-50">
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     @include('layouts.mobile-navigation')
@@ -30,7 +31,7 @@
 
         @include('layouts.top-bar')
 
-        <main class="flex-1">
+        <main class="flex-1 bg-gray-50">
             <div class="py-6">
                 <div class="mx-auto px-4 sm:px-6 md:px-8">
                     {{ $slot }}

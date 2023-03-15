@@ -1,22 +1,12 @@
 <x-store-app :title="$store->name">
     <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between">
         <div class="min-w-0 flex-1">
-            <nav class="items-center flex-1 hidden mx-auto space-x-2 text-sm text-gray-700 sm:flex">
-                <a href="#" class="px-3 py-2 font-medium text-gray-700 bg-gray-100 rounded-md ">Employees</a>
-                <a href="#"
-                   class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-blue-600">Vendors</a>
-                <a href="#"
-                   class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-blue-600">Scans</a>
-                <a href="#"
-                   class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-blue-600">Manuals</a>
-                <a href="#"
-                   class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-blue-600">Courses</a>
-            </nav>
+            @include('components.navigation.sub-nav', $store)
         </div>
         <div class="mt-4 flex space-x-5 sm:mt-0 sm:ml-4">
             <button
                 onclick="Livewire.emit('slide-over.open', 'dealer.store.edit', @js(['store' => $store->id]))"
-                class="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:ml-0">
+                class="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-arm-blue-500 focus:ring-offset-2 sm:ml-0">
                 Edit
             </button>
 

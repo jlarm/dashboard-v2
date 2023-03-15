@@ -27,11 +27,16 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'edit-stores']);
         Permission::create(['name' => 'delete-stores']);
 
+        Permission::create(['name' => 'create-vendors']);
+        Permission::create(['name' => 'edit-vendors']);
+        Permission::create(['name' => 'delete-vendors']);
+
         Role::create(['name' => 'super-admin']);
 
         $adminRole = Role::create(['name' => 'Admin']);
         $consultantRole = Role::create(['name' => 'Consultant']);
         $ownerRole = Role::create(['name' => 'Owner']);
+        $qiRole = Role::create(['name' => 'Qualified Individual']);
         $gmRole = Role::create(['name' => 'GM']);
         $cfoRole = Role::create(['name' => 'CFO']);
         $gsmRole = Role::create(['name' => 'GSM']);
@@ -48,6 +53,9 @@ class RoleAndPermissionSeeder extends Seeder
             'create-stores',
             'edit-stores',
             'delete-stores',
+            'create-vendors',
+            'edit-vendors',
+            'delete-vendors',
         ]);
 
         $consultantRole->givePermissionTo([
@@ -57,6 +65,9 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-dealerships',
             'create-stores',
             'edit-stores',
+            'create-vendors',
+            'edit-vendors',
+            'delete-vendors',
         ]);
 
         $ownerRole->givePermissionTo([
@@ -66,6 +77,21 @@ class RoleAndPermissionSeeder extends Seeder
             'create-stores',
             'edit-stores',
             'delete-stores',
+            'create-vendors',
+            'edit-vendors',
+            'delete-vendors',
+        ]);
+
+        $qiRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'delete-users',
+            'create-stores',
+            'edit-stores',
+            'delete-stores',
+            'create-vendors',
+            'edit-vendors',
+            'delete-vendors',
         ]);
 
         $gmRole->givePermissionTo([
@@ -75,6 +101,9 @@ class RoleAndPermissionSeeder extends Seeder
             'create-stores',
             'edit-stores',
             'delete-stores',
+            'create-vendors',
+            'edit-vendors',
+            'delete-vendors',
         ]);
 
         $cfoRole->givePermissionTo([
@@ -84,6 +113,9 @@ class RoleAndPermissionSeeder extends Seeder
             'create-stores',
             'edit-stores',
             'delete-stores',
+            'create-vendors',
+            'edit-vendors',
+            'delete-vendors',
         ]);
 
         $gsmRole->givePermissionTo([
@@ -93,6 +125,9 @@ class RoleAndPermissionSeeder extends Seeder
             'create-stores',
             'edit-stores',
             'delete-stores',
+            'create-vendors',
+            'edit-vendors',
+            'delete-vendors',
         ]);
 
         $managerRole->givePermissionTo([

@@ -3,11 +3,11 @@
 namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\Store;
-use WireElements\Pro\Components\SlideOver\SlideOver;
+use Livewire\Component;
 
-class Edit extends SlideOver
+class Edit extends Component
 {
-    public $store;
+    public Store $store;
 
     public $name;
 
@@ -23,16 +23,15 @@ class Edit extends SlideOver
 
     public $website;
 
-    public function mount(Store $store)
+    public function mount()
     {
-        $this->store = $store;
-        $this->name = $store->name;
-        $this->address = $store->address;
-        $this->city = $store->city;
-        $this->state = $store->state;
-        $this->postal_code = $store->postal_code;
-        $this->phone = $store->phone;
-        $this->website = $store->website;
+        $this->name = $this->store->name;
+        $this->address = $this->store->address;
+        $this->city = $this->store->city;
+        $this->state = $this->store->state;
+        $this->postal_code = $this->store->postal_code;
+        $this->phone = $this->store->phone;
+        $this->website = $this->store->website;
     }
 
     public function updateStore()

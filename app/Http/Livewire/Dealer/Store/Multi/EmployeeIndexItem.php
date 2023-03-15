@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Store\Multi;
 
 use App\Models\Dealer\Course;
+use App\Models\Dealer\Store;
 use App\Models\User;
 use DB;
 use Livewire\Component;
@@ -10,6 +11,8 @@ use Livewire\Component;
 class EmployeeIndexItem extends Component
 {
     public User $user;
+
+    public Store $store;
 
     public function mount()
     {

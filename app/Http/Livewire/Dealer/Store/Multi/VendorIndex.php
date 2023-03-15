@@ -20,7 +20,7 @@ class VendorIndex extends Component
     public function render()
     {
         return view('livewire.dealer.store.multi.vendor-index', [
-            'vendors' => Vendor::where('store_id', $this->sid)->get(),
+            'vendors' => Vendor::latest()->get(),
         ]);
     }
 }

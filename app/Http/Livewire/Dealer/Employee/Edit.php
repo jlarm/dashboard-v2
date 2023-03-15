@@ -16,7 +16,7 @@ class Edit extends SlideOver
 
     public $role;
 
-    public $store;
+    public $stores = [];
 
     public $department;
 
@@ -24,7 +24,7 @@ class Edit extends SlideOver
     {
         $this->user = $user;
         $this->name = $user->name;
-        $this->store = $user->store_id;
+        $this->stores = $user->stores()->get();
         $this->department = $user->department_id;
         $this->role = $user->role;
     }

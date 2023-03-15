@@ -5,6 +5,7 @@ namespace App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -21,6 +22,31 @@ class Store extends Model
         'postal_code',
         'phone',
         'website',
+        'firewall_company',
+        'ip_addresses',
+        'mfa',
+        'vulnerability',
+        'currently_monitoring',
+        'antivirus_software',
+        'antivirus_computers',
+        'antivirus_minutes',
+        'screensaver_minutes',
+        'dms_provider',
+        'website_urls',
+        'backups',
+        'designated_red_flag_coordinator',
+        'document_shredding',
+        'service_provider_agreements',
+        'offsite_storage',
+        'other_business',
+        'vendor_access',
+        'personal_devices',
+        'compliance_issues',
+    ];
+
+    protected $casts = [
+        'ip_addresses' => 'array',
+        'website_urls' => 'array',
     ];
 
     public function getSlugOptions(): SlugOptions
@@ -41,5 +67,10 @@ class Store extends Model
     public function users(): BelongsToMany
     {
         return $this->BelongsToMany(User::class);
+    }
+
+    public function dealerInfo(): HasOne
+    {
+        return $this->hasOne(DealerInfo::class);
     }
 }

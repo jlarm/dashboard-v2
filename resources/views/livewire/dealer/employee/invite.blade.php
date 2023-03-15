@@ -1,6 +1,6 @@
 <x-wire-elements-pro::tailwind.modal on-submit="sendInvite" :content-padding="true">
 
-    <x-slot name="title">Add Employee</x-slot>
+    <x-slot name="title">Add Employee to {{ $currentStore->name }}</x-slot>
 
     <div class="space-y-5">
         <!-- Name -->
@@ -19,20 +19,21 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2"/>
         </div>
 
+        <input type="hidden" wire:model.defer="currentStoreId" value="{{ $currentStoreId }}"/>
+
         @can('create-stores')
             <!-- Store -->
-            @if(tenant('locations'))
+            <div class="col-span-3">
                 <div class="col-span-3">
-                    <div class="col-span-3">
-                        <x-input-label for="dealers" :value="__('Select a Store, Cmd/Ctrl click to select multiple')"/>
-                        <select wire:model="dealers" class="w-full" multiple>
-                            @foreach($stores as $store)
-                                <option value="{{ $store->id }}">{{ $store->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <x-input-label for="dealers" :value="__('Select a Store, Cmd/Ctrl click to select multiple')"/>
+                    <select wire:model="dealers" class="w-full" multiple>
+                        @foreach($stores as $store)
+                            <option value="{{ $store->id }}">{{ $store->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-            @endif
+            </div>
+
             <!-- Department -->
             <div class="col-span-3">
                 <x-input-label for="department" :value="__('Select a Department')"/>
@@ -68,6 +69,7 @@
 
             </select>
         </div>
+
     </div>
 
     <x-slot name="buttons">

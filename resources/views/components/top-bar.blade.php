@@ -8,13 +8,9 @@
             <x-dealership-name :title="$title"/>
         </div>
         <div class="ml-4 flex items-center md:ml-6 space-x-5">
-            <x-navigation.store-selector/>
             @env('local')
                 <x-navigation.role/>
             @endenv
-            <!-- Notifications Bell -->
-            {{--            <x-navigation.notifications/>--}}
-            <!-- Profile dropdown -->
             <x-navigation.user-dropdown/>
         </div>
     </div>

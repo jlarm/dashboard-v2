@@ -22,6 +22,16 @@ class Invite extends Modal
 
     public $role;
 
+    public int|Store $currentStore;
+
+    public $currentStoreId;
+
+    public function mount(Store $currentStore)
+    {
+        $this->currentStore = $currentStore;
+        $this->currentStoreId = $currentStore->id;
+    }
+
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'max:255'],
@@ -34,15 +44,27 @@ class Invite extends Modal
     {
         $validated = $this->validate();
 
-        $invite = \App\Models\Dealer\Invite::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'stores' => $validated['dealers'],
-            'department_id' => $validated['department'],
-            'roles' => $validated['role'],
-            'user_id' => auth()->user()->id,
-            'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
-        ]);
+        if (auth()->user()->hasRole('Manager')) {
+            $invite = \App\Models\Dealer\Invite::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'stores' => [$this->currentStoreId],
+                'department_id' => auth()->user()->department_id,
+                'roles' => $validated['role'],
+                'user_id' => auth()->user()->id,
+                'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+            ]);
+        } else {
+            $invite = \App\Models\Dealer\Invite::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'stores' => $validated['dealers'],
+                'department_id' => $validated['department'],
+                'roles' => $validated['role'],
+                'user_id' => auth()->user()->id,
+                'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+            ]);
+        }
 
         Mail::to($validated['email'])->send(new InviteMail($invite));
 

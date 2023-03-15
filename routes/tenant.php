@@ -45,7 +45,7 @@ Route::group([
     Route::get('stores', function () {
         return view('dealer.store.index');
     })->middleware(['auth', 'has.stores'])->name('stores.index');
-    Route::get('stores/{store:slug}', [StoreController::class, 'show'])->middleware(['auth', 'has.stores'])->name('stores.show');
+    Route::get('stores/{store:slug}/edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('stores.edit');
 
     Route::get('employees', function () {
         return view('dealer.employee.index');
@@ -54,12 +54,13 @@ Route::group([
         return view('dealer.employee.open-invites');
     })->middleware('auth')->name('employees.open-invites');
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])->middleware('web')->name('employees.create');
-    Route::post('employees/dealer/store', [UserController::class, 'store'])->name('dealer.employees.store');
+    Route::post('employees/dealer/store', [UserController::class, 'store'])->name('employees.store');
     Route::get('employees/{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('employees.show');
     Route::get('abc', [CourseResultsController::class, 'export'])->middleware(['web', 'auth'])->name('dealer.employees.export');
 
     Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.'], function () {
         Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
+        Route::get('employees/{user:slug}', [EmployeeController::class, 'show'])->middleware(['auth', 'has.stores'])->name('show');
         Route::get('vendors', [StoreVendorController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.vendor.index');
         Route::get('scans', function () {
             return view('dealer.store.multi.scan-index');

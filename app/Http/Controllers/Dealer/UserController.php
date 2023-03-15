@@ -44,7 +44,7 @@ class UserController extends Controller
             $user->stores()->attach($store);
         }
 
-        $user->assignRole($invite['role']);
+        $user->assignRole($invite['roles']);
 
         event(new Registered($user));
 

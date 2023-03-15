@@ -174,13 +174,30 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
-        <nav class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-gray-50 pt-5 pb-4">
+        <nav class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5 pb-4">
             <div class="flex flex-shrink-0 items-center px-4">
                 <x-application-logo class="h-auto w-full"/>
             </div>
             <div class="mt-5 flex-grow">
                 <div class="space-y-1">
+                    @hasrole('Manager')
                     <livewire:dealer.navigation.manager-stores/>
+                    @endhasrole
+                    @cannot('create-stores')
+                        <a
+                            href="{{ route('dealer.courses.index') }}"
+                            class="{{ (request()->is('courses')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
+                        >
+                            <svg
+                                class="{{ request()->is('courses') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+                            </svg>
+                            Courses
+                        </a>
+                    @endcannot
                     @can('create-stores')
                         <a
                             href="{{ route('dealer.dashboard') }}"

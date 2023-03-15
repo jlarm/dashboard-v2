@@ -23,5 +23,20 @@ class DepartmentSeeder extends Seeder
             'name' => 'Office Personnel',
             'slug' => 'office-personnel',
         ]);
+
+        Department::create([
+            'name' => 'Service',
+            'slug' => 'service',
+        ]);
+
+        Department::create([
+            'name' => 'Parts',
+            'slug' => 'parts',
+        ]);
+
+        Department::create([
+            'name' => 'Body Shop',
+            'slug' => 'body-shop',
+        ]);
     }
 }

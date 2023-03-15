@@ -27,9 +27,11 @@
             <a href="#" class="text-sm">
                 Download
             </a>
-            <a href="#" class="text-sm">
-                Send
-            </a>
+            @can('create-stores')
+                <a href="#" class="text-sm">
+                    Send
+                </a>
+            @endcan
         </div>
     </td>
 </tr>

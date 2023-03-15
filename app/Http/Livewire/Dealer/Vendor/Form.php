@@ -11,6 +11,7 @@ class Form extends Component
     public Vendor $vendor;
 
     public $name;
+
     public $contact_name;
 
     public $signature;
