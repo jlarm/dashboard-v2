@@ -6,7 +6,7 @@
         <div class="mt-4 flex space-x-5 sm:mt-0 sm:ml-4">
             <button
                 onclick="Livewire.emit('slide-over.open', 'dealer.employee.edit', @js(['user' => $user->id]))"
-                class="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:ml-0"
+                class="sm:order-0 order-1 ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:ml-0">
 
                 Edit
             </button>
