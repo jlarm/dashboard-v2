@@ -2,11 +2,10 @@
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
+use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
-use App\Notifications\VendorFormNotification;
 use Illuminate\Contracts\View\View;
-use Notification;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Create extends Modal
@@ -37,8 +36,7 @@ class Create extends Modal
             'store_id' => $this->store_id ?? null,
         ]);
 
-        Notification::route('mail', $this->contact_email)
-            ->notify(new VendorFormNotification($vendor));
+        SendVendorEmailJob::dispatch($vendor);
 
         $this->reset();
 

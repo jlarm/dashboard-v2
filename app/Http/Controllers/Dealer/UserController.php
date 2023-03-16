@@ -46,6 +46,8 @@ class UserController extends Controller
 
         $user->assignRole($invite['roles']);
 
+        $invite->delete();
+
         event(new Registered($user));
 
         $user->markEmailAsVerified();

@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function create(CreateUserRequest $request)
     {
-        $validated = $request->validated();
+        
 
         return view('central.employee.register', [
             'email' => $validated['email'],
@@ -35,6 +35,8 @@ class UserController extends Controller
         ]);
 
         $user->assignRole($validated['role']);
+
+//        Invite::where('id', $request['id'])->delete();
 
         event(new Registered($user));
 

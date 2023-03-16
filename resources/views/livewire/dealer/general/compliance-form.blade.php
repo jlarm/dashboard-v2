@@ -25,7 +25,7 @@
                 <div class="space-y-3">
                     <x-input-label for="name" value="External IP Addresses"/>
                     @foreach($ip_addresses ?? [] as $key => $value)
-                        <div class="block">
+                        <div class="block" wire:key="ip_addresses.{{$key}}">
                             <div class="w-full flex space-x-3">
                                 <input
                                     wire:model.defer="ip_addresses.{{$key}}"

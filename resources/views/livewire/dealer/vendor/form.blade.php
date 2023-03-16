@@ -1047,9 +1047,10 @@
         </div>
 
         <x-signature-pad wire:model.defer="signature"/>
+        @error('signature') <span class="text-red-500">{{ $message }}</span> @enderror
 
         <div>
-            <button type="submit" class="bg-arm-blue-500 py-3 px-5 rounded-md text-white">Submit</button>
+            <x-primary-button>Submit</x-primary-button>
         </div>
 
     </form>

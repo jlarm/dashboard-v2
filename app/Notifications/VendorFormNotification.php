@@ -32,8 +32,8 @@ class VendorFormNotification extends Notification
         $url = $this->generateUrl($notifiable->routes['mail']);
 
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url($url))
+            ->line('Please click the button below to fill out our 3rd party service provider form.')
+            ->action('Click Here', url($url))
             ->line('Thank you for using our application!');
     }
 

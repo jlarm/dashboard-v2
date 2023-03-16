@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Dealer\Vendor;
 use App\Models\Dealer\Vendor;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Form extends Component
 {
+    use WithFileUploads;
+
     public Vendor $vendor;
 
     public $name;
@@ -151,7 +154,7 @@ class Form extends Component
         'q21c' => ['nullable', 'string', 'max:255'],
         'q22a' => ['required', 'string', 'max:255'],
         'q22c' => ['nullable', 'string', 'max:255'],
-        'signature' => ['nullable', 'string', 'max:255'],
+        'signature' => ['required'],
     ];
 
     public function mount(Vendor $vendor)
@@ -163,7 +166,10 @@ class Form extends Component
 
     public function submit()
     {
-        $this->validate();
+        $validated = $this->validate();
+        $fName = \Str::of($this->contact_name)->replace(' ', '')->lower();
+        $cTime = now()->format('YmdHis');
+        $fileName = $fName.$cTime.'.png';
 
         $this->vendor->update([
             'q1a' => $this->q1a,
@@ -210,12 +216,13 @@ class Form extends Component
             'q21c' => $this->q21c,
             'q22a' => $this->q22a,
             'q22c' => $this->q22c,
-            'signature' => $this->signature,
+            'signature' => $fileName,
         ]);
+
+        \Storage::put('signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
 
         return redirect(route('dealer.vendors.thankyou'));
 
-//        \Storage::put('signatures/'.tenant('name').'/'.$this->contact_name.now().'.png', base64_decode(\Str::of($this->signature)->after(',')));
     }
 
     public function render(): View

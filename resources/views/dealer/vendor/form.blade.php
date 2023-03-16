@@ -23,7 +23,7 @@
     </div>
 </header>
 <div class="max-w-3xl mx-auto py-20">
-    <div class="mb-16">
+    <div class="mb-16 space-y-5">
         <h2 class="font-bold text-2xl text-arm-blue-500">Risk Assessment Form for {{ $vendor->name }}</h2>
         <p>Hi {{ $vendor->contact_name }}, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus at cum
             deleniti eius esse harum, hic ipsa
