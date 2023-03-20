@@ -1,79 +1,106 @@
-[{
-    "name": "DOT Hazardous Materials Transportation",
-    "slug": "dot-hazardous-materials-transportation",
-    "department": "1",
-    "slides": [{
-        "title": "DOT Hazardous Materials Transportation",
-        "description": "<p>ACC Certification program</p>"
-    },{
-        "title": "DOT Certification",
-        "description": "<p><strong>Background</strong></p><p>The US Department of Transportation (DOT) is the Federal agency empowered by Congress to regulate the safe transportation of hazardous materials in intrastate, interstate, and foreign commerce. The Office of Hazardous Materials Safety (OHM) within DOT develops and recommends regulatory changes governing the multi-modal transportation of hazardous materials. The mission of the OHM is to promulgate a national safety program that will minimize the risks to life and property inherent in commercial transportation of hazardous materials. More information on DOT and the Office of Hazardous Material safety can be found at http://hazmat.dot.gov.</p>"
-    },{
-        "title": "DOT Certification",
-        "description":"<p>The Office of Hazardous Material Safety has both domestic and international standards and we are going to confine our studies to the domestic.</p><p>The domestic regulations are found in Title 49 of the Code of Federal Regulations (49 CFR), parts 100 through 185. An online copy of the regulations can be found at the Office of Hazardous Materials Safety</p>"
-    },{
-        "title": "DOT Certification",
-        "description": "<p>The Hazardous Materials Regulations (HMR) cover 5 major areas:</p><ol><li>Hazardous materials definitions/classification (Part 172 Subparts A-B, Part 173)</li><li>Hazard Communication (Part 172 Subparts C-G)</li><li>Packaging requirements (Parts 173. 178, 179, 180)</li><li>Operational Rules (Part 171, 173, 174, 175, 176 and 177)</li><li>Training (Part 172 Subpart H) The regulations are intended to protect against the risk to life and property inherent in the loading, unloading and transportation of hazardous materials.</li></ol>"
-    },{
-        "title": "DOT Certification",
-        "description": "<p><strong>Training Requirements</strong></p><p>DOT requires the training of all hazardous materials (hazmat) employees. Training meeting these requirements will increase a hazmat employee's safety awareness and be an essential element in reducing hazmat incidents. DOT considers the training requirement to be as important as the other regulated activities in the hazardous material compliance process. </p>"
-    },{
-        "title": "DOT Certification",
-        "description": "<p><strong>According to Subpart H, hazardous materials training shall include:</strong></p><ol><li>General awareness/familiarization training which includes teaching employees how to recognize and identify hazardous materials;</li><li>Function-specific training which presents relevant materials related to the employees' specific duties, such as how to prepare shipping papers, or how to label and mark drums;</li><li>Safety training which covers the requirements found in Subpart G of 49CFR 172;</li><li>Driver Training (for each hazmat employee who will operate a vehicle);</li><li>Security awareness training; and</li><li>In-depth security training.</li></ol>"
-    },{
-        "title": "DOT Certification",
-        "description": "<p>On March 25, 2003, DOT added additional training requirements to enhance the security of hazardous materials transportation. Shippers and carriers of hazardous material must ensure that their employee training includes a security component. The training must provide an awareness of the security issues associated with hazardous materials transportation and possible methods to enhance transportation security. The security training component must be included in all new employee training after March 25, 2003 and incorporated into recurrent training scheduled between March 25, 2003 and March 24, 2006.</p>"
-    },{
-        "title": "DOT Certification",
-        "description":"<p><strong>Hazardous materials (hazmat) training now applies to any individual who;</strong></p><ol><li>Loads, unloads, or handles hazardous materials;</li><li>Manufactures, tests, reconditions, repairs, modifies, marks, or otherwise represents containers, drums, or packagings as qualified for use in the transportation of hazardous materials;</li><li>Prepares hazardous materials for transportation;</li><li>Is responsible for safety of transporting hazardous materials;</li><li>Operates a vehicle used to transport hazardous materials. Initial training is required for new employees, or employees who change job functions. The training must be completed within 90 days of employment or change in job function. Recurrent training is required at least once every three years.</li></ol>"
-    },{
-        "title": "DOT Certification",
-        "description": "<p><strong>Other Regulatory Entities</strong></p><p>The primary modes of transportation governed by 49 CFR are rail and truck. If a shipment of hazardous materials is made by air, the governing regulations are those of the International Civil Aviation Organization (ICAO). These are published by an association of air carriers known as the International Air Transportation Association (IATA). Domestic air shipments are governed by the IATA Dangerous Goods Regulations as well. These regulations are revised and published effective each January 1st.</p><p>If hazardous materials are shipped by vessel, the governing regulations are those published by the International Maritime Organization (IMO) under its set of regulations known as the International Maritime Dangerous Goods Code (IMDG). Hazardous materials shipments prepared for export under the IMDG Code may move within the United States to and from the port of exportation even though the materials may not be regulated under 49 CFR.</p>"
-    },{
-        "title": "DOT Certification",
-        "description": "<p><strong>Regulated Parties</strong></p><p>There are three regulated \"entities\" subject to the hazardous materials regulations (HMR):</p><ol><li>Shipper/receiver;</li><li>Carrier or Transporter; and</li><li>Container manufacturer.</li></ol><p>It is not unusual to be two entities at the same time. For example, this happens when shippers elect to transport their hazardous materials in their own company vehicles.</p><p>The terms \"shipper\" and \"receiver\" are undefined in the regulations. Instead, DOT prefers to apply the regulations to \"any person\" who offers or accepts a hazardous material for transportation. In this way, it invalidates the issue of ownership, so that one doesn't have to \"own\" a material to be the shipper or receiver. Any person performing the functions of a shipper or receiver is recognized as the shipper/receiver under 49 CFR and is subject to all of the \"shipper requirements\" HMR.</p>"
-    },{
-        "title": "DOT Certification",
-        "description":"<p>The regulation is broken down into many parts and subparts and for us in the dealership we will deal mainly with the subparts listed below:</p><ol><li>Subpart A - General Part 172.1</li><li>Subpart B - Table of Hazardous Materials and Special Provisions Part 172.101</li>Subpart C - Shipping Papers Part 172.200</ol><li>Subpart D - Marking Part 172.300</li><li>Subpart E - Labeling Part 172.400</li><li>Subpart F - Placarding Part 172.500</li><li>Subpart G - Emergency Response Information Part 172.600</li><li>Subpart H - Training Part 172.700</li><p>Understanding the material in 49CFR 172 Subpart B Table of Hazardous Materials and Special Provisions is especially critical in assuring compliance with the hazardous materials regulations. The Hazardous Materials Table (49CFR 172.101) will be discussed in greater detail in Module 2.</p>"
-    },{
-        "title": "DOT Certification",
-        "description": "<p><strong>Definitions</strong></p><p>The HMR uses terms that are defined quite specifically. Particularly note the distinction between bulk packaging and non-bulk packaging, both for liquids and solids. Many materials are fully regulated in bulk packagings, but are not regulated in non-bulk packagings. It is important that you have a clear understanding of what is meant by the following terms among many others. Look them up in 171.8.</p>"
-    },{
-        "title": "Definitions",
-        "description": "<p><strong>Bulk packaging</strong> for example is defined as \"a packaging... which has (1) a maximum capacity greater than 450 L (119 gallons) as a receptacle for liquid; (2) a maximum net mass greater than 400 kg (882 pounds) and a maximum capacity greater than 450 L (119 gallons) as a receptacle for a solid; or (3) a water capacity greater than 454 kg (1000 pounds) as a receptacle for a gas as defined in 173.115. </p><p>Alternatively, <strong>non-bulk packaging</strong> means \"a packaging which has (1) a maximum capacity of 450 L (119 gallons) or less as a receptacle for a liquid; (2) a maximum net mass of 400 kg (882 pounds) or less and a maximum capacity of 450 L (119 gallons) or less as a receptacle for a solid; or, (3) a water capacity of 454 kg (1000 pounds) or less as a receptacle for a gas as defined in 173.115.\"</p>"
-    },{
-        "title": "Definitions",
-        "description": "<p>Asphyxiant gas means a gas which dilutes or replaces oxygen normally in the atmosphere.</p><p>Atmospheric gases means air, nitrogen,oxygen, argon, krypton, neon and xenon.</p>"
-    },{
-        "title": "Definitions",
-        "description": "<p>Box means a packaging with complete rectangular or polygonal faces, made of metal, wood, plywood, reconstituted wood, fiberboard, plastic, or other suitable material. Holes appropriate to the size and use of the packaging, for purposes such as ease of handling or opening, or to meet classification requirements, are permitted as long as they do not compromise the integrity of the packaging during transportation, and are not otherwise prohibited in this subchapter.</p><p>Break-bulk means packages of hazardous materials that are handled individually, palletized, or unitized for purposes of transportation as opposed to bulk and containerized freight. Btu means British thermal unit.</p>"
-    },{
-        "title": "Definitions",
-        "description": "<p><strong>Hazard class means</strong>the category of hazard assigned to a hazardous material under the definitional criteria of part 173 of this subchapter and the provisions of the § 172.101 table. A material may meet the defining criteria for more than one hazard class but is assigned to only one hazard class.</p><p><strong>hazard zone means</strong>one of four levels of hazard (Hazard Zones A through D) assigned to gases, as specified in § 173.116(a) of this subchapter, and one of two levels of hazards (Hazard Zones A and B) assigned to liquids that are poisonous by inhalation, as specified in § 173.133(a) of this subchapter. A hazard zone is based on the LC50 value for acute inhalation toxicity of gases and vapors, as specified in § 173.133(a).</p>"
-    },{
-        "title": "Definitions",
-        "description": "<p>Hazardous material means a substance or material, which has been determined by the Secretary of Transportation to be capable of posing an unreasonable risk to health, safety, and property when transported in commerce, and which has been so designated. The term includes hazardous substances, hazardous wastes, marine pollutants, and elevated temperature materials as defined in this section, materials designated as hazardous under the provisions of § 172.101 of this subchapter, and materials that meet the defining criteria for hazard classes and divisions in part 173 of this subchapter.</p>"
-    },{
-        "title": "Definitions",
-        "description": "<p><strong>Hazardous substance for the purposes</strong>of this subchapter, means a material, including its mixtures and solutions, that— (1) Is listed in the appendix A to § 172.101 of this subchapter; (2) Is in a quantity, in one package, which equals or exceeds the reportable quantity (RQ) listed in the appendix A to § 172.101 of this subchapter; and (3) When in a mixture or solution— (i) For radionuclides, conforms to paragraph 7 of the appendix A to § 172.101.</p>"
-    },{
-        "title": "Definitions",
-        "description": "<p>There are many other definitions that you will need to know these are merely examples of some of the many terms you need to know look the remainder up at<p>Department of Transportation (DOT) regulations in 49 CFR</p></p>"
-    },{
-        "title": "Penalties for Non-compliance",
-        "description": "<p>The maximum penalties are published in Part 107 of the HMR. The minimum fine assessed is $250. The table below summarizes the penalties;</p>"
-    },{
-        "title": "Penalties for Non-compliance",
-        "description": "<p>If the penalty results in death, serious illness, or severe injury, or substantial destruction of property the maximum civil penalty rises to $100,000. If the violation is related to training the minimum civil penalty is raised to $450. Each day of a continuing violation is considered a separate offense. DOT publishes as Appendix A to 49 CFR Part 107 a list of frequently cited violations and the baseline assessment for each violation. This list serves as a guideline for civil penalties under the DOT's enforcement powers.</p>"
-    },{
-        "title": "10 Steps for preparing Hazardous Material for Shipment:",
-        "description": "<p>1.Identify/classify the material (173.22(a)(1)) The first step of identifying and classifying the material is the most important! It requires a careful consideration of a material's physical and health properties, and a search of the Hazardous Materials Table and Appendices A & B in Part 172. On occasion, the quantity of hazardous material may also be important. Some hazardous materials may not be subject to all requirements of the hazardous materials regulations if they are packaged in small enough quantities. 49 CFR 173.4 provides exceptions for small quantities of certain hazard classes.</p>"
-    },{
-        "title": "10 Steps for preparing Hazardous Material for Shipment:",
-        "description": "<p><strong>10 Steps for preparing Hazardous Material for Shipment:</strong></p><p>Identify/classify the material (173.22(a)(1))</p><p>Determine the packing group (173-subpart D)</p><p>Select a proper shipping name (172.101-Table)</p><p>Choose an authorized package (173.22(a)(2))</p><p>Apply the required markings (172.300)</p>"
-    },{
-        "title": "10 Steps for preparing Hazardous Material for Shipment:",
-        "description": "<p><strong>10 Steps for preparing Hazardous Material for Shipment:</strong></p><p>Apply the required DOT labels (172.400)</p><p>Prepare a shipping paper/manifest (172.200)</p><p>Emergency response information (172.600)</p><p>Supply the placards (if required) (172.500)</p><p>Security (172.800)</p>"
-    }],
-    "questions": []
-}]
+[
+    {
+        "name": "DOT Hazardous Materials Transportation",
+        "slug": "dot-hazardous-materials-transportation",
+        "department": "1",
+        "slides": [
+            {
+                "title": "DOT Hazardous Materials Transportation",
+                "description": "<p>ACC Certification program</p>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p><strong>Background</strong></p><p>The US Department of Transportation (DOT) is the Federal agency empowered by Congress to regulate the safe transportation of hazardous materials in intrastate, interstate, and foreign commerce. The Office of Hazardous Materials Safety (OHM) within DOT develops and recommends regulatory changes governing the multi-modal transportation of hazardous materials. The mission of the OHM is to promulgate a national safety program that will minimize the risks to life and property inherent in commercial transportation of hazardous materials. More information on DOT and the Office of Hazardous Material safety can be found at http://hazmat.dot.gov.</p>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p>The Office of Hazardous Material Safety has both domestic and international standards and we are going to confine our studies to the domestic.</p><p>The domestic regulations are found in Title 49 of the Code of Federal Regulations (49 CFR), parts 100 through 185. An online copy of the regulations can be found at the Office of Hazardous Materials Safety</p>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p>The Hazardous Materials Regulations (HMR) cover 5 major areas:</p><ol><li>Hazardous materials definitions/classification (Part 172 Subparts A-B, Part 173)</li><li>Hazard Communication (Part 172 Subparts C-G)</li><li>Packaging requirements (Parts 173. 178, 179, 180)</li><li>Operational Rules (Part 171, 173, 174, 175, 176 and 177)</li><li>Training (Part 172 Subpart H) The regulations are intended to protect against the risk to life and property inherent in the loading, unloading and transportation of hazardous materials.</li></ol>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p><strong>Training Requirements</strong></p><p>DOT requires the training of all hazardous materials (hazmat) employees. Training meeting these requirements will increase a hazmat employee's safety awareness and be an essential element in reducing hazmat incidents. DOT considers the training requirement to be as important as the other regulated activities in the hazardous material compliance process. </p>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p><strong>According to Subpart H, hazardous materials training shall include:</strong></p><ol><li>General awareness/familiarization training which includes teaching employees how to recognize and identify hazardous materials;</li><li>Function-specific training which presents relevant materials related to the employees' specific duties, such as how to prepare shipping papers, or how to label and mark drums;</li><li>Safety training which covers the requirements found in Subpart G of 49CFR 172;</li><li>Driver Training (for each hazmat employee who will operate a vehicle);</li><li>Security awareness training; and</li><li>In-depth security training.</li></ol>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p>On March 25, 2003, DOT added additional training requirements to enhance the security of hazardous materials transportation. Shippers and carriers of hazardous material must ensure that their employee training includes a security component. The training must provide an awareness of the security issues associated with hazardous materials transportation and possible methods to enhance transportation security. The security training component must be included in all new employee training after March 25, 2003 and incorporated into recurrent training scheduled between March 25, 2003 and March 24, 2006.</p>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p><strong>Hazardous materials (hazmat) training now applies to any individual who;</strong></p><ol><li>Loads, unloads, or handles hazardous materials;</li><li>Manufactures, tests, reconditions, repairs, modifies, marks, or otherwise represents containers, drums, or packagings as qualified for use in the transportation of hazardous materials;</li><li>Prepares hazardous materials for transportation;</li><li>Is responsible for safety of transporting hazardous materials;</li><li>Operates a vehicle used to transport hazardous materials. Initial training is required for new employees, or employees who change job functions. The training must be completed within 90 days of employment or change in job function. Recurrent training is required at least once every three years.</li></ol>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p><strong>Other Regulatory Entities</strong></p><p>The primary modes of transportation governed by 49 CFR are rail and truck. If a shipment of hazardous materials is made by air, the governing regulations are those of the International Civil Aviation Organization (ICAO). These are published by an association of air carriers known as the International Air Transportation Association (IATA). Domestic air shipments are governed by the IATA Dangerous Goods Regulations as well. These regulations are revised and published effective each January 1st.</p><p>If hazardous materials are shipped by vessel, the governing regulations are those published by the International Maritime Organization (IMO) under its set of regulations known as the International Maritime Dangerous Goods Code (IMDG). Hazardous materials shipments prepared for export under the IMDG Code may move within the United States to and from the port of exportation even though the materials may not be regulated under 49 CFR.</p>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p><strong>Regulated Parties</strong></p><p>There are three regulated \"entities\" subject to the hazardous materials regulations (HMR):</p><ol><li>Shipper/receiver;</li><li>Carrier or Transporter; and</li><li>Container manufacturer.</li></ol><p>It is not unusual to be two entities at the same time. For example, this happens when shippers elect to transport their hazardous materials in their own company vehicles.</p><p>The terms \"shipper\" and \"receiver\" are undefined in the regulations. Instead, DOT prefers to apply the regulations to \"any person\" who offers or accepts a hazardous material for transportation. In this way, it invalidates the issue of ownership, so that one doesn't have to \"own\" a material to be the shipper or receiver. Any person performing the functions of a shipper or receiver is recognized as the shipper/receiver under 49 CFR and is subject to all of the \"shipper requirements\" HMR.</p>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p>The regulation is broken down into many parts and subparts and for us in the dealership we will deal mainly with the subparts listed below:</p><ol><li>Subpart A - General Part 172.1</li><li>Subpart B - Table of Hazardous Materials and Special Provisions Part 172.101</li>Subpart C - Shipping Papers Part 172.200</ol><li>Subpart D - Marking Part 172.300</li><li>Subpart E - Labeling Part 172.400</li><li>Subpart F - Placarding Part 172.500</li><li>Subpart G - Emergency Response Information Part 172.600</li><li>Subpart H - Training Part 172.700</li><p>Understanding the material in 49CFR 172 Subpart B Table of Hazardous Materials and Special Provisions is especially critical in assuring compliance with the hazardous materials regulations. The Hazardous Materials Table (49CFR 172.101) will be discussed in greater detail in Module 2.</p>"
+            },
+            {
+                "title": "DOT Certification",
+                "description": "<p><strong>Definitions</strong></p><p>The HMR uses terms that are defined quite specifically. Particularly note the distinction between bulk packaging and non-bulk packaging, both for liquids and solids. Many materials are fully regulated in bulk packagings, but are not regulated in non-bulk packagings. It is important that you have a clear understanding of what is meant by the following terms among many others. Look them up in 171.8.</p>"
+            },
+            {
+                "title": "Definitions",
+                "description": "<p><strong>Bulk packaging</strong> for example is defined as \"a packaging... which has (1) a maximum capacity greater than 450 L (119 gallons) as a receptacle for liquid; (2) a maximum net mass greater than 400 kg (882 pounds) and a maximum capacity greater than 450 L (119 gallons) as a receptacle for a solid; or (3) a water capacity greater than 454 kg (1000 pounds) as a receptacle for a gas as defined in 173.115. </p><p>Alternatively, <strong>non-bulk packaging</strong> means \"a packaging which has (1) a maximum capacity of 450 L (119 gallons) or less as a receptacle for a liquid; (2) a maximum net mass of 400 kg (882 pounds) or less and a maximum capacity of 450 L (119 gallons) or less as a receptacle for a solid; or, (3) a water capacity of 454 kg (1000 pounds) or less as a receptacle for a gas as defined in 173.115.\"</p>"
+            },
+            {
+                "title": "Definitions",
+                "description": "<p>Asphyxiant gas means a gas which dilutes or replaces oxygen normally in the atmosphere.</p><p>Atmospheric gases means air, nitrogen,oxygen, argon, krypton, neon and xenon.</p>"
+            },
+            {
+                "title": "Definitions",
+                "description": "<p>Box means a packaging with complete rectangular or polygonal faces, made of metal, wood, plywood, reconstituted wood, fiberboard, plastic, or other suitable material. Holes appropriate to the size and use of the packaging, for purposes such as ease of handling or opening, or to meet classification requirements, are permitted as long as they do not compromise the integrity of the packaging during transportation, and are not otherwise prohibited in this subchapter.</p><p>Break-bulk means packages of hazardous materials that are handled individually, palletized, or unitized for purposes of transportation as opposed to bulk and containerized freight. Btu means British thermal unit.</p>"
+            },
+            {
+                "title": "Definitions",
+                "description": "<p><strong>Hazard class means</strong>the category of hazard assigned to a hazardous material under the definitional criteria of part 173 of this subchapter and the provisions of the § 172.101 table. A material may meet the defining criteria for more than one hazard class but is assigned to only one hazard class.</p><p><strong>hazard zone means</strong>one of four levels of hazard (Hazard Zones A through D) assigned to gases, as specified in § 173.116(a) of this subchapter, and one of two levels of hazards (Hazard Zones A and B) assigned to liquids that are poisonous by inhalation, as specified in § 173.133(a) of this subchapter. A hazard zone is based on the LC50 value for acute inhalation toxicity of gases and vapors, as specified in § 173.133(a).</p>"
+            },
+            {
+                "title": "Definitions",
+                "description": "<p>Hazardous material means a substance or material, which has been determined by the Secretary of Transportation to be capable of posing an unreasonable risk to health, safety, and property when transported in commerce, and which has been so designated. The term includes hazardous substances, hazardous wastes, marine pollutants, and elevated temperature materials as defined in this section, materials designated as hazardous under the provisions of § 172.101 of this subchapter, and materials that meet the defining criteria for hazard classes and divisions in part 173 of this subchapter.</p>"
+            },
+            {
+                "title": "Definitions",
+                "description": "<p><strong>Hazardous substance for the purposes</strong>of this subchapter, means a material, including its mixtures and solutions, that— (1) Is listed in the appendix A to § 172.101 of this subchapter; (2) Is in a quantity, in one package, which equals or exceeds the reportable quantity (RQ) listed in the appendix A to § 172.101 of this subchapter; and (3) When in a mixture or solution— (i) For radionuclides, conforms to paragraph 7 of the appendix A to § 172.101.</p>"
+            },
+            {
+                "title": "Definitions",
+                "description": "<p>There are many other definitions that you will need to know these are merely examples of some of the many terms you need to know look the remainder up at<p>Department of Transportation (DOT) regulations in 49 CFR</p></p>"
+            },
+            {
+                "title": "Penalties for Non-compliance",
+                "description": "<p>The maximum penalties are published in Part 107 of the HMR. The minimum fine assessed is $250. The table below summarizes the penalties;</p>"
+            },
+            {
+                "title": "Penalties for Non-compliance",
+                "description": "<p>If the penalty results in death, serious illness, or severe injury, or substantial destruction of property the maximum civil penalty rises to $100,000. If the violation is related to training the minimum civil penalty is raised to $450. Each day of a continuing violation is considered a separate offense. DOT publishes as Appendix A to 49 CFR Part 107 a list of frequently cited violations and the baseline assessment for each violation. This list serves as a guideline for civil penalties under the DOT's enforcement powers.</p>"
+            },
+            {
+                "title": "10 Steps for preparing Hazardous Material for Shipment:",
+                "description": "<p>1.Identify/classify the material (173.22(a)(1)) The first step of identifying and classifying the material is the most important! It requires a careful consideration of a material's physical and health properties, and a search of the Hazardous Materials Table and Appendices A & B in Part 172. On occasion, the quantity of hazardous material may also be important. Some hazardous materials may not be subject to all requirements of the hazardous materials regulations if they are packaged in small enough quantities. 49 CFR 173.4 provides exceptions for small quantities of certain hazard classes.</p>"
+            },
+            {
+                "title": "10 Steps for preparing Hazardous Material for Shipment:",
+                "description": "<p><strong>10 Steps for preparing Hazardous Material for Shipment:</strong></p><p>Identify/classify the material (173.22(a)(1))</p><p>Determine the packing group (173-subpart D)</p><p>Select a proper shipping name (172.101-Table)</p><p>Choose an authorized package (173.22(a)(2))</p><p>Apply the required markings (172.300)</p>"
+            },
+            {
+                "title": "10 Steps for preparing Hazardous Material for Shipment:",
+                "description": "<p><strong>10 Steps for preparing Hazardous Material for Shipment:</strong></p><p>Apply the required DOT labels (172.400)</p><p>Prepare a shipping paper/manifest (172.200)</p><p>Emergency response information (172.600)</p><p>Supply the placards (if required) (172.500)</p><p>Security (172.800)</p>"
+            }
+        ],
+        "questions": []
+    }
+]

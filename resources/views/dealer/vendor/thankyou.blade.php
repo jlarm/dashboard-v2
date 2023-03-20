@@ -1,5 +1,5 @@
 <x-guest-layout>
     <div>
-        <p class="text-center">Thank you for your submission, you will receive an email confirmation shortly.</p>
+        <p class="text-center">Thank you for your submission.</p>
     </div>
 </x-guest-layout>
