@@ -31,17 +31,17 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'edit-vendors']);
         Permission::create(['name' => 'delete-vendors']);
 
-        Role::create(['name' => 'super-admin']);
+        Role::create(['global_id' => 'super-admin', 'name' => 'super-admin']);
 
-        $adminRole = Role::create(['name' => 'Admin']);
-        $consultantRole = Role::create(['name' => 'Consultant']);
-        $ownerRole = Role::create(['name' => 'Owner']);
-        $qiRole = Role::create(['name' => 'Qualified Individual']);
-        $gmRole = Role::create(['name' => 'GM']);
-        $cfoRole = Role::create(['name' => 'CFO']);
-        $gsmRole = Role::create(['name' => 'GSM']);
-        $managerRole = Role::create(['name' => 'Manager']);
-        $employeeRole = Role::create(['name' => 'Employee']);
+        $adminRole = Role::create(['global_id' => 'Admin','name' => 'Admin']);
+        $consultantRole = Role::create(['global_id' => 'Consultant','name' => 'Consultant']);
+        $ownerRole = Role::create(['global_id' => 'Owner','name' => 'Owner']);
+        $qiRole = Role::create(['global_id' => 'QI','name' => 'Qualified Individual']);
+        $gmRole = Role::create(['global_id' => 'GM','name' => 'GM']);
+        $cfoRole = Role::create(['global_id' => 'CFO','name' => 'CFO']);
+        $gsmRole = Role::create(['global_id' => 'GSM','name' => 'GSM']);
+        $managerRole = Role::create(['global_id' => 'Manager','name' => 'Manager']);
+        $employeeRole = Role::create(['global_id' => 'Employee','name' => 'Employee']);
 
         $adminRole->givePermissionTo([
             'create-users',

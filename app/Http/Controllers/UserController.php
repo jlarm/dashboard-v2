@@ -13,12 +13,10 @@ class UserController extends Controller
 {
     public function create(CreateUserRequest $request)
     {
-        
-
         return view('central.employee.register', [
-            'email' => $validated['email'],
-            'name' => $validated['name'],
-            'role' => $validated['role'],
+            'email' => $request['email'],
+            'name' => $request['name'],
+            'role' => $request['role'],
         ]);
     }
 
