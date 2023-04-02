@@ -5,18 +5,18 @@ namespace Database\Seeders;
 use App\Models\Dealer\Course;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class CourseSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        $files = Storage::disk('courses')->allFiles();
+        $path = app_path('courses');
+        $files = File::allFiles($path);
 
-        foreach ($files as $file) {
-            $course = File::get(app_path("courses/{$file}"));
+        foreach($files as $file)
+        {
+            $course = File::get($file);
             $json = json_decode($course);
-
             foreach ($json as $key => $value) {
                 $course = Course::create([
                     'department_id' => $value->department,

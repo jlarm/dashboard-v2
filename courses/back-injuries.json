@@ -1,0 +1,113 @@
+[
+    {
+        "name": "Back Injuries",
+        "slug": "back-injuries",
+        "department": "1",
+        "roles": [
+            "Manager",
+            "Employee"
+        ],
+        "slides": [
+            {
+                "title": "Ergonomics/Back Injuries",
+                "description": "<p>Ergonomics is the science of designing the workplace and the job to fit the worker. Generally, this is caused by repeated stress on the body from all types of work routines-from repetitive use of tools and machines to poor lighting and seating. The goal of ergonomics is to allow work to be done without undue stress on the human body.</p>"
+            },
+            {
+                "title": "BSL – Bureau of Labor Statistics",
+                "description": "<p>According to Bureau of Labor Statistics, more than 1 million workers suffer back injuries each year.</p><p>Back injuries cost American industry 100 billion dollars in workers' compensation costs annually and over $225 billion in lost productivity.</p><p>A healthy lifestyle – attention to posture, conditioning and body mechanics, avoiding obesity and smoking, and minimizing emotional stress – will take you a long way toward maintaining a healthy back.</p>"
+            },
+            {
+                "title": "Ergonomic Factors",
+                "description": "<p>Below are some items to be aware of in your shops to minimize ergonomics stresses:</p><ul><li>Heavy lifting – batteries, heavy parts, tires, moving equipment, inventory etc.</li><li>Constant bent posture-working under the hood</li><li>Lifting with forceful movement-manually unloading trucks, removing equipment from vehicles, removing parts adhering (stuck) to other parts.</li><li>Pushing/pulling heavy loads-moving stalled vehicles/equipment, manual pipe and tube-bending.</li><li>Excessive sitting/poor seating-office personnel, use maximum adjustable seating.</li><li>Excessive vibration-air impact wrenches</li><li>Excessive reaching and twisting-parts department, warehouse personnel.</li><li>Poor design of workstations.</li><li>Poorly designed tools.</li><li>Computer terminals-excess use, poor contrast, glare; prolonged keystroking.</li><li>Electronic displays-poor visibility</li><li>Poor illumination</li><li>Workbench height-arms should never be lower than your shoulders; neck and back no more than 20&#8451; to 30&#8451; from vertical.</li><li>Noise – impact wrenches, radios, televisions, engines.</li><li>PPE, poor selection and use to maximize comfort.</li><li>Torque effect, Vibrations, Fatigue and temperature extremes.</li></ul>"
+            },
+            {
+                "title": "Tool Selection",
+                "description": "<p>Injuries occur from repetitive use of hands and power tools, especially when awkward hands position and /or forceful exertions are involved. Below are some tips to help you select tools to reduce stress-related injuries, improve productivity and worker comfort.</p>\n<ul>\n    <li>Ideally, you should have a chance to try out new tools before they are purchased; consider the weight, shape, balance and noise/vibration potential.</li>\n    <li>Tools should be designed so when used, the wrist is in a straight and neutral position.</li>\n    <li>Use tools designed to reduce vibration/noise and that do not transmit torque to the arms and hands, when possible.</li>\n    <li>Power tools are always preferred on highly repetitive tasks because they reduce the force and exertion.</li>\n    <li>Your size and strength may require a different size tool. Your facility manager may need to purchase two or three sizes.</li>\n    <li>Tools should be designed to work well regardless of whether you are left-handed or right-handed.</li>\n    <li>Tools weighing over 1 to 2 pounds that are continuously held should be used with a stationary tool balance at the center of gravity to take the weight off the worker.</li>\n    <li>Handles for tools should be 1-1/4 inches to 1-3/4 inches in diameter, contacting as much of the hand and fingers area as possible. Minimum handles length should be 5 inches and tools requiring both hands should have two handles or room for both hands.</li>\n    <li>Selecting the proper tool for the job is very important to allow less stress and make the job easier.</li>\n    <li>Proper care and maintenance of the tools is important to reduce safety hazards and ergonomic concerns.</li>\n    <li>Torque- and force- limited tools, e.g., air-impact wrenched, power drills, etc. will limit kickback, damage to work and tools and forces transmitted to arms and hands.</li>\n    <li>Handles should have built-in, slip resistant, vibration-reducing padding, when possible. (Gloves also provide these features). Avoid handles with sharp edges and corners.</li>\n</ul>"
+            },
+            {
+                "title": "Three Key Components in Back Injury Prevention",
+                "description": "<p>Proper posture, conditioning and body mechanics are the key components of any program designed to prevent back injuries.</p><p>Up to 80% of Americans will suffer back pain at some point in their lives.</p><p>The cause of back pain in about 90% of cases is strain or sprain of back muscles, ligaments or soft tissue. These conditions generally heal completely, but often recur if prevention strategies are not used.</p><p>Back pain in the remaining 10% of cases is due to more serious conditions such as degenerative disk disease or herniated disks in the spine.</p><p>However, even these cases may be prevented – or treated – with proper posture, conditioning and body mechanics.</p>"
+            },
+            {
+                "title": "Posture",
+                "description": "<p>Proper posture includes standing and sitting in an upright position without slouching, rounding of the shoulders or accentuating the natural curves of the spine.</p><p>Poor posture typically involves holding the head too far forward or allowing the belly to pull the back forward. If possible, get in the habit of holding in the belly to keep it from protruding and putting excess force on the spine.</p><p>When standing, bend your knees slightly. Years of poor posture can lead to weakened spine and abdominal muscles that contribute to back pain and injury.</p><p>Proper sleeping posture is also important to prevent and relieve back pain. Sleep on a mattress that is firm, not sagging, but not too hard. Do not sleep on your stomach. Instead, sleep on your side with a pillow between your knees or sleep on your back with a pillow under your knees.</p>"
+            },
+            {
+                "title": "Conditioning",
+                "description": "<p>Proper conditioning involves overall conditioning of the body and cardiovascular system with aerobic exercise, as well as strengthening and stretching core muscles of the spine and abdomen.</p><p>Studies have shown that smoking can contribute to back pain and injury, so if you still smoke, you have yet another reason to think about quitting.</p><p>Walking, swimming, bicycling and, for some people, slow, short-distance running are excellent ways to condition the entire body and improve cardiovascular health. In addition to improving general levels of health and fitness, these activities increase blood flow to the spine.</p><p>Aerobic activity, along with a healthy diet, helps prevent weight gain, which is a risk factor for back injury. To begin exercising, try walking for 10 minutes twice per day at a moderate pace and build up to at least one 30-minute walk per day three days a week; walking every day is preferable.</p><p>Stretching to increase back and abdomen flexibility should be done 5-7 days per week, and strengthening exercises should be done at least 4-5 days per week. Because back conditions vary, strengthening and stretching the muscles of the spine and abdomen should be done under the direction of a physician or physical therapist. These stabilizing exercises improve support for the spine itself, but proper technique is essential.</p>"
+            },
+            {
+                "title": "Body Mechanics",
+                "description": "<p>Body mechanics refers to the way we use our bodies to complete various tasks during activities of daily life. When lifting, bending or stretching, we should think of how we are using our back to avoid provoking an acute injury. There may be a simpler, less strenuous method or posture that can be used to get something done. Don’t be afraid to ask for help.</p><p>Instead of bending at the back to pick something up off the floor, stoop down at the knees. Keep the back as straight as possible and maintain proper posture. Instead of reaching overhead, use a sturdy stepstool. Push or pull with your entire body, not just your arms. Wear comfortable, low-heeled shoes.</p><p>When lifting, avoid reaching too far out for the object to be moved; instead, stand close and grasp the object close to the body. Maintain proper posture with back straight and head up. Bend at the knees and hips, not at the back or waist, and use your legs to lift. Pivot at the hips, not the back. If possible, lift from a tabletop or from waist height, rather than from the floor or over your head.</p><p>When working, whether sitting or standing, pace your activities and take frequent breaks. Vary the position of your body when standing. Stand on a cushioned mat, if possible.</p><p>When sitting at a desk, think in terms of right angles (90°, or the shape of an L). Knees should be at 90° angles when the soles of the feet are touching the floor. The back and thighs should form 90° angles when the body is sitting properly in a chair. Wrists should be straight and elbows at 90° angles when the hands are on the desk or keyboard. Use a chair with proper low-back support and keep your head back and shoulders relaxed.</p><p>Some studies have found that back belts worn to prevent back injuries while lifting are not effective; however, they may help remind you to lift with proper body mechanics. When doing something that you haven’t done in months, whether it’s yard work or golfing, do some simple stretches for your entire body and for the particular muscles involved, before, during and after the activity. Maintaining your level of fitness throughout the year will make injury less likely.</p>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "Ergonomics is",
+                "answers": [
+                    {
+                        "a": "Ergonomics is the science of designing the workplace and the job to fit the worker.",
+                        "b": "Ergonomics is the science of designing the employees work habits around the workplace environment.",
+                        "c": "Ergonomics is the science of adapting the employees work experiences to the shops lay out regarding their job function.",
+                        "d": "All of the above."
+                    }
+                ],
+                "correct": "a"
+            },
+            {
+                "question": "What are some of the work-related symptoms related to improper ergonomics?",
+                "answers": [
+                    {
+                        "a": "Sore wrists",
+                        "b": "Back pain",
+                        "c": "Eyestrain and headaches",
+                        "d": "All of the above."
+                    }
+                ],
+                "correct": "d"
+            },
+            {
+                "question": "Below are some items to be aware of in your shops to minimize ergonomics stresses:",
+                "answers": [
+                    {
+                        "a": "Heavy lifting, Poor illumination, Vibrations, PPE selection",
+                        "b": "Lifting with forceful movements, Poor design of workstations, Workbench height",
+                        "c": "Both A and B",
+                        "d": "B only"
+                    }
+                ],
+                "correct": "c"
+            },
+            {
+                "question": "Ideally you should have a chance to try out new tools before they are purchased",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correct": "a"
+            },
+            {
+                "question": "Selection of the proper tool for the job makes the job easier and less stressful to the body.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correct": "a"
+            },
+            {
+                "question": "There are special tools designed for left- handed and right-handed workers.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correct": "b"
+            }
+        ]
+    }
+]

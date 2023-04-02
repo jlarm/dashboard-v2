@@ -1,0 +1,72 @@
+[{
+    "name": "Tire Repairing, Inflation and Mounting",
+    "slug": "tire-repairing-inflation-and-mounting",
+    "department": "1",
+    "slides": [{
+        "title":"Tire Repairing, Inflation and Mounting",
+        "description":"<p><Strong>Tire Repairing, Inflation and Mounting</Strong></p><p>Tire repairing, inflation and mounting are dangerous activities. Shop employees can be killed from tire explosions-not to mention those who have suffered serious injuries or whose hearing has been seriously impaired.</p>"
+    },{
+        "title": "Tire Repairing, Inflation and Mounting cont’d",
+        "description":"<p>Hennessy Industries (La Vergne, TN) has summed up tire safety in one word-RIM. R-read, I-inspect and M-mount.</p><p><strong>Read</strong>the tire and wheel to make sure they are the same size. A 16-inch tire an a 16.5-inch wheel (or vice versa) can cause an explosion.</p><p><strong>Inspect the wheel for rust, bent flanges or cracks that could cause problems and inspect the tire for damage.</strong>the wheel for rust, bent flanges or cracks that could cause problems and inspect the tire for damage.</p><p><strong>Mount</strong>the tire safely. Never stand over the tire while you are inflating it. Never inflate a tire beyond its rated pressure to seat the bead. If you have to do this, something else is wrong. Deflate and check the tire and rim again.</p>"
+},{
+    "title": "Additional Tips",
+    "description":"<p>Do not inflate tire in poor condition-a blowout could occur. Examples of a tire in poor condition include a damaged tread, cut sidewall or one that is bald.</p><p>Keep yourself on one side of the tire when checking or inflating it-never directly in front of the tire.</p><p>Each tire-inflation hose should have a snap-on chuck with at least 24 inches of hose between the chuck and the in-line valve and gauge. The air should shut off when the valve is released.</p><p>Keep hands and fingers away from pinch points.</p><p>If a tire is suspect of having a defect, deflate the tire before dismounting from the vehicle.</p><p>Lifting a tire improperly is a potential back-safety hazard. Lift with legs from the squatting position. Be careful when rolling tires around as they can easily get out of control and cause an accident.</p>"
+},{
+    "title": "Slip-Rim or Locking-Ring Wheels",
+    "description":" <p>Heavy trucks and equipment have two-piece rims. Inflating these tires can be extremely dangerous. The rim may fly off during inflation. Follow these safety rules tips:</p><p>Use a tire-restraining device, such as a cage, chain or other means, when inflation tires mounted on split rims or rims using retainer rings.</p><p>Use a clamp-on connector with an in-line pressure gauge to connect the air hose to the tire stem. You can then inflate the tire out of the immediate danger area.</p>"
+}],
+"questions": [
+    {
+        "question": "Hennessy Industries (La Vergne, TN) has summed up tire safety in one word-RIM, what does RIM stand for?",
+        "answers": [
+            {
+                "a": "Roll, Incinerate, Mold",
+                "b": "Read, Inspect, Mount",
+                "c": "Repair, Inflation, Mount",
+                "d": "None of the above"
+            }
+        ],
+        "correct": "b"
+    },
+    {
+        "question": "Look at the tire and wheel to make sure they are the same size. A 16-inch tire and a 16.5-inch wheel (or vice versa) can cause an explosion.",
+        "answers": [
+            {
+                "a": "True",
+                "b": "False"
+            }
+        ],
+        "correct": "a"
+    },
+    {
+        "question": "You can stand over the tire while you are inflating it and inflating a tire beyond its rated pressure to seat the bead will be safe.",
+        "answers": [
+            {
+                "a": "True",
+                "b": "False"
+            }
+        ],
+        "correct": "b"
+    },
+    {
+        "question": "If a tire is suspect of having a defect, deflate the tire before dismounting from the vehicle.",
+        "answers": [
+            {
+                "a": "True",
+                "b": "False"
+            }
+        ],
+        "correct": "a"
+    },
+    {
+        "question": "Always inspect the wheel for rust, bent flanges or cracks that could cause problems and inspect the tire for damage.",
+        "answers": [
+            {
+                "a": "True",
+                "b": "False"
+            }
+        ],
+        "correct": "a"
+    }
+]
+}]

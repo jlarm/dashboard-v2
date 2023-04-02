@@ -1,0 +1,28 @@
+[
+    {
+        "name": "The Americans with Disabilities Act",
+        "slug": "the-americans-with-disabilities-act",
+        "department": "1",
+        "slides": [
+            {
+                "title": "Purpose of the ADA",
+                "description": "<ul><li>Protections</li><li>Title I - private employers</li><li>Discrimination</li></ul>"
+            },
+            {
+                "title": "Who is protected",
+                "description": "<ul><li>Qualified individuals</li><li></li>Definition of a disability</ul>"
+            },
+            {
+                "title": "Job descriptions and essential functions",
+                "description": "<ul><li>With or without reasonable accommodation</li><li></li>Job descriptions</ul>"
+            },
+            {
+                "title": "Reasonable accommodation",
+                "description": "<ul><li>Definition</li><li>Examples of reasonable accommodation</li><li>Choices of reasonable accommodation</li></ul>"
+            }
+        ],
+        "questions": [
+
+        ]
+    }
+]

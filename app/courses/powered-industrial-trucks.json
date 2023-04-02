@@ -1,0 +1,200 @@
+[
+    {
+        "name": "Powered Industrial Trucks",
+        "slug": "powered-industrial-trucks",
+        "department": "1",
+        "slides": [
+            {
+                "title": "Objectives",
+                "description": "<ul><li>Describe the types of powered industrial trucks.</li><li>Understand the requirements of OSHA Regulation 1910.178</li><li>Understand the requirements for safe operation of a powered industrial truck.</li></ul>"
+            },
+            {
+                "title": "The Importance of Safety",
+                "description": "<p>On July 10th, 2000 a 17 year old worker was killed while operating a forklift.  He made a right turn too sharply, which resulted in the vehicle overturning.  His head was caught between the overhead guard and the ground, and was crushed.</p>"
+            },
+            {
+                "title": "The Importance of Safety",
+                "description": ""
+            },
+            {
+                "title": "The results of the investigation found that:",
+                "description": "<ol><li>The employee had not been trained on forklift operation.</li><li>The vehicle was not fitted with an operator restraint system.</li><li>The vehicle had a passenger that it was not designed for.</li><li>The operator was under the legal age required to operate a forklift.</li></ol>"
+            },
+            {
+                "title": "Powered Industrial Truck Types",
+                "description": "<ul><li>OSHA recognizes 11 different designations of industrial trucks.</li><li>Each type of vehicle has specific safeguards.</li><li>The employer must select the proper type of vehicle to match the hazard profile of the work environment.</li><li>The letters designate the type of motive power.</li><li>D = Diesel</li><li>E = Electric</li><li>G = Gas</li><li>L = Liquefied Petroleum Gas</li></ul>"
+            },
+            {
+                "title": "D Type Vehicles",
+                "description": "<ul><li>D = The D designated units are diesel powered units having minimum acceptable safeguards against inherent fire hazards.</li><li>DS = Like D types, but have additional safeguards to exhaust, fuel, and electrical systems.</li><li>DY = Like DS but do not have any electrical equipment and is equipped with temperature limiting features.</li></ul>"
+            },
+            {
+                "title": "E Type Vehicles",
+                "description": "<ul><li>E = Electrically powered units that have minimum acceptable safeguards against inherent fire hazards.</li><li>ES = Like E types, but are provided with additional safeguards to the electrical system to prevent emission of hazardous sparks and to limit surface temperatures.</li><li>EE = Like ES, but the electric motors and all other electrical equipment is completely enclosed.</li><li>EX = The electrical fittings and equipment are so designed, constructed and assembled that the units may be used in certain atmospheres containing flammable vapors or dusts.</li></ul>"
+            },
+            {
+                "title": "G Type Vehicles",
+                "description": "<ul><li>G = The G designated units are gasoline powered units having minimum acceptable safeguards against inherent fire hazards.</li><li>GS = The GS designated units are gasoline powered units that are provided with additional safeguards to the exhaust, fuel, and electrical systems. They may be used in some locations where the use of a G unit may not be considered suitable.</li></ul>"
+            },
+            {
+                "title": "L Type Vehicles",
+                "description": "<ul><li>LP = The LP designated unit is similar to the G unit except that liquefied petroleum gas is used for fuel instead of gasoline.</li><li>LPS = The LPS designated units are liquefied petroleum gas powered units that are provided with additional safeguards to the exhaust, fuel, and electrical systems. They may be used in some locations where the use of an LP unit may not be considered suitable.</li></ul>"
+            },
+            {
+                "title": "Vehicle Selection",
+                "description": "<p>It is important select the type of vehicle that is appropriate for your work environment.</p><p>Refer to Table N-1 in OSHA instruction 1910.178 for guidelines on appropriate vehicle selection.</p><p>All labels on a vehicle must be legible.</p>"
+            },
+            {
+                "title": "Modifications and Additions",
+                "description": "<p>Any modifications or additions that affect capacity or safe operation must have the written approval of the manufacturer.</p><p>All marking plates, tags, or decals shall be changed accordingly.</p><p>Additions and modifications affect balance and safety of the vehicles. It is important to get manufacturers permission, and to train employees on these alterations.</p>"
+            },
+            {
+                "title": "Atmosphere Requirements",
+                "description": "<p>Powered industrial trucks can cause fires or other dangers in certain types of environments.</p><p>PIT’s are not allowed to be used in atmospheres containing hazardous concentrations of:</p><ul><li>Acetylene</li><li>Butadiene</li><li>Ethyl Oxide</li><li>Hydrogen</li><li>Propylene Oxide</li><li>Acetaldehyde</li><li>Cyclopropane</li><li>Diethyl ether</li><li>Ethylene</li><li>Unsymmetrical dimethyl hydrazine</li></ul><p>1910.178 has specific requirements about atmospheric requirements. If your workplace has atmospheric contaminants, consult the rules for proper vehicle selection.</p>"
+            },
+            {
+                "title": "Carbon Monoxide",
+                "description": "<p>Powered Industrial Trucks can emit carbon monoxide.</p><p>In enclosed environments, this could raise the level of carbon monoxide to a point that is hazardous to employees.</p><p>Carbon monoxide levels may not exceed 55 mg/m3.</p><p>Make sure there is adequate ventilation in areas where powered industrial trucks are used.</p>"
+            },
+            {
+                "title": "The Stability Triangle",
+                "description": "<p>Nearly all counterbalanced PIT's have a three-point suspension system.</p><p>When the load center is inside the stability triangle, the load is balanced.</p><p>When the load center is outside the triangle, the vehicle will tip over.</p>"
+            },
+            {
+                "title": "Vehicle Stability",
+                "description": "<p>Longitudinal stability is the trucks resistance to turning over forward or rearward.</p><p>Lateral stability is the trucks resistance to overturning sideways.</p>"
+            },
+            {
+                "title": "Dynamic Stability",
+                "description": "<p>Dynamic stability is the affect that dynamic forces have on the load center when the machine is moving, braking, cornering, lifting, tilting, and lowering loads.</p><p>Dynamic stability varies depending on the size of the load, speed of motion, and angle.</p><p>There are no specific guidelines for managing dynamic stability. Always drive slowly and carefully, and keep loads low.</p>"
+            },
+            {
+                "title": "Fuel Storage",
+                "description": "<p>The storage and handling of liquid fuels, such as gasoline and diesel, must be in accordance with NFPA Flammable and Combustible Liquids Code 30-1969.</p><p>The storage and handling of liquefied petroleum gas must be in accordance with NFPA Storage and Handling of Liquefied Petroleum Gasses Code 58-1969.</p>"
+            },
+            {
+                "title": "Battery Charging Facilities",
+                "description": "<p>Battery charging must be performed in areas designated for that purpose.</p><p>This area must have:</p><ul><li>Fire protection.</li><li>Protection from damage by trucks.</li><li>A way to flush and neutralize spilled electrolyte.</li><li>Adequate ventilation for dispersal of fumes from gassing batteries.</li><li>Material handling equipment for moving or changing batteries.</li></ul>"
+            },
+            {
+                "title": "Handling Batteries",
+                "description": "<p>Tools and other metallic objects must be kept away from uncovered batteries.</p><p>Precautions must be taken to prevent open flames, sparks and electric arcs in the battery charging areas.</p><p>Always pour acid into water, never pour water into acid.</p><p>Ensure that the vent caps are functioning.</p><p>Smoking is prohibited in charging areas.</p>"
+            },
+            {
+                "title": "Vehicle Components",
+                "description": "<img src=\"https://drive.google.com/file/d/1Ou4Gfv6wc1WmzJotA4SbColSF5y9LhRk/view?usp=sharing\" />"
+            },
+            {
+                "title": "Safe Vehicle Operations",
+                "description": "<p>Common sense can be your best protection when using powered industrial trucks.</p><p>Always drive slowly and carefully. Your speed dramatically affects your load center and its position in the stability triangle.</p><p>When travelling with a load, keep it low.</p>"
+            },
+            {
+                "title": "Vehicle Inspection",
+                "description": "<p>The operator should perform a brief vehicle inspection prior to every shift.</p><p>Include these basic inspection items, as well as any required by the owners manual.</p>"
+            },
+            {
+                "title": "Daily Inspection Checklist",
+                "description": "<p>Propane Forklift Procedures</p><p>KEY OFF Procedures</p><ul><li>The vehicle inspection<ul><li>Overhead Guard</li><li>Hydraulic Cylinders</li><li>Mast Assembly</li><li>Lift Chains and Rollers</li><li>Forks</li><li>LPG Tank and Locator Pin</li><li>LPG Tank Hose</li><li>Gas Gauge</li></ul></li><li>Check the engine oil</li><li>Examine the battery</li><li>Check the hydraulic fluid level</li><li>Check the engine coolant level</li></ul><p>KEY ON Procedures</p><ul><li>Test the front, tail, and brake lights</li></ul><p>ENGINE RUNNING Procedures</p><ul><li>Check the gauges<ul><li>Oil pressure indicator lamp</li><li>Ammeter indicator lamp</li><li>Hour meter</li><li>Water temperature gauge</li></ul></li><li>Test the standard equipment<ul><li>Steering</li><li>Brakes</li><li>Horn</li><li>Safety seat (if equipped)</li></ul></li><li>Check the operation of load-handling attachments</li><li>Check the transmission fluid level</li></ul>"
+            },
+            {
+                "title": "Working On and Around Vehicles",
+                "description": "<p>Do not drive trucks up to people standing or sitting in front of fixed objects.</p><p>People should not pass below elevated portions of the truck.</p><p>Only vehicles designed for carrying a passenger may have one.</p><p>Arms and legs may not be placed outside the masts or the running lines of the vehicle.</p>"
+            },
+            {
+                "title": "Vehicle Entry and Exit",
+                "description": "<p>Always enter and leave a powered industrial truck facing the vehicle.</p><p>If a sit-down vehicle tips over, remain seated in the operators seat and lean away from the direction of the fall.</p><p>If a stand-up rider truck tips over, step backwards off the vehicle to get clear.</p>"
+            },
+            {
+                "title": "Leaving Vehicles Unattended",
+                "description": "<p>A PIT is considered to be unattended when the operator is greater than 25ft from it, or the vehicle is not in his view.</p><p>When a vehicle is unattended, it must:</p><ul><li>Have its controls neutralized.</li><li>Have load engaging means fully lowered.</li><li>Have its power shut off.</li><li>Have its brakes set.</li><li>Have its wheels blocked if it is on an incline.</li></ul><p>Unattended vehicles must be shut down and have controls neutralized.</p>"
+            },
+            {
+                "title": "Travelling with the Vehicle",
+                "description": "<p>When travelling with the vehicle:</p><ul><li>Maintain three lengths from the vehicle ahead.</li><li>Yield the right away for emergency vehicles.</li><li>Slow the vehicle and sound the horn when crossing areas with obstructed views.</li><li>Cross railroad tracks diagonally when possible.</li><li>Ascend and descend grades slowly.</li></ul><p>Pedestrians have the right of way. Always be alert for them.</p>"
+            },
+            {
+                "title": "Loading",
+                "description": "<p>Only stable and safely arranged loads should be handled.</p><p>Loads must be below the rated capacity of the vehicle.</p><p>Trucks with attachments must be operated as partially loaded trucks, even when not carrying a load.</p><p>Before engaging a load, make sure it is below the rating of your vehicle.</p>"
+            },
+            {
+                "title": "Engaging a Load",
+                "description": "<p>When engaging a load, the engaging means must be placed under the load as far as possible.</p><p>The mast must be carefully tilted backwards to stabilize the load.</p><p>Do not tilt the engaging means forward, except when picking up a load.</p><p>Tilt the load backwards slightly for stability.</p>"
+            },
+            {
+                "title": "Travelling with a Load",
+                "description": "<p>When travelling with a load:</p><ul><li>If possible, the load engaging means should be tilted back slightly.</li><li>The load should only be raised enough to clear the road surface.</li><li>If the load obstructs forward view, travel with the load trailing.</li><li>When traveling grades in excess of 10%, loaded trucks must be driven with the load upgrade.</li></ul><p>When travelling with a load, try and keep it as low as possible.</p>"
+            },
+            {
+                "title": "Fuelling",
+                "description": "<p>Fuel tanks may not be filled while the engine is running.</p><p>Fuel spills must be completely washed away or evaporated before starting the engine.</p><p>Trucks may not be operated with fuel systems leaks.</p><p>No smoking or open flames in fueling areas.</p>"
+            },
+            {
+                "title": "Maintenance",
+                "description": "<p>Vehicles not in a safe operating condition must be removed from service.</p><p>Only authorized personnel can make repairs.</p><p>Repairs to fuel and ignition systems must be made in designated areas.</p><p>The battery must be disconnected before repairs on the electrical system can occur.</p>"
+            },
+            {
+                "title": "Training Requirements",
+                "description": "<p>No one is allowed to drive powered industrial trucks until they have been trained and certified by the employer.</p><p>The minimum age to drive one is 18.</p><p>Trainees must be supervised at all times while operating.</p>"
+            },
+            {
+                "title": "Summary",
+                "description": "<p>The four major classifications of Powered Industrial Trucks are:</p><ul><li>E = Electrically</li><li>D = Diesel Powered</li><li>G = Gasoline Powered</li><li>L = Liquefied Petroleum Gas</li></ul><p>Longitudinal stability is the trucks resistance to turning over forward or rearward.</p><p>Lateral stability is the trucks resistance to overturning sideways.</p><p>Dynamic stability is the affect that dynamic forces have on the load center when the machine is moving, braking, cornering, lifting, tilting, and lowering loads.</p><p>The minimum age to drive a powered industrial truck is 18.</p><p>Employees must be trained and evaluated in forklift operations prior to operating them alone.</p>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "Anyone can operate a forklift as long as they have been trained!",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "How often should an operator inspect their forklift?",
+                "answers": [
+                    {
+                        "a": "Weekly",
+                        "b": "Every Shift",
+                        "c": "Monthly",
+                        "d": "Annually"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The maximum number of people on a forklift at any time is two.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "When traveling with a load you should raise the load:",
+                "answers": [
+                    {
+                        "a": "About mid height so that you can see and the load cant catch on anything",
+                        "b": "Just slightly off the floor so that you can travel",
+                        "c": "As high as it can go so that you can see clearly and it doesn't get caught on anything and fall"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Do not tilt the mast when traveling it could cause the load to be unstable.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            }
+        ]
+    }
+]

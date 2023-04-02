@@ -1,0 +1,82 @@
+[{
+    "name": "Hazard Communication Standard (Employee Right-to-Know)",
+    "slug": "hazard-communication-standard-employee-right-to-know",
+    "department": "1",
+    "slides": [{
+        "title": "Hazard Communication Standard (Employee Right-to-Know)",
+        "description": "<p>The purpose of the OSHA’s Hazard Communication Standard (HCS) (also called the employee right-to-know) is to provide employees with information pertaining to potential exposures to the dangers of hazardous materials in the workplace. </p>"
+    },{
+        "title": "Employee Training",
+        "description": "<p>All employees are to receive HCS training before working with hazardous materials. Some states require annual training and all training must be documented. The training must also provide you with a general understanding of the following.</p><p>The HCS and your rights;</p><p>Hazardous materials to which you are or could be exposed;</p><p>Location of hazardous materials at your dalership;</p><p>Health effects of hazardous-materials exposure;</p><p>Detection of hazardous-materials exposure; Material Safety Data Sheets (MSDS’s);</p><p>Personal Protective Equipment (PPE)</p>"
+    },{
+        "title": "Management’s Responsibility",
+        "description": "<p>The management of your facility must: Ensure all shop employees are properly trained.</p><p>Prepare an inventory of all hazardous products and materials used at the dealership that requires MSDS.</p><p>Ensure a current MSDS is available for each hazardous material. You must be informed as to where the MSDS’s are kept at your dealership so you an refer to them prior to handling hazardous materials or when you have questions about how to use the materials safely.</p><p>Ensure all containers, tanks, boxes, bottles, cans, etc., are properly labled.</p><p>Develop a written Hazard Communication Plan that describes how the HCS will be implemented at your facility.</p>"
+    },{
+        "title": "Management’s Responsibility",
+        "description": "<p>Hazardous buy-products, such as those listed below, may also be produced at your location. By-products from the use of materials/products will be described on the MSDS. Welding fumes (oxides of iron, aluminum and zinc; ozone) Asbestos dust Solvent and gasoline vapors Metallic dust Automotive / diesel exhaust</p><p>Automotive and diesel-engine exhaust contains fine-particulate matter, hydrocarbons and carbon monoxide (CO). Excessive exhaust in poorly ventilated areas can be very irritating, noxious and even deadly. Diesel exhaust, especially, creates a fine dust that spreads everywhere.</p><p>Some of the effects from exposure to CO includes reduced tolerance for exercise, impaired mental function, nausea and headaches. Extreme exposure leads to unconsciousness and death. To avoid potential health hazards from automotive or diesel exhaust, follow these recommended practices: Make sure adequate ventilation is provided by use of flexible hose that vents to the outside. While running an engine when the doors are closed, attach the flexible hose to the exhaust. Open doors, when possible, to allow for cross ventilation. The use of a wall fan does not insure elimination of CO and exhaust pollutants. Avoid running engines except when necessary, especially when the maintenance facility doors are not open.</p>"
+    },{
+        "title": "Body Shops",
+        "description": "<p>Some of the most common hazardous materials in the paint and body shop covered by HCS are described below:</p><p>Many topcoats, hardeners, glass or punchweld primers contain isocyanates, an extremely toxic class of compounds. Over-exposure to isocyanates can cause eye and throat irritation. Long term overexposure can cause permanent damage to the lungs, central nervous system and brain. They are mostly found in the dust from sanding, grinding etc., but may also be present as a gas in the air.</p><p>Aerosol cleaners for plastic repairs contain toluene and xylene. These attack the liver, kidneys and nervous system.</p><p>Buffing compounds and butyl tapes contain crystalline silica, a lung irritant that can cause lung cancer.</p><p>Wheel cleaners contain acids such as hydrofluoric acid. It can irritate and burn skin and eyes.</p><p>Adhesives and rubberized under coatings contain thinners such as acetone and 1,1 trichloroethane.</p><p>Paints contain mineral spirits. Orange, yellow, and red paints on trucks and industrial equipment can contain lead chromate, presenting a hazard when sanding, grinding or applying.</p><p>Solvents may contain mineral spirits, alcohols or other hydro-carbons.</p>"
+    },{
+        "title": "Body Shops",
+        "description": "<p>Body parts (coated steel, painted parts, bumpers, plastic parts, etc.) subjected to cutting, grinding, sanding or welding will also produce hazardous dusts and fumes. The worker needs to be aware of this, what is in the coating or plastic and what protective measures to take.</p><p>HCS also covers fire extinguishers, steel coated with oil, sandpaper and grinding wheels. Coated, metal and plastic parts may also be covered, depending on how the materials are used. If they are used in a fashion that could create a hazardous exposure, such as grinding, welding or cutting, they must be mentioned in the MSDS.</p><p>MSDSs are not required for hazardous waste or by-products. However, disposal methods and hazards of spent or used products and hazardous fumes must be mentioned in the MSDS.</p><p>Exemptions include consumer-type products (those that can be purchased at the retail store) in small quantities and used in fashion as one may use a product at home.</p>"
+    },{
+        "title": "Proper Container Labeling",
+        "description": "<p>Labeling, tagging or marking of all containers of hazardous materials must include the products name, name of manufacturer or supplier, a description of the hazard and the PPE required. This is usually provided by the supplier or manufacturer.</p><p>For containers not properly labeled, or for materials to be stored in non-original containers, follow your facility’s labeling policy. Temporary containers are not required to be labeled, if the contents are emptied by the end of the work shift. </p>"
+    },{
+        "title": "OSHA Approved Labeling System",
+        "description": "<p><strong>National Fire Protection Association (NFPA)</strong></p><p>Within the small squares or diamonds on the product label are entered numbers indicating what type of hazard, if any, is present in the container. 0 = No Hazard 1 = Slight Hazard 2 = Moderate Hazard 3 = Serious Hazard 4 = Sever Hazard</p><p>The white diamond on the NFPA label provides a place for special note.</p>"
+    },{
+        "title": "OSHA Approved Labeling System",
+        "description": "<p>Hazardous Material Identification System (HMIS)</p><p>Within the small squares on the product label are entered numbers indicating what type of hazard, if any, is present in the container. 0 = No Hazard 1 = Slight Hazard 2 = Moderate Hazard 3 = Serious Hazard 4 = Sever Hazard</p><p>The white bar area on the HMIS label allows for the placement of any symbol for PPE.</p>"
+    },{
+
+        "description": "<p>It your responsibility to know how to read and understand these warning labels. If any information is missing from a container, your supervisor should contact the supplier immediately and request additional MSDS labels be sent and applied where necessary.</p>"
+    }],
+    "questions": [
+        {
+            "question": "The purpose of the OSHA’s Hazard Communication Standard (HCS) (also called the employee right-to-know) is to provide employees with information pertaining to potential exposures to the dangers of hazardous materials in the workplace.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        },
+        {
+            "question": "Which of the following must the management of your facility provide:",
+            "answers": [
+                {
+                    "a": "Ensure all shop employees are properly trained",
+                    "b": "Prepare an inventory of all hazardous products and materials used at the dealership that requires MSDS.",
+                    "c": "Ensure all containers, tanks, boxes, bottles, cans, etc., are properly labeled.",
+                    "d": "All of the above"
+                }
+            ],
+            "correctAnswer": "d"
+        },
+        {
+            "question": "How many different types of OSHA approved labeling systems are provided in the industry.",
+            "answers": [
+                {
+                    "a": "1 standardized labeling form",
+                    "b": "2 standard labeling formsf",
+                    "c": "No standardized labeling system is provided.",
+                    "d": "None of the above"
+                }
+            ],
+            "correctAnswer": "b"
+        },
+        {
+            "question": "MSDS Right-To-Know booklets are to be stored in visible and 24 hour accessible locations at all times.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        }
+    ]
+}]

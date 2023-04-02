@@ -1,0 +1,54 @@
+[
+    {
+        "name": "Harassment",
+        "slug": "harassment",
+        "department": "1",
+        "slides": [
+            {
+                "title": "The Law of Harassment",
+                "description": "<p>PROTECTED BASES</p><ul><li>RACE</li><li>COLOR</li><li>RELIGION</li><li>SEX</li><li>NATIONAL ORIGIN</li><li>AGE (40 and over)</li><li>DISABILITY</li><li>RETALIATION</li></ul>"
+            },
+            {
+                "title": "WHAT IS WORKPLACE HARASSMENT?",
+                "description": "<p>Harassment is any unwelcome verbal or physical conduct based on one of the protected bases that is so objectively offensive as to alter the conditions of the victim’s employment. This standard is met when:</p><p>The conduct culminates in a tangible employment action, or</p><p>The conduct was sufficiently severe or pervasive to create a hostile work environment</p>"
+            },
+            {
+                "title": "ELEMENTS OF A HARASSMENT",
+                "description": "<p>Conduct must be unwelcome</p><p>Conduct based on a protected basis</p><p>Conduct results in a tangible employment action or creates a hostile work environment</p>"
+            },
+            {
+                "title": "UNWELCOME CONDUCT",
+                "description": "<p>\"Unwelcome\" conduct is where the employee did not solicit or invite the conduct and regarded it as undesirable</p><p>Critical inquiry: Did the complainant explicitly or implicitly communicate that the conduct was unwelcome?</p><p>Submission does not mean welcomeness</p><p>Active participation would likely defeat to claim</p>"
+            },
+            {
+                "title": "BASIS",
+                "description": "<p>Harassment based on sex, including same-sex, (sexual and nonsexual) violates Title VII</p><p>Harassment based on race, color, national origin, religion, age (40 and over), disability, or in retaliation for protected activity also violates federal and anti-- discrimination laws</p>"
+            },
+            {
+                "title": "HOSTILE ENVIRONMENT HARASSMENT STANDARDS",
+                "description": "<p>Unwelcome comments or conduct based on a protected basis which unreasonably interferes with an employee’s work performance or creates an intimidating, hostile or offensive work environment</p><p>Anyone can commit this type of harassment, a management official, a co-worker or a non-employee</p>"
+            },
+            {
+                "title": "REASONABLE PERSON",
+                "description": "<p>Is the conduct severe or pervasive enough to create an environment that a reasonable person would find hostile, intimidating or abusive?</p><p>Does the person perceive the conduct as such?</p>"
+            },
+            {
+                "title": "HOW HARASSMENT AFFECTS THE WORKPLACE",
+                "description": "<p>Poor public image</p><p>Lower productivity and morale</p><p>Higher costs for hiring and training new employees</p><p>Promotional and physical pain for employees</p><p>Less effective job performance</p><p>Poor employee morale</p><p>Personal and financial problems</p>"
+            },
+            {
+                "title": "APPROPRIATE PREVENTATIVE ACTIONS",
+                "description": "<p>All employees should:</p><ul><li>Know the employer's anti-harassment policy</li><li>Set a positive example by treating others with respect</li><li>Don't make assumptions about jokes</li><li>Think before speaking and consider others' feelings and perceptions</li><li>Never go along with the crowd of behavior is offensive</li></ul>"
+            },
+            {
+                "title": "EEOC \"Employee's Duty\"",
+                "description": "<p>Take advantage of any preventive or corrective opportunities provided by the employer.</p><p>Take no unreasonable delays filing a complaint.</p><p>Provide truthful information and cooperate in the investigation.</p><p>Report harassment before it becomes severe or pervasive.</p>"
+            },
+            {
+                "title": "Harassment Policy, Compliant Process and Expectations",
+                "description": "<p>Employees have 180 days to report harassment that is covered by the EEOC ( in some states it may be as long as 300 days)</p><p>You must report the situation to HR1 or HR2, although an employee should not necessarily be expected to complain to management immediately after the first or second incident of relatively minor harassment.</p><p>You can expect an investigation into the complaint that is prompt, thorough, and impartial. The amount of time necessary to complete an investigation will depend on the particular circumstances.</p><p>If you so direct you will be assured of confidentiality of the harassment allegations \"to the extent possible.</p><p>Finally, the employer will take prompt corrective measures if it determines that harassment has occurred.</p>"
+            }
+        ],
+        "questions": []
+    }
+]
