@@ -19,5 +19,4 @@ yarn-error.log
 
 # Project exclude paths
 /storage/app/
-/storage/framework/.vapor/
 .env.staging
