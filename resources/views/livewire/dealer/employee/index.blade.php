@@ -10,7 +10,9 @@
                             <td class="px-4 py-4">Name</td>
                             <td class="px-4 py-4">Email</td>
                             <td class="px-4 py-4">Role</td>
-                            <td class="px-4 py-4">Stores</td>
+                            @if(tenant('locations'))
+                                <td class="px-4 py-4">Stores</td>
+                            @endif
                             <td class="px-4 py-4">Department</td>
                             <td class="px-4 py-4">Courses</td>
                             <td class="px-4 py-4">&nbsp;</td>

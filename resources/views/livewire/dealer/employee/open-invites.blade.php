@@ -43,10 +43,10 @@
                                 </td>
                                 <td class="px-4 py-4 text-right text-sm font-medium sm:pr-6 space-x-3">
                                     @if($invite->user_id === auth()->id())
-                                        <button class="text-gray-500"
-                                                wire:click="$emit('modal.open', 'dealer.employee.resend-invite',  @js(['invite' => $invite->id]))">
-                                            Resend
-                                        </button>
+                                        {{--                                        <button class="text-gray-500"--}}
+                                        {{--                                                wire:click="$emit('modal.open', 'dealer.employee.resend-invite',  @js(['invite' => $invite->id]))">--}}
+                                        {{--                                            Resend--}}
+                                        {{--                                        </button>--}}
                                         <button class="text-red-500"
                                                 wire:click="$emit('modal.open', 'dealer.employee.delete-invite',  @js(['invite' => $invite->id]))">
                                             Delete

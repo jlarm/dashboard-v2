@@ -12,6 +12,10 @@
             font-family: Helvetica, serif;
         }
 
+        .bg-red {
+            background-color: #fca5a5 !important;
+        }
+
         h1 {
             font-size: 16px;
         }
@@ -136,7 +140,7 @@
 <div class="page-break"></div>
 <!-- Questions -->
 <div>
-    <div class="question">
+    <div class="question @if($vendor->q1a === 'no' || $vendor->q1a === 'na') bg-red @endif">
         Are you an employee or authorized representative of this vendor/company? Indicate the Person’s Name in the
         comments.
         <div class="answer">
@@ -158,7 +162,7 @@
             {!! $vendor->q1c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q2a === 'no' || $vendor->q2a === 'na') bg-red @endif">
         Does your company offer software applications as part of its services?
         <div class="answer">
             <label for="yes">
@@ -179,7 +183,7 @@
             {!! $vendor->q2c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q3a === 'no' || $vendor->q3a === 'na') bg-red @endif">
         Is client data encrypted at rest and in transit? If not, why not?
         <div class="answer">
             <label for="yes">
@@ -200,7 +204,7 @@
             {!! $vendor->q3c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q4a === 'no' || $vendor->q4a === 'na') bg-red @endif">
         Has your company experienced a data breach in the past 12 months that affected customers’ personal information?
         <div class="answer">
             <label for="yes">
@@ -221,7 +225,7 @@
             {!! $vendor->q4c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q5a === 'no' || $vendor->q5a === 'na') bg-red @endif">
         Does your company have insurance coverage for a data breach that may involve our customers’ information that
         your company acquires while doing business with us?
         <div class="answer">
@@ -243,7 +247,7 @@
             {!! $vendor->q5c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q6a === 'no' || $vendor->q6a === 'na') bg-red @endif">
         Does your company require security awareness training for all employees? If so, please answer how often it is
         provided in the comments section.
         <div class="answer">
@@ -265,7 +269,7 @@
             {!! $vendor->q6c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q7a === 'no' || $vendor->q7a === 'na') bg-red @endif">
         Does your company monitor for the effectiveness of employee security training by testing your users with
         simulated attacks?
         <div class="answer">
@@ -287,7 +291,7 @@
             {!! $vendor->q7c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q8a === 'no' || $vendor->q8a === 'na') bg-red @endif">
         Does your company have a process for restricting access to customer files on a need-to-know basis?
         <div class="answer">
             <label for="yes">
@@ -308,7 +312,7 @@
             {!! $vendor->q8c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q9a === 'no' || $vendor->q9a === 'na') bg-red @endif">
         Do you have a written information security program?
         <div class="answer">
             <label for="yes">
@@ -329,7 +333,7 @@
             {!! $vendor->q9c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q10a === 'no' || $vendor->q10a === 'na') bg-red @endif">
         Does your company conduct annual risk assessments that assess electronic, physical, and administrative
         information safeguards?
         <div class="answer">
@@ -351,7 +355,7 @@
             {!! $vendor->q10c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q11a === 'no' || $vendor->q11a === 'na') bg-red @endif">
         Does your company have systems in place to securely dispose of documents that have personal identifiable
         information on them?
         <div class="answer">
@@ -373,7 +377,7 @@
             {!! $vendor->q11c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q12a === 'no' || $vendor->q12a === 'na') bg-red @endif">
         Does your company have systems in place to restrict access to files/documents containing customers personal
         information to those with proper authorization?
         <div class="answer">
@@ -395,7 +399,7 @@
             {!! $vendor->q12c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q13a === 'no' || $vendor->q13a === 'na') bg-red @endif">
         Does your company have due diligence processes and procedures for vetting subcontractors, including having them
         sign processing agreements that are compliant with applicable federal and state laws?
         <div class="answer">
@@ -417,7 +421,7 @@
             {!! $vendor->q13c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q14a === 'no' || $vendor->q14a === 'na') bg-red @endif">
         Has your company performed penetration testing of its systems within the past 12 months?
         <div class="answer">
             <label for="yes">
@@ -438,7 +442,7 @@
             {!! $vendor->q14c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q15a === 'no' || $vendor->q15a === 'na') bg-red @endif">
         Has your company conducted a vulnerability assessment of your systems within the past 6 months?
         <div class="answer">
             <label for="yes">
@@ -459,7 +463,7 @@
             {!! $vendor->q15c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q16a === 'no' || $vendor->q16a === 'na') bg-red @endif">
         Does your company maintain end-of-life or unsupported operating systems or software? If so, are these systems
         used to manage or maintain customer data?
         <div class="answer">
@@ -481,7 +485,7 @@
             {!! $vendor->q16c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q17a === 'no' || $vendor->q17a === 'na') bg-red @endif">
         Does your company regularly patch or update systems and third-party software and monitor for noncompliance?
         <div class="answer">
             <label for="yes">
@@ -502,7 +506,7 @@
             {!! $vendor->q17c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q18a === 'no' || $vendor->q18a === 'na') bg-red @endif">
         Does your company have a written incident response plan in the event of a security breach?
         <div class="answer">
             <label for="yes">
@@ -523,7 +527,7 @@
             {!! $vendor->q18c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q19a === 'no' || $vendor->q19a === 'na') bg-red @endif">
         Does your company require users to create complex passwords with 9 characters or greater?
         <div class="answer">
             <label for="yes">
@@ -544,7 +548,7 @@
             {!! $vendor->q19c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q20a === 'no' || $vendor->q20a === 'na') bg-red @endif">
         Does your company prohibit shared logins?
         <div class="answer">
             <label for="yes">
@@ -565,7 +569,7 @@
             {!! $vendor->q20c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q21a === 'no' || $vendor->q21a === 'na') bg-red @endif">
         Does your company require multi-factor authentication to log into your company’s systems?
         <div class="answer">
             <label for="yes">
@@ -586,7 +590,7 @@
             {!! $vendor->q21c ?? '' !!}
         </div>
     </div>
-    <div class="question">
+    <div class="question @if($vendor->q22a === 'no' || $vendor->q22a === 'na') bg-red @endif">
         Do you have an account lockout policy?
         <div class="answer">
             <label for="yes">

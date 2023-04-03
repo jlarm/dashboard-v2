@@ -81,9 +81,9 @@ class Invite extends Modal
     public function render()
     {
         return view('livewire.dealer.employee.invite', [
-            'stores' => Store::all(),
-            'departments' => Department::all(),
-            'roles' => Role::get(),
+            'stores' => Store::orderBy('name')->get(),
+            'departments' => Department::orderBy('name')->get(),
+            'roles' => Role::select('name')->get(),
         ]);
     }
 }

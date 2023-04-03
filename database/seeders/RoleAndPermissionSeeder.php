@@ -15,119 +15,190 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'create-users']);
-        Permission::create(['name' => 'edit-users']);
-        Permission::create(['name' => 'delete-users']);
-
         Permission::create(['name' => 'create-dealerships']);
         Permission::create(['name' => 'edit-dealerships']);
         Permission::create(['name' => 'delete-dealerships']);
+        Permission::create(['name' => 'view-dealerships']);
 
         Permission::create(['name' => 'create-stores']);
         Permission::create(['name' => 'edit-stores']);
         Permission::create(['name' => 'delete-stores']);
+        Permission::create(['name' => 'view-stores']);
+
+        Permission::create(['name' => 'create-users']);
+        Permission::create(['name' => 'edit-users']);
+        Permission::create(['name' => 'delete-users']);
+        Permission::create(['name' => 'view-users']);
 
         Permission::create(['name' => 'create-vendors']);
         Permission::create(['name' => 'edit-vendors']);
         Permission::create(['name' => 'delete-vendors']);
+        Permission::create(['name' => 'view-vendors']);
 
-        Role::create(['global_id' => 'super-admin', 'name' => 'super-admin']);
+        Permission::create(['name' => 'create-scans']);
+        Permission::create(['name' => 'edit-scans']);
+        Permission::create(['name' => 'delete-scans']);
+        Permission::create(['name' => 'view-scans']);
 
-        $adminRole = Role::create(['global_id' => 'Admin','name' => 'Admin']);
-        $consultantRole = Role::create(['global_id' => 'Consultant','name' => 'Consultant']);
-        $ownerRole = Role::create(['global_id' => 'Owner','name' => 'Owner']);
-        $qiRole = Role::create(['global_id' => 'QI','name' => 'Qualified Individual']);
-        $gmRole = Role::create(['global_id' => 'GM','name' => 'GM']);
-        $cfoRole = Role::create(['global_id' => 'CFO','name' => 'CFO']);
-        $gsmRole = Role::create(['global_id' => 'GSM','name' => 'GSM']);
-        $managerRole = Role::create(['global_id' => 'Manager','name' => 'Manager']);
-        $employeeRole = Role::create(['global_id' => 'Employee','name' => 'Employee']);
+        Permission::create(['name' => 'create-manuals']);
+        Permission::create(['name' => 'edit-manuals']);
+        Permission::create(['name' => 'delete-manuals']);
+        Permission::create(['name' => 'view-manuals']);
+
+        Role::create(['name' => 'super-admin']);
+
+        $adminRole = Role::create(['name' => 'Admin']);
+        $consultantRole = Role::create(['name' => 'Consultant']);
+        $ownerRole = Role::create(['name' => 'Owner']);
+        $qiRole = Role::create(['name' => 'Qualified Individual']);
+        $gmRole = Role::create(['name' => 'General Manager']);
+        $smRole = Role::create(['name' => 'Service Manager']);
+        $pmRole = Role::create(['name' => 'Parts Manager']);
+        $bsmRole = Role::create(['name' => 'Body Shop Manager']);
+        $cfoRole = Role::create(['name' => 'CFO']);
+        $gsmRole = Role::create(['name' => 'GSM']);
+        $managerRole = Role::create(['name' => 'Manager']);
+        $employeeRole = Role::create(['name' => 'Employee']);
 
         $adminRole->givePermissionTo([
-            'create-users',
-            'edit-users',
-            'delete-users',
             'create-dealerships',
             'edit-dealerships',
             'delete-dealerships',
+            'view-dealerships',
             'create-stores',
             'edit-stores',
             'delete-stores',
+            'view-stores',
+            'create-users',
+            'edit-users',
+            'delete-users',
+            'view-users',
             'create-vendors',
             'edit-vendors',
             'delete-vendors',
+            'view-vendors',
+            'create-scans',
+            'edit-scans',
+            'delete-scans',
+            'view-scans',
+            'create-manuals',
+            'edit-manuals',
+            'delete-manuals',
+            'view-manuals',
         ]);
 
         $consultantRole->givePermissionTo([
-            'create-users',
-            'edit-users',
             'create-dealerships',
             'edit-dealerships',
+            'view-dealerships',
             'create-stores',
             'edit-stores',
+            'view-stores',
+            'create-users',
+            'edit-users',
+            'view-users',
             'create-vendors',
             'edit-vendors',
-            'delete-vendors',
+            'view-vendors',
+            'create-scans',
+            'edit-scans',
+            'view-scans',
+            'create-manuals',
+            'edit-manuals',
+            'view-manuals',
         ]);
 
         $ownerRole->givePermissionTo([
+            'create-stores',
+            'edit-stores',
             'create-users',
             'edit-users',
             'delete-users',
-            'create-stores',
-            'edit-stores',
-            'delete-stores',
             'create-vendors',
             'edit-vendors',
-            'delete-vendors',
-        ]);
-
-        $qiRole->givePermissionTo([
-            'create-users',
-            'edit-users',
-            'delete-users',
-            'create-stores',
-            'edit-stores',
-            'delete-stores',
-            'create-vendors',
-            'edit-vendors',
-            'delete-vendors',
+            'view-scans',
+            'view-manuals',
         ]);
 
         $gmRole->givePermissionTo([
+            'create-stores',
+            'edit-stores',
             'create-users',
             'edit-users',
             'delete-users',
-            'create-stores',
-            'edit-stores',
-            'delete-stores',
             'create-vendors',
             'edit-vendors',
-            'delete-vendors',
+            'view-scans',
+            'view-manuals',
         ]);
 
         $cfoRole->givePermissionTo([
+            'create-stores',
+            'edit-stores',
             'create-users',
             'edit-users',
             'delete-users',
-            'create-stores',
-            'edit-stores',
-            'delete-stores',
             'create-vendors',
             'edit-vendors',
-            'delete-vendors',
+            'view-scans',
+            'view-manuals',
         ]);
 
         $gsmRole->givePermissionTo([
+            'create-stores',
+            'edit-stores',
             'create-users',
             'edit-users',
             'delete-users',
-            'create-stores',
-            'edit-stores',
-            'delete-stores',
             'create-vendors',
             'edit-vendors',
-            'delete-vendors',
+            'view-scans',
+            'view-manuals',
+        ]);
+
+        $qiRole->givePermissionTo([
+            'create-dealerships',
+            'edit-dealerships',
+            'view-dealerships',
+            'create-stores',
+            'edit-stores',
+            'view-stores',
+            'create-users',
+            'edit-users',
+            'view-users',
+            'create-vendors',
+            'edit-vendors',
+            'view-vendors',
+            'create-scans',
+            'edit-scans',
+            'view-scans',
+            'create-manuals',
+            'edit-manuals',
+            'view-manuals',
+        ]);
+
+        $smRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'view-users',
+            'view-vendors',
+            'view-manuals',
+        ]);
+
+        $pmRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'view-users',
+            'view-vendors',
+            'view-manuals',
+        ]);
+
+        $bsmRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'view-users',
+            'view-vendors',
+            'view-manuals',
         ]);
 
         $managerRole->givePermissionTo([

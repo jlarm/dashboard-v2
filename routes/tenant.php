@@ -88,6 +88,9 @@ Route::group([
     Route::get('/glbform', function () {
         return view('dealer.manual.GlbForm');
     })->middleware('auth')->name('manual.glbform');
+    Route::get('osha', function () {
+        return view('dealer.manual.osha');
+    })->middleware('auth')->name('manual.osha');
 
     Route::get('vendors', function () {
         return view('dealer.vendor.index');

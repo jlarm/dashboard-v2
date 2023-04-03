@@ -9,14 +9,19 @@
                     <td class="px-4 py-4">Contact Name</td>
                     <td class="px-4 py-4">Contact Email</td>
                     <td class="px-4 py-4">Store</td>
-                    <td class="px-4 py-4">&nbsp;</td>
+                    <td class="px-4 py-4">Status</td>
+                    <td class="px-4 py-4">No's</td>
                     <td class="px-4 py-4"></td>
                 </tr>
                 </thead>
                 <tbody class="text-gray-700 whitespace-nowrap divide-y divide-gray-100">
-                @foreach($vendors as $vendor)
+                @forelse($vendors as $vendor)
                     <livewire:dealer.vendor.index-item :vendor="$vendor" :key="$vendor->id"/>
-                @endforeach
+                @empty
+                    <tr>
+                        <td class="px-4 py-4 text-sm text-gray-700" colspan="6">No vendors found.</td>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>

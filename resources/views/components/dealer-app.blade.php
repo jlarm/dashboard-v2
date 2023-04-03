@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('favicon.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ global_asset('favicon.svg') }}" type="image/x-icon">
 
     <title>{{ tenant('name') }}</title>
 
@@ -19,7 +19,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="font-sans antialiased bg-gray-50">
+<body class="font-sans antialiased bg-white">
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     @include('layouts.mobile-navigation')
@@ -31,7 +31,7 @@
 
         @include('layouts.top-bar')
 
-        <main class="flex-1 bg-gray-50">
+        <main class="flex-1 bg-white">
             <div class="py-6">
                 <div class="mx-auto px-4 sm:px-6 md:px-8">
                     {{ $slot }}
