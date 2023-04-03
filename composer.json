@@ -21,6 +21,7 @@
         "livewire/livewire": "^2.11",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.27",
+        "sentry/sentry-laravel": "^3.3",
         "spatie/laravel-onboard": "^2.4",
         "spatie/laravel-permission": "^5.8",
         "spatie/laravel-ray": "^1.32",
@@ -86,7 +87,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "dev",
