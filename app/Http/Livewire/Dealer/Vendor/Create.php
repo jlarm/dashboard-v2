@@ -11,6 +11,7 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
+    public $user;
 
     public $contact_name;
 
@@ -36,7 +37,7 @@ class Create extends Modal
             'store_id' => $this->store_id ?? null,
         ]);
 
-        SendVendorEmailJob::dispatch($vendor);
+        SendVendorEmailJob::dispatch($vendor, $this->user);
 
         $this->reset();
 

@@ -58,7 +58,7 @@ class Edit extends SlideOver
         'fax' => 'nullable',
         'domain' => 'required',
         'url' => 'required',
-        'locations' => 'required',
+        'locations' => 'required|boolean',
         'user' => 'required',
     ];
 
