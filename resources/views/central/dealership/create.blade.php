@@ -97,7 +97,7 @@
                                         :value="old('domain')"
                                         required
                                     />
-                                    <span>.dashboard.test</span>
+                                    <span>.{{ config('tenancy.central_domains')[0] }}</span>
                                 </div>
                                 <x-input-error :messages="$errors->get('domain')" class="mt-2"/>
                             </div>
