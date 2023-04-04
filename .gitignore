@@ -1,3 +1,4 @@
+/.phpunit.cache
 /node_modules
 /public/build
 /public/hot
@@ -16,7 +17,3 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-
-# Project exclude paths
-/storage/app/
-.env.staging
