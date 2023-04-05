@@ -2,7 +2,7 @@
     @if(Cookie::get('sentry'))
         <livewire:dealer.scan.index/>
     @else
-        <div class="max-w-md">
+        <div class="max-w-md mx-auto">
             <livewire:dealer.scan.login/>
         </div>
     @endif

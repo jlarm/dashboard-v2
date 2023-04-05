@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Request;
 use Livewire\Component;
 use Response;
 
-class Index extends Component
+class   Index extends Component
 {
     public string $type = 'technical';
     public string $dealer;

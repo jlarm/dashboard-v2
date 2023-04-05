@@ -1,11 +1,11 @@
-<div class="flex justify-center flex-col">
+<div class="flex justify-center flex-col text-center">
     @error('email')
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
         <strong class="font-bold">Error!</strong>
         <span class="block sm:inline">{{ $message }}</span>
     </div>
     @enderror
-    <p class="mb-6">Login to view scan results</p>
+    <p class="my-6">Login to view scan results</p>
     <form wire:submit.prevent="login" class="space-y-6">
         <div>
             <x-text-input
@@ -15,6 +15,7 @@
                 label="email"
                 placeholder="Email Address"
                 required
+                class="w-full"
             />
         </div>
         <div>
@@ -25,10 +26,15 @@
                 label="password"
                 placeholder="Password"
                 required
+                class="w-full"
             />
         </div>
         <button
-            class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
+            class="w-full text-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md
+                font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700
+                active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2
+                transition ease-in-out duration-150
+            "
             type="submit"
         >
             <div wire:loading>
