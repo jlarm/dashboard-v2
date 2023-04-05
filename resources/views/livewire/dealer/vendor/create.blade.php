@@ -2,6 +2,24 @@
     <x-slot name="title">Add New Vendor</x-slot>
 
     <div class="space-y-5">
+        @if(!$qi)
+            <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700">
+                            A Qualified Individual must be set before adding a vendor.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Company Name</label>
             <div class="mt-1">
@@ -55,7 +73,8 @@
 
     <x-slot name="buttons">
         <button
-            type="submit"
+            @if(!$qi) disabled @endif
+        type="submit"
             class="inline-flex items-center justify-center rounded-md border border-transparent bg-arm-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-arm-blue-700 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:w-auto"
         >
             Create

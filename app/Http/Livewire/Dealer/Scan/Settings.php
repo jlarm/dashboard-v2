@@ -17,7 +17,7 @@ class Settings extends Component
 
     public function mount()
     {
-        $this->name = $this->scan->name ?? '';
+        $this->name = $this->scan->name;
     }
 
     protected $rules = [

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Vendor;
 use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -12,6 +13,7 @@ class Create extends Modal
 {
     public $name;
     public $user;
+    public $qi;
 
     public $contact_name;
 
@@ -25,6 +27,11 @@ class Create extends Modal
         'contact_email' => 'required|max:255',
         'store_id' => 'nullable|max:255',
     ];
+
+    public function mount()
+    {
+        $this->qi = User::role('Qualified Individual')->first();
+    }
 
     public function create()
     {
