@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Central\Dealership;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealership\CreateRequest;
+use App\Models\Dealer\ScanSetting;
 use App\Models\Dealership;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -43,6 +44,8 @@ class CreateController extends Controller
                     'password' => bcrypt($pass),
                 ]);
                 $user->assignRole('Consultant');
+
+                ScanSetting::create([]);
             });
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

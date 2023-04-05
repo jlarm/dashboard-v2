@@ -78,6 +78,10 @@ Route::group([
         return view('dealer.scan.index');
     })->middleware('auth')->name('scan.index');
 
+    Route::get('scans/settings', function () {
+        return view('dealer.scan.settings');
+    })->middleware('auth')->name('scan.settings');
+
     Route::get('/sds', function () {
         return view('dealer.sds.index');
     })->middleware('auth')->name('sds.index');

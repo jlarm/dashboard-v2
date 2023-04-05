@@ -19,7 +19,10 @@
                     <livewire:dealer.vendor.index-item :vendor="$vendor" :key="$vendor->id"/>
                 @empty
                     <tr>
-                        <td class="px-4 py-4 text-sm text-gray-700" colspan="6">No vendors found.</td>
+                        <td colspan="7"
+                            class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
+                            No Vendors Added
+                        </td>
                     </tr>
                 @endforelse
                 </tbody>
