@@ -9,7 +9,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form action="{{ route('dealerships.store') }}" method="POST" class="space-y-5">
                         @csrf
@@ -63,9 +63,14 @@
                                 <!-- Dealership Phone Number -->
                                 <div>
                                     <x-input-label for="phone" :value="__('Phone')"/>
-                                    <x-text-input wire:model.lazy="phone" id="phone" class="block mt-1 w-full"
-                                                  type="tel" name="phone"
-                                                  :value="old('phone')" required/>
+                                    <x-text-input
+                                        x-mask="999-999-9999"
+                                        placeholder="235-456-2346"
+                                        wire:model.lazy="phone"
+                                        id="phone"
+                                        class="block mt-1 w-full"
+                                        type="tel" name="phone"
+                                        :value="old('phone')" required/>
                                     <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
                                 </div>
 
@@ -73,6 +78,7 @@
                                 <div>
                                     <x-input-label for="fax" :value="__('Fax')"/>
                                     <x-text-input
+                                        placeholder="235-456-2346"
                                         wire:model.lazy="fax"
                                         id="fax"
                                         class="block mt-1 w-full"
