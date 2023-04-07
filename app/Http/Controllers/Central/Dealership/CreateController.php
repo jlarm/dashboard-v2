@@ -45,13 +45,29 @@ class CreateController extends Controller
                 ]);
                 $user->assignRole('Consultant');
 
+                $joe = User::create([
+                    'name' => 'Joe Lohr',
+                    'email' => 'jlohr@autorisknow.com',
+                    'phone' => '2243586930',
+                    'password' => bcrypt('AutorisknowJL!'),
+                ]);
+                $joe->assignRole('super-admin');
+
                 $terry = User::create([
-                    'name' => 'Terry',
+                    'name' => 'Terry Dortch',
                     'email' => 'tdortch@autorisknow.com',
                     'phone' => '8156704651',
-                    'password' => bcrypt('935Woodstock!'),
+                    'password' => bcrypt('AutorisknowTD!'),
                 ]);
                 $terry->assignRole('super-admin');
+
+                $mike = User::create([
+                    'name' => 'Mike Backer',
+                    'email' => 'mbacker@autorisknow.com',
+                    'phone' => '8043823021',
+                    'password' => bcrypt('AutorisknowMB!'),
+                ]);
+                $mike->assignRole('super-admin');
 
                 ScanSetting::create([]);
             });
