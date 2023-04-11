@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\ScanSetting;
-use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class Settings extends Component
@@ -32,10 +31,8 @@ class Settings extends Component
             'name' => $this->name,
         ]);
 
-        Notification::make()
-            ->title('Successfully Updated')
-            ->success()
-            ->send();
+        return redirect(route('dealer.scan.index'));
+
     }
     public function render()
     {
