@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Central\Dealership;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealership\CreateRequest;
 use App\Models\Dealer\ScanSetting;
+use App\Models\Dealer\StoreSettings;
 use App\Models\Dealership;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,8 +36,28 @@ class CreateController extends Controller
             $dealer->createDomain($tenantDomain, $validated['url']);
 
             $pass = $validated['password'];
+            $name = $validated['name'];
+            $address = $validated['address'];
+            $city = $validated['city'];
+            $state = $validated['state'];
+            $zip_code = $validated['zip_code'];
+            $phone = $validated['phone'];
+            $fax = $validated['fax'];
+            $url = $validated['url'];
 
-            $dealer->run(function () use ($pass) {
+            $dealer->run(function () use ($pass, $name, $address, $city, $state, $zip_code, $phone, $fax, $url) {
+
+                StoreSettings::create([
+                    'name' => $name,
+                    'address' => $address,
+                    'city' => $city,
+                    'state' => $state,
+                    'postal_code' => $zip_code,
+                    'phone' => $phone,
+                    'fax' => $fax,
+                    'website' => $url,
+                ]);
+
                 $user = User::create([
                     'name' => auth()->user()->name,
                     'email' => auth()->user()->email,

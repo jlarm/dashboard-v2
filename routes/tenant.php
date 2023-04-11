@@ -46,6 +46,9 @@ Route::group([
         return view('dealer.store.index');
     })->middleware(['auth', 'has.stores'])->name('stores.index');
     Route::get('stores/{store:slug}/edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('stores.edit');
+    Route::get('settings', function () {
+        return view('dealer.store.settings');
+    })->middleware(['auth'])->name('dealer.settings');
 
     Route::get('employees', function () {
         return view('dealer.employee.index');
@@ -89,9 +92,9 @@ Route::group([
     Route::get('/manuals', function () {
         return view('dealer.manual.index');
     })->middleware('auth')->name('manual.index');
-    Route::get('/glbform', function () {
-        return view('dealer.manual.GlbForm');
-    })->middleware('auth')->name('manual.glbform');
+    Route::get('/isp', function () {
+        return view('dealer.manual.isp');
+    })->middleware('auth')->name('manual.isp');
     Route::get('osha', function () {
         return view('dealer.manual.osha');
     })->middleware('auth')->name('manual.osha');

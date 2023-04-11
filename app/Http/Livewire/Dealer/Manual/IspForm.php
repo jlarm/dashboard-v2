@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Dealer\Manual;
 
-use App\Models\Dealer\Manual\Osha;
+use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\StoreSettings;
 use App\Models\User;
 use Livewire\Component;
 
-class OshaForm extends Component
+class IspForm extends Component
 {
     public $qi;
     public $qit = 'Qualified Individual';
@@ -87,7 +87,7 @@ class OshaForm extends Component
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
-        Osha::create([
+        Isp::create([
             'logged_in_user' => auth()->user()->id,
             'qualified_individual_name' => $this->qi,
             'qualified_individual_phone' => $this->qip,
@@ -116,6 +116,6 @@ class OshaForm extends Component
     }
     public function render()
     {
-        return view('livewire.dealer.manual.osha-form');
+        return view('livewire.dealer.manual.isp-form');
     }
 }
