@@ -1,5 +1,5 @@
 [{
-    "name": "DOT Hazardous Materials Transportation, Shipping Papers, Emergency Response & Placarding ",
+    "name": "DOT Module 4 Hazardous Materials Transportation, Shipping Papers, Emergency Response & Placarding ",
     "slug": "dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding",
     "department": "1",
     "slides": [{
@@ -84,5 +84,61 @@
         "title": "Shipping Papers, Emergency Response & Placarding",
         "description": "<p>Individuals receiving hazardous materials, but not shipping them, are not subject to the security plan requirements.</p><p>A security plan must include an assessment of possible transportation security risks for shipments of the hazardous materials covered by the plan and appropriate measures to address the assessed risks. At a minimum, a security plan must include the following elements:</p><ol><li><strong>Personnel security</strong>: Measures to confirm information provided by job applicants hired for positions that involve access to and handling of the hazardous materials covered by the security plan.</li><li><strong>Unauthorized access</strong>: Measures to address the possibility that unauthorized persons may gain access to the hazardous materials covered by the security plan or to transport conveyances being prepared for transportation of the hazardous materials covered by the security plan.</li><li><strong>En route security</strong>: Measures to address the security risks of shipments of hazardous materials covered by the security plan en route from origin to destination, including shipments stored incidental to movement.</li></ol><p>The security plan must be in writing and must be retained for as long as it remains in effect. Copies of the security plan must be available to the employees who are responsible for implementation. The security plan must be revised and updated as necessary to reflect changing circumstances. To avoid unnecessary duplication, security plans that conform to regulations issued by other agencies, or industry organizations may be used to satisfy the requirements in this subpart, provided such security plans address all the requirements specified by DOT in 49 CFR 172.800.</p>"
     }],
-    "questions": []
+    "questions": [
+        {
+            "question": "The basic description must include:",
+            "answers": [
+                {
+                    "a": "The Proper shipping name",
+                    "b": "Hazard class or division",
+                    "c": "UN identification Number",
+                    "d": "Packing Group",
+                    "e": "Weight",
+                    "f": "All of the above",
+                    "g": "A, B, C, D"
+                }
+            ],
+            "correctAnswer": "f"
+        },
+        {
+            "question": "Shippers must retain a copy of the shipping papers for a period of two (2) years.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        },
+        {
+            "question": "The Total Quantity of the hazardous material must be shown before or after the basic description and include the units of measure",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        },
+        {
+            "question": "The technical name is not required to be on the bill of lading since no one would understand what it is anyway.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "b"
+        },
+        {
+            "question": "Any persons involved in the transportation of hazardous materials must be trained every 6 months as ongoing training as to the risks associated with the handling of hazardous material.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "b"
+        }
+    ]
 }]

@@ -12,6 +12,7 @@ class CourseSeeder extends Seeder
     {
         $path = app_path('courses');
         $files = File::allFiles($path);
+        sort($files, SORT_NATURAL);
 
         foreach($files as $file)
         {

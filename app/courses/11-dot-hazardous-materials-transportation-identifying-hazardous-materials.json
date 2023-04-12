@@ -1,0 +1,254 @@
+[{
+    "name": "DOT Module 2 Hazardous Materials Transportation, Identifying Hazardous Materials",
+    "slug": "dot-hazardous-materials-transportation-identifying-hazardous-materials",
+    "department": "1",
+    "slides": [
+        {
+        "title": "Identify and Classify the material",
+        "description": "<p>A hazardous material can be broadly defined as a substance capable of posing an unreasonable risk to health, safety, and property when transported which has been designated by the Secretary of Transportation; and, meets one or more of the hazard class definitions in Part 173.</p>"
+        },{
+            "title": "Identify and Classify the material",
+            "description": "<p>According to the regulatory definition, a hazardous material is:</p><ol><li>A material designated by DOT as a hazardous material and listed in the 49 CFR 172.101 Hazardous Materials Table</li><li>A material meeting the definition of one of the nine hazard classes in 49 CFR 173</li><li>A hazardous substance, a marine pollutant, a hazardous waste, or an elevated temperature material.</li></ol><p>Hazardous Materials are listed alphabetically in the Hazardous Materials Table (HMT) found in 49 CFR 172.101.</p>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p>Proper shipping names are listed in Column 2 of the Hazardous Materials Table (HMT). The proper shipping name may be a unique chemical , such as \"acetone,\" or it may refer to a group of materials which possess the same hazard but are not specifically named. These materials are identified with a phrase such as \"n.o.s.\" (not otherwise specified), \"n.o.i.\" (not otherwise indexed), or \"n.o.i.b.n.\" (not otherwise indexed by name).</p><p>Except for a few entries, listings do not include mixtures, solutions or formulated chemicals. The generic grouping may be</p><ol><li>listed as a hazard class (flammable liquid, n.o.s., corrosive liquid, n.o.s.), or</li><li>descriptive of chemical family (Alcohols, n.o.s. or ketones, n.o.s.), or</li><li>designated by use (Compounds, cleaning liquid, or Lighters for cigars, cigarettes etc with lighter fluid).</li></ol>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p>Be sure to know the hazard of the items when selecting a proper shipping name. For example there are several listings for batteries. They include:</p><ol><li>Batteries, containing sodium;</li><li>Batteries, dry, containing potassium hydroxide solid, electric, storage</li><li>Batteries, wet, filled with acid, electric storage</li><li>Batteries, wet, filled with alkali, electric storage</li><li>Batteries, wet, non-spillable, electric storage</li></ol><p>Each entry above has a different UN Identification number indicating different hazards associated with the different entries in the Hazardous Materials Table.</p>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p>Go to the hazardous materials table (49 CFR 172.101) to see if the following chemicals are listed in the table.</p><ol><li>Methyl ethyl ketone</li><li>Hydrochloric acid</li><li>Mercury</li><li>Charcoal briquette</li><li>Acetone and methyl ethyl ketone mixture</li><li>10% isobutanol and 10% isopropanol mixture</li></ol>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p>Please note that there will be chemicals that are not listed specifically in the chart which means that you will need to know more about the chemical than just the name. You should know the composition of the chemical so that if needed you can look up the ingredients so to better recognize the chemical you are attempting to identify. Some mixtures may be in the alcohol family and in the flammable liquid family as well so you need to really know the material you are attempting to label.</p>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p>For mixtures and solutions, the rules in 49 CFR 172.101 (c) (10) provide additional information particularly for deciding upon a proper shipping name, when to use generic n.o.s. descriptions and when to apply end-use descriptions.</p>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p>Entries in the HMT, in order of preferred use,</p><ul><li>Single entries for specifically named substances, for example,<strong>Acetone</strong>, UN 1090</li><li>Generic entries for groups of similar substances, such as<strong>Adhesives</strong>, UN 1133 or<strong>Lighters, containing flammable gas</strong>, UN 1057</li><li>Specific n.o.s entries covering materials with a similar chemical or technical property, for example<strong>refrigerant gas, n.o.s</strong>UN 1078 or<strong>Ketones, liquid, n.o.s.</strong>UN 1224</li><li>General n.o.s. entries meeting the specific definition of one or more of the hazard classes, such as<strong>Corrosive liquid, n.o.s.</strong>UN 1760 or<strong>Flammable Liquid, toxic, corrosive,</strong>UN 3286</li></ul>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p>There are nine hazard classes recognized in the DOT hazardous materials classification system. Classes 1 through 8 have specific definitions related to the physical and/or health properties of certain chemicals and their mixtures.</p><p>Class 9 materials possess properties that are not necessarily physical or health related, but are regulated because of their potential to harm the environment. They are commonly referred to in the regulations as \"miscellaneous hazardous materials\".</p>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p>In addition to the nine classes, there are several other categories of materials that must be considered. These are:</p><ol><li>Other Regulated Materials Domestic (ORM-D)</li><li>Hazardous Substances listed in Appendix A to the HMT</li><li>Marine Pollutants listed as Appendix B to the HMT</li><li>Hazardous Wastes defined in 40 CFR Part 261</li><li>Elevated Temperature Materials as defined in 49 CFR Part 171.8.</li></ol><p>These categories of \"materials\" are:</p><ol><li>hazardous materials which have been reclassified as consumer commodities which present a limited hazard during transportation due to their form, quantity and packaging (ORM-D)</li><li>collection of lists (Appendix A & B to the HMT)</li><li>EPA hazardous wastes, and</li><li>materials shipped in a \"HOT\" state (elevated temperature materials).</li></ol>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 1-EXPLOSIVES</strong>49 CFR (173.50)</p><p>The Divisions of Class 1 are arranged according to their respective levels of sensitivity, from Division 1.1 at the very dangerous level, to Division 1.6 at the lowest.</p><ol><li>Division 1.1 The mass explosive hazard; very dangerous,</li><li>Division 1.2 A projectile hazard material,</li><li>Division 1.3 Those that present a fire hazard or either a minor blast or projection hazard potential,</li><li>Division 1.4 Minor explosives with less than 25g of detonating material,</li><li>Division 1.5 Insensitive explosives with little probability of initiating, and</li><li>Division 1.6 Extremely insensitive materials of little consequence.</li></ol>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 2-GASES</strong>49 CFR (173.115)</p><p>This class has three divisions, Divisions 2.1, 2.2 and 2.3:</p><ol><li>Division 2.1 Flammable gases are those that are ignitable at 101.3 kPa (14.7 psi) when in a mixture of 13% or less by volume with air;</li><li>Division 2.1 gases have a flammable range at 101.3 kPa (14.7 psi) with air of at least 12% regardless of the lower limit.</li><li>Division 2.2 gases are non-flammable and non-poisonous which exert an absolute pressure of 280 kPa (40.6 psia) or greater at 20 C (68° F)</li><li>Division 2.3 gases are poisonous by inhalation! They require special labeling, placarding and description.</li></ol>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 3-FLAMMABLES</strong>and COMBUSTIBLES 49 CFR 173.120</p><p>Flammable Liquids no longer have any Divisions.</p><p>They are defined as liquids that have a flash point of not more than 60 C (140 F), or any material in a liquid phase with a flash point at or above 37.8 C (100 F) that is intentionally heated and offered for transportation or transported at or above its flash point in a bulk packaging. (49CFR173.120)</p><p>Combustible liquids are those that do not meet the definition of any other hazard class AND have a flash point above 60°C (140°F) and below 93°C (200°F).</p>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 4-MATERIALS</strong>(49 CFR 173.124)</p><p>This class consists of three separate and distinct divisions as follows:</p><p>Division 4.1 - flammable solids of three types;</p><ol><li>Desensitized explosives;</li><li>Self-reactive thermally unstable materials; and</li><li>Oxidizing substance in Division 5.1 containing less than 5.0% combustible organic substances.</li></ol><p>Division 4.2 - spontaneously combustible materials that are either pyrophoric or self-heating.</p><p>Division 4.3 - materials that, by contact with water, are liable to become spontaneously flammable or give off flammable or toxic gas. They are Dangerous when Wet!</p>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 5 - OXIDIZERS</strong>(49 CFR 173.127) and ORGANIC PEROXIDES (49 CFR 173.128)</p><p>This class has two divisions. Division 5.1 are Oxidizing materials and Division 5.2 are Organic Peroxides.</p><ol><li>Division 5.1 materials are oxidizers; i.e., they give off oxygen and enhance or increase combustion.</li><li>Division 5.2 materials are organic peroxides, i.e., organic compounds containing oxygen and which may be considered a derivative of hydrogen peroxide, where one or more of the hydrogen atoms have been replaced by organic radicals. Materials in this class that are NOT identified in the Organic Peroxides Table (173.225), are grouped by seven GENERIC Types A through G according to their level of hazard similar to Class 1.</li></ol><p>Division 5.2 materials often require temperature controls.</p>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 6 Division 6.1 and 6.2</strong>(49 CFR 173.132-134)</p><p>This class has two divisions: Division 6.1 and Division 6.2.</p><p>Division 6.1 poisonous materials are those, other than gases, that are known to be so toxic to humans as to afford a hazard to health during transportation, or which, in the absence of adequate data on human toxicity, are presumed to be toxic via the following routes of administration.</p><ol><li>Oral Toxicity- liquid with LD50 for acute toxicity of not more than 500 mg/kg or a solid with LD50 for acute toxicity of not more than 200 mg/kg.</li><li>Dermal Toxicity- material with an LD50 for acute dermal toxicity of not more than 1000 mg/kg.</li><li>Inhalation Toxicity- a dust or mist with LC50 for acute toxicity of not more than 10 mg/L.</li></ol><p>Division 6.2 materials are materials known or reasonably expected to contain a pathogen. Infectious substances must be assigned to one of the following UN Identification Numbers: UN 2814, UN 2900, UN 3373, or UN 3291 and assigned to either Category A or Category B. Category A are infectious substances in a form capable of causing permanent disability or life threatening or fatal disease in otherwise healthy humans or animals when exposure occurs. Category B are substances not generally capable of causing permanent disability or life threatening or fatal disease in otherwise healthy humans or animals, including those transported for diagnostic or investigational purposes.</p><ol><li>an infectious substance is a material known to contain, or suspected of containing, a pathogen, where a pathogen is defined as a virus or microorganism or a proteinaceous infectious particle that has the potential to cause disease in humans or animals.</li><li>a biological product is a virus therapeutic serum, toxin, antitoxin, vaccine, blood component or derivative, allergenic product, used in the prevention, diagnosis, treatment, or cure of diseases in humans or animals.</li></ol><p>For additional information and definitions for Division 6.2 materials, refer to 49 CFR 173.134.</p>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 7 - RADIOACTIVE MATERIALS</strong>(49 CFR 173.403)</p><p>A radioactive material is defined in the regulations (173.403) as any material having a specific activity greater than 70 Bq per gram (0.002 microcuries per gram).</p>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 8 - CORROSIVE MATERIALS</strong>(49 CFR 173.136)</p><p>A corrosive material is defined in 173.136 as a liquid or solid that causes full thickness destruction of human skin tissue at the site of contact within a specified period of time. A liquid that has a severe corrosion rate on steel or aluminum is also a corrosive material.</p><ol><li>severely corrosive - tissue destruction with exposure &lt; 3 minutes</li><li>moderately corrosive - tissue destruction with exposure > 3 minutes but &lt; 60 minutes</li><li>minor corrosive-tissue destruction with exposure >1 hour, but &lt; 4 hours</li></ol>"
+        }, {
+            "title": "Hazard Classes",
+            "description": "<p><strong>CLASS 9 - MISCELLANEOUS HAZARDOUS MATERIALS</strong>(49 CFR 173.140)</p><p>A class 9 material means a material which presents a hazard during transportation but which does not meet the definition of any other hazard class. Included in this class are materials that have anesthetic, noxious or other similar properties which could cause extreme annoyance or discomfort to a flight crew so as to prevent the correct performance of assigned duties, or materials that meet the definition of elevated temperature materials, hazardous substances, hazardous waste or a marine pollutant.</p>"
+        }, {
+            "title": "Identify and Classify the material",
+            "description": "<p><strong>OTHER REGULATED MATERIALS - Domestic (ORM-D)(49 CFR 173.144)</strong></p><p>In some cases, hazardous materials which present a limited hazard during transportation maybe reclassified as ORM-D. ORM-D stands for other regulated material-domestic, sometimes also referred to as a consumer commodity. The consumer commodity designation is valid for domestic shipments only.</p><p>A \"consumer commodity\" is defined in 49 CFR 171.8 as a material that is packaged and distributed in a form intended for retail sales for personal or household use by individuals. This term also includes drugs and medicines.</p><p>Some hazardous materials may be reclassified as ORM-D if an exception is provided for in Column 8A of the hazardous materials table. An ORM-D material must meet the definitions found in 49 CFR 171.8 for consumer commodity and 49 CFR 173.144 for ORM-D.The ORM-D designation excepts certain hazardous materials from labeling, specification packaging, placarding, and shipping papers if they qualify and comply with requirements. ORM-D requirements will be discussed further in Module 3.</p>"
+        }, {
+            "title": "Step 2 Determining the Packing Groups (PG)",
+            "description": "<ul><li>Once you have determined the potential proper shipping name for a material, you still need additional information to properly ship the hazardous material. You will need to identify the proper packing group which there are three categories . Packing Group I indicates great danger, Packing Group II, medium danger, and Packing Group III, minor danger.</li></ul>"
+        }, {
+            "title": "Step 2 Determining the Packing Groups (PG)",
+            "description": "<p>However, in some cases, the hazardous materials table may have multiple listings for the same proper shipping name. For example, \"flammable liquids, n.o.s.\" has 3 entries. As you move across the columns you will see 3 separate entries in Column 5 for our flammable liquid, n.o.s. entry.</p><p>This means that the \"degree of danger\" could range from great (PG I) to minor (PG III) depending upon the particular physical and/or health properties of the mixture. Mixtures or solutions are likely to range from great to minor danger because of varying concentrations of the hazardous component in the formulated compound.</p>"
+        }, {
+            "title": "Step 2 Determining the Packing Groups (PG)",
+            "description": "<p>All hazard classes have packing groups except Class 2 (gases), Class 7 (radioactives), Division 6.2 (other than regulated medical waste), and ORM-D materials.</p><p>When the HMT indicates a range the packing group criteria must be consulted to determine which packing group applies. The following table shows where the PG criteria for each of the hazard classes appear in the regulations. Keep in mind that the assignment of a PG to a mixture or solution will determine the packaging performance level needed for the containers used.</p>"
+        }, {
+            "title": "Step 2 Determining the Packing Groups (PG)",
+            "description": "<table><tr><th><strong>Hazard Class</strong></th><th><strong>Packing Group Criteria</strong></th></tr><tr><td>1</td><td>49 CFR 173.60 - all assigned to PG II</td></tr><tr><td>3</td><td>49 CFR 173.121 - based on flash point</td></tr><tr><td>4.1</td><td>49 CFR 173.125</td></tr><tr><td>4.2</td><td>49 CFR 173.125</td></tr><tr><td>4.3</td><td>49 CFR 173.125</td></tr><tr><td>5.1</td><td>49 CFR 173.127</td></tr><tr><td>5.2</td><td>All organic peroxides in PG II</td></tr><tr><td>6.1</td><td>49 CFR 173.133</td></tr><tr><td>6.2</td><td>No PGs except for medical waste</td></tr><tr><td>8</td><td>49 CFR 173.137</td></tr><tr><td>9</td><td>As shown in Column 5 of the HMT</td></tr></table>"
+        }, {
+            "title": "Step 2 Determining the Packing Groups (PG)",
+            "description": "<p>Let us look at Class 3 flammable liquids for the assignment of packing group. For Class 3 materials, the packing group is determined using the following criteria (49 CFR 173.121):</p><p>Materials with an initial boiling point less than or equal to 35 C or 95 F are assigned to Packing Group I.</p><p>Materials with an initial boiling point greater than 35 C and with a flashpoint less than 23 C or 73 F are assigned to Packing Group II.</p><p>Materials with an initial boiling point greater than 35 C and with a flashpoint greater than or equal to 23 C or 73 F and less than or equal to 60 C or 140 F are assigned to Packing Group III.</p><p>Remember that Reviewing the data on a material safety data sheet may be necessary in determining the packing group for a hazardous material.</p>"
+        }, {
+            "title": "Select the Proper Shipping Name",
+            "description": "<p>The Hazardous Materials Table (HMT) designates the materials listed as hazardous materials for the purpose of transportation. For each listed material, the HMT identifies the hazard class or specifies that the material is forbidden in transportation, and gives the proper shipping name or directs the user to the preferred proper shipping name. In addition, the HMT specifies or references requirements in the regulations pertaining to labeling, packaging, quantity limits aboard aircraft and stowage of hazardous materials aboard vessels.</p>"
+        }, {
+            "title": "Select the Proper Shipping Name",
+            "description": "<table><tr><th>Symbols (1)</th><th>Proper Shipping Names (2)</th><th>Hazard Class (3)</th><th>ID No (4)</th><th>PG (5)</th><th>Label Codes (6)</th><th>Spec Prov (7)</th><th>Packaging (8)</th></tr><tr><td>G</td><td>Flammable liquid, toxic, n.o.s.</td><td>3 3 3</td><td>UN1992 UN1992 UN1992 UN1992 UN1992 UN1992</td><td>I II III</td><td>3, 6.1 3, 6.1 3, 6.1</td><td>T42 T18 T18</td><td>.201 .202 .203</td></tr><tr><td>G</td><td>Toxic liquids, flammable, organic, n.o.s.</td><td>6.1 6.1</td><td>UN2929 UN2929</td><td>I II</td><td>6.1,3 6.1,3</td><td>T42 T15</td><td>.201 .202</td></tr><tr><td>D,G</td><td>Compounds, tree or weed killing</td><td>3 3 3</td><td>NA1993 NA1993 NA1993</td><td>I II III</td><td>3 3 3</td><td>T42 T8 B52</td><td>.201 .202 .203</td></tr><tr><td>D,G</td><td>Compounds, tree or weed killing</td><td>6.1 6.1 6.1</td><td>NA2810 NA2810 NA2810</td><td>I II III</td><td>6.1 6.1 6.1</td><td></td><td>.201 .202 .203</td></tr></table>"
+        }, {
+            "title": "Select the Proper Shipping Name",
+            "description": "<p>The HMT lists all of the materials that have been identified and designated by the DOT as being hazardous. For the most part these are \"pure\" chemicals whose properties are known in the literature. Also listed are mixtures, compounds and solutions, not by NAME, but by their physical and/or health properties. For instance, some flammable mixtures, would be called \"Flammable liquid, N.O.S.\" (not otherwise specified), because they are not \"pure\" chemicals but rather a mixture of some chemical with other non-hazardous materials to make a solution with the properties of an unnamed flammable liquid.</p>"
+        }, {
+            "title": "Select the Proper Shipping Name",
+            "description": "<p>Subpart B of 49 CFR Part 172.101 contains the HMT. There are 10 columns in the Table. A detailed explanation of what information is in each of the columns, is provided in the preamble to the TABLE. Entitled \"Purpose and use of the hazardous materials table\", it should be consulted every time a hazardous materials shipment is to be made. The list of materials is alphabetical and changes regularly. Entries are added by rule-making and some entries are removed the same way.</p>"
+        }, {
+            "title": "Definition of each column",
+            "description": "<p><strong>Column 1</strong>, entitled Symbols, has one of 5 symbols or is blank. If a symbol is present the following rules apply. The Symbols are as follows:</p><p>(+) -fixes the proper shipping name, hazard class and packing group. This means you may not change the proper shipping name, hazard class or packing group even if the material does not meet the DOT's definition for that hazard class or Packing group.</p><p>(A) -means the material is regulated in air transportation only, unless it is also a hazardous substance or hazardous waste (see Acetaldehyde ammonia)</p><p>(D) -identifies proper shipping names which are appropriate for domestic transportation only. (see Ethyl phosphorodichloridate)</p><p>(G) -identifies proper shipping names that require technical names entered in parentheses (see flammable liquids, n.o.s.).</p><p>(I) -identifies proper shipping names which are appropriate for international shipments. An alternate name may be selected when only domestic transportation is involved. (see sulfur, molten)</p><p>(W) -means the material is regulated only if offered for water transportation unless it is also a hazardous substance or hazardous waste. (see carbon dioxide, solid)</p>"
+        }, {
+            "title": "Definition of each column",
+            "description": "<p><strong>Column 2</strong>lists the proper shipping name. Remember as discussed earlier, the listings are alphabetical and may include pure chemicals, chemical families, listings by material use and hazard class. Note that words appearing in italics are not part of the proper shipping name. You must choose the most specific name that appears in the table. Two notes of special interest,</p><p>(1) when shipping a waste material, the word \"waste\" must appear as part of the proper shipping name (preceding the name in column 2), as in the case of \"waste, acetone\", or \"waste, flammable liquid, n.o.s.\";</p><p>(2) if non-hazardous materials are added to a hazardous materials such that the hazardous properties do not change, the material may be classified as a \"mixture\" or \"solution\". For example, if materials are diluted prior to shipping, the proper shipping name may be changed to \"Acetone mixture\" or \"Acetone solution\".</p>"
+        }, {
+            "title": "Definition of each column",
+            "description": "<p><strong>Column 3</strong>lists the hazard class or division or the word \"Forbidden\". Forbidden means the material may not be transported unless the material is diluted, stabilized or incorporated into a device.</p><p><strong>Column 4</strong>lists the 4 digit United Nations (UN) or North American (NA) identification number. The 4 digit number provides a quick method to specifically identify a hazardous material and is critical for emergency responders.</p><p><strong>Column 5</strong>specifies the packing group. Some materials may be assigned to more than one packing group. As discussed above, most classes or divisions have specific criteria for assigning the packing group. There are no Packing groups for Class 2, 7 or Division 6.2.</p>"
+        }, {
+            "title": "Definition of each column",
+            "description": "<p><strong>Column 6</strong>specifies which labels are required. If two numbers appear in column 6, the first number identifies the primary hazard and additional label codes are indicative of subsidiary hazards.</p><p><strong>Column 7 l</strong>lists special provisions applicable to packing. Numbers, letters, or both may appear in column 7</p><p><strong>Column 8</strong>is subdivided into columns (8A), (8B), and (8C). Information in column (8A) lists the sections from 49 CFR Part 173 that cover exceptions to the packaging requirements. Column (8B) lists the sections of Part 173 applicable to non-bulk packaging, and column (8C) indicates the requirements for bulk packaging. Remember from Module 1 that non-bulk packaging is containers for liquids of 450 liters (119 gallons) or less, and for solids a net mass of 400 kg (882 pounds) or less. The three numbers listed in column 8, indicate the section of Part 173 to which you should refer. For example, for acetone, the number listed in Column 8B is 202. This indicates that the non-bulk packaging requirements for acetone are found in 49 CFR 173.202.</p>"
+        }, {
+            "title": "Definition of each column",
+            "description": "<p><strong>Column 9</strong>covers quantity limitations and applies to rail and air shipments. The quantities listed in Column 9 limit the amount per package or if the word \"forbidden\" appears, it prohibits the transportation of that material by passenger aircraft and passenger rail car in Column 9A and cargo aircraft in Column 9B.</p><p><strong>Column 10</strong>specifies the requirements for transportation of hazardous materials by cargo and passenger carrying vessels.</p><p>The columns in the HMT provide the necessary information to compile and prepare the shipping paper. The information in Column 2 + Column 3 + Column 4 + Column 5 produces the basic description for the shipping paper (bill of lading). Column 6 provides the label code (see 172.101(g)) for the DOT label to be applied. Column 7 provides some useful information in the form of a code (see 172.102) which must be addressed. Column 8 provides the sections in Part 173 which must be used to select the authorized and approved packaging for the material.</p>"
+        }, {
+            "title": "Select the Proper Shipping Name",
+            "description": "<p>Recent changes to the hazardous material regulations provide a preferred order in which the basic description is placed on shipping papers. The UN identification number followed by the proper shipping name, hazard class, and subsidiary risk in parenthesis (if applicable) followed by the packing group.The following examples-<strong>UN 1090, acetone, 3, PG II or UN 2794, Batteries, wet, filled with acid, electric storage, 8, PG III</strong>- indicate the preferred sequence. International shipments and shipments by air require this sequence with the UN identification number first beginning January 1. 2007. The US DOT will allow the alternate sequence for domestic shipments only until January 1, 2013.</p>"
+        }, {
+            "title": "Hazardous Substances",
+            "description": "<p>This is a category of hazardous materials listed separately as APPENDIX A following the HMT in 172.101. The list is identical to the Section 101(14) listing under the Comprehensive Environmental Response, Compensation, Liability Act (CERCLA) and other statutes. The APPENDIX is divided into two tables, TABLE 1 for Hazardous Substances Other than Radionuclides, and TABLE 2 for Radionuclides.</p>"
+        }, {
+            "title": "Hazardous Substances",
+            "description": "<p>TABLE 1 is the most familiar. It provides two columns, one with the name of the substance and the other with the Reportable Quantity (RQ) established for the substance. The RQ's are important because a substance, though listed, may still not be regulated if less than the reportable quantity is in one package. A hazardous substance, therefore, is a material listed in Appendix A and shipped in one package in a quantity equal to or greater than the RQ.</p>"
+        }, {
+            "title": "Hazardous Substances",
+            "description": "<p>If the substance in APPENDIX A is not listed in the HMT and does not meet the definition of any other hazard class, it is assigned to Class 9 as a \"miscellaneous hazardous material\". Hazardous substances that do not meet the definition of any other hazard class are transported as \"Environmentally hazardous substances, liquid or solid, n.o.s., 9, UN 3082 or 3077, PG III.\"</p><p>If the substance in APPENDIX A is not listed in the HMT, but meets the definition of a hazard class such as Class 3, the material (mixture) would be assigned to Class 3 and transported under the shipping name \"Flammable liquid, n.o.s.\" or other generic hazard class shipping name.</p>"
+        }, {
+            "title": "Hazardous Substances",
+            "description": "<p>Some of the substances listed in the APPENDIX are also listed in the HMT by name as regulated hazardous materials and assigned to another class. In that situation, the proper shipping name is the HMT entry and Class 9 has no application.</p><p>For example, Acetone is listed in the APPENDIX with a RQ of 5,000lb. It is also listed in the HMT as a Class 3 flammable liquid. Since the RQ is 5,000lb, acetone becomes a Class 3 hazardous substance when transported in a quantity greater than 5,000 pounds in one package, i.e., tank cars and tank trucks. Quantities of acetone less than 5,000 lbs are regulated as hazardous materials.</p>"
+        }, {
+            "title": "Hazardous Substances",
+            "description": "<p>The RQ amounts may be listed as 1 lb, 10 lb, 100 lb, 1000 lb, and 5000 lb. Reportable quantities require additional designation on shipping papers. The letters RQ shall be entered on the shipping paper either before or after the basic description. For example, a shipment of acetone in bulk packaging exceeding 5,000 lbs would be designated as \"UN1090, acetone, 3, PGII, RQ\" or RQ UN1090, acetone, 3, PGII\".</p>"
+        }, {
+            "title": "Marine Pollutants",
+            "description": "<p>Another category of hazardous materials are marine pollutants. These \"pollutants\" are listed in APPENDIX B to the HMT. As with hazardous substances, these are assigned to Class 9 if they do NOT meet the definition of another hazard class. If a listed marine pollutant in Appendix B also meets the definition of another hazard class, for instance Class 3, whether listed by name in the HMT or not, the material is regulated as a Class 3 Marine Pollutant and Class 9 has no application.</p>"
+        }, {
+            "title": "Marine Pollutants",
+            "description": "<p>Listed materials are designated as either marine pollutants, or \"severe marine pollutants\". The latter appear with a \"PP\" designation in column 1 of TABLE 2. No special labels are required for these materials, except they must bear a marine pollutant marking. (See 49 CFR 172.322).</p><p>Marine pollutants are ONLY regulated within the United States when they move in BULK containers via all modes. They are not regulated in non-bulk containers regardless of the mode of transport, unless they move by vessel i.e. to Hawaii or Puerto Rico.</p>"
+        }, {
+            "title": "Hazardous Substances",
+            "description": "<p>An example of how a specific material is regulated as a hazardous substance, a marine pollutant and a poison gas, at the same time, is CHLORINE. It is a liquefied POISON GAS assigned to class 2.3 in the HMT. It also appears in APPENDIX A as a hazardous substance with an RQ of 10 lb., and in APPENDIX B as a marine pollutant.</p>"
+        }, {
+            "title": "Conclusion",
+            "description": "<p>Many times when classifying a material for transportation, you must have detailed information at your fingertips, such as from a Material Safety Data Sheet. You can ask yourself the following questions;</p><ul><li>Is the material a pure chemical and specifically listed in the HMT?</li><li>Is the material all from one chemical family?</li><li>Does the material have physical properties meeting any of the DOT hazard class definitions? (such as does it have a flash point less than 140 F or do the toxicity values exceed the poison criteria in Class 6.1) Is the material listed in Appendix A?</li><li>If so, what is the reportable quantity and in what size container is it being shipped?</li><li>Is the material a marine pollutant listed in Appendix B?</li><li>Is the material being shipped domestically, or internationally?</li><li>Is the material being shipped in bulk or non-bulk containers?</li></ul>"
+        }
+    ],
+    "questions": [
+        {
+            "question": "Where is the Hazardous Materials Table (HMT) listed?",
+            "answers": [
+                {
+                    "a": "49 CFR 172.103",
+                    "b": "49 CFR 172.101",
+                    "c": "49 CFR 172.106",
+                    "d": "49 CFR 173.101"
+                }
+            ],
+            "correct": "b"
+        },
+        {
+            "question": "N.O.S. is an abbreviation of what?",
+            "answers": [
+                {
+                    "a": "No Other Standers",
+                    "b": "Not Otherwise Secured",
+                    "c": "Not Otherwise Specified",
+                    "d": "None of the above"
+                }
+            ],
+            "correct": "c"
+        },
+        {
+            "question": "A hazardous material can be broadly defined as a substance capable of posing an unreasonable risk to health, safety, and property when transported which has been designated by the Secretary of Transportation; and, meets one or more of the hazard class definitions in Part 173.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correct": "a"
+        },
+        {
+            "question": "How many hazard classes are recognized in the DOT hazardous materials classification system?",
+            "answers": [
+                {
+                    "a": "4",
+                    "b": "6",
+                    "c": "7",
+                    "d": "9"
+                }
+            ],
+            "correct": "d"
+        }
+        ,{
+            "question": "Out of the classifications listed in the (HMT), which ones are correct.",
+            "answers": [
+                {
+                    "a": "Explosives, Gases, Flammables",
+                    "b": "Oxidizers, Radioactive, Corrosive materials",
+                    "c": "A and B",
+                    "d": "A only"
+                }
+            ],
+            "correct": "c"
+        },
+        {
+            "question": "How many Packing Groups will you need to consider before you ship your container/package.",
+            "answers": [
+                {
+                    "a": "1",
+                    "b": "3",
+                    "c": "5"
+                }
+            ],
+            "correct": "b"
+        },
+        {
+            "question": "Packing Group 1 indicates what concerning the type of hazard it is associated with.",
+            "answers": [
+                {
+                    "a": "minor danger",
+                    "b": "medium danger",
+                    "c": "great danger"
+                }
+            ],
+            "correct": "a"
+        },
+        {
+            "question": "In column 4 of the HMT there is an abbreviation of the letters “UN”. What does this mean?",
+            "answers": [
+                {
+                    "a": "Unauthorized Numbers",
+                    "b": "United Nations",
+                    "c": "Unified Nations",
+                    "d": "Under Nations"
+                }
+            ],
+            "correct": "b"
+        },
+        {
+            "question": "The word \"Forbidden\" in column 3 of the HMT means the material may not be transported unless the material is diluted, stabilized or incorporated into a device.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correct": "a"
+        },
+        {
+            "question": "There is no preferred order in which the basic description of the hazardous substance is placed on shipping papers.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correct": "b"
+        }
+    ]
+}]

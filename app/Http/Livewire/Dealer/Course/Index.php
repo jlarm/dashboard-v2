@@ -34,7 +34,7 @@ class Index extends Component
                     ->select('id', 'slug', 'name')
                     ->with([
                         'results' => function ($query) {
-                            $query->where('user_id', auth()->user()->id)->latest()->take(1);
+                            $query->where('user_id', auth()->user()->id);
                         },
                     ])
                     ->orderBy('name')
