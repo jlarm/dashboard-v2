@@ -28,7 +28,7 @@ class Create extends Modal
         'city' => 'required|max:255',
         'state' => 'required|max:255',
         'postal_code' => 'required|max:255',
-        'phone' => 'required|max:255',
+        'phone' => 'required',
         'website' => 'required|max:255',
     ];
 

@@ -148,7 +148,7 @@
                     "d": "49 CFR 173.101"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "N.O.S. is an abbreviation of what?",
@@ -160,7 +160,7 @@
                     "d": "None of the above"
                 }
             ],
-            "correct": "c"
+            "correctAnswer": "c"
         },
         {
             "question": "A hazardous material can be broadly defined as a substance capable of posing an unreasonable risk to health, safety, and property when transported which has been designated by the Secretary of Transportation; and, meets one or more of the hazard class definitions in Part 173.",
@@ -170,7 +170,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "How many hazard classes are recognized in the DOT hazardous materials classification system?",
@@ -182,7 +182,7 @@
                     "d": "9"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         }
         ,{
             "question": "Out of the classifications listed in the (HMT), which ones are correct.",
@@ -194,7 +194,7 @@
                     "d": "A only"
                 }
             ],
-            "correct": "c"
+            "correctAnswer": "c"
         },
         {
             "question": "How many Packing Groups will you need to consider before you ship your container/package.",
@@ -205,7 +205,7 @@
                     "c": "5"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "Packing Group 1 indicates what concerning the type of hazard it is associated with.",
@@ -216,7 +216,7 @@
                     "c": "great danger"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "In column 4 of the HMT there is an abbreviation of the letters “UN”. What does this mean?",
@@ -228,7 +228,7 @@
                     "d": "Under Nations"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "The word \"Forbidden\" in column 3 of the HMT means the material may not be transported unless the material is diluted, stabilized or incorporated into a device.",
@@ -238,7 +238,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "There is no preferred order in which the basic description of the hazardous substance is placed on shipping papers.",
@@ -248,7 +248,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         }
     ]
 }]

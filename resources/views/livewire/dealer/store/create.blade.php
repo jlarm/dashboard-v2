@@ -5,7 +5,8 @@
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Dealership Name</label>
             <div class="mt-1">
-                <input wire:model.defer="name" type="text" name="name" id="name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
+                <input wire:model.defer="name" type="text" name="name" id="name"
+                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                 @error('name')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -14,7 +15,8 @@
         <div>
             <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
             <div class="mt-1">
-                <input wire:model.defer="address" type="text" name="address" id="address" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
+                <input wire:model.defer="address" type="text" name="address" id="address"
+                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                 @error('address')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -24,7 +26,8 @@
             <div class="sm:col-span-2">
                 <label for="city" class="block text-sm font-medium text-gray-700">City</label>
                 <div class="mt-1">
-                    <input wire:model.defer="city" type="text" name="city" id="city" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
+                    <input wire:model.defer="city" type="text" name="city" id="city"
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                     @error('city')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -33,7 +36,8 @@
             <div class="sm:col-span-2">
                 <label for="state" class="block text-sm font-medium text-gray-700">State</label>
                 <div class="mt-1">
-                    <input wire:model.defer="state" type="text" name="state" id="state" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
+                    <input wire:model.defer="state" type="text" name="state" id="state"
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                     @error('state')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -42,7 +46,8 @@
             <div class="sm:col-span-2">
                 <label for="postal_code" class="block text-sm font-medium text-gray-700">Postal Code</label>
                 <div class="mt-1">
-                    <input wire:model.defer="postal_code" type="text" name="postal_code" id="postal_code" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
+                    <input wire:model.defer="postal_code" type="text" name="postal_code" id="postal_code"
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                     @error('postal_code')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -54,7 +59,7 @@
                     <input
                         wire:model.defer="phone"
                         x-mask="999-999-9999"
-                        type="text"
+                        type="tel"
                         name="phone"
                         id="phone"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
