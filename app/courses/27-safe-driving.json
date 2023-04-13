@@ -1,7 +1,7 @@
 [{
 "name": "Safe Driving",
 "slug": "safe-driving",
-"department": "1",
+    "department": [],
 "slides":[{
         "title": "<strong>Cell phones & Texting</strong>",
         "description": "<p>The National Safety Council estimates at least 28% of all traffic crashes or at least 1.6 million crashes each year involve drivers using cell phones and texting. NSC estimates that 1.4 million crashes each year involve drivers using cell phones and a minimum of 200,000 additional crashes each year involve drivers who are texting.</p>"

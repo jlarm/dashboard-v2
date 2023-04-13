@@ -1,7 +1,7 @@
 [{
     "name": "General Safety Right to Know",
     "slug": "gen-safety-right-to-know",
-    "department": "1",
+    "department": [],
     "slides": [{
         "title": "Employee General Safety Training Overview",
         "description": "<p>Hazard Communication Standard (Employee Right-to-Know)</p><p>The purpose of the OSHA’s Hazard Communication Standard (HCS) (also called the employee right-to-know) is to provide employees with information pertaining to potential exposures to the dangers of hazardous materials in the workplace. </p>"

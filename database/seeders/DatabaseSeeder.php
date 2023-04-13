@@ -19,7 +19,5 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             CourseSeeder::class,
         ]);
-
-//        User::factory()->count(150)->create();
     }
 }

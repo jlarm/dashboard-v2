@@ -2,7 +2,9 @@
     {
         "name": "The Americans with Disabilities Act",
         "slug": "the-americans-with-disabilities-act",
-        "department": "1",
+        "department": [
+
+        ],
         "slides": [
             {
                 "title": "Purpose of the ADA",

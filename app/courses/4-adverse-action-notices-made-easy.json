@@ -1,7 +1,9 @@
 [{
     "name": "Adverse Action Notices Made Easy",
     "slug": "adverse-action-notices-made-easy",
-    "department": "1",
+    "department": [
+
+    ],
     "slides": [{
         "title": "Adverse Action Notices",
         "description": "<ul><li>This course will define the role we will need to play in reference to adverse action notices!</li></ul>"

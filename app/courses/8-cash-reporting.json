@@ -1,7 +1,7 @@
 [{
     "name": "Cash Reporting 8300",
     "slug": "cash-reporting",
-    "department": "1",
+    "department": [],
     "slides": [{
         "title": "Reporting Cash Payments of Over $10,000",
         "description": "<p>If, in a 12 month period, you receive more than $10,000 in cash from one buyer as a result of a transaction in your dealership, you<strong>MUST</strong>report it to the IRS and the Financial Crimes Enforcement Network (FinCEN) on<strong>form 8300</strong>.</p><p><strong><u>What Payments Must Be Reported?</u></strong></p><p>You must file form 8300 to report cash paid to you if it is:</p><ol><li>Over $10,000</li><li>Received as:<ol><li>One lump sum of over $10,000</li><li>Installment payments that causes the total cash received within 1 year of the initial payment to total more than $10,000 or</li><li>Other previously unreported payments that cause the total cash received within a 12 month period to total more than $10,000</li></ol></li><li>Received in the course of your trade or business.</li><li>Received from the same buyer (or agent) and</li><li>Received in a single or in related transactions.</li></ol>"

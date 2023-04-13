@@ -1,7 +1,9 @@
 [{
     "name": "National Emission Standards for Hazardous Air Pollutants (NESHAP) Subpart HHHHHH 40 CFR 63.11169-63.1180, Paint Stripping and Miscellaneous Surface Coating Area",
     "slug": "6h-national-emission-standards",
-    "department": "1",
+    "department": [
+        6
+    ],
     "slides": [{
         "title": "NESHAP (better known as the 6H rule)",
         "description": "<ul><li>NESHAP: Paint Stripping and Miscellaneous Surface Coating Operations at Area Sources published 1/9/08 (73 FR 1738)</li><li>Area Sources - Federal HAP emissions less than 10 tons per year (TPY) of any one, and less than 25 TPY of all combined</li></ul>"

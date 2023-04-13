@@ -1,7 +1,7 @@
 [{
     "name": "Telemarketing Sales Rule",
     "slug": "telemarketing-sales-rule",
-    "department": "1",
+    "department": [],
     "slides": [{
       "title": "Telemarketing",
       "description": "<p>1.Telephone consumer protection act</p><p>2.Telemarketing Sales Rule</p><p>3.Do not Call Registry</p>"

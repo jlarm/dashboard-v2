@@ -1,7 +1,9 @@
 [{
     "name": "Adverse Action",
     "slug": "adverse-action",
-    "department": "1",
+    "department": [
+        2
+    ],
     "slides": [{
         "title": "The Rules Governing Adverse Action Notices",
         "description": "<p>There are two rules that govern the issuing of adverse action notices:</p><ul><li>FCRA – Fair Credit Reporting Act</li><li>ECOA – Equal Credit Opportunity Act</li></ul>"

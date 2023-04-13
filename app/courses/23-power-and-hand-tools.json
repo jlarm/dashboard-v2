@@ -2,7 +2,7 @@
     {
         "name": "Power and Hand Tools",
         "slug": "power-and-hand-tools",
-        "department": "1",
+        "department": [4],
         "slides": [
             {
                 "title": "Power and Hand Tools",

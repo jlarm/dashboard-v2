@@ -83,7 +83,11 @@ class Invite extends Modal
         return view('livewire.dealer.employee.invite', [
             'stores' => Store::orderBy('name')->get(),
             'departments' => Department::orderBy('name')->get(),
-            'roles' => Role::select('name')->get(),
+            'roles' => Role::where('name', '!=', 'super-admin')
+                ->where('name', '!=', 'Admin')
+                ->where('name', '!=', 'Consultant')
+                ->orderBy('name')
+                ->get(),
         ]);
     }
 }

@@ -2,7 +2,7 @@
     {
         "name": "Powered Industrial Trucks",
         "slug": "powered-industrial-trucks",
-        "department": "1",
+        "department": [5],
         "slides": [
             {
                 "title": "Objectives",

@@ -1,7 +1,7 @@
 [{
     "name": "Red Flags",
     "slug": "red-flags",
-    "department": "1",
+    "department": [2],
     "slides": [{
         "title": "Introduction",
         "description": "<p>The purpose of this presentation is to summarize the new \"Red Flag\" regulations. Review FACT Act provisions that are the basis for \"Red Flag\" rules for automotive and issues regarding compliance with \"Red Flag Rules\".</p>"

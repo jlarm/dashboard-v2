@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Employee;
 
-use App\Models\Dealer\Course;
+use App\Models\Dealer\Department;
 use App\Models\User;
 use Livewire\Component;
 
@@ -30,7 +30,9 @@ class ManagerIndexItem extends Component
         $this->completed = collect($this->completed->where('passed', 1))->count();
 
         // Get all courses for this user's department
-        $this->totalCourses = Course::where('department_id', $this->user->department_id)->count();
+        if ($this->user->department_id) {
+            $this->totalCourses = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
+        }
     }
 
     public function render()

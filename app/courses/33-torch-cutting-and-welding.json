@@ -1,7 +1,7 @@
 [{
     "name": "Torch Cutting and Welding",
     "slug": "torch-cutting-and-welding",
-    "department": "1",
+    "department": [],
     "slides": [{
         "title": "Torch Cutting and Welding",
         "description": "<p>Torch-cutting and welding operations can expose shop employees to many types of hazards to include the following:</p><ul><li>Fumes</li><li>Electric shock</li><li>Radiation burns</li><li>Burns from hot metals</li><li>Temporary or permanent eye damage</li><li>Fire and explosion</li><li>Compressed gas</li></ul><p>his section will give you many safety rules and tips for torches, regulators, hoses, connections and cylinders.</p>"

@@ -2,7 +2,7 @@
     {
         "name": "Heat Illness In the Workplace",
         "slug": "heat-illness-in-the-workplace",
-        "department": "1",
+        "department": [],
         "slides": [
             {
                 "title": "Heat Illness",

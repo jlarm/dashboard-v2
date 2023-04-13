@@ -31,4 +31,9 @@ class Course extends Model
     {
         return $this->hasMany(CourseResults::class);
     }
+
+    public function departments(): BelongsToMany
+    {
+        return $this->belongsToMany(Department::class);
+    }
 }

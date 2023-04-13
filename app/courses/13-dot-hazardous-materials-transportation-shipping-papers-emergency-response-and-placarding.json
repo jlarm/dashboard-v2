@@ -1,7 +1,7 @@
 [{
     "name": "DOT Module 4 Hazardous Materials Transportation, Shipping Papers, Emergency Response & Placarding ",
     "slug": "dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding",
-    "department": "1",
+    "department": [],
     "slides": [{
         "title": "Shipping Papers, Emergency Response & Placarding ",
         "description": "<p>The Department of Transportation requires each person who offers a hazardous material for transportation to describe the material on a properly prepared shipping paper. (49 CFR 172.22). Except for hazardous wastes, there is no specific form or format for hazardous material shipping papers. A shipping paper may include a shipping order, bill of lading, manifest or other shipping document. The detailed requirements for shipping papers are found in 49 CFR 172.200.</p>"

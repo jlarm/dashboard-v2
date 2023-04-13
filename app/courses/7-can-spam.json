@@ -2,7 +2,9 @@
     {
         "name": "Can Spam",
         "slug": "can-spam",
-        "department": "1",
+        "department": [
+
+        ],
         "slides": [
             {
                 "title": "Can Spam",

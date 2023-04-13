@@ -1,7 +1,7 @@
 [{
 "name": "Fire Prevention/Fire Extinguisher Safety",
 "slug": "fire-prevention-fire-extinguisher-safety",
-"department": "1",
+    "department": [1,2,3,4,5,6],
 "slides":[{
     "title": "Fire Safety",
     "description": "<p>Never use containers without lids or glass bottles for flammable liquid storage.</p><p>Keep flammable liquids and paints in closed, properly marked lockers and storage cabinets, where available.</p><p>Do not place or store flammable liquids, paints, etc., near sparks, heat or open flames.</p><p>Keep lids closed on solvent-based, parts-washing sinks when not in use.</p><p>Secure compressed oxygen and cylinders. Keep cylinders capped and stored away from heat, flames and sparks.</p><p>Never use oxygen from cylinders to blow away dirt, etc. Oxygen causes a highly flammable condition. Never refer to oxygen as “Air”</p><p>Properly dispose of paper cartons. Cardboard and paper could catch fire or smolder, if exposed to sparks, gasoline, etc.</p><p>Use only Underwriter Laboratory/Factory Mutual-approved safety cans with flame arresters and self-closing lids for storage of gasoline.</p><p>Don’t throw hot auto parts into a container of ignitable or flammable materials.</p>"

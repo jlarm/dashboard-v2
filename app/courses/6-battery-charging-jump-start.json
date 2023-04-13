@@ -1,7 +1,9 @@
 [{
     "name": "Battery Charging Jump Start Review",
     "slug": "battery-charging-jump-start",
-    "department": "1",
+    "department": [
+
+    ],
     "slides": [{
         "title": "Battery Charging",
         "description": "<p>Follow the following guidelines for safe battery charging</p><ul><li>Never operate battery chargers indoor without good ventilation.</li><li>Closely follow the instructions provided by the manufacturer of your battery charger.</li><li>Remove negative cable first from the battery, then the positive cable. Make sure the battery charger is not plugged in and is switched off. Connect the negative cable from the charger to the negative post of the battery. Then connect the positive cable.</li><li>If the battery is totally discharged, set the charger on 12 volts and a higher amp setting (10 to 40amps). Plug in the charger and switch it on.</li><li>After 30 minutes, reduce the setting to a slow or trickle charge (2 to 5 amps).<strong>Warning</strong>; leaving the battery on high charge for a long period of time could destroy the battery and cause an explosion.</li></ul>"

@@ -1,7 +1,7 @@
 [{
     "name": "Hazard Communication Standard (Employee Right-to-Know)",
     "slug": "hazard-communication-standard-employee-right-to-know",
-    "department": "1",
+    "department": [5],
     "slides": [{
         "title": "Hazard Communication Standard (Employee Right-to-Know)",
         "description": "<p>The purpose of the OSHA’s Hazard Communication Standard (HCS) (also called the employee right-to-know) is to provide employees with information pertaining to potential exposures to the dangers of hazardous materials in the workplace. </p>"

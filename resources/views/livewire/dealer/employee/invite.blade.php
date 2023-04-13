@@ -53,23 +53,40 @@
                     @endforeach
                 </select>
             </div>
+
+            <!-- Role -->
+            <div class="col-span-3">
+                <x-input-label for="role" :value="__('Select a Role')"/>
+                <select
+                    wire:model.defer="role"
+                    name="role"
+                    id="role"
+                    class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
+                >
+                    <option></option>
+                    @foreach($roles as $role)
+                        <option value="{{ $role['name'] }}">{{ $role['name'] }}</option>
+                    @endforeach
+                </select>
+            </div>
         @endcan
 
-        <!-- Role -->
-        <div class="col-span-3">
-            <x-input-label for="role" :value="__('Select a Role')"/>
-            <select
-                wire:model.defer="role"
-                name="role"
-                id="role"
-                class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
-            >
-                <option></option>
-                @foreach($roles as $role)
-                    <option value="{{ $role['name'] }}">{{ $role['name'] }}</option>
-                @endforeach
-            </select>
-        </div>
+        {{--Manager list--}}
+        @cannot('create-stores')
+            <div class="col-span-3">
+                <x-input-label for="role" :value="__('Select a Role')"/>
+                <select
+                    wire:model.defer="role"
+                    name="role"
+                    id="role"
+                    class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
+                >
+                    <option></option>
+                    <option value="Manager">Manager</option>
+                    <option value="Employee">Employee</option>
+                </select>
+            </div>
+        @endcannot
 
     </div>
 

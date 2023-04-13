@@ -1,7 +1,7 @@
 [{
     "name": "Storm Water Pollution Protection",
     "slug": "storm-water-pollution-protection",
-    "department": "1",
+    "department": [4],
     "slides": [{
      "title": "What is Storm Water Pollution?",
      "description":"<p>Results from materials and chemicals washed into storm drains from streets, gutters, industrial sites, parking lots, etc.</p><p>It is significant because storm water is untreated and flows directly into lakes and the ocean</p><p>Affects water quality, resulting in closed beaches Hurts aquatic life</p><p>Improper disposal of chemicals will result in fines to the dealership</p>"

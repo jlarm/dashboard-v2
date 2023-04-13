@@ -1,7 +1,7 @@
 [{
     "name": "ECOA",
     "slug": "ecoa",
-    "department": "1",
+    "department": [],
     "slides": [{
         "title": "Purpose",
         "description": "<p>This course provides guidance about compliance with the fair lending requirements of the Equal Credit Opportunity Act (ECOA) and its implementing regulation, Regulation B.</p>"

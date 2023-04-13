@@ -1,7 +1,7 @@
 [{
     "name": "DOT Module 3 Hazardous Materials Transportation, Preparing Hazardous Materials for Shipment",
     "slug": "dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment",
-    "department": "1",
+    "department": [],
     "slides": [{
         "title": "Preparing Hazardous Materials for Shipment",
         "description": "<p>The hazardous materials regulations are aimed at ensuring the safe transportation of hazardous materials. According to the regulations, materials must be in an approved package, marked and labeled correctly and be accompanied by appropriate documentation including safety procedures and information for emergency responders. Module 3 will address the selection of proper packaging, labeling and marking, and the exceptions that may be allowed.</p>"
@@ -129,7 +129,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "Packaging basically means the receptacle and other components necessary to contain the hazardous materials safely during transportation.",
@@ -139,7 +139,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "According to the regulations, authorized packages can only be single packagings and never a combination of packagings.",
@@ -149,7 +149,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "Packaging information is found in what Columns?",
@@ -161,7 +161,7 @@
                     "d": "All of the above"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         },
         {
             "question": "The containers used for hazardous materials packaging have to meet certain tests in order to be authorized for use, the test include which one of the following;",
@@ -174,7 +174,7 @@
                     "e": "All the above"
                 }
             ],
-            "correct": "e"
+            "correctAnswer": "e"
         },
         {
             "question": "Additional considerations that must be addressed when selecting one of the authorized packagings are in 49 CFR 173.24; they include Compatibility, Closure and Filling limits.",
@@ -185,7 +185,7 @@
                     "c": "Only Compatibility and Filling limits"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "Hazardous Materials which present a limited hazard during transportation due to their form, quantity and packaging may sometimes be reclassified as ORM-D, what does ORM-D stand for?",
@@ -196,7 +196,7 @@
                     "c": "Other Relative Materials-Domestic"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "Labeling and marking are two of the most important communication requirements in the hazardous materials regulations.",
@@ -206,7 +206,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "The Labeling requirements are found in:",
@@ -218,7 +218,7 @@
                     "d": "49 CFR 173.101 (Subpart F)"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         },
         {
             "question": "How many Label Codes are there possibilities of?",
@@ -230,7 +230,7 @@
                     "d": "16"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         }
         ,{
             "question": "Concerning labeling requirements, there is no regulatory requirement to put the labels in any specific order; they must only be next to each other.",
@@ -240,7 +240,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "'Marking' means a descriptive name, identification number,...or UN marks, or combinations thereof, required... on outer packagings of hazardous materials.",
@@ -250,7 +250,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "DOT requires all markings to be durable, in English, and printed on or affixed to the surface of a package, or on a label, tag, or sign.",
@@ -260,7 +260,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         }
     ]
 }]

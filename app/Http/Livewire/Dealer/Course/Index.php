@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Course;
 
 use App\Models\Dealer\Course;
+use App\Models\Dealer\Department;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,17 +17,11 @@ class Index extends Component
     {
         if (auth()->user()->department_id) {
             return view('livewire.dealer.course.index', [
-                'courses' => Course::query()
-                    ->select('id', 'slug', 'name')
-                    ->where('department_id', auth()->user()->department_id)
-                    ->with([
-                        'results' => function ($query) {
-                            $query->where('user_id', auth()->user()->id)->latest()->take(1);
-                        },
-                    ])
-                    ->orderBy('name')
-                    ->search('name', $this->search)
-                    ->paginate(24),
+                'courses' => Department::where('id', auth()->user()->department_id)->with('courses')->first()->courses()->with([
+                    'results' => function ($query) {
+                        $query->where('user_id', auth()->user()->id);
+                    },
+                ])->orderBy('name')->search('name', $this->search)->paginate(24),
             ]);
         } else {
             return view('livewire.dealer.course.index', [

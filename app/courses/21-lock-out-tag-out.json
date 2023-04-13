@@ -2,7 +2,7 @@
     {
         "name": "Lock out Tag Out",
         "slug": "lock-out-tag-out",
-        "department": "1",
+        "department": [4],
         "slides": [
             {
                 "title": "What is Lock Out/Tag Out?",

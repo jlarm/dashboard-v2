@@ -1,7 +1,7 @@
 [{
    "name": "Electrical Safety",
    "slug": "electrical-safety",
-   "department": "1",
+    "department": [4],
    "slides": [
        {
         "title": "Why Worry About Electricity?",

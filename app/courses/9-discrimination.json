@@ -1,7 +1,7 @@
 [{
     "name": "Discrimination",
     "slug": "discrimination",
-    "department": "1",
+    "department": [],
     "slides": [
         {
             "title": "Equal Employment Opportunity Commission",
