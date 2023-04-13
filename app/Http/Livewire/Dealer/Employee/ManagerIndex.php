@@ -22,6 +22,9 @@ class ManagerIndex extends Component
     {
         return view('livewire.dealer.employee.manager-index', [
         'users' => User::query()
+            ->where('name', '!=', 'Terry Dortch')
+            ->where('name', '!=', 'Mike Backer')
+            ->where('name', '!=', 'Joe Lohr')
             ->select('id', 'name', 'email', 'phone', 'department_id')
             ->when($this->store, function ($query, $store) {
                 $query->whereHas('stores', function ($query) use ($store) {

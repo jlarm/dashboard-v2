@@ -14,6 +14,9 @@ class Index extends Component
     {
         return view('livewire.dealer.employee.index', [
             'users' => User::latest()
+                ->where('name', '!=', 'Terry Dortch')
+                ->where('name', '!=', 'Mike Backer')
+                ->where('name', '!=', 'Joe Lohr')
                 ->paginate(10),
         ]);
     }
