@@ -194,7 +194,7 @@
                     "d": "A only"
                 }
             ],
-            "correctAnswer": "c"
+            "correctAnswer": "b"
         },
         {
             "question": "How many Packing Groups will you need to consider before you ship your container/package.",
@@ -213,10 +213,10 @@
                 {
                     "a": "minor danger",
                     "b": "medium danger",
-                    "c": "great danger"
+                    "c": "high danger"
                 }
             ],
-            "correctAnswer": "a"
+            "correctAnswer": "c"
         },
         {
             "question": "In column 4 of the HMT there is an abbreviation of the letters “UN”. What does this mean?",

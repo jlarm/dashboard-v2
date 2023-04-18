@@ -36,7 +36,7 @@
                     "e": "A and B only"
                 }
             ],
-            "correct": "e"
+            "correctAnswer": "e"
         },
         {
             "question": "The first line of defense in wearing the proper PPE is the responsibility of:",
@@ -48,7 +48,7 @@
                     "d": "Owner"
                 }
             ],
-            "correct": "c"
+            "correctAnswer": "c"
         },
         {
             "question": "NIOSH-approved dust respirators may also need to be used when sanding or burnishing for paint preparation or vehicle body work, if engineered dust control is not provided.",
@@ -58,7 +58,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "Decibel Levels are important to monitor and wear proper PPE for the following reasons.",
@@ -70,7 +70,7 @@
                     "d": "None of the above"
                 }
             ],
-            "correct": "c"
+            "correctAnswer": "c"
         }
     ]
 }]

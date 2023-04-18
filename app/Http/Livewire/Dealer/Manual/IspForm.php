@@ -9,6 +9,7 @@ use Livewire\Component;
 
 class IspForm extends Component
 {
+    public $store_id;
     public $qi;
     public $qit = 'Qualified Individual';
     public $qip;

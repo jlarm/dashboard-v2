@@ -1,7 +1,7 @@
 <x-dealer-app>
     <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <div class="min-w-0 flex-1">
-            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">Employees</h1>
+            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">All Employees</h1>
         </div>
         <div class="mt-4 flex space-x-5 sm:mt-0 sm:ml-4">
             <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.employee.invite')">Add Employee

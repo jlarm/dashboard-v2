@@ -38,7 +38,7 @@
                     "d": "Over 10 million"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         },
         {
             "question": "Average time spent on recovery from an identity theft crime is:",
@@ -50,7 +50,7 @@
                     "d": "Over 50 Hours"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         },
         {
             "question": "The Red Flag Rule was finalized in October 2007 and went into effect on January 1st, 2008.",
@@ -60,7 +60,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "What is a “Red Flag”?",
@@ -72,7 +72,7 @@
                     "d": "None of the above"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "Your Identity Theft program included reasonable policies and procedures to:",
@@ -85,7 +85,7 @@
                     "e": "A,B, & C"
                 }
             ],
-            "correct": "e"
+            "correctAnswer": "e"
         },
         {
             "question": "Examples of Red Flags are:",
@@ -100,7 +100,7 @@
                     "g": "B & D"
                 }
             ],
-            "correct": "f"
+            "correctAnswer": "f"
         },
         {
             "question": "What should be your “Main Guide” in detecting Red Flag discrepancies?",
@@ -112,7 +112,7 @@
                     "d": "Customer appearance"
                 }
             ],
-            "correct": "c"
+            "correctAnswer": "c"
         }
     ]
 }]

@@ -3,11 +3,13 @@
 namespace App\Http\Livewire\Dealer\Manual;
 
 use App\Models\Dealer\Manual\Osha;
+use App\Models\Dealer\Store;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Livewire\Component;
 
 class OshaCard extends Component
 {
+    public Store $store;
     public function download()
     {
         $osha = Osha::latest()->first();

@@ -10,6 +10,8 @@ return new class extends Migration {
         Schema::create('store_settings', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignIdFor(\App\Models\Dealer\Store::class)->nullable();
+
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('city')->nullable();
@@ -18,6 +20,7 @@ return new class extends Migration {
             $table->string('phone')->nullable();
             $table->string('fax')->nullable();
             $table->string('website')->nullable();
+            $table->string('logo')->nullable();
 
             $table->string('police_emergency_phone')->nullable();
             $table->string('police_non_emergency_phone')->nullable();

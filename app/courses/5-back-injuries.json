@@ -52,7 +52,7 @@
                         "d": "All of the above."
                     }
                 ],
-                "correct": "a"
+                "correctAnswer": "a"
             },
             {
                 "question": "What are some of the work-related symptoms related to improper ergonomics?",
@@ -64,7 +64,7 @@
                         "d": "All of the above."
                     }
                 ],
-                "correct": "d"
+                "correctAnswer": "d"
             },
             {
                 "question": "Below are some items to be aware of in your shops to minimize ergonomics stresses:",
@@ -76,7 +76,7 @@
                         "d": "B only"
                     }
                 ],
-                "correct": "c"
+                "correctAnswer": "c"
             },
             {
                 "question": "Ideally you should have a chance to try out new tools before they are purchased",
@@ -86,7 +86,7 @@
                         "b": "False"
                     }
                 ],
-                "correct": "a"
+                "correctAnswer": "a"
             },
             {
                 "question": "Selection of the proper tool for the job makes the job easier and less stressful to the body.",
@@ -96,7 +96,7 @@
                         "b": "False"
                     }
                 ],
-                "correct": "a"
+                "correctAnswer": "a"
             },
             {
                 "question": "There are special tools designed for left- handed and right-handed workers.",
@@ -106,7 +106,7 @@
                         "b": "False"
                     }
                 ],
-                "correct": "b"
+                "correctAnswer": "b"
             }
         ]
     }

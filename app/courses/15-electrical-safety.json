@@ -25,7 +25,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "Provide signs and barricades where hazards are present and maintenance is in progress.",
@@ -35,7 +35,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "Never use a water-type extinguisher on an electrical fire.",
@@ -45,17 +45,17 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
-            "questions": "Only grounded extension cords can be used. When changing parts or working with an extension cord, first disconnect the power to prevent accidental activation.",
+            "question": "Only grounded extension cords can be used. When changing parts or working with an extension cord, first disconnect the power to prevent accidental activation.",
             "answers": [
                 {
                     "a": "True",
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "How would you protect yourself if you saw someone who was electrocuted?",
@@ -67,7 +67,7 @@
                     "d": "All of the above"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         },
         {
             "question": "Roughly 300 disabling electrical contact injuries occur every year in the United States, along with another 400 non-disabling injuries.",
@@ -77,7 +77,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         }
     ]
 }]

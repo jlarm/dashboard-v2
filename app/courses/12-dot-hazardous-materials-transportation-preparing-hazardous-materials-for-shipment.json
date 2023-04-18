@@ -218,7 +218,7 @@
                     "d": "49 CFR 173.101 (Subpart F)"
                 }
             ],
-            "correctAnswer": "d"
+            "correctAnswer": "c"
         },
         {
             "question": "How many Label Codes are there possibilities of?",
@@ -240,7 +240,7 @@
                     "b": "False"
                 }
             ],
-            "correctAnswer": "b"
+            "correctAnswer": "a"
         },
         {
             "question": "'Marking' means a descriptive name, identification number,...or UN marks, or combinations thereof, required... on outer packagings of hazardous materials.",

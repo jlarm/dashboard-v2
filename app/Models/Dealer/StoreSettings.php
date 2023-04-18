@@ -3,10 +3,12 @@
 namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StoreSettings extends Model
 {
     protected $fillable = [
+        'store_id',
         'name',
         'address',
         'city',
@@ -15,6 +17,7 @@ class StoreSettings extends Model
         'phone',
         'fax',
         'website',
+        'logo',
         'police_emergency_phone',
         'police_non_emergency_phone',
         'fire_emergency_phone',
@@ -47,4 +50,10 @@ class StoreSettings extends Model
         'ip_addresses' => 'array',
         'website_urls' => 'array',
     ];
+
+    public function store(): belongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
 }

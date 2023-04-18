@@ -34,7 +34,7 @@
                         "b": "False"
                     }
                 ],
-                "correct": "a"
+                "correctAnswer": "a"
             },
             {
                 "question": "Which of the following are Hazardous energy forms covered by LOTO?",
@@ -46,7 +46,7 @@
                         "d": "All of the above"
                     }
                 ],
-                "correct": "d"
+                "correctAnswer": "d"
             },
             {
                 "question": "Which of the following items are required for an effective LOTO program?",
@@ -59,7 +59,7 @@
                         "e": "All of the above"
                     }
                 ],
-                "correct": "e"
+                "correctAnswer": "e"
             },
             {
                 "question": "Any employee, shop manager or authorized personnel may have control of the keys",
@@ -69,7 +69,7 @@
                         "b": "False"
                     }
                 ],
-                "correct": "b"
+                "correctAnswer": "b"
             },
             {
                 "question": "Lock Out/Tag-Out ensures all containers, tanks, boxes, bottles, cans, are properly labeled.",
@@ -79,7 +79,7 @@
                         "b": "False"
                     }
                 ],
-                "correct": "a"
+                "correctAnswer": "a"
             }
         ]
     }

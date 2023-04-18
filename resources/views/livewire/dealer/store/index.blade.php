@@ -33,7 +33,7 @@
                             {{ $store->website }}
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-700">
-                            <a href="{{ route('dealer.stores.edit', $store) }}">Edit</a>
+                            <a href="{{ route('dealer.stores.employees', $store) }}">View</a>
                         </td>
                     </tr>
                 @endforeach

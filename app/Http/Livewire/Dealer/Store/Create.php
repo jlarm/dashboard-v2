@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Dealer\Store;
 
+use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
+use App\Models\Dealer\StoreSettings;
 use Filament\Notifications\Notification;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -41,7 +43,7 @@ class Create extends Modal
     {
         $this->validate();
 
-        Store::create([
+        $store = Store::create([
             'name' => $this->name,
             'address' => $this->address,
             'city' => $this->city,
@@ -50,6 +52,19 @@ class Create extends Modal
             'phone' => $this->phone,
             'website' => $this->website,
         ]);
+
+        StoreSettings::create([
+            'store_id' => $store->id,
+            'name' => $store->name,
+            'address' => $store->address,
+            'city' => $store->city,
+            'state' => $store->state,
+            'postal_code' => $store->postal_code,
+            'phone' => $store->phone,
+            'website' => $store->website,
+        ]);
+
+        ScanSetting::create(['store_id' => $store->id]);
 
         $this->reset();
 

@@ -3,11 +3,13 @@
 namespace App\Http\Livewire\Dealer\Manual;
 
 use App\Models\Dealer\Manual\Isp;
+use App\Models\Dealer\Store;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Livewire\Component;
 
 class IspCard extends Component
 {
+    public Store $store;
     public function download()
     {
         $isp = Isp::latest()->first();

@@ -26,7 +26,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "Batteries should be stored in a cool, dry place.",
@@ -36,7 +36,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "It is acceptable to make live connections directly to the battery.",
@@ -46,7 +46,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "The eyes, face, and body should be protected from battery acid.",
@@ -56,7 +56,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "Batteries should be inspected in natural light.",
@@ -66,7 +66,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         }
     ]
 }]

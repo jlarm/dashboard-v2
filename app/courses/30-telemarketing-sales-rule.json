@@ -30,7 +30,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "If a consumer makes an inquiry or submits an application to a company, the company can call for up to 120 days.",
@@ -40,7 +40,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "A consumer always has the right to ask to be taken off the calling list and when they do, the company must take them off immediately.",
@@ -50,7 +50,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "Businesses can be fined for TSR (Do Not Call) violations up to $10,000 per occurrence.",
@@ -60,7 +60,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "Telemarketers are required to scrub their customer data banks against the Do Not Call list every 31 days.",
@@ -70,7 +70,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         }
     ]
    }]

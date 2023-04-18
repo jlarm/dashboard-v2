@@ -10,7 +10,7 @@
     "description": "<p>Be sure you know the types of fires and extinguishers. There are four different types of fires: Class A, B, C and D. Fires can occur in a combination of these types.</p><p><stong>Class A Fires (Ordinary Combustibles)</stong>Class A fires usually occur in materials such as: paper, cloth, wood or rubbish. A quenching-type extinguisher agent is needed for a Class A fire.</p><p><strong>Class B Fires (Flammable Liquids)</strong>Class B fires in the vehicle/equipment maintenance facility usually involve: thinners, oils, gasoline, grease, paint or chemicals. Water must not be used on this type of fire because it will cause the fire to spread. Use a dry chemical B-type, C-type, ABC-type or carbon dioxide (CO₂)-type extinguisher on this type fire.</p><p><strong>Class C Fires (Electrical Equipment)</strong>Class C fires involve energized electrical equipment such as an air-compressor motor or fuse box. Never use water-type extinguisher on electrical equipment; use a CO₂ extinguisher. BC – or ABC-type extinguishers may also be used on electrical fires .</p><p>Class D Fires (Combustible Metals) This type of fire involves the burning of materials that contain zirconium, lithium, magnesium, titanium or sodium. Class D fires are very rare in vehicle/equipment maintenance shops.</p><p>Fire extinguishers are to be charged and kept clean at all times, inspected annually and tagged with inspection dates.</p><p>CO₂ extinguishers generate an extremely cold gas (well below zero degrees) that can cause skin burns. Be caution when using this type of extinguisher.</p>"
 },{
     "title": "Types of Extinguishers",
-    "description": "<img src=\"https://liberty-auto.armpdemo.com/storage/courses/fire-extinguishers.png\">"
+    "description": "<img src=\"https://drive.google.com/uc?export=view&id=1g4xYqHIvK4Jtcq-I0YL_zJwrtzc7xSgP\">"
 },{
     "title": "Using a Fire Extinguisher",
     "description": "<strong>Using a Fire Extinguisher</strong>,<p><strong>Utilize the P.A.S.S system to remember how to use properly</strong></p><p><strong>Pull the Pin</strong>at the top of the extinguisher. The pin releases a locking mechanism and will allow you to discharge the extinguisher.</p><p><strong>Aim at the base of the fire</strong>, not the flames. This is important - in order to put out the fire, you must extinguish the fuel.</p><p>Squeeze the lever slowly. This will release the extinguishing agent in the extinguisher. If the handle is released, the discharge will stop.</p><p>Sweep from side to side. Using a sweeping motion, move the fire extinguisher back and forth until the fire is completely out. Operate the extinguisher from a safe distance, several feet away, and then move towards the fire once it starts to diminish. Be sure to read the instructions on your fire extinguisher - different fire extinguishers recommend operating them from different distances. Remember: Aim at the base of the fire, not at the flames!!!!</p>"
@@ -27,7 +27,7 @@
                 "b": "False"
             }
         ],
-        "correct": "a"
+        "correctAnswer": "a"
     },
     {
         "question": "Properly dispose of paper cartons. Cardboard and paper could catch fire or smolder, if exposed to sparks, gasoline, etc.",
@@ -37,7 +37,7 @@
                 "b": "False"
             }
         ],
-        "correct": "a"
+        "correctAnswer": "a"
     },
     {
         "question": "There are four different types of fires: Class A, B, C and D.",
@@ -47,7 +47,7 @@
                 "b": "False"
             }
         ],
-        "correct": "a"
+        "correctAnswer": "a"
     },
     {
         "question": "What is the most common type of fire extinguisher used?",
@@ -59,7 +59,7 @@
                 "d": "None of the above"
             }
         ],
-        "correct": "c"
+        "correctAnswer": "c"
     },
     {
         "question": "What does the P.A.S.S. system stand for concerning fire extinguishers?",
@@ -71,7 +71,7 @@
                 "d": "None of the above"
             }
         ],
-        "correct": "c"
+        "correctAnswer": "c"
     }
 ]
 }]

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Store;
 
+use App\Models\Dealer\Store;
 use App\Models\Dealer\StoreSettings;
 use Filament\Forms;
 use Filament\Notifications\Notification;
@@ -11,11 +12,17 @@ class SingleStoreDetails extends Component implements Forms\Contracts\HasForms
 {
     use Forms\Concerns\InteractsWithForms;
 
+    public $store;
     public $dealer;
 
-    public function mount(): void
+    public function mount(Store $store): void
     {
-        $this->dealer = StoreSettings::first();
+        if ($store->id === null) {
+            $this->dealer = StoreSettings::first();
+        } else {
+            $this->dealer = StoreSettings::where('store_id', $this->store->id)->first();
+        }
+
         $this->form->fill([
             'name' => $this->dealer->name,
             'address' => $this->dealer->address,
@@ -24,6 +31,7 @@ class SingleStoreDetails extends Component implements Forms\Contracts\HasForms
             'postal_code' => $this->dealer->postal_code,
             'phone' => $this->dealer->phone,
             'url' => $this->dealer->website,
+            'logo' => $this->dealer->logo,
         ]);
     }
 
@@ -43,6 +51,10 @@ class SingleStoreDetails extends Component implements Forms\Contracts\HasForms
                     Forms\Components\TextInput::make('phone')->required()->label('Phone Number'),
                     Forms\Components\TextInput::make('url')->required()->label('Website URL'),
                 ]),
+            Forms\Components\FileUpload::make('logo')
+                ->label('Logo')
+                ->image()
+                ->maxSize(1024),
         ];
     }
 

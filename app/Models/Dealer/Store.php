@@ -73,4 +73,14 @@ class Store extends Model
     {
         return $this->hasOne(DealerInfo::class);
     }
+
+    public function storeSettings(): HasOne
+    {
+        return $this->hasOne(StoreSettings::class);
+    }
+
+    public function scanSetting(): HasOne
+    {
+        return $this->hasOne(ScanSetting::class);
+    }
 }

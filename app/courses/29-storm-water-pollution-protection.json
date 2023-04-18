@@ -38,7 +38,7 @@
 }],
     "questions": [
         {
-            "questions": "What does improper storm water pollution effect if not handled properly?",
+            "question": "What does improper storm water pollution effect if not handled properly?",
             "answers": [
                 {
                     "a": "The Cleanliness of your service bay area and parking lot",
@@ -47,7 +47,7 @@
                     "d": "All of the above"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "Why do we need to be aware of Storm Water Pollution?",
@@ -59,7 +59,7 @@
                     "d": "The equivalent of 7 Exxon Valdez oil spills is improperly dumped each year in the US"
                 }
             ],
-            "correct": "c"
+            "correctAnswer": "c"
         },
         {
             "question": "What type of wastewater is generated at Dealerships?",
@@ -71,7 +71,7 @@
                     "d": "All the above"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         },
         {
             "question": "Wastewater is generated where?",
@@ -84,7 +84,7 @@
                     "e": "All of the above"
                 }
             ],
-            "correct": "f"
+            "correctAnswer": "e"
         },
         {
             "question": "In some cases is it OK to drain or replace oil, coolants or other vehicle fluids on the ground or outside pavements.",
@@ -94,7 +94,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         },
         {
             "question": "Dry sweep floors before wet cleaning and never sweep to the outside pavement.",
@@ -104,7 +104,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "a"
+            "correctAnswer": "a"
         },
         {
             "question": "If an oily sheen appears on your wet floors, what should you do?",
@@ -116,7 +116,7 @@
                     "d": "Use rags and or any other cloth materials to soak up the water/oil area and throw away in any trash receptacle"
                 }
             ],
-            "correct": "c"
+            "correctAnswer": "c"
         }
     ]
 }]

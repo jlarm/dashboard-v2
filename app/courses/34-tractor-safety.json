@@ -16,7 +16,7 @@
                     "c": "Overturning the tractor"
                 }
             ],
-            "correct": "c"
+            "correctAnswer": "c"
         },
         {
             "question": "A tractor can overturn by:",
@@ -28,7 +28,7 @@
                     "d": "All of the above"
                 }
             ],
-            "correct": "d"
+            "correctAnswer": "d"
         },
         {
             "question": "Should always wear a seatbelt even if you do not have a ROPS.",
@@ -38,7 +38,7 @@
                     "b": "False"
                 }
             ],
-            "correct": "b"
+            "correctAnswer": "b"
         }
     ]
 }]

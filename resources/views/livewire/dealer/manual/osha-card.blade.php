@@ -12,7 +12,7 @@
                             </div>
                         @else
                             <div class="min-w-0 flex-1">
-                                <a href="{{ route('dealer.manual.osha') }}"
+                                <a href="@if(!tenant('locations')) {{ route('dealer.manual.osha') }} @else {{ route('dealer.stores.manuals.osha', $store) }} @endif"
                                    class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50">
                                     Start
                                 </a>

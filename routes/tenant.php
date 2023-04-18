@@ -42,13 +42,17 @@ Route::group([
         return view('dealer.dashboard');
     })->middleware('auth')->name('dashboard');
 
-    Route::get('stores', function () {
-        return view('dealer.store.index');
-    })->middleware(['auth', 'has.stores'])->name('stores.index');
+    Route::get('stores', function () { return view('dealer.store.index');})->middleware(['auth', 'has.stores'])->name('stores.index');
+    Route::get('stores/{store:slug}/employees', \App\Http\Livewire\Dealer\Store\SingleStoreEmployees::class)->middleware(['auth', 'has.stores'])->name('stores.employees');
+    Route::get('stores/{store:slug}/scans', \App\Http\Livewire\Dealer\Store\SingleStoreScans::class)->middleware(['auth', 'has.stores'])->name('stores.scans');
+    Route::get('stores/{store:slug}/scan-settings', \App\Http\Livewire\Dealer\Store\SingleStoreScanSettings::class)->middleware(['auth', 'has.stores'])->name('stores.scan-settings');
+    Route::get('stores/{store:slug}/manuals', \App\Http\Livewire\Dealer\Store\SingleStoreManuals::class)->middleware(['auth', 'has.stores'])->name('stores.manuals');
+    Route::get('stores/{store:slug}/manuals/isp', \App\Http\Livewire\Dealer\Store\SingleStoreIspForm::class)->middleware(['auth', 'has.stores'])->name('stores.manuals.isp');
+    Route::get('stores/{store:slug}/manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStoreOshaForm::class)->middleware(['auth', 'has.stores'])->name('stores.manuals.osha');
+    Route::get('stores/{store:slug}/audits', \App\Http\Livewire\Dealer\Store\SingleStoreAudits::class)->middleware(['auth', 'has.stores'])->name('stores.audits');
+    Route::get('stores/{store:slug}/settings', \App\Http\Livewire\Dealer\Store\SingleStoreSettings::class)->middleware(['auth', 'has.stores'])->name('stores.settings');
     Route::get('stores/{store:slug}/edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('stores.edit');
-    Route::get('settings', function () {
-        return view('dealer.store.settings');
-    })->middleware(['auth'])->name('dealer.settings');
+    Route::get('settings', function () { return view('dealer.store.settings'); })->middleware(['auth'])->name('dealer.settings');
 
     Route::get('employees', function () {
         return view('dealer.employee.index');
@@ -70,20 +74,13 @@ Route::group([
         })->middleware(['auth', 'has.stores'])->name('store.scan.index');
     });
 
-    Route::get('courses', function () {
-        return view('dealer.course.index');
-    })->middleware('auth')->name('courses.index');
+    Route::get('courses', function () { return view('dealer.course.index'); })->middleware('auth')->name('courses.index');
     Route::get('courses/{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('courses.show');
     Route::post('courses/{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('courses.results.store');
     Route::get('courses/{course:slug}/quiz', [CourseController::class, 'quiz'])->middleware('auth')->name('courses.quiz');
 
-    Route::get('scans', function () {
-        return view('dealer.scan.index');
-    })->middleware('auth')->name('scan.index');
-
-    Route::get('scans/settings', function () {
-        return view('dealer.scan.settings');
-    })->middleware('auth')->name('scan.settings');
+    Route::get('scans', function () { return view('dealer.scan.index'); })->middleware('auth')->name('scan.index');
+    Route::get('scans/settings', function () { return view('dealer.scan.settings'); })->middleware('auth')->name('scan.settings');
 
     Route::get('/sds', function () {
         return view('dealer.sds.index');
