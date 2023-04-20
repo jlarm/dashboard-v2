@@ -55,7 +55,7 @@
             <div class="max-w-7xl mx-auto sm:px-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 bg-gray-100 p-10 drop-shadow-md">
                     <div class="flex flex-col items-center space-y-5">
-                        <span class="text-3xl">15</span>
+                        <span class="text-3xl">{{ $assets }}</span>
                         <svg class="w-auto h-16" xmlns="http://www.w3.org/2000/svg" id="Layer_1"
                              data-name="Layer 1"
                              viewBox="0 0 24.15 25.16">
@@ -73,7 +73,7 @@
                         <span class="text-xl uppercase">Assets</span>
                     </div>
                     <div class="flex flex-col items-center space-y-5">
-                        <span class="text-3xl">293</span>
+                        <span class="text-3xl"></span>
                         <svg class="w-auto h-16" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1"
                              viewBox="0 0 24.78 24.22">
                             <defs>

@@ -25,9 +25,10 @@
 <div class="max-w-3xl mx-auto py-20">
     <div class="mb-16 space-y-5">
         <h2 class="font-bold text-2xl text-arm-blue-500">Risk Assessment Form for {{ $vendor->name }}</h2>
-        <p>Hi {{ $vendor->contact_name }}, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus at cum
-            deleniti eius esse harum, hic ipsa
-            labore maiores nisi nostrum odio odit pariatur provident, qui, quidem sequi similique vero.</p>
+        <p>Hi {{ $vendor->contact_name }}, Please complete the Risk Assessment form attached. We are completing our
+            requirements to further acknowledge that your company has installed all GLBA policies, procedures, and IT
+            requirements ensuring you are maintaining adequate procedures to protect customer information and detect and
+            respond to potential security breaches.</p>
     </div>
     <livewire:dealer.vendor.form :vendor="$vendor"/>
 </div>

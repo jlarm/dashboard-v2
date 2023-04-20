@@ -13,11 +13,26 @@ class   Index extends Component
 {
     public string $type = 'technical';
     public string $dealer;
+    public $assets;
 
     public function mount()
     {
+        $statToken = Cookie::get('sentry');
+        $statClient = new Client();
+        $statNames = ['live_assets', 'root_domains', 'subdomains'];
         $this->dealer = ScanSetting::first()->name ?? '';
+
+        $statRequest = new Request('GET', 'https://blue-api.redsentry.com/external/stats/total/live_assets?sentry=Victor%20Ford', [
+            'Authorization' => $statToken,
+        ]);
+
+        $send = $statClient->send($statRequest)->getBody()->getContents();
+
+        $this->assets = json_decode($send);
+
+        $this->assets = $this->assets->total;
     }
+
     public function export()
     {
         $token = Cookie::get('sentry');
