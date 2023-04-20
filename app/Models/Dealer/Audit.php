@@ -4,9 +4,15 @@ namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Audit extends Model
+class Audit extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $fillable = [
         'store_id',
         'draft',
@@ -157,5 +163,18 @@ class Audit extends Model
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->nonQueued();
+    }
+
+    public function getPathToMedia(Media $media): string
+    {
+        return tenant('id') . '/' . $media->collection_name . '/' . $media->id . '/';
     }
 }

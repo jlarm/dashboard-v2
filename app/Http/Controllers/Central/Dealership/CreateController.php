@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Central\Dealership;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealership\CreateRequest;
 use App\Models\Dealer\ScanSetting;
-use App\Models\Dealer\StoreSettings;
+use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,7 +47,7 @@ class CreateController extends Controller
 
             $dealer->run(function () use ($pass, $name, $address, $city, $state, $zip_code, $phone, $fax, $url) {
 
-                StoreSettings::create([
+                Store::create([
                     'name' => $name,
                     'address' => $address,
                     'city' => $city,

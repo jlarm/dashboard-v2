@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\Dealer\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Dealer\Auth\EmailVerificationNotificationController;
@@ -106,6 +107,7 @@ Route::group([
 
     Route::get('audits', function () { return view('dealer.audit.index'); })->middleware('auth')->name('audit.index');
     Route::get('audits/create', function () { return view('dealer.audit.create'); })->middleware('auth')->name('audit.create');
+    Route::get('audits/{audit:id}', AuditController::class)->middleware('auth')->name('audit.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
