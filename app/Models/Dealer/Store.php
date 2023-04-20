@@ -5,6 +5,7 @@ namespace App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -82,5 +83,10 @@ class Store extends Model
     public function scanSetting(): HasOne
     {
         return $this->hasOne(ScanSetting::class);
+    }
+
+    public function audit(): HasMany
+    {
+        return $this->hasMany(Audit::class);
     }
 }

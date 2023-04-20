@@ -276,6 +276,19 @@
                             </a>
                             @if(!tenant('locations'))
                                 <a
+                                    href="{{ route('dealer.audit.index') }}"
+                                    class="{{ (request()->is('audits')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor"
+                                         class="{{ request()->is('audits') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                                    </svg>
+
+                                    Audits
+                                </a>
+                                <a
                                     href="{{ route('dealer.scan.index') }}"
                                     class="{{ (request()->is('scans')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
                                 >

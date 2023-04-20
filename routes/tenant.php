@@ -104,6 +104,9 @@ Route::group([
         return view('dealer.vendor.thankyou');
     })->middleware('web')->name('vendors.thankyou');
 
+    Route::get('audits', function () { return view('dealer.audit.index'); })->middleware('auth')->name('audit.index');
+    Route::get('audits/create', function () { return view('dealer.audit.create'); })->middleware('auth')->name('audit.create');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
