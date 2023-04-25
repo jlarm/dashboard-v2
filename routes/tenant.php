@@ -35,8 +35,7 @@ Route::group([
         return view('dealer.welcome');
     });
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('/dashboard', function () {
@@ -55,16 +54,12 @@ Route::group([
     Route::get('stores/{store:slug}/edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('stores.edit');
     Route::get('settings', function () { return view('dealer.store.settings'); })->middleware(['auth'])->name('dealer.settings');
 
-    Route::get('employees', function () {
-        return view('dealer.employee.index');
-    })->middleware('auth')->name('employees.index');
-    Route::get('employees/open-invites', function () {
-        return view('dealer.employee.open-invites');
-    })->middleware('auth')->name('employees.open-invites');
+    Route::get('employees', function () { return view('dealer.employee.index'); })->middleware('auth')->name('employees.index');
+    Route::get('employees/open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('employees.open-invites');
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])->middleware('web')->name('employees.create');
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('employees.store');
     Route::get('employees/{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('employees.show');
-    Route::get('abc', [CourseResultsController::class, 'export'])->middleware(['web', 'auth'])->name('dealer.employees.export');
+//    Route::get('abc', [CourseResultsController::class, 'export'])->middleware(['web', 'auth'])->name('dealer.employees.export');
 
     Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.'], function () {
         Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
@@ -83,27 +78,15 @@ Route::group([
     Route::get('scans', function () { return view('dealer.scan.index'); })->middleware('auth')->name('scan.index');
     Route::get('scans/settings', function () { return view('dealer.scan.settings'); })->middleware('auth')->name('scan.settings');
 
-    Route::get('/sds', function () {
-        return view('dealer.sds.index');
-    })->middleware('auth')->name('sds.index');
+    Route::get('/sds', function () { return view('dealer.sds.index'); })->middleware('auth')->name('sds.index');
 
-    Route::get('/manuals', function () {
-        return view('dealer.manual.index');
-    })->middleware('auth')->name('manual.index');
-    Route::get('/isp', function () {
-        return view('dealer.manual.isp');
-    })->middleware('auth')->name('manual.isp');
-    Route::get('osha', function () {
-        return view('dealer.manual.osha');
-    })->middleware('auth')->name('manual.osha');
+    Route::get('/manuals', function () { return view('dealer.manual.index'); })->middleware('auth')->name('manual.index');
+    Route::get('/isp', function () { return view('dealer.manual.isp'); })->middleware('auth')->name('manual.isp');
+    Route::get('osha', function () { return view('dealer.manual.osha'); })->middleware('auth')->name('manual.osha');
 
-    Route::get('vendors', function () {
-        return view('dealer.vendor.index');
-    })->middleware('auth')->name('vendor.index');
+    Route::get('vendors', function () { return view('dealer.vendor.index'); })->middleware('auth')->name('vendor.index');
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
-    Route::get('/vendors/thankyou', function () {
-        return view('dealer.vendor.thankyou');
-    })->middleware('web')->name('vendors.thankyou');
+    Route::get('/vendors/thankyou', function () { return view('dealer.vendor.thankyou'); })->middleware('web')->name('vendors.thankyou');
 
     Route::get('audits', function () { return view('dealer.audit.index'); })->middleware('auth')->name('audit.index');
     Route::get('audits/create', function () { return view('dealer.audit.create'); })->middleware('auth')->name('audit.create');

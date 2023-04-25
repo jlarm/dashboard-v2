@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\Store;
-use App\Models\Dealer\StoreSettings;
 use Filament\Forms;
 use Filament\Forms\Components\Radio;
 use Filament\Notifications\Notification;
@@ -19,9 +18,9 @@ class SingleOnboardingDetails extends Component implements Forms\Contracts\HasFo
     public function mount(Store $store)
     {
         if ($store->id === null) {
-            $this->dealer = StoreSettings::first();
+            $this->dealer = Store::first();
         } else {
-            $this->dealer = StoreSettings::where('store_id', $this->store->id)->first();
+            $this->dealer = Store::where('store_id', $this->store->id)->first();
         }
 
         $this->form->fill([

@@ -1,0 +1,123 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('finance_audits', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(Store::class)->nullable();
+
+            $table->boolean('draft')->default(true);
+
+            $table->tinyInteger('finance_q1_answer')->nullable();
+            $table->mediumText('finance_q1_comment')->nullable();
+            $table->tinyInteger('finance_q2_answer')->nullable();
+            $table->mediumText('finance_q2_comment')->nullable();
+            $table->tinyInteger('finance_q3_answer')->nullable();
+            $table->mediumText('finance_q3_comment')->nullable();
+            $table->tinyInteger('finance_q4_answer')->nullable();
+            $table->mediumText('finance_q4_comment')->nullable();
+            $table->tinyInteger('finance_q5_answer')->nullable();
+            $table->mediumText('finance_q5_comment')->nullable();
+            $table->tinyInteger('finance_q6_answer')->nullable();
+            $table->mediumText('finance_q6_comment')->nullable();
+            $table->tinyInteger('finance_q7_answer')->nullable();
+            $table->mediumText('finance_q7_comment')->nullable();
+            $table->tinyInteger('finance_q8_answer')->nullable();
+            $table->mediumText('finance_q8_comment')->nullable();
+            $table->tinyInteger('finance_q9_answer')->nullable();
+            $table->mediumText('finance_q9_comment')->nullable();
+            $table->tinyInteger('finance_q10_answer')->nullable();
+            $table->mediumText('finance_q10_comment')->nullable();
+            $table->tinyInteger('finance_q11_answer')->nullable();
+            $table->mediumText('finance_q11_comment')->nullable();
+            $table->tinyInteger('finance_q12_answer')->nullable();
+            $table->mediumText('finance_q12_comment')->nullable();
+            $table->tinyInteger('finance_q13_answer')->nullable();
+            $table->mediumText('finance_q13_comment')->nullable();
+            $table->tinyInteger('finance_q14_answer')->nullable();
+            $table->mediumText('finance_q14_comment')->nullable();
+            $table->tinyInteger('finance_q15_answer')->nullable();
+            $table->mediumText('finance_q15_comment')->nullable();
+            $table->tinyInteger('finance_q16_answer')->nullable();
+            $table->mediumText('finance_q16_comment')->nullable();
+            $table->tinyInteger('finance_q17_answer')->nullable();
+            $table->mediumText('finance_q17_comment')->nullable();
+            $table->tinyInteger('finance_q18_answer')->nullable();
+            $table->mediumText('finance_q18_comment')->nullable();
+            $table->tinyInteger('finance_q19_answer')->nullable();
+            $table->mediumText('finance_q19_comment')->nullable();
+            $table->tinyInteger('finance_q20_answer')->nullable();
+            $table->mediumText('finance_q20_comment')->nullable();
+            $table->tinyInteger('finance_q21_answer')->nullable();
+            $table->mediumText('finance_q21_comment')->nullable();
+            $table->tinyInteger('finance_q22_answer')->nullable();
+            $table->mediumText('finance_q22_comment')->nullable();
+            $table->tinyInteger('finance_q23_answer')->nullable();
+            $table->mediumText('finance_q23_comment')->nullable();
+            $table->tinyInteger('finance_q24_answer')->nullable();
+            $table->mediumText('finance_q24_comment')->nullable();
+            $table->tinyInteger('finance_q25_answer')->nullable();
+            $table->mediumText('finance_q25_comment')->nullable();
+            $table->tinyInteger('finance_q26_answer')->nullable();
+            $table->mediumText('finance_q26_comment')->nullable();
+            $table->tinyInteger('finance_q27_answer')->nullable();
+            $table->mediumText('finance_q27_comment')->nullable();
+            $table->tinyInteger('finance_q28_answer')->nullable();
+            $table->mediumText('finance_q28_comment')->nullable();
+            $table->tinyInteger('finance_q29_answer')->nullable();
+            $table->mediumText('finance_q29_comment')->nullable();
+            $table->tinyInteger('finance_q30_answer')->nullable();
+            $table->mediumText('finance_q30_comment')->nullable();
+            $table->tinyInteger('finance_q31_answer')->nullable();
+            $table->mediumText('finance_q31_comment')->nullable();
+            $table->tinyInteger('finance_q32_answer')->nullable();
+            $table->mediumText('finance_q32_comment')->nullable();
+            $table->tinyInteger('finance_q33_answer')->nullable();
+            $table->mediumText('finance_q33_comment')->nullable();
+            $table->tinyInteger('finance_q34_answer')->nullable();
+            $table->mediumText('finance_q34_comment')->nullable();
+            $table->tinyInteger('finance_q35_answer')->nullable();
+            $table->mediumText('finance_q35_comment')->nullable();
+            $table->tinyInteger('finance_q36_answer')->nullable();
+            $table->mediumText('finance_q36_comment')->nullable();
+            $table->tinyInteger('finance_q37_answer')->nullable();
+            $table->mediumText('finance_q37_comment')->nullable();
+            $table->tinyInteger('finance_q38_answer')->nullable();
+            $table->mediumText('finance_q38_comment')->nullable();
+            $table->tinyInteger('finance_q39_answer')->nullable();
+            $table->mediumText('finance_q39_comment')->nullable();
+            $table->tinyInteger('finance_q40_answer')->nullable();
+            $table->mediumText('finance_q40_comment')->nullable();
+            $table->tinyInteger('finance_q41_answer')->nullable();
+            $table->mediumText('finance_q41_comment')->nullable();
+            $table->tinyInteger('finance_q42_answer')->nullable();
+            $table->mediumText('finance_q42_comment')->nullable();
+            $table->tinyInteger('finance_q43_answer')->nullable();
+            $table->mediumText('finance_q43_comment')->nullable();
+            $table->tinyInteger('finance_q44_answer')->nullable();
+            $table->mediumText('finance_q44_comment')->nullable();
+            $table->tinyInteger('finance_q45_answer')->nullable();
+            $table->mediumText('finance_q45_comment')->nullable();
+            $table->tinyInteger('finance_q46_answer')->nullable();
+            $table->mediumText('finance_q46_comment')->nullable();
+            $table->tinyInteger('finance_q47_answer')->nullable();
+            $table->mediumText('finance_q47_comment')->nullable();
+            $table->tinyInteger('finance_q48_answer')->nullable();
+            $table->mediumText('finance_q48_comment')->nullable();
+            $table->tinyInteger('finance_q49_answer')->nullable();
+            $table->mediumText('finance_q49_comment')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('finance_audits');
+    }
+};
