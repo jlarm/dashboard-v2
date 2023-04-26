@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\BodyShopAuditController;
+use App\Http\Controllers\Dealer\Audit\FinanceController;
 use App\Http\Controllers\Dealer\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Dealer\Auth\EmailVerificationNotificationController;
@@ -93,10 +94,11 @@ Route::group([
     Route::get('audits/osha/create', function () { return view('dealer.audit.osha.create'); })->middleware('auth')->name('audit.osha.create');
     Route::get('audits/osha/{audit:id}', AuditController::class)->middleware('auth')->name('audit.osha.show');
     Route::get('audits/body-shop', function () { return view('dealer.audit.body-shop.index'); })->middleware('auth')->name('audit.body-shop.index');
-    Route::get('audits/body-shop/create', function () { return view('dealer.audit.body-shop.create'); })->middleware('auth')->name('audits.body-shop.create');
+    Route::get('audits/body-shop/create', function () { return view('dealer.audit.body-shop.create'); })->middleware('auth')->name('audit.body-shop.create');
     Route::get('audits/body-shop/{audit:id}', BodyShopAuditController::class)->middleware('auth')->name('audit.body-shop.show');
     Route::get('audits/finance', function () { return view('dealer.audit.finance.index'); })->middleware('auth')->name('audit.finance.index');
-    Route::get('audits/finance/create', function () { return view('dealer.audit.finance.create'); })->middleware('auth')->name('audits.finance.create');
+    Route::get('audits/finance/create', function () { return view('dealer.audit.finance.create'); })->middleware('auth')->name('audit.finance.create');
+    Route::get('audits/finance/{audit:id}', FinanceController::class)->middleware('auth')->name('audit.finance.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

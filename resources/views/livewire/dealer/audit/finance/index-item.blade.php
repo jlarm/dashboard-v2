@@ -23,10 +23,16 @@
 
                 Download
             </button>
-            <a href="{{ route('dealer.audit.show', $audit) }}" type="button"
+            <a href="{{ route('dealer.audit.finance.show', $audit) }}" type="button"
                class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                 Edit
             </a>
+            <button
+                class="text-red-500 text-sm"
+                wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['financeAudit' => $audit->id]))"
+            >
+                Delete
+            </button>
         </div>
     </td>
 </tr>

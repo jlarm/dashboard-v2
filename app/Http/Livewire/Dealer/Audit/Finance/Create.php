@@ -368,12 +368,12 @@ class Create extends Component
 
         $submission = FinanceAudit::create($validated);
 
-        for ($i = 1; $i <= 69; $i++) {
+        for ($i = 1; $i <= 49; $i++) {
             $submission->addFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
                 ->toMediaCollection('finance_q' . $i . '_images');
         }
 
-        return redirect(route('dealer.audit.index'));
+        return redirect(route('dealer.audit.finance.index'));
     }
     public function render()
     {

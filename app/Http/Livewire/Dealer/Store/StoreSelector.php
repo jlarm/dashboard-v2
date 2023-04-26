@@ -11,7 +11,8 @@ class StoreSelector extends Component
     {
         if (auth()->user()->can('create-stores')) {
             return view('livewire.dealer.store.store-selector', [
-                'stores' => Store::latest()->get(),
+                'stores' => Store::orderBy('name')
+                    ->skip(1)->get(),
             ]);
         } else {
             return view('livewire.dealer.store.store-selector', [

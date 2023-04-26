@@ -15,7 +15,9 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.store.index', [
-            'stores' => Store::latest()->paginate(10),
+            'stores' => Store::orderBy('name')
+                ->whereNot('id', 1)
+                ->paginate(10),
         ]);
     }
 }
