@@ -47,8 +47,10 @@
                                         {{--                                                wire:click="$emit('modal.open', 'dealer.employee.resend-invite',  @js(['invite' => $invite->id]))">--}}
                                         {{--                                            Resend--}}
                                         {{--                                        </button>--}}
-                                        <button class="text-red-500"
-                                                wire:click="$emit('modal.open', 'dealer.employee.delete-invite',  @js(['invite' => $invite->id]))">
+                                        <button
+                                            class="text-red-500"
+                                            wire:click="$emit('modal.open', 'dealer.employee.delete-invite',  @js(['invite' => $invite->id]))"
+                                        >
                                             Delete
                                         </button>
                                     @endif

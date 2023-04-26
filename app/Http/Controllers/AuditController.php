@@ -9,7 +9,7 @@ class AuditController extends Controller
 {
     public function __invoke(OshaAudit $audit)
     {
-        return view('dealer.audit.show', [
+        return view('dealer.audit.osha.show', [
             'audit' => $audit,
         ]);
     }

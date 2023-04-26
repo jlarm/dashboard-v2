@@ -344,7 +344,7 @@ class Create extends Component
                 ->toMediaCollection('body_shop_q' . $i . '_images');
         }
 
-        return redirect(route('dealer.audit.index'));
+        return redirect(route('dealer.audit.body-shop.index'));
     }
 
     public function render()

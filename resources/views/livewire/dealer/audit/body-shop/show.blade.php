@@ -1,4 +1,4 @@
-<form method="POST" wire:submit.prevent="submit">
+<form method="POST" wire:submit.prevent="update">
     <div class="space-y-5">
         <!-- 1 Is a Filtration Log being completed? -->
         <div class="bg-gray-50 p-3 space-y-7">

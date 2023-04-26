@@ -1,5 +1,5 @@
 @props(['title'])
-<div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
+<div class="sticky top-0 z-96 flex h-16 flex-shrink-0 bg-white shadow">
     <!-- Mobile Menu Toggle -->
     <x-navigation.mobile-menu-toggle/>
     <div class="flex flex-1 justify-between px-4">

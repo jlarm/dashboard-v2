@@ -12,7 +12,7 @@
                 </thead>
                 <tbody class="text-gray-700 whitespace-nowrap divide-y divide-gray-100">
                 @forelse($audits as $audit)
-                    <livewire:dealer.audit.index-item :audit="$audit" :key="$audit->id"/>
+                    <livewire:dealer.audit.osha.index-item :audit="$audit" :key="$audit->id"/>
                 @empty
                     <tr>
                         <td colspan="7"
