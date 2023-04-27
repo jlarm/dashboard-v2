@@ -18,10 +18,6 @@ class Delete extends Modal
     public function delete()
     {
         $this->bodyShopAudit->delete();
-//        BodyShopAudit::destroy($this->bodyShopAudit->id);
-//
-//        $media = Media::where('model_id', $this->bodyShopAudit->id);
-//        $media->delete();
 
         $this->emitTo('dealer.audit.body-shop.index', 'refreshAudits');
 

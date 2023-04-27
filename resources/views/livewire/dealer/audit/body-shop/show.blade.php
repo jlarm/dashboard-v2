@@ -53,7 +53,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q1_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q1_images"
+                :model="$audit"
+                collection="body_shop_q1_images"
+            />
         </div>
         <!-- 2 Do all employees know how to -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -107,7 +114,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q2_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q2_images"
+                :model="$audit"
+                collection="body_shop_q2_images"
+            />
         </div>
         <!-- 3 Has annual fit test for all employees been performed? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -162,7 +176,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q3_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q3_images"
+                :model="$audit"
+                collection="body_shop_q3_images"
+            />
         </div>
         <!-- 4 Medical Questionnaire issued to employees utilizing respirators? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -217,7 +238,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q4_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q4_images"
+                :model="$audit"
+                collection="body_shop_q4_images"
+            />
         </div>
         <!-- 5 Are respirators stored properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -271,7 +299,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q5_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q5_images"
+                :model="$audit"
+                collection="body_shop_q5_images"
+            />
         </div>
         <!-- 6 Hybrid - Do respirators have NIOSH certification? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -325,7 +360,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q6_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q6_images"
+                :model="$audit"
+                collection="body_shop_q6_images"
+            />
         </div>
         <!-- 7 Is PPE equipment available and is it in good condition? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -380,7 +422,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q7_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q7_images"
+                :model="$audit"
+                collection="body_shop_q7_images"
+            />
         </div>
         <!-- 8 Are paint booths free from any flammable material? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -435,7 +484,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q8_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q8_images"
+                :model="$audit"
+                collection="body_shop_q8_images"
+            />
         </div>
         <!-- 9 Are all the flammable materials stored properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -490,7 +546,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q9_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q9_images"
+                :model="$audit"
+                collection="body_shop_q9_images"
+            />
         </div>
         <!-- 10 Are all products that are in containers other than the original properly labeled with product NAME, MFG, and appropriate hazard warning? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -545,7 +608,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q10_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q10_images"
+                :model="$audit"
+                collection="body_shop_q10_images"
+            />
         </div>
         <!-- 11 Has the eye wash equipment been tested, cleaned and documented weekly? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -600,7 +670,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q11_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q11_images"
+                :model="$audit"
+                collection="body_shop_q11_images"
+            />
         </div>
         <!-- 12 Is the eye wash equipment readily accessible? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -655,7 +732,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q12_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q12_images"
+                :model="$audit"
+                collection="body_shop_q12_images"
+            />
         </div>
         <!-- 13 How often is the water/solution changed in the eye wash equipment? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -710,7 +794,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q13_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q13_images"
+                :model="$audit"
+                collection="body_shop_q13_images"
+            />
         </div>
         <!-- 14 Do you have documentation on water/solution change out? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -765,7 +856,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q14_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q14_images"
+                :model="$audit"
+                collection="body_shop_q14_images"
+            />
         </div>
         <!-- 15 Are you following the mfg. specs? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -819,7 +917,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q15_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q15_images"
+                :model="$audit"
+                collection="body_shop_q15_images"
+            />
         </div>
         <!-- 16 Have the fire extinguishers had their annual inspection and are they properly identified and fully charged? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -880,7 +985,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q16_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q16_images"
+                :model="$audit"
+                collection="body_shop_q16_images"
+            />
         </div>
         <!-- 17 Are the fire extinguishers easily accessible? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -935,7 +1047,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q17_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q17_images"
+                :model="$audit"
+                collection="body_shop_q17_images"
+            />
         </div>
         <!-- 18 Are all hoses and cutting tips for the welder/cutting torches in good condition without any cracks or breaks? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -990,7 +1109,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q18_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q18_images"
+                :model="$audit"
+                collection="body_shop_q18_images"
+            />
         </div>
         <!-- 19 Are all exits properly marked? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1044,7 +1170,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q19_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q19_images"
+                :model="$audit"
+                collection="body_shop_q19_images"
+            />
         </div>
         <!-- 20 Are pathways to exits clear of obstructions? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1099,7 +1232,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q20_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q20_images"
+                :model="$audit"
+                collection="body_shop_q20_images"
+            />
         </div>
         <!-- 21 Are all aisles/pathways, stairways and landings free from obstructions and are the shop areas kept clean and orderly? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1154,7 +1294,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q21_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q21_images"
+                :model="$audit"
+                collection="body_shop_q21_images"
+            />
         </div>
         <!-- 22 Are any doorways that are nonfunctioning or blocked marked by a sign stating “NOT AN EXIT”? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1210,7 +1357,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q22_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q22_images"
+                :model="$audit"
+                collection="body_shop_q22_images"
+            />
         </div>
         <!-- 23 Are floors in good repair and free from obstruction and debris and slippery conditions? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1265,7 +1419,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q23_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q23_images"
+                :model="$audit"
+                collection="body_shop_q23_images"
+            />
         </div>
         <!-- 24 Are floor openings in excess of 2.25” wide covered with hinged flaps? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1320,7 +1481,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q24_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q24_images"
+                :model="$audit"
+                collection="body_shop_q24_images"
+            />
         </div>
         <!-- 25 Are compressed air hoses in safe (no frays, cuts, tape or clamps for repair) working condition? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1375,7 +1543,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q25_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q25_images"
+                :model="$audit"
+                collection="body_shop_q25_images"
+            />
         </div>
         <!-- 26 Are all portable gas containers UL of FM approved? Yes, dealership only uses UL approved containers. Did not find any of these containers in the body shop during this audit. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1431,7 +1606,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q26_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q26_images"
+                :model="$audit"
+                collection="body_shop_q26_images"
+            />
         </div>
         <!-- 27 All gas cylinders stored properly i.e. tied down etc.? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1486,7 +1668,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q27_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q27_images"
+                :model="$audit"
+                collection="body_shop_q27_images"
+            />
         </div>
         <!-- 28 Are gas cylinders stored away from sources of heat or electricity and at least 20’ away from combustible materials? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1541,7 +1730,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q28_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q28_images"
+                :model="$audit"
+                collection="body_shop_q28_images"
+            />
         </div>
         <!-- 29 When dispensing are all tanks holding flammable material properly grounded? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1596,7 +1792,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q29_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q29_images"
+                :model="$audit"
+                collection="body_shop_q29_images"
+            />
         </div>
         <!-- 30 Is there proper signage about not smoking in the appropriate areas? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1651,7 +1854,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q30_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q30_images"
+                :model="$audit"
+                collection="body_shop_q30_images"
+            />
         </div>
         <!-- 31 Are no smoking signs being enforced? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1705,7 +1915,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q31_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q31_images"
+                :model="$audit"
+                collection="body_shop_q31_images"
+            />
         </div>
         <!-- 32 Are goggles or face shields always worn when grinding? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1760,7 +1977,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q32_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q32_images"
+                :model="$audit"
+                collection="body_shop_q32_images"
+            />
         </div>
         <!-- 33 Is there proper spacing on grinders; Tool rest 1/8” from grinding wheel Tongue plate 1/4” from grinding wheel -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1815,7 +2039,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q33_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q33_images"
+                :model="$audit"
+                collection="body_shop_q33_images"
+            />
         </div>
         <!-- 34 Are Signs posted warning of automatic starting feature of the compressors? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1870,7 +2101,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q34_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q34_images"
+                :model="$audit"
+                collection="body_shop_q34_images"
+            />
         </div>
         <!-- 35 Is there clear access of at least 36” to all electrical panels? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1925,7 +2163,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q35_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q35_images"
+                :model="$audit"
+                collection="body_shop_q35_images"
+            />
         </div>
         <!-- 36 Are all the breakers properly labeled? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1979,7 +2224,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q36_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q36_images"
+                :model="$audit"
+                collection="body_shop_q36_images"
+            />
         </div>
         <!-- 37 Are there any extension cords being used improperly? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2034,7 +2286,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q37_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q37_images"
+                :model="$audit"
+                collection="body_shop_q37_images"
+            />
         </div>
         <!-- 38 Are any electrical cords frayed, cracked, taped, or spliced? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2089,7 +2348,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q38_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q38_images"
+                :model="$audit"
+                collection="body_shop_q38_images"
+            />
         </div>
         <!-- 39 Check the plug end to be sure the ground is still intact. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2144,7 +2410,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q39_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q39_images"
+                :model="$audit"
+                collection="body_shop_q39_images"
+            />
         </div>
         <!-- 40 Any electrical issues: -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2198,7 +2471,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q40_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q40_images"
+                :model="$audit"
+                collection="body_shop_q40_images"
+            />
         </div>
         <!-- 41 Miscellaneous issues? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2252,7 +2532,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q41_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q41_images"
+                :model="$audit"
+                collection="body_shop_q41_images"
+            />
         </div>
         <!-- 42 Hybrid Vehicle Safety: Are batteries removed before work is started? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2307,7 +2594,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q42_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q42_images"
+                :model="$audit"
+                collection="body_shop_q42_images"
+            />
         </div>
         <!-- 43 Safety glasses not being worn when working on hybrid vehicle? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2362,7 +2656,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q43_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q43_images"
+                :model="$audit"
+                collection="body_shop_q43_images"
+            />
         </div>
         <!-- 44 Is the First Aid Kit identified and is it stocked with appropriate supplies? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2418,7 +2719,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q44_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q44_images"
+                :model="$audit"
+                collection="body_shop_q44_images"
+            />
         </div>
         <!-- 45 Electrical panels: (clear access of at -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2473,7 +2781,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="body_shop_q45_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="body_shop_q45_images"
+                :model="$audit"
+                collection="body_shop_q45_images"
+            />
         </div>
         <div class="flex items-center space-x-6">
             <button
