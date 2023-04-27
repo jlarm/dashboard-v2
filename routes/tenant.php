@@ -51,7 +51,11 @@ Route::group([
     Route::get('stores/{store:slug}/manuals', \App\Http\Livewire\Dealer\Store\SingleStoreManuals::class)->middleware(['auth', 'has.stores'])->name('stores.manuals');
     Route::get('stores/{store:slug}/manuals/isp', \App\Http\Livewire\Dealer\Store\SingleStoreIspForm::class)->middleware(['auth', 'has.stores'])->name('stores.manuals.isp');
     Route::get('stores/{store:slug}/manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStoreOshaForm::class)->middleware(['auth', 'has.stores'])->name('stores.manuals.osha');
-    Route::get('stores/{store:slug}/audits', \App\Http\Livewire\Dealer\Store\SingleStoreAudits::class)->middleware(['auth', 'has.stores'])->name('stores.audits');
+    Route::get('stores/{store:slug}/audits/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Index::class)->middleware(['auth', 'has.stores'])->name('stores.audits.osha.index');
+    Route::get('stores/{store:slug}/audits/osha/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Create::class)->middleware(['auth', 'has.stores'])->name('stores.audits.osha.create');
+    Route::get('stores/{store:slug}/audits/osha/{audit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Show::class)->middleware(['auth', 'has.stores'])->name('stores.audits.osha.show');
+    Route::get('stores/{store:slug}/audits/body-shop', \App\Http\Livewire\Dealer\Store\SingleStoreBodyShopAudit::class)->middleware(['auth', 'has.stores'])->name('stores.audits.body-shop');
+    Route::get('stores/{store:slug}/audits/finance', \App\Http\Livewire\Dealer\Store\SingleStoreFinanceAudit::class)->middleware(['auth', 'has.stores'])->name('stores.audits.finance');
     Route::get('stores/{store:slug}/settings', \App\Http\Livewire\Dealer\Store\SingleStoreSettings::class)->middleware(['auth', 'has.stores'])->name('stores.settings');
     Route::get('stores/{store:slug}/edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('stores.edit');
     Route::get('settings', function () { return view('dealer.store.settings'); })->middleware(['auth'])->name('dealer.settings');

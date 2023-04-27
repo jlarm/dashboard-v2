@@ -1,4 +1,4 @@
-<div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6 border">
+<div class="bg-white sm:p-6 border-t">
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <h3 class="text-base font-semibold leading-6 text-gray-900">Compliance Info</h3>

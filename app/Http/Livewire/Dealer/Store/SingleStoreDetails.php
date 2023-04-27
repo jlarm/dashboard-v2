@@ -19,7 +19,7 @@ class SingleStoreDetails extends Component implements Forms\Contracts\HasForms
         if ($store->id === null) {
             $this->dealer = Store::first();
         } else {
-            $this->dealer = Store::where('store_id', $this->store->id)->first();
+            $this->dealer = Store::where('id', $this->store->id)->first();
         }
 
         $this->form->fill([

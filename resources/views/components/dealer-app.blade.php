@@ -32,10 +32,8 @@
         @include('layouts.top-bar')
 
         <main class="flex-1 bg-white">
-            <div class="py-6">
-                <div class="mx-auto px-4 sm:px-6 md:px-8">
-                    {{ $slot }}
-                </div>
+            <div class="mx-auto">
+                {{ $slot }}
             </div>
         </main>
     </div>

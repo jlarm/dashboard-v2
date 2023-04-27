@@ -1,41 +1,69 @@
-<div class="flex items-center mb-5 bg-gray-50 p-5 rounded">
-    <span class="text-xl font-black text-arm-orange-500">{{ $store->name }}</span>
-    <nav class="flex overflow-x-auto grow border-b border-white/10 py-4">
-        <ul role="list"
-            class="flex gap-x-6 px-4 text-sm font-semibold leading-6 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between mb-5 bg-gray-50 p-4 rounded border-b border-gray-200">
+    <div>
+        <span class="text-3xl font-black text-arm-orange-500">{{ $store->name }}</span>
+        <nav class="flex grow border-b border-white/10 py-2">
+            <ul role="list"
+                class="flex gap-x-6 text-sm font-semibold leading-6">
 
-            <li>
-                <a
-                    class="{{ (request()->segment(3) == 'employees') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
-                    href="{{ route('dealer.stores.employees', $store) }}">Employees</a>
-            </li>
+                <li>
+                    <a
+                        class="{{ (request()->segment(3) == 'employees') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
+                        href="{{ route('dealer.stores.employees', $store) }}">Employees</a>
+                </li>
 
-            <li>
-                <a
-                    class="{{ (request()->segment(3) == 'scans') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
-                    href="{{ route('dealer.stores.scans', $store) }}">Scans</a>
-            </li>
+                <li>
+                    <a
+                        class="{{ (request()->segment(3) == 'scans') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
+                        href="{{ route('dealer.stores.scans', $store) }}">Scans</a>
+                </li>
 
-            <li>
-                <a
-                    class="{{ (request()->segment(3) == 'manuals') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
-                    href="{{ route('dealer.stores.manuals', $store) }}">Manuals</a>
-            </li>
+                <li>
+                    <a
+                        class="{{ (request()->segment(3) == 'manuals') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
+                        href="{{ route('dealer.stores.manuals', $store) }}">Manuals</a>
+                </li>
 
-            <li>
-                <a
-                    class="{{ (request()->segment(3) == 'audits') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
-                    href="{{ route('dealer.stores.audits', $store) }}">Audits</a>
-            </li>
+                <li x-data="{ open: false }" class="relative">
+                    <button
+                        @click="open = !open"
+                        class="{{ (request()->segment(3) == 'audits') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }} flex items-center gap-x-1"
+                    >
+                        Audits
+                        <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                             aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 translate-y-1"
+                         x-description="'Company' flyout menu, show/hide based on flyout menu state."
+                         class="x-cloak absolute -left-8 top-full z-10 mt-3 w-56 rounded-xl bg-white p-2 shadow-lg ring-1 ring-gray-900/5"
+                         x-ref="panel" @click.away="open = false">
+                        <a href="{{ route('dealer.stores.audits.osha.index', $store) }}"
+                           class="block rounded-lg px-3 py-2 text-sm leading-6 text-arm-blue-500 hover:bg-arm-blue-50">OSHA</a>
+                        <a href="{{ route('dealer.stores.audits.body-shop', $store) }}"
+                           class="block rounded-lg px-3 py-2 text-sm leading-6 text-arm-blue-500 hover:bg-arm-blue-50">Body
+                            Shop</a>
+                        <a href="{{ route('dealer.stores.audits.finance', $store) }}"
+                           class="block rounded-lg px-3 py-2 text-sm leading-6 text-arm-blue-500 hover:bg-arm-blue-50">Finance</a>
+                    </div>
+                </li>
 
-            <li>
-                <a
-                    class="{{ (request()->segment(3) == 'settings') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
-                    href="{{ route('dealer.stores.settings', $store) }}">Settings</a>
-            </li>
+                <li>
+                    <a
+                        class="{{ (request()->segment(3) == 'settings') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
+                        href="{{ route('dealer.stores.settings', $store) }}">Settings</a>
+                </li>
 
-        </ul>
-    </nav>
+            </ul>
+        </nav>
+    </div>
 
     @if($stores->count() > 1)
         <div class="flex justify-center">
@@ -71,7 +99,7 @@
                     :aria-expanded="open"
                     :aria-controls="$id('dropdown-button')"
                     type="button"
-                    class="flex items-center gap-2 bg-white px-5 py-2.5 rounded-md shadow"
+                    class="flex items-center gap-2 bg-white px-5 py-2.5 rounded-md shadow text-sm"
                 >
                     Switch Store
 

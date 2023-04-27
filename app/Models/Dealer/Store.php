@@ -2,6 +2,9 @@
 
 namespace App\Models\Dealer;
 
+use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -87,8 +90,23 @@ class Store extends Model implements HasMedia
         return $this->hasOne(ScanSetting::class);
     }
 
-    public function audit(): HasMany
+    public function oshaAudits(): HasMany
     {
-        return $this->hasMany(Audit::class);
+        return $this->hasMany(OshaAudit::class);
+    }
+
+    public function audits(): HasMany
+    {
+        return $this->hasMany(OshaAudit::class);
+    }
+
+    public function bodyShopAudits(): HasMany
+    {
+        return $this->hasMany(BodyShopAudit::class);
+    }
+
+    public function financeAudits(): HasMany
+    {
+        return $this->hasMany(FinanceAudit::class);
     }
 }

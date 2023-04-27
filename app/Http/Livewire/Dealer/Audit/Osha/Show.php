@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Audit\OshaAudit;
+use App\Models\Dealer\Store;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
 class Show extends Component
 {
     use WithMedia;
-
+    public Store $store;
     public OshaAudit $audit;
 
     public $mediaComponentNames = [

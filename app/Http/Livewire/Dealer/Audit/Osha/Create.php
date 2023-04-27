@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Audit\OshaAudit;
+use App\Models\Dealer\Store;
+use Auth;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
@@ -82,6 +84,7 @@ class Create extends Component
         'osha_q69_images',
     ];
     public $draft = false;
+    public Store $store;
     public $osha_q1_answer;
     public $osha_q1_comment;
     public $osha_q1_images;
@@ -503,16 +506,163 @@ class Create extends Component
 
     public function submit()
     {
-        $validated = $this->validate();
+        $this->validate();
 
-        $submission = OshaAudit::create($validated);
+        $submission = OshaAudit::create([
+            'user_id' => Auth::user()->id,
+            'store_id' => $this->store->id ?? Store::first()->id,
+            'osha_q1_answer' => $this->osha_q1_answer,
+            'osha_q1_comment' => $this->osha_q1_comment,
+            'osha_q2_answer' => $this->osha_q2_answer,
+            'osha_q2_comment' => $this->osha_q2_comment,
+            'osha_q3_answer' => $this->osha_q3_answer,
+            'osha_q3_comment' => $this->osha_q3_comment,
+            'osha_q4_answer' => $this->osha_q4_answer,
+            'osha_q4_comment' => $this->osha_q4_comment,
+            'osha_q5_answer' => $this->osha_q5_answer,
+            'osha_q5_comment' => $this->osha_q5_comment,
+            'osha_q6_answer' => $this->osha_q6_answer,
+            'osha_q6_comment' => $this->osha_q6_comment,
+            'osha_q7_answer' => $this->osha_q7_answer,
+            'osha_q7_comment' => $this->osha_q7_comment,
+            'osha_q8_answer' => $this->osha_q8_answer,
+            'osha_q8_comment' => $this->osha_q8_comment,
+            'osha_q9_answer' => $this->osha_q9_answer,
+            'osha_q9_comment' => $this->osha_q9_comment,
+            'osha_q10_answer' => $this->osha_q10_answer,
+            'osha_q10_comment' => $this->osha_q10_comment,
+            'osha_q11_answer' => $this->osha_q11_answer,
+            'osha_q11_comment' => $this->osha_q11_comment,
+            'osha_q12_answer' => $this->osha_q12_answer,
+            'osha_q12_comment' => $this->osha_q12_comment,
+            'osha_q13_answer' => $this->osha_q13_answer,
+            'osha_q13_comment' => $this->osha_q13_comment,
+            'osha_q14_answer' => $this->osha_q14_answer,
+            'osha_q14_comment' => $this->osha_q14_comment,
+            'osha_q15_answer' => $this->osha_q15_answer,
+            'osha_q15_comment' => $this->osha_q15_comment,
+            'osha_q16_answer' => $this->osha_q16_answer,
+            'osha_q16_comment' => $this->osha_q16_comment,
+            'osha_q17_answer' => $this->osha_q17_answer,
+            'osha_q17_comment' => $this->osha_q17_comment,
+            'osha_q18_answer' => $this->osha_q18_answer,
+            'osha_q18_comment' => $this->osha_q18_comment,
+            'osha_q19_answer' => $this->osha_q19_answer,
+            'osha_q19_comment' => $this->osha_q19_comment,
+            'osha_q20_answer' => $this->osha_q20_answer,
+            'osha_q20_comment' => $this->osha_q20_comment,
+            'osha_q21_answer' => $this->osha_q21_answer,
+            'osha_q21_comment' => $this->osha_q21_comment,
+            'osha_q22_answer' => $this->osha_q22_answer,
+            'osha_q22_comment' => $this->osha_q22_comment,
+            'osha_q23_answer' => $this->osha_q23_answer,
+            'osha_q23_comment' => $this->osha_q23_comment,
+            'osha_q24_answer' => $this->osha_q24_answer,
+            'osha_q24_comment' => $this->osha_q24_comment,
+            'osha_q25_answer' => $this->osha_q25_answer,
+            'osha_q25_comment' => $this->osha_q25_comment,
+            'osha_q26_answer' => $this->osha_q26_answer,
+            'osha_q26_comment' => $this->osha_q26_comment,
+            'osha_q27_answer' => $this->osha_q27_answer,
+            'osha_q27_comment' => $this->osha_q27_comment,
+            'osha_q28_answer' => $this->osha_q28_answer,
+            'osha_q28_comment' => $this->osha_q28_comment,
+            'osha_q29_answer' => $this->osha_q29_answer,
+            'osha_q29_comment' => $this->osha_q29_comment,
+            'osha_q30_answer' => $this->osha_q30_answer,
+            'osha_q30_comment' => $this->osha_q30_comment,
+            'osha_q31_answer' => $this->osha_q31_answer,
+            'osha_q31_comment' => $this->osha_q31_comment,
+            'osha_q32_answer' => $this->osha_q32_answer,
+            'osha_q32_comment' => $this->osha_q32_comment,
+            'osha_q33_answer' => $this->osha_q33_answer,
+            'osha_q33_comment' => $this->osha_q33_comment,
+            'osha_q34_answer' => $this->osha_q34_answer,
+            'osha_q34_comment' => $this->osha_q34_comment,
+            'osha_q35_answer' => $this->osha_q35_answer,
+            'osha_q35_comment' => $this->osha_q35_comment,
+            'osha_q36_answer' => $this->osha_q36_answer,
+            'osha_q36_comment' => $this->osha_q36_comment,
+            'osha_q37_answer' => $this->osha_q37_answer,
+            'osha_q37_comment' => $this->osha_q37_comment,
+            'osha_q38_answer' => $this->osha_q38_answer,
+            'osha_q38_comment' => $this->osha_q38_comment,
+            'osha_q39_answer' => $this->osha_q39_answer,
+            'osha_q39_comment' => $this->osha_q39_comment,
+            'osha_q40_answer' => $this->osha_q40_answer,
+            'osha_q40_comment' => $this->osha_q40_comment,
+            'osha_q41_answer' => $this->osha_q41_answer,
+            'osha_q41_comment' => $this->osha_q41_comment,
+            'osha_q42_answer' => $this->osha_q42_answer,
+            'osha_q42_comment' => $this->osha_q42_comment,
+            'osha_q43_answer' => $this->osha_q43_answer,
+            'osha_q43_comment' => $this->osha_q43_comment,
+            'osha_q44_answer' => $this->osha_q44_answer,
+            'osha_q44_comment' => $this->osha_q44_comment,
+            'osha_q45_answer' => $this->osha_q45_answer,
+            'osha_q45_comment' => $this->osha_q45_comment,
+            'osha_q46_answer' => $this->osha_q46_answer,
+            'osha_q46_comment' => $this->osha_q46_comment,
+            'osha_q47_answer' => $this->osha_q47_answer,
+            'osha_q47_comment' => $this->osha_q47_comment,
+            'osha_q48_answer' => $this->osha_q48_answer,
+            'osha_q48_comment' => $this->osha_q48_comment,
+            'osha_q49_answer' => $this->osha_q49_answer,
+            'osha_q49_comment' => $this->osha_q49_comment,
+            'osha_q50_answer' => $this->osha_q50_answer,
+            'osha_q50_comment' => $this->osha_q50_comment,
+            'osha_q51_answer' => $this->osha_q51_answer,
+            'osha_q51_comment' => $this->osha_q51_comment,
+            'osha_q52_answer' => $this->osha_q52_answer,
+            'osha_q52_comment' => $this->osha_q52_comment,
+            'osha_q53_answer' => $this->osha_q53_answer,
+            'osha_q53_comment' => $this->osha_q53_comment,
+            'osha_q54_answer' => $this->osha_q54_answer,
+            'osha_q54_comment' => $this->osha_q54_comment,
+            'osha_q55_answer' => $this->osha_q55_answer,
+            'osha_q55_comment' => $this->osha_q55_comment,
+            'osha_q56_answer' => $this->osha_q56_answer,
+            'osha_q56_comment' => $this->osha_q56_comment,
+            'osha_q57_answer' => $this->osha_q57_answer,
+            'osha_q57_comment' => $this->osha_q57_comment,
+            'osha_q58_answer' => $this->osha_q58_answer,
+            'osha_q58_comment' => $this->osha_q58_comment,
+            'osha_q59_answer' => $this->osha_q59_answer,
+            'osha_q59_comment' => $this->osha_q59_comment,
+            'osha_q60_answer' => $this->osha_q60_answer,
+            'osha_q60_comment' => $this->osha_q60_comment,
+            'osha_q61_answer' => $this->osha_q61_answer,
+            'osha_q61_comment' => $this->osha_q61_comment,
+            'osha_q62_answer' => $this->osha_q62_answer,
+            'osha_q62_comment' => $this->osha_q62_comment,
+            'osha_q63_answer' => $this->osha_q63_answer,
+            'osha_q63_comment' => $this->osha_q63_comment,
+            'osha_q64_answer' => $this->osha_q64_answer,
+            'osha_q64_comment' => $this->osha_q64_comment,
+            'osha_q65_answer' => $this->osha_q65_answer,
+            'osha_q65_comment' => $this->osha_q65_comment,
+            'osha_q66_answer' => $this->osha_q66_answer,
+            'osha_q66_comment' => $this->osha_q66_comment,
+            'osha_q67_answer' => $this->osha_q67_answer,
+            'osha_q67_comment' => $this->osha_q67_comment,
+            'osha_q68_answer' => $this->osha_q68_answer,
+            'osha_q68_comment' => $this->osha_q68_comment,
+            'osha_q69_answer' => $this->osha_q69_answer,
+            'osha_q69_comment' => $this->osha_q69_comment,
+        ]);
 
         for ($i = 1; $i <= 69; $i++) {
             $submission->addFromMediaLibraryRequest($this->{'osha_q' . $i . '_images'})
                 ->toMediaCollection('osha_q' . $i . '_images');
         }
 
-        return redirect(route('dealer.audit.osha.index'));
+        if (tenant('locations')) {
+            return redirect(route('dealer.stores.audits.osha.index', $this->store));
+        } else {
+            return redirect(route('dealer.audit.osha.index'));
+        }
+
+
     }
     public function render()
     {
