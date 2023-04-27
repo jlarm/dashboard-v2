@@ -798,7 +798,11 @@ class Show extends Component
                 ->toMediaCollection('osha_q' . $i . '_images');
         }
 
-        return redirect(route('dealer.audit.osha.index'));
+        if (tenant('locations')) {
+            return redirect(route('dealer.stores.audits.osha.index', $this->store));
+        } else {
+            return redirect(route('dealer.audit.osha.index'));
+        }
     }
     public function render()
     {
