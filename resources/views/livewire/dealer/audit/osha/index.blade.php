@@ -31,8 +31,8 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                        @forelse($audits as $audit)
-                            <livewire:dealer.audit.osha.index-item :audit="$audit"/>
+                        @forelse($oshaAudits as $oshaAudit)
+                            <livewire:dealer.audit.osha.index-item :oshaAudit="$oshaAudit"/>
                         @empty
                             <tr>
                                 <td colspan="7"

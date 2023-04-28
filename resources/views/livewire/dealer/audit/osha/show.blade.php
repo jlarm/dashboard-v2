@@ -57,7 +57,7 @@
                 multiple max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q1_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q1_images"
             />
         </div>
@@ -119,7 +119,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q2_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q2_images"
             />
         </div>
@@ -181,7 +181,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q3_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q3_images"
             />
         </div>
@@ -242,7 +242,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q4_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q4_images"
             />
         </div>
@@ -304,7 +304,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q5_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q5_images"
             />
         </div>
@@ -366,7 +366,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q6_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q6_images"
             />
         </div>
@@ -428,7 +428,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q7_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q7_images"
             />
         </div>
@@ -489,7 +489,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q8_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q8_images"
             />
         </div>
@@ -551,7 +551,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q9_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q9_images"
             />
         </div>
@@ -612,7 +612,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q10_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q10_images"
             />
         </div>
@@ -674,7 +674,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q11_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q11_images"
             />
         </div>
@@ -736,7 +736,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q12_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q12_images"
             />
         </div>
@@ -798,7 +798,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q13_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q13_images"
             />
         </div>
@@ -860,7 +860,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q14_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q14_images"
             />
         </div>
@@ -922,7 +922,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q15_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q15_images"
             />
         </div>
@@ -984,7 +984,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q16_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q16_images"
             />
         </div>
@@ -1046,7 +1046,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q17_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q17_images"
             />
         </div>
@@ -1108,7 +1108,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q18_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q18_images"
             />
         </div>
@@ -1170,7 +1170,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q19_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q19_images"
             />
         </div>
@@ -1232,7 +1232,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q20_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q20_images"
             />
         </div>
@@ -1293,7 +1293,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q21_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q21_images"
             />
         </div>
@@ -1355,7 +1355,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q22_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q22_images"
             />
         </div>
@@ -1416,7 +1416,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q23_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q23_images"
             />
         </div>
@@ -1478,7 +1478,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q24_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q24_images"
             />
         </div>
@@ -1540,7 +1540,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q25_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q25_images"
             />
         </div>
@@ -1602,7 +1602,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q26_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q26_images"
             />
         </div>
@@ -1664,7 +1664,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q27_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q27_images"
             />
         </div>
@@ -1726,7 +1726,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q28_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q28_images"
             />
         </div>
@@ -1788,7 +1788,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q29_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q29_images"
             />
         </div>
@@ -1850,7 +1850,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q30_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q30_images"
             />
         </div>
@@ -1912,7 +1912,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q31_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q31_images"
             />
         </div>
@@ -1973,7 +1973,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q32_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q32_images"
             />
         </div>
@@ -2035,7 +2035,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q33_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q33_images"
             />
         </div>
@@ -2097,7 +2097,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q34_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q34_images"
             />
         </div>
@@ -2159,7 +2159,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q35_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q35_images"
             />
         </div>
@@ -2221,7 +2221,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q36_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q36_images"
             />
         </div>
@@ -2283,7 +2283,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q37_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q37_images"
             />
         </div>
@@ -2345,7 +2345,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q38_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q38_images"
             />
         </div>
@@ -2406,7 +2406,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q39_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q39_images"
             />
         </div>
@@ -2468,7 +2468,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q40_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q40_images"
             />
         </div>
@@ -2530,7 +2530,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q41_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q41_images"
             />
         </div>
@@ -2592,7 +2592,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q42_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q42_images"
             />
         </div>
@@ -2654,7 +2654,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q43_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q43_images"
             />
         </div>
@@ -2716,7 +2716,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q44_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q44_images"
             />
         </div>
@@ -2778,7 +2778,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q45_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q45_images"
             />
         </div>
@@ -2840,7 +2840,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q46_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q46_images"
             />
         </div>
@@ -2902,7 +2902,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q47_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q47_images"
             />
         </div>
@@ -2963,7 +2963,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q48_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q48_images"
             />
         </div>
@@ -3025,7 +3025,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q49_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q49_images"
             />
         </div>
@@ -3087,7 +3087,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q50_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q50_images"
             />
         </div>
@@ -3149,7 +3149,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q51_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q51_images"
             />
         </div>
@@ -3210,7 +3210,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q52_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q52_images"
             />
         </div>
@@ -3272,7 +3272,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q53_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q53_images"
             />
         </div>
@@ -3334,7 +3334,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q54_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q54_images"
             />
         </div>
@@ -3395,7 +3395,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q55_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q55_images"
             />
         </div>
@@ -3456,7 +3456,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q56_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q56_images"
             />
         </div>
@@ -3517,7 +3517,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q57_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q57_images"
             />
         </div>
@@ -3579,7 +3579,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q58_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q58_images"
             />
         </div>
@@ -3641,7 +3641,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q59_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q59_images"
             />
         </div>
@@ -3703,7 +3703,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q60_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q60_images"
             />
         </div>
@@ -3767,7 +3767,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q61_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q61_images"
             />
         </div>
@@ -3828,7 +3828,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q62_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q62_images"
             />
         </div>
@@ -3889,7 +3889,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q63_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q63_images"
             />
         </div>
@@ -3950,7 +3950,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q64_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q64_images"
             />
         </div>
@@ -4011,7 +4011,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q65_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q65_images"
             />
         </div>
@@ -4073,7 +4073,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q66_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q66_images"
             />
         </div>
@@ -4134,7 +4134,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q67_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q67_images"
             />
         </div>
@@ -4195,7 +4195,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="osha_q68_images"
-                :model="$audit"
+                :model="$oshaAudit"
                 collection="osha_q68_images"
             />
         </div>

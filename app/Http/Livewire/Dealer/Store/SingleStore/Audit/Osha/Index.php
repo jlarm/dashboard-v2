@@ -12,7 +12,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.osha.index', [
-            'audits' => OshaAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc')->get()
+            'oshaAudits' => OshaAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc')->get()
         ])->layout('components.dealer-app');
     }
 }

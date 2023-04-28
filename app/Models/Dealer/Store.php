@@ -95,11 +95,6 @@ class Store extends Model implements HasMedia
         return $this->hasMany(OshaAudit::class);
     }
 
-    public function audits(): HasMany
-    {
-        return $this->hasMany(OshaAudit::class);
-    }
-
     public function bodyShopAudits(): HasMany
     {
         return $this->hasMany(BodyShopAudit::class);

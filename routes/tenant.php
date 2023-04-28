@@ -53,7 +53,7 @@ Route::group([
     Route::get('stores/{store:slug}/manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStoreOshaForm::class)->middleware(['auth', 'has.stores'])->name('stores.manuals.osha');
     Route::get('stores/{store:slug}/audits/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Index::class)->middleware(['auth', 'has.stores'])->name('stores.audits.osha.index');
     Route::get('stores/{store:slug}/audits/osha/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Create::class)->middleware(['auth', 'has.stores'])->name('stores.audits.osha.create');
-    Route::get('stores/{store:slug}/audits/osha/{audit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Show::class)->middleware(['auth', 'has.stores'])->name('stores.audits.osha.show');
+    Route::get('stores/{store:slug}/audits/osha/{oshaAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Show::class)->middleware(['auth', 'has.stores'])->name('stores.audits.osha.show');
     Route::get('stores/{store:slug}/audits/body-shop', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Index::class)->middleware(['auth', 'has.stores'])->name('stores.audits.body-shop.index');
     Route::get('stores/{store:slug}/audits/body-shop/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Create::class)->middleware(['auth', 'has.stores'])->name('stores.audits.body-shop.create');
     Route::get('stores/{store:slug}/audits/body-shop/{bodyShopAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Show::class)->middleware(['auth', 'has.stores'])->name('stores.audits.body-shop.show');
@@ -100,7 +100,7 @@ Route::group([
 
     Route::get('audits/osha', function () { return view('dealer.audit.osha.index'); })->middleware('auth')->name('audit.osha.index');
     Route::get('audits/osha/create', function () { return view('dealer.audit.osha.create'); })->middleware('auth')->name('audit.osha.create');
-    Route::get('audits/osha/{audit:id}', AuditController::class)->middleware('auth')->name('audit.osha.show');
+    Route::get('audits/osha/{oshaAudit:id}', AuditController::class)->middleware('auth')->name('audit.osha.show');
     Route::get('audits/body-shop', function () { return view('dealer.audit.body-shop.index'); })->middleware('auth')->name('audit.body-shop.index');
     Route::get('audits/body-shop/create', function () { return view('dealer.audit.body-shop.create'); })->middleware('auth')->name('audit.body-shop.create');
     Route::get('audits/body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->middleware('auth')->name('audit.body-shop.show');

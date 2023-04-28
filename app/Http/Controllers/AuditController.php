@@ -7,10 +7,10 @@ use App\Models\Dealer\Audit\OshaAudit;
 
 class AuditController extends Controller
 {
-    public function __invoke(OshaAudit $audit)
+    public function __invoke(OshaAudit $oshaAudit)
     {
         return view('dealer.audit.osha.show', [
-            'audit' => $audit,
+            'oshaAudit' => $oshaAudit,
         ]);
     }
 }

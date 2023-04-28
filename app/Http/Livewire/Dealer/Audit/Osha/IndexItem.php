@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class IndexItem extends Component
 {
-    public OshaAudit $audit;
+    public OshaAudit $oshaAudit;
     public function render()
     {
         return view('livewire.dealer.audit.osha.index-item');
