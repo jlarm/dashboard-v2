@@ -3,14 +3,16 @@
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
 use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
 class Show extends Component
 {
     use WithMedia;
-
-    public BodyShopAudit $audit;
+    public Store $store;
+    public BodyShopAudit $bodyShopAudit;
 
     public $mediaComponentNames = [
         'body_shop_q1_images',
@@ -338,104 +340,104 @@ class Show extends Component
 
     public function mount()
     {
-        $this->draft = $this->audit->draft;
-        $this->body_shop_q1_answer = $this->audit->body_shop_q1_answer;
-        $this->body_shop_q1_comment = $this->audit->body_shop_q1_comment;
-        $this->body_shop_q2_answer = $this->audit->body_shop_q2_answer;
-        $this->body_shop_q2_comment = $this->audit->body_shop_q2_comment;
-        $this->body_shop_q3_answer = $this->audit->body_shop_q3_answer;
-        $this->body_shop_q3_comment = $this->audit->body_shop_q3_comment;
-        $this->body_shop_q4_answer = $this->audit->body_shop_q4_answer;
-        $this->body_shop_q4_comment = $this->audit->body_shop_q4_comment;
-        $this->body_shop_q5_answer = $this->audit->body_shop_q5_answer;
-        $this->body_shop_q5_comment = $this->audit->body_shop_q5_comment;
-        $this->body_shop_q6_answer = $this->audit->body_shop_q6_answer;
-        $this->body_shop_q6_comment = $this->audit->body_shop_q6_comment;
-        $this->body_shop_q7_answer = $this->audit->body_shop_q7_answer;
-        $this->body_shop_q7_comment = $this->audit->body_shop_q7_comment;
-        $this->body_shop_q8_answer = $this->audit->body_shop_q8_answer;
-        $this->body_shop_q8_comment = $this->audit->body_shop_q8_comment;
-        $this->body_shop_q9_answer = $this->audit->body_shop_q9_answer;
-        $this->body_shop_q9_comment = $this->audit->body_shop_q9_comment;
-        $this->body_shop_q10_answer = $this->audit->body_shop_q10_answer;
-        $this->body_shop_q10_comment = $this->audit->body_shop_q10_comment;
-        $this->body_shop_q11_answer = $this->audit->body_shop_q11_answer;
-        $this->body_shop_q11_comment = $this->audit->body_shop_q11_comment;
-        $this->body_shop_q12_answer = $this->audit->body_shop_q12_answer;
-        $this->body_shop_q12_comment = $this->audit->body_shop_q12_comment;
-        $this->body_shop_q13_answer = $this->audit->body_shop_q13_answer;
-        $this->body_shop_q13_comment = $this->audit->body_shop_q13_comment;
-        $this->body_shop_q14_answer = $this->audit->body_shop_q14_answer;
-        $this->body_shop_q14_comment = $this->audit->body_shop_q14_comment;
-        $this->body_shop_q15_answer = $this->audit->body_shop_q15_answer;
-        $this->body_shop_q15_comment = $this->audit->body_shop_q15_comment;
-        $this->body_shop_q16_answer = $this->audit->body_shop_q16_answer;
-        $this->body_shop_q16_comment = $this->audit->body_shop_q16_comment;
-        $this->body_shop_q17_answer = $this->audit->body_shop_q17_answer;
-        $this->body_shop_q17_comment = $this->audit->body_shop_q17_comment;
-        $this->body_shop_q18_answer = $this->audit->body_shop_q18_answer;
-        $this->body_shop_q18_comment = $this->audit->body_shop_q18_comment;
-        $this->body_shop_q19_answer = $this->audit->body_shop_q19_answer;
-        $this->body_shop_q19_comment = $this->audit->body_shop_q19_comment;
-        $this->body_shop_q20_answer = $this->audit->body_shop_q20_answer;
-        $this->body_shop_q20_comment = $this->audit->body_shop_q20_comment;
-        $this->body_shop_q21_answer = $this->audit->body_shop_q21_answer;
-        $this->body_shop_q21_comment = $this->audit->body_shop_q21_comment;
-        $this->body_shop_q22_answer = $this->audit->body_shop_q22_answer;
-        $this->body_shop_q22_comment = $this->audit->body_shop_q22_comment;
-        $this->body_shop_q23_answer = $this->audit->body_shop_q23_answer;
-        $this->body_shop_q23_comment = $this->audit->body_shop_q23_comment;
-        $this->body_shop_q24_answer = $this->audit->body_shop_q24_answer;
-        $this->body_shop_q24_comment = $this->audit->body_shop_q24_comment;
-        $this->body_shop_q25_answer = $this->audit->body_shop_q25_answer;
-        $this->body_shop_q25_comment = $this->audit->body_shop_q25_comment;
-        $this->body_shop_q26_answer = $this->audit->body_shop_q26_answer;
-        $this->body_shop_q26_comment = $this->audit->body_shop_q26_comment;
-        $this->body_shop_q27_answer = $this->audit->body_shop_q27_answer;
-        $this->body_shop_q27_comment = $this->audit->body_shop_q27_comment;
-        $this->body_shop_q28_answer = $this->audit->body_shop_q28_answer;
-        $this->body_shop_q28_comment = $this->audit->body_shop_q28_comment;
-        $this->body_shop_q29_answer = $this->audit->body_shop_q29_answer;
-        $this->body_shop_q29_comment = $this->audit->body_shop_q29_comment;
-        $this->body_shop_q30_answer = $this->audit->body_shop_q30_answer;
-        $this->body_shop_q30_comment = $this->audit->body_shop_q30_comment;
-        $this->body_shop_q31_answer = $this->audit->body_shop_q31_answer;
-        $this->body_shop_q31_comment = $this->audit->body_shop_q31_comment;
-        $this->body_shop_q32_answer = $this->audit->body_shop_q32_answer;
-        $this->body_shop_q32_comment = $this->audit->body_shop_q32_comment;
-        $this->body_shop_q33_answer = $this->audit->body_shop_q33_answer;
-        $this->body_shop_q33_comment = $this->audit->body_shop_q33_comment;
-        $this->body_shop_q34_answer = $this->audit->body_shop_q34_answer;
-        $this->body_shop_q34_comment = $this->audit->body_shop_q34_comment;
-        $this->body_shop_q35_answer = $this->audit->body_shop_q35_answer;
-        $this->body_shop_q35_comment = $this->audit->body_shop_q35_comment;
-        $this->body_shop_q36_answer = $this->audit->body_shop_q36_answer;
-        $this->body_shop_q36_comment = $this->audit->body_shop_q36_comment;
-        $this->body_shop_q37_answer = $this->audit->body_shop_q37_answer;
-        $this->body_shop_q37_comment = $this->audit->body_shop_q37_comment;
-        $this->body_shop_q38_answer = $this->audit->body_shop_q38_answer;
-        $this->body_shop_q38_comment = $this->audit->body_shop_q38_comment;
-        $this->body_shop_q39_answer = $this->audit->body_shop_q39_answer;
-        $this->body_shop_q39_comment = $this->audit->body_shop_q39_comment;
-        $this->body_shop_q40_answer = $this->audit->body_shop_q40_answer;
-        $this->body_shop_q40_comment = $this->audit->body_shop_q40_comment;
-        $this->body_shop_q41_answer = $this->audit->body_shop_q41_answer;
-        $this->body_shop_q41_comment = $this->audit->body_shop_q41_comment;
-        $this->body_shop_q42_answer = $this->audit->body_shop_q42_answer;
-        $this->body_shop_q42_comment = $this->audit->body_shop_q42_comment;
-        $this->body_shop_q43_answer = $this->audit->body_shop_q43_answer;
-        $this->body_shop_q43_comment = $this->audit->body_shop_q43_comment;
-        $this->body_shop_q44_answer = $this->audit->body_shop_q44_answer;
-        $this->body_shop_q44_comment = $this->audit->body_shop_q44_comment;
-        $this->body_shop_q45_answer = $this->audit->body_shop_q45_answer;
-        $this->body_shop_q45_comment = $this->audit->body_shop_q45_comment;
+        $this->draft = $this->bodyShopAudit->draft;
+        $this->body_shop_q1_answer = $this->bodyShopAudit->body_shop_q1_answer;
+        $this->body_shop_q1_comment = $this->bodyShopAudit->body_shop_q1_comment;
+        $this->body_shop_q2_answer = $this->bodyShopAudit->body_shop_q2_answer;
+        $this->body_shop_q2_comment = $this->bodyShopAudit->body_shop_q2_comment;
+        $this->body_shop_q3_answer = $this->bodyShopAudit->body_shop_q3_answer;
+        $this->body_shop_q3_comment = $this->bodyShopAudit->body_shop_q3_comment;
+        $this->body_shop_q4_answer = $this->bodyShopAudit->body_shop_q4_answer;
+        $this->body_shop_q4_comment = $this->bodyShopAudit->body_shop_q4_comment;
+        $this->body_shop_q5_answer = $this->bodyShopAudit->body_shop_q5_answer;
+        $this->body_shop_q5_comment = $this->bodyShopAudit->body_shop_q5_comment;
+        $this->body_shop_q6_answer = $this->bodyShopAudit->body_shop_q6_answer;
+        $this->body_shop_q6_comment = $this->bodyShopAudit->body_shop_q6_comment;
+        $this->body_shop_q7_answer = $this->bodyShopAudit->body_shop_q7_answer;
+        $this->body_shop_q7_comment = $this->bodyShopAudit->body_shop_q7_comment;
+        $this->body_shop_q8_answer = $this->bodyShopAudit->body_shop_q8_answer;
+        $this->body_shop_q8_comment = $this->bodyShopAudit->body_shop_q8_comment;
+        $this->body_shop_q9_answer = $this->bodyShopAudit->body_shop_q9_answer;
+        $this->body_shop_q9_comment = $this->bodyShopAudit->body_shop_q9_comment;
+        $this->body_shop_q10_answer = $this->bodyShopAudit->body_shop_q10_answer;
+        $this->body_shop_q10_comment = $this->bodyShopAudit->body_shop_q10_comment;
+        $this->body_shop_q11_answer = $this->bodyShopAudit->body_shop_q11_answer;
+        $this->body_shop_q11_comment = $this->bodyShopAudit->body_shop_q11_comment;
+        $this->body_shop_q12_answer = $this->bodyShopAudit->body_shop_q12_answer;
+        $this->body_shop_q12_comment = $this->bodyShopAudit->body_shop_q12_comment;
+        $this->body_shop_q13_answer = $this->bodyShopAudit->body_shop_q13_answer;
+        $this->body_shop_q13_comment = $this->bodyShopAudit->body_shop_q13_comment;
+        $this->body_shop_q14_answer = $this->bodyShopAudit->body_shop_q14_answer;
+        $this->body_shop_q14_comment = $this->bodyShopAudit->body_shop_q14_comment;
+        $this->body_shop_q15_answer = $this->bodyShopAudit->body_shop_q15_answer;
+        $this->body_shop_q15_comment = $this->bodyShopAudit->body_shop_q15_comment;
+        $this->body_shop_q16_answer = $this->bodyShopAudit->body_shop_q16_answer;
+        $this->body_shop_q16_comment = $this->bodyShopAudit->body_shop_q16_comment;
+        $this->body_shop_q17_answer = $this->bodyShopAudit->body_shop_q17_answer;
+        $this->body_shop_q17_comment = $this->bodyShopAudit->body_shop_q17_comment;
+        $this->body_shop_q18_answer = $this->bodyShopAudit->body_shop_q18_answer;
+        $this->body_shop_q18_comment = $this->bodyShopAudit->body_shop_q18_comment;
+        $this->body_shop_q19_answer = $this->bodyShopAudit->body_shop_q19_answer;
+        $this->body_shop_q19_comment = $this->bodyShopAudit->body_shop_q19_comment;
+        $this->body_shop_q20_answer = $this->bodyShopAudit->body_shop_q20_answer;
+        $this->body_shop_q20_comment = $this->bodyShopAudit->body_shop_q20_comment;
+        $this->body_shop_q21_answer = $this->bodyShopAudit->body_shop_q21_answer;
+        $this->body_shop_q21_comment = $this->bodyShopAudit->body_shop_q21_comment;
+        $this->body_shop_q22_answer = $this->bodyShopAudit->body_shop_q22_answer;
+        $this->body_shop_q22_comment = $this->bodyShopAudit->body_shop_q22_comment;
+        $this->body_shop_q23_answer = $this->bodyShopAudit->body_shop_q23_answer;
+        $this->body_shop_q23_comment = $this->bodyShopAudit->body_shop_q23_comment;
+        $this->body_shop_q24_answer = $this->bodyShopAudit->body_shop_q24_answer;
+        $this->body_shop_q24_comment = $this->bodyShopAudit->body_shop_q24_comment;
+        $this->body_shop_q25_answer = $this->bodyShopAudit->body_shop_q25_answer;
+        $this->body_shop_q25_comment = $this->bodyShopAudit->body_shop_q25_comment;
+        $this->body_shop_q26_answer = $this->bodyShopAudit->body_shop_q26_answer;
+        $this->body_shop_q26_comment = $this->bodyShopAudit->body_shop_q26_comment;
+        $this->body_shop_q27_answer = $this->bodyShopAudit->body_shop_q27_answer;
+        $this->body_shop_q27_comment = $this->bodyShopAudit->body_shop_q27_comment;
+        $this->body_shop_q28_answer = $this->bodyShopAudit->body_shop_q28_answer;
+        $this->body_shop_q28_comment = $this->bodyShopAudit->body_shop_q28_comment;
+        $this->body_shop_q29_answer = $this->bodyShopAudit->body_shop_q29_answer;
+        $this->body_shop_q29_comment = $this->bodyShopAudit->body_shop_q29_comment;
+        $this->body_shop_q30_answer = $this->bodyShopAudit->body_shop_q30_answer;
+        $this->body_shop_q30_comment = $this->bodyShopAudit->body_shop_q30_comment;
+        $this->body_shop_q31_answer = $this->bodyShopAudit->body_shop_q31_answer;
+        $this->body_shop_q31_comment = $this->bodyShopAudit->body_shop_q31_comment;
+        $this->body_shop_q32_answer = $this->bodyShopAudit->body_shop_q32_answer;
+        $this->body_shop_q32_comment = $this->bodyShopAudit->body_shop_q32_comment;
+        $this->body_shop_q33_answer = $this->bodyShopAudit->body_shop_q33_answer;
+        $this->body_shop_q33_comment = $this->bodyShopAudit->body_shop_q33_comment;
+        $this->body_shop_q34_answer = $this->bodyShopAudit->body_shop_q34_answer;
+        $this->body_shop_q34_comment = $this->bodyShopAudit->body_shop_q34_comment;
+        $this->body_shop_q35_answer = $this->bodyShopAudit->body_shop_q35_answer;
+        $this->body_shop_q35_comment = $this->bodyShopAudit->body_shop_q35_comment;
+        $this->body_shop_q36_answer = $this->bodyShopAudit->body_shop_q36_answer;
+        $this->body_shop_q36_comment = $this->bodyShopAudit->body_shop_q36_comment;
+        $this->body_shop_q37_answer = $this->bodyShopAudit->body_shop_q37_answer;
+        $this->body_shop_q37_comment = $this->bodyShopAudit->body_shop_q37_comment;
+        $this->body_shop_q38_answer = $this->bodyShopAudit->body_shop_q38_answer;
+        $this->body_shop_q38_comment = $this->bodyShopAudit->body_shop_q38_comment;
+        $this->body_shop_q39_answer = $this->bodyShopAudit->body_shop_q39_answer;
+        $this->body_shop_q39_comment = $this->bodyShopAudit->body_shop_q39_comment;
+        $this->body_shop_q40_answer = $this->bodyShopAudit->body_shop_q40_answer;
+        $this->body_shop_q40_comment = $this->bodyShopAudit->body_shop_q40_comment;
+        $this->body_shop_q41_answer = $this->bodyShopAudit->body_shop_q41_answer;
+        $this->body_shop_q41_comment = $this->bodyShopAudit->body_shop_q41_comment;
+        $this->body_shop_q42_answer = $this->bodyShopAudit->body_shop_q42_answer;
+        $this->body_shop_q42_comment = $this->bodyShopAudit->body_shop_q42_comment;
+        $this->body_shop_q43_answer = $this->bodyShopAudit->body_shop_q43_answer;
+        $this->body_shop_q43_comment = $this->bodyShopAudit->body_shop_q43_comment;
+        $this->body_shop_q44_answer = $this->bodyShopAudit->body_shop_q44_answer;
+        $this->body_shop_q44_comment = $this->bodyShopAudit->body_shop_q44_comment;
+        $this->body_shop_q45_answer = $this->bodyShopAudit->body_shop_q45_answer;
+        $this->body_shop_q45_comment = $this->bodyShopAudit->body_shop_q45_comment;
     }
 
     public function update()
     {
         $this->validate();
 
-        $this->audit->update([
+        $this->bodyShopAudit->update([
             'draft' => $this->draft,
             'body_shop_q1_answer' => $this->body_shop_q1_answer,
             'body_shop_q1_comment' => $this->body_shop_q1_comment,
@@ -530,11 +532,20 @@ class Show extends Component
         ]);
 
         for ($i = 1; $i <= 45; $i++) {
-            $this->audit->syncFromMediaLibraryRequest($this->{'body_shop_q' . $i . '_images'})
+            $this->bodyShopAudit->syncFromMediaLibraryRequest($this->{'body_shop_q' . $i . '_images'})
                 ->toMediaCollection('body_shop_q' . $i . '_images');
         }
 
-        return redirect(route('dealer.audit.body-shop.index'));
+        Notification::make()
+            ->title('Body Shop Audit Updated Successfully!')
+            ->success()
+            ->send();
+
+        if (tenant('locations')) {
+            return redirect(route('dealer.stores.audits.body-shop.index', $this->store));
+        } else {
+            return redirect(route('dealer.audit.body-shop.index'));
+        }
     }
     public function render()
     {

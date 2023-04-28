@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Store;
 use Auth;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
@@ -656,12 +657,16 @@ class Create extends Component
                 ->toMediaCollection('osha_q' . $i . '_images');
         }
 
+        Notification::make()
+            ->title('Body Shop Audit Created Successfully!')
+            ->success()
+            ->send();
+
         if (tenant('locations')) {
             return redirect(route('dealer.stores.audits.osha.index', $this->store));
         } else {
             return redirect(route('dealer.audit.osha.index'));
         }
-
 
     }
     public function render()

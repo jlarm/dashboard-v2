@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
@@ -10,7 +12,8 @@ class Show extends Component
 {
     use WithMedia;
 
-    public FinanceAudit $audit;
+    public Store $store;
+    public FinanceAudit $financeAudit;
 
     public $mediaComponentNames = [
         'finance_q1_images',
@@ -366,112 +369,112 @@ class Show extends Component
 
     public function mount()
     {
-        $this->draft = $this->audit->draft;
-        $this->finance_q1_answer = $this->audit->finance_q1_answer;
-        $this->finance_q1_comment = $this->audit->finance_q1_comment;
-        $this->finance_q2_answer = $this->audit->finance_q2_answer;
-        $this->finance_q2_comment = $this->audit->finance_q2_comment;
-        $this->finance_q3_answer = $this->audit->finance_q3_answer;
-        $this->finance_q3_comment = $this->audit->finance_q3_comment;
-        $this->finance_q4_answer = $this->audit->finance_q4_answer;
-        $this->finance_q4_comment = $this->audit->finance_q4_comment;
-        $this->finance_q5_answer = $this->audit->finance_q5_answer;
-        $this->finance_q5_comment = $this->audit->finance_q5_comment;
-        $this->finance_q6_answer = $this->audit->finance_q6_answer;
-        $this->finance_q6_comment = $this->audit->finance_q6_comment;
-        $this->finance_q7_answer = $this->audit->finance_q7_answer;
-        $this->finance_q7_comment = $this->audit->finance_q7_comment;
-        $this->finance_q8_answer = $this->audit->finance_q8_answer;
-        $this->finance_q8_comment = $this->audit->finance_q8_comment;
-        $this->finance_q9_answer = $this->audit->finance_q9_answer;
-        $this->finance_q9_comment = $this->audit->finance_q9_comment;
-        $this->finance_q10_answer = $this->audit->finance_q10_answer;
-        $this->finance_q10_comment = $this->audit->finance_q10_comment;
-        $this->finance_q11_answer = $this->audit->finance_q11_answer;
-        $this->finance_q11_comment = $this->audit->finance_q11_comment;
-        $this->finance_q12_answer = $this->audit->finance_q12_answer;
-        $this->finance_q12_comment = $this->audit->finance_q12_comment;
-        $this->finance_q13_answer = $this->audit->finance_q13_answer;
-        $this->finance_q13_comment = $this->audit->finance_q13_comment;
-        $this->finance_q14_answer = $this->audit->finance_q14_answer;
-        $this->finance_q14_comment = $this->audit->finance_q14_comment;
-        $this->finance_q15_answer = $this->audit->finance_q15_answer;
-        $this->finance_q15_comment = $this->audit->finance_q15_comment;
-        $this->finance_q16_answer = $this->audit->finance_q16_answer;
-        $this->finance_q16_comment = $this->audit->finance_q16_comment;
-        $this->finance_q17_answer = $this->audit->finance_q17_answer;
-        $this->finance_q17_comment = $this->audit->finance_q17_comment;
-        $this->finance_q18_answer = $this->audit->finance_q18_answer;
-        $this->finance_q18_comment = $this->audit->finance_q18_comment;
-        $this->finance_q19_answer = $this->audit->finance_q19_answer;
-        $this->finance_q19_comment = $this->audit->finance_q19_comment;
-        $this->finance_q20_answer = $this->audit->finance_q20_answer;
-        $this->finance_q20_comment = $this->audit->finance_q20_comment;
-        $this->finance_q21_answer = $this->audit->finance_q21_answer;
-        $this->finance_q21_comment = $this->audit->finance_q21_comment;
-        $this->finance_q22_answer = $this->audit->finance_q22_answer;
-        $this->finance_q22_comment = $this->audit->finance_q22_comment;
-        $this->finance_q23_answer = $this->audit->finance_q23_answer;
-        $this->finance_q23_comment = $this->audit->finance_q23_comment;
-        $this->finance_q24_answer = $this->audit->finance_q24_answer;
-        $this->finance_q24_comment = $this->audit->finance_q24_comment;
-        $this->finance_q25_answer = $this->audit->finance_q25_answer;
-        $this->finance_q25_comment = $this->audit->finance_q25_comment;
-        $this->finance_q26_answer = $this->audit->finance_q26_answer;
-        $this->finance_q26_comment = $this->audit->finance_q26_comment;
-        $this->finance_q27_answer = $this->audit->finance_q27_answer;
-        $this->finance_q27_comment = $this->audit->finance_q27_comment;
-        $this->finance_q28_answer = $this->audit->finance_q28_answer;
-        $this->finance_q28_comment = $this->audit->finance_q28_comment;
-        $this->finance_q29_answer = $this->audit->finance_q29_answer;
-        $this->finance_q29_comment = $this->audit->finance_q29_comment;
-        $this->finance_q30_answer = $this->audit->finance_q30_answer;
-        $this->finance_q30_comment = $this->audit->finance_q30_comment;
-        $this->finance_q31_answer = $this->audit->finance_q31_answer;
-        $this->finance_q31_comment = $this->audit->finance_q31_comment;
-        $this->finance_q32_answer = $this->audit->finance_q32_answer;
-        $this->finance_q32_comment = $this->audit->finance_q32_comment;
-        $this->finance_q33_answer = $this->audit->finance_q33_answer;
-        $this->finance_q33_comment = $this->audit->finance_q33_comment;
-        $this->finance_q34_answer = $this->audit->finance_q34_answer;
-        $this->finance_q34_comment = $this->audit->finance_q34_comment;
-        $this->finance_q35_answer = $this->audit->finance_q35_answer;
-        $this->finance_q35_comment = $this->audit->finance_q35_comment;
-        $this->finance_q36_answer = $this->audit->finance_q36_answer;
-        $this->finance_q36_comment = $this->audit->finance_q36_comment;
-        $this->finance_q37_answer = $this->audit->finance_q37_answer;
-        $this->finance_q37_comment = $this->audit->finance_q37_comment;
-        $this->finance_q38_answer = $this->audit->finance_q38_answer;
-        $this->finance_q38_comment = $this->audit->finance_q38_comment;
-        $this->finance_q39_answer = $this->audit->finance_q39_answer;
-        $this->finance_q39_comment = $this->audit->finance_q39_comment;
-        $this->finance_q40_answer = $this->audit->finance_q40_answer;
-        $this->finance_q40_comment = $this->audit->finance_q40_comment;
-        $this->finance_q41_answer = $this->audit->finance_q41_answer;
-        $this->finance_q41_comment = $this->audit->finance_q41_comment;
-        $this->finance_q42_answer = $this->audit->finance_q42_answer;
-        $this->finance_q42_comment = $this->audit->finance_q42_comment;
-        $this->finance_q43_answer = $this->audit->finance_q43_answer;
-        $this->finance_q43_comment = $this->audit->finance_q43_comment;
-        $this->finance_q44_answer = $this->audit->finance_q44_answer;
-        $this->finance_q44_comment = $this->audit->finance_q44_comment;
-        $this->finance_q45_answer = $this->audit->finance_q45_answer;
-        $this->finance_q45_comment = $this->audit->finance_q45_comment;
-        $this->finance_q46_answer = $this->audit->finance_q46_answer;
-        $this->finance_q46_comment = $this->audit->finance_q46_comment;
-        $this->finance_q47_answer = $this->audit->finance_q47_answer;
-        $this->finance_q47_comment = $this->audit->finance_q47_comment;
-        $this->finance_q48_answer = $this->audit->finance_q48_answer;
-        $this->finance_q48_comment = $this->audit->finance_q48_comment;
-        $this->finance_q49_answer = $this->audit->finance_q49_answer;
-        $this->finance_q49_comment = $this->audit->finance_q49_comment;
+        $this->draft = $this->financeAudit->draft;
+        $this->finance_q1_answer = $this->financeAudit->finance_q1_answer;
+        $this->finance_q1_comment = $this->financeAudit->finance_q1_comment;
+        $this->finance_q2_answer = $this->financeAudit->finance_q2_answer;
+        $this->finance_q2_comment = $this->financeAudit->finance_q2_comment;
+        $this->finance_q3_answer = $this->financeAudit->finance_q3_answer;
+        $this->finance_q3_comment = $this->financeAudit->finance_q3_comment;
+        $this->finance_q4_answer = $this->financeAudit->finance_q4_answer;
+        $this->finance_q4_comment = $this->financeAudit->finance_q4_comment;
+        $this->finance_q5_answer = $this->financeAudit->finance_q5_answer;
+        $this->finance_q5_comment = $this->financeAudit->finance_q5_comment;
+        $this->finance_q6_answer = $this->financeAudit->finance_q6_answer;
+        $this->finance_q6_comment = $this->financeAudit->finance_q6_comment;
+        $this->finance_q7_answer = $this->financeAudit->finance_q7_answer;
+        $this->finance_q7_comment = $this->financeAudit->finance_q7_comment;
+        $this->finance_q8_answer = $this->financeAudit->finance_q8_answer;
+        $this->finance_q8_comment = $this->financeAudit->finance_q8_comment;
+        $this->finance_q9_answer = $this->financeAudit->finance_q9_answer;
+        $this->finance_q9_comment = $this->financeAudit->finance_q9_comment;
+        $this->finance_q10_answer = $this->financeAudit->finance_q10_answer;
+        $this->finance_q10_comment = $this->financeAudit->finance_q10_comment;
+        $this->finance_q11_answer = $this->financeAudit->finance_q11_answer;
+        $this->finance_q11_comment = $this->financeAudit->finance_q11_comment;
+        $this->finance_q12_answer = $this->financeAudit->finance_q12_answer;
+        $this->finance_q12_comment = $this->financeAudit->finance_q12_comment;
+        $this->finance_q13_answer = $this->financeAudit->finance_q13_answer;
+        $this->finance_q13_comment = $this->financeAudit->finance_q13_comment;
+        $this->finance_q14_answer = $this->financeAudit->finance_q14_answer;
+        $this->finance_q14_comment = $this->financeAudit->finance_q14_comment;
+        $this->finance_q15_answer = $this->financeAudit->finance_q15_answer;
+        $this->finance_q15_comment = $this->financeAudit->finance_q15_comment;
+        $this->finance_q16_answer = $this->financeAudit->finance_q16_answer;
+        $this->finance_q16_comment = $this->financeAudit->finance_q16_comment;
+        $this->finance_q17_answer = $this->financeAudit->finance_q17_answer;
+        $this->finance_q17_comment = $this->financeAudit->finance_q17_comment;
+        $this->finance_q18_answer = $this->financeAudit->finance_q18_answer;
+        $this->finance_q18_comment = $this->financeAudit->finance_q18_comment;
+        $this->finance_q19_answer = $this->financeAudit->finance_q19_answer;
+        $this->finance_q19_comment = $this->financeAudit->finance_q19_comment;
+        $this->finance_q20_answer = $this->financeAudit->finance_q20_answer;
+        $this->finance_q20_comment = $this->financeAudit->finance_q20_comment;
+        $this->finance_q21_answer = $this->financeAudit->finance_q21_answer;
+        $this->finance_q21_comment = $this->financeAudit->finance_q21_comment;
+        $this->finance_q22_answer = $this->financeAudit->finance_q22_answer;
+        $this->finance_q22_comment = $this->financeAudit->finance_q22_comment;
+        $this->finance_q23_answer = $this->financeAudit->finance_q23_answer;
+        $this->finance_q23_comment = $this->financeAudit->finance_q23_comment;
+        $this->finance_q24_answer = $this->financeAudit->finance_q24_answer;
+        $this->finance_q24_comment = $this->financeAudit->finance_q24_comment;
+        $this->finance_q25_answer = $this->financeAudit->finance_q25_answer;
+        $this->finance_q25_comment = $this->financeAudit->finance_q25_comment;
+        $this->finance_q26_answer = $this->financeAudit->finance_q26_answer;
+        $this->finance_q26_comment = $this->financeAudit->finance_q26_comment;
+        $this->finance_q27_answer = $this->financeAudit->finance_q27_answer;
+        $this->finance_q27_comment = $this->financeAudit->finance_q27_comment;
+        $this->finance_q28_answer = $this->financeAudit->finance_q28_answer;
+        $this->finance_q28_comment = $this->financeAudit->finance_q28_comment;
+        $this->finance_q29_answer = $this->financeAudit->finance_q29_answer;
+        $this->finance_q29_comment = $this->financeAudit->finance_q29_comment;
+        $this->finance_q30_answer = $this->financeAudit->finance_q30_answer;
+        $this->finance_q30_comment = $this->financeAudit->finance_q30_comment;
+        $this->finance_q31_answer = $this->financeAudit->finance_q31_answer;
+        $this->finance_q31_comment = $this->financeAudit->finance_q31_comment;
+        $this->finance_q32_answer = $this->financeAudit->finance_q32_answer;
+        $this->finance_q32_comment = $this->financeAudit->finance_q32_comment;
+        $this->finance_q33_answer = $this->financeAudit->finance_q33_answer;
+        $this->finance_q33_comment = $this->financeAudit->finance_q33_comment;
+        $this->finance_q34_answer = $this->financeAudit->finance_q34_answer;
+        $this->finance_q34_comment = $this->financeAudit->finance_q34_comment;
+        $this->finance_q35_answer = $this->financeAudit->finance_q35_answer;
+        $this->finance_q35_comment = $this->financeAudit->finance_q35_comment;
+        $this->finance_q36_answer = $this->financeAudit->finance_q36_answer;
+        $this->finance_q36_comment = $this->financeAudit->finance_q36_comment;
+        $this->finance_q37_answer = $this->financeAudit->finance_q37_answer;
+        $this->finance_q37_comment = $this->financeAudit->finance_q37_comment;
+        $this->finance_q38_answer = $this->financeAudit->finance_q38_answer;
+        $this->finance_q38_comment = $this->financeAudit->finance_q38_comment;
+        $this->finance_q39_answer = $this->financeAudit->finance_q39_answer;
+        $this->finance_q39_comment = $this->financeAudit->finance_q39_comment;
+        $this->finance_q40_answer = $this->financeAudit->finance_q40_answer;
+        $this->finance_q40_comment = $this->financeAudit->finance_q40_comment;
+        $this->finance_q41_answer = $this->financeAudit->finance_q41_answer;
+        $this->finance_q41_comment = $this->financeAudit->finance_q41_comment;
+        $this->finance_q42_answer = $this->financeAudit->finance_q42_answer;
+        $this->finance_q42_comment = $this->financeAudit->finance_q42_comment;
+        $this->finance_q43_answer = $this->financeAudit->finance_q43_answer;
+        $this->finance_q43_comment = $this->financeAudit->finance_q43_comment;
+        $this->finance_q44_answer = $this->financeAudit->finance_q44_answer;
+        $this->finance_q44_comment = $this->financeAudit->finance_q44_comment;
+        $this->finance_q45_answer = $this->financeAudit->finance_q45_answer;
+        $this->finance_q45_comment = $this->financeAudit->finance_q45_comment;
+        $this->finance_q46_answer = $this->financeAudit->finance_q46_answer;
+        $this->finance_q46_comment = $this->financeAudit->finance_q46_comment;
+        $this->finance_q47_answer = $this->financeAudit->finance_q47_answer;
+        $this->finance_q47_comment = $this->financeAudit->finance_q47_comment;
+        $this->finance_q48_answer = $this->financeAudit->finance_q48_answer;
+        $this->finance_q48_comment = $this->financeAudit->finance_q48_comment;
+        $this->finance_q49_answer = $this->financeAudit->finance_q49_answer;
+        $this->finance_q49_comment = $this->financeAudit->finance_q49_comment;
     }
 
     public function update()
     {
         $this->validate();
 
-        $this->audit->update([
+        $this->financeAudit->update([
             'draft' => $this->draft,
             'finance_q1_answer' => $this->finance_q1_answer,
             'finance_q1_comment' => $this->finance_q1_comment,
@@ -574,11 +577,20 @@ class Show extends Component
         ]);
 
         for ($i = 1; $i <= 49; $i++) {
-            $this->audit->syncFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
+            $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
                 ->toMediaCollection('finance_q' . $i . '_images');
         }
 
-        return redirect(route('dealer.audit.finance.index'));
+        Notification::make()
+            ->title('Finance Audit Updated Successfully!')
+            ->success()
+            ->send();
+
+        if (tenant('locations')) {
+            return redirect(route('dealer.stores.audits.finance.index', $this->store));
+        } else {
+            return redirect(route('dealer.audit.finance.index'));
+        }
     }
     public function render()
     {

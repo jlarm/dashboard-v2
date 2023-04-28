@@ -53,7 +53,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q1_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q1_images"
+                :model="$financeAudit"
+                collection="finance_q1_images"
+            />
         </div>
         <!-- 2 Has the written CMS been approved by the Board/Ownership? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -108,7 +115,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q2_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q2_images"
+                :model="$financeAudit"
+                collection="finance_q2_images"
+            />
         </div>
         <!-- 3 Shredding bins over-flowing and need to be cleaned out. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -163,7 +177,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q3_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q3_images"
+                :model="$financeAudit"
+                collection="finance_q3_images"
+            />
         </div>
         <!-- 4 Has complaint procedure been established and adopted by Board? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -218,7 +239,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q4_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q4_images"
+                :model="$financeAudit"
+                collection="finance_q4_images"
+            />
         </div>
         <!-- 5 Account department is not locked when employees are not present. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -273,7 +301,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q5_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q5_images"
+                :model="$financeAudit"
+                collection="finance_q5_images"
+            />
         </div>
         <!-- 6 Have CMS policies been distributed to management and relevant employees? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -328,7 +363,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q6_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q6_images"
+                :model="$financeAudit"
+                collection="finance_q6_images"
+            />
         </div>
         <!-- 7 Have employees and management acknowledged receipt of the above? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -383,7 +425,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q7_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q7_images"
+                :model="$financeAudit"
+                collection="finance_q7_images"
+            />
         </div>
         <!-- 8 Are employees and management completing training on a consistent basis? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -438,7 +487,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q8_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q8_images"
+                :model="$financeAudit"
+                collection="finance_q8_images"
+            />
         </div>
         <!-- 9 Are there policies and procedures in place to handle and respond to consumer complaints? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -493,7 +549,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q9_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q9_images"
+                :model="$financeAudit"
+                collection="finance_q9_images"
+            />
         </div>
         <!-- 10 Destruction of outdated NPI records? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -547,7 +610,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q10_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q10_images"
+                :model="$financeAudit"
+                collection="finance_q10_images"
+            />
         </div>
         <!-- 11 OFAC/SDN Listing documentation -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -601,7 +671,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q11_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q11_images"
+                :model="$financeAudit"
+                collection="finance_q11_images"
+            />
         </div>
         <!-- 12 Employees hired have signed confidentiality and security policy statements. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -656,7 +733,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q12_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q12_images"
+                :model="$financeAudit"
+                collection="finance_q12_images"
+            />
         </div>
         <!-- 13 Password activation on computers -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -710,7 +794,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q13_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q13_images"
+                :model="$financeAudit"
+                collection="finance_q13_images"
+            />
         </div>
         <!-- 14 Service Writers trash can have RO’s and misc. NPI documents present. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -765,7 +856,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q14_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q14_images"
+                :model="$financeAudit"
+                collection="finance_q14_images"
+            />
         </div>
         <!-- 15 Website privacy policy compliance. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -819,7 +917,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q15_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q15_images"
+                :model="$financeAudit"
+                collection="finance_q15_images"
+            />
         </div>
         <!-- 16 “NPI Check-Out Log” being utilized in accounting. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -874,7 +979,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q16_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q16_images"
+                :model="$financeAudit"
+                collection="finance_q16_images"
+            />
         </div>
         <!-- 17 Review “Certificate of Destruction” receipts from shredding company -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -929,7 +1041,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q17_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q17_images"
+                :model="$financeAudit"
+                collection="finance_q17_images"
+            />
         </div>
         <!-- 18 Computer terminals not being logged off to activating screensaver password? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -984,7 +1103,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q18_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q18_images"
+                :model="$financeAudit"
+                collection="finance_q18_images"
+            />
         </div>
         <!-- 19 Computer terminal not set to automatically log off after 5 minutes of non-activity. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1039,7 +1165,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q19_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q19_images"
+                :model="$financeAudit"
+                collection="finance_q19_images"
+            />
         </div>
         <!-- 20 Are network firewalls being monitored for intrusion. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1094,7 +1227,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q20_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q20_images"
+                :model="$financeAudit"
+                collection="finance_q20_images"
+            />
         </div>
         <!-- 21 Written IT policies regarding the use of flash drives, downloading software and programs by employees, and spam email protocols? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1149,7 +1289,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q21_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q21_images"
+                :model="$financeAudit"
+                collection="finance_q21_images"
+            />
         </div>
         <!-- 22 Have there been any network intrusions or security breaches since last quarterly? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1204,7 +1351,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q22_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q22_images"
+                :model="$financeAudit"
+                collection="finance_q22_images"
+            />
         </div>
         <!-- 23 Has a Security Risk Assessment been completed? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1259,7 +1413,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q23_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q23_images"
+                :model="$financeAudit"
+                collection="finance_q23_images"
+            />
         </div>
         <!-- 24 Written Response Plan been created?  -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1313,7 +1474,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q24_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q24_images"
+                :model="$financeAudit"
+                collection="finance_q424_images"
+            />
         </div>
         <!-- 25 IT Technical requirements been implemented for Encryption, MFA and System monitoring, penetration testing, and vulnerability assessments? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1368,7 +1536,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q25_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q25_images"
+                :model="$financeAudit"
+                collection="finance_q25_images"
+            />
         </div>
         <!-- 26 Cashiers area unsecured -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1422,7 +1597,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q26_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q26_images"
+                :model="$financeAudit"
+                collection="finance_q26_images"
+            />
         </div>
         <!-- 27 Review new Third Party provider agreements for safeguard language and compliance. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1477,7 +1659,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q27_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q27_images"
+                :model="$financeAudit"
+                collection="finance_q27_images"
+            />
         </div>
         <!-- 28 Have Third Party Providers been vetted for required compliance practices, procedures and training? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1532,7 +1721,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q28_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q28_images"
+                :model="$financeAudit"
+                collection="finance_q28_images"
+            />
         </div>
         <!-- 29 Sales desks not secured and have customer document exposed -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1587,7 +1783,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q29_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q29_images"
+                :model="$financeAudit"
+                collection="finance_q29_images"
+            />
         </div>
         <!-- 30 Check Can Spam Unsubscribe compliance. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1641,7 +1844,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q30_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q30_images"
+                :model="$financeAudit"
+                collection="finance_q30_images"
+            />
         </div>
         <!-- 31 Check for Telemarketing Do Not Call rules compliance: i.e., what system/software is in place to provide tracking? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1696,7 +1906,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q31_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q31_images"
+                :model="$financeAudit"
+                collection="finance_q31_images"
+            />
         </div>
         <!-- 32 NPI documents publicly exposed, not secured properly -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1751,7 +1968,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q32_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q32_images"
+                :model="$financeAudit"
+                collection="finance_q32_images"
+            />
         </div>
         <!-- 33 Breach in password sharing? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1805,7 +2029,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q33_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q33_images"
+                :model="$financeAudit"
+                collection="finance_q33_images"
+            />
         </div>
         <!-- 34 Customers NPI in unsecured trash cans? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1859,7 +2090,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q34_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q34_images"
+                :model="$financeAudit"
+                collection="finance_q34_images"
+            />
         </div>
         <!-- 35 Deal jackets unsecured? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1913,7 +2151,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q35_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q35_images"
+                :model="$financeAudit"
+                collection="finance_q35_images"
+            />
         </div>
         <!-- 36 Customer Information exposed/not secured? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -1967,7 +2212,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q36_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q36_images"
+                :model="$financeAudit"
+                collection="finance_q36_images"
+            />
         </div>
         <!-- 37 Filing cabinets securing customers NPI locked and secured? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2022,7 +2274,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q37_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q37_images"
+                :model="$financeAudit"
+                collection="finance_q37_images"
+            />
         </div>
         <!-- 38 Sales Tower area has NPI exposure, unsecured customer documents -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2077,7 +2336,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q38_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q38_images"
+                :model="$financeAudit"
+                collection="finance_q38_images"
+            />
         </div>
         <!-- 39 Was Network Vulnerability Assessment Report completed, denote possible issues? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2132,7 +2398,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q39_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q39_images"
+                :model="$financeAudit"
+                collection="finance_q39_images"
+            />
         </div>
         <!-- 40 Finance Office not locked exposing unsecured customer documents -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2187,7 +2460,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q40_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q40_images"
+                :model="$financeAudit"
+                collection="finance_q40_images"
+            />
         </div>
         <!-- 41 Credit application unsecured -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2241,7 +2521,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q41_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q41_images"
+                :model="$financeAudit"
+                collection="finance_q41_images"
+            />
         </div>
         <!-- 42 Red Flag software being utilized to check for fraudulent applicants? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2296,7 +2583,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q42_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q42_images"
+                :model="$financeAudit"
+                collection="finance_q42_images"
+            />
         </div>
         <!-- 43 Managers’ offices not being secured when employee not present. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2351,7 +2645,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q43_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q43_images"
+                :model="$financeAudit"
+                collection="finance_q43_images"
+            />
         </div>
         <!-- 44 Sales Showroom main exterior doors not secured prior to sales managers’ and employees reporting to work. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2406,7 +2707,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q44_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q44_images"
+                :model="$financeAudit"
+                collection="finance_q44_images"
+            />
         </div>
         <!-- 45 Use Car buyers guide not visibly posted on vehicles in parking lot/showroom -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2461,7 +2769,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q45_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q45_images"
+                :model="$financeAudit"
+                collection="finance_q45_images"
+            />
         </div>
         <!-- 46 Buyers Guide not filled out properly -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2515,7 +2830,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q46_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q46_images"
+                :model="$financeAudit"
+                collection="finance_q45_images"
+            />
         </div>
         <!-- 47 New car missing Monroney sticker placement. -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2569,7 +2891,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q47_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q47_images"
+                :model="$financeAudit"
+                collection="finance_q45_images"
+            />
         </div>
         <!-- 48 Improper finance terms noted/written on vehicle inventory -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2624,7 +2953,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q48_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q48_images"
+                :model="$financeAudit"
+                collection="finance_q45_images"
+            />
         </div>
         <!-- 49 Sale staff bull pin area not secured properly when employees not present -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -2679,7 +3015,14 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q49_images"/>
+            <x-media-library-collection
+                multiple
+                max-items="2"
+                rules="mimes:png,jpeg"
+                name="finance_q49_images"
+                :model="$financeAudit"
+                collection="finance_q49_images"
+            />
         </div>
         <div class="flex items-center space-x-6">
             <button

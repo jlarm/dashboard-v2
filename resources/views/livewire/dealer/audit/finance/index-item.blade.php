@@ -1,9 +1,9 @@
 <tr>
     <td class="px-4 py-4 text-sm text-gray-700">
-        {{ $audit->created_at->format('M d, Y') }}
+        {{ $financeAudit->created_at->format('M d, Y') }}
     </td>
     <td class="px-4 py-4">
-        @if($audit->draft)
+        @if($financeAudit->draft)
             <span
                 class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Draft</span>
         @else
@@ -23,13 +23,13 @@
 
                 Download
             </button>
-            <a href="{{ route('dealer.audit.finance.show', $audit) }}" type="button"
+            <a href="{{ route('dealer.audit.finance.show', $financeAudit) }}" type="button"
                class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                 Edit
             </a>
             <button
                 class="text-red-500 text-sm"
-                wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['financeAudit' => $audit->id]))"
+                wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['financeAudit' => $financeAudit->id]))"
             >
                 Delete
             </button>

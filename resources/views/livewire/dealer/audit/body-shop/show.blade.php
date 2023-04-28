@@ -58,7 +58,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q1_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q1_images"
             />
         </div>
@@ -119,7 +119,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q2_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q2_images"
             />
         </div>
@@ -181,7 +181,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q3_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q3_images"
             />
         </div>
@@ -243,7 +243,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q4_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q4_images"
             />
         </div>
@@ -304,7 +304,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q5_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q5_images"
             />
         </div>
@@ -365,7 +365,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q6_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q6_images"
             />
         </div>
@@ -427,7 +427,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q7_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q7_images"
             />
         </div>
@@ -489,7 +489,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q8_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q8_images"
             />
         </div>
@@ -551,7 +551,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q9_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q9_images"
             />
         </div>
@@ -613,7 +613,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q10_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q10_images"
             />
         </div>
@@ -675,7 +675,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q11_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q11_images"
             />
         </div>
@@ -737,7 +737,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q12_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q12_images"
             />
         </div>
@@ -799,7 +799,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q13_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q13_images"
             />
         </div>
@@ -861,7 +861,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q14_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q14_images"
             />
         </div>
@@ -922,7 +922,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q15_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q15_images"
             />
         </div>
@@ -990,7 +990,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q16_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q16_images"
             />
         </div>
@@ -1052,7 +1052,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q17_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q17_images"
             />
         </div>
@@ -1114,7 +1114,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q18_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q18_images"
             />
         </div>
@@ -1175,7 +1175,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q19_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q19_images"
             />
         </div>
@@ -1237,7 +1237,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q20_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q20_images"
             />
         </div>
@@ -1299,7 +1299,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q21_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q21_images"
             />
         </div>
@@ -1362,7 +1362,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q22_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q22_images"
             />
         </div>
@@ -1424,7 +1424,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q23_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q23_images"
             />
         </div>
@@ -1486,7 +1486,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q24_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q24_images"
             />
         </div>
@@ -1548,7 +1548,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q25_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q25_images"
             />
         </div>
@@ -1611,7 +1611,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q26_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q26_images"
             />
         </div>
@@ -1673,7 +1673,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q27_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q27_images"
             />
         </div>
@@ -1735,7 +1735,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q28_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q28_images"
             />
         </div>
@@ -1797,7 +1797,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q29_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q29_images"
             />
         </div>
@@ -1859,7 +1859,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q30_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q30_images"
             />
         </div>
@@ -1920,7 +1920,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q31_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q31_images"
             />
         </div>
@@ -1982,7 +1982,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q32_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q32_images"
             />
         </div>
@@ -2044,7 +2044,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q33_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q33_images"
             />
         </div>
@@ -2106,7 +2106,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q34_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q34_images"
             />
         </div>
@@ -2168,7 +2168,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q35_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q35_images"
             />
         </div>
@@ -2229,7 +2229,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q36_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q36_images"
             />
         </div>
@@ -2291,7 +2291,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q37_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q37_images"
             />
         </div>
@@ -2353,7 +2353,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q38_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q38_images"
             />
         </div>
@@ -2415,7 +2415,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q39_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q39_images"
             />
         </div>
@@ -2476,7 +2476,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q40_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q40_images"
             />
         </div>
@@ -2537,7 +2537,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q41_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q41_images"
             />
         </div>
@@ -2599,7 +2599,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q42_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q42_images"
             />
         </div>
@@ -2661,7 +2661,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q43_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q43_images"
             />
         </div>
@@ -2724,7 +2724,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q44_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q44_images"
             />
         </div>
@@ -2786,7 +2786,7 @@
                 max-items="2"
                 rules="mimes:png,jpeg"
                 name="body_shop_q45_images"
-                :model="$audit"
+                :model="$bodyShopAudit"
                 collection="body_shop_q45_images"
             />
         </div>

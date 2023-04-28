@@ -11,8 +11,8 @@
                 </tr>
                 </thead>
                 <tbody class="text-gray-700 whitespace-nowrap divide-y divide-gray-100">
-                @forelse($audits as $audit)
-                    <livewire:dealer.audit.finance.index-item :audit="$audit" :key="$audit->id"/>
+                @forelse($financeAudits as $financeAudit)
+                    <livewire:dealer.audit.finance.index-item :financeAudit="$financeAudit"/>
                 @empty
                     <tr>
                         <td colspan="7"

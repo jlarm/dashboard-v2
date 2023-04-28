@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class IndexItem extends Component
 {
-    public FinanceAudit $audit;
+    public FinanceAudit $financeAudit;
     public function render()
     {
         return view('livewire.dealer.audit.finance.index-item');

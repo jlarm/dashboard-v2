@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class IndexItem extends Component
 {
-    public BodyShopAudit $audit;
+    public BodyShopAudit $bodyShopAudit;
     public function render()
     {
         return view('livewire.dealer.audit.body-shop.index-item');

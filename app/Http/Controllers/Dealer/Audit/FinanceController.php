@@ -7,10 +7,10 @@ use App\Models\Dealer\Audit\FinanceAudit;
 
 class FinanceController extends Controller
 {
-    public function __invoke(FinanceAudit $audit)
+    public function __invoke(FinanceAudit $financeAudit)
     {
         return view('dealer.audit.finance.show', [
-            'audit' => $audit,
+            'financeAudit' => $financeAudit,
         ]);
     }
 }

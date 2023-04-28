@@ -3,6 +3,9 @@
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Store;
+use Auth;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
@@ -62,6 +65,7 @@ class Create extends Component
         'finance_q49_images'
     ];
 
+    public Store $store;
     public $draft = false;
     public $finance_q1_answer;
     public $finance_q1_comment;
@@ -364,16 +368,126 @@ class Create extends Component
 
     public function submit()
     {
-        $validated = $this->validate();
+        $this->validate();
 
-        $submission = FinanceAudit::create($validated);
+        $submission = FinanceAudit::create([
+            'user_id' => Auth::user()->id,
+            'store_id' => $this->store->id ?? Store::first()->id,
+            'finance_q1_answer' => $this->finance_q1_answer,
+            'finance_q1_comment' => $this->finance_q1_comment,
+            'finance_q2_answer' => $this->finance_q2_answer,
+            'finance_q2_comment' => $this->finance_q2_comment,
+            'finance_q3_answer' => $this->finance_q3_answer,
+            'finance_q3_comment' => $this->finance_q3_comment,
+            'finance_q4_answer' => $this->finance_q4_answer,
+            'finance_q4_comment' => $this->finance_q4_comment,
+            'finance_q5_answer' => $this->finance_q5_answer,
+            'finance_q5_comment' => $this->finance_q5_comment,
+            'finance_q6_answer' => $this->finance_q6_answer,
+            'finance_q6_comment' => $this->finance_q6_comment,
+            'finance_q7_answer' => $this->finance_q7_answer,
+            'finance_q7_comment' => $this->finance_q7_comment,
+            'finance_q8_answer' => $this->finance_q8_answer,
+            'finance_q8_comment' => $this->finance_q8_comment,
+            'finance_q9_answer' => $this->finance_q9_answer,
+            'finance_q9_comment' => $this->finance_q9_comment,
+            'finance_q10_answer' => $this->finance_q10_answer,
+            'finance_q10_comment' => $this->finance_q10_comment,
+            'finance_q11_answer' => $this->finance_q11_answer,
+            'finance_q11_comment' => $this->finance_q11_comment,
+            'finance_q12_answer' => $this->finance_q12_answer,
+            'finance_q12_comment' => $this->finance_q12_comment,
+            'finance_q13_answer' => $this->finance_q13_answer,
+            'finance_q13_comment' => $this->finance_q13_comment,
+            'finance_q14_answer' => $this->finance_q14_answer,
+            'finance_q14_comment' => $this->finance_q14_comment,
+            'finance_q15_answer' => $this->finance_q15_answer,
+            'finance_q15_comment' => $this->finance_q15_comment,
+            'finance_q16_answer' => $this->finance_q16_answer,
+            'finance_q16_comment' => $this->finance_q16_comment,
+            'finance_q17_answer' => $this->finance_q17_answer,
+            'finance_q17_comment' => $this->finance_q17_comment,
+            'finance_q18_answer' => $this->finance_q18_answer,
+            'finance_q18_comment' => $this->finance_q18_comment,
+            'finance_q19_answer' => $this->finance_q19_answer,
+            'finance_q19_comment' => $this->finance_q19_comment,
+            'finance_q20_answer' => $this->finance_q20_answer,
+            'finance_q20_comment' => $this->finance_q20_comment,
+            'finance_q21_answer' => $this->finance_q21_answer,
+            'finance_q21_comment' => $this->finance_q21_comment,
+            'finance_q22_answer' => $this->finance_q22_answer,
+            'finance_q22_comment' => $this->finance_q22_comment,
+            'finance_q23_answer' => $this->finance_q23_answer,
+            'finance_q23_comment' => $this->finance_q23_comment,
+            'finance_q24_answer' => $this->finance_q24_answer,
+            'finance_q24_comment' => $this->finance_q24_comment,
+            'finance_q25_answer' => $this->finance_q25_answer,
+            'finance_q25_comment' => $this->finance_q25_comment,
+            'finance_q26_answer' => $this->finance_q26_answer,
+            'finance_q26_comment' => $this->finance_q26_comment,
+            'finance_q27_answer' => $this->finance_q27_answer,
+            'finance_q27_comment' => $this->finance_q27_comment,
+            'finance_q28_answer' => $this->finance_q28_answer,
+            'finance_q28_comment' => $this->finance_q28_comment,
+            'finance_q29_answer' => $this->finance_q29_answer,
+            'finance_q29_comment' => $this->finance_q29_comment,
+            'finance_q30_answer' => $this->finance_q30_answer,
+            'finance_q30_comment' => $this->finance_q30_comment,
+            'finance_q31_answer' => $this->finance_q31_answer,
+            'finance_q31_comment' => $this->finance_q31_comment,
+            'finance_q32_answer' => $this->finance_q32_answer,
+            'finance_q32_comment' => $this->finance_q32_comment,
+            'finance_q33_answer' => $this->finance_q33_answer,
+            'finance_q33_comment' => $this->finance_q33_comment,
+            'finance_q34_answer' => $this->finance_q34_answer,
+            'finance_q34_comment' => $this->finance_q34_comment,
+            'finance_q35_answer' => $this->finance_q35_answer,
+            'finance_q35_comment' => $this->finance_q35_comment,
+            'finance_q36_answer' => $this->finance_q36_answer,
+            'finance_q36_comment' => $this->finance_q36_comment,
+            'finance_q37_answer' => $this->finance_q37_answer,
+            'finance_q37_comment' => $this->finance_q37_comment,
+            'finance_q38_answer' => $this->finance_q38_answer,
+            'finance_q38_comment' => $this->finance_q38_comment,
+            'finance_q39_answer' => $this->finance_q39_answer,
+            'finance_q39_comment' => $this->finance_q39_comment,
+            'finance_q40_answer' => $this->finance_q40_answer,
+            'finance_q40_comment' => $this->finance_q40_comment,
+            'finance_q41_answer' => $this->finance_q41_answer,
+            'finance_q41_comment' => $this->finance_q41_comment,
+            'finance_q42_answer' => $this->finance_q42_answer,
+            'finance_q42_comment' => $this->finance_q42_comment,
+            'finance_q43_answer' => $this->finance_q43_answer,
+            'finance_q43_comment' => $this->finance_q43_comment,
+            'finance_q44_answer' => $this->finance_q44_answer,
+            'finance_q44_comment' => $this->finance_q44_comment,
+            'finance_q45_answer' => $this->finance_q45_answer,
+            'finance_q45_comment' => $this->finance_q45_comment,
+            'finance_q46_answer' => $this->finance_q46_answer,
+            'finance_q46_comment' => $this->finance_q46_comment,
+            'finance_q47_answer' => $this->finance_q47_answer,
+            'finance_q47_comment' => $this->finance_q47_comment,
+            'finance_q48_answer' => $this->finance_q48_answer,
+            'finance_q48_comment' => $this->finance_q48_comment,
+            'finance_q49_answer' => $this->finance_q49_answer,
+            'finance_q49_comment' => $this->finance_q49_comment,
+        ]);
 
         for ($i = 1; $i <= 49; $i++) {
             $submission->addFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
                 ->toMediaCollection('finance_q' . $i . '_images');
         }
 
-        return redirect(route('dealer.audit.finance.index'));
+        Notification::make()
+            ->title('Finance Audit Created Successfully!')
+            ->success()
+            ->send();
+
+        if (tenant('locations')) {
+            return redirect(route('dealer.stores.audits.finance.index', $this->store));
+        } else {
+            return redirect(route('dealer.audit.finance.index'));
+        }
     }
     public function render()
     {

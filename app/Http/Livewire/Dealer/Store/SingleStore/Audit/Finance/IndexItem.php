@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance;
+
+use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Store;
+use Livewire\Component;
+
+class IndexItem extends Component
+{
+    public Store $store;
+    public FinanceAudit $financeAudit;
+    public function render()
+    {
+        return view('livewire.dealer.store.single-store.audit.finance.index-item')->layout('components.dealer-app');
+    }
+}

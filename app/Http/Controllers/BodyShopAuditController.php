@@ -6,10 +6,10 @@ use App\Models\Dealer\Audit\BodyShopAudit;
 
 class BodyShopAuditController extends Controller
 {
-    public function __invoke(BodyShopAudit $audit)
+    public function __invoke(BodyShopAudit $bodyShopAudit)
     {
         return view('dealer.audit.body-shop.show', [
-            'audit' => $audit,
+            'bodyShopAudit' => $bodyShopAudit,
         ]);
     }
 }

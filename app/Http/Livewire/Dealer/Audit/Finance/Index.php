@@ -13,7 +13,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.audit.finance.index', [
-            'audits' => FinanceAudit::latest()->select('id', 'draft', 'created_at')->get()
+            'financeAudits' => FinanceAudit::latest()->select('id', 'draft', 'created_at')->get()
         ]);
     }
 }

@@ -47,10 +47,10 @@
                          x-ref="panel" @click.away="open = false">
                         <a href="{{ route('dealer.stores.audits.osha.index', $store) }}"
                            class="block rounded-lg px-3 py-2 text-sm leading-6 text-arm-blue-500 hover:bg-arm-blue-50">OSHA</a>
-                        <a href="{{ route('dealer.stores.audits.body-shop', $store) }}"
+                        <a href="{{ route('dealer.stores.audits.body-shop.index', $store) }}"
                            class="block rounded-lg px-3 py-2 text-sm leading-6 text-arm-blue-500 hover:bg-arm-blue-50">Body
                             Shop</a>
-                        <a href="{{ route('dealer.stores.audits.finance', $store) }}"
+                        <a href="{{ route('dealer.stores.audits.finance.index', $store) }}"
                            class="block rounded-lg px-3 py-2 text-sm leading-6 text-arm-blue-500 hover:bg-arm-blue-50">Finance</a>
                     </div>
                 </li>

@@ -15,6 +15,7 @@ class FinanceAudit extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $fillable = [
+        'user_id',
         'store_id',
         'draft',
         'finance_q1_answer',

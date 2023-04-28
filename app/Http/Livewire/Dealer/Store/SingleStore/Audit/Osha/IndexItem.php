@@ -11,7 +11,6 @@ class IndexItem extends Component
     public Store $store;
     public OshaAudit $audit;
 
-
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.osha.index-item')->layout('components.dealer-app');

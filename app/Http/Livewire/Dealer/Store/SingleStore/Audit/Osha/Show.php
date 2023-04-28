@@ -10,7 +10,6 @@ class Show extends Component
 {
     public Store $store;
     public OshaAudit $audit;
-    
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.osha.show')->layout('components.dealer-app');
