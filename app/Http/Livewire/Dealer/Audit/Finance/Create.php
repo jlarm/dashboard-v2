@@ -475,7 +475,7 @@ class Create extends Component
 
         for ($i = 1; $i <= 49; $i++) {
             $submission->addFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
-                ->toMediaCollection('finance_q' . $i . '_images');
+                ->toMediaCollection('finance_q' . $i . '_images', 'digitalocean');
         }
 
         Notification::make()

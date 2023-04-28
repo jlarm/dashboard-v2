@@ -795,7 +795,7 @@ class Show extends Component
 
         for ($i = 1; $i <= 69; $i++) {
             $this->oshaAudit->syncFromMediaLibraryRequest($this->{'osha_q' . $i . '_images'})
-                ->toMediaCollection('osha_q' . $i . '_images');
+                ->toMediaCollection('osha_q' . $i . '_images', 'digitalocean');
         }
 
         if (tenant('locations')) {
