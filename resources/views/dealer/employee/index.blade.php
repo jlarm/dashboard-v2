@@ -6,12 +6,14 @@
         <div class="mt-4 flex space-x-5 sm:mt-0 sm:ml-4">
             <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.employee.invite')">Add Employee
             </x-primary-button>
-            <a href="{{ route('dealer.employees.open-invites') }}">Open Invites</a>
+            <a
+                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                href="{{ route('dealer.employees.open-invites') }}">Open Invites</a>
         </div>
     </div>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div>
             @can('edit-stores')
                 <livewire:dealer.employee.index/>
             @endcan

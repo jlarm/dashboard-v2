@@ -1,74 +1,77 @@
-<div class="space-y-10">
-    <div>
-        <div class="w-full bg-white rounded-md shadow-sm shadow-gray-300">
-            <div class="overflow-x-auto">
-                <div class="inline-block min-w-full overflow-hidden align-middle">
-                    <table class="min-w-full">
-                        <thead
-                            class="text-xs font-semibold tracking-widest text-gray-600 uppercase border-t border-b border-gray-100 bg-gray-50">
+<div>
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="mt-8 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle">
+                    <table class="min-w-full divide-y divide-gray-300">
+                        <thead>
                         <tr>
-                            <td class="px-4 py-4">name</td>
-                            <td class="px-4 py-4">Email Address</td>
+                            <th scope="col"
+                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
+                                Name
+                            </th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
                             @if(tenant('locations'))
-                                <td class="px-4 py-4">Store</td>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Stores
+                                </th>
                             @endif
-                            <td class="px-4 py-4">Invite Sent</td>
-                            <td class="px-4 py-4">Sent By</td>
-                            <td class="px-4 py-4">&nbsp;</td>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Invite
+                                Sent
+                            </th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Sent
+                                By
+                            </th>
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
+                                <span class="sr-only">Edit</span>
+                            </th>
                         </tr>
                         </thead>
-                        <tbody class="text-gray-700 whitespace-nowrap">
+                        <tbody class="divide-y divide-gray-200 bg-white">
                         @forelse($invites as $invite)
-                            <tr>
-                                <td class="px-4 py-4">
-                                    <div class="flex space-x-4 w-max">
-                                        <div class="flex-1">
-                                            <span class="text-sm font-semibold text-gray-800">{{ $invite->name }}</span>
-                                        </div>
-                                    </div>
+                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                                {{ $invite->name }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {{ $invite->email }}
+                            </td>
+                            @if(tenant('locations'))
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    {{ $invite->store->name ?? '' }}
                                 </td>
-                                <td class="text-sm text-gray-700">
-                                    {{ $invite->email }}
-                                </td>
-                                @if(tenant('locations'))
-                                    <td class="text-sm text-gray-700">
-                                        {{ $invite->store->name ?? '' }}
-                                    </td>
+                            @endif
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {{ $invite->created_at->format('F d, Y') }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {{ $invite->user->name }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                @if($invite->user_id === auth()->id())
+                                    {{--                                        <button class="text-gray-500"--}}
+                                    {{--                                                wire:click="$emit('modal.open', 'dealer.employee.resend-invite',  @js(['invite' => $invite->id]))">--}}
+                                    {{--                                            Resend--}}
+                                    {{--                                        </button>--}}
+                                    <button
+                                        class="text-red-500"
+                                        wire:click="$emit('modal.open', 'dealer.employee.delete-invite',  @js(['invite' => $invite->id]))"
+                                    >
+                                        Delete
+                                    </button>
                                 @endif
-                                <td class="text-sm text-gray-700">
-                                    {{ $invite->created_at->format('F d, Y') }}
-                                </td>
-                                <td class="px-4 py-4">
-                                    {{ $invite->user->name }}
-                                </td>
-                                <td class="px-4 py-4 text-right text-sm font-medium sm:pr-6 space-x-3">
-                                    @if($invite->user_id === auth()->id())
-                                        {{--                                        <button class="text-gray-500"--}}
-                                        {{--                                                wire:click="$emit('modal.open', 'dealer.employee.resend-invite',  @js(['invite' => $invite->id]))">--}}
-                                        {{--                                            Resend--}}
-                                        {{--                                        </button>--}}
-                                        <button
-                                            class="text-red-500"
-                                            wire:click="$emit('modal.open', 'dealer.employee.delete-invite',  @js(['invite' => $invite->id]))"
-                                        >
-                                            Delete
-                                        </button>
-                                    @endif
-                                </td>
-                            </tr>
+                            </td>
                         @empty
                             <tr>
-                                <td colspan="6"
+                                <td colspan="7"
                                     class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
-                                    No open invites
+                                    No Open Invites
                                 </td>
                             </tr>
                         @endforelse
                         </tbody>
                     </table>
                 </div>
+                {{ $invites->links() }}
             </div>
         </div>
     </div>
-    {{ $invites->links() }}
 </div>

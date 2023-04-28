@@ -1,27 +1,43 @@
 <div>
-    <div class="shadow-sm sm:rounded-lg">
-        <div class="w-full bg-white rounded-md shadow-sm shadow-gray-300">
-            <div>
-                <div class="inline-block min-w-full align-middle">
-                    <table class="min-w-full  divide-y divide-gray-200">
-                        <thead
-                            class="text-xs font-semibold tracking-widest text-gray-600 uppercase border-t border-b border-gray-100 bg-gray-50">
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="mt-8 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle">
+                    <table class="min-w-full divide-y divide-gray-300">
+                        <thead>
                         <tr>
-                            <td class="px-4 py-4">Name</td>
-                            <td class="px-4 py-4">Email</td>
-                            <td class="px-4 py-4">Role</td>
+                            <th scope="col"
+                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
+                                Name
+                            </th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
                             @if(tenant('locations'))
-                                <td class="px-4 py-4">Stores</td>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Stores
+                                </th>
                             @endif
-                            <td class="px-4 py-4">Department</td>
-                            <td class="px-4 py-4">Courses</td>
-                            <td class="px-4 py-4">&nbsp;</td>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                Department
+                            </th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Courses
+                            </th>
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
+                                <span class="sr-only">Edit</span>
+                            </th>
                         </tr>
                         </thead>
-                        <tbody class="text-gray-700 whitespace-nowrap divide-y divide-gray-100">
-                        @foreach($users as $user)
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                        @forelse($users as $user)
                             <livewire:dealer.employee.index-item :user="$user" :key="$user->id"/>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7"
+                                    class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
+                                    No Employees Created
+                                </td>
+                            </tr>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>
