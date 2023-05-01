@@ -22,18 +22,19 @@
                               d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
 
+
                     Download
                 </button>
             @endif
             <a
-                href="{{ route('dealer.audit.osha.show', $financeAudit) }}"
+                href="{{ route('dealer.audit.finance.show', $financeAudit) }}"
                 class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
                 Edit
             </a>
             <button
                 class="text-red-500 text-sm"
-                wire:click="$emit('modal.open', 'dealer.audit.osha.delete',  @js(['financeAudit' => $financeAudit->id]))"
+                wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['financeAudit' => $financeAudit->id]))"
             >
                 Delete
             </button>
