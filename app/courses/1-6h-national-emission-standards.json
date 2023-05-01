@@ -1,5 +1,5 @@
 [{
-    "name": "National Emission Standards for Hazardous Air Pollutants (NESHAP) Subpart HHHHHH 40 CFR 63.11169-63.1180, Paint Stripping and Miscellaneous Surface Coating Area",
+    "name": "NESHAP 6-H",
     "slug": "6h-national-emission-standards",
     "department": [
         6
@@ -137,5 +137,113 @@
         "description": "<p>Recordkeeping</p><ul><li>Paint stripping<ul><li>Records of paint strippers containing MeCl, including the MeCl content is sufficient to verify annual usage</li><li>Copy of minimization plan kept on site, if required<ul><li>including annual review and updates to plan</li></ul></li><li>Records of any deviations from requirements in the rule, including date and time period it occurred, a description of deviation, and corrective actions taken</li></ul></li></ul>"
 
     }],
-    "questions": []
+    "questions": [
+        {
+            "question": "NESHAP is the EPA’s attempt to reduce Hazardous Air Pollutants (HAPs) emitted by the collision industry.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        },
+        {
+            "question": "The distance between the spray gun and the coating surface will not affect transfer efficiency.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "b"
+        },
+        {
+            "question": "What is the HVLP spray guns transfer efficiency percentage.",
+            "answers": [
+                {
+                "a": "30%",
+                "b": "50%",
+                "c": "65%",
+                "d": "85%"
+                }
+            ],
+            "correctAnswer": "c"
+        },
+        {
+            "question": "Spray coating can be done outdoors if an HVLP spray gun is used.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "b"
+        },
+        {
+            "question": "What are the main spray gun adjustments that can be made?",
+            "answers": [
+                {
+                    "a": "Air input",
+                    "b": "Fluid flow",
+                    "c": "Fan adjustmrnt",
+                    "d": "A & B",
+                    "e": "All of the above"
+                }
+            ],
+            "correctAnswer": "e"
+        },
+        {
+            "question": "A spray gun should never be cleaned by spraying solvent.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        },
+        {
+            "question": "Maximum hose length recommended when attached to air gun is?",
+            "answers": [
+                {
+                    "a": "25ft",
+                    "b": "40ft",
+                    "c": "50ft",
+                    "d": "75ft"
+                }
+            ],
+            "correctAnswer": "c"
+        },
+        {
+            "question": "Following 6H NESHAP regulations will result in better health and safety for employees in the shop.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        },
+        {
+            "question": "Mixing only the amounts of material needed will reduce paint cost and minimize air pollutants.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        },
+        {
+            "question": "6H NESHAP training requirements and practices apply to any employee who sprays material in the\nshop.",
+            "answers": [
+                {
+                    "a": "True",
+                    "b": "False"
+                }
+            ],
+            "correctAnswer": "a"
+        }
+    ]
 }]

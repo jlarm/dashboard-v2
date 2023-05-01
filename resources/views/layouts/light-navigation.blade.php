@@ -1,5 +1,5 @@
 <div>
-
+    <!-- Mobile Sidebar -->
     <div
         x-show="open"
         x-ref="dialog"
@@ -39,7 +39,6 @@
                     <button type="button"
                             @click="open = false"
                             class="flex h-12 w-12 items-center justify-center rounded-full focus:bg-gray-600 focus:outline-none">
-                        <!-- Heroicon name: outline/x-mark -->
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -54,7 +53,6 @@
                 <div class="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav class="flex h-full flex-col">
                         <div class="space-y-1">
-                            <!-- Current: "bg-arm-blue-50 border-arm-blue-600 text-arm-blue-600", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
                             <a
                                 href="{{ route('dealer.dashboard') }}"
                                 class="{{ (request()->is('dashboard')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
@@ -113,10 +111,52 @@
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                               d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z"/>
                                     </svg>
-
-
                                     Vendors
                                 </a>
+                                <span
+                                    x-data="{ dropdownOpen: false }"
+                                >
+                                    <button
+                                        class="{{ (request()->segment(1) == 'audits') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} w-full border-transparent group border-l-4 py-2 px-3 flex text-sm font-medium"
+                                        type="button"
+                                        @click="dropdownOpen = !dropdownOpen"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor"
+                                             class="{{ (request()->segment(1) == 'audits') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                                    </svg>
+                                    Audits
+                                        <svg
+                                            class="text-gray-400 ml-auto h-5 w-5 shrink-0"
+                                            :class="{ 'rotate-90 text-gray-500': open, 'text-gray-400': !(open) }"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true">
+                                          <path fill-rule="evenodd"
+                                                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                                clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>
+                                    <ul class="block w-full mt-1 px-2" id="sub-menu-1" x-show="dropdownOpen" x-collapse>
+                                        <li>
+                                          <!-- 44px -->
+                                          <a href="{{ route('dealer.audit.osha.index') }}"
+                                             class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
+                                        </li>
+                                        <li>
+                                          <!-- 44px -->
+                                          <a href="{{ route('dealer.audit.body-shop.index') }}"
+                                             class="{{ (request()->segment(2) == 'body-shop') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Body Shop</a>
+                                        </li>
+                                        <li>
+                                          <!-- 44px -->
+                                          <a href="{{ route('dealer.audit.finance.index') }}"
+                                             class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Finance</a>
+                                        </li>
+                                      </ul>
+                                </span>
                                 <a
                                     href="{{ route('dealer.scan.index') }}"
                                     class="{{ (request()->is('scans')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
@@ -161,18 +201,6 @@
                             </a>
                         </div>
                         <div class="mt-auto space-y-1 pt-10">
-                            {{--                            <a href="#"--}}
-                            {{--                               class="group flex items-center border-l-4 border-transparent py-2 px-3 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">--}}
-                            {{--                                <!-- Heroicon name: outline/question-mark-circle -->--}}
-                            {{--                                <svg class="mr-4 h-6 w-6 text-gray-400 group-hover:text-gray-500"--}}
-                            {{--                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"--}}
-                            {{--                                     stroke-width="1.5" stroke="currentColor" aria-hidden="true">--}}
-                            {{--                                    <path stroke-linecap="round" stroke-linejoin="round"--}}
-                            {{--                                          d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/>--}}
-                            {{--                                </svg>--}}
-                            {{--                                Help--}}
-                            {{--                            </a>--}}
-
                             <form method="POST" action="{{ route('dealer.logout') }}">
                                 @csrf
                                 <a href="#"
@@ -425,7 +453,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                   d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
                         </svg>
-                        Logout
+                        Logoutx
                     </a>
                 </form>
             </div>

@@ -21,9 +21,6 @@
 </head>
 <body class="font-sans antialiased bg-white">
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
-    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-    @include('layouts.mobile-navigation')
-
     <!-- Static sidebar for desktop -->
     @include('layouts.light-navigation')
 
