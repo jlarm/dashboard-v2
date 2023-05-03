@@ -20,7 +20,8 @@
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                 Department
                             </th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Courses
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Completed
+                                Courses
                             </th>
                             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
                                 <span class="sr-only">Edit</span>

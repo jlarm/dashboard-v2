@@ -1,43 +1,40 @@
 <div>
-    <div class="w-full bg-white rounded-md shadow-sm shadow-gray-300">
+    <div class="w-full bg-white">
         <div>
             <div class="inline-block min-w-full align-middle">
-                <table class="min-w-full">
-                    <thead
-                        class="text-xs font-semibold tracking-widest text-gray-600 uppercase border-t border-b border-gray-100 bg-gray-50">
+                <table class="min-w-full divide-y divide-gray-300">
+                    <thead>
                     <tr>
-                        <td class="px-4 py-4">Name</td>
-                        <td class="px-4 py-4">Last Taken</td>
-                        <td class="px-4 py-4">Pass/Fail</td>
+                        <th scope="col"
+                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">Name
+                        </th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last Taken
+                        </th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pass/Fail</th>
                     </tr>
                     </thead>
-                    <tbody class="text-gray-700 whitespace-nowrap divide-y divide-gray-100">
+                    <tbody class="divide-y divide-gray-200 bg-white">
                     @foreach($courses as $course)
                         <tr>
-                            <td class="px-4 py-4">
-                                <div class="flex space-x-4 w-max">
-                                    <div class="flex-1">
-                                    <span
-                                        class="text-sm font-semibold text-gray-800">{{ Str::limit($course->name, 40) }}</span>
-                                    </div>
-                                </div>
+                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                                {{ Str::limit($course->name, 40) }}
                             </td>
-                            <td class="px-4 py-4 text-sm text-gray-700">
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 @if($course->results->first())
                                     {{ $course->results->first()->created_at->format('F d, Y') ?? __('-') }}
                                 @else
                                     {{ __('Never') }}
                                 @endif
                             </td>
-                            <td class="px-4 py-4 text-sm text-gray-700">
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 @if($course->results->first() && $course->results->first()->passed === 1)
                                     <span
-                                        class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                                        class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                                     Passed: {{ $course->results->first()->percentage }}%
                                 </span>
                                 @elseif($course->results->first() && $course->results->first()->passed === 0)
                                     <span
-                                        class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
+                                        class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
                                     Failed: {{ $course->results->first()->percentage }}%
                                 </span>
                                 @else

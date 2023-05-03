@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Employee;
 
-use App\Models\Dealer\Course;
+use App\Models\Dealer\Department;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,13 +18,11 @@ class CourseResults extends Component
     public function render()
     {
         return view('livewire.dealer.employee.course-results', [
-            'courses' => Course::query()
-                ->where('department_id', $this->user->department_id)
-                ->select('id', 'name')
-                ->with('results', function ($query) {
+            'courses' => Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->with([
+                'results' => function ($query) {
                     $query->where('user_id', $this->user->id)->latest();
-                })
-                ->paginate(15),
+                },
+            ])->orderBy('name')->paginate(24),
         ]);
     }
 }
