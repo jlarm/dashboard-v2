@@ -6,6 +6,7 @@ use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
 use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -51,6 +52,11 @@ class Create extends Modal
         $this->emit('refreshVendors');
 
         $this->close();
+
+        Notification::make()
+            ->title('Vendor Successfully Created!')
+            ->success()
+            ->send();
     }
 
     public function render(): View

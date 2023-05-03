@@ -21,6 +21,7 @@ use App\Http\Controllers\Dealer\Store\StoreVendorController;
 use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
+use App\Http\Controllers\FinanceCreateController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -105,7 +106,7 @@ Route::group([
     Route::get('audits/body-shop/create', function () { return view('dealer.audit.body-shop.create'); })->middleware('auth')->name('audit.body-shop.create');
     Route::get('audits/body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->middleware('auth')->name('audit.body-shop.show');
     Route::get('audits/finance', function () { return view('dealer.audit.finance.index'); })->middleware('auth')->name('audit.finance.index');
-    Route::get('audits/finance/create', function () { return view('dealer.audit.finance.create'); })->middleware('auth')->name('audit.finance.create');
+    Route::get('audits/finance/create', FinanceCreateController::class)->middleware('auth')->name('audit.finance.create');
     Route::get('audits/finance/{financeAudit:id}', FinanceController::class)->middleware('auth')->name('audit.finance.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
@@ -151,4 +152,9 @@ Route::group([
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->middleware('auth')
         ->name('logout');
+
+    Route::get('test', [CourseController::class, 'pdfTest'])->name('test');
+    Route::get('finance-download', function () {
+        return view('dealer.audit.finance.download');
+    })->name('finance.download');
 });

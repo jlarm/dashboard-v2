@@ -1,35 +1,28 @@
 <tr>
-    <td class="px-4 py-4">
-        <div class="flex space-x-4 w-max">
-            <div class="flex-1">
-                <span class="text-sm font-semibold text-gray-800">{{ $vendor->name }}</span>
-            </div>
-        </div>
+    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+        {{ $vendor->name }}
     </td>
-    <td class="px-4 py-4 text-sm text-gray-700">
-        {{ $vendor->contact_name ?? '-' }}
-    </td>
-    <td class="px-4 py-4 text-sm text-gray-700">
-        <div><a href="mailto:{{ $vendor->contact_email }}">{{ $vendor->contact_email }}</a></div>
-    </td>
-    <td class="px-4 py-4 text-sm text-gray-700">
-        {{ $vendor->store->name ?? 'Liberty Auto Plaza' }}
-    </td>
-    <td class="px-4 py-4 text-sm text-gray-700">
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $vendor->contact_name ?? '-' }}</td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a
+            href="mailto:{{ $vendor->contact_email }}">{{ $vendor->contact_email }}</a></td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $vendor->store->name ?? '-' }}</td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         @if(\Carbon\Carbon::now() > $vendor->updated_at->addYear() || !$vendor->q1a )
-            <span class="inline-flex items-center rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800">Incomplete</span>
+            <span
+                class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Incomplete</span>
         @else
-            <span class="inline-flex items-center rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">Current</span>
+            <span
+                class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Current</span>
         @endif
     </td>
-    <td class="px-4 py-4 text-sm text-gray-700">
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         @if($noCount > 0)
             {{ $noCount }}/{{ $totalQuestions }}
         @else
             {{ __('-') }}
         @endif
     </td>
-    <td class="px-4 py-4 text-right">
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         <div class="flex space-x-3 justify-end items-end">
             @if($vendor->signature)
                 <button wire:click.prevent="download" type="button"

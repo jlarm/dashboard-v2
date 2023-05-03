@@ -1,5 +1,12 @@
 <form method="POST" wire:submit.prevent="submit">
     <div class="space-y-5">
+        <div>
+            <label for="auditDate" class="block text-sm font-medium leading-6 text-gray-900">Audit Date</label>
+            <div class="mt-2">
+                <input wire:model.defer="audit_date" type="date" name="auditDate" id="auditDate"
+                       class="block w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+            </div>
+        </div>
         <!-- 1 Has the Dealer established a written CMS? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
@@ -44,14 +51,22 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q1_danger" type="checkbox" id="finance_q1_danger"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q1_danger" class="font-medium text-red-500">Flag as high
+                        risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q1_comment" id="finance_q1_comment" name="finance_q1_comment"
                           rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q1_images"/>
         </div>
@@ -100,13 +115,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q2_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q2_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q2_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q2_images"/>
         </div>
@@ -155,13 +177,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q3_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q3_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q3_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q3_images"/>
         </div>
@@ -210,13 +239,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q4_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q4_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q4_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q4_images"/>
         </div>
@@ -265,13 +301,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q5_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q5_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q5_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q5_images"/>
         </div>
@@ -320,13 +363,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q6_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q6_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q6_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q6_images"/>
         </div>
@@ -375,13 +425,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q7_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q7_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q7_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q7_images"/>
         </div>
@@ -430,13 +487,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q8_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q8_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q8_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q8_images"/>
         </div>
@@ -485,13 +549,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q9_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q9_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q9_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q9_images"/>
         </div>
@@ -539,13 +610,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q10_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q10_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q10_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q10_images"/>
         </div>
@@ -593,13 +671,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q11_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q11_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q11_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q11_images"/>
         </div>
@@ -648,13 +733,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q12_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q12_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q12_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q12_images"/>
         </div>
@@ -702,13 +794,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q13_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q13_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q13_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q13_images"/>
         </div>
@@ -757,13 +856,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q14_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q14_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q14_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q14_images"/>
         </div>
@@ -811,13 +917,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q15_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q15_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q15_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q15_images"/>
         </div>
@@ -866,13 +979,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q16_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q16_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q16_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q16_images"/>
         </div>
@@ -921,13 +1041,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q17_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q17_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q17_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q17_images"/>
         </div>
@@ -976,13 +1103,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q18_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q18_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q18_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q18_images"/>
         </div>
@@ -1031,13 +1165,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q19_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q19_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q19_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q19_images"/>
         </div>
@@ -1086,13 +1227,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_q20_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_q20_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q20_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q20_images"/>
         </div>
@@ -1141,13 +1289,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_21_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_21_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q21_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q21_images"/>
         </div>
@@ -1196,13 +1351,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_22_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_22_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q22_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q22_images"/>
         </div>
@@ -1251,13 +1413,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_23_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_23_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q23_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q23_images"/>
         </div>
@@ -1305,13 +1474,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_24_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_24_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q24_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q24_images"/>
         </div>
@@ -1360,13 +1536,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_25_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_25_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q25_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q25_images"/>
         </div>
@@ -1414,13 +1597,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_26_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_26_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q26_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q26_images"/>
         </div>
@@ -1469,13 +1659,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_27_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_27_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q27_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q27_images"/>
         </div>
@@ -1524,13 +1721,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_28_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_28_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q28_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q28_images"/>
         </div>
@@ -1579,13 +1783,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_29_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_29_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q29_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q29_images"/>
         </div>
@@ -1633,13 +1844,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_30_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_30_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q30_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q30_images"/>
         </div>
@@ -1688,13 +1906,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_31_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_31_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q31_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q31_images"/>
         </div>
@@ -1743,13 +1968,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_32_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_32_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q32_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q32_images"/>
         </div>
@@ -1797,13 +2029,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_33_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_33_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q33_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q33_images"/>
         </div>
@@ -1851,13 +2090,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_34_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_34_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q34_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q34_images"/>
         </div>
@@ -1905,13 +2151,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_35_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_35_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q35_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q35_images"/>
         </div>
@@ -1959,13 +2212,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_36_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_36_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q36_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q36_images"/>
         </div>
@@ -2014,13 +2274,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_37_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_37_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q37_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q37_images"/>
         </div>
@@ -2069,13 +2336,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_39_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_39_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q38_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q38_images"/>
         </div>
@@ -2124,13 +2398,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_39_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_39_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q39_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q39_images"/>
         </div>
@@ -2179,13 +2460,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_40_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_40_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q40_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q40_images"/>
         </div>
@@ -2233,13 +2521,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_41_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_41_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q41_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q41_images"/>
         </div>
@@ -2288,13 +2583,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_42_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_42_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q42_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q42_images"/>
         </div>
@@ -2343,13 +2645,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_43_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_43_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q43_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q43_images"/>
         </div>
@@ -2398,13 +2707,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_44_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_44_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q44_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q44_images"/>
         </div>
@@ -2453,13 +2769,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_45_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_45_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q45_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q45_images"/>
         </div>
@@ -2507,13 +2830,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_46_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_46_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q46_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q46_images"/>
         </div>
@@ -2561,13 +2891,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_47_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_47_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q47_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q47_images"/>
         </div>
@@ -2616,13 +2953,20 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_48_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_48_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q48_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q48_images"/>
         </div>
@@ -2671,40 +3015,49 @@
                         </div>
                     </div>
                 </fieldset>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <input wire:model.defer="finance_49_danger" type="checkbox"
+                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="finance_49_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
             </div>
             <div>
                 <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.defer="finance_q49_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-                @error('answer') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="finance_q49_images"/>
         </div>
-        <div class="flex items-center space-x-6">
-            <button
-                class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
-            >
-                <svg wire:loading
-                     class="animate-spin w-4 h-4 mr-2 text-gray-300 hover:cursor-pointer"
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                            stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Submit
-            </button>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <input wire:model.defer="draft" id="draft" aria-describedby="draft-description" name="draft"
-                           type="checkbox"
-                           class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
-                </div>
-                <div class="ml-1 text-sm leading-6">
-                    <label for="draft" class="font-medium text-gray-900">Save as Draft</label>
+        <div class="w-full sticky bottom-0 bg-arm-blue-200 p-5">
+            <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row space-x-6">
+                <button
+                    class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                >
+                    <svg wire:loading
+                         class="animate-spin w-4 h-4 mr-2 text-gray-300 hover:cursor-pointer"
+                         xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Submit
+                </button>
+                <div class="relative flex items-start">
+                    <div class="flex h-6 items-center">
+                        <input wire:model.defer="draft" id="draft" aria-describedby="draft-description" name="draft"
+                               type="checkbox"
+                               class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
+                    </div>
+                    <div class="ml-1 text-sm leading-6">
+                        <label for="draft" class="font-medium text-gray-900">Save as Draft</label>
+                    </div>
                 </div>
             </div>
         </div>
