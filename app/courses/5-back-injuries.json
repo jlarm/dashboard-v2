@@ -1,8 +1,16 @@
 [
     {
+        "uuid": "eeb08fd6-65d6-4383-81d2-87944d433736",
         "name": "Back Injuries",
         "slug": "back-injuries",
-        "department": [1,2,3,4,5,6],
+        "department": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+        ],
         "roles": [
             "Manager",
             "Employee"

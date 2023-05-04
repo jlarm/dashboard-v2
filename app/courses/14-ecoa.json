@@ -1,64 +1,87 @@
-[{
-    "name": "ECOA",
-    "slug": "ecoa",
-    "department": [],
-    "slides": [{
-        "title": "Purpose",
-        "description": "<p>This course provides guidance about compliance with the fair lending requirements of the Equal Credit Opportunity Act (ECOA) and its implementing regulation, Regulation B.</p>"
-    },{
-        "title": "The Equal Credit Opportunity Act (ECOA)",
-        "description": "<p>The Equal Credit Opportunity Act (ECOA) makes it unlawful for a creditor to discriminate against an applicant, with respect to any aspect of a credit transaction, on a \"prohibited basis.\"</p>"
-    },{
-        "title": "Prohibited Basis",
-        "description": "<p>The ECOA makes it illegal for a “creditor” to discriminate in any aspect of a credit transaction because of:</p><p>Race</p><p>Color</p><p>Religon</p><p>National Orgin</p><p>Sex</p><p>Matial Status</p><p>Age</p><p>The receipt of income from any public assistance program (Ex. rent and mortgage supplemental assistance, social security, unemployment)The exercise, in good faith, of a right under the Consumer Credit Protection Act (e.g., rights under the Truth in Lending Act, Fair Debt Collection Practices Act, Fair Credit Reporting Act).</p>"
-    },{
-        "title": "Prohibited Basis",
-        "description": "<p>What is \"Any Aspect\" of a Credit Transaction?</p><p>ECOA prohibitions against discrimination apply to every stage of the credit process - from the time the customer enters the store through collection of the debt.</p><p>Yes, even before a credit application is filled out a creditor cannot treat any applicant less favorably than other applicants on a prohibited basis, at any point in the process.</p>"
-    },{
-        "title": "Question",
-        "description": "<p>Mr. Jones pulls into your dealership first thing Monday morning. Jim Smith, a sales person, happens to know Mr. Jones. He knows that Mr. Jones gets government assistance for housing, and is on disability income.</p><p>Mr. jones says he is interested in buying a car. Jim Smith tells him “you know these vehicles are kind of pricey, you would be better off down the street at Acme Motors, and they do finance as part of the sale.”</p><p>Mr. Jones gets back in his car and heads to Acme Motors.</p><p>Is there anything wrong with Jim Smith’s suggestion?</p>"
-    },{
-        "title": "Answer",
-        "description": "<p><strong>YES!</strong> Jim Smith, the sales person in the lot, a person who may not even be allowed near the F&I office has just discouraged an individual from applying for credit. In this case Mr. Jones who happens to be protected under the ECOA. Statements made prior to a customer even getting to a credit application may violate the ECOA and Regulation B. Employees must be careful not make any oral or written statements to customers that would discourage them on a prohibited basis from making a credit application.</p>"
-    },{
-        "title": "What Constitutes Discrimination Under the ECOA?",
-        "description": "<p><strong>Overt discrimination: This is upfront, not hidden and illegal.</strong></p><p>Disparate treatment: Disparate treatment occurs when a Creditor intentionally targets a particular protected group but is not overt about it. This conduct is intentional and illegal.Disparate impact. Disparate impact occurs when a Creditor’s neutral policy or practice has a disproportionately negative impact on a prohibited basis, even though the creditor has no intent to discriminate, and the practice does not meet a legitimate business need that cannot reasonably be achieved as well by means that are less disparate in their impact.</p>"
-    },{
-        "title": "Disparate Impact",
-        "description": "<p>The CFPB believes that indirect auto lenders' policy of allowing auto dealers to mark up lender-established buy rates, and the discretion involved, create an environment of significant risk that they will result in pricing disparities on the basis of race, national origin, and potentially other prohibited bases.</p>"
-    },{
-        "title": "Debate Impact Actions",
-        "description": "<p>In recent CFPB action, the Agency found that “statistically significant disparities” existed in the rate charged African-American, Hispanic, and Asian/Pacific Islander borrowers by a finance source over a period of time. The CFPB found that approximately 20% of the borrowers in these classes were charged more for their loans than those similarly situated borrowers not in a protected class.</p><p><strong>What was “significantly more” to the CFPB?</strong></p><p>Loans analyzed showed that the borrowers identified paid on average 23 basis points, or .23% more on the rate for the loans in question.</p>"
-    },{
-        "title": "Is Your Dealership a Creditor Under the ECOA?",
-        "description": "<p><strong>Yes</strong></p><p>Under the Act a “creditor” is any person who regularly extends credit, arranges for the extension of credit, and includes a person who, in the ordinary course of its business, regularly participates in a credit decision. “Participating in the credit decision” includes taking part in setting the terms of credit, or being involved in determining what the applicant can or will pay. If your F&I department is compensated through dealer participation, and sets, or determines in any manner the down payment, final APR, repayment term, or any other term of the RISC, then your Dealership is a Creditor under the ECOA and Reg B.</p>"
-    },{
-        "title": "ECOA and Applying for Credit",
-        "description": "<p>As previously discussed, the ECOA prohibits any discrimination in all aspects of the credit transaction. From start to finish. Regulation B limits the type of information that may be requested on an application for credit.</p>"
-    },{
-        "title": "What Cannot Be Asked?",
-        "description": "<p>Generally, a creditor may not request or collect information about an applicant’s race, color, religion, national origin or sex. Exceptions to the general rule allow a Creditor to request information regarding:</p><p>An individual’s title (Mr., Ms., Miss, or Mrs.), but only if the application advises that a designation of title is optional. Information about an applicant’s spouse, or former spouse, ONLY IF:</p><p>The borrower is relyig on the spouse’s income to any degree as a source of repayment.</p><p>The borrower is relying on alimony, child support or separate maintenance income as a basis for obtaining the credit.</p><p>The borrower resides in a community property state, or the property upon which the applicant is relying as a basis for repayment is located in such a state.</p><p>The non-applicant spouse will be a user of or joint obligor on the account.</p><p>The non-applicant spouse will be contractually liable on the account.</p>"
-    },{
-        "title": "Martial Status",
-        "description": "<p>A creditor may not inquire about a borrower’s marital status when applying for individual credit, except in the following circumstances: The loan will be secured by collateral, and the information is necessary to determine what may be required to obtain the collateral in the event of a default.</p><p>The borrower resides in a community property state.</p><p>The borrower lists assets to support the loan application, and resides in a community property state.</p>"
-    },{
-        "title": "Never Allowed to ask",
-        "description": "<p>A person’s race, religion, national origin or sex. Information about a person’s Childbearing or Childrearing.</p>"
-    },{
-        "title": "Never Allowed to ask",
-        "description": "<p>Alimony, Child Support or Separate Maintenance</p><p>A creditor may only inquire about a borrower’s child support or separate maintenance income only in circumstances where:</p><p>The information may be requested only if it is first disclosed that this type of income does not need to be provided unless the borrower wants the creditor to factor the income in determining approval for the loan.</p><p>The borrower has requested that the creditor consider the income for purposes of approving the loan.</p>"
-    },{
-        "title": "Credit Decision",
-        "description": "<p>The ECOA requires a creditor to notify the applicant within 30 days of receipt of a completed application of its credit decision, informing the bower that the loan was approved, a counter offer accepted, or was denied.</p><p>In the case of approval, or acceptance of a counter offer the borrower is generally notified in person at the Dealership.</p>"
-    },{
-        "title": "Adverse Action",
-        "description": "<p>Adverse action is a refusal to grant credit in substantially the amount, or on substantially the terms, requested on an application, unless a counteroffer is made and accepted by the applicant</p><p>Where a borrower is not approved for credit, or a counter offer not accepted by the borrower, the creditor must provide a written notice of adverse action to the borrower. This adverse action notice is required by the ECOA and is in addition to any adverse action notice required by the Fair Credit Reporting Act (FCRA). Both the ECOA and FCRA adverse action notices may be combined in a single notice. Regulation B provides forms of the combined notice. Use of the appropriate Reg B form provides a safe harbor for the user.</p>"
-    },{
-        "title": "What the ECOA Adverse Action Notice Must Provide",
-        "description": "<p>The specific, principal reason(s) for the adverse action taken; or</p><p>A disclosure that the applicant has the right to request the reason(s) for denial within 60 days of receipt of the notification. The reason(s) may be given orally, if a creditor advises the applicant of the right to obtain the reason in writing upon request.</p><p>If the creditor chooses to provide principal reasons for denial, then those reasons must accurately describe, the factors actually considered or scored by a creditor.</p><p>An ECOA notice must also be included in a written notice: Notice: The federal Equal Credit Opportunity Act prohibits creditors from discriminating against credit applicants on the basis of race, color, religion, national origin, sex, marital status, age (provided the applicant has the capacity to enter into a binding contract); because all or part of the applicant’s income derive from any public assistance program; or because the applicant has in good faith exercised any right under the Consumer Credit Protection Act. The federal agency that administers compliance with this law concerning this creditor is [Add name and address of regulator].</p><p>The regulations do not require the adverse action notice be in writing. Nonetheless, all adverse action notices should be made in writing, and copies maintained for record and auditing purposes. RECORDS: All records related to the credit application, including the application, documents submitted by the borrower and not returned, notifications, and notices to the borrower must be kept a minimum of 25 months from the date the credit decision is made and the borrower notified. These records would include any notes, memorandum or computer entries regarding any oral communications to the borrower.</p>"
-    },{
-        "title": "The Incomplete Credit Application",
-        "description": "<p>A decision needs to be made on all submitted credit applications, even those that are incomplete. On an incomplete credit application you must take one of the following actions:</p><p>Deny the request for credit and send an adverse action notice, or</p><p>Give a written notice of incompleteness that provides: Ident</p><p>Identifies what information is needed; Provides a reasonable period of time to provide the requested information; and Informs the borrower that failure to provide the requested information will result in the application no longer being considered.</p><p>In the event the borrower provides the additional information a decision will need to be made. If no further information is provided by the borrower, the application need not be considered and no further notice is necessary. No notice is required when the borrower withdraws the application before it is submitted for a credit decision.</p>"
-    }],
-    "questions": []
-}]
+[
+    {
+        "uuid": "b1fec79c-049f-4987-9a78-cee8b45e1b15",
+        "name": "ECOA",
+        "slug": "ecoa",
+        "department": [],
+        "slides": [
+            {
+                "title": "Purpose",
+                "description": "<p>This course provides guidance about compliance with the fair lending requirements of the Equal Credit Opportunity Act (ECOA) and its implementing regulation, Regulation B.</p>"
+            },
+            {
+                "title": "The Equal Credit Opportunity Act (ECOA)",
+                "description": "<p>The Equal Credit Opportunity Act (ECOA) makes it unlawful for a creditor to discriminate against an applicant, with respect to any aspect of a credit transaction, on a \"prohibited basis.\"</p>"
+            },
+            {
+                "title": "Prohibited Basis",
+                "description": "<p>The ECOA makes it illegal for a “creditor” to discriminate in any aspect of a credit transaction because of:</p><p>Race</p><p>Color</p><p>Religon</p><p>National Orgin</p><p>Sex</p><p>Matial Status</p><p>Age</p><p>The receipt of income from any public assistance program (Ex. rent and mortgage supplemental assistance, social security, unemployment)The exercise, in good faith, of a right under the Consumer Credit Protection Act (e.g., rights under the Truth in Lending Act, Fair Debt Collection Practices Act, Fair Credit Reporting Act).</p>"
+            },
+            {
+                "title": "Prohibited Basis",
+                "description": "<p>What is \"Any Aspect\" of a Credit Transaction?</p><p>ECOA prohibitions against discrimination apply to every stage of the credit process - from the time the customer enters the store through collection of the debt.</p><p>Yes, even before a credit application is filled out a creditor cannot treat any applicant less favorably than other applicants on a prohibited basis, at any point in the process.</p>"
+            },
+            {
+                "title": "Question",
+                "description": "<p>Mr. Jones pulls into your dealership first thing Monday morning. Jim Smith, a sales person, happens to know Mr. Jones. He knows that Mr. Jones gets government assistance for housing, and is on disability income.</p><p>Mr. jones says he is interested in buying a car. Jim Smith tells him “you know these vehicles are kind of pricey, you would be better off down the street at Acme Motors, and they do finance as part of the sale.”</p><p>Mr. Jones gets back in his car and heads to Acme Motors.</p><p>Is there anything wrong with Jim Smith’s suggestion?</p>"
+            },
+            {
+                "title": "Answer",
+                "description": "<p><strong>YES!</strong> Jim Smith, the sales person in the lot, a person who may not even be allowed near the F&I office has just discouraged an individual from applying for credit. In this case Mr. Jones who happens to be protected under the ECOA. Statements made prior to a customer even getting to a credit application may violate the ECOA and Regulation B. Employees must be careful not make any oral or written statements to customers that would discourage them on a prohibited basis from making a credit application.</p>"
+            },
+            {
+                "title": "What Constitutes Discrimination Under the ECOA?",
+                "description": "<p><strong>Overt discrimination: This is upfront, not hidden and illegal.</strong></p><p>Disparate treatment: Disparate treatment occurs when a Creditor intentionally targets a particular protected group but is not overt about it. This conduct is intentional and illegal.Disparate impact. Disparate impact occurs when a Creditor’s neutral policy or practice has a disproportionately negative impact on a prohibited basis, even though the creditor has no intent to discriminate, and the practice does not meet a legitimate business need that cannot reasonably be achieved as well by means that are less disparate in their impact.</p>"
+            },
+            {
+                "title": "Disparate Impact",
+                "description": "<p>The CFPB believes that indirect auto lenders' policy of allowing auto dealers to mark up lender-established buy rates, and the discretion involved, create an environment of significant risk that they will result in pricing disparities on the basis of race, national origin, and potentially other prohibited bases.</p>"
+            },
+            {
+                "title": "Debate Impact Actions",
+                "description": "<p>In recent CFPB action, the Agency found that “statistically significant disparities” existed in the rate charged African-American, Hispanic, and Asian/Pacific Islander borrowers by a finance source over a period of time. The CFPB found that approximately 20% of the borrowers in these classes were charged more for their loans than those similarly situated borrowers not in a protected class.</p><p><strong>What was “significantly more” to the CFPB?</strong></p><p>Loans analyzed showed that the borrowers identified paid on average 23 basis points, or .23% more on the rate for the loans in question.</p>"
+            },
+            {
+                "title": "Is Your Dealership a Creditor Under the ECOA?",
+                "description": "<p><strong>Yes</strong></p><p>Under the Act a “creditor” is any person who regularly extends credit, arranges for the extension of credit, and includes a person who, in the ordinary course of its business, regularly participates in a credit decision. “Participating in the credit decision” includes taking part in setting the terms of credit, or being involved in determining what the applicant can or will pay. If your F&I department is compensated through dealer participation, and sets, or determines in any manner the down payment, final APR, repayment term, or any other term of the RISC, then your Dealership is a Creditor under the ECOA and Reg B.</p>"
+            },
+            {
+                "title": "ECOA and Applying for Credit",
+                "description": "<p>As previously discussed, the ECOA prohibits any discrimination in all aspects of the credit transaction. From start to finish. Regulation B limits the type of information that may be requested on an application for credit.</p>"
+            },
+            {
+                "title": "What Cannot Be Asked?",
+                "description": "<p>Generally, a creditor may not request or collect information about an applicant’s race, color, religion, national origin or sex. Exceptions to the general rule allow a Creditor to request information regarding:</p><p>An individual’s title (Mr., Ms., Miss, or Mrs.), but only if the application advises that a designation of title is optional. Information about an applicant’s spouse, or former spouse, ONLY IF:</p><p>The borrower is relyig on the spouse’s income to any degree as a source of repayment.</p><p>The borrower is relying on alimony, child support or separate maintenance income as a basis for obtaining the credit.</p><p>The borrower resides in a community property state, or the property upon which the applicant is relying as a basis for repayment is located in such a state.</p><p>The non-applicant spouse will be a user of or joint obligor on the account.</p><p>The non-applicant spouse will be contractually liable on the account.</p>"
+            },
+            {
+                "title": "Martial Status",
+                "description": "<p>A creditor may not inquire about a borrower’s marital status when applying for individual credit, except in the following circumstances: The loan will be secured by collateral, and the information is necessary to determine what may be required to obtain the collateral in the event of a default.</p><p>The borrower resides in a community property state.</p><p>The borrower lists assets to support the loan application, and resides in a community property state.</p>"
+            },
+            {
+                "title": "Never Allowed to ask",
+                "description": "<p>A person’s race, religion, national origin or sex. Information about a person’s Childbearing or Childrearing.</p>"
+            },
+            {
+                "title": "Never Allowed to ask",
+                "description": "<p>Alimony, Child Support or Separate Maintenance</p><p>A creditor may only inquire about a borrower’s child support or separate maintenance income only in circumstances where:</p><p>The information may be requested only if it is first disclosed that this type of income does not need to be provided unless the borrower wants the creditor to factor the income in determining approval for the loan.</p><p>The borrower has requested that the creditor consider the income for purposes of approving the loan.</p>"
+            },
+            {
+                "title": "Credit Decision",
+                "description": "<p>The ECOA requires a creditor to notify the applicant within 30 days of receipt of a completed application of its credit decision, informing the bower that the loan was approved, a counter offer accepted, or was denied.</p><p>In the case of approval, or acceptance of a counter offer the borrower is generally notified in person at the Dealership.</p>"
+            },
+            {
+                "title": "Adverse Action",
+                "description": "<p>Adverse action is a refusal to grant credit in substantially the amount, or on substantially the terms, requested on an application, unless a counteroffer is made and accepted by the applicant</p><p>Where a borrower is not approved for credit, or a counter offer not accepted by the borrower, the creditor must provide a written notice of adverse action to the borrower. This adverse action notice is required by the ECOA and is in addition to any adverse action notice required by the Fair Credit Reporting Act (FCRA). Both the ECOA and FCRA adverse action notices may be combined in a single notice. Regulation B provides forms of the combined notice. Use of the appropriate Reg B form provides a safe harbor for the user.</p>"
+            },
+            {
+                "title": "What the ECOA Adverse Action Notice Must Provide",
+                "description": "<p>The specific, principal reason(s) for the adverse action taken; or</p><p>A disclosure that the applicant has the right to request the reason(s) for denial within 60 days of receipt of the notification. The reason(s) may be given orally, if a creditor advises the applicant of the right to obtain the reason in writing upon request.</p><p>If the creditor chooses to provide principal reasons for denial, then those reasons must accurately describe, the factors actually considered or scored by a creditor.</p><p>An ECOA notice must also be included in a written notice: Notice: The federal Equal Credit Opportunity Act prohibits creditors from discriminating against credit applicants on the basis of race, color, religion, national origin, sex, marital status, age (provided the applicant has the capacity to enter into a binding contract); because all or part of the applicant’s income derive from any public assistance program; or because the applicant has in good faith exercised any right under the Consumer Credit Protection Act. The federal agency that administers compliance with this law concerning this creditor is [Add name and address of regulator].</p><p>The regulations do not require the adverse action notice be in writing. Nonetheless, all adverse action notices should be made in writing, and copies maintained for record and auditing purposes. RECORDS: All records related to the credit application, including the application, documents submitted by the borrower and not returned, notifications, and notices to the borrower must be kept a minimum of 25 months from the date the credit decision is made and the borrower notified. These records would include any notes, memorandum or computer entries regarding any oral communications to the borrower.</p>"
+            },
+            {
+                "title": "The Incomplete Credit Application",
+                "description": "<p>A decision needs to be made on all submitted credit applications, even those that are incomplete. On an incomplete credit application you must take one of the following actions:</p><p>Deny the request for credit and send an adverse action notice, or</p><p>Give a written notice of incompleteness that provides: Ident</p><p>Identifies what information is needed; Provides a reasonable period of time to provide the requested information; and Informs the borrower that failure to provide the requested information will result in the application no longer being considered.</p><p>In the event the borrower provides the additional information a decision will need to be made. If no further information is provided by the borrower, the application need not be considered and no further notice is necessary. No notice is required when the borrower withdraws the application before it is submitted for a credit decision.</p>"
+            }
+        ],
+        "questions": []
+    }
+]

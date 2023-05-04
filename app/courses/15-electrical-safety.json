@@ -1,83 +1,88 @@
-[{
-   "name": "Electrical Safety",
-   "slug": "electrical-safety",
-    "department": [4],
-   "slides": [
-       {
-        "title": "Why Worry About Electricity?",
-        "description": "<p>Deaths. Electrocutions ranks in the top 10 causes of industrial FATALITIES (behind traffic, violence and construction). The National Safety council estimates 600 people die every year of electrical causes. Most of these accidents involve low voltage (600 volts or less).</p><p>Roughly 3,600 disabling electrical contact injuries occur every year in the United States, along with another 4,000 non-disabling injuries.</p><p>Effects on your body:</p><p>A small night-light with a 6-watt bulb draws .05 ampere, and even that small amount of current can be fatal. Here are some effects of current (in milli amps) passing through a 150 pound body (note that perception is only .5 to 1.5 milli amps):</p><p>Electricity is an integral part of today's modern world, and sometimes it is easy to forget just how dangerous it can be. Given the correct circumstances, it can kill. But it can also shock you painfully, damage sensitive equipment, and ignite combustible materials</p><p>Observe the lockout program rule as covered in the LOTO provided earlier in this presentation. This element is essential in any safety program.</p><p>Only qualified personnel are allowed to install or perform work on electrical equipment and installation.</p><p>Always connect from the load to the source. First disconnect at the source and work toward the load.</p><p>Only grounded extensions cords can be used. When changing parts or working with an extension cord, first disconnect the power to prevent accidental activation.</p><p>Temporary wiring (such as an extension cord) cannot exceed 90 days of use.</p><p>Keep temporary cords and wires away from walkways and areas that might trip a person.</p><p>Provide signs and barricades where hazards are present and maintenance is in progress.</p><p>Keep an area in front of electrical boxes open by at least 3 feet to allow for access.</p><p>Use a CO₂ -type fire extinguisher on electrical fires. This eliminates costly cleanup after use as compared to a dry chemical-type extinguisher. NEVER use a water-type extinguisher on an electrical fire.</p><p>Use hand tools that have insulated handles.</p><p>All power boxes must be identified as to voltage and function.</p><p>All circuit breakers boxes must have proper labeling for each switch.</p>"
-       },
-       {
-           "title": "Electrical Shock",
-           "description": "<p>Protect yourself</p><p>Don't touch the person. That person might be energized, so take time to protect yourself.</p><p>Don't try to use a conductive tool to free the person.</p><p>Don't touch anyone who has become grounded.</p><p>Call 911 for help, IF the person:</p><ul><li>is obviously injured (loss of consciousness, significant trauma, etc.)</li><li>has an altered mental status (confusion, slow/slurred speech, etc.)</li><li>has other obvious injury (laceration, burn, etc.)</li><li>or: at your discretion or that of the shock victim or supervisor.</li></ul><p>Keep others from being harmed</p><p>Shut off the power (fuse or circuit-breaker or pull the plug; this might be difficult because there might be secondary sources; if you are not sure, get help)</p><p>Move the victim to safety only when power is OFF and no neck or spine injuries are possible</p><p>Give necessary first aid (keep CPR training up-to-date).</p><p>Report accident to supervisor (even minor shocks and close calls must be reported)</p><p>Secure area</p><p>Collect data for an investigation and to prevent reoccurrence.</p>"
-       },
-       {
-           "title": "What To Do Until Aid Arrives:",
-           "description": "<p>Pulse</p><ul><li>If person's heart has stopped, start CPR, if you are trained.</li></ul><p>Breathing</p><ul><li>If person isn't breathing, begin mouth-to-mouth resuscitation, if you are trained.</li></ul><p>Treat for shock</p><ul><li>Keep person lying down.</li><li>If unconscious, put them on their side to let fluids drain.</li><li>Don't move the person if neck or spine injuries are possible.</li><li>Cover the person to maintain body heat</li></ul><p>Stay with patient until help arrives</p><p>Inform medical personnel about patient conditions</p><p>If not emergency</p><ul><li>Often symptoms are delayed and the person might need medical attention.</li><li>All persons, who have received shocks but do not fall into the categories above, must be taken to the Hospital Center by a co-worker or supervisor.</li><li>Medical EVALUATION is a must.</li></ul>"
-       }
-   ],
-    "questions": [
-        {
-            "question": "Only qualified personnel are allowed to install or perform work on electrical equipment and installation.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        },
-        {
-            "question": "Provide signs and barricades where hazards are present and maintenance is in progress.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        },
-        {
-            "question": "Never use a water-type extinguisher on an electrical fire.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        },
-        {
-            "question": "Only grounded extension cords can be used. When changing parts or working with an extension cord, first disconnect the power to prevent accidental activation.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        },
-        {
-            "question": "How would you protect yourself if you saw someone who was electrocuted?",
-            "answers": [
-                {
-                    "a": "Don't touch the person. That person might be energized, so take time to protect yourself.",
-                    "b": "Don't try to use a conductive tool to free the person.",
-                    "c": "Don't touch anyone who has become grounded.",
-                    "d": "All of the above"
-                }
-            ],
-            "correctAnswer": "d"
-        },
-        {
-            "question": "Roughly 300 disabling electrical contact injuries occur every year in the United States, along with another 400 non-disabling injuries.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "b"
-        }
-    ]
-}]
+[
+    {
+        "uuid": "d0343323-b407-4146-bde9-d16b0466d195",
+        "name": "Electrical Safety",
+        "slug": "electrical-safety",
+        "department": [
+            4
+        ],
+        "slides": [
+            {
+                "title": "Why Worry About Electricity?",
+                "description": "<p>Deaths. Electrocutions ranks in the top 10 causes of industrial FATALITIES (behind traffic, violence and construction). The National Safety council estimates 600 people die every year of electrical causes. Most of these accidents involve low voltage (600 volts or less).</p><p>Roughly 3,600 disabling electrical contact injuries occur every year in the United States, along with another 4,000 non-disabling injuries.</p><p>Effects on your body:</p><p>A small night-light with a 6-watt bulb draws .05 ampere, and even that small amount of current can be fatal. Here are some effects of current (in milli amps) passing through a 150 pound body (note that perception is only .5 to 1.5 milli amps):</p><p>Electricity is an integral part of today's modern world, and sometimes it is easy to forget just how dangerous it can be. Given the correct circumstances, it can kill. But it can also shock you painfully, damage sensitive equipment, and ignite combustible materials</p><p>Observe the lockout program rule as covered in the LOTO provided earlier in this presentation. This element is essential in any safety program.</p><p>Only qualified personnel are allowed to install or perform work on electrical equipment and installation.</p><p>Always connect from the load to the source. First disconnect at the source and work toward the load.</p><p>Only grounded extensions cords can be used. When changing parts or working with an extension cord, first disconnect the power to prevent accidental activation.</p><p>Temporary wiring (such as an extension cord) cannot exceed 90 days of use.</p><p>Keep temporary cords and wires away from walkways and areas that might trip a person.</p><p>Provide signs and barricades where hazards are present and maintenance is in progress.</p><p>Keep an area in front of electrical boxes open by at least 3 feet to allow for access.</p><p>Use a CO₂ -type fire extinguisher on electrical fires. This eliminates costly cleanup after use as compared to a dry chemical-type extinguisher. NEVER use a water-type extinguisher on an electrical fire.</p><p>Use hand tools that have insulated handles.</p><p>All power boxes must be identified as to voltage and function.</p><p>All circuit breakers boxes must have proper labeling for each switch.</p>"
+            },
+            {
+                "title": "Electrical Shock",
+                "description": "<p>Protect yourself</p><p>Don't touch the person. That person might be energized, so take time to protect yourself.</p><p>Don't try to use a conductive tool to free the person.</p><p>Don't touch anyone who has become grounded.</p><p>Call 911 for help, IF the person:</p><ul><li>is obviously injured (loss of consciousness, significant trauma, etc.)</li><li>has an altered mental status (confusion, slow/slurred speech, etc.)</li><li>has other obvious injury (laceration, burn, etc.)</li><li>or: at your discretion or that of the shock victim or supervisor.</li></ul><p>Keep others from being harmed</p><p>Shut off the power (fuse or circuit-breaker or pull the plug; this might be difficult because there might be secondary sources; if you are not sure, get help)</p><p>Move the victim to safety only when power is OFF and no neck or spine injuries are possible</p><p>Give necessary first aid (keep CPR training up-to-date).</p><p>Report accident to supervisor (even minor shocks and close calls must be reported)</p><p>Secure area</p><p>Collect data for an investigation and to prevent reoccurrence.</p>"
+            },
+            {
+                "title": "What To Do Until Aid Arrives:",
+                "description": "<p>Pulse</p><ul><li>If person's heart has stopped, start CPR, if you are trained.</li></ul><p>Breathing</p><ul><li>If person isn't breathing, begin mouth-to-mouth resuscitation, if you are trained.</li></ul><p>Treat for shock</p><ul><li>Keep person lying down.</li><li>If unconscious, put them on their side to let fluids drain.</li><li>Don't move the person if neck or spine injuries are possible.</li><li>Cover the person to maintain body heat</li></ul><p>Stay with patient until help arrives</p><p>Inform medical personnel about patient conditions</p><p>If not emergency</p><ul><li>Often symptoms are delayed and the person might need medical attention.</li><li>All persons, who have received shocks but do not fall into the categories above, must be taken to the Hospital Center by a co-worker or supervisor.</li><li>Medical EVALUATION is a must.</li></ul>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "Only qualified personnel are allowed to install or perform work on electrical equipment and installation.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Provide signs and barricades where hazards are present and maintenance is in progress.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Never use a water-type extinguisher on an electrical fire.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Only grounded extension cords can be used. When changing parts or working with an extension cord, first disconnect the power to prevent accidental activation.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "How would you protect yourself if you saw someone who was electrocuted?",
+                "answers": [
+                    {
+                        "a": "Don't touch the person. That person might be energized, so take time to protect yourself.",
+                        "b": "Don't try to use a conductive tool to free the person.",
+                        "c": "Don't touch anyone who has become grounded.",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "Roughly 300 disabling electrical contact injuries occur every year in the United States, along with another 400 non-disabling injuries.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            }
+        ]
+    }
+]

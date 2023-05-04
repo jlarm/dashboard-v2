@@ -1,44 +1,47 @@
-[{
-    "name": "Discrimination",
-    "slug": "discrimination",
-    "department": [],
-    "slides": [
-        {
-            "title": "Equal Employment Opportunity Commission",
-            "description": "<p>Role of the EEOC is to protect employees from unfair treatment</p><p>The laws prohibit discrimination, harassment, retaliation and various other practices</p>"
-        },
-        {
-            "title": "Race/color discrimination",
-            "description": "<p>Title VII of the Civil Rights Act includes:</p><ul><li>Equal Pay Act</li><li>Age Discrimination</li><li>American Disabilities Act</li><li>Civil Rights Act</li><li>Protects individuals against employment discrimination based on race and color as well as cannot deny employment due to perceived race-linked characteristics</li><li>It is unlawful to discriminated against any individual in regard to recruiting, hiring, promotion, transfer, work assignments, performance measurements, job training, discipline and discharge, wages and benefits, or any other term or condition or employment</li></ul>"
-        },
-        {
-            "title": "Race related or hostile work environment",
-            "description": "<p>Prohibits offensive conduct such as racial or ethnic slurs racial jokes, derogatory comments or other verbal or physical conduct based on an individuals race/color. The conduct must be unwelcome and offensive and has to be sever or pervasive.</p><p>Employers must take appropriate steps to prevent and correct unlawful harassment</p>"
-        },
-        {
-            "title": "National origin discrimination",
-            "description": "<p>This law prohibits treating someone less favorably due to where he or she comes from, because of ethnicity or accent, or because it is believed that he or she has a particular ethnic background. This also prohibits discriminating against someone because of marriage or association with someone of a particular nationality.</p>"
-        },
-        {
-            "title": "Religious discrimination",
-            "description": "<p>Prohibits employers from discriminating against individuals because of their religion in hiring, firing, and other terms and conditions of employment</p><p>Employers may not treat employees or applicants more or less favorably because of religious beliefs or practices</p><p>Employers must reasonably accommodate employees religious practices unless doing so would impose an undue hardship on the employer</p>"
-        },
-        {
-            "title": "Age discrimination",
-            "description": "<p>Age Discrimination in Employment Act of 1967</p><p>This protects individuals who are 40 years of age or older from employment discrimination. This applies to employees and job applicants and prohibits discrimination pertaining to employment term, condition, or privilege of employment</p><p>Cannot discriminate against individuals 40 years of age or older if apprenticeship program is offered</p><p>Unlawful to include age preferences, limitations, or specifications of job notices or advertisements</p><p>Pre-employment inquiries do not specifically prohibit asking age or date of birth. However, request for age are closely scrutinized if this becomes an issue</p><p>Benefits – cannot deny benefits to older employees</p><p>Waivers of ADEA rights – an employer can ask an employee to waive his or her rights or claims under the ADEA either in settlement or an administrative or court claim</p>"
-        },
-        {
-            "title": "Disability discrimination",
-            "description": "<p>Title I of the Americans with Disabilities Act</p><p>This law prohibits discrimination against qualified individuals with disabilities in job application procedures, hiring, firing, advancement, compensation, training and other typical privileges of employment</p><p>Reasonable accommodations must be made for a qualified applicant. These accommodations include making existing facilities accessible to persons with disabilities, job restructuring, modifying work schedules.</p><p>An employer is not required to lower quality or production standards to accommodate such employee or to provide personal items such as hearing aids or wheelchairs</p>"
-        },
-        {
-            "title": "Pregnancy discrimination",
-            "description": "<p>Pregnancy Discrimination Act</p><p>An employer cannot refuse to hire a pregnant woman because of her pregnancy, related condition or because of prejudices of co-workers, clients or customers</p><p>Employers must hold open a job for pregnancy related absence for the same length of time jobs are held for employees on sick or disability leave</p>"
-        },
-        {
-            "title": "Compensation discrimination",
-            "description": "<p>Equal Pay Act requires that men and women be given equal pay for equal work in the same establishment. The jobs need not be identical, but must be substantially equal</p><p>Skill measured by experience, ability, education and training required to perform job</p><p>Effort - the amount of physical or mental exertion needed to perform job</p><p>Responsibility - the degree of accountability required in performing the job</p><p>Working conditions - physical surroundings and hazards</p><p>Establishment - physically separate places of business must be treated as one establishment</p><p>Title VII, ADEA, and ADA</p><p>Prohibits compensation discrimination on the basis of race, color, religion, sex, national origin, age or disability</p>"
-        }
-    ],
-    "questions": []
-}]
+[
+    {
+        "uuid": "346d3ba7-c2f0-44f4-bf42-ec044192760e",
+        "name": "Discrimination",
+        "slug": "discrimination",
+        "department": [],
+        "slides": [
+            {
+                "title": "Equal Employment Opportunity Commission",
+                "description": "<p>Role of the EEOC is to protect employees from unfair treatment</p><p>The laws prohibit discrimination, harassment, retaliation and various other practices</p>"
+            },
+            {
+                "title": "Race/color discrimination",
+                "description": "<p>Title VII of the Civil Rights Act includes:</p><ul><li>Equal Pay Act</li><li>Age Discrimination</li><li>American Disabilities Act</li><li>Civil Rights Act</li><li>Protects individuals against employment discrimination based on race and color as well as cannot deny employment due to perceived race-linked characteristics</li><li>It is unlawful to discriminated against any individual in regard to recruiting, hiring, promotion, transfer, work assignments, performance measurements, job training, discipline and discharge, wages and benefits, or any other term or condition or employment</li></ul>"
+            },
+            {
+                "title": "Race related or hostile work environment",
+                "description": "<p>Prohibits offensive conduct such as racial or ethnic slurs racial jokes, derogatory comments or other verbal or physical conduct based on an individuals race/color. The conduct must be unwelcome and offensive and has to be sever or pervasive.</p><p>Employers must take appropriate steps to prevent and correct unlawful harassment</p>"
+            },
+            {
+                "title": "National origin discrimination",
+                "description": "<p>This law prohibits treating someone less favorably due to where he or she comes from, because of ethnicity or accent, or because it is believed that he or she has a particular ethnic background. This also prohibits discriminating against someone because of marriage or association with someone of a particular nationality.</p>"
+            },
+            {
+                "title": "Religious discrimination",
+                "description": "<p>Prohibits employers from discriminating against individuals because of their religion in hiring, firing, and other terms and conditions of employment</p><p>Employers may not treat employees or applicants more or less favorably because of religious beliefs or practices</p><p>Employers must reasonably accommodate employees religious practices unless doing so would impose an undue hardship on the employer</p>"
+            },
+            {
+                "title": "Age discrimination",
+                "description": "<p>Age Discrimination in Employment Act of 1967</p><p>This protects individuals who are 40 years of age or older from employment discrimination. This applies to employees and job applicants and prohibits discrimination pertaining to employment term, condition, or privilege of employment</p><p>Cannot discriminate against individuals 40 years of age or older if apprenticeship program is offered</p><p>Unlawful to include age preferences, limitations, or specifications of job notices or advertisements</p><p>Pre-employment inquiries do not specifically prohibit asking age or date of birth. However, request for age are closely scrutinized if this becomes an issue</p><p>Benefits – cannot deny benefits to older employees</p><p>Waivers of ADEA rights – an employer can ask an employee to waive his or her rights or claims under the ADEA either in settlement or an administrative or court claim</p>"
+            },
+            {
+                "title": "Disability discrimination",
+                "description": "<p>Title I of the Americans with Disabilities Act</p><p>This law prohibits discrimination against qualified individuals with disabilities in job application procedures, hiring, firing, advancement, compensation, training and other typical privileges of employment</p><p>Reasonable accommodations must be made for a qualified applicant. These accommodations include making existing facilities accessible to persons with disabilities, job restructuring, modifying work schedules.</p><p>An employer is not required to lower quality or production standards to accommodate such employee or to provide personal items such as hearing aids or wheelchairs</p>"
+            },
+            {
+                "title": "Pregnancy discrimination",
+                "description": "<p>Pregnancy Discrimination Act</p><p>An employer cannot refuse to hire a pregnant woman because of her pregnancy, related condition or because of prejudices of co-workers, clients or customers</p><p>Employers must hold open a job for pregnancy related absence for the same length of time jobs are held for employees on sick or disability leave</p>"
+            },
+            {
+                "title": "Compensation discrimination",
+                "description": "<p>Equal Pay Act requires that men and women be given equal pay for equal work in the same establishment. The jobs need not be identical, but must be substantially equal</p><p>Skill measured by experience, ability, education and training required to perform job</p><p>Effort - the amount of physical or mental exertion needed to perform job</p><p>Responsibility - the degree of accountability required in performing the job</p><p>Working conditions - physical surroundings and hazards</p><p>Establishment - physically separate places of business must be treated as one establishment</p><p>Title VII, ADEA, and ADA</p><p>Prohibits compensation discrimination on the basis of race, color, religion, sex, national origin, age or disability</p>"
+            }
+        ],
+        "questions": []
+    }
+]

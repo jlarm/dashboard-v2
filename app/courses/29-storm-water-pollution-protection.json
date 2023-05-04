@@ -1,122 +1,139 @@
-[{
-    "name": "Storm Water Pollution Protection",
-    "slug": "storm-water-pollution-protection",
-    "department": [4],
-    "slides": [{
-     "title": "What is Storm Water Pollution?",
-     "description":"<p>Results from materials and chemicals washed into storm drains from streets, gutters, industrial sites, parking lots, etc.</p><p>It is significant because storm water is untreated and flows directly into lakes and the ocean</p><p>Affects water quality, resulting in closed beaches Hurts aquatic life</p><p>Improper disposal of chemicals will result in fines to the dealership</p>"
-},{
-    "title": "Why do We Need to be Aware of Storm Water Pollution?",
-    "description": "<p><strong>EPA estimates that:</strong></p><ul><li>Used oil from a single oil change can pollute up to 1 million gallons of fresh water</li><li>American households alone generate 193 million gallons of used oil every year</li><li>The equivalent of 17 Exxon Valdez oil spills is improperly dumped every year</li></ul>"
-},{
-    "title": "Waste Generated at Dealerships",
-    "description": "<p>Solvents (paint and thinners)</p><p>antifreeze</p><p>Brake fluid and brake lining</p><p>batteries</p><p>motor oils</p><p>Fuels (gasoline, kerosene, diesel)</p><p>Lubricating grease</p>"
-},{
-    "title": "Waste Water Generated",
-    "description": "<p>Waste water from floor washing</p><p>Spent coolant discharges</p><p>Spilled materials</p><p>Vehicle-washing and engine cleaning tanks</p><p>Waste water from water-based, parts-cleaning tanks</p><p>Most waste water from service bays enter drains, go into a grit chamber, then an oil/water separator before entering the public water treatment pipes</p>"
-},{
-    "title": "Wastewater Pollution-Prevention Methods",
-    "description": "<p>Do not drain or replace oil, coolant or other vehicle fluids on the ground or outside pavement</p><p>Do not steam clean engines outdoors</p><p>Prevent chemical spills in service bays; when they occur, clean up immediately and thoroughly</p><p>Dry-sweep floors before wet cleaning and don’t sweep floorwashings from service to outside pavement</p><p>If you see a release of fuel, oil or other hazmat, report it to a supervisor</p><p>Know how to use absorbents and spill-cleanup materials for immediate response to any indoor or outdoor spills</p><p>Make sure the used-oil transporter cleans up any spills during pump-out of used oil tanks</p>"
-},{
-    "title": "Vehicle Washing Requirements",
-    "description": "<p>Wash areas should be located on impervious surfaces with drains piped to disposal devices</p><p>It is recommended that washing areas be enclosed, but at a minimum, floors should be graded to allow wash water to drain</p><p>Absorbents should be used if an oily sheen appears</p><p>A recycle system that recycles both wash water and rinse water, with no discharge of wastewater to waters of the State, should be considered.</p>"
-},{
-    "title": "Used Oil Storage",
-    "description": "<p>Above ground tanks with capacity of 660 gallons or more are subject to federal regulations</p><p>Collection drums must be covered and labeled, in good condition and secured from vandals, and in compliance with local fire codes.</p><p>Label drums, tanks and fill pipes with the words “Used Oil”. “No Smoking” signs should be posted in used oil storage areas</p><p>A concrete or impervious floor with diking is required to prevent stormwater and rainfall contact</p><p>Immediately clean up spills of used oil with absorbents and properly dispose of the spent materials</p>"
-},{
-    "title": "Transportation of Used Oil",
-    "description":"<p>Used oil shipped off site must be picked up by transporters with EPA ID numbers</p><p>This applies to filters and oily rags</p><p>Keep logs or records of off-site shipments of used oil</p>"
-},{
-    "title": "Mixing Other Materials with Used Oil",
-    "description": "<p>Only other materials defined as used oil may be mixed with used oil, examples:</p><ul><li>Transmission and hydraulic fluids</li><li>Petroleum-based, non-hazardous lubricating fluids</li><li>Hydraulic, cutting, gear and cooling oils</li><li>Synthetic oils</li></ul><p>Never mix gasoline, wastewater, a listed hazardous waste, an unknown waste, halogenated solvents or antifreeze with used oil</p>"
-},{
-    "title": "Used Oil Filter Disposal/Recycling",
-    "description": "<p>Over 400 million used oil filters are generated in the US a year</p><p>To be disposed of, they must be properly treated. Recycling of used filters is becoming more common</p><p>Used oil filters are generally picked up by an EPA certified contractor and:</p><ul><li>Shredded, cut open and solvent washed</li><li>Crushed into low-density pucks</li><li>Crushed into high-density briquettes</li><li>Burned directly in cement kilns</li><li>Recycled as scrap steel</li><li>Prepared for acceptable landfilling</li></ul>"
-},{
-    "title": "Absorbents Contaminated with Used Oil and other Materials",
-    "description": "<p>Materials used to absorb used-oil spills such as paper and cloth towels, and clay-based, cellulose-based, corncob, sawdust or other absorbents which contain “free-flowing oil” are considered used oil and must be treated as such.</p><p>“Free-flowing oil” means the material drips with used oil</p><p>If any materials with “free-flowing oil” are stored with other absorbents, all must be treated as used oil. Used absorbents should be stored in covered containers labeled “used oil wastes”</p>"
-}],
-    "questions": [
-        {
-            "question": "What does improper storm water pollution effect if not handled properly?",
-            "answers": [
-                {
-                    "a": "The Cleanliness of your service bay area and parking lot",
-                    "b": "Affects water quality, resulting in closed beaches and hurts aquatic life",
-                    "c": "Hazardous work environment",
-                    "d": "All of the above"
-                }
-            ],
-            "correctAnswer": "b"
-        },
-        {
-            "question": "Why do we need to be aware of Storm Water Pollution?",
-            "answers": [
-                {
-                    "a": "Used Oil from one single oil change can pollute up to 1,000 gallons of fresh water",
-                    "b": "Used Oil from one single oil change can pollute up to 100,000 gallons of fresh water",
-                    "c": "Used Oil from one single oil change can pollute up to 1,000,000 gallons of fresh water",
-                    "d": "The equivalent of 7 Exxon Valdez oil spills is improperly dumped each year in the US"
-                }
-            ],
-            "correctAnswer": "c"
-        },
-        {
-            "question": "What type of wastewater is generated at Dealerships?",
-            "answers": [
-                {
-                    "a": "Solvent s (paint and thinners) and antifreeze",
-                    "b": "Motor oils, fuels (gasoline, kerosene, diesel), Brake fluids and linings",
-                    "c": "Batteries and lubricating greases",
-                    "d": "All the above"
-                }
-            ],
-            "correctAnswer": "d"
-        },
-        {
-            "question": "Wastewater is generated where?",
-            "answers": [
-                {
-                    "a": "Spilled materials, waste from floor washing",
-                    "b": "Spent coolant discharge, vehicle washing, engine cleaning, parts cleaning tanks",
-                    "c": "From drains at dealership in service bays",
-                    "d": "A & C only",
-                    "e": "All of the above"
-                }
-            ],
-            "correctAnswer": "e"
-        },
-        {
-            "question": "In some cases is it OK to drain or replace oil, coolants or other vehicle fluids on the ground or outside pavements.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "b"
-        },
-        {
-            "question": "Dry sweep floors before wet cleaning and never sweep to the outside pavement.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        },
-        {
-            "question": "If an oily sheen appears on your wet floors, what should you do?",
-            "answers": [
-                {
-                    "a": "Mop up and dump down the nearest drain",
-                    "b": "High pressure spray the area to insure oil dissipates properly",
-                    "c": "Use absorbents materials to soak up the oil and dispose in proper containers",
-                    "d": "Use rags and or any other cloth materials to soak up the water/oil area and throw away in any trash receptacle"
-                }
-            ],
-            "correctAnswer": "c"
-        }
-    ]
-}]
+[
+    {
+        "uuid": "bbccad45-3b27-42d4-b9e4-e6cb33219544",
+        "name": "Storm Water Pollution Protection",
+        "slug": "storm-water-pollution-protection",
+        "department": [
+            4
+        ],
+        "slides": [
+            {
+                "title": "What is Storm Water Pollution?",
+                "description": "<p>Results from materials and chemicals washed into storm drains from streets, gutters, industrial sites, parking lots, etc.</p><p>It is significant because storm water is untreated and flows directly into lakes and the ocean</p><p>Affects water quality, resulting in closed beaches Hurts aquatic life</p><p>Improper disposal of chemicals will result in fines to the dealership</p>"
+            },
+            {
+                "title": "Why do We Need to be Aware of Storm Water Pollution?",
+                "description": "<p><strong>EPA estimates that:</strong></p><ul><li>Used oil from a single oil change can pollute up to 1 million gallons of fresh water</li><li>American households alone generate 193 million gallons of used oil every year</li><li>The equivalent of 17 Exxon Valdez oil spills is improperly dumped every year</li></ul>"
+            },
+            {
+                "title": "Waste Generated at Dealerships",
+                "description": "<p>Solvents (paint and thinners)</p><p>antifreeze</p><p>Brake fluid and brake lining</p><p>batteries</p><p>motor oils</p><p>Fuels (gasoline, kerosene, diesel)</p><p>Lubricating grease</p>"
+            },
+            {
+                "title": "Waste Water Generated",
+                "description": "<p>Waste water from floor washing</p><p>Spent coolant discharges</p><p>Spilled materials</p><p>Vehicle-washing and engine cleaning tanks</p><p>Waste water from water-based, parts-cleaning tanks</p><p>Most waste water from service bays enter drains, go into a grit chamber, then an oil/water separator before entering the public water treatment pipes</p>"
+            },
+            {
+                "title": "Wastewater Pollution-Prevention Methods",
+                "description": "<p>Do not drain or replace oil, coolant or other vehicle fluids on the ground or outside pavement</p><p>Do not steam clean engines outdoors</p><p>Prevent chemical spills in service bays; when they occur, clean up immediately and thoroughly</p><p>Dry-sweep floors before wet cleaning and don’t sweep floorwashings from service to outside pavement</p><p>If you see a release of fuel, oil or other hazmat, report it to a supervisor</p><p>Know how to use absorbents and spill-cleanup materials for immediate response to any indoor or outdoor spills</p><p>Make sure the used-oil transporter cleans up any spills during pump-out of used oil tanks</p>"
+            },
+            {
+                "title": "Vehicle Washing Requirements",
+                "description": "<p>Wash areas should be located on impervious surfaces with drains piped to disposal devices</p><p>It is recommended that washing areas be enclosed, but at a minimum, floors should be graded to allow wash water to drain</p><p>Absorbents should be used if an oily sheen appears</p><p>A recycle system that recycles both wash water and rinse water, with no discharge of wastewater to waters of the State, should be considered.</p>"
+            },
+            {
+                "title": "Used Oil Storage",
+                "description": "<p>Above ground tanks with capacity of 660 gallons or more are subject to federal regulations</p><p>Collection drums must be covered and labeled, in good condition and secured from vandals, and in compliance with local fire codes.</p><p>Label drums, tanks and fill pipes with the words “Used Oil”. “No Smoking” signs should be posted in used oil storage areas</p><p>A concrete or impervious floor with diking is required to prevent stormwater and rainfall contact</p><p>Immediately clean up spills of used oil with absorbents and properly dispose of the spent materials</p>"
+            },
+            {
+                "title": "Transportation of Used Oil",
+                "description": "<p>Used oil shipped off site must be picked up by transporters with EPA ID numbers</p><p>This applies to filters and oily rags</p><p>Keep logs or records of off-site shipments of used oil</p>"
+            },
+            {
+                "title": "Mixing Other Materials with Used Oil",
+                "description": "<p>Only other materials defined as used oil may be mixed with used oil, examples:</p><ul><li>Transmission and hydraulic fluids</li><li>Petroleum-based, non-hazardous lubricating fluids</li><li>Hydraulic, cutting, gear and cooling oils</li><li>Synthetic oils</li></ul><p>Never mix gasoline, wastewater, a listed hazardous waste, an unknown waste, halogenated solvents or antifreeze with used oil</p>"
+            },
+            {
+                "title": "Used Oil Filter Disposal/Recycling",
+                "description": "<p>Over 400 million used oil filters are generated in the US a year</p><p>To be disposed of, they must be properly treated. Recycling of used filters is becoming more common</p><p>Used oil filters are generally picked up by an EPA certified contractor and:</p><ul><li>Shredded, cut open and solvent washed</li><li>Crushed into low-density pucks</li><li>Crushed into high-density briquettes</li><li>Burned directly in cement kilns</li><li>Recycled as scrap steel</li><li>Prepared for acceptable landfilling</li></ul>"
+            },
+            {
+                "title": "Absorbents Contaminated with Used Oil and other Materials",
+                "description": "<p>Materials used to absorb used-oil spills such as paper and cloth towels, and clay-based, cellulose-based, corncob, sawdust or other absorbents which contain “free-flowing oil” are considered used oil and must be treated as such.</p><p>“Free-flowing oil” means the material drips with used oil</p><p>If any materials with “free-flowing oil” are stored with other absorbents, all must be treated as used oil. Used absorbents should be stored in covered containers labeled “used oil wastes”</p>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "What does improper storm water pollution effect if not handled properly?",
+                "answers": [
+                    {
+                        "a": "The Cleanliness of your service bay area and parking lot",
+                        "b": "Affects water quality, resulting in closed beaches and hurts aquatic life",
+                        "c": "Hazardous work environment",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Why do we need to be aware of Storm Water Pollution?",
+                "answers": [
+                    {
+                        "a": "Used Oil from one single oil change can pollute up to 1,000 gallons of fresh water",
+                        "b": "Used Oil from one single oil change can pollute up to 100,000 gallons of fresh water",
+                        "c": "Used Oil from one single oil change can pollute up to 1,000,000 gallons of fresh water",
+                        "d": "The equivalent of 7 Exxon Valdez oil spills is improperly dumped each year in the US"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "What type of wastewater is generated at Dealerships?",
+                "answers": [
+                    {
+                        "a": "Solvent s (paint and thinners) and antifreeze",
+                        "b": "Motor oils, fuels (gasoline, kerosene, diesel), Brake fluids and linings",
+                        "c": "Batteries and lubricating greases",
+                        "d": "All the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "Wastewater is generated where?",
+                "answers": [
+                    {
+                        "a": "Spilled materials, waste from floor washing",
+                        "b": "Spent coolant discharge, vehicle washing, engine cleaning, parts cleaning tanks",
+                        "c": "From drains at dealership in service bays",
+                        "d": "A & C only",
+                        "e": "All of the above"
+                    }
+                ],
+                "correctAnswer": "e"
+            },
+            {
+                "question": "In some cases is it OK to drain or replace oil, coolants or other vehicle fluids on the ground or outside pavements.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Dry sweep floors before wet cleaning and never sweep to the outside pavement.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "If an oily sheen appears on your wet floors, what should you do?",
+                "answers": [
+                    {
+                        "a": "Mop up and dump down the nearest drain",
+                        "b": "High pressure spray the area to insure oil dissipates properly",
+                        "c": "Use absorbents materials to soak up the oil and dispose in proper containers",
+                        "d": "Use rags and or any other cloth materials to soak up the water/oil area and throw away in any trash receptacle"
+                    }
+                ],
+                "correctAnswer": "c"
+            }
+        ]
+    }
+]

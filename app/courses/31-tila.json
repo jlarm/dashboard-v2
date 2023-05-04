@@ -1,85 +1,100 @@
-[{
-    "name": "TILA",
-    "slug": "tila",
-    "department": [1],
-    "slides": [{
-        "title": "Truth in Lending Act(TILA) Regulation Z",
-        "description": "<p>Created in 1968</p><p>Can only be amended through Reg Z</p><p>Assure meaningful disclosure of consumer credit terms concerning credit transaction involving more than 4 installments </p><p>Allows consumer to easily compare terms and shop wisely for credit.</p><p>This would affect dealerships concerning a “Closed End Credit” deal.</p><p>Closed End deals involve a stated number of payments and a retail installment contract which is what is used in the automotive arena.</p>"
-    },{
-        "title": "Truth in Lending Act(TILA) Regulation Z",
-        "description": "<p>TILA requires disclosure of the following to be clearly, conspicuously, in writing and in a form the buyer may keep if he/she so wishes. The disclosure of the finance charge (the dollar amount that the credit is costing) and annual percentage rate (the cost of the credit as an annual rate) must be more conspicuous than other disclosures such as bold type, italics or something to differentiate them from the other disclosures.</p><p><stong>Must Disclose:</stong></p><p>The creditors identity</p><p>The amount financed along with the term \"amount of credit provided to you or on your behalf\"</p><p>Itemization of the amount financed and the itemization must show the amounts paid to the consumer, amounts credited to the consumer’s account, amounts paid to others on behalf of the consumer and identifying those persons.</p><p>The finance charge (with a statement \"the dollar amount that the credit will cost you)</p><p>The annual percentage rate (with a statement \"the cost of your credit as and annual rate\")</p><p>The payment schedule which will include the number of payments, the amount, and the timing of the payment required to repay the obligation.</p><p>Total of payments (with a statement \"The amount you will have paid when all payments have been paid\")</p><p>The total sale price (with a statement \"the total cost of your purchase on credit including your downpayment of X). Note the downpayment can not be a negative number(negative equity) more on this later in the course.</p><p>Prepayment statement stating whether there is a penalty if prepaid or if a simple interest there is a rebate for prepayment.</p><p>Late Payment charge (either in dollars or percentage)</p>"
-    },{
-        "title": "Negative Equity",
-        "description": "<p>Negative equity(sometimes referred to as being \"upside down\") is not to be posted on the credit agreement (retail sales contract) in the downpayment section as a negative number.</p><p>It must be listed as 0 if there is negative equity but the negative equity must be listed in the itemization of the amount financed.</p><p><strong>For Example:</strong></p><p>If the trade in has an appraised value of $8,000 and there is a payoff of $10,000 then there is $2,000 negative equity the contract must read 0 not -$2,000.</p><p>If the customer is putting cash down and there is negative equity it can either be netted out or used as cash down.</p><p><strong>For Example:</strong></p><p>If the customer is putting $2,000 down and there is $2,000 in negative equity you have the option of showing the down payment as $0 and using it to net out the negative equity of showing the downpayment as $2,000.</p>"
-    },{
-        "title": "Disclosure Requirements",
-        "description": "<p>The disclosure must be given prior to consummation of the credit sale</p><p>must be in writing</p><p>must be in a form that the consumer could keep.</p><p>The disclosure can occur just prior to accepting the terms and signing the retail installment contract as long as the consumer is given the opportunity to review the terms prior.</p><p>This can be accomplished simply by giving the unsigned retail installment contract to the customer to review just prior to signing it.</p>"
-    },{
-        "title": "Recontracting",
-        "description": "<p>When recontract a customer you will need to date all paperwork the date of the recontract not the original date of delivery. </p><p>Must be treated as new transaction which means that you will need to redisclose and make the customer aware of any changes in the original requested terms.</p><p>Several regulations are in play here, i.e. TILA and ECOA. </p><p>Disclosing all additional products as well as the terms of the credit translation are a MUST.</p>"
-    },{
-        "title": "TILA in Advertising",
-        "description": "<p>Regulation Z (Truth in Lending Act) covers any message that is inviting, offering, or otherwise announcing generally to prospective customers the availability of credit transactions whether visually, orally, or in print media.</p><p>If the advertisement states credit terms then it must state only the terms that you will actually arrange or offer. Can not state terms that are not available.</p><p>If your ad uses any credit terminology such as a reference to down payment, APR, payment schedule, or payment amount then you must disclose:</p><p>Amount or percentage of down payment</p><p>Terms of repayment</p><p>APR</p>"
-    },{
-        "title": "What constitutes an Advertisement?",
-        "description": "<p>The definition is \"a commercial message in any medium that promotes, directly or indirectly, a credit transaction\".</p><p><strong>Examples:</strong></p><p>Message in a newspaper, magazine, or flyer</p><p>radio, TV</p><p>Email or any internet messages(Twitter, or any of the social media sites)</p><p>Direct Mail</p><p>signage</p><p>All point of sale merchandise</p><p>All internal solicitation done via mail or telephone</p><p>Any price tags or mirror hangers</p>"
-    },{
-        "title": "What constitutes an Advertisement?",
-        "description": "<p>Civil action can occur since there is a greater propensity for it to affect a large group of consumers. This most likely involves a process that would be used often and could create a class action situation being the worst scenario possible.</p><p>Criminally there is a penalty but it is not as severe as the civil. For criminal you can be fined up to 5,000 and up to a year in prison. </p><p>Civil you would have to pay actual damages, attorneys fees and damages of twice the finance charge but not more than 1,000 except in the class action scenario where it can be as much as 500,000 which changes things dramatically.</p>"
-    },{
-        "title": "Conclusion",
-        "description": "<p>In conclusion the majority of TILA is organized within the Retail installment contracts that are used by the majority of the dealers which usually are provided by the lender or the state specific approved generic. </p><p>Even though most of the contracts are structured to comply with the act and you usually have the DMS provider program the form for you to print on your system, the liability for the proper disclosure rests on your shoulders not the lender or the DMS provider.</p>"
-    }],
-    "questions": [
-        {
-            "question": "Do we disclose the negative equity in the total sale price downpayment section?",
-            "answers": [
-                {
-                    "a": "Yes",
-                    "b": "No"
-                }
-            ],
-            "correctAnswer": "b"
-        },
-        {
-            "question": "In the itemization of amount financed section the negative equity must read 0",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "b"
-        },
-        {
-            "question": "The TILA disclosures must be mailed to the customer after he/she signs the retail installment contract",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "b"
-        },
-        {
-            "question": "The disclosure of the credit terms may be delivered orally as long as it is prior to consummation of the transaction",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "b"
-        },
-        {
-            "question": "When advertising any credit terms as long as we have a disclaimer stating that the terms stated were not available we can use any terms we wish",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "b"
-        }
-    ]
-}]
+[
+    {
+        "uuid": "8ffa3474-7795-4536-b4d7-a1c1ce6e8090",
+        "name": "TILA",
+        "slug": "tila",
+        "department": [
+            1
+        ],
+        "slides": [
+            {
+                "title": "Truth in Lending Act(TILA) Regulation Z",
+                "description": "<p>Created in 1968</p><p>Can only be amended through Reg Z</p><p>Assure meaningful disclosure of consumer credit terms concerning credit transaction involving more than 4 installments </p><p>Allows consumer to easily compare terms and shop wisely for credit.</p><p>This would affect dealerships concerning a “Closed End Credit” deal.</p><p>Closed End deals involve a stated number of payments and a retail installment contract which is what is used in the automotive arena.</p>"
+            },
+            {
+                "title": "Truth in Lending Act(TILA) Regulation Z",
+                "description": "<p>TILA requires disclosure of the following to be clearly, conspicuously, in writing and in a form the buyer may keep if he/she so wishes. The disclosure of the finance charge (the dollar amount that the credit is costing) and annual percentage rate (the cost of the credit as an annual rate) must be more conspicuous than other disclosures such as bold type, italics or something to differentiate them from the other disclosures.</p><p><stong>Must Disclose:</stong></p><p>The creditors identity</p><p>The amount financed along with the term \"amount of credit provided to you or on your behalf\"</p><p>Itemization of the amount financed and the itemization must show the amounts paid to the consumer, amounts credited to the consumer’s account, amounts paid to others on behalf of the consumer and identifying those persons.</p><p>The finance charge (with a statement \"the dollar amount that the credit will cost you)</p><p>The annual percentage rate (with a statement \"the cost of your credit as and annual rate\")</p><p>The payment schedule which will include the number of payments, the amount, and the timing of the payment required to repay the obligation.</p><p>Total of payments (with a statement \"The amount you will have paid when all payments have been paid\")</p><p>The total sale price (with a statement \"the total cost of your purchase on credit including your downpayment of X). Note the downpayment can not be a negative number(negative equity) more on this later in the course.</p><p>Prepayment statement stating whether there is a penalty if prepaid or if a simple interest there is a rebate for prepayment.</p><p>Late Payment charge (either in dollars or percentage)</p>"
+            },
+            {
+                "title": "Negative Equity",
+                "description": "<p>Negative equity(sometimes referred to as being \"upside down\") is not to be posted on the credit agreement (retail sales contract) in the downpayment section as a negative number.</p><p>It must be listed as 0 if there is negative equity but the negative equity must be listed in the itemization of the amount financed.</p><p><strong>For Example:</strong></p><p>If the trade in has an appraised value of $8,000 and there is a payoff of $10,000 then there is $2,000 negative equity the contract must read 0 not -$2,000.</p><p>If the customer is putting cash down and there is negative equity it can either be netted out or used as cash down.</p><p><strong>For Example:</strong></p><p>If the customer is putting $2,000 down and there is $2,000 in negative equity you have the option of showing the down payment as $0 and using it to net out the negative equity of showing the downpayment as $2,000.</p>"
+            },
+            {
+                "title": "Disclosure Requirements",
+                "description": "<p>The disclosure must be given prior to consummation of the credit sale</p><p>must be in writing</p><p>must be in a form that the consumer could keep.</p><p>The disclosure can occur just prior to accepting the terms and signing the retail installment contract as long as the consumer is given the opportunity to review the terms prior.</p><p>This can be accomplished simply by giving the unsigned retail installment contract to the customer to review just prior to signing it.</p>"
+            },
+            {
+                "title": "Recontracting",
+                "description": "<p>When recontract a customer you will need to date all paperwork the date of the recontract not the original date of delivery. </p><p>Must be treated as new transaction which means that you will need to redisclose and make the customer aware of any changes in the original requested terms.</p><p>Several regulations are in play here, i.e. TILA and ECOA. </p><p>Disclosing all additional products as well as the terms of the credit translation are a MUST.</p>"
+            },
+            {
+                "title": "TILA in Advertising",
+                "description": "<p>Regulation Z (Truth in Lending Act) covers any message that is inviting, offering, or otherwise announcing generally to prospective customers the availability of credit transactions whether visually, orally, or in print media.</p><p>If the advertisement states credit terms then it must state only the terms that you will actually arrange or offer. Can not state terms that are not available.</p><p>If your ad uses any credit terminology such as a reference to down payment, APR, payment schedule, or payment amount then you must disclose:</p><p>Amount or percentage of down payment</p><p>Terms of repayment</p><p>APR</p>"
+            },
+            {
+                "title": "What constitutes an Advertisement?",
+                "description": "<p>The definition is \"a commercial message in any medium that promotes, directly or indirectly, a credit transaction\".</p><p><strong>Examples:</strong></p><p>Message in a newspaper, magazine, or flyer</p><p>radio, TV</p><p>Email or any internet messages(Twitter, or any of the social media sites)</p><p>Direct Mail</p><p>signage</p><p>All point of sale merchandise</p><p>All internal solicitation done via mail or telephone</p><p>Any price tags or mirror hangers</p>"
+            },
+            {
+                "title": "What constitutes an Advertisement?",
+                "description": "<p>Civil action can occur since there is a greater propensity for it to affect a large group of consumers. This most likely involves a process that would be used often and could create a class action situation being the worst scenario possible.</p><p>Criminally there is a penalty but it is not as severe as the civil. For criminal you can be fined up to 5,000 and up to a year in prison. </p><p>Civil you would have to pay actual damages, attorneys fees and damages of twice the finance charge but not more than 1,000 except in the class action scenario where it can be as much as 500,000 which changes things dramatically.</p>"
+            },
+            {
+                "title": "Conclusion",
+                "description": "<p>In conclusion the majority of TILA is organized within the Retail installment contracts that are used by the majority of the dealers which usually are provided by the lender or the state specific approved generic. </p><p>Even though most of the contracts are structured to comply with the act and you usually have the DMS provider program the form for you to print on your system, the liability for the proper disclosure rests on your shoulders not the lender or the DMS provider.</p>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "Do we disclose the negative equity in the total sale price downpayment section?",
+                "answers": [
+                    {
+                        "a": "Yes",
+                        "b": "No"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "In the itemization of amount financed section the negative equity must read 0",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The TILA disclosures must be mailed to the customer after he/she signs the retail installment contract",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The disclosure of the credit terms may be delivered orally as long as it is prior to consummation of the transaction",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "When advertising any credit terms as long as we have a disclaimer stating that the terms stated were not available we can use any terms we wish",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            }
+        ]
+    }
+]

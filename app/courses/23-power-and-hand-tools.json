@@ -1,8 +1,11 @@
 [
     {
+        "uuid": "cf2986e4-c912-4cca-af45-7cf2253d859c",
         "name": "Power and Hand Tools",
         "slug": "power-and-hand-tools",
-        "department": [4],
+        "department": [
+            4
+        ],
         "slides": [
             {
                 "title": "Power and Hand Tools",

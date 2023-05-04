@@ -1,76 +1,81 @@
-[{
-    "name": "Personal Protective Equipment",
-    "slug": "personal-protective-equipment",
-    "department": [4],
-    "slides": [
-        {
-            "title": "Personal Protective Equipment",
-            "description": "<p>Safety Awareness to reduce work related accidents</p>"
-        },
-        {
-            "title": "Personal Protective Equipment PPE",
-            "description": "<p>About half of all shop injuries can be avoided by using PPE. PPE should be an integral part of your facility’s safety program and should be used when exposed to potential hazards such as the following:</p><ul><li>Sanding dust</li><li>Paint spray mist and solvent vapors</li><li>Sparks and hot objects</li><li>Asbestos and other dust</li><li>Welding fumes and radiation</li><li>Small, sharp pieces of flying metal</li><li>Chemicals</li><li>Falling objects</li></ul><p>Safety Glasses, as a general rule, anyone in the service bays should wear safety glasses at all times.</p><ul><li>Use only industrial-type glasses approved by the American National Standards Institute (ANSI). These should be provided by your employer.</li><li>Clean safety glasses regularly. Water them down to remove dirt before wiping to prevent scratching.</li><li>Make sure you understand when you need additional face protection and eye protection; e.g.’ when welding, working with acid, etc.</li></ul><p>Head Protection, when working under a vehicle, bump caps will provide sufficient protection. Bump caps are thin shelled and light weight. They do not offer the same protection as a hardhat. They do however:</p><ul><li>Protect your hair from oil, grease, water, dirt and sparks when working under vehicles.</li><li>Protect your head from hot exhaust systems, hot oil, sharp protruding objects and falling pipes, mufflers or other vehicle parts.</li><li>Easily adapt for the wearing of eye goggles and safety glasses.</li><li>Require cleaning on a regular basis.</li></ul><p>Foot Protection, according to statistics, there are over 250,000 disabling injuries to the feet every year in the U.S. In the vehicle/equipment maintenance facility, these injuries are usually the result of falling wheels, tools, shocks, coils, springs, dies, hoist, etc.</p><ul><li>Where these hazards exist, it is usually required that maintenance personnel wear steel-toes shoes. High-top, steel-toes shoes are preferred as they offer more protection over the lower-quarter, steel-toes shoes.</li><li>When torch cutting or welding, hot molten metal or sparks can fall inside the pant cuff, boot or shoe. Pants should be cuffless and hang over shoes.</li></ul><p>Hearing Protection, such as earmuffs or earplugs when exposed to excessive noise should be worn at all times. A good rule to follow is that if normal conversation cannot be carried on while people are only a few feet apart, hearing protection may be required.</p><ul><li>Air-powered tools, air compressors and vehicles that have a bad muffler or bad engine-exhaust pipe or fitting all produce a very high level of noise in the maintenance facility.</li><li>Noise and sound is measured by its level of intensity, unit called decibels (dB), a measure of sound pressure or force. As a basic rule, during an 8-hour shift, you should nor receive prolonged exposure to noise that exceeds an average of 90 dB. If noise exceeds 110 dB, you may only be exposed to this noise level for a half hour maximum in an 8-hour shift.</li></ul>"
-        },
-        {
-            "title": "Here are some typical maintenance shop-related sources of noise and their decibel Levels:",
-            "description": "<p>Air compressors - 80 to 85 dB</p><p>Air compressors in a room - 95 to 102 dB</p><p>Air impact gun - 105 dB</p><p>Air chisel - 123 db</p>"
-        },
-        {
-            "title": "Respirators",
-            "description": "<p>If painting or refinishing of vehicles are part of your operations, your facility will likely have a formal respirator program. This will consist of written instructions-including when and why respirators are to be worn and how to clean, store and service respirators, OSHA requires training of employees who must use respirators for certain jobs.</p><p>Vehicle painting might require a National Institute for Occupational Safety and Health (NIOSH)-approved, cartridge-type respirator to eliminate the inhalation of paint vapors. A full-face, self-contained breathing apparatus may also be required in painting vehicles at your location.</p><p>NIOSH-approved dust respirators may also need to be used when sanding or burnishing for paint preparation or vehicle body work, if engineered dust control is not provided.</p><p>Understand and follow the respirator policies and rules at your location.</p>"
-        },
-        {
-            "title": "Other Protective Equipment and Clothing",
-            "description": "<p>Use gloves to protect your hands from burns, cuts, abrasion and bruises. If you use asbestos gloves, make sure they are in good repair and not releasing asbestos fibers.</p><p>Wear shirts, pants and coveralls made of cotton to prevent dangerous burns and to provide maximum comfort. Synthetic pieces of clothing could burn and melt onto the skin. Starch uniforms to help retard burning of holes in the fabric from sparks. Again, wear pants so they hang over the shoes.</p><p>Avoid loose-fitting clothing. Tuck ties in or clip to the shirt if worn. Avoid wearing rings, watched, necklaces or other jewelry that may catch in equipment and cause injury.</p><p>Tie up or cover hair that hangs beyond the neck to prevent the hair from being entangled in the equipment.</p><p>Full-body uniforms may be needed in spray-painting operations, check with your supervisor.</p><p>Wear rubber or acid-resistant aprons and gloves when handling battery acid.</p>"
-        }
-    ],
-    "questions": [
-        {
-            "question": "What types of PPE are considered normal precautions?",
-            "answers": [
-                {
-                    "a": "Safety Glasses, Head Protection",
-                    "b": "Foot Protection, Hearing Protection",
-                    "c": "Loose fitting clothes, Long sleeve shirts",
-                    "d": "All of the above",
-                    "e": "A and B only"
-                }
-            ],
-            "correctAnswer": "e"
-        },
-        {
-            "question": "The first line of defense in wearing the proper PPE is the responsibility of:",
-            "answers": [
-                {
-                    "a": "Supervisor",
-                    "b": "Service Director",
-                    "c": "Employee",
-                    "d": "Owner"
-                }
-            ],
-            "correctAnswer": "c"
-        },
-        {
-            "question": "NIOSH-approved dust respirators may also need to be used when sanding or burnishing for paint preparation or vehicle body work, if engineered dust control is not provided.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        },
-        {
-            "question": "Decibel Levels are important to monitor and wear proper PPE for the following reasons.",
-            "answers": [
-                {
-                    "a": "To prevent your fingers from being cut off",
-                    "b": "To insure your toes are not broken",
-                    "c": "Insuring your hearing is not impaired",
-                    "d": "None of the above"
-                }
-            ],
-            "correctAnswer": "c"
-        }
-    ]
-}]
+[
+    {
+        "uuid": "357c9938-56c6-4801-abaf-5986a0c1a6ff",
+        "name": "Personal Protective Equipment",
+        "slug": "personal-protective-equipment",
+        "department": [
+            4
+        ],
+        "slides": [
+            {
+                "title": "Personal Protective Equipment",
+                "description": "<p>Safety Awareness to reduce work related accidents</p>"
+            },
+            {
+                "title": "Personal Protective Equipment PPE",
+                "description": "<p>About half of all shop injuries can be avoided by using PPE. PPE should be an integral part of your facility’s safety program and should be used when exposed to potential hazards such as the following:</p><ul><li>Sanding dust</li><li>Paint spray mist and solvent vapors</li><li>Sparks and hot objects</li><li>Asbestos and other dust</li><li>Welding fumes and radiation</li><li>Small, sharp pieces of flying metal</li><li>Chemicals</li><li>Falling objects</li></ul><p>Safety Glasses, as a general rule, anyone in the service bays should wear safety glasses at all times.</p><ul><li>Use only industrial-type glasses approved by the American National Standards Institute (ANSI). These should be provided by your employer.</li><li>Clean safety glasses regularly. Water them down to remove dirt before wiping to prevent scratching.</li><li>Make sure you understand when you need additional face protection and eye protection; e.g.’ when welding, working with acid, etc.</li></ul><p>Head Protection, when working under a vehicle, bump caps will provide sufficient protection. Bump caps are thin shelled and light weight. They do not offer the same protection as a hardhat. They do however:</p><ul><li>Protect your hair from oil, grease, water, dirt and sparks when working under vehicles.</li><li>Protect your head from hot exhaust systems, hot oil, sharp protruding objects and falling pipes, mufflers or other vehicle parts.</li><li>Easily adapt for the wearing of eye goggles and safety glasses.</li><li>Require cleaning on a regular basis.</li></ul><p>Foot Protection, according to statistics, there are over 250,000 disabling injuries to the feet every year in the U.S. In the vehicle/equipment maintenance facility, these injuries are usually the result of falling wheels, tools, shocks, coils, springs, dies, hoist, etc.</p><ul><li>Where these hazards exist, it is usually required that maintenance personnel wear steel-toes shoes. High-top, steel-toes shoes are preferred as they offer more protection over the lower-quarter, steel-toes shoes.</li><li>When torch cutting or welding, hot molten metal or sparks can fall inside the pant cuff, boot or shoe. Pants should be cuffless and hang over shoes.</li></ul><p>Hearing Protection, such as earmuffs or earplugs when exposed to excessive noise should be worn at all times. A good rule to follow is that if normal conversation cannot be carried on while people are only a few feet apart, hearing protection may be required.</p><ul><li>Air-powered tools, air compressors and vehicles that have a bad muffler or bad engine-exhaust pipe or fitting all produce a very high level of noise in the maintenance facility.</li><li>Noise and sound is measured by its level of intensity, unit called decibels (dB), a measure of sound pressure or force. As a basic rule, during an 8-hour shift, you should nor receive prolonged exposure to noise that exceeds an average of 90 dB. If noise exceeds 110 dB, you may only be exposed to this noise level for a half hour maximum in an 8-hour shift.</li></ul>"
+            },
+            {
+                "title": "Here are some typical maintenance shop-related sources of noise and their decibel Levels:",
+                "description": "<p>Air compressors - 80 to 85 dB</p><p>Air compressors in a room - 95 to 102 dB</p><p>Air impact gun - 105 dB</p><p>Air chisel - 123 db</p>"
+            },
+            {
+                "title": "Respirators",
+                "description": "<p>If painting or refinishing of vehicles are part of your operations, your facility will likely have a formal respirator program. This will consist of written instructions-including when and why respirators are to be worn and how to clean, store and service respirators, OSHA requires training of employees who must use respirators for certain jobs.</p><p>Vehicle painting might require a National Institute for Occupational Safety and Health (NIOSH)-approved, cartridge-type respirator to eliminate the inhalation of paint vapors. A full-face, self-contained breathing apparatus may also be required in painting vehicles at your location.</p><p>NIOSH-approved dust respirators may also need to be used when sanding or burnishing for paint preparation or vehicle body work, if engineered dust control is not provided.</p><p>Understand and follow the respirator policies and rules at your location.</p>"
+            },
+            {
+                "title": "Other Protective Equipment and Clothing",
+                "description": "<p>Use gloves to protect your hands from burns, cuts, abrasion and bruises. If you use asbestos gloves, make sure they are in good repair and not releasing asbestos fibers.</p><p>Wear shirts, pants and coveralls made of cotton to prevent dangerous burns and to provide maximum comfort. Synthetic pieces of clothing could burn and melt onto the skin. Starch uniforms to help retard burning of holes in the fabric from sparks. Again, wear pants so they hang over the shoes.</p><p>Avoid loose-fitting clothing. Tuck ties in or clip to the shirt if worn. Avoid wearing rings, watched, necklaces or other jewelry that may catch in equipment and cause injury.</p><p>Tie up or cover hair that hangs beyond the neck to prevent the hair from being entangled in the equipment.</p><p>Full-body uniforms may be needed in spray-painting operations, check with your supervisor.</p><p>Wear rubber or acid-resistant aprons and gloves when handling battery acid.</p>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "What types of PPE are considered normal precautions?",
+                "answers": [
+                    {
+                        "a": "Safety Glasses, Head Protection",
+                        "b": "Foot Protection, Hearing Protection",
+                        "c": "Loose fitting clothes, Long sleeve shirts",
+                        "d": "All of the above",
+                        "e": "A and B only"
+                    }
+                ],
+                "correctAnswer": "e"
+            },
+            {
+                "question": "The first line of defense in wearing the proper PPE is the responsibility of:",
+                "answers": [
+                    {
+                        "a": "Supervisor",
+                        "b": "Service Director",
+                        "c": "Employee",
+                        "d": "Owner"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "NIOSH-approved dust respirators may also need to be used when sanding or burnishing for paint preparation or vehicle body work, if engineered dust control is not provided.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Decibel Levels are important to monitor and wear proper PPE for the following reasons.",
+                "answers": [
+                    {
+                        "a": "To prevent your fingers from being cut off",
+                        "b": "To insure your toes are not broken",
+                        "c": "Insuring your hearing is not impaired",
+                        "d": "None of the above"
+                    }
+                ],
+                "correctAnswer": "c"
+            }
+        ]
+    }
+]

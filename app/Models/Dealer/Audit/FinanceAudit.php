@@ -18,7 +18,7 @@ class FinanceAudit extends Model implements HasMedia
 
     protected $casts = [
         'draft' => 'boolean',
-        'audit_date' => 'date',
+        'audit_date' => 'date:Y-m-d',
         'finance_q1_danger' => 'boolean',
     ];
 

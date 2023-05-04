@@ -1,72 +1,79 @@
-[{
-    "name": "Battery Charging Jump Start Review",
-    "slug": "battery-charging-jump-start",
-    "department": [
-
-    ],
-    "slides": [{
-        "title": "Battery Charging",
-        "description": "<p>Follow the following guidelines for safe battery charging</p><ul><li>Never operate battery chargers indoor without good ventilation.</li><li>Closely follow the instructions provided by the manufacturer of your battery charger.</li><li>Remove negative cable first from the battery, then the positive cable. Make sure the battery charger is not plugged in and is switched off. Connect the negative cable from the charger to the negative post of the battery. Then connect the positive cable.</li><li>If the battery is totally discharged, set the charger on 12 volts and a higher amp setting (10 to 40amps). Plug in the charger and switch it on.</li><li>After 30 minutes, reduce the setting to a slow or trickle charge (2 to 5 amps).<strong>Warning</strong>; leaving the battery on high charge for a long period of time could destroy the battery and cause an explosion.</li></ul>"
-    }, {
-        "title": "Charging Non-Sealed Batteries",
-        "description": "<ul><li>To activate nonsealed batteries, you will need to remove the caps and fill the battery with sulfuric-acid/distilled-water solution.</li><li>Wear gloves, apron and face protection when working with acid.</li><li>Always check the acid level of a discharge battery before charging. Always add acid to water;<strong>NEVER</strong>water to acid-this will cause a violent reaction.</li><li>Keep caps off during charging. Cover opening with a paper towel to avoid acid misting.</li><li>Make sure there are no sparks, flames or other ignition sources near the battery-charging area and that the area is well-ventilated. Hydrogen will be given off during battery charging, which is highly explosive.</li><li>Follow charging procedures on the previous slide.</li></ul>"
-    },{
-        "title": "Battery Jumping",
-        "description": "<p>The following are recommended practices for battery jumping</p><ul><li>Wear safety glasses and gloves during all steps of the battery jumping process.</li><li>Turn on the heater fan in the disabled vehicle to prevent electrical damage from power surges. Turn off all other electrical equipment.</li><li>Connect the red jumper cable to the positive terminal of both vehicles.</li><li>Connect the black jumper cable to the negative terminal of the booster battery.</li><li>Connect the other end of the jumper cable to a clean, unpainted area of the motor or other metal body part of the disabled vehicle.</li><li>Make sure cables are away from any moving parts.</li><li>Start the vehicle that has the good battery and run it at a moderate speed.</li><li>Start the vehicle with the discharged battery. If the vehicle does not start quickly, allow the starter motor to cool off between attempt. Failure too do so can destroy the starter motor.</li><li>Remove the cables in reverse order: 1) negative on disabled vehicle; 2) negative on booster battery; 3) positive on booster battery; and 4) positive on disabled vehicle battery.</li></ul>"
-    }, {
-        "title": "New and Used-Battery Handling and Storage",
-        "description": "<p>These handling and storage recommendations should be followed for new and used batteries.</p><ul><li>Where possible, batteries should be stored indoor in a specially designated area.</li><li>If outdoor storage is necessary, a sheltered, secured and covered area is recommended.</li><li>Batteries should be placed on acid-resistant pallets (no more than three batteries high). The indoor storage area must be well ventilated.</li><li>Use goggles or face shields, acid-resistant gloves and aprons when handling batteries. An eyewash fountain should be located near the battery storage and acid-filling area. Wash hands after handling batteries or acid spills.</li><li>Spent batteries should not be placed in the dumpster. They will be destined for landfill disposal or incineration. This is a violation of federal laws.</li><li>If a cracked battery is encountered, it should be double-bagged in an acid-proof bag for acceptance by the battery hauler.</li><li>Know how to use acid spill neutralizers, such as baking soda, and absorbents. Wear PPE when cleaning up spills.</li><li>Do not use open flames to inspect the electrolyte level in a battery.</li><li>Keep metal tools away from the tops of uncovered batteries.</li><li>I a battery fire starts, use a CO₂ extinguisher or an ABC multipurpose extinguisher, which should be nearby.</li></ul>"
-    }],
-    "questions": [
-        {
-            "question": "Ventilation is not important in the battery area.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "b"
-        },
-        {
-            "question": "Batteries should be stored in a cool, dry place.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        },
-        {
-            "question": "It is acceptable to make live connections directly to the battery.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "b"
-        },
-        {
-            "question": "The eyes, face, and body should be protected from battery acid.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        },
-        {
-            "question": "Batteries should be inspected in natural light.",
-            "answers": [
-                {
-                    "a": "True",
-                    "b": "False"
-                }
-            ],
-            "correctAnswer": "a"
-        }
-    ]
-}]
+[
+    {
+        "uuid": "da764156-cf61-4ffe-a6cd-5cc56fdb448f",
+        "name": "Battery Charging Jump Start Review",
+        "slug": "battery-charging-jump-start",
+        "department": [
+        ],
+        "slides": [
+            {
+                "title": "Battery Charging",
+                "description": "<p>Follow the following guidelines for safe battery charging</p><ul><li>Never operate battery chargers indoor without good ventilation.</li><li>Closely follow the instructions provided by the manufacturer of your battery charger.</li><li>Remove negative cable first from the battery, then the positive cable. Make sure the battery charger is not plugged in and is switched off. Connect the negative cable from the charger to the negative post of the battery. Then connect the positive cable.</li><li>If the battery is totally discharged, set the charger on 12 volts and a higher amp setting (10 to 40amps). Plug in the charger and switch it on.</li><li>After 30 minutes, reduce the setting to a slow or trickle charge (2 to 5 amps).<strong>Warning</strong>; leaving the battery on high charge for a long period of time could destroy the battery and cause an explosion.</li></ul>"
+            },
+            {
+                "title": "Charging Non-Sealed Batteries",
+                "description": "<ul><li>To activate nonsealed batteries, you will need to remove the caps and fill the battery with sulfuric-acid/distilled-water solution.</li><li>Wear gloves, apron and face protection when working with acid.</li><li>Always check the acid level of a discharge battery before charging. Always add acid to water;<strong>NEVER</strong>water to acid-this will cause a violent reaction.</li><li>Keep caps off during charging. Cover opening with a paper towel to avoid acid misting.</li><li>Make sure there are no sparks, flames or other ignition sources near the battery-charging area and that the area is well-ventilated. Hydrogen will be given off during battery charging, which is highly explosive.</li><li>Follow charging procedures on the previous slide.</li></ul>"
+            },
+            {
+                "title": "Battery Jumping",
+                "description": "<p>The following are recommended practices for battery jumping</p><ul><li>Wear safety glasses and gloves during all steps of the battery jumping process.</li><li>Turn on the heater fan in the disabled vehicle to prevent electrical damage from power surges. Turn off all other electrical equipment.</li><li>Connect the red jumper cable to the positive terminal of both vehicles.</li><li>Connect the black jumper cable to the negative terminal of the booster battery.</li><li>Connect the other end of the jumper cable to a clean, unpainted area of the motor or other metal body part of the disabled vehicle.</li><li>Make sure cables are away from any moving parts.</li><li>Start the vehicle that has the good battery and run it at a moderate speed.</li><li>Start the vehicle with the discharged battery. If the vehicle does not start quickly, allow the starter motor to cool off between attempt. Failure too do so can destroy the starter motor.</li><li>Remove the cables in reverse order: 1) negative on disabled vehicle; 2) negative on booster battery; 3) positive on booster battery; and 4) positive on disabled vehicle battery.</li></ul>"
+            },
+            {
+                "title": "New and Used-Battery Handling and Storage",
+                "description": "<p>These handling and storage recommendations should be followed for new and used batteries.</p><ul><li>Where possible, batteries should be stored indoor in a specially designated area.</li><li>If outdoor storage is necessary, a sheltered, secured and covered area is recommended.</li><li>Batteries should be placed on acid-resistant pallets (no more than three batteries high). The indoor storage area must be well ventilated.</li><li>Use goggles or face shields, acid-resistant gloves and aprons when handling batteries. An eyewash fountain should be located near the battery storage and acid-filling area. Wash hands after handling batteries or acid spills.</li><li>Spent batteries should not be placed in the dumpster. They will be destined for landfill disposal or incineration. This is a violation of federal laws.</li><li>If a cracked battery is encountered, it should be double-bagged in an acid-proof bag for acceptance by the battery hauler.</li><li>Know how to use acid spill neutralizers, such as baking soda, and absorbents. Wear PPE when cleaning up spills.</li><li>Do not use open flames to inspect the electrolyte level in a battery.</li><li>Keep metal tools away from the tops of uncovered batteries.</li><li>I a battery fire starts, use a CO₂ extinguisher or an ABC multipurpose extinguisher, which should be nearby.</li></ul>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "Ventilation is not important in the battery area.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Batteries should be stored in a cool, dry place.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "It is acceptable to make live connections directly to the battery.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The eyes, face, and body should be protected from battery acid.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Batteries should be inspected in natural light.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            }
+        ]
+    }
+]

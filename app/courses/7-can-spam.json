@@ -1,9 +1,9 @@
 [
     {
+        "uuid": "9acd82d4-af72-4871-bcdd-764222e4aae5",
         "name": "Can Spam",
         "slug": "can-spam",
         "department": [
-
         ],
         "slides": [
             {
@@ -32,7 +32,7 @@
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "a"
+                "correctAnswer": "b"
             },
             {
                 "question": "You must always describe the content of the email in the subject line.",
@@ -42,7 +42,7 @@
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "b"
+                "correctAnswer": "a"
             },
             {
                 "question": "Once you Unsubscribe the mechanism must work for at least 30 days after the message is sent.",
