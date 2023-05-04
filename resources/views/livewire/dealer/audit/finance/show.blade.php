@@ -83,7 +83,6 @@
             <x-media-library-collection
                 multiple
                 max-items="2"
-                rules="mimes:png,jpeg"
                 name="finance_q1_images"
                 :model="$financeAudit"
                 collection="finance_q1_images"
