@@ -1,6 +1,6 @@
 <tr>
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-        {{ $financeAudit->created_at->format('M d, Y') }}
+        {{ $financeAudit->audit_date->format('M d, Y') }}
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         @if($financeAudit->draft)

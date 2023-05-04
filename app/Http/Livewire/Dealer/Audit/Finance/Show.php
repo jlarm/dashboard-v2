@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Store;
+use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
@@ -470,7 +471,7 @@ class Show extends Component
     public function mount()
     {
         $this->draft = $this->financeAudit->draft;
-        $this->audit_date = $this->financeAudit->audit_date;
+        $this->audit_date = Carbon::make($this->financeAudit->audit_date)->format('Y-m-d');
         $this->finance_q1_answer = $this->financeAudit->finance_q1_answer;
         $this->finance_q1_comment = $this->financeAudit->finance_q1_comment;
         $this->finance_q1_danger = $this->financeAudit->finance_q1_danger;
@@ -793,6 +794,12 @@ class Show extends Component
         for ($i = 1; $i <= 49; $i++) {
             $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
                 ->toMediaCollection('finance_q' . $i . '_images', 'digitalocean');
+        }
+
+                if (tenant('locations')) {
+            return redirect(route('dealer.stores.audits.finance.index', $this->store));
+        } else {
+            return redirect(route('dealer.audit.finance.index'));
         }
     }
     public function render()

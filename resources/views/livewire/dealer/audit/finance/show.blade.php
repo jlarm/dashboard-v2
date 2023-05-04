@@ -8,6 +8,7 @@
                     type="date"
                     name="audit_date"
                     id="audit_date"
+                    pattern=""
                     class="block w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
                 />
             </div>
@@ -87,6 +88,7 @@
                 :model="$financeAudit"
                 collection="finance_q1_images"
             />
+            @error('finance_q1_images.*'){{ $message }}@enderror
         </div>
         <!-- 2 Has the written CMS been approved by the Board/Ownership? -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -3059,7 +3061,6 @@
         </div>
         <div class="w-full sticky bottom-0 bg-arm-blue-200 p-5">
             <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row space-x-6">
-                {{--                <span class="text-arm-blue-500">Saved!</span>--}}
                 <button
                     wire:click.prevent="uploadImages"
                     class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
