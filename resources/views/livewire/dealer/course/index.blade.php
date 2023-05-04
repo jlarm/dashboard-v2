@@ -1,6 +1,6 @@
 <div>
     <div class="space-y-4">
-        <div class="w-1/4">
+        <div class="md:w-1/3 px-3 sm:px-0">
             <div>
                 <label for="search" class="sr-only">Search</label>
                 <input type="search" name="search" id="search"
@@ -9,7 +9,7 @@
                        placeholder="Search Courses...">
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 px-3 sm:px-0">
             @forelse($courses as $course)
                 <div
                     class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-arm-blue-500 focus-within:ring-offset-2 hover:border-gray-400">
