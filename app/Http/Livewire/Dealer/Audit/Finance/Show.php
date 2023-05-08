@@ -781,12 +781,6 @@ class Show extends Component
             ->title('Finance Audit Updated Successfully!')
             ->success()
             ->send();
-
-//        if (tenant('locations')) {
-//            return redirect(route('dealer.stores.audits.finance.index', $this->store));
-//        } else {
-//            return redirect(route('dealer.audit.finance.index'));
-//        }
     }
 
     public function uploadImages()
