@@ -29,14 +29,10 @@ class FinanceAudit extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null): void
     {
-
         $this
             ->addMediaConversion('preview')
-            ->withResponsiveImages()
-            ->quality(50)
             ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->optimize()
-            ->queued();
+            ->nonQueued();
     }
 
     public function getPathToMedia(Media $media): string

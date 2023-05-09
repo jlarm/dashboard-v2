@@ -787,14 +787,14 @@ class Show extends Component
     {
         for ($i = 1; $i <= 49; $i++) {
             $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
-                ->toMediaCollection('finance_q' . $i . '_images', 'digitalocean');
+                ->toMediaCollection( 'finance_q' . $i . '_images', 'digitalocean');
         }
 
-                if (tenant('locations')) {
-            return redirect(route('dealer.stores.audits.finance.index', $this->store));
-        } else {
-            return redirect(route('dealer.audit.finance.index'));
-        }
+//                if (tenant('locations')) {
+//            return redirect(route('dealer.stores.audits.finance.index', $this->store));
+//        } else {
+//            return redirect(route('dealer.audit.finance.index'));
+//        }
     }
     public function render()
     {

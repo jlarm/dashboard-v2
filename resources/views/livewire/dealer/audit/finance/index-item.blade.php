@@ -11,6 +11,9 @@
                 class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Completed</span>
         @endif
     </td>
+    <td>
+        {{--        {{ dd(storage_path('finance-audits')) }}--}}
+    </td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
         <div class="flex items-center space-x-5">
             @if(!$financeAudit->draft)

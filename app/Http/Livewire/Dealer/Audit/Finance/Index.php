@@ -10,6 +10,7 @@ class Index extends Component
     protected $listeners = [
         'refreshAudits' => '$refresh',
     ];
+    
     public function render()
     {
         return view('livewire.dealer.audit.finance.index', [
