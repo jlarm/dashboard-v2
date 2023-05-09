@@ -61,6 +61,16 @@ return [
             "visibility" => "public",
         ],
 
+        'do-audits' => [
+            'driver' => 's3',
+            'key' => env('AUDITS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('AUDITS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('AUDITS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('AUDITS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('AUDITS_DIGITALOCEAN_SPACES_BUCKET'),
+            "visibility" => "public",
+        ],
+
     ],
 
     /*

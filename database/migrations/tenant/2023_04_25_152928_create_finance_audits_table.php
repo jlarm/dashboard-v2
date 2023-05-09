@@ -18,6 +18,8 @@ return new class extends Migration {
 
             $table->date('audit_date')->nullable();
 
+            $table->string('pdf_path')->nullable();
+
             $table->tinyInteger('finance_q1_answer')->nullable();
             $table->mediumText('finance_q1_comment')->nullable();
             $table->boolean('finance_q1_danger')->default(false);

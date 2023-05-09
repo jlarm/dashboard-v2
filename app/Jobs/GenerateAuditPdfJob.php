@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Browsershot\Browsershot;
 
+
 class GenerateAuditPdfJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -23,9 +24,17 @@ class GenerateAuditPdfJob implements ShouldQueue
     {
         $path = storage_path('app/finance-audits');
         $dealerName = str_replace(' ', '-', tenant('name'));
-        $fileName = $this->financeAudit->created_at->format('Ymd') . '-' . $dealerName . '-finance-audit.pdf';
+        $fileName = $this->financeAudit->audit_date->format('Ymd') . '-' . $dealerName . '-finance-audit.pdf';
 
         $html = view('dealer.audit.finance.download', [
+            'financeAudit' => $this->financeAudit
+        ])->render();
+
+        $header = view('dealer.audit.finance.header', [
+            'financeAudit' => $this->financeAudit
+        ])->render();
+
+        $footer = view('dealer.audit.finance.footer', [
             'financeAudit' => $this->financeAudit
         ])->render();
 
@@ -33,15 +42,11 @@ class GenerateAuditPdfJob implements ShouldQueue
             File::makeDirectory($path, $mode = 0777, true, true);
         }
 
-        try {
-            Browsershot::html($html)
-                ->showBackground()
-                ->margins(10, 10, 10, 10)
-                ->scale(0.75)
-                ->save(storage_path('app/finance-audits/' . $fileName));
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-        }
+        $audit = Browsershot::html($html)
+            ->showBackground()
+            ->margins(10, 10, 10, 10)
+            ->scale(0.75)
+            ->save(storage_path('app/finance-audits/' . $fileName));
 
     }
 }
