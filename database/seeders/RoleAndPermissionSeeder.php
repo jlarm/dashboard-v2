@@ -45,6 +45,11 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-manuals']);
         Permission::create(['name' => 'view-manuals']);
 
+        Permission::create(['name' => 'create-audits']);
+        Permission::create(['name' => 'edit-audits']);
+        Permission::create(['name' => 'delete-audits']);
+        Permission::create(['name' => 'view-audits']);
+
         Role::create(['name' => 'super-admin']);
 
         $adminRole = Role::create(['name' => 'Admin']);
@@ -106,6 +111,10 @@ class RoleAndPermissionSeeder extends Seeder
             'create-manuals',
             'edit-manuals',
             'view-manuals',
+            'create-audits',
+            'edit-audits',
+            'delete-audits',
+            'view-audits',
         ]);
 
         $ownerRole->givePermissionTo([
@@ -118,6 +127,7 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-vendors',
             'view-scans',
             'view-manuals',
+            'view-audits',
         ]);
 
         $gmRole->givePermissionTo([
@@ -130,6 +140,7 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-vendors',
             'view-scans',
             'view-manuals',
+            'view-audits',
         ]);
 
         $cfoRole->givePermissionTo([
@@ -142,6 +153,7 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-vendors',
             'view-scans',
             'view-manuals',
+            'view-audits',
         ]);
 
         $gsmRole->givePermissionTo([
@@ -154,6 +166,7 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-vendors',
             'view-scans',
             'view-manuals',
+            'view-audits',
         ]);
 
         $qiRole->givePermissionTo([
@@ -175,6 +188,7 @@ class RoleAndPermissionSeeder extends Seeder
             'create-manuals',
             'edit-manuals',
             'view-manuals',
+            'view-audits',
         ]);
 
         $smRole->givePermissionTo([

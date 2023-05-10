@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('postal_code')->nullable();
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
+            $table->string('logo')->nullable();
 
             $table->string('firewall_company')->nullable();
             $table->json('ip_addresses')->nullable();

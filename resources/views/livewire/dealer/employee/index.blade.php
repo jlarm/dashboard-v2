@@ -30,7 +30,7 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
                         @forelse($users as $user)
-                            <livewire:dealer.employee.index-item :user="$user" :key="$user->id"/>
+                            <livewire:dealer.employee.index-item :user="$user"/>
                         @empty
                             <tr>
                                 <td colspan="7"

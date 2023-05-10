@@ -1,4 +1,5 @@
-<!doctype html>
+@props(['title'])
+    <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,11 +15,19 @@
         <div class="space-y-5 text-center">
             <x-application-logo class=" h-12 w-auto mx-auto
         "/>
-            <img
-                class="py-20"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS-X3K2gpOP7706vLvwO2yBh9hChiJLPObEZUT0bgTpqr93jNQ7e5u78BNVIVuOCwh8A&usqp=CAU"
-                alt="">
-            <h1 class="text-3xl font-bold text-arm-blue-600">Finance Audit Review for {{ tenant('name') }}</h1>
+            @if($financeAudit->store->logo)
+                <img
+                    class="py-20 mx-auto"
+                    src="{{ asset($financeAudit->store->logo) }}"
+                    alt="">
+            @endif
+            @if(tenant('locations'))
+                <h1 class="text-3xl font-bold text-arm-blue-600">Finance Audit Review
+                    for {{ $financeAudit->store->name }}</h1>
+            @else
+                <h1 class="text-3xl font-bold text-arm-blue-600">Finance Audit Review
+                    for {{ tenant('name') }}</h1>
+            @endif
             <p class="text-arm-blue-400">{{ $financeAudit->audit_date->format('F d, Y') }}</p>
         </div>
     </div>

@@ -23,7 +23,11 @@ class GenerateAuditPdfJob implements ShouldQueue
     public function handle(): void
     {
         $path = storage_path('app/finance-audits');
-        $dealerName = str_replace(' ', '-', tenant('name'));
+        if(tenant('locations')){
+            $dealerName = str_replace(' ', '-', $this->financeAudit->store->name);
+        } else {
+            $dealerName = str_replace(' ', '-', tenant('name'));
+        }
         $fileName = $this->financeAudit->audit_date->format('Ymd') . '-' . $dealerName . '-finance-audit.pdf';
 
         $html = view('dealer.audit.finance.download', [

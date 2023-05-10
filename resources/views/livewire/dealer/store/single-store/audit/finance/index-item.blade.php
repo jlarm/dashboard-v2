@@ -13,17 +13,11 @@
     </td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8 space-x-5">
         <div class="flex items-center space-x-5">
-            @if(!$financeAudit->draft)
-                <button type="button"
-                        class="inline-flex items-center gap-x-1.5 rounded-md bg-arm-blue-600 px-2.5 py-1.5 text-sm text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="-ml-0.5 h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-
-                    Download
-                </button>
+            @if(!$financeAudit->draft && !$financeAudit->pdf_path)
+                <livewire:dealer.audit.finance.generate :financeAudit="$financeAudit"/>
+            @endif
+            @if($financeAudit->pdf_path)
+                <livewire:dealer.audit.finance.download :financeAudit="$financeAudit"/>
             @endif
             <a
                 href="{{ route('dealer.stores.audits.finance.show', [$store, $financeAudit]) }}"
@@ -33,10 +27,9 @@
             </a>
             <button
                 class="text-red-500 text-sm"
-                wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['bodyShopAudit' => $financeAudit->id]))"
+                wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['financeAudit' => $financeAudit->id]))"
             >
                 Delete
             </button>
         </div>
-    </td>
 </tr>

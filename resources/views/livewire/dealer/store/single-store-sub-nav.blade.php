@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between mb-5 bg-gray-50 p-4 rounded border-b border-gray-200">
+<div class="flex items-center justify-between mb-5 bg-gray-50 p-4 rounded border-b border-gray-200 sticky">
     <div>
         <span class="text-3xl font-black text-arm-orange-500">{{ $store->name }}</span>
         <nav class="flex grow border-b border-white/10 py-2">

@@ -22,6 +22,7 @@ use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Controllers\FinanceCreateController;
+use App\Models\Dealer\Audit\FinanceAudit;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -57,10 +58,11 @@ Route::group([
     })->middleware('auth')->name('dashboard');
 
     Route::get('stores', function () { return view('dealer.store.index');})->middleware(['auth', 'has.stores'])->name('stores.index');
-    Route::get('stores/{store:slug}/employees', \App\Http\Livewire\Dealer\Store\SingleStoreEmployees::class)->middleware(['auth', 'has.stores'])->name('stores.employees');
+    Route::get('stores/{store:slug}/employees', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Index::class)->middleware(['auth', 'has.stores'])->name('stores.employees');
+    Route::get('stores/{store:slug}/employees/{user:slug}', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->middleware(['auth', 'has.stores'])->name('stores.employees.show');
     Route::get('stores/{store:slug}/scans', \App\Http\Livewire\Dealer\Store\SingleStoreScans::class)->middleware(['auth', 'has.stores'])->name('stores.scans');
     Route::get('stores/{store:slug}/scan-settings', \App\Http\Livewire\Dealer\Store\SingleStoreScanSettings::class)->middleware(['auth', 'has.stores'])->name('stores.scan-settings');
-    Route::get('stores/{store:slug}/manuals', \App\Http\Livewire\Dealer\Store\SingleStoreManuals::class)->middleware(['auth', 'has.stores'])->name('stores.manuals');
+    Route::get('stores/{store:slug}/manuals', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Index::class)->middleware(['auth', 'has.stores'])->name('stores.manuals');
     Route::get('stores/{store:slug}/manuals/isp', \App\Http\Livewire\Dealer\Store\SingleStoreIspForm::class)->middleware(['auth', 'has.stores'])->name('stores.manuals.isp');
     Route::get('stores/{store:slug}/manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStoreOshaForm::class)->middleware(['auth', 'has.stores'])->name('stores.manuals.osha');
     Route::get('stores/{store:slug}/audits/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Index::class)->middleware(['auth', 'has.stores'])->name('stores.audits.osha.index');
@@ -69,10 +71,10 @@ Route::group([
     Route::get('stores/{store:slug}/audits/body-shop', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Index::class)->middleware(['auth', 'has.stores'])->name('stores.audits.body-shop.index');
     Route::get('stores/{store:slug}/audits/body-shop/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Create::class)->middleware(['auth', 'has.stores'])->name('stores.audits.body-shop.create');
     Route::get('stores/{store:slug}/audits/body-shop/{bodyShopAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Show::class)->middleware(['auth', 'has.stores'])->name('stores.audits.body-shop.show');
-    Route::get('stores/{store:slug}/audits/finance', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Index::class)->middleware(['auth', 'has.stores'])->name('stores.audits.finance.index');
+    Route::get('stores/{store:slug}/audits/finance', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Index::class)->middleware(['auth', 'has.stores', 'can:create-audits'])->name('stores.audits.finance.index');
     Route::get('stores/{store:slug}/audits/finance/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Create::class)->middleware(['auth', 'has.stores'])->name('stores.audits.finance.create');
     Route::get('stores/{store:slug}/audits/finance/{financeAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Show::class)->middleware(['auth', 'has.stores'])->name('stores.audits.finance.show');
-    Route::get('stores/{store:slug}/settings', \App\Http\Livewire\Dealer\Store\SingleStoreSettings::class)->middleware(['auth', 'has.stores'])->name('stores.settings');
+    Route::get('stores/{store:slug}/settings', \App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->middleware(['auth', 'has.stores'])->name('stores.settings');
     Route::get('stores/{store:slug}/edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('stores.edit');
     Route::get('settings', function () { return view('dealer.store.settings'); })->middleware(['auth'])->name('dealer.settings');
 
@@ -117,8 +119,8 @@ Route::group([
     Route::get('audits/body-shop/create', function () { return view('dealer.audit.body-shop.create'); })->middleware('auth')->name('audit.body-shop.create');
     Route::get('audits/body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->middleware('auth')->name('audit.body-shop.show');
     Route::get('audits/finance', function () { return view('dealer.audit.finance.index'); })->middleware('auth')->name('audit.finance.index');
-    Route::get('audits/finance/create', FinanceCreateController::class)->middleware('auth')->name('audit.finance.create');
-    Route::get('audits/finance/{financeAudit:id}', FinanceController::class)->middleware('auth')->name('audit.finance.show');
+    Route::get('audits/finance/create', FinanceCreateController::class)->middleware('auth', 'can:create-audits')->name('audit.finance.create');
+    Route::get('audits/finance/{financeAudit:id}', FinanceController::class)->middleware('auth', 'can:create-audits')->name('audit.finance.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
@@ -148,7 +150,10 @@ Route::group([
         ->middleware('auth')
         ->name('logout');
 
-    Route::get('test', [CourseController::class, 'pdfTest'])->name('test');
+    Route::get('test/{financeAudit}', function (FinanceAudit $financeAudit) {
+        return view('dealer.audit.finance.download', compact('financeAudit'));
+    })->name('test');
+
     Route::get('finance-download', function () {
         return view('dealer.audit.finance.download');
     })->name('finance.download');

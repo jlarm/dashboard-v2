@@ -28,6 +28,7 @@ class Store extends Model implements HasMedia
         'postal_code',
         'phone',
         'website',
+        'logo',
         'firewall_company',
         'ip_addresses',
         'mfa',
