@@ -6,6 +6,11 @@
     </x-slot>
 
     <div class="py-12">
+        @if(!tenant('locations'))
+            <div class="m-20">
+                <livewire:dealer.general.store-logo/>
+            </div>
+        @endif
         @can('view-stores')
             @if(tenant('locations'))
                 <livewire:dealer.home.store-list/>

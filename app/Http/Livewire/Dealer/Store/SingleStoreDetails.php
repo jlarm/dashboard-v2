@@ -3,16 +3,24 @@
 namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\Store;
-use Filament\Forms;
 use Filament\Notifications\Notification;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
-class SingleStoreDetails extends Component implements Forms\Contracts\HasForms
+class SingleStoreDetails extends Component
 {
-    use Forms\Concerns\InteractsWithForms;
+    use WithFileUploads;
 
     public $store;
     public $dealer;
+    public $name;
+    public $address;
+    public $city;
+    public $state;
+    public $postal_code;
+    public $phone;
+    public $website;
+    public $logo;
 
     public function mount(Store $store): void
     {
@@ -22,44 +30,42 @@ class SingleStoreDetails extends Component implements Forms\Contracts\HasForms
             $this->dealer = Store::where('id', $this->store->id)->first();
         }
 
-        $this->form->fill([
-            'name' => $this->dealer->name,
-            'address' => $this->dealer->address,
-            'city' => $this->dealer->city,
-            'state' => $this->dealer->state,
-            'postal_code' => $this->dealer->postal_code,
-            'phone' => $this->dealer->phone,
-            'url' => $this->dealer->website,
-            'logo' => $this->dealer->logo,
+        $this->name = $this->dealer->name;
+        $this->address = $this->dealer->address;
+        $this->city = $this->dealer->city;
+        $this->state = $this->dealer->state;
+        $this->postal_code = $this->dealer->postal_code;
+        $this->phone = $this->dealer->phone;
+        $this->website = $this->dealer->website;
+        $this->logo = $this->dealer->logo;
+    }
+
+    public function updatedPhoto(): void
+    {
+        $this->validate([
+            'logo' => 'image|max:1024', // 1MB Max
         ]);
     }
 
-    protected function getFormSchema(): array
-    {
-        return [
-            Forms\Components\TextInput::make('name')->required()->label('Dealership Name'),
-            Forms\Components\TextInput::make('address')->required()->label('Address'),
-            Forms\Components\Grid::make(3)
-                ->schema([
-                    Forms\Components\TextInput::make('city')->required()->label('City'),
-                    Forms\Components\TextInput::make('state')->required()->label('State'),
-                    Forms\Components\TextInput::make('postal_code')->required()->label('Zip Code'),
-                ]),
-            Forms\Components\Grid::make(2)
-                ->schema([
-                    Forms\Components\TextInput::make('phone')->required()->label('Phone Number'),
-                    Forms\Components\TextInput::make('url')->required()->label('Website URL'),
-                ]),
-            Forms\Components\FileUpload::make('logo')
-                ->label('Logo')
-                ->image()
-                ->maxSize(1024),
-        ];
-    }
 
     public function update(): void
     {
-        $this->dealer->update($this->form->getState());
+        if($this->dealer->logo) {
+            \Storage::delete($this->dealer->logo);
+        }
+
+        $logo = $this->logo->store('logo', 'public');
+
+        $this->dealer->update([
+            'name' => $this->name,
+            'address' => $this->address,
+            'city' => $this->city,
+            'state' => $this->state,
+            'postal_code' => $this->postal_code,
+            'phone' => $this->phone,
+            'website' => $this->website,
+            'logo' => $logo,
+        ]);
 
         Notification::make()
             ->title('Settings Updated Successfully!')
