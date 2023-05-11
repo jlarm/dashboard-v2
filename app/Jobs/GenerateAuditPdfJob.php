@@ -50,7 +50,12 @@ class GenerateAuditPdfJob implements ShouldQueue
             ->showBackground()
             ->margins(10, 10, 10, 10)
             ->scale(0.75)
+            ->waitUntilNetworkIdle()
             ->save(storage_path('app/finance-audits/' . $fileName));
+
+        $updatePath = $this->financeAudit->update([
+            'pdf_path' => $fileName,
+        ]);
 
     }
 }
