@@ -3354,7 +3354,7 @@
             <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row space-x-6">
                 <a
                     class="mr-auto inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
-                    href="{{ route('dealer.audit.finance.index') }}"
+                    href="{{ !tenant('locations') ? route('dealer.audit.finance.index') : route('dealer.stores.audits.finance.index', $store) }}"
                 >
                     Exit
                 </a>
