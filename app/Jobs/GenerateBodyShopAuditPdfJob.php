@@ -29,13 +29,13 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
         }
         $fileName = $this->bodyShopAudit->audit_date->format('Ymd') . '-' . $dealerName . '-body-shop-audit.pdf';
 
-        $html = view('dealer.audit.body-shop.download', [
-            'bodyShopAudit' => $this->bodyShopAudit
-        ])->render();
-
         if(!File::isDirectory($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
+
+        $html = view('dealer.audit.body-shop.download', [
+            'bodyShopAudit' => $this->bodyShopAudit
+        ])->render();
 
         $audit = Browsershot::html($html)
             ->showBackground()

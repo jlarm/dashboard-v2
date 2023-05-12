@@ -25,7 +25,7 @@
                 <h1 class="text-3xl font-bold text-arm-blue-600">Body Shop Audit Review
                     for {{ $bodyShopAudit->store->name }}</h1>
             @else
-                <h1 class="text-3xl font-bold text-arm-blue-600">body_shop Audit Review
+                <h1 class="text-3xl font-bold text-arm-blue-600">Body Shop Audit Review
                     for {{ tenant('name') }}</h1>
             @endif
             <p class="text-arm-blue-400">{{ $bodyShopAudit->audit_date->format('F d, Y') }}</p>
