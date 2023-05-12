@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Livewire\Dealer\Audit\BodyShop;
+
+use App\Jobs\GenerateBodyShopAuditPdfJob;
+use App\Jobs\UploadBodyShopAuditToDigitalOceanJob;
+use App\Models\Dealer\Audit\BodyShopAudit;
+use Bus;
+use Livewire\Component;
+
+class Generate extends Component
+{
+    public BodyShopAudit $bodyShopAudit;
+
+    public function generatePdf(): void
+    {
+        Bus::chain([
+            new GenerateBodyShopAuditPdfJob($this->bodyShopAudit),
+            new UploadBodyShopAuditToDigitalOceanJob($this->bodyShopAudit),
+        ])->dispatch();
+    }
+    public function render()
+    {
+        return view('livewire.dealer.audit.body-shop.generate');
+    }
+}

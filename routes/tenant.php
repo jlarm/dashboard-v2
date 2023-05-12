@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\BodyShopAuditController;
+use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
 use App\Http\Controllers\Dealer\Audit\FinanceController;
 use App\Http\Controllers\Dealer\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
@@ -112,15 +113,17 @@ Route::group([
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
     Route::get('/vendors/thankyou', function () { return view('dealer.vendor.thankyou'); })->middleware('web')->name('vendors.thankyou');
 
-    Route::get('audits/osha', function () { return view('dealer.audit.osha.index'); })->middleware('auth')->name('audit.osha.index');
-    Route::get('audits/osha/create', function () { return view('dealer.audit.osha.create'); })->middleware('auth')->name('audit.osha.create');
-    Route::get('audits/osha/{oshaAudit:id}', AuditController::class)->middleware('auth')->name('audit.osha.show');
-    Route::get('audits/body-shop', function () { return view('dealer.audit.body-shop.index'); })->middleware('auth')->name('audit.body-shop.index');
-    Route::get('audits/body-shop/create', function () { return view('dealer.audit.body-shop.create'); })->middleware('auth')->name('audit.body-shop.create');
-    Route::get('audits/body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->middleware('auth')->name('audit.body-shop.show');
-    Route::get('audits/finance', function () { return view('dealer.audit.finance.index'); })->middleware('auth')->name('audit.finance.index');
-    Route::get('audits/finance/create', FinanceCreateController::class)->middleware('auth', 'can:create-audits')->name('audit.finance.create');
-    Route::get('audits/finance/{financeAudit:id}', FinanceController::class)->middleware('auth', 'can:create-audits')->name('audit.finance.show');
+    Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => 'auth'], function () {
+        Route::get('osha', function () { return view('dealer.audit.osha.index'); })->name('osha.index');
+        Route::get('osha/create', function () { return view('dealer.audit.osha.create'); })->name('osha.create');
+        Route::get('osha/{oshaAudit:id}', AuditController::class)->name('osha.show');
+        Route::get('body-shop', function () { return view('dealer.audit.body-shop.index'); })->name('body-shop.index');
+        Route::get('body-shop/create', BodyShopCreateController::class)->name('body-shop.create');
+        Route::get('body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->name('body-shop.show');
+        Route::get('finance', function () { return view('dealer.audit.finance.index'); })->name('finance.index');
+        Route::get('finance/create', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
+        Route::get('finance/{financeAudit:id}', FinanceController::class)->middleware('can:create-audits')->name('finance.show');
+    });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

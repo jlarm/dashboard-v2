@@ -72,7 +72,7 @@ class Show extends Component
     public $audit_date;
     public $finance_q1_answer;
     public $finance_q1_comment;
-    public $finance_q1_danger = false;
+    public $finance_q1_danger;
     public $finance_q1_images;
     public $finance_q2_answer;
     public $finance_q2_comment;
