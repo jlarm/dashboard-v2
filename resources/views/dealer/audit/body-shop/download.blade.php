@@ -22,13 +22,13 @@
                     alt="">
             @endif
             @if(tenant('locations'))
-                <h1 class="text-3xl font-bold text-arm-blue-600">body_shop Audit Review
+                <h1 class="text-3xl font-bold text-arm-blue-600">Body Shop Audit Review
                     for {{ $bodyShopAudit->store->name }}</h1>
             @else
                 <h1 class="text-3xl font-bold text-arm-blue-600">body_shop Audit Review
                     for {{ tenant('name') }}</h1>
             @endif
-            <p class="text-arm-blue-400">{{ $bodySopAudit->audit_date->format('F d, Y') }}</p>
+            <p class="text-arm-blue-400">{{ $bodyShopAudit->audit_date->format('F d, Y') }}</p>
         </div>
     </div>
     <ul class="divide-y divide-gray-300">
@@ -89,7 +89,7 @@
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sho_q1_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q1_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -100,14 +100,14 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q2_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sho_q2_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q2_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodySoAudit->body_shop_q2_danger)
+            @if($bodyShopAudit->body_shop_q2_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -124,7 +124,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q2_answer === 2 || $bodyShoAudit->body_sop_q2_answer === 3)
+            @if($bodyShopAudit->body_shop_q2_answer === 2 || $bodyShopAudit->body_shop_q2_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -151,7 +151,7 @@
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sop_q2_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q2_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -169,7 +169,7 @@
                     @endif
                 </p>
             </div>
-            @if($bodySoAudit->body_sop_q3_danger)
+            @if($bodyShopAudit->body_shop_q3_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -186,7 +186,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q3_answer === 2 || $bodyShoAudit->body_sop_q3_answer === 3)
+            @if($bodyShopAudit->body_shop_q3_answer === 2 || $bodyShopAudit->body_shop_q3_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -213,7 +213,7 @@
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShoAudit->getMedia('body_shop_q3_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q3_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -222,7 +222,7 @@
             <div>
                 <p class="font-bold">Medical Questionnaire issued to employees utilizing respirators?</p>
                 <p>
-                    @if($bodyShopAudit->body_sho_q4_answer === 1)
+                    @if($bodyShopAudit->body_shop_q4_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q4_answer === 2)
                         No
@@ -310,7 +310,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sop_q5_answer === 2 || $bodyShopAudit->body_sho_q5_answer === 3)
+            @if($bodyShopAudit->body_shop_q5_answer === 2 || $bodyShopAudit->body_shop_q5_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -330,10 +330,10 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sop_q5_comment)
+            @if($bodyShopAudit->body_shop_q5_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShopAudit->body_sho_q5_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q5_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
@@ -346,16 +346,16 @@
             <div>
                 <p class="font-bold">Do respirators have NIOSH certification?</p>
                 <p>
-                    @if($bodyShoAudit->body_sho_q6_answer === 1)
+                    @if($bodyShopAudit->body_shop_q6_answer === 1)
                         Yes
-                    @elseif($bodyShoAudit->body_shop_q6_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q6_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodySopAudit->body_shop_q6_danger)
+            @if($bodyShopAudit->body_shop_q6_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -372,7 +372,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q6_answer === 2 || $bodySoAudit->body_sop_q6_answer === 3)
+            @if($bodyShopAudit->body_shop_q6_answer === 2 || $bodyShopAudit->body_shop_q6_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -392,14 +392,14 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_sop_q6_comment)
+            @if($bodyShopAudit->body_shop_q6_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodySopAudit->body_shop_q6_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q6_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sop_q6_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q6_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -408,7 +408,7 @@
             <div>
                 <p class="font-bold">Is PPE equipment available and is it in good condition?</p>
                 <p>
-                    @if($bodyShoAudit->body_shop_q7_answer === 1)
+                    @if($bodyShopAudit->body_shop_q7_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q7_answer === 2)
                         No
@@ -417,7 +417,7 @@
                     @endif
                 </p>
             </div>
-            @if($bodySopAudit->body_sho_q7_danger)
+            @if($bodyShopAudit->body_shop_q7_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -434,7 +434,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q7_answer === 2 || $bodyShopAudit->body_shop_q7_answer === 3)
+            @if($bodyShopAudit->body_shop_q7_answer === 2 || $bodyShopAudit->body_shop_q7_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -457,11 +457,11 @@
             @if($bodyShopAudit->body_shop_q7_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodySopAudit->body_shop_q7_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q7_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sho_q7_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q7_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -479,7 +479,7 @@
                     @endif
                 </p>
             </div>
-            @if($bodySopAudit->body_shop_q8_danger)
+            @if($bodyShopAudit->body_shop_q8_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -496,7 +496,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q8_answer === 2 || $bodyShopAudit->body_sho_q8_answer === 3)
+            @if($bodyShopAudit->body_shop_q8_answer === 2 || $bodyShopAudit->body_shop_q8_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -534,14 +534,14 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q9_answer === 1)
                         Yes
-                    @elseif($bodySopAudit->body_shop_q9_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q9_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodyShopAudit->body_sop_q9_danger)
+            @if($bodyShopAudit->body_shop_q9_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -558,7 +558,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sop_q9_answer === 2 || $bodyShoAudit->body_shop_q9_answer === 3)
+            @if($bodyShopAudit->body_shop_q9_answer === 2 || $bodyShopAudit->body_shop_q9_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -578,7 +578,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodySopAudit->body_shop_q9_comment)
+            @if($bodyShopAudit->body_shop_q9_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q9_comment }}</p>
@@ -595,7 +595,7 @@
                 <p class="font-bold">Are all products that are in containers other than the original properly labeled
                     with product NAME, MFG, and appropriate hazard warning?</p>
                 <p>
-                    @if($bodyShoAudit->body_shop_q10_answer === 1)
+                    @if($bodyShopAudit->body_shop_q10_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q10_answer === 2)
                         No
@@ -621,7 +621,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q10_answer === 2 || $bodyShopAudit->body_so_q10_answer === 3)
+            @if($bodyShopAudit->body_shop_q10_answer === 2 || $bodyShopAudit->body_shop_q10_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -644,11 +644,11 @@
             @if($bodyShopAudit->body_shop_q10_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShopAudit->body_sop_q10_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q10_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShoAudit->getMedia('body_shop_q10_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q10_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -657,7 +657,7 @@
             <div>
                 <p class="font-bold">Has the eye wash equipment been tested, cleaned and documented weekly?</p>
                 <p>
-                    @if($bodyShoAudit->body_shop_q11_answer === 1)
+                    @if($bodyShopAudit->body_shop_q11_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q11_answer === 2)
                         No
@@ -683,7 +683,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q11_answer === 2 || $bodyShopAudit->body_sop_q11_answer === 3)
+            @if($bodyShopAudit->body_shop_q11_answer === 2 || $bodyShopAudit->body_shop_q11_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -706,7 +706,7 @@
             @if($bodyShopAudit->body_shop_q11_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShoAudit->body_shop_q11_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q11_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
@@ -745,7 +745,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_shop_q12_answer === 2 || $bodyShopAudit->body_shop_q12_answer === 3)
+            @if($bodyShopAudit->body_shop_q12_answer === 2 || $bodyShopAudit->body_shop_q12_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -781,9 +781,9 @@
             <div>
                 <p class="font-bold">How often is the water/solution changed in the eye wash equipment?</p>
                 <p>
-                    @if($bodySopAudit->body_sho_q13_answer === 1)
+                    @if($bodyShopAudit->body_shop_q13_answer === 1)
                         Yes
-                    @elseif($bodyShoAudit->body_shop_q13_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q13_answer === 2)
                         No
                     @else
                         N/A
@@ -807,7 +807,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_shop_q13_answer === 2 || $bodyShopAudit->body_shop_q13_answer === 3)
+            @if($bodyShopAudit->body_shop_q13_answer === 2 || $bodyShopAudit->body_shop_q13_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -834,7 +834,7 @@
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sop_q13_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q13_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -845,7 +845,7 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q14_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sop_q14_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q14_answer === 2)
                         No
                     @else
                         N/A
@@ -869,7 +869,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sop_q14_answer === 2 || $bodyShopAudit->body_sho_q14_answer === 3)
+            @if($bodyShopAudit->body_shop_q14_answer === 2 || $bodyShopAudit->body_shop_q14_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -907,7 +907,7 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q15_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sop_q15_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q15_answer === 2)
                         No
                     @else
                         N/A
@@ -931,7 +931,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q15_answer === 2 || $bodySoAudit->body_shop_q15_answer === 3)
+            @if($bodyShopAudit->body_shop_q15_answer === 2 || $bodyShopAudit->body_shop_q15_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -951,10 +951,10 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sop_q15_comment)
+            @if($bodyShopAudit->body_shop_q15_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShopAudit->body_so_q15_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q15_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
@@ -968,16 +968,16 @@
                 <p class="font-bold">Have the fire extinguishers had their annual inspection and are they properly
                     identified and fully charged?</p>
                 <p>
-                    @if($bodySopAudit->body_shop_q16_answer === 1)
+                    @if($bodyShopAudit->body_shop_q16_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sho_q16_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q16_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodyShoAudit->body_shop_q16_danger)
+            @if($bodyShopAudit->body_shop_q16_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -996,11 +996,13 @@
             @endif
             <div>
                 <p class="font-bold">Last Annual Inspection Date</p>
-                <p>
-                    {{ $bodyShopAudit->body_shop_q16_inspection_date->format('F d, Y') }}
-                </p>
+                @if($bodyShopAudit->body_shop_q16_inspection_date)
+                    <p>
+                        {{ $bodyShopAudit->body_shop_q16_inspection_date->format('F d, Y') }}
+                    </p>
+                @endif
             </div>
-            @if($bodyShopAudit->body_shop_q16_answer === 2 || $bodyShopAudit->body_so_q16_answer === 3)
+            @if($bodyShopAudit->body_shop_q16_answer === 2 || $bodyShopAudit->body_shop_q16_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1036,16 +1038,16 @@
             <div>
                 <p class="font-bold">Are the fire extinguishers easily accessible?</p>
                 <p>
-                    @if($bodySopAudit->body_shop_q17_answer === 1)
+                    @if($bodyShopAudit->body_shop_q17_answer === 1)
                         Yes
-                    @elseif($bodySoAudit->body_shop_q17_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q17_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodyShoAudit->body_shop_q17_danger)
+            @if($bodyShopAudit->body_shop_q17_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1085,11 +1087,11 @@
             @if($bodyShopAudit->body_shop_q17_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShopAudit->body_sho_q17_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q17_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodySoAudit->getMedia('body_shop_q17_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q17_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -1099,16 +1101,16 @@
                 <p class="font-bold">Are all hoses and cutting tips for the welder/cutting torches in good condition
                     without any cracks or breaks?</p>
                 <p>
-                    @if($bodyShopAudit->body_sho_q18_answer === 1)
+                    @if($bodyShopAudit->body_shop_q18_answer === 1)
                         Yes
-                    @elseif($bodySopAudit->body_sop_q18_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q18_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodyShopAudit->body_sop_q18_danger)
+            @if($bodyShopAudit->body_shop_q18_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1125,7 +1127,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodySopAudit->body_shop_q18_answer === 2 || $bodyShopAudit->body_shop_q18_answer === 3)
+            @if($bodyShopAudit->body_shop_q18_answer === 2 || $bodyShopAudit->body_shop_q18_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1161,7 +1163,7 @@
             <div>
                 <p class="font-bold">Are all exits properly marked?</p>
                 <p>
-                    @if($bodyShopAudit->body_sop_q19_answer === 1)
+                    @if($bodyShopAudit->body_shop_q19_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q19_answer === 2)
                         No
@@ -1187,7 +1189,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sop_q19_answer === 2 || $bodySopAudit->body_shop_q19_answer === 3)
+            @if($bodyShopAudit->body_shop_q19_answer === 2 || $bodyShopAudit->body_shop_q19_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1207,14 +1209,14 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q19_comment)
+            @if($bodyShopAudit->body_shop_q19_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q19_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sho_q19_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q19_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -1225,7 +1227,7 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q20_answer === 1)
                         Yes
-                    @elseif($bodyShoAudit->body_shop_q20_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q20_answer === 2)
                         No
                     @else
                         N/A
@@ -1249,7 +1251,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_shop_q20_answer === 2 || $bodyShopAudit->body_shop_q20_answer === 3)
+            @if($bodyShopAudit->body_shop_q20_answer === 2 || $bodyShopAudit->body_shop_q20_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1269,14 +1271,14 @@
                     </div>
                 </div>
             @endif
-            @if($bodySopAudit->body_shop_q20_comment)
+            @if($bodyShopAudit->body_shop_q20_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q20_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodySopAudit->getMedia('body_shop_q20_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q20_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -1332,14 +1334,14 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_shop_q21_comment)
+            @if($bodyShopAudit->body_shop_q21_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q21_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sho_q21_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q21_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -1350,7 +1352,7 @@
                     AN EXIT”? Are any doorways that are nonfunctioning or blocked marked by a sign stating “NOT AN
                     EXIT”?</p>
                 <p>
-                    @if($bodyShopAudit->body_sop_q22_answer === 1)
+                    @if($bodyShopAudit->body_shop_q22_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q22_answer === 2)
                         No
@@ -1396,7 +1398,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_shop_q22_comment)
+            @if($bodyShopAudit->body_shop_q22_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q22_comment }}</p>
@@ -1413,7 +1415,7 @@
                 <p class="font-bold">Are floors in good repair and free from obstruction and debris and slippery
                     conditions?</p>
                 <p>
-                    @if($bodySopAudit->body_shop_q23_answer === 1)
+                    @if($bodyShopAudit->body_shop_q23_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q23_answer === 2)
                         No
@@ -1422,7 +1424,7 @@
                     @endif
                 </p>
             </div>
-            @if($bodySopAudit->body_so_q23_danger)
+            @if($bodyShopAudit->body_shop_q23_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1439,7 +1441,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q23_answer === 2 || $bodyShopAudit->body_sop_q23_answer === 3)
+            @if($bodyShopAudit->body_shop_q23_answer === 2 || $bodyShopAudit->body_shop_q23_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1477,7 +1479,7 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q24_answer === 1)
                         Yes
-                    @elseif($bodySopAudit->body_shop_q24_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q24_answer === 2)
                         No
                     @else
                         N/A
@@ -1547,7 +1549,7 @@
                     @endif
                 </p>
             </div>
-            @if($bodyShoAudit->body_shop_q25_danger)
+            @if($bodyShopAudit->body_shop_q25_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1564,7 +1566,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q25_answer === 2 || $bodyShoAudit->body_shop_q25_answer === 3)
+            @if($bodyShopAudit->body_shop_q25_answer === 2 || $bodyShopAudit->body_shop_q25_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1591,7 +1593,7 @@
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sho_q25_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q25_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -1601,7 +1603,7 @@
                 <p class="font-bold">Are all portable gas containers UL of FM approved? Yes, dealership only uses UL
                     approved containers. Did not find any of these containers in the body shop during this audit.</p>
                 <p>
-                    @if($bodySopAudit->body_shop_q26_answer === 1)
+                    @if($bodyShopAudit->body_shop_q26_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q26_answer === 2)
                         No
@@ -1627,7 +1629,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sop_q26_answer === 2 || $bodyShoAudit->body_sho_q26_answer === 3)
+            @if($bodyShopAudit->body_shop_q26_answer === 2 || $bodyShopAudit->body_sho_q26_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1665,7 +1667,7 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q27_answer === 1)
                         Yes
-                    @elseif($bodySopAudit->body_shop_q27_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q27_answer === 2)
                         No
                     @else
                         N/A
@@ -1709,14 +1711,14 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sop_q27_comment)
+            @if($bodyShopAudit->body_shop_q27_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q27_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sho_q27_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q27_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -1726,9 +1728,9 @@
                 <p class="font-bold">Are gas cylinders stored away from sources of heat or electricity and at least 20’
                     away from combustible materials?</p>
                 <p>
-                    @if($bodySopAudit->body_shop_q28_answer === 1)
+                    @if($bodyShopAudit->body_shop_q28_answer === 1)
                         Yes
-                    @elseif($bodyShoAudit->body_shop_q28_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q28_answer === 2)
                         No
                     @else
                         N/A
@@ -1775,7 +1777,7 @@
             @if($bodyShopAudit->body_shop_q28_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShoAudit->body_shop_q28_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q28_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
@@ -1814,7 +1816,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q29_answer === 2 || $bodyShoAudit->body_shop_q29_answer === 3)
+            @if($bodyShopAudit->body_shop_q29_answer === 2 || $bodyShopAudit->body_shop_q29_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1834,10 +1836,10 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q29_comment)
+            @if($bodyShopAudit->body_shop_q29_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShoAudit->body_shop_q29_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q29_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
@@ -1859,7 +1861,7 @@
                     @endif
                 </p>
             </div>
-            @if($bodyShopAudit->body_sop_q30_danger)
+            @if($bodyShopAudit->body_shop_q30_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1876,7 +1878,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q30_answer === 2 || $bodyShoAudit->body_shop_q30_answer === 3)
+            @if($bodyShopAudit->body_shop_q30_answer === 2 || $bodyShopAudit->body_shop_q30_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1914,7 +1916,7 @@
                 <p>
                     @if($bodyShopAudit->body_sho_q31_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sop_q31_answer === 2)
+                    @elseif($bodyShopAudit->body_sho_q31_answer === 2)
                         No
                     @else
                         N/A
@@ -1938,7 +1940,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q31_answer === 2 || $bodyShopAudit->body_shop_q31_answer === 3)
+            @if($bodyShopAudit->body_shop_q31_answer === 2 || $bodyShopAudit->body_shop_q31_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -1958,7 +1960,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q31_comment)
+            @if($bodyShopAudit->body_shop_q31_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q31_comment }}</p>
@@ -2020,14 +2022,14 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_shop_q32_comment)
+            @if($bodyShopAudit->body_shop_q32_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q32_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sop_q32_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q32_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -2039,14 +2041,14 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q33_answer === 1)
                         Yes
-                    @elseif($bodySopAudit->body_shop_q33_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q33_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodySopAudit->body_shop_q33_danger)
+            @if($bodyShopAudit->body_shop_q33_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2063,7 +2065,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q33_answer === 2 || $bodyShopAudit->body_shop_q33_answer === 3)
+            @if($bodyShopAudit->body_shop_q33_answer === 2 || $bodyShopAudit->body_shop_q33_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2090,7 +2092,7 @@
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShopAudit->getMedia('body_sop_q33_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q33_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -2099,7 +2101,7 @@
             <div>
                 <p class="font-bold">Are Signs posted warning of automatic starting feature of the compressors?</p>
                 <p>
-                    @if($bodyShopAudit->body_sho_q34_answer === 1)
+                    @if($bodyShopAudit->body_shop_q34_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q34_answer === 2)
                         No
@@ -2161,7 +2163,7 @@
             <div>
                 <p class="font-bold">Is there clear access of at least 36” to all electrical panels?</p>
                 <p>
-                    @if($bodyShopAudit->body_sho_q35_answer === 1)
+                    @if($bodyShopAudit->body_shop_q35_answer === 1)
                         Yes
                     @elseif($bodyShopAudit->body_shop_q35_answer === 2)
                         No
@@ -2170,7 +2172,7 @@
                     @endif
                 </p>
             </div>
-            @if($bodyShopAudit->body_sho_q35_danger)
+            @if($bodyShopAudit->body_shop_q35_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2207,10 +2209,10 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_sho_q35_comment)
+            @if($bodyShopAudit->body_shop_q35_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShoAudit->body_shop_q35_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q35_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
@@ -2223,9 +2225,9 @@
             <div>
                 <p class="font-bold">Are all the breakers properly labeled?</p>
                 <p>
-                    @if($bodyShoAudit->body_shop_q36_answer === 1)
+                    @if($bodyShopAudit->body_shop_q36_answer === 1)
                         Yes
-                    @elseif($bodyShoAudit->body_shop_q36_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q36_answer === 2)
                         No
                     @else
                         N/A
@@ -2272,7 +2274,7 @@
             @if($bodyShopAudit->body_shop_q36_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShoAudit->body_shop_q36_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q36_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
@@ -2287,14 +2289,14 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q37_answer === 1)
                         Yes
-                    @elseif($bodyShoAudit->body_shop_q37_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q37_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodySopAudit->body_shop_q37_danger)
+            @if($bodyShopAudit->body_shop_q37_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2311,7 +2313,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q37_answer === 2 || $bodyShopAudit->body_sho_q37_answer === 3)
+            @if($bodyShopAudit->body_shop_q37_answer === 2 || $bodyShopAudit->body_shop_q37_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2349,7 +2351,7 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q38_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sop_q38_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q38_answer === 2)
                         No
                     @else
                         N/A
@@ -2396,7 +2398,7 @@
             @if($bodyShopAudit->body_shop_q38_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShopAudit->body_sop_q38_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q38_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
@@ -2411,7 +2413,7 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q39_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sop_q39_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q39_answer === 2)
                         No
                     @else
                         N/A
@@ -2435,7 +2437,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_sho_q39_answer === 2 || $bodyShopAudit->body_shop_q39_answer === 3)
+            @if($bodyShopAudit->body_shop_q39_answer === 2 || $bodyShopAudit->body_shop_q39_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2455,7 +2457,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q39_comment)
+            @if($bodyShopAudit->body_shop_q39_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q39_comment }}</p>
@@ -2471,9 +2473,9 @@
             <div>
                 <p class="font-bold">Any electrical issues:</p>
                 <p>
-                    @if($bodyShopAudit->body_sho_q40_answer === 1)
+                    @if($bodyShopAudit->body_shop_q40_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sho_q40_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q40_answer === 2)
                         No
                     @else
                         N/A
@@ -2524,7 +2526,7 @@
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShoAudit->getMedia('body_sop_q40_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q40_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -2594,7 +2596,7 @@
         <li class="py-10 space-y-5 page-break">
             <div>
                 <p class="font-bold">Hybrid Vehicle Safety: Are batteries removed before work is started? Safety Gloves
-                    –“Class O heavy- duty gloves” rated to withstand 1,000 volts.</p>
+                    –“Class O heavy-duty gloves” rated to withstand 1,000 volts.</p>
                 <p>
                     @if($bodyShopAudit->body_shop_q42_answer === 1)
                         Yes
@@ -2605,7 +2607,7 @@
                     @endif
                 </p>
             </div>
-            @if($bodySopAudit->body_shop_q42_danger)
+            @if($bodyShopAudit->body_shop_q42_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2649,7 +2651,7 @@
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodySopAudit->getMedia('body_shop_q42_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q42_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -2658,16 +2660,16 @@
             <div>
                 <p class="font-bold">Safety glasses not being worn when working on hybrid vehicle?</p>
                 <p>
-                    @if($bodyShoAudit->body_shop_q43_answer === 1)
+                    @if($bodyShopAudit->body_shop_q43_answer === 1)
                         Yes
-                    @elseif($bodySopAudit->body_so_q43_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q43_answer === 2)
                         No
                     @else
                         N/A
                     @endif
                 </p>
             </div>
-            @if($bodyShoAudit->body_shop_q43_danger)
+            @if($bodyShopAudit->body_shop_q43_danger)
                 <div class="rounded-md bg-red-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2707,11 +2709,11 @@
             @if($bodyShopAudit->body_shop_q43_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShoAudit->body_sop_q43_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q43_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodyShoAudit->getMedia('body_shop_q43_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q43_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>
@@ -2786,7 +2788,7 @@
                 <p>
                     @if($bodyShopAudit->body_shop_q45_answer === 1)
                         Yes
-                    @elseif($bodyShopAudit->body_sho_q45_answer === 2)
+                    @elseif($bodyShopAudit->body_shop_q45_answer === 2)
                         No
                     @else
                         N/A
@@ -2810,7 +2812,7 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShoAudit->body_shop_q45_answer === 2 || $bodyShopAudit->body_sop_q45_answer === 3)
+            @if($bodyShopAudit->body_shop_q45_answer === 2 || $bodyShopAudit->body_shop_q45_answer === 3)
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -2830,14 +2832,14 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_sho_q45_comment)
+            @if($bodyShopAudit->body_shop_q45_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
-                    <p>{{ $bodyShopAudit->body_sho_q45_comment }}</p>
+                    <p>{{ $bodyShopAudit->body_shop_q45_comment }}</p>
                 </div>
             @endif
             <div class="grid grid-cols-2 gap-10">
-                @foreach($bodySopAudit->getMedia('body_shop_q45_images') as $image)
+                @foreach($bodyShopAudit->getMedia('body_shop_q45_images') as $image)
                     <img src="{{ $image->getUrl() }}" alt="">
                 @endforeach
             </div>

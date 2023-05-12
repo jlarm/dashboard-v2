@@ -12,7 +12,7 @@ class Download extends Component
 
     public function download()
     {
-        return Storage::disk('do-audits')->download(tenant('id') . '/audits/body-shop/' . '/body-shop-audit.pdf');
+        return Storage::disk('do-audits')->download(tenant('id') . '/body-shop/' . $this->bodyShopAudit->pdf_path);
     }
     public function render()
     {
