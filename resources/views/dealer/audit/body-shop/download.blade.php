@@ -1349,8 +1349,7 @@
         <li class="py-10 space-y-5 page-break">
             <div>
                 <p class="font-bold">Are any doorways that are nonfunctioning or blocked marked by a sign stating “NOT
-                    AN EXIT”? Are any doorways that are nonfunctioning or blocked marked by a sign stating “NOT AN
-                    EXIT”?</p>
+                    AN EXIT”?</p>
                 <p>
                     @if($bodyShopAudit->body_shop_q22_answer === 1)
                         Yes
