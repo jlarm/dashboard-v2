@@ -17,10 +17,11 @@ class Index extends Component
     protected $listeners = [
         'refreshAudits' => '$refresh',
     ];
+
     public function render()
     {
         return view('livewire.dealer.audit.osha.index', [
-            'oshaAudits' => OshaAudit::latest()->select('id', 'draft', 'created_at')->get()
+            'oshaAudits' => OshaAudit::latest()->select('id', 'draft', 'audit_date')->get()
         ]);
     }
 }
