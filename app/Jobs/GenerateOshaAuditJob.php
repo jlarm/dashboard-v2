@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Models\Dealer\Audit\OshaAudit;
+use File;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Spatie\Browsershot\Browsershot;
+
+class GenerateOshaAuditJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public function __construct(private OshaAudit $oshaAudit)
+    {
+    }
+
+    public function handle(): void
+    {
+        $path = storage_path('app/osha');
+        if(tenant('locations')){
+            $dealerName = str_replace(' ', '-', $this->oshaAudit->store->name);
+        } else {
+            $dealerName = str_replace(' ', '-', tenant('name'));
+        }
+        $fileName = $this->oshaAudit->audit_date->format('Ymd') . '-'. $this->oshaAudit->created_at->format('his') . '-' . $dealerName . '-osha-audit.pdf';
+
+        if(!File::isDirectory($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
+
+        $html = view('dealer.audit.osha.download', [
+            'oshaAudit' => $this->oshaAudit
+        ])->render();
+
+        $audit = Browsershot::html($html)
+            ->showBackground()
+            ->margins(10, 10, 10, 10)
+            ->scale(0.75)
+            ->waitUntilNetworkIdle()
+            ->save(storage_path('app/' . $fileName));
+
+        $updatePath = $this->oshaAudit->update([
+            'pdf_path' => $fileName,
+        ]);
+    }
+}

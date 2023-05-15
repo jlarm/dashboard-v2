@@ -1292,9 +1292,8 @@
         <!-- 18 Are all the Fire Extinguishers easily accessible? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">18. DOT certification - Is the person responsible
-                    for
-                    Hazardous material shipping current on his/her?</label>
+                <label class="text-base font-semibold text-gray-900">18. Are all the Fire Extinguishers easily
+                    accessible?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2041,8 +2040,7 @@
         <!-- 28 Are all exits properly marked? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">28. Does the forklift have legible labels?
-                    i.e., ANSI, serial #, maximum lift capacity</label>
+                <label class="text-base font-semibold text-gray-900">28. Are all exits properly marked?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4749,46 +4747,54 @@
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
                 <label class="text-base font-semibold text-gray-900">64. When was the last inspection date?</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q64_answer"
-                                value="1"
-                                name="osha_q64_answer"
-                                id="osha_q64_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q64_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q64_answer"
-                                value="2"
-                                name="osha_q64_answer"
-                                id="osha_q64_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q64_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q64_answer"
-                                value="3"
-                                name="osha_q64_answer"
-                                id="osha_q64_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q64_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
+                <input
+                    wire:model="osha_q64_date"
+                    type="date"
+                    name="osha_q64_date"
+                    id="osha_q64_date"
+                    pattern=""
+                    class="mt-4 block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
+                />
+                {{--                <fieldset class="mt-4">--}}
+                {{--                    <div class="flex items-center space-x-5">--}}
+                {{--                        <div class="flex items-center">--}}
+                {{--                            <input--}}
+                {{--                                wire:model="osha_q64_answer"--}}
+                {{--                                value="1"--}}
+                {{--                                name="osha_q64_answer"--}}
+                {{--                                id="osha_q64_answer_1"--}}
+                {{--                                type="radio"--}}
+                {{--                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"--}}
+                {{--                            >--}}
+                {{--                            <label for="osha_q64_answer_1"--}}
+                {{--                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="flex items-center">--}}
+                {{--                            <input--}}
+                {{--                                wire:model="osha_q64_answer"--}}
+                {{--                                value="2"--}}
+                {{--                                name="osha_q64_answer"--}}
+                {{--                                id="osha_q64_answer_2"--}}
+                {{--                                type="radio"--}}
+                {{--                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"--}}
+                {{--                            >--}}
+                {{--                            <label for="osha_q64_answer_2"--}}
+                {{--                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="flex items-center">--}}
+                {{--                            <input--}}
+                {{--                                wire:model="osha_q64_answer"--}}
+                {{--                                value="3"--}}
+                {{--                                name="osha_q64_answer"--}}
+                {{--                                id="osha_q64_answer_3"--}}
+                {{--                                type="radio"--}}
+                {{--                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"--}}
+                {{--                            >--}}
+                {{--                            <label for="osha_q64_answer_3"--}}
+                {{--                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </fieldset>--}}
             </div>
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
@@ -4810,14 +4816,14 @@
                 <textarea wire:model.lazy="osha_q64_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                rules="mimes:png,jpeg"
-                name="osha_q64_images"
-                :model="$oshaAudit"
-                collection="osha_q64_images"
-            />
+            {{--            <x-media-library-collection--}}
+            {{--                multiple--}}
+            {{--                max-items="2"--}}
+            {{--                rules="mimes:png,jpeg"--}}
+            {{--                name="osha_q64_images"--}}
+            {{--                :model="$oshaAudit"--}}
+            {{--                collection="osha_q64_images"--}}
+            {{--            />--}}
         </div>
         <!-- 65 Fluorescent Tubes not being properly stored -->
         <div class="bg-gray-50 p-3 space-y-7">
@@ -5221,6 +5227,7 @@
             </div>
         </div>
     </div>
+    {{--    <-- Loading Modal -->--}}
     <div wire:loading.delay class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity"></div>
         <div class="fixed inset-0 z-10 overflow-y-auto">

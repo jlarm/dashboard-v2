@@ -19,6 +19,7 @@ class OshaAudit extends Model implements HasMedia
     protected $casts = [
         'draft' => 'boolean',
         'audit_date' => 'date:Y-m-d',
+        'osha_q64_date' => 'date:Y-m-d',
     ];
 
     public function store(): BelongsTo

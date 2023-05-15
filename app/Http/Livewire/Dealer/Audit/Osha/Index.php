@@ -21,7 +21,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.audit.osha.index', [
-            'oshaAudits' => OshaAudit::latest()->select('id', 'draft', 'audit_date')->get()
+            'oshaAudits' => OshaAudit::latest()->select('id', 'draft', 'audit_date', 'pdf_path')->get()
         ]);
     }
 }

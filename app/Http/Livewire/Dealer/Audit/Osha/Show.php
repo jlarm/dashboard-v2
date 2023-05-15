@@ -344,6 +344,7 @@ class Show extends Component
     public $osha_q64_comment;
     public $osha_q64_danger;
     public $osha_q64_images;
+    public $osha_q4_date;
     public $osha_q65_answer;
     public $osha_q65_comment;
     public $osha_q65_danger;
@@ -624,6 +625,7 @@ class Show extends Component
         'osha_q64_comment' => 'nullable',
         'osha_q64_danger' => 'nullable',
         'osha_q64_images' => 'nullable',
+        'osha_q4_date' => 'sometimes',
         'osha_q65_answer' => 'nullable',
         'osha_q65_comment' => 'nullable',
         'osha_q65_danger' => 'nullable',
@@ -842,6 +844,7 @@ class Show extends Component
         $this->osha_q64_answer = $this->oshaAudit->osha_q64_answer;
         $this->osha_q64_comment = $this->oshaAudit->osha_q64_comment;
         $this->osha_q64_danger = $this->oshaAudit->osha_q64_danger;
+        $this->osha_q64_date = $this->oshaAudit->osha_q64_date;
         $this->osha_q65_answer = $this->oshaAudit->osha_q65_answer;
         $this->osha_q65_comment = $this->oshaAudit->osha_q65_comment;
         $this->osha_q65_danger = $this->oshaAudit->osha_q65_danger;
@@ -1058,6 +1061,7 @@ class Show extends Component
             'osha_q64_answer' => $this->osha_q64_answer,
             'osha_q64_comment' => $this->osha_q64_comment,
             'osha_q64_danger' => $this->osha_q64_danger,
+            'osha_q64_date' => $this->osha_q64_date,
             'osha_q65_answer' => $this->osha_q65_answer,
             'osha_q65_comment' => $this->osha_q65_comment,
             'osha_q65_danger' => $this->osha_q65_danger,

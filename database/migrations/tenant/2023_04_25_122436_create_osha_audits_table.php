@@ -211,6 +211,7 @@ $table->boolean('osha_q16_danger')->nullable();
             $table->boolean('osha_q63_danger')->nullable();
             $table->tinyInteger('osha_q64_answer')->nullable();
             $table->mediumText('osha_q64_comment')->nullable();
+            $table->date('osha_q64_date')->nullable();
             $table->boolean('osha_q64_danger')->nullable();
             $table->tinyInteger('osha_q65_answer')->nullable();
             $table->mediumText('osha_q65_comment')->nullable();
