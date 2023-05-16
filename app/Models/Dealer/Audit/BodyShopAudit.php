@@ -19,6 +19,7 @@ class BodyShopAudit extends Model implements HasMedia
     protected $casts = [
         'draft' => 'boolean',
         'audit_date' => 'date:Y-m-d',
+        'body_shop_q16_inspection_date' => 'date:Y-m-d',
     ];
 
     public function store(): BelongsTo

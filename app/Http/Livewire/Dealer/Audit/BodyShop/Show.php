@@ -268,7 +268,7 @@ class Show extends Component
         'body_shop_q15_images' => 'nullable',
         'body_shop_q16_answer' => 'nullable',
         'body_shop_q16_comment' => 'nullable',
-        'body_shop_q16_inspection_date' => 'nullable',
+        'body_shop_q16_inspection_date' => 'sometimes|nullable',
         'body_shop_q16_danger' => 'nullable',
         'body_shop_q16_images' => 'nullable',
         'body_shop_q17_answer' => 'nullable',
