@@ -117,20 +117,23 @@
                             </div>
 
                             <div>
-                                <x-input-label class="sr-only" for="locations" :value="__('Multiple Locations')"/>
-                                <div class="relative flex items-start">
-                                    <div class="flex h-5 items-center">
-                                        <input type="hidden" name="locations" value="0"/>
-                                        <input wire:model.defer="locations" id="locations" aria-describedby="locations"
-                                               name="locations"
-                                               type="checkbox"
-                                               value="1"
-                                               class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-500">
+                                <label for="locations">
+                                    <x-input-label class="sr-only" for="locations" :value="__('Multiple Locations')"/>
+                                    <div class="relative flex items-start">
+                                        <div class="flex h-5 items-center">
+                                            <input type="hidden" name="locations" value="0"/>
+                                            <input wire:model.defer="locations" id="locations"
+                                                   aria-describedby="locations"
+                                                   name="locations"
+                                                   type="checkbox"
+                                                   value="1"
+                                                   class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-500">
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <span id="comments-description">This dealership has multiple stores.</span>
+                                        </div>
                                     </div>
-                                    <div class="ml-3 text-sm">
-                                        <span id="comments-description">This dealership has multiple stores.</span>
-                                    </div>
-                                </div>
+                                </label>
                             </div>
 
                             <!-- Password -->
