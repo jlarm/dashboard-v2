@@ -76,7 +76,9 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>Filters shall be checked and changed
+                                    as needed based on volume of spray
+                                    booth activity. Filter log will be kept up-to-date on filter change outs.</p>
                             </div>
                         </div>
                     </div>
@@ -138,7 +140,14 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>HCS 1910.1200 App E
+                                    Each employee who may be
+                                    “exposed” to hazardous chemicals
+                                    when working must be provided
+                                    information and trained prior to initial
+                                    assignment to work with a hazardous
+                                    chemical, and whenever the hazard
+                                    changes.</p>
                             </div>
                         </div>
                     </div>
@@ -200,7 +209,15 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>1910.134
+                                    Fit testing must be performed initially
+                                    (before the employee is required to
+                                    wear the respirator in the workplace)
+                                    and must be repeated at least
+                                    annually. Fit testing must also be
+                                    conducted whenever respirator design
+                                    or facial changes occur that could
+                                    affect the proper fit of the respirator.</p>
                             </div>
                         </div>
                     </div>
@@ -262,7 +279,17 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.134 €(1)
+                                    Medical evaluation
+                                    (1) General. The employer shall
+                                    provide a medical evaluation to
+                                    determine the employee’s ability to
+                                    use a respirator, before the employee
+                                    is fit tested or required to use the
+                                    respirator in the workplace. The
+                                    employer may discontinue an employee’s medical evaluations when
+                                    the employee is no longer required to
+                                    use a respirator.</p>
                             </div>
                         </div>
                     </div>
@@ -324,7 +351,15 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.134(h)(2)(i)
+                                    All respirators shall be stored to
+                                    protect them from damage,
+                                    contamination, dust, sunlight,
+                                    extreme temperatures, excessive
+                                    moisture, and damaging chemicals,
+                                    and they shall be packed or stored to
+                                    prevent deformation of the facepiece
+                                    and exhalation valve.</p>
                             </div>
                         </div>
                     </div>
@@ -386,7 +421,15 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.134(i)
+                                    Identification of filters, cartridges, and
+                                    canisters. The employer shall ensure
+                                    that all filters, cartridges and
+                                    canisters used in the workplace are
+                                    labeled and color coded with the
+                                    NIOSH approval label and that the
+                                    label is not removed and remains
+                                    legible.</p>
                             </div>
                         </div>
                     </div>
@@ -448,7 +491,22 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.132(a)
+                                    Application. Protective equipment,
+                                    including personnel protective
+                                    equipment for eyes, face, head, and
+                                    extremities, protective clothing,
+                                    respiratory devices, and protective
+                                    shields and barriers, shall be provided,
+                                    used, and maintained in a sanitary
+                                    and reliable condition wherever it is necessary by reason of hazards of
+                                    processes or environment, chemical
+                                    hazards, radiological hazards, or
+                                    mechanical irritants encountered in a
+                                    manner capable of causing injury or
+                                    impairment in the function of any part
+                                    of the body through absorption,
+                                    inhalation or physical contact.</p>
                             </div>
                         </div>
                     </div>
@@ -510,7 +568,14 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.107(e)(i)
+                                    Flammable and combustible liquids —
+                                    storage and handling.
+                                    (1) Conformance. The storage of
+                                    flammable or combustible liquids in
+                                    connection with spraying operations
+                                    shall conform to the requirements of
+                                    §1910.106, where applicable.</p>
                             </div>
                         </div>
                     </div>
@@ -572,7 +637,11 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.106(a)(32)
+                                    Storage: Flammable or combustible
+                                    liquids shall be stored in a tank or in a
+                                    container that complies with
+                                    §1910.106(d)(2)(i) of this section</p>
                             </div>
                         </div>
                     </div>
@@ -635,7 +704,18 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>HCS – 29 CFR 1910.1200(f)(9) –
+                                    Transferring Chemicals in containers
+                                    The employer shall ensure that labels
+                                    or other forms of warning are legible,
+                                    in English, and prominently displayed
+                                    on the container, or readily available
+                                    in the work area throughout each
+                                    work shift. Employers having
+                                    employees who speak other
+                                    languages may add the information in
+                                    their language to the material presented, as long as the information
+                                    is presented in English as well.</p>
                             </div>
                         </div>
                     </div>
@@ -697,7 +777,18 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.151(c), ANSI Z358.1-
+                                    2009
+                                    ANSI standard states that plumbed
+                                    flushing equipment, “shall be
+                                    activated weekly for a period long
+                                    enough to verify operation and ensure
+                                    that flushing fluid is available”.
+                                    Furthermore, also requires Portable
+                                    and Self Contained equipment “be
+                                    visually checked to determine if
+                                    flushing fluid needs to be changed or
+                                    supplemented”.</p>
                             </div>
                         </div>
                     </div>
@@ -759,7 +850,32 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>The ANSI standard states that all
+                                    flushing equipment must be located in
+                                    areas that are accessible within 10
+                                    seconds (roughly 55 feet).
+                                     The Safety Showers and or
+                                    Eyewash Stations must be
+                                    located on the same level as
+                                    the hazard and the path of
+                                    travel shall be free from
+                                    obstructions
+                                     2014 update to Z358.1 added
+                                    two important criteria. The
+                                    first is that the requirement
+                                    for tepid water is now defined
+                                    as having a temperature of
+                                    between 60 and 100 degrees
+                                    Fahrenheit (15 to 37 degrees Celsius). The second change
+                                    addresses simultaneous
+                                    operation for combination
+                                    units. This means that if you
+                                    have a drench shower
+                                    combined with an eyewash
+                                    station, both devices must
+                                    provide adequate flows and
+                                    be fully operable at the same
+                                    time.</p>
                             </div>
                         </div>
                     </div>
@@ -821,7 +937,12 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>Dealership is to follow manufacturing
+                                    guidelines for water exchange, i.e.
+                                    change every 90 days with new
+                                    sanitizer packs also added.
+                                    Initial/date sign off tag on side of
+                                    unit.</p>
                             </div>
                         </div>
                     </div>
@@ -869,26 +990,26 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q14_answer === 2 || $bodyShopAudit->body_shop_q14_answer === 3)
-                <div class="rounded-md bg-yellow-50 p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                 aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                            <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            {{--            @if($bodyShopAudit->body_shop_q14_answer === 2 || $bodyShopAudit->body_shop_q14_answer === 3)--}}
+            {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
+            {{--                    <div class="flex">--}}
+            {{--                        <div class="flex-shrink-0">--}}
+            {{--                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
+            {{--                                 aria-hidden="true">--}}
+            {{--                                <path fill-rule="evenodd"--}}
+            {{--                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
+            {{--                                      clip-rule="evenodd"/>--}}
+            {{--                            </svg>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="ml-3">--}}
+            {{--                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
+            {{--                            <div class="mt-2 text-sm text-yellow-700">--}}
+            {{--                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            @endif--}}
             @if($bodyShopAudit->body_shop_q14_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
@@ -931,26 +1052,26 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q15_answer === 2 || $bodyShopAudit->body_shop_q15_answer === 3)
-                <div class="rounded-md bg-yellow-50 p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                 aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                            <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            {{--            @if($bodyShopAudit->body_shop_q15_answer === 2 || $bodyShopAudit->body_shop_q15_answer === 3)--}}
+            {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
+            {{--                    <div class="flex">--}}
+            {{--                        <div class="flex-shrink-0">--}}
+            {{--                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
+            {{--                                 aria-hidden="true">--}}
+            {{--                                <path fill-rule="evenodd"--}}
+            {{--                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
+            {{--                                      clip-rule="evenodd"/>--}}
+            {{--                            </svg>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="ml-3">--}}
+            {{--                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
+            {{--                            <div class="mt-2 text-sm text-yellow-700">--}}
+            {{--                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            @endif--}}
             @if($bodyShopAudit->body_shop_q15_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
@@ -1016,7 +1137,12 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.157(d)(2) - The
+                                    employer shall distribute portable fire
+                                    extinguishers for use by employees on
+                                    Class A fires so that the travel
+                                    distance for employees to any
+                                    extinguisher is 75 ft</p>
                             </div>
                         </div>
                     </div>
@@ -1078,7 +1204,13 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.157(c)(1) - Fire
+                                    extinguishers and shall mount, locate and identify them so that they are
+                                    readily accessible to employees
+                                    without subjecting the employees to
+                                    possible injury. Mounting; Height is
+                                    between 36” to 60”
+                                    Accessibility is 20’” in front and sides</p>
                             </div>
                         </div>
                     </div>
@@ -1141,7 +1273,9 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.252 / ANSI Z49.1
+                                    Safety in Welding, Cutting, and Allied
+                                    Processes.</p>
                             </div>
                         </div>
                     </div>
@@ -1203,7 +1337,15 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>NFPA 101, Section 7.10.1.2
+                                    NFPA 101 Life Safety Code 3.3.136
+                                    Means of Egress.
+                                    A continuous and unobstructed way
+                                    of travel from any point in a building
+                                    or structure to a public way consisting
+                                    of three separate and distinct parts:
+                                    (1) the exit access, (2) the exit, and (3)
+                                    the exit discharge.</p>
                             </div>
                         </div>
                     </div>
@@ -1265,7 +1407,10 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>Ensure that exit routes are
+                                    unobstructed such as by materials,
+                                    equipment, locked doors, or dead-end
+                                    corridors.</p>
                             </div>
                         </div>
                     </div>
@@ -1328,7 +1473,13 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>General Duty Clause 29 U.S.C. §
+                                    654, 5(a)1: - Each employer shall
+                                    furnish to each of his employees’
+                                    employment and a place of
+                                    employment which are free from recognized hazards that are causing
+                                    or are likely to cause death or serious
+                                    physical harm to his employees.&quot;</p>
                             </div>
                         </div>
                     </div>
@@ -1391,7 +1542,20 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>OSHA also requires that &quot;each exit
+                                    must be clearly visible and marked by
+                                    a sign reading &quot;EXIT&quot;. 1910.37(b)
+                                    (2).
+                                    &quot;Each exit route door must be free of
+                                    decorations or signs that obscure the
+                                    visibility of the exit route door.&quot;
+                                    1910.37(b) (3) - &quot;Each doorway or
+                                    passage along an exit access that
+                                    could be mistaken for an exit must be
+                                    marked &quot;NOT AN EXIT&quot; or similar
+                                    designation, or be identified by a sign
+                                    indicating its actual use (e.g., closet).&quot;
+                                    1910.37(b) (5).</p>
                             </div>
                         </div>
                     </div>
@@ -1454,7 +1618,8 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>General Duty Clause 29 U.S.C. §
+                                    654, 5(a)1:</p>
                             </div>
                         </div>
                     </div>
@@ -1516,7 +1681,25 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.23 - Every floor hole
+                                    into which persons can accidentally
+                                    walk must be guarded by either:
+                                    • a standard railing with standard
+                                    toe board on all exposed
+                                    sides, or
+                                    • a floor hole cover of standard
+                                    strength and construction.
+                                    (While the cover is not in place, the floor hole must be
+                                    constantly attended by
+                                    someone or must be
+                                    protected by a removable
+                                    standard railing.)
+                                    A cover that leaves no openings more
+                                    than 1 inch wide must protect every
+                                    floor hole into which persons cannot
+                                    accidentally walk (because fixed
+                                    machinery, equipment or walls). The
+                                    cover must be securely held in place</p>
                             </div>
                         </div>
                     </div>
@@ -1579,7 +1762,14 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.242 - Never use frayed,
+                                    damaged or deteriorated hoses.
+                                    Always store hoses properly and away
+                                    from heat sources or direct sunlight. A
+                                    hose failure can cause serious injury.
+                                    Hose Reels can decrease your chances
+                                    of injury, as well as help hoses last
+                                    longer.</p>
                             </div>
                         </div>
                     </div>
@@ -1642,7 +1832,11 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1926.152(a)(1) - Only
+                                    approved containers and portable
+                                    tanks shall be used for storage and
+                                    handling of flammable and
+                                    combustible liquids</p>
                             </div>
                         </div>
                     </div>
@@ -1704,7 +1898,12 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.101
+                                    29 CFR 1910.6 reference
+                                    49 CFR parts 171-179 &amp; 14 CFR
+                                    part 103
+                                    CGAP C-6-1968 &amp; C-8-1962
+                                    29 CFR 1926.350(a)(7); securing compressed gas cylinders.</p>
                             </div>
                         </div>
                     </div>
@@ -1767,7 +1966,11 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.101
+                                    29 CFR 1910.6 reference
+                                    49 CFR parts 171-179 &amp; 14 CFR
+                                    part 103
+                                    CGAP C-6-1968 &amp; C-8-1962</p>
                             </div>
                         </div>
                     </div>
@@ -1829,7 +2032,27 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.106
+                                    NFPA 30.4.5.3.4
+                                    Static Electricity.
+                                    All equipment such as tanks,
+                                    machinery, and piping shall be
+                                    designed and operated to prevent
+                                    electrostatic ignitions. All metallic
+                                    equipment where an ignitable mixture
+                                    could be present shall be bonded or
+                                    grounded. The bond or ground or
+                                    both shall be physically applied or
+                                    shall be inherently present by the
+                                    nature of the installation. Any
+                                    electrically isolated section of metallic
+                                    piping or equipment shall be bonded
+                                    or grounded to prevent hazardous
+                                    accumulation of static electricity. All
+                                    nonmetallic equipment and piping
+                                    where an ignitable mixture could be
+                                    present shall be given special
+                                    consideration.</p>
                             </div>
                         </div>
                     </div>
@@ -1891,7 +2114,11 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.106
+                                    &quot;No Smoking&quot; signs shall be
+                                    conspicuously posted where hazard
+                                    from flammable liquid vapors is
+                                    normally present.</p>
                             </div>
                         </div>
                     </div>
@@ -1939,26 +2166,26 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q31_answer === 2 || $bodyShopAudit->body_shop_q31_answer === 3)
-                <div class="rounded-md bg-yellow-50 p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                 aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                            <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            {{--            @if($bodyShopAudit->body_shop_q31_answer === 2 || $bodyShopAudit->body_shop_q31_answer === 3)--}}
+            {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
+            {{--                    <div class="flex">--}}
+            {{--                        <div class="flex-shrink-0">--}}
+            {{--                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
+            {{--                                 aria-hidden="true">--}}
+            {{--                                <path fill-rule="evenodd"--}}
+            {{--                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
+            {{--                                      clip-rule="evenodd"/>--}}
+            {{--                            </svg>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="ml-3">--}}
+            {{--                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
+            {{--                            <div class="mt-2 text-sm text-yellow-700">--}}
+            {{--                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            @endif--}}
             @if($bodyShopAudit->body_shop_q31_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
@@ -2015,7 +2242,16 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910 133 (a) (1) - (a)
+                                    General requirements. (1) The
+                                    employer shall ensure that each
+                                    affected employee uses appropriate
+                                    eye or face protection when exposed
+                                    to eye or face hazards from flying
+                                    particles, molten metal, liquid
+                                    chemicals, acids or caustic liquids,
+                                    chemical gases or vapors, or
+                                    potentially injurious light radiation.</p>
                             </div>
                         </div>
                     </div>
@@ -2078,7 +2314,18 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.215(a)(4) - Work rests.
+                                    (Bottom Plate) On offhand grinding
+                                    machines, Work rests shall be kept
+                                    adjusted closely to the wheel with a
+                                    maximum opening of one-eighth inch
+                                    29 CFR 1910.215(b)(9) - exposure
+                                    adjustment. (Top Cover over Wheel)
+                                    Safety guards. The distance between
+                                    the wheel periphery and the
+                                    adjustable tongue or the end of the
+                                    peripheral member at the top shall
+                                    never exceed one-fourth inch</p>
                             </div>
                         </div>
                     </div>
@@ -2140,7 +2387,8 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>Industry Standards Apply
+                                    Safety</p>
                             </div>
                         </div>
                     </div>
@@ -2202,7 +2450,13 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>1910.303(g)(1) &amp;
+                                    1910.303(g)(1)(i)(B)
+                                    29 CFR 1921.303 (g)
+                                    NFPA 70 110-26
+                                    Regulations requires a minimum of three feet of clearance for all
+                                    electrical equipment serving 600 volts
+                                    or less</p>
                             </div>
                         </div>
                     </div>
@@ -2264,7 +2518,15 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.303
+                                    Suitability for installation and use in
+                                    conformity with the provisions of this
+                                    subpart;
+                                    Note to paragraph (b) (1) (i) of this
+                                    section: Suitability of equipment for
+                                    an identified purpose may be
+                                    evidenced by listing or labeling for
+                                    that identified purpose.</p>
                             </div>
                         </div>
                     </div>
@@ -2326,7 +2588,8 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.334
+                                    Electrical Use of Equipment</p>
                             </div>
                         </div>
                     </div>
@@ -2388,7 +2651,15 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.334
+                                    Electrical cords shall be visually
+                                    inspected before use on any shift for
+                                    external defects (such as loose parts,
+                                    deformed and missing pins, or
+                                    damage to outer jacket or insulation)
+                                    and for evidence of possible internal
+                                    damage (such as pinched or crushed
+                                    outer jacket).</p>
                             </div>
                         </div>
                     </div>
@@ -2436,26 +2707,26 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q39_answer === 2 || $bodyShopAudit->body_shop_q39_answer === 3)
-                <div class="rounded-md bg-yellow-50 p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                 aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                            <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            {{--            @if($bodyShopAudit->body_shop_q39_answer === 2 || $bodyShopAudit->body_shop_q39_answer === 3)--}}
+            {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
+            {{--                    <div class="flex">--}}
+            {{--                        <div class="flex-shrink-0">--}}
+            {{--                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
+            {{--                                 aria-hidden="true">--}}
+            {{--                                <path fill-rule="evenodd"--}}
+            {{--                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
+            {{--                                      clip-rule="evenodd"/>--}}
+            {{--                            </svg>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="ml-3">--}}
+            {{--                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
+            {{--                            <div class="mt-2 text-sm text-yellow-700">--}}
+            {{--                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            @endif--}}
             @if($bodyShopAudit->body_shop_q39_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
@@ -2512,7 +2783,7 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>Safety</p>
                             </div>
                         </div>
                     </div>
@@ -2574,7 +2845,7 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>Safety</p>
                             </div>
                         </div>
                     </div>
@@ -2637,7 +2908,13 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>Safety
+                                    Safety Equipment:
+                                    Gloves
+                                    Goggles
+                                    Key Box
+                                    Steering wheel Cover
+                                    Sign for Vehicle</p>
                             </div>
                         </div>
                     </div>
@@ -2685,26 +2962,26 @@
                     </div>
                 </div>
             @endif
-            @if($bodyShopAudit->body_shop_q43_answer === 2 || $bodyShopAudit->body_shop_q43_answer === 3)
-                <div class="rounded-md bg-yellow-50 p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                 aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                            <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            {{--            @if($bodyShopAudit->body_shop_q43_answer === 2 || $bodyShopAudit->body_shop_q43_answer === 3)--}}
+            {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
+            {{--                    <div class="flex">--}}
+            {{--                        <div class="flex-shrink-0">--}}
+            {{--                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
+            {{--                                 aria-hidden="true">--}}
+            {{--                                <path fill-rule="evenodd"--}}
+            {{--                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
+            {{--                                      clip-rule="evenodd"/>--}}
+            {{--                            </svg>--}}
+            {{--                        </div>--}}
+            {{--                        <div class="ml-3">--}}
+            {{--                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
+            {{--                            <div class="mt-2 text-sm text-yellow-700">--}}
+            {{--                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            @endif--}}
             @if($bodyShopAudit->body_shop_q43_comment)
                 <div>
                     <p class="font-bold">Comments:</p>
@@ -2763,7 +3040,17 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.151
+                                    First aid kits
+                                    First aid supplies are required to be
+                                    readily available under paragraph §
+                                    1910.151(b).
+                                    An example of the minimal contents
+                                    of a generic first aid kit is described in
+                                    American National Standard
+                                    (ANSI) Z308.1-1998. Appendix A
+                                    &quot;Minimum Requirements for
+                                    Workplace First-aid Kits.&quot;</p>
                             </div>
                         </div>
                     </div>
@@ -2825,7 +3112,12 @@
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                             <div class="mt-2 text-sm text-yellow-700">
-                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                <p>29 CFR 1910.303(g). For equipment operating at 600 volts, nominal or less to
+                                    ground, electrical panels must have a minimum of three feet of clearance in front of
+                                    the panel
+                                    and a minimum clearance width of 2.5 feet or the width of the equipment, whichever
+                                    is
+                                    greater.</p>
                             </div>
                         </div>
                     </div>
