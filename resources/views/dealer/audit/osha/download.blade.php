@@ -4309,7 +4309,11 @@
         <li class="py-10 space-y-5 page-break">
             <div>
                 <p class="font-bold">When was the last inspection date?</p>
-                <p>{{ $oshaAudit->osha_q64_date->format('F d, Y') }}</p>
+                @if($oshaAudit->osha_q64_date)
+                    <p>{{ $oshaAudit->osha_q64_date->format('F d, Y') }}</p>
+                @else
+                    <p>N/A</p>
+                @endif
                 {{--                <p>--}}
                 {{--                    @if($oshaAudit->osha_q64_answer === 1)--}}
                 {{--                        Yes--}}

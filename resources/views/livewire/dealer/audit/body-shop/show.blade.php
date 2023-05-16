@@ -1,6 +1,6 @@
-<form>
+<form class="md:px-4">
     <div class="space-y-5">
-        <div class="ml-3 sm:ml-0">
+        <div class="ml-3 md:ml-0">
             <label for="audit_date" class="block text-sm font-medium leading-6 text-gray-900">Audit Date</label>
             <div class="mt-2">
                 <input
@@ -3417,7 +3417,7 @@
         <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row space-x-6">
             <a
                 class="mr-auto inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
-                href="{{ !tenant('locations') ? route('dealer.audit.body-shop.index') : route('dealer.stores.audits.body-shop.index', $store) }}"
+                href="{{ !tenant('locations') ? route('dealer.audit.body-shop.index', $store) : route('dealer.stores.audits.body-shop.index', $store) }}"
             >
                 Exit
             </a>

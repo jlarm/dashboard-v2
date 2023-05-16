@@ -9,10 +9,15 @@ use Livewire\Component;
 class Index extends Component
 {
     public Store $store;
+
+    protected $listeners = [
+        'refreshAudits' => '$refresh',
+    ];
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.body-shop.index', [
-            'audits' => BodyShopAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc')->get()
+            'bodyShopAudits' => BodyShopAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc')->get()
         ])->layout('components.dealer-app');
     }
 }

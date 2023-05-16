@@ -1,6 +1,6 @@
 <tr>
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-        {{ $financeAudit->created_at->format('M d, Y') }}
+        {{ $financeAudit->audit_date->format('M d, Y') }}
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         @if($financeAudit->draft)
@@ -13,23 +13,29 @@
     </td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8 space-x-5">
         <div class="flex items-center space-x-5">
-            @if(!$financeAudit->draft && !$financeAudit->pdf_path)
-                <livewire:dealer.audit.finance.generate :financeAudit="$financeAudit"/>
-            @endif
+            @can('create-audits')
+                @if(!$financeAudit->draft && !$financeAudit->pdf_path)
+                    <livewire:dealer.audit.finance.generate :financeAudit="$financeAudit"/>
+                @endif
+            @endcan
             @if($financeAudit->pdf_path)
                 <livewire:dealer.audit.finance.download :financeAudit="$financeAudit"/>
             @endif
-            <a
-                href="{{ route('dealer.stores.audits.finance.show', [$store, $financeAudit]) }}"
-                class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-                Edit
-            </a>
-            <button
-                class="text-red-500 text-sm"
-                wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['financeAudit' => $financeAudit->id]))"
-            >
-                Delete
-            </button>
+            @can('create-audits')
+                @if(!$financeAudit->pdf_path)
+                    <a
+                        href="{{ route('dealer.stores.audits.finance.show', [$store, $financeAudit]) }}"
+                        class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                        Edit
+                    </a>
+                @endif
+                <button
+                    class="text-red-500 text-sm"
+                    wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['financeAudit' => $financeAudit->id]))"
+                >
+                    Delete
+                </button>
+            @endcan
         </div>
 </tr>

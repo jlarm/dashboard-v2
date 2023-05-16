@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\AuditController;
 use App\Http\Controllers\BodyShopAuditController;
 use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
 use App\Http\Controllers\Dealer\Audit\FinanceController;
@@ -24,6 +23,7 @@ use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Controllers\FinanceCreateController;
+use App\Http\Controllers\OshaAuditController;
 use App\Models\Dealer\Audit\FinanceAudit;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -117,7 +117,7 @@ Route::group([
     Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => 'auth'], function () {
         Route::get('osha', function () { return view('dealer.audit.osha.index'); })->name('osha.index');
         Route::get('osha/create', OshaCreateController::class)->name('osha.create');
-        Route::get('osha/{oshaAudit:id}', AuditController::class)->name('osha.show');
+        Route::get('osha/{oshaAudit:id}', OshaAuditController::class)->name('osha.show');
         Route::get('body-shop', function () { return view('dealer.audit.body-shop.index'); })->name('body-shop.index');
         Route::get('body-shop/create', BodyShopCreateController::class)->name('body-shop.create');
         Route::get('body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->name('body-shop.show');

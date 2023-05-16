@@ -8,8 +8,8 @@ use Livewire\Component;
 
 class IndexItem extends Component
 {
+    public BodyShopAudit $bodyShopAudit;
     public Store $store;
-    public BodyShopAudit $audit;
 
     public function render()
     {

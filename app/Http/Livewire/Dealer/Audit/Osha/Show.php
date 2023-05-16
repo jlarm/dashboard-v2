@@ -12,6 +12,7 @@ use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 class Show extends Component
 {
     use WithMedia;
+    
     public Store $store;
     public OshaAudit $oshaAudit;
 

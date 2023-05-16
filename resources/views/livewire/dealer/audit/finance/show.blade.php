@@ -1,6 +1,6 @@
-<form>
+<form class="md:px-4">
     <div class="space-y-5">
-        <div class="ml-3 sm:ml-0">
+        <div class="ml-3 md:ml-0">
             <label for="audit_date" class="block text-sm font-medium leading-6 text-gray-900">Audit Date</label>
             <div class="mt-2">
                 <input

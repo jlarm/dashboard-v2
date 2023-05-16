@@ -8,8 +8,9 @@ use Livewire\Component;
 
 class IndexItem extends Component
 {
-    public Store $store;
     public FinanceAudit $financeAudit;
+    public Store $store;
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.finance.index-item')->layout('components.dealer-app');

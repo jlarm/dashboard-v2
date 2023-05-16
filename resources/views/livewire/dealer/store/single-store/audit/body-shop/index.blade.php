@@ -32,9 +32,9 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                        @forelse($audits as $audit)
+                        @forelse($bodyShopAudits as $bodyShopAudit)
                             <livewire:dealer.store.single-store.audit.body-shop.index-item :store="$store"
-                                                                                           :audit="$audit"/>
+                                                                                           :bodyShopAudit="$bodyShopAudit"/>
                         @empty
                             <tr>
                                 <td colspan="7"

@@ -8,8 +8,6 @@
     </div>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto px-0 sm:px-3">
-            <livewire:dealer.audit.finance.show :financeAudit="$financeAudit"/>
-        </div>
+        <livewire:dealer.audit.finance.show :financeAudit="$financeAudit"/>
     </div>
 </x-dealer-app>
