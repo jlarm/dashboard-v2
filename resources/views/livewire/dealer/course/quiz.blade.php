@@ -11,7 +11,8 @@
                     <div class="space-y-2">
                         @foreach($c['answers'][0] as $key => $value)
                             <label class="flex justify-start items-center space-x-3">
-                                <input name="question[{{ $i }}]" type="radio" value="{{ $key }}"/>
+                                <input name="question[{{ $i }}]" type="radio"
+                                       value="{{ $key }}" {{ $key === 'a' ? 'required' : '' }}/>
                                 <span class="ml-2">{{ $value }}</span>
                             </label>
                         @endforeach
