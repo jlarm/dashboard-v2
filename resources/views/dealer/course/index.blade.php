@@ -9,4 +9,7 @@
             <livewire:dealer.course.index/>
         </div>
     </div>
+    {{--    <div class="py-12 px-4">--}}
+    {{--        <livewire:dealer.course.roles/>--}}
+    {{--    </div>--}}
 </x-dealer-app>

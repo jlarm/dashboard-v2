@@ -36,4 +36,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Department::class);
     }
+
+    public function getDepartments()
+    {
+        return $this->departments->pluck('id')->toArray();
+    }
 }
