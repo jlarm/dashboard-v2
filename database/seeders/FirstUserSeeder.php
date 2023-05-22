@@ -21,12 +21,22 @@ class FirstUserSeeder extends Seeder
             'name' => 'Terry Dortch',
             'slug' => 'terry-dortch',
             'email' => 'tdortch@autorisknow.com',
-            'phone' => '1234567899',
+            'phone' => '8156704651',
             'email_verified_at' => now(),
             'password' => bcrypt('AutorisknowTD!'),
         ]);
 
+        $mike = User::create([
+            'name' => 'Mike Backer',
+            'slug' => 'mike-backer',
+            'email' => 'mbacker@autorisknow.com',
+            'phone' => '8043823021',
+            'email_verified_at' => now(),
+            'password' => bcrypt('AutorisknowMB!'),
+        ]);
+
         $user->assignRole('super-admin');
         $terry->assignRole('super-admin');
+        $mike->assignRole('super-admin');
     }
 }
