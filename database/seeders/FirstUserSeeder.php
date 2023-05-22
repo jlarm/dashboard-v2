@@ -17,6 +17,16 @@ class FirstUserSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
+        $terry = User::create([
+            'name' => 'Terry Dortch',
+            'slug' => 'terry-dortch',
+            'email' => 'tdortch@autorisknow.com',
+            'phone' => '1234567899',
+            'email_verified_at' => now(),
+            'password' => bcrypt('AutorisknowTD!'),
+        ]);
+
         $user->assignRole('super-admin');
+        $terry->assignRole('super-admin');
     }
 }
