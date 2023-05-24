@@ -10,9 +10,7 @@ class Index extends Component
 {
     public Store $store;
 
-    protected $listeners = [
-        'refreshAudits' => '$refresh',
-    ];
+    protected $listeners = ['refreshStoreBodyShopAudits' => '$refresh'];
 
     public function render()
     {

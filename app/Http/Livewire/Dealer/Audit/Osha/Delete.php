@@ -20,6 +20,7 @@ class Delete extends Modal
         $this->oshaAudit->delete();
 
         $this->emitTo('dealer.audit.osha.index', 'refreshAudits');
+        $this->emitTo('dealer.store.single-store.audit.osha.index', 'refreshAudits');
 
         $this->close();
 

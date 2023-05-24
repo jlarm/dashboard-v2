@@ -52,6 +52,9 @@
                             Shop</a>
                         <a href="{{ route('dealer.stores.audits.finance.index', $store) }}"
                            class="block rounded-lg px-3 py-2 text-sm leading-6 text-arm-blue-500 hover:bg-arm-blue-50">Finance</a>
+                        <a href="{{ route('dealer.stores.audits.individual.index', $store) }}"
+                           class="block rounded-lg px-3 py-2 text-sm leading-6 text-arm-blue-500 hover:bg-arm-blue-50">F&I
+                            Individual</a>
                     </div>
                 </li>
 

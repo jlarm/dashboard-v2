@@ -20,6 +20,7 @@ class Delete extends Modal
         $this->individualAudit->delete();
 
         $this->emitTo('dealer.audit.individual.index', 'refreshIndividualAudits');
+        $this->emitTo('dealer.store.single-store.audit.individual.index', 'refreshIndividualAudits');
 
         $this->close();
 

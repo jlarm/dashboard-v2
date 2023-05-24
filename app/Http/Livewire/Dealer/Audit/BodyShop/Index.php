@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    protected $listeners = ['refreshAudits' => '$refresh'];
+    protected $listeners = ['refreshBodyShopAudits' => '$refresh'];
     public function render()
     {
         return view('livewire.dealer.audit.body-shop.index', [

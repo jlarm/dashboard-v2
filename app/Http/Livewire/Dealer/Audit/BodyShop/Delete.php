@@ -19,7 +19,8 @@ class Delete extends Modal
     {
         $this->bodyShopAudit->delete();
 
-        $this->emitTo('dealer.audit.body-shop.index', 'refreshAudits');
+        $this->emitTo('dealer.audit.body-shop.index', 'refreshBodyShopAudits');
+        $this->emitTo('dealer.store.single-store.audit.body-shop.index', 'refreshStoreBodyShopAudits');
 
         $this->close();
 

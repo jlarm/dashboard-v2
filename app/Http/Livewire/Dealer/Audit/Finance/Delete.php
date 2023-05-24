@@ -20,7 +20,7 @@ class Delete extends Modal
         $this->financeAudit->delete();
 
         if(tenant('locations')) {
-            $this->emitTo('dealer.store.single-store.audit.finance.index', 'refreshFinanceAudits');
+            $this->emitTo('dealer.store.single-store.audit.finance.index', 'refreshAudits');
         } else {
             $this->emitTo('dealer.audit.finance.index', 'refreshFinanceAudits');
         }
