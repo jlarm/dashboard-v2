@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Dealer\Employee;
 
+use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
+use App\Models\Dealer\Store;
 use App\Models\User;
+use DB;
 use Livewire\Component;
 
 class IndexItem extends Component
@@ -13,13 +16,15 @@ class IndexItem extends Component
     public $completed;
 
     public $totalCourses;
+    public $departmentCourseCount;
+    public $unassignedCourseCount;
 
     public function mount()
     {
         $this->user = User::find($this->user->id);
 
         // Get all passed courses within the last year for this user
-        $this->completed = \DB::table('course_results')
+        $this->completed = DB::table('course_results')
             ->where('user_id', $this->user->id)
             ->where('created_at', '>=', now()->subYear())
             ->latest()
@@ -33,8 +38,17 @@ class IndexItem extends Component
 
         // Get all courses for this user's department
         if ($this->user->department_id) {
-            $this->totalCourses = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
+            $this->departmentCourseCount = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
         }
+
+        $this->unassignedCourseCount = Course::whereDoesntHave('departments')->count();
+
+        $this->totalCourses = $this->departmentCourseCount + $this->unassignedCourseCount;
+
+        if (Store::first()->pluck('state') != 'California') {
+            $this->totalCourses = $this->totalCourses - 1;
+        }
+
     }
 
     public function render()

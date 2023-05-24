@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
+use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\User;
 use Livewire\Component;
@@ -13,6 +14,8 @@ class IndexItem extends Component
     public $completed;
 
     public $totalCourses;
+    public $departmentCourseCount;
+    public $unassignedCourseCount;
 
     public function mount()
     {
@@ -33,7 +36,15 @@ class IndexItem extends Component
 
         // Get all courses for this user's department
         if ($this->user->department_id) {
-            $this->totalCourses = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
+            $this->departmentCourseCount = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
+        }
+
+        $this->unassignedCourseCount = Course::whereDoesntHave('departments')->count();
+
+        $this->totalCourses = $this->departmentCourseCount + $this->unassignedCourseCount;
+
+        if ($this->user->stores[0]->state != 'California') {
+            $this->totalCourses = $this->totalCourses - 1;
         }
     }
     public function render()
