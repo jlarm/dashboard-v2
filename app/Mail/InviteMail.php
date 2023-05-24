@@ -22,7 +22,7 @@ class InviteMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('no-reply@'.tenant('domain')),
+            from: new Address('no-reply@armp.app'),
             subject: 'Registration for '.tenant('name'),
         );
     }
