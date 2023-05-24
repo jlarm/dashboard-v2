@@ -4,6 +4,7 @@ namespace App\Models\Dealer;
 
 use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -104,5 +105,10 @@ class Store extends Model implements HasMedia
     public function financeAudits(): HasMany
     {
         return $this->hasMany(FinanceAudit::class);
+    }
+
+    public function individualAudits(): HasMany
+    {
+        return $this->hasMany(IndividualAudit::class);
     }
 }

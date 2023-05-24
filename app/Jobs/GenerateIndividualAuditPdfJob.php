@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Audit\IndividualAudit;
 use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,26 +11,26 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Browsershot\Browsershot;
 
-class GenerateAuditPdfJob implements ShouldQueue
+class GenerateIndividualAuditPdfJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected FinanceAudit $financeAudit)
+    public function __construct(protected IndividualAudit $individualAudit)
     {
     }
 
     public function handle(): void
     {
-        $path = storage_path('app/finance-audits');
+        $path = storage_path('app/individual-audits');
         if(tenant('locations')){
-            $dealerName = str_replace(' ', '-', $this->financeAudit->store->name);
+            $dealerName = str_replace(' ', '-', $this->individualAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
         }
-        $fileName = $this->financeAudit->audit_date->format('Ymd') . '-' . $dealerName . '-finance-audit.pdf';
+        $fileName = $this->individualAudit->audit_date->format('Ymd') . '-' . $dealerName . '-individual-audit.pdf';
 
-        $html = view('dealer.audit.finance.download', [
-            'financeAudit' => $this->financeAudit
+        $html = view('dealer.audit.individual.download', [
+            'individualAudit' => $this->individualAudit
         ])->render();
 
         if(!File::isDirectory($path)) {
@@ -42,11 +42,10 @@ class GenerateAuditPdfJob implements ShouldQueue
             ->margins(10, 10, 10, 10)
             ->scale(0.75)
             ->waitUntilNetworkIdle()
-            ->save(storage_path('app/finance-audits/' . $fileName));
+            ->save(storage_path('app/individual-audits/' . $fileName));
 
-        $updatePath = $this->financeAudit->update([
+        $updatePath = $this->individualAudit->update([
             'pdf_path' => $fileName,
         ]);
-
     }
 }

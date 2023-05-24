@@ -11,6 +11,10 @@ class IndexItem extends Component
     public FinanceAudit $financeAudit;
     public Store $store;
 
+    protected $listeners = [
+        'refreshFinanceAudits' => '$refresh',
+    ];
+
     public function render()
     {
         return view('livewire.dealer.audit.finance.index-item');

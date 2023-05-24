@@ -11,7 +11,7 @@ class Index extends Component
     public Store $store;
 
     protected $listeners = [
-        'refreshAudits' => '$refresh',
+        'refreshFinanceAudits' => '$refresh',
     ];
 
     public function render()

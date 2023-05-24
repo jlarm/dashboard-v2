@@ -156,6 +156,11 @@
                                           <a href="{{ route('dealer.audit.finance.index') }}"
                                              class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Finance</a>
                                         </li>
+                                        <li>
+                                          <!-- 44px -->
+                                          <a href="{{ route('dealer.audit.individual.index') }}"
+                                             class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">F&I Individual</a>
+                                        </li>
                                       </ul>
                                 </span>
                                 @endcan
@@ -362,19 +367,20 @@
                                     </button>
                                     <ul class="block w-full mt-1 px-2" id="sub-menu-1" x-show="open" x-collapse>
                                         <li>
-                                          <!-- 44px -->
                                           <a href="{{ route('dealer.audit.osha.index') }}"
                                              class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
                                         </li>
                                         <li>
-                                          <!-- 44px -->
                                           <a href="{{ route('dealer.audit.body-shop.index') }}"
                                              class="{{ (request()->segment(2) == 'body-shop') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Body Shop</a>
                                         </li>
                                         <li>
-                                          <!-- 44px -->
                                           <a href="{{ route('dealer.audit.finance.index') }}"
                                              class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Finance</a>
+                                        </li>
+                                        <li>
+                                          <a href="{{ route('dealer.audit.individual.index') }}"
+                                             class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">F&I Individual</a>
                                         </li>
                                       </ul>
                                 </span>

@@ -11,6 +11,7 @@ use Livewire\Component;
 class Generate extends Component
 {
     public FinanceAudit $financeAudit;
+
     public function generatePdf(): void
     {
         Bus::chain([
