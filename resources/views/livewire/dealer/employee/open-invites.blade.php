@@ -28,37 +28,39 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
                         @forelse($invites as $invite)
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-                                {{ $invite->name }}
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {{ $invite->email }}
-                            </td>
-                            @if(tenant('locations'))
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{ $invite->store->name ?? '' }}
+                            <tr>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                                    {{ $invite->name }}
                                 </td>
-                            @endif
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {{ $invite->created_at->format('F d, Y') }}
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {{ $invite->user->name }}
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                @if($invite->user_id === auth()->id())
-                                    {{--                                        <button class="text-gray-500"--}}
-                                    {{--                                                wire:click="$emit('modal.open', 'dealer.employee.resend-invite',  @js(['invite' => $invite->id]))">--}}
-                                    {{--                                            Resend--}}
-                                    {{--                                        </button>--}}
-                                    <button
-                                        class="text-red-500"
-                                        wire:click="$emit('modal.open', 'dealer.employee.delete-invite',  @js(['invite' => $invite->id]))"
-                                    >
-                                        Delete
-                                    </button>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    {{ $invite->email }}
+                                </td>
+                                @if(tenant('locations'))
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{ $invite->store->name ?? '' }}
+                                    </td>
                                 @endif
-                            </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    {{ $invite->created_at->format('F d, Y') }}
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    {{ $invite->user->name }}
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    @if($invite->user_id === auth()->id())
+                                        {{--                                        <button class="text-gray-500"--}}
+                                        {{--                                                wire:click="$emit('modal.open', 'dealer.employee.resend-invite',  @js(['invite' => $invite->id]))">--}}
+                                        {{--                                            Resend--}}
+                                        {{--                                        </button>--}}
+                                        <button
+                                            class="text-red-500"
+                                            wire:click="$emit('modal.open', 'dealer.employee.delete-invite',  @js(['invite' => $invite->id]))"
+                                        >
+                                            Delete
+                                        </button>
+                                    @endif
+                                </td>
+                            </tr>
                         @empty
                             <tr>
                                 <td colspan="7"
