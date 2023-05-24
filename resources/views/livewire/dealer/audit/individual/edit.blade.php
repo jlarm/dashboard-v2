@@ -2775,7 +2775,7 @@
             multiple
             max-items="6"
             rules="mimes:png,jpeg"
-            name="individual_audit_images"
+            name="audit_images"
             :model="$individualAudit"
             collection="individual_audit_images"
         />
