@@ -2781,9 +2781,9 @@
         />
         {{--        Sticky Save Bar--}}
         <div class="w-full sticky bottom-0 bg-arm-blue-200 p-5">
-            <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row space-x-6">
+            <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row">
                 <a
-                    class="mr-auto inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                    class="sm:mr-auto ml-5 sm:ml-0 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
                     href="{{ !tenant('locations') ? route('dealer.audit.individual.index') : route('dealer.stores.audits.individual.index', $store) }}"
                 >
                     Exit
@@ -2804,7 +2804,7 @@
                     </svg>
                     Update
                 </button>
-                <div class="relative flex items-start">
+                <div class="relative flex items-start mr-auto sm:mr-0 sm:ml-5">
                     <div class="flex h-6 items-center">
                         <input wire:model="draft" id="draft" aria-describedby="draft-description" name="draft"
                                type="checkbox"
