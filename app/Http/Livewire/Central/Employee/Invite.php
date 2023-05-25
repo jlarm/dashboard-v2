@@ -38,7 +38,7 @@ class Invite extends Modal
     public function render()
     {
         return view('livewire.central.employee.invite', [
-            'roles' => Role::all(),
+            'roles' => Role::where('name', 'Consultant')->orWhere('name', 'Admin')->get()
         ]);
     }
 }

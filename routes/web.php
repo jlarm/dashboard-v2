@@ -13,10 +13,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
 
-    Route::get('roles', function () { return view('central.role.index'); })->name('role.index');
-    Route::get('roles/create', function () { return view('central.role.create'); })->name('role.create');
-    Route::get('roles/{role:id}', EditController::class)->name('role.edit');
-
     Route::get('/dealerships', function () { return view('central.dealership.index'); })->name('dealerships.index');
     Route::get('dealerships/create', function () { return view('central.dealership.create'); })->name('dealerships.create');
     Route::post('dealerships/create', CreateController::class)->name('dealerships.store');
@@ -36,6 +32,9 @@ Route::group(['middleware' => ['can:delete-users', 'auth', 'verified']], functio
     Route::get('employees/invite', [EmployeeController::class, 'create'])->name('invite.create');
     Route::post('employees/invite', [EmployeeController::class, 'send'])->name('invite.send');
     Route::get('employees/{user}', [EmployeeController::class, 'show'])->name('employees.view');
+    Route::get('roles', function () { return view('central.role.index'); })->name('role.index');
+    Route::get('roles/create', function () { return view('central.role.create'); })->name('role.create');
+    Route::get('roles/{role:id}', EditController::class)->name('role.edit');
 });
 
 require __DIR__.'/auth.php';

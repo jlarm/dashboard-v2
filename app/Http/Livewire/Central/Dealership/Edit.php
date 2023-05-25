@@ -28,9 +28,23 @@ class Edit extends SlideOver
 
     public $url;
 
-    public $locations;
+    public $locations = false;
 
     public $user;
+
+    protected $rules = [
+        'name' => 'required',
+        'address' => 'required',
+        'city' => 'required',
+        'state' => 'required',
+        'zip_code' => 'required',
+        'phone' => 'required',
+        'fax' => 'nullable',
+        'domain' => 'required',
+        'url' => 'required',
+        'locations' => 'required|boolean',
+        'user' => 'required',
+    ];
 
     public function mount(Dealership $dealership)
     {
@@ -47,20 +61,6 @@ class Edit extends SlideOver
         $this->locations = $dealership->locations;
         $this->user = $dealership->user_id;
     }
-
-    protected $rules = [
-        'name' => 'required',
-        'address' => 'required',
-        'city' => 'required',
-        'state' => 'required',
-        'zip_code' => 'required',
-        'phone' => 'required',
-        'fax' => 'nullable',
-        'domain' => 'required',
-        'url' => 'required',
-        'locations' => 'required|boolean',
-        'user' => 'required',
-    ];
 
     public function updateDealership()
     {

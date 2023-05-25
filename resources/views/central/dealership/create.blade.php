@@ -8,7 +8,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form action="{{ route('dealerships.store') }}" method="POST" class="space-y-5">
@@ -126,7 +126,6 @@
                                                    aria-describedby="locations"
                                                    name="locations"
                                                    type="checkbox"
-                                                   value="1"
                                                    class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-500">
                                         </div>
                                         <div class="ml-3 text-sm">
