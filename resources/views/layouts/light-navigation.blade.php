@@ -3,7 +3,7 @@
     <div
         x-show="open"
         x-ref="dialog"
-        class="relative z-40 md:hidden" role="dialog" aria-modal="true">
+        class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
 
         <div
             x-show="open"
@@ -236,7 +236,7 @@
     </div>
 
     <!-- Static sidebar for desktop -->
-    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+    <div class="hidden lg:fixed md:inset-y-0 lg:flex md:w-64 md:flex-col">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <nav class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5 pb-4">
             <div class="flex flex-shrink-0 items-center px-4">

@@ -24,7 +24,7 @@
     <!-- Static sidebar for desktop -->
     @include('layouts.light-navigation')
 
-    <div class="flex flex-col md:pl-64">
+    <div class="flex flex-col lg:pl-64">
 
         @include('layouts.top-bar')
 
