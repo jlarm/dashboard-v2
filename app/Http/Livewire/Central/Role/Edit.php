@@ -16,7 +16,6 @@ class Edit extends Component
     {
         $this->name = $this->role->name;
         $this->assignedPermissions = $this->role->permissions->pluck('name')->toArray();
-        ray($this->assignedPermissions);
     }
 
     public function update()
@@ -24,7 +23,7 @@ class Edit extends Component
         $this->role->name = $this->name;
         $this->role->save();
         $this->role->syncPermissions($this->assignedPermissions);
-        
+
         return redirect()->route('role.index');
     }
     public function render()

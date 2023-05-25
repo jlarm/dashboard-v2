@@ -19,16 +19,18 @@ class Invite extends Modal
 
     public $department;
 
-    public $role;
+    public $roles = [];
 
     public $currentStore = null;
 
     public $currentStoreId;
+    public $qiCount;
 
-    public function mount(Store $currentStore)
+    public function mount(Store $currentStore): void
     {
         $this->currentStore = $currentStore;
         $this->currentStoreId = $currentStore->id;
+        $this->qiCount = Role::find(5)->users()->count();
     }
 
     protected $rules = [
@@ -36,7 +38,7 @@ class Invite extends Modal
         'email' => ['required', 'email', 'unique:users', 'max:255'],
         'dealers' => ['nullable', 'array'],
         'department' => ['nullable', 'integer'],
-        'role' => ['required', 'string', 'max:255'],
+        'roles' => ['min:1', 'array'],
     ];
 
     public function sendInvite()
@@ -49,7 +51,7 @@ class Invite extends Modal
                 'email' => $validated['email'],
                 'stores' => [$this->currentStoreId],
                 'department_id' => auth()->user()->department_id,
-                'roles' => $validated['role'],
+                'roles' => $validated['roles'],
                 'user_id' => auth()->user()->id,
                 'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
             ]);
@@ -59,7 +61,7 @@ class Invite extends Modal
                 'email' => $validated['email'],
                 'stores' => $validated['dealers'],
                 'department_id' => $validated['department'],
-                'roles' => $validated['role'],
+                'roles' => $validated['roles'],
                 'user_id' => auth()->user()->id,
                 'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
             ]);
@@ -81,9 +83,9 @@ class Invite extends Modal
         return view('livewire.dealer.employee.invite', [
             'stores' => Store::orderBy('name')->get(),
             'departments' => Department::orderBy('name')->get(),
-            'roles' => Role::where('name', '!=', 'super-admin')
-                ->where('name', '!=', 'Admin')
-                ->where('name', '!=', 'Consultant')
+            'allRoles' => Role::whereNot('name', 'super-admin')
+                ->whereNot('name', 'Admin')
+                ->whereNot('name', 'Consultant')
                 ->orderBy('name')
                 ->get(),
         ]);

@@ -15,11 +15,11 @@ class Edit extends SlideOver
 
     public $name;
 
-    public $role;
-
     public $stores = [];
 
     public $department;
+    public $assignedRoles;
+    public $qiCount;
 
     public function mount(User $user)
     {
@@ -27,15 +27,17 @@ class Edit extends SlideOver
         $this->name = $user->name;
         $this->stores = $user->stores()->get();
         $this->department = $user->department_id;
-        $this->role = $user->getRoleNames()->first();
+        $this->assignedRoles = $user->getRoleNames()->toArray();
+        $this->qiCount = Role::find(5)->users()->count();
     }
 
     public function updateUser()
     {
         $this->user->update([
             'department_id' => $this->department,
-            'role' => $this->user->syncRoles($this->role),
         ]);
+
+        $this->user->syncRoles($this->assignedRoles);
 
         $this->emitTo('dealer.employee.details', 'refreshEmployeeDetails');
         $this->emitTo('dealer.employee.course-results', 'refreshEmployeeDetails');
@@ -53,7 +55,11 @@ class Edit extends SlideOver
         return view('livewire.dealer.employee.edit', [
             'stores' => Store::all(),
             'departments' => Department::all(),
-            'roles' => Role::all(),
+            'allRoles' => Role::whereNot('name', 'super-admin')
+                ->whereNot('name', 'Admin')
+                ->whereNot('name', 'Consultant')
+                ->orderBy('name')
+                ->get(),
         ]);
     }
 }

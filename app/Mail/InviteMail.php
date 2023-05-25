@@ -33,7 +33,6 @@ class InviteMail extends Mailable
             markdown: 'emails.invite',
             with: [
                 'name' => $this->invite->name,
-                'role' => $this->invite->roles,
                 'company' => tenant('name'),
                 'link' => 'https://'.tenant('domain').'/invite_registration/'.$this->invite->invitation_token,
             ]

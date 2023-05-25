@@ -22,6 +22,7 @@ class Invite extends Model
 
     protected $casts = [
         'stores' => 'array',
+        'roles' => 'array',
     ];
 
     protected function serializeDate(DateTimeInterface $date): string
