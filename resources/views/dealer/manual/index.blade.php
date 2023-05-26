@@ -6,8 +6,8 @@
     </div>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 px-3 sm:px-0">
+        <div class="mx-auto sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 px-3 sm:px-0">
                 <livewire:dealer.manual.isp-card/>
                 <livewire:dealer.manual.osha-card/>
             </div>
