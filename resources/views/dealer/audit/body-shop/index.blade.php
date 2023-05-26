@@ -18,7 +18,12 @@
 
     <div class="py-12">
         <div class="mx-auto">
-            <livewire:dealer.audit.body-shop.index/>
+            @can('create-audits')
+                <livewire:dealer.audit.body-shop.index/>
+            @endcan
+            @if(auth()->user()->cannot('create-audits'))
+                <livewire:dealer.audit.body-shop.generated-report-index/>
+            @endif
         </div>
     </div>
 </x-dealer-app>
