@@ -22,6 +22,18 @@ class SingleStoreDetails extends Component
     public $website;
     public $logo;
 
+
+    protected $rules = [
+        'name' => 'required',
+        'address' => 'required',
+        'city' => 'required',
+        'state' => 'required',
+        'postal_code' => 'required',
+        'phone' => 'required',
+        'website' => 'required',
+        'logo' => 'nullable|image|max:1024', // 1MB Max
+    ];
+
     public function mount(Store $store): void
     {
         if ($store->id === null) {
@@ -43,7 +55,7 @@ class SingleStoreDetails extends Component
     public function updatedPhoto(): void
     {
         $this->validate([
-            'logo' => 'image|max:1024', // 1MB Max
+            'logo' => 'nullable|image|max:1024', // 1MB Max
         ]);
     }
 
@@ -52,20 +64,24 @@ class SingleStoreDetails extends Component
     {
         if($this->dealer->logo) {
             \Storage::delete($this->dealer->logo);
-        }
+        }  
 
         $logo = $this->logo->store('logo', 'public');
 
-        $this->dealer->update([
-            'name' => $this->name,
-            'address' => $this->address,
-            'city' => $this->city,
-            'state' => $this->state,
-            'postal_code' => $this->postal_code,
-            'phone' => $this->phone,
-            'website' => $this->website,
-            'logo' => $logo,
-        ]);
+        try {
+            $this->dealer->update([
+                'name' => $this->name,
+                'address' => $this->address,
+                'city' => $this->city,
+                'state' => $this->state,
+                'postal_code' => $this->postal_code,
+                'phone' => $this->phone,
+                'website' => $this->website,
+                'logo' => $logo,
+            ]);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+        }
 
         Notification::make()
             ->title('Settings Updated Successfully!')

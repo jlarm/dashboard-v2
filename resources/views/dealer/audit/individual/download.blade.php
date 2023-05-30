@@ -21,10 +21,10 @@
                     alt="">
             @endif
             @if(tenant('locations'))
-                <h1 class="text-3xl font-bold text-arm-blue-600">F&I Individual Audit Review
+                <h1 class="text-3xl font-bold text-arm-blue-600">Deal Jacket Audit Review
                     for {{ $individualAudit->store->name }}</h1>
             @else
-                <h1 class="text-3xl font-bold text-arm-blue-600">F&I Individual Audit Review
+                <h1 class="text-3xl font-bold text-arm-blue-600">Deal Jacket Audit Review
                     for {{ tenant('name') }}</h1>
             @endif
             <p class="text-arm-blue-400">{{ $individualAudit->audit_date->format('F d, Y') }}</p>

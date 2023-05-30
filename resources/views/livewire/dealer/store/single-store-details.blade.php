@@ -62,12 +62,13 @@
                 </div>
                 <div>
                     <div class="space-y-6 border border-gray-300 shadow-sm rounded-lg p-3">
+                        <img src="{{ storage_path($logo) }}" alt="">
                         <div>
                             @if($logo)
-                                <img src="{{  asset($logo) }}" alt="logo"
+                                <img src="{{  url($logo) }}" alt="logo"
                                      class="h-24 w-full rounded-lg object-contain">
                             @else
-                                
+
                             @endif
                         </div>
                         <div>

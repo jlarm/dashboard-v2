@@ -3,7 +3,7 @@
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-                <h1 class="text-lg font-medium leading-6 text-gray-900">F&I Individual Audits</h1>
+                <h1 class="text-lg font-medium leading-6 text-gray-900">Deal Jacket Audits</h1>
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                 <a

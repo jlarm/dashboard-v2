@@ -154,12 +154,12 @@
                                         <li>
                                           <!-- 44px -->
                                           <a href="{{ route('dealer.audit.finance.index') }}"
-                                             class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Finance</a>
+                                             class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">GLBA Walkthrough</a>
                                         </li>
                                         <li>
                                           <!-- 44px -->
                                           <a href="{{ route('dealer.audit.individual.index') }}"
-                                             class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">F&I Individual</a>
+                                             class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal Jackets</a>
                                         </li>
                                       </ul>
                                 </span>
@@ -391,11 +391,11 @@
                                         </li>
                                         <li>
                                           <a href="{{ route('dealer.audit.finance.index') }}"
-                                             class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Finance</a>
+                                             class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">GLBA Walkthrough</a>
                                         </li>
                                         <li>
                                           <a href="{{ route('dealer.audit.individual.index') }}"
-                                             class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">F&I Individual</a>
+                                             class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal Jackets</a>
                                         </li>
                                       </ul>
                                 </span>

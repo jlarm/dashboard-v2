@@ -22,10 +22,10 @@
                     alt="">
             @endif
             @if(tenant('locations'))
-                <h1 class="text-3xl font-bold text-arm-blue-600">Finance Audit Review
+                <h1 class="text-3xl font-bold text-arm-blue-600">GLBA Walkthrough Audit Review
                     for {{ $financeAudit->store->name }}</h1>
             @else
-                <h1 class="text-3xl font-bold text-arm-blue-600">Finance Audit Review
+                <h1 class="text-3xl font-bold text-arm-blue-600">GLBA Walkthrough Audit Review
                     for {{ tenant('name') }}</h1>
             @endif
             <p class="text-arm-blue-400">{{ $financeAudit->audit_date->format('F d, Y') }}</p>
