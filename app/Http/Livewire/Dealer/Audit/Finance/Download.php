@@ -9,9 +9,13 @@ use Storage;
 class Download extends Component
 {
     public FinanceAudit $financeAudit;
-    public function download()
+
+    public $content;
+
+    public function mount()
     {
-        return Storage::disk('do-audits')->download(tenant('id') . '/audits/finance/' . $this->financeAudit->pdf_path);
+
+        $this->content = Storage::disk('do-audits')->url(tenant('id') . '/finance/' . $this->financeAudit->pdf_path);
     }
     public function render()
     {

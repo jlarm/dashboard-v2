@@ -10,10 +10,14 @@ class Download extends Component
 {
     public IndividualAudit $individualAudit;
 
-    public function download()
+    public $content;
+
+    public function mount()
     {
-        return Storage::disk('do-audits')->download(tenant('id') . '/individual/' . $this->individualAudit->pdf_path);
+
+        $this->content = Storage::disk('do-audits')->url(tenant('id') . '/individual/' . $this->individualAudit->pdf_path);
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.individual.download');

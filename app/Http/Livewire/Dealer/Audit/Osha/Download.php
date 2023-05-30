@@ -11,6 +11,14 @@ class Download extends Component
 {
     public OshaAudit $oshaAudit;
 
+    public $content;
+
+    public function mount()
+    {
+
+        $this->content = Storage::disk('do-audits')->url(tenant('id') . '/osha/' . $this->oshaAudit->pdf_path);
+    }
+
     public function download(): StreamedResponse
     {
         return Storage::disk('do-audits')->download(tenant('id') . '/osha/' . $this->oshaAudit->pdf_path);
