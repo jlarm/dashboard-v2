@@ -10,9 +10,12 @@ class Download extends Component
 {
     public BodyShopAudit $bodyShopAudit;
 
-    public function download()
+    public $content;
+
+    public function mount()
     {
-        return Storage::disk('do-audits')->download(tenant('id') . '/body-shop/' . $this->bodyShopAudit->pdf_path);
+
+        $this->content = Storage::disk('do-audits')->url(tenant('id') . '/body-shop/' . $this->bodyShopAudit->pdf_path);
     }
     public function render()
     {
