@@ -68,11 +68,9 @@ class SingleStoreDetails extends Component
     {
         $this->validate();
 
-        if($this->dealer->logo) {
-            Storage::delete($this->dealer->logo);
+        if($this->logo != null) {
+            $logo = $this->logo->store('logo', 'public');
         }
-
-        $logo = $this->logo->store('logo', 'public');
 
         try {
             $this->dealer->update([
@@ -83,7 +81,7 @@ class SingleStoreDetails extends Component
                 'postal_code' => $this->postal_code,
                 'phone' => $this->phone,
                 'website' => $this->website,
-                'logo' => $logo,
+                'logo' => $this->logo,
             ]);
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
