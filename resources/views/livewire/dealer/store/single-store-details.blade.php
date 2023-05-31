@@ -69,7 +69,7 @@
                         </div>
                         <div>
                             <x-text-input
-                                wire:model="logo"
+                                wire:model.defer="logo"
                                 id="logo"
                                 name="logo"
                                 class="sr-only"

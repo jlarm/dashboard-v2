@@ -22,6 +22,10 @@ class SingleStoreDetails extends Component
     public $website;
     public $logo;
 
+    protected $listeners = [
+        'logoUpdated' => 'updatedLogo',
+    ];
+
 
     protected $rules = [
         'name' => 'required',
@@ -86,6 +90,8 @@ class SingleStoreDetails extends Component
             ->title('Settings Updated Successfully!')
             ->success()
             ->send();
+
+        $this->emit('logoUpdated');
     }
 
     public function render()
