@@ -23,10 +23,6 @@ class SingleStoreDetails extends Component
     public $website;
     public $logo;
 
-    protected $listeners = [
-        'refreshSingleStoreDetails' => '$refresh',
-    ];
-
     protected $rules = [
         'name' => 'required',
         'address' => 'required',
@@ -96,7 +92,6 @@ class SingleStoreDetails extends Component
             ->success()
             ->send();
 
-        return redirect()->back();
     }
 
     public function deleteLogo()
@@ -109,8 +104,7 @@ class SingleStoreDetails extends Component
             'logo' => null,
         ]);
 
-        $this->emit('refreshSingleStoreDetails');
-
+        return redirect()->route('dealer.dealer.settings');
     }
 
     public function render()

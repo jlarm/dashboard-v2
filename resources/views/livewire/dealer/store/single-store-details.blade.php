@@ -100,17 +100,19 @@
                             </div>
                             <div>
                                 @if ($logo)
-                                    <x-secondary-button type="button" wire:click="deleteLogo">
+                                    <x-secondary-button
+                                        wire:click="deleteLogo"
+                                    >
                                         {{ __('Remove Photo') }}
                                     </x-secondary-button>
                                 @endif
                             </div>
                         </div>
-                        @error('logo') <span class="text-red-500">{{ $message }}</span> @enderror
+                        @error('logo') <span class=" text-red-500">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="py-3 text-right">
-                    <x-primary-button>Update</x-primary-button>
+                    <x-primary-button wire:loading.attr="disabled">Update</x-primary-button>
                 </div>
             </form>
         </div>
