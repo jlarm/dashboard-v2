@@ -69,7 +69,7 @@ class SingleStoreDetails extends Component
         $this->validate();
 
         if($this->logo != null) {
-            $logo = $this->logo->store('logo', 'public');
+            $this->logo = $this->logo->store('logo', 'public');
         }
 
         try {
