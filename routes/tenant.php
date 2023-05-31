@@ -55,6 +55,7 @@ Route::group([
     Route::get('/dashboard', function () { return view('dealer.dashboard'); })->middleware('auth')->name('dashboard');
 
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])->middleware('web')->name('employees.create');
+    Route::post('employees/dealer/store', [UserController::class, 'store'])->name('employees.store');
 
     Route::group(['prefix' => 'courses/', 'as' => 'courses.'], function () {
         Route::get('/', function () { return view('dealer.course.index'); })->middleware('auth')->name('index');
@@ -88,7 +89,6 @@ Route::group([
     Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Manager']], function () {
         Route::get('/', function () { return view('dealer.employee.index'); })->middleware('auth')->name('index');
         Route::get('open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('open-invites');
-        Route::post('dealer/store', [UserController::class, 'store'])->name('store');
         Route::get('{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('show');
     });
 
