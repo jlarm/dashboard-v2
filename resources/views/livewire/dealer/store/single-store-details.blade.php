@@ -60,12 +60,15 @@
                         <x-input-error :messages="$errors->get('website')" class="mt-2"/>
                     </div>
                 </div>
-                <div>
+                <div x-data="{photoName: null, photoPreview: null}">
                     <div class="space-y-6 border border-gray-300 shadow-sm rounded-lg p-3">
-                        <div>
-                            @if($logo)
-                                <img src="{{ asset($logo) }}" alt="logo" class="h-24 w-full object-contain">
-                            @endif
+                        <div x-show="! photoPreview">
+                            <img src="{{ asset($logo) }}" alt="logo" class="h-24 w-full object-contain">
+                        </div>
+                        <div x-show="photoPreview" style="display: none;">
+                             <span class="block w-auto h-20 bg-contain bg-no-repeat bg-center"
+                                   x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
+                             </span>
                         </div>
                         <div>
                             <x-text-input
@@ -74,6 +77,15 @@
                                 name="logo"
                                 class="sr-only"
                                 type="file"
+                                x-ref="logo"
+                                x-on:change="
+                                        photoName = $refs.logo.files[0].name;
+                                        const reader = new FileReader();
+                                        reader.onload = (e) => {
+                                            photoPreview = e.target.result;
+                                        };
+                                        reader.readAsDataURL($refs.logo.files[0]);
+                                "
                             />
                             <label for="logo">
                                     <span
