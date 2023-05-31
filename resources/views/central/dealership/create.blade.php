@@ -111,8 +111,15 @@
                             <!-- Dealership Website URL -->
                             <div>
                                 <x-input-label for="url" :value="__('Website URL')"/>
-                                <x-text-input wire:model.defer="url" id="url" class="block mt-1 w-full" type="url"
-                                              name="url" required/>
+                                <x-text-input
+                                    placeholder="https://www.google.com"
+                                    wire:model.defer="url"
+                                    id="url"
+                                    class="block mt-1 w-full"
+                                    type="url"
+                                    name="url"
+                                    required
+                                />
                                 <x-input-error :messages="$errors->get('url')" class="mt-2"/>
                             </div>
 
