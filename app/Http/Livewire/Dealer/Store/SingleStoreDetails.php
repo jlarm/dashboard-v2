@@ -6,6 +6,7 @@ use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Storage;
 
 class SingleStoreDetails extends Component
 {
@@ -23,9 +24,8 @@ class SingleStoreDetails extends Component
     public $logo;
 
     protected $listeners = [
-        'logoUpdated' => 'updatedLogo',
+        'refreshSingleStoreDetails' => '$refresh',
     ];
-
 
     protected $rules = [
         'name' => 'required',
@@ -35,14 +35,15 @@ class SingleStoreDetails extends Component
         'postal_code' => 'required',
         'phone' => 'required',
         'website' => 'required',
+        'logo' => 'nullable|image|max:1024|mimes:png,jpg',
     ];
 
     public function mount(Store $store): void
     {
-        if ($store->id === null) {
-            $this->dealer = Store::first();
-        } else {
+        if ($store->id) {
             $this->dealer = Store::where('id', $this->store->id)->first();
+        } else {
+            $this->dealer = Store::first();
         }
 
         $this->name = $this->dealer->name;
@@ -63,10 +64,12 @@ class SingleStoreDetails extends Component
     }
 
 
-    public function update(): void
+    public function update()
     {
+        $this->validate();
+
         if($this->dealer->logo) {
-            \Storage::delete($this->dealer->logo);
+            Storage::delete($this->dealer->logo);
         }
 
         $logo = $this->logo->store('logo', 'public');
@@ -84,6 +87,10 @@ class SingleStoreDetails extends Component
             ]);
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
+            Notification::make()
+                ->title('Something went wrong!')
+                ->danger()
+                ->send();
         }
 
         Notification::make()
@@ -91,7 +98,21 @@ class SingleStoreDetails extends Component
             ->success()
             ->send();
 
-        $this->emit('logoUpdated');
+        return redirect()->back();
+    }
+
+    public function deleteLogo()
+    {
+        if($this->dealer->logo) {
+            Storage::delete($this->dealer->logo);
+        }
+
+        $this->dealer->update([
+            'logo' => null,
+        ]);
+
+        $this->emit('refreshSingleStoreDetails');
+
     }
 
     public function render()
