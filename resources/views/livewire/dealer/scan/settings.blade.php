@@ -1,4 +1,4 @@
-<div>
+<div class="max-w-4xl mx-auto mt-16">
     <form wire:submit.prevent="update" class="space-y-5">
         <div>
             <x-input-label class="mb-2" for="name" value="Dealership Name"/>
