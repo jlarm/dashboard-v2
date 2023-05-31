@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Dealer\Manual;
 
 use App\Models\Dealer\Manual\Osha;
-use App\Models\Dealer\StoreSettings;
+use App\Models\Dealer\Store;
 use App\Models\User;
 use Livewire\Component;
 
@@ -49,12 +49,12 @@ class OshaForm extends Component
         $this->smp = User::role('Service Manager')->first()->phone ?? '';
         $this->qi = User::role('Qualified Individual')->first()->name ?? '';
         $this->qip = User::role('Qualified Individual')->first()->phone ?? '';
-        $this->pepn = StoreSettings::first()->police_emergency_phone ?? '';
-        $this->pnepn = StoreSettings::first()->police_non_emergency_phone ?? '';
-        $this->fepn = StoreSettings::first()->fire_emergency_phone ?? '';
-        $this->fnepn = StoreSettings::first()->fire_non_emergency_phone ?? '';
-        $this->alarmSystem = StoreSettings::first()->fire_alarm_type ?? '';
-        $this->burglarSystem = StoreSettings::first()->burglar_alarm_type ?? '';
+        $this->pepn = Store::first()->police_emergency_phone ?? '';
+        $this->pnepn = Store::first()->police_non_emergency_phone ?? '';
+        $this->fepn = Store::first()->fire_emergency_phone ?? '';
+        $this->fnepn = Store::first()->fire_non_emergency_phone ?? '';
+        $this->alarmSystem = Store::first()->fire_alarm_type ?? '';
+        $this->burglarSystem = Store::first()->burglar_alarm_type ?? '';
     }
 
     protected $rules = [
