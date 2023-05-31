@@ -31,7 +31,6 @@ class SingleStoreDetails extends Component
         'postal_code' => 'required',
         'phone' => 'required',
         'website' => 'required',
-        'logo' => 'nullable|image|max:1024', // 1MB Max
     ];
 
     public function mount(Store $store): void
@@ -52,10 +51,10 @@ class SingleStoreDetails extends Component
         $this->logo = $this->dealer->logo;
     }
 
-    public function updatedPhoto(): void
+    public function updatedLogo(): void
     {
         $this->validate([
-            'logo' => 'nullable|image|max:1024', // 1MB Max
+            'logo' => 'nullable|image|max:1024|mimes:png,jpg', // 1MB Max
         ]);
     }
 
@@ -64,7 +63,7 @@ class SingleStoreDetails extends Component
     {
         if($this->dealer->logo) {
             \Storage::delete($this->dealer->logo);
-        }  
+        }
 
         $logo = $this->logo->store('logo', 'public');
 
