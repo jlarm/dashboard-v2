@@ -2780,7 +2780,7 @@
             collection="individual_audit_images"
         />
         {{--        Sticky Save Bar--}}
-        <div class="w-full sticky bottom-0 bg-arm-blue-200 p-5">
+        <div class="w-full sticky bottom-0 bg-arm-blue-200 p-5 z-20">
             <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row">
                 <a
                     class="sm:mr-auto ml-5 sm:ml-0 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
