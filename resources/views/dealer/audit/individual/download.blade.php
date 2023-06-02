@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>F&I Individual Audit Review</title>
+    <title>Deal Jacket Audit Review</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
@@ -109,7 +109,7 @@
                 </div>
             @endif
         </li>
-        @if($individualAudit->individual_q3_answer === 2 || $individualAudit->individual_q3_answer === 3)
+        @if($individualAudit->individual_q3_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Buyers Order & RISC a match?</p>
@@ -148,7 +148,7 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q4_answer === 2 || $individualAudit->individual_q4_answer === 3)
+        @if($individualAudit->individual_q4_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Vehicle price exceeds MSRP?</p>
@@ -187,7 +187,7 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q5_answer === 2 || $individualAudit->individual_q5_answer === 3)
+        @if($individualAudit->individual_q5_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Is it clear what the customer purchased and did the deal reflect the norm in
@@ -228,11 +228,10 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q6_answer === 2 || $individualAudit->individual_q6_answer === 3)
+        @if($individualAudit->individual_q6_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Was the deal sent to more than one financing source and are all the notes
-                        present?</p>
+                    <p class="font-bold">Was the deal sent to more than one finance source?</p>
                     <p>
                         @if($individualAudit->individual_q6_answer === 1)
                             Yes
@@ -268,13 +267,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q7_answer === 2 || $individualAudit->individual_q7_answer === 3)
+        @if($individualAudit->individual_q7_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are you noticing a trend with respect to price of products and/or markup where
-                        one
-                        group is paying more or less than another? Ex. women vs men? If the answer is yes, make
-                        notations.</p>
+                    <p class="font-bold">Are all customers being treated the same regarding
+                        markups on products offered on the menu system? If “No” explain.</p>
                     <p>
                         @if($individualAudit->individual_q7_answer === 1)
                             Yes
@@ -310,7 +307,7 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q8_answer === 2 || $individualAudit->individual_q8_answer === 3)
+        @if($individualAudit->individual_q8_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Credit app signed by borrower?</p>
@@ -349,10 +346,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q9_answer === 2 || $individualAudit->individual_q9_answer === 3)
+        @if($individualAudit->individual_q9_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Buyers Order & RISC set forth price of ancillary products?</p>
+                    <p class="font-bold">Do the finance numbers, i.e. income, rent etc.,
+                        match from the handwritten credit applications to the credit application submitted to banks?</p>
                     <p>
                         @if($individualAudit->individual_q9_answer === 1)
                             Yes
@@ -388,13 +386,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q10_answer === 2 || $individualAudit->individual_q10_answer === 3)
+        @if($individualAudit->individual_q10_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Single Document: All the agreements of the buyer and seller in one document (if
-                        required) with respect to the total cost and the terms of payment for the motor vehicle,
-                        including
-                        any promissory notes or any other evidence of indebtedness?</p>
+                    <p class="font-bold">Buyers Order & RISC set forth price of ancillary
+                        products?</p>
                     <p>
                         @if($individualAudit->individual_q10_answer === 1)
                             Yes
@@ -430,10 +426,13 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q11_answer === 2 || $individualAudit->individual_q11_answer === 3)
+        @if($individualAudit->individual_q11_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Signed by all Buyers and Seller - RISC & Retail Order?</p>
+                    <p class="font-bold">Single Document: All of the agreements of the
+                        buyer and seller in one document (if required) with respect to the total cost and the terms of
+                        payment for the motor vehicle, including any promissory notes or any other evidences of
+                        indebtedness?</p>
                     <p>
                         @if($individualAudit->individual_q11_answer === 1)
                             Yes
@@ -469,10 +468,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q12_answer === 2 || $individualAudit->individual_q12_answer === 3)
+        @if($individualAudit->individual_q12_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Date on RISC is accurate. NO BACKDATE</p>
+                    <p class="font-bold">Signed by all Buyers and Seller - RISC & Retail
+                        Order?</p>
                     <p>
                         @if($individualAudit->individual_q12_answer === 1)
                             Yes
@@ -508,10 +508,10 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q13_answer === 2 || $individualAudit->individual_q13_answer === 3)
+        @if($individualAudit->individual_q13_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Does date match date deal done? NO BACKDATE</p>
+                    <p class="font-bold">Date on RISC is accurate. NO BACKDATE</p>
                     <p>
                         @if($individualAudit->individual_q13_answer === 1)
                             Yes
@@ -547,7 +547,7 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q14_answer === 2 || $individualAudit->individual_q14_answer === 3)
+        @if($individualAudit->individual_q14_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Language of copy of contract given to customer proper for negotiation language
@@ -588,12 +588,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q15_answer === 2 || $individualAudit->individual_q15_answer === 3)
+        @if($individualAudit->individual_q15_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">RISC Disclosures? TILA - cash, charges, total cash price, trade, and down
-                        payment
-                        (deferred): All Reg Z required.</p>
+                    <p class="font-bold">Credit applications complete properly, signed by
+                        customer and accurate? If “No” explain.</p>
                     <p>
                         @if($individualAudit->individual_q15_answer === 1)
                             Yes
@@ -629,12 +628,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q16_answer === 2 || $individualAudit->individual_q16_answer === 3)
+        @if($individualAudit->individual_q16_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Anything unusual about credit app? Ex-spouse information may have been added,
-                        yet
-                        the buyer has sufficient income. If yes, explain.</p>
+                    <p class="font-bold">Are all state specific disclosures included in the
+                        deal?</p>
                     <p>
                         @if($individualAudit->individual_q16_answer === 1)
                             Yes
@@ -670,11 +668,10 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q17_answer === 2 || $individualAudit->individual_q17_answer === 3)
+        @if($individualAudit->individual_q17_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Do the RISC and Buyer’s order contain the proper Reg Z disclosures, and are all
-                        State disclosures for your particular State set forth on the RISC?</p>
+                    <p class="font-bold">Cosigner Notice? Only if a cosigner.</p>
                     <p>
                         @if($individualAudit->individual_q17_answer === 1)
                             Yes
@@ -710,10 +707,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_18_answer === 2 || $individualAudit->individual_18_answer === 3)
+        @if($individualAudit->individual_18_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Cosigner Notice? Only if a cosigner.</p>
+                    <p class="font-bold">Did the F&I deals have privacy
+                        statement?</p>
                     <p>
                         @if($individualAudit->individual_q18_answer === 1)
                             Yes
@@ -749,10 +747,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_19_answer === 2 || $individualAudit->individual_19_answer === 3)
+        @if($individualAudit->individual_19_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Did the F&I deals have a privacy statement?</p>
+                    <p class="font-bold">Is there a menu present and is it filled out
+                        properly and signed by customer?</p>
                     <p>
                         @if($individualAudit->individual_q19_answer === 1)
                             Yes
@@ -788,10 +787,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q20_answer === 2 || $individualAudit->individual_q20_answer === 3)
+        @if($individualAudit->individual_q20_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Did the F&I deals have menus?</p>
+                    <p class="font-bold">Are the products purchased and or denied “Clearly”
+                        displayed on the menu and or “Settlement Disclosure Document?</p>
                     <p>
                         @if($individualAudit->individual_q20_answer === 1)
                             Yes
@@ -827,10 +827,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q21_answer === 2 || $individualAudit->individual_q21_answer === 3)
+        @if($individualAudit->individual_q21_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Did the F&I deals have product disclosures?</p>
+                    <p class="font-bold">If there is a cashed deferred payment made, is it
+                        properly disclosed?</p>
                     <p>
                         @if($individualAudit->individual_q21_answer === 1)
                             Yes
@@ -866,10 +867,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q22_answer === 2 || $individualAudit->individual_q22_answer === 3)
+        @if($individualAudit->individual_q22_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Is there a cash deferred down payment?</p>
+                    <p class="font-bold">If a cash deferred down payment, is it paid before
+                        the 2nd scheduled payment period?</p>
                     <p>
                         @if($individualAudit->individual_q22_answer === 1)
                             Yes
@@ -905,11 +907,13 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q23_answer === 2 || $individualAudit->individual_q23_answer === 3)
+        @if($individualAudit->individual_q23_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">If cash deferred down payment, does payback exceed the 2nd scheduled
-                        payment?</p>
+                    <p class="font-bold">Check price of products on buyers order and
+                        RISC. Is amount charged for products similar to that charged other purchasers? If not, note
+                        whether
+                        higher.</p>
                     <p>
                         @if($individualAudit->individual_q23_answer === 1)
                             Yes
@@ -945,10 +949,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q24_answer === 2 || $individualAudit->individual_q24_answer === 3)
+        @if($individualAudit->individual_q24_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">“New” or “used” within a box outlined in red?</p>
+                    <p class="font-bold">Dealer recap or reconciliation document
+                        reviewed and in file?</p>
                     <p>
                         @if($individualAudit->individual_q24_answer === 1)
                             Yes
@@ -984,10 +989,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q25_answer === 2 || $individualAudit->individual_q25_answer === 3)
+        @if($individualAudit->individual_q25_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Menu signed?</p>
+                    <p class="font-bold">Is the dealership's markup rate within the
+                        Dealerships Participation Program rate as noted in their CMS program?</p>
                     <p>
                         @if($individualAudit->individual_q25_answer === 1)
                             Yes
@@ -1023,12 +1029,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q26_answer === 2 || $individualAudit->individual_q26_answer === 3)
+        @if($individualAudit->individual_q26_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Check price of products on buyers order and RISC. Is the amount charged for
-                        products
-                        similar to that charged by other purchasers? If not, note whether higher.</p>
+                    <p class="font-bold">Is an “Exception Notice (DPP form) filled out if
+                        the standard dealership rate not applied?</p>
                     <p>
                         @if($individualAudit->individual_q26_answer === 1)
                             Yes
@@ -1064,10 +1069,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q27_answer === 2 || $individualAudit->individual_q27_answer === 3)
+        @if($individualAudit->individual_q27_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Dealer recap or reconciliation document reviewed and in file?</p>
+                    <p class="font-bold">Are markups handled the same for similar customers,
+                        i.e. is it higher for protected class: sex, national origin, race, age etc.?</p>
                     <p>
                         @if($individualAudit->individual_q27_answer === 1)
                             Yes
@@ -1103,10 +1109,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q28_answer === 2 || $individualAudit->individual_q28_answer === 3)
+        @if($individualAudit->individual_q28_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Dealer markup? What amount? (Ex .5, 2.0, and 1.25)</p>
+                    <p class="font-bold">For used cars, was the buyer’s guide signed off
+                        on?</p>
                     <p>
                         @if($individualAudit->individual_q28_answer === 1)
                             Yes
@@ -1142,10 +1149,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q29_answer === 2 || $individualAudit->individual_q29_answer === 3)
+        @if($individualAudit->individual_q29_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Dealer markup at standard rate?</p>
+                    <p class="font-bold">Was it clear what products the customer
+                        purchased and did the deal reflect the norm?</p>
                     <p>
                         @if($individualAudit->individual_q29_answer === 1)
                             Yes
@@ -1181,10 +1189,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q30_answer === 2 || $individualAudit->individual_q30_answer === 3)
+        @if($individualAudit->individual_q30_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Did the F&I deals disclose the price of products presented?</p>
+                    <p class="font-bold">Was OFAC run and on file either physically or
+                        electronically?</p>
                     <p>
                         @if($individualAudit->individual_q30_answer === 1)
                             Yes
@@ -1220,10 +1229,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q31_answer === 2 || $individualAudit->individual_q31_answer === 3)
+        @if($individualAudit->individual_q31_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">For used cars, was the buyer’s guide signed off on?</p>
+                    <p class="font-bold">Was a copy of the signed Privacy notice in the deal
+                        jacket?</p>
                     <p>
                         @if($individualAudit->individual_q31_answer === 1)
                             Yes
@@ -1259,10 +1269,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q32_answer === 2 || $individualAudit->individual_q32_answer === 3)
+        @if($individualAudit->individual_q32_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Is the credit statement signed and filled out by the customer?</p>
+                    <p class="font-bold">Was the RBPN or Exception notice presented to and
+                        signed by the customer?</p>
                     <p>
                         @if($individualAudit->individual_q32_answer === 1)
                             Yes
@@ -1298,11 +1309,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q33_answer === 2 || $individualAudit->individual_q33_answer === 3)
+        @if($individualAudit->individual_q33_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Was it clear what products the customer purchased and did the deal reflect the
-                        norm?</p>
+                    <p class="font-bold">Was the Red Flag software run and a copy on file
+                        either physically or electronically?</p>
                     <p>
                         @if($individualAudit->individual_q33_answer === 1)
                             Yes
@@ -1338,10 +1349,11 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_q34_answer === 2 || $individualAudit->individual_q34_answer === 3)
+        @if($individualAudit->individual_q34_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">OFAC run and in file?</p>
+                    <p class="font-bold">Is the deal jacket complete with all
+                        information?</p>
                     <p>
                         @if($individualAudit->individual_q34_answer === 1)
                             Yes
@@ -1373,241 +1385,6 @@
                     <div>
                         <p class="font-bold">Comments:</p>
                         <p>{{ $individualAudit->individual_q34_comment }}</p>
-                    </div>
-                @endif
-            </li>
-        @endif
-        @if($individualAudit->individual_q35_answer === 2 || $individualAudit->individual_q35_answer === 3)
-            <li class="py-10 space-y-5 page-break">
-                <div>
-                    <p class="font-bold">Privacy Notice delivered?</p>
-                    <p>
-                        @if($individualAudit->individual_q35_answer === 1)
-                            Yes
-                        @elseif($individualAudit->individual_q35_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($individualAudit->individual_q35_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($individualAudit->individual_q35_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $individualAudit->individual_q35_comment }}</p>
-                    </div>
-                @endif
-            </li>
-        @endif
-        @if($individualAudit->individual_q36_answer === 2 || $individualAudit->individual_q36_answer === 3)
-            <li class="py-10 space-y-5 page-break">
-                <div>
-                    <p class="font-bold">RBPN or Exception notice provided borrower?</p>
-                    <p>
-                        @if($individualAudit->individual_q36_answer === 1)
-                            Yes
-                        @elseif($individualAudit->individual_q36_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($individualAudit->individual_q36_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($individualAudit->individual_q36_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $individualAudit->individual_q36_comment }}</p>
-                    </div>
-                @endif
-            </li>
-        @endif
-        @if($individualAudit->individual_q37_answer === 2 || $individualAudit->individual_q37_answer === 3)
-            <li class="py-10 space-y-5 page-break">
-                <div>
-                    <p class="font-bold">Red Flags Checks run and in file?</p>
-                    <p>
-                        @if($individualAudit->individual_q37_answer === 1)
-                            Yes
-                        @elseif($individualAudit->individual_q37_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($individualAudit->individual_q37_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($individualAudit->individual_q37_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $individualAudit->individual_q37_comment }}</p>
-                    </div>
-                @endif
-            </li>
-        @endif
-        @if($individualAudit->individual_q38_answer === 2 || $individualAudit->individual_q38_answer === 3)
-            <li class="py-10 space-y-5 page-break">
-                <div>
-                    <p class="font-bold">If not at standard markup, is a completed exception document in the file?</p>
-                    <p>
-                        @if($individualAudit->individual_q38_answer === 1)
-                            Yes
-                        @elseif($individualAudit->individual_q38_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($individualAudit->individual_q38_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($individualAudit->individual_q38_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $individualAudit->individual_q38_comment }}</p>
-                    </div>
-                @endif
-            </li>
-        @endif
-        @if($individualAudit->individual_q39_answer === 2 || $individualAudit->individual_q39_answer === 3)
-            <li class="py-10 space-y-5 page-break">
-                <div>
-                    <p class="font-bold">Is markup different from similarly situated customers, i.e. is it higher for
-                        protected class; sex, national origin, race or age?</p>
-                    <p>
-                        @if($individualAudit->individual_q39_answer === 1)
-                            Yes
-                        @elseif($individualAudit->individual_q39_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($individualAudit->individual_q39_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($individualAudit->individual_q39_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $individualAudit->individual_q39_comment }}</p>
-                    </div>
-                @endif
-            </li>
-        @endif
-        @if($individualAudit->individual_40_answer === 2 || $individualAudit->individual_40_answer === 3)
-            <li class="py-10 space-y-5 page-break">
-                <div>
-                    <p class="font-bold">Is the deal jacket complete with all information?</p>
-                    <p>
-                        @if($individualAudit->individual_q40_answer === 1)
-                            Yes
-                        @elseif($individualAudit->individual_q40_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($individualAudit->individual_q40_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($individualAudit->individual_q40_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $individualAudit->individual_q40_comment }}</p>
                     </div>
                 @endif
             </li>
