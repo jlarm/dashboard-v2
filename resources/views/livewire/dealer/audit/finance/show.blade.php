@@ -13,7 +13,7 @@
                 />
             </div>
         </div>
-        <!-- 1 Has the Dealer established a written CMS? -->
+        <!-- Has the Dealer established a written CMS? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
                 <label class="text-base font-semibold text-gray-900">Has the Dealer established a written CMS?</label>
@@ -88,7 +88,7 @@
             />
             @error('finance_q1_images.*'){{ $message }}@enderror
         </div>
-        <!-- 2 Has the written CMS been approved by the Board/Ownership? -->
+        <!-- Has the written CMS been approved by the Board/Ownership? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
                 <label class="text-base font-semibold text-gray-900">Has the written CMS been approved by the
@@ -156,11 +156,11 @@
                 collection="finance_q2_images"
             />
         </div>
-        <!-- 3 Shredding bins over-flowing and need to be cleaned out. -->
+        <!-- Are shredding bins being utilized in dealership? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Shredding bins over-flowing and need to be cleaned
-                    out.</label>
+                <label class="text-base font-semibold text-gray-900">Are shredding bins being utilized in
+                    dealership?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -228,11 +228,10 @@
                 collection="finance_q3_images"
             />
         </div>
-        <!-- 4 Has complaint procedure been established and adopted by Board? -->
+        <!-- Are shredding bins being emptied properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Has complaint procedure been established and
-                    adopted by Board?</label>
+                <label class="text-base font-semibold text-gray-900">Are shredding bins being emptied properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -300,11 +299,11 @@
                 collection="finance_q4_images"
             />
         </div>
-        <!-- 5 Account department is not locked when employees are not present. -->
+        <!-- Has complaint procedure been established and adopted by Board? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Account department is not locked when employees are
-                    not present.</label>
+                <label class="text-base font-semibold text-gray-900">Has complaint procedure been established and
+                    adopted by Board?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -372,11 +371,12 @@
                 collection="finance_q5_images"
             />
         </div>
-        <!-- 6 Have CMS policies been distributed to management and relevant employees? -->
+        <!-- Has complaint procedure been established and adopted by Board? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Have CMS policies been distributed to management
-                    and relevant employees?</label>
+                <label class="text-base font-semibold text-gray-900">Is accounting department/office locked and secured
+                    when employees not
+                    present?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -420,8 +420,12 @@
             </div>
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
-                    <input wire:model="finance_q6_danger" type="checkbox" id="finance_q6_danger"
-                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                    <input
+                        wire:model="finance_q6_danger"
+                        type="checkbox"
+                        id="finance_q6_danger"
+                        class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                    >
                 </div>
                 <div class="ml-3 text-sm leading-6">
                     <label for="finance_q6_danger" class="font-medium text-red-500">Flag as high risk</label>
@@ -440,11 +444,11 @@
                 collection="finance_q6_images"
             />
         </div>
-        <!-- 7 Have employees and management acknowledged receipt of the above? -->
+        <!-- Is accounting department/office locked and secured when employees not present? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Have employees and management acknowledged receipt
-                    of the above?</label>
+                <label class="text-base font-semibold text-gray-900">Is accounting department/office locked and secured
+                    when employees not present?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -480,7 +484,7 @@
                                 type="radio"
                                 class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
                             >
-                            <label for="finance_q6_answer_3"
+                            <label for="finance_q7_answer_3"
                                    class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
                         </div>
                     </div>
@@ -488,8 +492,12 @@
             </div>
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
-                    <input wire:model="finance_q7_danger" type="checkbox" id="finance_q7_danger"
-                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
+                    <input
+                        wire:model="finance_q7_danger"
+                        type="checkbox"
+                        id="finance_q7_danger"
+                        class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                    >
                 </div>
                 <div class="ml-3 text-sm leading-6">
                     <label for="finance_q7_danger" class="font-medium text-red-500">Flag as high risk</label>
@@ -508,11 +516,11 @@
                 collection="finance_q7_images"
             />
         </div>
-        <!-- 8 Are employees and management completing training on a consistent basis? -->
+        <!-- Have CMS policies been distributed to management and relevant employees? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Are employees and management completing training on
-                    a consistent basis?</label>
+                <label class="text-base font-semibold text-gray-900">Have CMS policies been distributed to management
+                    and relevant employees?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -576,11 +584,10 @@
                 collection="finance_q8_images"
             />
         </div>
-        <!-- 9 Are there policies and procedures in place to handle and respond to consumer complaints? -->
+        <!-- Have employees and management acknowledged receipt of the above? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Are there policies and procedures in place to
-                    handle and respond to consumer complaints?</label>
+                <label class="text-base font-semibold text-gray-900">Are shredding bins being emptied properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -616,7 +623,7 @@
                                 type="radio"
                                 class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
                             >
-                            <label for="finance_q9_answer_3"
+                            <label for="finance_q6_answer_3"
                                    class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
                         </div>
                     </div>
@@ -644,10 +651,11 @@
                 collection="finance_q9_images"
             />
         </div>
-        <!-- 10 Destruction of outdated NPI records? -->
+        <!-- Are employees and management completing training on a consistent basis? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Destruction of outdated NPI records?</label>
+                <label class="text-base font-semibold text-gray-900">Are employees and management completing training on
+                    a consistent basis?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -711,15 +719,16 @@
                 collection="finance_q10_images"
             />
         </div>
-        <!-- 11 OFAC/SDN Listing documentation -->
+        <!-- Are there policies and procedures in place to handle and respond to consumer complaints? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">OFAC/SDN Listing documentation</label>
+                <label class="text-base font-semibold text-gray-900">Are there policies and procedures in place to
+                    handle and respond to consumer complaints?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
                             <input
-                                wire:model="finance_q11_answer"
+                                wire:model="finance_q10_answer"
                                 value="1"
                                 name="finance_q11_answer"
                                 id="finance_q11_answer_1"
@@ -778,11 +787,11 @@
                 collection="finance_q11_images"
             />
         </div>
-        <!-- 12 Employees hired have signed confidentiality and security policy statements. -->
+        <!-- Are NPI/customer records being destroyed/shredded properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Employees hired have signed confidentiality and
-                    security policy statements.</label>
+                <label class="text-base font-semibold text-gray-900">Are NPI/customer records being destroyed/shredded
+                    properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -846,10 +855,11 @@
                 collection="finance_q12_images"
             />
         </div>
-        <!-- 13 Password activation on computers -->
+        <!-- Is the OFAC/SDN listings being completed on all contracted deals? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Password activation on computers</label>
+                <label class="text-base font-semibold text-gray-900">Is the OFAC/SDN listings being completed on all
+                    contracted deals?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -913,11 +923,11 @@
                 collection="finance_q13_images"
             />
         </div>
-        <!-- 14 Service Writers trash can have RO’s and misc. NPI documents present. -->
+        <!-- Are all new employees signing dealerships security policy statement? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Service Writers trash can have RO’s and misc. NPI
-                    documents present.</label>
+                <label class="text-base font-semibold text-gray-900">Are all new employees signing dealerships security
+                    policy statement?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -981,10 +991,11 @@
                 collection="finance_q14_images"
             />
         </div>
-        <!-- 15 Website privacy policy compliance. -->
+        <!-- Are computer terminals being logged off to activating screensaver password? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Website privacy policy compliance.</label>
+                <label class="text-base font-semibold text-gray-900">Are computer terminals being logged off to
+                    activating screensaver password?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1048,11 +1059,11 @@
                 collection="finance_q15_images"
             />
         </div>
-        <!-- 16 “NPI Check-Out Log” being utilized in accounting. -->
+        <!-- Are repair orders (RO’s) being disposed/shredded properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">“NPI Check-Out Log” being utilized in
-                    accounting.</label>
+                <label class="text-base font-semibold text-gray-900">Are repair orders (RO’s) being disposed/shredded
+                    properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1116,11 +1127,11 @@
                 collection="finance_q16_images"
             />
         </div>
-        <!-- 17 Review “Certificate of Destruction” receipts from shredding company -->
+        <!-- Is the privacy notice clearly stated on dealerships website? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Review “Certificate of Destruction” receipts from
-                    shredding company</label>
+                <label class="text-base font-semibold text-gray-900">Is the privacy notice clearly stated on dealerships
+                    website?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1184,11 +1195,11 @@
                 collection="finance_q17_images"
             />
         </div>
-        <!-- 18 Computer terminals not being logged off to activating screensaver password? -->
+        <!-- “NPI Check-Out Log” being utilized in accounting. -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Computer terminals not being logged off to
-                    activating screensaver password?</label>
+                <label class="text-base font-semibold text-gray-900">“NPI Check-Out Log” being utilized in
+                    accounting.</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1252,11 +1263,11 @@
                 collection="finance_q18_images"
             />
         </div>
-        <!-- 19 Computer terminal not set to automatically log off after 5 minutes of non-activity. -->
+        <!-- Are all computer terminals automatically set to log off after 5 minutes of non-activity? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Computer terminal not set to automatically log off
-                    after 5 minutes of non-activity.</label>
+                <label class="text-base font-semibold text-gray-900">Are all computer terminals automatically set to log
+                    off after 5 minutes of non-activity?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1320,7 +1331,7 @@
                 collection="finance_q19_images"
             />
         </div>
-        <!-- 20 Are network firewalls being monitored for intrusion. -->
+        <!-- Are network firewalls being monitored for intrusion. -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
                 <label class="text-base font-semibold text-gray-900">Are network firewalls being monitored for
@@ -1388,7 +1399,7 @@
                 collection="finance_q20_images"
             />
         </div>
-        <!-- 21 Written IT policies regarding the use of flash drives, downloading software and programs by employees, and spam email protocols? -->
+        <!-- Written IT policies regarding the use of flash drives, downloading software and programs by employees, and spam email protocols? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
                 <label class="text-base font-semibold text-gray-900">Written IT policies regarding the use of flash
@@ -1456,7 +1467,7 @@
                 collection="finance_q21_images"
             />
         </div>
-        <!-- 22 Have there been any network intrusions or security breaches since last quarterly? -->
+        <!-- Have there been any network intrusions or security breaches since last quarterly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
                 <label class="text-base font-semibold text-gray-900">Have there been any network intrusions or security
@@ -1524,11 +1535,11 @@
                 collection="finance_q22_images"
             />
         </div>
-        <!-- 23 Has a Security Risk Assessment been completed? -->
+        <!-- IT Technical requirements been implemented for Encryption, MFA and System monitoring, penetration testing, and vulnerability assessments? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Has a Security Risk Assessment been
-                    completed?</label>
+                <label class="text-base font-semibold text-gray-900">IT Technical requirements been implemented for
+                    Encryption, MFA and System monitoring, penetration testing, and vulnerability assessments?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1592,10 +1603,10 @@
                 collection="finance_q23_images"
             />
         </div>
-        <!-- 24 Written Response Plan been created?  -->
+        <!-- Cashiers area unsecured -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Written Response Plan been created?</label>
+                <label class="text-base font-semibold text-gray-900">Cashiers area unsecured</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1659,11 +1670,12 @@
                 collection="finance_q24_images"
             />
         </div>
-        <!-- 25 IT Technical requirements been implemented for Encryption, MFA and System monitoring, penetration testing, and vulnerability assessments? -->
+        <!-- Are there any new Third Party Service Provider companies that need to be sent acknowledgements and assessment report? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">IT Technical requirements been implemented for
-                    Encryption, MFA and System monitoring, penetration testing, and vulnerability assessments?</label>
+                <label class="text-base font-semibold text-gray-900">Are there any new Third Party Service Provider
+                    companies that need to be sent
+                    acknowledgements and assessment report?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1727,10 +1739,11 @@
                 collection="finance_q25_images"
             />
         </div>
-        <!-- 26 Cashiers area unsecured -->
+        <!-- Have Third Party Providers been vetted for required compliance practices, procedures and training? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Cashiers area unsecured</label>
+                <label class="text-base font-semibold text-gray-900">Have Third Party Providers been vetted for required
+                    compliance practices, procedures and training?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1794,11 +1807,11 @@
                 collection="finance_q26_images"
             />
         </div>
-        <!-- 27 Review new Third Party provider agreements for safeguard language and compliance. -->
+        <!-- Are sales desk drawers/file cabinets locked and secured? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Review new Third Party provider agreements for
-                    safeguard language and compliance.</label>
+                <label class="text-base font-semibold text-gray-900">Are sales desk drawers/file cabinets locked and
+                    secured?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1862,11 +1875,11 @@
                 collection="finance_q27_images"
             />
         </div>
-        <!-- 28 Have Third Party Providers been vetted for required compliance practices, procedures and training? -->
+        <!--y NPI/customer documents being left out on sales desks? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Have Third Party Providers been vetted for required
-                    compliance practices, procedures and training?</label>
+                <label class="text-base font-semibold text-gray-900">Any NPI/customer documents being left out on sales
+                    desks?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1930,11 +1943,10 @@
                 collection="finance_q28_images"
             />
         </div>
-        <!-- 29 Sales desks not secured and have customer document exposed -->
+        <!-- Is CAN SPAM process in place? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">ASales desks not secured and have customer document
-                    exposed</label>
+                <label class="text-base font-semibold text-gray-900">Is CAN SPAM process in place?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1998,10 +2010,11 @@
                 collection="finance_q29_images"
             />
         </div>
-        <!-- 30 Check Can Spam Unsubscribe compliance. -->
+        <!-- Is the Telemarketing “Do Not Call” rule being complied with? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Check Can Spam Unsubscribe compliance.</label>
+                <label class="text-base font-semibold text-gray-900">Is the Telemarketing “Do Not Call” rule being
+                    complied with?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2065,11 +2078,11 @@
                 collection="finance_q30_images"
             />
         </div>
-        <!-- 31 Check for Telemarketing Do Not Call rules compliance: i.e., what system/software is in place to provide tracking? -->
+        <!-- Any other NPI documents publicly exposed, not secured properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Check for Telemarketing Do Not Call rules
-                    compliance: i.e., what system/software is in place to provide tracking?</label>
+                <label class="text-base font-semibold text-gray-900">Any other NPI documents publicly exposed, not
+                    secured properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2133,11 +2146,10 @@
                 collection="finance_q31_images"
             />
         </div>
-        <!-- 32 NPI documents publicly exposed, not secured properly -->
+        <!-- Breach in password sharing? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">NPI documents publicly exposed, not secured
-                    properly</label>
+                <label class="text-base font-semibold text-gray-900">Breach in password sharing?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2201,10 +2213,10 @@
                 collection="finance_q32_images"
             />
         </div>
-        <!-- 33 Breach in password sharing? -->
+        <!-- Customers NPI in unsecured trash cans? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Breach in password sharing?</label>
+                <label class="text-base font-semibold text-gray-900">Customers NPI in unsecured trash cans?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2268,10 +2280,10 @@
                 collection="finance_q33_images"
             />
         </div>
-        <!-- 34 Customers NPI in unsecured trash cans? -->
+        <!-- Deal jackets unsecured? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Customers NPI in unsecured trash cans?</label>
+                <label class="text-base font-semibold text-gray-900">Deal jackets unsecured?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2335,10 +2347,11 @@
                 collection="finance_q34_images"
             />
         </div>
-        <!-- 35 Deal jackets unsecured? -->
+        <!-- Filing cabinets securing customers NPI locked and secured? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Deal jackets unsecured?</label>
+                <label class="text-base font-semibold text-gray-900">Filing cabinets securing customers NPI locked and
+                    secured?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2402,10 +2415,11 @@
                 collection="finance_q35_images"
             />
         </div>
-        <!-- 36 Customer Information exposed/not secured? -->
+        <!-- Sales Tower area secured from NPI/customer documents being exposed? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Customer Information exposed/not secured?</label>
+                <label class="text-base font-semibold text-gray-900">Sales Tower area secured from NPI/customer
+                    documents being exposed?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2469,11 +2483,11 @@
                 collection="finance_q36_images"
             />
         </div>
-        <!-- 37 Filing cabinets securing customers NPI locked and secured? -->
+        <!-- Was Network Vulnerability Assessment Report completed, denote possible issues? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Filing cabinets securing customers NPI locked and
-                    secured?</label>
+                <label class="text-base font-semibold text-gray-900">Was Network Vulnerability \Assessment Report
+                    completed, denote possible issues?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2537,11 +2551,11 @@
                 collection="finance_q37_images"
             />
         </div>
-        <!-- 38 Sales Tower area has NPI exposure, unsecured customer documents -->
+        <!-- Are finance offices locked and secured when employee not present? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Sales Tower area has NPI exposure, unsecured
-                    customer documents</label>
+                <label class="text-base font-semibold text-gray-900">Are finance offices locked and secured when
+                    employee not present?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2605,11 +2619,10 @@
                 collection="finance_q38_images"
             />
         </div>
-        <!-- 39 Was Network Vulnerability Assessment Report completed, denote possible issues? -->
+        <!-- Are credit applications secured? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Was Network Vulnerability \Assessment Report
-                    completed, denote possible issues?</label>
+                <label class="text-base font-semibold text-gray-900">Are credit applications secured?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2673,11 +2686,11 @@
                 collection="finance_q39_images"
             />
         </div>
-        <!-- 40 Finance Office not locked exposing unsecured customer documents -->
+        <!-- Red Flag software being utilized to check for fraudulent applicants? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Finance Office not locked exposing unsecured
-                    customer documents</label>
+                <label class="text-base font-semibold text-gray-900">Red Flag software being utilized to check for
+                    fraudulent applicants?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2741,10 +2754,11 @@
                 collection="finance_q40_images"
             />
         </div>
-        <!-- 41 Credit application unsecured -->
+        <!-- Are managers’ offices locked and secured when not present? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Credit application unsecured</label>
+                <label class="text-base font-semibold text-gray-900">Are managers’ offices locked and secured when not
+                    present?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2808,11 +2822,11 @@
                 collection="finance_q41_images"
             />
         </div>
-        <!-- 42 Red Flag software being utilized to check for fraudulent applicants? -->
+        <!-- Are the sales Showroom doors secured prior to sales staff reporting to work? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Red Flag software being utilized to check for
-                    fraudulent applicants?</label>
+                <label class="text-base font-semibold text-gray-900">Are the sales Showroom doors secured prior to sales
+                    staff reporting to work?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2876,11 +2890,11 @@
                 collection="finance_q42_images"
             />
         </div>
-        <!-- 43 Managers’ offices not being secured when employee not present. -->
+        <!-- Are Buyers Guide properly displayed in a fully visible on all used cars? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Managers’ offices not being secured when employee
-                    not present.</label>
+                <label class="text-base font-semibold text-gray-900">Are Buyers Guide properly displayed in a fully
+                    visible on all used cars?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2944,11 +2958,10 @@
                 collection="finance_q43_images"
             />
         </div>
-        <!-- 44 Sales Showroom main exterior doors not secured prior to sales managers’ and employees reporting to work. -->
+        <!-- Are Buyers Guides filled out properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Sales Showroom main exterior doors not secured
-                    prior to sales managers’ and employees reporting to work.</label>
+                <label class="text-base font-semibold text-gray-900">Are Buyers Guides filled out properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3012,11 +3025,11 @@
                 collection="finance_q44_images"
             />
         </div>
-        <!-- 45 Use Car buyers guide not visibly posted on vehicles in parking lot/showroom -->
+        <!-- Any new cars missing a Monroney sticker placement? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Use Car buyers guide not visibly posted on vehicles
-                    in parking lot/showroom</label>
+                <label class="text-base font-semibold text-gray-900">Any new cars missing a Monroney sticker
+                    placement?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3080,10 +3093,11 @@
                 collection="finance_q45_images"
             />
         </div>
-        <!-- 46 Buyers Guide not filled out properly -->
+        <!-- Are the finance terms properly displayed on vehicle inventory? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Buyers Guide not filled out properly</label>
+                <label class="text-base font-semibold text-gray-900">Are the finance terms properly displayed on vehicle
+                    inventory?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3147,10 +3161,11 @@
                 collection="finance_q46_images"
             />
         </div>
-        <!-- 47 New car missing Monroney sticker placement. -->
+        <!-- Is the sales bull pin area (if present) secured properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">New car missing Monroney sticker placement.</label>
+                <label class="text-base font-semibold text-gray-900">Is the sales bull pin area (if present) secured
+                    properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3214,141 +3229,16 @@
                 collection="finance_q47_images"
             />
         </div>
-        <!-- 48 Improper finance terms noted/written on vehicle inventory -->
-        <div class="bg-gray-50 p-3 space-y-7">
+        <!-- please not any additional issue/violation found during your sales &amp; finance walk-thru audit. -->
+        <div class="bg-gray-50 p-3 space-y-3">
             <div>
-                <label class="text-base font-semibold text-gray-900">Improper finance terms noted/written on vehicle
-                    inventory</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="finance_q48_answer"
-                                value="1"
-                                name="finance_q48_answer"
-                                id="finance_q48_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="finance_q48_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="finance_q48_answer"
-                                value="2"
-                                name="finance_q48_answer"
-                                id="finance_q48_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="finance_q48_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="finance_q48_answer"
-                                value="3"
-                                name="finance_q48_answer"
-                                id="finance_q48_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="finance_q48_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <input wire:model="finance_q48_danger" type="checkbox" id="finance_q48_danger"
-                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="finance_q48_danger" class="font-medium text-red-500">Flag as high risk</label>
-                </div>
+                <label class="text-base font-semibold text-gray-900">Please not any additional issue/violation found
+                    during your sales &amp; finance walk-thru audit.</label>
             </div>
             <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.lazy="finance_q48_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                name="finance_q48_images"
-                :model="$financeAudit"
-                collection="finance_q48_images"
-            />
-        </div>
-        <!-- 49 Sale staff bull pin area not secured properly when employees not present -->
-        <div class="bg-gray-50 p-3 space-y-7">
-            <div>
-                <label class="text-base font-semibold text-gray-900">Sale staff bull pin area not secured properly when
-                    employees not present</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="finance_q49_answer"
-                                value="1"
-                                name="finance_q49_answer"
-                                id="finance_q49_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="finance_q49_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="finance_q49_answer"
-                                value="2"
-                                name="finance_q49_answer"
-                                id="finance_q49_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="finance_q49_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="finance_q49_answer"
-                                value="3"
-                                name="finance_q49_answer"
-                                id="finance_q49_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="finance_q49_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <input wire:model="finance_q49_danger" type="checkbox" id="finance_q49_danger"
-                           class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="finance_q49_danger" class="font-medium text-red-500">Flag as high risk</label>
-                </div>
-            </div>
-            <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
-                <textarea wire:model.lazy="finance_q49_comment" rows="3"
-                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-            </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                name="finance_q49_images"
-                :model="$financeAudit"
-                collection="finance_q49_images"
-            />
         </div>
         <div class="w-full sticky bottom-0 bg-arm-blue-200 p-5 z-20">
             <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row">
@@ -3387,33 +3277,33 @@
             </div>
         </div>
     </div>
-    <div wire:loading.delay class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity"></div>
-        <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-                <div
-                    class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
-                    <div>
-                        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                            <svg class="animate-spin h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                        stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor"
-                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                        </div>
-                        <div class="mt-3 text-center sm:mt-5">
-                            <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Audit
-                                Saving</h3>
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-500">This may take a few seconds, please don't close this
-                                    page.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{--    <div wire:loading.delay class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">--}}
+    {{--        <div class="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity"></div>--}}
+    {{--        <div class="fixed inset-0 z-10 overflow-y-auto">--}}
+    {{--            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">--}}
+    {{--                <div--}}
+    {{--                    class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">--}}
+    {{--                    <div>--}}
+    {{--                        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">--}}
+    {{--                            <svg class="animate-spin h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg"--}}
+    {{--                                 fill="none" viewBox="0 0 24 24">--}}
+    {{--                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"--}}
+    {{--                                        stroke-width="4"></circle>--}}
+    {{--                                <path class="opacity-75" fill="currentColor"--}}
+    {{--                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>--}}
+    {{--                            </svg>--}}
+    {{--                        </div>--}}
+    {{--                        <div class="mt-3 text-center sm:mt-5">--}}
+    {{--                            <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Audit--}}
+    {{--                                Saving</h3>--}}
+    {{--                            <div class="mt-2">--}}
+    {{--                                <p class="text-sm text-gray-500">This may take a few seconds, please don't close this--}}
+    {{--                                    page.</p>--}}
+    {{--                            </div>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 </form>

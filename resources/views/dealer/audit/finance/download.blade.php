@@ -32,7 +32,7 @@
         </div>
     </div>
     <ul class="divide-y divide-gray-300">
-        @if($financeAudit->finance_q1_answer === 2 || $financeAudit->finance_q1_answer === 3)
+        @if($financeAudit->finance_q1_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Has the Dealer
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q1_answer === 2 || $financeAudit->finance_q1_answer === 3)
+                @if($financeAudit->finance_q1_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -98,7 +98,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q2_answer === 2 || $financeAudit->finance_q2_answer === 3)
+        @if($financeAudit->finance_q2_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Has the written CMS been
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q2_answer === 2 || $financeAudit->finance_q2_answer === 3)
+                @if($financeAudit->finance_q2_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -164,7 +164,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q3_answer === 2 || $financeAudit->finance_q3_answer === 3)
+        @if($financeAudit->finance_q3_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Shredding bins over-
@@ -197,7 +197,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q3_answer === 2 || $financeAudit->finance_q3_answer === 3)
+                @if($financeAudit->finance_q3_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -230,7 +230,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q4_answer === 2 || $financeAudit->finance_q4_answer === 3)
+        @if($financeAudit->finance_q4_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Has complaint procedure
@@ -263,7 +263,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q4_answer === 2 || $financeAudit->finance_q4_answer === 3)
+                @if($financeAudit->finance_q4_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -296,7 +296,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q5_answer === 2 || $financeAudit->finance_q5_answer === 3)
+        @if($financeAudit->finance_q5_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Account department is not locked when employees are not present.</p>
@@ -327,7 +327,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q5_answer === 2 || $financeAudit->finance_q5_answer === 3)
+                @if($financeAudit->finance_q5_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -360,7 +360,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q6_answer === 2 || $financeAudit->finance_q6_answer === 3)
+        @if($financeAudit->finance_q6_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Have CMS policies been distributed to management and relevant employees?</p>
@@ -391,7 +391,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q6_answer === 2 || $financeAudit->finance_q6_answer === 3)
+                @if($financeAudit->finance_q6_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -424,7 +424,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q7_answer === 2 || $financeAudit->finance_q7_answer === 3)
+        @if($financeAudit->finance_q7_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Have employees and management acknowledged receipt of the above?</p>
@@ -455,7 +455,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q7_answer === 2 || $financeAudit->finance_q7_answer === 3)
+                @if($financeAudit->finance_q7_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -488,7 +488,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q8_answer === 2 || $financeAudit->finance_q8_answer === 3)
+        @if($financeAudit->finance_q8_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are employees and management completing training on a consistent basis?</p>
@@ -519,7 +519,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q8_answer === 2 || $financeAudit->finance_q8_answer === 3)
+                @if($financeAudit->finance_q8_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -552,7 +552,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q9_answer === 2 || $financeAudit->finance_q9_answer === 3)
+        @if($financeAudit->finance_q9_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are there policies and procedures in place to handle and respond to consumer
@@ -584,7 +584,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q9_answer === 2 || $financeAudit->finance_q9_answer === 3)
+                @if($financeAudit->finance_q9_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -617,7 +617,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q10_answer === 2 || $financeAudit->finance_q10_answer === 3)
+        @if($financeAudit->finance_q10_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Destruction of outdated NPI records?</p>
@@ -648,7 +648,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q10_answer === 2 || $financeAudit->finance_q10_answer === 3)
+                @if($financeAudit->finance_q10_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -681,7 +681,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q11_answer === 2 || $financeAudit->finance_q11_answer === 3)
+        @if($financeAudit->finance_q11_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">OFAC/SDN Listing documentation</p>
@@ -712,7 +712,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q11_answer === 2 || $financeAudit->finance_q11_answer === 3)
+                @if($financeAudit->finance_q11_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -745,7 +745,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q12_answer === 2 || $financeAudit->finance_q12_answer === 3)
+        @if($financeAudit->finance_q12_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Employees hired have signed confidentiality and security policy statements.</p>
@@ -776,7 +776,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q12_answer === 2 || $financeAudit->finance_q12_answer === 3)
+                @if($financeAudit->finance_q12_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -809,7 +809,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q13_answer === 2 || $financeAudit->finance_q13_answer === 3)
+        @if($financeAudit->finance_q13_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Password activation on computers</p>
@@ -840,7 +840,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q13_answer === 2 || $financeAudit->finance_q13_answer === 3)
+                @if($financeAudit->finance_q13_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -873,7 +873,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q14_answer === 2 || $financeAudit->finance_q14_answer === 3)
+        @if($financeAudit->finance_q14_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Service Writers trash can have RO’s and misc. NPI documents present.</p>
@@ -904,7 +904,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q14_answer === 2 || $financeAudit->finance_q14_answer === 3)
+                @if($financeAudit->finance_q14_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -937,7 +937,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q15_answer === 2 || $financeAudit->finance_q15_answer === 3)
+        @if($financeAudit->finance_q15_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Website privacy policy compliance.</p>
@@ -968,7 +968,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q15_answer === 2 || $financeAudit->finance_q15_answer === 3)
+                @if($financeAudit->finance_q15_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1001,7 +1001,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q16_answer === 2 || $financeAudit->finance_q16_answer === 3)
+        @if($financeAudit->finance_q16_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">"NPI Check-Out Log" being utilized in accounting.</p>
@@ -1032,7 +1032,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q16_answer === 2 || $financeAudit->finance_q16_answer === 3)
+                @if($financeAudit->finance_q16_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1065,7 +1065,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q17_answer === 2 || $financeAudit->finance_q17_answer === 3)
+        @if($financeAudit->finance_q17_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Review "Certificate of Destruction" receipts from shredding company</p>
@@ -1096,7 +1096,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q17_answer === 2 || $financeAudit->finance_q17_answer === 3)
+                @if($financeAudit->finance_q17_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1129,7 +1129,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q18_answer === 2 || $financeAudit->finance_q18_answer === 3)
+        @if($financeAudit->finance_q18_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Computer terminals not being logged off to activating screensaver password?</p>
@@ -1160,7 +1160,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q18_answer === 2 || $financeAudit->finance_q18_answer === 3)
+                @if($financeAudit->finance_q18_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1193,7 +1193,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q19_answer === 2 || $financeAudit->finance_q19_answer === 3)
+        @if($financeAudit->finance_q19_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Computer terminal not set to automatically log off after 5 minutes of
@@ -1225,7 +1225,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q19_answer === 2 || $financeAudit->finance_q19_answer === 3)
+                @if($financeAudit->finance_q19_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1258,7 +1258,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q20_answer === 2 || $financeAudit->finance_q20_answer === 3)
+        @if($financeAudit->finance_q20_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are network firewalls being monitored for intrusion.</p>
@@ -1289,7 +1289,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q20_answer === 2 || $financeAudit->finance_q20_answer === 3)
+                @if($financeAudit->finance_q20_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1322,7 +1322,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q21_answer === 2 || $financeAudit->finance_q21_answer === 3)
+        @if($financeAudit->finance_q21_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Written IT policies regarding the use of flash drives, downloading software and
@@ -1354,7 +1354,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q21_answer === 2 || $financeAudit->finance_q21_answer === 3)
+                @if($financeAudit->finance_q21_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1387,7 +1387,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q22_answer === 2 || $financeAudit->finance_q22_answer === 3)
+        @if($financeAudit->finance_q22_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Have there been any network intrusions or security breaches since last
@@ -1419,7 +1419,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q22_answer === 2 || $financeAudit->finance_q22_answer === 3)
+                @if($financeAudit->finance_q22_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1452,7 +1452,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q23_answer === 2 || $financeAudit->finance_q23_answer === 3)
+        @if($financeAudit->finance_q23_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Has a Security Risk Assessment been completed?</p>
@@ -1483,7 +1483,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q23_answer === 2 || $financeAudit->finance_q23_answer === 3)
+                @if($financeAudit->finance_q23_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1516,7 +1516,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q24_answer === 2 || $financeAudit->finance_q24_answer === 3)
+        @if($financeAudit->finance_q24_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Written Response Plan been created?</p>
@@ -1547,7 +1547,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q24_answer === 2 || $financeAudit->finance_q24_answer === 3)
+                @if($financeAudit->finance_q24_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1580,7 +1580,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q25_answer === 2 || $financeAudit->finance_q25_answer === 3)
+        @if($financeAudit->finance_q25_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">IT Technical requirements been implemented for Encryption, MFA and System
@@ -1612,7 +1612,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q25_answer === 2 || $financeAudit->finance_q25_answer === 3)
+                @if($financeAudit->finance_q25_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1645,7 +1645,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q26_answer === 2 || $financeAudit->finance_q26_answer === 3)
+        @if($financeAudit->finance_q26_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Cashiers area unsecured</p>
@@ -1676,7 +1676,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q26_answer === 2 || $financeAudit->finance_q26_answer === 3)
+                @if($financeAudit->finance_q26_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1709,7 +1709,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q27_answer === 2 || $financeAudit->finance_q27_answer === 3)
+        @if($financeAudit->finance_q27_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Review new Third Party provider agreements for safeguard language and
@@ -1741,7 +1741,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q27_answer === 2 || $financeAudit->finance_q27_answer === 3)
+                @if($financeAudit->finance_q27_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1774,7 +1774,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q28_answer === 2 || $financeAudit->finance_q28_answer === 3)
+        @if($financeAudit->finance_q28_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Have Third Party Providers been vetted for required compliance practices,
@@ -1806,7 +1806,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q28_answer === 2 || $financeAudit->finance_q28_answer === 3)
+                @if($financeAudit->finance_q28_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1839,7 +1839,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q29_answer === 2 || $financeAudit->finance_q29_answer === 3)
+        @if($financeAudit->finance_q29_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">ASales desks not secured and have customer document exposed</p>
@@ -1870,7 +1870,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q29_answer === 2 || $financeAudit->finance_q29_answer === 3)
+                @if($financeAudit->finance_q29_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1903,7 +1903,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q30_answer === 2 || $financeAudit->finance_q30_answer === 3)
+        @if($financeAudit->finance_q30_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Check Can Spam Unsubscribe compliance.</p>
@@ -1934,7 +1934,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q30_answer === 2 || $financeAudit->finance_q30_answer === 3)
+                @if($financeAudit->finance_q30_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1967,7 +1967,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q31_answer === 2 || $financeAudit->finance_q31_answer === 3)
+        @if($financeAudit->finance_q31_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Check for Telemarketing Do Not Call rules compliance: i.e., what
@@ -2000,7 +2000,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q31_answer === 2 || $financeAudit->finance_q31_answer === 3)
+                @if($financeAudit->finance_q31_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2033,7 +2033,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q32_answer === 2 || $financeAudit->finance_q32_answer === 3)
+        @if($financeAudit->finance_q32_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">NPI documents publicly exposed, not secured properly</p>
@@ -2064,7 +2064,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q32_answer === 2 || $financeAudit->finance_q32_answer === 3)
+                @if($financeAudit->finance_q32_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2097,7 +2097,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q33_answer === 2 || $financeAudit->finance_q33_answer === 3)
+        @if($financeAudit->finance_q33_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Breach in password sharing?</p>
@@ -2128,7 +2128,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q33_answer === 2 || $financeAudit->finance_q33_answer === 3)
+                @if($financeAudit->finance_q33_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2161,7 +2161,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q34_answer === 2 || $financeAudit->finance_q34_answer === 3)
+        @if($financeAudit->finance_q34_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Customers NPI in unsecured trash cans?</p>
@@ -2192,7 +2192,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q34_answer === 2 || $financeAudit->finance_q34_answer === 3)
+                @if($financeAudit->finance_q34_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2225,7 +2225,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q35_answer === 2 || $financeAudit->finance_q35_answer === 3)
+        @if($financeAudit->finance_q35_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Deal jackets unsecured?</p>
@@ -2256,7 +2256,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q35_answer === 2 || $financeAudit->finance_q35_answer === 3)
+                @if($financeAudit->finance_q35_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2289,7 +2289,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q36_answer === 2 || $financeAudit->finance_q36_answer === 3)
+        @if($financeAudit->finance_q36_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Customer Information exposed/not secured?</p>
@@ -2320,7 +2320,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q36_answer === 2 || $financeAudit->finance_q36_answer === 3)
+                @if($financeAudit->finance_q36_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2353,7 +2353,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q37_answer === 2 || $financeAudit->finance_q37_answer === 3)
+        @if($financeAudit->finance_q37_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Filing cabinets securing customers NPI locked and secured?</p>
@@ -2384,7 +2384,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q37_answer === 2 || $financeAudit->finance_q37_answer === 3)
+                @if($financeAudit->finance_q37_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2417,7 +2417,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q38_answer === 2 || $financeAudit->finance_q38_answer === 3)
+        @if($financeAudit->finance_q38_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Sales Tower area has NPI exposure, unsecured customer documents</p>
@@ -2448,7 +2448,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q38_answer === 2 || $financeAudit->finance_q38_answer === 3)
+                @if($financeAudit->finance_q38_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2481,7 +2481,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q39_answer === 2 || $financeAudit->finance_q39_answer === 3)
+        @if($financeAudit->finance_q39_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Was Network Vulnerability \Assessment Report completed, denote possible
@@ -2513,7 +2513,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q39_answer === 2 || $financeAudit->finance_q39_answer === 3)
+                @if($financeAudit->finance_q39_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2546,7 +2546,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q40_answer === 2 || $financeAudit->finance_q40_answer === 3)
+        @if($financeAudit->finance_q40_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Finance Office not locked exposing unsecured customer documents</p>
@@ -2577,7 +2577,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q40_answer === 2 || $financeAudit->finance_q40_answer === 3)
+                @if($financeAudit->finance_q40_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2610,7 +2610,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q41_answer === 2 || $financeAudit->finance_q41_answer === 3)
+        @if($financeAudit->finance_q41_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Credit application unsecured</p>
@@ -2641,7 +2641,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q41_answer === 2 || $financeAudit->finance_q41_answer === 3)
+                @if($financeAudit->finance_q41_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2674,7 +2674,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q42_answer === 2 || $financeAudit->finance_q42_answer === 3)
+        @if($financeAudit->finance_q42_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Red Flag software being utilized to check for fraudulent applicants?</p>
@@ -2705,7 +2705,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q42_answer === 2 || $financeAudit->finance_q42_answer === 3)
+                @if($financeAudit->finance_q42_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2738,7 +2738,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q43_answer === 2 || $financeAudit->finance_q43_answer === 3)
+        @if($financeAudit->finance_q43_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Managers’ offices not being secured when employee not present.</p>
@@ -2769,7 +2769,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q43_answer === 2 || $financeAudit->finance_q43_answer === 3)
+                @if($financeAudit->finance_q43_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2802,7 +2802,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q44_answer === 2 || $financeAudit->finance_q44_answer === 3)
+        @if($financeAudit->finance_q44_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Sales Showroom main exterior doors not secured prior to sales managers’ and
@@ -2834,7 +2834,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q44_answer === 2 || $financeAudit->finance_q44_answer === 3)
+                @if($financeAudit->finance_q44_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2867,7 +2867,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q45_answer === 2 || $financeAudit->finance_q45_answer === 3)
+        @if($financeAudit->finance_q45_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Use Car buyers guide not visibly posted on vehicles in parking lot/showroom</p>
@@ -2898,7 +2898,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q45_answer === 2 || $financeAudit->finance_q45_answer === 3)
+                @if($financeAudit->finance_q45_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2931,7 +2931,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q46_answer === 2 || $financeAudit->finance_q46_answer === 3)
+        @if($financeAudit->finance_q46_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Buyers Guide not filled out properly</p>
@@ -2962,7 +2962,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q46_answer === 2 || $financeAudit->finance_q46_answer === 3)
+                @if($financeAudit->finance_q46_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2995,7 +2995,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q47_answer === 2 || $financeAudit->finance_q47_answer === 3)
+        @if($financeAudit->finance_q47_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">New car missing Monroney sticker placement.</p>
@@ -3026,7 +3026,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q47_answer === 2 || $financeAudit->finance_q47_answer === 3)
+                @if($financeAudit->finance_q47_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -3059,7 +3059,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q48_answer === 2 || $financeAudit->finance_q48_answer === 3)
+        @if($financeAudit->finance_q48_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Improper finance terms noted/written on vehicle inventory</p>
@@ -3090,7 +3090,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q48_answer === 2 || $financeAudit->finance_q48_answer === 3)
+                @if($financeAudit->finance_q48_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -3123,7 +3123,7 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q49_answer === 2 || $financeAudit->finance_q49_answer === 3)
+        @if($financeAudit->finance_q49_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Sale staff bull pin area not secured properly when employees not present</p>
@@ -3154,7 +3154,7 @@
                         </div>
                     </div>
                 @endif
-                @if($financeAudit->finance_q49_answer === 2 || $financeAudit->finance_q49_answer === 3)
+                @if($financeAudit->finance_q49_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
