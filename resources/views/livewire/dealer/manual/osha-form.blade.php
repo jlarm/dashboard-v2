@@ -66,7 +66,7 @@
                                     <label for="qi" class="block text-sm font-medium text-gray-700">Qualified Individual
                                         Name</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="qi" type="text" name="qi" id="qi"
+                                        <input wire:model="qi" type="text" name="qi" id="qi"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('qi')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -77,7 +77,7 @@
                                     <label for="qip" class="block text-sm font-medium text-gray-700">Phone
                                         Number</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="qip" type="text" name="qip" id="qip"
+                                        <input wire:model="qip" type="text" name="qip" id="qip"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('qip')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -90,7 +90,7 @@
                                     <label for="sm" class="block text-sm font-medium text-gray-700">Service
                                         Manager</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="sm" type="text" name="sm" id="sm"
+                                        <input wire:model="sm" type="text" name="sm" id="sm"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('sm')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -101,7 +101,7 @@
                                     <label for="smp" class="block text-sm font-medium text-gray-700">Phone
                                         Number</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="smp" type="text" name="smp" id="smp"
+                                        <input wire:model="smp" type="text" name="smp" id="smp"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('smp')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -114,7 +114,7 @@
                                     <label for="pm" class="block text-sm font-medium text-gray-700">Parts
                                         Manager</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="pm" type="text" name="pm" id="pm"
+                                        <input wire:model="pm" type="text" name="pm" id="pm"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('pm')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -125,7 +125,7 @@
                                     <label for="pmp" class="block text-sm font-medium text-gray-700">Phone
                                         Number</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="pmp" type="text" name="pmp" id="pmp"
+                                        <input wire:model="pmp" type="text" name="pmp" id="pmp"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('pmp')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -138,7 +138,7 @@
                                     <label for="bsm" class="block text-sm font-medium text-gray-700">Body Shop
                                         Manager</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="bsm" type="text" name="bsm" id="bsm"
+                                        <input wire:model="bsm" type="text" name="bsm" id="bsm"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('bsm')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -149,7 +149,7 @@
                                     <label for="bsmp" class="block text-sm font-medium text-gray-700">Phone
                                         Number</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="bsmp" type="text" name="bsmp" id="bsmp"
+                                        <input wire:model="bsmp" type="text" name="bsmp" id="bsmp"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('bsmp')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -162,7 +162,7 @@
                                     <label for="gm" class="block text-sm font-medium text-gray-700">General
                                         Manager</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="gm" type="text" name="gm" id="gm"
+                                        <input wire:model="gm" type="text" name="gm" id="gm"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('gm')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -173,7 +173,7 @@
                                     <label for="gmp" class="block text-sm font-medium text-gray-700">Phone
                                         Number</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="gmp" type="text" name="gmp" id="gmp"
+                                        <input wire:model="gmp" type="text" name="gmp" id="gmp"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('gmp')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -185,7 +185,7 @@
                                 <div>
                                     <label for="owner" class="block text-sm font-medium text-gray-700">Owner</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="owner" type="text" name="owner" id="owner"
+                                        <input wire:model="owner" type="text" name="owner" id="owner"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('owner')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -196,7 +196,7 @@
                                     <label for="ownerp" class="block text-sm font-medium text-gray-700">Phone
                                         Number</label>
                                     <div class="mt-1">
-                                        <input disabled wire:model="ownerp" type="text" name="ownerp" id="ownerp"
+                                        <input wire:model="ownerp" type="text" name="ownerp" id="ownerp"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                         @error('ownerp')
                                         <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -217,7 +217,7 @@
                                             Emergency
                                             Phone Number</label>
                                         <div class="mt-1">
-                                            <input disabled wire:model.defer="pepn" type="text" name="pepn" id="pepn"
+                                            <input wire:model.defer="pepn" type="text" name="pepn" id="pepn"
                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                             @error('pepn')
                                             <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -228,7 +228,7 @@
                                         <label for="pnepn" class="block text-sm font-medium text-gray-700">Police
                                             Non-Emergency Phone Number</label>
                                         <div class="mt-1">
-                                            <input disabled wire:model.defer="pnepn" type="text" name="pnepn" id="pnepn"
+                                            <input wire:model.defer="pnepn" type="text" name="pnepn" id="pnepn"
                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                             @error('pnepn')
                                             <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -241,7 +241,7 @@
                                         <label for="fepn" class="block text-sm font-medium text-gray-700">Fire Emergency
                                             Phone Number</label>
                                         <div class="mt-1">
-                                            <input disabled wire:model.defer="fepn" type="text" name="fepn" id="fepn"
+                                            <input wire:model.defer="fepn" type="text" name="fepn" id="fepn"
                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                             @error('fepn')
                                             <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -252,7 +252,7 @@
                                         <label for="fnepn" class="block text-sm font-medium text-gray-700">Fire
                                             Non-Emergency Phone Number</label>
                                         <div class="mt-1">
-                                            <input disabled wire:model.defer="fnepn" type="text" name="fnepn" id="fnepn"
+                                            <input wire:model.defer="fnepn" type="text" name="fnepn" id="fnepn"
                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                             @error('fnepn')
                                             <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -266,7 +266,7 @@
                                 <label for="alarmSystem" class="block text-sm font-medium text-gray-700">What type of
                                     fire alarm System do you use?</label>
                                 <div class="mt-1">
-                                    <input disabled wire:model.defer="alarmSystem" type="text" name="alarmSystem"
+                                    <input wire:model.defer="alarmSystem" type="text" name="alarmSystem"
                                            id="alarmSystem"
                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                     @error('alarmSystem')
@@ -278,7 +278,7 @@
                                 <label for="alarmSystem" class="block text-sm font-medium text-gray-700">What type of
                                     burglar alarm system do you use?</label>
                                 <div class="mt-1">
-                                    <input disabled wire:model.defer="burglarSystem" type="text" name="alarmSystem"
+                                    <input wire:model.defer="burglarSystem" type="text" name="alarmSystem"
                                            id="alarmSystem"
                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                     @error('alarmSystem')
@@ -297,7 +297,7 @@
                     <h1 class="text-arm-blue-600">Emergency Action Plan</h1>
                     <div>
                         <h2>Purpose</h2>
-                        <p><strong>{{ config('app.name') }}</strong> is dedicated to the protection of its employees
+                        <p><strong>{{ tenant('name') }}</strong> is dedicated to the protection of its employees
                             from emergencies such as
                             tornadoes and fires. When emergencies do occur, our Emergency Action Plan (EAP) is
                             initiated.
@@ -306,7 +306,7 @@
                             procedures
                             to be followed by employees in case of a workplace emergency.</p>
                         <p>OSHA's Emergency Action Plan requirements, found at 29 CFR 1910.38(a), require
-                            <strong>{{ config('app.name') }}</strong> to have a written emergency action plan (EAP).
+                            <strong>{{ tenant('name') }}</strong> to have a written emergency action plan (EAP).
                             This plan applies to all operations
                             in our company where employees may encounter an emergency situation.</p>
                         <p>The EAP communicates to employees, policies and procedures to follow in emergencies. This
@@ -370,19 +370,24 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>John Doe</td>
+                                <td>{{ $owner }}</td>
+                                <td>Owner</td>
+                                <td>{{ $ownerp }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ $gm }}</td>
                                 <td>General Manager</td>
-                                <td>555-555-5555</td>
+                                <td>{{ $gmp }}</td>
                             </tr>
                             <tr>
-                                <td>John Doe</td>
+                                <td>{{ $sm }}</td>
                                 <td>Service Manager</td>
-                                <td>555-555-5555</td>
+                                <td>{{ $smp }}</td>
                             </tr>
                             <tr>
-                                <td>John Doe</td>
+                                <td>{{ $pm }}</td>
                                 <td>Parts Manager</td>
-                                <td>555-555-5555</td>
+                                <td>{{ $pmp }}</td>
                             </tbody>
                         </table>
                         <p>These telephone numbers of key management personnel have been distributed to the following
@@ -398,14 +403,14 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>John Doe</td>
+                                <td>{{ $gm }}</td>
                                 <td>General Manager</td>
-                                <td>555-555-5555</td>
+                                <td>{{ $gmp }}</td>
                             </tr>
                             <tr>
-                                <td>John Doe</td>
+                                <td>{{ $sm }}</td>
                                 <td>Service Manager</td>
-                                <td>555-555-5555</td>
+                                <td>{{ $smp }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -418,9 +423,9 @@
                         <h2>Alarms</h2>
                         <p>Different emergencies call for different alarms to indicate what actions employees should
                             take.
-                            <strong>{{ config('app.name') }}</strong> has established an employee alarm system that
+                            <strong>{{ tenant('name') }}</strong> has established an employee alarm system that
                             complies with 29 CFR 1910.165.
-                            <strong>{{ config('app.name') }}</strong> uses in house fire suppression... We use a
+                            <strong>{{ tenant('name') }}</strong> uses in house fire suppression... We use a
                             distinctive alarm capable of
                             identification as a signal whether or not to evacuate for each emergency. We realize that
                             where
@@ -536,7 +541,7 @@
                             expands, the EAP Administrator may send employees home by normal means or provide them
                             with transportation to an offsite location.</p>
                         <h2>Non-Evacuation Emergency Procedures</h2>
-                        <p><strong>{{ config('app.name') }}</strong> has the following non-evacuation procedures:</p>
+                        <p><strong>{{ tenant('name') }}</strong> has the following non-evacuation procedures:</p>
                         <p>Proceed to the nearest shelter, or move to a different area a safe distance from the
                             emergency.</p>
                         <p><i>Responding to a tornado alarm</i></p>
@@ -598,7 +603,7 @@
                     <h1 class="text-arm-blue-600">Hazard Communication Program</h1>
                     <h2>Purpose</h2>
                     <p>The purpose of this program is to inform interested persons, including employees, that
-                        <strong>{{ config('app.name') }}</strong> is complying with the OSHA Hazard Communication
+                        <strong>{{ tenant('name') }}</strong> is complying with the OSHA Hazard Communication
                         Standard, Title 29 Code of
                         Federal Regulations 1910.1200, by compiling a hazardous chemicals list, by using material
                         safety data sheets (SDSs), by ensuring that containers are labeled, and by providing our
@@ -717,7 +722,7 @@
                         service department.</p>
                     <h3>General</h3>
                     <p>HAZWOPER is a complicated regulation, with many different elements required. At
-                        <strong>{{ config('app.name') }}</strong>
+                        <strong>{{ tenant('name') }}</strong>
                         we have done a thorough job of complying with the many aspects of HAZWOPER.</p>
                     <p>Because employees use a variety of types of PPE and/or respiratory equipment, in their day-to-
                         day operations, or in the event of a chemical spill, we needed to develop PPE and/or
@@ -830,7 +835,7 @@
                     <p>This procedure establishes this company&#39;s requirements for the lockout of energy isolating
                         devices whenever maintenance or servicing is done on machines or equipment, in accordance
                         with the requirements of OSHA&#39;s 1910.147. This program applies to all work operations at
-                        <strong>{{ config('app.name') }}</strong> where employees must deal with lockout/tagout
+                        <strong>{{ tenant('name') }}</strong> where employees must deal with lockout/tagout
                         situations as part of their job
                         duties to ensure that the machine or equipment is stopped, isolated from all potentially
                         hazardous energy sources, and locked out before employees perform any servicing or
@@ -838,7 +843,7 @@
                     <h2>Authorized and Affected Employees</h2>
                     <p>Authorized employees subject to the requirements of this program and to be trained on their
                         duties within it include: outside certified contractor/electrical company employees and
-                        supervisory personnel only, no hourly employees from <strong>{{ config('app.name') }}</strong>
+                        supervisory personnel only, no hourly employees from <strong>{{ tenant('name') }}</strong>
                         are authorized to utilize
                         lockout/tagout equipment. Affected employees subject to the requirements of this program and to
                         be trained on their duties
@@ -945,13 +950,13 @@
                     <h1 class="text-arm-blue-600">Electrical Safety Plan</h1>
                     <h2>General Company Policy</h2>
                     <p>The purpose of this program is to inform interested persons, including employees, that
-                        <strong>{{ config('app.name') }}</strong> is complying with the OSHA Electrical Safety Standard,
+                        <strong>{{ tenant('name') }}</strong> is complying with the OSHA Electrical Safety Standard,
                         Title 29 Code of Federal
                         Regulations 1910.333, by determining that this workplace needs written procedures for
                         preventing electric shock or other injuries resulting from direct/indirect electrical contacts
                         to
                         employees working on or near energized or deenergized parts. This program applies to all work
-                        operations at <strong>{{ config('app.name') }}</strong> where employees may be exposed to live
+                        operations at <strong>{{ tenant('name') }}</strong> where employees may be exposed to live
                         parts and/or those parts
                         that have been deenergized.</p>
                     <p><strong>{{ $qi }}</strong> has overall responsibility for coordinating safety and health programs
@@ -970,7 +975,7 @@
                         component of our overall safety plan. We strive for clear understanding, safe work practices,
                         and involvement in the program from every level of the company.</p>
                     <h2>Hazard Analysis Report</h2>
-                    <p>To determine areas of <strong>{{ config('app.name') }}</strong> that need to be included in the
+                    <p>To determine areas of <strong>{{ tenant('name') }}</strong> that need to be included in the
                         Electrical Safety Program,
                         the service manager has conducted a hazard analysis of our workplace. This analysis located in
                         shop foreman’s office, has provided us with information identifying which departments have
@@ -994,7 +999,7 @@
                         knowledge of electrical circuitry are considered an unqualified person who has little or no
                         training in avoiding the electrical hazards of working on or near exposed energized parts.</p>
                     <h2>Training Program</h2>
-                    <p>Every employee at <strong>{{ config('app.name') }}</strong> who faces the risk of electric shock
+                    <p>Every employee at <strong>{{ tenant('name') }}</strong> who faces the risk of electric shock
                         from working on or near
                         energized or deenergized electrical sources receives training in electrical related safety work
                         practices pertaining to the individual&#39;s job assignment.</p>
@@ -1014,7 +1019,7 @@
                         knowledge (&quot;unqualified&quot;) of electrical circuitry but must work near or on such
                         electrical
                         equipment. This training must be completed before participants will be allowed to work in areas
-                        of <strong>{{ config('app.name') }}</strong> where electrical hazards exist.</p>
+                        of <strong>{{ tenant('name') }}</strong> where electrical hazards exist.</p>
                     <p>The format we follow for our training program receives both classroom instruction through on-
                         line web base training on electrical safety and on-the-job training.</p>
                     <p>The procedures we follow when training new employees who will be working on or near
@@ -1024,7 +1029,7 @@
                         safety of all affected workers. In this case, we follow these procedures: immediate on-the-job
                         training will take place when situations such as new equipment, reorganization and remodeling
                         take place in the dealership.</p>
-                    <p><strong>{{ config('app.name') }}</strong> conducts the electrical safety training for all
+                    <p><strong>{{ tenant('name') }}</strong> conducts the electrical safety training for all
                         employees. Every employee who
                         participates in the Electrical Safety Program receives an acknowledgement from the web base
                         training program which they will sign off on verifying that they have completed the course, that
@@ -1033,7 +1038,7 @@
                         training
                         materials and documentation are kept on dealership’s online compliance dashboard.</p>
                     <h2>Lockout and Tagging Program</h2>
-                    <p>It is a <strong>{{ config('app.name') }}</strong> policy that circuits and equipment must be
+                    <p>It is a <strong>{{ tenant('name') }}</strong> policy that circuits and equipment must be
                         disconnected from all electric
                         energy sources before work on them begins. We use lockout and tagging devices to prevent the
                         accidental reenergization of this equipment. Lockout and tagout procedures are the main
@@ -1186,7 +1191,7 @@
                     <h2>Evaluation of Pollution Sources</h2>
                     <p>We maintain a current drainage site map and topographic map of our facility.</p>
                     <p>We have had no significant spills and leaks of toxic or hazardous materials at our facility.</p>
-                    <p><strong>{{ config('app.name') }}</strong> has no significant materials that have been treated,
+                    <p><strong>{{ tenant('name') }}</strong> has no significant materials that have been treated,
                         stored or disposed in a manner to allow exposure to stormwater.</p>
                     <p>At our facility, the following activities have a high potential for contaminating stormwater:
                         working with the removal and storage of gasoline, oils, antifreeze etc. the following pollutants
@@ -1256,7 +1261,7 @@
                         instead.</p>
                     <h2>Purpose</h2>
                     <p>This plan provides one source of written documentation for used oil records for
-                        <strong>{{ config('app.name') }}</strong>. In addition, this plan will inform interested
+                        <strong>{{ tenant('name') }}</strong>. In addition, this plan will inform interested
                         persons, including company and contractor employees, about this company's compliance with
                         Environmental Protection Agency (EPA) requirements (found at 40 CFR 279) for used oil
                         generators.</p>
@@ -1419,7 +1424,7 @@
                         <li>The used oil management standards define a used oil transporter as any person who transports
                             used oil, any person who collects used oil from more than one generator and transports the
                             collected oil, and owners and operators of used oil transfer facilities."
-                            <strong>{{ config('app.name') }}</strong> utilizes a waste transport company for hauling our
+                            <strong>{{ tenant('name') }}</strong> utilizes a waste transport company for hauling our
                             used oil and other products for proper disposal. Our transporter has an EPA ID number and
                             complies with all relevant used oil regulations, including keeping tracking records of where
                             the used oil is collected and where it will be transported to.
@@ -1481,7 +1486,7 @@
                         employees from respiratory hazards in accordance with the requirements of OSHA 29 CFR
                         1910.134.</p>
                     <h2>Administrative Duties</h2>
-                    <p>At <strong>{{ config('app.name') }}</strong> our Respiratory Protection Program Administrator is
+                    <p>At <strong>{{ tenant('name') }}</strong> our Respiratory Protection Program Administrator is
                         body <strong>{{ $bsm }}</strong>.</p>
                     <p>The body shop manager is also qualified by appropriate training and experience that is
                         commensurate with the complexity of the program to administer or oversee our Respiratory
@@ -1548,14 +1553,14 @@
                     <p>For information regarding the types of respirators in use at this facility and their uses, see
                         the table in the full plan.</p>
                     <h2>Medical Evaluations</h2>
-                    <p>At <strong>{{ config('app.name') }}</strong>, persons will not be assigned to tasks requiring use
+                    <p>At <strong>{{ tenant('name') }}</strong>, persons will not be assigned to tasks requiring use
                         of respirators nor fit tested unless it has been determined that they are physically able to
                         perform the work and use the respirator.</p>
                     <p>Medical evaluations are provided according to the requirements of 29 CFR 1910.134(e).</p>
                     <p>Employees may contact their supervisor for a copy of their confidential medical evaluation or
                         questionnaire.</p>
                     <h2>Fit Test Procedures</h2>
-                    <p><strong>{{ config('app.name') }}</strong> makes sure that employees are fit tested:</p>
+                    <p><strong>{{ tenant('name') }}</strong> makes sure that employees are fit tested:</p>
                     <ul>
                         <li>before they are required to use a respirator,</li>
                         <li>according to 29 CFR 1910.134(f), and</li>
@@ -1799,10 +1804,10 @@
                     <h2>Training</h2>
                     <p>Employee training is an important part of the respiratory protection program and is essential for
                         correct respirator use. Our training program is provided by assigned outside vendors and
-                        <strong>{{ config('app.name') }}</strong> according to 29 CFR 1910.134(k).</p>
+                        <strong>{{ tenant('name') }}</strong> according to 29 CFR 1910.134(k).</p>
                     <p>See attached training curriculum/materials.</p>
                     <h2>Program Evaluation</h2>
-                    <p>At <strong>{{ config('app.name') }}</strong>, program evaluation is performed annually by our
+                    <p>At <strong>{{ tenant('name') }}</strong>, program evaluation is performed annually by our
                         body shop manager according to 29 CFR 1910.134(l).</p>
                     <h2>Appendices</h2>
                     <p>The following documents are attached to this Respiratory Protection Program: none</p>
@@ -1847,7 +1852,7 @@
                     <p><i>Labels</i></p>
                     <p>The plan indicates which labeling method(s) is used in this facility. <strong>{{ $sm }}</strong>,
                         ensures that proper, effective labeling is used. The local health department and
-                        <strong>{{ config('app.name') }}</strong> provides training to employees on hepatitis B
+                        <strong>{{ tenant('name') }}</strong> provides training to employees on hepatitis B
                         vaccinations, addressing the safety, benefits, efficacy, methods of administration, and
                         availability. Personal physician provides vaccinations at the physicians’ location.</p>
                     <h2>Hepatitis B Vaccination Post-exposure and Evaluation</h2>
@@ -1884,7 +1889,7 @@
                         assessment, protective measures in place, and PPE in use at this company.</p>
                     <p>While OSHA's Personal Protective Equipment regulation, found at 29 CFR 1910.132-.140 (Subpart I),
                         does not explicitly require a written Personal Protective Equipment (PPE) Program,
-                        <strong>{{ config('app.name') }}</strong> has developed a written PPE program to document and
+                        <strong>{{ tenant('name') }}</strong> has developed a written PPE program to document and
                         specify all information relative to our PPE needs.</p>
                     <p>The <strong>{{ $sm }}</strong>, is the program coordinator, acting as the representative of the
                         plant manager, who has overall responsibility for the program. The service manager will
@@ -1989,7 +1994,7 @@
                 <article id="cgp">
                     <h1 class="text-arm-blue-600">Compressed Gas Plan</h1>
                     <h2>Purpose</h2>
-                    <p>It is the policy of <strong>{{ config('app.name') }}</strong> to permit only trained and
+                    <p>It is the policy of <strong>{{ tenant('name') }}</strong> to permit only trained and
                         authorized employees to handle, store,
                         use, and inspect compressed gases and equipment at any time.</p>
                     <h2>Administrative Duties</h2>
@@ -2043,7 +2048,7 @@
                     <h2>Welding and Cutting Equipment</h2>
                     <p>Our company uses welding and cutting equipment according to the table in the full plan.</p>
                     <h2>Training</h2>
-                    <p>It is the policy of <strong>{{ config('app.name') }}</strong> to permit only trained and
+                    <p>It is the policy of <strong>{{ tenant('name') }}</strong> to permit only trained and
                         authorized personnel to operate
                         welding and cutting equipment. The service manager will identify all new employees in the
                         employee orientation program and make arrangements with department management to
@@ -2315,7 +2320,7 @@
                     <h1 class="text-arm-blue-600">Fire Prevention Plan</h1>
                     <h2>Purpose</h2>
                     <p>OSHA&#39;s Fire Prevention Plan regulation, found at 29 CFR 1910.38(b), requires
-                        <strong>{{ config('app.name') }}</strong>, to
+                        <strong>{{ tenant('name') }}</strong>, to
                         have a written fire prevention plan (FPP). This plan applies to all operations in our company
                         where employees may encounter a fire.</p>
                     <p>This Fire Prevention Plan (FPP) is in place at this company to control and reduce the possibility
@@ -2352,7 +2357,7 @@
                         and
                         involvement in the plan from every level of the company.</p>
                     <h2>Plan Coordinator Responsibilities</h2>
-                    <p>Here at <strong>{{ config('app.name') }}</strong>, the Plan Coordinator,
+                    <p>Here at <strong>{{ tenant('name') }}</strong>, the Plan Coordinator,
                         <strong>{{ $qi }}</strong>, or designee, is responsible
                         for the following activities. He or she must:</p>
                     <ol>
@@ -2571,7 +2576,7 @@
                         <li>Standardize procedures for use and care of the equipment,</li>
                         <li>Provide a consistent format for training employees on the proper procedures to be used,</li>
                         <li>Minimize the possibility of injury or harm to our employees, and</li>
-                        <li>Demonstrate <strong>{{ config('app.name') }}&#39;s</strong> compliance with machine safety
+                        <li>Demonstrate <strong>{{ tenant('name') }}&#39;s</strong> compliance with machine safety
                             and equipment usage
                             requirements for general industry in Subpart O and P of 29 CFR 1910.
                         </li>
