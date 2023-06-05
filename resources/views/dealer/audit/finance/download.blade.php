@@ -167,9 +167,8 @@
         @if($financeAudit->finance_q3_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Shredding bins over-
-                        flowing and need to be
-                        cleaned out.</p>
+                    <p class="font-bold">Are shredding bins being utilized in
+                        dealership?</p>
                     <p>
                         @if($financeAudit->finance_q3_answer === 1)
                             Yes
@@ -233,9 +232,7 @@
         @if($financeAudit->finance_q4_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Has complaint procedure
-                        been established and
-                        adopted by Board?</p>
+                    <p class="font-bold">Are shredding bins being emptied properly?</p>
                     <p>
                         @if($financeAudit->finance_q4_answer === 1)
                             Yes
@@ -299,7 +296,9 @@
         @if($financeAudit->finance_q5_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Account department is not locked when employees are not present.</p>
+                    <p class="font-bold">Has complaint procedure
+                        been established and
+                        adopted by Board?</p>
                     <p>
                         @if($financeAudit->finance_q5_answer === 1)
                             Yes
@@ -363,7 +362,9 @@
         @if($financeAudit->finance_q6_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Have CMS policies been distributed to management and relevant employees?</p>
+                    <p class="font-bold">Is accounting department/office locked and secured
+                        when employees not
+                        present?</p>
                     <p>
                         @if($financeAudit->finance_q6_answer === 1)
                             Yes
@@ -427,7 +428,7 @@
         @if($financeAudit->finance_q7_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Have employees and management acknowledged receipt of the above?</p>
+                    <p class="font-bold">Have CMS policies been distributed to management and relevant employees?</p>
                     <p>
                         @if($financeAudit->finance_q7_answer === 1)
                             Yes
@@ -491,7 +492,7 @@
         @if($financeAudit->finance_q8_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are employees and management completing training on a consistent basis?</p>
+                    <p class="font-bold">Have employees and management acknowledged receipt of the above?</p>
                     <p>
                         @if($financeAudit->finance_q8_answer === 1)
                             Yes
@@ -555,8 +556,7 @@
         @if($financeAudit->finance_q9_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are there policies and procedures in place to handle and respond to consumer
-                        complaints?</p>
+                    <p class="font-bold">Are employees and management completing training on a consistent basis?</p>
                     <p>
                         @if($financeAudit->finance_q9_answer === 1)
                             Yes
@@ -620,7 +620,8 @@
         @if($financeAudit->finance_q10_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Destruction of outdated NPI records?</p>
+                    <p class="font-bold">Are there policies and procedures in place to handle and respond to consumer
+                        complaints?</p>
                     <p>
                         @if($financeAudit->finance_q10_answer === 1)
                             Yes
@@ -684,7 +685,8 @@
         @if($financeAudit->finance_q11_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">OFAC/SDN Listing documentation</p>
+                    <p class="font-bold">Are NPI/customer records being destroyed/shredded
+                        properly?</p>
                     <p>
                         @if($financeAudit->finance_q11_answer === 1)
                             Yes
@@ -748,7 +750,8 @@
         @if($financeAudit->finance_q12_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Employees hired have signed confidentiality and security policy statements.</p>
+                    <p class="font-bold">Is the OFAC/SDN listings being completed on all
+                        contracted deals?</p>
                     <p>
                         @if($financeAudit->finance_q12_answer === 1)
                             Yes
@@ -790,7 +793,10 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                    <p>U.S. Department of the Treasury’s Office of Foreign Assets Control (OFAC)
+                                        administers and enforces U.S. economic and trade sanctions programs against
+                                        targeted foreign governments, individuals, groups, and entities in accordance
+                                        with national security and foreign policy goals and objectives</p>
                                 </div>
                             </div>
                         </div>
@@ -812,7 +818,8 @@
         @if($financeAudit->finance_q13_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Password activation on computers</p>
+                    <p class="font-bold">Are all new employees signing dealerships security
+                        policy statement?</p>
                     <p>
                         @if($financeAudit->finance_q13_answer === 1)
                             Yes
@@ -876,7 +883,8 @@
         @if($financeAudit->finance_q14_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Service Writers trash can have RO’s and misc. NPI documents present.</p>
+                    <p class="font-bold">Are computer terminals being logged off to
+                        activate screensaver password?</p>
                     <p>
                         @if($financeAudit->finance_q14_answer === 1)
                             Yes
@@ -940,7 +948,8 @@
         @if($financeAudit->finance_q15_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Website privacy policy compliance.</p>
+                    <p class="font-bold">Are repair orders (RO’s) being disposed/shredded
+                        properly?</p>
                     <p>
                         @if($financeAudit->finance_q15_answer === 1)
                             Yes
@@ -1004,7 +1013,9 @@
         @if($financeAudit->finance_q16_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">"NPI Check-Out Log" being utilized in accounting.</p>
+                    <p class="font-bold">Is the privacy notice clearly stated on
+                        dealership's
+                        website?</p>
                     <p>
                         @if($financeAudit->finance_q16_answer === 1)
                             Yes
@@ -1068,7 +1079,7 @@
         @if($financeAudit->finance_q17_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Review "Certificate of Destruction" receipts from shredding company</p>
+                    <p class="font-bold">"NPI Check-Out Log" being utilized in accounting.</p>
                     <p>
                         @if($financeAudit->finance_q17_answer === 1)
                             Yes
@@ -1132,7 +1143,8 @@
         @if($financeAudit->finance_q18_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Computer terminals not being logged off to activating screensaver password?</p>
+                    <p class="font-bold">Are all computer terminals automatically set to log
+                        off after 5 minutes of non-activity?</p>
                     <p>
                         @if($financeAudit->finance_q18_answer === 1)
                             Yes
@@ -1196,8 +1208,7 @@
         @if($financeAudit->finance_q19_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Computer terminal not set to automatically log off after 5 minutes of
-                        non-activity.</p>
+                    <p class="font-bold">Are network firewalls being monitored for intrusion.</p>
                     <p>
                         @if($financeAudit->finance_q19_answer === 1)
                             Yes
@@ -1261,7 +1272,8 @@
         @if($financeAudit->finance_q20_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are network firewalls being monitored for intrusion.</p>
+                    <p class="font-bold">Written IT policies regarding the use of flash drives, downloading software and
+                        programs by employees, and spam email protocols?</p>
                     <p>
                         @if($financeAudit->finance_q20_answer === 1)
                             Yes
@@ -1325,8 +1337,8 @@
         @if($financeAudit->finance_q21_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Written IT policies regarding the use of flash drives, downloading software and
-                        programs by employees, and spam email protocols?</p>
+                    <p class="font-bold">Have there been any network intrusions or security breaches since last
+                        quarterly?</p>
                     <p>
                         @if($financeAudit->finance_q21_answer === 1)
                             Yes
@@ -1390,8 +1402,8 @@
         @if($financeAudit->finance_q22_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Have there been any network intrusions or security breaches since last
-                        quarterly?</p>
+                    <p class="font-bold">IT Technical requirements been implemented for Encryption, MFA and System
+                        monitoring, penetration testing, and vulnerability assessments?</p>
                     <p>
                         @if($financeAudit->finance_q22_answer === 1)
                             Yes
@@ -1455,7 +1467,7 @@
         @if($financeAudit->finance_q23_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Has a Security Risk Assessment been completed?</p>
+                    <p class="font-bold">Cashiers area unsecured</p>
                     <p>
                         @if($financeAudit->finance_q23_answer === 1)
                             Yes
@@ -1519,7 +1531,9 @@
         @if($financeAudit->finance_q24_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Written Response Plan been created?</p>
+                    <p class="font-bold">Are there any new Third Party Service Provider
+                        companies that need to be sent
+                        acknowledgements and assessment report?</p>
                     <p>
                         @if($financeAudit->finance_q24_answer === 1)
                             Yes
@@ -1583,8 +1597,8 @@
         @if($financeAudit->finance_q25_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">IT Technical requirements been implemented for Encryption, MFA and System
-                        monitoring, penetration testing, and vulnerability assessments?</p>
+                    <p class="font-bold">Have Third Party Providers been vetted for required compliance practices,
+                        procedures and training?</p>
                     <p>
                         @if($financeAudit->finance_q25_answer === 1)
                             Yes
@@ -1648,7 +1662,8 @@
         @if($financeAudit->finance_q26_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Cashiers area unsecured</p>
+                    <p class="font-bold">Are sales desk drawers/file cabinets locked and
+                        secured?</p>
                     <p>
                         @if($financeAudit->finance_q26_answer === 1)
                             Yes
@@ -1712,8 +1727,8 @@
         @if($financeAudit->finance_q27_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Review new Third Party provider agreements for safeguard language and
-                        compliance.</p>
+                    <p class="font-bold">Any NPI/customer documents being left out on sales
+                        desks?</p>
                     <p>
                         @if($financeAudit->finance_q27_answer === 1)
                             Yes
@@ -1777,8 +1792,7 @@
         @if($financeAudit->finance_q28_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Have Third Party Providers been vetted for required compliance practices,
-                        procedures and training?</p>
+                    <p class="font-bold">Is CAN SPAM process in place?</p>
                     <p>
                         @if($financeAudit->finance_q28_answer === 1)
                             Yes
@@ -1820,7 +1834,10 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                    <p>CAN-SPAM Act, a law that sets the rules for commercial email, establishes
+                                        requirements for commercial messages, gives recipients the right to have you
+                                        stop emailing them, and spells out tough penalties for violations.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -1842,7 +1859,8 @@
         @if($financeAudit->finance_q29_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">ASales desks not secured and have customer document exposed</p>
+                    <p class="font-bold">Is the Telemarketing “Do Not Call” rule being
+                        complied with?</p>
                     <p>
                         @if($financeAudit->finance_q29_answer === 1)
                             Yes
@@ -1884,7 +1902,7 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                    <p>FTC – National “Do not Call Registry” guidelines</p>
                                 </div>
                             </div>
                         </div>
@@ -1906,7 +1924,8 @@
         @if($financeAudit->finance_q30_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Check Can Spam Unsubscribe compliance.</p>
+                    <p class="font-bold">Any other NPI documents publicly exposed, not
+                        secured properly?</p>
                     <p>
                         @if($financeAudit->finance_q30_answer === 1)
                             Yes
@@ -1970,9 +1989,7 @@
         @if($financeAudit->finance_q31_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Check for Telemarketing Do Not Call rules compliance: i.e., what
-                        system/software is
-                        in place to provide tracking?</p>
+                    <p class="font-bold">Breach in password sharing?</p>
                     <p>
                         @if($financeAudit->finance_q31_answer === 1)
                             Yes
@@ -2036,7 +2053,7 @@
         @if($financeAudit->finance_q32_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">NPI documents publicly exposed, not secured properly</p>
+                    <p class="font-bold">Customers NPI in unsecured trash cans?</p>
                     <p>
                         @if($financeAudit->finance_q32_answer === 1)
                             Yes
@@ -2100,7 +2117,7 @@
         @if($financeAudit->finance_q33_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Breach in password sharing?</p>
+                    <p class="font-bold">Deal jackets unsecured?</p>
                     <p>
                         @if($financeAudit->finance_q33_answer === 1)
                             Yes
@@ -2164,7 +2181,7 @@
         @if($financeAudit->finance_q34_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Customers NPI in unsecured trash cans?</p>
+                    <p class="font-bold">Filing cabinets securing customers NPI locked and secured?</p>
                     <p>
                         @if($financeAudit->finance_q34_answer === 1)
                             Yes
@@ -2228,7 +2245,7 @@
         @if($financeAudit->finance_q35_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Deal jackets unsecured?</p>
+                    <p class="font-bold">Sales Tower area has NPI exposure, unsecured customer documents</p>
                     <p>
                         @if($financeAudit->finance_q35_answer === 1)
                             Yes
@@ -2292,7 +2309,8 @@
         @if($financeAudit->finance_q36_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Customer Information exposed/not secured?</p>
+                    <p class="font-bold">Was Network Vulnerability \Assessment Report completed, denote possible
+                        issues?</p>
                     <p>
                         @if($financeAudit->finance_q36_answer === 1)
                             Yes
@@ -2356,7 +2374,8 @@
         @if($financeAudit->finance_q37_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Filing cabinets securing customers NPI locked and secured?</p>
+                    <p class="font-bold">Are finance offices locked and secured when
+                        employee not present?</p>
                     <p>
                         @if($financeAudit->finance_q37_answer === 1)
                             Yes
@@ -2420,7 +2439,7 @@
         @if($financeAudit->finance_q38_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Sales Tower area has NPI exposure, unsecured customer documents</p>
+                    <p class="font-bold">Are credit applications secured?</p>
                     <p>
                         @if($financeAudit->finance_q38_answer === 1)
                             Yes
@@ -2484,8 +2503,7 @@
         @if($financeAudit->finance_q39_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Was Network Vulnerability \Assessment Report completed, denote possible
-                        issues?</p>
+                    <p class="font-bold">Red Flag software being utilized to check for fraudulent applicants?</p>
                     <p>
                         @if($financeAudit->finance_q39_answer === 1)
                             Yes
@@ -2527,7 +2545,13 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                    <p>Red Flags Rule
+                                        Sometimes it’s referred to as one of the Fair Credit Reporting Act’s Identity
+                                        Theft Rules and it appears in the Code of Federal Regulations as “Detection,
+                                        Prevention, and Mitigation of Identity Theft.” The Red Flags Rule requires many
+                                        businesses and organizations to implement a written Identity Theft Prevention
+                                        Program designed to detect the warning signs – or red flags – of identity theft
+                                        in their day-to-day operations.</p>
                                 </div>
                             </div>
                         </div>
@@ -2549,7 +2573,8 @@
         @if($financeAudit->finance_q40_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Finance Office not locked exposing unsecured customer documents</p>
+                    <p class="font-bold">Are managers’ offices locked and secured when not
+                        present?</p>
                     <p>
                         @if($financeAudit->finance_q40_answer === 1)
                             Yes
@@ -2613,7 +2638,8 @@
         @if($financeAudit->finance_q41_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Credit application unsecured</p>
+                    <p class="font-bold">Are the sales Showroom doors secured prior to sales
+                        staff reporting to work?</p>
                     <p>
                         @if($financeAudit->finance_q41_answer === 1)
                             Yes
@@ -2677,7 +2703,8 @@
         @if($financeAudit->finance_q42_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Red Flag software being utilized to check for fraudulent applicants?</p>
+                    <p class="font-bold">Are Buyers Guide properly displayed in a fully
+                        visible on all used cars?</p>
                     <p>
                         @if($financeAudit->finance_q42_answer === 1)
                             Yes
@@ -2719,7 +2746,12 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                    <p>16 CFR Part 455
+                                        Rule Summary
+                                        The Used Car Rule, formally known as the Used Motor Vehicle Trade Regulation
+                                        Rule, has been in effect since 1985. It requires car dealers to display a window
+                                        sticker, known as a Buyer’s Guide, on the used cars they offer for sale.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -2741,7 +2773,7 @@
         @if($financeAudit->finance_q43_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Managers’ offices not being secured when employee not present.</p>
+                    <p class="font-bold">Are Buyers Guides filled out properly?</p>
                     <p>
                         @if($financeAudit->finance_q43_answer === 1)
                             Yes
@@ -2783,7 +2815,11 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                    <p>16 CFR Part 455
+                                        Rule Summary
+                                        The Used Car Rule, formally known as the Used Motor Vehicle Trade Regulation
+                                        Rule, has been in effect since 1985. It requires car dealers to display a window
+                                        sticker, known as a Buyer’s Guide, on the used cars they offer for sale.</p>
                                 </div>
                             </div>
                         </div>
@@ -2805,8 +2841,7 @@
         @if($financeAudit->finance_q44_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Sales Showroom main exterior doors not secured prior to sales managers’ and
-                        employees reporting to work.</p>
+                    <p class="font-bold">New car missing Monroney sticker placement.</p>
                     <p>
                         @if($financeAudit->finance_q44_answer === 1)
                             Yes
@@ -2848,7 +2883,9 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                    <p>A Monroney Label is a reproduction of the original factory window sticker. U.S.
+                                        law requires a window sticker, known as a Monroney label, to be displayed on all
+                                        new cars. These stickers contain mandatory information about the car</p>
                                 </div>
                             </div>
                         </div>
@@ -2870,7 +2907,8 @@
         @if($financeAudit->finance_q45_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Use Car buyers guide not visibly posted on vehicles in parking lot/showroom</p>
+                    <p class="font-bold">Are the finance terms properly displayed on vehicle
+                        inventory?</p>
                     <p>
                         @if($financeAudit->finance_q45_answer === 1)
                             Yes
@@ -2912,7 +2950,11 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
+                                    <p>CFBP - § 1026.24 Advertising
+                                        (i)The amount or percentage of any downpayment.
+                                        (ii)The number of payments or period of repayment.
+                                        (iii)The amount of any payment.
+                                        (iv)The amount of any finance charge.</p>
                                 </div>
                             </div>
                         </div>
@@ -2934,7 +2976,8 @@
         @if($financeAudit->finance_q46_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Buyers Guide not filled out properly</p>
+                    <p class="font-bold">Is the sales bull pin area (if present) secured
+                        properly?</p>
                     <p>
                         @if($financeAudit->finance_q46_answer === 1)
                             Yes
@@ -2995,195 +3038,15 @@
                 </div>
             </li>
         @endif
-        @if($financeAudit->finance_q47_answer === 2)
+        @if($financeAudit->finance_q47_comment)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">New car missing Monroney sticker placement.</p>
-                    <p>
-                        @if($financeAudit->finance_q47_answer === 1)
-                            Yes
-                        @elseif($financeAudit->finance_q47_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
+                    <p class="font-bold">Please not any additional issue/violation found
+                        during your sales &amp; finance walk-thru audit.</p>
                 </div>
-                @if($financeAudit->finance_q47_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($financeAudit->finance_q47_answer === 2)
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                                <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($financeAudit->finance_q47_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $financeAudit->finance_q47_comment }}</p>
-                    </div>
-                @endif
-                <div class="grid grid-cols-2 gap-10">
-                    @foreach($financeAudit->getMedia('finance_q47_images') as $image)
-                        <img src="{{ $image->getUrl() }}" alt="">
-                    @endforeach
-                </div>
-            </li>
-        @endif
-        @if($financeAudit->finance_q48_answer === 2)
-            <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Improper finance terms noted/written on vehicle inventory</p>
-                    <p>
-                        @if($financeAudit->finance_q48_answer === 1)
-                            Yes
-                        @elseif($financeAudit->finance_q48_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($financeAudit->finance_q48_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($financeAudit->finance_q48_answer === 2)
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                                <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($financeAudit->finance_q48_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $financeAudit->finance_q48_comment }}</p>
-                    </div>
-                @endif
-                <div class="grid grid-cols-2 gap-10">
-                    @foreach($financeAudit->getMedia('finance_q48_images') as $image)
-                        <img src="{{ $image->getUrl() }}" alt="">
-                    @endforeach
-                </div>
-            </li>
-        @endif
-        @if($financeAudit->finance_q49_answer === 2)
-            <li class="py-10 space-y-5 page-break">
-                <div>
-                    <p class="font-bold">Sale staff bull pin area not secured properly when employees not present</p>
-                    <p>
-                        @if($financeAudit->finance_q49_answer === 1)
-                            Yes
-                        @elseif($financeAudit->finance_q49_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($financeAudit->finance_q49_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($financeAudit->finance_q49_answer === 2)
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                                <div class="mt-2 text-sm text-yellow-700">
-                                    <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($financeAudit->finance_q49_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $financeAudit->finance_q49_comment }}</p>
-                    </div>
-                @endif
-                <div class="grid grid-cols-2 gap-10">
-                    @foreach($financeAudit->getMedia('finance_q49_images') as $image)
-                        <img src="{{ $image->getUrl() }}" alt="">
-                    @endforeach
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q47_comment }}</p>
                 </div>
             </li>
         @endif
