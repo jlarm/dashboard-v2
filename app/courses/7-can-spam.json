@@ -6,6 +6,10 @@
         "department": [
             3
         ],
+        "roles": [
+            8,
+            6
+        ],
         "slides": [
             {
                 "title": "Can Spam",

@@ -4,6 +4,11 @@
         "name": "Discrimination",
         "slug": "discrimination",
         "department": [],
+        "roles": [
+            6,
+            8,
+            9
+        ],
         "slides": [
             {
                 "title": "Equal Employment Opportunity Commission",

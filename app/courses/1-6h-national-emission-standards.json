@@ -6,6 +6,10 @@
         "department": [
             5
         ],
+        "roles": [
+            9,
+            10
+        ],
         "slides": [
             {
                 "title": "NESHAP (better known as the 6H rule)",

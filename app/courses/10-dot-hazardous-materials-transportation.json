@@ -4,7 +4,8 @@
         "name": "DOT Module 1 Hazardous Materials Transportation",
         "slug": "dot-hazardous-materials-transportation",
         "department": [
-            4
+            9,
+            10
         ],
         "slides": [
             {

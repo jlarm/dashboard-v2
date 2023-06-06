@@ -6,6 +6,9 @@
         "department": [
             3
         ],
+        "roles": [
+            10
+        ],
         "slides": [
             {
                 "title": "Battery Charging",

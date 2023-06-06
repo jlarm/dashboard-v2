@@ -6,6 +6,10 @@
         "department": [
             4
         ],
+        "roles": [
+            9,
+            10
+        ],
         "slides": [
             {
                 "title": "Preparing Hazardous Materials for Shipment",

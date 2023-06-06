@@ -8,6 +8,13 @@
             2,
             6
         ],
+        "roles": [
+            10,
+            7,
+            6,
+            8,
+            9
+        ],
         "slides": [
             {
                 "title": "Reporting Cash Payments of Over $10,000",

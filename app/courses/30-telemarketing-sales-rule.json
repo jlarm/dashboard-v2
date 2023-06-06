@@ -6,6 +6,11 @@
         "department": [
             1
         ],
+        "roles": [
+            6,
+            8,
+            9
+        ],
         "slides": [
             {
                 "title": "Telemarketing",

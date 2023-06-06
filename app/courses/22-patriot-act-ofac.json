@@ -6,6 +6,12 @@
         "department": [
             6
         ],
+        "roles": [
+            10,
+            6,
+            8,
+            9
+        ],
         "slides": [
             {
                 "title": "The USA PATRIOT Act & OFAC",
