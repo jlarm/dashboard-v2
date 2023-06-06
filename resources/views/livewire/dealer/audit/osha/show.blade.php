@@ -16,7 +16,7 @@
         <!-- 1 Oil Manifest -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">1. Oil Manifest</label>
+                <label class="text-base font-semibold text-gray-900">Oil Manifest</label>
                 <fieldset class="mt-4">
                     <legend class="sr-only">Notification method</legend>
                     <div class="flex items-center space-x-5">
@@ -90,7 +90,7 @@
         <!-- 2 Battery Manifest -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">2. Battery Manifest</label>
+                <label class="text-base font-semibold text-gray-900">Battery Manifest</label>
                 <fieldset class="mt-4">
                     <legend class="sr-only">Notification method</legend>
                     <div class="flex items-center space-x-5">
@@ -165,7 +165,7 @@
         <!-- 3 Tire Manifest -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">3. Tire Manifest</label>
+                <label class="text-base font-semibold text-gray-900">Tire Manifest</label>
                 <fieldset class="mt-4">
                     <legend class="sr-only">Notification method</legend>
                     <div class="flex items-center space-x-5">
@@ -240,7 +240,7 @@
         <!-- 4 Forklift Operators certifications -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">4. Forklift Operators certifications</label>
+                <label class="text-base font-semibold text-gray-900">Forklift Operators certifications</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -311,11 +311,11 @@
                 collection="osha_q4_images"
             />
         </div>
-        <!-- 5 Review OSHA 300 -->
+        <!-- 5 Is the OSHA 300 & 300A being completed on an on-going basis and electronically filed? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">5. Review OSHA 300 & was OSHA 300A
-                    - Annual Summary posted and up-loaded</label>
+                <label class="text-base font-semibold text-gray-900">Is the OSHA 300 & 300A being completed on an
+                    on-going basis and electronically filed?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -386,11 +386,10 @@
                 collection="osha_q5_images"
             />
         </div>
-        <!-- 6 Hybrid - Vehicle Training -->
+        <!-- 6 SPCC filing -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">6. Hybrid - Vehicle Training Certification
-                    –up-load</label>
+                <label class="text-base font-semibold text-gray-900">SPCC filing</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -456,16 +455,16 @@
                 multiple
                 max-items="2"
                 rules="mimes:png,jpeg"
-                name="osha_q6_images"
+                name="osha_q8_images"
                 :model="$oshaAudit"
-                collection="osha_q6_images"
+                collection="osha_q8_images"
             />
         </div>
-        <!-- 7 Hybrid - Handling of “High-Voltage Batteries” -->
+        <!-- 7 Any other State or Local EPA filings to upload? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">7. Hybrid - Handling of “High-Voltage
-                    Batteries”</label>
+                <label class="text-base font-semibold text-gray-900">Are any other local and state EPA filings uploaded
+                    to the dealership dashboard?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -501,7 +500,7 @@
                                 type="radio"
                                 class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
                             >
-                            <label for="osha_q6_answer_3"
+                            <label for="osha_q7_answer_3"
                                    class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
                         </div>
                     </div>
@@ -536,10 +535,11 @@
                 collection="osha_q7_images"
             />
         </div>
-        <!-- 8 SPCC filing -->
+        <!-- 8 Do all employees know how to access SDS’s? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">8. SPCC filing</label>
+                <label class="text-base font-semibold text-gray-900">Do all employees know how to access
+                    SDS’s?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -610,11 +610,11 @@
                 collection="osha_q8_images"
             />
         </div>
-        <!-- 9 Any other State or Local EPA filings to upload? -->
+        <!-- 9 Has there been any employee exposed to a spill of a chemical since last visit? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">9. Any other State or Local EPA filings to
-                    upload</label>
+                <label class="text-base font-semibold text-gray-900">All employees have been exposure free from any
+                    chemicals in the dealership?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -685,11 +685,11 @@
                 collection="osha_q9_images"
             />
         </div>
-        <!-- 10 Do all employees know how to access SDS’s? -->
+        <!-- 10 Are all products that are in containers other than the original properly labeled with product NAME, MFG, and appropriate hazard warning? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">10. Do all employees know how to access
-                    SDS’s?</label>
+                <label class="text-base font-semibold text-gray-900">Are all secondary containers filled with chemicals
+                    properly labeled?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -760,12 +760,11 @@
                 collection="osha_q10_images"
             />
         </div>
-        <!-- 11 Has there been any employee exposed to a spill of a chemical since last visit? -->
+        <!-- 11 Have there been any accidents since last visit? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">11. Has there been any employee exposed to a spill
-                    of a
-                    chemical since last visit?</label>
+                <label class="text-base font-semibold text-gray-900">Is the dealership accident free since the last
+                    audit?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -836,12 +835,11 @@
                 collection="osha_q11_images"
             />
         </div>
-        <!-- 12 Are all products that are in containers other than the original properly labeled with product NAME, MFG, and appropriate hazard warning? -->
+        <!-- 12 Is the eye wash equipment readily accessible? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">12. Are all products that are in containers other
-                    than
-                    the original properly labeled with product NAME, MFG, and appropriate hazard warning? </label>
+                <label class="text-base font-semibold text-gray-900">Is the eye wash equipment readily
+                    accessible?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -912,11 +910,12 @@
                 collection="osha_q12_images"
             />
         </div>
-        <!-- 13 Have there been any accidents since last visit? -->
+        <!-- 13 Has the eye wash equipment been tested and cleaned and documented weekly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">13. Have there been any accidents since last
-                    visit?</label>
+                <label class="text-base font-semibold text-gray-900">Has the eye wash equipment been tested and
+                    cleaned
+                    and documented weekly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -987,11 +986,11 @@
                 collection="osha_q13_images"
             />
         </div>
-        <!-- 14 Is the eye wash equipment readily accessible? -->
+        <!-- 14 How often is the water/solution changed and documented in the eye wash equipment? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">14. Is the eye wash equipment readily
-                    accessible?</label>
+                <label class="text-base font-semibold text-gray-900">Has the eye wash container water supply been
+                    changed out properly based on manufacturer recommendations per solution used?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1062,12 +1061,12 @@
                 collection="osha_q14_images"
             />
         </div>
-        <!-- 15 Has the eye wash equipment been tested and cleaned and documented weekly? -->
+        <!-- 15 DOT certification - Is the person responsible for Hazardous material shipping current on his/her? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">15. Has the eye wash equipment been tested and
-                    cleaned
-                    and documented weekly?</label>
+                <label class="text-base font-semibold text-gray-900">DOT certification - Is the person responsible
+                    for
+                    Hazardous material shipping current on his/her?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1138,11 +1137,11 @@
                 collection="osha_q15_images"
             />
         </div>
-        <!-- 16 How often is the water/solution changed and documented in the eye wash equipment? -->
+        <!-- 16 Are all the Fire Extinguishers easily accessible? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">16. How often is the water/solution changed and
-                    documented in the eye wash equipment?</label>
+                <label class="text-base font-semibold text-gray-900">Are all the Fire Extinguishers easily
+                    accessible?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1213,12 +1212,11 @@
                 collection="osha_q16_images"
             />
         </div>
-        <!-- 17 DOT certification - Is the person responsible for Hazardous material shipping current on his/her? -->
+        <!-- 17 Have the fire extinguishers had their annual inspection and are they properly identified and fully charged? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">17. DOT certification - Is the person responsible
-                    for
-                    Hazardous material shipping current on his/her?</label>
+                <label class="text-base font-semibold text-gray-900">Have the fire extinguishers had their annual
+                    inspection and are they properly identified and fully charged?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1289,11 +1287,11 @@
                 collection="osha_q17_images"
             />
         </div>
-        <!-- 18 Are all the Fire Extinguishers easily accessible? -->
+        <!-- 18 Are extinguishers mounted properly? (36”-60”) -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">18. Are all the Fire Extinguishers easily
-                    accessible?</label>
+                <label class="text-base font-semibold text-gray-900">Are extinguishers mounted properly?
+                    (36”-60”) </label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1364,11 +1362,11 @@
                 collection="osha_q18_images"
             />
         </div>
-        <!-- 19 Have the fire extinguishers had their annual inspection and are they properly identified and fully charged? -->
+        <!-- 19 Are Signs posted properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">19. Have the fire extinguishers had their annual
-                    inspection and are they properly identified and fully charged?</label>
+                <label class="text-base font-semibold text-gray-900">Are fire extinguisher signs above the unit posted
+                    properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1439,11 +1437,11 @@
                 collection="osha_q19_images"
             />
         </div>
-        <!-- 20 Are extinguishers mounted properly? (36”-60”) -->
+        <!-- 20 Are all hoses and cutting tips for the welder / cutting torches in good condition without any cracks or breaks? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">20. Are extinguishers mounted properly?
-                    (36”-60”) </label>
+                <label class="text-base font-semibold text-gray-900">Are all hoses and cutting tips for the welder /
+                    cutting torches in good condition without any cracks or breaks?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1514,10 +1512,10 @@
                 collection="osha_q20_images"
             />
         </div>
-        <!-- 21 Are Signs posted properly? -->
+        <!-- 21 Do you have any forklift(s)? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">21. Are Signs posted properly?</label>
+                <label class="text-base font-semibold text-gray-900">Do you have any forklift(s)?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1588,11 +1586,11 @@
                 collection="osha_q21_images"
             />
         </div>
-        <!-- 22 Are all hoses and cutting tips for the welder / cutting torches in good condition without any cracks or breaks? -->
+        <!-- 22 If you have a forklift, has the person(s) responsible for operating it been properly trained on safety and signed off as such? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">22. Are all hoses and cutting tips for the welder /
-                    cutting torches in good condition without any cracks or breaks?</label>
+                <label class="text-base font-semibold text-gray-900">If you have a forklift, has the person(s)
+                    responsible for operating it been properly trained on safety and signed off as such?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1663,10 +1661,11 @@
                 collection="osha_q22_images"
             />
         </div>
-        <!-- 23 Do you have any forklift(s)? -->
+        <!-- 23 Do you have forklift training certificates of completed training class(es)? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">23. Do you have any forklift(s)?</label>
+                <label class="text-base font-semibold text-gray-900">Do you have forklift training certificates of
+                    completed training class(es)?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1737,11 +1736,11 @@
                 collection="osha_q23_images"
             />
         </div>
-        <!-- 24 If you have a forklift, has the person(s) responsible for operating it been properly trained on safety and signed off as such? -->
+        <!-- 24 Do forklifts have a seat belt/safety harness? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">24. If you have a forklift, has the person(s)
-                    responsible for operating it been properly trained on safety and signed off as such?</label>
+                <label class="text-base font-semibold text-gray-900">Do forklifts have a seat belt/safety
+                    harness?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1812,11 +1811,11 @@
                 collection="osha_q24_images"
             />
         </div>
-        <!-- 25 Do you have forklift training certificates of completed training class(es)? -->
+        <!-- 25 Does the forklift have legible labels?   i.e., ANSI, serial #, maximum lift capacity -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">25. Do you have forklift training certificates of
-                    completed training class(es)?</label>
+                <label class="text-base font-semibold text-gray-900">Does the forklift have legible labels?
+                    i.e., ANSI, serial #, maximum lift capacity</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1887,11 +1886,10 @@
                 collection="osha_q25_images"
             />
         </div>
-        <!-- 26 Do forklifts have a seat belt/safety harness? -->
+        <!-- 26 Are all exits properly marked? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">26. Do forklifts have a seat belt/safety
-                    harness?</label>
+                <label class="text-base font-semibold text-gray-900">Are all exits properly marked?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1962,11 +1960,11 @@
                 collection="osha_q26_images"
             />
         </div>
-        <!-- 27 Does the forklift have legible labels?   i.e., ANSI, serial #, maximum lift capacity -->
+        <!-- 27 Are pathways to exits clear of obstructions? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">27. Does the forklift have legible labels?
-                    i.e., ANSI, serial #, maximum lift capacity</label>
+                <label class="text-base font-semibold text-gray-900">Are pathways to exits clear of
+                    obstructions?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2037,10 +2035,11 @@
                 collection="osha_q27_images"
             />
         </div>
-        <!-- 28 Are all exits properly marked? -->
+        <!-- 28 Are all aisles/pathways, stairways and landings free from obstructions? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">28. Are all exits properly marked?</label>
+                <label class="text-base font-semibold text-gray-900">Are all aisles/pathways, stairways and landings
+                    free from obstructions?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2111,11 +2110,12 @@
                 collection="osha_q28_images"
             />
         </div>
-        <!-- 29 Are pathways to exits clear of obstructions? -->
+        <!-- 29 Are any doorways that are nonfunctioning or blocked marked by a sign stating “NO EXIT”? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">29. Are pathways to exits clear of
-                    obstructions?</label>
+                <label class="text-base font-semibold text-gray-900">Are any doorways that are nonfunctioning or
+                    blocked
+                    marked by a sign stating “NO EXIT”?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2186,11 +2186,11 @@
                 collection="osha_q29_images"
             />
         </div>
-        <!-- 30 Are all aisles/pathways, stairways and landings free from obstructions? -->
+        <!-- 30 Are the shop areas kept clean and orderly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">30. Are all aisles/pathways, stairways and landings
-                    free from obstructions?</label>
+                <label class="text-base font-semibold text-gray-900">Are the shop areas kept clean and
+                    orderly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2261,12 +2261,11 @@
                 collection="osha_q30_images"
             />
         </div>
-        <!-- 31 Are any doorways that are nonfunctioning or blocked marked by a sign stating “NO EXIT”? -->
+        <!-- 31 Are all flammable materials (oily shop rags) properly stored? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">31. Are any doorways that are nonfunctioning or
-                    blocked
-                    marked by a sign stating “NO EXIT”?</label>
+                <label class="text-base font-semibold text-gray-900">Are all flammable materials (oily shop rags)
+                    properly stored?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2337,11 +2336,12 @@
                 collection="osha_q31_images"
             />
         </div>
-        <!-- 32 Are the shop areas kept clean and orderly? -->
+        <!-- 32 Are floors in good repair and free from obstruction and debris and slippery conditions? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">32. Are the shop areas kept clean and
-                    orderly?</label>
+                <label class="text-base font-semibold text-gray-900">Are floors in good repair and free from
+                    obstruction
+                    and debris and slippery conditions?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2412,11 +2412,12 @@
                 collection="osha_q32_images"
             />
         </div>
-        <!-- 33 Are all flammable materials (oily shop rags) properly stored? -->
+        <!-- 33 Are floor openings in excess of 2.25” wide covered with hinged flaps? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">33. Are all flammable materials (oily shop rags)
-                    properly stored?</label>
+                <label class="text-base font-semibold text-gray-900">Are floor openings in excess of 2.25” wide
+                    covered
+                    with hinged flaps?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2487,12 +2488,11 @@
                 collection="osha_q33_images"
             />
         </div>
-        <!-- 34 Are floors in good repair and free from obstruction and debris and slippery conditions? -->
+        <!-- 34 Are employees properly maintaining their hoist controls and not bypassing any automatic safety features? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">34. Are floors in good repair and free from
-                    obstruction
-                    and debris and slippery conditions?</label>
+                <label class="text-base font-semibold text-gray-900">Are employees properly maintaining their hoist
+                    controls and not bypassing any automatic safety features? </label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2563,12 +2563,11 @@
                 collection="osha_q34_images"
             />
         </div>
-        <!-- 35 Are floor openings in excess of 2.25” wide covered with hinged flaps? -->
+        <!-- 35 Are hoists maintained within mfg. specs, and inspected and serviced AND documented under the mfg. suggested frequency? Usually annually. -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">35. Are floor openings in excess of 2.25” wide
-                    covered
-                    with hinged flaps?</label>
+                <label class="text-base font-semibold text-gray-900">Are hoists maintained within mfg. specs, and
+                    inspected and serviced AND documented under the mfg. suggested frequency? Usually annually.</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2639,11 +2638,11 @@
                 collection="osha_q35_images"
             />
         </div>
-        <!-- 36 Are employees properly maintaining their hoist controls and not bypassing any automatic safety features? -->
+        <!-- 36 Are used batteries stored on a leak proof container? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">36. Are employees properly maintaining their hoist
-                    controls and not bypassing any automatic safety features? </label>
+                <label class="text-base font-semibold text-gray-900">Are used batteries stored in acid resistance leak
+                    proof containers and or on mat?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2714,11 +2713,11 @@
                 collection="osha_q36_images"
             />
         </div>
-        <!-- 37 Are hoists maintained within mfg. specs, and inspected and serviced AND documented under the mfg. suggested frequency? -->
+        <!-- 37 Are any batteries stored outside? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">37. Are hoists maintained within mfg. specs, and
-                    inspected and serviced AND documented under the mfg. suggested frequency?</label>
+                <label class="text-base font-semibold text-gray-900">If batteries are stored outside, are they in an
+                    enclosed or sheltered unit?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2789,11 +2788,11 @@
                 collection="osha_q37_images"
             />
         </div>
-        <!-- 38 Are used batteries stored on a leak proof container? -->
+        <!-- 38 Do automatic sprinkler heads have an 18” clearance? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">38. Are used batteries stored on a leak proof
-                    container?</label>
+                <label class="text-base font-semibold text-gray-900">Do automatic sprinkler heads have a minimum
+                    clearance of 18” at all times?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2864,10 +2863,11 @@
                 collection="osha_q38_images"
             />
         </div>
-        <!-- 39 Are any batteries stored outside? -->
+        <!-- 39 Are all portable gas containers UL of FM approved? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">39. Are any batteries stored outside?</label>
+                <label class="text-base font-semibold text-gray-900">Are all portable gas containers UL of FM
+                    approved?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2938,11 +2938,12 @@
                 collection="osha_q39_images"
             />
         </div>
-        <!-- 40 Do automatic sprinkler heads have an 18” clearance? -->
+        <!-- 40 Are compressed air hoses in safe (no frays, cuts, tape or clamps for repair) working condition? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">40. Do automatic sprinkler heads have an 18”
-                    clearance?</label>
+                <label class="text-base font-semibold text-gray-900">Are compressed air hoses in safe (no frays,
+                    cuts,
+                    tape or clamps for repair) working condition?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3013,11 +3014,11 @@
                 collection="osha_q40_images"
             />
         </div>
-        <!-- 41 Are all portable gas containers UL of FM approved? -->
+        <!-- 41 Are all gas cylinders stored properly tied down? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">41. Are all portable gas containers UL of FM
-                    approved?</label>
+                <label class="text-base font-semibold text-gray-900">Are all gas cylinders stored and tied off
+                    properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3088,12 +3089,12 @@
                 collection="osha_q41_images"
             />
         </div>
-        <!-- 42 Are compressed air hoses in safe (no frays, cuts, tape or clamps for repair) working condition? -->
+        <!-- 42 Are gas cylinders stored away from sources of heat or electricity and at least 20’ away from combustible materials? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">42. Are compressed air hoses in safe (no frays,
-                    cuts,
-                    tape or clamps for repair) working condition?</label>
+                <label class="text-base font-semibold text-gray-900">Are gas cylinders stored away from sources of
+                    heat
+                    or electricity and at least 20’ away from combustible materials?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3164,11 +3165,11 @@
                 collection="osha_q42_images"
             />
         </div>
-        <!-- 43 Are all gas cylinders stored properly tied down? -->
+        <!-- 43 Are goggles or face shields always worn when grinding? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">43. Are all gas cylinders stored properly tied
-                    down?</label>
+                <label class="text-base font-semibold text-gray-900">Are goggles or face shields always worn when
+                    grinding?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3239,12 +3240,12 @@
                 collection="osha_q43_images"
             />
         </div>
-        <!-- 44 Are gas cylinders stored away from sources of heat or electricity and at least 20’ away from combustible materials? -->
+        <!-- 44 Is there proper spacing on grinders; -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">44. Are gas cylinders stored away from sources of
-                    heat
-                    or electricity and at least 20’ away from combustible materials?</label>
+                <label class="text-base font-semibold text-gray-900">Is there proper spacing on grinders; Tool rest
+                    1/8”
+                    from grinding wheel. Tongue plate 1/4” from grinding wheel.</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3315,11 +3316,12 @@
                 collection="osha_q44_images"
             />
         </div>
-        <!-- 45 Are goggles or face shields always worn when grinding? -->
+        <!-- 45 Is there proper signage about not smoking in the appropriate areas? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">45. Are goggles or face shields always worn when
-                    grinding?</label>
+                <label class="text-base font-semibold text-gray-900">Is there proper signage about not smoking in
+                    the
+                    appropriate areas?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3390,12 +3392,11 @@
                 collection="osha_q45_images"
             />
         </div>
-        <!-- 46 Is there proper spacing on grinders; -->
+        <!-- 46 Are the no smoking areas being enforced? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">46. Is there proper spacing on grinders; Tool rest
-                    1/8”
-                    from grinding wheel. Tongue plate 1/4” from grinding wheel.</label>
+                <label class="text-base font-semibold text-gray-900">Are the no smoking areas being
+                    enforced?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3466,12 +3467,11 @@
                 collection="osha_q46_images"
             />
         </div>
-        <!-- 47 Is there proper signage about not smoking in the appropriate areas? -->
+        <!-- 47 Air compressors marked with Automatic on/off signage? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">47. Is there proper signage about not smoking in
-                    the
-                    appropriate areas?</label>
+                <label class="text-base font-semibold text-gray-900">Air compressors marked with Automatic on/off
+                    signage?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3542,11 +3542,12 @@
                 collection="osha_q47_images"
             />
         </div>
-        <!-- 48 Are the no smoking areas being enforced? -->
+        <!-- 48 Are all tanks holding flammable material properly grounded? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">48. Are the no smoking areas being
-                    enforced?</label>
+                <label class="text-base font-semibold text-gray-900">Are all tanks holding flammable material
+                    properly
+                    grounded?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3617,11 +3618,11 @@
                 collection="osha_q48_images"
             />
         </div>
-        <!-- 49 Air compressors marked with Automatic on/off signage? -->
+        <!-- 49 Is there clear access of at least 36” to all electrical panels? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">49. Air compressors marked with Automatic on/off
-                    signage?</label>
+                <label class="text-base font-semibold text-gray-900">Is there clear access of at least 36” to all
+                    electrical panels?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3692,12 +3693,10 @@
                 collection="osha_q49_images"
             />
         </div>
-        <!-- 50 Are all tanks holding flammable material properly grounded? -->
+        <!-- 50 Are all the breakers properly labeled? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">50. Are all tanks holding flammable material
-                    properly
-                    grounded?</label>
+                <label class="text-base font-semibold text-gray-900">Are all the breakers properly labeled?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3768,11 +3767,11 @@
                 collection="osha_q50_images"
             />
         </div>
-        <!-- 51 Is there clear access of at least 36” to all electrical panels? -->
+        <!-- 51 Are all vacant holes properly sealed off on electrical panel box? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">51. Is there clear access of at least 36” to all
-                    electrical panels?</label>
+                <label class="text-base font-semibold text-gray-900">Are all vacant holes properly sealed off on
+                    electrical panel box?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3843,10 +3842,11 @@
                 collection="osha_q51_images"
             />
         </div>
-        <!-- 52 Are all the breakers properly labeled? -->
+        <!-- 52 Are there any extension cords being used improperly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">52. Are all the breakers properly labeled?</label>
+                <label class="text-base font-semibold text-gray-900">Are commercial grade extension cords being used
+                    properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3917,11 +3917,11 @@
                 collection="osha_q52_images"
             />
         </div>
-        <!-- 53 Are there any extension cords being used improperly? -->
+        <!-- 53 Are any electrical cords frayed, cracked, taped, or spliced or ground missing on 3 prong plugs? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">53. Are there any extension cords being used
-                    improperly?</label>
+                <label class="text-base font-semibold text-gray-900">Are all electrical cords in good working order
+                    (none frayed, cracked, taped, or spliced or ground missing on 3 prong plugs)?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3992,12 +3992,11 @@
                 collection="osha_q53_images"
             />
         </div>
-        <!-- 54 Are any electrical cords frayed, cracked, taped, or spliced or ground missing on 3 prong plugs? -->
+        <!-- 54 Are the fluorescent tubes stored properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">54. Are any electrical cords frayed, cracked,
-                    taped, or
-                    spliced or ground missing on 3 prong plugs?</label>
+                <label class="text-base font-semibold text-gray-900">Are the fluorescent tubes stored
+                    properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4068,11 +4067,11 @@
                 collection="osha_q54_images"
             />
         </div>
-        <!-- 55 Are the fluorescent tubes stored properly? -->
+        <!-- 55 Miscellaneous Electrical issues? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">55. Are the fluorescent tubes stored
-                    properly?</label>
+                <label class="text-base font-semibold text-gray-900">There are no other miscellaneous electrical issues
+                    to note? If “No” explain further</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4143,84 +4142,21 @@
                 collection="osha_q55_images"
             />
         </div>
-        <!-- 56 Miscellaneous Electrical issues? -->
+        <!-- 56 Miscellaneous issues? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">56. Miscellaneous Electrical issues?</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q56_answer"
-                                value="1"
-                                name="osha_q56_answer"
-                                id="osha_q56_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q56_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q56_answer"
-                                value="2"
-                                name="osha_q56_answer"
-                                id="osha_q56_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q56_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q56_answer"
-                                value="3"
-                                name="osha_q56_answer"
-                                id="osha_q56_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q56_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <label>
-                        <input
-                            wire:model="osha_q56_danger"
-                            id="osha_q56_danger"
-                            type="checkbox"
-                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-                        />
-                    </label>
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="osha_q56_danger" class="font-medium text-red-500">Flag as high risk</label>
-                </div>
+                <label class="text-base font-semibold text-gray-900">Miscellaneous issues?</label>
             </div>
             <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
                 <textarea wire:model.lazy="osha_q56_comment" rows="3"
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                rules="mimes:png,jpeg"
-                name="osha_q56_images"
-                :model="$oshaAudit"
-                collection="osha_q56_images"
-            />
         </div>
-        <!-- 57 Miscellaneous issues? -->
+        <!-- 57 Hybrid - Vehicle Training -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">57. Miscellaneous issues?</label>
+                <label class="text-base font-semibold text-gray-900">Hybrid - Vehicle Training Certification
+                    upload</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4294,9 +4230,8 @@
         <!-- 58 Hybrid - Safety Gloves: -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">58. Hybrid - Safety Gloves: “Class O Heavy-Duty
-                    gloves”
-                    rated to withstand 1,000 volts.</label>
+                <label class="text-base font-semibold text-gray-900">Hybrid safety gloves are “Class O Heavy-Duty gloves
+                    rated to withstand 1,000 volts?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4370,8 +4305,8 @@
         <!-- 59 Hybrid - Are the gloves in good condition?  Are there any cracks visible? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">59. Hybrid - Are the gloves in good condition? Are
-                    there any cracks visible?</label>
+                <label class="text-base font-semibold text-gray-900">Hybrid safety gloves are in good working
+                    condition?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4445,8 +4380,8 @@
         <!-- 60 Hybrid - Safety Glasses Are safety glasses worn when working on hybrid vehicle? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">60. Hybrid - Safety Glasses
-                    Are safety glasses worn when working on hybrid vehicle?</label>
+                <label class="text-base font-semibold text-gray-900">Hybrid safety glasses worn when working on hybrid
+                    vehicles?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4520,11 +4455,8 @@
         <!-- 61 Is the first aid kit identified and accessible? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">61. Is the first aid kit identified and is it
-                    stocked
-                    with appropriate supplies? i.e., absorbent compress, adhesive bandages, adhesive tape, antiseptic,
-                    burn treatment, medical exam gloves, sterile pads, triangular bandages. Recommend that the first aid
-                    kits be mounted and visible for all personnel to see.</label>
+                <label class="text-base font-semibold text-gray-900">Is the first aid kit properly stocked given the
+                    dealership work environment?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4598,7 +4530,7 @@
         <!-- 62 Does dealership have elevators? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">62. Does dealership have elevators?</label>
+                <label class="text-base font-semibold text-gray-900">Does dealership have elevators?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4672,7 +4604,7 @@
         <!-- 63 Has elevator been inspected? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">63. Has elevator been inspected?</label>
+                <label class="text-base font-semibold text-gray-900">Has elevator been inspected?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4746,7 +4678,7 @@
         <!-- 64 When was the last inspection date? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">64. When was the last inspection date?</label>
+                <label class="text-base font-semibold text-gray-900">When was the last inspection date?</label>
                 <input
                     wire:model="osha_q64_date"
                     type="date"
@@ -4825,11 +4757,10 @@
             {{--                collection="osha_q64_images"--}}
             {{--            />--}}
         </div>
-        <!-- 65 Fluorescent Tubes not being properly stored -->
+        <!-- 65 Is the first aid kit accessible to all employees 24/7? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">65. Fluorescent Tubes not being properly
-                    stored</label>
+                <label class="text-base font-semibold text-gray-900">Has elevator been inspected?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -4899,296 +4830,6 @@
                 :model="$oshaAudit"
                 collection="osha_q65_images"
             />
-        </div>
-        <!-- 66 Electrical panels: (clear access of at least 36”) -->
-        <div class="bg-gray-50 p-3 space-y-7">
-            <div>
-                <label class="text-base font-semibold text-gray-900">66. Electrical panels: (clear access of at least
-                    36”)</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q66_answer"
-                                value="1"
-                                name="osha_q66_answer"
-                                id="osha_q66_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q66_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q66_answer"
-                                value="2"
-                                name="osha_q66_answer"
-                                id="osha_q66_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q66_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q66_answer"
-                                value="3"
-                                name="osha_q66_answer"
-                                id="osha_q66_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q66_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <label>
-                        <input
-                            wire:model="osha_q66_danger"
-                            id="osha_q66_danger"
-                            type="checkbox"
-                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-                        />
-                    </label>
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="osha_q66_danger" class="font-medium text-red-500">Flag as high risk</label>
-                </div>
-            </div>
-            <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
-                <textarea wire:model.lazy="osha_q66_comment" rows="3"
-                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-            </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                rules="mimes:png,jpeg"
-                name="osha_q66_images"
-                :model="$oshaAudit"
-                collection="osha_q66_images"
-            />
-        </div>
-        <!-- 67 Electrical beakers labeling: (clearly labeled) -->
-        <div class="bg-gray-50 p-3 space-y-7">
-            <div>
-                <label class="text-base font-semibold text-gray-900">67. Electrical beakers labeling:</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q67_answer"
-                                value="1"
-                                name="osha_q67_answer"
-                                id="osha_q67_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q67_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q67_answer"
-                                value="2"
-                                name="osha_q67_answer"
-                                id="osha_q67_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q67_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q67_answer"
-                                value="3"
-                                name="osha_q67_answer"
-                                id="osha_q67_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q67_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <label>
-                        <input
-                            wire:model="osha_q67_danger"
-                            id="osha_q67_danger"
-                            type="checkbox"
-                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-                        />
-                    </label>
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="osha_q67_danger" class="font-medium text-red-500">Flag as high risk</label>
-                </div>
-            </div>
-            <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
-                <textarea wire:model.lazy="osha_q67_comment" rows="3"
-                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-            </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                rules="mimes:png,jpeg"
-                name="osha_q67_images"
-                :model="$oshaAudit"
-                collection="osha_q67_images"
-            />
-        </div>
-        <!-- 68 Miscellaneous Electrical issues: -->
-        <div class="bg-gray-50 p-3 space-y-7">
-            <div>
-                <label class="text-base font-semibold text-gray-900">68. Miscellaneous Electrical issues:</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q68_answer"
-                                value="1"
-                                name="osha_q68_answer"
-                                id="osha_q68_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q68_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q68_answer"
-                                value="2"
-                                name="osha_q68_answer"
-                                id="osha_q68_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q68_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q68_answer"
-                                value="3"
-                                name="osha_q68_answer"
-                                id="osha_q68_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q68_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <label>
-                        <input
-                            wire:model="osha_q68_danger"
-                            id="osha_q68_danger"
-                            type="checkbox"
-                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-                        />
-                    </label>
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="osha_q68_danger" class="font-medium text-red-500">Flag as high risk</label>
-                </div>
-            </div>
-            <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
-                <textarea wire:model.lazy="osha_q68_comment" rows="3"
-                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-            </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                rules="mimes:png,jpeg"
-                name="osha_q68_images"
-                :model="$oshaAudit"
-                collection="osha_q68_images"
-            />
-        </div>
-        <!-- 69 Floor slippery conditions -->
-        <div class="bg-gray-50 p-3 space-y-7">
-            <div>
-                <label class="text-base font-semibold text-gray-900">69. Floor slippery conditions</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q69_answer"
-                                value="1"
-                                name="osha_q69_answer"
-                                id="osha_q69_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q69_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q69_answer"
-                                value="2"
-                                name="osha_q69_answer"
-                                id="osha_q69_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q69_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="osha_q69_answer"
-                                value="3"
-                                name="osha_q69_answer"
-                                id="osha_q69_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="osha_q69_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <label>
-                        <input
-                            wire:model="osha_q69_danger"
-                            id="osha_q69_danger"
-                            type="checkbox"
-                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-                        />
-                    </label>
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="osha_q69_danger" class="font-medium text-red-500">Flag as high risk</label>
-                </div>
-            </div>
-            <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
-                <textarea wire:model.lazy="osha_q69_comment" rows="3"
-                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-            </div>
-            <x-media-library-attachment multiple max-items="2" rules="mimes:png,jpeg" name="osha_q69_images"/>
         </div>
         <div class="w-full sticky bottom-0 bg-arm-blue-200 p-5 z-20">
             <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row">
