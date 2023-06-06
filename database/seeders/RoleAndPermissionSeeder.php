@@ -56,10 +56,7 @@ class RoleAndPermissionSeeder extends Seeder
         $consultantRole = Role::create(['name' => 'Consultant']);
         $ownerRole = Role::create(['name' => 'Owner']);
         $qiRole = Role::create(['name' => 'Qualified Individual']);
-        $gmRole = Role::create(['name' => 'General Manager']);
-        $smRole = Role::create(['name' => 'Service Manager']);
-        $pmRole = Role::create(['name' => 'Parts Manager']);
-        $bsmRole = Role::create(['name' => 'Body Shop Manager']);
+        $gmRole = Role::create(['name' => 'GM']);
         $cfoRole = Role::create(['name' => 'CFO']);
         $gsmRole = Role::create(['name' => 'GSM']);
         $managerRole = Role::create(['name' => 'Manager']);
@@ -189,30 +186,6 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-manuals',
             'view-manuals',
             'view-audits',
-        ]);
-
-        $smRole->givePermissionTo([
-            'create-users',
-            'edit-users',
-            'view-users',
-            'view-vendors',
-            'view-manuals',
-        ]);
-
-        $pmRole->givePermissionTo([
-            'create-users',
-            'edit-users',
-            'view-users',
-            'view-vendors',
-            'view-manuals',
-        ]);
-
-        $bsmRole->givePermissionTo([
-            'create-users',
-            'edit-users',
-            'view-users',
-            'view-vendors',
-            'view-manuals',
         ]);
 
         $managerRole->givePermissionTo([
