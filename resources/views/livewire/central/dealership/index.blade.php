@@ -1,5 +1,5 @@
 <div class="space-y-5">
-    <div class="w-1/4">
+    <div class="md:w-1/4">
         <div>
             <label for="search" class="sr-only">Email</label>
             <input type="search" name="search" id="search"
