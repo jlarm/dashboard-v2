@@ -3,7 +3,11 @@
         "uuid": "c5667260-7895-4c91-85ad-4ecc1cd568eb",
         "name": "Torch Cutting and Welding",
         "slug": "torch-cutting-and-welding",
-        "department": [],
+        "department": [
+            3,
+            4,
+            5
+        ],
         "slides": [
             {
                 "title": "Torch Cutting and Welding",

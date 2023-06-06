@@ -3,7 +3,10 @@
         "uuid": "b1fec79c-049f-4987-9a78-cee8b45e1b15",
         "name": "ECOA",
         "slug": "ecoa",
-        "department": [],
+        "department": [
+            1,
+            6
+        ],
         "slides": [
             {
                 "title": "Purpose",

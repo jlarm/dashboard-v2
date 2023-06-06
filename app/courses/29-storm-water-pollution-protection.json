@@ -4,7 +4,9 @@
         "name": "Storm Water Pollution Protection",
         "slug": "storm-water-pollution-protection",
         "department": [
-            4
+            3,
+            4,
+            5
         ],
         "slides": [
             {

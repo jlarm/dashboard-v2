@@ -4,7 +4,9 @@
         "name": "Lock out Tag Out",
         "slug": "lock-out-tag-out",
         "department": [
-            4
+            3,
+            4,
+            5
         ],
         "slides": [
             {

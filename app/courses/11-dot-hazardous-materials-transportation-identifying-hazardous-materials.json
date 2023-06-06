@@ -3,7 +3,9 @@
         "uuid": "574423b0-e573-479f-b88a-a701b38230e7",
         "name": "DOT Module 2 Hazardous Materials Transportation, Identifying Hazardous Materials",
         "slug": "dot-hazardous-materials-transportation-identifying-hazardous-materials",
-        "department": [],
+        "department": [
+            4
+        ],
         "slides": [
             {
                 "title": "Identify and Classify the material",

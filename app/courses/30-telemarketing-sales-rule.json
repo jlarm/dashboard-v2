@@ -3,7 +3,9 @@
         "uuid": "b82594b0-91f6-43a6-b1d9-1aa24bbefa4a",
         "name": "Telemarketing Sales Rule",
         "slug": "telemarketing-sales-rule",
-        "department": [],
+        "department": [
+            1
+        ],
         "slides": [
             {
                 "title": "Telemarketing",

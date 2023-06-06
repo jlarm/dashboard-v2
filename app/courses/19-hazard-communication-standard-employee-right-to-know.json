@@ -4,6 +4,8 @@
         "name": "Hazard Communication Standard (Employee Right-to-Know)",
         "slug": "hazard-communication-standard-employee-right-to-know",
         "department": [
+            3,
+            4,
             5
         ],
         "slides": [

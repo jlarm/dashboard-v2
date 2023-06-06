@@ -3,7 +3,9 @@
         "uuid": "de5d79c7-efb8-4b0e-ab9d-52ddcdb7a3c9",
         "name": "Safe Driving",
         "slug": "safe-driving",
-        "department": [],
+        "department": [
+            3
+        ],
         "slides": [
             {
                 "title": "<strong>Cell phones & Texting</strong>",

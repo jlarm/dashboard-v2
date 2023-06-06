@@ -4,7 +4,9 @@
         "name": "Personal Protective Equipment",
         "slug": "personal-protective-equipment",
         "department": [
-            4
+            3,
+            4,
+            5
         ],
         "slides": [
             {

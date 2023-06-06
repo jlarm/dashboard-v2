@@ -4,6 +4,8 @@
         "name": "Powered Industrial Trucks",
         "slug": "powered-industrial-trucks",
         "department": [
+            3,
+            4,
             5
         ],
         "slides": [

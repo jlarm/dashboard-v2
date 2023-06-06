@@ -4,7 +4,9 @@
         "name": "Adverse Action",
         "slug": "adverse-action",
         "department": [
-            2
+            1,
+            2,
+            6
         ],
         "slides": [
             {

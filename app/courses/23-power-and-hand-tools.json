@@ -4,7 +4,9 @@
         "name": "Power and Hand Tools",
         "slug": "power-and-hand-tools",
         "department": [
-            4
+            3,
+            4,
+            5
         ],
         "slides": [
             {
