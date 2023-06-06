@@ -38,5 +38,10 @@ class DepartmentSeeder extends Seeder
             'name' => 'Body Shop',
             'slug' => 'body-shop',
         ]);
+
+        Department::create([
+            'name' => 'Finance',
+            'slug' => 'finance',
+        ]);
     }
 }
