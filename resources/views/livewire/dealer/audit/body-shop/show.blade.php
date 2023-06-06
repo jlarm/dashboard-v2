@@ -16,7 +16,7 @@
         <!-- 1 Is a Filtration Log being completed? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">1. Is a Filtration Log being completed?</label>
+                <label class="text-base font-semibold text-gray-900">Is a Filtration Log being completed?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -91,7 +91,7 @@
         <!-- 2 Do all employees know how to -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">2. Do all employees know how to access
+                <label class="text-base font-semibold text-gray-900">Do all employees know how to access
                     SDS’s?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -166,7 +166,7 @@
         <!-- 3 Has annual fit test for all employees been performed? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">3. Has annual fit test for all employees been
+                <label class="text-base font-semibold text-gray-900">Has annual fit test for all employees been
                     performed?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -241,7 +241,7 @@
         <!-- 4 Medical Questionnaire issued to employees utilizing respirators? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">4. Medical Questionnaire issued to employees
+                <label class="text-base font-semibold text-gray-900">Medical Questionnaire issued to employees
                     utilizing
                     respirators?</label>
                 <fieldset class="mt-4">
@@ -317,7 +317,7 @@
         <!-- 5 Are respirators stored properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">5. Are respirators stored properly?</label>
+                <label class="text-base font-semibold text-gray-900">Are respirators stored properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -391,7 +391,7 @@
         <!-- 6 Hybrid - Do respirators have NIOSH certification? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">6. Do respirators have NIOSH
+                <label class="text-base font-semibold text-gray-900">Do respirators have NIOSH
                     certification?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -466,7 +466,7 @@
         <!-- 7 Is PPE equipment available and is it in good condition? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">7. Is PPE equipment available and is it in good
+                <label class="text-base font-semibold text-gray-900">Is PPE equipment available and is it in good
                     condition?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -541,7 +541,7 @@
         <!-- 8 Are paint booths free from any flammable material? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">8. Are paint booths free from any flammable
+                <label class="text-base font-semibold text-gray-900">Are paint booths free from any flammable
                     material?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -616,7 +616,7 @@
         <!-- 9 Are all the flammable materials stored properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">9. Are all the flammable materials stored
+                <label class="text-base font-semibold text-gray-900">Are all the flammable materials stored
                     properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -691,9 +691,8 @@
         <!-- 10 Are all products that are in containers other than the original properly labeled with product NAME, MFG, and appropriate hazard warning? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">10. Are all products that are in containers other
-                    than
-                    the original properly labeled with product NAME, MFG, and appropriate hazard warning?</label>
+                <label class="text-base font-semibold text-gray-900">Are all secondary containers filled with chemicals
+                    properly labeled?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -767,7 +766,7 @@
         <!-- 11 Has the eye wash equipment been tested, cleaned and documented weekly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">11. Has the eye wash equipment been tested, cleaned
+                <label class="text-base font-semibold text-gray-900">Has the eye wash equipment been tested, cleaned
                     and
                     documented weekly?</label>
                 <fieldset class="mt-4">
@@ -843,7 +842,7 @@
         <!-- 12 Is the eye wash equipment readily accessible? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">12. Is the eye wash equipment readily
+                <label class="text-base font-semibold text-gray-900">Is the eye wash equipment readily
                     accessible?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -915,12 +914,11 @@
                 collection="body_shop_q12_images"
             />
         </div>
-        <!-- 13 How often is the water/solution changed in the eye wash equipment? -->
+        <!-- 13 Has the eye wash container water supply been changed out properly based on manufacturer recommendations per solution used?-->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">13. How often is the water/solution changed in the
-                    eye
-                    wash equipment?</label>
+                <label class="text-base font-semibold text-gray-900">Has the eye wash container water supply been
+                    changed out properly based on manufacturer recommendations per solution used?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -994,7 +992,7 @@
         <!-- 14 Do you have documentation on water/solution change out? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">14. Do you have documentation on water/solution
+                <label class="text-base font-semibold text-gray-900">Do you have documentation on water/solution
                     change
                     out?</label>
                 <fieldset class="mt-4">
@@ -1070,7 +1068,7 @@
         <!-- 15 Are you following the mfg. specs? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">15. Are you following the mfg. specs?</label>
+                <label class="text-base font-semibold text-gray-900">Are you following the mfg. specs?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1144,8 +1142,9 @@
         <!-- 16 Have the fire extinguishers had their annual inspection and are they properly identified and fully charged? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">16. Have the fire extinguishers had their annual
-                    inspection and are they properly identified and fully charged?</label>
+                <label class="text-base font-semibold text-gray-900">Have the fire extinguishers had their annual
+                    inspection and are they properly identified and fully charged? Add last annual inspection to the
+                    comments.</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1225,7 +1224,7 @@
         <!-- 17 Are the fire extinguishers easily accessible? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">17. Are the fire extinguishers easily
+                <label class="text-base font-semibold text-gray-900">Are the fire extinguishers easily
                     accessible?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -1300,7 +1299,7 @@
         <!-- 18 Are all hoses and cutting tips for the welder/cutting torches in good condition without any cracks or breaks? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">18. Are all hoses and cutting tips for the
+                <label class="text-base font-semibold text-gray-900">Are all hoses and cutting tips for the
                     welder/cutting torches in good condition without any cracks or breaks?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -1375,7 +1374,7 @@
         <!-- 19 Are all exits properly marked? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">19. Are all exits properly marked?</label>
+                <label class="text-base font-semibold text-gray-900">Are all exits properly marked?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1449,7 +1448,7 @@
         <!-- 20 Are pathways to exits clear of obstructions? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">20. Are pathways to exits clear of
+                <label class="text-base font-semibold text-gray-900">Are pathways to exits clear of
                     obstructions?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -1524,7 +1523,7 @@
         <!-- 21 Are all aisles/pathways, stairways and landings free from obstructions and are the shop areas kept clean and orderly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">21. Are all aisles/pathways, stairways and landings
+                <label class="text-base font-semibold text-gray-900">Are all aisles/pathways, stairways and landings
                     free from obstructions and are the shop areas kept clean and orderly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -1599,7 +1598,7 @@
         <!-- 22 Are any doorways that are nonfunctioning or blocked marked by a sign stating “NOT AN EXIT”? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">22. Are any doorways that are nonfunctioning or
+                <label class="text-base font-semibold text-gray-900">Are any doorways that are nonfunctioning or
                     blocked
                     marked by a sign stating “NOT AN EXIT”? Are any doorways that are nonfunctioning or blocked
                     marked
@@ -1677,7 +1676,7 @@
         <!-- 23 Are floors in good repair and free from obstruction and debris and slippery conditions? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">23. Are floors in good repair and free from
+                <label class="text-base font-semibold text-gray-900">Are floors in good repair and free from
                     obstruction
                     and debris and slippery conditions?</label>
                 <fieldset class="mt-4">
@@ -1753,7 +1752,7 @@
         <!-- 24 Are floor openings in excess of 2.25” wide covered with hinged flaps? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">24. Are floor openings in excess of 2.25” wide
+                <label class="text-base font-semibold text-gray-900">Are floor openings in excess of 2.25” wide
                     covered
                     with hinged flaps?</label>
                 <fieldset class="mt-4">
@@ -1829,7 +1828,7 @@
         <!-- 25 Are compressed air hoses in safe (no frays, cuts, tape or clamps for repair) working condition? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">25. Are compressed air hoses in safe (no frays,
+                <label class="text-base font-semibold text-gray-900">Are compressed air hoses in safe (no frays,
                     cuts,
                     tape or clamps for repair) working condition?</label>
                 <fieldset class="mt-4">
@@ -1902,14 +1901,12 @@
                 collection="body_shop_q25_images"
             />
         </div>
-        <!-- 26 Are all portable gas containers UL of FM approved? Yes, dealership only uses UL approved containers. Did not find any of these containers in the body shop during this audit. -->
+        <!-- 26 All gas cylinders stored properly i.e. tied down etc.? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">26. Are all portable gas containers UL of FM
-                    approved?
-                    Yes, dealership only uses UL approved containers. Did not find any of these containers in the
-                    body
-                    shop during this audit.</label>
+                <label class="text-base font-semibold text-gray-900">All gas cylinders stored properly i.e. tied
+                    down
+                    etc.?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1980,12 +1977,12 @@
                 collection="body_shop_q26_images"
             />
         </div>
-        <!-- 27 All gas cylinders stored properly i.e. tied down etc.? -->
+        <!-- 28 Are gas cylinders stored away from sources of heat or electricity and at least 20’ away from combustible materials? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">27. All gas cylinders stored properly i.e. tied
-                    down
-                    etc.?</label>
+                <label class="text-base font-semibold text-gray-900">Are gas cylinders stored away from sources of
+                    heat
+                    or electricity and at least 20’ away from combustible materials?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2056,12 +2053,11 @@
                 collection="body_shop_q27_images"
             />
         </div>
-        <!-- 28 Are gas cylinders stored away from sources of heat or electricity and at least 20’ away from combustible materials? -->
+        <!-- 29 When dispensing are all tanks holding flammable material properly grounded? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">28. Are gas cylinders stored away from sources of
-                    heat
-                    or electricity and at least 20’ away from combustible materials?</label>
+                <label class="text-base font-semibold text-gray-900">When dispensing are all tanks holding flammable
+                    material properly grounded?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2132,11 +2128,12 @@
                 collection="body_shop_q28_images"
             />
         </div>
-        <!-- 29 When dispensing are all tanks holding flammable material properly grounded? -->
+        <!-- 30 Is there proper signage about not smoking in the appropriate areas? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">29. When dispensing are all tanks holding flammable
-                    material properly grounded?</label>
+                <label class="text-base font-semibold text-gray-900">Is there proper signage about not smoking in
+                    the
+                    appropriate areas?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2207,12 +2204,10 @@
                 collection="body_shop_q29_images"
             />
         </div>
-        <!-- 30 Is there proper signage about not smoking in the appropriate areas? -->
+        <!-- 31 Are no smoking signs being enforced? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">30. Is there proper signage about not smoking in
-                    the
-                    appropriate areas?</label>
+                <label class="text-base font-semibold text-gray-900">Are no smoking signs being enforced?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2283,10 +2278,11 @@
                 collection="body_shop_q30_images"
             />
         </div>
-        <!-- 31 Are no smoking signs being enforced? -->
+        <!-- 32 Are goggles or face shields always worn when grinding? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">31. Are no smoking signs being enforced?</label>
+                <label class="text-base font-semibold text-gray-900">Are goggles or face shields always worn when
+                    grinding?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2357,11 +2353,12 @@
                 collection="body_shop_q31_images"
             />
         </div>
-        <!-- 32 Are goggles or face shields always worn when grinding? -->
+        <!-- 33 Is there proper spacing on grinders; Tool rest 1/8” from grinding wheel Tongue plate 1/4” from grinding wheel -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">32. Are goggles or face shields always worn when
-                    grinding?</label>
+                <label class="text-base font-semibold text-gray-900">Is there proper spacing on grinders; Tool rest
+                    1/8”
+                    from grinding wheel Tongue plate 1/4” from grinding wheel?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2432,12 +2429,11 @@
                 collection="body_shop_q32_images"
             />
         </div>
-        <!-- 33 Is there proper spacing on grinders; Tool rest 1/8” from grinding wheel Tongue plate 1/4” from grinding wheel -->
+        <!-- 34 Are Signs posted warning of automatic starting feature of the compressors? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">33. Is there proper spacing on grinders; Tool rest
-                    1/8”
-                    from grinding wheel Tongue plate 1/4” from grinding wheel</label>
+                <label class="text-base font-semibold text-gray-900">Are Signs posted warning of automatic starting
+                    feature of the compressors?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2508,11 +2504,11 @@
                 collection="body_shop_q33_images"
             />
         </div>
-        <!-- 34 Are Signs posted warning of automatic starting feature of the compressors? -->
+        <!-- 35 Is there clear access of at least 36” to all electrical panels? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">34. Are Signs posted warning of automatic starting
-                    feature of the compressors?</label>
+                <label class="text-base font-semibold text-gray-900">Is there clear access of at least 36” to all
+                    electrical panels?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2583,11 +2579,10 @@
                 collection="body_shop_q34_images"
             />
         </div>
-        <!-- 35 Is there clear access of at least 36” to all electrical panels? -->
+        <!-- 36 Are all the breakers properly labeled? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">35. Is there clear access of at least 36” to all
-                    electrical panels?</label>
+                <label class="text-base font-semibold text-gray-900">Are all the breakers properly labeled?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2658,10 +2653,11 @@
                 collection="body_shop_q35_images"
             />
         </div>
-        <!-- 36 Are all the breakers properly labeled? -->
+        <!-- Are commercial grade extension cords being used properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">36. Are all the breakers properly labeled?</label>
+                <label class="text-base font-semibold text-gray-900">Are commercial grade extension cords being used
+                    properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2732,11 +2728,11 @@
                 collection="body_shop_q36_images"
             />
         </div>
-        <!-- 37 Are there any extension cords being used improperly? -->
+        <!-- Are all electrical cords in good working order (none frayed, cracked, taped, or spliced or ground missing on 3 prong plugs)? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">37. Are there any extension cords being used
-                    improperly?</label>
+                <label class="text-base font-semibold text-gray-900">Are all electrical cords in good working order
+                    (none frayed, cracked, taped, or spliced or ground missing on 3 prong plugs)?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2807,12 +2803,11 @@
                 collection="body_shop_q37_images"
             />
         </div>
-        <!-- 38 Are any electrical cords frayed, cracked, taped, or spliced? -->
+        <!-- Are all electrical plug ends still have ground prong attached? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">38. Are any electrical cords frayed, cracked,
-                    taped, or
-                    spliced?</label>
+                <label class="text-base font-semibold text-gray-900">Are all electrical plug ends still have ground
+                    prong attached?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2883,12 +2878,11 @@
                 collection="body_shop_q38_images"
             />
         </div>
-        <!-- 39 Check the plug end to be sure the ground is still intact. -->
+        <!-- 4Are all other additional electrical issues correct? If “No” explain -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">39. Check the plug end to be sure the ground is
-                    still
-                    intact.</label>
+                <label class="text-base font-semibold text-gray-900">Are all other additional electrical issues correct?
+                    If “No” explain.</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2959,10 +2953,11 @@
                 collection="body_shop_q39_images"
             />
         </div>
-        <!-- 40 Any electrical issues: -->
+        <!-- There are no other miscellaneous electrical issues to note? If “No” explain further -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">40. Any electrical issues:</label>
+                <label class="text-base font-semibold text-gray-900">There are no other miscellaneous electrical issues
+                    to note? If “No” explain further.</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3033,10 +3028,11 @@
                 collection="body_shop_q40_images"
             />
         </div>
-        <!-- 41 Miscellaneous issues? -->
+        <!-- Hybrid safety gloves are “Class O Heavy-Duty gloves rated to withstand 1,000 volts? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">41. Miscellaneous issues?</label>
+                <label class="text-base font-semibold text-gray-900">Hybrid safety gloves are “Class O Heavy-Duty gloves
+                    rated to withstand 1,000 volts?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3107,13 +3103,11 @@
                 collection="body_shop_q41_images"
             />
         </div>
-        <!-- 42 Hybrid Vehicle Safety: Are batteries removed before work is started? -->
+        <!-- Hybrid safety glasses worn when working on hybrid vehicles? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">42. Hybrid Vehicle Safety: Are batteries removed
-                    before
-                    work is started? Safety Gloves –“Class O heavy- duty gloves” rated to withstand 1,000
-                    volts.</label>
+                <label class="text-base font-semibold text-gray-900">Hybrid safety glasses worn when working on hybrid
+                    vehicles?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3184,11 +3178,11 @@
                 collection="body_shop_q42_images"
             />
         </div>
-        <!-- 43 Safety glasses not being worn when working on hybrid vehicle? -->
+        <!-- Is the first aid kit properly stocked given the dealership work environment?  -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">43. Safety glasses not being worn when working on
-                    hybrid vehicle?</label>
+                <label class="text-base font-semibold text-gray-900">Is the first aid kit properly stocked given the
+                    dealership work environment?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -3259,158 +3253,15 @@
                 collection="body_shop_q43_images"
             />
         </div>
-        <!-- 44 Is the First Aid Kit identified and is it stocked with appropriate supplies? -->
-        <div class="bg-gray-50 p-3 space-y-7">
-            <div>
-                <label class="text-base font-semibold text-gray-900">44. Is the First Aid Kit identified and is it
-                    stocked
-                    with appropriate supplies? i.e. absorbent compress, adhesive bandages, adhesive tape,
-                    antiseptic,
-                    burn treatment, medical exam gloves, sterile pads, triangular bandages.</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="body_shop_q44_answer"
-                                value="1"
-                                name="body_shop_q44_answer"
-                                id="body_shop_q44_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="body_shop_q44_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="body_shop_q44_answer"
-                                value="2"
-                                name="body_shop_q44_answer"
-                                id="body_shop_q44_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="body_shop_q44_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="body_shop_q44_answer"
-                                value="3"
-                                name="body_shop_q44_answer"
-                                id="body_shop_q44_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="body_shop_q44_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <label>
-                        <input
-                            wire:model="body_shop_q44_danger"
-                            id="body_shop_q44_danger"
-                            type="checkbox"
-                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-                        />
-                    </label>
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="body_shop_q44_danger" class="font-medium text-red-500">Flag as high risk</label>
+        <!-- Additional Notes  -->
+        <div class="bg-gray-50 p-3">
+            <div class="space-y-7">
+                <label class="text-base font-semibold text-gray-900">Additional Notes:</label>
+                <div>
+                    <textarea wire:model.lazy="body_shop_q44_comment" rows="3"
+                              class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                 </div>
             </div>
-            <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
-                <textarea wire:model.lazy="body_shop_q44_comment" rows="3"
-                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-            </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                rules="mimes:png,jpeg"
-                name="body_shop_q44_images"
-                :model="$bodyShopAudit"
-                collection="body_shop_q44_images"
-            />
-        </div>
-        <!-- 45 Electrical panels: (clear access of at -->
-        <div class="bg-gray-50 p-3 space-y-7">
-            <div>
-                <label class="text-base font-semibold text-gray-900">45. Electrical panels: (clear access of at least
-                    36")</label>
-                <fieldset class="mt-4">
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="body_shop_q45_answer"
-                                value="1"
-                                name="body_shop_q45_answer"
-                                id="body_shop_q45_answer_1"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="body_shop_q45_answer_1"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="body_shop_q45_answer"
-                                value="2"
-                                name="body_shop_q45_answer"
-                                id="body_shop_q45_answer_2"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="body_shop_q45_answer_2"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input
-                                wire:model="body_shop_q45_answer"
-                                value="3"
-                                name="body_shop_q45_answer"
-                                id="body_shop_q45_answer_3"
-                                type="radio"
-                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                            >
-                            <label for="body_shop_q45_answer_3"
-                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
-                    <label>
-                        <input
-                            wire:model="body_shop_q45_danger"
-                            id="body_shop_q45_danger"
-                            type="checkbox"
-                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-                        />
-                    </label>
-                </div>
-                <div class="ml-3 text-sm leading-6">
-                    <label for="body_shop_q45_danger" class="font-medium text-red-500">Flag as high risk</label>
-                </div>
-            </div>
-            <div>
-                <label class="text-base font-semibold text-gray-900">Comments</label>
-                <textarea wire:model.lazy="body_shop_q45_comment" rows="3"
-                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
-            </div>
-            <x-media-library-collection
-                multiple
-                max-items="2"
-                rules="mimes:png,jpeg"
-                name="body_shop_q45_images"
-                :model="$bodyShopAudit"
-                collection="body_shop_q45_images"
-            />
         </div>
     </div>
     <div class="w-full sticky bottom-0 bg-arm-blue-200 p-5 z-20">

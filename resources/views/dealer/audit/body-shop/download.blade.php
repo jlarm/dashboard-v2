@@ -31,7 +31,7 @@
         </div>
     </div>
     <ul class="divide-y divide-gray-300">
-        @if($bodyShopAudit->body_shop_q1_answer === 2 || $bodyShopAudit->body_shop_q1_answer === 3)
+        @if($bodyShopAudit->body_shop_q1_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Is a Filtration Log being completed?</p>
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q1_answer === 2 || $bodyShopAudit->body_shop_q1_answer === 3)
+                @if($bodyShopAudit->body_shop_q1_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -97,7 +97,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q2_answer === 2 || $bodyShopAudit->body_shop_q2_answer === 3)
+        @if($bodyShopAudit->body_shop_q2_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Do all employees know how to access SDS’s?</p>
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q2_answer === 2 || $bodyShopAudit->body_shop_q2_answer === 3)
+                @if($bodyShopAudit->body_shop_q2_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -168,7 +168,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q3_answer === 2 || $bodyShopAudit->body_shop_q3_answer === 3)
+        @if($bodyShopAudit->body_shop_q3_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Has annual fit test for all employees been performed?</p>
@@ -199,7 +199,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q3_answer === 2 || $bodyShopAudit->body_shop_q3_answer === 3)
+                @if($bodyShopAudit->body_shop_q3_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -240,7 +240,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q4_answer === 2 || $bodyShopAudit->body_shop_q4_answer === 3)
+        @if($bodyShopAudit->body_shop_q4_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Medical Questionnaire issued to employees utilizing respirators?</p>
@@ -271,7 +271,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q4_answer === 2 || $bodyShopAudit->body_shop_q4_answer === 3)
+                @if($bodyShopAudit->body_shop_q4_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -314,7 +314,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q5_answer === 2 || $bodyShopAudit->body_shop_q5_answer === 3)
+        @if($bodyShopAudit->body_shop_q5_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are respirators stored properly?</p>
@@ -345,7 +345,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q5_answer === 2 || $bodyShopAudit->body_shop_q5_answer === 3)
+                @if($bodyShopAudit->body_shop_q5_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -386,7 +386,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q6_answer === 2 || $bodyShopAudit->body_shop_q6_answer === 3)
+        @if($bodyShopAudit->body_shop_q6_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Do respirators have NIOSH certification?</p>
@@ -417,7 +417,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q6_answer === 2 || $bodyShopAudit->body_shop_q6_answer === 3)
+                @if($bodyShopAudit->body_shop_q6_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -458,7 +458,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q7_answer === 2 || $bodyShopAudit->body_shop_q7_answer === 3)
+        @if($bodyShopAudit->body_shop_q7_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Is PPE equipment available and is it in good condition?</p>
@@ -489,7 +489,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q7_answer === 2 || $bodyShopAudit->body_shop_q7_answer === 3)
+                @if($bodyShopAudit->body_shop_q7_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -537,7 +537,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q8_answer === 2 || $bodyShopAudit->body_shop_q8_answer === 3)
+        @if($bodyShopAudit->body_shop_q8_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are paint booths free from any flammable material?</p>
@@ -568,7 +568,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q8_answer === 2 || $bodyShopAudit->body_shop_q8_answer === 3)
+                @if($bodyShopAudit->body_shop_q8_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -608,7 +608,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q9_answer === 2 || $bodyShopAudit->body_shop_q9_answer === 3)
+        @if($bodyShopAudit->body_shop_q9_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are all the flammable materials stored properly?</p>
@@ -639,7 +639,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q9_answer === 2 || $bodyShopAudit->body_shop_q9_answer === 3)
+                @if($bodyShopAudit->body_shop_q9_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -676,12 +676,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q10_answer === 2 || $bodyShopAudit->body_shop_q10_answer === 3)
+        @if($bodyShopAudit->body_shop_q10_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are all products that are in containers other than the original properly
-                        labeled
-                        with product NAME, MFG, and appropriate hazard warning?</p>
+                    <p class="font-bold">Are all secondary containers filled with chemicals
+                        properly labeled?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q10_answer === 1)
                             Yes
@@ -709,7 +708,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q10_answer === 2 || $bodyShopAudit->body_shop_q10_answer === 3)
+                @if($bodyShopAudit->body_shop_q10_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -753,7 +752,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q11_answer === 2 || $bodyShopAudit->body_shop_q11_answer === 3)
+        @if($bodyShopAudit->body_shop_q11_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Has the eye wash equipment been tested, cleaned and documented weekly?</p>
@@ -784,7 +783,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q11_answer === 2 || $bodyShopAudit->body_shop_q11_answer === 3)
+                @if($bodyShopAudit->body_shop_q11_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -828,7 +827,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q12_answer === 2 || $bodyShopAudit->body_shop_q12_answer === 3)
+        @if($bodyShopAudit->body_shop_q12_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Is the eye wash equipment readily accessible?</p>
@@ -859,7 +858,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q12_answer === 2 || $bodyShopAudit->body_shop_q12_answer === 3)
+                @if($bodyShopAudit->body_shop_q12_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -917,10 +916,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q13_answer === 2 || $bodyShopAudit->body_shop_q13_answer === 3)
+        @if($bodyShopAudit->body_shop_q13_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">How often is the water/solution changed in the eye wash equipment?</p>
+                    <p class="font-bold">Has the eye wash container water supply been changed out properly based on
+                        manufacturer recommendations per solution used?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q13_answer === 1)
                             Yes
@@ -948,7 +948,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q13_answer === 2 || $bodyShopAudit->body_shop_q13_answer === 3)
+                @if($bodyShopAudit->body_shop_q13_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -986,7 +986,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q14_answer === 2 || $bodyShopAudit->body_shop_q14_answer === 3)
+        @if($bodyShopAudit->body_shop_q14_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Do you have documentation on water/solution change out?</p>
@@ -1017,7 +1017,7 @@
                         </div>
                     </div>
                 @endif
-                {{--            @if($bodyShopAudit->body_shop_q14_answer === 2 || $bodyShopAudit->body_shop_q14_answer === 3)--}}
+                {{--            @if($bodyShopAudit->body_shop_q14_answer === 2)--}}
                 {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
                 {{--                    <div class="flex">--}}
                 {{--                        <div class="flex-shrink-0">--}}
@@ -1050,7 +1050,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q15_answer === 2 || $bodyShopAudit->body_shop_q15_answer === 3)
+        @if($bodyShopAudit->body_shop_q15_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are you following the mfg. specs?</p>
@@ -1081,7 +1081,7 @@
                         </div>
                     </div>
                 @endif
-                {{--            @if($bodyShopAudit->body_shop_q15_answer === 2 || $bodyShopAudit->body_shop_q15_answer === 3)--}}
+                {{--            @if($bodyShopAudit->body_shop_q15_answer === 2)--}}
                 {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
                 {{--                    <div class="flex">--}}
                 {{--                        <div class="flex-shrink-0">--}}
@@ -1114,7 +1114,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q16_answer === 2 || $bodyShopAudit->body_shop_q16_answer === 3)
+        @if($bodyShopAudit->body_shop_q16_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Have the fire extinguishers had their annual inspection and are they properly
@@ -1154,7 +1154,7 @@
                         </p>
                     @endif
                 </div>
-                @if($bodyShopAudit->body_shop_q16_answer === 2 || $bodyShopAudit->body_shop_q16_answer === 3)
+                @if($bodyShopAudit->body_shop_q16_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1192,7 +1192,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q17_answer === 2 || $bodyShopAudit->body_shop_q17_answer === 3)
+        @if($bodyShopAudit->body_shop_q17_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are the fire extinguishers easily accessible?</p>
@@ -1223,7 +1223,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q17_answer === 2 || $bodyShopAudit->body_shop_q17_answer === 3)
+                @if($bodyShopAudit->body_shop_q17_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1262,7 +1262,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q18_answer === 2 || $bodyShopAudit->body_shop_q18_answer === 3)
+        @if($bodyShopAudit->body_shop_q18_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are all hoses and cutting tips for the welder/cutting torches in good condition
@@ -1294,7 +1294,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q18_answer === 2 || $bodyShopAudit->body_shop_q18_answer === 3)
+                @if($bodyShopAudit->body_shop_q18_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1329,7 +1329,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q19_answer === 2 || $bodyShopAudit->body_shop_q19_answer === 3)
+        @if($bodyShopAudit->body_shop_q19_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are all exits properly marked?</p>
@@ -1360,7 +1360,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q19_answer === 2 || $bodyShopAudit->body_shop_q19_answer === 3)
+                @if($bodyShopAudit->body_shop_q19_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1401,7 +1401,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q20_answer === 2 || $bodyShopAudit->body_shop_q20_answer === 3)
+        @if($bodyShopAudit->body_shop_q20_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are pathways to exits clear of obstructions?</p>
@@ -1432,7 +1432,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q20_answer === 2 || $bodyShopAudit->body_shop_q20_answer === 3)
+                @if($bodyShopAudit->body_shop_q20_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1468,7 +1468,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q21_answer === 2 || $bodyShopAudit->body_shop_q21_answer === 3)
+        @if($bodyShopAudit->body_shop_q21_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are all aisles/pathways, stairways and landings free from obstructions and are
@@ -1501,7 +1501,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q21_answer === 2 || $bodyShopAudit->body_shop_q21_answer === 3)
+                @if($bodyShopAudit->body_shop_q21_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1540,12 +1540,14 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q22_answer === 2 || $bodyShopAudit->body_shop_q22_answer === 3)
+        @if($bodyShopAudit->body_shop_q22_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are any doorways that are nonfunctioning or blocked marked by a sign stating
-                        “NOT
-                        AN EXIT”?</p>
+                    <p class="font-bold">Are any doorways that are nonfunctioning or
+                        blocked
+                        marked by a sign stating “NOT AN EXIT”? Are any doorways that are nonfunctioning or blocked
+                        marked
+                        by a sign stating “NOT AN EXIT”?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q22_answer === 1)
                             Yes
@@ -1573,7 +1575,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q22_answer === 2 || $bodyShopAudit->body_shop_q22_answer === 3)
+                @if($bodyShopAudit->body_shop_q22_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1619,7 +1621,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q23_answer === 2 || $bodyShopAudit->body_shop_q23_answer === 3)
+        @if($bodyShopAudit->body_shop_q23_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are floors in good repair and free from obstruction and debris and slippery
@@ -1651,7 +1653,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q23_answer === 2 || $bodyShopAudit->body_shop_q23_answer === 3)
+                @if($bodyShopAudit->body_shop_q23_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1685,7 +1687,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q24_answer === 2 || $bodyShopAudit->body_shop_q24_answer === 3)
+        @if($bodyShopAudit->body_shop_q24_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are floor openings in excess of 2.25” wide covered with hinged flaps?</p>
@@ -1716,7 +1718,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q24_answer === 2 || $bodyShopAudit->body_shop_q24_answer === 3)
+                @if($bodyShopAudit->body_shop_q24_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1767,7 +1769,7 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q25_answer === 2 || $bodyShopAudit->body_shop_q25_answer === 3)
+        @if($bodyShopAudit->body_shop_q25_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Are compressed air hoses in safe (no frays, cuts, tape or clamps for repair)
@@ -1799,7 +1801,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q25_answer === 2 || $bodyShopAudit->body_shop_q25_answer === 3)
+                @if($bodyShopAudit->body_shop_q25_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1839,12 +1841,12 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q26_answer === 2 || $bodyShopAudit->body_shop_q26_answer === 3)
+        @if($bodyShopAudit->body_shop_q26_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are all portable gas containers UL of FM approved? Yes, dealership only uses UL
-                        approved containers. Did not find any of these containers in the body shop during this
-                        audit.</p>
+                    <p class="font-bold">All gas cylinders stored properly i.e. tied
+                        down
+                        etc.?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q26_answer === 1)
                             Yes
@@ -1872,7 +1874,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q26_answer === 2 || $bodyShopAudit->body_sho_q26_answer === 3)
+                @if($bodyShopAudit->body_shop_q26_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1886,11 +1888,12 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>29 CFR 1926.152(a)(1) - Only
-                                        approved containers and portable
-                                        tanks shall be used for storage and
-                                        handling of flammable and
-                                        combustible liquids</p>
+                                    <p>29 CFR 1910.101
+                                        29 CFR 1910.6 reference
+                                        49 CFR parts 171-179 & 14 CFR part 103
+                                        CGAP C-6-1968 & C-8-1962
+                                        29 CFR 1926.350(a)(7); securing compressed gas cylinders.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -1909,10 +1912,12 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q27_answer === 2 || $bodyShopAudit->body_shop_q27_answer === 3)
+        @if($bodyShopAudit->body_shop_q27_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">All gas cylinders stored properly i.e. tied down etc.?</p>
+                    <p class="font-bold">Are gas cylinders stored away from sources of
+                        heat
+                        or electricity and at least 20’ away from combustible materials?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q27_answer === 1)
                             Yes
@@ -1940,7 +1945,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q27_answer === 2 || $bodyShopAudit->body_shop_q27_answer === 3)
+                @if($bodyShopAudit->body_shop_q27_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -1956,10 +1961,8 @@
                                 <div class="mt-2 text-sm text-yellow-700">
                                     <p>29 CFR 1910.101
                                         29 CFR 1910.6 reference
-                                        49 CFR parts 171-179 &amp; 14 CFR
-                                        part 103
-                                        CGAP C-6-1968 &amp; C-8-1962
-                                        29 CFR 1926.350(a)(7); securing compressed gas cylinders.</p>
+                                        49 CFR parts 171-179 & 14 CFR part 103
+                                        CGAP C-6-1968 & C-8-1962</p>
                                 </div>
                             </div>
                         </div>
@@ -1978,12 +1981,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q28_answer === 2 || $bodyShopAudit->body_shop_q28_answer === 3)
+        @if($bodyShopAudit->body_shop_q28_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are gas cylinders stored away from sources of heat or electricity and at least
-                        20’
-                        away from combustible materials?</p>
+                    <p class="font-bold">When dispensing are all tanks holding flammable
+                        material properly grounded?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q28_answer === 1)
                             Yes
@@ -2011,7 +2013,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q28_answer === 2 || $bodyShopAudit->body_shop_q28_answer === 3)
+                @if($bodyShopAudit->body_shop_q28_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2025,11 +2027,18 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>29 CFR 1910.101
-                                        29 CFR 1910.6 reference
-                                        49 CFR parts 171-179 &amp; 14 CFR
-                                        part 103
-                                        CGAP C-6-1968 &amp; C-8-1962</p>
+                                    <p>29 CFR 1910.106
+                                        NFPA 30.4.5.3.4
+                                        Static Electricity.
+                                        All equipment such as tanks, machinery, and piping shall be designed and
+                                        operated to prevent electrostatic ignitions. All metallic equipment where an
+                                        ignitable mixture could be present shall be bonded or grounded. The bond or
+                                        ground or both shall be physically applied or shall be inherently present by the
+                                        nature of the installation. Any electrically isolated section of metallic piping
+                                        or equipment shall be bonded or grounded to prevent hazardous accumulation of
+                                        static electricity. All nonmetallic equipment and piping where an ignitable
+                                        mixture could be present shall be given special consideration.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -2048,10 +2057,12 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q29_answer === 2 || $bodyShopAudit->body_shop_q29_answer === 3)
+        @if($bodyShopAudit->body_shop_q29_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">When dispensing are all tanks holding flammable material properly grounded?</p>
+                    <p class="font-bold">Is there proper signage about not smoking in
+                        the
+                        appropriate areas?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q29_answer === 1)
                             Yes
@@ -2079,7 +2090,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q29_answer === 2 || $bodyShopAudit->body_shop_q29_answer === 3)
+                @if($bodyShopAudit->body_shop_q29_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2132,10 +2143,10 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q30_answer === 2 || $bodyShopAudit->body_shop_q30_answer === 3)
+        @if($bodyShopAudit->body_shop_q30_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Is there proper signage about not smoking in the appropriate areas?</p>
+                    <p class="font-bold">Are no smoking signs being enforced?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q30_answer === 1)
                             Yes
@@ -2163,30 +2174,30 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q30_answer === 2 || $bodyShopAudit->body_shop_q30_answer === 3)
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                                <div class="mt-2 text-sm text-yellow-700">
-                                    <p>29 CFR 1910.106
-                                        &quot;No Smoking&quot; signs shall be
-                                        conspicuously posted where hazard
-                                        from flammable liquid vapors is
-                                        normally present.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                {{--                @if($bodyShopAudit->body_shop_q30_answer === 2)--}}
+                {{--                    <div class="rounded-md bg-yellow-50 p-4">--}}
+                {{--                        <div class="flex">--}}
+                {{--                            <div class="flex-shrink-0">--}}
+                {{--                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
+                {{--                                     aria-hidden="true">--}}
+                {{--                                    <path fill-rule="evenodd"--}}
+                {{--                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
+                {{--                                          clip-rule="evenodd"/>--}}
+                {{--                                </svg>--}}
+                {{--                            </div>--}}
+                {{--                            <div class="ml-3">--}}
+                {{--                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
+                {{--                                <div class="mt-2 text-sm text-yellow-700">--}}
+                {{--                                    <p>29 CFR 1910.106--}}
+                {{--                                        &quot;No Smoking&quot; signs shall be--}}
+                {{--                                        conspicuously posted where hazard--}}
+                {{--                                        from flammable liquid vapors is--}}
+                {{--                                        normally present.</p>--}}
+                {{--                                </div>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                @endif--}}
                 @if($bodyShopAudit->body_shop_q30_comment)
                     <div>
                         <p class="font-bold">Comments:</p>
@@ -2200,10 +2211,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q31_answer === 2 || $bodyShopAudit->body_shop_q31_answer === 3)
+        @if($bodyShopAudit->body_shop_q31_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are no smoking signs being enforced?</p>
+                    <p class="font-bold">Are goggles or face shields always worn when
+                        grinding?</p>
                     <p>
                         @if($bodyShopAudit->body_sho_q31_answer === 1)
                             Yes
@@ -2231,26 +2243,31 @@
                         </div>
                     </div>
                 @endif
-                {{--            @if($bodyShopAudit->body_shop_q31_answer === 2 || $bodyShopAudit->body_shop_q31_answer === 3)--}}
-                {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
-                {{--                    <div class="flex">--}}
-                {{--                        <div class="flex-shrink-0">--}}
-                {{--                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
-                {{--                                 aria-hidden="true">--}}
-                {{--                                <path fill-rule="evenodd"--}}
-                {{--                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
-                {{--                                      clip-rule="evenodd"/>--}}
-                {{--                            </svg>--}}
-                {{--                        </div>--}}
-                {{--                        <div class="ml-3">--}}
-                {{--                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
-                {{--                            <div class="mt-2 text-sm text-yellow-700">--}}
-                {{--                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-                {{--            @endif--}}
+                @if($bodyShopAudit->body_shop_q31_answer === 2)
+                    <div class="rounded-md bg-yellow-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
+                                     aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
+                                <div class="mt-2 text-sm text-yellow-700">
+                                    <p>29 CFR 1910 133 (a) (1) - (a) General requirements. (1) The employer shall ensure
+                                        that each affected employee uses appropriate eye or face protection when exposed
+                                        to eye or face hazards from flying particles, molten metal, liquid chemicals,
+                                        acids or caustic liquids, chemical gases or vapors, or potentially injurious
+                                        light radiation.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 @if($bodyShopAudit->body_shop_q31_comment)
                     <div>
                         <p class="font-bold">Comments:</p>
@@ -2264,10 +2281,12 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q32_answer === 2 || $bodyShopAudit->body_shop_q32_answer === 3)
+        @if($bodyShopAudit->body_shop_q32_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are goggles or face shields always worn when grinding?</p>
+                    <p class="font-bold">Is there proper spacing on grinders; Tool rest
+                        1/8”
+                        from grinding wheel Tongue plate 1/4” from grinding wheel?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q32_answer === 1)
                             Yes
@@ -2295,7 +2314,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q32_answer === 2 || $bodyShopAudit->body_shop_q32_answer === 3)
+                @if($bodyShopAudit->body_shop_q32_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2309,16 +2328,14 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>29 CFR 1910 133 (a) (1) - (a)
-                                        General requirements. (1) The
-                                        employer shall ensure that each
-                                        affected employee uses appropriate
-                                        eye or face protection when exposed
-                                        to eye or face hazards from flying
-                                        particles, molten metal, liquid
-                                        chemicals, acids or caustic liquids,
-                                        chemical gases or vapors, or
-                                        potentially injurious light radiation.</p>
+                                    <p>29 CFR 1910.215(a)(4) - Work rests. (Bottom Plate) On offhand grinding machines,
+                                        Work rests shall be kept adjusted closely to the wheel with a maximum opening of
+                                        one-eighth inch
+
+                                        29 CFR 1910.215(b)(9) - exposure adjustment. (Top Cover over Wheel) Safety
+                                        guards. The distance between the wheel periphery and the adjustable tongue or
+                                        the end of the peripheral member at the top shall never exceed one-fourth
+                                        inch</p>
                                 </div>
                             </div>
                         </div>
@@ -2337,11 +2354,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q33_answer === 2 || $bodyShopAudit->body_shop_q33_answer === 3)
+        @if($bodyShopAudit->body_shop_q33_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Is there proper spacing on grinders; Tool rest 1/8” from grinding wheel Tongue
-                        plate 1/4” from grinding wheel</p>
+                    <p class="font-bold">Are Signs posted warning of automatic starting
+                        feature of the compressors?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q33_answer === 1)
                             Yes
@@ -2369,7 +2386,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q33_answer === 2 || $bodyShopAudit->body_shop_q33_answer === 3)
+                @if($bodyShopAudit->body_shop_q33_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2383,18 +2400,8 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>29 CFR 1910.215(a)(4) - Work rests.
-                                        (Bottom Plate) On offhand grinding
-                                        machines, Work rests shall be kept
-                                        adjusted closely to the wheel with a
-                                        maximum opening of one-eighth inch
-                                        29 CFR 1910.215(b)(9) - exposure
-                                        adjustment. (Top Cover over Wheel)
-                                        Safety guards. The distance between
-                                        the wheel periphery and the
-                                        adjustable tongue or the end of the
-                                        peripheral member at the top shall
-                                        never exceed one-fourth inch</p>
+                                    <p>Industry Standards Apply
+                                        Safety</p>
                                 </div>
                             </div>
                         </div>
@@ -2413,10 +2420,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q34_answer === 2 || $bodyShopAudit->body_shop_q34_answer === 3)
+        @if($bodyShopAudit->body_shop_q34_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are Signs posted warning of automatic starting feature of the compressors?</p>
+                    <p class="font-bold">Is there clear access of at least 36” to all
+                        electrical panels?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q34_answer === 1)
                             Yes
@@ -2444,7 +2452,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q34_answer === 2 || $bodyShopAudit->body_shop_q34_answer === 3)
+                @if($bodyShopAudit->body_shop_q34_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2458,8 +2466,11 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>Industry Standards Apply
-                                        Safety</p>
+                                    <p>1910.303(g)(1) & 1910.303(g)(1)(i)(B)
+                                        29 CFR 1921.303 (g)
+                                        NFPA 70 110-26
+                                        Regulations requires a minimum of three feet of clearance for all electrical
+                                        equipment serving 600 volts or less</p>
                                 </div>
                             </div>
                         </div>
@@ -2478,10 +2489,10 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q35_answer === 2 || $bodyShopAudit->body_shop_q35_answer === 3)
+        @if($bodyShopAudit->body_shop_q35_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Is there clear access of at least 36” to all electrical panels?</p>
+                    <p class="font-bold">Are all the breakers properly labeled?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q35_answer === 1)
                             Yes
@@ -2509,7 +2520,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q35_answer === 2 || $bodyShopAudit->body_shop_q35_answer === 3)
+                @if($bodyShopAudit->body_shop_q35_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2523,13 +2534,12 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>1910.303(g)(1) &amp;
-                                        1910.303(g)(1)(i)(B)
-                                        29 CFR 1921.303 (g)
-                                        NFPA 70 110-26
-                                        Regulations requires a minimum of three feet of clearance for all
-                                        electrical equipment serving 600 volts
-                                        or less</p>
+                                    <p>29 CFR 1910.303
+                                        Suitability for installation and use in conformity with the provisions of this
+                                        subpart;
+                                        Note to paragraph (b) (1) (i) of this section: Suitability of equipment for an
+                                        identified purpose may be evidenced by listing or labeling for that identified
+                                        purpose. </p>
                                 </div>
                             </div>
                         </div>
@@ -2548,10 +2558,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q36_answer === 2 || $bodyShopAudit->body_shop_q36_answer === 3)
+        @if($bodyShopAudit->body_shop_q36_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are all the breakers properly labeled?</p>
+                    <p class="font-bold">Are commercial grade extension cords being used
+                        properly?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q36_answer === 1)
                             Yes
@@ -2579,7 +2590,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q36_answer === 2 || $bodyShopAudit->body_shop_q36_answer === 3)
+                @if($bodyShopAudit->body_shop_q36_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2593,15 +2604,9 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>29 CFR 1910.303
-                                        Suitability for installation and use in
-                                        conformity with the provisions of this
-                                        subpart;
-                                        Note to paragraph (b) (1) (i) of this
-                                        section: Suitability of equipment for
-                                        an identified purpose may be
-                                        evidenced by listing or labeling for
-                                        that identified purpose.</p>
+                                    <p>29 CFR 1910.334
+                                        Electrical Use of Equipment
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -2620,10 +2625,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q37_answer === 2 || $bodyShopAudit->body_shop_q37_answer === 3)
+        @if($bodyShopAudit->body_shop_q37_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Are there any extension cords being used improperly?</p>
+                    <p class="font-bold">Are all electrical cords in good working order
+                        (none frayed, cracked, taped, or spliced or ground missing on 3 prong plugs)?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q37_answer === 1)
                             Yes
@@ -2651,7 +2657,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q37_answer === 2 || $bodyShopAudit->body_shop_q37_answer === 3)
+                @if($bodyShopAudit->body_shop_q37_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2666,7 +2672,10 @@
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
                                     <p>29 CFR 1910.334
-                                        Electrical Use of Equipment</p>
+                                        Electrical cords shall be visually inspected before use on any shift for
+                                        external defects (such as loose parts, deformed and missing pins, or damage to
+                                        outer jacket or insulation) and for evidence of possible internal damage (such
+                                        as pinched or crushed outer jacket).</p>
                                 </div>
                             </div>
                         </div>
@@ -2685,10 +2694,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q38_answer === 2 || $bodyShopAudit->body_shop_q38_answer === 3)
+        @if($bodyShopAudit->body_shop_q38_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold"> Are any electrical cords frayed, cracked, taped, or spliced?</p>
+                    <p class="font-bold">Are all electrical plug ends still have ground
+                        prong attached?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q38_answer === 1)
                             Yes
@@ -2716,34 +2726,34 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q38_answer === 2 || $bodyShopAudit->body_shop_q38_answer === 3)
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                                <div class="mt-2 text-sm text-yellow-700">
-                                    <p>29 CFR 1910.334
-                                        Electrical cords shall be visually
-                                        inspected before use on any shift for
-                                        external defects (such as loose parts,
-                                        deformed and missing pins, or
-                                        damage to outer jacket or insulation)
-                                        and for evidence of possible internal
-                                        damage (such as pinched or crushed
-                                        outer jacket).</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                {{--                @if($bodyShopAudit->body_shop_q38_answer === 2)--}}
+                {{--                    <div class="rounded-md bg-yellow-50 p-4">--}}
+                {{--                        <div class="flex">--}}
+                {{--                            <div class="flex-shrink-0">--}}
+                {{--                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
+                {{--                                     aria-hidden="true">--}}
+                {{--                                    <path fill-rule="evenodd"--}}
+                {{--                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
+                {{--                                          clip-rule="evenodd"/>--}}
+                {{--                                </svg>--}}
+                {{--                            </div>--}}
+                {{--                            <div class="ml-3">--}}
+                {{--                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
+                {{--                                <div class="mt-2 text-sm text-yellow-700">--}}
+                {{--                                    <p>29 CFR 1910.334--}}
+                {{--                                        Electrical cords shall be visually--}}
+                {{--                                        inspected before use on any shift for--}}
+                {{--                                        external defects (such as loose parts,--}}
+                {{--                                        deformed and missing pins, or--}}
+                {{--                                        damage to outer jacket or insulation)--}}
+                {{--                                        and for evidence of possible internal--}}
+                {{--                                        damage (such as pinched or crushed--}}
+                {{--                                        outer jacket).</p>--}}
+                {{--                                </div>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                @endif--}}
                 @if($bodyShopAudit->body_shop_q38_comment)
                     <div>
                         <p class="font-bold">Comments:</p>
@@ -2757,10 +2767,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q39_answer === 2 || $bodyShopAudit->body_shop_q39_answer === 3)
+        @if($bodyShopAudit->body_shop_q39_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Check the plug end to be sure the ground is still intact.</p>
+                    <p class="font-bold">Are all other additional electrical issues correct?
+                        If “No” explain.</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q39_answer === 1)
                             Yes
@@ -2788,26 +2799,26 @@
                         </div>
                     </div>
                 @endif
-                {{--            @if($bodyShopAudit->body_shop_q39_answer === 2 || $bodyShopAudit->body_shop_q39_answer === 3)--}}
-                {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
-                {{--                    <div class="flex">--}}
-                {{--                        <div class="flex-shrink-0">--}}
-                {{--                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
-                {{--                                 aria-hidden="true">--}}
-                {{--                                <path fill-rule="evenodd"--}}
-                {{--                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
-                {{--                                      clip-rule="evenodd"/>--}}
-                {{--                            </svg>--}}
-                {{--                        </div>--}}
-                {{--                        <div class="ml-3">--}}
-                {{--                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
-                {{--                            <div class="mt-2 text-sm text-yellow-700">--}}
-                {{--                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-                {{--            @endif--}}
+                @if($bodyShopAudit->body_shop_q39_answer === 2)
+                    <div class="rounded-md bg-yellow-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
+                                     aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
+                                <div class="mt-2 text-sm text-yellow-700">
+                                    <p>Safety</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 @if($bodyShopAudit->body_shop_q39_comment)
                     <div>
                         <p class="font-bold">Comments:</p>
@@ -2821,10 +2832,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q40_answer === 2 || $bodyShopAudit->body_shop_q40_answer === 3)
+        @if($bodyShopAudit->body_shop_q40_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Any electrical issues:</p>
+                    <p class="font-bold">There are no other miscellaneous electrical issues
+                        to note? If “No” explain further.</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q40_answer === 1)
                             Yes
@@ -2852,7 +2864,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q40_answer === 2 || $bodyShopAudit->body_shop_q40_answer === 3)
+                @if($bodyShopAudit->body_shop_q40_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2885,10 +2897,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q41_answer === 2 || $bodyShopAudit->body_shop_q41_answer === 3)
+        @if($bodyShopAudit->body_shop_q41_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Miscellaneous issues?</p>
+                    <p class="font-bold">Hybrid safety gloves are “Class O Heavy-Duty gloves
+                        rated to withstand 1,000 volts?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q41_answer === 1)
                             Yes
@@ -2916,7 +2929,7 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q41_answer === 2 || $bodyShopAudit->body_shop_q41_answer === 3)
+                @if($bodyShopAudit->body_shop_q41_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -2930,7 +2943,15 @@
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
                                 <div class="mt-2 text-sm text-yellow-700">
-                                    <p>Safety</p>
+                                    <p>Safety
+
+                                        Safety Equipment:
+                                        Gloves
+                                        Goggles
+                                        Key Box
+                                        Steering wheel Cover
+                                        Sign for Vehicle
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -2949,12 +2970,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q42_answer === 2 || $bodyShopAudit->body_shop_q42_answer === 3)
+        @if($bodyShopAudit->body_shop_q42_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Hybrid Vehicle Safety: Are batteries removed before work is started? Safety
-                        Gloves
-                        –“Class O heavy-duty gloves” rated to withstand 1,000 volts.</p>
+                    <p class="font-bold">Hybrid safety glasses worn when working on hybrid
+                        vehicles?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q42_answer === 1)
                             Yes
@@ -2982,32 +3002,32 @@
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q42_answer === 2 || $bodyShopAudit->body_shop_q42_answer === 3)
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                                <div class="mt-2 text-sm text-yellow-700">
-                                    <p>Safety
-                                        Safety Equipment:
-                                        Gloves
-                                        Goggles
-                                        Key Box
-                                        Steering wheel Cover
-                                        Sign for Vehicle</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                {{--                @if($bodyShopAudit->body_shop_q42_answer === 2)--}}
+                {{--                    <div class="rounded-md bg-yellow-50 p-4">--}}
+                {{--                        <div class="flex">--}}
+                {{--                            <div class="flex-shrink-0">--}}
+                {{--                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
+                {{--                                     aria-hidden="true">--}}
+                {{--                                    <path fill-rule="evenodd"--}}
+                {{--                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
+                {{--                                          clip-rule="evenodd"/>--}}
+                {{--                                </svg>--}}
+                {{--                            </div>--}}
+                {{--                            <div class="ml-3">--}}
+                {{--                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
+                {{--                                <div class="mt-2 text-sm text-yellow-700">--}}
+                {{--                                    <p>Safety--}}
+                {{--                                        Safety Equipment:--}}
+                {{--                                        Gloves--}}
+                {{--                                        Goggles--}}
+                {{--                                        Key Box--}}
+                {{--                                        Steering wheel Cover--}}
+                {{--                                        Sign for Vehicle</p>--}}
+                {{--                                </div>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                @endif--}}
                 @if($bodyShopAudit->body_shop_q42_comment)
                     <div>
                         <p class="font-bold">Comments:</p>
@@ -3021,10 +3041,11 @@
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q43_answer === 2 || $bodyShopAudit->body_shop_q43_answer === 3)
+        @if($bodyShopAudit->body_shop_q43_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Safety glasses not being worn when working on hybrid vehicle?</p>
+                    <p class="font-bold">Is the first aid kit properly stocked given the
+                        dealership work environment?</p>
                     <p>
                         @if($bodyShopAudit->body_shop_q43_answer === 1)
                             Yes
@@ -3052,74 +3073,7 @@
                         </div>
                     </div>
                 @endif
-                {{--            @if($bodyShopAudit->body_shop_q43_answer === 2 || $bodyShopAudit->body_shop_q43_answer === 3)--}}
-                {{--                <div class="rounded-md bg-yellow-50 p-4">--}}
-                {{--                    <div class="flex">--}}
-                {{--                        <div class="flex-shrink-0">--}}
-                {{--                            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"--}}
-                {{--                                 aria-hidden="true">--}}
-                {{--                                <path fill-rule="evenodd"--}}
-                {{--                                      d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"--}}
-                {{--                                      clip-rule="evenodd"/>--}}
-                {{--                            </svg>--}}
-                {{--                        </div>--}}
-                {{--                        <div class="ml-3">--}}
-                {{--                            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>--}}
-                {{--                            <div class="mt-2 text-sm text-yellow-700">--}}
-                {{--                                <p>GLBA Standard FTC Standard Safeguards Rule under section 501 (b)</p>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-                {{--            @endif--}}
-                @if($bodyShopAudit->body_shop_q43_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $bodyShopAudit->body_shop_q43_comment }}</p>
-                    </div>
-                @endif
-                <div class="grid grid-cols-2 gap-10">
-                    @foreach($bodyShopAudit->getMedia('body_shop_q43_images') as $image)
-                        <img src="{{ $image->getUrl() }}" alt="">
-                    @endforeach
-                </div>
-            </li>
-        @endif
-        @if($bodyShopAudit->body_shop_q44_answer === 2 || $bodyShopAudit->body_shop_q44_answer === 3)
-            <li class="py-10 space-y-5 page-break">
-                <div>
-                    <p class="font-bold">Is the First Aid Kit identified and is it stocked with appropriate supplies?
-                        i.e.
-                        absorbent compress, adhesive bandages, adhesive tape, antiseptic, burn treatment, medical exam
-                        gloves, sterile pads, triangular bandages.</p>
-                    <p>
-                        @if($bodyShopAudit->body_shop_q44_answer === 1)
-                            Yes
-                        @elseif($bodyShopAudit->body_shop_q44_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
-                </div>
-                @if($bodyShopAudit->body_shop_q44_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($bodyShopAudit->body_shop_q44_answer === 2 || $bodyShopAudit->body_shop_q44_answer === 3)
+                @if($bodyShopAudit->body_shop_q43_answer === 2)
                     <div class="rounded-md bg-yellow-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -3135,101 +3089,39 @@
                                 <div class="mt-2 text-sm text-yellow-700">
                                     <p>29 CFR 1910.151
                                         First aid kits
-                                        First aid supplies are required to be
-                                        readily available under paragraph §
+                                        First aid supplies are required to be readily available under paragraph §
                                         1910.151(b).
-                                        An example of the minimal contents
-                                        of a generic first aid kit is described in
-                                        American National Standard
-                                        (ANSI) Z308.1-1998. Appendix A
-                                        &quot;Minimum Requirements for
-                                        Workplace First-aid Kits.&quot;</p>
+
+                                        An example of the minimal contents of a generic first aid kit is described in
+                                        American National Standard (ANSI) Z308.1-1998. Appendix A
+
+                                        "Minimum Requirements for Workplace First-aid Kits."
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endif
-                @if($bodyShopAudit->body_shop_q44_comment)
+                @if($bodyShopAudit->body_shop_q43_comment)
                     <div>
                         <p class="font-bold">Comments:</p>
-                        <p>{{ $bodyShopAudit->body_shop_q44_comment }}</p>
+                        <p>{{ $bodyShopAudit->body_shop_q43_comment }}</p>
                     </div>
                 @endif
                 <div class="grid grid-cols-2 gap-10">
-                    @foreach($bodyShopAudit->getMedia('body_shop_q44_images') as $image)
+                    @foreach($bodyShopAudit->getMedia('body_shop_q43_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
                 </div>
             </li>
         @endif
-        @if($bodyShopAudit->body_shop_q45_answer === 2 || $bodyShopAudit->body_shop_q45_answer === 3)
+        @if($bodyShopAudit->body_shop_q44_comment)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Electrical panels: (clear access of at least 36")</p>
-                    <p>
-                        @if($bodyShopAudit->body_shop_q45_answer === 1)
-                            Yes
-                        @elseif($bodyShopAudit->body_shop_q45_answer === 2)
-                            No
-                        @else
-                            N/A
-                        @endif
-                    </p>
+                    <p class="font-bold">Additional Notes:</p>
                 </div>
-                @if($bodyShopAudit->body_shop_q45_danger)
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Potential high risk violation!</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($bodyShopAudit->body_shop_q45_answer === 2 || $bodyShopAudit->body_shop_q45_answer === 3)
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-                                <div class="mt-2 text-sm text-yellow-700">
-                                    <p>29 CFR 1910.303(g). For equipment operating at 600 volts, nominal or less to
-                                        ground, electrical panels must have a minimum of three feet of clearance in
-                                        front of
-                                        the panel
-                                        and a minimum clearance width of 2.5 feet or the width of the equipment,
-                                        whichever
-                                        is
-                                        greater.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if($bodyShopAudit->body_shop_q45_comment)
-                    <div>
-                        <p class="font-bold">Comments:</p>
-                        <p>{{ $bodyShopAudit->body_shop_q45_comment }}</p>
-                    </div>
-                @endif
-                <div class="grid grid-cols-2 gap-10">
-                    @foreach($bodyShopAudit->getMedia('body_shop_q45_images') as $image)
-                        <img src="{{ $image->getUrl() }}" alt="">
-                    @endforeach
+                <div>
+                    <p>{{ $bodyShopAudit->body_shop_q44_comment }}</p>
                 </div>
             </li>
         @endif
