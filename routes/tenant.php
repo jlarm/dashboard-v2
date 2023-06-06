@@ -86,7 +86,7 @@ Route::group([
     // Roles to Manager
     // **************************************************
 
-    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Manager']], function () {
+    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Manager|Consultant']], function () {
         Route::get('/', function () { return view('dealer.employee.index'); })->middleware('auth')->name('index');
         Route::get('open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('open-invites');
         Route::get('{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('show');
@@ -96,7 +96,7 @@ Route::group([
     // Roles to Manager
     // **************************************************
 
-    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Manager']], function () {
+    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Manager|Consultant']], function () {
         Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
         Route::get('employees/{user:slug}', [EmployeeController::class, 'show'])->middleware(['auth', 'has.stores'])->name('show');
         Route::get('vendors', [StoreVendorController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.vendor.index');
@@ -109,7 +109,7 @@ Route::group([
     // Roles to QA
     // **************************************************
 
-    Route::group(['middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual']], function () {
+    Route::group(['middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Consultant']], function () {
 
         Route::get('vendors', function () { return view('dealer.vendor.index'); })->middleware('auth')->name('vendor.index');
 
