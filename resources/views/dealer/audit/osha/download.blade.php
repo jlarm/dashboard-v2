@@ -4764,7 +4764,7 @@
         {{--        61--}}
         @if($oshaAudit->osha_q61_answer === 1 && $oshaAudit->osha_q61_comment || $oshaAudit->osha_q61_answer === 3 && $oshaAudit->osha_q61_comment)
             <li class="py-10 space-y-5 page-break">
-                <p class="font-bold">>Is the first aid kit properly stocked given the dealership work
+                <p class="font-bold">Is the first aid kit properly stocked given the dealership work
                     environment?</p>
                 <div>
                     <p class="font-bold">Comments:</p>
