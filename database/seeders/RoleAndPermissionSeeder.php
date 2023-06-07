@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use DB;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -15,6 +16,9 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('roles')->truncate();
+
         Permission::create(['name' => 'create-dealerships']);
         Permission::create(['name' => 'edit-dealerships']);
         Permission::create(['name' => 'delete-dealerships']);
@@ -167,9 +171,6 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
 
         $qiRole->givePermissionTo([
-            'create-dealerships',
-            'edit-dealerships',
-            'view-dealerships',
             'create-stores',
             'edit-stores',
             'view-stores',
