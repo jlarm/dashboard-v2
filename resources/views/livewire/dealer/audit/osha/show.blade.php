@@ -455,9 +455,9 @@
                 multiple
                 max-items="2"
                 rules="mimes:png,jpeg"
-                name="osha_q8_images"
+                name="osha_q6_images"
                 :model="$oshaAudit"
-                collection="osha_q8_images"
+                collection="osha_q6_images"
             />
         </div>
         <!-- 7 Any other State or Local EPA filings to upload? -->

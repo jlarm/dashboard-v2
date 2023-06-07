@@ -12,7 +12,7 @@ use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 class Show extends Component
 {
     use WithMedia;
-    
+
     public Store $store;
     public OshaAudit $oshaAudit;
 
@@ -345,7 +345,7 @@ class Show extends Component
     public $osha_q64_comment;
     public $osha_q64_danger;
     public $osha_q64_images;
-    public $osha_q4_date;
+    public $osha_q64_date;
     public $osha_q65_answer;
     public $osha_q65_comment;
     public $osha_q65_danger;
@@ -626,7 +626,7 @@ class Show extends Component
         'osha_q64_comment' => 'nullable',
         'osha_q64_danger' => 'nullable',
         'osha_q64_images' => 'nullable',
-        'osha_q4_date' => 'sometimes',
+        'osha_q64_date' => 'sometimes',
         'osha_q65_answer' => 'nullable',
         'osha_q65_comment' => 'nullable',
         'osha_q65_danger' => 'nullable',
