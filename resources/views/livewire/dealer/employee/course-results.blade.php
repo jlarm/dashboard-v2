@@ -15,7 +15,7 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
                     @foreach($courses as $course)
-                        <tr class="@if($store->state != 'California' && $course->slug === 'sexual-harassment-training-in-california') hidden @endif">
+                        <tr>
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                                 {{ Str::limit($course->name, 40) }}
                             </td>
