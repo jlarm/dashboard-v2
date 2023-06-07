@@ -38,12 +38,20 @@ class IndexItem extends Component
 
         // Get all courses for this user's department
         if ($this->user->department_id) {
-            $this->departmentCourseCount = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
+//            $this->departmentCourseCount = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
+            $this->departmentCourseCount = Course::with('results')
+                ->WhereHas('departments', function ($query) {
+                    $query->where('id', $this->user->department_id);
+                })
+                ->WhereHas('roles', function ($query) {
+                    $query->where('id', $this->user->roles()->where('name', '!=', 'Qualified Individual')->first()->id);
+                })
+                ->orWhereDoesntHave('departments')->count();
         }
 
-        $this->unassignedCourseCount = Course::whereDoesntHave('departments')->count();
+//        $this->unassignedCourseCount = Course::whereDoesntHave('departments')->count();
 
-        $this->totalCourses = $this->departmentCourseCount + $this->unassignedCourseCount;
+        $this->totalCourses = $this->departmentCourseCount;
 
         if (Store::first()->pluck('state') != 'California') {
             $this->totalCourses = $this->totalCourses - 1;

@@ -33,16 +33,20 @@
         </td>
     @endif
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-        {{ $user->department->name ?? '-' }}
+        {{ $user->department->name ?? '' }}
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-        @if(!$totalCourses)
-            {{ __('-') }}
-        @else
-            {{ $completed }} of {{ $totalCourses }} passed
+        @if(!$user->hasRole('Consultant'))
+            @if(!$totalCourses)
+                {{ __('-') }}
+            @else
+                {{ $completed }} of {{ $totalCourses }} passed
+            @endif
         @endif
     </td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
-        <a href="{{ route('dealer.employees.show', $user) }}" class="text-sm">View</a>
+        @if(!$user->hasRole('Consultant'))
+            <a href="{{ route('dealer.employees.show', $user) }}" class="text-sm">View</a>
+        @endif
     </td>
 </tr>
