@@ -7,7 +7,7 @@
                 <span>{{ $store->name ?? 'Liberty Auto Plaza' }}</span>
             </div>
         @endforeach
-        <span>{{ $user->department->name ?? '-' }} {{ $user->roles->first()->name }}</span>
+        <span>{{ $user->department->name ?? '' }} {{ $user->roles->first()->name }}</span>
     </div>
     <button
         onclick="Livewire.emit('slide-over.open', 'dealer.employee.edit', @js(['user' => $user->id]))"
