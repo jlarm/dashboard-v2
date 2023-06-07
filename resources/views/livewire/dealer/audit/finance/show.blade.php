@@ -3162,7 +3162,7 @@
         <!-- please not any additional issue/violation found during your sales &amp; finance walk-thru audit. -->
         <div class="bg-gray-50 p-3 space-y-3">
             <div>
-                <label class="text-base font-semibold text-gray-900">Please not any additional issue/violation found
+                <label class="text-base font-semibold text-gray-900">Please note any additional issue/violation found
                     during your sales &amp; finance walk-thru audit.</label>
             </div>
             <div>
@@ -3207,33 +3207,33 @@
             </div>
         </div>
     </div>
-    {{--    <div wire:loading.delay class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">--}}
-    {{--        <div class="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity"></div>--}}
-    {{--        <div class="fixed inset-0 z-10 overflow-y-auto">--}}
-    {{--            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">--}}
-    {{--                <div--}}
-    {{--                    class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">--}}
-    {{--                    <div>--}}
-    {{--                        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">--}}
-    {{--                            <svg class="animate-spin h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg"--}}
-    {{--                                 fill="none" viewBox="0 0 24 24">--}}
-    {{--                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"--}}
-    {{--                                        stroke-width="4"></circle>--}}
-    {{--                                <path class="opacity-75" fill="currentColor"--}}
-    {{--                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>--}}
-    {{--                            </svg>--}}
-    {{--                        </div>--}}
-    {{--                        <div class="mt-3 text-center sm:mt-5">--}}
-    {{--                            <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Audit--}}
-    {{--                                Saving</h3>--}}
-    {{--                            <div class="mt-2">--}}
-    {{--                                <p class="text-sm text-gray-500">This may take a few seconds, please don't close this--}}
-    {{--                                    page.</p>--}}
-    {{--                            </div>--}}
-    {{--                        </div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
+    <div wire:loading.delay class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div
+                    class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                    <div>
+                        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                            <svg class="animate-spin h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-5">
+                            <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Audit
+                                Saving</h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">This may take a few seconds, please don't close this
+                                    page.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>

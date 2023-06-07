@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Finance Audit Review</title>
+    <title>GLBA Walkthrough Audit Review</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
@@ -32,6 +32,17 @@
         </div>
     </div>
     <ul class="divide-y divide-gray-300">
+        @if($financeAudit->finance_q1_answer === 1 && $financeAudit->finance_q1_comment || $financeAudit->finance_q1_answer === 3 && $financeAudit->finance_q1_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has the Dealer
+                    established a written
+                    CMS?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q1_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q1_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -95,6 +106,18 @@
                     @foreach($financeAudit->getMedia('finance_q1_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q2_answer === 1 && $financeAudit->finance_q2_comment || $financeAudit->finance_q2_answer === 3 && $financeAudit->finance_q2_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has the written CMS been
+                    approved by the
+                    Board/Ownership?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q2_comment }}</p>
                 </div>
             </li>
         @endif
@@ -164,6 +187,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q3_answer === 1 && $financeAudit->finance_q3_comment || $financeAudit->finance_q3_answer === 3 && $financeAudit->finance_q3_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are shredding bins being utilized in
+                    dealership?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q3_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q3_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -229,6 +263,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q4_answer === 1 && $financeAudit->finance_q4_comment || $financeAudit->finance_q4_answer === 3 && $financeAudit->finance_q4_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are shredding bins being emptied properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q4_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q4_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -290,6 +334,18 @@
                     @foreach($financeAudit->getMedia('finance_q4_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q5_answer === 1 && $financeAudit->finance_q5_comment || $financeAudit->finance_q5_answer === 3 && $financeAudit->finance_q5_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has complaint procedure
+                    been established and
+                    adopted by Board?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q5_comment }}</p>
                 </div>
             </li>
         @endif
@@ -359,6 +415,18 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q6_answer === 1 && $financeAudit->finance_q6_comment || $financeAudit->finance_q6_answer === 3 && $financeAudit->finance_q6_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is accounting department/office locked and secured
+                    when employees not
+                    present?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q6_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q6_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -422,6 +490,16 @@
                     @foreach($financeAudit->getMedia('finance_q6_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q7_answer === 1 && $financeAudit->finance_q7_comment || $financeAudit->finance_q7_answer === 3 && $financeAudit->finance_q7_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Have CMS policies been distributed to management and relevant employees?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q7_comment }}</p>
                 </div>
             </li>
         @endif
@@ -489,6 +567,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q8_answer === 1 && $financeAudit->finance_q8_comment || $financeAudit->finance_q8_answer === 3 && $financeAudit->finance_q8_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Have employees and management acknowledged receipt of the above?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q8_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q8_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -553,6 +641,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q9_answer === 1 && $financeAudit->finance_q9_comment || $financeAudit->finance_q9_answer === 3 && $financeAudit->finance_q9_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are employees and management completing training on a consistent basis?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q9_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q9_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -614,6 +712,17 @@
                     @foreach($financeAudit->getMedia('finance_q9_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q10_answer === 1 && $financeAudit->finance_q10_comment || $financeAudit->finance_q10_answer === 3 && $financeAudit->finance_q10_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are there policies and procedures in place to handle and respond to consumer
+                    complaints?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q10_comment }}</p>
                 </div>
             </li>
         @endif
@@ -682,6 +791,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q11_answer === 1 && $financeAudit->finance_q11_comment || $financeAudit->finance_q11_answer === 3 && $financeAudit->finance_q11_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are NPI/customer records being destroyed/shredded
+                    properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q11_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q11_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -744,6 +864,17 @@
                     @foreach($financeAudit->getMedia('finance_q11_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q12_answer === 1 && $financeAudit->finance_q12_comment || $financeAudit->finance_q12_answer === 3 && $financeAudit->finance_q12_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the OFAC/SDN listings being completed on all
+                    contracted deals?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q12_comment }}</p>
                 </div>
             </li>
         @endif
@@ -815,6 +946,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q13_answer === 1 && $financeAudit->finance_q13_comment || $financeAudit->finance_q13_answer === 3 && $financeAudit->finance_q13_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all new employees signing dealerships security
+                    policy statement?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q13_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q13_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -877,6 +1019,17 @@
                     @foreach($financeAudit->getMedia('finance_q13_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q14_answer === 1 && $financeAudit->finance_q14_comment || $financeAudit->finance_q14_answer === 3 && $financeAudit->finance_q14_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are computer terminals being logged off to
+                    activate screensaver password?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q14_comment }}</p>
                 </div>
             </li>
         @endif
@@ -945,6 +1098,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q15_answer === 1 && $financeAudit->finance_q15_comment || $financeAudit->finance_q15_answer === 3 && $financeAudit->finance_q15_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are repair orders (RO’s) being disposed/shredded
+                    properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q15_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q15_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1007,6 +1171,18 @@
                     @foreach($financeAudit->getMedia('finance_q15_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q16_answer === 1 && $financeAudit->finance_q16_comment || $financeAudit->finance_q16_answer === 3 && $financeAudit->finance_q16_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the privacy notice clearly stated on
+                    dealership's
+                    website?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q16_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1076,6 +1252,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q17_answer === 1 && $financeAudit->finance_q17_comment || $financeAudit->finance_q17_answer === 3 && $financeAudit->finance_q17_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">"NPI Check-Out Log" being utilized in accounting.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q17_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q17_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1137,6 +1323,17 @@
                     @foreach($financeAudit->getMedia('finance_q17_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q18_answer === 1 && $financeAudit->finance_q18_comment || $financeAudit->finance_q18_answer === 3 && $financeAudit->finance_q18_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all computer terminals automatically set to log
+                    off after 5 minutes of non-activity?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q18_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1205,6 +1402,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q19_answer === 1 && $financeAudit->finance_q19_comment || $financeAudit->finance_q19_answer === 3 && $financeAudit->finance_q19_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are network firewalls being monitored for intrusion.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q19_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q19_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1266,6 +1473,17 @@
                     @foreach($financeAudit->getMedia('finance_q19_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q20_answer === 1 && $financeAudit->finance_q20_comment || $financeAudit->finance_q20_answer === 3 && $financeAudit->finance_q20_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Written IT policies regarding the use of flash drives, downloading software and
+                    programs by employees, and spam email protocols?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q20_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1334,6 +1552,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q21_answer === 1 && $financeAudit->finance_q21_comment || $financeAudit->finance_q21_answer === 3 && $financeAudit->finance_q21_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Have there been any network intrusions or security breaches since last
+                    quarterly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q21_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q21_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1396,6 +1625,17 @@
                     @foreach($financeAudit->getMedia('finance_q21_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q22_answer === 1 && $financeAudit->finance_q22_comment || $financeAudit->finance_q22_answer === 3 && $financeAudit->finance_q22_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">IT Technical requirements been implemented for Encryption, MFA and System
+                    monitoring, penetration testing, and vulnerability assessments?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q22_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1464,6 +1704,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q23_answer === 1 && $financeAudit->finance_q23_comment || $financeAudit->finance_q23_answer === 3 && $financeAudit->finance_q23_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Cashiers area unsecured</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q23_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q23_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1525,6 +1775,18 @@
                     @foreach($financeAudit->getMedia('finance_q23_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q24_answer === 1 && $financeAudit->finance_q24_comment || $financeAudit->finance_q24_answer === 3 && $financeAudit->finance_q24_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are there any new Third Party Service Provider
+                    companies that need to be sent
+                    acknowledgements and assessment report?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q24_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1594,6 +1856,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q25_answer === 1 && $financeAudit->finance_q25_comment || $financeAudit->finance_q25_answer === 3 && $financeAudit->finance_q25_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Have Third Party Providers been vetted for required compliance practices,
+                    procedures and training?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q25_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q25_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1656,6 +1929,17 @@
                     @foreach($financeAudit->getMedia('finance_q25_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q26_answer === 1 && $financeAudit->finance_q26_comment || $financeAudit->finance_q26_answer === 3 && $financeAudit->finance_q26_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are sales desk drawers/file cabinets locked and
+                    secured?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q26_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1724,6 +2008,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q27_answer === 1 && $financeAudit->finance_q27_comment || $financeAudit->finance_q27_answer === 3 && $financeAudit->finance_q27_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Any NPI/customer documents being left out on sales
+                    desks?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q27_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q27_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1786,6 +2081,16 @@
                     @foreach($financeAudit->getMedia('finance_q27_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q28_answer === 1 && $financeAudit->finance_q28_comment || $financeAudit->finance_q28_answer === 3 && $financeAudit->finance_q28_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is CAN SPAM process in place?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q28_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1856,6 +2161,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q29_answer === 1 && $financeAudit->finance_q29_comment || $financeAudit->finance_q29_answer === 3 && $financeAudit->finance_q29_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the Telemarketing “Do Not Call” rule being
+                    complied with?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q29_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q29_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1918,6 +2234,17 @@
                     @foreach($financeAudit->getMedia('finance_q29_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q30_answer === 1 && $financeAudit->finance_q30_comment || $financeAudit->finance_q30_answer === 3 && $financeAudit->finance_q30_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Any other NPI documents publicly exposed, not
+                    secured properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q30_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1986,6 +2313,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q31_answer === 1 && $financeAudit->finance_q31_comment || $financeAudit->finance_q31_answer === 3 && $financeAudit->finance_q31_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Breach in password sharing?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q31_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q31_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2047,6 +2384,16 @@
                     @foreach($financeAudit->getMedia('finance_q31_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q32_answer === 1 && $financeAudit->finance_q32_comment || $financeAudit->finance_q32_answer === 3 && $financeAudit->finance_q32_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Customers NPI in unsecured trash cans?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q32_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2114,6 +2461,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q33_answer === 1 && $financeAudit->finance_q33_comment || $financeAudit->finance_q33_answer === 3 && $financeAudit->finance_q33_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Deal jackets unsecured?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q33_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q33_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2175,6 +2532,16 @@
                     @foreach($financeAudit->getMedia('finance_q33_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q34_answer === 1 && $financeAudit->finance_q34_comment || $financeAudit->finance_q34_answer === 3 && $financeAudit->finance_q34_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Filing cabinets securing customers NPI locked and secured?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q34_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2242,6 +2609,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q35_answer === 1 && $financeAudit->finance_q35_comment || $financeAudit->finance_q35_answer === 3 && $financeAudit->finance_q35_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Sales Tower area has NPI exposure, unsecured customer documents</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q35_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q35_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2303,6 +2680,17 @@
                     @foreach($financeAudit->getMedia('finance_q35_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q36_answer === 1 && $financeAudit->finance_q36_comment || $financeAudit->finance_q36_answer === 3 && $financeAudit->finance_q36_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Was Network Vulnerability \Assessment Report completed, denote possible
+                    issues?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q36_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2371,6 +2759,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q37_answer === 1 && $financeAudit->finance_q37_comment || $financeAudit->finance_q37_answer === 3 && $financeAudit->finance_q37_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are finance offices locked and secured when
+                    employee not present?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q37_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q37_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2436,6 +2835,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q38_answer === 1 && $financeAudit->finance_q38_comment || $financeAudit->finance_q38_answer === 3 && $financeAudit->finance_q38_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are credit applications secured?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q38_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q38_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2497,6 +2906,16 @@
                     @foreach($financeAudit->getMedia('finance_q38_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q39_answer === 1 && $financeAudit->finance_q39_comment || $financeAudit->finance_q39_answer === 3 && $financeAudit->finance_q39_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Red Flag software being utilized to check for fraudulent applicants?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q39_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2570,6 +2989,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q40_answer === 1 && $financeAudit->finance_q40_comment || $financeAudit->finance_q40_answer === 3 && $financeAudit->finance_q40_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are managers’ offices locked and secured when not
+                    present?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q40_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q40_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2635,6 +3065,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q41_answer === 1 && $financeAudit->finance_q41_comment || $financeAudit->finance_q41_answer === 3 && $financeAudit->finance_q41_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are the sales Showroom doors secured prior to sales
+                    staff reporting to work?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q41_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q41_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2697,6 +3138,17 @@
                     @foreach($financeAudit->getMedia('finance_q41_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q42_answer === 1 && $financeAudit->finance_q42_comment || $financeAudit->finance_q42_answer === 3 && $financeAudit->finance_q42_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are Buyers Guide properly displayed in a fully
+                    visible on all used cars?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q42_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2770,6 +3222,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q43_answer === 1 && $financeAudit->finance_q43_comment || $financeAudit->finance_q43_answer === 3 && $financeAudit->finance_q43_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are Buyers Guides filled out properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q43_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q43_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2838,6 +3300,16 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q44_answer === 1 && $financeAudit->finance_q44_comment || $financeAudit->finance_q44_answer === 3 && $financeAudit->finance_q44_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">New car missing Monroney sticker placement.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q44_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q44_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2901,6 +3373,17 @@
                     @foreach($financeAudit->getMedia('finance_q44_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+
+        @if($financeAudit->finance_q45_answer === 1 && $financeAudit->finance_q45_comment || $financeAudit->finance_q45_answer === 3 && $financeAudit->finance_q45_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are the finance terms properly displayed on vehicle
+                    inventory?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q45_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2973,6 +3456,17 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q46_answer === 1 && $financeAudit->finance_q46_comment || $financeAudit->finance_q46_answer === 3 && $financeAudit->finance_q46_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the sales bull pin area (if present) secured
+                    properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q46_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q46_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3038,10 +3532,21 @@
                 </div>
             </li>
         @endif
+
+        @if($financeAudit->finance_q47_answer === 1 && $financeAudit->finance_q47_comment || $financeAudit->finance_q47_answer === 3 && $financeAudit->finance_q47_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Please note any additional issue/violation found
+                    during your sales &amp; finance walk-thru audit.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $financeAudit->finance_q47_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($financeAudit->finance_q47_comment)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">Please not any additional issue/violation found
+                    <p class="font-bold">Please note any additional issue/violation found
                         during your sales &amp; finance walk-thru audit.</p>
                 </div>
                 <div>
