@@ -18,7 +18,9 @@
     <div class="py-12">
         <div class="mx-auto px-4 sm:px-6 lg:px-8 xl:grid xl:grid-cols-3">
             <div class="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
-                <livewire:dealer.employee.course-results :user="$user"/>
+                @if($user->department)
+                    <livewire:dealer.employee.course-results :user="$user"/>
+                @endif
             </div>
             <div class="hidden xl:block xl:pl-8">
                 <livewire:dealer.employee.details :user="$user"/>
