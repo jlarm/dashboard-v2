@@ -6,9 +6,13 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class Course extends Model
 {
+    use HasRoles;
+
     protected $fillable = [
         'department_id',
         'slug',
@@ -40,5 +44,10 @@ class Course extends Model
     public function getDepartments()
     {
         return $this->departments->pluck('id')->toArray();
+    }
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
     }
 }

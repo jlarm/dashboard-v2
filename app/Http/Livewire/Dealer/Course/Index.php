@@ -5,12 +5,9 @@ namespace App\Http\Livewire\Dealer\Course;
 use App\Models\Dealer\Course;
 use App\Models\User;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
-
     public User $user;
     public $departmentCourses;
     public $otherCourses;
@@ -22,10 +19,13 @@ class Index extends Component
     {
         $this->user = auth()->user();
         $this->courses = Course::with('results')
-            ->whereDoesntHave('departments')
-            ->orWhereHas('departments', function ($query) {
+            ->WhereHas('departments', function ($query) {
                 $query->where('id', $this->user->department_id);
             })
+            ->WhereHas('roles', function ($query) {
+                $query->where('id', $this->user->roles()->where('name', '!=', 'Qualified Individual')->first()->id);
+            })
+            ->orWhereDoesntHave('departments')
             ->orderBy('name')
             ->get();
     }

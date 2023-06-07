@@ -4,6 +4,9 @@
         "name": "DOT Module 1 Hazardous Materials Transportation",
         "slug": "dot-hazardous-materials-transportation",
         "department": [
+            4
+        ],
+        "roles": [
             9,
             10
         ],
@@ -167,7 +170,7 @@
                 "correctAnswer": "d"
             },
             {
-                "question": "Bulk packaging for example is defined as \"a packaging... which has (1) a maximum capacity greater than 450 L (119 gallons) as a receptacle for liquid; (2) a maximum net mass greater than 400 kg (882 pounds) and a maximum capacity greater than 450 L (119 gallons) as a receptacle for a solid; or (3) a water capacity greater than 454 kg (1000 pounds) as a receptacle for a gas as defined in 173.115. “non-bulk packaging means anything less than quantities listed above.",
+                "question": "Bulk packaging for example is defined as a packaging... which has (1) a maximum capacity greater than 450 L (119 gallons) as a receptacle for liquid; (2) a maximum net mass greater than 400 kg (882 pounds) and a maximum capacity greater than 450 L (119 gallons) as a receptacle for a solid; or (3) a water capacity greater than 454 kg (1000 pounds) as a receptacle for a gas as defined in 173.115. non-bulk packaging means anything less than quantities listed above.",
                 "answers": [
                     {
                         "a": "True",

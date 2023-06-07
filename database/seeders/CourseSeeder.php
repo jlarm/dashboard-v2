@@ -28,6 +28,10 @@ class CourseSeeder extends Seeder
                 if ($value->department != null) {
                     $course->departments()->attach($value->department);
                 }
+                if ($value->roles != null) {
+                    $course->roles()->attach($value->roles);
+                }
+                ray($json);
             }
         }
     }
