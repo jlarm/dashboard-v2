@@ -27,7 +27,7 @@ class UploadAuditToDigitalOceanJob implements ShouldQueue
     public function handle(): void
     {
         $pdf = Storage::get('/finance-audits/' . $this->financeAudit->pdf_path);
-        $moved = Storage::disk('do-audits')->put(tenant('id') . '/audits/finance/' . $this->financeAudit->pdf_path, $pdf);
+        $moved = Storage::disk('do-audits')->put(tenant('id') . '/finance/' . $this->financeAudit->pdf_path, $pdf);
         if($moved) {
             Storage::delete('/finance-audits/' . $this->financeAudit->pdf_path);
         }
