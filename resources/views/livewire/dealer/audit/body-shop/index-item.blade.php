@@ -24,14 +24,14 @@
                 <livewire:dealer.audit.body-shop.download :bodyShopAudit="$bodyShopAudit"/>
             @endif
             @can('create-audits')
-                @if(!$bodyShopAudit->pdf_path)
-                    <a
-                        href="{{ route('dealer.audit.body-shop.show', $bodyShopAudit) }}"
-                        class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                        Edit
-                    </a>
-                @endif
+                {{--                @if(!$bodyShopAudit->pdf_path)--}}
+                <a
+                    href="{{ route('dealer.audit.body-shop.show', $bodyShopAudit) }}"
+                    class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                >
+                    Edit
+                </a>
+                {{--                @endif--}}
                 <button
                     class="text-red-500 text-sm"
                     wire:click="$emit('modal.open', 'dealer.audit.body-shop.delete',  @js(['bodyShopAudit' => $bodyShopAudit->id]))"

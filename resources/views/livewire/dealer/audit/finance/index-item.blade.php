@@ -24,14 +24,14 @@
                 <livewire:dealer.audit.finance.download :financeAudit="$financeAudit"/>
             @endif
             @can('create-audits')
-                @if(!$financeAudit->pdf_path)
-                    <a
-                        href="{{ route('dealer.audit.finance.show', $financeAudit) }}"
-                        class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                        Edit
-                    </a>
-                @endif
+                {{--                @if(!$financeAudit->pdf_path)--}}
+                <a
+                    href="{{ route('dealer.audit.finance.show', $financeAudit) }}"
+                    class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                >
+                    Edit
+                </a>
+                {{--                @endif--}}
                 <button
                     class="text-red-500 text-sm"
                     wire:click="$emit('modal.open', 'dealer.audit.finance.delete',  @js(['financeAudit' => $financeAudit->id]))"
