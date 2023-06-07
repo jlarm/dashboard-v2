@@ -33,6 +33,15 @@
     </div>
     <ul class="divide-y divide-gray-300">
         {{--        1--}}
+        @if($oshaAudit->osha_q1_answer === 1 && $oshaAudit->osha_q1_comment || $oshaAudit->osha_q1_answer === 3 && $oshaAudit->osha_q1_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Oil Manifest</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q1_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q1_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -98,6 +107,15 @@
             </li>
         @endif
         {{--        2--}}
+        @if($oshaAudit->osha_q2_answer === 1 && $oshaAudit->osha_q2_comment || $oshaAudit->osha_q2_answer === 3 && $oshaAudit->osha_q2_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Battery Manifest</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q2_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q2_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -166,6 +184,15 @@
             </li>
         @endif
         {{--        3--}}
+        @if($oshaAudit->osha_q3_answer === 1 && $oshaAudit->osha_q3_comment || $oshaAudit->osha_q3_answer === 3 && $oshaAudit->osha_q3_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Tire Manifests</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q3_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q3_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -231,6 +258,15 @@
             </li>
         @endif
         {{--        4--}}
+        @if($oshaAudit->osha_q4_answer === 1 && $oshaAudit->osha_q4_comment || $oshaAudit->osha_q4_answer === 3 && $oshaAudit->osha_q4_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Forklift Operators certifications</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q4_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q4_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -299,6 +335,16 @@
             </li>
         @endif
         {{--        5--}}
+        @if($oshaAudit->osha_q5_answer === 1 && $oshaAudit->osha_q5_comment || $oshaAudit->osha_q5_answer === 3 && $oshaAudit->osha_q5_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the OSHA 300 & 300A being completed on an on-going basis and electronically
+                    filed?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q5_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q5_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -368,6 +414,15 @@
             </li>
         @endif
         {{--            6  --}}
+        @if($oshaAudit->osha_q6_answer === 1 && $oshaAudit->osha_q6_comment || $oshaAudit->osha_q6_answer === 3 && $oshaAudit->osha_q6_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">SPCC filing</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q6_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q6_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -445,6 +500,16 @@
             </li>
         @endif
         {{--        7--}}
+        @if($oshaAudit->osha_q7_answer === 1 && $oshaAudit->osha_q7_comment || $oshaAudit->osha_q7_answer === 3 && $oshaAudit->osha_q7_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are any other local and state EPA filings uploaded to the dealership
+                    dashboard?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q7_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q7_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -511,6 +576,16 @@
             </li>
         @endif
         {{--        8--}}
+        @if($oshaAudit->osha_q8_answer === 1 && $oshaAudit->osha_q8_comment || $oshaAudit->osha_q8_answer === 3 && $oshaAudit->osha_q8_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do all employees know how to
+                    access SDS’s?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q8_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q8_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -583,10 +658,20 @@
             </li>
         @endif
         {{--        9--}}
+        @if($oshaAudit->osha_q9_answer === 1 && $oshaAudit->osha_q9_comment || $oshaAudit->osha_q9_answer === 3 && $oshaAudit->osha_q9_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">All employees have been exposure free from any chemicals in the
+                    dealership?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q9_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q9_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
-                    <p class="font-bold">HAll employees have been exposure free from any chemicals in the
+                    <p class="font-bold">All employees have been exposure free from any chemicals in the
                         dealership?</p>
                     <p>
                         @if($oshaAudit->osha_q9_answer === 1)
@@ -660,6 +745,15 @@
             </li>
         @endif
         {{--        10--}}
+        @if($oshaAudit->osha_q10_answer === 1 && $oshaAudit->osha_q10_comment || $oshaAudit->osha_q10_answer === 3 && $oshaAudit->osha_q10_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all secondary containers filled with chemicals properly labeled?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q10_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q10_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -733,6 +827,15 @@
             </li>
         @endif
         {{--        11--}}
+        @if($oshaAudit->osha_q11_answer === 1 && $oshaAudit->osha_q11_comment || $oshaAudit->osha_q11_answer === 3 && $oshaAudit->osha_q11_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the dealership accident free since the last audit?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q11_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q11_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -799,6 +902,16 @@
             </li>
         @endif
         {{--        12--}}
+        @if($oshaAudit->osha_q12_answer === 1 && $oshaAudit->osha_q12_comment || $oshaAudit->osha_q12_answer === 3 && $oshaAudit->osha_q12_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the eye wash equipment readily
+                    accessible?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q12_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q12_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -873,6 +986,15 @@
             </li>
         @endif
         {{--        13--}}
+        @if($oshaAudit->osha_q13_answer === 1 && $oshaAudit->osha_q13_comment || $oshaAudit->osha_q13_answer === 3 && $oshaAudit->osha_q13_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has the eye wash equipment been tested and cleaned and documented weekly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q13_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q13_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -948,6 +1070,16 @@
             </li>
         @endif
         {{--        14--}}
+        @if($oshaAudit->osha_q14_answer === 1 && $oshaAudit->osha_q14_comment || $oshaAudit->osha_q14_answer === 3 && $oshaAudit->osha_q14_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has the eye wash container water supply been changed out properly based on
+                    manufacturer recommendations per solution used?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q14_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q14_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1019,6 +1151,17 @@
             </li>
         @endif
         {{--        15--}}
+        @if($oshaAudit->osha_q15_answer === 1 && $oshaAudit->osha_q15_comment || $oshaAudit->osha_q15_answer === 3 && $oshaAudit->osha_q15_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">DOT certification - Is the person
+                    responsible for Hazardous material
+                    shipping current on his/her?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q15_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q15_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1091,6 +1234,15 @@
             </li>
         @endif
         {{--        16--}}
+        @if($oshaAudit->osha_q16_answer === 1 && $oshaAudit->osha_q16_comment || $oshaAudit->osha_q16_answer === 3 && $oshaAudit->osha_q16_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all the Fire Extinguishers easily accessible?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q16_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q16_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1161,6 +1313,16 @@
             </li>
         @endif
         {{--        17--}}
+        @if($oshaAudit->osha_q17_answer === 1 && $oshaAudit->osha_q17_comment || $oshaAudit->osha_q17_answer === 3 && $oshaAudit->osha_q17_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Have the fire extinguishers had their annual inspection and are they properly
+                    identified and fully charged?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q17_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q17_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1234,6 +1396,15 @@
             </li>
         @endif
         {{--        18--}}
+        @if($oshaAudit->osha_q18_answer === 1 && $oshaAudit->osha_q18_comment || $oshaAudit->osha_q18_answer === 3 && $oshaAudit->osha_q18_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are extinguishers mounted properly? (36”-60”)</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q18_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q18_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1302,6 +1473,15 @@
             </li>
         @endif
         {{--        19--}}
+        @if($oshaAudit->osha_q19_answer === 1 && $oshaAudit->osha_q19_comment || $oshaAudit->osha_q19_answer === 3 && $oshaAudit->osha_q19_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are fire extinguisher signs above the unit posted properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q19_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q19_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1376,6 +1556,17 @@
             </li>
         @endif
         {{--        20--}}
+        @if($oshaAudit->osha_q20_answer === 1 && $oshaAudit->osha_q20_comment || $oshaAudit->osha_q20_answer === 3 && $oshaAudit->osha_q20_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all hoses and cutting tips for the welder / cutting torches in good
+                    condition
+                    without any cracks or breaks?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q20_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q20_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1444,6 +1635,15 @@
             </li>
         @endif
         {{--        21--}}
+        @if($oshaAudit->osha_q21_answer === 1 && $oshaAudit->osha_q21_comment || $oshaAudit->osha_q21_answer === 3 && $oshaAudit->osha_q21_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do you have any forklift(s)?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q21_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q21_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1511,6 +1711,16 @@
             </li>
         @endif
         {{--        22--}}
+        @if($oshaAudit->osha_q22_answer === 1 && $oshaAudit->osha_q22_comment || $oshaAudit->osha_q22_answer === 3 && $oshaAudit->osha_q22_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">If you have a forklift, has the person(s) responsible for operating it been
+                    properly trained on safety and signed off as such?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q22_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q22_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1579,6 +1789,15 @@
             </li>
         @endif
         {{--        23--}}
+        @if($oshaAudit->osha_q23_answer === 1 && $oshaAudit->osha_q23_comment || $oshaAudit->osha_q23_answer === 3 && $oshaAudit->osha_q23_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do you have forklift training certificates of completed training class(es)?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q23_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q23_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1654,6 +1873,15 @@
             </li>
         @endif
         {{--        24--}}
+        @if($oshaAudit->osha_q24_answer === 1 && $oshaAudit->osha_q24_comment || $oshaAudit->osha_q24_answer === 3 && $oshaAudit->osha_q24_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do forklifts have a seat belt/safety harness?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q24_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q24_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1721,6 +1949,16 @@
             </li>
         @endif
         {{--        25--}}
+        @if($oshaAudit->osha_q25_answer === 1 && $oshaAudit->osha_q25_comment || $oshaAudit->osha_q25_answer === 3 && $oshaAudit->osha_q25_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Does the forklift have legible labels?
+                    i.e., ANSI, serial #, maximum lift capacity</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q25_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q25_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1792,6 +2030,15 @@
             </li>
         @endif
         {{--        26--}}
+        @if($oshaAudit->osha_q26_answer === 1 && $oshaAudit->osha_q26_comment || $oshaAudit->osha_q26_answer === 3 && $oshaAudit->osha_q26_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all exits properly marked?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q26_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q26_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1857,6 +2104,15 @@
             </li>
         @endif
         {{--        27--}}
+        @if($oshaAudit->osha_q27_answer === 1 && $oshaAudit->osha_q27_comment || $oshaAudit->osha_q27_answer === 3 && $oshaAudit->osha_q27_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are pathways to exits clear of obstructions?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q27_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q27_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1927,6 +2183,15 @@
             </li>
         @endif
         {{--        28--}}
+        @if($oshaAudit->osha_q28_answer === 1 && $oshaAudit->osha_q28_comment || $oshaAudit->osha_q28_answer === 3 && $oshaAudit->osha_q28_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all aisles/pathways, stairways and landings free from obstructions?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q28_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q28_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1993,6 +2258,17 @@
             </li>
         @endif
         {{--        29--}}
+        @if($oshaAudit->osha_q29_answer === 1 && $oshaAudit->osha_q29_comment || $oshaAudit->osha_q29_answer === 3 && $oshaAudit->osha_q29_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are any doorways that are nonfunctioning or blocked marked by a sign stating
+                    “NO
+                    EXIT”?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q29_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q29_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2064,6 +2340,15 @@
             </li>
         @endif
         {{--        30--}}
+        @if($oshaAudit->osha_q30_answer === 1 && $oshaAudit->osha_q30_comment || $oshaAudit->osha_q30_answer === 3 && $oshaAudit->osha_q30_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are the shop areas kept clean and orderly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q30_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q30_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2135,6 +2420,15 @@
             </li>
         @endif
         {{--        31--}}
+        @if($oshaAudit->osha_q31_answer === 1 && $oshaAudit->osha_q31_comment || $oshaAudit->osha_q31_answer === 3 && $oshaAudit->osha_q31_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all flammable materials (oily shop rags) properly stored?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q31_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q31_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2204,6 +2498,16 @@
             </li>
         @endif
         {{--        32--}}
+        @if($oshaAudit->osha_q32_answer === 1 && $oshaAudit->osha_q32_comment || $oshaAudit->osha_q32_answer === 3 && $oshaAudit->osha_q32_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are floors in good repair and free from obstruction and debris and slippery
+                    conditions?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q32_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q32_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2274,6 +2578,15 @@
             </li>
         @endif
         {{--        33--}}
+        @if($oshaAudit->osha_q33_answer === 1 && $oshaAudit->osha_q33_comment || $oshaAudit->osha_q33_answer === 3 && $oshaAudit->osha_q33_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are floor openings in excess of 2.25” wide covered with hinged flaps?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q33_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q33_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2355,6 +2668,16 @@
             </li>
         @endif
         {{--        34--}}
+        @if($oshaAudit->osha_q34_answer === 1 && $oshaAudit->osha_q34_comment || $oshaAudit->osha_q34_answer === 3 && $oshaAudit->osha_q34_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are employees properly maintaining their hoist controls and not bypassing any
+                    automatic safety features?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q34_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q34_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2423,6 +2746,16 @@
             </li>
         @endif
         {{--        35--}}
+        @if($oshaAudit->osha_q35_answer === 1 && $oshaAudit->osha_q35_comment || $oshaAudit->osha_q35_answer === 3 && $oshaAudit->osha_q35_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are hoists maintained within mfg. specs, and inspected and serviced AND
+                    documented under the mfg. suggested frequency? Usually annually.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q35_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q35_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2493,6 +2826,16 @@
             </li>
         @endif
         {{--        36--}}
+        @if($oshaAudit->osha_q36_answer === 1 && $oshaAudit->osha_q36_comment || $oshaAudit->osha_q36_answer === 3 && $oshaAudit->osha_q36_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are used batteries stored in acid resistance leak proof containers and or on
+                    mat?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q36_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q36_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2561,6 +2904,15 @@
             </li>
         @endif
         {{--        37--}}
+        @if($oshaAudit->osha_q37_answer === 1 && $oshaAudit->osha_q37_comment || $oshaAudit->osha_q37_answer === 3 && $oshaAudit->osha_q37_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">If batteries are stored outside, are they in an enclosed or sheltered unit?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q37_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q37_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2629,6 +2981,15 @@
             </li>
         @endif
         {{--        38--}}
+        @if($oshaAudit->osha_q38_answer === 1 && $oshaAudit->osha_q38_comment || $oshaAudit->osha_q38_answer === 3 && $oshaAudit->osha_q38_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do automatic sprinkler heads have a minimum clearance of 18” at all times?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q38_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q38_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2697,6 +3058,15 @@
             </li>
         @endif
         {{--        39--}}
+        @if($oshaAudit->osha_q39_answer === 1 && $oshaAudit->osha_q39_comment || $oshaAudit->osha_q39_answer === 3 && $oshaAudit->osha_q39_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all portable gas containers UL of FM approved?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q39_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q39_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2772,6 +3142,16 @@
             </li>
         @endif
         {{--        40--}}
+        @if($oshaAudit->osha_q40_answer === 1 && $oshaAudit->osha_q40_comment || $oshaAudit->osha_q40_answer === 3 && $oshaAudit->osha_q40_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are compressed air hoses in safe (no frays, cuts, tape or clamps for repair)
+                    working condition?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q40_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q40_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2842,6 +3222,15 @@
             </li>
         @endif
         {{--        41--}}
+        @if($oshaAudit->osha_q41_answer === 1 && $oshaAudit->osha_q41_comment || $oshaAudit->osha_q41_answer === 3 && $oshaAudit->osha_q41_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all gas cylinders stored and tied off properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q41_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q41_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2911,6 +3300,16 @@
             </li>
         @endif
         {{--        42--}}
+        @if($oshaAudit->osha_q42_answer === 1 && $oshaAudit->osha_q42_comment || $oshaAudit->osha_q42_answer === 3 && $oshaAudit->osha_q42_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are gas cylinders stored away from sources of heat or electricity and at least
+                    20’ away from combustible materials?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q42_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q42_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2981,6 +3380,15 @@
             </li>
         @endif
         {{--        43--}}
+        @if($oshaAudit->osha_q43_answer === 1 && $oshaAudit->osha_q43_comment || $oshaAudit->osha_q43_answer === 3 && $oshaAudit->osha_q43_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are goggles or face shields always worn when grinding?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q43_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q43_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3046,6 +3454,17 @@
             </li>
         @endif
         {{--        44--}}
+        @if($oshaAudit->osha_q44_answer === 1 && $oshaAudit->osha_q44_comment || $oshaAudit->osha_q44_answer === 3 && $oshaAudit->osha_q44_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is there proper spacing on grinders;
+                    Tool rest 1/8” from grinding wheel.
+                    Tongue plate 1/4” from grinding wheel.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q44_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q44_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3122,6 +3541,15 @@
             </li>
         @endif
         {{--        45--}}
+        @if($oshaAudit->osha_q45_answer === 1 && $oshaAudit->osha_q45_comment || $oshaAudit->osha_q45_answer === 3 && $oshaAudit->osha_q45_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is there proper signage about not smoking in the appropriate areas?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q45_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q45_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3191,6 +3619,15 @@
             </li>
         @endif
         {{--        46--}}
+        @if($oshaAudit->osha_q46_answer === 1 && $oshaAudit->osha_q46_comment || $oshaAudit->osha_q46_answer === 3 && $oshaAudit->osha_q46_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are the no smoking areas being enforced?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q46_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q46_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3261,6 +3698,15 @@
             </li>
         @endif
         {{--        47--}}
+        @if($oshaAudit->osha_q47_answer === 1 && $oshaAudit->osha_q47_comment || $oshaAudit->osha_q47_answer === 3 && $oshaAudit->osha_q47_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Air compressors marked with Automatic on/off signage?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q47_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q47_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3327,6 +3773,15 @@
             </li>
         @endif
         {{--        48--}}
+        @if($oshaAudit->osha_q48_answer === 1 && $oshaAudit->osha_q48_comment || $oshaAudit->osha_q48_answer === 3 && $oshaAudit->osha_q48_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all tanks holding flammable material properly grounded?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q48_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q48_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3409,6 +3864,15 @@
             </li>
         @endif
         {{--        49--}}
+        @if($oshaAudit->osha_q49_answer === 1 && $oshaAudit->osha_q49_comment || $oshaAudit->osha_q49_answer === 3 && $oshaAudit->osha_q49_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is there clear access of at least 36” to all electrical panels?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q49_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q49_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3480,6 +3944,15 @@
             </li>
         @endif
         {{--        50--}}
+        @if($oshaAudit->osha_q50_answer === 1 && $oshaAudit->osha_q50_comment || $oshaAudit->osha_q50_answer === 3 && $oshaAudit->osha_q50_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all the breakers properly labeled?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q50_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q50_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3550,6 +4023,15 @@
             </li>
         @endif
         {{--        51--}}
+        @if($oshaAudit->osha_q51_answer === 1 && $oshaAudit->osha_q51_comment || $oshaAudit->osha_q51_answer === 3 && $oshaAudit->osha_q51_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all vacant holes properly sealed off on electrical panel box?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q51_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q51_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3620,6 +4102,15 @@
             </li>
         @endif
         {{--        52--}}
+        @if($oshaAudit->osha_q52_answer === 1 && $oshaAudit->osha_q52_comment || $oshaAudit->osha_q52_answer === 3 && $oshaAudit->osha_q52_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are commercial grade extension cords being used properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q52_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q52_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3687,6 +4178,16 @@
             </li>
         @endif
         {{--        53--}}
+        @if($oshaAudit->osha_q53_answer === 1 && $oshaAudit->osha_q53_comment || $oshaAudit->osha_q53_answer === 3 && $oshaAudit->osha_q53_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all electrical cords in good working order (none frayed, cracked, taped, or
+                    spliced or ground missing on 3 prong plugs)?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q53_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q53_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3760,6 +4261,15 @@
             </li>
         @endif
         {{--        54--}}
+        @if($oshaAudit->osha_q54_answer === 1 && $oshaAudit->osha_q54_comment || $oshaAudit->osha_q54_answer === 3 && $oshaAudit->osha_q54_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are the fluorescent tubes stored properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q54_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q54_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3834,6 +4344,16 @@
             </li>
         @endif
         {{--        55--}}
+        @if($oshaAudit->osha_q55_answer === 1 && $oshaAudit->osha_q55_comment || $oshaAudit->osha_q55_answer === 3 && $oshaAudit->osha_q55_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">There are no other miscellaneous electrical issues to note? If “No” explain
+                    further</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q55_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q55_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3902,6 +4422,15 @@
             </li>
         @endif
         {{--        56--}}
+        @if($oshaAudit->osha_q56_answer === 1 && $oshaAudit->osha_q56_comment || $oshaAudit->osha_q56_answer === 3 && $oshaAudit->osha_q56_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Miscellaneous issues?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q56_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q56_comment)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3913,6 +4442,16 @@
             </li>
         @endif
         {{--        57   --}}
+        @if($oshaAudit->osha_q57_answer === 1 && $oshaAudit->osha_q57_comment || $oshaAudit->osha_q57_answer === 3 && $oshaAudit->osha_q57_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Hybrid - Vehicle Training
+                    Certification upload</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q57_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q57_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3979,6 +4518,16 @@
             </li>
         @endif
         {{--        58--}}
+        @if($oshaAudit->osha_q58_answer === 1 && $oshaAudit->osha_q58_comment || $oshaAudit->osha_q58_answer === 3 && $oshaAudit->osha_q58_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Hybrid safety gloves are Class O Heavy-Duty gloves rated to withstand 1,000
+                    volts?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q58_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q58_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -4052,6 +4601,15 @@
             </li>
         @endif
         {{--        59--}}
+        @if($oshaAudit->osha_q59_answer === 1 && $oshaAudit->osha_q59_comment || $oshaAudit->osha_q59_answer === 3 && $oshaAudit->osha_q59_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Hybrid safety gloves are in good working condition?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q59_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q59_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -4130,6 +4688,15 @@
             </li>
         @endif
         {{--        60--}}
+        @if($oshaAudit->osha_q60_answer === 1 && $oshaAudit->osha_q60_comment || $oshaAudit->osha_q60_answer === 3 && $oshaAudit->osha_q60_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Hybrid safety glasses worn when working on hybrid vehicles?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q60_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q60_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -4195,6 +4762,16 @@
             </li>
         @endif
         {{--        61--}}
+        @if($oshaAudit->osha_q61_answer === 1 && $oshaAudit->osha_q61_comment || $oshaAudit->osha_q61_answer === 3 && $oshaAudit->osha_q61_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">>Is the first aid kit properly stocked given the dealership work
+                    environment?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q61_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q61_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -4269,6 +4846,15 @@
             </li>
         @endif
         {{--        62--}}
+        @if($oshaAudit->osha_q62_answer === 1 && $oshaAudit->osha_q62_comment || $oshaAudit->osha_q62_answer === 3 && $oshaAudit->osha_q62_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Does dealership have elevators?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q62_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q62_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -4340,6 +4926,15 @@
             </li>
         @endif
         {{--        63--}}
+        @if($oshaAudit->osha_q63_answer === 1 && $oshaAudit->osha_q63_comment || $oshaAudit->osha_q63_answer === 3 && $oshaAudit->osha_q63_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has elevator been inspected?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q63_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q63_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -4411,6 +5006,15 @@
             </li>
         @endif
         {{--        64--}}
+        @if($oshaAudit->osha_q64_answer === 1 && $oshaAudit->osha_q64_comment || $oshaAudit->osha_q64_answer === 3 && $oshaAudit->osha_q64_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">When was the last inspection date?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q64_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q64_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -4481,6 +5085,15 @@
             </li>
         @endif
         {{--        65--}}
+        @if($oshaAudit->osha_q65_answer === 1 && $oshaAudit->osha_q65_comment || $oshaAudit->osha_q65_answer === 3 && $oshaAudit->osha_q65_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the first aid kit accessible to all employees 24/7?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $oshaAudit->osha_q65_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($oshaAudit->osha_q65_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
