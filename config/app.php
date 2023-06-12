@@ -188,6 +188,7 @@ return [
         WireElements\Pro\WireElementsProServiceProvider::class,
         WireElements\Pro\Components\SlideOver\SlideOverServiceProvider::class,
         WireElements\Pro\Components\Modal\ModalServiceProvider::class,
+        Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -218,6 +219,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDFMerger' => Webklex\PDFMerger\Facades\PDFMergerFacade::class,
     ])->toArray(),
 
 ];
