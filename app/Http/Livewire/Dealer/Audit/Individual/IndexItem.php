@@ -14,7 +14,9 @@ class IndexItem extends Component
 
     public function mount()
     {
-        $this->drafts = $this->individualAudit->children()->where('draft', true)->count();
+        $children = $this->individualAudit->where('parent_id', $this->individualAudit->id)->where('draft', 1)->count();
+        $parent = $this->individualAudit->draft == 1 ? 1 : 0;
+        $this->drafts = $children + $parent;
     }
 
     protected $listeners = [

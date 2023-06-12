@@ -15,44 +15,12 @@
     @endcan
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
         <div class="flex items-center space-x-5">
-            @if(!$drafts)
-                {{--                <a--}}
-                {{--                    --}}{{--                    href="{{ route('dealer.audit.individual.show', $individualAudit) }}"--}}
-                {{--                    class="inline-flex items-center gap-x-1.5 text-white rounded-md bg-arm-green-800 px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-arm-green-300 hover:bg-gray-50"--}}
-                {{--                >--}}
-                {{--                    Download--}}
-                {{--                </a>--}}
-            @endif
             <a
                 href="{{ route('dealer.audit.individual.show', $individualAudit) }}"
                 class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
                 View
             </a>
-            {{--            @can('create-audits')--}}
-            {{--                @if(!$individualAudit->draft && !$individualAudit->pdf_path)--}}
-            {{--                    <livewire:dealer.audit.individual.generate :individualAudit="$individualAudit"/>--}}
-            {{--                @endif--}}
-            {{--            @endcan--}}
-            {{--            @if($individualAudit->pdf_path)--}}
-            {{--                <livewire:dealer.audit.individual.download :individualAudit="$individualAudit"/>--}}
-            {{--            @endif--}}
-            {{--            @can('create-audits')--}}
-            {{--                --}}{{--                @if(!$individualAudit->pdf_path)--}}
-            {{--                <a--}}
-            {{--                    href="{{ route('dealer.audit.individual.show', $individualAudit) }}"--}}
-            {{--                    class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"--}}
-            {{--                >--}}
-            {{--                    Edit--}}
-            {{--                </a>--}}
-            {{--                --}}{{--                @endif--}}
-            {{--                <button--}}
-            {{--                    class="text-red-500 text-sm"--}}
-            {{--                    wire:click="$emit('modal.open', 'dealer.audit.individual.delete',  @js(['individualAudit' => $individualAudit->id]))"--}}
-            {{--                >--}}
-            {{--                    Delete--}}
-            {{--                </button>--}}
-            {{--            @endcan--}}
         </div>
     </td>
 </tr>
