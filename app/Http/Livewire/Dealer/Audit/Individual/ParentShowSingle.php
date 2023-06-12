@@ -17,6 +17,12 @@ class ParentShowSingle extends Component
         $this->children = $this->individualAudit->where('parent_id', $this->individualAudit->id)->count();
     }
 
+    public function delete()
+    {
+        $this->individualAudit->delete();
+        return redirect()->route('dealer.audit.individual.index');
+    }
+
     public function render()
     {
         return view('livewire.dealer.audit.individual.parent-show-single');
