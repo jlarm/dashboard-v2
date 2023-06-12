@@ -5,14 +5,16 @@ namespace App\Models\Dealer\Audit;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Concerns\HasUuid;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class IndividualAudit extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia, HasUUID;
 
     protected $guarded = [];
 
@@ -37,6 +39,16 @@ class IndividualAudit extends Model implements HasMedia
     public function getPathToMedia(Media $media): string
     {
         return tenant('id') . '/' . $media->collection_name . '/' . $media->id . '/';
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(IndividualAudit::class, 'parent_id')->with('children');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(IndividualAudit::class, 'parent_id')->with('parent');
     }
 
 }

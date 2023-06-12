@@ -20,6 +20,7 @@ class Edit extends Component
         'audit_images',
     ];
 
+    public $parent;
     public $draft;
     public $audit_date;
     public $customer_number;
@@ -236,6 +237,7 @@ class Edit extends Component
 
     public function mount()
     {
+        $this->parent = $this->individualAudit->parent ?? $this->individualAudit;
         $this->draft = $this->individualAudit->draft;
         $this->audit_date = Carbon::make($this->individualAudit->audit_date)->format('Y-m-d');
         $this->customer_number = $this->individualAudit->customer_number;

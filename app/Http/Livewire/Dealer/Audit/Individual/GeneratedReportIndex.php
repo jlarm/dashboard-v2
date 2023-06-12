@@ -10,7 +10,11 @@ class GeneratedReportIndex extends Component
     public function render()
     {
         return view('livewire.dealer.audit.individual.generated-report-index', [
-            'individualAudits' => IndividualAudit::whereNot('pdf_path', '')->orderBy('audit_date', 'desc')->select('id', 'audit_date', 'pdf_path')->get()
+            'individualAudits' => IndividualAudit::where('parent_id', null)
+                ->whereNot('pdf_path', '')
+                ->orderBy('audit_date', 'desc')
+                ->select('id', 'audit_date', 'pdf_path')
+                ->get()
         ]);
     }
 }

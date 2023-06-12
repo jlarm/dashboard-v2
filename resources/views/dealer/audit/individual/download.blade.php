@@ -11,25 +11,27 @@
 </head>
 <body>
 <div class="max-w-4xl mx-auto">
-    <div class="h-screen flex items-center justify-center">
-        <div class="space-y-5 text-center">
-            <x-application-logo class=" h-12 w-auto mx-auto"/>
-            @if($individualAudit->store->logo)
-                <img
-                    class="py-20 mx-auto"
-                    src="{{ asset($individualAudit->store->logo) }}"
-                    alt="">
-            @endif
-            @if(tenant('locations'))
-                <h1 class="text-3xl font-bold text-arm-blue-600">Deal Jacket Audit Review
-                    for {{ $individualAudit->store->name }}</h1>
-            @else
-                <h1 class="text-3xl font-bold text-arm-blue-600">Deal Jacket Audit Review
-                    for {{ tenant('name') }}</h1>
-            @endif
-            <p class="text-arm-blue-400">{{ $individualAudit->audit_date->format('F d, Y') }}</p>
+    @if($count === 0)
+        <div class="h-screen flex items-center justify-center">
+            <div class="space-y-5 text-center">
+                <x-application-logo class=" h-12 w-auto mx-auto"/>
+                @if($individualAudit->store->logo)
+                    <img
+                        class="py-20 mx-auto"
+                        src="{{ asset($individualAudit->store->logo) }}"
+                        alt="">
+                @endif
+                @if(tenant('locations'))
+                    <h1 class="text-3xl font-bold text-arm-blue-600">Deal Jacket Audit Review
+                        for {{ $individualAudit->store->name }}</h1>
+                @else
+                    <h1 class="text-3xl font-bold text-arm-blue-600">Deal Jacket Audit Review
+                        for {{ tenant('name') }}</h1>
+                @endif
+                <p class="text-arm-blue-400">{{ $individualAudit->audit_date->format('F d, Y') }}</p>
+            </div>
         </div>
-    </div>
+    @endif
     <ul class="divide-y divide-gray-300">
         <li class="py-10 space-y-5 page-break">
             <p class="font-bold">Customer Number</p>
@@ -109,6 +111,15 @@
                 </div>
             @endif
         </li>
+        @if($individualAudit->individual_q3_answer === 1 && $individualAudit->individual_q3_comment || $individualAudit->individual_q3_answer === 3 && $individualAudit->individual_q3_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Buyers Order & RISC a match?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q3_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q3_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -148,6 +159,15 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q4_answer === 1 && $individualAudit->individual_q4_comment || $individualAudit->individual_q4_answer === 3 && $individualAudit->individual_q4_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Vehicle price exceeds MSRP?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q4_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q4_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -185,6 +205,17 @@
                         <p>{{ $individualAudit->individual_q4_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q5_answer === 1 && $individualAudit->individual_q5_comment || $individualAudit->individual_q5_answer === 3 && $individualAudit->individual_q5_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is it clear what the customer purchased and did the deal reflect the norm in
+                    the
+                    Store?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q5_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q5_answer === 2)
@@ -228,6 +259,15 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q6_answer === 1 && $individualAudit->individual_q6_comment || $individualAudit->individual_q6_answer === 3 && $individualAudit->individual_q6_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Was the deal sent to more than one finance source?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q6_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q6_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -265,6 +305,16 @@
                         <p>{{ $individualAudit->individual_q6_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q7_answer === 1 && $individualAudit->individual_q7_comment || $individualAudit->individual_q7_answer === 3 && $individualAudit->individual_q7_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all customers being treated the same regarding
+                    markups on products offered on the menu system? If “No” explain.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q7_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q7_answer === 2)
@@ -307,6 +357,15 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q8_answer === 1 && $individualAudit->individual_q8_comment || $individualAudit->individual_q8_answer === 3 && $individualAudit->individual_q8_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Credit app signed by borrower?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q8_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q8_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -344,6 +403,16 @@
                         <p>{{ $individualAudit->individual_q8_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q9_answer === 1 && $individualAudit->individual_q9_comment || $individualAudit->individual_q9_answer === 3 && $individualAudit->individual_q9_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do the finance numbers, i.e. income, rent etc.,
+                    match from the handwritten credit applications to the credit application submitted to banks?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q9_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q9_answer === 2)
@@ -386,6 +455,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q10_answer === 1 && $individualAudit->individual_q10_comment || $individualAudit->individual_q10_answer === 3 && $individualAudit->individual_q10_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Buyers Order & RISC set forth price of ancillary
+                    products?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q10_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q10_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -424,6 +503,18 @@
                         <p>{{ $individualAudit->individual_q10_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q11_answer === 1 && $individualAudit->individual_q11_comment || $individualAudit->individual_q11_answer === 3 && $individualAudit->individual_q11_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Single Document: All of the agreements of the
+                    buyer and seller in one document (if required) with respect to the total cost and the terms of
+                    payment for the motor vehicle, including any promissory notes or any other evidences of
+                    indebtedness?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q11_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q11_answer === 2)
@@ -468,6 +559,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q12_answer === 1 && $individualAudit->individual_q12_comment || $individualAudit->individual_q12_answer === 3 && $individualAudit->individual_q12_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Signed by all Buyers and Seller - RISC & Retail
+                    Order?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q12_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q12_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -508,6 +609,15 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q13_answer === 1 && $individualAudit->individual_q13_comment || $individualAudit->individual_q13_answer === 3 && $individualAudit->individual_q13_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Date on RISC is accurate. NO BACKDATE</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q13_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q13_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -545,6 +655,17 @@
                         <p>{{ $individualAudit->individual_q13_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q14_answer === 1 && $individualAudit->individual_q14_comment || $individualAudit->individual_q14_answer === 3 && $individualAudit->individual_q14_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Language of copy of contract given to customer proper for negotiation language
+                    if
+                    required by state law?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q14_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q14_answer === 2)
@@ -588,6 +709,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q15_answer === 1 && $individualAudit->individual_q15_comment || $individualAudit->individual_q15_answer === 3 && $individualAudit->individual_q15_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Credit applications complete properly, signed by
+                    customer and accurate? If “No” explain.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q15_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q15_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -626,6 +757,16 @@
                         <p>{{ $individualAudit->individual_q15_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q16_answer === 1 && $individualAudit->individual_q16_comment || $individualAudit->individual_q16_answer === 3 && $individualAudit->individual_q16_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all state specific disclosures included in the
+                    deal?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q16_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q16_answer === 2)
@@ -668,6 +809,15 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q17_answer === 1 && $individualAudit->individual_q17_comment || $individualAudit->individual_q17_answer === 3 && $individualAudit->individual_q17_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Cosigner Notice? Only if a cosigner.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q17_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q17_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -707,7 +857,17 @@
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_18_answer === 2)
+        @if($individualAudit->individual_q18_answer === 1 && $individualAudit->individual_q18_comment || $individualAudit->individual_q18_answer === 3 && $individualAudit->individual_q18_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Did the F&I deals have privacy
+                    statement?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q18_comment }}</p>
+                </div>
+            </li>
+        @endif
+        @if($individualAudit->individual_q18_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Did the F&I deals have privacy
@@ -742,12 +902,22 @@
                 @if($individualAudit->individual_q18_comment)
                     <div>
                         <p class="font-bold">Comments:</p>
-                        <p>{{ $individualAudit->individual_q18_comment }}</p>
+                        <p>{{ $individualAudit->individual_q17_comment }}</p>
                     </div>
                 @endif
             </li>
         @endif
-        @if($individualAudit->individual_19_answer === 2)
+        @if($individualAudit->individual_q19_answer === 1 && $individualAudit->individual_q19_comment || $individualAudit->individual_q19_answer === 3 && $individualAudit->individual_q19_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is there a menu present and is it filled out
+                    properly and signed by customer?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q19_comment }}</p>
+                </div>
+            </li>
+        @endif
+        @if($individualAudit->individual_q19_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
                     <p class="font-bold">Is there a menu present and is it filled out
@@ -785,6 +955,16 @@
                         <p>{{ $individualAudit->individual_q19_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q20_answer === 1 && $individualAudit->individual_q20_comment || $individualAudit->individual_q20_answer === 3 && $individualAudit->individual_q20_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are the products purchased and or denied “Clearly”
+                    displayed on the menu and or “Settlement Disclosure Document?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q20_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q20_answer === 2)
@@ -827,6 +1007,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q21_answer === 1 && $individualAudit->individual_q21_comment || $individualAudit->individual_q21_answer === 3 && $individualAudit->individual_q21_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">If there is a cashed deferred payment made, is it
+                    properly disclosed?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q21_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q21_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -867,6 +1057,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q22_answer === 1 && $individualAudit->individual_q22_comment || $individualAudit->individual_q22_answer === 3 && $individualAudit->individual_q22_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">If a cash deferred down payment, is it paid before
+                    the 2nd scheduled payment period?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q22_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q22_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -905,6 +1105,18 @@
                         <p>{{ $individualAudit->individual_q22_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q23_answer === 1 && $individualAudit->individual_q23_comment || $individualAudit->individual_q23_answer === 3 && $individualAudit->individual_q23_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Check price of products on buyers order and
+                    RISC. Is amount charged for products similar to that charged other purchasers? If not, note
+                    whether
+                    higher.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q23_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q23_answer === 2)
@@ -949,6 +1161,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q24_answer === 1 && $individualAudit->individual_q24_comment || $individualAudit->individual_q24_answer === 3 && $individualAudit->individual_q24_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Dealer recap or reconciliation document
+                    reviewed and in file?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q24_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q24_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -987,6 +1209,16 @@
                         <p>{{ $individualAudit->individual_q24_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q25_answer === 1 && $individualAudit->individual_q25_comment || $individualAudit->individual_q25_answer === 3 && $individualAudit->individual_q25_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the dealership's markup rate within the
+                    Dealerships Participation Program rate as noted in their CMS program?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q25_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q25_answer === 2)
@@ -1029,6 +1261,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q26_answer === 1 && $individualAudit->individual_q26_comment || $individualAudit->individual_q26_answer === 3 && $individualAudit->individual_q26_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is an “Exception Notice (DPP form) filled out if
+                    the standard dealership rate not applied?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q26_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q26_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1067,6 +1309,16 @@
                         <p>{{ $individualAudit->individual_q26_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q27_answer === 1 && $individualAudit->individual_q27_comment || $individualAudit->individual_q27_answer === 3 && $individualAudit->individual_q27_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are markups handled the same for similar customers,
+                    i.e. is it higher for protected class: sex, national origin, race, age etc.?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q27_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q27_answer === 2)
@@ -1109,6 +1361,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q28_answer === 1 && $individualAudit->individual_q28_comment || $individualAudit->individual_q28_answer === 3 && $individualAudit->individual_q28_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">For used cars, was the buyer’s guide signed off
+                    on?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q28_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q28_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1147,6 +1409,16 @@
                         <p>{{ $individualAudit->individual_q28_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q29_answer === 1 && $individualAudit->individual_q29_comment || $individualAudit->individual_q29_answer === 3 && $individualAudit->individual_q29_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Was it clear what products the customer
+                    purchased and did the deal reflect the norm?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q29_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q29_answer === 2)
@@ -1189,6 +1461,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q30_answer === 1 && $individualAudit->individual_q30_comment || $individualAudit->individual_q30_answer === 3 && $individualAudit->individual_q30_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Was OFAC run and on file either physically or
+                    electronically?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q30_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q30_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1227,6 +1509,16 @@
                         <p>{{ $individualAudit->individual_q30_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q31_answer === 1 && $individualAudit->individual_q31_comment || $individualAudit->individual_q31_answer === 3 && $individualAudit->individual_q31_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Was a copy of the signed Privacy notice in the deal
+                    jacket?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q31_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q31_answer === 2)
@@ -1269,6 +1561,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q32_answer === 1 && $individualAudit->individual_q32_comment || $individualAudit->individual_q32_answer === 3 && $individualAudit->individual_q32_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Was the RBPN or Exception notice presented to and
+                    signed by the customer?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q32_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q32_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1309,6 +1611,16 @@
                 @endif
             </li>
         @endif
+        @if($individualAudit->individual_q33_answer === 1 && $individualAudit->individual_q33_comment || $individualAudit->individual_q33_answer === 3 && $individualAudit->individual_q33_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Was the Red Flag software run and a copy on file
+                    either physically or electronically?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q33_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($individualAudit->individual_q33_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1347,6 +1659,16 @@
                         <p>{{ $individualAudit->individual_q33_comment }}</p>
                     </div>
                 @endif
+            </li>
+        @endif
+        @if($individualAudit->individual_q34_answer === 1 && $individualAudit->individual_q34_comment || $individualAudit->individual_q34_answer === 3 && $individualAudit->individual_q34_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the deal jacket complete with all
+                    information?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $individualAudit->individual_q34_comment }}</p>
+                </div>
             </li>
         @endif
         @if($individualAudit->individual_q34_answer === 2)

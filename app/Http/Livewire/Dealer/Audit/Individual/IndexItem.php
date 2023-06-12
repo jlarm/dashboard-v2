@@ -10,6 +10,12 @@ class IndexItem extends Component
 {
     public IndividualAudit $individualAudit;
     public Store $store;
+    public $drafts;
+
+    public function mount()
+    {
+        $this->drafts = $this->individualAudit->children()->where('draft', true)->count();
+    }
 
     protected $listeners = [
         'refreshIndividualAudits' => '$refresh',

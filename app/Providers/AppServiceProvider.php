@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Model::preventLazyLoading(! $this->app->isProduction());
+//        Model::preventLazyLoading(! $this->app->isProduction());
 
         Builder::macro('search', function ($field, $string) {
             return $string ? $this->where($field, 'like', '%'.$string.'%') : $this;
