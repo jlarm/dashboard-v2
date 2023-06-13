@@ -31,6 +31,15 @@
         </div>
     </div>
     <ul class="divide-y divide-gray-300">
+        @if($bodyShopAudit->body_shop_q1_answer === 1 && $bodyShopAudit->body_shop_q1_comment || $bodyShopAudit->body_shop_q1_answer === 3 && $bodyShopAudit->body_shop_q1_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is a Filtration Log being completed?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q1_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q1_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -94,6 +103,15 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q1_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q2_answer === 1 && $bodyShopAudit->body_shop_q2_comment || $bodyShopAudit->body_shop_q2_answer === 3 && $bodyShopAudit->body_shop_q2_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do all employees know how to access SDS’s?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q2_comment }}</p>
                 </div>
             </li>
         @endif
@@ -168,6 +186,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q3_answer === 1 && $bodyShopAudit->body_shop_q3_comment || $bodyShopAudit->body_shop_q3_answer === 3 && $bodyShopAudit->body_shop_q3_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has annual fit test for all employees been performed?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q3_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q3_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -237,6 +264,15 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q3_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q4_answer === 1 && $bodyShopAudit->body_shop_q4_comment || $bodyShopAudit->body_shop_q4_answer === 3 && $bodyShopAudit->body_shop_q4_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Medical Questionnaire issued to employees utilizing respirators?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q4_comment }}</p>
                 </div>
             </li>
         @endif
@@ -314,6 +350,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q5_answer === 1 && $bodyShopAudit->body_shop_q5_comment || $bodyShopAudit->body_shop_q5_answer === 3 && $bodyShopAudit->body_shop_q5_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are respirators stored properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q5_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q5_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -386,6 +431,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q6_answer === 1 && $bodyShopAudit->body_shop_q6_comment || $bodyShopAudit->body_shop_q6_answer === 3 && $bodyShopAudit->body_shop_q6_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do respirators have NIOSH certification?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q6_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q6_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -455,6 +509,15 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q6_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q7_answer === 1 && $bodyShopAudit->body_shop_q7_comment || $bodyShopAudit->body_shop_q7_answer === 3 && $bodyShopAudit->body_shop_q7_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is PPE equipment available and is it in good condition?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q7_comment }}</p>
                 </div>
             </li>
         @endif
@@ -537,6 +600,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q8_answer === 1 && $bodyShopAudit->body_shop_q8_comment || $bodyShopAudit->body_shop_q8_answer === 3 && $bodyShopAudit->body_shop_q8_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are paint booths free from any flammable material?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q8_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q8_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -608,6 +680,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q9_answer === 1 && $bodyShopAudit->body_shop_q9_comment || $bodyShopAudit->body_shop_q9_answer === 3 && $bodyShopAudit->body_shop_q9_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all the flammable materials stored properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q9_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q9_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -673,6 +754,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q9_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q10_answer === 1 && $bodyShopAudit->body_shop_q10_comment || $bodyShopAudit->body_shop_q10_answer === 3 && $bodyShopAudit->body_shop_q10_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all secondary containers filled with chemicals
+                    properly labeled?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q10_comment }}</p>
                 </div>
             </li>
         @endif
@@ -752,6 +843,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q11_answer === 1 && $bodyShopAudit->body_shop_q11_comment || $bodyShopAudit->body_shop_q11_answer === 3 && $bodyShopAudit->body_shop_q11_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has the eye wash equipment been tested, cleaned and documented weekly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q11_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q11_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -824,6 +924,15 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q11_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q12_answer === 1 && $bodyShopAudit->body_shop_q12_comment || $bodyShopAudit->body_shop_q12_answer === 3 && $bodyShopAudit->body_shop_q12_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the eye wash equipment readily accessible?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q12_comment }}</p>
                 </div>
             </li>
         @endif
@@ -916,6 +1025,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q13_answer === 1 && $bodyShopAudit->body_shop_q13_comment || $bodyShopAudit->body_shop_q13_answer === 3 && $bodyShopAudit->body_shop_q13_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Has the eye wash container water supply been changed out properly based on
+                    manufacturer recommendations per solution used?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q13_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q13_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -986,6 +1105,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q14_answer === 1 && $bodyShopAudit->body_shop_q14_comment || $bodyShopAudit->body_shop_q14_answer === 3 && $bodyShopAudit->body_shop_q14_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Do you have documentation on water/solution change out?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q14_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q14_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1050,6 +1178,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q15_answer === 1 && $bodyShopAudit->body_shop_q15_comment || $bodyShopAudit->body_shop_q15_answer === 3 && $bodyShopAudit->body_shop_q15_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are you following the mfg. specs?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q15_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q15_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1111,6 +1248,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q15_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q16_answer === 1 && $bodyShopAudit->body_shop_q16_comment || $bodyShopAudit->body_shop_q16_answer === 3 && $bodyShopAudit->body_shop_q16_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Have the fire extinguishers had their annual inspection and are they properly
+                    identified and fully charged?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q16_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1192,6 +1339,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q17_answer === 1 && $bodyShopAudit->body_shop_q17_comment || $bodyShopAudit->body_shop_q17_answer === 3 && $bodyShopAudit->body_shop_q17_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are the fire extinguishers easily accessible?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q17_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q17_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1262,6 +1418,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q18_answer === 1 && $bodyShopAudit->body_shop_q18_comment || $bodyShopAudit->body_shop_q18_answer === 3 && $bodyShopAudit->body_shop_q18_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all hoses and cutting tips for the welder/cutting torches in good condition
+                    without any cracks or breaks?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q18_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q18_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1326,6 +1492,15 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q18_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q19_answer === 1 && $bodyShopAudit->body_shop_q19_comment || $bodyShopAudit->body_shop_q19_answer === 3 && $bodyShopAudit->body_shop_q19_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all exits properly marked?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q19_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1401,6 +1576,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q20_answer === 1 && $bodyShopAudit->body_shop_q20_comment || $bodyShopAudit->body_shop_q20_answer === 3 && $bodyShopAudit->body_shop_q20_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are pathways to exits clear of obstructions?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q20_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q20_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1465,6 +1649,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q20_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q21_answer === 1 && $bodyShopAudit->body_shop_q21_comment || $bodyShopAudit->body_shop_q21_answer === 3 && $bodyShopAudit->body_shop_q21_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all aisles/pathways, stairways and landings free from obstructions and are the
+                    shop areas kept clean and orderly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q21_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1537,6 +1731,19 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q21_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q22_answer === 1 && $bodyShopAudit->body_shop_q22_comment || $bodyShopAudit->body_shop_q22_answer === 3 && $bodyShopAudit->body_shop_q22_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are any doorways that are nonfunctioning or
+                    blocked
+                    marked by a sign stating “NOT AN EXIT”? Are any doorways that are nonfunctioning or blocked
+                    marked
+                    by a sign stating “NOT AN EXIT”?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q22_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1621,6 +1828,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q23_answer === 1 && $bodyShopAudit->body_shop_q23_comment || $bodyShopAudit->body_shop_q23_answer === 3 && $bodyShopAudit->body_shop_q23_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are floors in good repair and free from obstruction and debris and slippery
+                    conditions?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q23_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q23_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1684,6 +1901,15 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q23_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q24_answer === 1 && $bodyShopAudit->body_shop_q24_comment || $bodyShopAudit->body_shop_q24_answer === 3 && $bodyShopAudit->body_shop_q24_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are floor openings in excess of 2.25” wide covered with hinged flaps?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q24_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1769,6 +1995,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q25_answer === 1 && $bodyShopAudit->body_shop_q25_comment || $bodyShopAudit->body_shop_q25_answer === 3 && $bodyShopAudit->body_shop_q25_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are compressed air hoses in safe (no frays, cuts, tape or clamps for repair)
+                    working condition?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q25_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q25_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1838,6 +2074,15 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q25_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q26_answer === 1 && $bodyShopAudit->body_shop_q26_comment || $bodyShopAudit->body_shop_q26_answer === 3 && $bodyShopAudit->body_shop_q26_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">All gas cylinders stored properly i.e. tied down etc.?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q26_comment }}</p>
                 </div>
             </li>
         @endif
@@ -1912,6 +2157,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q27_answer === 1 && $bodyShopAudit->body_shop_q27_comment || $bodyShopAudit->body_shop_q27_answer === 3 && $bodyShopAudit->body_shop_q27_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are gas cylinders stored away from sources of
+                    heat or electricity and at least 20’ away from combustible materials?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q27_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q27_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -1978,6 +2233,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q27_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q28_answer === 1 && $bodyShopAudit->body_shop_q28_comment || $bodyShopAudit->body_shop_q28_answer === 3 && $bodyShopAudit->body_shop_q28_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">When dispensing are all tanks holding flammable
+                    material properly grounded?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q28_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2054,6 +2319,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q28_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q29_answer === 1 && $bodyShopAudit->body_shop_q29_comment || $bodyShopAudit->body_shop_q29_answer === 3 && $bodyShopAudit->body_shop_q29_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is there proper signage about not smoking in
+                    the appropriate areas?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q29_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2143,6 +2418,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q30_answer === 1 && $bodyShopAudit->body_shop_q30_comment || $bodyShopAudit->body_shop_q30_answer === 3 && $bodyShopAudit->body_shop_q30_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are no smoking signs being enforced?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q30_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q30_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2208,6 +2492,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q30_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q31_answer === 1 && $bodyShopAudit->body_shop_q31_comment || $bodyShopAudit->body_shop_q31_answer === 3 && $bodyShopAudit->body_shop_q31_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are goggles or face shields always worn when
+                    grinding?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q31_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2278,6 +2572,17 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q31_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q32_answer === 1 && $bodyShopAudit->body_shop_q32_comment || $bodyShopAudit->body_shop_q32_answer === 3 && $bodyShopAudit->body_shop_q32_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is there proper spacing on grinders; Tool rest
+                    1/8”
+                    from grinding wheel Tongue plate 1/4” from grinding wheel?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q32_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2354,6 +2659,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q33_answer === 1 && $bodyShopAudit->body_shop_q33_comment || $bodyShopAudit->body_shop_q33_answer === 3 && $bodyShopAudit->body_shop_q33_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are Signs posted warning of automatic starting
+                    feature of the compressors?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q33_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q33_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2417,6 +2732,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q33_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q34_answer === 1 && $bodyShopAudit->body_shop_q34_comment || $bodyShopAudit->body_shop_q34_answer === 3 && $bodyShopAudit->body_shop_q34_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is there clear access of at least 36” to all
+                    electrical panels?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q34_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2489,6 +2814,15 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q35_answer === 1 && $bodyShopAudit->body_shop_q35_comment || $bodyShopAudit->body_shop_q35_answer === 3 && $bodyShopAudit->body_shop_q35_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all the breakers properly labeled?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q35_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q35_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2555,6 +2889,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q35_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q36_answer === 1 && $bodyShopAudit->body_shop_q36_comment || $bodyShopAudit->body_shop_q36_answer === 3 && $bodyShopAudit->body_shop_q36_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are commercial grade extension cords being used
+                    properly?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q36_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2625,6 +2969,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q37_answer === 1 && $bodyShopAudit->body_shop_q37_comment || $bodyShopAudit->body_shop_q37_answer === 3 && $bodyShopAudit->body_shop_q37_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all electrical cords in good working order
+                    (none frayed, cracked, taped, or spliced or ground missing on 3 prong plugs)?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q37_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q37_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2691,6 +3045,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q37_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q38_answer === 1 && $bodyShopAudit->body_shop_q38_comment || $bodyShopAudit->body_shop_q38_answer === 3 && $bodyShopAudit->body_shop_q38_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all electrical plug ends still have ground
+                    prong attached?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q38_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2767,6 +3131,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q39_answer === 1 && $bodyShopAudit->body_shop_q39_comment || $bodyShopAudit->body_shop_q39_answer === 3 && $bodyShopAudit->body_shop_q39_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Are all other additional electrical issues correct?
+                    If “No” explain.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q39_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q39_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2832,6 +3206,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q40_answer === 1 && $bodyShopAudit->body_shop_q40_comment || $bodyShopAudit->body_shop_q40_answer === 3 && $bodyShopAudit->body_shop_q40_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">There are no other miscellaneous electrical issues
+                    to note? If “No” explain further.</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q40_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q40_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -2894,6 +3278,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q40_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q41_answer === 1 && $bodyShopAudit->body_shop_q41_comment || $bodyShopAudit->body_shop_q41_answer === 3 && $bodyShopAudit->body_shop_q41_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Hybrid safety gloves are “Class O Heavy-Duty gloves
+                    rated to withstand 1,000 volts?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q41_comment }}</p>
                 </div>
             </li>
         @endif
@@ -2970,6 +3364,16 @@
                 </div>
             </li>
         @endif
+        @if($bodyShopAudit->body_shop_q42_answer === 1 && $bodyShopAudit->body_shop_q42_comment || $bodyShopAudit->body_shop_q42_answer === 3 && $bodyShopAudit->body_shop_q42_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Hybrid safety glasses worn when working on hybrid
+                    vehicles?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q42_comment }}</p>
+                </div>
+            </li>
+        @endif
         @if($bodyShopAudit->body_shop_q42_answer === 2)
             <li class="py-10 space-y-5 page-break">
                 <div>
@@ -3038,6 +3442,16 @@
                     @foreach($bodyShopAudit->getMedia('body_shop_q42_images') as $image)
                         <img src="{{ $image->getUrl() }}" alt="">
                     @endforeach
+                </div>
+            </li>
+        @endif
+        @if($bodyShopAudit->body_shop_q43_answer === 1 && $bodyShopAudit->body_shop_q43_comment || $bodyShopAudit->body_shop_q43_answer === 3 && $bodyShopAudit->body_shop_q43_comment)
+            <li class="py-10 space-y-5 page-break">
+                <p class="font-bold">Is the first aid kit properly stocked given the
+                    dealership work environment?</p>
+                <div>
+                    <p class="font-bold">Comments:</p>
+                    <p>{{ $bodyShopAudit->body_shop_q43_comment }}</p>
                 </div>
             </li>
         @endif
