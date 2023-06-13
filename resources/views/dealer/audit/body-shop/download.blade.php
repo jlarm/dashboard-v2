@@ -1738,9 +1738,7 @@
             <li class="py-10 space-y-5 page-break">
                 <p class="font-bold">Are any doorways that are nonfunctioning or
                     blocked
-                    marked by a sign stating “NOT AN EXIT”? Are any doorways that are nonfunctioning or blocked
-                    marked
-                    by a sign stating “NOT AN EXIT”?</p>
+                    marked by a sign stating “NOT AN EXIT”?</p>
                 <div>
                     <p class="font-bold">Comments:</p>
                     <p>{{ $bodyShopAudit->body_shop_q22_comment }}</p>
