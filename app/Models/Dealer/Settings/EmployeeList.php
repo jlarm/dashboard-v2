@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class EmployeeList extends Model
 {
     protected $fillable = [
+        'store_id',
         'qualified_individual_name',
         'qualified_individual_phone',
         'service_manager_name',
