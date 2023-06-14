@@ -2,7 +2,9 @@
 
 namespace App\Models\Dealer\Manual;
 
+use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Osha extends Model
 {
@@ -29,6 +31,11 @@ class Osha extends Model
         'burglar_alarm_type',
         'signature',
     ];
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
 
     public function getPhoneNumberAttribute()
     {

@@ -71,6 +71,16 @@ return [
             "visibility" => "public",
         ],
 
+        'do-manuals' => [
+            'driver' => 's3',
+            'key' => env('MANUALS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('MANUALS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('MANUALS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('MANUALS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('MANUALS_DIGITALOCEAN_SPACES_BUCKET'),
+            "visibility" => "public",
+        ],
+
     ],
 
     /*

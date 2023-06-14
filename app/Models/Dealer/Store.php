@@ -7,6 +7,8 @@ use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Manual\Isp;
+use App\Models\Dealer\Manual\Osha;
+use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -128,5 +130,16 @@ class Store extends Model implements HasMedia
     public function isps(): HasMany
     {
         return $this->hasMany(Isp::class);
+    }
+
+    public function oshas(): HasMany
+    {
+        return $this->hasMany(Osha::class);
+    }
+
+    public function redflags(): HasMany
+
+    {
+        return $this->hasMany(RedFlag::class);
     }
 }

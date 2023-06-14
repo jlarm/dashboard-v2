@@ -3,14 +3,16 @@
 namespace App\Models\Dealer\Manual;
 
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Isp extends Model
+class RedFlag extends Model
 {
     protected $fillable = [
         'store_id',
-        'logged_in_user',
+        'user_id',
+        'pdf_path',
         'qualified_individual_name',
         'qualified_individual_phone',
         'service_manager_name',
@@ -32,16 +34,13 @@ class Isp extends Model
         'signature',
     ];
 
-    public function getPhoneNumberAttribute()
-    {
-        $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-        preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
-
-        return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
-    }
-
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

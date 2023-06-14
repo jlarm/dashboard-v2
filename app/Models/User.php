@@ -7,6 +7,7 @@ use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
+use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -100,5 +101,15 @@ class User extends Authenticatable
     public function results()
     {
         return $this->hasMany(CourseResults::class);
+    }
+
+    public function routeNotificationForVonage($notification)
+    {
+        return $this->phone;
+    }
+
+    public function redflags(): HasMany
+    {
+        return $this->hasMany(RedFlag::class);
     }
 }

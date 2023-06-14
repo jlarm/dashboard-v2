@@ -10,6 +10,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 px-3 sm:px-0">
                 <livewire:dealer.manual.isp-card/>
                 <livewire:dealer.manual.osha-card/>
+                <livewire:dealer.manual.red-flag-card/>
             </div>
         </div>
     </div>
