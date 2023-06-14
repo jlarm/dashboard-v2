@@ -6,6 +6,8 @@ use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaAudit;
+use App\Models\Dealer\Manual\Isp;
+use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -116,5 +118,15 @@ class Store extends Model implements HasMedia
     public function individualAudits(): HasMany
     {
         return $this->hasMany(IndividualAudit::class);
+    }
+
+    public function employeeList(): HasOne
+    {
+        return $this->hasOne(EmployeeList::class);
+    }
+
+    public function isps(): HasMany
+    {
+        return $this->hasMany(Isp::class);
     }
 }

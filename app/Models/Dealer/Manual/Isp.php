@@ -2,11 +2,13 @@
 
 namespace App\Models\Dealer\Manual;
 
+use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Model;
 
 class Isp extends Model
 {
     protected $fillable = [
+        'store_id',
         'logged_in_user',
         'qualified_individual_name',
         'qualified_individual_phone',
@@ -35,5 +37,10 @@ class Isp extends Model
         preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
 
         return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 }

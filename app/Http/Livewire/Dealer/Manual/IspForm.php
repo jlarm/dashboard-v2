@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Dealer\Manual;
 
 use App\Models\Dealer\Manual\Isp;
+use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
-use App\Models\User;
 use Livewire\Component;
 
 class IspForm extends Component
 {
     public $store_id;
+    public $employeeList;
     public $qi;
     public $qit = 'Qualified Individual';
     public $qip;
@@ -38,18 +39,19 @@ class IspForm extends Component
 
     public function mount()
     {
-        $this->owner = User::role('Owner')->first()->name ?? '';
-        $this->ownerp = User::role('Owner')->first()->phone ?? '';
-        $this->gm = User::role('General Manager')->first()->name ?? '';
-        $this->gmp = User::role('General Manager')->first()->phone ?? '';
-        $this->bsm = User::role('Body Shop Manager')->first()->name ?? '';
-        $this->bsmp = User::role('Body Shop Manager')->first()->phone ?? '';
-        $this->pm = User::role('Parts Manager')->first()->name ?? '';
-        $this->pmp = User::role('Parts Manager')->first()->phone ?? '';
-        $this->sm = User::role('Service Manager')->first()->name ?? '';
-        $this->smp = User::role('Service Manager')->first()->phone ?? '';
-        $this->qi = User::role('Qualified Individual')->first()->name ?? '';
-        $this->qip = User::role('Qualified Individual')->first()->phone ?? '';
+        $this->employeeList = EmployeeList::first();
+        $this->qi = $this->employeeList->qualified_individual_name ?? '';
+        $this->qip = $this->employeeList->qualified_individual_phone ?? '';
+        $this->sm = $this->employeeList->service_manager_name ?? '';
+        $this->smp = $this->employeeList->service_manager_phone ?? '';
+        $this->pm = $this->employeeList->parts_manager_name ?? '';
+        $this->pmp = $this->employeeList->parts_manager_phone ?? '';
+        $this->bsm = $this->employeeList->body_shop_manager_name ?? '';
+        $this->bsmp = $this->employeeList->body_shop_manager_phone ?? '';
+        $this->gm = $this->employeeList->general_manager_name ?? '';
+        $this->gmp = $this->employeeList->general_manager_phone ?? '';
+        $this->owner = $this->employeeList->owner_name ?? '';
+        $this->ownerp = $this->employeeList->owner_phone ?? '';
         $this->pepn = Store::first()->police_emergency_phone ?? '';
         $this->pnepn = Store::first()->police_non_emergency_phone ?? '';
         $this->fepn = Store::first()->fire_emergency_phone ?? '';
@@ -59,24 +61,6 @@ class IspForm extends Component
     }
 
     protected $rules = [
-        'qi' => 'required',
-        'qip' => 'required',
-        'sm' => 'required',
-        'smp' => 'required',
-        'pm' => 'required',
-        'pmp' => 'required',
-        'bsm' => 'required',
-        'bsmp' => 'required',
-        'gm' => 'required',
-        'gmp' => 'required',
-        'owner' => 'required',
-        'ownerp' => 'required',
-        'pepn' => 'required',
-        'pnepn' => 'required',
-        'fepn' => 'required',
-        'fnepn' => 'required',
-        'alarmSystem' => 'required',
-        'burglarSystem' => 'required',
         'signature' => 'required',
     ];
 
@@ -89,19 +73,20 @@ class IspForm extends Component
         $fileName = $fName.$cTime.'.png';
 
         Isp::create([
+            'store_id' => $this->employeeList->store_id ?? '',
             'logged_in_user' => auth()->user()->id,
-            'qualified_individual_name' => $this->qi,
-            'qualified_individual_phone' => $this->qip,
-            'service_manager_name' => $this->sm,
-            'service_manager_phone' => $this->smp,
-            'parts_manager_name' => $this->pm,
-            'parts_manager_phone' => $this->pmp,
-            'body_shop_manager_name' => $this->bsm,
-            'body_shop_manager_phone' => $this->bsmp,
-            'general_manager_name' => $this->gm,
-            'general_manager_phone' => $this->gmp,
-            'owner_name' => $this->owner,
-            'owner_phone' => $this->ownerp,
+            'qualified_individual_name' =>  $this->employeeList->qualified_individual_name ?? '',
+            'qualified_individual_phone' => $this->employeeList->qualified_individual_phone ?? '',
+            'service_manager_name' => $this->employeeList->service_manager_name ?? '',
+            'service_manager_phone' => $this->employeeList->service_manager_phone ?? '',
+            'parts_manager_name' => $this->employeeList->parts_manager_name ?? '',
+            'parts_manager_phone' => $this->employeeList->parts_manager_phone ?? '',
+            'body_shop_manager_name' => $this->employeeList->body_shop_manager_name ?? '',
+            'body_shop_manager_phone' => $this->employeeList->body_shop_manager_phone ?? '',
+            'general_manager_name' => $this->employeeList->general_manager_name ?? '',
+            'general_manager_phone' => $this->employeeList->general_manager_phone ?? '',
+            'owner_name' => $this->employeeList->owner_name ?? '',
+            'owner_phone' => $this->employeeList->owner_phone ?? '',
             'police_emergency_phone' => $this->pepn,
             'police_non_emergency_phone' => $this->pnepn,
             'fire_emergency_phone' => $this->fepn,
@@ -111,7 +96,7 @@ class IspForm extends Component
             'signature' => $fileName,
         ]);
 
-        \Storage::put('osha-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
+        \Storage::put('isp-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
 
         $this->redirect(route('dealer.manual.index'));
     }

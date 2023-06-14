@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Osha extends Model
 {
     protected $fillable = [
+        'store_id',
         'logged_in_user',
         'qualified_individual_name',
         'qualified_individual_phone',

@@ -1,4 +1,4 @@
-<div class="bg-gray-50 border border-gray-300 overflow-hidden rounded-lg">
+<div class="bg-gray-50 border border-gray-300 overflow-hidden rounded-lg hover:shadow-xl transition">
     <div class="p-6 text-gray-900">
         <h2 class="text-2xl font-bold mb-5">ISP</h2>
         <div class="flow-root">

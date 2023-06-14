@@ -12,6 +12,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="space-y-6">
                 <livewire:dealer.store.single-store-details/>
+                <livewire:dealer.settings.employee-list/>
                 <livewire:dealer.store.single-onboarding-details/>
             </div>
         </div>
