@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Dealer\Audit\IndividualAudit;
+use App\Models\User;
 use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -48,6 +49,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             $html = view('dealer.audit.individual.download', [
                 'individualAudit' => $audit,
                 'count' => $count,
+                'managerName' => User::where('id', $audit->manager_id)->first()->name,
             ])->render();
 
             $pdf = Browsershot::html($html)

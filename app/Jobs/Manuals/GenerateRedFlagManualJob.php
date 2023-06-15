@@ -24,7 +24,7 @@ class GenerateRedFlagManualJob implements ShouldQueue
         $storagePath = storage_path('app/' . $fileName);
 
         $html = view('dealer.manual.pdf.red-flag', [
-            'redFlag' => $this->manual
+            'redFlag' => $this->manual,
         ])->render();
 
         $manual = Browsershot::html($html)

@@ -47,7 +47,7 @@
         </li>
         <li class="py-10 space-y-5 page-break">
             <p class="font-bold">Finance Manager</p>
-            <p>{{ $individualAudit->user->name }}</p>
+            <p>{{ $managerName ?? '' }}</p>
         </li>
         <li class="py-10 space-y-5 page-break">
             <div>
