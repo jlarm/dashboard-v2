@@ -49,7 +49,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             $html = view('dealer.audit.individual.download', [
                 'individualAudit' => $audit,
                 'count' => $count,
-                'managerName' => User::where('id', $audit->manager_id)->first()->name,
+                'managerName' => isset($audit->manager_id) ? User::where('id', $audit->manager_id)->first()->name : null,
             ])->render();
 
             $pdf = Browsershot::html($html)
