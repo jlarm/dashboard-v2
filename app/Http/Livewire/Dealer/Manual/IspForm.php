@@ -74,7 +74,7 @@ class IspForm extends Component
 
         Isp::create([
             'store_id' => $this->employeeList->store_id ?? '',
-            'logged_in_user' => auth()->user()->id,
+            'user_id' => auth()->user()->id,
             'qualified_individual_name' =>  $this->employeeList->qualified_individual_name ?? '',
             'qualified_individual_phone' => $this->employeeList->qualified_individual_phone ?? '',
             'service_manager_name' => $this->employeeList->service_manager_name ?? '',

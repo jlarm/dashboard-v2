@@ -2,46 +2,37 @@
 
 namespace App\Http\Livewire\Dealer\Manual;
 
+use App\Jobs\Manuals\GenerateIspManualJob;
+use App\Jobs\Manuals\UploadIspToDigitaloceanJob;
 use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Store;
 use Livewire\Component;
-use Spatie\Browsershot\Browsershot;
+use Storage;
 
 class IspCard extends Component
 {
     public Store $store;
+    public $manual;
+    public $content;
+
+    public function mount()
+    {
+        $this->manual = Isp::latest()->first();
+        if($this->manual && $this->manual->pdf_path) {
+            $this->content = Storage::disk('do-manuals')->url(tenant('id') . '/isp/' . $this->manual->pdf_path) ?? null;
+        }
+    }
+
     public function download()
     {
-        $isp = Isp::with('store')->latest()->first();
-        $fileName = 'isp-manual'.now()->format('Ymd').'.pdf';
-        $storgePath = storage_path('app/' . $fileName);
-
-        $html = view('dealer.manual.pdf.isp', [
-            'isp' => $isp
-        ])->render();
-
-        $ispManual = Browsershot::html($html)
-            ->showBackground()
-            ->margins(10, 10, 10, 10)
-            ->scale(0.75)
-            ->waitUntilNetworkIdle()
-            ->save($storgePath);
-
-        // open pdf in new tab
-        return response()->stream(function () use ($storgePath) {
-            echo file_get_contents($storgePath);
-        }, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $fileName . '"'
-        ]);
-
-        // refresh current page
-//        return redirect()->route('dealer.manual.index');
+        \Bus::chain([
+            new GenerateIspManualJob($this->manual),
+            new UploadIspToDigitaloceanJob($this->manual),
+        ])->dispatch();
     }
+
     public function render()
     {
-        return view('livewire.dealer.manual.isp-card', [
-            'isp' => Isp::latest()->first()
-        ]);
+        return view('livewire.dealer.manual.isp-card');
     }
 }

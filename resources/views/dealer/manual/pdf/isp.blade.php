@@ -1011,6 +1011,7 @@
             with
             the appropriate authority to monitor and enforce its provisions and policies.</p>
         <p>Effective Date: {{ $isp->created_at->format('F d, Y') }}</p>
+        <p>{{ $isp->user->name }}</p>
         <img src="{{ storage_path() }}/app/isp-signatures/{{ $isp->signature }}" alt="Signature"/>
     </div>
 </div>
