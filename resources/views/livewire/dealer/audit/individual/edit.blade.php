@@ -14,16 +14,17 @@
                 />
             </div>
         </div>
-        <!-- Customer Number -->
+        <!-- Deal Jacket Date -->
         <div class="ml-3 md:ml-0">
-            <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Customer
-                Number</label>
+            <label for="deal_jacket_date" class="block text-sm font-medium leading-6 text-gray-900">Deal Jacket
+                Date</label>
             <div class="mt-2">
                 <input
-                    wire:model.lazy="customer_number"
-                    type="text"
-                    name="customer_number"
-                    id="customer_number"
+                    wire:model="deal_jacket_date"
+                    type="date"
+                    name="deal_jacket_date"
+                    id="deal_jacket_date"
+                    pattern=""
                     class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
                 />
             </div>
@@ -42,10 +43,50 @@
                 />
             </div>
         </div>
+        <!-- Customer Number -->
+        <div class="ml-3 md:ml-0">
+            <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Customer
+                Number</label>
+            <div class="mt-2">
+                <input
+                    wire:model.lazy="customer_number"
+                    type="text"
+                    name="customer_number"
+                    id="customer_number"
+                    class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
+                />
+            </div>
+        </div>
+        <!-- Manager Name -->
+        <div class="ml-3 md:ml-0">
+            <label for="manager_id" class="block text-sm font-medium leading-6 text-gray-900">Finance Manager</label>
+            <div class="mt-2">
+                <select wire:model="manager_id" id="manager_id" name="manager_id" autocomplete="cmanager_id"
+                        class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                    <option></option>
+                    @foreach($managers as $manager)
+                        <option value="{{ $manager->id }}">{{ $manager->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <!-- Mileage -->
+        <div class="ml-3 md:ml-0">
+            <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Mileage</label>
+            <div class="mt-2">
+                <input
+                    wire:model.lazy="mileage"
+                    type="number"
+                    name="mileage"
+                    id="mileage"
+                    class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
+                />
+            </div>
+        </div>
         <!-- Cash or Finance? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Cash or Finance?</label>
+                <label class="text-base font-semibold text-gray-900">Cash, Finance or Lease?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -71,6 +112,18 @@
                             >
                             <label for="individual_q1_answer_2"
                                    class="ml-3 block text-sm font-medium leading-6 text-gray-900">Finance</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q1_answer"
+                                value="3"
+                                name="individual_q1_answer"
+                                id="individual_q1_answer_3"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q1_answer_3"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Lease</label>
                         </div>
                     </div>
                 </fieldset>
@@ -154,10 +207,10 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Buyers Order & RISC a match? -->
+        <!-- Is there an Odometer Statement in deal? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Buyers Order & RISC a match?</label>
+                <label class="text-base font-semibold text-gray-900">Is there an Odometer Statement in deal?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -222,10 +275,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Vehicle price exceeds MSRP? -->
+        <!-- Did deal have two page model Privacy Notice statement and was it signed? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Vehicle price exceeds MSRP?</label>
+                <label class="text-base font-semibold text-gray-900">Did deal have two page model Privacy Notice
+                    statement and was it signed?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -290,12 +344,10 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Is it clear what the customer purchased and did the deal reflect the norm in the Store? -->
+        <!-- Menu Present? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Is it clear what the customer purchased and did
-                    the
-                    deal reflect the norm in the Store?</label>
+                <label class="text-base font-semibold text-gray-900">Menu Present?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -360,11 +412,10 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Was the deal sent to more than one finance source? -->
+        <!-- Is the Menu filled out properly? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Was the deal sent to more than one finance
-                    source?</label>
+                <label class="text-base font-semibold text-gray-900">Is the Menu filled out properly?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -429,11 +480,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Are all customers being treated the same regarding markups on products offered on the menu system? If “No” explain. -->
+        <!-- Is there a separate signed contract for each product sold on menu? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Are all customers being treated the same regarding
-                    markups on products offered on the menu system? If “No” explain.</label>
+                <label class="text-base font-semibold text-gray-900">Is there a separate signed contract for each
+                    product sold on menu?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -498,10 +549,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Credit app signed by borrower? -->
+        <!-- Are all customers being treated the same regarding product markups on menu system? If no explain -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Credit app signed by borrower?</label>
+                <label class="text-base font-semibold text-gray-900">Are all customers being treated the same regarding
+                    product markups on menu system? If no explain</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -566,11 +618,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Do the finance numbers, i.e. income, rent etc., match from the handwritten credit applications to the credit application submitted to banks? -->
+        <!-- Was OFAC run and on file either physically or electronically? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Do the finance numbers, i.e. income, rent etc.,
-                    match from the handwritten credit applications to the credit application submitted to banks?</label>
+                <label class="text-base font-semibold text-gray-900">Was OFAC run and on file either physically or
+                    electronically?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -635,11 +687,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Buyers Order & RISC set forth price of ancillary products? -->
+        <!-- Was the Red Flag software run and on file either physically or electronically? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Buyers Order & RISC set forth price of ancillary
-                    products?</label>
+                <label class="text-base font-semibold text-gray-900">Was the Red Flag software run and on file either
+                    physically or electronically?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -704,13 +756,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Single Document: All of the agreements of the -->
+        <!-- Is there a copy of the Buyer's Guide in deal jacket? (if used car sold) -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Single Document: All of the agreements of the
-                    buyer and seller in one document (if required) with respect to the total cost and the terms of
-                    payment for the motor vehicle, including any promissory notes or any other evidences of
-                    indebtedness?</label>
+                <label class="text-base font-semibold text-gray-900">Is there a copy of the Buyer's Guide in deal
+                    jacket? (if used car sold)</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -775,11 +825,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Signed by all Buyers and Seller - RISC & Retail Order? -->
+        <!-- If Buyer's Guide present is it filled out properly and signed by customer? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Signed by all Buyers and Seller - RISC & Retail
-                    Order?</label>
+                <label class="text-base font-semibold text-gray-900">If Buyer's Guide present is it filled out properly
+                    and signed by customer?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -844,10 +894,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Date on RISC is accurate. NO BACKDATE -->
+        <!-- Was RBPN or Exception notice presented and signed by customer? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Date on RISC is accurate. NO BACKDATE</label>
+                <label class="text-base font-semibold text-gray-900">Was RBPN or Exception notice presented and signed
+                    by customer?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -912,11 +963,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Language of copy of contract given to customer proper for negotiation language if required by state law? -->
+        <!-- Does the Buyers Order & the RISC match up regarding final purchase price?  -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Language of copy of contract given to customer
-                    proper for negotiation language if required by state law?</label>
+                <label class="text-base font-semibold text-gray-900">Does the Buyers Order & the RISC match up regarding
+                    final purchase price? </label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -981,11 +1032,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Credit applications complete properly, signed by customer and accurate? If “No” explain. -->
+        <!-- Does the Menu, Buyers Order & the RISC match up regarding ancillary products purchased? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Credit applications complete properly, signed by
-                    customer and accurate? If “No” explain.</label>
+                <label class="text-base font-semibold text-gray-900">Does the Menu, Buyers Order & the RISC match up
+                    regarding ancillary products purchased?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1050,11 +1101,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Are all state specific disclosures included in the deal? -->
+        <!-- Products purchased or denied are "CLEARLY" displayed on the menu and or "Settlement Disclosure Document"? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Are all state specific disclosures included in the
-                    deal?</label>
+                <label class="text-base font-semibold text-gray-900">Products purchased or denied are "CLEARLY"
+                    displayed on the menu and or "Settlement Disclosure Document"?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1119,10 +1170,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Cosigner Notice? Only if a cosigner. -->
+        <!-- Check price of products on buyers order and RISC, Is the amount charged similar to that charged for other purchasers? If not explain. -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Cosigner Notice? Only if a cosigner.</label>
+                <label class="text-base font-semibold text-gray-900">Check price of products on buyers order and RISC,
+                    Is the amount charged similar to that charged for other purchasers? If not explain.</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1187,11 +1239,10 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Did the F&I deals have privacy statement? -->
+        <!-- MSRP of Vehicle did not exceed price?? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Did the F&I deals have privacy
-                    statement?</label>
+                <label class="text-base font-semibold text-gray-900">MSRP of Vehicle did not exceed price?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1256,11 +1307,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Is there a menu present and is it filled out properly and signed by customer? -->
+        <!-- Was deal sent to more than one finance source? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Is there a menu present and is it filled out
-                    properly and signed by customer?</label>
+                <label class="text-base font-semibold text-gray-900">Was deal sent to more than one finance
+                    source?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1325,11 +1376,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Are the products purchased and or denied “Clearly” displayed on the menu and or “Settlement Disclosure Document? -->
+        <!-- Was credit application completed properly, accurate and signed by customer? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Are the products purchased and or denied “Clearly”
-                    displayed on the menu and or “Settlement Disclosure Document?</label>
+                <label class="text-base font-semibold text-gray-900">Was credit application completed properly, accurate
+                    and signed by customer?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1394,11 +1445,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- If there is a cashed deferred payment made, is it properly disclosed? -->
+        <!-- If a handwritten credit application was present, it's signed and matches the bank copy regarding income, rent etc? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">If there is a cashed deferred payment made, is it
-                    properly disclosed?</label>
+                <label class="text-base font-semibold text-gray-900">If a handwritten credit application was present,
+                    it's signed and matches the bank copy regarding income, rent etc?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1463,11 +1514,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- If a cash deferred down payment, is it paid before the 2nd scheduled payment period? -->
+        <!-- Was an Adverse Action filled out if warranted? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">If a cash deferred down payment, is it paid before
-                    the 2nd scheduled payment period?</label>
+                <label class="text-base font-semibold text-gray-900">Was an Adverse Action filled out if
+                    warranted?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1532,12 +1583,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Check price of products on buyers order and -->
+        <!-- Is the DPP form filled out properly stating dealership CMS policy mark up rate and actual rate spread to cutomer? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Check price of products on buyers order and
-                    RISC. Is amount charged for products similar to that charged other purchasers? If not, note whether
-                    higher.</label>
+                <label class="text-base font-semibold text-gray-900">Is the DPP form filled out properly stating
+                    dealership CMS policy mark up rate and actual rate spread to customer?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1602,11 +1652,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Dealer recap or reconciliation document reviewed and in file? -->
+        <!-- Are markups handled the same for similar customers, i.e. is it higher for protected class: sex, national origin, race, age, etc? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Dealer recap or reconciliation document
-                    reviewed and in file?</label>
+                <label class="text-base font-semibold text-gray-900">Are markups handled the same for similar customers,
+                    i.e. is it higher for protected class: sex, national origin, race, age, etc?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1671,11 +1721,10 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Is the dealership's markup rate within the -->
+        <!-- Is the date on RISC accurate with no backdating? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Is the dealership's markup rate within the
-                    Dealerships Participation Program rate as noted in their CMS program?
+                <label class="text-base font-semibold text-gray-900">Is the date on RISC accurate with no backdating?
                 </label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
@@ -1741,11 +1790,10 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Is an “Exception Notice (DPP form) filled out if the standard dealership rate not applied? -->
+        <!-- Are all contracts signed by customer(s)?? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Is an “Exception Notice (DPP form) filled out if
-                    the standard dealership rate not applied?</label>
+                <label class="text-base font-semibold text-gray-900">Are all contracts signed by customer(s)?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1810,11 +1858,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Are markups handled the same for similar customers, -->
+        <!-- All signature match up between menu, buyers order, RISC and all other product contracts? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Are markups handled the same for similar customers,
-                    i.e. is it higher for protected class: sex, national origin, race, age etc.?</label>
+                <label class="text-base font-semibold text-gray-900">All signature match up between menu, buyers order,
+                    RISC and all other product contracts?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1879,11 +1927,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- For used cars, was the buyer’s guide signed off on? -->
+        <!-- Is there a copy of customers Driver's License in deal? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">For used cars, was the buyer’s guide signed off
-                    on?</label>
+                <label class="text-base font-semibold text-gray-900">Is there a copy of customers Driver's License in
+                    deal?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -1948,11 +1996,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- as it clear what products the customer purchased and did the deal reflect the norm? -->
+        <!-- Language of contracts given to customers proper for negotiaition if required by state law? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Was it clear what products the customer
-                    purchased and did the deal reflect the norm?</label>
+                <label class="text-base font-semibold text-gray-900">Language of contracts given to customers proper for
+                    negotiation if required by state law?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2017,11 +2065,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Was OFAC run and on file either physically or electronically? -->
+        <!-- Are all state specific disclosures included in deal? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Was OFAC run and on file either physically or
-                    electronically?</label>
+                <label class="text-base font-semibold text-gray-900">Are all state specific disclosures included in
+                    deal?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2086,11 +2134,10 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Was a copy of the signed Privacy notice in the deal jacket? -->
+        <!-- Is Cosigner Notice sign? (if applicable) -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Was a copy of the signed Privacy notice in the deal
-                    jacket?</label>
+                <label class="text-base font-semibold text-gray-900">Is Cosigner Notice sign? (if applicable)</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2155,11 +2202,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Was the RBPN or Exception notice presented to and -->
+        <!-- If there is a cashed deferred payment "Promissory Note from Customer" made, is it properly disclosed? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Was the RBPN or Exception notice presented to and
-                    signed by the customer?</label>
+                <label class="text-base font-semibold text-gray-900">If there is a cashed deferred payment "Promissory
+                    Note from Customer" made, is it properly disclosed?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2224,11 +2271,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Was the Red Flag software run and a copy on file either physically or electronically? -->
+        <!-- Was the "Cashed Deferred" down payment paid off before the 2nd scheduled payment period? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Was the Red Flag software run and a copy on file
-                    either physically or electronically?</label>
+                <label class="text-base font-semibold text-gray-900">Was the "Cashed Deferred" down payment paid off
+                    before the 2nd scheduled payment period?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2293,11 +2340,11 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
-        <!-- Is the deal jacket complete with all information? -->
+        <!-- Is the Deal Recap or reconcillation documents reviewed and in file? -->
         <div class="bg-gray-50 p-3 space-y-7">
             <div>
-                <label class="text-base font-semibold text-gray-900">Is the deal jacket complete with all
-                    information?</label>
+                <label class="text-base font-semibold text-gray-900">Is the Deal Recap or reconciliation documents
+                    reviewed and in file?</label>
                 <fieldset class="mt-4">
                     <div class="flex items-center space-x-5">
                         <div class="flex items-center">
@@ -2362,6 +2409,420 @@
                           class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
             </div>
         </div>
+        <!-- Was the 8300 procedures followed for transactions defined as "CASH"? -->
+        <div class="bg-gray-50 p-3 space-y-7">
+            <div>
+                <label class="text-base font-semibold text-gray-900">Was the 8300 procedures followed for transactions
+                    defined as "CASH"?</label>
+                <fieldset class="mt-4">
+                    <div class="flex items-center space-x-5">
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q35_answer"
+                                value="1"
+                                name="individual_q35_answer"
+                                id="individual_q35_answer_1"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q35_answer_1"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q35_answer"
+                                value="2"
+                                name="individual_q35_answer"
+                                id="individual_q35_answer_2"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q35_answer_2"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q35_answer"
+                                value="3"
+                                name="individual_q35_answer"
+                                id="individual_q35_answer_3"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q35_answer_3"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <label>
+                        <input
+                            wire:model="individual_q35_danger"
+                            id="individual_q35_danger"
+                            type="checkbox"
+                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                        />
+                    </label>
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="individual_q35_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
+            </div>
+            <div>
+                <label for="individual_q35_comment" class="text-base font-semibold text-gray-900">Comments</label>
+                <textarea wire:model.lazy="individual_q35_comment" id="individual_q1_comment"
+                          name.lazy="individual_q35_comment"
+                          rows="3"
+                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
+            </div>
+        </div>
+        <!-- Was there a receipt for any cash down payments in deal? -->
+        <div class="bg-gray-50 p-3 space-y-7">
+            <div>
+                <label class="text-base font-semibold text-gray-900">Was there a receipt for any cash down payments in
+                    deal?</label>
+                <fieldset class="mt-4">
+                    <div class="flex items-center space-x-5">
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q36_answer"
+                                value="1"
+                                name="individual_q36_answer"
+                                id="individual_q36_answer_1"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q36_answer_1"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q36_answer"
+                                value="2"
+                                name="individual_q36_answer"
+                                id="individual_q36_answer_2"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q36_answer_2"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q36_answer"
+                                value="3"
+                                name="individual_q36_answer"
+                                id="individual_q36_answer_3"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q36_answer_3"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <label>
+                        <input
+                            wire:model="individual_q36_danger"
+                            id="individual_q36_danger"
+                            type="checkbox"
+                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                        />
+                    </label>
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="individual_q36_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
+            </div>
+            <div>
+                <label for="individual_q36_comment" class="text-base font-semibold text-gray-900">Comments</label>
+                <textarea wire:model.lazy="individual_q36_comment" id="individual_q1_comment"
+                          name.lazy="individual_q36_comment"
+                          rows="3"
+                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
+            </div>
+        </div>
+        <!-- Was the trade in vehicle properly disclosed (line itemed) on the buyers order and RISC? -->
+        <div class="bg-gray-50 p-3 space-y-7">
+            <div>
+                <label class="text-base font-semibold text-gray-900">Was the trade in vehicle properly disclosed (line
+                    itemed) on the buyers order and RISC?</label>
+                <fieldset class="mt-4">
+                    <div class="flex items-center space-x-5">
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q37_answer"
+                                value="1"
+                                name="individual_q37_answer"
+                                id="individual_q37_answer_1"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q37_answer_1"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q37_answer"
+                                value="2"
+                                name="individual_q37_answer"
+                                id="individual_q37_answer_2"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q37_answer_2"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q37_answer"
+                                value="3"
+                                name="individual_q37_answer"
+                                id="individual_q37_answer_3"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q37_answer_3"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <label>
+                        <input
+                            wire:model="individual_q37_danger"
+                            id="individual_q37_danger"
+                            type="checkbox"
+                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                        />
+                    </label>
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="individual_q37_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
+            </div>
+            <div>
+                <label for="individual_q37_comment" class="text-base font-semibold text-gray-900">Comments</label>
+                <textarea wire:model.lazy="individual_q37_comment" id="individual_q1_comment"
+                          name.lazy="individual_q37_comment"
+                          rows="3"
+                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
+            </div>
+        </div>
+        <!-- Lease deal contract properly displaying all products purchased? -->
+        <div class="bg-gray-50 p-3 space-y-7">
+            <div>
+                <label class="text-base font-semibold text-gray-900">Lease deal contract properly displaying all
+                    products purchased?</label>
+                <fieldset class="mt-4">
+                    <div class="flex items-center space-x-5">
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q38_answer"
+                                value="1"
+                                name="individual_q38_answer"
+                                id="individual_q38_answer_1"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q38_answer_1"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q38_answer"
+                                value="2"
+                                name="individual_q38_answer"
+                                id="individual_q38_answer_2"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q38_answer_2"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q38_answer"
+                                value="3"
+                                name="individual_q38_answer"
+                                id="individual_q38_answer_3"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q38_answer_3"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <label>
+                        <input
+                            wire:model="individual_q38_danger"
+                            id="individual_q38_danger"
+                            type="checkbox"
+                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                        />
+                    </label>
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="individual_q38_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
+            </div>
+            <div>
+                <label for="individual_q38_comment" class="text-base font-semibold text-gray-900">Comments</label>
+                <textarea wire:model.lazy="individual_q38_comment" id="individual_q1_comment"
+                          name.lazy="individual_q38_comment"
+                          rows="3"
+                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
+            </div>
+        </div>
+        <!-- Is it clear what the customer purchased and did the deal reflect the norm in the dealership? -->
+        <div class="bg-gray-50 p-3 space-y-7">
+            <div>
+                <label class="text-base font-semibold text-gray-900">Is it clear what the customer purchased and did the
+                    deal reflect the norm in the dealership?</label>
+                <fieldset class="mt-4">
+                    <div class="flex items-center space-x-5">
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q39_answer"
+                                value="1"
+                                name="individual_q39_answer"
+                                id="individual_q39_answer_1"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q39_answer_1"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q39_answer"
+                                value="2"
+                                name="individual_q39_answer"
+                                id="individual_q39_answer_2"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q39_answer_2"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q39_answer"
+                                value="3"
+                                name="individual_q39_answer"
+                                id="individual_q39_answer_3"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q39_answer_3"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <label>
+                        <input
+                            wire:model="individual_q39_danger"
+                            id="individual_q39_danger"
+                            type="checkbox"
+                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                        />
+                    </label>
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="individual_q39_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
+            </div>
+            <div>
+                <label for="individual_q39_comment" class="text-base font-semibold text-gray-900">Comments</label>
+                <textarea wire:model.lazy="individual_q39_comment" id="individual_q1_comment"
+                          name.lazy="individual_q39_comment"
+                          rows="3"
+                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
+            </div>
+        </div>
+        <!-- Is the deal jacket complete with all information required based on the customer needs and wants? -->
+        <div class="bg-gray-50 p-3 space-y-7">
+            <div>
+                <label class="text-base font-semibold text-gray-900">Is the deal jacket complete with all information
+                    required based on the customer needs and wants?</label>
+                <fieldset class="mt-4">
+                    <div class="flex items-center space-x-5">
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q40_answer"
+                                value="1"
+                                name="individual_q40_answer"
+                                id="individual_q40_answer_1"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q40_answer_1"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q40_answer"
+                                value="2"
+                                name="individual_q40_answer"
+                                id="individual_q40_answer_2"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q40_answer_2"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input
+                                wire:model="individual_q40_answer"
+                                value="3"
+                                name="individual_q40_answer"
+                                id="individual_q40_answer_3"
+                                type="radio"
+                                class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                            >
+                            <label for="individual_q40_answer_3"
+                                   class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                    <label>
+                        <input
+                            wire:model="individual_q40_danger"
+                            id="individual_q40_danger"
+                            type="checkbox"
+                            class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                        />
+                    </label>
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                    <label for="individual_q40_danger" class="font-medium text-red-500">Flag as high risk</label>
+                </div>
+            </div>
+            <div>
+                <label for="individual_q40_comment" class="text-base font-semibold text-gray-900">Comments</label>
+                <textarea wire:model.lazy="individual_q40_comment" id="individual_q1_comment"
+                          name.lazy="individual_q40_comment"
+                          rows="3"
+                          class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
+            </div>
+        </div>
         <!-- Images -->
         <x-media-library-collection
             multiple
@@ -2376,7 +2837,7 @@
             <div class="flex justify-between sm:justify-end items-center flex-row-reverse sm:flex-row">
                 <a
                     class="sm:mr-auto ml-5 sm:ml-0 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
-                    href="{{ !tenant('locations') ? route('dealer.audit.individual.show', $parent) : route('dealer.stores.audits.individual.index', $store) }}"
+                    href="{{ !tenant('locations') ? route('dealer.audit.individual.show', $parent) : route('dealer.stores.audits.individual.show', [$store, $parent]) }}"
                 >
                     Exit
                 </a>

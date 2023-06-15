@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Department;
@@ -111,5 +112,10 @@ class User extends Authenticatable
     public function redflags(): HasMany
     {
         return $this->hasMany(RedFlag::class);
+    }
+
+    public function individualAudits(): HasMany
+    {
+        return $this->hasMany(IndividualAudit::class, 'manager_id', 'id');
     }
 }

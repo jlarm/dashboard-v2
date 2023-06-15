@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\Individual;
 
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Livewire\Component;
@@ -15,6 +16,7 @@ class Edit extends Component
 
     public Store $store;
     public IndividualAudit $individualAudit;
+    public $managers;
 
     public $mediaComponentNames = [
         'audit_images',
@@ -25,6 +27,9 @@ class Edit extends Component
     public $audit_date;
     public $customer_number;
     public $customer_name;
+    public $deal_jacket_date;
+    public $manager_id;
+    public $mileage;
     public $individual_q1_answer;
     public $individual_q1_comment;
     public $individual_q2_answer;
@@ -112,6 +117,9 @@ class Edit extends Component
         'audit_date' => 'sometimes',
         'customer_number' => 'nullable',
         'customer_name' => 'nullable',
+        'deal_jacket_date' => 'sometimes',
+        'manager_id' => 'nullable',
+        'mileage' => 'nullable',
         'individual_q1_answer' => 'nullable',
         'individual_q1_comment' => 'nullable',
         'individual_q1_danger' => 'nullable',
@@ -237,11 +245,15 @@ class Edit extends Component
 
     public function mount()
     {
+        $this->managers = User::role('manager')->whereDepartmentId(6)->select('id', 'name')->get();
         $this->parent = $this->individualAudit->parent ?? $this->individualAudit;
         $this->draft = $this->individualAudit->draft;
         $this->audit_date = Carbon::make($this->individualAudit->audit_date)->format('Y-m-d');
         $this->customer_number = $this->individualAudit->customer_number;
         $this->customer_name = $this->individualAudit->customer_name;
+        $this->deal_jacket_date = $this->individualAudit->deal_jacket_date->format('Y-m-d');
+        $this->manager_id = $this->individualAudit->manager_id;
+        $this->mileage = $this->individualAudit->mileage;
         $this->individual_q1_answer = $this->individualAudit->individual_q1_answer;
         $this->individual_q1_comment = $this->individualAudit->individual_q1_comment;
         $this->individual_q1_danger = $this->individualAudit->individual_q1_danger;
@@ -373,6 +385,9 @@ class Edit extends Component
             'audit_date' => $this->audit_date,
             'customer_number' => $this->customer_number,
             'customer_name' => $this->customer_name,
+            'deal_jacket_date' => $this->deal_jacket_date,
+            'manager_id' => $this->manager_id,
+            'mileage' => $this->mileage,
             'individual_q1_answer' => $this->individual_q1_answer,
             'individual_q1_comment' => $this->individual_q1_comment,
             'individual_q1_danger' => $this->individual_q1_danger,
@@ -496,7 +511,7 @@ class Edit extends Component
         ]);
 
         Notification::make()
-            ->title('F&I Individual Audit Updated Successfully!')
+            ->title('Deal Jacket Audit Updated Successfully!')
             ->success()
             ->send();
     }

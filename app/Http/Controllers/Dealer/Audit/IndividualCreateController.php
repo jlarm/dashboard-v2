@@ -13,6 +13,7 @@ class IndividualCreateController extends Controller
     {
         $audit = IndividualAudit::create([
             'parent_id' => $individualAudit->id ?? null,
+            'deal_jacket_date' => now()->format('Y-m-d'),
             'uuid' => (string) Str::uuid(),
             'user_id' => auth()->id(),
             'store_id' => request()->store_id ?? Store::first()->id,

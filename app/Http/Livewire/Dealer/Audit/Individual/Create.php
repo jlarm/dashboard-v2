@@ -14,6 +14,8 @@ class Create extends Component
     {
         $audit = IndividualAudit::create([
             'user_id' => auth()->id(),
+            'parent_id' => $individualAudit->id ?? null,
+            'deal_jacket_date' => now()->format('Y-m-d'),
             'uuid' => Str::uuid(),
             'store_id' => $this->store->id ?? Store::first()->id,
             'audit_date' => now()->format('Y-m-d'),

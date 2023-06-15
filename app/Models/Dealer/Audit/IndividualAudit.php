@@ -3,6 +3,7 @@
 namespace App\Models\Dealer\Audit;
 
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,6 +22,7 @@ class IndividualAudit extends Model implements HasMedia
     protected $casts = [
         'draft' => 'boolean',
         'audit_date' => 'date:Y-m-d',
+        'deal_jacket_date' => 'date:Y-m-d',
     ];
 
     public function store(): BelongsTo
@@ -49,6 +51,11 @@ class IndividualAudit extends Model implements HasMedia
     public function parent(): BelongsTo
     {
         return $this->belongsTo(IndividualAudit::class, 'parent_id')->with('parent');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

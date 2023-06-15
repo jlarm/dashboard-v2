@@ -71,6 +71,51 @@
                 "description": "<ul><li>In conclusion the best way to look at adverse action notices is that any time the dealer makes a decision to not send the credit statement to any lender, any time the dealer decides not to accept the modified terms of a lender, or any time the credit statement is completely rejected by all lenders then an adverse action notice must be sent.</li></ul>"
             }
         ],
-        "questions": []
+        "questions": [
+            {
+                "question": "If the credit statement is taken over the phone(Five Liner) just to see if there is a chance that the applicant could get credit we do not have to issue an adverse action notice because there was no real expectation that the credit would be accepted.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "We do not have to send an adverse action notice if:",
+                "answers": [
+                    {
+                        "a": "The terms that were acceptable to the lender were different than the original terms requested and you spotted the car but the customer would not accept the new terms and the deal was unwound.",
+                        "b": "The customer submitted the statement through the 800 credit help line and it was sent around but was not acceptable to any lender but because it was through the bad credit 800 phone line there is no need to issue an adverse action notice.",
+                        "c": "The customer submitted the statement and we ran the bureau and found a credit score of 350 and knowing there was no way we could get financing we informed the applicant that there was nothing we could do for them and they left but because we did not submit it to any lender there is no need to issue an adverse action notice.",
+                        "d": "None of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "It is appropriate to send out adverse action letters:",
+                "answers": [
+                    {
+                        "a": "No later than 30 days after receiving the statement.",
+                        "b": "Within 90 days of any counter offer given to an applicant where the new terms were not acceptable.",
+                        "c": "Immediately upon the decision being made.",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "The rule that governs the issuance of adverse action notices is the Truth In Lending Act or TILA.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            }
+        ]
     }
 ]

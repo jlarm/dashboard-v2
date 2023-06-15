@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Dealer\Audit\Individual;
+namespace App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual;
 
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
@@ -12,21 +12,13 @@ class ParentShowSingle extends Component
     public Store $store;
     public $children;
 
-    protected $listeners = ['refreshParentComponent' => '$refresh'];
-
     public function mount()
     {
         $this->children = $this->individualAudit->where('parent_id', $this->individualAudit->id)->count();
     }
 
-    public function delete()
-    {
-        $this->individualAudit->delete();
-        return redirect()->route('dealer.audit.individual.index');
-    }
-
     public function render()
     {
-        return view('livewire.dealer.audit.individual.parent-show-single');
+        return view('livewire.dealer.store.single-store.audit.individual.parent-show-single');
     }
 }
