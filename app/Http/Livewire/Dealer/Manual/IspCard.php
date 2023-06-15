@@ -23,7 +23,7 @@ class IspCard extends Component
         }
     }
 
-    public function download()
+    public function generate()
     {
         \Bus::chain([
             new GenerateIspManualJob($this->manual),
