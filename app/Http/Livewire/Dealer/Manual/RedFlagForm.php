@@ -56,7 +56,7 @@ class RedFlagForm extends Component
     {
         $this->validate();
 
-        $fName = \Str::of($this->qi)->replace(' ', '')->lower();
+        $fName = \Str::of(auth()->user()->name)->replace(' ', '')->lower();
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 

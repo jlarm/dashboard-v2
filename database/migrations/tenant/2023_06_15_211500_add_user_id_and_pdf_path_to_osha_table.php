@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('isps', function (Blueprint $table) {
+        Schema::table('oshas', function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\User::class)->nullable()->after('id');
             $table->string('pdf_path')->nullable()->after('user_id');
         });
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('isps', function (Blueprint $table) {
+        Schema::table('oshas', function (Blueprint $table) {
             $table->dropColumn('user_id');
             $table->dropColumn('pdf_path');
         });

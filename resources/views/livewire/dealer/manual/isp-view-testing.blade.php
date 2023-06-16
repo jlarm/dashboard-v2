@@ -1,11 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 <div class="w-full p-5">
@@ -14,11 +12,10 @@
             <x-application-logo class=" h-12 w-auto mx-auto"/>
             {{--            @if($isp->store->logo)--}}
             {{--                <img--}}
-            {{--                    class="w-full h-25 py-20 mx-auto"--}}
+            {{--                    class="py-20 mx-auto"--}}
             {{--                    src="{{ asset($isp->store->logo) }}"--}}
             {{--                    alt="">--}}
             {{--            @endif--}}
-            <h1 class="text-3xl font-bold text-arm-blue-600">{{ tenant('name') }}</h1>
             <h1 class="text-3xl font-bold text-arm-blue-600">Information Security Program</h1>
             <p class="text-arm-blue-400">{{ $isp->created_at->format('F d, Y') }}</p>
             <p>
@@ -177,14 +174,14 @@
             </div>
         </li>
     </ul>
-    <div class="prose max-w-none px-6">
+    <div class="prose mx-auto">
         <h1>
             Information Security Program (ISP)
         </h1>
-        <p>This document contains the ISP for {{ tenant('name') }}, and is part of the
+        <p>This document contains the ISP for Dealershipx, and is part of the
             Compliance Management System for the Dealership. This information was
             assembled with the help of Automotive Risk Management Partners, Inc. It
-            contains the process that {{ tenant('name') }} follows to ensure compliance with
+            contains the process that Dealershipx follows to ensure compliance with
             the Gramm Leach Bliley Act, Federal Trade Commission Safeguards Rule,
             and the privacy and security of customer and dealership information.</p>
         <p>All information provided includes all revisions to the Safeguards Rule that are to be
@@ -1011,7 +1008,6 @@
             with
             the appropriate authority to monitor and enforce its provisions and policies.</p>
         <p>Effective Date: {{ $isp->created_at->format('F d, Y') }}</p>
-        <p>{{ $isp->user->name }}</p>
         <img src="{{ storage_path() }}/app/isp-signatures/{{ $isp->signature }}" alt="Signature"/>
     </div>
 </div>

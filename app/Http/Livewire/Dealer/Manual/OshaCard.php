@@ -2,22 +2,34 @@
 
 namespace App\Http\Livewire\Dealer\Manual;
 
+use App\Jobs\Manuals\GenerateOshaManualJob;
+use App\Jobs\Manuals\UploadOshaToDigitalOceanJob;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Store;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Livewire\Component;
+use Storage;
 
 class OshaCard extends Component
 {
     public Store $store;
-    public function download()
-    {
-        $osha = Osha::latest()->first();
-        $pdf = PDF::loadView('dealer.manual.pdf.osha', compact('osha'));
 
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->output();
-        }, 'osha-manual'.now()->format('Ymd').'.pdf');
+    public $manual;
+    public $content;
+
+    public function mount()
+    {
+        $this->manual = Osha::latest()->first();
+        if($this->manual && $this->manual->pdf_path) {
+            $this->content = Storage::disk('do-manuals')->url(tenant('id') . '/osha/' . $this->manual->pdf_path) ?? null;
+        }
+    }
+
+    public function generate()
+    {
+        \Bus::chain([
+            new GenerateOshaManualJob($this->manual),
+            new UploadOshaToDigitalOceanJob($this->manual),
+        ])->dispatch();
     }
     public function render()
     {

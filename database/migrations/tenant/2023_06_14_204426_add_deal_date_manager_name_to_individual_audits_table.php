@@ -28,7 +28,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('individual_audits', function (Blueprint $table) {
-            //
+            $table->dropColumn('deal_jacket_date');
+            $table->dropColumn('manager_id');
+            $table->dropColumn('mileage');
         });
     }
 };
