@@ -14,7 +14,10 @@ class ParentShowSingle extends Component
 
     public function mount()
     {
-        $this->children = $this->individualAudit->where('parent_id', $this->individualAudit->id)->count();
+        $this->children = $this->individualAudit
+            ->where('store_id', $this->store->id)
+            ->where('parent_id', $this->individualAudit->id)
+            ->count();
     }
 
     public function render()
