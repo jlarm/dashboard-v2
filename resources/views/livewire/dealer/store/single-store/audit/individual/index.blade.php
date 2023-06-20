@@ -23,34 +23,6 @@
                     @if(auth()->user()->cannot('create-audits'))
                         <livewire:dealer.audit.individual.generated-report-index/>
                     @endif
-                    {{--                    <table class="min-w-full divide-y divide-gray-300">--}}
-                    {{--                        <thead>--}}
-                    {{--                        <tr>--}}
-                    {{--                            <th scope="col"--}}
-                    {{--                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">--}}
-                    {{--                                Date--}}
-                    {{--                            </th>--}}
-                    {{--                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status--}}
-                    {{--                            </th>--}}
-                    {{--                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">--}}
-                    {{--                                <span class="sr-only">Edit</span>--}}
-                    {{--                            </th>--}}
-                    {{--                        </tr>--}}
-                    {{--                        </thead>--}}
-                    {{--                        <tbody class="divide-y divide-gray-200 bg-white">--}}
-                    {{--                        @forelse($individualAudits as $individualAudit)--}}
-                    {{--                            <livewire:dealer.store.single-store.audit.individual.index-item :store="$store"--}}
-                    {{--                                                                                            :individualAudit="$individualAudit"/>--}}
-                    {{--                        @empty--}}
-                    {{--                            <tr>--}}
-                    {{--                                <td colspan="7"--}}
-                    {{--                                    class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">--}}
-                    {{--                                    No Audits Created--}}
-                    {{--                                </td>--}}
-                    {{--                            </tr>--}}
-                    {{--                        @endforelse--}}
-                    {{--                        </tbody>--}}
-                    {{--                    </table>--}}
                 </div>
             </div>
         </div>

@@ -17,7 +17,11 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.audit.individual.index', [
-            'audits' => IndividualAudit::latest()->where('parent_id', null)->with('store')->select('id', 'uuid', 'store_id', 'draft', 'audit_date', 'pdf_path')->get()
+            'audits' => IndividualAudit::latest()->where('parent_id', null)
+                ->with('store')
+                ->where('store_id', $this->store->id)
+                ->select('id', 'uuid', 'store_id', 'draft', 'audit_date', 'pdf_path')
+                ->get()
         ]);
     }
 }
