@@ -43,8 +43,6 @@ Route::group([
     // All Access
     // **************************************************
 
-    Route::get('isp-view', \App\Http\Livewire\Dealer\Manual\IspViewTesting::class)->name('isp-view');
-
     Route::get('/', function () { return view('dealer.welcome'); });
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
