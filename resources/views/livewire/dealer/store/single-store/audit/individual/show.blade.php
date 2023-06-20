@@ -1,7 +1,7 @@
 <div>
     <livewire:dealer.store.single-store-sub-nav :store="$store"/>
     <div>
-        <div class="sm:flex sm:items-center">
+        <div class="sm:flex sm:items-center p-4">
             <div class="sm:flex-auto">
                 <h1 class="text-lg font-medium leading-6 text-gray-900">Deal Jacket Audit
                     for {{ $individualAudit->audit_date->format('F d, Y') }}</h1>

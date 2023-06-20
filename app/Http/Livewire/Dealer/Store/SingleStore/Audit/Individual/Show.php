@@ -17,6 +17,7 @@ class Show extends Component
     public function mount()
     {
         $this->children = IndividualAudit::query()
+            ->where('store_id', $this->store->id)
             ->where('parent_id', $this->individualAudit->id)
             ->where('draft', 1)
             ->count();
