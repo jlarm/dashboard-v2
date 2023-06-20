@@ -26,6 +26,11 @@ class Index extends Component
                 $query->where('id', $this->user->roles()->where('name', '!=', 'Qualified Individual')->first()->id);
             })
             ->orWhereDoesntHave('departments')
+            ->with([
+                'results' => function ($query) {
+                    $query->where('user_id', $this->user->id)->latest();
+                }
+                ])
             ->orderBy('name')
             ->get();
     }
