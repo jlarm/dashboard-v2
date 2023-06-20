@@ -43,6 +43,8 @@ Route::group([
     // All Access
     // **************************************************
 
+    Route::get('isp-view', \App\Http\Livewire\Dealer\Manual\IspViewTesting::class)->name('isp-view');
+
     Route::get('/', function () { return view('dealer.welcome'); });
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -112,7 +114,7 @@ Route::group([
 
     Route::group(['middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Consultant']], function () {
 
-        Route::get('vendors', function () { return view('dealer.vendor.index'); })->middleware('auth')->name('vendor.index');
+        Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
 
         Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => 'auth'], function () {
             Route::get('osha', function () { return view('dealer.audit.osha.index'); })->name('osha.index');
@@ -124,10 +126,10 @@ Route::group([
             Route::get('finance', function () { return view('dealer.audit.finance.index'); })->name('finance.index');
             Route::get('finance/create', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
             Route::get('finance/{financeAudit:id}', FinanceController::class)->middleware('can:create-audits')->name('finance.show');
-            Route::get('individual', function () { return view('dealer.audit.individual.index'); })->name('individual.index');
-            Route::get('individual/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
-            Route::get('individual/{individualAudit:uuid}', IndividualController::class)->name('individual.show');
-            Route::get('individual/{individualAudit:uuid}/edit', \App\Http\Controllers\Dealer\Audit\SingleIndividualController::class)->name('individual.edit');
+            Route::get('deal-jackets', \App\Http\Controllers\Dealer\Audit\IndividualIndexController::class)->name('individual.index');
+            Route::get('deal-jackets/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
+            Route::get('deal-jackets/{individualAudit:uuid}', IndividualController::class)->name('individual.show');
+            Route::get('deal-jackets/{individualAudit:uuid}/edit', \App\Http\Controllers\Dealer\Audit\SingleIndividualController::class)->name('individual.edit');
         });
 
         Route::group(['prefix' => 'stores/{store:slug}', 'as' => 'stores.'], function () {
@@ -136,8 +138,9 @@ Route::group([
             Route::get('scans', \App\Http\Livewire\Dealer\Store\SingleStoreScans::class)->middleware(['auth', 'has.stores'])->name('scans');
             Route::get('scan-settings', \App\Http\Livewire\Dealer\Store\SingleStoreScanSettings::class)->middleware(['auth', 'has.stores'])->name('scan-settings');
             Route::get('manuals', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Index::class)->middleware(['auth', 'has.stores'])->name('manuals');
-            Route::get('manuals/isp', \App\Http\Livewire\Dealer\Store\SingleStoreIspForm::class)->middleware(['auth', 'has.stores'])->name('manuals.isp');
-            Route::get('manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStoreOshaForm::class)->middleware(['auth', 'has.stores'])->name('manuals.osha');
+            Route::get('manuals/isp', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Isp::class)->middleware(['auth', 'has.stores'])->name('manuals.isp');
+            Route::get('manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Osha::class)->middleware(['auth', 'has.stores'])->name('manuals.osha');
+            Route::get('manuals/red-flag', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\RedFlag::class)->middleware(['auth', 'has.stores'])->name('manuals.red-flag');
             Route::get('audits/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Index::class)->middleware(['auth', 'has.stores'])->name('audits.osha.index');
             Route::get('audits/osha/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Create::class)->middleware(['auth', 'has.stores'])->name('audits.osha.create');
             Route::get('audits/osha/{oshaAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Show::class)->middleware(['auth', 'has.stores'])->name('audits.osha.show');
@@ -147,9 +150,10 @@ Route::group([
             Route::get('audits/finance', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Index::class)->middleware(['auth', 'has.stores', 'can:create-audits'])->name('audits.finance.index');
             Route::get('audits/finance/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Create::class)->middleware(['auth', 'has.stores'])->name('audits.finance.create');
             Route::get('audits/finance/{financeAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Show::class)->middleware(['auth', 'has.stores'])->name('audits.finance.show');
-            Route::get('audits/individual', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->middleware(['auth', 'has.stores'])->name('audits.individual.index');
-            Route::get('audits/individual/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Create::class)->middleware(['auth', 'has.stores'])->name('audits.individual.create');
-            Route::get('audits/individual/{individualAudit:uuid}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->middleware(['auth', 'has.stores'])->name('audits.individual.edit');
+            Route::get('audits/deal-jackets', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->middleware(['auth', 'has.stores'])->name('audits.individual.index');
+            Route::get('audits/deal-jackets/create/{individualAudit:uuid?}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Create::class)->middleware(['auth', 'has.stores'])->name('audits.individual.create');
+            Route::get('audits/deal-jackets/{individualAudit:uuid}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Show::class)->middleware(['auth', 'has.stores'])->name('audits.individual.show');
+            Route::get('audits/deal-jackets/{individualAudit:uuid}/edit', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->middleware(['auth', 'has.stores'])->name('audits.individual.edit');
             Route::get('settings', \App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->middleware(['auth', 'has.stores'])->name('settings');
             Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('edit');
         });
@@ -157,13 +161,13 @@ Route::group([
         Route::get('scans', function () { return view('dealer.scan.index'); })->middleware('auth')->name('scan.index');
         Route::get('scans/settings', function () { return view('dealer.scan.settings'); })->middleware('auth')->name('scan.settings');
 
-        Route::get('manuals', function () { return view('dealer.manual.index'); })->middleware('auth')->name('manual.index');
-        Route::get('isp', function () { return view('dealer.manual.isp'); })->middleware('auth')->name('manual.isp');
-        Route::get('osha', function () { return view('dealer.manual.osha'); })->middleware('auth')->name('manual.osha');
-        Route::get('red-flag', function () { return view('dealer.manual.red-flag'); })->middleware('auth')->name('manual.red-flag');
+        Route::get('manuals', \App\Http\Controllers\Dealer\ManualController::class)->middleware('auth')->name('manual.index');
+        Route::get('manuals/isp', \App\Http\Controllers\Dealer\Manual\IspController::class)->middleware('auth')->name('manual.isp');
+        Route::get('manuals/osha', \App\Http\Controllers\Dealer\Manual\OshaController::class)->middleware('auth')->name('manual.osha');
+        Route::get('manuals/red-flag', \App\Http\Controllers\Dealer\Manual\RedFlagController::class)->middleware('auth')->name('manual.red-flag');
 
         Route::get('stores', function () { return view('dealer.store.index');})->middleware(['auth', 'has.stores'])->name('stores.index');
-        Route::get('settings', function () { return view('dealer.store.settings'); })->middleware(['auth'])->name('dealer.settings');
+        Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth'])->name('dealer.settings');
 
     });
 

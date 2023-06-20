@@ -5,14 +5,14 @@
             <ul role="list" class="-my-5 divide-y divide-gray-200">
                 <li class="py-4">
                     <div class="flex items-end space-x-4">
-                        @if($osha)
+                        @if($manual)
                             <div class="min-w-0 flex-1">
                                 <span class="text-sm text-gray-400">Last Reviewed:</span>
-                                <p class="truncate text-sm text-gray-800">{{ $osha->created_at->format('F d, Y') }}</p>
+                                <p class="truncate text-sm text-gray-800">{{ $manual->created_at->format('F d, Y') }}</p>
                             </div>
                         @else
                             <div class="min-w-0 flex-1">
-                                <a href="@if(!tenant('locations')) {{ route('dealer.manual.osha') }} @else {{ route('dealer.stores.manuals.osha', $store) }} @endif"
+                                <a href="@if(!tenant('locations')) {{ route('dealer.manual.osha', $store) }} @else {{ route('dealer.stores.manuals.osha', $store) }} @endif"
                                    class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50">
                                     Start
                                 </a>

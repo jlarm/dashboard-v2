@@ -1,22 +1,40 @@
 <x-wire-elements-pro::tailwind.slide-over on-submit="updateUser">
     <x-slot name="title">Edit</x-slot>
-
-    <div class="space-y-5">
+    <div class="space-y-10">
         <!-- Store -->
         @if(tenant('locations'))
             <div class="col-span-3">
-                <x-input-label for="store_id" :value="__('Select a Store')"/>
-                <select
-                    wire:model.defer="store"
-                    name="store"
-                    id="store"
-                    class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
-                >
-                    <option></option>
+                <div class="col-span-3">
+                    <x-input-label for="dealers" :value="__('Select Store(s)')"/>
                     @foreach($stores as $store)
-                        <option value="{{ $store->id }}">{{ $store->name }}</option>
+                        <div class="relative flex items-start max-h-32 overscroll-y-auto">
+                            <div class="flex h-6 items-center">
+                                <input
+                                    wire:model="assignedStores"
+                                    {{ in_array($store->name, $assignedStores) ? 'checked' : '' }}
+                                    value="{{ $store->name }}"
+                                    id="{{ $store->name }}"
+                                    aria-describedby="{{ $store->name }}"
+                                    name="{{ $store->name }}"
+                                    type="checkbox"
+                                    class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"/>
+                            </div>
+                            <div class="ml-3 text-sm leading-6">
+                                <label for="{{ $store->name }}" class="text-gray-900">{{ $store->name }}</label>
+                            </div>
+                        </div>
                     @endforeach
-                </select>
+                    {{--                    <select wire:model="dealers.defer" class="w-full rounded-md border-gray-300" multiple>--}}
+                    {{--                        @foreach($stores as $store)--}}
+                    {{--                            <option--}}
+                    {{--                                {{ in_array($store->name, $assignedStores) ? 'selected' : '' }}--}}
+                    {{--                                value="{{ $store->id }}"--}}
+                    {{--                            >--}}
+                    {{--                                {{ $store->name }}--}}
+                    {{--                            </option>--}}
+                    {{--                        @endforeach--}}
+                    {{--                    </select>--}}
+                </div>
             </div>
         @endif
 

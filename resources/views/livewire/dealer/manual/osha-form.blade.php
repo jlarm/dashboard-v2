@@ -1,4 +1,4 @@
-<div class="mx-auto">
+<div class="mx-auto px-4">
     <div class="relative md:flex">
         <div class="w-64 fixed inset-y-0 z-10 flex flex-col pr-6 mt-36 border-r">
             <h1 class="text-3xl font-black">OSHA Manual</h1>

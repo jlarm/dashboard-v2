@@ -1,5 +1,4 @@
-<div
-    class="bg-gray-50 border border-gray-300 overflow-hidden rounded-lg hover:shadow-xl transition">
+<div class="bg-gray-50 border border-gray-300 overflow-hidden rounded-lg hover:shadow-xl transition">
     <div class="p-6 text-gray-900">
         <h2 class="text-2xl font-bold mb-5">Red Flag</h2>
         <div class="flow-root">
@@ -13,7 +12,7 @@
                             </div>
                         @else
                             <div class="min-w-0 flex-1">
-                                <a href="@if(!tenant('locations')) {{ route('dealer.manual.red-flag') }} @else {{ route('dealer.stores.manuals.red-flag', $store) }} @endif"
+                                <a href="@if(!tenant('locations')) {{ route('dealer.manual.red-flag', $store) }} @else {{ route('dealer.stores.manuals.red-flag', $store) }} @endif"
                                    class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50">
                                     Start
                                 </a>

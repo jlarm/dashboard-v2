@@ -11,9 +11,10 @@
                 <livewire:dealer.general.store-logo/>
             </div>
         @endif
-        @can('view-stores')
-            @if(tenant('locations'))
+        @if(tenant('locations'))
+            @can('edit-stores')
                 <livewire:dealer.home.store-list/>
-    @endif
-    @endcan
+            @endcan
+        @endif
+    </div>
 </x-dealer-app>

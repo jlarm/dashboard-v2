@@ -13,12 +13,14 @@ class Create extends Component
     public function mount()
     {
         $individualAudit = IndividualAudit::create([
+            'parent_id' => $individualAudit->id ?? null,
+            'deal_jacket_date' => now()->format('Y-m-d'),
             'uuid' => (string) Str::uuid(),
             'user_id' => auth()->id(),
-            'store_id' => $this->store->id ?? Store::first()->id,
+            'store_id' => $this->store->id,
             'audit_date' => now()->format('Y-m-d'),
         ]);
 
-        return redirect()->to(route('dealer.stores.audits.individual.edit', [$this->store, $individualAudit->id]));
+        return redirect()->to(route('dealer.stores.audits.individual.edit', [$this->store, $individualAudit->uuid]));
     }
 }

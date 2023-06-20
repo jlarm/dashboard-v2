@@ -2321,7 +2321,7 @@
     {{--            </ul>--}}
     {{--        </div>--}}
     {{--    </div>--}}
-    <div class="prose">
+    <div class="prose min-w-full">
         <h1>
             Information Security Program (ISP)
         </h1>

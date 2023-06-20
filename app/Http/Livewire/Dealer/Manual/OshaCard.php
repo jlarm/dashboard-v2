@@ -33,8 +33,6 @@ class OshaCard extends Component
     }
     public function render()
     {
-        return view('livewire.dealer.manual.osha-card', [
-            'osha' => Osha::latest()->first()
-        ]);
+        return view('livewire.dealer.manual.osha-card');
     }
 }

@@ -12,17 +12,11 @@ use WireElements\Pro\Components\Modal\Modal;
 class Invite extends Modal
 {
     public $name;
-
     public $email;
-
     public $dealers = [];
-
     public $department;
-
     public $roles = [];
-
     public $currentStore = null;
-
     public $currentStoreId;
     public $qiCount;
 

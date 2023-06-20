@@ -11,9 +11,9 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="space-y-6">
-                <livewire:dealer.store.single-store-details/>
-                <livewire:dealer.settings.employee-list/>
-                <livewire:dealer.store.single-onboarding-details/>
+                <livewire:dealer.store.single-store-details :store="$store"/>
+                <livewire:dealer.settings.employee-list :store="$store"/>
+                <livewire:dealer.store.single-onboarding-details :store="$store"/>
             </div>
         </div>
     </div>

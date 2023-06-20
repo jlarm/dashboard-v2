@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Create Dealership') }}
+                {{ __('Create a Dealership') }}
             </h2>
         </div>
     </x-slot>
@@ -133,6 +133,7 @@
                                                    aria-describedby="locations"
                                                    name="locations"
                                                    type="checkbox"
+                                                   value="1"
                                                    class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-500">
                                         </div>
                                         <div class="ml-3 text-sm">
@@ -171,8 +172,9 @@
                                                id="password" name="password" type="password" x-bind:type="input">
                                         <div class="absolute right-0 top-0 mr-2 mt-3"
                                              x-on:click="input = (input === 'password') ? 'text' : 'password'">
-                        <span class="body text-show-hide text-sm text-gray-600 uppercase cursor-pointer"
-                              x-text="input == 'password' ? 'show' : 'hide'">show</span>
+                                                    <span
+                                                        class="body text-show-hide text-sm text-gray-600 uppercase cursor-pointer"
+                                                        x-text="input == 'password' ? 'show' : 'hide'">show</span>
                                         </div>
                                     </div>
                                 </div>

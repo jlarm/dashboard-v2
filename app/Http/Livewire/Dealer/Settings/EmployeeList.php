@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\Dealer\Settings;
 
+use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class EmployeeList extends Component
 {
+    public Store $store;
+
     public $dealer;
     public $qualified_individual_name;
     public $qualified_individual_phone;
@@ -38,7 +41,7 @@ class EmployeeList extends Component
 
     public function mount(\App\Models\Dealer\Settings\EmployeeList $employeeList)
     {
-        $this->dealer = $employeeList->first();
+        $this->dealer = $employeeList->where('store_id', $this->store->id)->first();
 
         $this->qualified_individual_name = $this->dealer->qualified_individual_name ?? '';
         $this->qualified_individual_phone = $this->dealer->qualified_individual_phone ?? '';

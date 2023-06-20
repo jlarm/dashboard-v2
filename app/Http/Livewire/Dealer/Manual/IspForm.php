@@ -9,6 +9,7 @@ use Livewire\Component;
 
 class IspForm extends Component
 {
+    public Store $store;
     public $store_id;
     public $employeeList;
     public $qi;
@@ -39,7 +40,7 @@ class IspForm extends Component
 
     public function mount()
     {
-        $this->employeeList = EmployeeList::first();
+        $this->employeeList = EmployeeList::where('store_id', $this->store->id)->first();
         $this->qi = $this->employeeList->qualified_individual_name ?? '';
         $this->qip = $this->employeeList->qualified_individual_phone ?? '';
         $this->sm = $this->employeeList->service_manager_name ?? '';
@@ -98,7 +99,7 @@ class IspForm extends Component
 
         \Storage::put('isp-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
 
-        $this->redirect(route('dealer.manual.index'));
+        (!tenant('locations')) ? $this->redirect(route('dealer.manual.index', $this->store)) : $this->redirect(route('dealer.stores.manuals', $this->store));
     }
     public function render()
     {

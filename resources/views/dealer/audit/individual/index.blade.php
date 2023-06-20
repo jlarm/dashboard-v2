@@ -19,7 +19,7 @@
     <div class="py-12">
         <div class="mx-auto">
             @can('create-audits')
-                <livewire:dealer.audit.individual.index/>
+                <livewire:dealer.audit.individual.index :store="$store"/>
             @endcan
             @if(auth()->user()->cannot('create-audits'))
                 <livewire:dealer.audit.individual.generated-report-index/>

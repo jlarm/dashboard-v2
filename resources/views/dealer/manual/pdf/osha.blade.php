@@ -18,7 +18,7 @@
                     src="{{ asset($osha->store->logo) }}"
                     alt="">
             @endif
-            <h1 class="text-3xl font-bold text-arm-blue-600">{{ tenant('name') }}</h1>
+            <h1 class="text-3xl font-bold text-arm-blue-600">{{ $osha->store->name }}</h1>
             <h1 class="text-3xl font-bold text-arm-blue-600">OSHA Manual</h1>
             <p class="text-arm-blue-400">{{ $osha->created_at->format('F d, Y') }}</p>
             <p>

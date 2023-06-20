@@ -1,5 +1,5 @@
-<div>
-    <div class="prose">
+<div class="px-4">
+    <div class="prose min-w-full">
         <div id="red-flag-rule">
             <h2>Red Flag Rule</h2>
             <p>The Federal Trade Commission and the federal financial institution regulatory agencies have sent to the

@@ -18,7 +18,7 @@
             {{--                    src="{{ asset($isp->store->logo) }}"--}}
             {{--                    alt="">--}}
             {{--            @endif--}}
-            <h1 class="text-3xl font-bold text-arm-blue-600">{{ tenant('name') }}</h1>
+            <h1 class="text-3xl font-bold text-arm-blue-600">{{ $isp->store->name }}</h1>
             <h1 class="text-3xl font-bold text-arm-blue-600">Information Security Program</h1>
             <p class="text-arm-blue-400">{{ $isp->created_at->format('F d, Y') }}</p>
             <p>

@@ -18,7 +18,7 @@
             {{--                    src="{{ asset($redFlag->store->logo) }}"--}}
             {{--                    alt="">--}}
             {{--            @endif--}}
-            <h1 class="text-3xl font-bold text-arm-blue-600">{{ tenant('name') }}</h1>
+            <h1 class="text-3xl font-bold text-arm-blue-600">{{ $redFlag->store->name }}</h1>
             <h1 class="text-3xl font-bold text-arm-blue-600">Red Flags Rules</h1>
             <p class="text-arm-blue-400">{{ $redFlag->created_at->format('F d, Y') }}</p>
             <p>
@@ -151,7 +151,7 @@
             </table>
         </li>
     </ul>
-    <div class="prose mx-auto">
+    <div class="prose mx-auto min-w-full">
         <div id="red-flag-rule">
             <h2>Red Flag Rule</h2>
             <p>The Federal Trade Commission and the federal financial institution regulatory agencies have sent to the

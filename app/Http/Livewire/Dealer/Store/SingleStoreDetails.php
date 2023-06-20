@@ -12,7 +12,7 @@ class SingleStoreDetails extends Component
 {
     use WithFileUploads;
 
-    public $store;
+    public Store $store;
     public $dealer;
     public $name;
     public $address;
@@ -34,13 +34,9 @@ class SingleStoreDetails extends Component
         'logo' => 'nullable|image|max:1024|mimes:png,jpg',
     ];
 
-    public function mount(Store $store): void
+    public function mount(): void
     {
-        if ($store->id) {
-            $this->dealer = Store::where('id', $this->store->id)->first();
-        } else {
-            $this->dealer = Store::first();
-        }
+        $this->dealer = Store::where('id', $this->store->id)->first();
 
         $this->name = $this->dealer->name;
         $this->address = $this->dealer->address;

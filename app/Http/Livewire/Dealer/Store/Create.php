@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\ScanSetting;
+use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\StoreSettings;
 use Filament\Notifications\Notification;
@@ -64,6 +65,7 @@ class Create extends Modal
             'website' => $store->website,
         ]);
 
+        EmployeeList::create(['store_id' => $store->id]);
         ScanSetting::create(['store_id' => $store->id]);
 
         $this->reset();

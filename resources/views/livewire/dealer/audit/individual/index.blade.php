@@ -16,7 +16,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                 @forelse($audits as $individualAudit)
-                    <livewire:dealer.audit.individual.index-item :individualAudit="$individualAudit"/>
+                    <livewire:dealer.audit.individual.index-item :store="$store" :individualAudit="$individualAudit"/>
                 @empty
                     <tr>
                         <td colspan="7"

@@ -20,6 +20,13 @@ class DealerUserInviteNotification extends Notification
         return ['mail'];
     }
 
+    public function generateUrl(string $email)
+    {
+        return URL::temporarySignedRoute('dealer.vendor.create', now()->addDay(), [
+            'id' => $this->validated->id,
+        ]);
+    }
+
     public function generateInvitationUrl(string $email)
     {
         return URL::temporarySignedRoute('employees.create', now()->addDay(), [
@@ -36,7 +43,7 @@ class DealerUserInviteNotification extends Notification
         $url = $this->generateInvitationUrl($notifiable->routes['mail']);
 
         return (new MailMessage)
-            ->line('The introduction to the notification.')
+            ->line('You have been invited to join the ' . $this->validated->store . ' compliance dashboard. Please click the link below to finish your registration.')
             ->action('Notification Action', url($url))
             ->line('Thank you for using our application!');
     }

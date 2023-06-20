@@ -17,11 +17,7 @@ class SingleOnboardingDetails extends Component implements Forms\Contracts\HasFo
 
     public function mount(Store $store)
     {
-        if ($store->id === null) {
-            $this->dealer = Store::first();
-        } else {
-            $this->dealer = Store::where('id', $this->store->id)->first();
-        }
+        $this->dealer = Store::where('id', $this->store->id)->first();
 
         $this->form->fill([
             'police_emergency_phone' => $this->dealer->police_emergency_phone,

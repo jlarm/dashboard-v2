@@ -12,11 +12,8 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public $user;
-
     public $name;
-
-    public $stores = [];
-
+    public $assignedStores;
     public $department;
     public $assignedRoles;
     public $qiCount;
@@ -25,7 +22,7 @@ class Edit extends SlideOver
     {
         $this->user = $user;
         $this->name = $user->name;
-        $this->stores = $user->stores()->get();
+        $this->assignedStores = $user->stores()->pluck('name')->toArray();
         $this->department = $user->department_id;
         $this->assignedRoles = $user->getRoleNames()->toArray();
         $this->qiCount = Role::find(5)->users()->count();
@@ -36,6 +33,8 @@ class Edit extends SlideOver
         $this->user->update([
             'department_id' => $this->department,
         ]);
+
+        $this->user->stores()->sync(Store::whereIn('name', $this->assignedStores)->pluck('id')->toArray());
 
         $this->user->syncRoles($this->assignedRoles);
 

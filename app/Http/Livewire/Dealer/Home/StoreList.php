@@ -16,7 +16,7 @@ class StoreList extends Component
     public function render()
     {
         return view('livewire.dealer.home.store-list', [
-            'stores' => Store::whereNot('id', 1)
+            'stores' => Store::query()
                 ->search('name', $this->search)
                 ->paginate(10)
         ]);

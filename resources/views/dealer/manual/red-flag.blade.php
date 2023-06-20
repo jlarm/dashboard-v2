@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <livewire:dealer.manual.red-flag-form/>
+            <livewire:dealer.manual.red-flag-form :store="$store"/>
         </div>
     </div>
 </x-dealer-app>
