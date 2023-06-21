@@ -3194,16 +3194,16 @@
                     </svg>
                     Update
                 </button>
-                <div class="relative flex items-start mr-auto sm:mr-0 sm:ml-5">
-                    <div class="flex h-6 items-center">
-                        <input wire:model="draft" id="draft" aria-describedby="draft-description" name="draft"
-                               type="checkbox"
-                               class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
-                    </div>
-                    <div class="ml-1 text-sm leading-6">
-                        <label for="draft" class="font-medium text-gray-900">Save as Draft</label>
-                    </div>
-                </div>
+                {{--                <div class="relative flex items-start mr-auto sm:mr-0 sm:ml-5">--}}
+                {{--                    <div class="flex h-6 items-center">--}}
+                {{--                        <input wire:model="draft" id="draft" aria-describedby="draft-description" name="draft"--}}
+                {{--                               type="checkbox"--}}
+                {{--                               class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">--}}
+                {{--                    </div>--}}
+                {{--                    <div class="ml-1 text-sm leading-6">--}}
+                {{--                        <label for="draft" class="font-medium text-gray-900">Save as Draft</label>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
             </div>
         </div>
     </div>

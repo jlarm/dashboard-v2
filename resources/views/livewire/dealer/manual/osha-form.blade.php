@@ -1,6 +1,6 @@
 <div class="mx-auto px-4">
     <div class="relative md:flex">
-        <div class="w-64 fixed inset-y-0 z-10 flex flex-col pr-6 mt-36 border-r">
+        <div class="w-64 fixed inset-y-0 z-10 flex flex-col pr-6 mt-48 border-r">
             <h1 class="text-3xl font-black">OSHA Manual</h1>
             <ul class="toc mt-6 space-y-6 text-gray-500">
                 <li class="text-sm">
@@ -56,6 +56,66 @@
             </ul>
         </div>
         <div class="pl-72 relative top-10">
+            <div class="divide-y mb-10">
+                <div class="grid grid-cols-3 gap-x-5 gap-y-10 mb-10">
+                    <div>
+                        <p class="font-bold">Qualified Individual</p>
+                        <p>{{ $qi }}</p>
+                        <p>{{ $qip }}</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">Owner</p>
+                        <p>{{ $owner }}</p>
+                        <p>{{ $ownerp }}</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">General Manager</p>
+                        <p>{{ $gm }}</p>
+                        <p>{{ $gmp }}</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">Service Manager</p>
+                        <p>{{ $sm }}</p>
+                        <p>{{ $smp }}</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">Parts Manager</p>
+                        <p>{{ $pm }}</p>
+                        <p>{{ $pmp }}</p>
+                    </div>
+                    <div>
+                        <p class="font-bold">Body Shop Manager</p>
+                        <p>{{ $bsm }}</p>
+                        <p>{{ $bsmp }}</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-5 py-10">
+                    <div class="space-y-5">
+                        <div>
+                            <p class="font-bold">Police Emergency Phone Number</p>
+                            <p>{{ $pepn }}</p>
+                        </div>
+                        <div>
+                            <p class="font-bold">Police Non-Emergency Phone Number</p>
+                            <p>{{ $pnepn}}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-5">
+                        <div>
+                            <p class="font-bold">Fire Emergency Phone Number</p>
+                            <p>{{ $fepn }}</p>
+                        </div>
+                        <div>
+                            <p class="font-bold">Fire Non-Emergency Phone Number</p>
+                            <p>{{ $fnepn }}</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-400">If any information above is outdated, please make adjustments in <a
+                        class="text-gray-500 underline"
+                        href="{{ (!tenant('locations') ? route('dealer.dealer.settings') : route('dealer.stores.settings', $store)) }}">settings</a>.
+                </p>
+            </div>
             <div class="space-y-10 prose max-w-none px-6">
                 <article id="eap">
                     <h1 class="text-arm-blue-600">Emergency Action Plan</h1>
