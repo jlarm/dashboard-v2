@@ -440,7 +440,7 @@ class Show extends Component
         $this->body_shop_q15_danger = $this->bodyShopAudit->body_shop_q15_danger;
         $this->body_shop_q16_answer = $this->bodyShopAudit->body_shop_q16_answer;
         $this->body_shop_q16_comment = $this->bodyShopAudit->body_shop_q16_comment;
-        $this->body_shop_q16_inspection_date = $this->bodyShopAudit->body_shop_q16_inspection_date;
+        $this->body_shop_q16_inspection_date = ($this->bodyShopAudit->body_shop_q16_inspection_date) ? Carbon::make($this->bodyShopAudit->body_shop_q16_inspection_date)->format('Y-m-d') : null;
         $this->body_shop_q16_danger = $this->bodyShopAudit->body_shop_q16_danger;
         $this->body_shop_q17_answer = $this->bodyShopAudit->body_shop_q17_answer;
         $this->body_shop_q17_comment = $this->bodyShopAudit->body_shop_q17_comment;
