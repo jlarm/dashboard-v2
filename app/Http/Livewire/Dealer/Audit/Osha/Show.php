@@ -1062,7 +1062,7 @@ class Show extends Component
             'osha_q64_answer' => $this->osha_q64_answer,
             'osha_q64_comment' => $this->osha_q64_comment,
             'osha_q64_danger' => $this->osha_q64_danger,
-            'osha_q64_date' => Carbon::make($this->osha_q64_date)->format('Y-m-d'),
+            'osha_q64_date' => ($this->osha_q64_date) ? Carbon::make($this->osha_q64_date)->format('Y-m-d') : null,
             'osha_q65_answer' => $this->osha_q65_answer,
             'osha_q65_comment' => $this->osha_q65_comment,
             'osha_q65_danger' => $this->osha_q65_danger,
