@@ -4769,7 +4769,8 @@
             <!-- 65 Is the first aid kit accessible to all employees 24/7? -->
             <div class="bg-gray-50 p-3 space-y-7">
                 <div>
-                    <label class="text-base font-semibold text-gray-900">Has elevator been inspected?</label>
+                    <label class="text-base font-semibold text-gray-900">Is the first aid kit accessible to all
+                        employees 24/7?</label>
                     <fieldset class="mt-4">
                         <div class="flex items-center space-x-5">
                             <div class="flex items-center">
