@@ -251,7 +251,7 @@ class Edit extends Component
         $this->audit_date = Carbon::make($this->individualAudit->audit_date)->format('Y-m-d');
         $this->customer_number = $this->individualAudit->customer_number;
         $this->customer_name = $this->individualAudit->customer_name;
-        $this->deal_jacket_date = $this->individualAudit->deal_jacket_date->format('Y-m-d');
+        $this->deal_jacket_date = ($this->individualAudit->deal_jacket_date) ? Carbon::make($this->individualAudit->deal_jacket_date)->format('Y-m-d') : null;
         $this->manager_id = $this->individualAudit->manager_id;
         $this->mileage = $this->individualAudit->mileage;
         $this->individual_q1_answer = $this->individualAudit->individual_q1_answer;
