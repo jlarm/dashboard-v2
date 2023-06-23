@@ -67,7 +67,7 @@ return new class extends Migration {
             $table->boolean('osha_q15_danger')->nullable();
             $table->tinyInteger('osha_q16_answer')->nullable();
             $table->mediumText('osha_q16_comment')->nullable();
-$table->boolean('osha_q16_danger')->nullable();
+            $table->boolean('osha_q16_danger')->nullable();
             $table->tinyInteger('osha_q17_answer')->nullable();
             $table->mediumText('osha_q17_comment')->nullable();
             $table->boolean('osha_q17_danger')->nullable();

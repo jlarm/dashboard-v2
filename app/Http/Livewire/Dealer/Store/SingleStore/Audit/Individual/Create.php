@@ -10,10 +10,11 @@ use Livewire\Component;
 class Create extends Component
 {
     public Store $store;
+    public IndividualAudit $individualAudit;
     public function mount()
     {
-        $individualAudit = IndividualAudit::create([
-            'parent_id' => $individualAudit->id ?? null,
+        $audit = IndividualAudit::create([
+            'parent_id' => $this->individualAudit->id ?? null,
             'deal_jacket_date' => now()->format('Y-m-d'),
             'uuid' => (string) Str::uuid(),
             'user_id' => auth()->id(),
@@ -21,6 +22,6 @@ class Create extends Component
             'audit_date' => now()->format('Y-m-d'),
         ]);
 
-        return redirect()->to(route('dealer.stores.audits.individual.edit', [$this->store, $individualAudit->uuid]));
+        return redirect()->to(route('dealer.stores.audits.individual.edit', [$this->store, $audit->uuid]));
     }
 }

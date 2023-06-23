@@ -5006,7 +5006,7 @@
             </li>
         @endif
         {{--        64--}}
-        @if($oshaAudit->osha_q64_answer === 1 && $oshaAudit->osha_q64_comment || $oshaAudit->osha_q64_answer === 3 && $oshaAudit->osha_q64_comment)
+        @if($oshaAudit->osha_q64_date || $oshaAudit->osha_q64_comment)
             <li class="py-10 space-y-5 page-break">
                 <p class="font-bold">When was the last inspection date?</p>
                 <div>
