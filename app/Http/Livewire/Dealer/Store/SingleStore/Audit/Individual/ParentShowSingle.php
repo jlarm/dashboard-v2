@@ -20,6 +20,12 @@ class ParentShowSingle extends Component
             ->count();
     }
 
+    public function delete()
+    {
+        $this->individualAudit->delete();
+        return redirect()->route('dealer.stores.audits.individual.index', $this->store->slug);
+    }
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.individual.parent-show-single');
