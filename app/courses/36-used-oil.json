@@ -1,0 +1,120 @@
+[
+    {
+        "id": 36,
+        "uuid": "ad4c8797-3e25-4ab7-ac52-78566a293302",
+        "name": "Used Oil",
+        "slug": "used-oil",
+        "department": [
+            4,
+            3,
+            5
+        ],
+        "roles": [
+            9,
+            10
+        ],
+        "slides": [
+            {
+                "title": "Used Oil Storage",
+                "description": "<ul><li>Above ground tanks with capacity of 660 gallons or more are subject to federal regulations</li><li>Collection drums must be covered and labeled, in good condition and secured from vandals, and in compliance with local fire codes.</li><li>Inspect weekly for leaks, corrosion or spillage</li><li>Label drums, tanks and fill pipes with the words<strong>Used Oil</strong></li><li><strong>No Smoking</strong>signs should be posted in used oil storage areas</li><li>A concrete or impervious floor with diking is required to prevent stormwater and rainfall contact</li><li>Immediately clean up spills of used oil with absorbents and properly dispose of the spent materials</li></ul>"
+            },
+            {
+                "title": "Transportation of Used Oil",
+                "description": "<ul><li>Used oil shipped off site must be picked up by transporters with EPA ID numbers</li><li>This applies to filters and oily rags</li><li>Keep logs or records of off-site shipments of used oil</li></ul>"
+            },
+            {
+                "title": "Mixing Other Materials with Used Oil",
+                "description": "<p>Only other materials defined as used oil may be mixed with used oil, examples:</p><ul><li>Transmission and hydraulic fluids</li><li>Petroleum-based, non-hazardous lubricating fluids</li><li>Hydraulic, cutting, gear and cooling oils</li><li>Synthetic oils</li></ul><p>Never mix gasoline, wastewater, a listed hazardous waste, an unknown waste, halogenated solvents or antifreeze with used oil.</p>"
+            },
+            {
+                "title": "Used Oil Filter Disposal/Recycling",
+                "description": "<p>Only other materials defined as used oil may be mixed with used oil, examples:</p><ul><li>Over 400 million used oil filters are generated in the US a year To be disposed of, they must be properly treated.</li><li>Recycling of used filters is becoming more common</li><li>Used oil filters are generally picked up by an EPA certified contractor and:<ul><li>Shredded, cut open and solvent washed</li><li>Crushed into low-density pucks</li><li>Crushed into high-density briquettes</li><li>Burned directly in cement kilns</li><li>Recycled as scrap steel</li><li>Prepared for acceptable landfilling</li></ul></li></ul>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "Used oil storage areas should always be labeled on their drums, tanks and fill pipes.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "No smoking signs are not required in the used oil storage areas.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "All spills must be cleaned up immediately with proper absorbents and disposed of properly.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Used oil, filters and rags can be removed off site by a regular trash hauler.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Off site shipments of used oil must always be recorded on a log sheet.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Used Oil can be mixed with other petroleum-based non-hazardous lubricating fluids.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Other petroleum-based products would be:",
+                "answers": [
+                    {
+                        "a": "Transmission and Hydraulic fluids",
+                        "b": "Hydraulic, Cutting, Gear and Cooling Oils.",
+                        "c": "Synthetic Oils",
+                        "d": "A & B only",
+                        "e": "All of the above"
+                    }
+                ],
+                "correctAnswer": "e"
+            },
+            {
+                "question": "Antifreeze can also be mixed with oil if needed.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            }
+        ]
+    }
+]

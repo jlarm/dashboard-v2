@@ -48,6 +48,73 @@
                 "description": "<ul><li>Fire extinguishers should be readily available.</li><li>Never use a torch or welding apparatus on any container that may have held a flammable liquid or chemical, such as a vehicle fuel tank, or on a vehicle with fuel leaks.</li><li>Wear cutting goggles that have the proper lenses. Above all, the eyes must be protected from the heat, sparks, molten metal and intense light.</li><li>While in the working area, eye protection should be worn at all times. Many eye injuries are caused by other people using a torch or spark-producing equipment.</li><li>Proper ventilation must exist. Fans should be used whenever possible to move any smoke/fume emissions.</li><li>Keep areas dry where electric arc welding is to take place. Be sure welding unit is electronically grounded. Use leather gloves for maximum safety.</li></ul>"
             }
         ],
-        "questions": []
+        "questions": [
+            {
+                "question": "Which answer follows Safe use of Torches?",
+                "answers": [
+                    {
+                        "a": "You must not use torches unless you are trained and authorized to do so.",
+                        "b": "Torches must be designed for the gas that is going to be used.",
+                        "c": "Before changing torches, shut off the gas at the pressure-reducing regulators. Do not crimp the hose to shut off the torch.",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "Which answer follows Safe use of Regulators?",
+                "answers": [
+                    {
+                        "a": "Never drop or pound on regulators.",
+                        "b": "Leaking regulators should be removed from service.",
+                        "c": "As long as the cylinders are secure they may be laid on their side.",
+                        "d": "A and B only"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "Hoses and Hose Connections, which ones are applicable?",
+                "answers": [
+                    {
+                        "a": "The length of hoses should only be as long as necessary. Keep hoses from being linked or tangled.",
+                        "b": "Keep hoses and lines away from walkways, steps, etc., so tripping hazards are not created.",
+                        "c": "Keep hoses away from sparks and flames. Do not operate.",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "Cylinders should be secured at all times while being transported.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Never drag a cylinder; instead, roll it on its edge. Transport cylinders in carts or cages.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Observe \"No Smoking\" signs posted in the cylinder-storage area.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            }
+        ]
     }
 ]
