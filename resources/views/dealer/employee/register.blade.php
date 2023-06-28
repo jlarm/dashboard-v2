@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="bg-white shadow-md overflow-hidden sm:rounded-lg p-5">
+    <div class="bg-white shadow-md overflow-hidden sm:rounded-lg p-5" x-data>
         <form method="POST" action="{{ route('dealer.employees.store') }}">
             @csrf
             <input type="hidden" id="id" name="id" value="{{ $invite->id }}">
@@ -9,6 +9,7 @@
                 <x-input-label for="phone" :value="__('Phone')"/>
 
                 <x-text-input id="phone" class="block mt-1 w-full"
+                              x-mask="999-999-9999"
                               type="tel"
                               name="phone" :value="old('phone')" required autofocus/>
 

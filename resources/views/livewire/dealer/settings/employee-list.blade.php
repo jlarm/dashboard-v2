@@ -1,4 +1,4 @@
-<div class="bg-white px-4 py-5 sm:p-6">
+<div class="bg-white px-4 py-5 sm:p-6" x-data>
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <h3 class="text-base font-semibold leading-6 text-gray-900">Employee Information</h3>
@@ -23,6 +23,7 @@
                                 Number</label>
                             <div class="mt-1">
                                 <input wire:model="qualified_individual_phone" type="tel" name="qip" id="qip"
+                                       x-mask="999-999-9999" placeholder="555-555-5555"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                 @error('qip')
                                 <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -47,6 +48,7 @@
                                 Number</label>
                             <div class="mt-1">
                                 <input wire:model="service_manager_phone" type="tel" name="smp" id="smp"
+                                       x-mask="999-999-9999" placeholder="555-555-5555"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                 @error('service_manager_phone')
                                 <p class="mt-2 text-sm text-red-600">This field is required.</p>
@@ -71,6 +73,7 @@
                                 Number</label>
                             <div class="mt-1">
                                 <input wire:model="parts_manager_phone" type="tel" name="parts_manager_phone"
+                                       x-mask="999-999-9999" placeholder="555-555-5555"
                                        id="parts_manager_phone"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                 @error('parts_manager_phone')
@@ -98,6 +101,7 @@
                                 Number</label>
                             <div class="mt-1">
                                 <input wire:model="body_shop_manager_phone" type="tel" name="body_shop_manager_phone"
+                                       x-mask="999-999-9999" placeholder="555-555-5555"
                                        id="body_shop_manager_phone"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                 @error('body_shop_manager_phone')
@@ -124,6 +128,7 @@
                                 Number</label>
                             <div class="mt-1">
                                 <input wire:model="general_manager_phone" type="tel" name="general_manager_phone"
+                                       x-mask="999-999-9999" placeholder="555-555-5555"
                                        id="general_manager_phone"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                 @error('general_manager_phone')
@@ -148,6 +153,7 @@
                                 Number</label>
                             <div class="mt-1">
                                 <input wire:model="owner_phone" type="tel" name="owner_phone" id="owner_phone"
+                                       x-mask="999-999-9999" placeholder="555-555-5555"
                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
                                 @error('owner_phone')
                                 <p class="mt-2 text-sm text-red-600">This field is required.</p>

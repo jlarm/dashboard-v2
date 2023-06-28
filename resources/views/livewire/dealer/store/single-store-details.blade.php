@@ -4,7 +4,7 @@
             <h3 class="text-base font-semibold leading-6 text-gray-900">General Information</h3>
         </div>
         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
-            <form wire:submit.prevent="update" class="mb-20 space-y-6">
+            <form wire:submit.prevent="update" class="mb-20 space-y-6" x-data>
                 <div>
                     <x-input-label for="name" :value="__('Dealership Name')"/>
                     <x-text-input wire:model.defer="name" id="name" class="block mt-1 w-full" type="text" name="name"
@@ -48,6 +48,7 @@
                     <div>
                         <x-input-label for="phone" :value="__('Phone Number')"/>
                         <x-text-input wire:model.defer="phone" id="phone" class="block mt-1 w-full" type="text"
+                                      x-mask="999-999-9999"
                                       :value="old('phone')"
                                       required autofocus/>
                         <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
