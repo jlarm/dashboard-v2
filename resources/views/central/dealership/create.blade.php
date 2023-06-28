@@ -7,7 +7,7 @@
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12" x-data>
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -78,6 +78,7 @@
                                 <div>
                                     <x-input-label for="fax" :value="__('Fax')"/>
                                     <x-text-input
+                                        x-mask="999-999-9999"
                                         placeholder="235-456-2346"
                                         wire:model.lazy="fax"
                                         id="fax"

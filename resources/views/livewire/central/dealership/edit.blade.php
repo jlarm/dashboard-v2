@@ -1,7 +1,7 @@
 <x-wire-elements-pro::tailwind.slide-over on-submit="updateDealership" :content-padding="true">
     <x-slot name="title">{{ $dealership->name }}</x-slot>
 
-    <div class="space-y-10">
+    <div class="space-y-10" x-data>
         <!-- Dealership Name -->
         <div>
             <x-input-label for="name" :value="__('Dealership Name')"/>
@@ -47,7 +47,8 @@
             <!-- Dealership Phone Number -->
             <div>
                 <x-input-label for="phone" :value="__('Phone')"/>
-                <x-text-input wire:model.lazy="phone" id="phone" class="block mt-1 w-full" type="tel" name="phone"
+                <x-text-input x-mask="999-999-9999" wire:model.lazy="phone" id="phone" class="block mt-1 w-full"
+                              type="tel" name="phone"
                               :value="old('phone')" placeholder="555-555-5555" required/>
                 <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
             </div>
@@ -55,7 +56,8 @@
             <!-- Dealership Fax -->
             <div>
                 <x-input-label for="fax" :value="__('Fax')"/>
-                <x-text-input wire:model.lazy="fax" id="fax" class="block mt-1 w-full" type="tel" name="fax"
+                <x-text-input x-mask="999-999-9999" placeholder="555-555-5555" wire:model.lazy="fax" id="fax"
+                              class="block mt-1 w-full" type="tel" name="fax"
                               :value="old('fax')"/>
                 <x-input-error :messages="$errors->get('fax')" class="mt-2"/>
             </div>
@@ -105,8 +107,6 @@
                 </div>
             </div>
         </div>
-
-        {{ var_export($locations) }}
 
         <x-slot name="buttons">
             <div class="space-x-5">
