@@ -1,6 +1,6 @@
 <div class="flex flex-col space-y-3">
     <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-    <span>{{ $user->phoneNumber }}</span>
+    <span>{{ $user->phone }}</span>
     <div class="flex flex-col">
         @foreach($user->stores as $store)
             <div>
