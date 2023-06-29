@@ -4,7 +4,7 @@
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         <div><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></div>
-        <div>{{ $user->phoneNumber }}</div>
+        <div>{{ $user->phone }}</div>
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         @foreach($user->roles as $role)
