@@ -29,7 +29,7 @@
                 <div class="col-span-3">
                     <div class="col-span-3">
                         <x-input-label for="dealers" :value="__('Select a Store, Cmd/Ctrl click to select multiple')"/>
-                        <select wire:model="dealers" class="w-full" multiple>
+                        <select wire:model="dealers" class="w-full" multiple required>
                             @foreach($stores as $store)
                                 <option value="{{ $store->id }}">{{ $store->name }}</option>
                             @endforeach

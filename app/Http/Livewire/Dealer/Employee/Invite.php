@@ -30,8 +30,8 @@ class Invite extends Modal
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
-        'dealers' => ['nullable', 'array'],
-        'department' => ['nullable', 'integer'],
+        'dealers' => ['required', 'array'],
+        'department' => ['required', 'integer'],
         'roles' => ['min:1', 'array'],
     ];
 

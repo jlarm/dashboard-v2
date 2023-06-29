@@ -30,6 +30,10 @@ class UserController extends Controller
     {
         $invite = Invite::where('id', $request['id'])->first();
 
+        $request->validate([
+            'password' => ['required', 'confirmed', 'min:8'],
+        ]);
+
         // Create user
         $user = User::create([
             'name' => $invite['name'],

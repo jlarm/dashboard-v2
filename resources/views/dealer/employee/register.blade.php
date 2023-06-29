@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <p class="text-center mb-5">Please fill out the form to complete your registration.</p>
     <div class="bg-white shadow-md overflow-hidden sm:rounded-lg p-5" x-data>
         <form method="POST" action="{{ route('dealer.employees.store') }}">
             @csrf
@@ -11,6 +12,7 @@
                 <x-text-input id="phone" class="block mt-1 w-full"
                               x-mask="999-999-9999"
                               type="tel"
+                              placeholder="111-111-1111"
                               name="phone" :value="old('phone')" required autofocus/>
 
                 <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
