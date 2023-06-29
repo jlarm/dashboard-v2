@@ -38,7 +38,7 @@
             <p>{{ $individualAudit->deal_jacket_date->format('F d, Y') }}</p>
         </li>
         <li class="py-10 space-y-5 page-break">
-            <p class="font-bold">Customer Number</p>
+            <p class="font-bold">Customer Deal Number</p>
             <p>{{ $individualAudit->customer_number }}</p>
         </li>
         <li class="py-10 space-y-5 page-break">

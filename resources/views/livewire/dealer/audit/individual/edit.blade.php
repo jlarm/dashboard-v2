@@ -16,8 +16,8 @@
         </div>
         <!-- Deal Jacket Date -->
         <div class="ml-3 md:ml-0">
-            <label for="deal_jacket_date" class="block text-sm font-medium leading-6 text-gray-900">Deal Jacket
-                Date</label>
+            <label for="deal_jacket_date" class="block text-sm font-medium leading-6 text-gray-900">Date of Deal
+                Jacket</label>
             <div class="mt-2">
                 <input
                     wire:model="deal_jacket_date"
@@ -45,7 +45,7 @@
         </div>
         <!-- Customer Number -->
         <div class="ml-3 md:ml-0">
-            <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Customer
+            <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Customer Deal
                 Number</label>
             <div class="mt-2">
                 <input
