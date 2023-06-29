@@ -3,160 +3,158 @@
 namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\Store;
-use Filament\Forms;
-use Filament\Forms\Components\Radio;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
-class SingleOnboardingDetails extends Component implements Forms\Contracts\HasForms
+class SingleOnboardingDetails extends Component
 {
-    use Forms\Concerns\InteractsWithForms;
-
     public $store;
     public $dealer;
+    public $pep;
+    public $pnep;
+    public $fep;
+    public $fnep;
+    public $fireAlarm;
+    public $burglarAlarm;
+    public $firewallCompany;
+    public Collection $ipAddresses;
+    public $mfa;
+    public $vulnerability;
+    public $monitoring;
+    public $antivirus;
+    public $antivirusComputers;
+    public $antivirusMinutes;
+    public $screensaverMinutes;
+    public $dmsProvider;
+    public $backups;
+    public Collection $websiteUrls;
+    public $designatedRedFlagCoordinator;
+    public $documentShredding;
+    public $serviceProviderAgreements;
+    public $offsiteStorage;
+    public $otherBusiness;
+    public $vendorAccess;
+    public $personalDevices;
+    public $complianceIssues;
 
-    public function mount(Store $store)
+    public function addIpAddress()
     {
-        $this->dealer = Store::where('id', $this->store->id)->first();
-
-        $this->form->fill([
-            'police_emergency_phone' => $this->dealer->police_emergency_phone,
-            'police_non_emergency_phone' => $this->dealer->police_non_emergency_phone,
-            'fire_emergency_phone' => $this->dealer->fire_emergency_phone,
-            'fire_non_emergency_phone' => $this->dealer->fire_non_emergency_phone,
-            'fire_alarm_type' => $this->dealer->fire_alarm_type,
-            'burglar_alarm_type' => $this->dealer->burglar_alarm_type,
-            'firewall_company' => $this->dealer->firewall_company,
-            'ip_addresses' => $this->dealer->ip_addresses,
-            'mfa' => $this->dealer->mfa,
-            'vulnerability' => $this->dealer->vulnerability,
-            'currently_monitoring' => $this->dealer->currently_monitoring,
-            'antivirus_software' => $this->dealer->antivirus_software,
-            'antivirus_computers' => $this->dealer->antivirus_computers,
-            'antivirus_minutes' => $this->dealer->antivirus_minutes,
-            'screensaver_minutes' => $this->dealer->screensaver_minutes,
-            'dms_provider' => $this->dealer->dms_provider,
-            'website_urls' => $this->dealer->website_urls,
-            'backups' => $this->dealer->backups,
-            'designated_red_flag_coordinator' => $this->dealer->designated_red_flag_coordinator,
-            'document_shredding' => $this->dealer->document_shredding,
-            'service_provider_agreements' => $this->dealer->service_provider_agreements,
-            'offsite_storage' => $this->dealer->offsite_storage,
-            'other_business' => $this->dealer->other_business,
-            'vendor_access' => $this->dealer->vendor_access,
-            'personal_devices' => $this->dealer->personal_devices,
-            'compliance_issues' => $this->dealer->compliance_issues,
-        ]);
+        $this->ipAddresses->push(['phone_number' => '']);
     }
 
-    protected function getFormSchema(): array
+    public function addWebsiteUrl()
     {
-        return [
-            Forms\Components\Grid::make(2)
-                ->schema([
-                    Forms\Components\TextInput::make('police_emergency_phone')
-                    ->label('Police Emergency Phone Number'),
-                    Forms\Components\TextInput::make('police_non_emergency_phone')
-                    ->label('Police Non-Emergency Phone Number'),
-                    Forms\Components\TextInput::make('fire_emergency_phone')
-                    ->label('Fire Emergency Phone Number'),
-                    Forms\Components\TextInput::make('fire_non_emergency_phone')
-                    ->label('Fire Non-Emergency Phone Number'),
-                    Forms\Components\TextInput::make('fire_alarm_type')
-                    ->label('What type of fire alarm System do you use?'),
-                    Forms\Components\TextInput::make('burglar_alarm_type')
-                    ->label('What type of Burglar Alarm System do you use?'),
-                ]),
-            Forms\Components\TextInput::make('firewall_company'),
-            Forms\Components\Repeater::make('ip_addresses')
-                ->schema([
-                    Forms\Components\TextInput::make('ip_address'),
-                ])
-            ->createItemButtonLabel('Add IP Address')
-            ->label('IP Addresses'),
-            Forms\Components\Radio::make('mfa')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Multi-Factor Authentication (MFA) - Do you have it installed and being utilized?'),
-            Forms\Components\Radio::make('vulnerability')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Are IT Vulnerability scans currently being completed?'),
-            Forms\Components\Radio::make('currently_monitoring')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Are you currently Monitoring & Logging User Activity at your dealership?'),
-            Forms\Components\TextInput::make('antivirus_software')
-                ->label('Antivirus Software'),
-            Forms\Components\TextInput::make('antivirus_computers')
-                ->label('Anti-Virus Applied on individual computers or through server?'),
-            Forms\Components\TextInput::make('screensaver_minutes')
-                ->numeric()
-                ->label('How many minutes are the monitors set for screen saver activation?'),
-            Forms\Components\TextInput::make('dms_provider')
-                ->label('Who is your Dealership Management System Provider (DMS)'),
-            Forms\Components\TextInput::make('backups')
-                ->label('Where and how are backups being stored?'),
-            Forms\Components\Repeater::make('website_urls')
-                ->schema([
-                    Forms\Components\TextInput::make('url'),
-                ])->createItemButtonLabel('Add Website URL'),
-            Forms\Components\TextInput::make('designated_red_flag_coordinator')
-                ->label('Who is your designated Red Flag Coordinator?'),
-            Radio::make('document_shredding')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Do you use a document Shredding Company?'),
-            Radio::make('service_provider_agreements')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Are Service Provider Agreements & Risk Assessments on file with your dealership?'),
-            Radio::make('offsite_storage')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Does your dealership store any customer information at offsite locations?'),
-            Radio::make('other_business')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Does your dealership have an affiliation with any other business where he/she has a financial interest of more than 25%?'),
-            Radio::make('vendor_access')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Are there any vendors that have after hour access to your dealership and other buildings storing customer information?'),
-            Radio::make('personal_devices')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Are there any persons that have customers access on their personal PC or that maintain a customer data base on their personal device of any kind?'),
-            Radio::make('compliance_issues')
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->label('Have there been any compliance related issues that Automotive Risk Management Partners should be made aware of i.e. Information being compromised, fraud attempted on the dealership etc.'),
-        ];
+        $this->websiteUrls->push(['url' => '']);
     }
+
+    public function removeIpAddress($key)
+    {
+        $this->ipAddresses->pull($key);
+    }
+
+    public function removeWebsiteUrl($urlKey)
+    {
+        $this->websiteUrls->pull($urlKey);
+    }
+
+    protected $rules = [
+        'pep' => 'nullable',
+        'pnep' => 'nullable',
+        'fep' => 'nullable',
+        'fnep' => 'nullable',
+        'fireAlarm' => 'nullable',
+        'burglarAlarm' => 'nullable',
+        'firewallCompany' => 'nullable',
+        'ipAddresses.*.ipAddress' => 'nullable',
+        'mfa' => 'nullable',
+        'vulnerability' => 'nullable',
+        'monitoring' => 'nullable',
+        'antivirus' => 'nullable',
+        'antivirusComputers' => 'nullable',
+        'antivirusMinutes' => 'nullable',
+        'screensaverMinutes' => 'nullable',
+        'dmsProvider' => 'nullable',
+        'backups' => 'nullable',
+        'websiteUrls.*.url' => 'nullable',
+        'designatedRedFlagCoordinator' => 'nullable',
+        'documentShredding' => 'nullable',
+        'serviceProviderAgreements' => 'nullable',
+        'offsiteStorage' => 'nullable',
+        'otherBusiness' => 'nullable',
+        'vendorAccess' => 'nullable',
+        'personalDevices' => 'nullable',
+        'complianceIssues' => 'nullable',
+    ];
+
+    public function mount()
+    {
+        $this->store = Store::where('id', $this->store->id)->first();
+        $this->pep = $this->store->police_emergency_phone;
+        $this->pnep = $this->store->police_non_emergency_phone;
+        $this->fep = $this->store->fire_emergency_phone;
+        $this->fnep = $this->store->fire_non_emergency_phone;
+        $this->fireAlarm = $this->store->fire_alarm_type;
+        $this->burglarAlarm = $this->store->burglar_alarm_type;
+        $this->firewallCompany = $this->store->firewall_company;
+        $this->ipAddresses = collect($this->store->ip_addresses)->map(function ($ip) {
+            return ['ipAddress' => $ip];
+        });
+        $this->mfa = $this->store->mfa;
+        $this->vulnerability = $this->store->vulnerability;
+        $this->monitoring = $this->store->currently_monitoring;
+        $this->antivirus = $this->store->antivirus_software;
+        $this->antivirusComputers = $this->store->antivirus_computers;
+        $this->antivirusMinutes = $this->store->antivirus_minutes;
+        $this->screensaverMinutes = $this->store->screensaver_minutes;
+        $this->dmsProvider = $this->store->dms_provider;
+        $this->backups = $this->store->backups;
+        $this->websiteUrls = collect($this->store->website_urls)->map(function ($url) {
+            return ['websiteUrl' => $url];
+        });
+        $this->designatedRedFlagCoordinator = $this->store->designated_red_flag_coordinator;
+        $this->documentShredding = $this->store->document_shredding;
+        $this->serviceProviderAgreements = $this->store->service_provider_agreements;
+        $this->offsiteStorage = $this->store->offsite_storage;
+        $this->otherBusiness = $this->store->other_business;
+        $this->vendorAccess = $this->store->vendor_access;
+        $this->personalDevices = $this->store->personal_devices;
+        $this->complianceIssues = $this->store->compliance_issues;
+    }
+
 
     public function update(): void
     {
-        $this->dealer->update($this->form->getState());
+        $this->validate();
+
+        $this->store->update([
+            'police_emergency_phone' => $this->pep,
+            'police_non_emergency_phone' => $this->pnep,
+            'fire_emergency_phone' => $this->fep,
+            'fire_non_emergency_phone' => $this->fnep,
+            'fire_alarm_type' => $this->fireAlarm,
+            'burglar_alarm_type' => $this->burglarAlarm,
+            'firewall_company' => $this->firewallCompany,
+            'ip_addresses' => $this->ipAddresses->pluck('ipAddress')->toArray(),
+            'mfa' => $this->mfa,
+            'vulnerability' => $this->vulnerability,
+            'currently_monitoring' => $this->monitoring,
+            'antivirus_software' => $this->antivirus,
+            'antivirus_computers' => $this->antivirusComputers,
+            'antivirus_minutes' => $this->antivirusMinutes,
+            'screensaver_minutes' => $this->screensaverMinutes,
+            'dms_provider' => $this->dmsProvider,
+            'backups' => $this->backups,
+            'website_urls' => $this->websiteUrls->pluck('websiteUrl')->toArray(),
+            'designated_red_flag_coordinator' => $this->designatedRedFlagCoordinator,
+            'document_shredding' => $this->documentShredding,
+            'service_provider_agreements' => $this->serviceProviderAgreements,
+            'offsite_storage' => $this->offsiteStorage,
+            'other_business' => $this->otherBusiness,
+            'vendor_access' => $this->vendorAccess,
+            'personal_devices' => $this->personalDevices,
+            'compliance_issues' => $this->complianceIssues,
+        ]);
 
         Notification::make()
             ->title('Settings Updated Successfully!')
