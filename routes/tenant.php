@@ -54,7 +54,9 @@ Route::group([
 
     Route::get('/dashboard', function () { return view('dealer.dashboard'); })->middleware('auth')->name('dashboard');
 
-    Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])->middleware('web')->name('employees.create');
+    Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])
+        ->missing(function () { return response()->view('errors.link-expired'); })
+        ->middleware('web')->name('employees.create');
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('employees.store');
 
     Route::group(['prefix' => 'courses/', 'as' => 'courses.'], function () {
