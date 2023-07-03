@@ -89,7 +89,7 @@ Route::group([
     // Roles to Manager
     // **************************************************
 
-    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Manager|Consultant']], function () {
+    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
         Route::get('/', function () { return view('dealer.employee.index'); })->middleware('auth')->name('index');
         Route::get('open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('open-invites');
         Route::get('{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('show');
@@ -99,7 +99,7 @@ Route::group([
     // Roles to Manager
     // **************************************************
 
-    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Manager|Consultant']], function () {
+    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
         Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
         Route::get('employees/{user:slug}', [EmployeeController::class, 'show'])->middleware(['auth', 'has.stores'])->name('show');
         Route::get('vendors', [StoreVendorController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.vendor.index');
@@ -112,7 +112,7 @@ Route::group([
     // Roles to QA
     // **************************************************
 
-    Route::group(['middleware' => ['role:super-admin|Owner|CFO|General Manager|GSM|Qualified Individual|Consultant']], function () {
+    Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Consultant']], function () {
 
         Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
 
@@ -147,7 +147,7 @@ Route::group([
             Route::get('audits/body-shop', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Index::class)->middleware(['auth', 'has.stores'])->name('audits.body-shop.index');
             Route::get('audits/body-shop/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Create::class)->middleware(['auth', 'has.stores'])->name('audits.body-shop.create');
             Route::get('audits/body-shop/{bodyShopAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Show::class)->middleware(['auth', 'has.stores'])->name('audits.body-shop.show');
-            Route::get('audits/finance', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Index::class)->middleware(['auth', 'has.stores', 'can:create-audits'])->name('audits.finance.index');
+            Route::get('audits/finance', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Index::class)->middleware(['auth', 'has.stores'])->name('audits.finance.index');
             Route::get('audits/finance/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Create::class)->middleware(['auth', 'has.stores'])->name('audits.finance.create');
             Route::get('audits/finance/{financeAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Show::class)->middleware(['auth', 'has.stores'])->name('audits.finance.show');
             Route::get('audits/deal-jackets', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->middleware(['auth', 'has.stores'])->name('audits.individual.index');
