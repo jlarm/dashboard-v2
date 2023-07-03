@@ -35,7 +35,9 @@
     <ul class="divide-y divide-gray-300">
         <li class="py-10 space-y-5 page-break">
             <p class="font-bold">Date of Deal Jacket</p>
-            <p>{{ $individualAudit->deal_jacket_date->format('F d, Y') ?? '' }}</p>
+            @if($individualAudit->deal_jacket_date)
+                <p>{{ $individualAudit->deal_jacket_date->format('F d, Y') }}</p>
+            @endif
         </li>
         <li class="py-10 space-y-5 page-break">
             <p class="font-bold">Customer Deal Number</p>
