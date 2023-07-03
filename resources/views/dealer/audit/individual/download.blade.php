@@ -28,14 +28,14 @@
                     <h1 class="text-3xl font-bold text-arm-blue-600">Deal Jacket Audit Review
                         for {{ tenant('name') }}</h1>
                 @endif
-                <p class="text-arm-blue-400">{{ $individualAudit->audit_date->format('F d, Y') }}</p>
+                <p class="text-arm-blue-400">{{ $individualAudit->audit_date->format('F d, Y') ?? '' }}</p>
             </div>
         </div>
     @endif
     <ul class="divide-y divide-gray-300">
         <li class="py-10 space-y-5 page-break">
             <p class="font-bold">Date of Deal Jacket</p>
-            <p>{{ $individualAudit->deal_jacket_date->format('F d, Y') }}</p>
+            <p>{{ $individualAudit->deal_jacket_date->format('F d, Y') ?? '' }}</p>
         </li>
         <li class="py-10 space-y-5 page-break">
             <p class="font-bold">Customer Deal Number</p>
