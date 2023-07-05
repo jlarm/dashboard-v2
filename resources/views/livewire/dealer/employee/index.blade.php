@@ -14,7 +14,7 @@
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
                             @if(tenant('locations'))
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    Stores
+                                    Store(s)
                                 </th>
                             @endif
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -24,13 +24,13 @@
                                 Courses
                             </th>
                             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
-                                <span class="sr-only">Edit</span>
+                                <span class="sr-only">View</span>
                             </th>
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
                         @forelse($users as $user)
-                            <livewire:dealer.employee.index-item :user="$user"/>
+                            <livewire:dealer.employee.index-item :wire:key="$user->id" :user="$user"/>
                         @empty
                             <tr>
                                 <td colspan="7"
@@ -44,8 +44,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="mt-10">
-        {{ $users->links() }}
+        <div class="mt-10">
+            {{ $users->links() }}
+        </div>
     </div>
 </div>
