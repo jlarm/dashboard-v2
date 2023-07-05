@@ -28,7 +28,9 @@
                 <h1 class="text-3xl font-bold text-arm-blue-600">GLBA Walkthrough Audit Review
                     for {{ tenant('name') }}</h1>
             @endif
-            <p class="text-arm-blue-400">{{ $financeAudit->audit_date->format('F d, Y') }}</p>
+            @if($financeAudit->audit_date)
+                <p class="text-arm-blue-400">{{ $financeAudit->audit_date->format('F d, Y') }}</p>
+            @endif
         </div>
     </div>
     <ul class="divide-y divide-gray-300">

@@ -28,7 +28,9 @@
                     <h1 class="text-3xl font-bold text-arm-blue-600">Deal Jacket Audit Review
                         for {{ tenant('name') }}</h1>
                 @endif
-                <p class="text-arm-blue-400">{{ $individualAudit->audit_date->format('F d, Y') ?? '' }}</p>
+                @if($individualAudit->audit_date)
+                    <p class="text-arm-blue-400">{{ $individualAudit->audit_date->format('F d, Y') ?? '' }}</p>
+                @endif
             </div>
         </div>
     @endif
