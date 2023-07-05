@@ -1,6 +1,15 @@
 <div>
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="mt-8 flow-root">
+            <div class="md:w-1/3 px-3 sm:px-0 mb-5">
+                <div>
+                    <label for="search" class="sr-only">Search</label>
+                    <input type="search" name="search" id="search"
+                           wire:model="search"
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
+                           placeholder="Search by Name...">
+                </div>
+            </div>
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle">
                     <table class="min-w-full divide-y divide-gray-300">

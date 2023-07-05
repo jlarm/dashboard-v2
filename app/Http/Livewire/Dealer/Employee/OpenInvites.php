@@ -10,6 +10,8 @@ class OpenInvites extends Component
 {
     use WithPagination;
 
+    public $search = '';
+
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
 
     public function render()
@@ -19,6 +21,7 @@ class OpenInvites extends Component
                 ->with('user')
                 ->with('store')
                 ->orderBy('created_at', 'desc')
+                ->search('name', $this->search)
                 ->paginate(10),
         ]);
     }
