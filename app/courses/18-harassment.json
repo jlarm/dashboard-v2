@@ -52,6 +52,62 @@
                 "description": "<p>Employees have 180 days to report harassment that is covered by the EEOC ( in some states it may be as long as 300 days)</p><p>You must report the situation to HR1 or HR2, although an employee should not necessarily be expected to complain to management immediately after the first or second incident of relatively minor harassment.</p><p>You can expect an investigation into the complaint that is prompt, thorough, and impartial. The amount of time necessary to complete an investigation will depend on the particular circumstances.</p><p>If you so direct you will be assured of confidentiality of the harassment allegations \"to the extent possible.</p><p>Finally, the employer will take prompt corrective measures if it determines that harassment has occurred.</p>"
             }
         ],
-        "questions": []
+        "questions": [
+            {
+                "question": "The protected bases against harassment include race/color, religion, sex, national origin, age (over 40 years of age) disability and retaliation?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "You must have a program enforcing reasonable care in preventing harassment including the following items:",
+                "answers": [
+                    {
+                        "a": "Strong written policy",
+                        "b": "Training program",
+                        "c": "Investigative procedure",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "You will need an affirmative defense if an employee claims that he/she is working in a hostile work environment. This would include using reasonable care to prevent and promptly correct harassment.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "In the case regarding the Texas car dealership and same-sex harassment, what should the dealership have done to prevent such legal ramifications?",
+                "answers": [
+                    {
+                        "a": "Addressed and documented activities promptly",
+                        "b": "Used anti-harassment disciplinary actions against offenders",
+                        "c": "reinforced NO TOLERANCE policy for sexual harassment",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "What is retaliation?",
+                "answers": [
+                    {
+                        "a": "When an employee is discriminated against due to reporting a harassment case.",
+                        "b": "When an employer does not report harassment",
+                        "c": "When the employee does not report harassment until the workplace has become hostile"
+                    }
+                ],
+                "correctAnswer": "a"
+            }
+        ]
     }
 ]

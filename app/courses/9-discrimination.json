@@ -14,7 +14,7 @@
         "slides": [
             {
                 "title": "Equal Employment Opportunity Commission",
-                "description": "<p>Role of the EEOC is to protect employees from unfair treatment</p><p>The laws prohibit discrimination, harassment, retaliation and various other practices</p>"
+                "description": "<p>Role of the EEOC is to protect employees from unfair treatment</p><p>The laws prohibit discrimination, harassment, retaliation and various other practices</p><p>Protected Classes under the Human Rights Law Title VII:</p><ul><li>Age</li><li>Immigration or citizenship status</li><li>Color</li><li>Disability</li><li>Gender (including sexual harassment)</li><li>Gender Identity</li><li>Marital status and partnership status</li><li>National origin</li></ul>"
             },
             {
                 "title": "Race/color discrimination",
@@ -49,6 +49,55 @@
                 "description": "<p>Equal Pay Act requires that men and women be given equal pay for equal work in the same establishment. The jobs need not be identical, but must be substantially equal</p><p>Skill measured by experience, ability, education and training required to perform job</p><p>Effort - the amount of physical or mental exertion needed to perform job</p><p>Responsibility - the degree of accountability required in performing the job</p><p>Working conditions - physical surroundings and hazards</p><p>Establishment - physically separate places of business must be treated as one establishment</p><p>Title VII, ADEA, and ADA</p><p>Prohibits compensation discrimination on the basis of race, color, religion, sex, national origin, age or disability</p>"
             }
         ],
-        "questions": []
+        "questions": [
+            {
+                "question": "What are the various types of discrimination?",
+                "answers": [
+                    {
+                        "a": "Age, Immigration or citizenship status, Color, Disability, Gender (including sexual harassment), Gender Identity, Marital status and partnership status, National origin",
+                        "b": "Sexual, mental and lack of knowledge",
+                        "c": "Race/color, national origin, sex, religious discrimination, age discrimination and LGBTQ",
+                        "d": "Age, Sex, Transsexual and Marital status"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Race related or hostile work environment acts require that employers take steps to prevent and correct unlawful behavior based on certain conduct. What behavior is prohibited?",
+                "answers": [
+                    {
+                        "a": "Taking time off unnecessarily, calling in sick and being lazy on the job",
+                        "b": "Offensive behavior such as racial slurs, racial jokes, derogatory comments and other physical or verbal abuse",
+                        "c": "Not being able to perform job duties, not being able to get along with co-workers and not being able to work with others",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "What is required so as not to discriminate against an employee based on religion?",
+                "answers": [
+                    {
+                        "a": "Employers must let everyone do what they want and not monitor any behavior if related to employee's religion.",
+                        "b": "Employers must “reasonably” accommodate employees religious practices, unless doing so would impose undue hardship on such employer.",
+                        "c": "Employers must let employees take time off whenever they want to practice their religion.",
+                        "d": "A and C"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "At what age are employees protected from age discrimination?",
+                "answers": [
+                    {
+                        "a": "40 years of age or older",
+                        "b": "Over 50 years old",
+                        "c": "Any age that does not conform with the company's profile age",
+                        "d": "None of the above"
+                    }
+                ],
+                "correctAnswer": "a"
+            }
+        ]
     }
 ]
