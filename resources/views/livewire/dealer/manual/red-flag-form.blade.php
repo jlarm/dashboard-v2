@@ -110,7 +110,7 @@
                 Address Discrepancy and Red Flag Rules.</p>
             <p>This Program and the rules outlined shall be implemented and maintained by the Compliance Security
                 Officer, <strong>{{ $qi }}</strong> and any ITPP Coordinator(s) (not a required position).
-                <strong>{{ tenant('name') }}</strong> has
+                <strong>{{ $store->name }}</strong> has
                 contracted with Automotive Risk Management Partners to assist in the formation, implementation,
                 performance, monitoring and recommendations to this program. Qualified Individualx shall report to board
                 or equivalent on any updates, changes or issues that arise that would jeopardize this program.</p>
@@ -132,20 +132,20 @@
                 </li>
             </ol>
             <p>This program will be overseen by the of <strong>{{ $qi }}</strong> of
-                <strong>{{ tenant('name') }}</strong>. <strong>{{ $qi }}</strong> will
+                <strong>{{ $store->name }}</strong>. <strong>{{ $qi }}</strong> will
                 be responsible for overseeing the implementation and maintenance of the ITTP including assisting
                 Automotive Risk Management Partners with the creation of a written report to be delivered to Board or
                 equivalent on at least an annual basis.</p>
             <h3>Covered Accounts:</h3>
             <p>Covered Accounts consist of all consumer transactions involving multiple payments (even if immediately
                 assigned to a third party) and any other multiple payment accounts (including business accounts) where
-                there is a reasonably foreseeable risk of identity theft to <strong>{{ tenant('name') }}</strong> and or
+                there is a reasonably foreseeable risk of identity theft to <strong>{{ $store->name }}</strong> and or
                 our customers. The
                 covered accounts consist of:</p>
             <ol>
                 <li>All retail installment or lease contracts that are assigned to a third party.</li>
                 <li>All retail installment or lease contracts that are kept in house and maintained by
-                    <strong>{{ tenant('name') }}</strong>.
+                    <strong>{{ $store->name }}</strong>.
                 </li>
                 <li>Any Accounts receivables carried in the service department for customers
                     making multiple or delayed payments on service work performed (including Business Accounts where
@@ -155,7 +155,7 @@
                     reasonable foreseeable risk to identity theft).
                 </li>
             </ol>
-            <p><strong>{{ tenant('name') }}</strong> will use account identification and risk assessment worksheet to
+            <p><strong>{{ $store->name }}</strong> will use account identification and risk assessment worksheet to
                 properly identify each covered account that exists and make part of this ITPP.</p>
         </div>
         <div id="methods-for-identifying">
@@ -174,12 +174,12 @@
                 mind. We have identified 21 of these as relevant to our organization and the automotive industry. These
                 red flags will be assessed on a semiannual basis and at that time any potential new red flags will be
                 examined by the Qualified Individual and ARMP in order to update this ITPP and to ensure that we are
-                consistently mitigating the affects of Identity Theft within <strong>{{ tenant('name') }}</strong>.</p>
+                consistently mitigating the affects of Identity Theft within <strong>{{ $store->name }}</strong>.</p>
             <p>When addressing the risk factors for the purpose of identifying the relevant red flags we must analyze
-                the methods <strong>{{ tenant('name') }}</strong> has employed to open and access the Accounts and
-                <strong>{{ tenant('name') }}</strong>’s previous
+                the methods <strong>{{ $store->name }}</strong> has employed to open and access the Accounts and
+                <strong>{{ $store->name }}</strong>’s previous
                 experience with identity theft. When assessing the risk factors within
-                <strong>{{ tenant('name') }}</strong> we must look at these
+                <strong>{{ $store->name }}</strong> we must look at these
                 relevant processes:</p>
             <ul>
                 <li>Who is responsible for accepting the credit statements from the potential customer?</li>
@@ -189,7 +189,7 @@
                 <li>Where are all the Accounts stored?</li>
                 <li>Where are the Accounts kept while in progress?</li>
             </ul>
-            <p>Given the risk factors of <strong>{{ tenant('name') }}</strong>, the responsible party for accepting
+            <p>Given the risk factors of <strong>{{ $store->name }}</strong>, the responsible party for accepting
                 credit applications will be a
                 Sales or Finance Manager. All credit bureaus will be run by a Sales or Finance Manager. The ultimate
                 decision to proceed with the transaction will be assumed by the Sales and / or Finance Managers in
@@ -220,12 +220,12 @@
         <div id="detect">
             <h2>Developing the means to detect Red Flags and Verify Identity.</h2>
             <p>Although the procedures may vary depending on the type of Accounts involved, identity verification is a
-                standard operating procedure for <strong>{{ tenant('name') }}</strong> to use for any person seeking to
+                standard operating procedure for <strong>{{ $store->name }}</strong> to use for any person seeking to
                 conduct business with
-                <strong>{{ tenant('name') }}</strong>. The Qualified Individual in conjunction with the ITPP Coordinator
+                <strong>{{ $store->name }}</strong>. The Qualified Individual in conjunction with the ITPP Coordinator
                 (if assigned) will use
                 the Red Flag Identification, Detection, and Response worksheets/software to determine the relevant Red
-                Flags. <strong>{{ tenant('name') }}</strong> has adopted the following identity theft identification
+                Flags. <strong>{{ $store->name }}</strong> has adopted the following identity theft identification
                 detection process using the
                 following means:
             </p>
@@ -236,7 +236,7 @@
                 <li>Where the dealership maintains a covered accounts after it is opened, authenticating customers,
                     monitoring transactions, and verifying the validity of change of address requests.
                 </li>
-                <li>The process {{ tenant('name') }} will employ for verifying the identity of unknown persons seeking
+                <li>The process {{ $store->name }} will employ for verifying the identity of unknown persons seeking
                     to open a
                     Covered Accounts will be referred to as the;
                 </li>
@@ -262,7 +262,7 @@
                 </li>
                 <li>Verify information given by customer with information on the credit bureau.
                     <ul>
-                        <li>Compare that information with any other information {{ tenant('name') }} has on file.</li>
+                        <li>Compare that information with any other information {{ $store->name }} has on file.</li>
                     </ul>
                 </li>
                 <li>If deemed necessary, collect additional items that would provide a comfort level such as insurance
@@ -297,15 +297,15 @@
         <div id="updating">
             <h2>Updating the ITPP</h2>
             <p>The Qualified Individual will update the ITPP on an annual basis with the assistance of ARMP and these
-                updates will reflect the changes in risks that may have occurred in {{ tenant('name') }}
-                . {{ tenant('name') }} will as part
+                updates will reflect the changes in risks that may have occurred in {{ $store->name }}
+                . {{ $store->name }} will as part
                 of but not limited to the updating process, review the identification of covered accounts and relevant
                 red
                 flags and re-assess the effectiveness of the current detection and response procedures. It is imperative
                 that
-                {{ tenant('name') }} take into consideration the following:</p>
+                {{ $store->name }} take into consideration the following:</p>
             <ul>
-                <li>Any and all experiences of {{ tenant('name') }} with identity theft.</li>
+                <li>Any and all experiences of {{ $store->name }} with identity theft.</li>
                 <li>Changes in methods of identity theft (this is ever changing)</li>
                 <li>Changes in methods to detect, prevent, and mitigate identity theft.</li>
                 <li>Changes in types of Accounts that the dealership offers or maintains (i.e., dealer starts accepting
@@ -316,21 +316,21 @@
                     alliances, joint ventures, and service provider arrangements.
                 </li>
             </ul>
-            <p>If at any time {{ tenant('name') }} encounters a significant change such as a serious incident of
+            <p>If at any time {{ $store->name }} encounters a significant change such as a serious incident of
                 identity theft or
                 installation of a new credit report retrieval system, the Qualified Individual in conjunction with ARMP
                 should immediately update the ITPP.</p>
         </div>
         <div id="policies">
             <h2>General Policies and Procedures for responding to detected Red Flags</h2>
-            <p>{{ tenant('name') }} has developed procedures for responding to detected red flags, the response will
+            <p>{{ $store->name }} has developed procedures for responding to detected red flags, the response will
                 depend on
                 the nature and severity of the red flag detected and the quality and quantity of the red flags present
                 in any
                 one transaction. Not every response is appropriate in every circumstance which is why there needs to be
                 a
                 range of responses and we need to rely on the personal judgment of the Sales and Finance Managers.
-                {{ tenant('name') }} personnel will respond appropriately to detected red flags to prevent and mitigate
+                {{ $store->name }} personnel will respond appropriately to detected red flags to prevent and mitigate
                 identity
                 theft when opening or maintaining covered Accounts.</p>
             <ol>
@@ -1291,7 +1291,7 @@ facility to sign the required documents.</span>
                     </li>
                 </ul>
             </div>
-            <p>{{ tenant('name') }} will train all relevant personnel within the dealership with the assistance of
+            <p>{{ $store->name }} will train all relevant personnel within the dealership with the assistance of
                 ARMP to ensure that everyone knows the process that is being instituted. All relevant
                 personnel involved in opening covered accounts, working with existing accounts (if any),
                 or anyone requesting or using credit reports. All relevant new personnel will be trained
@@ -1303,7 +1303,7 @@ facility to sign the required documents.</span>
                 trained within the 90 day timeframe.</p>
         </div>
         <div id="acknowledgement">
-            The undersigned employee acknowledges {{ tenant('name') }} has instituted an Identity
+            The undersigned employee acknowledges {{ $store->name }} has instituted an Identity
             Theft Prevention Program (hereinafter referred to as ITPP), and agrees to comply with its
             practices and procedures. Employee agrees to abide by the policies contained in the ITPP,
             and to take all necessary steps and precautions to help detect, prevent and mitigate identity
@@ -1314,22 +1314,22 @@ facility to sign the required documents.</span>
         <div id="oversee">
             <h2>Overseeing Service Providers</h2>
             <p>Any third-party service provider that is engaged in an activity in connection with one or more covered
-                Accounts, {{ tenant('name') }} will ensure that the activity of the service provider is conducted in
+                Accounts, {{ $store->name }} will ensure that the activity of the service provider is conducted in
                 accordance
                 with reasonable policies and procedures designed to detect, prevent, and mitigate the risk of identity
                 theft.
                 All service providers will sign off on a service provider agreement requiring the service provider to
                 have
                 policies and procedures in place to detect relevant red flags that may arise in the performance of the
-                service provider’s activities, and either report the red flags to {{ tenant('name') }} or take
+                service provider’s activities, and either report the red flags to {{ $store->name }} or take
                 appropriate steps to
                 prevent or mitigate identity theft.</p>
-            <p>{{ tenant('name') }}’s covered Accounts are limited to installment sale contracts and leases which are
+            <p>{{ $store->name }}’s covered Accounts are limited to installment sale contracts and leases which are
                 immediately assigned to finance sources and no Accounts are maintained and or serviced, thus
-                {{ tenant('name') }} does not retain any service provider to maintain or service these accounts.
-                {{ tenant('name') }} does not outsource the actual Accounts opening function.</p>
+                {{ $store->name }} does not retain any service provider to maintain or service these accounts.
+                {{ $store->name }} does not outsource the actual Accounts opening function.</p>
             <p>There are some examples of possible arrangements of the user of service providers in the opening of
-                covered accounts and if at any time this occurs, {{ tenant('name') }} will have this service provider
+                covered accounts and if at any time this occurs, {{ $store->name }} will have this service provider
                 sign the
                 appropriate acknowledgment attached to this ITPP.</p>
             <ul>
@@ -1351,9 +1351,9 @@ facility to sign the required documents.</span>
                 <li>Significant incidents involving identity theft and management’s response.</li>
                 <li>Recommendations for material changes to the program.</li>
             </ol>
-            <p>{{ tenant('name') }} and/or the board of directors will be responsible for reviewing the above reports
+            <p>{{ $store->name }} and/or the board of directors will be responsible for reviewing the above reports
                 and
-                approving any material changes necessary to address changing identity theft risks. {{ tenant('name') }},
+                approving any material changes necessary to address changing identity theft risks. {{ $store->name }},
                 a
                 member of the board of directors, or a member of senior management will sign off on this ITPP and
                 approve its mission.</p>
@@ -1361,7 +1361,7 @@ facility to sign the required documents.</span>
         <div id="understand">
             <h2>Acceptance of procedures for Address Discrepancy, Red Flag Rules, and Identity Theft Mitigation</h2>
             <p>I the undersigned accept the Procedures contained herein and agree to implement
-                them to the best ability possible. {{ tenant('name') }} has received their Red Flag program and
+                them to the best ability possible. {{ $store->name }} has received their Red Flag program and
                 have been trained on the Red Flag Check dealership software and the procedures contained
                 herein.</p>
         </div>
