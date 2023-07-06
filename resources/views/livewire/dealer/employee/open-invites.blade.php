@@ -81,8 +81,10 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $invites->links() }}
             </div>
+        </div>
+        <div class="mt-10">
+            {{ $invites->links() }}
         </div>
     </div>
 </div>
