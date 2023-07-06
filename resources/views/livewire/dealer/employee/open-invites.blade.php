@@ -20,10 +20,6 @@
                                 Name
                             </th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
-                            @if(tenant('locations'))
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Stores
-                                </th>
-                            @endif
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Invite
                                 Sent
                             </th>
@@ -44,11 +40,6 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     {{ $invite->email }}
                                 </td>
-                                @if(tenant('locations'))
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ $invite->store->name ?? '' }}
-                                    </td>
-                                @endif
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     {{ $invite->created_at->format('F d, Y') }}
                                 </td>
