@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Store;
+use App\Models\OshaQuestions;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Livewire\Component;
@@ -15,6 +16,7 @@ class Show extends Component
 
     public Store $store;
     public OshaAudit $oshaAudit;
+    public $search = '';
 
     public $mediaComponentNames = [
         'osha_q1_images',
@@ -863,7 +865,7 @@ class Show extends Component
         $this->osha_q69_danger = $this->oshaAudit->osha_q69_danger;
     }
 
-    public function updated()
+    public function update()
     {
         $this->validate();
 
@@ -1080,22 +1082,23 @@ class Show extends Component
             'osha_q69_danger' => $this->osha_q69_danger,
         ]);
 
+        for ($i = 1; $i <= 69; $i++) {
+            $this->oshaAudit->syncFromMediaLibraryRequest($this->{'osha_q' . $i . '_images'})
+                ->toMediaCollection('osha_q' . $i . '_images', 'digitalocean');
+        }
+
         Notification::make()
             ->title('OSHA Audit Updated Successfully!')
             ->success()
             ->send();
     }
 
-    public function uploadImages()
-    {
-        for ($i = 1; $i <= 69; $i++) {
-            $this->oshaAudit->syncFromMediaLibraryRequest($this->{'osha_q' . $i . '_images'})
-                ->toMediaCollection('osha_q' . $i . '_images', 'digitalocean');
-        }
-    }
-
     public function render()
     {
-        return view('livewire.dealer.audit.osha.show');
+        return view('livewire.dealer.audit.osha.show', [
+            'questions' => tenancy()->central(function ($tenant) {
+                return OshaQuestions::query()->search('question', $this->search)->get();
+            })
+        ]);
     }
 }
