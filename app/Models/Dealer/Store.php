@@ -142,4 +142,9 @@ class Store extends Model implements HasMedia
     {
         return $this->hasMany(RedFlag::class);
     }
+
+    public function scanReports(): HasMany
+    {
+        return $this->hasMany(ScanReport::class);
+    }
 }

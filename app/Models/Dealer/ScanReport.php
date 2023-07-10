@@ -3,6 +3,7 @@
 namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ScanReport extends Model
 {
@@ -12,4 +13,9 @@ class ScanReport extends Model
         'path',
         'type',
     ];
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

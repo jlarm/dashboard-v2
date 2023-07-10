@@ -10,7 +10,7 @@ class StoreLogo extends Component
     public function render()
     {
         return view('livewire.dealer.general.store-logo', [
-            'logo' => Store::first()->logo,
+            'logo' => Store::first()->logo ?? '',
         ]);
     }
 }
