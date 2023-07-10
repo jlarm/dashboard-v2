@@ -135,8 +135,8 @@ Route::group([
         Route::group(['prefix' => 'stores/{store:slug}', 'as' => 'stores.'], function () {
             Route::get('employees', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Index::class)->middleware(['auth', 'has.stores'])->name('employees');
             Route::get('employees/{user:slug}', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->middleware(['auth', 'has.stores'])->name('employees.show');
-            Route::get('scans', \App\Http\Livewire\Dealer\Store\SingleStoreScans::class)->middleware(['auth', 'has.stores'])->name('scans');
-            Route::get('scan-settings', \App\Http\Livewire\Dealer\Store\SingleStoreScanSettings::class)->middleware(['auth', 'has.stores'])->name('scan-settings');
+            Route::get('scans', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scans');
+            Route::get('scan-settings', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Settings::class)->middleware(['auth', 'has.stores'])->name('scan-settings');
             Route::get('manuals', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Index::class)->middleware(['auth', 'has.stores'])->name('manuals');
             Route::get('manuals/isp', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Isp::class)->middleware(['auth', 'has.stores'])->name('manuals.isp');
             Route::get('manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Osha::class)->middleware(['auth', 'has.stores'])->name('manuals.osha');
