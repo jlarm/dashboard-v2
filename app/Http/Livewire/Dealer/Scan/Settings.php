@@ -3,11 +3,13 @@
 namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\ScanSetting;
+use App\Models\Dealer\Store;
 use Livewire\Component;
 
 class Settings extends Component
 {
     public $name;
+    public Store $store;
 
     public function getScanProperty()
     {
@@ -31,7 +33,12 @@ class Settings extends Component
             'name' => $this->name,
         ]);
 
-        return redirect(route('dealer.scan.index'));
+        if(tenant('locations')){
+            return redirect(route('dealer.stores.scans', $this->store));
+        } else {
+            return redirect(route('dealer.scan.index'));
+        }
+
 
     }
     public function render()

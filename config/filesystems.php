@@ -81,6 +81,16 @@ return [
             "visibility" => "public",
         ],
 
+        'do-scans' => [
+            'driver' => 's3',
+            'key' => env('SCANS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('SCANS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('SCANS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('SCANS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('SCANS_DIGITALOCEAN_SPACES_BUCKET'),
+            "visibility" => "public",
+        ],
+
     ],
 
     /*
