@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
+use App\Models\BodyShopQuestions;
 use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Store;
 use Carbon\Carbon;
@@ -15,6 +16,8 @@ class Show extends Component
 
     public Store $store;
     public BodyShopAudit $bodyShopAudit;
+
+    public $search = '';
 
     public $mediaComponentNames = [
         'body_shop_q1_images',
@@ -531,7 +534,7 @@ class Show extends Component
         $this->body_shop_q45_danger = $this->bodyShopAudit->body_shop_q45_danger;
     }
 
-    public function updated()
+    public function update()
     {
         $this->validate();
 
@@ -676,21 +679,23 @@ class Show extends Component
             'body_shop_q45_danger' => $this->body_shop_q45_danger,
         ]);
 
+        for ($i = 1; $i <= 45; $i++) {
+            $this->bodyShopAudit->syncFromMediaLibraryRequest($this->{'body_shop_q' . $i . '_images'})
+                ->toMediaCollection('body_shop_q' . $i . '_images');
+        }
+
         Notification::make()
             ->title('Body Shop Audit Updated Successfully!')
             ->success()
             ->send();
     }
 
-    public function uploadImages()
-    {
-        for ($i = 1; $i <= 45; $i++) {
-            $this->bodyShopAudit->syncFromMediaLibraryRequest($this->{'body_shop_q' . $i . '_images'})
-                ->toMediaCollection('body_shop_q' . $i . '_images');
-        }
-    }
     public function render()
     {
-        return view('livewire.dealer.audit.body-shop.show');
+        return view('livewire.dealer.audit.body-shop.show', [
+            'questions' => tenancy()->central(function ($tenant) {
+                return BodyShopQuestions::query()->search('question', $this->search)->get();
+            })
+        ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Store;
+use App\Models\FinanceQuestions;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Livewire\Component;
@@ -15,6 +16,8 @@ class Show extends Component
 
     public Store $store;
     public FinanceAudit $financeAudit;
+
+    public $search = '';
 
     public $mediaComponentNames = [
         'finance_q1_images',
@@ -621,7 +624,7 @@ class Show extends Component
         $this->finance_q49_comment = $this->financeAudit->finance_q49_comment;
     }
 
-    public function updated()
+    public function update()
     {
         $this->validate();
 
@@ -777,21 +780,23 @@ class Show extends Component
             'finance_q49_comment' => $this->finance_q49_comment
         ]);
 
+        for ($i = 1; $i <= 49; $i++) {
+            $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
+                ->toMediaCollection( 'finance_q' . $i . '_images', 'digitalocean');
+        }
+
         Notification::make()
             ->title('Finance Audit Updated Successfully!')
             ->success()
             ->send();
     }
 
-    public function uploadImages()
-    {
-        for ($i = 1; $i <= 49; $i++) {
-            $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
-                ->toMediaCollection( 'finance_q' . $i . '_images', 'digitalocean');
-        }
-    }
     public function render()
     {
-        return view('livewire.dealer.audit.finance.show');
+        return view('livewire.dealer.audit.finance.show', [
+            'questions' => tenancy()->central(function ($tenant) {
+                return FinanceQuestions::query()->search('question', $this->search)->get();
+            })
+        ]);
     }
 }

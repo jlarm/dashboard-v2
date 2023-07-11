@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\Individual;
 
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
+use App\Models\IndividualQuestions;
 use App\Models\User;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
@@ -17,6 +18,7 @@ class Edit extends Component
     public Store $store;
     public IndividualAudit $individualAudit;
     public $managers;
+    public $search = '';
 
     public $mediaComponentNames = [
         'audit_images',
@@ -376,7 +378,7 @@ class Edit extends Component
         $this->individual_q40_danger = $this->individualAudit->individual_q40_danger;
     }
 
-    public function updated()
+    public function update()
     {
         $this->validate();
 
@@ -510,20 +512,21 @@ class Edit extends Component
             'individual_q40_danger' => $this->individual_q40_danger
         ]);
 
+        $this->individualAudit->syncFromMediaLibraryRequest($this->audit_images)
+            ->toMediaCollection('individual_audit_images', 'digitalocean');
+
         Notification::make()
             ->title('Deal Jacket Audit Updated Successfully!')
             ->success()
             ->send();
     }
 
-    public function uploadImages()
-    {
-        $this->individualAudit->syncFromMediaLibraryRequest($this->audit_images)
-            ->toMediaCollection('individual_audit_images', 'digitalocean');
-    }
-
     public function render()
     {
-        return view('livewire.dealer.audit.individual.edit');
+        return view('livewire.dealer.audit.individual.edit', [
+            'questions' => tenancy()->central(function ($tenant) {
+                return IndividualQuestions::query()->search('question', $this->search)->get();
+            })
+        ]);
     }
 }
