@@ -12,7 +12,7 @@ class VendorController extends Controller
     {
         $store = Store::first();
         return view('dealer.vendor.index', [
-            'vendors' => $store->vendors,
+            'stores' => Store::count(),
         ]);
     }
 

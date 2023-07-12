@@ -19,7 +19,12 @@ class IndexItem extends Component
     public function mount()
     {
         $this->user = auth()->user();
-        $this->store = $this->user->stores->first() ?? Store::first();
+
+//        if(tenant('locations')) {
+//            $this->store = $this->user->stores->first()->state ?? '';
+//        }
+//
+//        $this->store = Store::first();
 
         $course1 = Course::with('results')->where('slug', 'dot-hazardous-materials-transportation')->pluck('id');
         $course2 = Course::with('results')->where('slug', 'dot-hazardous-materials-transportation-identifying-hazardous-materials')->pluck('id');

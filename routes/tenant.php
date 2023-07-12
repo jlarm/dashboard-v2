@@ -90,7 +90,7 @@ Route::group([
     // **************************************************
 
     Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
-        Route::get('/', function () { return view('dealer.employee.index'); })->middleware('auth')->name('index');
+        Route::get('/', \App\Http\Controllers\Dealer\EmployeeIndexController::class)->middleware('auth')->name('index');
         Route::get('open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('open-invites');
         Route::get('{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('show');
     });
