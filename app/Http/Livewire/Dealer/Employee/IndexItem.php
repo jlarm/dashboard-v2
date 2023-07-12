@@ -53,7 +53,7 @@ class IndexItem extends Component
 
         $this->totalCourses = $this->departmentCourseCount;
 
-        if (Store::first()->pluck('state') != 'California') {
+        if (Store::first()->exists() && Store::first()->pluck('state') != 'California') {
             $this->totalCourses = $this->totalCourses - 1;
         }
 
