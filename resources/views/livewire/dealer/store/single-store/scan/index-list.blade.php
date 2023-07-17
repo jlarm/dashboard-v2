@@ -1,67 +1,139 @@
 <div class="px-4 sm:px-6 lg:px-8">
-    <div class="mt-8 flow-root">
+    <div class="flow-root">
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle">
-                <table class="min-w-full divide-y divide-gray-300">
-                    <thead>
-                    <tr>
-                        <th scope="col"
-                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">Date
-                        </th>
-                        <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
-                            <span class="sr-only">Edit</span>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                    @forelse($reports as $day => $report)
-                        <tr>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-                                {{ $day }}
-                            </td>
-                            <td class="relative space-x-5 flex justify-end whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                                @foreach($report as $r)
-                                    @if($r->type === 'executive')
-                                        <a
-                                            target="_blank"
-                                            class="underline hover:text-gray-500 transition flex items-center"
-                                            href="https://armp-scan-reports.nyc3.cdn.digitaloceanspaces.com/{{ $r->path }}"
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                 stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
-                                            </svg>
-                                            Executive Report
-                                        </a>
-                                    @else
-                                        <a
-                                            target="_blank"
-                                            class="underline hover:text-gray-500 transition flex items-center"
-                                            href="https://armp-scan-reports.nyc3.cdn.digitaloceanspaces.com/{{ $r->path }}
-                                            "
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                 stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
-                                            </svg>
-                                            Technical Report
-                                        </a>
-                                    @endif
-                                @endforeach
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="2"
-                                class="whitespace-nowrap py-4 pl-4 pr-3 text-2xl font-medium text-arm-blue-900 sm:pl-6 lg:pl-8 text-center">
-                                No reports found.
-                            </td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                <!-- Tabs -->
+                <div
+                    x-data="{
+                        selectedId: null,
+                        init() {
+                            // Set the first available tab on the page on page load.
+                            this.$nextTick(() => this.select(this.$id('tab', 1)))
+                        },
+                        select(id) {
+                            this.selectedId = id
+                        },
+                        isSelected(id) {
+                            return this.selectedId === id
+                        },
+                        whichChild(el, parent) {
+                            return Array.from(parent.children).indexOf(el) + 1
+                        }
+                    }"
+                    x-id="['tab']"
+                    class="mx-5"
+                >
+                    <!-- Tab List -->
+                    <ul
+                        x-ref="tablist"
+                        @keydown.right.prevent.stop="$focus.wrap().next()"
+                        @keydown.home.prevent.stop="$focus.first()"
+                        @keydown.page-up.prevent.stop="$focus.first()"
+                        @keydown.left.prevent.stop="$focus.wrap().prev()"
+                        @keydown.end.prevent.stop="$focus.last()"
+                        @keydown.page-down.prevent.stop="$focus.last()"
+                        role="tablist"
+                        class="-mb-px flex items-stretch"
+                    >
+                        <!-- Tab -->
+                        <li>
+                            <button
+                                :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                                @click="select($el.id)"
+                                @mousedown.prevent
+                                @focus="select($el.id)"
+                                type="button"
+                                :tabindex="isSelected($el.id) ? 0 : -1"
+                                :aria-selected="isSelected($el.id)"
+                                :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
+                                class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                                role="tab"
+                            >External Scans
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                                @click="select($el.id)"
+                                @mousedown.prevent
+                                @focus="select($el.id)"
+                                type="button"
+                                :tabindex="isSelected($el.id) ? 0 : -1"
+                                :aria-selected="isSelected($el.id)"
+                                :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
+                                class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                                role="tab"
+                            >Internal Scans
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                                @click="select($el.id)"
+                                @mousedown.prevent
+                                @focus="select($el.id)"
+                                type="button"
+                                :tabindex="isSelected($el.id) ? 0 : -1"
+                                :aria-selected="isSelected($el.id)"
+                                :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
+                                class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                                role="tab"
+                            >Settings
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Panels -->
+                    <div role="tabpanels" class="rounded-b-md border border-gray-200 bg-white">
+                        <!-- Panel -->
+                        <section
+                            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                            role="tabpanel"
+                            class="p-8"
+                        >
+                            @role('super-admin|Consultant')
+                            @if(Cookie::get('sentry'))
+                                <livewire:dealer.scan.index :store="$store"/>
+                            @else
+                                <div class="max-w-md mx-auto">
+                                    <livewire:dealer.scan.login :store="$store"/>
+                                </div>
+                            @endif
+                            @endrole
+                            <livewire:dealer.scan.report-index :store="$store"/>
+                        </section>
+
+                        <section
+                            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                            role="tabpanel"
+                            class="p-8"
+                        >
+                            @role('super-admin|Consultant')
+                            @if(Cookie::get('sentry'))
+                                <livewire:dealer.scan.internal-report-generator :store="$store"/>
+                            @else
+                                <div class="max-w-md mx-auto">
+                                    <livewire:dealer.scan.login :store="$store"/>
+                                </div>
+                            @endif
+                            @endrole
+                            <livewire:dealer.scan.internal-report-index :store="$store"/>
+                        </section>
+
+                        <section
+                            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                            role="tabpanel"
+                            class="p-8"
+                        >
+                            <livewire:dealer.store.single-store.scan.settings :store="$store"/>
+                        </section>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

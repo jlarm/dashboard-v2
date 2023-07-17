@@ -11,9 +11,10 @@ use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
-class   Index extends Component
+class InternalReportGenerator extends Component
 {
-    public $statusCode;
+    public $token;
+    public $status;
     public string $type = 'technical';
     public string $dealer;
     public $assets;
@@ -25,7 +26,7 @@ class   Index extends Component
     public function mount()
     {
         if(tenant('locations')) {
-            $this->dealer = ScanSetting::where('store_id', $this->store->id)->first()->name ?? '';
+            $this->store = Store::where('id', $this->store->id)->first() ?? '';
         } else {
             $this->dealer = ScanSetting::first()->name ?? '';
         }
@@ -33,6 +34,9 @@ class   Index extends Component
 
     public function export()
     {
+        $token = Cookie::get('sentry');
+        $client = new Client();
+
         if(tenant('locations')){
             $dealerName = str_replace(' ', '-', $this->store->name);
         } else {
@@ -40,35 +44,29 @@ class   Index extends Component
         }
         $fileName = $dealerName .'-'. now()->format('Ymdhis') .'-'.$this->type.'.pdf';
 
-
         try {
-            $token = Cookie::get('sentry');
-            $client = new Client();
-
-            $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/' . $this->type, [
+            $request = new Request('GET', 'https://blue-api.redsentry.com/v2/internal/'.$this->dealer.'/report/' . $this->type, [
                 'Authorization' => $token,
             ]);
 
             $status = $client->send($request)->getBody()->getContents();
 
-            Storage::disk('do-scans')->put(tenant('id') . '/' . $this->type . '/' . $fileName, $status);
+            Storage::disk('do-scans')->put(tenant('id') . '/internal/' . $this->type . '/' . $fileName, $status);
 
             ScanReport::create([
                 'user_id' => auth()->id(),
                 'store_id' => $this->store->id ?? Store::first()->id,
-                'path' => tenant('id') . '/' . $this->type . '/' . $fileName,
+                'path' => tenant('id') . '/external/' . $this->type . '/' . $fileName,
                 'type' => $this->type,
-                'scan_type' => 'external',
+                'scan_type' => 'internal',
             ]);
-
-            if(tenant('locations')){
-                return redirect()->route('dealer.stores.scans', $this->store);
-            } else {
-                return redirect()->route('dealer.scan.index');
-            }
-        } catch (\Exception $e) {
+        } catch(\Exception $e) {
             $this->addError('connection', 'Error connecting to Sentry. Please check the dealership name in settings.');
         }
 
+    }
+    public function render()
+    {
+        return view('livewire.dealer.scan.internal-report-generator');
     }
 }

@@ -60,8 +60,8 @@ class CreateController extends Controller
                         'fax' => $fax,
                         'website' => $url,
                     ]);
-                    
-                    ScanSetting::create([]);
+
+                    ScanSetting::create(['store_id' => $store->id]);
                     EmployeeList::create(['store_id' => $store->id]);
                 }
 

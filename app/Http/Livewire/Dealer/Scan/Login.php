@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Dealer\Scan;
 
+use App\Models\Dealer\Store;
 use Cookie;
 use Http;
 use Livewire\Component;
 
 class Login extends Component
 {
+    public Store $store;
     public string $email;
     public string $password;
     public string $token;
@@ -22,9 +24,13 @@ class Login extends Component
 
             $this->token = $user['token'];
 
-            Cookie::queue('sentry', $this->token, 30);
+            Cookie::queue('sentry', $this->token, 604800);
 
-            return redirect()->route('dealer.scan.index');
+            if(tenant('locations')) {
+                return redirect()->route('dealer.stores.scans', $this->store);
+            } else {
+                return redirect()->route('dealer.scan.index');
+            }
         } catch (\Exception $e) {
             $this->addError('email', 'Invalid credentials');
         }

@@ -17,44 +17,44 @@ class GenerateReport extends Component
     public $assets;
     public $reports;
     public Store $store;
-    public $tech;
-    public $exec;
+    public $generateError;
 
     public function mount()
     {
-        $this->tech = $this->store->scanReports()->where('type', 'technical')->latest()->select('created_at')->first();
-        $this->exec = $this->store->scanReports()->where('type', 'executive')->latest()->select('created_at')->first();
-
         $this->dealer = $this->store->scanSetting()->first()->name;
     }
 
     public function export() {
-        $token = Cookie::get('sentry');
-        $client = new Client();
+        try {
+            $token = Cookie::get('sentry');
+            $client = new Client();
 
-        if(tenant('locations')){
-            $dealerName = str_replace(' ', '-', $this->store->name);
-        } else {
-            $dealerName = str_replace(' ', '-', tenant('name'));
+            if(tenant('locations')){
+                $dealerName = str_replace(' ', '-', $this->store->name);
+            } else {
+                $dealerName = str_replace(' ', '-', tenant('name'));
+            }
+            $fileName = $dealerName .'-'. now()->format('Ymdhis') .'-'.$this->type.'.pdf';
+
+            $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/' . $this->type, [
+                'Authorization' => $token,
+            ]);
+
+            $status = $client->send($request)->getBody()->getContents();
+
+            Storage::disk('do-scans')->put(tenant('id') . '/' . $this->type . '/' . $fileName, $status);
+
+            ScanReport::create([
+                'user_id' => auth()->id(),
+                'store_id' => $this->store->id ?? Store::first()->id,
+                'path' => tenant('id') . '/' . $this->type . '/' . $fileName,
+                'type' => $this->type,
+            ]);
+
+            return redirect()->route('dealer.stores.scans', $this->store);
+        } catch (\Exception $e) {
+            $this->addError('generateError', $e->getMessage());
         }
-        $fileName = $dealerName .'-'. now()->format('Ymdhis') .'-'.$this->type.'.pdf';
-
-        $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/' . $this->type, [
-            'Authorization' => $token,
-        ]);
-
-        $status = $client->send($request)->getBody()->getContents();
-
-        Storage::disk('do-scans')->put(tenant('id') . '/' . $this->type . '/' . $fileName, $status);
-
-        ScanReport::create([
-            'user_id' => auth()->id(),
-            'store_id' => $this->store->id ?? Store::first()->id,
-            'path' => tenant('id') . '/' . $this->type . '/' . $fileName,
-            'type' => $this->type,
-        ]);
-
-        return redirect()->route('dealer.stores.scans', $this->store);
     }
 
     public function render()

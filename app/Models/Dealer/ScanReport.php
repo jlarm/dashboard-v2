@@ -12,6 +12,7 @@ class ScanReport extends Model
         'store_id',
         'path',
         'type',
+        'scan_type',
     ];
 
     public function store(): BelongsTo

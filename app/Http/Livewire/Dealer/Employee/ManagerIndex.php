@@ -10,6 +10,7 @@ use Livewire\Component;
 class ManagerIndex extends Component
 {
     public $store;
+    public $search = '';
 
     public function mount()
     {
@@ -34,6 +35,7 @@ class ManagerIndex extends Component
                 })
                 ->with('department')
                 ->with('roles')
+                ->search('name', $this->search)
                 ->paginate(10),
         ]);
     }

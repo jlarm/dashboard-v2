@@ -1,4 +1,7 @@
-<div class="shadow-sm sm:rounded-lg">
+<div>
+    <div class="ml-5 mb-8">
+        <x-text-input type="search" wire:model="search" placeholder="Search Employees..."/>
+    </div>
     <div class="w-full bg-white">
         <div class="overflow-x-auto">
             <div class="inline-block min-w-full overflow-hidden align-middle">
@@ -9,7 +12,7 @@
                             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
                             Name
                         </th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Contact</th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Completed
                             Courses

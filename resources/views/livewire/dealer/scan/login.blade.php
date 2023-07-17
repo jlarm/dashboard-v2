@@ -5,7 +5,7 @@
         <span class="block sm:inline">{{ $message }}</span>
     </div>
     @enderror
-    <p class="my-6">Login to generate reports</p>
+    <p class="my-6">Login with your Red Sentry credentials to generate reports</p>
     <form wire:submit.prevent="login" class="space-y-6">
         <div>
             <x-text-input

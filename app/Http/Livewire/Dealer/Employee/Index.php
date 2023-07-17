@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+    public $search = '';
 
     public function render()
     {
@@ -17,6 +18,7 @@ class Index extends Component
                 ->whereNot('name', 'Terry Dortch')
                 ->whereNot('name', 'Mike Backer')
                 ->whereNot('name', 'Joe Lohr')
+                ->search('name', $this->search)
                 ->paginate(10),
         ]);
     }

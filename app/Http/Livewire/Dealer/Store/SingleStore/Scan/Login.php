@@ -22,7 +22,7 @@ class Login extends Component
 
             $this->token = $user['token'];
 
-            Cookie::queue('sentry', $this->token, 30);
+            Cookie::queue('sentry', $this->token, 604800);
 
             return redirect()->route('dealer.store.single-store.scan');
         } catch (\Exception $e) {

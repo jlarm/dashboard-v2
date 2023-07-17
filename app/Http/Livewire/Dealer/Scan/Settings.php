@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class Settings extends Component
@@ -18,7 +19,7 @@ class Settings extends Component
 
     public function mount()
     {
-        $this->name = $this->scan->name;
+        $this->name = $this->scan->name ?? '';
     }
 
     protected $rules = [
@@ -32,6 +33,11 @@ class Settings extends Component
         $this->scan->update([
             'name' => $this->name,
         ]);
+
+        Notification::make()
+            ->title('Updated Successfully!')
+            ->success()
+            ->send();
 
         if(tenant('locations')){
             return redirect(route('dealer.stores.scans', $this->store));

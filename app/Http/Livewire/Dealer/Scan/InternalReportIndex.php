@@ -6,14 +6,14 @@ use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
 use Livewire\Component;
 
-class ReportIndex extends Component
+class InternalReportIndex extends Component
 {
     public Store $store;
     public function render()
     {
         if(tenant('locations')) {
-            return view('livewire.dealer.scan.report-index', [
-                'reports' => ScanReport::where('scan_type', 'external')
+            return view('livewire.dealer.scan.internal-report-index', [
+                'reports' => ScanReport::where('scan_type', 'internal')
                     ->where('store_id', $this->store->id)
                     ->latest()
                     ->get()
@@ -28,8 +28,8 @@ class ReportIndex extends Component
                     }),
             ]);
         } else {
-            return view('livewire.dealer.scan.report-index', [
-                'reports' => ScanReport::where('scan_type', 'external')
+            return view('livewire.dealer.scan.internal-report-index', [
+                'reports' => ScanReport::where('scan_type', 'internal')
                     ->latest()
                     ->get()
                     ->groupBy(function($data) {

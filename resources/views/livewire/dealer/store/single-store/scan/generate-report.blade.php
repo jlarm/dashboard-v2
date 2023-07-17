@@ -1,5 +1,8 @@
 <div class="w-full">
     <div class="w-full">
+        @if($generateError)
+            {{ $generateError }}
+        @endif
         <div class="flex justify-end items-end mt-4 sm:mt-0 space-x-5">
             @if($dealer)
                 <select
@@ -7,12 +10,8 @@
                     id="location"
                     name="location"
                     class="mt-2 block rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
-                    @if(!$tech || $tech->created_at->format('Ymd') != Carbon\Carbon::now()->format('Ymd'))
-                        <option value="technical">Technical Report</option>
-                    @endif
-                    @if(!$exec || $exec->created_at->format('Ymd') != Carbon\Carbon::now()->format('Ymd'))
-                        <option value="executive">Executive Report</option>
-                    @endif
+                    <option value="technical">Technical Report</option>
+                    <option value="executive">Executive Report</option>
                 </select>
 
                 <span class="sm:block">
