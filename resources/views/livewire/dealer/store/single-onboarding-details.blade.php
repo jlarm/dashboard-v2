@@ -12,6 +12,7 @@
                         <x-input-label for="pep" :value="__('Police Emergency Phone Number')"/>
                         <x-text-input wire:model.defer="pep" id="pep" class="block mt-1 w-full" type="text" name="pep"
                                       :value="old('pep')"
+                                      x-mask="999-999-9999"
                                       required autofocus/>
                         <x-input-error :messages="$errors->get('pep')" class="mt-2"/>
                     </div>
@@ -20,6 +21,7 @@
                         <x-text-input x-mask="999-999-9999" wire:model.defer="pnep" id="pnep" class="block mt-1 w-full"
                                       type="text" name="pnep"
                                       :value="old('pnep')"
+                                      x-mask="999-999-9999"
                                       required autofocus/>
                         <x-input-error :messages="$errors->get('pnep')" class="mt-2"/>
                     </div>
@@ -27,6 +29,7 @@
                         <x-input-label for="fep" :value="__('Fire Emergency Phone Number')"/>
                         <x-text-input wire:model.defer="fep" id="fep" class="block mt-1 w-full" type="text" name="fep"
                                       :value="old('fep')"
+                                      x-mask="999-999-9999"
                                       required autofocus/>
                         <x-input-error :messages="$errors->get('fep')" class="mt-2"/>
                     </div>
@@ -35,6 +38,7 @@
                         <x-text-input wire:model.defer="fnep" id="fnep" class="block mt-1 w-full" type="text"
                                       name="fnep"
                                       :value="old('fnep')"
+                                      x-mask="999-999-9999"
                                       required autofocus/>
                         <x-input-error :messages="$errors->get('fnep')" class="mt-2"/>
                     </div>
