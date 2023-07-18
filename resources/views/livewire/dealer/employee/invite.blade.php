@@ -10,7 +10,7 @@
             <x-input-label for="name" :value="__('Employee Name')"/>
             <x-text-input wire:model.defer="name" id="name" class="block mt-1 w-full" type="text" name="name"
                           :value="old('name')" required/>
-            <x-input-error :messages="$errors->get('name')" class="mt-2"/>
+            @error('name') <p class="text-red-500">{{ $message }}</p> @enderror
         </div>
 
         <!-- Email Address -->
@@ -18,7 +18,7 @@
             <x-input-label for="email" :value="__('Employee Email Address')"/>
             <x-text-input wire:model.defer="email" id="email" class="block mt-1 w-full" type="email" name="email"
                           :value="old('email')" required/>
-            <x-input-error :messages="$errors->get('email')" class="mt-2"/>
+            @error('email') <p class="text-red-500">{{ $message }}</p> @enderror
         </div>
 
         <input type="hidden" wire:model.defer="currentStoreId" value="{{ $currentStoreId }}"/>

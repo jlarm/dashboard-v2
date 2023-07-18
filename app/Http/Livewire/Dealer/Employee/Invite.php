@@ -30,32 +30,36 @@ class Invite extends Modal
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
-        'dealers' => ['required', 'array'],
         'department' => ['required', 'integer'],
         'roles' => ['min:1', 'array'],
     ];
 
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
     public function sendInvite()
     {
-        $validated = $this->validate();
+        $this->validate();
 
         if (auth()->user()->hasRole('Manager')) {
             $invite = \App\Models\Dealer\Invite::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
+                'name' => $this->name,
+                'email' => $this->email,
                 'stores' => [$this->currentStoreId],
                 'department_id' => auth()->user()->department_id,
-                'roles' => $validated['roles'],
+                'roles' => $this->roles,
                 'user_id' => auth()->user()->id,
                 'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
             ]);
         } else {
             $invite = \App\Models\Dealer\Invite::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'stores' => $validated['dealers'],
-                'department_id' => $validated['department'],
-                'roles' => $validated['roles'],
+                'name' => $this->name,
+                'email' => $this->email,
+                'stores' => $this->dealers,
+                'department_id' => $this->department,
+                'roles' => $this->roles,
                 'user_id' => auth()->user()->id,
                 'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
             ]);
