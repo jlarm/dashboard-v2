@@ -61,6 +61,8 @@
                         Cash
                     @elseif($individualAudit->individual_q1_answer === 2)
                         Finance
+                    @elseif($individualAudit->individual_q1_answer === 3)
+                        Lease
                     @endif
                 </p>
             </div>
