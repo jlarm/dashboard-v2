@@ -114,55 +114,59 @@
                                     Vendors
                                 </a>
                                 @can('view-audits')
-                                    <span
+                                    <div
                                         x-data="{ dropdownOpen: false }"
                                     >
-                                    <button
-                                        class="{{ (request()->segment(1) == 'audits') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} w-full border-transparent group border-l-4 py-2 px-3 flex text-sm font-medium"
-                                        type="button"
-                                        @click="dropdownOpen = !dropdownOpen"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                             stroke-width="1.5" stroke="currentColor"
-                                             class="{{ (request()->segment(1) == 'audits') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
-                                    </svg>
-                                    Audits
-                                        <svg
-                                            class="text-gray-400 ml-auto h-5 w-5 shrink-0"
-                                            :class="{ 'rotate-90 text-gray-500': open, 'text-gray-400': !(open) }"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                            aria-hidden="true">
-                                          <path fill-rule="evenodd"
-                                                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                                                clip-rule="evenodd"/>
-                                        </svg>
-                                    </button>
-                                    <ul class="block w-full mt-1 px-2" id="sub-menu-1" x-show="dropdownOpen" x-collapse>
-                                        <li>
-                                          <!-- 44px -->
-                                          <a href="{{ route('dealer.audit.osha.index') }}"
-                                             class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
-                                        </li>
-                                        <li>
-                                          <!-- 44px -->
-                                          <a href="{{ route('dealer.audit.body-shop.index') }}"
-                                             class="{{ (request()->segment(2) == 'body-shop') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Body Shop</a>
-                                        </li>
-                                        <li>
-                                          <!-- 44px -->
-                                          <a href="{{ route('dealer.audit.finance.index') }}"
-                                             class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">GLBA Walkthrough</a>
-                                        </li>
-                                        <li>
-                                          <!-- 44px -->
-                                          <a href="{{ route('dealer.audit.individual.index') }}"
-                                             class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal Jackets</a>
-                                        </li>
-                                      </ul>
-                                </span>
+                                        <button
+                                            class="{{ (request()->segment(1) == 'audits') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} w-full border-transparent group border-l-4 py-2 px-3 flex text-sm font-medium"
+                                            type="button"
+                                            @click="dropdownOpen = !dropdownOpen"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor"
+                                                 class="{{ (request()->segment(1) == 'audits') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                                            </svg>
+                                            Audits
+                                            <svg
+                                                class="text-gray-400 ml-auto h-5 w-5 shrink-0"
+                                                :class="{ 'rotate-90 text-gray-500': open, 'text-gray-400': !(open) }"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                      d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                        <ul class="block w-full mt-1 px-2" id="sub-menu-1" x-show="dropdownOpen"
+                                            x-collapse>
+                                            <li>
+                                                <!-- 44px -->
+                                                <a href="{{ route('dealer.audit.osha.index') }}"
+                                                   class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
+                                            </li>
+                                            <li>
+                                                <!-- 44px -->
+                                                <a href="{{ route('dealer.audit.body-shop.index') }}"
+                                                   class="{{ (request()->segment(2) == 'body-shop') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Body
+                                                    Shop</a>
+                                            </li>
+                                            <li>
+                                                <!-- 44px -->
+                                                <a href="{{ route('dealer.audit.finance.index') }}"
+                                                   class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">GLBA
+                                                    Walkthrough</a>
+                                            </li>
+                                            <li>
+                                                <!-- 44px -->
+                                                <a href="{{ route('dealer.audit.individual.index') }}"
+                                                   class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal
+                                                    Jackets</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 @endcan
                                 <a
                                     href="{{ route('dealer.scan.index') }}"
@@ -297,51 +301,54 @@
                     <!-- AUDITS -->
                     @if(!tenant('locations'))
                         @can('create-stores')
-                            <span
+                            <div
                                 x-data="{ open: false }"
                             >
-                                    <button
-                                        class="{{ (request()->segment(1) == 'audits') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} w-full border-transparent group border-l-4 py-2 px-3 flex text-sm font-medium"
-                                        type="button"
-                                        @click="open = !open"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                             stroke-width="1.5" stroke="currentColor"
-                                             class="{{ (request()->segment(1) == 'audits') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6">
+                                <button
+                                    class="{{ (request()->segment(1) == 'audits') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} w-full border-transparent group border-l-4 py-2 px-3 flex text-sm font-medium"
+                                    type="button"
+                                    @click="open = !open"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor"
+                                         class="{{ (request()->segment(1) == 'audits') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                               d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
                                     </svg>
                                     Audits
-                                        <svg
-                                            class="text-gray-400 ml-auto h-5 w-5 shrink-0"
-                                            :class="{ 'rotate-90 text-gray-500': open, 'text-gray-400': !(open) }"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                            aria-hidden="true">
-                                          <path fill-rule="evenodd"
-                                                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                                                clip-rule="evenodd"/>
-                                        </svg>
-                                    </button>
-                                    <ul class="block w-full mt-1 px-2" id="sub-menu-1" x-show="open" x-collapse>
-                                        <li>
-                                          <a href="{{ route('dealer.audit.osha.index') }}"
-                                             class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
-                                        </li>
-                                        <li>
-                                          <a href="{{ route('dealer.audit.body-shop.index') }}"
-                                             class="{{ (request()->segment(2) == 'body-shop') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Body Shop</a>
-                                        </li>
-                                        <li>
-                                          <a href="{{ route('dealer.audit.finance.index') }}"
-                                             class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">GLBA Walkthrough</a>
-                                        </li>
-                                        <li>
-                                          <a href="{{ route('dealer.audit.individual.index') }}"
-                                             class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal Jackets</a>
-                                        </li>
-                                      </ul>
-                                </span>
+                                    <svg
+                                        class="text-gray-400 ml-auto h-5 w-5 shrink-0"
+                                        :class="{ 'rotate-90 text-gray-500': open, 'text-gray-400': !(open) }"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                              d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                <ul class="block w-full mt-1 px-2" id="sub-menu-1" x-show="open" x-collapse>
+                                    <li>
+                                        <a href="{{ route('dealer.audit.osha.index') }}"
+                                           class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('dealer.audit.body-shop.index') }}"
+                                           class="{{ (request()->segment(2) == 'body-shop') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Body
+                                            Shop</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('dealer.audit.finance.index') }}"
+                                           class="{{ (request()->segment(2) == 'finance') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">GLBA
+                                            Walkthrough</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('dealer.audit.individual.index') }}"
+                                           class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal
+                                            Jackets</a>
+                                    </li>
+                                </ul>
+                            </div>
                         @endcan
                     @endif
                     <!-- VENDORS -->
