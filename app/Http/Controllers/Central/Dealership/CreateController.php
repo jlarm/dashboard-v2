@@ -112,8 +112,6 @@ class CreateController extends Controller
                     $mike->assignRole('super-admin');
                 }
 
-                dd($initials);
-
             });
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
