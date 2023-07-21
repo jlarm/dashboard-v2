@@ -68,8 +68,7 @@
             </ul>
         </nav>
     </div>
-
-    @if($stores->count() > 1)
+    @if($storeCount > 1)
         <div class="flex justify-center">
             <div
                 x-data="{
