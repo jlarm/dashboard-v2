@@ -13,7 +13,7 @@
                         <x-text-input wire:model.defer="pep" id="pep" class="block mt-1 w-full" type="text" name="pep"
                                       :value="old('pep')"
                                       x-mask="999-999-9999"
-                                      required autofocus/>
+                                      autofocus/>
                         <x-input-error :messages="$errors->get('pep')" class="mt-2"/>
                     </div>
                     <div>
@@ -22,7 +22,7 @@
                                       type="text" name="pnep"
                                       :value="old('pnep')"
                                       x-mask="999-999-9999"
-                                      required autofocus/>
+                                      autofocus/>
                         <x-input-error :messages="$errors->get('pnep')" class="mt-2"/>
                     </div>
                     <div>
@@ -30,7 +30,7 @@
                         <x-text-input wire:model.defer="fep" id="fep" class="block mt-1 w-full" type="text" name="fep"
                                       :value="old('fep')"
                                       x-mask="999-999-9999"
-                                      required autofocus/>
+                                      autofocus/>
                         <x-input-error :messages="$errors->get('fep')" class="mt-2"/>
                     </div>
                     <div>
@@ -39,7 +39,7 @@
                                       name="fnep"
                                       :value="old('fnep')"
                                       x-mask="999-999-9999"
-                                      required autofocus/>
+                                      autofocus/>
                         <x-input-error :messages="$errors->get('fnep')" class="mt-2"/>
                     </div>
                     <div>
@@ -47,7 +47,7 @@
                         <x-text-input wire:model.defer="fireAlarm" id="fireAlarm" class="block mt-1 w-full" type="text"
                                       name="fireAlarm"
                                       :value="old('fireAlarm')"
-                                      required autofocus/>
+                                      autofocus/>
                         <x-input-error :messages="$errors->get('fireAlarm')" class="mt-2"/>
                     </div>
                     <div>
@@ -55,7 +55,7 @@
                         <x-text-input wire:model.defer="burglarAlarm" id="burglarAlarm" class="block mt-1 w-full"
                                       type="text" name="burglarAlarm"
                                       :value="old('burglarAlarm')"
-                                      required autofocus/>
+                                      autofocus/>
                         <x-input-error :messages="$errors->get('burglarAlarm')" class="mt-2"/>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     <x-text-input wire:model.defer="firewallCompany" id="firewallCompany" class="block mt-1 w-full"
                                   type="text" name="firewallCompany"
                                   :value="old('firewallCompany')"
-                                  required autofocus/>
+                                  autofocus/>
                     <x-input-error :messages="$errors->get('firewallCompany')" class="mt-2"/>
                 </div>
                 <div class="space-y-1">
@@ -178,7 +178,7 @@
                     <x-text-input wire:model.defer="antivirus" id="antivirus" class="block mt-1 w-full" type="text"
                                   name="antivirus"
                                   :value="old('antivirus')"
-                                  required autofocus/>
+                                  autofocus/>
                     <x-input-error :messages="$errors->get('antivirus')" class="mt-2"/>
                 </div>
                 <div>
@@ -187,7 +187,7 @@
                     <x-text-input wire:model.defer="antivirusComputers" id="antivirusComputers"
                                   class="block mt-1 w-full" type="text" name="antivirusComputers"
                                   :value="old('antivirusComputers')"
-                                  required autofocus/>
+                                  autofocus/>
                     <x-input-error :messages="$errors->get('antivirusComputers')" class="mt-2"/>
                 </div>
                 <div>
@@ -196,7 +196,7 @@
                     <x-text-input wire:model.defer="screensaverMinutes" id="screensaverMinutes"
                                   class="block mt-1 w-full" type="number" name="screensaverMinutes"
                                   :value="old('screensaverMinutes')"
-                                  required autofocus/>
+                                  autofocus/>
                     <x-input-error :messages="$errors->get('screensaverMinutes')" class="mt-2"/>
                 </div>
                 <div>
@@ -205,7 +205,7 @@
                     <x-text-input wire:model.defer="dmsProvider" id="dmsProvider" class="block mt-1 w-full" type="text"
                                   name="dmsProvider"
                                   :value="old('dmsProvider')"
-                                  required autofocus/>
+                                  autofocus/>
                     <x-input-error :messages="$errors->get('dmsProvider')" class="mt-2"/>
                 </div>
                 <div>
@@ -213,7 +213,7 @@
                     <x-text-input wire:model.defer="backups" id="backups" class="block mt-1 w-full" type="text"
                                   name="backups"
                                   :value="old('backups')"
-                                  required autofocus/>
+                                  autofocus/>
                     <x-input-error :messages="$errors->get('backups')" class="mt-2"/>
                 </div>
                 <div class="space-y-1">
@@ -251,7 +251,7 @@
                     <x-text-input wire:model.defer="designatedRedFlagCoordinator" id="designatedRedFlagCoordinator"
                                   class="block mt-1 w-full" type="text" name="designatedRedFlagCoordinator"
                                   :value="old('designatedRedFlagCoordinator')"
-                                  required autofocus/>
+                                  autofocus/>
                     <x-input-error :messages="$errors->get('designatedRedFlagCoordinator')" class="mt-2"/>
                 </div>
                 <div>
