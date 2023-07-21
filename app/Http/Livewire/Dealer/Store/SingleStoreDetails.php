@@ -30,7 +30,7 @@ class SingleStoreDetails extends Component
         'state' => 'required',
         'postal_code' => 'required',
         'phone' => 'required',
-        'website' => 'required',
+        'website' => 'nullable',
         'logo' => 'nullable|image|max:1024|mimes:png,jpg',
     ];
 

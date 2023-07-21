@@ -57,7 +57,7 @@
                         <x-input-label for="website" :value="__('Website URL')"/>
                         <x-text-input wire:model.defer="website" id="website" class="block mt-1 w-full" type="text"
                                       :value="old('website')"
-                                      required autofocus/>
+                                      autofocus/>
                         <x-input-error :messages="$errors->get('website')" class="mt-2"/>
                     </div>
                 </div>
