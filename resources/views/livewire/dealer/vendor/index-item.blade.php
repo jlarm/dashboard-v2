@@ -5,7 +5,9 @@
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $vendor->contact_name ?? '-' }}</td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a
             href="mailto:{{ $vendor->contact_email }}">{{ $vendor->contact_email }}</a></td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $vendor->store->name ?? '-' }}</td>
+    @if(tenant('locations'))
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $vendor->store->name ?? '-' }}</td>
+    @endif
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         @if(\Carbon\Carbon::now() > $vendor->updated_at->addYear() || !$vendor->q1a )
             <span
