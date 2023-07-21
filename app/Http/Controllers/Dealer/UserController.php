@@ -49,6 +49,8 @@ class UserController extends Controller
 
         $user->assignRole($invite['roles']);
 
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
         $invite->delete();
 
         event(new Registered($user));

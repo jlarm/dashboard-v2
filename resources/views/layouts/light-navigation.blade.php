@@ -327,7 +327,7 @@
                                               clip-rule="evenodd"/>
                                     </svg>
                                 </button>
-                                <ul class="block w-full mt-1 px-2" id="sub-menu-1" x-show="open" x-collapse>
+                                <ul x-cloak class="block w-full mt-1 px-2" id="sub-menu-1" x-show="open" x-collapse>
                                     <li>
                                         <a href="{{ route('dealer.audit.osha.index') }}"
                                            class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
@@ -405,6 +405,7 @@
                         @endcan
                     @endif
                     <!-- COURSES -->
+                    @unlessrole('super-admin|Consultant')
                     <a
                         href="{{ route('dealer.courses.index') }}"
                         class="{{ (request()->is('courses')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
@@ -418,6 +419,7 @@
                         </svg>
                         Courses
                     </a>
+                    @endunlessrole
                     <!--  SETTINGS -->
                     @if(!tenant('locations'))
                         @can('create-stores')

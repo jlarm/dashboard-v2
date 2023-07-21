@@ -38,6 +38,8 @@ class Edit extends SlideOver
 
         $this->user->syncRoles($this->assignedRoles);
 
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
         $this->emitTo('dealer.employee.details', 'refreshEmployeeDetails');
         $this->emitTo('dealer.employee.course-results', 'refreshEmployeeDetails');
 
