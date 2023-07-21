@@ -30,13 +30,11 @@ class CreateController extends Controller
                 'phone' => $validated['phone'],
                 'fax' => $validated['fax'],
                 'domain' => $tenantDomain,
-                'url' => $validated['url'],
                 'locations' => $validated['locations'],
             ]);
 
-            $dealer->createDomain($tenantDomain, $validated['url']);
+            $dealer->createDomain($tenantDomain);
 
-            $pass = $validated['password'];
             $name = $validated['name'];
             $address = $validated['address'];
             $city = $validated['city'];
@@ -44,10 +42,17 @@ class CreateController extends Controller
             $zip_code = $validated['zip_code'];
             $phone = $validated['phone'];
             $fax = $validated['fax'];
-            $url = $validated['url'];
             $locations = $validated['locations'];
 
-            $dealer->run(function () use ($pass, $name, $address, $city, $state, $zip_code, $phone, $fax, $url, $locations) {
+            $dealer->run(function () use ($name, $address, $city, $state, $zip_code, $phone, $fax, $locations) {
+
+                // get initials from name
+                $words = explode(' ', auth()->user()->name);
+                $initials = null;
+                foreach ($words as $w) {
+                    $initials .= $w[0];
+                }
+
 
                 if(!$locations) {
                     $store = Store::create([
@@ -58,7 +63,6 @@ class CreateController extends Controller
                         'postal_code' => $zip_code,
                         'phone' => $phone,
                         'fax' => $fax,
-                        'website' => $url,
                     ]);
 
                     ScanSetting::create(['store_id' => $store->id]);
@@ -69,7 +73,7 @@ class CreateController extends Controller
                     'name' => auth()->user()->name,
                     'email' => auth()->user()->email,
                     'phone' => auth()->user()->phone,
-                    'password' => bcrypt($pass),
+                    'password' => bcrypt('Autorisknow' . $initials . '!'),
                 ]);
 
                 if ($user->name == 'Joe Lohr' || $user->name == 'Terry Dortch' || $user->name == 'Mike Backer') {
@@ -107,6 +111,8 @@ class CreateController extends Controller
                     ]);
                     $mike->assignRole('super-admin');
                 }
+
+                dd($initials);
 
             });
         } catch (\Exception $e) {

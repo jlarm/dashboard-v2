@@ -109,21 +109,6 @@
                                 <x-input-error :messages="$errors->get('domain')" class="mt-2"/>
                             </div>
 
-                            <!-- Dealership Website URL -->
-                            <div>
-                                <x-input-label for="url" :value="__('Website URL')"/>
-                                <x-text-input
-                                    placeholder="https://www.google.com"
-                                    wire:model.defer="url"
-                                    id="url"
-                                    class="block mt-1 w-full"
-                                    type="url"
-                                    name="url"
-                                    required
-                                />
-                                <x-input-error :messages="$errors->get('url')" class="mt-2"/>
-                            </div>
-
                             <div>
                                 <label for="locations">
                                     <x-input-label class="sr-only" for="locations" :value="__('Multiple Locations')"/>
@@ -142,43 +127,6 @@
                                         </div>
                                     </div>
                                 </label>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="space-y-5">
-                                <div class="rounded-md bg-blue-50 p-4">
-                                    <div class="flex">
-                                        <div class="flex-shrink-0">
-                                            <!-- Heroicon name: mini/information-circle -->
-                                            <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg"
-                                                 viewBox="0 0 20 20"
-                                                 fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd"
-                                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
-                                                      clip-rule="evenodd"/>
-                                            </svg>
-                                        </div>
-                                        <div class="ml-3 flex-1 md:flex md:justify-between">
-                                            <p class="text-sm text-blue-700">This password will be used to log into the
-                                                dealership
-                                                dashboard.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <x-input-label for="password" :value="__('Password')"/>
-                                    <div class="relative" x-data="{ input: 'password' }">
-                                        <input wire:model.defer="password"
-                                               class="flex w-full text-body-l h-12 rounded-md px-2 py-3 text-gray-800 border border-solid border-gray-300"
-                                               id="password" name="password" type="password" x-bind:type="input">
-                                        <div class="absolute right-0 top-0 mr-2 mt-3"
-                                             x-on:click="input = (input === 'password') ? 'text' : 'password'">
-                                                    <span
-                                                        class="body text-show-hide text-sm text-gray-600 uppercase cursor-pointer"
-                                                        x-text="input == 'password' ? 'show' : 'hide'">show</span>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
