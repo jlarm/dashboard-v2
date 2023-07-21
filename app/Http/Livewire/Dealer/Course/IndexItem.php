@@ -20,11 +20,11 @@ class IndexItem extends Component
     {
         $this->user = auth()->user();
 
-//        if(tenant('locations')) {
-//            $this->store = $this->user->stores->first()->state ?? '';
-//        }
-//
-//        $this->store = Store::first();
+        if(tenant('locations')) {
+            $this->store = $this->user->stores->first();
+        } else {
+            $this->store = Store::first();
+        }
 
         $course1 = Course::with('results')->where('slug', 'dot-hazardous-materials-transportation')->pluck('id');
         $course2 = Course::with('results')->where('slug', 'dot-hazardous-materials-transportation-identifying-hazardous-materials')->pluck('id');
