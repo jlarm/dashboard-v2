@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 use App\Models\Dealer\Audit\OshaAudit;
 use Livewire\Component;
 
-class IndexItem extends Component
+class GeneratedReportIndexItem extends Component
 {
     public OshaAudit $oshaAudit;
     public $rating;
@@ -30,6 +30,6 @@ class IndexItem extends Component
 
     public function render()
     {
-        return view('livewire.dealer.audit.osha.index-item');
+        return view('livewire.dealer.audit.osha.generated-report-index-item');
     }
 }

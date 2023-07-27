@@ -6,7 +6,7 @@ use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Store;
 use Livewire\Component;
 
-class IndexItem extends Component
+class GeneratedReportIndexItem extends Component
 {
     public FinanceAudit $financeAudit;
     public Store $store;
@@ -32,9 +32,8 @@ class IndexItem extends Component
         $wrong = $this->sum;
         $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
     }
-
     public function render()
     {
-        return view('livewire.dealer.audit.finance.index-item');
+        return view('livewire.dealer.audit.finance.generated-report-index-item');
     }
 }

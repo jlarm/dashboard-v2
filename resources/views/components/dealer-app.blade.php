@@ -18,6 +18,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <body class="font-sans antialiased bg-white">
 <div x-data="{ open: false }" @keydown.window.escape="open = false">

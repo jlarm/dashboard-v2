@@ -19,6 +19,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     public int $timeout = 240;
     public $audits;
     public int $count = 0;
+    protected $sum;
 
     public function __construct(protected IndividualAudit $individualAudit)
     {
@@ -59,8 +60,20 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                 ->waitUntilNetworkIdle()
                 ->save(storage_path('app/individual-audits/' . $fileName));
 
+            $this->audits->filter(function ($value) {
+                for ($i = 3; $i <= 40; $i++) {
+                    if ($i != 19 && $value->{'individual_q' . $i .'_answer'} == 2) {
+                        $this->sum += 1;
+                    }
+                }
+            });
+            $total = count($this->audits) * 37;
+            $wrong = $this->sum;
+            $rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
+
             $updatePath = $audit->update([
                 'pdf_path' => $fileName,
+                'rating' => $rating,
             ]);
             $this->count++;
         }

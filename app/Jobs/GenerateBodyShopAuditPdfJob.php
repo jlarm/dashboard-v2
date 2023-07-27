@@ -19,6 +19,19 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
     {
     }
 
+    private function rating(): float
+    {
+        $sum = 0;
+        for ($i = 1; $i <= 43; $i++) {
+            if ($this->bodyShopAudit->{'body_shop_q' . $i .'_answer'} == 2) {
+                $sum += 1;
+            }
+        }
+
+        $wrong = $sum;
+        return number_format(100 * (43 - $wrong) / 43, 2, '.', '');
+    }
+
     public function handle(): void
     {
         $path = storage_path('app/body-shop-audits');
@@ -46,6 +59,7 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
 
         $updatePath = $this->bodyShopAudit->update([
             'pdf_path' => $fileName,
+            'rating' => $this->rating()
         ]);
 
     }

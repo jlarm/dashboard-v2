@@ -19,6 +19,20 @@ class GenerateOshaAuditJob implements ShouldQueue
     {
     }
 
+    private function rating(): float
+    {
+        $sum = 0;
+        $exclude = [7, 21, 62];
+        for ($i = 1; $i <= 65; $i++) {
+            if (!in_array($i, $exclude) && $this->oshaAudit->{'osha_q' . $i . '_answer'} == 2) {
+                $sum += 1;
+            }
+        }
+
+        $wrong = $sum;
+        return number_format(100 * (62 - $wrong) / 62, 2, '.', '');
+    }
+
     public function handle(): void
     {
         $path = storage_path('app/osha');
@@ -46,6 +60,7 @@ class GenerateOshaAuditJob implements ShouldQueue
 
         $updatePath = $this->oshaAudit->update([
             'pdf_path' => $fileName,
+            'rating' => $this->rating()
         ]);
     }
 }

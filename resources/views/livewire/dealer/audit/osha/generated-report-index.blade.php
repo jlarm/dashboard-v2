@@ -7,23 +7,13 @@
                     <th scope="col"
                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">Date
                     </th>
-                    @can('create-audits')
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><span
-                                class="sr-only">Edit</span></th>
-                    @endcan
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Rating</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                 @forelse($oshaAudits as $oshaAudit)
-                    <tr>
-                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-                            {{ $oshaAudit->audit_date->format('M d, Y') }}
-                        </td>
-                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
-                            <livewire:dealer.audit.osha.download :oshaAudit="$oshaAudit"/>
-                        </td>
-                    </tr>
+                    <livewire:dealer.audit.osha.generated-report-index-item :oshaAudit="$oshaAudit"/>
                 @empty
                     <tr>
                         <td colspan="7"

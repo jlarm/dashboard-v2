@@ -7,6 +7,9 @@
                     <th scope="col"
                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">Date
                     </th>
+                    <th scope="col"
+                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Rating
+                    </th>
                     @can('create-audits')
                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"><span
                                 class="sr-only">Edit</span></th>

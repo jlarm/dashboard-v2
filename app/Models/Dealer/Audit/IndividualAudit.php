@@ -58,4 +58,9 @@ class IndividualAudit extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    public function manager(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'manager_id');
+    }
+
 }

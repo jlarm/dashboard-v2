@@ -11,7 +11,12 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.audit.body-shop.index', [
-            'audits' => BodyShopAudit::latest()->with('store')->select('id', 'store_id', 'draft', 'audit_date', 'pdf_path')->get()
+            'audits' => BodyShopAudit::orderBy('audit_date', 'desc')
+                ->latest()
+                ->with('store')
+                ->orderBy('audit_date')
+                ->select('id', 'store_id', 'audit_date', 'pdf_path')
+                ->get()
         ]);
     }
 }

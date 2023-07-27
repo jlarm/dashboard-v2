@@ -6,7 +6,7 @@ use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Store;
 use Livewire\Component;
 
-class IndexItem extends Component
+class GeneratedReportIndexItem extends Component
 {
     public BodyShopAudit $bodyShopAudit;
     public Store $store;
@@ -30,6 +30,6 @@ class IndexItem extends Component
     }
     public function render()
     {
-        return view('livewire.dealer.audit.body-shop.index-item');
+        return view('livewire.dealer.audit.body-shop.generated-report-index-item');
     }
 }

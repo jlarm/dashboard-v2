@@ -10,13 +10,17 @@ class Show extends Component
     public IndividualAudit $individualAudit;
     public $audits;
     public $children;
+    protected $sum;
+    public $rating;
 
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function mount()
     {
-        $this->audits = $this->individualAudit->where('parent_id', $this->individualAudit->id)->get();
-        $this->children = $this->individualAudit->where('parent_id', $this->individualAudit->id)->count();
+        $this->audits = collect([$this->individualAudit, ...$this->individualAudit->children]);
+
+//        $this->audits = $this->individualAudit->where('parent_id', $this->individualAudit->id)->get();
+//        $this->children = $this->individualAudit->where('parent_id', $this->individualAudit->id)->count();
     }
 
     public function delete()

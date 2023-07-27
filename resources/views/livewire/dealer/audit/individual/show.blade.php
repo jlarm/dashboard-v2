@@ -5,14 +5,16 @@
             Customer Number
         </th>
         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Customer Name</th>
+        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Manager Name</th>
+        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Rating</th>
         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
             <span class="sr-only">Edit</span>
         </th>
     </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 bg-white">
-    <livewire:dealer.audit.individual.parent-show-single :individualAudit="$individualAudit"
-                                                         :key="$individualAudit->id"/>
+    {{--    <livewire:dealer.audit.individual.parent-show-single :individualAudit="$individualAudit"--}}
+    {{--                                                         :key="$individualAudit->id"/>--}}
     @foreach($audits as $audit)
         <livewire:dealer.audit.individual.show-single :audit="$audit" :key="$audit->id"/>
     @endforeach
