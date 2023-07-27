@@ -32,7 +32,6 @@ class Index extends Component
                 }
                 ])
             ->orderBy('name')
-            ->whereNot('id', 2)
             ->get();
     }
 
