@@ -20,4 +20,11 @@ class CourseController extends Controller
             'course' => $course,
         ]);
     }
+
+    public function edit(Course $course)
+    {
+        return view('dealer.course.edit', [
+            'course' => $course,
+        ]);
+    }
 }

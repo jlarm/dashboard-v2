@@ -26,6 +26,86 @@
             }
         ],
         "questions": [
+            {
+                "question": "The ADA forces employers to hire unqualified individuals with\ndisabilities.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "When there are several qualified applicants for a job and one has a\ndisability, the ADA requires the employer to hire that person.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The ADA doesn't give job applicants with disabilities advantages over those without disabilities.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Under the ADA, employers must give people with disabilities special privileges, known as accommodations.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Providing accommodations for people with disabilities is expensive. Myth or fact?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The ADA places a financial burden on small businesses that can't afford to make accommodations for individuals with disabilities.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The ADA protects employees who have difficult or rude personalities or are troublemakers.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Under the ADA, an employer can&#39;t fire an employee who has a disability.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            }
         ]
     }
 ]

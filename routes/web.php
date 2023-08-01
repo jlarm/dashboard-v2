@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Central\Course\CourseResultsController;
+use App\Http\Controllers\Central\Course\QuizController;
+use App\Http\Controllers\Central\Course\ShowController;
 use App\Http\Controllers\Central\Dealership\CreateController;
 use App\Http\Controllers\Central\EmployeeController;
 use App\Http\Controllers\Central\Role\EditController;
@@ -20,6 +23,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('courses', function () { return view('central.course.index'); })->name('courses.index');
+    Route::get('courses/{course:slug}', ShowController::class)->name('courses.show');
+    Route::get('courses/{course:slug}/quiz', QuizController::class)->name('courses.quiz');
+    Route::post('courses/{course:slug}/quiz', CourseResultsController::class)->name('courses.quiz.store');
 
 });
 
