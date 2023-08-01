@@ -3,7 +3,7 @@
     <div>
         <div class="sm:flex sm:items-center p-4">
             <div class="sm:flex-auto">
-                <h1 class="text-lg font-medium leading-6 text-gray-900">Deal Jacket Audit
+                <h1 class="text-lg font-medium leading-6 text-gray-900">Deal Jacket Audits
                     for {{ $individualAudit->audit_date->format('F d, Y') }}</h1>
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -30,6 +30,8 @@
                     Customer Number
                 </th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Customer Name</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Manager Name</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Rating</th>
                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
                     <span class="sr-only">Edit</span>
                 </th>

@@ -45,6 +45,10 @@ Route::group([
 
     Route::get('/', function () { return view('dealer.welcome'); });
 
+    if(config('app.env') === 'local') {
+        Route::get('audit-pdf', function () { return view('dealer.deal-jacket-audit-pdf'); });
+    }
+
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
@@ -133,6 +137,7 @@ Route::group([
         });
 
         Route::group(['prefix' => 'stores/{store:slug}', 'as' => 'stores.'], function () {
+            Route::get('/', \App\Http\Livewire\Dealer\Store\SingleStore\Home\Index::class)->middleware(['auth', 'has.stores'])->name('home');
             Route::get('employees', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Index::class)->middleware(['auth', 'has.stores'])->name('employees');
             Route::get('employees/{user:slug}', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->middleware(['auth', 'has.stores'])->name('employees.show');
             Route::get('scans', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scans');

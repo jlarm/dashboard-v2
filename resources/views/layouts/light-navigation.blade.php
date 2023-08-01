@@ -330,7 +330,7 @@
                                 <ul x-cloak class="block w-full mt-1 px-2" id="sub-menu-1" x-show="open" x-collapse>
                                     <li>
                                         <a href="{{ route('dealer.audit.osha.index') }}"
-                                           class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
+                                           class="{{ (request()->segment(2) == 'osha') ? 'bg-arm-blue-50 active' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">OSHA</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('dealer.audit.body-shop.index') }}"

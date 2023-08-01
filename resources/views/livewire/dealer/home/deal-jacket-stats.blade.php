@@ -1,8 +1,8 @@
 <div>
-    <a href="{{ route('dealer.audit.individual.index') }}"
+    <a href="{{ !tenant('locations') ? route('dealer.audit.individual.index') : route('dealer.stores.audits.individual.index', $store) }}"
        class="flex flex-col gap-y-4 bg-white rounded border hover:shadow-xl transition pt-10">
         <dt class="text-base leading-7 text-gray-600">Deal Jacket Rating</dt>
-        @if(count($dealJackets) > 0)
+        @if($rating > 0)
             @if($rating >= 90)
                 <dd class="order-first text-3xl font-semibold tracking-tight text-green-500 sm:text-5xl">A</dd>
             @elseif($rating >= 80)
@@ -20,7 +20,7 @@
         @endif
         <span id="deal-jacket-chart"></span>
     </a>
-    @if(count($dealJackets) > 1)
+    @if(count($audits) > 1)
         <script>
             var options = {
                 chart: {

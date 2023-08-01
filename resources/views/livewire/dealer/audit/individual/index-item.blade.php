@@ -3,7 +3,7 @@
         {{ $individualAudit->audit_date->format('M d, Y') }}
     </td>
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
-        @if(count($flat) > 0)
+        @if($rating > 0)
             @if($rating >= 90)
                 <span
                     class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">A</span>
@@ -20,6 +20,8 @@
                 <span
                     class="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">F</span>
             @endif
+        @else
+            -
         @endif
     </td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">

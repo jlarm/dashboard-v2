@@ -1,8 +1,8 @@
 <div>
-    <a href="{{ route('dealer.audit.osha.index') }}"
+    <a href="{{ !tenant('locations') ? route('dealer.audit.osha.index') : route('dealer.stores.audits.osha.index', $store) }}"
        class="flex flex-col gap-y-4 bg-white rounded border hover:shadow-xl transition pt-10">
         <dt class="text-base leading-7 text-gray-600">OSHA Rating</dt>
-        @if(count($audits) > 0)
+        @if($rating > 0)
             @if($rating >= 90)
                 <dd class="order-first text-3xl font-semibold tracking-tight text-green-500 sm:text-5xl">A</dd>
             @elseif($rating >= 80)

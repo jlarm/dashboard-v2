@@ -1,4 +1,4 @@
-<div class="px-4 sm:px-6 lg:px-8">
+<div class="px-4 sm:px-6 lg:px-8 mt-10">
     <div class="sm:flex sm:items-center">
         @if(Route::is('dealer.dashboard'))
             <div class="sm:flex-auto">
