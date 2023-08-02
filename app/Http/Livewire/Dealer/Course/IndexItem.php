@@ -21,7 +21,7 @@ class IndexItem extends Component
         $this->user = auth()->user();
 
         if(tenant('locations')) {
-            $this->store = $this->user->stores->first();
+            $this->store = $this->user->stores->first() ?? Store::first();
         } else {
             $this->store = Store::first();
         }
