@@ -29,7 +29,7 @@
     <div class="col-span-5 row-span-4 col-start-1 row-start-2 bg-arm-blue-500 z-10 py-10 pr-10">
         <div class="w-full h-full flex flex-row items-center border-t border-r border-b border-white ">
             <div class="flex flex-col ml-10">
-                <h1 class="text-5xl text-white">Body Shop Report<span
+                <h1 class="text-7xl text-white">Body Shop Report<span
                         class="block font-bold">{{ $audit->store->name }}</span></h1>
                 <p class="text-white text-2xl my-10">Complete On: {{ $audit->audit_date->format('n/d/Y') }}</p>
                 <p class="text-white text-2xl">Report Created By:</p>
@@ -48,7 +48,7 @@
 <div class="w-full h-screen p-10">
     <div class="prose min-w-full divide-y divide-gray-200">
         @if($audit->body_shop_q1_comment || $audit->body_shop_q1_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if($audit->getFirstMedia('body_shop_q1_images') != null)
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -80,7 +80,7 @@
             </div>
         @endif
         @if($audit->body_shop_q2_comment || $audit->body_shop_q2_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q2_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -117,7 +117,7 @@
             </div>
         @endif
         @if($audit->body_shop_q3_comment || $audit->body_shop_q3_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q3_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -155,7 +155,7 @@
             </div>
         @endif
         @if($audit->body_shop_q4_comment || $audit->body_shop_q4_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q4_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -195,7 +195,7 @@
             </div>
         @endif
         @if($audit->body_shop_q5_comment || $audit->body_shop_q5_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q5_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -233,7 +233,7 @@
             </div>
         @endif
         @if($audit->body_shop_q6_comment || $audit->body_shop_q6_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q6_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -271,7 +271,7 @@
             </div>
         @endif
         @if($audit->body_shop_q7_comment || $audit->body_shop_q7_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q7_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -316,7 +316,7 @@
             </div>
         @endif
         @if($audit->body_shop_q8_comment || $audit->body_shop_q8_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q8_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -353,7 +353,7 @@
             </div>
         @endif
         @if($audit->body_shop_q9_comment || $audit->body_shop_q9_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q9_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -387,7 +387,7 @@
             </div>
         @endif
         @if($audit->body_shop_q10_comment || $audit->body_shop_q10_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q10_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -428,7 +428,7 @@
             </div>
         @endif
         @if($audit->body_shop_q11_comment || $audit->body_shop_q11_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q11_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -469,7 +469,7 @@
             </div>
         @endif
         @if($audit->body_shop_q12_comment || $audit->body_shop_q12_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q12_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -524,7 +524,7 @@
             </div>
         @endif
         @if($audit->body_shop_q13_comment || $audit->body_shop_q13_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q13_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -561,7 +561,7 @@
             </div>
         @endif
         @if($audit->body_shop_q14_comment || $audit->body_shop_q14_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q14_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -588,7 +588,7 @@
             </div>
         @endif
         @if($audit->body_shop_q15_comment || $audit->body_shop_q15_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q15_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -615,7 +615,7 @@
             </div>
         @endif
         @if($audit->body_shop_q16_comment || $audit->body_shop_q16_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q16_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -652,7 +652,7 @@
             </div>
         @endif
         @if($audit->body_shop_q17_comment || $audit->body_shop_q17_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q17_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -688,7 +688,7 @@
             </div>
         @endif
         @if($audit->body_shop_q18_comment || $audit->body_shop_q18_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q18_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -722,7 +722,7 @@
             </div>
         @endif
         @if($audit->body_shop_q19_comment || $audit->body_shop_q19_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q19_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -760,7 +760,7 @@
             </div>
         @endif
         @if($audit->body_shop_q20_comment || $audit->body_shop_q20_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q20_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -793,7 +793,7 @@
             </div>
         @endif
         @if($audit->body_shop_q21_comment || $audit->body_shop_q21_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q21_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -831,7 +831,7 @@
             </div>
         @endif
         @if($audit->body_shop_q22_comment || $audit->body_shop_q22_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q22_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -876,7 +876,7 @@
             </div>
         @endif
         @if($audit->body_shop_q23_comment || $audit->body_shop_q23_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q23_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -909,7 +909,7 @@
             </div>
         @endif
         @if($audit->body_shop_q24_comment || $audit->body_shop_q24_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q24_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -957,7 +957,7 @@
             </div>
         @endif
         @if($audit->body_shop_q25_comment || $audit->body_shop_q25_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q25_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -996,7 +996,7 @@
             </div>
         @endif
         @if($audit->body_shop_q26_comment || $audit->body_shop_q26_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q26_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1031,7 +1031,7 @@
             </div>
         @endif
         @if($audit->body_shop_q27_comment || $audit->body_shop_q27_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q27_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1066,7 +1066,7 @@
             </div>
         @endif
         @if($audit->body_shop_q28_comment || $audit->body_shop_q28_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q28_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1107,7 +1107,7 @@
             </div>
         @endif
         @if($audit->body_shop_q29_comment || $audit->body_shop_q29_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q29_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1157,7 +1157,7 @@
             </div>
         @endif
         @if($audit->body_shop_q30_comment || $audit->body_shop_q30_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q30_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1184,7 +1184,7 @@
             </div>
         @endif
         @if($audit->body_shop_q31_comment || $audit->body_shop_q31_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q31_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1219,7 +1219,7 @@
             </div>
         @endif
         @if($audit->body_shop_q32_comment || $audit->body_shop_q32_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q32_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1258,7 +1258,7 @@
             </div>
         @endif
         @if($audit->body_shop_q33_comment || $audit->body_shop_q33_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q33_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1289,7 +1289,7 @@
             </div>
         @endif
         @if($audit->body_shop_q34_comment || $audit->body_shop_q34_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q34_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1324,7 +1324,7 @@
             </div>
         @endif
         @if($audit->body_shop_q35_comment || $audit->body_shop_q35_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q35_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1359,7 +1359,7 @@
             </div>
         @endif
         @if($audit->body_shop_q36_comment || $audit->body_shop_q36_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q36_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1391,7 +1391,7 @@
             </div>
         @endif
         @if($audit->body_shop_q37_comment || $audit->body_shop_q37_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q37_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1427,7 +1427,7 @@
             </div>
         @endif
         @if($audit->body_shop_q38_comment || $audit->body_shop_q38_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q38_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1454,7 +1454,7 @@
             </div>
         @endif
         @if($audit->body_shop_q39_comment || $audit->body_shop_q39_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q39_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1484,7 +1484,7 @@
             </div>
         @endif
         @if($audit->body_shop_q40_comment || $audit->body_shop_q40_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q40_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1514,7 +1514,7 @@
             </div>
         @endif
         @if($audit->body_shop_q41_comment || $audit->body_shop_q41_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q41_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1551,7 +1551,7 @@
             </div>
         @endif
         @if($audit->body_shop_q42_comment || $audit->body_shop_q42_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q42_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1578,7 +1578,7 @@
             </div>
         @endif
         @if($audit->body_shop_q43_comment || $audit->body_shop_q43_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q43_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1617,7 +1617,7 @@
             </div>
         @endif
         @if($audit->body_shop_q44_comment || $audit->body_shop_q44_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('body_shop_q44_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"

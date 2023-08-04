@@ -47,12 +47,12 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
         }
 
         $html = view('dealer.audit.body-shop.download', [
-            'bodyShopAudit' => $this->bodyShopAudit
+            'audit' => $this->bodyShopAudit
         ])->render();
 
         $audit = Browsershot::html($html)
             ->showBackground()
-            ->margins(10, 10, 10, 10)
+            ->format('A4')
             ->scale(0.75)
             ->waitUntilNetworkIdle()
             ->save(storage_path('app/body-shop-audits/' . $fileName));

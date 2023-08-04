@@ -43,7 +43,7 @@ class GenerateAuditPdfJob implements ShouldQueue
         $fileName = $this->financeAudit->audit_date->format('Ymd') . '-' . $dealerName . '-finance-audit.pdf';
 
         $html = view('dealer.audit.finance.download', [
-            'financeAudit' => $this->financeAudit
+            'audit' => $this->financeAudit
         ])->render();
 
         if(!File::isDirectory($path)) {
@@ -52,7 +52,7 @@ class GenerateAuditPdfJob implements ShouldQueue
 
         $audit = Browsershot::html($html)
             ->showBackground()
-            ->margins(10, 10, 10, 10)
+            ->format('A4')
             ->scale(0.75)
             ->waitUntilNetworkIdle()
             ->save(storage_path('app/finance-audits/' . $fileName));

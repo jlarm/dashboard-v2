@@ -48,7 +48,7 @@
 <div class="w-full h-screen p-10">
     <div class="prose min-w-full divide-y divide-gray-200">
         @if($audit->osha_q1_comment || $audit->osha_q1_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if($audit->getFirstMedia('osha_q1_images') != null)
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -78,7 +78,7 @@
             </div>
         @endif
         @if($audit->osha_q2_comment || $audit->osha_q2_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q2_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -110,7 +110,7 @@
             </div>
         @endif
         @if($audit->osha_q3_comment || $audit->osha_q3_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q3_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -140,7 +140,7 @@
             </div>
         @endif
         @if($audit->osha_q4_comment || $audit->osha_q4_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q4_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -170,7 +170,7 @@
             </div>
         @endif
         @if($audit->osha_q5_comment || $audit->osha_q5_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q5_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -204,7 +204,7 @@
             </div>
         @endif
         @if($audit->osha_q6_comment || $audit->osha_q6_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q6_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -246,7 +246,7 @@
             </div>
         @endif
         @if($audit->osha_q7_comment || $audit->osha_q7_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q7_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -273,7 +273,7 @@
             </div>
         @endif
         @if($audit->osha_q8_comment || $audit->osha_q8_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q8_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -309,7 +309,7 @@
             </div>
         @endif
         @if($audit->osha_q9_comment || $audit->osha_q9_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q9_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -349,7 +349,7 @@
             </div>
         @endif
         @if($audit->osha_q10_comment || $audit->osha_q10_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q10_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -387,7 +387,7 @@
             </div>
         @endif
         @if($audit->osha_q11_comment || $audit->osha_q11_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q11_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -418,7 +418,7 @@
             </div>
         @endif
         @if($audit->osha_q12_comment || $audit->osha_q12_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q12_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -456,7 +456,7 @@
             </div>
         @endif
         @if($audit->osha_q13_comment || $audit->osha_q13_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q13_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -496,7 +496,7 @@
             </div>
         @endif
         @if($audit->osha_q14_comment || $audit->osha_q14_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q14_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -533,7 +533,7 @@
             </div>
         @endif
         @if($audit->osha_q15_comment || $audit->osha_q15_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q15_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -572,7 +572,7 @@
             </div>
         @endif
         @if($audit->osha_q16_comment || $audit->osha_q16_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q16_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -604,7 +604,7 @@
             </div>
         @endif
         @if($audit->osha_q17_comment || $audit->osha_q17_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q17_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -643,7 +643,7 @@
             </div>
         @endif
         @if($audit->osha_q18_comment || $audit->osha_q18_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q18_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -676,7 +676,7 @@
             </div>
         @endif
         @if($audit->osha_q19_comment || $audit->osha_q19_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q19_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -711,7 +711,7 @@
             </div>
         @endif
         @if($audit->osha_q20_comment || $audit->osha_q20_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q20_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -744,7 +744,7 @@
             </div>
         @endif
         @if($audit->osha_q21_comment || $audit->osha_q21_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q21_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -776,7 +776,7 @@
             </div>
         @endif
         @if($audit->osha_q22_comment || $audit->osha_q22_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q22_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -810,7 +810,7 @@
             </div>
         @endif
         @if($audit->osha_q23_comment || $audit->osha_q23_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q23_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -837,7 +837,7 @@
             </div>
         @endif
         @if($audit->osha_q24_comment || $audit->osha_q24_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q24_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -869,7 +869,7 @@
             </div>
         @endif
         @if($audit->osha_q25_comment || $audit->osha_q25_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q25_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -904,7 +904,7 @@
             </div>
         @endif
         @if($audit->osha_q26_comment || $audit->osha_q26_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q26_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -934,7 +934,7 @@
             </div>
         @endif
         @if($audit->osha_q27_comment || $audit->osha_q27_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q27_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -969,7 +969,7 @@
             </div>
         @endif
         @if($audit->osha_q28_comment || $audit->osha_q28_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q28_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1000,7 +1000,7 @@
             </div>
         @endif
         @if($audit->osha_q29_comment || $audit->osha_q29_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q29_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1034,7 +1034,7 @@
             </div>
         @endif
         @if($audit->osha_q30_comment || $audit->osha_q30_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q30_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1067,7 +1067,7 @@
             </div>
         @endif
         @if($audit->osha_q31_comment || $audit->osha_q31_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q31_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1101,7 +1101,7 @@
             </div>
         @endif
         @if($audit->osha_q32_comment || $audit->osha_q32_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q32_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1136,7 +1136,7 @@
             </div>
         @endif
         @if($audit->osha_q33_comment || $audit->osha_q33_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q33_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1177,7 +1177,7 @@
             </div>
         @endif
         @if($audit->osha_q34_comment || $audit->osha_q34_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q34_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1211,7 +1211,7 @@
             </div>
         @endif
         @if($audit->osha_q35_comment || $audit->osha_q35_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q35_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1247,7 +1247,7 @@
             </div>
         @endif
         @if($audit->osha_q36_comment || $audit->osha_q36_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q36_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1280,7 +1280,7 @@
             </div>
         @endif
         @if($audit->osha_q37_comment || $audit->osha_q37_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q37_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1313,7 +1313,7 @@
             </div>
         @endif
         @if($audit->osha_q38_comment || $audit->osha_q38_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q38_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1346,7 +1346,7 @@
             </div>
         @endif
         @if($audit->osha_q39_comment || $audit->osha_q39_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q39_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1386,7 +1386,7 @@
             </div>
         @endif
         @if($audit->osha_q40_comment || $audit->osha_q40_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q40_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1422,7 +1422,7 @@
             </div>
         @endif
         @if($audit->osha_q41_comment || $audit->osha_q41_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q41_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1456,7 +1456,7 @@
             </div>
         @endif
         @if($audit->osha_q42_comment || $audit->osha_q42_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q42_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1491,7 +1491,7 @@
             </div>
         @endif
         @if($audit->osha_q43_comment || $audit->osha_q43_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q43_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1521,7 +1521,7 @@
             </div>
         @endif
         @if($audit->osha_q44_comment || $audit->osha_q44_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q44_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1562,7 +1562,7 @@
             </div>
         @endif
         @if($audit->osha_q45_comment || $audit->osha_q45_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q45_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1596,7 +1596,7 @@
             </div>
         @endif
         @if($audit->osha_q46_comment || $audit->osha_q46_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q46_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1629,7 +1629,7 @@
             </div>
         @endif
         @if($audit->osha_q47_comment || $audit->osha_q47_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q47_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1660,7 +1660,7 @@
             </div>
         @endif
         @if($audit->osha_q48_comment || $audit->osha_q48_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q48_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1707,7 +1707,7 @@
             </div>
         @endif
         @if($audit->osha_q49_comment || $audit->osha_q49_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q49_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1743,7 +1743,7 @@
             </div>
         @endif
         @if($audit->osha_q50_comment || $audit->osha_q50_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q50_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1778,7 +1778,7 @@
             </div>
         @endif
         @if($audit->osha_q51_comment || $audit->osha_q51_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q51_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1813,7 +1813,7 @@
             </div>
         @endif
         @if($audit->osha_q52_comment || $audit->osha_q52_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q52_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1845,7 +1845,7 @@
             </div>
         @endif
         @if($audit->osha_q53_comment || $audit->osha_q53_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q53_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1884,7 +1884,7 @@
             </div>
         @endif
         @if($audit->osha_q54_comment || $audit->osha_q54_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q54_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1923,7 +1923,7 @@
             </div>
         @endif
         @if($audit->osha_q55_comment || $audit->osha_q55_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q55_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1955,7 +1955,7 @@
             </div>
         @endif
         @if($audit->osha_q56_comment || $audit->osha_q56_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q56_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -1982,7 +1982,7 @@
             </div>
         @endif
         @if($audit->osha_q57_comment || $audit->osha_q57_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q57_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -2009,7 +2009,7 @@
             </div>
         @endif
         @if($audit->osha_q58_comment || $audit->osha_q58_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q58_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -2048,7 +2048,7 @@
             </div>
         @endif
         @if($audit->osha_q59_comment || $audit->osha_q59_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q59_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -2085,7 +2085,7 @@
             </div>
         @endif
         @if($audit->osha_q60_comment || $audit->osha_q60_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q60_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -2115,7 +2115,7 @@
             </div>
         @endif
         @if($audit->osha_q61_comment || $audit->osha_q61_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q61_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -2154,7 +2154,7 @@
             </div>
         @endif
         @if($audit->osha_q62_comment || $audit->osha_q62_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q62_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -2181,7 +2181,7 @@
             </div>
         @endif
         @if($audit->osha_q63_comment || $audit->osha_q63_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q63_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -2208,7 +2208,7 @@
             </div>
         @endif
         @if($audit->osha_q64_comment || $audit->osha_q64_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q64_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"
@@ -2236,7 +2236,7 @@
             </div>
         @endif
         @if($audit->osha_q65_comment || $audit->osha_q65_answer === 2)
-            <div class="grid grid-cols-6 gap-10" style="page-break-inside: avoid;">
+            <div class="grid grid-cols-6 gap-10">
                 <div class="col-span-1">
                     @if(!empty($audit->getFirstMedia('osha_q65_images')))
                         <img class="aspect-[4/5] w-full rounded object-cover"

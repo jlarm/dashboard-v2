@@ -22,28 +22,37 @@
     @livewireStyles
 </head>
 <body class="font-sans antialiased">
-<div class="w-full h-screen bg-gray-50 grid grid-cols-8 grid-rows-6">
-    <div class="col-span-3 col-start-1 p-20">
-        <x-application-logo class="h-auto w-full"/>
-    </div>
-    <div class="col-span-5 row-span-4 col-start-1 row-start-2 bg-arm-blue-500 z-10 py-10 pr-10">
-        <div class="w-full h-full flex flex-row items-center border-t border-r border-b border-white ">
-            <div class="flex flex-col ml-10">
-                <h1 class="text-7xl text-white">Deal Jacket Report<span
-                        class="block font-bold">Victor Ford</span></h1>
-                <p class="text-white text-2xl my-10">Complete On: 7/12/2023</p>
-                <p class="text-white text-2xl">Report Created By:</p>
-                <p class="text-white text-xl">
-                    John Doe<br/>
-                    123-123-1233<br/>
-                    jdoe@autorisknow.com
-                </p>
-            </div>
-        </div>
-    </div>
-    <div
-        style="background-image: url('{{ url('deal-jacket-audit-bg.jpg') }}');"
-        class="col-span-5 row-span-6 bg-arm-orange-500 col-start-4 row-start-1 z-0 bg-cover"></div>
+{{--<div class="w-full h-screen bg-white grid grid-cols-8 grid-rows-6">--}}
+{{--    <div class="col-span-3 col-start-1 p-20">--}}
+{{--        <x-application-logo class="h-auto w-full"/>--}}
+{{--    </div>--}}
+{{--    <div class="col-span-5 row-span-4 col-start-1 row-start-2 bg-arm-blue-500 z-10 py-10 pr-10">--}}
+{{--        <div class="w-full h-full flex flex-row items-center border-t border-r border-b border-white ">--}}
+{{--            <div class="flex flex-col ml-10">--}}
+{{--                <h1 class="text-7xl text-white">Deal Jacket Report<span--}}
+{{--                        class="block font-bold">{{ $audit->store->name }}</span></h1>--}}
+{{--                <p class="text-white text-2xl my-10">Complete On: {{ $audit->audit_date->format('n/d/Y') }}</p>--}}
+{{--                <p class="text-white text-2xl">Report Created By:</p>--}}
+{{--                <p class="text-white text-xl">--}}
+{{--                    {{ $audit->user->name }}<br/>--}}
+{{--                    {{ $audit->user->phoneNumber }}<br/>--}}
+{{--                    {{ $audit->user->email }}--}}
+{{--                </p>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <div--}}
+{{--        style="background-image: url('{{ url('deal-jacket-audit-bg.jpg') }}');"--}}
+{{--        class="col-span-5 row-span-6 bg-arm-orange-500 col-start-4 row-start-1 z-0 bg-cover"></div>--}}
+{{--</div>--}}
+<div class="w-full h-screen">
+    {{ dd($audits) }}
+    {{--    @foreach($audits as $manager => $audit)--}}
+    {{--        Manager Name: {{ $manager }}<br/><br/><br/>--}}
+    {{--        @foreach($audit as $issue)--}}
+    {{--            {{ $issue->deal_jacket_date }}<br/><br/><br/><br/>--}}
+    {{--        @endforeach--}}
+    {{--    @endforeach--}}
 </div>
 <div class="w-full h-screen p-10">
     <h1 class="text-5xl text-center font-bold">Details by Finance Manager</h1>

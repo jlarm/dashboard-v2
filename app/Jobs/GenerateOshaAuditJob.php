@@ -48,14 +48,19 @@ class GenerateOshaAuditJob implements ShouldQueue
         }
 
         $html = view('dealer.audit.osha.download', [
-            'oshaAudit' => $this->oshaAudit
+            'audit' => $this->oshaAudit
         ])->render();
+
+        $footer = view('pdf.audit-footer')->render();
 
         $audit = Browsershot::html($html)
             ->showBackground()
-            ->margins(10, 10, 10, 10)
+            ->format('A4')
             ->scale(0.75)
             ->waitUntilNetworkIdle()
+            ->showBrowserHeaderAndFooter()
+            ->hideHeader()
+            ->footerHtml($footer)
             ->save(storage_path('app/' . $fileName));
 
         $updatePath = $this->oshaAudit->update([

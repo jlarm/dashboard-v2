@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
+use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Department;
@@ -68,7 +71,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getPhoneNumberAttribute()
+    public function getPhoneNumberAttribute(): string
     {
         $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
         preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
@@ -129,5 +132,20 @@ class User extends Authenticatable
     public function oshas(): HasMany
     {
         return $this->hasMany(Osha::class);
+    }
+
+    public function oshaAudits(): HasMany
+    {
+        return $this->hasMany(OshaAudit::class);
+    }
+
+    public function bodyShopAudits(): HasMany
+    {
+        return $this->hasMany(BodyShopAudit::class);
+    }
+
+    public function glbaAudits(): HasMany
+    {
+        return $this->hasMany(FinanceAudit::class);
     }
 }
