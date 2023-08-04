@@ -42,7 +42,7 @@
         </div>
     </div>
     <div
-        style="background-image: url('{{ url('deal-jacket-audit-bg.jpg') }}');"
+        style="background-image: url('{{ asset('deal-jacket-audit-bg.jpg') }}');"
         class="col-span-5 row-span-6 bg-arm-orange-500 col-start-4 row-start-1 z-0 bg-cover"></div>
 </div>
 <div class="w-full h-screen p-10">
