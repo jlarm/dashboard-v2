@@ -49,8 +49,8 @@ Route::group([
         Route::get('osha-audit-pdf', \App\Http\Controllers\OshaPdfTestController::class);
         Route::get('deal-jacket-audit-pdf', \App\Http\Controllers\DealJacketPdfTestController::class);
         Route::get('glba-audit-pdf', \App\Http\Controllers\GlbaPdfTestController::class);
-    }
         Route::get('body-shop-audit-pdf', \App\Http\Controllers\BodyShopPdfTestController::class);
+    }
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
