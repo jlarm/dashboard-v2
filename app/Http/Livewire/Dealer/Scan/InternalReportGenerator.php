@@ -42,22 +42,23 @@ class InternalReportGenerator extends Component
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
         }
-        $fileName = $dealerName .'-'. now()->format('Ymdhis') .'-'.$this->type.'.pdf';
+
+        $fileName = $dealerName .'-'. now()->format('Ymdhis') .'-internal-scan.pdf';
 
         try {
-            $request = new Request('GET', 'https://blue-api.redsentry.com/v2/internal/'.$this->dealer.'/report/' . $this->type, [
+            $request = new Request('GET', 'https://blue-api.redsentry.com/internal/'.$this->dealer.'/report/executive?format=pdf&scan_id=latest', [
                 'Authorization' => $token,
             ]);
 
             $status = $client->send($request)->getBody()->getContents();
 
-            Storage::disk('do-scans')->put(tenant('id') . '/internal/' . $this->type . '/' . $fileName, $status);
+            Storage::disk('do-scans')->put(tenant('id') . '/internal/' . $fileName, $status);
 
             ScanReport::create([
                 'user_id' => auth()->id(),
                 'store_id' => $this->store->id ?? Store::first()->id,
-                'path' => tenant('id') . '/external/' . $this->type . '/' . $fileName,
-                'type' => $this->type,
+                'path' => tenant('id') . '/internal/' . $fileName,
+                'type' => 'external',
                 'scan_type' => 'internal',
             ]);
         } catch(\Exception $e) {
