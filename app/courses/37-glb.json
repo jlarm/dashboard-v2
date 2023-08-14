@@ -115,7 +115,7 @@
                 "correctAnswer": "d"
             },
             {
-                "question": "A dealership is considered a <i><b>financial institution</b></i> by the FTC?",
+                "question": "A dealership is considered a financial institution by the FTC?",
                 "answers": [
                     {
                         "a": "True",
@@ -125,7 +125,7 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Privacy is a central element of the FTC�s consumer protection mission?",
+                "question": "Privacy is a central element of the FTC's consumer protection mission?",
                 "answers": [
                     {
                         "a": "True",

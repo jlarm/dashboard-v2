@@ -27,7 +27,7 @@
         ],
         "questions": [
             {
-                "question": "The ADA forces employers to hire unqualified individuals with\ndisabilities.",
+                "question": "The ADA forces employers to hire unqualified individuals with disabilities.",
                 "answers": [
                     {
                         "a": "True",
@@ -67,7 +67,7 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "Providing accommodations for people with disabilities is expensive. Myth or fact?",
+                "question": "Providing accommodations for people with disabilities is expensive.",
                 "answers": [
                     {
                         "a": "True",
@@ -97,7 +97,7 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "Under the ADA, an employer can&#39;t fire an employee who has a disability.",
+                "question": "Under the ADA, an employer can't fire an employee who has a disability.",
                 "answers": [
                     {
                         "a": "True",
