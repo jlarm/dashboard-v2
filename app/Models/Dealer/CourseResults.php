@@ -13,6 +13,8 @@ class CourseResults extends Model
         'passed',
         'course_id',
         'user_id',
+        'created_at',
+        'updated_at',
     ];
 
     public function course(): BelongsTo

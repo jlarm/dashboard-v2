@@ -11,61 +11,31 @@ use WireElements\Pro\Components\Modal\Modal;
 
 class Invite extends Modal
 {
-    public $name;
-    public $email;
-    public $dealers = [];
-    public $department;
-    public $roles = [];
-    public $currentStore = null;
-    public $currentStoreId;
-    public $qiCount;
-
-    public function mount(Store $currentStore): void
-    {
-        $this->currentStore = $currentStore;
-        $this->currentStoreId = $currentStore->id;
-        $this->qiCount = Role::find(5)->users()->count();
-    }
+    public string $name, $email, $department, $role;
+    public array $stores = [];
 
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
+        'stores' => ['nullable', 'array'],
         'department' => ['required', 'integer'],
-        'roles' => ['min:1', 'array'],
+        'role' => ['required'],
     ];
-
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
 
     public function sendInvite()
     {
         $this->validate();
 
-        if (auth()->user()->hasRole('Manager')) {
-            $invite = \App\Models\Dealer\Invite::create([
-                'name' => $this->name,
-                'email' => $this->email,
-                'stores' => [$this->currentStoreId],
-                'department_id' => auth()->user()->department_id,
-                'roles' => $this->roles,
-                'user_id' => auth()->user()->id,
-                'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
-            ]);
-        } else {
-            $invite = \App\Models\Dealer\Invite::create([
-                'name' => $this->name,
-                'email' => $this->email,
-                'stores' => $this->dealers,
-                'department_id' => $this->department,
-                'roles' => $this->roles,
-                'user_id' => auth()->user()->id,
-                'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
-            ]);
-        }
+        $invite = \App\Models\Dealer\Invite::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'stores' => $this->stores ?? [],
+            'department_id' => $this->department,
+            'roles' => [$this->role],
+            'user_id' => auth()->user()->id,
+            'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+        ]);
 
-//        Mail::to($validated['email'])->send(new InviteMail($invite));
         SendQueueEmailJob::dispatch($invite, 'invite');
 
         $this->close();
@@ -79,7 +49,7 @@ class Invite extends Modal
     public function render()
     {
         return view('livewire.dealer.employee.invite', [
-            'stores' => Store::orderBy('name')->get(),
+            'allStore' => Store::orderBy('name')->get(),
             'departments' => Department::orderBy('name')->get(),
             'allRoles' => Role::whereNot('name', 'super-admin')
                 ->whereNot('name', 'Admin')

@@ -18,11 +18,13 @@ class Invite extends Model
         'roles',
         'invitation_token',
         'registered_at',
+        'courses',
     ];
 
     protected $casts = [
         'stores' => 'array',
         'roles' => 'array',
+        'courses' => 'array',
     ];
 
     protected function serializeDate(DateTimeInterface $date): string

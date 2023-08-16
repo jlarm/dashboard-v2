@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dealer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Invite;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -42,6 +43,19 @@ class UserController extends Controller
             'department_id' => $invite['department_id'],
             'password' => bcrypt($request->input('password')),
         ]);
+
+        if ($invite['courses']) {
+            foreach($invite['courses'] as $key => $course) {
+                CourseResults::create([
+                    'user_id' => $user->id,
+                    'course_id' => $key,
+                    'percentage' => 100,
+                    'passed' => 1,
+                    'created_at' => $course . ' ' . now()->format('H:i:s'),
+                    'updated_at' => $course . ' ' . now()->format('H:i:s'),
+                ]);
+            }
+        }
 
         foreach ($invite['stores'] as $store) {
             $user->stores()->attach($store);

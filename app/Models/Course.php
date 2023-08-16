@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Dealer\Department;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -24,6 +25,11 @@ class Course extends Model
     public function results(): HasMany
     {
         return $this->hasMany(CourseResults::class);
+    }
+
+    public function departments(): BelongsToMany
+    {
+        return $this->belongsToMany(Department::class);
     }
 
 }

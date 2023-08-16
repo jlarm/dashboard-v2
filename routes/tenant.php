@@ -96,10 +96,15 @@ Route::group([
     // Roles to Manager
     // **************************************************
 
-    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
-        Route::get('/', \App\Http\Controllers\Dealer\EmployeeIndexController::class)->middleware('auth')->name('index');
-        Route::get('open-invites', function () { return view('dealer.employee.open-invites'); })->middleware('auth')->name('open-invites');
-        Route::get('{user:slug}', [UserController::class, 'show'])->middleware('auth')->name('show');
+    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['auth', 'role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
+        Route::get('/', \App\Http\Controllers\Dealer\EmployeeIndexController::class)->name('index');
+        Route::get('create', function () { return view('dealer.employee.create'); })->name('new');
+        Route::get('open-invites', function () { return view('dealer.employee.open-invites'); })->name('open-invites');
+        Route::get('{user:slug}', [UserController::class, 'show'])->name('show');
+    });
+
+    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['auth', 'role:super-admin|Consultant']], function () {
+        Route::get('create', function () { return view('dealer.employee.create'); })->name('new');
     });
 
     // **************************************************

@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Livewire\Dealer\Employee;
+
+use App\Jobs\SendQueueEmailJob;
+use App\Models\Course;
+use App\Models\Dealer\Department;
+use App\Models\Dealer\Invite;
+use App\Models\Dealer\Store;
+use App\Models\User;
+use Filament\Notifications\Notification;
+use Livewire\Component;
+use Spatie\Permission\Models\Role;
+
+class Create extends Component
+{
+    public string $name, $email, $department, $departmentId, $role;
+    public array $roles = [], $courses = [], $dealers = [];
+    public $currentStore = 1;
+
+    public function mount(Store $currentStore): void
+    {
+        $this->currentStore = $currentStore;
+        $this->departmentId = auth()->user()->department_id ?? '';
+    }
+
+    protected $rules = [
+        'name' => ['required', 'max:255'],
+        'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
+//        'department' => ['required', 'integer'],
+        'roles' => ['min:1', 'array'],
+        'courses' => ['nullable', 'array'],
+    ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public function submit()
+    {
+        $this->validate();
+
+        $invite = Invite::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'stores' => $this->dealers,
+            'department_id' => $this->department,
+            'user_id' => auth()->user()->id,
+            'roles' => $this->roles,
+            'courses' => $this->courses,
+            'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+        ]);
+
+        SendQueueEmailJob::dispatch($invite, 'invite');
+
+        Notification::make()
+            ->title('Invite Successfully Sent!')
+            ->success()
+            ->send();
+
+        return redirect()->route('dealer.employees.index');
+
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.employee.create', [
+            'departments' => Department::all(),
+            'allRoles' => Role::whereNot('name', 'super-admin')
+                ->whereNot('name', 'Admin')
+                ->whereNot('name', 'Consultant')
+                ->orderBy('name')
+                ->get(),
+            'qualifiedCount' => User::with('roles')->get()->filter(function ($user) {
+                return $user->roles->where('name', 'Qualified Individual')->count();
+            })->count(),
+            'allCourses' => Course::select('id', 'name')->get(),
+            'stores' => Store::orderBy('name')->get(),
+        ]);
+    }
+}
