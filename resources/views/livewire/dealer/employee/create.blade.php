@@ -99,9 +99,9 @@
             <p>Add the completion date of any courses completed in the past year.</p>
             @foreach($allCourses as $course)
                 <div>
-                    <p class="text-sm @if(array_key_exists($course->id, $courses)) text-green-500 font-bold @endif">{{ $course->name }}</p>
+                    <p class="text-sm">{{ $course->name }}</p>
                     <div class="text-gray-400">
-                        <x-text-input wire:model="courses.{{$course->id}}" id="courses.{{$course->id}}"
+                        <x-text-input wire:model.defer="courses.{{$course->id}}" id="courses.{{$course->id}}"
                                       class="w-full block mt-1"
                                       type="date" name="name"
                                       :value="old('name')"/>
