@@ -22,176 +22,141 @@
     @livewireStyles
 </head>
 <body class="font-sans antialiased">
-{{--<div class="w-full h-screen bg-white grid grid-cols-8 grid-rows-6">--}}
-{{--    <div class="col-span-3 col-start-1 p-20">--}}
-{{--        <x-application-logo class="h-auto w-full"/>--}}
-{{--    </div>--}}
-{{--    <div class="col-span-5 row-span-4 col-start-1 row-start-2 bg-arm-blue-500 z-10 py-10 pr-10">--}}
-{{--        <div class="w-full h-full flex flex-row items-center border-t border-r border-b border-white ">--}}
-{{--            <div class="flex flex-col ml-10">--}}
-{{--                <h1 class="text-7xl text-white">Deal Jacket Report<span--}}
-{{--                        class="block font-bold">{{ $audit->store->name }}</span></h1>--}}
-{{--                <p class="text-white text-2xl my-10">Complete On: {{ $audit->audit_date->format('n/d/Y') }}</p>--}}
-{{--                <p class="text-white text-2xl">Report Created By:</p>--}}
-{{--                <p class="text-white text-xl">--}}
-{{--                    {{ $audit->user->name }}<br/>--}}
-{{--                    {{ $audit->user->phoneNumber }}<br/>--}}
-{{--                    {{ $audit->user->email }}--}}
-{{--                </p>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    <div--}}
-{{--        style="background-image: url('{{ url('deal-jacket-audit-bg.jpg') }}');"--}}
-{{--        class="col-span-5 row-span-6 bg-arm-orange-500 col-start-4 row-start-1 z-0 bg-cover"></div>--}}
-{{--</div>--}}
-<div class="w-full h-screen">
-    {{ dd($audits) }}
-    {{--    @foreach($audits as $manager => $audit)--}}
-    {{--        Manager Name: {{ $manager }}<br/><br/><br/>--}}
-    {{--        @foreach($audit as $issue)--}}
-    {{--            {{ $issue->deal_jacket_date }}<br/><br/><br/><br/>--}}
-    {{--        @endforeach--}}
-    {{--    @endforeach--}}
+
+{{--Cover Page--}}
+<div class="w-full h-screen bg-white grid grid-cols-8 grid-rows-6">
+    <div class="col-span-3 col-start-1 p-20">
+        <x-application-logo class="h-auto w-full"/>
+    </div>
+    <div class="col-span-5 row-span-4 col-start-1 row-start-2 bg-arm-blue-500 z-10 py-10 pr-10">
+        <div class="w-full h-full flex flex-row items-center border-t border-r border-b border-white ">
+            <div class="flex flex-col ml-10">
+                <h1 class="text-7xl text-white">Deal Jacket Report<span
+                        class="block font-bold">{{ $audit->store->name }}</span></h1>
+                <p class="text-white text-2xl my-10">Complete On: {{ $audit->audit_date->format('n/d/Y') }}</p>
+                <p class="text-white text-2xl">Report Created By:</p>
+                <p class="text-white text-xl">
+                    {{ $audit->user->name }}<br/>
+                    {{ $audit->user->phoneNumber }}<br/>
+                    {{ $audit->user->email }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div
+        style="background-image: url('{{ url('deal-jacket-audit-bg.jpg') }}');"
+        class="col-span-5 row-span-6 bg-arm-orange-500 col-start-4 row-start-1 z-0 bg-cover"></div>
 </div>
+
+{{--Manager Issue Count--}}
+<div class="w-full h-screen">
+    <div class="p-10">
+        <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
+            @foreach($auditCount as $key => $value)
+                <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 text-center">
+                    <dt class="truncate text-2xl font-medium text-gray-500">{{ $key }}</dt>
+                    <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ $value }}</dd>
+                    <p class="text-gray-500">
+                        @if($value > 1)
+                            Issues
+                        @else
+                            Issue
+                        @endif
+                        Found
+                    </p>
+                </div>
+            @endforeach
+        </dl>
+    </div>
+</div>
+
+{{--Issues by Manager--}}
+@foreach($managers as $manager => $results)
+    <div class="prose w-full min-w-full p-10">
+        <h1 class="bg-arm-blue-500 leading-none"><span class="bg-white pr-5">{{ $manager }}</span>
+        </h1>
+        @foreach($results as $key => $value)
+            <div class="page-break">
+                <h3>{{ \App\Enums\DealJacketQuestions::fromKey($key) }}</h3>
+                <ul class="divide-y divide-gray-100 list-none pl-0">
+                    @foreach($value as $a)
+                        <li class="pl-0 my-0 py-2">{{ $a[1] }} - {{ $a[3] }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endforeach
+    </div>
+@endforeach
+
+{{--Issues by Deal Jacket--}}
 <div class="w-full h-screen p-10">
-    <h1 class="text-5xl text-center font-bold">Details by Finance Manager</h1>
-    <div class="prose min-w-full mt-20">
-        <div>
-            <h2 class="w-full bg-gray-50 p-3 text-center">Frank Thomas</h2>
-            <h3 class="text-arm-orange-500">9 Issues found</h3>
-            <h4>Buyers Guide Filled Out Improperly</h4>
-            <p>All information on the Buyers Guide must be accurate</p>
-            <table>
-                <tbody>
-                <tr>
-                    <td><strong>19428</strong></td>
-                    <td>INCORRECT BG (IMPLIED WARRANT NEEDED, NOT AS IS) AND POC NOT LISTED</td>
-                </tr>
-                <tr>
-                    <td><strong>19428</strong></td>
-                    <td>INCORRECT BG (IMPLIED WARRANT NEEDED, NOT AS IS) AND POC NOT LISTED</td>
-                </tr>
-                <tr>
-                    <td><strong>19428</strong></td>
-                    <td>INCORRECT BG (IMPLIED WARRANT NEEDED, NOT AS IS) AND POC NOT LISTED</td>
-                </tr>
-                </tbody>
-            </table>
-            <h4>Credit Score Disclosure: Not Found, Improper Form, or No Acknowledgement</h4>
-            <p>Dealers must provide all credit applicants with a Credit Score Disclosure (CSD), which must contain the
-                consumer's credit score, additional information pertaining to that score and standardized educational
-                information about credit reports and credit scores. If a credit score for a customer is not available
-                (e.g.,
-                due to insufficient credit history), then a “No Score Disclosure” (NSD) form, different from the notice
-                used
-                to convey a consumer’s credit score, must be provided to that consumer. If multiple credit reporting
-                agencies are unable to provide credit scores, a NSD form should be generated for each “no score”
-                agency.</p>
-            <p>It is recommended that dealers require customers to sign copies of the CSD and/or the NSD so the dealer
-                can
-                prove the notice was provided.</p>
-            <p>It is essential that the signature does not obscure any of the language on either form. The
-                customer-signed
-                copy should be retained in the deal jacket.</p>
-            <table>
-                <tbody>
-                <tr>
-                    <td><strong>19428</strong></td>
-                    <td>NO COPY IN DEAL</td>
-                </tr>
-                <tr>
-                    <td><strong>19428</strong></td>
-                    <td>NO COPY IN DEAL</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <h2 class="w-full bg-gray-50 p-3 text-center">Jane Doe</h2>
-            <h3 class="text-arm-orange-500">2 Issues found</h3>
-            <h4>Buyers Guide Filled Out Improperly</h4>
-            <p>All information on the Buyers Guide must be accurate</p>
-            <table>
-                <tbody>
-                <tr>
-                    <td><strong>19428</strong></td>
-                    <td>INCORRECT BG (IMPLIED WARRANT NEEDED, NOT AS IS) AND POC NOT LISTED</td>
-                </tr>
-                </tbody>
-            </table>
-            <h4>Credit Score Disclosure: Not Found, Improper Form, or No Acknowledgement</h4>
-            <p>Dealers must provide all credit applicants with a Credit Score Disclosure (CSD), which must contain the
-                consumer's credit score, additional information pertaining to that score and standardized educational
-                information about credit reports and credit scores. If a credit score for a customer is not available
-                (e.g.,
-                due to insufficient credit history), then a “No Score Disclosure” (NSD) form, different from the notice
-                used
-                to convey a consumer’s credit score, must be provided to that consumer. If multiple credit reporting
-                agencies are unable to provide credit scores, a NSD form should be generated for each “no score”
-                agency.</p>
-            <p>It is recommended that dealers require customers to sign copies of the CSD and/or the NSD so the dealer
-                can
-                prove the notice was provided.</p>
-            <p>It is essential that the signature does not obscure any of the language on either form. The
-                customer-signed
-                copy should be retained in the deal jacket.</p>
-            <table>
-                <tbody>
-                <tr>
-                    <td><strong>19428</strong></td>
-                    <td>NO COPY IN DEAL</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="prose min-w-full">
-        <h1 class="text-5xl text-center font-bold my-10">Details by Deal Jacket</h1>
-        <div class="w-1/3">
-            <table>
-                <tbody>
-                <tr>
-                    <td>Stock Number:</td>
-                    <td>19508</td>
-                </tr>
-                <tr>
-                    <td>Finance Manager:</td>
-                    <td>Frank Thomas</td>
-                </tr>
-                <tr>
-                    <td>Customer:</td>
-                    <td>John Doe</td>
-                </tr>
-                <tr>
-                    <td>Deal Type:</td>
-                    <td>Cash</td>
-                </tr>
-                <tr>
-                    <td>Vehicle Type:</td>
-                    <td>New</td>
-                </tr>
-                <tr>
-                    <td>Odometer Reading:</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td>Date of Delivery:</td>
-                    <td>7-21-2023</td>
-                </tr>
-                </tbody>
-            </table>
-            <h4>F&I Menu Missing or Terms Differ From Contract</h4>
-        </div>
-        <p>No law mandates the price at which various aftermarket products may be sold. That said, not having standard
-            pricing in place can result in problems when a consumer pays more than most customers—particularly if
-            certain protected classes of consumers tend to pay more than others. Also, some customers have accused
-            dealers of failing to offer them an available F&I product that they would have purchased if they had known
-            about it. To avoid potential actions by regulators (or consumer attorneys), it is recommended that dealers
-            implement standardized pricing for aftermarket goods and services sold in the finance department, and that
-            these prices be presented to consumers in a uniform manner through a “menu” system. Always print a final
-            menu that matches the agreed upon terms that will be printed on the final agreements.</p>
-    </div>
+    <h1 class="text-5xl text-center font-bold my-10 bg-arm-blue-500"><span
+            class="bg-white px-5">Details by Deal Jacket</span></h1>
+    <ul class="divide-y divide-gray-300">
+        @foreach($audits as $key => $audit)
+            <li class="prose min-w-full py-10">
+                <div>
+                    <div class="w-1/3">
+                        <table class="mt-0">
+                            <tbody>
+                            <tr>
+                                <td>Customer Name:</td>
+                                <td>{{ $audit->customer_name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Customer Number:</td>
+                                <td>{{ $audit->customer_number }}</td>
+                            </tr>
+                            <tr>
+                                <td>Finance Manager:</td>
+                                <td>{{ $audit->manager->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Deal Type:</td>
+                                <td>
+                                    @if($audit->individual_q1_answer == 1)
+                                        Cash
+                                    @elseif($audit->individual_q1_answer == 2)
+                                        Finance
+                                    @elseif($audit->individual_q1_answer == 3)
+                                        Lease
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Vehicle Type:</td>
+                                <td>
+                                    @if($audit->individual_q2_answer == 1)
+                                        New
+                                    @elseif($audit->individual_q2_answer == 2)
+                                        Used
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Odometer Reading:</td>
+                                <td>{{ $audit->mileage }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of Delivery:</td>
+                                <td>{{ $audit->deal_jacket_date->format('F d, Y') }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    @for($i = 3; $i <= 40; $i++)
+                        @if($audit->{'individual_q' . $i . '_answer'} == 2)
+                            <h4>{{ \App\Enums\DealJacketQuestions::fromKey('individual_q' . $i . '_answer') }}</h4>
+                        @endif
+                    @endfor
+                </div>
+            </li>
+        @endforeach
+    </ul>
 </div>
 </body>
 </html>

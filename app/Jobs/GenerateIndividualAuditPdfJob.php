@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Models\Dealer\Audit\IndividualAudit;
-use App\Models\User;
 use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,14 +19,101 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     public $audits;
     public int $count = 0;
     protected $sum;
+    public $issueCountByManager;
+    public $issuesByManager;
+    public $array = [];
+    protected $parent;
 
     public function __construct(protected IndividualAudit $individualAudit)
     {
-        $this->audits = $this->individualAudit
+        $this->parent = $this->individualAudit;
+
+        $this->audits = IndividualAudit::query()
             ->where('id', $this->individualAudit->id)
             ->orWhere('parent_id', $this->individualAudit->id)
             ->with('store')
+            ->with('user')
             ->get();
+
+        $this->issueCountByManager = $this->audits
+            ->groupBy(function ($item) {
+                return $item->manager->name;
+            })
+            ->map(function ($item) {
+                $this->array = [];
+                $item->each(function ($item, $key) {
+                    foreach ($item->getAttributes() as $key => $value) {
+                        if (
+                            $key != 'id' &&
+                            $key != 'parent_id' &&
+                            $key != 'user_id' &&
+                            $key != 'store_id' &&
+                            $key != 'manager_id' &&
+                            $key != 'mileage' &&
+                            $key != 'customer_number' &&
+                            $key != 'rating' &&
+                            $key != 'individual_q1_answer' &&
+                            $key != 'individual_q2_answer'
+                        ) {
+                            if ($value === 2) {
+                                $this->array[] = $value;
+                            }
+                        }
+                    }
+                });
+                return count($this->array);
+            });
+
+        $this->issuesByManager = $this->audits
+            ->groupBy(function ($item) {
+                return $item->manager->name;
+            })
+            ->map(function ($item) {
+                $this->array = [];
+                $item->each(function ($item, $key) {
+                    foreach ($item->getAttributes() as $key => $value) {
+                        if (
+                            $key != 'id' &&
+                            $key != 'parent_id' &&
+                            $key != 'user_id' &&
+                            $key != 'store_id' &&
+                            $key != 'manager_id' &&
+                            $key != 'mileage' &&
+                            $key != 'customer_number' &&
+                            $key != 'rating' &&
+                            $key != 'individual_q1_answer' &&
+                            $key != 'individual_q2_answer'
+                        ) {
+                            if ($value === 2) {
+                                preg_match('/^[^_]*_q\K[^_]+/', $key, $matches);
+                                $comment = $item->getAttributes()['individual_q' . $matches[0] . '_comment'];
+                                $this->array[] = [$key, $item->customer_number, $key, $comment];
+                            }
+                        }
+                    }
+                });
+                return collect($this->array)->groupBy(function ($item) {
+                    return $item[0];
+                });
+            });
+    }
+
+    private function rating(): void
+    {
+        $sum = 0;
+
+        foreach ($this->audits as $audit) {
+            for ($i = 3; $i <= 40; $i++) {
+                if ($audit->{'individual_q' . $i . '_answer'} == 2) {
+                    $sum += 1;
+                }
+            }
+            $wrong = $sum;
+
+            $audit->update([
+                'rating' => number_format(100 * (40 - $wrong) / 40, 2, '.', ''),
+            ]);
+        }
     }
 
     public function handle(): void
@@ -43,40 +129,27 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             $dealerName = str_replace(' ', '-', tenant('name'));
         }
 
-        foreach ($this->audits as $audit) {
-            $count = $this->count;
-            $fileName = $audit->audit_date->format('Ymd') . '-' . $dealerName . '-' . $audit->customer_number . '-individual-audit.pdf';
+        $fileName = $this->individualAudit->audit_date->format('Ymd') . '-'. $this->individualAudit->created_at->format('his') . '-' . $dealerName . '-deal-jacket-audit.pdf';
 
-            $html = view('dealer.audit.individual.download', [
-                'individualAudit' => $audit,
-                'count' => $count,
-                'managerName' => isset($audit->manager_id) ? User::where('id', $audit->manager_id)->first()->name : null,
-            ])->render();
+        $html = view('dealer.audit.individual.download', [
+            'audit' => $this->parent,
+            'auditCount' => $this->issueCountByManager,
+            'audits' => $this->audits,
+            'managers' => $this->issuesByManager,
+        ])->render();
 
-            $pdf = Browsershot::html($html)
-                ->showBackground()
-                ->margins(10, 10, 10, 10)
-                ->scale(0.75)
-                ->waitUntilNetworkIdle()
-                ->save(storage_path('app/individual-audits/' . $fileName));
+        $pdf = Browsershot::html($html)
+            ->showBackground()
+            ->margins(10, 10, 10, 10)
+            ->scale(0.75)
+            ->waitUntilNetworkIdle()
+            ->save(storage_path('app/individual-audits/' . $fileName));
 
-            $this->audits->filter(function ($value) {
-                for ($i = 3; $i <= 40; $i++) {
-                    if ($i != 19 && $value->{'individual_q' . $i .'_answer'} == 2) {
-                        $this->sum += 1;
-                    }
-                }
-            });
-            $total = count($this->audits) * 37;
-            $wrong = $this->sum;
-            $rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
+        $updatePath = $this->parent->update([
+            'pdf_path' => $fileName,
+        ]);
 
-            $updatePath = $audit->update([
-                'pdf_path' => $fileName,
-                'rating' => $rating,
-            ]);
-            $this->count++;
-        }
+        $this->rating();
 
     }
 }
