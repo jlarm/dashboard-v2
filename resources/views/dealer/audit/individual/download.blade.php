@@ -70,6 +70,53 @@
     </div>
 </div>
 
+{{--Issues by Question--}}
+<div class="w-full h-screen">
+    <div class="p-10">
+        <h1 class="text-5xl text-center font-bold my-10 bg-arm-blue-500">
+            <span class="bg-white px-5">Deal Jacket Audit Summary</span>
+        </h1>
+        <table class="table-fixed mx-auto divide-y divide-gray-300">
+            <thead>
+            <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Issue
+                </th>
+                @foreach($managers as $manager => $count)
+                    <th scope="col"
+                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        <span class="inline-block transform rotate-180"
+                              style="writing-mode: vertical-rl;">{{ $manager }}</span>
+                    </th>
+                @endforeach
+                <th scope="col" class="flex px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    <span class="inline-block transform rotate-180"
+                          style="writing-mode: vertical-rl;">Total Issues
+                    </span>
+                </th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+            @foreach($managerIssueCount as $question => $count)
+                <tr class="divide-x divide-gray-200">
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                        {{ \App\Enums\DealJacketQuestions::fromKey($question) }}
+                    </td>
+                    @foreach($count as $a)
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $a }}</td>
+                    @endforeach
+                </tr>
+            @endforeach
+            <tr class="divide-x divide-gray-200">
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-right">Total Issues</td>
+                @foreach($totals as $total)
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $total }}</td>
+                @endforeach
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 {{--Issues by Manager--}}
 @foreach($managers as $manager => $results)
     <div class="prose w-full min-w-full p-10">
