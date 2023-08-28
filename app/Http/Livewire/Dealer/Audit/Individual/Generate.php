@@ -11,6 +11,21 @@ use Livewire\Component;
 class Generate extends Component
 {
     public IndividualAudit $individualAudit;
+    public $managerCheck;
+
+    public function mount(IndividualAudit $individualAudit)
+    {
+        $this->managerCheck = IndividualAudit::query()
+            ->where('id', $individualAudit->id)
+            ->orWhere('parent_id', $individualAudit->id)
+            ->pluck('manager_id');
+
+        if (in_array(null, $this->managerCheck->toArray())) {
+            $this->managerCheck = false;
+        } else {
+            $this->managerCheck = true;
+        }
+    }
 
     public function generatePdf(): void
     {
