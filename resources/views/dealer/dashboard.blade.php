@@ -9,8 +9,11 @@
         @if(!tenant('locations'))
             @can('create-dealerships')
                 <div class="bg-white">
-                    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                        <dl class="grid grid-cols-2 gap-5 text-center lg:grid-cols-4">
+                    <div class="mx-auto px-6 lg:px-8">
+                        <dl class="grid grid-cols-2 gap-5 text-center lg:grid-cols-6">
+                            <div class="col-span-2">
+                                <livewire:dealer.general.store-logo/>
+                            </div>
                             <livewire:dealer.home.osha-stats/>
                             <livewire:dealer.home.body-shop-stats/>
                             <livewire:dealer.home.glba-stats/>
@@ -19,9 +22,9 @@
                     </div>
                 </div>
             @endcan
-            <div class="m-20">
-                <livewire:dealer.general.store-logo/>
-            </div>
+            {{--            <div class="m-20">--}}
+            {{--                <livewire:dealer.general.store-logo/>--}}
+            {{--            </div>--}}
         @endif
         @if(tenant('locations'))
             @can('edit-stores')
