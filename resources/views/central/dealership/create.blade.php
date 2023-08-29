@@ -102,9 +102,10 @@
                                         id="domain"
                                         name="domain"
                                         required
+                                        placeholder="abcford"
                                     >
                                     <span
-                                        class="flex items-center rounded-r-md border border-gray-300 border-l-0 bg-slate-50 focus:border-arm-blue-500 focus:ring-arm-blue-500 px-2 py-2 mt-1 text-slate-400 transition-colors duration-300 peer-focus:border-sky-400 peer-focus:bg-sky-400 peer-focus:text-white">.{{ config('tenancy.central_domains')[0] }}</span>
+                                        class="flex items-center rounded-r-md border border-gray-300 border-l-0 bg-slate-50 focus:border-arm-blue-500 focus:ring-arm-blue-500 px-2 py-2 mt-1 text-slate-500 transition-colors duration-300 peer-focus:border-sky-400 peer-focus:bg-sky-400 peer-focus:text-white">.{{ config('tenancy.central_domains')[0] }}</span>
                                 </div>
                                 <x-input-error :messages="$errors->get('domain')" class="mt-2"/>
                             </div>
