@@ -128,7 +128,7 @@ Route::group([
 
         Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
 
-        Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => 'auth'], function () {
+        Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => ['auth', 'single.store']], function () {
             Route::get('osha', function () { return view('dealer.audit.osha.index'); })->name('osha.index');
             Route::get('osha/create', OshaCreateController::class)->name('osha.create');
             Route::get('osha/{oshaAudit:id}', OshaAuditController::class)->name('osha.show');
@@ -171,16 +171,16 @@ Route::group([
             Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('edit');
         });
 
-        Route::get('scans', function () { return view('dealer.scan.index'); })->middleware('auth')->name('scan.index');
+        Route::get('scans', function () { return view('dealer.scan.index'); })->middleware(['auth', 'single.store'])->name('scan.index');
         Route::get('scans/settings', function () { return view('dealer.scan.settings'); })->middleware('auth')->name('scan.settings');
 
-        Route::get('manuals', \App\Http\Controllers\Dealer\ManualController::class)->middleware('auth')->name('manual.index');
-        Route::get('manuals/isp', \App\Http\Controllers\Dealer\Manual\IspController::class)->middleware('auth')->name('manual.isp');
-        Route::get('manuals/osha', \App\Http\Controllers\Dealer\Manual\OshaController::class)->middleware('auth')->name('manual.osha');
-        Route::get('manuals/red-flag', \App\Http\Controllers\Dealer\Manual\RedFlagController::class)->middleware('auth')->name('manual.red-flag');
+        Route::get('manuals', \App\Http\Controllers\Dealer\ManualController::class)->middleware(['auth', 'single.store'])->name('manual.index');
+        Route::get('manuals/isp', \App\Http\Controllers\Dealer\Manual\IspController::class)->middleware(['auth', 'single.store'])->name('manual.isp');
+        Route::get('manuals/osha', \App\Http\Controllers\Dealer\Manual\OshaController::class)->middleware(['auth', 'single.store'])->name('manual.osha');
+        Route::get('manuals/red-flag', \App\Http\Controllers\Dealer\Manual\RedFlagController::class)->middleware(['auth', 'single.store'])->name('manual.red-flag');
 
         Route::get('stores', function () { return view('dealer.store.index');})->middleware(['auth', 'has.stores'])->name('stores.index');
-        Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth'])->name('dealer.settings');
+        Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
 
     });
 
