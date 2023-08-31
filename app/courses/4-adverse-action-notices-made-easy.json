@@ -27,7 +27,7 @@
             },
             {
                 "title": "FCRA – FAIR CREDIT REPORTING ACT",
-                "description": "<p>All adverse action notices must also include these disclosures></p><ul><li>The credit decision was based whole or in part on the information from the credit report.</li><li>That the credit reporting agency is unable to provide the specific reason for declination since they did not make that final decision they just provided the information.</li><li>The customer has the right to a free credit report if requested within 60 days of receiving the notice.</li><li>The customer has the right to question the accuracy and completeness of the content of their credit report.</li></ul>"
+                "description": "<p>All adverse action notices must also include these disclosures</p><ul><li>The credit decision was based whole or in part on the information from the credit report.</li><li>That the credit reporting agency is unable to provide the specific reason for declination since they did not make that final decision they just provided the information.</li><li>The customer has the right to a free credit report if requested within 60 days of receiving the notice.</li><li>The customer has the right to question the accuracy and completeness of the content of their credit report.</li></ul>"
             },
             {
                 "title": "ECOA – EQUAL CREDIT OPPORTUNITY ACT",
@@ -35,7 +35,7 @@
             },
             {
                 "title": "ADVERSE ACTION NOTICE",
-                "description": "<ul><li>The actual adverse action notice should be as simple as possible and should be a single page that will satisfy both rules. The resource center of Compliance Solved has several notices that will cover all scenarios please review with your attorney before implementing.</li></ul>"
+                "description": "<ul><li>The actual adverse action notice should be as simple as possible and should be a single page that will satisfy both rules. The resource center of ARMP has several notices that will cover all scenarios please review with your attorney before implementing.</li></ul>"
             },
             {
                 "title": "WHEN TO SEND THE ADVERSE ACTION NOTICE?",
@@ -72,7 +72,7 @@
         ],
         "questions": [
             {
-                "question": "If the credit statement is taken over the phone(Five Liner) just to see if there is a chance that the applicant could get credit we do not have to issue an adverse action notice because there was no real expectation that the credit would be accepted.",
+                "question": "If the credit statement is taken over the phone just to see if there is a chance that the applicant could get credit, we do not have to issue an adverse action notice because there was no real expectation that the credit would be accepted.",
                 "answers": [
                     {
                         "a": "True",

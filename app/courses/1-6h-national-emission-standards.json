@@ -55,7 +55,7 @@
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<p>Notification and Reporting</p><ul><li>Annual Notification of Changes Report<ul><li>Sources must submit report annually prior to March 1 if any previously reported information changed during the previous year</li><li>Changes include paint stripping sources that increase usage of MeCl to more than one ton in a <u>calendar</u> year<ul><li>Submit the changes report by March 1 following the year usage exceeded one ton of MeCl</li><li>Develop and implement a written minimization plan by December 31 (2010???)</li><li>Submit a notification of compliance status by March 1 of the following year</li></ul></li></ul></li></ul>"
+                "description": "<p>Notification and Reporting</p><ul><li>Annual Notification of Changes Report<ul><li>Sources must submit report annually prior to March 1 if any previously reported information changed during the previous year</li><li>Changes include paint stripping sources that increase usage of MeCl to more than one ton in a <u>calendar</u> year<ul><li>Submit the changes report by March 1 following the year usage exceeded one ton of MeCl</li><li>Develop and implement a written minimization plan by December 31 2010)</li><li>Submit a notification of compliance status by March 1 of the following year</li></ul></li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
@@ -67,35 +67,35 @@
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<p>General Requirements Surface Coating</p><ul><li>1: Painters must be certified as completing training in proper spray application of surface coatings, setup and maintenance of spray equipment<ul><li>Except students of accredited surface coating training program who are under the direct supervision of an instructor who is certified</li></ul></li></ul>"
+                "description": "<p>General Requirements Surface Coating</p><ul><li>Painters must be certified as completing training in proper spray application of surface coatings, setup and maintenance of spray equipment<ul><li>Except students of accredited surface coating training program who are under the direct supervision of an instructor who is certified</li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<p>General Requirements Surface Coating</p><ul><li>2: Spray-applied coatings must be applied in spray booth, preparation station, or mobile enclosure that meets a <u>and</u> b, or c, and d:<ul><li>a: Fitted with filter system demonstrated to have 98% collection efficiency, using vendor provided filter efficiency data, or using waterwash spray booths operated to manufacturer’s specs</li><li>b: Booths and prep stations for complete motor vehicles or mobile equipment must<ul><li>Have full roof and four walls or side curtains, and operate and negative pressure; OR</li><li>Use downdraft booth operated at up to, but no more than, 0.05 inches w.g. positive pressure</li></ul></li></ul></li></ul>"
+                "description": "<p>General Requirements Surface Coating</p><ul><li>Spray-applied coatings must be applied in spray booth, preparation station, or mobile enclosure that meets a <u>and</u> b, or c, and d:<ul><li>a: Fitted with filter system demonstrated to have 98% collection efficiency, using vendor provided filter efficiency data, or using waterwash spray booths operated to manufacturer’s specs</li><li>b: Booths and prep stations for complete motor vehicles or mobile equipment must<ul><li>Have full roof and four walls or side curtains, and operate and negative pressure; OR</li><li>Use downdraft booth operated at up to, but no more than, 0.05 inches w.g. positive pressure</li></ul></li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<p>General Requirements Surface Coating</p><ul><li>2: Spray booths, prep stations, or mobile enclosures<ul><li>c: Booths or prep stations for miscellaneous coating or vehicle subassemblies<ul><li>Must have full roof, at least 3 complete walls or side curtains, and ventilated so air is drawn into the booth</li><li>Roof and walls may have openings for conveyors</li></ul></li><li>d: Mobile enclosures for spot repairs must enclose and seal against the surface being coated and remain in enclosure directing to the filter</li></ul></li></ul>"
+                "description": "<p>General Requirements Surface Coating</p><ul><li>Spray booths, prep stations, or mobile enclosures<ul><li>c: Booths or prep stations for miscellaneous coating or vehicle subassemblies<ul><li>Must have full roof, at least 3 complete walls or side curtains, and ventilated so air is drawn into the booth</li><li>Roof and walls may have openings for conveyors</li></ul></li><li>d: Mobile enclosures for spot repairs must enclose and seal against the surface being coated and remain in enclosure directing to the filter</li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<ul><li>General Requirements Surface Coating</li><li>3: Spray-applied coatings must be applied with one of the following gun technologies:<ul><li>High volume, low pressure (HVLP)</li><li>Electrostatic</li><li>Airless</li><li>Air-assisted airless</li><li>With written approval from EPA, other spray technology demonstrated to achieve equivalent transfer efficiency is permitted</li></ul></li></ul>"
+                "description": "<ul><li>General Requirements Surface Coating</li><li>Spray-applied coatings must be applied with one of the following gun technologies:<ul><li>High volume, low pressure (HVLP)</li><li>Electrostatic</li><li>Airless</li><li>Air-assisted airless</li><li>With written approval from EPA, other spray technology demonstrated to achieve equivalent transfer efficiency is permitted</li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<p>General Requirements Surface Coating</p><ul><li>3: Listed spray technologies are not required if:<ul><li>Painting is performed by students and instructors at paint training centers</li><li>Coating aerospace vehicle<ul><li>Components that normally require use of airbrush or extensions to reach limited access areas</li><li>With coatings that contain fillers that adversely affect atomization with HVLP</li><li>With coatings that have dried film thickness of less than 0.0013 cm (0.0005 in)</li></ul></li></ul></li></ul>"
+                "description": "<p>General Requirements Surface Coating</p><ul><li>Listed spray technologies are not required if:<ul><li>Painting is performed by students and instructors at paint training centers</li><li>Coating aerospace vehicle<ul><li>Components that normally require use of airbrush or extensions to reach limited access areas</li><li>With coatings that contain fillers that adversely affect atomization with HVLP</li><li>With coatings that have dried film thickness of less than 0.0013 cm (0.0005 in)</li></ul></li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<p>General Requirements Surface Coating</p><ul><li>4: Spray gun cleaning operation should prevent atomized mist or avoid spraying cleaning solvent and paint residue outside container used to collect waste solvent<ul><li>Acceptable options include:<ul><li>Hand cleaning of disassembled gun</li><li>Flush gun with solvent, without spraying</li><li>Use fully enclosed gun cleaner</li><li>Combination of non-atomizing methods</li></ul></li></ul></li></ul>"
+                "description": "<p>General Requirements Surface Coating</p><ul><li>Spray gun cleaning operation should prevent atomized mist or avoid spraying cleaning solvent and paint residue outside container used to collect waste solvent<ul><li>Acceptable options include:<ul><li>Hand cleaning of disassembled gun</li><li>Flush gun with solvent, without spraying</li><li>Use fully enclosed gun cleaner</li><li>Combination of non-atomizing methods</li></ul></li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<p>General Requirements Surface Coating</p><ul><li>5: Train all personnel, including contractors, who spray apply coatings<ul><li>Initial training<ul><li>New sources must train personnel by January 9, 2007 or 180 days after hire, whichever is later</li><li>Existing sources must train new personnel 180 days after hire or by January 10, 2011 (can use training completed up to five years prior to date training is required, if it met elements of training program required in the rule)</li></ul></li><li>Refresher training, at least once every five years following initial training date</li></ul></li></ul>"
+                "description": "<p>General Requirements Surface Coating</p><ul><li>Train all personnel, including contractors, who spray apply coatings<ul><li>Initial training<ul><li>New sources must train personnel by January 9, 2007 or 180 days after hire, whichever is later</li><li>Existing sources must train new personnel 180 days after hire or by January 10, 2011 (can use training completed up to five years prior to date training is required, if it met elements of training program required in the rule)</li></ul></li><li>Refresher training, at least once every five years following initial training date</li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<p>General Requirements Surface Coating</p><ul><li>5: remove this number Training program must include:<ul><li>List of personnel requiring training</li><li>Hands on and classroom instruction including:<ul><li>Spray gun equipment selection, set up, and operation</li><li>Best spray technique for different types of coatings to improve transfer efficiency and minimize overspray</li><li>Routine booth and filter maintenance, filter selection and installation</li><li>Compliance with requirements of the NESHAP</li></ul></li><li>Description of methods to document and certify training</li></ul></li></ul>"
+                "description": "<p>General Requirements Surface Coating</p><ul><li>Training program must include:<ul><li>List of personnel requiring training</li><li>Hands on and classroom instruction including:<ul><li>Spray gun equipment selection, set up, and operation</li><li>Best spray technique for different types of coatings to improve transfer efficiency and minimize overspray</li><li>Routine booth and filter maintenance, filter selection and installation</li><li>Compliance with requirements of the NESHAP</li></ul></li><li>Description of methods to document and certify training</li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
@@ -119,7 +119,7 @@
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
-                "description": "<ul><li>There are different types of spray booths. Here are some examples of good and bad booths: (are these good or bad? Doesn’t make sense)<ul><li>4 walls, full roof and exhaust fan</li><li>3 walls, Full roof and exhaust fan</li><li>Negative pressure exhaust (inward Draw)</li><li>Positive Pressure exhaust (downdraft only)</li></ul></li></ul>"
+                "description": "<ul><li>There are different types of spray booths. Here are some examples of good and bad booths: <ul><li>4 walls, full roof and exhaust fan</li><li>3 walls, Full roof and exhaust fan</li><li>Negative pressure exhaust (inward Draw)</li><li>Positive Pressure exhaust (downdraft only)</li></ul></li></ul>"
             },
             {
                 "title": "NESHAP (better known as the 6H rule)",
