@@ -20,7 +20,7 @@
                 <li>
                     <a
                         class="{{ (request()->segment(3) == 'scans') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
-                        href="{{ route('dealer.stores.scans', $store) }}">Scans</a>
+                        href="{{ route('dealer.stores.scans', $store) }}">IT Scans</a>
                 </li>
 
                 <li>
