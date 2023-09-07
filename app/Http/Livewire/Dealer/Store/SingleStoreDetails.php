@@ -33,7 +33,6 @@ class SingleStoreDetails extends Component
         'postal_code' => 'required',
         'phone' => 'required',
         'website' => 'nullable',
-        'logo' => 'nullable|image|max:1024|mimes:png,jpg',
         'active_monitoring' => 'boolean|required',
         'monitoring_start_date' => 'date|required_with:active_monitoring',
     ];
@@ -66,9 +65,7 @@ class SingleStoreDetails extends Component
     {
         $this->validate();
 
-        if($this->logo != null) {
             $this->logo = $this->logo->store('logo', 'public');
-        }
 
         try {
             $this->dealer->update([
