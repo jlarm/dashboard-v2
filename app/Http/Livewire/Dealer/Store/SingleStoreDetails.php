@@ -84,7 +84,7 @@ class SingleStoreDetails extends Component
             ]);
 
             $this->dealer->syncFromMediaLibraryRequest($this->logo)
-                ->toMediaCollection('logo', 'public');
+                ->toMediaCollection('logo', 'local');
 
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
