@@ -36,7 +36,7 @@ class SingleStoreDetails extends Component
         'phone' => 'required',
         'website' => 'nullable',
         'active_monitoring' => 'boolean|required',
-        'monitoring_start_date' => 'date|required_with:active_monitoring',
+        'monitoring_start_date' => 'date|nullable',
     ];
 
     public function mount(): void
