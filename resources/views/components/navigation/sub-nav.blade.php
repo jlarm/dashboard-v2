@@ -5,7 +5,8 @@
         <a href="#"
            class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-arm-blue-600">Vendors</a>
         <a href="#"
-           class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-arm-blue-600">Scans</a>
+           class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-arm-blue-600">IT
+            Scans</a>
         <a href="#"
            class="px-3 py-2 transition-colors duration-300 bg-white rounded-md hover:bg-gray-100 hover:text-arm-blue-600">Manuals</a>
         <a href="#"

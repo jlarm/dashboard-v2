@@ -22,6 +22,8 @@ class SingleStoreDetails extends Component
     public $phone;
     public $website;
     public $logo;
+    public $active_monitoring = false;
+    public $monitoring_start_date;
 
     protected $rules = [
         'name' => 'required',
@@ -32,6 +34,8 @@ class SingleStoreDetails extends Component
         'phone' => 'required',
         'website' => 'nullable',
         'logo' => 'nullable|image|max:1024|mimes:png,jpg',
+        'active_monitoring' => 'boolean|required',
+        'monitoring_start_date' => 'date|required_with:active_monitoring',
     ];
 
     public function mount(): void
@@ -46,6 +50,8 @@ class SingleStoreDetails extends Component
         $this->phone = $this->dealer->phone;
         $this->website = $this->dealer->website;
         $this->logo = $this->dealer->logo;
+        $this->active_monitoring = $this->dealer->active_monitoring;
+        $this->monitoring_start_date = $this->dealer->monitoring_start_date?->format('Y-m-d');
     }
 
     public function updatedLogo(): void
@@ -74,6 +80,8 @@ class SingleStoreDetails extends Component
                 'phone' => $this->phone,
                 'website' => $this->website,
                 'logo' => $this->logo,
+                'active_monitoring' => $this->active_monitoring,
+                'monitoring_start_date' => $this->monitoring_start_date,
             ]);
         } catch (\Exception $e) {
             \Log::error($e->getMessage());

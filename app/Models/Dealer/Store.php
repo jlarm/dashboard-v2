@@ -34,6 +34,8 @@ class Store extends Model implements HasMedia
         'phone',
         'website',
         'logo',
+        'active_monitoring',
+        'monitoring_start_date',
         'police_emergency_phone',
         'police_non_emergency_phone',
         'fire_emergency_phone',
@@ -65,6 +67,8 @@ class Store extends Model implements HasMedia
     protected $casts = [
         'ip_addresses' => 'array',
         'website_urls' => 'array',
+        'monitoring_start_date' => 'date:Y-m-d',
+        'currently_monitoring' => 'boolean',
     ];
 
     public function getSlugOptions(): SlugOptions

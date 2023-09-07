@@ -112,6 +112,45 @@
                         @error('logo') <span class=" text-red-500">{{ $message }}</span> @enderror
                     </div>
                 </div>
+                @can('create-dealerships')
+                    <div class="grid grid-cols-2 gap-5 border-t pt-5">
+                        <div class="flex items-start mb-6">
+                            <div class="flex items-center h-5">
+                                <input wire:model="active_monitoring"
+                                       id="custom-checkbox"
+                                       type="checkbox" class="hidden peer">
+                                <label for="custom-checkbox"
+                                       class="peer-checked:[&_svg]:scale-100 text-sm font-medium text-neutral-600 peer-checked:text-arm-blue-600 [&_svg]:scale-0 peer-checked:[&_.custom-checkbox]:border-arm-blue-500 peer-checked:[&_.custom-checkbox]:bg-arm-blue-500 select-none flex items-center space-x-2">
+                                    <span
+                                        class="flex items-center justify-center w-5 h-5 border-2 rounded custom-checkbox text-neutral-900">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="3"
+                                             stroke="currentColor" class="w-3 h-3 text-white duration-300 ease-out">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                                      </svg>
+                                    </span>
+                                    <span>Dealership has active SOC monitoring</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex">
+                                <x-input-label for="monitoring_start_date" :value="__('SOC Monitoring Start Date')"/>
+                                @if($active_monitoring)
+                                    <span class="text-sm text-red-600">*</span>
+                                @endif
+                            </div>
+                            <x-text-input
+                                wire:model.defer="monitoring_start_date"
+                                id="monitoring_start_date"
+                                class="block mt-1 w-full"
+                                type="date"
+                                name="monitoring_start_date"
+                            />
+                            <x-input-error :messages="$errors->get('monitoring_start_date')" class="mt-2"/>
+                        </div>
+                    </div>
+                @endcan
                 <div class="py-3 text-right">
                     <x-primary-button wire:loading.attr="disabled">Update</x-primary-button>
                 </div>

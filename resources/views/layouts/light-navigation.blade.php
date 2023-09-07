@@ -210,6 +210,11 @@
                                 </svg>
                                 Courses
                             </a>
+                            @if(!tenant('locations'))
+                                @can('view-audits')
+                                    <livewire:dealer.general.soc-monitoring/>
+                                @endcan
+                            @endif
                         </div>
                         <div class="mt-auto space-y-1 pt-10">
                             <form method="POST" action="{{ route('dealer.logout') }}">
@@ -442,6 +447,11 @@
                         @endcan
                     @endif
                 </div>
+                @if(!tenant('locations'))
+                    @can('view-audits')
+                        <livewire:dealer.general.soc-monitoring/>
+                    @endcan
+                @endif
             </div>
             <div class="block w-full flex-shrink-0">
                 @can('create-dealerships')
