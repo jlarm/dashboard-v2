@@ -1,5 +1,5 @@
 <div>
     @if($logo)
-        <img src="{{ $logo }}" alt="Logo">
+        <img src="{{ asset($logo) }}" alt="Logo">
     @endif
 </div>
