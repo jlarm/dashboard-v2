@@ -6,11 +6,12 @@ use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 use Storage;
 
 class SingleStoreDetails extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithMedia;
 
     public Store $store;
     public $dealer;
@@ -21,7 +22,8 @@ class SingleStoreDetails extends Component
     public $postal_code;
     public $phone;
     public $website;
-    public $logo;
+    public $mediaComponentNames = ['logo'];
+    public $logo = null;
     public $active_monitoring = false;
     public $monitoring_start_date;
 
@@ -48,7 +50,6 @@ class SingleStoreDetails extends Component
         $this->postal_code = $this->dealer->postal_code;
         $this->phone = $this->dealer->phone;
         $this->website = $this->dealer->website;
-        $this->logo = $this->dealer->logo;
         $this->active_monitoring = $this->dealer->active_monitoring;
         $this->monitoring_start_date = $this->dealer->monitoring_start_date?->format('Y-m-d');
     }
@@ -56,7 +57,7 @@ class SingleStoreDetails extends Component
     public function updatedLogo(): void
     {
         $this->validate([
-            'logo' => 'nullable|image|max:1024|mimes:png,jpg', // 1MB Max
+            'logo' => 'sometimes|image|max:1024', // 1MB Max
         ]);
     }
 
@@ -65,7 +66,9 @@ class SingleStoreDetails extends Component
     {
         $this->validate();
 
-            $this->logo = $this->logo->store('logo', 'public');
+//        if($this->logo) {
+//            $this->logo = $this->logo->store('logo', 'public');
+//        }
 
         try {
             $this->dealer->update([
@@ -76,10 +79,13 @@ class SingleStoreDetails extends Component
                 'postal_code' => $this->postal_code,
                 'phone' => $this->phone,
                 'website' => $this->website,
-                'logo' => $this->logo,
                 'active_monitoring' => $this->active_monitoring,
                 'monitoring_start_date' => $this->monitoring_start_date,
             ]);
+
+            $this->dealer->syncFromMediaLibraryRequest($this->logo)
+                ->toMediaCollection('logo', 'public');
+
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             Notification::make()

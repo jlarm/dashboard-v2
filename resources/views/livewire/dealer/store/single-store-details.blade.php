@@ -62,55 +62,63 @@
                     </div>
                 </div>
                 <div x-data="{photoName: null, photoPreview: null}">
-                    <div class="space-y-6 border border-gray-300 shadow-sm rounded-lg p-3">
-                        @if($logo)
-                            <div x-show="! photoPreview">
-                                <img src="{{ asset($logo) }}" alt="logo" class="h-24 w-full object-contain">
-                            </div>
-                        @endif
-                        <div x-show="photoPreview" style="display: none;">
-                             <span class="block w-auto h-20 bg-contain bg-no-repeat bg-center"
-                                   x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
-                             </span>
-                        </div>
-                        <div class="flex space-x-3">
-                            <div>
-                                <x-text-input
-                                    wire:model.defer="logo"
-                                    id="logo"
-                                    name="logo"
-                                    class="sr-only"
-                                    type="file"
-                                    x-ref="logo"
-                                    x-on:change="
-                                        photoName = $refs.logo.files[0].name;
-                                        const reader = new FileReader();
-                                        reader.onload = (e) => {
-                                            photoPreview = e.target.result;
-                                        };
-                                        reader.readAsDataURL($refs.logo.files[0]);
-                                "
-                                />
-                                <label for="logo">
-                                    <span
-                                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150 hover:cursor-pointer">
-                                        Upload Logo
-                                    </span>
-                                </label>
-                                <div wire:loading.delay wire:target="logo">Uploading...</div>
-                            </div>
-                            <div>
-                                @if ($logo)
-                                    <x-secondary-button
-                                        wire:click="deleteLogo"
-                                    >
-                                        {{ __('Remove Photo') }}
-                                    </x-secondary-button>
-                                @endif
-                            </div>
-                        </div>
-                        @error('logo') <span class=" text-red-500">{{ $message }}</span> @enderror
-                    </div>
+                    {{--                    <div class="space-y-6 border border-gray-300 shadow-sm rounded-lg p-3">--}}
+                    {{--                        @if($logo)--}}
+                    {{--                            <div x-show="! photoPreview">--}}
+                    {{--                                <img src="{{ asset($logo) }}" alt="logo" class="h-24 w-full object-contain">--}}
+                    {{--                            </div>--}}
+                    {{--                        @endif--}}
+                    {{--                        <div x-show="photoPreview" style="display: none;">--}}
+                    {{--                             <span class="block w-auto h-20 bg-contain bg-no-repeat bg-center"--}}
+                    {{--                                   x-bind:style="'background-image: url(\'' + photoPreview + '\');'">--}}
+                    {{--                             </span>--}}
+                    {{--                        </div>--}}
+                    {{--                        <div class="flex space-x-3">--}}
+                    {{--                            <div>--}}
+                    {{--                                <x-text-input--}}
+                    {{--                                    wire:model.defer="logo"--}}
+                    {{--                                    id="logo"--}}
+                    {{--                                    name="logo"--}}
+                    {{--                                    class="sr-only"--}}
+                    {{--                                    type="file"--}}
+                    {{--                                    x-ref="logo"--}}
+                    {{--                                    x-on:change="--}}
+                    {{--                                        photoName = $refs.logo.files[0].name;--}}
+                    {{--                                        const reader = new FileReader();--}}
+                    {{--                                        reader.onload = (e) => {--}}
+                    {{--                                            photoPreview = e.target.result;--}}
+                    {{--                                        };--}}
+                    {{--                                        reader.readAsDataURL($refs.logo.files[0]);--}}
+                    {{--                                "--}}
+                    {{--                                />--}}
+                    {{--                                <label for="logo">--}}
+                    {{--                                    <span--}}
+                    {{--                                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150 hover:cursor-pointer">--}}
+                    {{--                                        Upload Logo--}}
+                    {{--                                    </span>--}}
+                    {{--                                </label>--}}
+                    {{--                                <div wire:loading.delay wire:target="logo">Uploading...</div>--}}
+                    {{--                            </div>--}}
+                    {{--                            <div>--}}
+                    {{--                                @if ($logo)--}}
+                    {{--                                    <x-secondary-button--}}
+                    {{--                                        wire:click="deleteLogo"--}}
+                    {{--                                    >--}}
+                    {{--                                        {{ __('Remove Photo') }}--}}
+                    {{--                                    </x-secondary-button>--}}
+                    {{--                                @endif--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                        @error('logo') <span class=" text-red-500">{{ $message }}</span> @enderror--}}
+                    {{--                    </div>--}}
+                    <x-input-label for="monitoring_start_date" :value="__('Logo Upload')"/>
+                    <x-media-library-collection
+                        multiple max-items="1"
+                        rules="mimes:png,jpeg"
+                        name="logo"
+                        :model="$store"
+                        collection="logo"
+                    />
                 </div>
                 @can('create-dealerships')
                     <div class="grid grid-cols-2 gap-5 border-t pt-5">
