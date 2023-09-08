@@ -27,6 +27,7 @@ class EditCourseTaken extends Modal
             'passed' => 1,
             'course_id' => $this->course->id,
             'user_id' => $this->user->id,
+            'created_at' => $this->dateTaken,
         ]);
 
         $this->emit('refreshEmployeeDetails');
