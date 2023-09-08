@@ -11,6 +11,7 @@
                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last Taken
                         </th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pass/Fail</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
@@ -40,6 +41,17 @@
                                 @else
                                     {{ __('-') }}
                                 @endif
+                            </td>
+                            <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                @can('create-dealerships')
+                                    @if(!$course->results->first())
+                                        <span
+                                            onclick="Livewire.emit('modal.open', 'dealer.employee.edit-course-taken', @js(['course' => $course->id, 'user' => $user->id]))"
+                                            class="text-arm-blue-600 hover:text-arm-blue-900 hover:cursor-pointer">
+                                    Edit
+                                </span>
+                                    @endif
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
