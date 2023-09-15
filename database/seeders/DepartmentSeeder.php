@@ -42,5 +42,10 @@ class DepartmentSeeder extends Seeder
             'name' => 'Finance',
             'slug' => 'finance',
         ]);
+
+        Department::create([
+            'name' => 'Porter/Driver',
+            'slug' => 'porter-driver',
+        ]);
     }
 }

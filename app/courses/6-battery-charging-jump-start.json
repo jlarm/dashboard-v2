@@ -5,7 +5,8 @@
         "name": "Battery Charging Jump Start Review",
         "slug": "battery-charging-jump-start",
         "department": [
-            3
+            3,
+            7
         ],
         "roles": [
             5,

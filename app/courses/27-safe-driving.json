@@ -5,7 +5,8 @@
         "name": "Safe Driving",
         "slug": "safe-driving",
         "department": [
-            3
+            3,
+            7
         ],
         "roles": [
             5,
