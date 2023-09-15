@@ -124,7 +124,7 @@ Route::group([
     // Roles to QA
     // **************************************************
 
-    Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Consultant']], function () {
+    Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
 
         Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
 
