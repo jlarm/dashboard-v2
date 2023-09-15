@@ -378,7 +378,7 @@ class Edit extends Component
         $this->individual_q40_danger = $this->individualAudit->individual_q40_danger;
     }
 
-    public function update()
+    public function update($exit, Store $store)
     {
         $this->validate();
 
@@ -519,6 +519,13 @@ class Edit extends Component
             ->title('Deal Jacket Audit Updated Successfully!')
             ->success()
             ->send();
+
+        if ($exit) {
+            if (!tenant('locations')) {
+                return redirect()->route('dealer.audit.individual.index');
+            }
+            return redirect()->route('dealer.stores.audits.individual.index', [$store->slug]);
+        }
     }
 
     public function render()

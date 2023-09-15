@@ -534,7 +534,7 @@ class Show extends Component
         $this->body_shop_q45_danger = $this->bodyShopAudit->body_shop_q45_danger;
     }
 
-    public function update()
+    public function update($exit, Store $store)
     {
         $this->validate();
 
@@ -688,6 +688,13 @@ class Show extends Component
             ->title('Body Shop Audit Updated Successfully!')
             ->success()
             ->send();
+
+        if ($exit) {
+            if (!tenant('locations')) {
+                return redirect()->route('dealer.audit.body-shop.index');
+            }
+            return redirect()->route('dealer.stores.audits.body-shop.index', $store);
+        }
     }
 
     public function render()

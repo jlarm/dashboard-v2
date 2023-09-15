@@ -865,7 +865,7 @@ class Show extends Component
         $this->osha_q69_danger = $this->oshaAudit->osha_q69_danger;
     }
 
-    public function update()
+    public function update($exit, Store $store)
     {
         $this->validate();
 
@@ -1091,6 +1091,13 @@ class Show extends Component
             ->title('OSHA Audit Updated Successfully!')
             ->success()
             ->send();
+
+        if ($exit) {
+            if (!tenant('locations')) {
+                return redirect()->route('dealer.audit.osha.index');
+            }
+            return redirect()->route('dealer.stores.audits.osha.index', [$store->slug]);
+        }
     }
 
     public function render()

@@ -253,8 +253,8 @@
         <div class="w-full sticky bottom-0 bg-arm-blue-200 p-3 z-20">
             <div class="flex justify-evenly">
                 <a
-                    class="sm:mr-auto sm:ml-0 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
-                    href="{{ !tenant('locations') ? route('dealer.audit.individual.index') : route('dealer.stores.audits.individual.index', $store) }}"
+                    class="sm:mr-auto sm:ml-0 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150 hover:cursor-pointer"
+                    wire:click.prevent="update($exit = true, {{ $store }})"
                 >
                     Exit
                 </a>
@@ -263,7 +263,7 @@
                        class="block sm:w-1/4 w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm mx-5"
                        placeholder="Search Questions...">
                 <button
-                    wire:click.prevent="update"
+                    wire:click.prevent="update($exit = false)"
                     class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
                 >
                     <svg wire:loading

@@ -624,7 +624,7 @@ class Show extends Component
         $this->finance_q49_comment = $this->financeAudit->finance_q49_comment;
     }
 
-    public function update()
+    public function update($exit, Store $store)
     {
         $this->validate();
 
@@ -789,6 +789,13 @@ class Show extends Component
             ->title('Finance Audit Updated Successfully!')
             ->success()
             ->send();
+
+        if ($exit) {
+            if (!tenant('locations')) {
+                return redirect()->route('dealer.audit.finance.index');
+            }
+            return redirect()->route('dealer.stores.audits.finance.index', [$store->slug]);
+        }
     }
 
     public function render()
