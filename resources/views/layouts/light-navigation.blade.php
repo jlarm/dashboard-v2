@@ -447,47 +447,43 @@
                         @endcan
                     @endif
                 </div>
-                <!-- SOC Monitoring --
+                <!-- SOC Monitoring -->
                 @if(!tenant('locations'))
                     @can('view-audits')
                         <livewire:dealer.general.soc-monitoring/>
-
-
                     @endcan
                 @endif
-                </div>
-                <div class="block w-full flex-shrink-0">
-@can('create-dealerships')
-                    <a href="https://docs.armp.app/" target="_blank"
-                       class="group flex items-center border-l-4 border-transparent py-2 px-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                             stroke="currentColor" class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                        </svg>
+            </div>
+            <div class="block w-full flex-shrink-0"
+            @can('create-dealerships')
+                <a href="https://docs.armp.app/" target="_blank"
+                   class="group flex items-center border-l-4 border-transparent py-2 px-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                    </svg>
+                    Docs
+                </a>
 
-                        Docs
-                    </a>
-
-
-                @endcan
-                <form method="POST" action="{{ route('dealer.logout') }}">
-                    @csrf
+            @endcan
+            <form method="POST" action="{{ route('dealer.logout') }}">
+                @csrf
                 <a href="#"
                    onclick="event.preventDefault(); this.closest('form').submit();"
                    class="group flex items-center border-l-4 border-transparent py-2 px-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">
-<!-- Heroicon name: outline/arrow-left-on-rectangle -->
-                <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                     aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
-                </svg>
-                Logout
+                    <!- Heroicon name: outline/arrow-left-on-rectangle -->
+                    <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                         xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                         aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
+                    </svg>
+                    Logout
                 </a>
-                </form>
-            </div>
-        </nav>
+            </form>
     </div>
+    </nav>
+</div>
 </div>
