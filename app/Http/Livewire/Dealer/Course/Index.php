@@ -23,7 +23,7 @@ class Index extends Component
                 $query->where('id', $this->user->department_id);
             })
             ->WhereHas('roles', function ($query) {
-                $query->where('id', $this->user->roles()->where('name', '!=', 'Qualified Individual')->first()->id);
+                $query?->where('id', $this->user->roles()->where('name', '!=', 'Qualified Individual')?->first()?->id);
             })
             ->orWhereDoesntHave('departments')
             ->with([
