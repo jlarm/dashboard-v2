@@ -7,7 +7,7 @@
                 <span>{{ $store->name ?? '' }}</span>
             </div>
         @endforeach
-        <span>{{ $user->department->name ?? '' }} {{ $user->roles->first()->name }}</span>
+        <span>{{ $user->department->name ?? '' }} {{ $user->roles->first()->name ?? '' }}</span>
     </div>
     @if(auth()->user()->id != $user->id)
         <button
