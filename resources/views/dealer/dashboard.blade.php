@@ -7,10 +7,15 @@
 
     <div class="py-12">
         @if(!tenant('locations'))
-            @can('create-dealerships')
+            @can('create-users')
                 <div class="bg-white">
                     <div class="mx-auto px-6 lg:px-8">
                         <dl class="grid grid-cols-2 gap-5 text-center">
+                            @can('create-dealerships')
+                                <div class="col-span-2">
+                                    <livewire:dealer.home.note/>
+                                </div>
+                            @endcan
                             <div class="col-span-1">
                                 <livewire:dealer.general.store-logo/>
                             </div>
@@ -23,9 +28,6 @@
                     </div>
                 </div>
             @endcan
-            {{--            <div class="m-20">--}}
-            {{--                <livewire:dealer.general.store-logo/>--}}
-            {{--            </div>--}}
         @endif
         @if(tenant('locations'))
             @can('edit-stores')
