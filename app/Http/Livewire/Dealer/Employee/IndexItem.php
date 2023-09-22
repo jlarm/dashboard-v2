@@ -18,14 +18,14 @@ class IndexItem extends Component
     public $totalCourses;
     public $departmentCourseCount;
     public $unassignedCourseCount;
-    public $courseWithRole;
+    private $userRole;
+    private $courseWithRole;
 
     public function mount()
     {
-        $this->user = User::find($this->user->id);
-
-        $userRole = $this->user->roles()->select('id')->first()->toArray();
-        $this->courseWithRole = DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
+        $this->userRole = $this->user->roles()->first();
+//        dd($this->userRole['id']);
+        $this->courseWithRole = DB::table('course_role')->where('role_id', $this->userRole)->pluck('course_id')->toArray();
 
         // Get all passed courses within the last year for this user
         $this->completed = DB::table('course_results')
@@ -46,7 +46,7 @@ class IndexItem extends Component
                 ->WhereHas('departments', function ($query) {
                     $query->where('id', $this->user->department_id);
                 })
-                ->whereIn('id', $this->courseWithRole)
+//                ->whereIn('id', $this->courseWithRole)
                 ->orWhereDoesntHave('departments')->count();
         }
 

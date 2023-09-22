@@ -13,10 +13,14 @@ class EmployeeIndexItem extends Component
     public User $user;
 
     public Store $store;
+    public $completed;
+    public $totalCourses;
+    public $courseWithRole;
 
     public function mount()
     {
-        $this->user = User::find($this->user->id);
+        $userRole = $this->user->roles()->select('id')->first()->toArray();
+        $this->courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
 
         // Get all passed courses within the last year for this user
         $this->completed = DB::table('course_results')
@@ -32,7 +36,17 @@ class EmployeeIndexItem extends Component
         $this->completed = collect($this->completed->where('passed', 1))->count();
 
         // Get all courses for this user's department
-        $this->totalCourses = Course::where('department_id', $this->user->department_id)->count();
+        $this->totalCourses = Course::query()
+            ->WhereHas('departments', function ($query) {
+                $query->where('id', $this->user->department_id);
+            })
+            ->whereIn('id', $this->courseWithRole)
+            ->orWhereDoesntHave('departments')
+            ->with([
+                'results' => function ($query) {
+                    $query->where('user_id', $this->user->id)->latest();
+                }
+            ])->count();
     }
 
     public function render()

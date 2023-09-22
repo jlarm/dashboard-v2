@@ -40,7 +40,7 @@
             @if(!$totalCourses)
                 {{ __('-') }}
             @else
-                {{ $completed }} of {{ $totalCourses }} passed
+                {{ $completed }} of {{ $totalCourses - 1 }} passed
             @endif
         @endif
     </td>
