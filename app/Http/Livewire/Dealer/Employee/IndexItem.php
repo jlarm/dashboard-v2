@@ -18,10 +18,14 @@ class IndexItem extends Component
     public $totalCourses;
     public $departmentCourseCount;
     public $unassignedCourseCount;
+    public $courseWithRole;
 
     public function mount()
     {
         $this->user = User::find($this->user->id);
+
+        $userRole = $this->user->roles()->select('id')->first()->toArray();
+        $this->courseWithRole = DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
 
         // Get all passed courses within the last year for this user
         $this->completed = DB::table('course_results')
@@ -38,18 +42,13 @@ class IndexItem extends Component
 
         // Get all courses for this user's department
         if ($this->user->department_id) {
-//            $this->departmentCourseCount = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
             $this->departmentCourseCount = Course::with('results')
                 ->WhereHas('departments', function ($query) {
                     $query->where('id', $this->user->department_id);
                 })
-                ->WhereHas('roles', function ($query) {
-                    $query->where('id', $this->user->roles()->where('name', '!=', 'Qualified Individual')->first()->id ?? '');
-                })
+                ->whereIn('id', $this->courseWithRole)
                 ->orWhereDoesntHave('departments')->count();
         }
-
-//        $this->unassignedCourseCount = Course::whereDoesntHave('departments')->count();
 
         $this->totalCourses = $this->departmentCourseCount;
 

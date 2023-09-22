@@ -14,30 +14,31 @@ class CourseResults extends Component
 
     public Store $store;
     public User $user;
+    public $courseWithRole;
 
     protected $listeners = ['refreshEmployeeDetails' => '$refresh'];
 
     public function mount()
     {
         $this->store = $this->user->stores->first() ?? Store::first();
+        $userRole = $this->user->roles()->select('id')->first()->toArray();
+        $this->courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
     }
 
     public function render()
     {
         return view('livewire.dealer.employee.course-results', [
-            'courses' => Course::with('results')
+            'courses' => Course::query()
                 ->WhereHas('departments', function ($query) {
                     $query->where('id', $this->user->department_id);
                 })
-                ->WhereHas('roles', function ($query) {
-                    $query->where('id', $this->user->roles()->where('name', '!=', 'Qualified Individual')->first()->id ?? '');
-                })
+                ->whereIn('id', $this->courseWithRole)
                 ->orWhereDoesntHave('departments')
                 ->with([
                 'results' => function ($query) {
                     $query->where('user_id', $this->user->id)->latest();
                 },
-            ])->orderBy('name')->paginate(24),
+                ])->orderBy('name')->paginate(24),
         ]);
     }
 }

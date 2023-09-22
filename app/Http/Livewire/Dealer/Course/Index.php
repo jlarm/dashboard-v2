@@ -10,21 +10,18 @@ class Index extends Component
 {
     public User $user;
     public $departmentCourses;
-    public $otherCourses;
     public $courses;
-
-    public $search = '';
 
     public function mount()
     {
         $this->user = auth()->user();
-        $this->courses = Course::with('results')
+        $userRole = $this->user->roles()->select('id')->first()->toArray();
+        $courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
+        $this->courses = Course::query()
             ->WhereHas('departments', function ($query) {
                 $query->where('id', $this->user->department_id);
             })
-            ->WhereHas('roles', function ($query) {
-                $query?->where('id', $this->user->roles()->where('name', '!=', 'Qualified Individual')?->first()?->id);
-            })
+            ->whereIn('id', $courseWithRole)
             ->orWhereDoesntHave('departments')
             ->with([
                 'results' => function ($query) {
