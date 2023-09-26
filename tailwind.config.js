@@ -15,7 +15,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Outfit', ...defaultTheme.fontFamily.sans],
+                sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 'arm-blue': {
