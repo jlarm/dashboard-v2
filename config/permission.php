@@ -35,7 +35,6 @@ return [
          * table should be used to retrieve your roles. We have chosen a basic
          * default value but you may easily change it to any table you like.
          */
-
         'roles' => 'roles',
 
         /*

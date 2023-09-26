@@ -65,7 +65,6 @@ class RoleAndPermissionSeeder extends Seeder
         $gsmRole = Role::create(['name' => 'GSM']);
         $managerRole = Role::create(['name' => 'Manager']);
         $employeeRole = Role::create(['name' => 'Employee']);
-        $porterDriverRole = Role::create(['name' => 'Porter/Driver']);
 
         $adminRole->givePermissionTo([
             'create-dealerships',
@@ -200,10 +199,6 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
 
         $employeeRole->givePermissionTo([
-
-        ]);
-
-        $porterDriverRole->givePermissionTo([
 
         ]);
     }
