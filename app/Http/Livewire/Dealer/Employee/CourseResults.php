@@ -21,7 +21,8 @@ class CourseResults extends Component
     public function mount()
     {
         $this->store = $this->user->stores->first() ?? Store::first();
-        $userRole = $this->user->roles()->select('id')->first()->toArray();
+        $userRole = $this->user->roles()->pluck('id')->toArray();
+        $userRole = array_diff($userRole, [5]);
         $this->courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
     }
 

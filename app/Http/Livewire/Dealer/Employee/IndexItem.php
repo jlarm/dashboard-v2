@@ -6,7 +6,6 @@ use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
 use App\Models\User;
-use DB;
 use Livewire\Component;
 
 class IndexItem extends Component
@@ -18,18 +17,31 @@ class IndexItem extends Component
     public $totalCourses;
     public $departmentCourseCount;
     public $unassignedCourseCount;
+    private $courses;
     private $userRole;
     private $courseWithRole;
 
     public function mount()
     {
-        $this->userRole = $this->user->roles()->first();
-//        dd($this->userRole['id']);
-        $this->courseWithRole = DB::table('course_role')->where('role_id', $this->userRole)->pluck('course_id')->toArray();
+        $this->userRole = $this->user->roles()->pluck('id')->toArray();
 
-        // Get all passed courses within the last year for this user
-        $this->completed = DB::table('course_results')
+        $this->userRole = array_diff($this->userRole, [5]);
+
+        $this->courseWithRole = \DB::table('course_role')->where('role_id', $this->userRole)->pluck('course_id')->toArray();
+
+        $this->courses = Course::query()
+            ->WhereHas('departments', function ($query) {
+                $query->where('id', $this->user->department_id);
+            })
+            ->whereIn('id', $this->courseWithRole)
+            ->orWhereDoesntHave('departments')
+            ->get();
+
+        $courseIds = $this->courses->pluck('id')->toArray();
+
+        $this->completed = \DB::table('course_results')
             ->where('user_id', $this->user->id)
+            ->whereIn('course_id', $courseIds)
             ->where('created_at', '>=', now()->subYear())
             ->latest()
             ->get()
@@ -40,17 +52,7 @@ class IndexItem extends Component
 
         $this->completed = collect($this->completed->where('passed', 1))->count();
 
-        // Get all courses for this user's department
-        if ($this->user->department_id) {
-            $this->departmentCourseCount = Course::with('results')
-                ->WhereHas('departments', function ($query) {
-                    $query->where('id', $this->user->department_id);
-                })
-//                ->whereIn('id', $this->courseWithRole)
-                ->orWhereDoesntHave('departments')->count();
-        }
-
-        $this->totalCourses = $this->departmentCourseCount;
+        $this->totalCourses = $this->courses->count();
 
         if (Store::exists() && Store::first()->pluck('state') != 'California') {
             $this->totalCourses = $this->totalCourses - 1;

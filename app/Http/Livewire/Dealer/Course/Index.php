@@ -15,7 +15,8 @@ class Index extends Component
     public function mount()
     {
         $this->user = auth()->user();
-        $userRole = $this->user->roles()->select('id')->first()->toArray();
+        $userRole = $this->user->roles()->pluck('id')->toArray();
+        $userRole = array_diff($userRole, [5]);
         $courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
         $this->courses = Course::query()
             ->WhereHas('departments', function ($query) {
