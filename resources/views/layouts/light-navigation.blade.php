@@ -196,6 +196,28 @@
                                     Manuals
                                 </a>
                             @endcan
+                            <!-- DOCS -->
+                            @if(!tenant('locations'))
+                                @can('view-manuals')
+                                    <a
+                                        href="{{ route('dealer.doc.index') }}"
+                                        class="{{ (request()->segment(1) == 'docs') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor"
+                                            class="{{ (request()->segment(1) == 'docs') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
+                                        >
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+                                        </svg>
+                                        Documents
+                                    </a>
+                                @endcan
+                            @endif
                             <a
                                 href="{{ route('dealer.courses.index') }}"
                                 class="{{ (request()->is('courses')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
@@ -409,6 +431,28 @@
                             </a>
                         @endcan
                     @endif
+                    <!-- DOCS -->
+                    @if(!tenant('locations'))
+                        @can('view-manuals')
+                            <a
+                                href="{{ route('dealer.doc.index') }}"
+                                class="{{ (request()->segment(1) == 'docs') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="{{ (request()->segment(1) == 'docs') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
+                                >
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+                                </svg>
+                                Documents
+                            </a>
+                        @endcan
+                    @endif
                     <!-- COURSES -->
                     @unlessrole('super-admin|Consultant')
                     <a
@@ -454,36 +498,36 @@
                     @endcan
                 @endif
             </div>
-            <div class="block w-full flex-shrink-0"
-            @can('create-dealerships')
-                <a href="https://docs.armp.app/" target="_blank"
-                   class="group flex items-center border-l-4 border-transparent py-2 px-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                    </svg>
-                    Docs
-                </a>
+            <div class="block w-full flex-shrink-0">
+                @can('create-dealerships')
+                    <a href="https://docs.armp.app/" target="_blank"
+                       class="group flex items-center border-l-4 border-transparent py-2 px-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                        </svg>
+                        Docs
+                    </a>
 
-            @endcan
-            <form method="POST" action="{{ route('dealer.logout') }}">
-                @csrf
-                <a href="#"
-                   onclick="event.preventDefault(); this.closest('form').submit();"
-                   class="group flex items-center border-l-4 border-transparent py-2 px-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">
-                    <!- Heroicon name: outline/arrow-left-on-rectangle -->
-                    <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                         xmlns="http://www.w3.org/2000/svg"
-                         fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                         aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
-                    </svg>
-                    Logout
-                </a>
-            </form>
+                @endcan
+                <form method="POST" action="{{ route('dealer.logout') }}">
+                    @csrf
+                    <a href="#"
+                       onclick="event.preventDefault(); this.closest('form').submit();"
+                       class="group flex items-center border-l-4 border-transparent py-2 px-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                        <!- Heroicon name: outline/arrow-left-on-rectangle -->
+                        <svg class="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
+                        </svg>
+                        Logout
+                    </a>
+                </form>
+            </div>
+        </nav>
     </div>
-    </nav>
-</div>
 </div>

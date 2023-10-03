@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
+
 Route::group([
     'as' => 'dealer.',
     'middleware' => [
@@ -107,7 +108,7 @@ Route::group([
         Route::get('create', function () { return view('dealer.employee.create'); })->name('new');
     });
 
-    // **************************************************
+    // **************************************** **********
     // Roles to Manager
     // **************************************************
 
@@ -127,6 +128,10 @@ Route::group([
     Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
 
         Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
+
+        Route::group(['prefix' => 'docs/', 'as' => 'doc.', 'middleware' => ['auth']], function () {
+           Route::get('/', \App\Http\Livewire\Dealer\Docs\Index::class)->name('index');
+        });
 
         Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => ['auth', 'single.store']], function () {
             Route::get('osha', function () { return view('dealer.audit.osha.index'); })->name('osha.index');
@@ -167,6 +172,7 @@ Route::group([
             Route::get('audits/deal-jackets/create/{individualAudit:uuid?}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Create::class)->middleware(['auth', 'has.stores'])->name('audits.individual.create');
             Route::get('audits/deal-jackets/{individualAudit:uuid}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Show::class)->middleware(['auth', 'has.stores'])->name('audits.individual.show');
             Route::get('audits/deal-jackets/{individualAudit:uuid}/edit', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->middleware(['auth', 'has.stores'])->name('audits.individual.edit');
+            Route::get('docs', \App\Http\Livewire\Dealer\Store\SingleStore\Docs\Index::class)->middleware(['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|auth', 'has.stores'])->name('doc.index');
             Route::get('settings', \App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->middleware(['auth', 'has.stores'])->name('settings');
             Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('edit');
         });

@@ -10,6 +10,7 @@ use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
+use App\Models\DealerDoc;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -151,5 +152,10 @@ class Store extends Model implements HasMedia
     public function scanReports(): HasMany
     {
         return $this->hasMany(ScanReport::class);
+    }
+
+    public function docs(): HasMany
+    {
+        return $this->hasMany(DealerDoc::class);
     }
 }

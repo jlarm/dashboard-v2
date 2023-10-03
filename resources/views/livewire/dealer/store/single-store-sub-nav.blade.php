@@ -68,7 +68,13 @@
                             Jackets</a>
                     </div>
                 </li>
-
+                @can('create-stores')
+                    <li>
+                        <a
+                            class="{{ (request()->segment(3) == 'docs') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
+                            href="{{ route('dealer.stores.doc.index', $store) }}">Documents</a>
+                    </li>
+                @endcan
                 <li>
                     <a
                         class="{{ (request()->segment(3) == 'settings') ? 'text-arm-blue-600' : 'text-gray-400 hover:text-arm-blue-600' }}"
