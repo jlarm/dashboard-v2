@@ -20,12 +20,14 @@
                                            class="text-sm leading-6 text-gray-900">
                                             Download
                                         </a>
-                                        <button
-                                            class="text-red-500 text-sm"
-                                            wire:click="$emit('modal.open', 'dealer.docs.delete',  @js(['doc' => $doc->id]))"
-                                        >
-                                            Delete
-                                        </button>
+                                        @can('create-dealerships')
+                                            <button
+                                                class="text-red-500 text-sm"
+                                                wire:click="$emit('modal.open', 'dealer.docs.delete',  @js(['doc' => $doc->id]))"
+                                            >
+                                                Delete
+                                            </button>
+                                        @endcan
                                     </div>
                                 </li>
                             @empty
