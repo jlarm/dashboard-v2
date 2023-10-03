@@ -91,6 +91,16 @@ return [
             "visibility" => "public",
         ],
 
+        'dealer-docs' => [
+            'driver' => 's3',
+            'key' => env('DOCS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('DOCS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('DOCS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('DOCS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('DOCS_DIGITALOCEAN_SPACES_BUCKET'),
+            "visibility" => "public",
+        ],
+
     ],
 
     /*
