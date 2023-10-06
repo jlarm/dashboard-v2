@@ -16,19 +16,19 @@
         "slides": [
             {
                 "title": "Introduction",
-                "description": "<p>The purpose of this presentation is to summarize the new \"Red Flag\" regulations. Review FACT Act provisions that are the basis for \"Red Flag\" rules for automotive and issues regarding compliance with \"Red Flag Rules\".</p>"
+                "description": "<p>The Red Flag Rule requires businesses and organizations to implement identity theft prevention program designed to detect the \"Red Flags\" of identity theft in their day-to-day operations, take steps to prevent the crime, and mitigate its damage. Red Flags are the potential patterns, practices, or specific activities indicating the possibility of identity theft.</p>"
             },
             {
                 "title": "From a consumers perspective;...",
-                "description": "<ul><li>By 2007 there will have been more than 14 million victims of Identity theft in the U.S. alone.</li><li>The average time spent recovering from identity theft ranges from 330 hours to more than 600 hours.</li><li>The emotional impact of identity theft is similar to or likened to victim of a violent crime.</li><li>The cost to the economy is well in excess of $60 Billion dollars a year – everything that we buy costs more because of this issue.</li></ul>"
+                "description": "<ul><li>By 2022 there will have been more than 13.5 million victims of Identity theft in the U.S. alone.</li><li>The average time spent recovering from identity theft ranges from 330 hours to more than 600 hours.</li><li>The emotional impact of identity theft is similar to or likened to victim of a violent crime.</li><li>The cost to the economy is well in excess of $60 Billion dollars a year – everything that we buy costs more because of this issue.</li></ul>"
             },
             {
                 "title": "Why Red Flag legislation?",
-                "description": "<ul><li>The passage of the FACT Act in December of 2003 was preceded by countless events highlighting ID Theft as a growing and pervasive problem.</li><li>Congressional hearings regarding reauthorization of Fair Credit Reporting Act (FCRA) and its role in fighting ID theft took place.</li><li>The release of a report in September of 2003 by the Federal Trade Commission(FTC) that detailed the impact and scope of ID Theft as the fastest growing white collar crime in the U.S.</li><li>Articles in the newspapers and television programs relating to ID theft on nearly a daily basis brought the problem to the public's attention.</li></ul>"
+                "description": "<ul><li>The passage of the FACT Act was preceded by countless events highlighting ID Theft as a growing and pervasive problem.</li><li>Congressional hearings regarding reauthorization of Fair Credit Reporting Act (FCRA) and its role in fighting ID theft took place.</li><li>The release of a report by the Federal Trade Commission (FTC) that detailed the impact and scope of ID Theft as the fastest growing white collar crime in the U.S.</li><li>Articles in the newspapers and television programs relating to ID theft on nearly a daily basis brought the problem to the public's attention.</li></ul>"
             },
             {
                 "title": "FACT Act Red Flag Timeline",
-                "description": "<ul><li>The Fact Act was updated in December of 2003 which required agencies to (1) establish and maintain guidelines regarding ID Theft and to update them regularly (Section 114) and (2) create regulations requiring “reasonable policies and procedures” to identify possible risks to account holders or customers or the safety and soundness of the institution or customers.</li><li>Proposed Red Flags published in July of 2006 with comment period …</li><li>The final rule was released by the combined regulatory agencies on October 31st, 2007.</li><li>The effective date was January 1st, 2008.</li></ul>"
+                "description": "<ul><li>The identity theft program includes: (1) establish and maintain guidelines regarding ID theft and Up-Date them regularly (2) Identify and detect Red Flags. (3) Responding appropriately to Red Flags that are detected. (4) Review with management annually regarding any such updates and changes to program.</li><li>The final rule was released by the combined regulatory agencies on October 31st, 2007.</li><li>The effective date was January 1st, 2008.</li></ul>"
             },
             {
                 "title": "Fact Act Requirements Section 315;",
@@ -40,7 +40,7 @@
             },
             {
                 "title": "What is our role in all of this?",
-                "description": "<ul><li>We are required to do more than just get a copy of a driver's license.</li></ul>"
+                "description": "<ul><li>We are required to do more than just get a copy of a driver's license.</li><li>We need to pay more attention to the Credit Bureau and look for notices and or any customer insertions.</li><li>Your main guide in detecting identity discrepancies is common sense.</li></ul>"
             },
             {
                 "title": "Some examples of red flags:",
@@ -49,13 +49,13 @@
         ],
         "questions": [
             {
-                "question": "In 2009 there were approximately how many identity theft occurring in the US.",
+                "question": "In 2023 there were approximately how many identity theft occurring in the US.",
                 "answers": [
                     {
-                        "a": "Over 1 million",
-                        "b": "Over 5 million",
-                        "c": "Over 8 million",
-                        "d": "Over 10 million"
+                        "a": "Over 5 million",
+                        "b": "Over 8 million",
+                        "c": "Over 10 million",
+                        "d": "Over 13 million"
                     }
                 ],
                 "correctAnswer": "d"
@@ -64,10 +64,10 @@
                 "question": "Average time spent on recovery from an identity theft crime is:",
                 "answers": [
                     {
-                        "a": "5 hours",
-                        "b": "10-20 hours",
-                        "c": "30-40 hours",
-                        "d": "Over 50 Hours"
+                        "a": "40-50 hours",
+                        "b": "50-75 hours",
+                        "c": "230-300 hours",
+                        "d": "330-600 Hours"
                     }
                 ],
                 "correctAnswer": "d"
@@ -112,12 +112,12 @@
                 "answers": [
                     {
                         "a": "Notice of credit freeze or address discrepancies",
-                        "b": "Recent surge in establishing credit relations and increase in volume of inquires",
-                        "c": "Signature and photo on drivers license match",
-                        "d": "Social Security number not listed on the Death Master list",
+                        "b": "Information provided is known, and associated with fraudulent activity",
+                        "c": "Fraud or active-duty alerts on consumer reports",
+                        "d": "Social Security number is listed on Death Master List",
                         "e": "A & C",
                         "f": "A & B",
-                        "g": "B & D"
+                        "g": "All of the above"
                     }
                 ],
                 "correctAnswer": "f"
@@ -133,6 +133,18 @@
                     }
                 ],
                 "correctAnswer": "c"
+            },
+            {
+                "question": "Overall annual cost of Identity theft is?",
+                "answers": [
+                    {
+                        "a": "1 billion per year",
+                        "b": "5 billion per year",
+                        "c": "25 billion per year",
+                        "d": "60 billion per year"
+                    }
+                ],
+                "correctAnswer": "d"
             }
         ]
     }

@@ -8,8 +8,12 @@
         "roles": [],
         "slides": [
             {
+                "title": "Harassment",
+                "description": "<p>Harassment is a form of employment discrimination that violates Title VII of the Civil Rights Act\nof 1964, the Age Discrimination in Employment Act of 1967, (ADEA) and the Americans with Disabilities\nAct of 1990, (ADA)</p>"
+            },
+            {
                 "title": "The Law of Harassment",
-                "description": "<p>PROTECTED BASES</p><ul><li>RACE</li><li>COLOR</li><li>RELIGION</li><li>SEX</li><li>NATIONAL ORIGIN</li><li>AGE (40 and over)</li><li>DISABILITY</li><li>RETALIATION</li></ul>"
+                "description": "<p>PROTECTED BASES</p><ul><li>RACE</li><li>COLOR</li><li>RELIGION</li><li>SEX (including sexual orientation, gender identity, or pregnancy)</li><li>NATIONAL ORIGIN</li><li>AGE (40 and over) disability, or genetic information (including family medical history)</li><li>DISABILITY</li><li>RETALIATION</li></ul>"
             },
             {
                 "title": "WHAT IS WORKPLACE HARASSMENT?",
@@ -17,7 +21,7 @@
             },
             {
                 "title": "ELEMENTS OF A HARASSMENT",
-                "description": "<p>Conduct must be unwelcome</p><p>Conduct based on a protected basis</p><p>Conduct results in a tangible employment action or creates a hostile work environment</p>"
+                "description": "<p>Conduct must be unwelcome</p><p>Conduct based on a protected basis</p><p>Conduct results in a tangible employment action or creates a hostile work environment</p><p>Retaliation action – when an employee is discriminated against due to reporting a harassment case.</p>"
             },
             {
                 "title": "UNWELCOME CONDUCT",
@@ -54,45 +58,53 @@
         ],
         "questions": [
             {
-                "question": "The protected bases against harassment include race/color, religion, sex, national origin, age (over 40 years of age) disability and retaliation?",
+                "question": "Appropriate Preventative Actions",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Know employer’s anti-harassment Policy",
+                        "b": "Don't make assumptions about jokes",
+                        "c": "Never go along with the crowd if behavior is offensive",
+                        "d": "A & C",
+                        "e": "All of the above"
                     }
                 ],
-                "correctAnswer": "a"
+                "correctAnswer": "e"
             },
             {
-                "question": "You must have a program enforcing reasonable care in preventing harassment including the following items:",
+                "question": "What are employees' duties to eliminate harassment?",
                 "answers": [
                     {
-                        "a": "Strong written policy",
-                        "b": "Training program",
-                        "c": "Investigative procedure",
-                        "d": "All of the above"
+                        "a": "Don’t delay filing complaints",
+                        "b": "Report harassment before it becomes severe or pervasive",
+                        "c": "Discuss with your fellow employees as you see fit.",
+                        "d": "A & B",
+                        "e": "B & C",
+                        "f": "All of the above"
                     }
                 ],
                 "correctAnswer": "d"
             },
             {
-                "question": "You will need an affirmative defense if an employee claims that he/she is working in a hostile work environment. This would include using reasonable care to prevent and promptly correct harassment.",
+                "question": "How long does an employee have to file a harassment report in most states?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "90 days",
+                        "b": "180 days",
+                        "c": "6 months",
+                        "d": "1 year"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "In the case regarding the Texas car dealership and same-sex harassment, what should the dealership have done to prevent such legal ramifications?",
+                "question": "How does harassment affect the workplace?",
                 "answers": [
                     {
-                        "a": "Addressed and documented activities promptly",
-                        "b": "Used anti-harassment disciplinary actions against offenders",
-                        "c": "reinforced NO TOLERANCE policy for sexual harassment",
-                        "d": "All of the above"
+                        "a": "Personal and financial problems",
+                        "b": "Poor public image",
+                        "c": "Less effective job performance",
+                        "d": "All of the above",
+                        "e": "B & C"
                     }
                 ],
                 "correctAnswer": "d"
@@ -101,7 +113,7 @@
                 "question": "What is retaliation?",
                 "answers": [
                     {
-                        "a": "When an employee is discriminated against due to reporting a harassment case.",
+                        "a": "When employees are discriminated against due to reporting a harassment case.",
                         "b": "When an employer does not report harassment",
                         "c": "When the employee does not report harassment until the workplace has become hostile"
                     }
