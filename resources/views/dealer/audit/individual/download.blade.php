@@ -200,6 +200,12 @@
                             <h4>{{ \App\Enums\DealJacketQuestions::fromKey('individual_q' . $i . '_answer') }}</h4>
                         @endif
                     @endfor
+                    <div class="w-full grid grid-cols-2 gap-24">
+                        @foreach($audit->getMedia('individual_audit_images') as $image)
+                            <img class="w-full"
+                                 src="{{ $image->getUrl() }}" alt="">
+                        @endforeach
+                    </div>
                 </div>
             </li>
         @endforeach
