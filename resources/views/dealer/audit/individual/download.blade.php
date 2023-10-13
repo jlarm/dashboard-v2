@@ -119,20 +119,23 @@
 
 {{--Issues by Manager--}}
 @foreach($managers as $manager => $results)
-    <div class="prose w-full min-w-full p-10">
-        <h1 class="bg-arm-blue-500 leading-none"><span class="bg-white pr-5">{{ $manager }}</span>
-        </h1>
-        @foreach($results as $key => $value)
-            <div class="page-break">
-                <h3>{{ \App\Enums\DealJacketQuestions::fromKey($key) }}</h3>
-                <ul class="divide-y divide-gray-100 list-none pl-0">
-                    @foreach($value as $a)
-                        <li class="pl-0 my-0 py-2">{{ $a[1] }} - {{ $a[3] }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endforeach
-    </div>
+    @if(count($results) > 0)
+        <div class="prose w-full min-w-full p-10">
+            <h1 class="bg-arm-blue-500 leading-none"><span
+                    class="bg-white pr-5">{{ $manager }}</span>
+            </h1>
+            @foreach($results as $key => $value)
+                <div class="page-break">
+                    <h3>{{ \App\Enums\DealJacketQuestions::fromKey($key) }}</h3>
+                    <ul class="divide-y divide-gray-100 list-none pl-0">
+                        @foreach($value as $a)
+                            <li class="pl-0 my-0 py-2">{{ $a[1] }} - {{ $a[3] }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endforeach
+        </div>
+    @endif
 @endforeach
 
 {{--Issues by Deal Jacket--}}
