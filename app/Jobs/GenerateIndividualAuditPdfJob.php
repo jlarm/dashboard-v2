@@ -40,6 +40,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             ->get();
 
         $this->issueCountByManager = $this->audits
+            ->sortBy('manager.name')
             ->groupBy(function ($item) {
                 return $item->manager->name;
             })
@@ -69,6 +70,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             });
 
         $this->issuesByManager = $this->audits
+            ->sortBy('manager.name')
             ->groupBy(function ($item) {
                 return $item->manager->name;
             })
@@ -102,6 +104,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             });
 
         $this->managerIssueCount = $this->audits
+            ->sortBy('manager.name')
             ->groupBy(function ($item) {
                 return $item->manager->name;
             })
@@ -154,10 +157,18 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
         }
 
         // Rearrange "Total" to be at the end of each sub-array
-        foreach ($this->results as &$questionAnswers) {
-            $total = $questionAnswers['Total'];
-            unset($questionAnswers['Total']);
-            $questionAnswers['Total'] = $total;
+        foreach($this->results as &$subArray){
+            // Check if "Total" key exists
+            if (isset($subArray['Total'])) {
+                // Remove "Total" key-value pair from array
+                $total = $subArray['Total'];
+                unset($subArray['Total']);
+                ksort($subArray);
+                // Add "Total" key-value pair to end of array
+                $subArray['Total'] = $total;
+            } else {
+                ksort($subArray);
+            }
         }
 
         foreach ($this->managerIssueCount as $name => $answers) {
