@@ -120,7 +120,7 @@
 {{--Issues by Manager--}}
 @foreach($managers as $manager => $results)
     @if(count($results) > 0)
-        <div class="prose w-full min-w-full p-10">
+        <div class="prose w-full min-w-full p-10 break-after">
             <h1 class="bg-arm-blue-500 leading-none"><span
                     class="bg-white pr-5">{{ $manager }}</span>
             </h1>
