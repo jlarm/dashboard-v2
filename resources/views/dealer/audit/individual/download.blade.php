@@ -31,8 +31,8 @@
     <div class="col-span-5 row-span-4 col-start-1 row-start-2 bg-arm-blue-500 z-10 py-10 pr-10">
         <div class="w-full h-full flex flex-row items-center border-t border-r border-b border-white ">
             <div class="flex flex-col ml-10">
-                <h1 class="text-7xl text-white">Deal Jacket Report<span
-                        class="block font-bold">{{ $audit->store->name }}</span></h1>
+                <h1 class="text-6xl text-white">Deal Jacket Report
+                    <span class="text-4xl block font-bold">{{ $audit->store->name }}</span></h1>
                 <p class="text-white text-2xl my-10">Completed On: {{ $audit->audit_date->format('n/d/Y') }}</p>
                 <p class="text-white text-2xl">Report Created By:</p>
                 <p class="text-white text-xl">
