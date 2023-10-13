@@ -24,7 +24,7 @@
 <body class="font-sans antialiased">
 
 {{--Cover Page--}}
-<div class="w-full h-screen bg-white grid grid-cols-8 grid-rows-6">
+<div class="w-full h-screen bg-white grid grid-cols-8 grid-rows-6 break-after">
     <div class="col-span-3 col-start-1 p-20">
         <x-application-logo class="h-auto w-full"/>
     </div>
@@ -49,7 +49,7 @@
 </div>
 
 {{--Manager Issue Count--}}
-<div class="w-full h-screen">
+<div class="w-full h-screen break-after">
     <div class="p-10">
         <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
             @foreach($auditCount as $key => $value)
@@ -203,7 +203,7 @@
                             <h4>{{ \App\Enums\DealJacketQuestions::fromKey('individual_q' . $i . '_answer') }}</h4>
                         @endif
                     @endfor
-                    <div class="w-full grid grid-cols-2 gap-24">
+                    <div class="w-full grid grid-cols-2 gap-24 page-break">
                         @foreach($audit->getMedia('individual_audit_images') as $image)
                             <img class="w-full"
                                  src="{{ $image->getUrl() }}" alt="">
