@@ -71,7 +71,7 @@
 </div>
 
 {{--Issues by Question--}}
-<div class="w-full h-screen">
+<div class="w-full h-screen break-before">
     <div class="p-10">
         <h1 class="text-5xl text-center font-bold my-10 bg-arm-blue-500">
             <span class="bg-white px-5">Deal Jacket Audit Summary</span>
