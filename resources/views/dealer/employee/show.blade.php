@@ -7,12 +7,14 @@
         </div>
         <div class="mt-4 flex space-x-5 sm:mt-0 sm:ml-4">
             @can('create-stores')
-                <button
-                    class="text-red-500 text-sm"
-                    onclick="Livewire.emit('modal.open', 'dealer.employee.delete', @js(['user' => $user->id]))"
-                >
-                    Delete
-                </button>
+                @if(auth()->user()->id != $user->id)
+                    <button
+                        class="text-red-500 text-sm"
+                        onclick="Livewire.emit('modal.open', 'dealer.employee.delete', @js(['user' => $user->id]))"
+                    >
+                        Delete
+                    </button>
+                @endif
             @endcan
         </div>
     </div>
