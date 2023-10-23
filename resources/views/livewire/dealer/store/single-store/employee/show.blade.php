@@ -7,7 +7,14 @@
                     <h1 class="text-lg font-medium leading-6 text-gray-900">{{ $user->name }}</h1>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-
+                    @can('create-stores')
+                        <button
+                            class="text-red-500 text-sm"
+                            onclick="Livewire.emit('modal.open', 'dealer.store.single-store.employee.delete', @js(['user' => $user->id, 'store' => $store->id]))"
+                        >
+                            Delete
+                        </button>
+                    @endcan
                 </div>
             </div>
             <div class="mt-8 flow-root">
