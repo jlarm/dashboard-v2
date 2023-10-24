@@ -35,6 +35,9 @@ class Index extends Component
 
     public function getUsersProperty()
     {
+        if ($this->showIncompleteCourses) {
+            return $this->usersQuery->get();
+        }
         return $this->usersQuery
             ->paginate(10);
     }
@@ -61,6 +64,12 @@ class Index extends Component
     {
         $this->selectAll = true;
     }
+
+    public function hideIncompleteCourses()
+    {
+        $this->showIncompleteCourses = false;
+    }
+
 
     public function exportCsv(): \Symfony\Component\HttpFoundation\StreamedResponse
     {
@@ -101,7 +110,7 @@ class Index extends Component
         $users = $this->users;
 
         if ($this->showIncompleteCourses) {
-            $users = $users->filter(function ($user) {
+            $users = $this->users->filter(function ($user) {
                 return $user->user_has_not_completed_courses;
             });
         }

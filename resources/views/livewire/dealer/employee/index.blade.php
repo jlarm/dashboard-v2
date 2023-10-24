@@ -50,6 +50,22 @@
                             </div>
                         </div>
                     @endcan
+                    @if($showIncompleteCourses)
+                        <a
+                            wire:click="hideIncompleteCourses"
+                            class="hover:cursor-pointer inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                            Clear
+                            <button type="button"
+                                    class="group relative -mr-1 h-3.5 w-3.5 rounded-sm">
+                                <span class="sr-only">Remove</span>
+                                <svg viewBox="0 0 14 14"
+                                     class="h-3.5 w-3.5 stroke-gray-600/50 group-hover:stroke-gray-600/75">
+                                    <path d="M4 4l6 6m0-6l-6 6"/>
+                                </svg>
+                                <span class="absolute -inset-1"></span>
+                            </button>
+                        </a>
+                    @endif
                 </div>
                 <div class="flex flex-row-reverse">
                     @can('delete-stores')
@@ -140,10 +156,10 @@
                                     </td>
                                 @endcan
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-                                    {{ $user->name }}
+                                    {{ Str::headline($user->name) }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    <div><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></div>
+                                    <div><a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a></div>
                                 </td>
                                 @if(tenant('locations'))
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -188,7 +204,7 @@
                             <tr>
                                 <td colspan="7"
                                     class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
-                                    No Employees Created
+                                    No Employees
                                 </td>
                             </tr>
                         @endforelse
@@ -197,8 +213,10 @@
                 </div>
             </div>
         </div>
-        <div class="mt-10">
-            {{ $users->links() }}
-        </div>
+        @if(!$showIncompleteCourses)
+            <div class="mt-10">
+                {{ $users->links() }}
+            </div>
+        @endif
     </div>
 </div>

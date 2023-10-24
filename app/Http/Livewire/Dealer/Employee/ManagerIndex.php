@@ -23,9 +23,7 @@ class ManagerIndex extends Component
     {
         return view('livewire.dealer.employee.manager-index', [
             'users' => User::query()
-                ->whereNot('name', 'Terry Dortch')
-                ->whereNot('name', 'Mike Backer')
-                ->whereNot('name', 'Joe Lohr')
+                ->whereNotIn('name', ['Terry Dortch', 'Mike Backer', 'Joe Lohr'])
                 ->select('id', 'name', 'email', 'phone', 'department_id')
                 ->where('department_id', auth()->user()->department_id)
                 ->when($this->store, function ($query, $store) {
@@ -33,8 +31,8 @@ class ManagerIndex extends Component
                         $query->where('store_id', $store);
                     });
                 })
-                ->with('department')
-                ->with('roles')
+                    ->orderBy('name')
+                ->with('department', 'roles')
                 ->search('name', $this->search)
                 ->paginate(10),
         ]);

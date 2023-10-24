@@ -37,8 +37,16 @@ class Index extends Component
 
     public function getUsersProperty()
     {
+        if ($this->showIncompleteCourses) {
+            return $this->usersQuery->get();
+        }
         return $this->usersQuery
             ->paginate(10);
+    }
+
+    public function hideIncompleteCourses()
+    {
+        $this->showIncompleteCourses = false;
     }
 
     public function render()

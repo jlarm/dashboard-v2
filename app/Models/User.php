@@ -15,6 +15,7 @@ use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Store;
+use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -81,35 +82,44 @@ class User extends Authenticatable
 
     private function totalUserCourses(): array
     {
-        $userRole = $this->roles()->pluck('id')->toArray();
-        $userRole = array_diff($userRole, [5]);
-        $courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
+        // Fetch the role IDs excluding the ID 5
+        $userRoles = $this->roles->pluck('id')->reject(function ($id) {
+            return $id == 5;
+        });
 
-        $courses = Course::query()
-            ->WhereHas('departments', function ($query) {
-                $query->where('id', $this->department_id);
+        // If there are no valid roles, there's no need to continue
+        if ($userRoles->isEmpty()) {
+            return [];
+        }
+
+        $courseWithRole = \DB::table('course_role')
+            ->whereIn('role_id', $userRoles)
+            ->pluck('course_id')
+            ->toArray();
+
+        // Fetch courses using a single query
+        return Course::with('departments')
+            ->where(function ($query) use ($courseWithRole) {
+                $query->whereHas('departments', function ($q) {
+                    $q->where('id', $this->department_id);
+                })
+                    ->whereIn('id', $courseWithRole);
             })
-            ->whereIn('id', $courseWithRole)
             ->orWhereDoesntHave('departments')
-            ->get();
-
-        return $courses->pluck('id')->toArray();
+            ->pluck('id')
+            ->toArray();
     }
 
     public function getTotalCompletedCoursesAttribute(): int
     {
-        $completed = \DB::table('course_results')
+        return DB::table('course_results')
+            ->select('course_id')
             ->where('user_id', $this->id)
             ->whereIn('course_id', $this->totalUserCourses())
             ->where('created_at', '>=', now()->subYear())
-            ->latest()
-            ->get()
+            ->where('passed', 1)
             ->groupBy('course_id')
-            ->map(function ($item) {
-                return $item->first();
-            });
-
-        return collect($completed->where('passed', 1))->count();
+            ->count();
     }
 
     public function getTotalUserCoursesAttribute(): int
@@ -119,7 +129,7 @@ class User extends Authenticatable
 
     public function getUserHasNotCompletedCoursesAttribute(): bool
     {
-        return $this->total_completed_courses != $this->total_user_courses;
+        return $this->total_completed_courses != 0;
     }
 
 

@@ -1,10 +1,9 @@
-<tr>
+<tr class="odd:bg-gray-50 hover:bg-arm-blue-50">
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-        {{ $user->name }}
+        {{ Str::headline($user->name) }}
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-        <div><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></div>
-        <div>{{ $user->phone }}</div>
+        <div><a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a></div>
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         @foreach($user->roles as $role)

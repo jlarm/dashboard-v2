@@ -49,6 +49,22 @@
                             </div>
                         </div>
                     @endcan
+                    @if($showIncompleteCourses)
+                        <a
+                            wire:click="hideIncompleteCourses"
+                            class="hover:cursor-pointer inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                            Clear
+                            <button type="button"
+                                    class="group relative -mr-1 h-3.5 w-3.5 rounded-sm">
+                                <span class="sr-only">Remove</span>
+                                <svg viewBox="0 0 14 14"
+                                     class="h-3.5 w-3.5 stroke-gray-600/50 group-hover:stroke-gray-600/75">
+                                    <path d="M4 4l6 6m0-6l-6 6"/>
+                                </svg>
+                                <span class="absolute -inset-1"></span>
+                            </button>
+                        </a>
+                    @endif
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                     <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.employee.invite')">Add Employee
@@ -91,7 +107,7 @@
                                 <tr>
                                     <td colspan="7"
                                         class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
-                                        No Employees Created
+                                        No Employees
                                     </td>
                                 </tr>
                             @endforelse
@@ -100,9 +116,11 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-10">
-                {{ $users->links() }}
-            </div>
+            @if(!$showIncompleteCourses)
+                <div class="mt-10">
+                    {{ $users->links() }}
+                </div>
+            @endif
         </div>
     </div>
 </div>
