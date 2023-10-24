@@ -129,7 +129,7 @@ class User extends Authenticatable
 
     public function getUserHasNotCompletedCoursesAttribute(): bool
     {
-        return $this->total_completed_courses != 0;
+        return $this->total_completed_courses != $this->total_user_courses;
     }
 
 
