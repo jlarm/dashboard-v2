@@ -79,6 +79,50 @@ class User extends Authenticatable
         return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
     }
 
+    private function totalUserCourses(): array
+    {
+        $userRole = $this->roles()->pluck('id')->toArray();
+        $userRole = array_diff($userRole, [5]);
+        $courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
+
+        $courses = Course::query()
+            ->WhereHas('departments', function ($query) {
+                $query->where('id', $this->department_id);
+            })
+            ->whereIn('id', $courseWithRole)
+            ->orWhereDoesntHave('departments')
+            ->get();
+
+        return $courses->pluck('id')->toArray();
+    }
+
+    public function getTotalCompletedCoursesAttribute(): int
+    {
+        $completed = \DB::table('course_results')
+            ->where('user_id', $this->id)
+            ->whereIn('course_id', $this->totalUserCourses())
+            ->where('created_at', '>=', now()->subYear())
+            ->latest()
+            ->get()
+            ->groupBy('course_id')
+            ->map(function ($item) {
+                return $item->first();
+            });
+
+        return collect($completed->where('passed', 1))->count();
+    }
+
+    public function getTotalUserCoursesAttribute(): int
+    {
+        return count($this->totalUserCourses());
+    }
+
+    public function getUserHasNotCompletedCoursesAttribute(): bool
+    {
+        return $this->total_completed_courses != $this->total_user_courses;
+    }
+
+
     public function dealerships(): HasMany
     {
         return $this->hasMany(Dealership::class);
@@ -107,11 +151,6 @@ class User extends Authenticatable
     public function results()
     {
         return $this->hasMany(CourseResults::class);
-    }
-
-    public function routeNotificationForVonage($notification)
-    {
-        return $this->phone;
     }
 
     public function redflags(): HasMany
@@ -147,6 +186,11 @@ class User extends Authenticatable
     public function glbaAudits(): HasMany
     {
         return $this->hasMany(FinanceAudit::class);
+    }
+
+    public function routeNotificationForVonage($notification)
+    {
+        return $this->phone;
     }
 
 }
