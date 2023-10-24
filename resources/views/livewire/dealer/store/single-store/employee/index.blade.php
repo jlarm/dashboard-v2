@@ -100,8 +100,9 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-10">
+                {{ $users->links() }}
+            </div>
         </div>
     </div>
-
-    {{--    <livewire:dealer.store.employees :store="$store"/>--}}
 </div>

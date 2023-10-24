@@ -140,9 +140,7 @@
                                     </td>
                                 @endcan
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-                                    @if (app()->environment('local'))
-                                        {{ $user->id }}:
-                                    @endif {{ $user->name }}
+                                    {{ $user->name }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     <div><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></div>
@@ -200,7 +198,7 @@
             </div>
         </div>
         <div class="mt-10">
-            {{--            {{ $users->links() }}--}}
+            {{ $users->links() }}
         </div>
     </div>
 </div>
