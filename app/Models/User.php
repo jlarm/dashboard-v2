@@ -80,6 +80,11 @@ class User extends Authenticatable
         return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
     }
 
+    private function userHasNoCaliforniaStore(): bool
+    {
+        return !$this->stores()->where('state', 'California')->exists();
+    }
+
     private function totalUserCourses(): array
     {
         // Fetch the role IDs excluding the ID 5
@@ -102,15 +107,17 @@ class User extends Authenticatable
             ->where(function ($query) use ($courseWithRole) {
                 $query->whereHas('departments', function ($q) {
                     $q->where('id', $this->department_id);
-                })
-                    ->whereIn('id', $courseWithRole);
+                })->whereIn('id', $courseWithRole);
             })
             ->orWhereDoesntHave('departments')
+            ->when($this->userHasNoCaliforniaStore(), function ($query) {
+                $query->where('id', '!=', 28);
+            })
             ->pluck('id')
             ->toArray();
     }
 
-    public function getTotalCompletedCoursesAttribute(): int
+    public function getTotalCompletedCoursesAttribute()
     {
         return DB::table('course_results')
             ->select('course_id')
@@ -118,7 +125,6 @@ class User extends Authenticatable
             ->whereIn('course_id', $this->totalUserCourses())
             ->where('created_at', '>=', now()->subYear())
             ->where('passed', 1)
-            ->groupBy('course_id')
             ->count();
     }
 
