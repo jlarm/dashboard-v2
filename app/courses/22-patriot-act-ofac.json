@@ -16,7 +16,7 @@
         "slides": [
             {
                 "title": "The USA PATRIOT Act & OFAC",
-                "description": "<p>In this course we will review the USA PATRIOT Act and OFAC</p><p>With over 15 government agencies and over 150 Federal laws from Gramm-Leach-Bliley, EPA, Patriot Act, Red Flag, OSHA, and EEOC to name just a few, compliance has never been more complicated or necessary.</p><p>Automotive Compliance Consultants works with dealerships to understand the compliance and regulatory maze that exists in all aspects of the dealership environment. With offices from coast-to-coast we help hundreds of dealerships with these programs from top 100 to small single point dealerships.</p>"
+                "description": "<p>In this course we will review the USA PATRIOT Act and OFAC</p><p>With over 15 government agencies and over 150 Federal laws from Gramm-Leach-Bliley, EPA, Patriot Act, Red Flag, OSHA, and EEOC to name just a few, compliance has never been more complicated or necessary.</p><p>Automotive Risk management Partners works with dealerships to understand the compliance and regulatory maze that exists in all aspects of the dealership environment. With offices from coast-to-coast we help hundreds of dealerships with these programs from top 100 to small single point dealerships.</p>"
             },
             {
                 "title": "The Patriot Act",
@@ -99,6 +99,79 @@
                 "description": "<p>The OFAC has the authority to impose substantial fines for violations. General guidelines for violations are as follows:</p><p>$1,000 for a transaction valued at less than $1,000</p><p>$10,000 for a transaction valued at $1,000 or more but less than $10,000;</p><p>$25,000 for a transaction valued at $10,000 or more but less than $25,000;</p><p>$50,000 for a transaction valued at $25,000 or more but less than $50,000;</p><p>$100,000 for a transaction valued at $50,000 or more but less than $100,000;</p><p>$170,000 for a transaction valued at $100,000 or more but less than $170,000; and $250,000 for a transaction valued at $170,000 or more</p><p>In addition to civil penalties, criminal penalties for willful violations can include fines ranging up to $20 million and imprisonment of up to 30 years.</p><p><strong>Note the following Agency statement:</strong></p><p>A person who processes an unauthorized transaction involving an SDN has violated U.S. law and may be subject to an enforcement action. Generally speaking, however, if (i) the only sanctions reference in the transaction is a weak AKA, (ii) the person involved in the processing had no other reason to know that the transaction involved an SDN or was otherwise in violation of U.S. law, and (iii) the person maintains a rigorous risk-based compliance program, OFAC will not issue a civil penalty against an individual or entity for processing such a transaction.</p>"
             }
         ],
-        "questions": []
+        "questions": [
+            {
+                "question": "What is the primary mission of FinCEN?",
+                "answers": [
+                    {
+                        "a": "Issuing driver's licenses",
+                        "b": "Supporting golf tournaments",
+                        "c": "Supporting law enforcement investigative efforts against financial crimes",
+                        "d": "Promoting the sale of automobiles"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "What form must a dealership file with FinCEN when they receive more than $10,000 in cash?",
+                "answers": [
+                    {
+                        "a": "IRS Form 1040",
+                        "b": "IRS Form 8300",
+                        "c": "IRS Form 1099",
+                        "d": "IRS Form 7777"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "When does the receipt of $10,000 or greater in cash trigger FinCEN reporting?",
+                "answers": [
+                    {
+                        "a": "Only in a lump sum single transaction",
+                        "b": "Only in two or more payments totaling over $10,000",
+                        "c": "Only in payments received as part of a single transaction",
+                        "d": "In one transaction, two or more related transactions, or within a 12-month period"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "Which of the following is NOT considered as cash?",
+                "answers": [
+                    {
+                        "a": "Proceeds from a loan",
+                        "b": "Personal Check",
+                        "c": "Certified business, personal check or wired funds",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "According to the information, when are transactions considered related, even if they are more than 24 hours apart?",
+                "answers": [
+                    {
+                        "a": "Only if they occur within a 24-hour period",
+                        "b": "Only if they involve the same parties",
+                        "c": "If you know or have reason to know that each is one of a series of connected transactions",
+                        "d": "If they involve items or services negotiated during the original purchase"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "What information must be included in the notice provided to the customer after filing Form 8300?",
+                "answers": [
+                    {
+                        "a": "The customer's social security number",
+                        "b": "The name of the dealership's favorite golf course",
+                        "c": "The name, telephone number, and address of the information contact for the dealership, the aggregate amount of reportable cash received, and IRS reporting",
+                        "d": "The dealership's menu of services"
+                    }
+                ],
+                "correctAnswer": "c"
+            }
+        ]
     }
 ]
