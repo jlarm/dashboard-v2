@@ -120,12 +120,13 @@ class User extends Authenticatable
     public function getTotalCompletedCoursesAttribute()
     {
         return DB::table('course_results')
+            ->distinct()
             ->select('course_id')
             ->where('user_id', $this->id)
             ->whereIn('course_id', $this->totalUserCourses())
             ->where('created_at', '>=', now()->subYear())
             ->where('passed', 1)
-            ->count();
+            ->count('course_id');
     }
 
     public function getTotalUserCoursesAttribute(): int
