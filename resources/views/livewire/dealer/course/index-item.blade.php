@@ -1,5 +1,5 @@
 <div
-    class="@if($store->state != 'California' && $course->slug === 'sexual-harassment-training-in-california') hidden @endif relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-arm-blue-500 focus-within:ring-offset-2 hover:border-gray-400">
+    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-arm-blue-500 focus-within:ring-offset-2 hover:border-gray-400">
     <div class="min-w-0 flex-1
         @if(
             $course->slug === 'dot-hazardous-materials-transportation-identifying-hazardous-materials' ||
@@ -40,11 +40,11 @@
                     @else
                         @if($course->results->first()->passed === 1)
                             <span class="text-green-500">
-                                        Passed On: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                        {{ __('Passed On')}}: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
                                     </span>
                         @else
                             <span class="text-red-800">
-                                        Last Attempt: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                        {{ __('Last Attempt') }}: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
                                     </span>
                         @endif
                     @endif

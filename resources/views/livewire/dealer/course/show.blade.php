@@ -55,10 +55,10 @@
                                     href="{{ route('dealer.courses.quiz', $course) }}"
                                     class="inline-flex items-center rounded-md border border-transparent bg-arm-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-arm-green-700 focus:outline-none focus:ring-2 focus:ring-arm-green-500 focus:ring-offset-2"
                                 >
-                                    Start Quiz
+                                    {{__('Start Quiz')}}
                                 </a>
                             @else
-                                <p>Quiz available soon.</p>
+                                <p>{{ __('Quiz available soon') }}.</p>
                             @endif
                         </div>
                     </li>

@@ -38,7 +38,7 @@
         @if(!$totalCourses)
             {{ __('-') }}
         @else
-            {{ $completed }} of {{ $totalCourses }} passed
+            {{ $completed }} of {{ $totalCourses }}
         @endif
     </td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">

@@ -36,6 +36,11 @@
         {{ $user->department->name ?? '' }}
     </td>
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+        @if($completed === $totalCourses)
+            Completed
+        @else
+            Incomplete
+        @endif
         @if(!$user->hasRole('Consultant'))
             @if(!$totalCourses)
                 {{ __('-') }}

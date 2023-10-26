@@ -191,7 +191,12 @@
                                     @endforeach
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{ $user->total_completed_courses }} of {{ $user->total_user_courses }} passed
+                                    @if($user->total_completed_courses === $user->total_user_courses)
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700">Completed</span>
+                                    @else
+                                        {{ $user->total_completed_courses }} of {{ $user->total_user_courses }}
+                                    @endif
                                 </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
                                     @if(!$user->hasRole('Consultant'))
