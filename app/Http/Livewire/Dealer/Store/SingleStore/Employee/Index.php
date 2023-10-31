@@ -22,6 +22,9 @@ class Index extends Component
             ->whereNotIn('id', [1,2,3])
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'Consultant');
+            })
             ->userStore($this->store)
             ->currentUserIsManager(auth()->user())
             ->search('name', $this->search);

@@ -103,7 +103,7 @@ class User extends Authenticatable
                 ->toArray();
 
             $this->userCoursesCache = Course::with('departments')
-                ->where('id', '!=', 22)
+                ->where('slug', '!=', 'patriot-act-ofac')
                 ->where(function ($query) use ($courseWithRole) {
                     $query->whereHas('departments', fn($q) => $q->where('id', $this->department_id))
                         ->whereIn('id', $courseWithRole);
