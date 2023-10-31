@@ -109,7 +109,7 @@ class User extends Authenticatable
                         ->whereIn('id', $courseWithRole);
                 })
                 ->orWhereDoesntHave('departments')
-                ->when($this->userHasNoCaliforniaStore(), fn($query) => $query->where('id', '!=', 28))
+                ->when($this->userHasNoCaliforniaStore(), fn($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
                 ->pluck('id')
                 ->toArray();
         }
