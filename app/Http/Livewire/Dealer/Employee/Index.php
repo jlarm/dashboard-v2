@@ -11,18 +11,19 @@ class Index extends Component
     use WithPagination;
 
     public $search = '';
+    public $store;
     public $showIncompleteCourseUsers = false;
 
     public function getUsersQueryProperty()
     {
         return User::query()
-            ->whereNotIn('id', [1,2,3])
+            ->whereNotIn('name', ['Joe Lohr','Terry Dortch','Mike Backer'])
+            ->userStore($this->store ?? null)
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')
             ->whereDoesntHave('roles', function ($query) {
                 $query->where('name', 'Consultant');
             })
-            ->userStore($this->store ?? null)
             ->currentUserIsManager(auth()->user())
             ->search('name', $this->search);
     }

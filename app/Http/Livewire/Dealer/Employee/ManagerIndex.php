@@ -2,39 +2,50 @@
 
 namespace App\Http\Livewire\Dealer\Employee;
 
-use App\Models\Dealer\Store;
 use App\Models\User;
-use Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ManagerIndex extends Component
 {
-    public $store;
-    public $search = '';
+    use WithPagination;
 
-    public function mount()
+    public $search = '';
+    public $showIncompleteCourseUsers = false;
+
+    public function getUsersQueryProperty()
     {
-        $this->store = Store::whereHas('users', function ($query) {
-            $query->where('user_id', Auth::user()->id);
-        })->pluck('id')->first();
+        return User::query()
+            ->whereNotIn('name', ['Joe Lohr','Terry Dortch','Mike Backer'])
+            ->userStore($this->store ?? null)
+            ->select(['id', 'name', 'slug', 'email', 'department_id'])
+            ->with('roles', 'department', 'stores', 'courses')
+            ->currentUserIsManager(auth()->user())
+            ->search('name', $this->search);
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingShowIncompleteCourseUsers()
+    {
+        $this->resetPage();
     }
 
     public function render()
     {
+        $users = $this->usersQuery->paginate(25);
+
+        if ($this->showIncompleteCourseUsers) {
+            $users = $this->usersQuery->paginate(500)->filter(function ($user) {
+                return $user->user_has_not_completed_courses;
+            });
+        }
+
         return view('livewire.dealer.employee.manager-index', [
-            'users' => User::query()
-                ->whereNotIn('name', ['Terry Dortch', 'Mike Backer', 'Joe Lohr'])
-                ->select('id', 'name', 'email', 'phone', 'department_id')
-                ->where('department_id', auth()->user()->department_id)
-                ->when($this->store, function ($query, $store) {
-                    $query->whereHas('stores', function ($query) use ($store) {
-                        $query->where('store_id', $store);
-                    });
-                })
-                    ->orderBy('name')
-                ->with('department', 'roles')
-                ->search('name', $this->search)
-                ->paginate(10),
+            'users' => $users,
         ]);
     }
 }

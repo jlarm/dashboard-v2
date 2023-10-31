@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
 use App\Models\Dealer\Store;
-use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,14 +17,13 @@ class Index extends Component
 
     public function getUsersQueryProperty()
     {
-        return User::query()
-            ->whereNotIn('id', [1,2,3])
+        return $this->store->users()
+            ->whereNotIn('name', ['Joe Lohr','Terry Dortch','Mike Backer'])
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')
             ->whereDoesntHave('roles', function ($query) {
                 $query->where('name', 'Consultant');
             })
-            ->userStore($this->store)
             ->currentUserIsManager(auth()->user())
             ->search('name', $this->search);
     }
