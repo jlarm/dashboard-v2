@@ -8,15 +8,14 @@
                         <input type="search" wire:model="search" placeholder="Search"
                                class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
                     </label>
-                    @can('delete-stores')
-                        <div class="w-full max-w-xs">
-                            <div class="flex items-start">
-                                <div class="flex items-center h-5">
-                                    <input wire:model="showIncompleteCourseUsers" name="custom-checkbox"
-                                           id="custom-checkbox" type="checkbox" class="hidden peer"
-                                           required>
-                                    <label for="custom-checkbox"
-                                           class="peer-checked:[&_svg]:scale-100 text-sm font-medium text-neutral-600 peer-checked:text-arm-green-600 [&_svg]:scale-0 peer-checked:[&_.custom-checkbox]:border-arm-green-500 peer-checked:[&_.custom-checkbox]:bg-arm-green-500 select-none flex items-center space-x-2">
+                    <div class="w-full max-w-xs">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input wire:model="showIncompleteCourseUsers" name="custom-checkbox"
+                                       id="custom-checkbox" type="checkbox" class="hidden peer"
+                                       required>
+                                <label for="custom-checkbox"
+                                       class="peer-checked:[&_svg]:scale-100 text-sm font-medium text-neutral-600 peer-checked:text-arm-green-600 [&_svg]:scale-0 peer-checked:[&_.custom-checkbox]:border-arm-green-500 peer-checked:[&_.custom-checkbox]:bg-arm-green-500 select-none flex items-center space-x-2">
                                     <span
                                         class="flex items-center justify-center w-5 h-5 border-2 rounded custom-checkbox text-neutral-900">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -25,12 +24,11 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
                                       </svg>
                                     </span>
-                                        <span>Incomplete Courses</span>
-                                    </label>
-                                </div>
+                                    <span>Incomplete Courses</span>
+                                </label>
                             </div>
                         </div>
-                    @endcan
+                    </div>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                     <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.employee.invite')">Add Employee
