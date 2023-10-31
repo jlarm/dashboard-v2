@@ -15,7 +15,6 @@ use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Store;
-use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,6 +30,8 @@ use Spatie\Sluggable\SlugOptions;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, HasSlug;
+
+    protected $appends = ['user_has_not_completed_courses'];
 
     public function getSlugOptions(): SlugOptions
     {
@@ -87,39 +88,38 @@ class User extends Authenticatable
 
     private function totalUserCourses(): array
     {
-        // Fetch the role IDs excluding the ID 5
-        $userRoles = $this->roles->pluck('id')->reject(function ($id) {
-            return $id == 5;
-        });
+        if (is_null($this->userCoursesCache)) {  // Check if already computed and cached
+            // Fetch the role IDs excluding the ID 5
+            $userRoles = $this->roles->pluck('id')->reject(fn($id) => $id == 5);
 
-        // If there are no valid roles, there's no need to continue
-        if ($userRoles->isEmpty()) {
-            return [];
+            // If there are no valid roles, return an empty array
+            if ($userRoles->isEmpty()) {
+                return [];
+            }
+
+            $courseWithRole = \DB::table('course_role')
+                ->whereIn('role_id', $userRoles)
+                ->pluck('course_id')
+                ->toArray();
+
+            $this->userCoursesCache = Course::with('departments')
+                ->where('id', '!=', 22)
+                ->where(function ($query) use ($courseWithRole) {
+                    $query->whereHas('departments', fn($q) => $q->where('id', $this->department_id))
+                        ->whereIn('id', $courseWithRole);
+                })
+                ->orWhereDoesntHave('departments')
+                ->when($this->userHasNoCaliforniaStore(), fn($query) => $query->where('id', '!=', 28))
+                ->pluck('id')
+                ->toArray();
         }
 
-        $courseWithRole = \DB::table('course_role')
-            ->whereIn('role_id', $userRoles)
-            ->pluck('course_id')
-            ->toArray();
-
-        // Fetch courses using a single query
-        return Course::with('departments')
-            ->where(function ($query) use ($courseWithRole) {
-                $query->whereHas('departments', function ($q) {
-                    $q->where('id', $this->department_id);
-                })->whereIn('id', $courseWithRole);
-            })
-            ->orWhereDoesntHave('departments')
-            ->when($this->userHasNoCaliforniaStore(), function ($query) {
-                $query->where('id', '!=', 28);
-            })
-            ->pluck('id')
-            ->toArray();
+        return $this->userCoursesCache;
     }
 
-    public function getTotalCompletedCoursesAttribute()
+    public function getTotalCompletedCoursesAttribute(): int
     {
-        return DB::table('course_results')
+        return \DB::table('course_results')
             ->distinct()
             ->select('course_id')
             ->where('user_id', $this->id)
@@ -138,6 +138,7 @@ class User extends Authenticatable
     {
         return $this->total_completed_courses != $this->total_user_courses;
     }
+
 
 
     public function dealerships(): HasMany
@@ -208,6 +209,27 @@ class User extends Authenticatable
     public function routeNotificationForVonage($notification)
     {
         return $this->phone;
+    }
+
+    public function scopeUserStore($query, $store)
+    {
+        if ($store) {
+            $query->whereHas('stores', function ($q) use ($store) {
+                $q->where('store_id', $store->id);
+            });
+        }
+    }
+
+    public function scopeCurrentUserIsManager($query, $currentUser): void
+    {
+        if ($currentUser->hasRole('Manager') && !$currentUser->hasRole('Qualified Individual')) {
+            $query->where('department_id', $currentUser->department_id);
+        }
+    }
+
+    public function scopeUsersNotCompletedCourses($query, $showNotCompleted): void
+    {
+        $query->when($showNotCompleted, fn($query) => $query->where($this->user_has_not_completed_courses, true));
     }
 
 }
