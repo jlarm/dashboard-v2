@@ -21,6 +21,6 @@
             </a>
         </li>
     @empty
-        <p class="mt-10">No Upcoming Events</p>
+        <p class="mt-10 mb-3">No Upcoming Events</p>
     @endforelse
 </ul>

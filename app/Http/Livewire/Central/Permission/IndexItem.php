@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Livewire\Central\Permission;
+
+use Livewire\Component;
+use Spatie\Permission\Models\Permission;
+use Str;
+
+class IndexItem extends Component
+{
+    public Permission $permission;
+    public bool $enableEditing;
+
+    public function mount()
+    {
+        Str::startsWith($this->permission->name, 'create') ? $this->enableEditing = true : $this->enableEditing = false;
+    }
+
+    public function render()
+    {
+        return view('livewire.central.permission.index-item');
+    }
+}

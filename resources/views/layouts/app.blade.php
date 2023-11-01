@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,53 +9,42 @@
 
     <title>@if(tenant('company'))
             {{ tenant('company') }} |
-        @endif{{ config('app.name', 'Laravel') }}</title>
+        @endif{{ config('app.name', 'ARMP') }}</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;900&display=swap"
-          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet"
+    />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-white">
-    @include('layouts.navigation')
+<body class="h-full font-sans antialiased min-h-screen bg-gray-100">
 
-    <!-- Page Heading -->
-    @if (isset($header))
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
-    @endif
+<div x-data="{ open: false }" @keydown.window.escape="open = false">
+    @include('components.central-sidebar-menu')
+    @include('components.navigation.mobile-central-sidebar-menu')
+    <div class="lg:pl-72">
+        @include('layouts.nav')
+        <div class="py-10 px-4 sm:px-6 lg:px-8">
+            @if (isset($header))
+                <header class="p-5">
+                    {{ $header }}
+                </header>
+            @endif
 
-    <!-- Page Content -->
-    <main>
-        {{ $slot }}
-    </main>
+            {{ $slot }}
+        </div>
+    </div>
 </div>
-{{--<script type="text/javascript">!function (e, t, n) {--}}
-{{--        function a() {--}}
-{{--            var e = t.getElementsByTagName("script")[0], n = t.createElement("script");--}}
-{{--            n.type = "text/javascript", n.async = !0, n.src = "https://beacon-v2.helpscout.net", e.parentNode.insertBefore(n, e)--}}
-{{--        }--}}
-
-{{--        if (e.Beacon = n = function (t, n, a) {--}}
-{{--            e.Beacon.readyQueue.push({method: t, options: n, data: a})--}}
-{{--        }, n.readyQueue = [], "complete" === t.readyState) return a();--}}
-{{--        e.attachEvent ? e.attachEvent("onload", a) : e.addEventListener("load", a, !1)--}}
-{{--    }(window, document, window.Beacon || function () {--}}
-{{--    });--}}
-{{--</script>--}}
-{{--<script type="text/javascript">window.Beacon('init', 'd2b94abf-c277-46fc-8bc7-5ce562b91d12')</script>--}}
 <x-notification/>
 @livewire('slide-over-pro')
 @livewire('modal-pro')
+@livewire('notifications')
 @livewireScripts
 </body>
 </html>

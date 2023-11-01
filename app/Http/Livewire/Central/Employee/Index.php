@@ -15,7 +15,11 @@ class Index extends Component
     public function render()
     {
         return view('livewire.central.employee.index', [
-            'users' => User::search('name', $this->search)->orderBy('name')->with('roles')->paginate(20),
+            'users' => User::query()
+                ->search('name', $this->search)
+                ->orderBy('name')
+                ->with('roles', 'courses')
+                ->paginate(20),
         ]);
     }
 }

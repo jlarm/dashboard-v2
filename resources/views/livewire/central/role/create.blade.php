@@ -1,5 +1,5 @@
 <form wire:submit.prevent="create" class="space-y-10">
-    <div class="w-1/4">
+    <div>
         <x-input-label for="name" :value="__('Role Name')"/>
         <x-text-input
             wire:model="name"

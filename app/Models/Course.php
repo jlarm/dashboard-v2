@@ -2,15 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\Dealer\Department;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Permission\Traits\HasRoles;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
+    protected string $guard_name = 'web';
+
+    protected $fillable = [
+        'model_type',
+        'department_id',
+        'slug',
+        'name',
+        'slides',
+        'questions',
+    ];
 
     protected $casts = [
         'slides' => 'array',
@@ -22,6 +32,11 @@ class Course extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function roles(): BelongsToMany
+    {
+        return $this->morphToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
+    }
+
     public function results(): HasMany
     {
         return $this->hasMany(CourseResults::class);
@@ -31,5 +46,7 @@ class Course extends Model
     {
         return $this->belongsToMany(Department::class);
     }
+
+
 
 }
