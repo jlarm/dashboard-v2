@@ -97,21 +97,38 @@ class User extends Authenticatable
                 return [];
             }
 
-            $courseWithRole = \DB::table('course_role')
-                ->whereIn('role_id', $userRoles)
-                ->pluck('course_id')
-                ->toArray();
+            if (!tenant()) {
+                $courseWithRole = \DB::table('course_role')
+                    ->whereIn('role_id', $userRoles)
+                    ->pluck('model_id')
+                    ->toArray();
 
-            $this->userCoursesCache = Course::with('departments')
-                ->where('slug', '!=', 'patriot-act-ofac')
-                ->where(function ($query) use ($courseWithRole) {
-                    $query->whereHas('departments', fn($q) => $q->where('id', $this->department_id))
-                        ->whereIn('id', $courseWithRole);
-                })
-                ->orWhereDoesntHave('departments')
-                ->when($this->userHasNoCaliforniaStore(), fn($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
-                ->pluck('id')
-                ->toArray();
+                $this->userCoursesCache = Course::with('departments')
+                    ->where('slug', '!=', 'patriot-act-ofac')
+                    ->where(function ($query) use ($courseWithRole) {
+                        $query->whereHas('departments', fn($q) => $q->where('id', $this->department_id))
+                            ->whereIn('id', $courseWithRole);
+                    })
+                    ->orWhereDoesntHave('departments')
+                    ->pluck('id')
+                    ->toArray();
+            } else {
+                $courseWithRole = \DB::table('course_role')
+                    ->whereIn('role_id', $userRoles)
+                    ->pluck('course_id')
+                    ->toArray();
+
+                $this->userCoursesCache = Course::with('departments')
+                    ->where('slug', '!=', 'patriot-act-ofac')
+                    ->where(function ($query) use ($courseWithRole) {
+                        $query->whereHas('departments', fn($q) => $q->where('id', $this->department_id))
+                            ->whereIn('id', $courseWithRole);
+                    })
+                    ->orWhereDoesntHave('departments')
+                    ->when($this->userHasNoCaliforniaStore(), fn($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
+                    ->pluck('id')
+                    ->toArray();
+            }
         }
 
         return $this->userCoursesCache;
