@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Model::preventLazyLoading(! $this->app->isProduction());
+//        Model::preventLazyLoading(! $this->app->isProduction());
 
         view()->composer('layouts.top-bar', function ($view) {
             $view->with('current_locale', app()->getLocale());
