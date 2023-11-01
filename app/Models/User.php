@@ -97,7 +97,7 @@ class User extends Authenticatable
                 return [];
             }
 
-            if (!tenant()) {
+            if (request()->getHost() === config('tenancy.central_domains')[0]) {
                 $courseWithRole = \DB::table('course_role')
                     ->whereIn('role_id', $userRoles)
                     ->pluck('model_id')
