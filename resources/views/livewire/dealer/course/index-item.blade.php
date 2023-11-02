@@ -6,7 +6,7 @@
             $course->slug === 'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment' ||
             $course->slug === 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding'
             )
-            @if($module1 === null || $module1 != 1)
+            @if($module1 != 1)
                 pointer-events-none
             @endif
         @endif
@@ -14,12 +14,12 @@
             $course->slug === 'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment' ||
             $course->slug === 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding'
             )
-            @if($module2 === null || $module2 != 1)
+            @if($module2 != 1)
                 pointer-events-none
             @endif
         @endif
         @if($course->slug === 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')
-            @if($module3 === null || $module3 != 1)
+            @if($module3 != 1)
                 pointer-events-none
             @endif
         @endif
