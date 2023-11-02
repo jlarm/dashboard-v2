@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Department;
 use App\Models\User;
+use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,6 +18,7 @@ class Index extends Component
     public $selectedDepartment = null;
     public $selectedDepartmentName = null;
     public $showIncompleteCourseUsers = false;
+    public $email;
 
     public function getUsersQueryProperty()
     {
@@ -52,6 +55,57 @@ class Index extends Component
     public function resetFilters()
     {
         $this->reset(['showIncompleteCourseUsers', 'selectedDepartment']);
+    }
+
+    public function generateCsv()
+    {
+
+        try {
+            $this->validate([
+                'email' => 'required|email|exists:users,email',
+            ]);
+
+            // Get all users from the database
+            $users = $this->usersQuery->get();
+
+            // Generate the CSV content
+            $csvContent = "Name,Email,Department,Courses\n";
+            foreach ($users as $user) {
+                $csvContent .= "{$user->name},{$user->email},{$user->department->name},$user->total_completed_courses of $user->total_user_courses\n";
+            }
+
+            $body = 'Attached is an outline of the progress your employees have made regarding completing their compliance training courses. If an employee is not noted, they have completed all courses assigned. If you have further questions regarding this, you can always access your compliance dashboard and review your departments progress as a whole.';
+
+            // Send the email with the CSV attachment
+            Mail::send([], [], function ($message) use ($csvContent, $body) {
+                $message->to($this->email)
+                    ->from('noreply@armp.app', tenant('name'))
+                    ->subject('Incomplete Employee Courses Report as of '. date('m/d/Y'))
+                    ->text($body)
+                    ->attachData($csvContent, 'incomplete-employee-courses-report-' . date('m-d-Y') . '.csv', [
+                        'mime' => 'text/csv',
+                    ]);
+            });
+
+            // Reset the email field
+            $this->email = '';
+
+            Notification::make()
+                ->title('User Report Sent Successfully')
+                ->success()
+                ->send();
+
+        } catch (\Exception $e) {
+            \Sentry::captureException($e);
+
+
+
+            Notification::make()
+                ->title('Error trying to send the User Report')
+                ->body('Please check the employees email address.')
+                ->danger()
+                ->send();
+        }
     }
 
     public function render()

@@ -6,7 +6,28 @@
                     <input type="search" wire:model="search" placeholder="Search"
                            class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
                 </label>
-                <div>
+                <div class="flex items-center space-x-3">
+                    @if(auth()->user()->hasRole('super-admin') && $showIncompleteCourseUsers && $selectedDepartment)
+                        <div>
+                            <form wire:submit.prevent="generateCsv" class="flex space-x-3">
+                                <label>
+                                    <input type="email" wire:model.defer="email"
+                                           placeholder="Enter Employee Email Address"
+                                           class="flex w-full w-56 h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
+                                </label>
+                                <x-primary-button>
+                                    <svg wire:loading class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                                stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Send
+                                </x-primary-button>
+                            </form>
+                        </div>
+                    @endif
                     <div
                         x-data="{
                                 open: false,
@@ -157,15 +178,6 @@
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead>
                             <tr class="bg-gray-50">
-                                {{--                            @can('delete-stores')--}}
-                                {{--                                <th scope="col" class="relative px-7 sm:w-12 sm:px-6">--}}
-                                {{--                                    <input--}}
-                                {{--                                        wire:model="selectPage"--}}
-                                {{--                                        type="checkbox"--}}
-                                {{--                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"--}}
-                                {{--                                    >--}}
-                                {{--                                </th>--}}
-                                {{--                            @endcan--}}
                                 <th scope="col"
                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
                                     Name
@@ -193,26 +205,6 @@
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                            {{--                        @if ($selectPage)--}}
-                            {{--                            <tr class="bg-gray-100" wire:key="row-message">--}}
-                            {{--                                <td colspan="7"--}}
-                            {{--                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">--}}
-                            {{--                                    @unless($selectAll)--}}
-                            {{--                                        <div>--}}
-                            {{--                                                                    <span>You selected <strong>{{ $users->count() }}</strong> employees, do you want to--}}
-                            {{--                                                                select--}}
-                            {{--                                                                all--}}
-                            {{--                                                                <strong></strong>?</span>--}}
-                            {{--                                            <button wire:click="selectAll" class="text-arm-blue-500 ml-3">Select All--}}
-                            {{--                                            </button>--}}
-                            {{--                                        </div>--}}
-                            {{--                                    @else--}}
-                            {{--                                        <span>You are currently selecting all <strong></strong>--}}
-                            {{--                                                                employees.</span>--}}
-                            {{--                                    @endunless--}}
-                            {{--                                </td>--}}
-                            {{--                            </tr>--}}
-                            {{--                        @endif--}}
                             @forelse($users as $user)
                                 <livewire:dealer.employee.index-item :user="$user" :key="$user->id"/>
                             @empty
