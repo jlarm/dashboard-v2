@@ -1,22 +1,79 @@
 <div>
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="mb-4">
-            <div class="flex justify-between items-center">
-                <div class="-ml-4 flex items-center gap-x-3">
-                    <div class="w-full max-w-xs mx-auto">
-                        <label>
-                            <input type="search" wire:model="search" placeholder="Search"
-                                   class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
-                        </label>
-                    </div>
-                    <div class="w-full max-w-xs">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input wire:model="showIncompleteCourseUsers" name="custom-checkbox"
-                                       id="custom-checkbox" type="checkbox" class="hidden peer"
-                                       required>
-                                <label for="custom-checkbox"
-                                       class="peer-checked:[&_svg]:scale-100 text-sm font-medium text-neutral-600 peer-checked:text-arm-green-600 [&_svg]:scale-0 peer-checked:[&_.custom-checkbox]:border-arm-green-500 peer-checked:[&_.custom-checkbox]:bg-arm-green-500 select-none flex items-center space-x-2">
+            <div class="w-full flex justify-between items-center mx-auto">
+                <label>
+                    <input type="search" wire:model="search" placeholder="Search"
+                           class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
+                </label>
+                <div>
+                    <div
+                        x-data="{
+                                open: false,
+                                toggle() {
+                                    if (this.open) {
+                                        return this.close()
+                                    }
+
+                                    this.$refs.button.focus()
+
+                                    this.open = true
+                                },
+                                close(focusAfter) {
+                                    if (! this.open) return
+
+                                    this.open = false
+
+                                    focusAfter && focusAfter.focus()
+                                }
+                            }"
+                        x-on:keydown.escape.prevent.stop="close($refs.button)"
+                        x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                        x-id="['dropdown-button']"
+                        class="relative"
+                    >
+                        <!-- Button -->
+                        <button
+                            x-ref="button"
+                            x-on:click="toggle()"
+                            :aria-expanded="open"
+                            :aria-controls="$id('dropdown-button')"
+                            type="button"
+                            class="flex items-center gap-2 bg-white px-2.5 py-2.5 rounded-md border border-b-neutral-200"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-400">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/>
+                            </svg>
+                        </button>
+
+                        <!-- Panel -->
+                        <div
+                            x-ref="panel"
+                            x-show="open"
+                            x-transition.origin.top.left
+                            x-on:click.outside="close($refs.button)"
+                            :id="$id('dropdown-button')"
+                            style="display: none;"
+                            class="absolute right-0 mt-2 w-64 rounded-md bg-white shadow-md p-6 space-y-6 z-20"
+                        >
+                            <div class="w-full flex justify-between items-center">
+                                <h4 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
+                                    Filters</h4>
+                                <button
+                                    wire:click="resetFilters"
+                                    class="fi-link fi-link-size-md relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus:underline gap-1.5 text-sm text-red-600 dark:text-red-400">
+                                    Reset
+                                </button>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input wire:model="showIncompleteCourseUsers" name="custom-checkbox"
+                                           id="custom-checkbox" type="checkbox" class="hidden peer"
+                                           required>
+                                    <label for="custom-checkbox"
+                                           class="peer-checked:[&_svg]:scale-100 text-sm font-medium text-neutral-600 peer-checked:text-arm-green-600 [&_svg]:scale-0 peer-checked:[&_.custom-checkbox]:border-arm-green-500 peer-checked:[&_.custom-checkbox]:bg-arm-green-500 select-none flex items-center space-x-2">
                                     <span
                                         class="flex items-center justify-center w-5 h-5 border-2 rounded custom-checkbox text-neutral-900">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -25,123 +82,157 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
                                       </svg>
                                     </span>
-                                    <span>Incomplete Courses</span>
-                                </label>
+                                        <span>Incomplete Courses</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="department"
+                                       class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Department</label>
+                                <select wire:model="selectedDepartment" id="department" name="department"
+                                        class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                                    <option value="null">All</option>
+                                    @foreach($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
-                    {{--                    @if($showIncompleteCourses)--}}
-                    {{--                        <a--}}
-                    {{--                            wire:click="hideIncompleteCourses"--}}
-                    {{--                            class="hover:cursor-pointer inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">--}}
-                    {{--                            Clear--}}
-                    {{--                            <button type="button"--}}
-                    {{--                                    class="group relative -mr-1 h-3.5 w-3.5 rounded-sm">--}}
-                    {{--                                <span class="sr-only">Remove</span>--}}
-                    {{--                                <svg viewBox="0 0 14 14"--}}
-                    {{--                                     class="h-3.5 w-3.5 stroke-gray-600/50 group-hover:stroke-gray-600/75">--}}
-                    {{--                                    <path d="M4 4l6 6m0-6l-6 6"/>--}}
-                    {{--                                </svg>--}}
-                    {{--                                <span class="absolute -inset-1"></span>--}}
-                    {{--                            </button>--}}
-                    {{--                        </a>--}}
-                    {{--                    @endif--}}
-                </div>
-                <div class="flex flex-row-reverse">
-                    {{--                    @can('delete-stores')--}}
-                    {{--                        @if (count($selected) > 0)--}}
-                    {{--                            <x-primary-button wire:click="exportCsv" class="mr-3">--}}
-                    {{--                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"--}}
-                    {{--                                     stroke-width="1.5"--}}
-                    {{--                                     stroke="currentColor" class="w-4 h-4 mr-2">--}}
-                    {{--                                    <path stroke-linecap="round" stroke-linejoin="round"--}}
-                    {{--                                          d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>--}}
-                    {{--                                </svg>--}}
-                    {{--                                Export--}}
-                    {{--                            </x-primary-button>--}}
-                    {{--                        @endif--}}
-                    {{--                    @endcan--}}
                 </div>
             </div>
-        </div>
-        <div class="mt-8 flow-root">
-            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle">
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead>
-                        <tr>
-                            {{--                            @can('delete-stores')--}}
-                            {{--                                <th scope="col" class="relative px-7 sm:w-12 sm:px-6">--}}
-                            {{--                                    <input--}}
-                            {{--                                        wire:model="selectPage"--}}
-                            {{--                                        type="checkbox"--}}
-                            {{--                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"--}}
-                            {{--                                    >--}}
-                            {{--                                </th>--}}
-                            {{--                            @endcan--}}
-                            <th scope="col"
-                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
-                                Name
-                            </th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Contact
-                            </th>
-                            @if(tenant('locations'))
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    Store(s)
+            <div class="mt-8 flow-root">
+                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    @if($selectedDepartmentName || $showIncompleteCourseUsers)
+                        <div
+                            class="flex items-start justify-between gap-x-3 px-4 py-1.5 sm:px-8 bg-gray-50 border-y border-gray-200">
+                            <div class="flex flex-col gap-x-3 gap-y-1 sm:flex-row">
+                                <span
+                                    class="whitespace-nowrap text-sm font-medium leading-6 text-gray-700">Active Filters</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    @if($showIncompleteCourseUsers)
+                                        <span
+                                            class="inline-flex items-center gap-x-0.5 rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                      Incomplete Courses
+                                      <button wire:click="resetShowIncompleteCourseUsers" type="button"
+                                              class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-blue-600/20">
+                                        <span class="sr-only">Remove</span>
+                                        <svg viewBox="0 0 14 14"
+                                             class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75">
+                                          <path d="M4 4l6 6m0-6l-6 6"/>
+                                        </svg>
+                                        <span class="absolute -inset-1"></span>
+                                      </button>
+                                    </span>
+                                    @endif
+                                    @if($selectedDepartmentName)
+                                        <span
+                                            class="inline-flex items-center gap-x-0.5 rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                  Department: {{ $selectedDepartmentName }}
+                                  <button wire:click="resetSelectedDepartment" type="button"
+                                          class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-blue-600/20">
+                                    <span class="sr-only">Remove</span>
+                                    <svg viewBox="0 0 14 14"
+                                         class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75">
+                                      <path d="M4 4l6 6m0-6l-6 6"/>
+                                    </svg>
+                                    <span class="absolute -inset-1"></span>
+                                  </button>
+                                </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <button wire:click="resetFilters">
+                                <svg wire:loading.remove.delay="1" wire:target="removeTableFilters"
+                                     class="fi-icon-btn-icon h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 20 20"
+                                     fill="currentColor" aria-hidden="true">
+                                    <path
+                                        d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    @endif
+                    <div class="inline-block min-w-full align-middle">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead>
+                            <tr class="bg-gray-50">
+                                {{--                            @can('delete-stores')--}}
+                                {{--                                <th scope="col" class="relative px-7 sm:w-12 sm:px-6">--}}
+                                {{--                                    <input--}}
+                                {{--                                        wire:model="selectPage"--}}
+                                {{--                                        type="checkbox"--}}
+                                {{--                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"--}}
+                                {{--                                    >--}}
+                                {{--                                </th>--}}
+                                {{--                            @endcan--}}
+                                <th scope="col"
+                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
+                                    Name
                                 </th>
-                            @endif
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Department
-                            </th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Completed
-                                Courses
-                            </th>
-                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
-                                <span class="sr-only">View</span>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                        {{--                        @if ($selectPage)--}}
-                        {{--                            <tr class="bg-gray-100" wire:key="row-message">--}}
-                        {{--                                <td colspan="7"--}}
-                        {{--                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">--}}
-                        {{--                                    @unless($selectAll)--}}
-                        {{--                                        <div>--}}
-                        {{--                                                                    <span>You selected <strong>{{ $users->count() }}</strong> employees, do you want to--}}
-                        {{--                                                                select--}}
-                        {{--                                                                all--}}
-                        {{--                                                                <strong></strong>?</span>--}}
-                        {{--                                            <button wire:click="selectAll" class="text-arm-blue-500 ml-3">Select All--}}
-                        {{--                                            </button>--}}
-                        {{--                                        </div>--}}
-                        {{--                                    @else--}}
-                        {{--                                        <span>You are currently selecting all <strong></strong>--}}
-                        {{--                                                                employees.</span>--}}
-                        {{--                                    @endunless--}}
-                        {{--                                </td>--}}
-                        {{--                            </tr>--}}
-                        {{--                        @endif--}}
-                        @forelse($users as $user)
-                            <livewire:dealer.employee.index-item :user="$user" :key="$user->id"/>
-                        @empty
-                            <tr>
-                                <td colspan="7"
-                                    class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
-                                    No Employees
-                                </td>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Contact
+                                </th>
+                                @if(tenant('locations'))
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        Store(s)
+                                    </th>
+                                @endif
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Department
+                                </th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role
+                                </th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Completed
+                                    Courses
+                                </th>
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
+                                    <span class="sr-only">View</span>
+                                </th>
                             </tr>
-                        @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                            {{--                        @if ($selectPage)--}}
+                            {{--                            <tr class="bg-gray-100" wire:key="row-message">--}}
+                            {{--                                <td colspan="7"--}}
+                            {{--                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">--}}
+                            {{--                                    @unless($selectAll)--}}
+                            {{--                                        <div>--}}
+                            {{--                                                                    <span>You selected <strong>{{ $users->count() }}</strong> employees, do you want to--}}
+                            {{--                                                                select--}}
+                            {{--                                                                all--}}
+                            {{--                                                                <strong></strong>?</span>--}}
+                            {{--                                            <button wire:click="selectAll" class="text-arm-blue-500 ml-3">Select All--}}
+                            {{--                                            </button>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    @else--}}
+                            {{--                                        <span>You are currently selecting all <strong></strong>--}}
+                            {{--                                                                employees.</span>--}}
+                            {{--                                    @endunless--}}
+                            {{--                                </td>--}}
+                            {{--                            </tr>--}}
+                            {{--                        @endif--}}
+                            @forelse($users as $user)
+                                <livewire:dealer.employee.index-item :user="$user" :key="$user->id"/>
+                            @empty
+                                <tr>
+                                    <td colspan="7"
+                                        class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
+                                        No Employees
+                                    </td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="mt-10">
-            @if(!$showIncompleteCourseUsers)
-                {{ $users->links() }}
-            @endif
+            <div class="mt-10">
+                @if(!$showIncompleteCourseUsers)
+                    {{ $users->links() }}
+                @endif
+            </div>
         </div>
     </div>
 </div>

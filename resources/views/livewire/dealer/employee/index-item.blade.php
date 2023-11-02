@@ -1,4 +1,4 @@
-<tr class="odd:bg-gray-50 hover:bg-arm-blue-50">
+<tr class="even:bg-gray-50 hover:bg-arm-blue-50">
     {{--    @can('delete-stores')--}}
     {{--        <td class="relative px-7 sm:w-12 sm:px-6">--}}
     {{--            <input--}}

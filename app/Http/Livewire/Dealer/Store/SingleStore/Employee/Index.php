@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
 use App\Models\Dealer\Store;
+use App\Models\Department;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,6 +14,8 @@ class Index extends Component
     public Store $store;
 
     public $search = '';
+    public $selectedDepartment = null;
+    public $selectedDepartmentName = null;
     public $showIncompleteCourseUsers = false;
 
     public function getUsersQueryProperty()
@@ -24,6 +27,9 @@ class Index extends Component
             ->whereDoesntHave('roles', function ($query) {
                 $query->where('name', 'Consultant');
             })
+            ->when($this->selectedDepartment, function ($query) {
+                $query->where('department_id', $this->selectedDepartment);
+            })
             ->currentUserIsManager(auth()->user())
             ->search('name', $this->search);
     }
@@ -33,9 +39,19 @@ class Index extends Component
         $this->resetPage();
     }
 
-    public function updatingShowIncompleteCourseUsers()
+    public function resetShowIncompleteCourseUsers()
     {
-        $this->resetPage();
+        $this->reset(['showIncompleteCourseUsers']);
+    }
+
+    public function resetSelectedDepartment()
+    {
+        $this->selectedDepartment = null;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['showIncompleteCourseUsers', 'selectedDepartment']);
     }
 
     public function render()
@@ -50,6 +66,8 @@ class Index extends Component
 
         return view('livewire.dealer.store.single-store.employee.index', [
             'users' => $users,
+            'departments' => Department::whereHas('users')->orderBy('name')->get(),
+            $this->selectedDepartmentName = Department::where('id', $this->selectedDepartment)->first()->name ?? null,
         ])->layout('components.dealer-app');
     }
 }

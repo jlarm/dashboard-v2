@@ -1,4 +1,4 @@
-<tr class="odd:bg-gray-50 hover:bg-arm-blue-50">
+<tr class="even:bg-gray-50 hover:bg-arm-blue-50">
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
         {{ Str::headline($user->name) }}
     </td>
