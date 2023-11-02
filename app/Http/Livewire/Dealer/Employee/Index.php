@@ -71,7 +71,9 @@ class Index extends Component
             // Generate the CSV content
             $csvContent = "Name,Email,Department,Courses\n";
             foreach ($users as $user) {
-                $csvContent .= "{$user->name},{$user->email},{$user->department->name},$user->total_completed_courses of $user->total_user_courses\n";
+                if($user->total_completed_courses != $user->total_user_courses) {
+                    $csvContent .= "{$user->name},{$user->email},{$user->department->name},$user->total_completed_courses of $user->total_user_courses\n";
+                }
             }
 
             $body = 'Attached is an outline of the progress your employees have made regarding completing their compliance training courses. If an employee is not noted, they have completed all courses assigned. If you have further questions regarding this, you can always access your compliance dashboard and review your departments progress as a whole.';
