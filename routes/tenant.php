@@ -122,7 +122,7 @@ Route::group([
 
     Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['current.store', 'role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
         Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
-        Route::get('employees/archived', \App\Http\Livewire\Dealer\Employee\ArchivedIndex::class)->middleware(['auth', 'has.stores'])->name('store.employee.archived');
+//        Route::get('employees/archived', \App\Http\Livewire\Dealer\Employee\ArchivedIndex::class)->middleware(['auth', 'has.stores'])->name('store.employee.archived');
         Route::get('employees/{user:slug}', [EmployeeController::class, 'show'])->middleware(['auth', 'has.stores'])->name('show');
         Route::get('vendors', [StoreVendorController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.vendor.index');
         Route::get('scans', function () {
