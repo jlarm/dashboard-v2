@@ -44,6 +44,13 @@ Route::group([
     // All Access
     // **************************************************
 
+    Route::get('/language/{locale}', function ($locale) {
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+
+        return redirect()->back();
+    });
+
     Route::get('/', function () { return view('dealer.welcome'); });
 
     if(config('app.env') === 'local') {
@@ -69,6 +76,7 @@ Route::group([
 
     Route::group(['prefix' => 'courses/', 'as' => 'courses.'], function () {
         Route::get('/', function () { return view('dealer.course.index'); })->middleware('auth')->name('index');
+        Route::get('all', function () { return view('dealer.course.all'); })->middleware(['auth', 'role:super-admin|Consultant'])->name('all');
         Route::get('{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('show');
         Route::post('{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('results.store');
         Route::get('{course:slug}/edit', [CourseController::class, 'edit'])->middleware('auth')->name('edit');
@@ -108,12 +116,13 @@ Route::group([
         Route::get('create', function () { return view('dealer.employee.create'); })->name('new');
     });
 
-    // **************************************** **********
+    // **************************************************
     // Roles to Manager
     // **************************************************
 
-    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
+    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['current.store', 'role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
         Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
+        Route::get('employees/archived', \App\Http\Livewire\Dealer\Employee\ArchivedIndex::class)->middleware(['auth', 'has.stores'])->name('store.employee.archived');
         Route::get('employees/{user:slug}', [EmployeeController::class, 'show'])->middleware(['auth', 'has.stores'])->name('show');
         Route::get('vendors', [StoreVendorController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.vendor.index');
         Route::get('scans', function () {
