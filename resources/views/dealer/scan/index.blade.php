@@ -74,22 +74,23 @@
                 >Internal Scans
                 </button>
             </li>
-
-            <li>
-                <button
-                    :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
-                    class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
-                    role="tab"
-                >Settings
-                </button>
-            </li>
+            @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
+                <li>
+                    <button
+                        :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                        @click="select($el.id)"
+                        @mousedown.prevent
+                        @focus="select($el.id)"
+                        type="button"
+                        :tabindex="isSelected($el.id) ? 0 : -1"
+                        :aria-selected="isSelected($el.id)"
+                        :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
+                        class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                        role="tab"
+                    >Settings
+                    </button>
+                </li>
+            @endif
         </ul>
 
         <!-- Panels -->
@@ -101,15 +102,17 @@
                 role="tabpanel"
                 class="p-8"
             >
-                @role('super-admin|Consultant')
-                @if(Cookie::get('sentry'))
-                    <livewire:dealer.scan.index/>
-                @else
-                    <div class="max-w-md mx-auto">
-                        <livewire:dealer.scan.login/>
-                    </div>
+                @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
+                    @role('super-admin|Consultant')
+                    @if(Cookie::get('sentry'))
+                        <livewire:dealer.scan.index/>
+                    @else
+                        <div class="max-w-md mx-auto">
+                            <livewire:dealer.scan.login/>
+                        </div>
+                    @endif
+                    @endrole
                 @endif
-                @endrole
                 <livewire:dealer.scan.report-index/>
             </section>
 
@@ -119,15 +122,17 @@
                 role="tabpanel"
                 class="p-8"
             >
-                @role('super-admin|Consultant')
-                @if(Cookie::get('sentry'))
-                    <livewire:dealer.scan.internal-report-generator/>
-                @else
-                    <div class="max-w-md mx-auto">
-                        <livewire:dealer.scan.login/>
-                    </div>
+                @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
+                    @role('super-admin|Consultant')
+                    @if(Cookie::get('sentry'))
+                        <livewire:dealer.scan.internal-report-generator/>
+                    @else
+                        <div class="max-w-md mx-auto">
+                            <livewire:dealer.scan.login/>
+                        </div>
+                    @endif
+                    @endrole
                 @endif
-                @endrole
                 <livewire:dealer.scan.internal-report-index/>
             </section>
 
