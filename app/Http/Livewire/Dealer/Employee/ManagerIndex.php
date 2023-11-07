@@ -38,6 +38,16 @@ class ManagerIndex extends Component
         $this->reset(['showIncompleteCourseUsers']);
     }
 
+    public function updatingShowIncompleteCourseUsers()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedDepartment()
+    {
+        $this->resetPage();
+    }
+
     public function resetFilters()
     {
         $this->reset(['showIncompleteCourseUsers']);

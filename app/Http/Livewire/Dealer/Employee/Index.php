@@ -47,9 +47,19 @@ class Index extends Component
         $this->reset(['showIncompleteCourseUsers']);
     }
 
+    public function updatingShowIncompleteCourseUsers()
+    {
+        $this->resetPage();
+    }
+
     public function resetSelectedDepartment()
     {
         $this->selectedDepartment = null;
+    }
+
+    public function updatingSelectedDepartment()
+    {
+        $this->resetPage();
     }
 
     public function resetFilters()
