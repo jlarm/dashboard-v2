@@ -1,8 +1,8 @@
 <div class="mx-auto px-4">
     <div class="relative md:flex">
-        <div class="w-64 fixed inset-y-0 z-10 flex flex-col pr-6 mt-48 border-r">
+        <div class="w-64 fixed inset-y-0 z-10 flex flex-col pr-6 mt-20 border-r">
             <h1 class="text-3xl font-black">OSHA Manual</h1>
-            <ul class="toc mt-6 space-y-6 text-gray-500">
+            <ul class="toc mt-3 space-y-3 text-gray-500">
                 <li class="text-sm">
                     <a
                         href="#gq"
@@ -55,7 +55,7 @@
                 </li>
             </ul>
         </div>
-        <div class="pl-72 relative top-10">
+        <div class="pl-72 relative top-2">
             <div class="divide-y mb-10">
                 <div class="grid grid-cols-3 gap-x-5 gap-y-10 mb-10">
                     <div>
