@@ -3,54 +3,54 @@
         <div class="w-64 fixed inset-y-0 z-10 flex flex-col pr-6 mt-20 border-r">
             <h1 class="text-3xl font-black">OSHA Manual</h1>
             <ul class="toc mt-3 space-y-3 text-gray-500">
-                <li class="text-sm">
+                <li>
                     <a
                         href="#gq"
                         class="hover:text-arm-orange-500 transition"
                     >General Questions</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#eap" class="hover:text-arm-orange-600 transition">Emergency Action Plan</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#hcp" class="hover:text-arm-orange-600 transition">Hazard Communication Program</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#hazwoper" class="hover:text-arm-orange-600 transition">HAZWOPER
                         <span class="block">(Hazardous Waste Operations & Emergency Response)</span>
                     </a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#lt" class="hover:text-arm-orange-600 transition">Lockout Tagout</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#esp" class="hover:text-arm-orange-600 transition">Electrical Safety Plan</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#swpp" class="hover:text-arm-orange-600 transition">Storm Water Pollution Plan</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#uomp" class="hover:text-arm-orange-600 transition">Used Oil Management Plan</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#rpp" class="hover:text-arm-orange-600 transition">Respiratory Protection Plan</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#bpp" class="hover:text-arm-orange-600 transition">Bloodborne Pathogens Plan</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#ppe" class="hover:text-arm-orange-600 transition">Personal Protection Plan - PPE</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#cgp" class="hover:text-arm-orange-600 transition">Compressed Gas Plan</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#wcp" class="hover:text-arm-orange-600 transition">Welding & Cutting Procedures</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#fpp" class="hover:text-arm-orange-600 transition">Fire Prevention Plan</a>
                 </li>
-                <li class="text-sm">
+                <li>
                     <a href="#mesg" class="hover:text-arm-orange-600 transition">Machine Equipment Safety/Guarding</a>
                 </li>
             </ul>
