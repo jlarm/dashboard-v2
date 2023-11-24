@@ -37,6 +37,14 @@ class SingleOnboardingDetails extends Component
     public $vendorAccess;
     public $personalDevices;
     public $complianceIssues;
+    public $fi_products_sold;
+    public Collection $service_contracts;
+    public Collection $tire_wheel;
+    public Collection $other_fi;
+    public $fi_system;
+    public $appearance_protection_sold;
+    public $reinsurance;
+    public $admin_name;
 
     public function addIpAddress()
     {
@@ -56,6 +64,36 @@ class SingleOnboardingDetails extends Component
     public function removeWebsiteUrl($urlKey)
     {
         $this->websiteUrls->pull($urlKey);
+    }
+
+    public function addServiceContract()
+    {
+        $this->service_contracts->push(['contract' => '']);
+    }
+
+    public function removeServiceContract($contractKey)
+    {
+        $this->service_contracts->pull($contractKey);
+    }
+
+    public function addTireWheel()
+    {
+        $this->tire_wheel->push(['tireWheel' => '']);
+    }
+
+    public function removeTireWheel($tireKey)
+    {
+        $this->tire_wheel->pull($tireKey);
+    }
+
+    public function addOtherFi()
+    {
+        $this->other_fi->push(['otherFi' => '']);
+    }
+
+    public function removeOtherFi($fiKey)
+    {
+        $this->other_fi->pull($fiKey);
     }
 
     protected $rules = [
@@ -85,6 +123,14 @@ class SingleOnboardingDetails extends Component
         'vendorAccess' => 'nullable',
         'personalDevices' => 'nullable',
         'complianceIssues' => 'nullable',
+        'fi_products_sold' => 'nullable',
+        'service_contracts.*.contract' => 'nullable',
+        'tire_wheel.*.tw' => 'nullable',
+        'other_fi.*.fi' => 'nullable',
+        'fi_system' => 'nullable',
+        'appearance_protection_sold' => 'nullable',
+        'reinsurance' => 'nullable',
+        'admin_name' => 'nullable',
     ];
 
     public function mount()
@@ -120,6 +166,20 @@ class SingleOnboardingDetails extends Component
         $this->vendorAccess = $this->store->vendor_access;
         $this->personalDevices = $this->store->personal_devices;
         $this->complianceIssues = $this->store->compliance_issues;
+        $this->fi_products_sold = $this->store->fi_products_sold;
+        $this->service_contracts = collect($this->store->service_contracts)->map(function ($contract) {
+            return ['serviceContract' => $contract];
+        });
+        $this->tire_wheel = collect($this->store->tire_wheel)->map(function ($tw) {
+            return ['tireWheel' => $tw];
+        });
+        $this->other_fi = collect($this->store->other_fi)->map(function ($fi) {
+            return ['otherFi' => $fi];
+        });
+        $this->fi_system = $this->store->fi_system;
+        $this->appearance_protection_sold = $this->store->appearance_protection_sold;
+        $this->reinsurance = $this->store->reinsurance;
+        $this->admin_name = $this->store->admin_name;
     }
 
 
@@ -154,6 +214,14 @@ class SingleOnboardingDetails extends Component
             'vendor_access' => $this->vendorAccess,
             'personal_devices' => $this->personalDevices,
             'compliance_issues' => $this->complianceIssues,
+            'fi_products_sold' => $this->fi_products_sold,
+            'service_contracts' => $this->service_contracts->pluck('serviceContract')->toArray(),
+            'tire_wheel' => $this->tire_wheel->pluck('tireWheel')->toArray(),
+            'other_fi' => $this->other_fi->pluck('otherFi')->toArray(),
+            'fi_system' => $this->fi_system,
+            'appearance_protection_sold' => $this->appearance_protection_sold,
+            'reinsurance' => $this->reinsurance,
+            'admin_name' => $this->admin_name,
         ]);
 
         Notification::make()

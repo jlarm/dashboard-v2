@@ -64,6 +64,14 @@ class Store extends Model implements HasMedia
         'vendor_access',
         'personal_devices',
         'compliance_issues',
+        'fi_products_sold',
+        'service_contracts',
+        'tire_wheel',
+        'other_fi',
+        'fi_system',
+        'appearance_protection_sold',
+        'reinsurance',
+        'admin_name',
     ];
 
     protected $casts = [
@@ -71,6 +79,10 @@ class Store extends Model implements HasMedia
         'website_urls' => 'array',
         'monitoring_start_date' => 'date:Y-m-d',
         'currently_monitoring' => 'boolean',
+        'service_contracts' => 'array',
+        'tire_wheel' => 'array',
+        'other_fi' => 'array',
+        'reinsurance' => 'boolean',
     ];
 
     public function getSlugOptions(): SlugOptions
