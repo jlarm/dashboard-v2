@@ -6,6 +6,7 @@ use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Spatie\Browsershot\Browsershot;
 
 class SingleOnboardingDetails extends Component
 {
@@ -228,6 +229,24 @@ class SingleOnboardingDetails extends Component
             ->title('Settings Updated Successfully!')
             ->success()
             ->send();
+    }
+
+    public function download()
+    {
+        $html = view('dealer.settings.ComplianceInfoDownloadView', [
+            'store' => $this->store,
+        ])->render();
+
+        $pdf = Browsershot::html($html)
+            ->format('A4')
+            ->margins(20, 10, 20, 10)
+            ->pdf();
+
+        ray($pdf);
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf;
+        }, 'ComplianceInfo.pdf');
     }
 
     public function render()

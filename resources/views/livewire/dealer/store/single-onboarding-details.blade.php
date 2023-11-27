@@ -4,6 +4,18 @@
             <h3 class="text-base font-semibold leading-6 text-gray-900">Compliance Info</h3>
             <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful what
                 you share.</p>
+            @can('create-dealerships')
+                <x-primary-button wire:click.prevent="download">
+                    Download form
+                    <svg wire:loading class="animate-spin ml-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </x-primary-button>
+            @endcan
         </div>
         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0" x-data>
             <form wire:submit.prevent="update" class="space-y-5">
