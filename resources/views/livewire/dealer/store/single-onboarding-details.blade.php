@@ -2,7 +2,7 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <h3 class="text-base font-semibold leading-6 text-gray-900">Compliance Info</h3>
-            <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful what
+            <p class="my-5 text-sm text-gray-500">This information will be displayed publicly so be careful what
                 you share.</p>
             @can('create-dealerships')
                 <x-primary-button wire:click.prevent="download">
