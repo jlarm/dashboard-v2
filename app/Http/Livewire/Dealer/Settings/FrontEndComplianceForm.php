@@ -146,15 +146,8 @@ class FrontEndComplianceForm extends Component
 
     public function mount(): void
     {
-        $storeSlug = request()->segment(2);
-
-        if (session('stores') && $storeSlug) {
-            $storeName = session('stores');
-        } else {
-            $storeName = tenant('name');
-        }
-
-        $this->store = Store::whereName($storeName)->first();
+        $storeId = request('store');
+        $this->store = Store::whereId($storeId)->first();
 
         $this->qualified_individual_name = $this->store->employeeList->qualified_individual_name;
         $this->qualified_individual_phone = $this->store->employeeList->qualified_individual_phone;
