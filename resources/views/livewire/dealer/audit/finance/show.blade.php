@@ -17,7 +17,7 @@
             @foreach($questions as $question)
                 <div class="bg-gray-50 p-3 space-y-7">
                     <div>
-                        <label class="text-base font-semibold text-gray-900">{{ $question->id }}
+                        <label class="text-base font-semibold text-gray-900">{{ $loop->index + 1 }}
                             . {{ $question->question }}</label>
                         <fieldset class="mt-4">
                             <div class="flex items-center space-x-5">

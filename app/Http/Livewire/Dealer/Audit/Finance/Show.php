@@ -700,9 +700,6 @@ class Show extends Component
             'finance_q23_answer' => $this->finance_q23_answer,
             'finance_q23_danger' => $this->finance_q23_danger,
             'finance_q23_comment' => $this->finance_q23_comment,
-            'finance_q24_answer' => $this->finance_q24_answer,
-            'finance_q24_danger' => $this->finance_q24_danger,
-            'finance_q24_comment' => $this->finance_q24_comment,
             'finance_q25_answer' => $this->finance_q25_answer,
             'finance_q25_danger' => $this->finance_q25_danger,
             'finance_q25_comment' => $this->finance_q25_comment,
@@ -802,7 +799,7 @@ class Show extends Component
     {
         return view('livewire.dealer.audit.finance.show', [
             'questions' => tenancy()->central(function ($tenant) {
-                return FinanceQuestions::query()->search('question', $this->search)->get();
+                return FinanceQuestions::query()->whereNot('id', 24)->search('question', $this->search)->get();
             })
         ]);
     }
