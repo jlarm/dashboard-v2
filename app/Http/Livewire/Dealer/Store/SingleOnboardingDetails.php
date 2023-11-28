@@ -246,7 +246,7 @@ class SingleOnboardingDetails extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'ComplianceInfo.pdf');
+        }, str_replace(' ', '-', strtolower($this->store->name)) . '-compliance-info-' . now()->format('m-d-y') . '.pdf');
     }
 
     public function render()
