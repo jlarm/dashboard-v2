@@ -15,6 +15,11 @@
                               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
                 </x-primary-button>
+                @if(auth()->user()->name === 'Joe Lohr')
+                    @if(!$store->user_submitted)
+                        <livewire:dealer.settings.send-compliance-email-link :store="$store"/>
+                    @endif
+                @endif
             @endcan
         </div>
         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0" x-data>
