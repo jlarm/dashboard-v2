@@ -72,6 +72,7 @@ class Store extends Model implements HasMedia
         'appearance_protection_sold',
         'reinsurance',
         'admin_name',
+        'user_submitted',
     ];
 
     protected $casts = [
@@ -83,6 +84,7 @@ class Store extends Model implements HasMedia
         'tire_wheel' => 'array',
         'other_fi' => 'array',
         'reinsurance' => 'boolean',
+        'user_submitted' => 'array',
     ];
 
     public function getSlugOptions(): SlugOptions
