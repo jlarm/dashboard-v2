@@ -1,4 +1,5 @@
 <div>
+    <livewire:dealer.store.single-store-sub-nav :store="$store"/>
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="mt-8 flow-root">
             <div class="md:w-1/3 px-3 sm:px-0 mb-5">
