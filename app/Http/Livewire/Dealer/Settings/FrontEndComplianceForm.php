@@ -217,6 +217,21 @@ class FrontEndComplianceForm extends Component
 
         $this->validate();
 
+        $this->store->employeeList->update([
+            'qualified_individual_name' => $this->qualified_individual_name,
+            'qualified_individual_phone' => $this->qualified_individual_phone,
+            'service_manager_name' => $this->service_manager_name,
+            'service_manager_phone' => $this->service_manager_phone,
+            'parts_manager_name' => $this->parts_manager_name,
+            'parts_manager_phone' => $this->parts_manager_phone,
+            'body_shop_manager_name' => $this->body_shop_manager_name,
+            'body_shop_manager_phone' => $this->body_shop_manager_phone,
+            'general_manager_name' => $this->general_manager_name,
+            'general_manager_phone' => $this->general_manager_phone,
+            'owner_name' => $this->owner_name,
+            'owner_phone' => $this->owner_phone,
+        ]);
+
         $this->store->update([
             'police_emergency_phone' => $this->pep,
             'police_non_emergency_phone' => $this->pnep,
