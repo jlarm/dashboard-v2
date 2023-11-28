@@ -161,6 +161,7 @@ Route::group([
         Route::group(['prefix' => 'stores/{store:slug}', 'as' => 'stores.'], function () {
             Route::get('/', \App\Http\Livewire\Dealer\Store\SingleStore\Home\Index::class)->middleware(['auth', 'has.stores'])->name('home');
             Route::get('employees', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Index::class)->middleware(['auth', 'has.stores'])->name('employees');
+            Route::get('/employees/open-invites', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\OpenInvites::class)->middleware(['auth', 'has.stores'])->name('employees.open-invites');
             Route::get('employees/{user:slug}', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->middleware(['auth', 'has.stores'])->name('employees.show');
             Route::get('scans', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scans');
             Route::get('scan-settings', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Settings::class)->middleware(['auth', 'has.stores'])->name('scan-settings');
