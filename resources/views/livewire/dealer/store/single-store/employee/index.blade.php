@@ -1,9 +1,37 @@
-<div>
-    <div>
-        <livewire:dealer.store.single-store-sub-nav :store="$store"/>
-        <div class="px-4 sm:px-6 lg:px-8">
+<div class="px-6">
+    <div
+        class="py-5 sm:flex sm:items-center sm:justify-between">
+        <div class="min-w-0 flex-1">
+            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Employees</h1>
+        </div>
+        <div class="mt-4 flex space-x-5 sm:mt-0 sm:ml-4">
+            @can('create-dealerships')
+                <a
+                    class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                    href="{{ route('dealer.stores.employee.create', $store) }}">Add Employee</a>
+            @endcan
+
+            @role('Manager')
+            @cannot('create-stores')
+                <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.employee.manager-invite')">Add
+                    Employee
+                </x-primary-button>
+            @endcannot
+            @endrole
+
+            @role('Qualified Individual')
+            <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.employee.invite')">Add Employee
+            </x-primary-button>
+            @endrole
+            <a
+                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                href="{{ route('dealer.stores.employees.open-invites', $store) }}">Open Invites</a>
+        </div>
+    </div>
+    <div class="border rounded-md p-6">
+        <div>
             <div class="sm:flex sm:items-center sm:justify-between">
-                <div class="w-full max-w-xs flex items-center gap-x-3">
+                <div class="w-full flex items-center justify-between gap-x-3">
                     <label>
                         <input type="search" wire:model="search" placeholder="Search"
                                class="flex w-56 h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
@@ -58,7 +86,7 @@
                                 x-on:click.outside="close($refs.button)"
                                 :id="$id('dropdown-button')"
                                 style="display: none;"
-                                class="absolute left-0 mt-2 w-64 rounded-md bg-white shadow-md p-6 space-y-6 z-20"
+                                class="absolute right-0 mt-2 w-64 rounded-md bg-white shadow-md p-6 space-y-6 z-20"
                             >
                                 <div class="w-full flex justify-between items-center">
                                     <h4 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
@@ -111,7 +139,7 @@
                                     <label>
                                         <input type="email" wire:model.defer="email"
                                                placeholder="Enter Manager Email Address"
-                                               class="flex w-full w-56 h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
+                                               class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
                                     </label>
                                     <x-primary-button>
                                         <svg wire:loading class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
@@ -128,16 +156,12 @@
                         @endif
                     @endcan
                 </div>
-                <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.employee.invite')">Add Employee
-                    </x-primary-button>
-                </div>
             </div>
             <div class="mt-8 flow-root">
-                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div>
                     @if($selectedDepartmentName || $showIncompleteCourseUsers)
                         <div
-                            class="flex items-start justify-between gap-x-3 px-4 py-1.5 sm:px-8 bg-gray-50 border-y border-gray-200">
+                            class="flex items-start justify-between gap-x-3 py-1.5 border-b border-gray-200">
                             <div class="flex flex-col gap-x-3 gap-y-1 sm:flex-row">
                                 <span
                                     class="whitespace-nowrap text-sm font-medium leading-6 text-gray-700">Active Filters</span>
@@ -188,23 +212,23 @@
                     <div class="inline-block min-w-full align-middle">
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead>
-                            <tr class="bg-gray-50">
+                            <tr>
                                 <th scope="col"
-                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
+                                    class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                                     Name
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Contact
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Role
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Store
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Department
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Courses
                                 </th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">

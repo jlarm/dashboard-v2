@@ -1,4 +1,3 @@
-<div>
-    <livewire:dealer.store.single-store-sub-nav :store="$store"/>
+<div class="mt-6">
     <livewire:dealer.audit.osha.show :store="$store" :oshaAudit="$oshaAudit"/>
 </div>

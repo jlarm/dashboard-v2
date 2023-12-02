@@ -1,87 +1,89 @@
 <div class="min-h-screen">
     <form class="md:px-4" wire:loading.class="opacity-25">
-        <div class="space-y-5">
-            <div class="ml-3 sm:ml-0">
-                <label for="audit_date" class="block text-sm font-medium leading-6 text-gray-900">Audit Date</label>
-                <div class="mt-2">
-                    <input
-                        wire:model.defer="audit_date"
-                        type="date"
-                        name="audit_date"
-                        id="audit_date"
-                        pattern=""
-                        class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
-                    />
+        <div class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="ml-3 sm:ml-0">
+                    <label for="audit_date" class="block text-sm font-medium leading-6 text-gray-900">Audit Date</label>
+                    <div class="mt-2">
+                        <input
+                            wire:model.defer="audit_date"
+                            type="date"
+                            name="audit_date"
+                            id="audit_date"
+                            pattern=""
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
+                        />
+                    </div>
                 </div>
-            </div>
-            <!-- Deal Jacket Date -->
-            <div class="ml-3 md:ml-0">
-                <label for="deal_jacket_date" class="block text-sm font-medium leading-6 text-gray-900">Date of Deal
-                    Jacket</label>
-                <div class="mt-2">
-                    <input
-                        wire:model.defer="deal_jacket_date"
-                        type="date"
-                        name="deal_jacket_date"
-                        id="deal_jacket_date"
-                        pattern=""
-                        class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
-                    />
+                <!-- Deal Jacket Date -->
+                <div class="ml-3 md:ml-0">
+                    <label for="deal_jacket_date" class="block text-sm font-medium leading-6 text-gray-900">Date of Deal
+                        Jacket</label>
+                    <div class="mt-2">
+                        <input
+                            wire:model.defer="deal_jacket_date"
+                            type="date"
+                            name="deal_jacket_date"
+                            id="deal_jacket_date"
+                            pattern=""
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
+                        />
+                    </div>
                 </div>
-            </div>
-            <!-- Customer Name -->
-            <div class="ml-3 md:ml-0">
-                <label for="customer_name" class="block text-sm font-medium leading-6 text-gray-900">Customer
-                    Name</label>
-                <div class="mt-2">
-                    <input
-                        wire:model.defer="customer_name"
-                        type="text"
-                        name="customer_name"
-                        id="customer_name"
-                        class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
-                    />
+                <!-- Customer Name -->
+                <div class="ml-3 md:ml-0">
+                    <label for="customer_name" class="block text-sm font-medium leading-6 text-gray-900">Customer
+                        Name</label>
+                    <div class="mt-2">
+                        <input
+                            wire:model.defer="customer_name"
+                            type="text"
+                            name="customer_name"
+                            id="customer_name"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
+                        />
+                    </div>
                 </div>
-            </div>
-            <!-- Customer Number -->
-            <div class="ml-3 md:ml-0">
-                <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Customer Deal
-                    Number</label>
-                <div class="mt-2">
-                    <input
-                        wire:model.defer="customer_number"
-                        type="text"
-                        name="customer_number"
-                        id="customer_number"
-                        class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
-                    />
+                <!-- Customer Number -->
+                <div class="ml-3 md:ml-0">
+                    <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Customer Deal
+                        Number</label>
+                    <div class="mt-2">
+                        <input
+                            wire:model.defer="customer_number"
+                            type="text"
+                            name="customer_number"
+                            id="customer_number"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
+                        />
+                    </div>
                 </div>
-            </div>
-            <!-- Manager Name -->
-            <div class="ml-3 md:ml-0">
-                <label for="manager_id" class="block text-sm font-medium leading-6 text-gray-900">Finance
-                    Manager</label>
-                <div class="mt-2">
-                    <select wire:model.defer="manager_id" id="manager_id" name="manager_id" autocomplete="cmanager_id"
-                            class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
-                        <option></option>
-                        @foreach($managers as $manager)
-                            <option value="{{ $manager->id }}">{{ $manager->name }}</option>
-                        @endforeach
-                    </select>
+                <!-- Manager Name -->
+                <div class="ml-3 md:ml-0">
+                    <label for="manager_id" class="block text-sm font-medium leading-6 text-gray-900">Finance
+                        Manager</label>
+                    <div class="mt-2">
+                        <select wire:model.defer="manager_id" id="manager_id" name="manager_id" autocomplete="cmanager_id"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                            <option></option>
+                            @foreach($managers as $manager)
+                                <option value="{{ $manager->id }}">{{ $manager->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <!-- Mileage -->
-            <div class="ml-3 md:ml-0">
-                <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Mileage</label>
-                <div class="mt-2">
-                    <input
-                        wire:model.defer="mileage"
-                        type="number"
-                        name="mileage"
-                        id="mileage"
-                        class="block w-1/2 sm:w-1/3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
-                    />
+                <!-- Mileage -->
+                <div class="ml-3 md:ml-0">
+                    <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Mileage</label>
+                    <div class="mt-2">
+                        <input
+                            wire:model.defer="mileage"
+                            type="number"
+                            name="mileage"
+                            id="mileage"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
+                        />
+                    </div>
                 </div>
             </div>
             @foreach($questions as $question)

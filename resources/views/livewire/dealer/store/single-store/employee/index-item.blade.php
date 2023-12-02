@@ -1,11 +1,11 @@
 <tr class="even:bg-gray-50 hover:bg-arm-blue-50">
-    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
         {{ Str::headline($user->name) }}
     </td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         <div><a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a></div>
     </td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         @foreach($user->roles as $role)
             @if($role->name == 'Manager')
                 <span
@@ -23,7 +23,7 @@
         @endforeach
     </td>
     @if(tenant('locations'))
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+        <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
             @foreach($user->stores as $store)
                 <div class="flex flex-col">
                     <span>{{ $store->name }}</span>
@@ -31,10 +31,10 @@
             @endforeach
         </td>
     @endif
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         {{ $user->department->name ?? '-' }}
     </td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         @if($user->total_completed_courses === $user->total_user_courses)
             <span
                 class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700">Completed</span>
@@ -42,7 +42,7 @@
             {{ $user->total_completed_courses }} of {{ $user->total_user_courses }}
         @endif
     </td>
-    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
+    <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
         <a href="{{ route('dealer.stores.employees.show', [$store, $user]) }}" class="text-sm">View</a>
     </td>
 </tr>

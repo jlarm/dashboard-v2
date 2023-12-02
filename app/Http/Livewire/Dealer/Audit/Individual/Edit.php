@@ -520,11 +520,17 @@ class Edit extends Component
             ->success()
             ->send();
 
+        if (!$this->individualAudit->parent_id) {
+            $parent = $this->individualAudit;
+        } else {
+            $parent = IndividualAudit::where('id', $this->individualAudit->parent_id)->first();
+        }
+
         if ($exit) {
             if (!tenant('locations')) {
-                return redirect()->route('dealer.audit.individual.index');
+                return redirect()->route('dealer.audit.individual.show', $parent);
             }
-            return redirect()->route('dealer.stores.audits.individual.index', [$store->slug]);
+            return redirect()->route('dealer.stores.audits.individual.show', [$store, $parent]);
         }
     }
 

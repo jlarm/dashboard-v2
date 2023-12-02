@@ -2,8 +2,18 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <h3 class="text-base font-semibold leading-6 text-gray-900">Compliance Info</h3>
-            <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful what
+            <p class="my-5 text-sm text-gray-500">This information will be displayed publicly so be careful what
                 you share.</p>
+            <x-primary-button wire:click.prevent="download">
+                Download form
+                <svg wire:loading class="animate-spin ml-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </x-primary-button>
+            @if(!$store->user_submitted)
+            <livewire:dealer.settings.send-compliance-email-link :store="$store"/>
+            @endif
         </div>
         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0" x-data>
             <form wire:submit.prevent="update" class="space-y-5">
@@ -448,6 +458,161 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <x-input-label for="fi_products_sold" :value="__('What F&I products are sold in the F&I Department?')"/>
+                    <x-text-input wire:model.defer="fi_products_sold" id="fi_products_sold" class="block mt-1 w-full" type="text"
+                                  name="fi_products_sold"
+                                  :value="old('fi_products_sold')"
+                                  autofocus/>
+                    <x-input-error :messages="$errors->get('fi_products_sold')" class="mt-2"/>
+                </div>
+
+                <div class="space-y-1">
+                    <x-input-label for="name" :value="__('Service Contracts: New and Used')"/>
+                    @foreach($service_contracts as $contractKey => $contractInput)
+                        <div class="flex flex-wrap items-end justify-between sm:flex-nowrap">
+                            <div class="flex-1">
+                                <x-text-input
+                                    id="service_contractsInput_{{$contractKey}}_service_contract"
+                                    wire:model.defer="service_contracts.{{$contractKey}}.serviceContract"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                    autocomplete="off"
+                                />
+                                @error('service_contracts.'.$contractKey.'.contract') <span
+                                    class="text-xs text-red-600">{{ $message }}</span> @enderror
+                            </div>
+
+                            <x-danger-button type="button" wire:click="removeServiceContract({{$contractKey}})"
+                                             class="flex-shrink-0 ml-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
+                                </svg>
+                            </x-danger-button>
+
+                        </div>
+                    @endforeach
+                    <x-secondary-button type="button" wire:click="addServiceContract">Add Contract</x-secondary-button>
+                </div>
+
+                <div class="space-y-1">
+                    <x-input-label for="name" :value="__('Combo/Tire and Wheel')"/>
+                    @foreach($tire_wheel as $twKey => $twInput)
+                        <div class="flex flex-wrap items-end justify-between sm:flex-nowrap">
+                            <div class="flex-1">
+                                <x-text-input
+                                    id="tire_wheelsInput_{{$twKey}}_tw"
+                                    wire:model.defer="tire_wheel.{{$twKey}}.tireWheel"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                    autocomplete="off"
+                                />
+                                @error('$tire_wheel.'.$twKey.'.tw') <span
+                                    class="text-xs text-red-600">{{ $message }}</span> @enderror
+                            </div>
+
+                            <x-danger-button type="button" wire:click="removeTireWheel({{$twKey}})"
+                                             class="flex-shrink-0 ml-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
+                                </svg>
+                            </x-danger-button>
+
+                        </div>
+                    @endforeach
+                    <x-secondary-button type="button" wire:click="addTireWheel">Add</x-secondary-button>
+                </div>
+
+                <div class="space-y-1">
+                    <x-input-label for="name" :value="__('Other ie: Etch, Security Systems, GPS')"/>
+                    @foreach($other_fi as $fiKey => $fiInput)
+                        <div class="flex flex-wrap items-end justify-between sm:flex-nowrap">
+                            <div class="flex-1">
+                                <x-text-input
+                                    id="other_fiInput_{{$fiKey}}_fi"
+                                    wire:model.defer="other_fi.{{$fiKey}}.otherFi"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                    autocomplete="off"
+                                />
+                                @error('other_fi.'.$fiKey.'.fi') <span
+                                    class="text-xs text-red-600">{{ $message }}</span> @enderror
+                            </div>
+
+                            <x-danger-button type="button" wire:click="removeOtherFi({{$fiKey}})"
+                                             class="flex-shrink-0 ml-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
+                                </svg>
+                            </x-danger-button>
+
+                        </div>
+                    @endforeach
+                    <x-secondary-button type="button" wire:click="addOtherFi">Add</x-secondary-button>
+                </div>
+
+                <div>
+                    <x-input-label for="fi_products_sold" :value="__('What F&I System do you use? IE: Reynolds, Stone Eagle, Dealer Track')"/>
+                    <x-text-input wire:model.defer="fi_system" id="fi_system" class="block mt-1 w-full" type="text"
+                                  name="fi_products_sold"
+                                  :value="old('fi_system')"
+                                  autofocus/>
+                    <x-input-error :messages="$errors->get('fi_system')" class="mt-2"/>
+                </div>
+
+                <div>
+                    <x-input-label for="fi_products_sold" :value="__('Where is their appearance protection products sold? Sales floor-Separate dept-F&I')"/>
+                    <x-text-input wire:model.defer="appearance_protection_sold" id="appearance_protection_sold" class="block mt-1 w-full" type="text"
+                                  name="fi_products_sold"
+                                  :value="old('appearance_protection_sold')"
+                                  autofocus/>
+                    <x-input-error :messages="$errors->get('appearance_protection_sold')" class="mt-2"/>
+                </div>
+
+                <div>
+                    <x-input-label for="reinsurance"
+                                   :value="__('Does the dealer have a reinsurance company formed?')"/>
+                    <div class="flex space-x-5">
+                        <div class="relative flex items-start">
+                            <div class="flex h-6 items-center">
+                                <input wire:model.defer="reinsurance" value="1" id="reinsurance_1"
+                                       aria-describedby="reinsurance-description" name="reinsurance"
+                                       type="radio"
+                                       class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
+                            </div>
+                            <div class="ml-3 text-sm leading-6">
+                                <label for="reinsurance_1" id="reinsurance" class="text-gray-500">Yes</label>
+                            </div>
+                        </div>
+                        <div class="relative flex items-start">
+                            <div class="flex h-6 items-center">
+                                <input wire:model.defer="reinsurance" value="0" id="reinsurance_0"
+                                       aria-describedby="reinsurance-description" name="reinsurance"
+                                       type="radio"
+                                       class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
+                            </div>
+                            <div class="ml-3 text-sm leading-6">
+                                <label for="reinsurance_0" id="reinsurance" class="text-gray-500">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <x-input-label for="admin_name" :value="__('Who is the administrator?')"/>
+                    <x-text-input wire:model.defer="admin_name" id="admin_name" class="block mt-1 w-full" type="text"
+                                  name="fi_products_sold"
+                                  :value="old('admin_name')"
+                                  autofocus/>
+                    <x-input-error :messages="$errors->get('admin_name')" class="mt-2"/>
+                </div>
+
                 <div class="py-3 text-right">
                     <x-primary-button>Update</x-primary-button>
                 </div>

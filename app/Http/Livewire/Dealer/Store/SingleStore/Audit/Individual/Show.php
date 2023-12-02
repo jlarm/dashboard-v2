@@ -24,6 +24,19 @@ class Show extends Component
         $this->parent = IndividualAudit::where('id', $this->individualAudit->id)->where('draft', 1)->count();
         $this->draftCount = $this->children + $this->parent;
     }
+
+    public function getQuarterNameAttribute()
+    {
+        if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3){
+            return 'Q1';
+        } elseif ($this->individualAudit->audit_date->format('m') >= 4 && $this->individualAudit->audit_date->format('m') <= 6){
+            return 'Q2';
+        } elseif ($this->individualAudit->audit_date->format('m') >= 7 && $this->individualAudit->audit_date->format('m') <= 9){
+            return 'Q3';
+        } elseif ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12){
+            return 'Q4';
+        }
+    }
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.individual.show', [

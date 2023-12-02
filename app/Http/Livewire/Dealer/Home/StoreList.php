@@ -18,6 +18,7 @@ class StoreList extends Component
         return view('livewire.dealer.home.store-list', [
             'stores' => Store::query()
                 ->search('name', $this->search)
+                ->select('id', 'name', 'slug')
                 ->paginate(10)
         ]);
     }

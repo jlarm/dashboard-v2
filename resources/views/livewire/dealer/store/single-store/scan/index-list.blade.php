@@ -1,7 +1,7 @@
-<div class="px-4 sm:px-6 lg:px-8">
+<div>
     <div class="flow-root">
-        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle">
+        <div>
+            <div class="inline-block min-w-full align-middle">
                 <!-- Tabs -->
                 <div
                     x-data="{
@@ -21,7 +21,6 @@
                         }
                     }"
                     x-id="['tab']"
-                    class="mx-5"
                 >
                     <!-- Tab List -->
                     <ul

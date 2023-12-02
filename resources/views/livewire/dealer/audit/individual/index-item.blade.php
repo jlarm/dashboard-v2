@@ -1,8 +1,8 @@
 <tr>
-    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-        {{ $individualAudit->audit_date->format('M d, Y') }}
+    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
+        {{ $this->getQuarterNameAttribute() }} of {{ $this->individualAudit->audit_date->format('Y') }}
     </td>
-    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         @if($rating > 0)
             @if($rating >= 90)
                 <span
@@ -24,7 +24,7 @@
             -
         @endif
     </td>
-    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
+    <td class="relative whitespace-nowrap py-4 pl-3 flex justify-end text-sm font-medium">
         <div class="flex items-center space-x-5">
             <a
                 href="{{ (!$tenants) ? route('dealer.audit.individual.show', $individualAudit) : route('dealer.stores.audits.individual.show', [$store, $individualAudit]) }}"

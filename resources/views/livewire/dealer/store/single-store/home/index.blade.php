@@ -1,6 +1,5 @@
 <div>
-    <livewire:dealer.store.single-store-sub-nav :store="$store"/>
-    <div class="mx-auto px-6 lg:px-8">
+    <div class="mx-auto px-6 pt-6">
         <dl class="grid grid-cols-2 gap-5 text-center">
             @can('create-stores')
                 <div class="col-span-2">

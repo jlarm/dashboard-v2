@@ -10,7 +10,7 @@ class FixSignedUrls implements TenancyBootstrapper
     public function bootstrap(Tenant $tenant)
     {
         \URL::formatHostUsing(function () use ($tenant) {
-            return 'https://'.$tenant->domains->first()->domain;
+            return 'http://'.$tenant->domains->first()->domain;
         });
     }
 

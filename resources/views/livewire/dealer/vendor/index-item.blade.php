@@ -1,62 +1,124 @@
 <tr>
-    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
         {{ $vendor->name }}
     </td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $vendor->contact_name ?? '-' }}</td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a
-            href="mailto:{{ $vendor->contact_email }}">{{ $vendor->contact_email }}</a></td>
-    @if(tenant('locations'))
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $vendor->store->name ?? '-' }}</td>
-    @endif
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-        @if(\Carbon\Carbon::now() > $vendor->updated_at->addYear() || !$vendor->q1a )
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+        {{ $vendor->contact_name ?? '-' }}
+        <a class="block text-xs text-gray-400" href="mailto:{{ $vendor->contact_email }}">{{ $vendor->contact_email }}</a>
+    </td>
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+        @if(\Carbon\Carbon::now() <= $vendor->updated_at->addYear() && $vendor->signature)
+            <p class="whitespace-nowrap">Completed <time>{{ $vendor->updated_at->format('M d, Y') }}</time></p>
+        @elseif(\Carbon\Carbon::now() > $vendor->updated_at->addYear() && $vendor->signature)
+            <p class="whitespace-nowrap">Expired <time>{{ $vendor->updated_at->addYear()->format('M d, Y') }}</time></p>
+        @else
+            <p class="whitespace-nowrap">Sent <time>{{ $vendor->created_at->format('M d, Y') }}</time></p>
+        @endif
+    </td>
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+        @if(\Carbon\Carbon::now() <= $vendor->updated_at->addYear() && !$vendor->signature)
             <span
-                class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Incomplete</span>
+                class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/10">Incomplete</span>
+        @elseif(\Carbon\Carbon::now() > $vendor->updated_at->addYear() && $vendor->signature)
+            <span
+                class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Expired</span>
         @else
             <span
                 class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Current</span>
         @endif
     </td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         @if($noCount > 0)
             {{ $noCount }}/{{ $totalQuestions }}
         @else
             {{ __('-') }}
         @endif
     </td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         <div class="flex space-x-3 justify-end items-end">
-            @if($vendor->signature)
-                <button wire:click.prevent="download" type="button"
-                        class="inline-flex items-center gap-x-1.5 rounded-md bg-arm-blue-600 py-1.5 px-2.5 text-sm text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">
-                    <svg wire:loading.remove xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke-width="1.5"
-                         stroke="currentColor" class="-ml-0.5 h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
-                    </svg>
-                    <svg wire:loading class="animate-spin -ml-1 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
-                         fill="none"
-                         viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Download
-                </button>
-            @endif
-            {{--            @if(!$vendor->signature)--}}
-            {{--                <button wire:click.prevent="email" type="button" disabled--}}
-            {{--                        class="inline-flex items-center gap-x-1.5 rounded-md bg-arm-orange-600 py-1.5 px-2.5 text-sm text-white shadow-sm hover:bg-arm-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-orange-600">--}}
-            {{--                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"--}}
-            {{--                         stroke="currentColor" class="-ml-0.5 h-5 w-5">--}}
-            {{--                        <path stroke-linecap="round" stroke-linejoin="round"--}}
-            {{--                              d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>--}}
-            {{--                    </svg>--}}
-            {{--                    Send--}}
-            {{--                </button>--}}
-            {{--            @endif--}}
+            <div class="flex flex-none items-center gap-x-4">
+                <div
+                    x-data="{
+                                open: false,
+                                toggle() {
+                                    if (this.open) {
+                                        return this.close()
+                                    }
+                                    this.$refs.button.focus()
+                                    this.open = true
+                                },
+                                close(focusAfter) {
+                                    if (! this.open) return
+                                    this.open = false
+                                    focusAfter && focusAfter.focus()
+                                }
+                            }"
+                    x-on:keydown.escape.prevent.stop="close($refs.button)"
+                    x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                    x-id="['dropdown-button']"
+                    class="relative flex-none"
+                >
+                    <button
+                        x-ref="button"
+                        x-on:click="toggle()"
+                        :aria-expanded="open"
+                        :aria-controls="$id('dropdown-button')"
+                        type="button"
+                        class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900"
+                        id="options-menu-0-button"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                    >
+                        <span class="sr-only">Open options</span>
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
+                        </svg>
+                    </button>
+                    <div
+                        x-ref="panel"
+                        x-show="open"
+                        x-transition.origin.top.left
+                        x-on:click.outside="close($refs.button)"
+                        :id="$id('dropdown-button')"
+                        style="display: none;"
+                        class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="options-menu-0-button"
+                        tabindex="-1"
+                    >
+                        @if($vendor->signature)
+                            <button
+                                wire:click.prevent="download"
+                                type="button"
+                                class="block px-3 py-1 text-sm leading-6 text-gray-900"
+                                tabindex="-1"
+                                id="options-menu-0-item-0"
+                            >
+                                Download
+                            </button>
+                        @endif
+                        @can('create-stores')
+                        <button
+                            wire:click="$emit('modal.open', 'dealer.vendor.edit',  @js(['vendor' => $vendor->id]))"
+                            class="block px-3 py-1 text-sm leading-6 text-gray-900"
+                            tabindex="-1"
+                            id="options-menu-0-item-2"
+                        >
+                            Edit
+                        </button>
+                        <button
+                            wire:click="$emit('modal.open', 'dealer.vendor.delete',  @js(['vendor' => $vendor->id]))"
+                            class="block px-3 py-1 text-sm leading-6 text-gray-900"
+                            tabindex="-1"
+                            id="options-menu-0-item-2"
+                        >
+                            Delete
+                        </button>
+                        @endcan
+                    </div>
+                </div>
+            </div>
         </div>
     </td>
 </tr>

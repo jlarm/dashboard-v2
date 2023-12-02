@@ -54,6 +54,14 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
     public $personal_devices;
 
     public $compliance_issues;
+    public $fi_products_sold;
+    public $service_contracts = [''];
+    public $tire_wheel = [''];
+    public $other_fi = [''];
+    public $fi_system;
+    public $appearance_protection_sold;
+    public $reinsurance;
+    public $admin_name;
 
     public $i = 1;
     public $u = 0;
@@ -79,6 +87,14 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
         'vendor_access' => 'nullable|boolean',
         'personal_devices' => 'nullable|boolean',
         'compliance_issues' => 'nullable|boolean',
+        'fi_products_sold' => 'nullable',
+        'service_contracts' => 'nullable|array',
+        'tire_wheel' => 'nullable|array',
+        'other_fi' => 'nullable|array',
+        'fi_system' => 'nullable',
+        'appearance_protection_sold' => 'nullable',
+        'reinsurance' => 'nullable|boolean',
+        'admin_name' => 'nullable',
     ];
 
     public function mount()
@@ -104,6 +120,14 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
         $this->vendor_access = $this->store->vendor_access;
         $this->personal_devices = $this->store->personal_devices;
         $this->compliance_issues = $this->store->compliance_issues;
+        $this->fi_products_sold = $this->store->fi_products_sold;
+        $this->service_contracts = $this->store->service_contracts;
+        $this->tire_wheel = $this->store->tire_wheel;
+        $this->other_fi = $this->store->other_fi;
+        $this->fi_system = $this->store->fi_system;
+        $this->appearance_protection_sold = $this->store->appearance_protection_sold;
+        $this->reinsurance = $this->store->reinsurance;
+        $this->admin_name = $this->store->admin_name;
     }
 
     public function addIp()
@@ -153,6 +177,14 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
             'vendor_access' => $this->vendor_access,
             'personal_devices' => $this->personal_devices,
             'compliance_issues' => $this->compliance_issues,
+            'fi_products_sold' => $this->fi_products_sold,
+            'service_contracts' => $this->service_contracts,
+            'tire_wheel' => $this->tire_wheel,
+            'other_fi' => $this->other_fi,
+            'fi_system' => $this->fi_system,
+            'appearance_protection_sold' => $this->appearance_protection_sold,
+            'reinsurance' => $this->reinsurance,
+            'admin_name' => $this->admin_name,
         ]);
 
         Notification::make()

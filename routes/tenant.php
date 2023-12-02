@@ -120,7 +120,7 @@ Route::group([
     // Roles to Manager
     // **************************************************
 
-    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['current.store', 'role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
+    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['stores', 'current.store', 'role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
         Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
 //        Route::get('employees/archived', \App\Http\Livewire\Dealer\Employee\ArchivedIndex::class)->middleware(['auth', 'has.stores'])->name('store.employee.archived');
         Route::get('employees/{user:slug}', [EmployeeController::class, 'show'])->middleware(['auth', 'has.stores'])->name('show');
@@ -158,9 +158,11 @@ Route::group([
             Route::get('deal-jackets/{individualAudit:uuid}/edit', \App\Http\Controllers\Dealer\Audit\SingleIndividualController::class)->name('individual.edit');
         });
 
-        Route::group(['prefix' => 'stores/{store:slug}', 'as' => 'stores.'], function () {
+        Route::group(['prefix' => 'stores/{store:slug}', 'as' => 'stores.', 'middleware' => ['stores']], function () {
             Route::get('/', \App\Http\Livewire\Dealer\Store\SingleStore\Home\Index::class)->middleware(['auth', 'has.stores'])->name('home');
             Route::get('employees', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Index::class)->middleware(['auth', 'has.stores'])->name('employees');
+            Route::get('employees/create', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Create::class)->middleware(['auth', 'has.stores'])->name('employee.create');
+            Route::get('/employees/open-invites', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\OpenInvites::class)->middleware(['auth', 'has.stores'])->name('employees.open-invites');
             Route::get('employees/{user:slug}', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->middleware(['auth', 'has.stores'])->name('employees.show');
             Route::get('scans', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scans');
             Route::get('scan-settings', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Settings::class)->middleware(['auth', 'has.stores'])->name('scan-settings');
@@ -181,6 +183,7 @@ Route::group([
             Route::get('audits/deal-jackets/create/{individualAudit:uuid?}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Create::class)->middleware(['auth', 'has.stores'])->name('audits.individual.create');
             Route::get('audits/deal-jackets/{individualAudit:uuid}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Show::class)->middleware(['auth', 'has.stores'])->name('audits.individual.show');
             Route::get('audits/deal-jackets/{individualAudit:uuid}/edit', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->middleware(['auth', 'has.stores'])->name('audits.individual.edit');
+            Route::get('vendors', \App\Http\Livewire\Dealer\Store\SingleStore\Vendor\Index::class)->middleware(['auth', 'has.stores'])->name('vendors.index');
             Route::get('docs', \App\Http\Livewire\Dealer\Store\SingleStore\Docs\Index::class)->middleware(['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|auth', 'has.stores'])->name('doc.index');
             Route::get('settings', \App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->middleware(['auth', 'has.stores'])->name('settings');
             Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('edit');
@@ -196,7 +199,7 @@ Route::group([
 
         Route::get('stores', function () { return view('dealer.store.index');})->middleware(['auth', 'has.stores'])->name('stores.index');
         Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
-
     });
+        Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
 });
