@@ -1,12 +1,15 @@
 <x-dealer-app>
-    <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+    <div class="px-6 py-4 sm:flex sm:items-center sm:justify-between">
         <div class="min-w-0 flex-1">
-            <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">{{ __('Courses') }}</h1>
+            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">{{ __('Courses') }}</h1>
         </div>
+        <livewire:dealer.course.dot-cert />
     </div>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <livewire:dealer.course.index/>
+    <div class="px-6">
+        <div class="border rounded-md">
+            <div class="p-6">
+                <livewire:dealer.course.index/>
+            </div>
         </div>
     </div>
 </x-dealer-app>

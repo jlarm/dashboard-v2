@@ -37,6 +37,10 @@
                 <p class="truncate text-sm text-gray-500">
                     @if(is_null($course->results->first()))
                         {{ __('Not taken yet') }}
+                    @elseif($course->results->first()->passed === 1 && $course->results->first()->created_at->diffInDays() > 365)
+                        <span class="text-orange-500">
+                            {{ __('Expired On: ') }} {{ $course->results->first()->created_at->format('F d, Y') }}
+                        </span>
                     @else
                         @if($course->results->first()->passed === 1)
                             <span class="text-green-500">
@@ -49,12 +53,12 @@
                         @endif
                     @endif
                 </p>
-                @if($course->results->first() && $course->results->first()->passed === 1)
+                @if($course->results->first() && $course->results->first()->passed === 1 && $course->results->first()->created_at->diffInDays() < 365)
                     <span
                         class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
                                     {{ $course->results->first()->percentage }}%
                                 </span>
-                @elseif($course->results->first() && $course->results->first()->passed === 0)
+                @elseif($course->results->first() && $course->results->first()->passed === 0 && $course->results->first()->created_at->diffInDays() < 365)
                     <span
                         class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
                                     {{ $course->results->first()->percentage }}%

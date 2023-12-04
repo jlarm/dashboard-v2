@@ -58,6 +58,7 @@ Route::group([
         Route::get('deal-jacket-audit-pdf', \App\Http\Controllers\DealJacketPdfTestController::class);
         Route::get('glba-audit-pdf', \App\Http\Controllers\GlbaPdfTestController::class);
         Route::get('body-shop-audit-pdf', \App\Http\Controllers\BodyShopPdfTestController::class);
+        Route::Get('dot-cert', function () { return view('dealer.course.CertDownloadView'); });
     }
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
