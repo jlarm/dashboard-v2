@@ -1,5 +1,5 @@
 <div>
-    <div class="px-4 sm:px-6 lg:px-8">
+    <div>
         <div class="mb-4">
             <div class="w-full flex justify-between items-center mx-auto">
                 <label>
@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div class="mt-8 flow-root">
-                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div>
                     @if($showIncompleteCourseUsers)
                         <div
                             class="flex items-start justify-between gap-x-3 px-4 py-1.5 sm:px-8 bg-gray-50 border-y border-gray-200">
@@ -128,34 +128,25 @@
                     <div class="inline-block min-w-full align-middle">
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead>
-                            <tr class="bg-gray-50">
-                                {{--                            @can('delete-stores')--}}
-                                {{--                                <th scope="col" class="relative px-7 sm:w-12 sm:px-6">--}}
-                                {{--                                    <input--}}
-                                {{--                                        wire:model="selectPage"--}}
-                                {{--                                        type="checkbox"--}}
-                                {{--                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"--}}
-                                {{--                                    >--}}
-                                {{--                                </th>--}}
-                                {{--                            @endcan--}}
+                            <tr>
                                 <th scope="col"
-                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">
+                                    class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                                     Name
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Contact
                                 </th>
                                 @if(tenant('locations'))
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Store(s)
                                     </th>
                                 @endif
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Department
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Role
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Completed
                                     Courses
                                 </th>
@@ -165,26 +156,6 @@
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                            {{--                        @if ($selectPage)--}}
-                            {{--                            <tr class="bg-gray-100" wire:key="row-message">--}}
-                            {{--                                <td colspan="7"--}}
-                            {{--                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">--}}
-                            {{--                                    @unless($selectAll)--}}
-                            {{--                                        <div>--}}
-                            {{--                                                                    <span>You selected <strong>{{ $users->count() }}</strong> employees, do you want to--}}
-                            {{--                                                                select--}}
-                            {{--                                                                all--}}
-                            {{--                                                                <strong></strong>?</span>--}}
-                            {{--                                            <button wire:click="selectAll" class="text-arm-blue-500 ml-3">Select All--}}
-                            {{--                                            </button>--}}
-                            {{--                                        </div>--}}
-                            {{--                                    @else--}}
-                            {{--                                        <span>You are currently selecting all <strong></strong>--}}
-                            {{--                                                                employees.</span>--}}
-                            {{--                                    @endunless--}}
-                            {{--                                </td>--}}
-                            {{--                            </tr>--}}
-                            {{--                        @endif--}}
                             @forelse($users as $user)
                                 <livewire:dealer.employee.index-item :user="$user" :key="$user->id"/>
                             @empty

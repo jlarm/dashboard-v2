@@ -67,24 +67,24 @@
                                 </svg>
                                 Home
                             </a>
-                            @can('create-stores')
-                                @if(tenant('locations'))
-                                    <a
-                                        href="{{ route('dealer.stores.index') }}"
-                                        class="{{ (request()->is('stores')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
-                                    >
-                                        <svg
-                                            class="{{ request()->is('stores') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/>
-                                        </svg>
-                                        Stores
-                                    </a>
-                                @endif
-                            @endcan
+{{--                            @can('create-stores')--}}
+{{--                                @if(tenant('locations'))--}}
+{{--                                    <a--}}
+{{--                                        href="{{ route('dealer.stores.index') }}"--}}
+{{--                                        class="{{ (request()->is('stores')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"--}}
+{{--                                    >--}}
+{{--                                        <svg--}}
+{{--                                            class="{{ request()->is('stores') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"--}}
+{{--                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"--}}
+{{--                                            stroke-width="1.5"--}}
+{{--                                            stroke="currentColor">--}}
+{{--                                            <path stroke-linecap="round" stroke-linejoin="round"--}}
+{{--                                                  d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/>--}}
+{{--                                        </svg>--}}
+{{--                                        Stores--}}
+{{--                                    </a>--}}
+{{--                                @endif--}}
+{{--                            @endcan--}}
                             @can('edit-users')
                                 <a
                                     href="{{ route('dealer.employees.index') }}"
@@ -276,7 +276,9 @@
             <div class="my-5 px-4">
                 @if (tenant('locations'))
                     @can('create-users')
-                        <livewire:dealer.navigation.store-switcher />
+                        @if(count(auth()->user()->stores) != 1)
+                            <livewire:dealer.navigation.store-switcher />
+                        @endif
                     @endcan
                 @endif
             </div>

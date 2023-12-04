@@ -86,6 +86,7 @@ Route::group([
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
     Route::get('/vendors/thankyou', function () { return view('dealer.vendor.thankyou'); })->middleware('web')->name('vendors.thankyou');
 
+    Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
@@ -102,104 +103,81 @@ Route::group([
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
 
     // **************************************************
-    // Roles to Manager
+    // Roles to Consultant
     // **************************************************
 
-    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['auth', 'role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
-        Route::get('/', \App\Http\Controllers\Dealer\EmployeeIndexController::class)->name('index');
-        Route::get('create', function () { return view('dealer.employee.create'); })->name('new');
-        Route::get('open-invites', function () { return view('dealer.employee.open-invites'); })->name('open-invites');
-        Route::get('{user:slug}', [UserController::class, 'show'])->name('show');
-    });
+    Route::group(['middleware' => ['role:super-admin|Consultant']], function () {
 
-    Route::group(['prefix' => 'employees/', 'as' => 'employees.', 'middleware' => ['auth', 'role:super-admin|Consultant']], function () {
-        Route::get('create', function () { return view('dealer.employee.create'); })->name('new');
+        Route::group(['prefix' => 'employees/', 'as' => 'employees.'], function () {
+            Route::get('create', function () { return view('dealer.employee.create'); })->name('new');
+        });
+
     });
 
     // **************************************************
     // Roles to Manager
-    // **************************************************
-
-    Route::group(['prefix' => 'store/{store:slug}/', 'as' => 'store.employees.', 'middleware' => ['stores', 'current.store', 'role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
-        Route::get('employees', [EmployeeController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.employee.index');
-//        Route::get('employees/archived', \App\Http\Livewire\Dealer\Employee\ArchivedIndex::class)->middleware(['auth', 'has.stores'])->name('store.employee.archived');
-        Route::get('employees/{user:slug}', [EmployeeController::class, 'show'])->middleware(['auth', 'has.stores'])->name('show');
-        Route::get('vendors', [StoreVendorController::class, 'index'])->middleware(['auth', 'has.stores'])->name('store.vendor.index');
-        Route::get('scans', function () {
-            return view('dealer.store.multi.scan-index');
-        })->middleware(['auth', 'has.stores'])->name('store.scan.index');
-    });
-
-    // **************************************************
-    // Roles to QA
     // **************************************************
 
     Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
 
-        Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
-
-        Route::group(['prefix' => 'docs/', 'as' => 'doc.', 'middleware' => ['auth']], function () {
-           Route::get('/', \App\Http\Livewire\Dealer\Docs\Index::class)->name('index');
-        });
-
-        Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => ['auth', 'single.store']], function () {
-            Route::get('osha', function () { return view('dealer.audit.osha.index'); })->name('osha.index');
-            Route::get('osha/create', OshaCreateController::class)->name('osha.create');
-            Route::get('osha/{oshaAudit:id}', OshaAuditController::class)->name('osha.show');
-            Route::get('body-shop', function () { return view('dealer.audit.body-shop.index'); })->name('body-shop.index');
-            Route::get('body-shop/create', BodyShopCreateController::class)->name('body-shop.create');
-            Route::get('body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->name('body-shop.show');
-            Route::get('finance', function () { return view('dealer.audit.finance.index'); })->name('finance.index');
-            Route::get('finance/create', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
-            Route::get('finance/{financeAudit:id}', FinanceController::class)->middleware('can:create-audits')->name('finance.show');
-            Route::get('deal-jackets', \App\Http\Controllers\Dealer\Audit\IndividualIndexController::class)->name('individual.index');
-            Route::get('deal-jackets/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
-            Route::get('deal-jackets/{individualAudit:uuid}', IndividualController::class)->name('individual.show');
-            Route::get('deal-jackets/{individualAudit:uuid}/edit', \App\Http\Controllers\Dealer\Audit\SingleIndividualController::class)->name('individual.edit');
-        });
-
-        Route::group(['prefix' => 'stores/{store:slug}', 'as' => 'stores.', 'middleware' => ['stores']], function () {
-            Route::get('/', \App\Http\Livewire\Dealer\Store\SingleStore\Home\Index::class)->middleware(['auth', 'has.stores'])->name('home');
-            Route::get('employees', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Index::class)->middleware(['auth', 'has.stores'])->name('employees');
-            Route::get('employees/create', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Create::class)->middleware(['auth', 'has.stores'])->name('employee.create');
-            Route::get('/employees/open-invites', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\OpenInvites::class)->middleware(['auth', 'has.stores'])->name('employees.open-invites');
-            Route::get('employees/{user:slug}', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->middleware(['auth', 'has.stores'])->name('employees.show');
-            Route::get('scans', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scans');
-            Route::get('scan-settings', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Settings::class)->middleware(['auth', 'has.stores'])->name('scan-settings');
-            Route::get('manuals', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Index::class)->middleware(['auth', 'has.stores'])->name('manuals');
-            Route::get('manuals/isp', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Isp::class)->middleware(['auth', 'has.stores'])->name('manuals.isp');
-            Route::get('manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Osha::class)->middleware(['auth', 'has.stores'])->name('manuals.osha');
-            Route::get('manuals/red-flag', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\RedFlag::class)->middleware(['auth', 'has.stores'])->name('manuals.red-flag');
-            Route::get('audits/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Index::class)->middleware(['auth', 'has.stores'])->name('audits.osha.index');
-            Route::get('audits/osha/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Create::class)->middleware(['auth', 'has.stores'])->name('audits.osha.create');
-            Route::get('audits/osha/{oshaAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Show::class)->middleware(['auth', 'has.stores'])->name('audits.osha.show');
-            Route::get('audits/body-shop', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Index::class)->middleware(['auth', 'has.stores'])->name('audits.body-shop.index');
-            Route::get('audits/body-shop/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Create::class)->middleware(['auth', 'has.stores'])->name('audits.body-shop.create');
-            Route::get('audits/body-shop/{bodyShopAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Show::class)->middleware(['auth', 'has.stores'])->name('audits.body-shop.show');
-            Route::get('audits/finance', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Index::class)->middleware(['auth', 'has.stores'])->name('audits.finance.index');
-            Route::get('audits/finance/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Create::class)->middleware(['auth', 'has.stores'])->name('audits.finance.create');
-            Route::get('audits/finance/{financeAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Show::class)->middleware(['auth', 'has.stores'])->name('audits.finance.show');
-            Route::get('audits/deal-jackets', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->middleware(['auth', 'has.stores'])->name('audits.individual.index');
-            Route::get('audits/deal-jackets/create/{individualAudit:uuid?}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Create::class)->middleware(['auth', 'has.stores'])->name('audits.individual.create');
-            Route::get('audits/deal-jackets/{individualAudit:uuid}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Show::class)->middleware(['auth', 'has.stores'])->name('audits.individual.show');
-            Route::get('audits/deal-jackets/{individualAudit:uuid}/edit', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->middleware(['auth', 'has.stores'])->name('audits.individual.edit');
-            Route::get('vendors', \App\Http\Livewire\Dealer\Store\SingleStore\Vendor\Index::class)->middleware(['auth', 'has.stores'])->name('vendors.index');
-            Route::get('docs', \App\Http\Livewire\Dealer\Store\SingleStore\Docs\Index::class)->middleware(['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|auth', 'has.stores'])->name('doc.index');
-            Route::get('settings', \App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->middleware(['auth', 'has.stores'])->name('settings');
-            Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth', 'has.stores'])->name('edit');
+        Route::group(['prefix' => 'employees/', 'as' => 'employees.'], function () {
+            Route::get('/', \App\Http\Controllers\Dealer\EmployeeIndexController::class)->name('index');
+            Route::get('create', function () { return view('dealer.employee.create'); })->name('new');
+            Route::get('open-invites', function () { return view('dealer.employee.open-invites'); })->name('open-invites');
+            Route::get('{user:slug}', [UserController::class, 'show'])->name('show');
         });
 
         Route::get('scans', function () { return view('dealer.scan.index'); })->middleware(['auth', 'single.store'])->name('scan.index');
         Route::get('scans/settings', function () { return view('dealer.scan.settings'); })->middleware('auth')->name('scan.settings');
 
-        Route::get('manuals', \App\Http\Controllers\Dealer\ManualController::class)->middleware(['auth', 'single.store'])->name('manual.index');
-        Route::get('manuals/isp', \App\Http\Controllers\Dealer\Manual\IspController::class)->middleware(['auth', 'single.store'])->name('manual.isp');
-        Route::get('manuals/osha', \App\Http\Controllers\Dealer\Manual\OshaController::class)->middleware(['auth', 'single.store'])->name('manual.osha');
-        Route::get('manuals/red-flag', \App\Http\Controllers\Dealer\Manual\RedFlagController::class)->middleware(['auth', 'single.store'])->name('manual.red-flag');
+        Route::group(['prefix' => 'manuals/', 'as' => 'manual.', 'middleware' => ['auth', 'single.store']], function () {
+            Route::get('/', \App\Http\Controllers\Dealer\ManualController::class)->name('index');
+        });
 
-        Route::get('stores', function () { return view('dealer.store.index');})->middleware(['auth', 'has.stores'])->name('stores.index');
+
+        Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => ['auth', 'single.store']], function () {
+            Route::get('osha', function () { return view('dealer.audit.osha.index'); })->name('osha.index');
+            Route::get('body-shop', function () { return view('dealer.audit.body-shop.index'); })->name('body-shop.index');
+            Route::get('finance', function () { return view('dealer.audit.finance.index'); })->name('finance.index');
+            Route::get('deal-jackets', \App\Http\Controllers\Dealer\Audit\IndividualIndexController::class)->name('individual.index');
+        });
+
+        Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
+
+        Route::group(['prefix' => 'docs/', 'as' => 'doc.', 'middleware' => ['auth']], function () {
+            Route::get('/', \App\Http\Livewire\Dealer\Docs\Index::class)->name('index');
+        });
+
+    });
+
+
+    // **************************************************
+    // Roles to QA
+    // **************************************************
+
+    Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Consultant']], function () {
+
+        Route::group(['prefix' => 'manuals/', 'as' => 'manual.', 'middleware' => ['auth', 'single.store']], function () {
+            Route::get('/isp', \App\Http\Controllers\Dealer\Manual\IspController::class)->name('isp');
+            Route::get('/osha', \App\Http\Controllers\Dealer\Manual\OshaController::class)->name('osha');
+            Route::get('/red-flag', \App\Http\Controllers\Dealer\Manual\RedFlagController::class)->name('red-flag');
+        });
+
+        Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => ['auth', 'single.store']], function () {
+            Route::get('osha/create', OshaCreateController::class)->name('osha.create');
+            Route::get('osha/{oshaAudit:id}', OshaAuditController::class)->name('osha.show');
+            Route::get('body-shop/create', BodyShopCreateController::class)->name('body-shop.create');
+            Route::get('body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->name('body-shop.show');
+            Route::get('finance/create', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
+            Route::get('finance/{financeAudit:id}', FinanceController::class)->middleware('can:create-audits')->name('finance.show');
+            Route::get('deal-jackets/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
+            Route::get('deal-jackets/{individualAudit:uuid}', IndividualController::class)->name('individual.show');
+            Route::get('deal-jackets/{individualAudit:uuid}/edit', \App\Http\Controllers\Dealer\Audit\SingleIndividualController::class)->name('individual.edit');
+        });
+
         Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
     });
-        Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
 });
+
+require __DIR__ . '/stores.php';

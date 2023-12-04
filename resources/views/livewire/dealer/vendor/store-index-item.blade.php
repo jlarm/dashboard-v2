@@ -86,6 +86,7 @@
                         Download
                     </button>
                 @endif
+                @can('create-stores')
                     <button
                         wire:click="$emit('modal.open', 'dealer.vendor.edit',  @js(['vendor' => $vendor->id]))"
                         class="block px-3 py-1 text-sm leading-6 text-gray-900"
@@ -102,6 +103,7 @@
                 >
                     Delete
                 </button>
+                @endcan
             </div>
         </div>
     </div>
