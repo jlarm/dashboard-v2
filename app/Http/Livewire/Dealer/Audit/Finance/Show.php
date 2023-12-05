@@ -544,9 +544,6 @@ class Show extends Component
         $this->finance_q23_answer = $this->financeAudit->finance_q23_answer;
         $this->finance_q23_danger = $this->financeAudit->finance_q23_danger;
         $this->finance_q23_comment = $this->financeAudit->finance_q23_comment;
-        $this->finance_q24_answer = $this->financeAudit->finance_q24_answer;
-        $this->finance_q24_danger = $this->financeAudit->finance_q24_danger;
-        $this->finance_q24_comment = $this->financeAudit->finance_q24_comment;
         $this->finance_q25_answer = $this->financeAudit->finance_q25_answer;
         $this->finance_q25_danger = $this->financeAudit->finance_q25_danger;
         $this->finance_q25_comment = $this->financeAudit->finance_q25_comment;

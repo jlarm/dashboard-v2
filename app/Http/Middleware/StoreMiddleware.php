@@ -14,7 +14,7 @@ class StoreMiddleware
 
         $store = Store::where('slug', $storeSlug)->firstOrFail();
 
-        \Session::put('stores', $store->name);
+        $request->attributes->add(['store' => $store]);
 
         return $next($request);
     }

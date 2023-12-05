@@ -18,9 +18,19 @@ class Show extends Component
     public function mount()
     {
         $this->audits = collect([$this->individualAudit, ...$this->individualAudit->children]);
+    }
 
-//        $this->audits = $this->individualAudit->where('parent_id', $this->individualAudit->id)->get();
-//        $this->children = $this->individualAudit->where('parent_id', $this->individualAudit->id)->count();
+    public function getQuarterNameAttribute()
+    {
+        if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3){
+            return 'Q1';
+        } elseif ($this->individualAudit->audit_date->format('m') >= 4 && $this->individualAudit->audit_date->format('m') <= 6){
+            return 'Q2';
+        } elseif ($this->individualAudit->audit_date->format('m') >= 7 && $this->individualAudit->audit_date->format('m') <= 9){
+            return 'Q3';
+        } elseif ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12){
+            return 'Q4';
+        }
     }
 
     public function delete()

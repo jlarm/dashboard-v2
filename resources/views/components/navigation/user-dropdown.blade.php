@@ -24,7 +24,7 @@
             :aria-expanded="open"
             :aria-controls="$id('dropdown-button')"
             type="button"
-            class="flex max-w-xs items-center bg-gray-50 hover:text-arm-blue-500 text-sm focus:outline-none"
+            class="flex max-w-xs items-center hover:text-arm-blue-500 text-sm focus:outline-none"
             id="user-menu-button" aria-expanded="false" aria-haspopup="true"
         >
             <span class="sr-only">Open user menu</span>

@@ -94,12 +94,65 @@ class Store extends Model implements HasMedia
             ->saveSlugsTo('slug');
     }
 
+    private function calculateGrade(array $grades): ?string
+    {
+        if (count($grades) === 0) {
+            return null;
+        }
+
+        $grade = round(array_sum($grades) / count($grades));
+
+        if ($grade >= 90) {
+            return 'A';
+        } elseif ($grade >= 80) {
+            return 'B';
+        } elseif ($grade >= 70) {
+            return 'C';
+        } elseif ($grade >= 60) {
+            return 'D';
+        } else {
+            return 'F';
+        }
+    }
+
     public function getPhoneNumberAttribute(): string
     {
         $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
         preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
 
         return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+    }
+
+    public function getDealJacketGradeAttribute(): ?string
+    {
+        return $this->calculateGrade($this->individualAudits->pluck('rating')->toArray());
+    }
+
+    public function getOshaGradeAttribute(): ?string
+    {
+        return $this->calculateGrade($this->oshaAudits->pluck('rating')->toArray());
+    }
+
+    public function getGlbaGradeAttribute(): ?string
+    {
+        return $this->calculateGrade($this->financeAudits->pluck('rating')->toArray());
+    }
+
+    public function getBodyShopGradeAttribute(): ?string
+    {
+        return $this->calculateGrade($this->bodyShopAudits->pluck('rating')->toArray());
+    }
+
+    public function getOverallGradeAttribute(): ?string
+    {
+        $grades = array_merge(
+            $this->individualAudits->where('rating', '!=', null)->pluck('rating')->toArray(),
+            $this->financeAudits->where('rating', '!=', null)->pluck('rating')->toArray(),
+            $this->oshaAudits->where('rating', '!=', null)->pluck('rating')->toArray(),
+            $this->bodyShopAudits->where('rating', '!=', null)->pluck('rating')->toArray()
+        );
+
+        return $this->calculateGrade($grades);
     }
 
     public function users(): BelongsToMany
@@ -171,5 +224,10 @@ class Store extends Model implements HasMedia
     public function docs(): HasMany
     {
         return $this->hasMany(DealerDoc::class);
+    }
+
+    public function vendors(): HasMany
+    {
+        return $this->hasMany(Vendor::class);
     }
 }

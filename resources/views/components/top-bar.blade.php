@@ -5,7 +5,7 @@
     <div class="flex flex-1 justify-between px-4">
         <div class="flex flex-1 items-center">
             <!-- Dealership Name -->
-            <x-dealership-name :title="$title"/>
+            <x-dealership-name />
         </div>
         <div class="ml-4 flex items-center md:ml-6 space-x-5">
             @env('local')

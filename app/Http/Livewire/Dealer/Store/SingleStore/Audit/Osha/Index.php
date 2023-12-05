@@ -14,8 +14,14 @@ class Index extends Component
 
     public function render()
     {
+        $query = OshaAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc');
+
+        if (auth()->user()->hasRole('Manager')) {
+            $query->whereNot('pdf_path', null);
+        }
+
         return view('livewire.dealer.store.single-store.audit.osha.index', [
-            'oshaAudits' => OshaAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc')->get()
+            'oshaAudits' => $query->get()
         ])->layout('components.dealer-app');
     }
 }

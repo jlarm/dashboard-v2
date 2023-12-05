@@ -17,7 +17,7 @@ class IspCard extends Component
 
     public function mount()
     {
-        $this->manual = Isp::latest()->first();
+        $this->manual = Isp::where('store_id', $this->store->id)->latest()->first();
         if($this->manual && $this->manual->pdf_path) {
             $this->content = Storage::disk('do-manuals')->url(tenant('id') . '/isp/' . $this->manual->pdf_path) ?? null;
         }

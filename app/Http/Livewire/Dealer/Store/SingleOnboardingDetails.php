@@ -231,7 +231,7 @@ class SingleOnboardingDetails extends Component
             ->send();
     }
 
-    public function download()
+    public function download(): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         $html = view('dealer.settings.ComplianceInfoDownloadView', [
             'store' => $this->store,
@@ -241,8 +241,6 @@ class SingleOnboardingDetails extends Component
             ->format('A4')
             ->margins(20, 10, 20, 10)
             ->pdf();
-
-        ray($pdf);
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;

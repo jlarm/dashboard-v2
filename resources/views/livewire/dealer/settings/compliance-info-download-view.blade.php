@@ -1,7 +1,7 @@
 <div>
     <div class="flex justify-between items-end mb-20 border-b pb-5">
-        <x-application-logo class="h-6"/>
-        <span class="text-right text-xs text-arm-blue-800">{{ $store->name }} <br/>Compliance Information</span>
+        <x-application-logo class="h-6" />
+        <span class="text-right text-xs text-arm-blue-800">{{ $store->name }} <br />Compliance Information</span>
     </div>
     <div class="grid grid-cols-2 gap-5">
         <div class="mt-5 page-break">
@@ -122,11 +122,11 @@
     <div class="mt-5 page-break">
         <x-input-label :value="__('IP Addresses')"/>
         @if($store->ip_addresses)
-            <div class="w-full mt-3">
-                @foreach($store->ip_addresses as $ip)
-                    <div class="text-xs">{{ $ip }}</div>
-                @endforeach
-            </div>
+        <div class="w-full mt-3">
+            @foreach($store->ip_addresses as $ip)
+                <div class="text-xs">{{ $ip }}</div>
+            @endforeach
+        </div>
         @endif
         <div class="w-full h-32 border px-3 mt-3">
             <span class="text-gray-200 text-xs">Add any additional IP Addresses</span>
@@ -150,7 +150,7 @@
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
                     <input value="0" id="mfa_0" aria-describedby="mfa" name="mfa"
-                           {{ $store->mfa == 0 ? 'checked' : '' }}
+                            {{ $store->mfa == 0 ? 'checked' : '' }}
                            type="radio"
                            class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                 </div>
@@ -167,7 +167,7 @@
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
                     <input value="1" id="vulnerability_1"
-                           {{ $store->vulnerability == 1 ? 'checked' : '' }}
+                            {{ $store->vulnerability == 1 ? 'checked' : '' }}
                            aria-describedby="vulnerability-description" name="vulnerability" type="radio"
                            class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                 </div>
@@ -178,7 +178,7 @@
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
                     <input value="0" id="vulnerability_0"
-                           {{ $store->vulnerability == 0 ? 'checked' : '' }}
+                            {{ $store->vulnerability == 0 ? 'checked' : '' }}
                            aria-describedby="vulnerability-description" name="vulnerability" type="radio"
                            class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                 </div>
@@ -195,7 +195,7 @@
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
                     <input value="1" id="monitoring_1"
-                           {{ $store->monitoring == 1 ? 'checked' : '' }}
+                            {{ $store->monitoring == 1 ? 'checked' : '' }}
                            aria-describedby="monitoring-description" name="monitoring" type="radio"
                            class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                 </div>
@@ -206,7 +206,7 @@
             <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
                     <input value="0" id="monitoring_0"
-                           {{ $store->monitoring == 0 ? 'checked' : '' }}
+                            {{ $store->monitoring == 0 ? 'checked' : '' }}
                            aria-describedby="monitoring-description" name="monitoring" type="radio"
                            class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                 </div>
@@ -252,11 +252,11 @@
     <div class="mt-5 page-break">
         <x-input-label :value="__('Website URL\'s')"/>
         @if($store->website_urls)
-            <div class="w-full mt-3">
-                @foreach($store->website_urls as $url)
-                    <div class="text-xs">{{ $url }}</div>
-                @endforeach
-            </div>
+        <div class="w-full mt-3">
+            @foreach($store->website_urls as $url)
+                <div class="text-xs">{{ $url }}</div>
+            @endforeach
+        </div>
         @endif
         <div class="w-full h-32 border px-3 mt-3">
             <span class="text-gray-200 text-xs">Add any additional Website Url's</span>
@@ -264,7 +264,7 @@
     </div>
     <div class="mt-5 page-break">
         <x-input-label
-            :value="__('Who is your designated Red Flag Coordinator?')"/>
+                       :value="__('Who is your designated Red Flag Coordinator?')"/>
         <div class="w-full h-6 border-b mt-3 text-xs">
             {{ $store->designated_red_flag_coordinator ?? '' }}
         </div>
@@ -305,8 +305,7 @@
                 <div class="flex h-6 items-center">
                     <input value="1" id="service_provider_agreements_1"
                            {{ $store->service_provider_agreements ==1 ? 'checked' : '' }}
-                           aria-describedby="service_provider_agreements-description" name="service_provider_agreements"
-                           type="radio"
+                           aria-describedby="service_provider_agreements-description" name="service_provider_agreements" type="radio"
                            class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                 </div>
                 <div class="ml-3 text-sm leading-6">
@@ -317,13 +316,11 @@
                 <div class="flex h-6 items-center">
                     <input value="0" id="service_provider_agreements_0"
                            {{ $store->service_provider_agreements == 0 ? 'checked' : '' }}
-                           aria-describedby="service_provider_agreements-description" name="service_provider_agreements"
-                           type="radio"
+                           aria-describedby="service_provider_agreements-description" name="service_provider_agreements" type="radio"
                            class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                 </div>
                 <div class="ml-3 text-sm leading-6">
-                    <label for="service_provider_agreements_0" id="service_provider_agreements"
-                           class="text-gray-500">No</label>
+                    <label for="service_provider_agreements_0" id="service_provider_agreements" class="text-gray-500">No</label>
                 </div>
             </div>
         </div>
@@ -477,11 +474,11 @@
     <div class="mt-5 page-break">
         <x-input-label :value="__('Service Contracts: New and Used')"/>
         @if($store->service_contracts)
-            <div class="w-full mt-3">
-                @foreach($store->service_contracts as $contract)
-                    <div class="text-xs">{{ $contract }}</div>
-                @endforeach
-            </div>
+        <div class="w-full mt-3">
+            @foreach($store->service_contracts as $contract)
+                <div class="text-xs">{{ $contract }}</div>
+            @endforeach
+        </div>
         @endif
         <div class="w-full h-32 border px-3 mt-3">
             <span class="text-gray-200 text-xs">Add any additional Service Contracts</span>
@@ -490,11 +487,11 @@
     <div class="mt-5 page-break">
         <x-input-label :value="__('Combo/Tire and Wheel')"/>
         @if($store->tire_wheel)
-            <div class="w-full mt-3">
-                @foreach($store->tire_wheel as $tire)
-                    <div class="text-xs">{{ $tire }}</div>
-                @endforeach
-            </div>
+        <div class="w-full mt-3">
+            @foreach($store->tire_wheel as $tire)
+                <div class="text-xs">{{ $tire }}</div>
+            @endforeach
+        </div>
         @endif
         <div class="w-full h-32 border px-3 mt-3">
             <span class="text-gray-200 text-xs">Add any additional Combo/Tire and Wheel</span>
@@ -503,11 +500,11 @@
     <div class="mt-5 page-break">
         <x-input-label :value="__('Other ie: Etch, Security Systems, GPS')"/>
         @if($store->other_fi)
-            <div class="w-full mt-3">
-                @foreach($store->other_fi as $other)
-                    <div class="text-xs">{{ $other }}</div>
-                @endforeach
-            </div>
+        <div class="w-full mt-3">
+            @foreach($store->other_fi as $other)
+                <div class="text-xs">{{ $other }}</div>
+            @endforeach
+        </div>
         @endif
         <div class="w-full h-32 border px-3 mt-3">
             <span class="text-gray-200 text-xs">Add any additional to Other</span>
@@ -520,8 +517,7 @@
         </div>
     </div>
     <div class="mt-5 page-break">
-        <x-input-label
-            :value="__('Where is their appearance protection products sold? Sales floor-Separate dept-F&I')"/>
+        <x-input-label :value="__('Where is their appearance protection products sold? Sales floor-Separate dept-F&I')"/>
         <div class="w-full h-6 border-b mt-3 text-xs">
             {{ $store->appearance_protection_sold ?? '' }}
         </div>

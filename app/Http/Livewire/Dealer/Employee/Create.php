@@ -9,6 +9,7 @@ use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
@@ -16,12 +17,13 @@ class Create extends Component
 {
     public string $name, $email, $department, $departmentId, $role;
     public array $roles = [], $courses = [], $dealers = [];
-    public $currentStore = 1;
+    public $currentStore;
 
-    public function mount(Store $currentStore): void
+    public function mount(Request $request): void
     {
-        $this->currentStore = $currentStore;
         $this->departmentId = auth()->user()->department_id ?? '';
+        $this->currentStore = $request->get('store')?->id ?? '';
+        $this->dealers[] = $request->get('store')?->id ? (string)$request->get('store')?->id : [];
     }
 
     protected $rules = [

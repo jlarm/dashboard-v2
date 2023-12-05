@@ -16,8 +16,14 @@ class Index extends Component
 
     public function render()
     {
+        $query = FinanceAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc');
+
+        if (auth()->user()->hasRole('Manager')) {
+            $query->whereNot('pdf_path', null);
+        }
+
         return view('livewire.dealer.store.single-store.audit.finance.index', [
-            'financeAudits' => FinanceAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc')->get()
+            'financeAudits' => $query->get()
         ])->layout('components.dealer-app');
     }
 }

@@ -1,7 +1,12 @@
 <div>
-    <livewire:dealer.store.single-store-sub-nav :store="$store"/>
-    <div class="mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5 px-4">
+    <div
+        class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
+        <div class="min-w-0 flex-1">
+            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Manuals</h1>
+        </div>
+    </div>
+    <div class="px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5">
             <livewire:dealer.manual.isp-card :store="$store"/>
             <livewire:dealer.manual.osha-card :store="$store"/>
             <livewire:dealer.manual.red-flag-card :store="$store"/>

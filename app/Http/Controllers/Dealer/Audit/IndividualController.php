@@ -17,6 +17,8 @@ class IndividualController extends Controller
             ->count();
         $parent = IndividualAudit::where('id', $individualAudit->id)->where('draft', 1)->count();
 
+
+
         return view('dealer.audit.individual.show', [
             'individualAudit' => $individualAudit->load('children'),
             'drafts' => $children + $parent,

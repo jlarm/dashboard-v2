@@ -1,17 +1,15 @@
 <x-dealer-app>
-
-    <div
-        class="bg-gray-50 border-b border-gray-200 px-4 py-5 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
-        <div class="min-w-0 flex-1">
-            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">IT Scans</h1>
+    <div class="px-6">
+        <div
+            class="py-5 sm:flex sm:items-center sm:justify-between">
+            <div class="min-w-0 flex-1">
+                <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Scans</h1>
+            </div>
         </div>
-        <div class="mt-4 flex sm:mt-0 sm:ml-4">
-        </div>
-    </div>
 
-    <!-- Tabs -->
-    <div
-        x-data="{
+        <!-- Tabs -->
+        <div
+            x-data="{
         selectedId: null,
         init() {
             // Set the first available tab on the page on page load.
@@ -27,54 +25,21 @@
             return Array.from(parent.children).indexOf(el) + 1
         }
     }"
-        x-id="['tab']"
-        class="mx-auto max-w-7xl mx-5 mt-10"
-    >
-        <!-- Tab List -->
-        <ul
-            x-ref="tablist"
-            @keydown.right.prevent.stop="$focus.wrap().next()"
-            @keydown.home.prevent.stop="$focus.first()"
-            @keydown.page-up.prevent.stop="$focus.first()"
-            @keydown.left.prevent.stop="$focus.wrap().prev()"
-            @keydown.end.prevent.stop="$focus.last()"
-            @keydown.page-down.prevent.stop="$focus.last()"
-            role="tablist"
-            class="-mb-px flex items-stretch"
+            x-id="['tab']"
         >
-            <!-- Tab -->
-            <li>
-                <button
-                    :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
-                    class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
-                    role="tab"
-                >External Scans
-                </button>
-            </li>
-
-            <li>
-                <button
-                    :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
-                    class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
-                    role="tab"
-                >Internal Scans
-                </button>
-            </li>
-            @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
+            <!-- Tab List -->
+            <ul
+                x-ref="tablist"
+                @keydown.right.prevent.stop="$focus.wrap().next()"
+                @keydown.home.prevent.stop="$focus.first()"
+                @keydown.page-up.prevent.stop="$focus.first()"
+                @keydown.left.prevent.stop="$focus.wrap().prev()"
+                @keydown.end.prevent.stop="$focus.last()"
+                @keydown.page-down.prevent.stop="$focus.last()"
+                role="tablist"
+                class="-mb-px flex items-stretch"
+            >
+                <!-- Tab -->
                 <li>
                     <button
                         :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
@@ -87,63 +52,99 @@
                         :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
                         class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
                         role="tab"
-                    >Settings
+                    >External Scans
                     </button>
                 </li>
-            @endif
-        </ul>
 
-        <!-- Panels -->
-        <div role="tabpanels" class="rounded-b-md border border-gray-200 bg-white">
-            <!-- Panel -->
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-8"
-            >
+                <li>
+                    <button
+                        :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                        @click="select($el.id)"
+                        @mousedown.prevent
+                        @focus="select($el.id)"
+                        type="button"
+                        :tabindex="isSelected($el.id) ? 0 : -1"
+                        :aria-selected="isSelected($el.id)"
+                        :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
+                        class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                        role="tab"
+                    >Internal Scans
+                    </button>
+                </li>
                 @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
-                    @role('super-admin|Consultant')
-                    @if(Cookie::get('sentry'))
-                        <livewire:dealer.scan.index/>
-                    @else
-                        <div class="max-w-md mx-auto">
-                            <livewire:dealer.scan.login/>
-                        </div>
-                    @endif
-                    @endrole
+                    @can('create-stores')
+                    <li>
+                        <button
+                            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                            @click="select($el.id)"
+                            @mousedown.prevent
+                            @focus="select($el.id)"
+                            type="button"
+                            :tabindex="isSelected($el.id) ? 0 : -1"
+                            :aria-selected="isSelected($el.id)"
+                            :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
+                            class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                            role="tab"
+                        >Settings
+                        </button>
+                    </li>
+                    @endcan
                 @endif
-                <livewire:dealer.scan.report-index/>
-            </section>
+            </ul>
 
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-8"
-            >
-                @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
-                    @role('super-admin|Consultant')
-                    @if(Cookie::get('sentry'))
-                        <livewire:dealer.scan.internal-report-generator/>
-                    @else
-                        <div class="max-w-md mx-auto">
-                            <livewire:dealer.scan.login/>
-                        </div>
+            <!-- Panels -->
+            <div role="tabpanels" class="rounded-b-md border border-gray-200 bg-white">
+                <!-- Panel -->
+                <section
+                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                    role="tabpanel"
+                    class="p-8"
+                >
+                    @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
+                        @role('super-admin|Consultant')
+                        @if(Cookie::get('sentry'))
+                            <livewire:dealer.scan.index/>
+                        @else
+                            <div class="max-w-md mx-auto">
+                                <livewire:dealer.scan.login/>
+                            </div>
+                        @endif
+                        @endrole
                     @endif
-                    @endrole
-                @endif
-                <livewire:dealer.scan.internal-report-index/>
-            </section>
+                    <livewire:dealer.scan.report-index/>
+                </section>
 
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-8"
-            >
-                <livewire:dealer.scan.settings/>
-            </section>
+                <section
+                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                    role="tabpanel"
+                    class="p-8"
+                >
+                    @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
+                        @role('super-admin|Consultant')
+                        @if(Cookie::get('sentry'))
+                            <livewire:dealer.scan.internal-report-generator/>
+                        @else
+                            <div class="max-w-md mx-auto">
+                                <livewire:dealer.scan.login/>
+                            </div>
+                        @endif
+                        @endrole
+                    @endif
+                    <livewire:dealer.scan.internal-report-index/>
+                </section>
+                @can('create-stores')
+                <section
+                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                    role="tabpanel"
+                    class="p-8"
+                >
+                    <livewire:dealer.scan.settings/>
+                </section>
+                @endcan
+            </div>
         </div>
     </div>
 </x-dealer-app>

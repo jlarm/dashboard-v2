@@ -1,6 +1,6 @@
 <x-dealer-app>
     <div
-        class="bg-gray-50 border-b border-gray-200 px-4 py-5 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
         <div class="min-w-0 flex-1">
             <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">GLBA Walkthrough Audits</h1>
         </div>
@@ -16,14 +16,16 @@
         </div>
     </div>
 
-    <div class="py-12">
-        <div class="mx-auto">
-            @can('create-audits')
-                <livewire:dealer.audit.finance.index/>
-            @endcan
-            @if(auth()->user()->cannot('create-audits'))
-                <livewire:dealer.audit.finance.generated-report-index/>
-            @endif
+    <div class="px-6">
+        <div class="border rounded-md">
+            <div class="p-6">
+                @can('create-audits')
+                    <livewire:dealer.audit.finance.index/>
+                @endcan
+                @if(auth()->user()->cannot('create-audits'))
+                    <livewire:dealer.audit.finance.generated-report-index/>
+                @endif
+            </div>
         </div>
     </div>
 </x-dealer-app>

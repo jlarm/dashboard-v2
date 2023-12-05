@@ -4,8 +4,9 @@
             <h3 class="text-base font-semibold leading-6 text-gray-900">Compliance Information</h3>
             <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful what
                 you share.</p>
+            <x-primary-button>Download form</x-primary-button>
         </div>
-        <div class="mt-5 spac-ey-6 md:col-span-2 md:mt-0">
+        <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
             <form wire:submit.prevent="save" class="space-y-5">
 
                 <!-- Firewall Company -->
@@ -454,7 +455,6 @@
                         </div>
                     </fieldset>
                 </div>
-
 
                 <div class="py-3 text-right">
                     <button

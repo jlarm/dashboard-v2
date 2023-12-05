@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Dealer\Settings;
 
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
+use Illuminate\Support\Facades\Mail;
 
 class SendComplianceEmailLink extends Component
 {

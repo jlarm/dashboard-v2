@@ -14,7 +14,7 @@ class CreateRequest extends FormRequest
             'city' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
             'zip_code' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'min:10'],
+            'phone' => ['nullable', 'min:10'],
             'fax' => ['nullable', 'string', 'max:255'],
             'domain' => ['required', 'string', 'max:255', 'unique:domains'],
             'locations' => ['nullable', 'boolean'],

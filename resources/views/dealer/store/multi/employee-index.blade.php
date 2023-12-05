@@ -13,6 +13,6 @@
         </div>
     </div>
     <div class="py-12">
-        <livewire:dealer.store.multi.employee-index :store="$store"/>
+{{--        <livewire:dealer.store.multi.employee-index :store="$store"/>--}}
     </div>
 </x-store-app>

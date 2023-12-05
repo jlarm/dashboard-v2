@@ -63,4 +63,17 @@ class IndividualAudit extends Model implements HasMedia
         return $this->belongsTo(User::class, 'manager_id');
     }
 
+    public function getQuarterNameAttribute()
+    {
+        if ($this->audit_date->format('m') >= 1 && $this->audit_date->format('m') <= 3){
+            return 'Q1';
+        } elseif ($this->audit_date->format('m') >= 4 && $this->audit_date->format('m') <= 6){
+            return 'Q2';
+        } elseif ($this->audit_date->format('m') >= 7 && $this->audit_date->format('m') <= 9){
+            return 'Q3';
+        } elseif ($this->audit_date->format('m') >= 10 && $this->audit_date->format('m') <= 12){
+            return 'Q4';
+        }
+    }
+
 }

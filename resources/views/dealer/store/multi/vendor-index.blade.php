@@ -1,9 +1,13 @@
-<x-store-app :title="$store->name">
-    <div class="mb-5 flex justify-end">
-        @can('create-stores')
-            <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.vendor.create')">Add Vendor
-            </x-primary-button>
-        @endcan
+<div>
+    <div
+        class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
+        <div class="min-w-0 flex-1">
+            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Manuals</h1>
+        </div>
     </div>
-    <livewire:dealer.store.multi.vendor-index :store="$store"/>
-</x-store-app>
+    <div class="px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5">
+            <livewire:dealer.store.single-store.vendor.index :store="$store"/>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,7 @@ class OpenInvites extends Component
 
     public Store $store;
     public $search = '';
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.employee.open-invites', [

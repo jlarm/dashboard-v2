@@ -8,11 +8,11 @@ use Illuminate\View\Component;
 
 class TopBar extends Component
 {
-    public Store $store;
+    public mixed $storeName;
 
-    public function __construct(Store $store)
+    public function __construct()
     {
-        $this->store = $store;
+        $this->storeName = session('stores');
     }
 
     public function render(): View
