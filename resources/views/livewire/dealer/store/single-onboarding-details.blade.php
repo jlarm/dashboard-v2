@@ -4,7 +4,7 @@
             <h3 class="text-base font-semibold leading-6 text-gray-900">Compliance Info</h3>
             <p class="my-5 text-sm text-gray-500">This information will be displayed publicly so be careful what
                 you share.</p>
-            <x-primary-button wire:click.prevent="download">
+<x-primary-button wire:click.prevent="download">
                 Download form
                 <svg wire:loading class="animate-spin ml-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
