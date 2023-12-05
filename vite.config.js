@@ -13,7 +13,6 @@ export default defineConfig({
                 'app/Http/Livewire/**',
                 'app/Forms/Components/**',
             ],
-            detectTls: 'dashboard-v2.test'
         }),
     ],
 });
