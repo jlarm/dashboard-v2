@@ -35,11 +35,11 @@
         @if (request()->segment(1) === 'stores' || !tenant('locations'))
         <a
             href="{{ $currentStore ? route('dealer.stores.scan.index', $currentStore) : route('dealer.scan.index') }}"
-            class="{{ (request()->routeIs('dealer.scan.index') || request()->routeIs('dealer.stores.scans')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
+            class="{{ (request()->segment(1) === 'scans' || request()->segment(3) === 'scans') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
         >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                  stroke-width="1.5"
-                 class="{{ (request()->routeIs('dealer.scan.index') || request()->routeIs('dealer.stores.scans')) ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
+                 class="{{ (request()->segment(1) === 'scans' || request()->segment(3) === 'scans') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
                  stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z"/>
@@ -130,11 +130,11 @@
     @can('view-vendors')
         <a
             href="{{ $currentStore ? route('dealer.stores.vendor.index', $currentStore) : route('dealer.vendor.index') }}"
-            class="{{ (request()->routeIs('dealer.vendor.index') || request()->routeIs('dealer.stores.vendors.index')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
+            class="{{ (request()->segment(1) === 'vendors' || request()->segment(3) === 'vendors') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
         >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                  stroke-width="1.5"
-                 class="{{ (request()->routeIs('dealer.vendor.index') || request()->routeIs('dealer.stores.vendors.index')) ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
+                 class="{{ (request()->segment(1) === 'vendors' || request()->segment(3) === 'vendors') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
                  stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z"/>
@@ -166,6 +166,7 @@
     @endcan
     <!-- COURSES -->
     @unlessrole('super-admin|Consultant')
+    @can('create-users')
     <a
         href="{{ route('dealer.courses.index') }}"
         class="{{ (request()->is('courses')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
@@ -179,6 +180,7 @@
         </svg>
         {{ __('Courses') }}
     </a>
+    @endcan
     @endunlessrole
     <!-- COURSE LIST FOR DEMO -->
     @if(tenant('id') === 'e44653a5-c049-4be0-92e3-b8aacea4bf20')

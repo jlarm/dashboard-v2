@@ -129,7 +129,6 @@ Route::group([
         });
 
         Route::get('scans', function () { return view('dealer.scan.index'); })->middleware(['auth', 'single.store'])->name('scan.index');
-        Route::get('scans/settings', function () { return view('dealer.scan.settings'); })->middleware('auth')->name('scan.settings');
 
         Route::group(['prefix' => 'manuals/', 'as' => 'manual.', 'middleware' => ['auth', 'single.store']], function () {
             Route::get('/', \App\Http\Controllers\Dealer\ManualController::class)->name('index');

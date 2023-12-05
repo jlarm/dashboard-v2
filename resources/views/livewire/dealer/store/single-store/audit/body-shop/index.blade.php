@@ -39,6 +39,7 @@
                             <livewire:dealer.store.single-store.audit.body-shop.index-item :store="$store"
                                                                                            :bodyShopAudit="$bodyShopAudit"/>
                         @empty
+                            @can('create-audits')
                             <tr>
                                 <td colspan="7"
                                     class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
@@ -56,7 +57,16 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endcan
                         @endforelse
+                        @cannot('create-audits')
+                            <tr>
+                                <td colspan="7"
+                                    class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
+                                    No Audits Created
+                                </td>
+                            </tr>
+                        @endcannot
                         </tbody>
                     </table>
                 </div>

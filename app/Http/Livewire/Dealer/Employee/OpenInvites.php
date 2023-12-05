@@ -16,13 +16,19 @@ class OpenInvites extends Component
 
     public function render()
     {
+        $query = Invite::query()
+            ->where('registered_at', null)
+            ->with('user')
+            ->with('store')
+            ->orderBy('created_at', 'desc')
+            ->search('name', $this->search);
+
+        if (auth()->user()->hasRole('Manager')) {
+            $query->where('department_id', auth()->user()->department_id);
+        }
+
         return view('livewire.dealer.employee.open-invites', [
-            'invites' => Invite::where('registered_at', null)
-                ->with('user')
-                ->with('store')
-                ->orderBy('created_at', 'desc')
-                ->search('name', $this->search)
-                ->paginate(10),
+            'invites' => $query->paginate(10),
         ]);
     }
 }

@@ -67,6 +67,7 @@
                             </button>
                         </li>
                         @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
+                            @can('create-stores')
                             <li>
                                 <button
                                     :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
@@ -82,6 +83,7 @@
                                 >Settings
                                 </button>
                             </li>
+                            @endcan
                         @endif
                     </ul>
 
@@ -127,7 +129,7 @@
                             @endif
                             <livewire:dealer.scan.internal-report-index :store="$store"/>
                         </section>
-
+                        @can('create-stores')
                         <section
                             x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
                             :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
@@ -136,6 +138,7 @@
                         >
                             <livewire:dealer.store.single-store.scan.settings :store="$store"/>
                         </section>
+                        @endcan
                     </div>
                 </div>
             </div>

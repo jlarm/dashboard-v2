@@ -1,14 +1,12 @@
 <div>
     <div
-        class="bg-gray-50 border-b border-gray-200 px-4 py-5 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
         <div class="min-w-0 flex-1">
             <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Documents</h1>
         </div>
-        <div class="mt-4 flex sm:mt-0 sm:ml-4">
-        </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 p-10">
-        <div class="border p-5">
+    <div class="px-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="border rounded-md p-5">
             <ul role="list" class="divide-y divide-gray-100">
                 @forelse($docs as $doc)
                     <li class="flex justify-between gap-x-6 py-5">
@@ -41,7 +39,7 @@
                 @endforelse
             </ul>
         </div>
-        <div class="border p-5">
+        <div class="border rounded-md p-5">
             @can('create-dealerships')
                 <livewire:dealer.docs.create/>
             @endcan

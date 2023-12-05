@@ -54,7 +54,7 @@ Route::group([
             Route::get('/employees/open-invites', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\OpenInvites::class)->name('employees.open-invites');
             Route::get('employees/{user:slug}', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->name('employees.show');
 
-            Route::get('scans', function () { return view('dealer.store.multi.scan-index'); })->name('scan.index');
+            Route::get('scans', \App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scan.index');
 
             Route::get('manuals', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Index::class)->name('manuals');
 

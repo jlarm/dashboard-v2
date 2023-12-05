@@ -21,9 +21,9 @@
                     @can('create-audits')
                         <livewire:dealer.audit.individual.index :store="$store"/>
                     @endcan
-                    @if(auth()->user()->cannot('create-audits'))
-                        <livewire:dealer.audit.individual.generated-report-index/>
-                    @endif
+                    @cannot('create-audits')
+                        <livewire:dealer.audit.individual.generated-report-index :store="$store"/>
+                    @endcannot
                 </div>
             </div>
         </div>
