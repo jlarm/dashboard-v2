@@ -125,22 +125,22 @@ class Store extends Model implements HasMedia
 
     public function getDealJacketGradeAttribute(): ?string
     {
-        return $this->calculateGrade($this->individualAudits->pluck('rating')->toArray());
+        return $this->calculateGrade($this->individualAudits->where('rating', '!=', null)->pluck('rating')->toArray());
     }
 
     public function getOshaGradeAttribute(): ?string
     {
-        return $this->calculateGrade($this->oshaAudits->pluck('rating')->toArray());
+        return $this->calculateGrade($this->oshaAudits->where('rating', '!=', null)->pluck('rating')->toArray());
     }
 
     public function getGlbaGradeAttribute(): ?string
     {
-        return $this->calculateGrade($this->financeAudits->pluck('rating')->toArray());
+        return $this->calculateGrade($this->financeAudits->where('rating', '!=', null)->pluck('rating')->toArray());
     }
 
     public function getBodyShopGradeAttribute(): ?string
     {
-        return $this->calculateGrade($this->bodyShopAudits->pluck('rating')->toArray());
+        return $this->calculateGrade($this->bodyShopAudits->where('rating', '!=', null)->pluck('rating')->toArray());
     }
 
     public function getOverallGradeAttribute(): ?string
