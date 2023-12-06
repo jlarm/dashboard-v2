@@ -1,4 +1,5 @@
 <div class="px-6">
+
     <div
         class="py-5 sm:flex sm:items-center sm:justify-between">
         <div class="min-w-0 flex-1">
