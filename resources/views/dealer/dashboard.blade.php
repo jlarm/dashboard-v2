@@ -25,8 +25,8 @@
         @endif
         @if(tenant('locations'))
             @can('edit-stores')
-{{--                    <livewire:dealer.home.group-rating />--}}
-{{--                    <livewire:dealer.home.store-list/>--}}
+                    <livewire:dealer.home.group-rating />
+                    <livewire:dealer.home.store-list/>
             @endcan
         @endif
         @cannot('create-users')
