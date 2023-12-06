@@ -14,7 +14,7 @@ class SocMonitoring extends Component
     {
         $this->monitoring = Store::query()
             ->where('name', $request->get('store')?->name)
-            ->orWhere('name', tenant('name'))
+            ->orWhere('id', 1)
             ->first();
     }
 
