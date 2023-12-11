@@ -19,6 +19,8 @@
                 </div>
             </div>
 
+            <livewire:dealer.profile.cert-index />
+
         </div>
     </div>
 </x-dealer-app>

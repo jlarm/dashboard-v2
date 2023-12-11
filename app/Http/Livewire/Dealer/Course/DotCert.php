@@ -2,9 +2,14 @@
 
 namespace App\Http\Livewire\Dealer\Course;
 
+use App\Models\Certificate;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
+use Filament\Notifications\Notification;
+use Filament\Notifications\Actions\Action;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Spatie\Browsershot\Browsershot;
 
@@ -14,7 +19,7 @@ class DotCert extends Component
 
     public function mount()
     {
-        if (!$this->passingGrades()) {
+        if (!$this->passingGrades() || auth()->user()->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
             $this->showCertButton = false;
         } else {
             if ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 365) {
@@ -49,9 +54,38 @@ class DotCert extends Component
 
         $pdf = Browsershot::html($html)->landscape()->pdf();
 
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf;
-        }, 'certificate.pdf');
+        $fileName = Str::slug(auth()->user()->name) . '-' . now()->format('m-d-Y') . '-dot-certificate.pdf';
+
+        Storage::disk('local')->put($fileName, $pdf);
+
+        $localFile = Storage::disk('local')->get($fileName);
+
+        Storage::disk('armp-certs')->put(tenant('id') . '/' . auth()->user()->id . '/' . $fileName, $localFile);
+
+        Storage::delete($fileName);
+
+        Certificate::create([
+            'user_id' => auth()->user()->id,
+            'course_name' => 'DOT Hazardous Materials Transportation',
+            'file_name' => $fileName,
+        ]);
+
+        $this->showCertButton = false;
+
+        Notification::make()
+            ->title('Certificate Generated Successfully!')
+            ->body('You can find your certificate in the Certificates section of your profile.')
+            ->icon('heroicon-o-document-text')
+            ->iconColor('success')
+            ->success()
+            ->actions([
+                Action::make('view-profile')
+                    ->button()
+                    ->color('primary')
+                    ->url(route('dealer.profile.edit'))
+            ])
+            ->send();
+
     }
 
     public function render()
