@@ -101,6 +101,16 @@ return [
             "visibility" => "public",
         ],
 
+        'armp-certs' => [
+            'driver' => 's3',
+            'key' => env('CERTS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('CERTS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('CERTS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('CERTS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('CERTS_DIGITALOCEAN_SPACES_BUCKET'),
+            "visibility" => "public",
+        ],
+
     ],
 
     /*

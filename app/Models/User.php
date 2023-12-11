@@ -224,6 +224,11 @@ class User extends Authenticatable
         return $this->hasMany(FinanceAudit::class);
     }
 
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(Certificate::class);
+    }
+
     public function routeNotificationForVonage($notification)
     {
         return $this->phone;
