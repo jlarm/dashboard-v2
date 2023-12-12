@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Settings;
 
 use App\Models\Dealer\Store;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 
 class FrontEndComplianceForm extends Component
@@ -56,6 +57,8 @@ class FrontEndComplianceForm extends Component
     public $reinsurance;
     public $admin_name;
     public $user_submitted;
+    public $fi_username;
+    public $fi_password;
 
     public function addIpAddress(): void
     {
@@ -142,6 +145,8 @@ class FrontEndComplianceForm extends Component
         'appearance_protection_sold' => 'nullable',
         'reinsurance' => 'nullable',
         'admin_name' => 'nullable',
+        'fi_username' => 'nullable',
+        'fi_password' => 'nullable',
     ];
 
     public function mount(): void
@@ -206,6 +211,8 @@ class FrontEndComplianceForm extends Component
         $this->reinsurance = $this->store->reinsurance;
         $this->admin_name = $this->store->admin_name;
         $this->user_submitted = $this->store->user_submitted;
+        $this->fi_username = $this->store->fi_username;
+        $this->fi_password = $this->store->fi_password ? Crypt::decryptString($this->store->fi_password) : null;
     }
 
     public function update()
@@ -268,6 +275,8 @@ class FrontEndComplianceForm extends Component
             'reinsurance' => $this->reinsurance,
             'admin_name' => $this->admin_name,
             'user_submitted' => 1,
+            'fi_username' => $this->fi_username,
+            'fi_password' => Crypt::encryptString($this->fi_password),
         ]);
 
         sleep(1);

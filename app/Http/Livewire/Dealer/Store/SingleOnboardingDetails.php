@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Store;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 use Spatie\Browsershot\Browsershot;
 
@@ -46,6 +47,8 @@ class SingleOnboardingDetails extends Component
     public $appearance_protection_sold;
     public $reinsurance;
     public $admin_name;
+    public $fi_username;
+    public $fi_password;
 
     public function addIpAddress()
     {
@@ -132,6 +135,8 @@ class SingleOnboardingDetails extends Component
         'appearance_protection_sold' => 'nullable',
         'reinsurance' => 'nullable',
         'admin_name' => 'nullable',
+        'fi_username' => 'nullable',
+        'fi_password' => 'nullable',
     ];
 
     public function mount()
@@ -181,6 +186,8 @@ class SingleOnboardingDetails extends Component
         $this->appearance_protection_sold = $this->store->appearance_protection_sold;
         $this->reinsurance = $this->store->reinsurance;
         $this->admin_name = $this->store->admin_name;
+        $this->fi_username = $this->store->fi_username;
+        $this->fi_password = $this->store->fi_password ? Crypt::decryptString($this->store->fi_password) : null;
     }
 
 
@@ -223,6 +230,8 @@ class SingleOnboardingDetails extends Component
             'appearance_protection_sold' => $this->appearance_protection_sold,
             'reinsurance' => $this->reinsurance,
             'admin_name' => $this->admin_name,
+            'fi_username' => $this->fi_username,
+            'fi_password' => Crypt::encryptString($this->fi_password),
         ]);
 
         Notification::make()
