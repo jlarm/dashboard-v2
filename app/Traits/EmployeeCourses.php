@@ -52,7 +52,7 @@ trait EmployeeCourses
                 }
             ])
             ->when($californiaStore, function ($query) {
-                $query->where('id', '!=', 28);
+                $query->where('slug', '!=', 'sexual-harassment-training-in-california');
             })
             ->orderBy('name')
             ->get();
