@@ -73,6 +73,8 @@ class Store extends Model implements HasMedia
         'reinsurance',
         'admin_name',
         'user_submitted',
+        'fi_username',
+        'fi_password',
     ];
 
     protected $casts = [

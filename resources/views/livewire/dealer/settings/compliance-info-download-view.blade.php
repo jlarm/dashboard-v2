@@ -556,4 +556,18 @@
             {{ $store->admin_name ?? '' }}
         </div>
     </div>
+    <div class="mt-5 page-break">
+        <x-input-label :value="__('F&I Logs Username')"/>
+        <div class="w-full h-6 border-b mt-3 text-xs">
+
+        </div>
+    </div>
+    <div class="mt-5 page-break">
+        <x-input-label :value="__('F&I Logs Password')"/>
+        <div class="w-full h-6 border-b mt-3 text-xs">
+
+        </div>
+    </div>
+
+
 </div>
