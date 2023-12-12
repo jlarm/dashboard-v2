@@ -111,6 +111,16 @@ return [
             "visibility" => "public",
         ],
 
+        'central-docs' => [
+            'driver' => 's3',
+            'key' => env('CENTRAL_DOCS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('CENTRAL_DOCS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('CENTRAL_DOCS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('CENTRAL_DOCS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('CENTRAL_DOCS_DIGITALOCEAN_SPACES_BUCKET'),
+            "visibility" => "public",
+        ],
+
     ],
 
     /*
