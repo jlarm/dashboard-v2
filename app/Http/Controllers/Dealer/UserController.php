@@ -3,13 +3,21 @@
 namespace App\Http\Controllers\Dealer;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\GenerateAandUploadCertificateJob;
+use App\Jobs\GenerateAndUploadCertificateJob;
+use App\Models\Certificate;
+use App\Models\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Invite;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Spatie\Browsershot\Browsershot;
 
 class UserController extends Controller
 {
@@ -54,6 +62,34 @@ class UserController extends Controller
                     'created_at' => $course . ' ' . now()->format('H:i:s'),
                     'updated_at' => $course . ' ' . now()->format('H:i:s'),
                 ]);
+
+                $dotCompletion = Course::where('id', $key)->where('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')->first() ?? null;
+
+                if ($dotCompletion) {
+                    $html = view('dealer.course.CertDownloadView', [
+                        'user' => User::where('id', $user->id)->first(),
+                        'store' => $request->get('store')?->name ?? tenant('name'),
+                        'passed_on' => Carbon::parse($course)->format('F d, Y'),
+                    ])->render();
+
+                    $pdf = Browsershot::html($html)->landscape()->pdf();
+
+                    $fileName = Str::slug($user->name) . '-' . now()->format('m-d-Y') . '-dot-certificate.pdf';
+
+                    Storage::disk('local')->put($fileName, $pdf);
+
+                    $localFile = Storage::disk('local')->get($fileName);
+
+                    Storage::disk('armp-certs')->put(tenant('id') . '/' . $user->id . '/' . $fileName, $localFile);
+
+                    Storage::delete($fileName);
+
+                    Certificate::create([
+                        'user_id' => $user->id,
+                        'course_name' => 'DOT Hazardous Materials Transportation',
+                        'file_name' => $fileName,
+                    ]);
+                }
             }
         }
 

@@ -95,16 +95,19 @@
             </div>
         </div>
 
-        <div x-cloak="" x-show="open" class="space-y-3 grid grid-cols-1 gap-3">
+        <div x-cloak x-show="open" class="space-y-3 grid grid-cols-1 gap-3">
             <p>Add the completion date of any courses completed in the past year.</p>
             @foreach($allCourses as $course)
                 <div>
                     <p class="text-sm">{{ $course->name }}</p>
                     <div class="text-gray-400">
-                        <x-text-input wire:model.defer="courses.{{$course->id}}" id="courses.{{$course->id}}"
-                                      class="w-full block mt-1"
-                                      type="date" name="name"
-                                      :value="old('name')"/>
+                        <x-text-input
+                            wire:model.defer="courses.{{$course->id}}"
+                            id="courses.{{$course->id}}"
+                            class="w-full block mt-1"
+                            type="date"
+                            name="name"
+                            :value="old('name')"/>
                     </div>
                 </div>
             @endforeach
