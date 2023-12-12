@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         $course = \App\Models\Course::findOrFail(1)->update(['name' => 'NESHAP 6-H TEST']);
     });
 
+    Route::get('docs', \App\Http\Livewire\Central\Docs\Index::class)->name('docs.index');
+
 });
 
 Route::get('employees/create', [UserController::class, 'create'])->middleware('signed')->name('employees.create');
