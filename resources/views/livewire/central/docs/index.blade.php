@@ -3,9 +3,18 @@
         class="sm:flex sm:items-center sm:justify-between">
         <div class="min-w-0 flex-1">
             <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Documents</h1>
+            <div class="md:w-1/4 mt-1">
+                <div>
+                    <label for="search" class="sr-only">Search Documents</label>
+                    <input type="search" name="search" id="search"
+                           wire:model="search"
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
+                           placeholder="Search Documents...">
+                </div>
+            </div>
         </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+    <div class="grid grid-cols-1 @can('delete-dealerships') md:grid-cols-2 @endcan gap-5 mt-5">
         <div class="border rounded-md p-5 bg-white">
             <ul role="list" class="divide-y divide-gray-100">
                 @forelse($docs as $doc)
@@ -38,11 +47,14 @@
                     </li>
                 @endforelse
             </ul>
+            <div>
+                {{ $docs->links() }}
+            </div>
         </div>
+        @can('delete-dealerships')
         <div class="border rounded-md p-5">
-            @can('delete-dealerships')
-                <livewire:central.docs.create/>
-            @endcan
+            <livewire:central.docs.create/>
         </div>
+        @endcan
     </div>
 </div>
