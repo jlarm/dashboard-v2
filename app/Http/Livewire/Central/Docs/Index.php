@@ -14,6 +14,11 @@ class Index extends Component
 
     public $search = '';
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.central.docs.index', [
