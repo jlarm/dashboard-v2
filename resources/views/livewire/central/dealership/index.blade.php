@@ -1,7 +1,7 @@
 <div class="space-y-5">
     <div class="md:w-1/4">
         <div>
-            <label for="search" class="sr-only">Email</label>
+            <label for="search" class="sr-only">Search</label>
             <input type="search" name="search" id="search"
                    wire:model="search"
                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
