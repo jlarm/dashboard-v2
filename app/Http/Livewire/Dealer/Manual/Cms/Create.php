@@ -39,7 +39,7 @@ class Create extends Component
     public function mount(Request $request)
     {
 
-        $storeName = $request->get('store')->name ?? tenant('name');
+        $storeName = $request->get('store')->name ?? Store::first()->name;
         $this->store = Store::where('name', $storeName)->first();
 
         $this->qiRole = Role::where('name', 'Qualified Individual')->first();
