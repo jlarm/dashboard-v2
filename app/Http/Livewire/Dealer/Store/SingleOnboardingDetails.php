@@ -49,6 +49,7 @@ class SingleOnboardingDetails extends Component
     public $admin_name;
     public $fi_username;
     public $fi_password;
+    public $standard_dpp_rate;
 
     public function addIpAddress()
     {
@@ -137,6 +138,7 @@ class SingleOnboardingDetails extends Component
         'admin_name' => 'nullable',
         'fi_username' => 'nullable',
         'fi_password' => 'nullable',
+        'standard_dpp_rate' => 'nullable',
     ];
 
     public function mount()
@@ -188,6 +190,7 @@ class SingleOnboardingDetails extends Component
         $this->admin_name = $this->store->admin_name;
         $this->fi_username = $this->store->fi_username;
         $this->fi_password = $this->store->fi_password ? Crypt::decryptString($this->store->fi_password) : null;
+        $this->standard_dpp_rate = $this->store->standard_dpp_rate;
     }
 
 
@@ -232,6 +235,7 @@ class SingleOnboardingDetails extends Component
             'admin_name' => $this->admin_name,
             'fi_username' => $this->fi_username,
             'fi_password' => Crypt::encryptString($this->fi_password),
+            'standard_dpp_rate' => $this->standard_dpp_rate,
         ]);
 
         Notification::make()

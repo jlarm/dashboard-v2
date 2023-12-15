@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Dealer\Manual;
+namespace App\Http\Livewire\Dealer\Manual\old;
 
 use App\Jobs\Manuals\GenerateOshaManualJob;
 use App\Jobs\Manuals\UploadOshaToDigitalOceanJob;

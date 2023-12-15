@@ -1,29 +1,41 @@
 <?php
 
-namespace App\Http\Livewire\Dealer\Manual;
+namespace App\Http\Livewire\Dealer\Manual\old;
 
-use App\Models\Dealer\Manual\RedFlag;
+use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use Livewire\Component;
 
-class RedFlagForm extends Component
+class OshaForm extends Component
 {
     public Store $store;
     public $employeeList;
     public $store_id;
     public $qi;
+    public $qit = 'Qualified Individual';
     public $qip;
     public $sm;
+    public $smt = 'Service Manager';
     public $smp;
     public $pm;
+    public $pmt = 'Parts Manager';
     public $pmp;
     public $bsm;
+    public $bsmt = 'Body Shop Manager';
     public $bsmp;
     public $gm;
+    public $gmt = 'General Manager';
     public $gmp;
     public $owner;
+    public $ownert = 'Owner';
     public $ownerp;
+    public $pepn;
+    public $pnepn;
+    public $fepn;
+    public $fnepn;
+    public $alarmSystem;
+    public $burglarSystem;
     public $signature;
 
     public function mount()
@@ -61,7 +73,7 @@ class RedFlagForm extends Component
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
-        RedFlag::create([
+        Osha::create([
             'store_id' => $this->employeeList->store_id,
             'user_id' => auth()->user()->id,
             'qualified_individual_name' =>  $this->employeeList->qualified_individual_name ?? '',
@@ -85,14 +97,13 @@ class RedFlagForm extends Component
             'signature' => $fileName,
         ]);
 
-        \Storage::put('red-flag-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
+        \Storage::put('osha-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
 
         (!tenant('locations')) ? $this->redirect(route('dealer.manual.index', $this->store)) : $this->redirect(route('dealer.stores.manuals', $this->store));
 
     }
-
     public function render()
     {
-        return view('livewire.dealer.manual.red-flag-form');
+        return view('livewire.dealer.manual.osha-form');
     }
 }

@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Http\Livewire\Dealer\Manual;
+namespace App\Http\Livewire\Dealer\Manual\Osha;
 
+use App\Jobs\Manuals\GenerateOshaManualJob;
+use App\Jobs\Manuals\UploadOshaToDigitalOceanJob;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
-class OshaForm extends Component
+class Create extends Component
 {
-    public Store $store;
+    public $store;
     public $employeeList;
     public $store_id;
     public $qi;
@@ -38,8 +41,10 @@ class OshaForm extends Component
     public $burglarSystem;
     public $signature;
 
-    public function mount()
+    public function mount(Request $request): void
     {
+        $storeName = $request->get('store')->name ?? tenant('name');
+        $this->store = Store::where('name', $storeName)->first();
         $this->employeeList = EmployeeList::where('store_id', $this->store->id)->first();
         $this->qi = $this->employeeList->qualified_individual_name ?? '';
         $this->qip = $this->employeeList->qualified_individual_phone ?? '';
@@ -53,12 +58,12 @@ class OshaForm extends Component
         $this->gmp = $this->employeeList->general_manager_phone ?? '';
         $this->owner = $this->employeeList->owner_name ?? '';
         $this->ownerp = $this->employeeList->owner_phone ?? '';
-        $this->pepn = Store::first()->police_emergency_phone ?? '';
-        $this->pnepn = Store::first()->police_non_emergency_phone ?? '';
-        $this->fepn = Store::first()->fire_emergency_phone ?? '';
-        $this->fnepn = Store::first()->fire_non_emergency_phone ?? '';
-        $this->alarmSystem = Store::first()->fire_alarm_type ?? '';
-        $this->burglarSystem = Store::first()->burglar_alarm_type ?? '';
+        $this->pepn = $this->store->police_emergency_phone ?? '';
+        $this->pnepn = $this->store->police_non_emergency_phone ?? '';
+        $this->fepn = $this->store->fire_emergency_phone ?? '';
+        $this->fnepn = $this->store->fire_non_emergency_phone ?? '';
+        $this->alarmSystem = $this->store->fire_alarm_type ?? '';
+        $this->burglarSystem = $this->store->burglar_alarm_type ?? '';
     }
 
     protected $rules = [
@@ -73,7 +78,7 @@ class OshaForm extends Component
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
-        Osha::create([
+        $manual = Osha::create([
             'store_id' => $this->employeeList->store_id,
             'user_id' => auth()->user()->id,
             'qualified_individual_name' =>  $this->employeeList->qualified_individual_name ?? '',
@@ -99,11 +104,16 @@ class OshaForm extends Component
 
         \Storage::put('osha-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
 
-        (!tenant('locations')) ? $this->redirect(route('dealer.manual.index', $this->store)) : $this->redirect(route('dealer.stores.manuals', $this->store));
+        \Bus::chain([
+            new GenerateOshaManualJob($manual),
+            new UploadOshaToDigitalOceanJob($manual),
+        ])->dispatch();
+
+        (!tenant('locations')) ? $this->redirect(route('dealer.manual.osha.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.osha.index', $this->store));
 
     }
     public function render()
     {
-        return view('livewire.dealer.manual.osha-form');
+        return view('livewire.dealer.manual.osha.create')->layout('components.dealer-app');
     }
 }

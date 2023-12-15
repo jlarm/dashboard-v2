@@ -2,6 +2,7 @@
 
 namespace App\Models\Dealer;
 
+use App\Models\CmsManual;
 use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
@@ -75,6 +76,7 @@ class Store extends Model implements HasMedia
         'user_submitted',
         'fi_username',
         'fi_password',
+        'standard_dpp_rate',
     ];
 
     protected $casts = [
@@ -216,6 +218,11 @@ class Store extends Model implements HasMedia
 
     {
         return $this->hasMany(RedFlag::class);
+    }
+
+    public function cmsManuals(): HasMany
+    {
+        return $this->hasMany(CmsManual::class);
     }
 
     public function scanReports(): HasMany

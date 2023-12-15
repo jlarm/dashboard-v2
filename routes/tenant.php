@@ -158,9 +158,14 @@ Route::group([
     Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Consultant']], function () {
 
         Route::group(['prefix' => 'manuals/', 'as' => 'manual.', 'middleware' => ['auth', 'single.store']], function () {
-            Route::get('/isp', \App\Http\Controllers\Dealer\Manual\IspController::class)->name('isp');
-            Route::get('/osha', \App\Http\Controllers\Dealer\Manual\OshaController::class)->name('osha');
-            Route::get('/red-flag', \App\Http\Controllers\Dealer\Manual\RedFlagController::class)->name('red-flag');
+            Route::get('/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
+            Route::get('/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('isp.create');
+            Route::get('/osha', \App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('osha.index');
+            Route::get('/osha/create', \App\Http\Livewire\Dealer\Manual\Osha\Create::class)->name('osha.create');
+            Route::get('/red-flag', App\Http\Livewire\Dealer\Manual\RedFlag\Index::class)->name('red-flag.index');
+            Route::get('/red-flag/create', App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->name('red-flag.create');
+            Route::get('cms', \App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('cms.index');
+            Route::get('cms/create', \App\Http\Livewire\Dealer\Manual\Cms\Create::class)->name('cms.create');
         });
 
         Route::group(['prefix' => 'audits/', 'as' => 'audit.', 'middleware' => ['auth', 'single.store']], function () {
