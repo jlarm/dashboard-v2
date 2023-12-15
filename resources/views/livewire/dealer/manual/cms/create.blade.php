@@ -62,7 +62,7 @@
             <h2>Dealer Participation Program</h2>
             <p>As part of its Fair Lending Policy, Dealership is instituting a Dealer Participation Program (DPP). To reduce the risk of any disparate impact in the financing transaction, and to comply with requirements established by the CFPB which has direct jurisdiction over many Dealer financing sources, Dealership is establishing a Dealer Participation Program (DPP). The Dealer Participation Program consists of five parts:</p>
             <p>1. An up-to-date fair lending policy statement approved by management setting a standard markup for non-subvented loans, and establishing exceptions to the standard markup based solely on legitimate business needs.  Dealership has adopted a policy of a dealer participation rate of
-            @if($standard_dpp_rate) {{ $standard_dpp_rate[0] }} @else <span class="text-red-500 font-black">A Standard DPP Rate is required to complete the CMS Manual</span> @endif.</p>
+            @if($standard_dpp_rate) {{ $standard_dpp_rate }} @else <span class="text-red-500 font-black">A Standard DPP Rate is required to complete the CMS Manual</span> @endif.</p>
             <p>2. Regular fair lending training for all employees involved with any aspect of the Dealership’s finance transactions, including managers and officers;</p>
             <p>3. Ongoing monitoring for compliance with fair lending policies and procedures, and the Dealer Participation Program;</p>
             <p>4. Audit of policies, and finance transactions for potential fair lending violations, including potential disparate impact;</p>

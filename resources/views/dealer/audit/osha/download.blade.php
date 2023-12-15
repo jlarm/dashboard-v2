@@ -24,7 +24,7 @@
 <body class="font-sans antialiased">
 <div class="w-full h-screen bg-gray-50 grid grid-cols-8 grid-rows-6">
     <div class="col-span-3 col-start-1 p-20">
-        <x-application-logo class="h-auto w-full"/>
+        <x-application-logo class="h-52 w-full"/>
     </div>
     <div class="col-span-5 row-span-4 col-start-1 row-start-2 bg-arm-blue-500 z-10 py-10 pr-10">
         <div class="w-full h-full flex flex-row items-center border-t border-r border-b border-white ">
