@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Dealer\Manual;
+namespace App\Http\Livewire\Dealer\Manual\old;
 
 use App\Jobs\Manuals\GenerateRedFlagManualJob;
 use App\Jobs\Manuals\UploadRedFlagToDigitalOceanJob;

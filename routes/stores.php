@@ -74,9 +74,14 @@ Route::group([
         // **************************************************
         Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Consultant']], function () {
 
-            Route::get('manuals/isp', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Isp::class)->name('manuals.isp');
-            Route::get('manuals/osha', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\Osha::class)->name('manuals.osha');
-            Route::get('manuals/red-flag', \App\Http\Livewire\Dealer\Store\SingleStore\Manual\RedFlag::class)->name('manuals.red-flag');
+            Route::get('manuals/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('manuals.isp.index');
+            Route::get('manuals/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('manuals.isp.create');
+            Route::get('manuals/osha', \App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('manuals.osha.index');
+            Route::get('manuals/osha/create', \App\Http\Livewire\Dealer\Manual\Osha\Create::class)->name('manuals.osha.create');
+            Route::get('manuals/red-flag', \App\Http\Livewire\Dealer\Manual\RedFlag\Index::class)->name('manuals.red-flag.index');
+            Route::get('manuals/red-flag/create', \App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->name('manuals.red-flag.create');
+            Route::get('manuals/cms', \App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('manuals.cms.index');
+            Route::get('manuals/cms/create', \App\Http\Livewire\Dealer\Manual\Cms\Create::class)->name('manuals.cms.create');
 
             Route::get('audits/osha/create', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Create::class)->name('audits.osha.create');
             Route::get('audits/osha/{oshaAudit:id}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Osha\Show::class)->name('audits.osha.show');

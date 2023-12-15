@@ -52,19 +52,55 @@
     <!-- MANUALS -->
     @can('create-users')
         @if (request()->segment(1) === 'stores' || !tenant('locations'))
-        <a
-            href="{{ $currentStore ? route('dealer.stores.manuals', $currentStore) : route('dealer.manual.index') }}"
-            class="{{ (request()->segment(1) === 'manuals' || request()->segment(3) === 'manuals') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.5"
-                 class="{{ (request()->segment(1) === 'manuals' || request()->segment(3) === 'manuals') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6"
-                 stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
-            </svg>
-            Manuals
-        </a>
+            <div x-data="{ open: '{{ request()->segment(1) == 'manuals' || request()->segment(3) === 'manuals' }}' }">
+                <button
+                    class="{{ (request()->segment(1) == 'manuals' || request()->segment(3) === 'manuals') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} w-full border-transparent group border-l-4 py-2 px-3 flex text-sm font-medium"
+                    type="button"
+                    @click="open = !open"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         stroke-width="1.5" stroke="currentColor"
+                         class="{{ (request()->segment(1) == 'manuals' || request()->segment(3) === 'manuals') ? 'text-arm-blue-500' : 'text-gray-400 group-hover:text-gray-500' }} mr-3 flex-shrink-0 h-6 w-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                    </svg>
+                    Manuals
+                    <svg
+                        class="text-gray-400 ml-auto h-5 w-5 shrink-0"
+                        :class="{ 'rotate-90 text-gray-500': open, 'text-gray-400': !(open) }"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <ul
+                    x-cloak
+                    class="x-cloak block w-full mt-1 px-2"
+                    id="sub-menu-1"
+                    x-show="open"
+                    x-collapse
+                >
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.manuals.isp.index', $currentStore) : route('dealer.manual.isp.index') }}"
+                           class="{{ (request()->segment(2) == 'isp' || request()->segment(4) === 'isp') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">ISP</a>
+                    </li>
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.manuals.osha.index', $currentStore) : route('dealer.manual.osha.index') }}"
+                           class="{{ (request()->segment(2) == 'osha' || request()->segment(4) === 'osha') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Osha</a>
+                    </li>
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.manuals.red-flag.index', $currentStore) : route('dealer.manual.red-flag.index') }}"
+                           class="{{ (request()->segment(2) == 'red-flag' || request()->segment(4) === 'red-flag') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Red Flag</a>
+                    </li>
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.manuals.cms.index', $currentStore) : route('dealer.manual.cms.index') }}"
+                           class="{{ (request()->segment(2) == 'cms' || request()->segment(4) === 'cms') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">CMS</a>
+                    </li>
+                </ul>
+            </div>
         @endif
     @endcan
     <!-- AUDITS -->
@@ -98,7 +134,7 @@
             </button>
             <ul
                 x-cloak
-                class="block w-full mt-1 px-2"
+                class="x-cloak block w-full mt-1 px-2"
                 id="sub-menu-1"
                 x-show="open"
                 x-collapse
