@@ -21,7 +21,7 @@
                             <td colspan="7"
                                 class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
                                 <div class="text-center">
-                                    <h3 class="mt-2 text-sm font-semibold text-gray-900">No manuals</h3>
+                                    <h3 class="mt-2 text-sm font-semibold text-gray-900">No signed manuals</h3>
                                     <div class="mt-6">
                                         <a href="{{ request()->segment(1) != 'stores' ? route('dealer.manual.isp.create') : route('dealer.stores.manuals.isp.create', $store) }}" class="inline-flex items-center rounded-md bg-arm-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">
                                             Sign Manual
