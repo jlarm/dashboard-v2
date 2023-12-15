@@ -182,7 +182,8 @@ Route::group([
 
         Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
     });
-        Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
+
+    Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
 
 });
 

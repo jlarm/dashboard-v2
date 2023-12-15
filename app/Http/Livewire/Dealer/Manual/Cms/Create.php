@@ -89,7 +89,7 @@ class Create extends Component
 
     private function sendStandardDppRateMissingNotification()
     {
-        $route = (!tenant('locations')) ? route('dealer.settings') : route('dealer.stores.settings', $this->store);
+        $route = (!tenant('locations')) ? route('dealer.dealer.settings') : route('dealer.stores.settings', $this->store);
         Notification::make()
             ->title('Standard DPP Rate Missing')
             ->body('Please set the standard DPP rate in the Dealer Settings.')
