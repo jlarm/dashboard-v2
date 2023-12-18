@@ -17,7 +17,7 @@
         </div>
         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0" x-data="{ show: true }">
             <form wire:submit.prevent="update" class="space-y-5">
-                <div class="grid grid-cols-2 gap-5">
+                <div class="grid grid-cols-1 mg:grid-cols-2 gap-5">
                     <div>
                         <x-input-label for="pep" :value="__('Police Emergency Phone Number')"/>
                         <x-text-input wire:model.defer="pep" id="pep" class="block mt-1 w-full" type="text" name="pep"
