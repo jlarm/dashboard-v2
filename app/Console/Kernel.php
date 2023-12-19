@@ -15,10 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('invite:reminder-ten-days')->dailyAt('23:00')->emailOutputTo('jlohr@autorisknow.com')->emailOutputOnFailure('jlohr@autorisknow.com');
-        $schedule->command('invite:reminder-twenty-days')->dailyAt('00:00')->emailOutputTo('jlohr@autorisknow.com')->emailOutputOnFailure('jlohr@autorisknow.com');
-        $schedule->command('delete:temporary-uploads')->dailyAt('01:00')->emailOutputTo('jlohr@autorisknow.com')->emailOutputOnFailure('jlohr@autorisknow.com');
-        $schedule->command('delete:old-invites')->dailyAt('02:00')->emailOutputTo('jlohr@autorisknow.com')->emailOutputOnFailure('jlohr@autorisknow.com');
+        $schedule->command('invite:reminder-ten-days')->dailyAt('23:00')->runInBackground()->emailOutputTo('jlohr@autorisknow.com')->emailOutputOnFailure('jlohr@autorisknow.com');
+        $schedule->command('invite:reminder-twenty-days')->dailyAt('00:00')->runInBackground()->emailOutputTo('jlohr@autorisknow.com')->emailOutputOnFailure('jlohr@autorisknow.com');
+        $schedule->command('delete:temporary-uploads')->dailyAt('01:00')->runInBackground()->emailOutputTo('jlohr@autorisknow.com')->emailOutputOnFailure('jlohr@autorisknow.com');
+        $schedule->command('delete:old-invites')->dailyAt('02:00')->runInBackground()->emailOutputTo('jlohr@autorisknow.com')->emailOutputOnFailure('jlohr@autorisknow.com');
     }
 
     /**
