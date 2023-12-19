@@ -15,8 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('media-library:delete-old-temporary-uploads')->daily();
-        $schedule->command('delete:old-invites')->daily();
+        $schedule->command('media-library:delete-old-temporary-uploads')->dailyAt('00:00');
+        $schedule->command('delete:old-invites')->dailyAt('04:00');
+//        $schedule->command('send:invite-reminder-after-ten-days')->daily();
     }
 
     /**
