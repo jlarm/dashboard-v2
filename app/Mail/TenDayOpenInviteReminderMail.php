@@ -3,14 +3,16 @@
 namespace App\Mail;
 
 use App\Models\Dealer\Invite;
+use http\Env;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class InviteMail extends Mailable
+class TenDayOpenInviteReminderMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -25,14 +27,14 @@ class InviteMail extends Mailable
     {
         return new Envelope(
             from: new Address('no-reply@armp.app'),
-            subject: 'Registration for '.tenant('name'),
+            subject: 'Registration Reminder for '.tenant('name'),
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.invite',
+            markdown: 'emails.ten-day-open-invite-reminder',
             with: [
                 'name' => $this->invite->name,
                 'company' => tenant('name'),
