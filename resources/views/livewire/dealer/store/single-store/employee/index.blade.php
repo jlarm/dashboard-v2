@@ -209,7 +209,7 @@
                             </button>
                         </div>
                     @endif
-                    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="-mx-4 md:-mx-0 -my-2 md:-my-0 overflow-x-auto">
                         <div class="inline-block min-w-full align-middle">
                             <table class="min-w-full divide-y divide-gray-300">
                                 <thead>

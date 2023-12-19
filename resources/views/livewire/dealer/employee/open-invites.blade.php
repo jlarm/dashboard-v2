@@ -10,7 +10,7 @@
                            placeholder="Search by Name...">
                 </div>
             </div>
-            <div>
+            <div class="-mx-4 md:-mx-0 -my-2 md:-my-0 overflow-x-auto">
                 <div class="inline-block min-w-full py-2 align-middle">
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead>

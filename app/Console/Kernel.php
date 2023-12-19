@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('media-library:delete-old-temporary-uploads')->daily()->sentryMonitor();
+        $schedule->command('media-library:delete-old-temporary-uploads')->daily();
+        $schedule->command('delete:old-invites')->daily();
     }
 
     /**
