@@ -181,9 +181,9 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
     private function rating(): void
     {
-        $sum = 0;
 
         foreach ($this->audits as $audit) {
+            $sum = 0;
             for ($i = 3; $i <= 40; $i++) {
                 if ($audit->{'individual_q' . $i . '_answer'} == 2) {
                     $sum += 1;
