@@ -22,10 +22,10 @@ class Index extends Component
     public function render()
     {
         return view('livewire.central.docs.index', [
-            'docs' => Document::query()
-                ->orderBy('title')
-                ->search('title', $this->search)
-                ->paginate(10)
+//            'docs' => Document::query()
+//                ->orderBy('title')
+//                ->search('title', $this->search)
+//                ->paginate(10)
         ])->layout('layouts.app');
     }
 }

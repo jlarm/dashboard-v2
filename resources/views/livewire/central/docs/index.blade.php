@@ -4,13 +4,13 @@
         <div class="min-w-0 flex-1">
             <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Documents</h1>
             <div class="md:w-1/4 mt-1">
-                <div>
-                    <label for="search" class="sr-only">Search Documents</label>
-                    <input type="search" name="search" id="search"
-                           wire:model="search"
-                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
-                           placeholder="Search Documents...">
-                </div>
+{{--                <div>--}}
+{{--                    <label for="search" class="sr-only">Search Documents</label>--}}
+{{--                    <input type="search" name="search" id="search"--}}
+{{--                           wire:model="search"--}}
+{{--                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"--}}
+{{--                           placeholder="Search Documents...">--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
         </div>
         @can('delete-dealerships')
         <div class="border rounded-md p-5">
-            <livewire:central.docs.create/>
+{{--            <livewire:central.docs.create/>--}}
         </div>
         @endcan
     </div>
