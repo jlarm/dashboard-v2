@@ -15,7 +15,7 @@ class IndexItem extends Component
 
     public function mount()
     {
-        $this->totalCourses = Course::count();
+        $this->totalCourses = Course::count() - 1;
 
         $this->completed = DB::table('course_results')
             ->where('user_id', $this->user->id)
