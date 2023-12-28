@@ -181,7 +181,6 @@
     <!-- DOCS -->
     @can('create-users')
         @if (request()->segment(1) === 'stores' || !tenant('locations'))
-            @if(auth()->user()->name === 'Joe Lohr')
         <a
             href="{{ $currentStore ? route('dealer.stores.doc.index', $currentStore) : route('dealer.doc.index') }}"
             class="{{ (request()->routeIs('dealer.doc.index') || request()->routeIs('dealer.stores.doc.index')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
@@ -199,7 +198,6 @@
             </svg>
             Documents
         </a>
-            @endif
         @endif
             <a
                 href="{{ global_asset('docs/osha-300.pdf') }}"
