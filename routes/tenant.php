@@ -144,7 +144,7 @@ Route::group([
 
         Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
 
-        Route::group(['prefix' => 'docs/', 'as' => 'doc.', 'middleware' => ['auth']], function () {
+        Route::group(['prefix' => 'documents/', 'as' => 'doc.', 'middleware' => ['auth']], function () {
             Route::get('/', \App\Http\Livewire\Dealer\Docs\Index::class)->name('index');
         });
 

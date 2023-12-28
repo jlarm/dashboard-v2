@@ -65,7 +65,7 @@ Route::group([
 
             Route::get('vendors', \App\Http\Livewire\Dealer\Store\SingleStore\Vendor\Index::class)->name('vendor.index');
 
-            Route::get('docs', \App\Http\Livewire\Dealer\Store\SingleStore\Docs\Index::class)->name('doc.index');
+            Route::get('documents', \App\Http\Livewire\Dealer\Store\SingleStore\Docs\Index::class)->name('doc.index');
 
         });
 
