@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Dealer\Department;
-use DB;
 use Illuminate\Database\Seeder;
 
 class DepartmentSeeder extends Seeder

@@ -1,0 +1,72 @@
+name: Test
+on:
+  - push
+jobs:
+  test:
+    strategy:
+      matrix:
+        operating-system:
+          - ubuntu-latest
+        php-version:
+          - '8.2'
+    name: php ${{ matrix.php-version }} on ${{ matrix.operating-system }}
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    runs-on: ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: bcmath, ctype, fileinfo, imagick, json, mbstring, openssl, pdo, tokenizer, xml
+          coverage: none
+      - name: Prepare the environment
+        run: cp .env.example .env
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Setup composer cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install composer dependencies
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Generate application key
+        run: php artisan key:generate
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.1
+      - name: Install NPM
+        run: npm install
+      - name: Run Build
+        run: npm run build
+      - name: Create Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+          echo "DB_CONNECTION=sqlite" >> $GITHUB_ENV
+          echo "DB_DATABASE=${{ github.workspace }}/database/database.sqlite" >> $GITHUB_ENV
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan migrate
+      - name: Seed
+        run: |
+          php artisan db:seed --class=DepartmentSeeder
+          php artisan db:seed --class=RoleAndPermissionSeeder
+          php artisan db:seed --class=FirstUserSeeder
+      - name: Run Tests
+        run: vendor/bin/phpunit
