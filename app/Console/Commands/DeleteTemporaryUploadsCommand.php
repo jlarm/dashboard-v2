@@ -10,7 +10,7 @@ class DeleteTemporaryUploadsCommand extends Command
 
     protected $description = 'Delete old temporary uploads';
 
-    public function handle()
+    public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
             $this->info('Start removing old temporary uploads...');

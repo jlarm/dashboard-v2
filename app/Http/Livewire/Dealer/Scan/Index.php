@@ -11,20 +11,27 @@ use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
-class   Index extends Component
+class Index extends Component
 {
     public $statusCode;
+
     public string $type = 'technical';
+
     public string $dealer;
+
     public $assets;
+
     public $reports;
+
     public Store $store;
+
     public $internal;
+
     public $external;
 
     public function mount()
     {
-        if(tenant('locations')) {
+        if (tenant('locations')) {
             $this->dealer = ScanSetting::where('store_id', $this->store->id)->first()->name ?? '';
         } else {
             $this->dealer = ScanSetting::first()->name ?? '';
@@ -33,35 +40,34 @@ class   Index extends Component
 
     public function export()
     {
-        if(tenant('locations')){
+        if (tenant('locations')) {
             $dealerName = str_replace(' ', '-', $this->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
         }
-        $fileName = $dealerName .'-'. now()->format('Ymdhis') .'-'.$this->type.'.pdf';
-
+        $fileName = $dealerName.'-'.now()->format('Ymdhis').'-'.$this->type.'.pdf';
 
         try {
             $token = Cookie::get('sentry');
             $client = new Client();
 
-            $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/' . $this->type, [
+            $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/'.$this->type, [
                 'Authorization' => $token,
             ]);
 
             $status = $client->send($request)->getBody()->getContents();
 
-            Storage::disk('do-scans')->put(tenant('id') . '/' . $this->type . '/' . $fileName, $status);
+            Storage::disk('do-scans')->put(tenant('id').'/'.$this->type.'/'.$fileName, $status);
 
             ScanReport::create([
                 'user_id' => auth()->id(),
                 'store_id' => $this->store->id ?? Store::first()->id,
-                'path' => tenant('id') . '/' . $this->type . '/' . $fileName,
+                'path' => tenant('id').'/'.$this->type.'/'.$fileName,
                 'type' => $this->type,
                 'scan_type' => 'external',
             ]);
 
-            if(tenant('locations')){
+            if (tenant('locations')) {
                 return redirect()->route('dealer.stores.scans', $this->store);
             } else {
                 return redirect()->route('dealer.scan.index');

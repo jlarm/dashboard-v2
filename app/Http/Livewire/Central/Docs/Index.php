@@ -25,7 +25,7 @@ class Index extends Component
             'docs' => Document::query()
                 ->orderBy('title')
                 ->search('title', $this->search)
-                ->paginate(10)
+                ->paginate(10),
         ])->layout('layouts.app');
     }
 }

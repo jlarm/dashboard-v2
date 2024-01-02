@@ -11,7 +11,14 @@ use WireElements\Pro\Components\Modal\Modal;
 
 class Invite extends Modal
 {
-    public string $name, $email, $department, $role;
+    public string $name;
+
+    public string $email;
+
+    public string $department;
+
+    public string $role;
+
     public array $stores = [];
 
     protected $rules = [

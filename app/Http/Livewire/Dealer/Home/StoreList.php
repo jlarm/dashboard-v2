@@ -13,13 +13,14 @@ class StoreList extends Component
     public $search = '';
 
     protected $listeners = ['refreshStores' => '$refresh'];
+
     public function render()
     {
         return view('livewire.dealer.home.store-list', [
             'stores' => Store::query()
                 ->search('name', $this->search)
                 ->select('id', 'name', 'slug')
-                ->paginate(10)
+                ->paginate(10),
         ]);
     }
 }

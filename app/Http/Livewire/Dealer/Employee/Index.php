@@ -14,16 +14,21 @@ class Index extends Component
     use WithPagination;
 
     public $search = '';
+
     public $store;
+
     public $selectedDepartment = null;
+
     public $selectedDepartmentName = null;
+
     public $showIncompleteCourseUsers = false;
+
     public $email;
 
     public function getUsersQueryProperty()
     {
         return User::query()
-            ->whereNotIn('name', ['Joe Lohr','Terry Dortch','Mike Backer'])
+            ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
             ->userStore($this->store ?? null)
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')
@@ -81,7 +86,7 @@ class Index extends Component
             // Generate the CSV content
             $csvContent = "Name,Email,Department,Courses\n";
             foreach ($users as $user) {
-                if($user->total_completed_courses != $user->total_user_courses) {
+                if ($user->total_completed_courses != $user->total_user_courses) {
                     $csvContent .= "{$user->name},{$user->email},{$user->department->name},$user->total_completed_courses of $user->total_user_courses\n";
                 }
             }
@@ -92,9 +97,9 @@ class Index extends Component
             Mail::send([], [], function ($message) use ($csvContent, $body) {
                 $message->to($this->email)
                     ->from('noreply@armp.app', tenant('name'))
-                    ->subject('Incomplete Employee Courses Report as of '. date('m/d/Y'))
+                    ->subject('Incomplete Employee Courses Report as of '.date('m/d/Y'))
                     ->text($body)
-                    ->attachData($csvContent, 'incomplete-employee-courses-report-' . date('m-d-Y') . '.csv', [
+                    ->attachData($csvContent, 'incomplete-employee-courses-report-'.date('m-d-Y').'.csv', [
                         'mime' => 'text/csv',
                     ]);
             });
@@ -109,8 +114,6 @@ class Index extends Component
 
         } catch (\Exception $e) {
             \Sentry::captureException($e);
-
-
 
             Notification::make()
                 ->title('Error trying to send the User Report')

@@ -13,7 +13,9 @@ class CourseResults extends Component
     use WithPagination;
 
     public Store $store;
+
     public User $user;
+
     public $courseWithRole;
 
     protected $listeners = ['refreshEmployeeDetails' => '$refresh'];
@@ -36,9 +38,9 @@ class CourseResults extends Component
                 ->whereIn('id', $this->courseWithRole)
                 ->orWhereDoesntHave('departments')
                 ->with([
-                'results' => function ($query) {
-                    $query->where('user_id', $this->user->id)->latest();
-                },
+                    'results' => function ($query) {
+                        $query->where('user_id', $this->user->id)->latest();
+                    },
                 ])->orderBy('name')->paginate(24),
         ]);
     }

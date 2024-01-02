@@ -10,9 +10,13 @@ use WireElements\Pro\Components\Modal\Modal;
 class Edit extends Modal
 {
     public $vendor;
+
     public $name;
+
     public $contactName;
+
     public $contactEmail;
+
     public $store_id;
 
     public function rules()
@@ -56,7 +60,7 @@ class Edit extends Modal
 
     public function render()
     {
-        return view('livewire.dealer.vendor.edit',[
-            'stores' => Store::orderBy('name')->get(),]);
+        return view('livewire.dealer.vendor.edit', [
+            'stores' => Store::orderBy('name')->get(), ]);
     }
 }

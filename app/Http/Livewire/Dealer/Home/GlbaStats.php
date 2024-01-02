@@ -13,8 +13,11 @@ class GlbaStats extends Component
     use GlbaGenerateRating;
 
     public Store $store;
+
     public ?int $rating;
+
     public $audits;
+
     public $dates;
 
     public function mount()

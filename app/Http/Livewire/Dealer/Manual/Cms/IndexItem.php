@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Dealer\Manual\Cms;
 
-use App\Jobs\Manuals\GenerateCmsManualJob;
-use App\Jobs\Manuals\UploadCmsToDigitalOceanJob;
 use App\Models\CmsManual;
 use Livewire\Component;
 use Storage;
@@ -11,11 +9,12 @@ use Storage;
 class IndexItem extends Component
 {
     public CmsManual $manual;
+
     public $link;
 
     public function mount()
     {
-        $this->link = Storage::disk('do-manuals')->url(tenant('id') . '/cms/' . $this->manual->pdf_path) ?? null;
+        $this->link = Storage::disk('do-manuals')->url(tenant('id').'/cms/'.$this->manual->pdf_path) ?? null;
     }
 
     public function render()

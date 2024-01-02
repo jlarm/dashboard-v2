@@ -9,6 +9,7 @@ use Livewire\Component;
 class Create extends Component
 {
     public Store $store;
+
     public function mount()
     {
         $financeAudit = FinanceAudit::create([

@@ -11,13 +11,15 @@ class ManagerIndex extends Component
     use WithPagination;
 
     public $search = '';
+
     public $store;
+
     public $showIncompleteCourseUsers = false;
 
     public function getUsersQueryProperty()
     {
         return User::query()
-            ->whereNotIn('name', ['Joe Lohr','Terry Dortch','Mike Backer'])
+            ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
             ->userStore($this->store ?? null)
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')

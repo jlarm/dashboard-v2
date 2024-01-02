@@ -15,8 +15,9 @@ class Download extends Component
     public function mount()
     {
 
-        $this->content = Storage::disk('do-audits')->url(tenant('id') . '/body-shop/' . $this->bodyShopAudit->pdf_path);
+        $this->content = Storage::disk('do-audits')->url(tenant('id').'/body-shop/'.$this->bodyShopAudit->pdf_path);
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.body-shop.download');

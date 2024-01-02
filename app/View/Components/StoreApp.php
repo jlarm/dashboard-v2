@@ -19,8 +19,8 @@ class StoreApp extends Component
         $this->store = $store;
     }
 
-        public function render(): View
-        {
-            return view('components.store-app');
-        }
+    public function render(): View
+    {
+        return view('components.store-app');
+    }
 }

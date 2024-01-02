@@ -10,22 +10,18 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-//        Model::preventLazyLoading(! $this->app->isProduction());
+        //        Model::preventLazyLoading(! $this->app->isProduction());
 
         view()->composer('layouts.top-bar', function ($view) {
             $view->with('current_locale', app()->getLocale());
@@ -45,13 +41,15 @@ class AppServiceProvider extends ServiceProvider
         Builder::macro('toCsv', function () {
             $results = $this->get();
 
-            if ($results->count() < 1) return;
+            if ($results->count() < 1) {
+                return;
+            }
 
             $titles = implode(',', array_keys($results->first()->getAttributes()));
 
             $values = $results->map(function ($result) {
                 return implode(',', collect($result->getAttributes())->map(function ($value) {
-                    return '"' . $value . '"';
+                    return '"'.$value.'"';
                 })->toArray());
             });
 
@@ -60,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
             return $values->implode("\n");
         });
 
-        Collection::macro('toCSV', function() {
+        Collection::macro('toCSV', function () {
             $output = fopen('php://temp', 'r+');
 
             // Write the header
@@ -79,6 +77,7 @@ class AppServiceProvider extends ServiceProvider
             }
 
             rewind($output);
+
             return stream_get_contents($output);
         });
 

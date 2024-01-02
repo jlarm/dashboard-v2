@@ -2,52 +2,21 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\BodyShopAuditController;
-use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
-use App\Http\Controllers\Dealer\Audit\FinanceController;
-use App\Http\Controllers\Dealer\Audit\IndividualController;
-use App\Http\Controllers\Dealer\Audit\IndividualCreateController;
-use App\Http\Controllers\Dealer\Audit\OshaCreateController;
-use App\Http\Controllers\Dealer\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Dealer\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Dealer\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Dealer\Auth\NewPasswordController;
-use App\Http\Controllers\Dealer\Auth\PasswordController;
-use App\Http\Controllers\Dealer\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Dealer\Auth\VerifyEmailController;
-use App\Http\Controllers\Dealer\CourseController;
-use App\Http\Controllers\Dealer\CourseResultsController;
-use App\Http\Controllers\Dealer\ProfileController;
-use App\Http\Controllers\Dealer\Store\EmployeeController;
-use App\Http\Controllers\Dealer\Store\StoreVendorController;
 use App\Http\Controllers\Dealer\StoreController;
-use App\Http\Controllers\Dealer\UserController;
-use App\Http\Controllers\Dealer\VendorController;
-use App\Http\Controllers\FinanceCreateController;
-use App\Http\Controllers\OshaAuditController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
+Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class)->group(function () {
 
-Route::group([
-    'as' => 'dealer.stores.',
-    'middleware' => [
-        'web',
-        InitializeTenancyByDomain::class,
-        PreventAccessFromCentralDomains::class,
-    ],
-], function () {
-
-    Route::group(['prefix' => 'stores/{store:slug}', 'middleware' => ['stores', 'has.stores', 'auth']], function () {
+    Route::prefix('stores/{store:slug}')->middleware('stores', 'has.stores', 'auth')->group(function () {
 
         Route::get('/', \App\Http\Livewire\Dealer\Store\SingleStore\Home\Index::class)->name('home');
 
         // **************************************************
         // Roles to Manager
         // **************************************************
-        Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant']], function () {
+        Route::middleware('role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant')->group(function () {
 
             Route::get('employees', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Index::class)->name('employees');
             Route::get('employees/create', \App\Http\Livewire\Dealer\Store\SingleStore\Employee\Create::class)->name('employee.create');
@@ -72,7 +41,7 @@ Route::group([
         // **************************************************
         // Roles to QA
         // **************************************************
-        Route::group(['middleware' => ['role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Consultant']], function () {
+        Route::middleware('role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Consultant')->group(function () {
 
             Route::get('manuals/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('manuals.isp.index');
             Route::get('manuals/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('manuals.isp.create');

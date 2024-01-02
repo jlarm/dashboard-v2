@@ -13,7 +13,7 @@ class CourseResults extends Model
         'course_id',
         'user_id',
     ];
-    
+
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

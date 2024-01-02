@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\SendQueueEmailJob;
 use App\Mail\TenDayOpenInviteReminderMail;
 use App\Models\Dealer\Invite;
 use Carbon\Carbon;
@@ -15,12 +14,12 @@ class InviteReminderTenDaysCommand extends Command
 
     protected $description = 'Daily check to send reminder to invitees 10 days after invite was sent';
 
-    public function handle()
+    public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
-            $invites = Invite::where('created_at', '=', Carbon::now()->subDays(10))->get();;
+            $invites = Invite::where('created_at', '=', Carbon::now()->subDays(10))->get();
 
             foreach ($invites as $invite) {
                 Mail::to($invite->email)->send(new TenDayOpenInviteReminderMail($invite));

@@ -14,13 +14,14 @@ class OshaCard extends Component
     public Store $store;
 
     public $manual;
+
     public $content;
 
     public function mount()
     {
         $this->manual = Osha::where('store_id', $this->store->id)->latest()->first();
-        if($this->manual && $this->manual->pdf_path) {
-            $this->content = Storage::disk('do-manuals')->url(tenant('id') . '/osha/' . $this->manual->pdf_path) ?? null;
+        if ($this->manual && $this->manual->pdf_path) {
+            $this->content = Storage::disk('do-manuals')->url(tenant('id').'/osha/'.$this->manual->pdf_path) ?? null;
         }
     }
 
@@ -31,6 +32,7 @@ class OshaCard extends Component
             new UploadOshaToDigitalOceanJob($this->manual),
         ])->dispatch();
     }
+
     public function render()
     {
         return view('livewire.dealer.manual.osha-card');

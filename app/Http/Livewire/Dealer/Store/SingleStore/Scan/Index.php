@@ -8,6 +8,7 @@ use Livewire\Component;
 class Index extends Component
 {
     public Store $store;
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.scan.index')->layout('components.dealer-app');

@@ -16,9 +16,10 @@ class Generate extends Component
     {
         Bus::chain([
             new GenerateOshaAuditJob($this->oshaAudit),
-            new UploadOshaAuditToDigitalOceanJob($this->oshaAudit)
+            new UploadOshaAuditToDigitalOceanJob($this->oshaAudit),
         ])->dispatch();
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.osha.generate');

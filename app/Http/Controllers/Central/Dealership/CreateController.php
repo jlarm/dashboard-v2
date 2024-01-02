@@ -44,7 +44,7 @@ class CreateController extends Controller
 
     private function createStoreAndSettings($validated)
     {
-        if(!$validated['locations']) {
+        if (! $validated['locations']) {
             $store = Store::create([
                 'name' => $validated['name'],
                 'address' => $validated['address'],
@@ -68,7 +68,7 @@ class CreateController extends Controller
             'name' => auth()->user()->name,
             'email' => auth()->user()->email,
             'phone' => auth()->user()->phone,
-            'password' => bcrypt('Autorisknow' . $initials . '!'),
+            'password' => bcrypt('Autorisknow'.$initials.'!'),
         ]);
 
         $this->assignRoleToUser($user);

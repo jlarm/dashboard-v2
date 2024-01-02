@@ -14,6 +14,7 @@ class Main extends Component
     {
         $this->currentStore = Store::where('name', $request->get('store')?->name)->first();
     }
+
     public function render()
     {
         return view('livewire.dealer.navigation.main');

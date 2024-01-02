@@ -21,7 +21,7 @@ class Index extends Component
         }
 
         return view('livewire.dealer.store.single-store.audit.body-shop.index', [
-            'bodyShopAudits' => $query->get()
+            'bodyShopAudits' => $query->get(),
         ])->layout('components.dealer-app');
     }
 }

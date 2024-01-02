@@ -12,7 +12,7 @@ class CustomPathGenerator implements PathGenerator
      */
     public function getPath(Media $media): string
     {
-        return tenant('id') . '/' . $media->model_id . '/' . $media->collection_name . '/' . $media->id . '/';
+        return tenant('id').'/'.$media->model_id.'/'.$media->collection_name.'/'.$media->id.'/';
     }
 
     /*
@@ -20,7 +20,7 @@ class CustomPathGenerator implements PathGenerator
      */
     public function getPathForConversions(Media $media): string
     {
-        return tenant('id') . '/' . $media->model_id . '/' . $media->collection_name . '/' . $media->id . '/';
+        return tenant('id').'/'.$media->model_id.'/'.$media->collection_name.'/'.$media->id.'/';
     }
 
     /*
@@ -28,6 +28,6 @@ class CustomPathGenerator implements PathGenerator
      */
     public function getPathForResponsiveImages(Media $media): string
     {
-        return tenant('id') . '/' . $media->model_id . '/' . $media->collection_name . '/' . $media->id . '/';
+        return tenant('id').'/'.$media->model_id.'/'.$media->collection_name.'/'.$media->id.'/';
     }
 }

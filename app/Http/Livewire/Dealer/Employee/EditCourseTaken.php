@@ -11,7 +11,9 @@ use WireElements\Pro\Components\Modal\Modal;
 class EditCourseTaken extends Modal
 {
     public $course;
+
     public $user;
+
     public $dateTaken;
 
     public function mount(Course $course, User $user)

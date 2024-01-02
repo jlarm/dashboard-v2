@@ -35,7 +35,7 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
 
     public $dms_provider;
 
-    public $website_urls = [""];
+    public $website_urls = [''];
 
     public $backups;
 
@@ -54,16 +54,25 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
     public $personal_devices;
 
     public $compliance_issues;
+
     public $fi_products_sold;
+
     public $service_contracts = [''];
+
     public $tire_wheel = [''];
+
     public $other_fi = [''];
+
     public $fi_system;
+
     public $appearance_protection_sold;
+
     public $reinsurance;
+
     public $admin_name;
 
     public $i = 1;
+
     public $u = 0;
 
     protected $rules = [

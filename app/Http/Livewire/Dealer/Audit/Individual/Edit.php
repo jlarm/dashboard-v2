@@ -16,8 +16,11 @@ class Edit extends Component
     use WithMedia;
 
     public Store $store;
+
     public IndividualAudit $individualAudit;
+
     public $managers;
+
     public $search = '';
 
     public $mediaComponentNames = [
@@ -25,93 +28,181 @@ class Edit extends Component
     ];
 
     public $parent;
+
     public $draft;
+
     public $audit_date;
+
     public $customer_number;
+
     public $customer_name;
+
     public $deal_jacket_date;
+
     public $manager_id;
+
     public $mileage;
+
     public $individual_q1_answer;
+
     public $individual_q1_comment;
+
     public $individual_q2_answer;
+
     public $individual_q2_comment;
+
     public $individual_q3_answer;
+
     public $individual_q3_comment;
+
     public $individual_q4_answer;
+
     public $individual_q4_comment;
+
     public $individual_q5_answer;
+
     public $individual_q5_comment;
+
     public $individual_q6_answer;
+
     public $individual_q6_comment;
+
     public $individual_q7_answer;
+
     public $individual_q7_comment;
+
     public $individual_q8_answer;
+
     public $individual_q8_comment;
+
     public $individual_q9_answer;
+
     public $individual_q9_comment;
+
     public $individual_q10_answer;
+
     public $individual_q10_comment;
+
     public $individual_q11_answer;
+
     public $individual_q11_comment;
+
     public $individual_q12_answer;
+
     public $individual_q12_comment;
+
     public $individual_q13_answer;
+
     public $individual_q13_comment;
+
     public $individual_q14_answer;
+
     public $individual_q14_comment;
+
     public $individual_q15_answer;
+
     public $individual_q15_comment;
+
     public $individual_q16_answer;
+
     public $individual_q16_comment;
+
     public $individual_q17_answer;
+
     public $individual_q17_comment;
+
     public $individual_q18_answer;
+
     public $individual_q18_comment;
+
     public $individual_q19_answer;
+
     public $individual_q19_comment;
+
     public $individual_q20_answer;
+
     public $individual_q20_comment;
+
     public $individual_q21_answer;
+
     public $individual_q21_comment;
+
     public $individual_q22_answer;
+
     public $individual_q22_comment;
+
     public $individual_q23_answer;
+
     public $individual_q23_comment;
+
     public $individual_q24_answer;
+
     public $individual_q24_comment;
+
     public $individual_q25_answer;
+
     public $individual_q25_comment;
+
     public $individual_q26_answer;
+
     public $individual_q26_comment;
+
     public $individual_q27_answer;
+
     public $individual_q27_comment;
+
     public $individual_q28_answer;
+
     public $individual_q28_comment;
+
     public $individual_q29_answer;
+
     public $individual_q29_comment;
+
     public $individual_q30_answer;
+
     public $individual_q30_comment;
+
     public $individual_q31_answer;
+
     public $individual_q31_comment;
+
     public $individual_q32_answer;
+
     public $individual_q32_comment;
+
     public $individual_q33_answer;
+
     public $individual_q33_comment;
+
     public $individual_q34_answer;
+
     public $individual_q34_comment;
+
     public $individual_q35_answer;
+
     public $individual_q35_comment;
+
     public $individual_q36_answer;
+
     public $individual_q36_comment;
+
     public $individual_q37_answer;
+
     public $individual_q37_comment;
+
     public $individual_q38_answer;
+
     public $individual_q38_comment;
+
     public $individual_q39_answer;
+
     public $individual_q39_comment;
+
     public $individual_q40_answer;
+
     public $individual_q40_comment;
+
     public $audit_images;
 
     protected $rules = [
@@ -509,7 +600,7 @@ class Edit extends Component
             'individual_q39_danger' => $this->individual_q39_danger,
             'individual_q40_answer' => $this->individual_q40_answer,
             'individual_q40_comment' => $this->individual_q40_comment,
-            'individual_q40_danger' => $this->individual_q40_danger
+            'individual_q40_danger' => $this->individual_q40_danger,
         ]);
 
         $this->individualAudit->syncFromMediaLibraryRequest($this->audit_images)
@@ -520,16 +611,17 @@ class Edit extends Component
             ->success()
             ->send();
 
-        if (!$this->individualAudit->parent_id) {
+        if (! $this->individualAudit->parent_id) {
             $parent = $this->individualAudit;
         } else {
             $parent = IndividualAudit::where('id', $this->individualAudit->parent_id)->first();
         }
 
         if ($exit) {
-            if (!tenant('locations')) {
+            if (! tenant('locations')) {
                 return redirect()->route('dealer.audit.individual.show', $parent);
             }
+
             return redirect()->route('dealer.stores.audits.individual.show', [$store, $parent]);
         }
     }
@@ -539,7 +631,7 @@ class Edit extends Component
         return view('livewire.dealer.audit.individual.edit', [
             'questions' => tenancy()->central(function ($tenant) {
                 return IndividualQuestions::query()->search('question', $this->search)->get();
-            })
+            }),
         ]);
     }
 }

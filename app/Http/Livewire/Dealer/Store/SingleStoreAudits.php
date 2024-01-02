@@ -8,6 +8,7 @@ use Livewire\Component;
 class SingleStoreAudits extends Component
 {
     public Store $store;
+
     public function render()
     {
         return view('livewire.dealer.store.single-store-audits')->layout('components.dealer-app');

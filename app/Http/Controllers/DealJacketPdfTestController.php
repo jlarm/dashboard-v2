@@ -7,14 +7,23 @@ use App\Models\Dealer\Audit\IndividualAudit;
 class DealJacketPdfTestController extends Controller
 {
     public array $array = [];
+
     public $managers;
+
     public $question;
+
     public $dealJackets;
+
     public $audits;
+
     public $count;
+
     public $managerIssueCount = [];
+
     public $results = [];
+
     public $totals = [];
+
     public $grandTotal;
 
     public function __invoke()
@@ -51,6 +60,7 @@ class DealJacketPdfTestController extends Controller
                         }
                     }
                 });
+
                 return count($this->array);
             });
 
@@ -80,16 +90,17 @@ class DealJacketPdfTestController extends Controller
                         }
                     }
                 });
+
                 return array_count_values($this->array);
             });
 
         foreach ($this->managerIssueCount as $name => $answers) {
             foreach ($answers as $question => $answer) {
-                if (!isset($this->results[$question])) {
+                if (! isset($this->results[$question])) {
                     $this->results[$question] = [];
                 }
                 $this->results[$question][$name] = $answer;
-                if (!isset($this->results[$question]['Total'])) {
+                if (! isset($this->results[$question]['Total'])) {
                     $this->results[$question]['Total'] = 0;
                 }
                 $this->results[$question]['Total'] += $answer;
@@ -100,7 +111,7 @@ class DealJacketPdfTestController extends Controller
         $allNames = array_keys($this->managerIssueCount->toArray());
         foreach ($this->results as $question => $answers) {
             foreach ($allNames as $name) {
-                if (!isset($answers[$name])) {
+                if (! isset($answers[$name])) {
                     $this->results[$question][$name] = 0;
                 }
             }
@@ -142,12 +153,13 @@ class DealJacketPdfTestController extends Controller
                         ) {
                             if ($value === 2) {
                                 preg_match('/^[^_]*_q\K[^_]+/', $key, $matches);
-                                $comment = $item->getAttributes()['individual_q' . $matches[0] . '_comment'];
+                                $comment = $item->getAttributes()['individual_q'.$matches[0].'_comment'];
                                 $this->array[] = [$key, $item->customer_number, $key, $comment];
                             }
                         }
                     }
                 });
+
                 return collect($this->array)->groupBy(function ($item) {
                     return $item[0];
                 });

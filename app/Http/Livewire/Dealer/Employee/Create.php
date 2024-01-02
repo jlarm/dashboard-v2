@@ -15,21 +15,35 @@ use Spatie\Permission\Models\Role;
 
 class Create extends Component
 {
-    public string $name, $email, $department, $departmentId, $role;
-    public array $roles = [], $courses = [], $dealers = [];
+    public string $name;
+
+    public string $email;
+
+    public string $department;
+
+    public string $departmentId;
+
+    public string $role;
+
+    public array $roles = [];
+
+    public array $courses = [];
+
+    public array $dealers = [];
+
     public $currentStore;
 
     public function mount(Request $request): void
     {
         $this->departmentId = auth()->user()->department_id ?? '';
         $this->currentStore = $request->get('store')?->id ?? '';
-        $this->dealers[] = $request->get('store')?->id ? (string)$request->get('store')?->id : [];
+        $this->dealers[] = $request->get('store')?->id ? (string) $request->get('store')?->id : [];
     }
 
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
-//        'department' => ['required', 'integer'],
+        //        'department' => ['required', 'integer'],
         'roles' => ['min:1', 'array'],
         'courses' => ['nullable', 'array'],
     ];

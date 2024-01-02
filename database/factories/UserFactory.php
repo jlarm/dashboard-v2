@@ -15,7 +15,7 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $this->fName = fake()->firstName();
         $this->lName = fake()->lastName();
@@ -33,10 +33,8 @@ class UserFactory extends Factory
 
     /**
      * Indicate that the model's email address should be unverified.
-     *
-     * @return static
      */
-    public function unverified()
+    public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,

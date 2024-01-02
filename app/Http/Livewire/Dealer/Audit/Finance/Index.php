@@ -21,7 +21,7 @@ class Index extends Component
                 ->latest()
                 ->with('store')
                 ->select('id', 'store_id', 'audit_date', 'pdf_path')
-                ->get()
+                ->get(),
         ]);
     }
 }

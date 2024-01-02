@@ -21,7 +21,7 @@ class GenerateIspManualJob implements ShouldQueue
     public function handle(): void
     {
         $fileName = 'isp-manual-'.now()->format('YmdHis').'.pdf';
-        $storagePath = storage_path('app/' . $fileName);
+        $storagePath = storage_path('app/'.$fileName);
 
         $html = view('dealer.manual.pdf.isp', [
             'isp' => $this->manual,

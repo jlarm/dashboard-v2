@@ -17,7 +17,7 @@ class UserCourseResultsExport implements FromQuery
 
     public function query()
     {
-//        return User::all();
+        //        return User::all();
         return Course::query()
             ->where('department_id', $this->user->department_id)
             ->select('id', 'name')

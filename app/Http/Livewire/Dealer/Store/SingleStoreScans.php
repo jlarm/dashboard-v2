@@ -13,7 +13,9 @@ use Response;
 class SingleStoreScans extends Component
 {
     public $store;
+
     public string $type = 'technical';
+
     public string $dealer;
 
     public function mount(Store $store)
@@ -24,12 +26,13 @@ class SingleStoreScans extends Component
             $this->dealer = ScanSetting::where('store_id', $this->store->id)->first()->name ?? '';
         }
     }
+
     public function export()
     {
         $token = Cookie::get('sentry');
         $client = new Client();
 
-        $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/' . $this->type, [
+        $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/'.$this->type, [
             'Authorization' => $token,
         ]);
 
@@ -43,6 +46,7 @@ class SingleStoreScans extends Component
             'Content-Disposition' => 'attachment; filename="report.pdf"',
         ]);
     }
+
     public function render()
     {
         return view('livewire.dealer.store.single-store-scans')->layout('components.dealer-app');

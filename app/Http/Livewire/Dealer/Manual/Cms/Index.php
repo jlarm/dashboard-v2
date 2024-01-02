@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Dealer\Manual\Cms;
 
-use App\Models\CmsManual;
 use App\Models\Dealer\Store;
 use Illuminate\Http\Request;
 use Livewire\Component;
@@ -21,7 +20,7 @@ class Index extends Component
         $storeName = $request->get('store')?->name;
 
         if ($storeName) {
-            return Store::where('name', $storeName)->select('id','slug')->first();
+            return Store::where('name', $storeName)->select('id', 'slug')->first();
         }
 
         return Store::first()->select('id')->first();

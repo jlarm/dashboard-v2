@@ -9,7 +9,9 @@ use Livewire\Component;
 class ParentShowSingle extends Component
 {
     public IndividualAudit $individualAudit;
+
     public Store $store;
+
     public $children;
 
     protected $listeners = ['refreshParentComponent' => '$refresh'];
@@ -22,6 +24,7 @@ class ParentShowSingle extends Component
     public function delete()
     {
         $this->individualAudit->delete();
+
         return redirect()->route('dealer.audit.individual.index');
     }
 

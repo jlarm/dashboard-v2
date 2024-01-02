@@ -9,7 +9,9 @@ use Livewire\Component;
 class ParentShowSingle extends Component
 {
     public IndividualAudit $individualAudit;
+
     public Store $store;
+
     public $children;
 
     public function mount()
@@ -23,6 +25,7 @@ class ParentShowSingle extends Component
     public function delete()
     {
         $this->individualAudit->delete();
+
         return redirect()->route('dealer.stores.audits.individual.index', $this->store->slug);
     }
 

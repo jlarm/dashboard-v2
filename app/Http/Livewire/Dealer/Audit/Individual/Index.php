@@ -10,6 +10,7 @@ use Livewire\Component;
 class Index extends Component
 {
     public Store $store;
+
     public $currentStore;
 
     public function mount(Request $request): void
@@ -18,7 +19,7 @@ class Index extends Component
     }
 
     protected $listeners = [
-        'refreshIndividualAudits' => '$refresh'
+        'refreshIndividualAudits' => '$refresh',
     ];
 
     public function render()
@@ -28,7 +29,7 @@ class Index extends Component
                 ->latest()->where('parent_id', null)
                 ->with('store')
                 ->where('store_id', $this->store->id)
-                ->get()
+                ->get(),
         ]);
     }
 }

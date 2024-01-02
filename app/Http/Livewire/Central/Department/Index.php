@@ -8,7 +8,7 @@ use Livewire\Component;
 class Index extends Component
 {
     protected $listeners = ['departmentCreated' => 'render'];
-    
+
     public function render()
     {
         return view('livewire.central.department.index', [

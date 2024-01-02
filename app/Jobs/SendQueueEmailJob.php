@@ -21,7 +21,7 @@ class SendQueueEmailJob implements ShouldQueue
         $this->invite = $invite;
     }
 
-    public function handle()
+    public function handle(): void
     {
         Mail::to($this->invite->email)->send(new InviteMail($this->invite));
     }

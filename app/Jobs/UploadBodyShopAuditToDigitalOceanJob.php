@@ -26,10 +26,10 @@ class UploadBodyShopAuditToDigitalOceanJob implements ShouldQueue
 
     public function handle(): void
     {
-        $pdf = Storage::get('/body-shop-audits/' . $this->bodyShopAudit->pdf_path);
-        $moved = Storage::disk('do-audits')->put(tenant('id') . '/body-shop/' . $this->bodyShopAudit->pdf_path, $pdf);
-        if($moved) {
-            Storage::delete('/body-shop-audits/' . $this->bodyShopAudit->pdf_path);
+        $pdf = Storage::get('/body-shop-audits/'.$this->bodyShopAudit->pdf_path);
+        $moved = Storage::disk('do-audits')->put(tenant('id').'/body-shop/'.$this->bodyShopAudit->pdf_path, $pdf);
+        if ($moved) {
+            Storage::delete('/body-shop-audits/'.$this->bodyShopAudit->pdf_path);
         }
     }
 }

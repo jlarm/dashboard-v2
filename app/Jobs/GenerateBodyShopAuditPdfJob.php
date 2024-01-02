@@ -23,31 +23,32 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
     {
         $sum = 0;
         for ($i = 1; $i <= 43; $i++) {
-            if ($this->bodyShopAudit->{'body_shop_q' . $i .'_answer'} == 2) {
+            if ($this->bodyShopAudit->{'body_shop_q'.$i.'_answer'} == 2) {
                 $sum += 1;
             }
         }
 
         $wrong = $sum;
+
         return number_format(100 * (43 - $wrong) / 43, 2, '.', '');
     }
 
     public function handle(): void
     {
         $path = storage_path('app/body-shop-audits');
-        if(tenant('locations')){
+        if (tenant('locations')) {
             $dealerName = str_replace(' ', '-', $this->bodyShopAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
         }
-        $fileName = $this->bodyShopAudit->audit_date->format('Ymd') . '-' . $dealerName . '-body-shop-audit.pdf';
+        $fileName = $this->bodyShopAudit->audit_date->format('Ymd').'-'.$dealerName.'-body-shop-audit.pdf';
 
-        if(!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
 
         $html = view('dealer.audit.body-shop.download', [
-            'audit' => $this->bodyShopAudit
+            'audit' => $this->bodyShopAudit,
         ])->render();
 
         $audit = Browsershot::html($html)
@@ -55,11 +56,11 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
             ->format('A4')
             ->scale(0.75)
             ->waitUntilNetworkIdle()
-            ->save(storage_path('app/body-shop-audits/' . $fileName));
+            ->save(storage_path('app/body-shop-audits/'.$fileName));
 
         $updatePath = $this->bodyShopAudit->update([
             'pdf_path' => $fileName,
-            'rating' => $this->rating()
+            'rating' => $this->rating(),
         ]);
 
     }

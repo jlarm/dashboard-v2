@@ -10,32 +10,59 @@ use Livewire\Component;
 class IspForm extends Component
 {
     public Store $store;
+
     public $store_id;
+
     public $employeeList;
+
     public $qi;
+
     public $qit = 'Qualified Individual';
+
     public $qip;
+
     public $sm;
+
     public $smt = 'Service Manager';
+
     public $smp;
+
     public $pm;
+
     public $pmt = 'Parts Manager';
+
     public $pmp;
+
     public $bsm;
+
     public $bsmt = 'Body Shop Manager';
+
     public $bsmp;
+
     public $gm;
+
     public $gmt = 'General Manager';
+
     public $gmp;
+
     public $owner;
+
     public $ownert = 'Owner';
+
     public $ownerp;
+
     public $pepn;
+
     public $pnepn;
+
     public $fepn;
+
     public $fnepn;
+
     public $alarmSystem;
+
     public $burglarSystem;
+
     public $signature;
 
     public function mount()
@@ -76,7 +103,7 @@ class IspForm extends Component
         Isp::create([
             'store_id' => $this->employeeList->store_id ?? '',
             'user_id' => auth()->user()->id,
-            'qualified_individual_name' =>  $this->employeeList->qualified_individual_name ?? '',
+            'qualified_individual_name' => $this->employeeList->qualified_individual_name ?? '',
             'qualified_individual_phone' => $this->employeeList->qualified_individual_phone ?? '',
             'service_manager_name' => $this->employeeList->service_manager_name ?? '',
             'service_manager_phone' => $this->employeeList->service_manager_phone ?? '',
@@ -99,8 +126,9 @@ class IspForm extends Component
 
         \Storage::put('isp-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
 
-        (!tenant('locations')) ? $this->redirect(route('dealer.manual.index', $this->store)) : $this->redirect(route('dealer.stores.manuals', $this->store));
+        (! tenant('locations')) ? $this->redirect(route('dealer.manual.index', $this->store)) : $this->redirect(route('dealer.stores.manuals', $this->store));
     }
+
     public function render()
     {
         return view('livewire.dealer.manual.isp-form');

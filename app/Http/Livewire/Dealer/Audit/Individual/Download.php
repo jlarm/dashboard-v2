@@ -15,7 +15,7 @@ class Download extends Component
     public function mount()
     {
 
-        $this->content = Storage::disk('do-audits')->url(tenant('id') . '/individual-audits/' . $this->individualAudit->pdf_path);
+        $this->content = Storage::disk('do-audits')->url(tenant('id').'/individual-audits/'.$this->individualAudit->pdf_path);
     }
 
     public function render()

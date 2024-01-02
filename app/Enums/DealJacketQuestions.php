@@ -43,8 +43,6 @@ enum DealJacketQuestions: string
     case individual_q39_answer = 'It is not clear what the customer purchased and/or the deal does not reflect the norm in the dealership.';
     case individual_q40_answer = 'The deal jacket is not complete with all information required based on the customer needs and wants.';
 
-
-
     public static function fromKey(string $key): DealJacketQuestions
     {
         return match ($key) {

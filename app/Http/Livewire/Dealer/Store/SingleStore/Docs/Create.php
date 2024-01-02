@@ -13,24 +13,26 @@ class Create extends Component
     use WithFileUploads;
 
     public Store $store;
+
     public $title;
+
     public $file;
 
     protected $messages = [
-        'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.'
+        'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
     ];
 
     protected $rules = [
         'title' => 'required',
-        'file' => 'required|mimes:pdf|max:1024'
+        'file' => 'required|mimes:pdf|max:1024',
     ];
 
     public function save()
     {
         try {
-//            $this->validate();
+            //            $this->validate();
 
-            $fileUpload = $this->file->store(tenant()->id ."/" . $this->store->slug, 'dealer-docs');
+            $fileUpload = $this->file->store(tenant()->id.'/'.$this->store->slug, 'dealer-docs');
 
             DealerDoc::create([
                 'store_id' => $this->store->id,
@@ -48,7 +50,7 @@ class Create extends Component
                 ->title('Document Added Successfully!')
                 ->success()
                 ->send();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e);
             \Sentry\captureException($e);
             if (str_contains($e->getMessage(), 'max.')) {
@@ -58,6 +60,7 @@ class Create extends Component
             }
         }
     }
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.docs.create');

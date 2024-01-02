@@ -9,6 +9,7 @@ use WireElements\Pro\Components\Modal\Modal;
 class Delete extends Modal
 {
     public $permission;
+
     protected $permissionTypes = ['create', 'edit', 'delete', 'view'];
 
     public function mount($permission)
@@ -18,10 +19,10 @@ class Delete extends Modal
 
     public function delete()
     {
-        $getPermission = Permission::where('name', 'create-' . $this->permission)->first();
+        $getPermission = Permission::where('name', 'create-'.$this->permission)->first();
         $name = substr($getPermission->name, strpos($getPermission->name, '-') + 1);
         foreach ($this->permissionTypes as $permissionType) {
-            $permission = Permission::where('name', $permissionType . '-' . lcfirst($name))->first();
+            $permission = Permission::where('name', $permissionType.'-'.lcfirst($name))->first();
             $permission->roles()->detach();
             $permission->delete();
         }

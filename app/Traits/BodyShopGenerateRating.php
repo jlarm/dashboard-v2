@@ -7,17 +7,18 @@ use App\Models\Dealer\Audit\BodyShopAudit;
 trait BodyShopGenerateRating
 {
     protected int $sum = 0;
+
     public $audits;
 
     public function rating()
     {
-        $this->audits = cache()->remember('body_shop_stats', 60*60*24, function () {
+        $this->audits = cache()->remember('body_shop_stats', 60 * 60 * 24, function () {
             return BodyShopAudit::where('pdf_path', '!=', null)
                 ->get();
         });
         $this->audits->filter(function ($value) {
             for ($i = 1; $i <= 43; $i++) {
-                if ($value->{'body_shop_q' . $i . '_answer'} == 2) {
+                if ($value->{'body_shop_q'.$i.'_answer'} == 2) {
                     $this->sum += 1;
                 }
             }

@@ -14,17 +14,29 @@ class SingleStoreDetails extends Component
     use WithFileUploads, WithMedia;
 
     public Store $store;
+
     public $dealer;
+
     public $name;
+
     public $address;
+
     public $city;
+
     public $state;
+
     public $postal_code;
+
     public $phone;
+
     public $website;
+
     public $mediaComponentNames = ['logo'];
+
     public $logo = null;
+
     public $active_monitoring = false;
+
     public $monitoring_start_date;
 
     protected $rules = [
@@ -61,14 +73,13 @@ class SingleStoreDetails extends Component
         ]);
     }
 
-
     public function update()
     {
         $this->validate();
 
-//        if($this->logo) {
-//            $this->logo = $this->logo->store('logo', 'public');
-//        }
+        //        if($this->logo) {
+        //            $this->logo = $this->logo->store('logo', 'public');
+        //        }
 
         try {
             $this->dealer->update([
@@ -103,7 +114,7 @@ class SingleStoreDetails extends Component
 
     public function deleteLogo()
     {
-        if($this->dealer->logo) {
+        if ($this->dealer->logo) {
             Storage::delete($this->dealer->logo);
         }
 

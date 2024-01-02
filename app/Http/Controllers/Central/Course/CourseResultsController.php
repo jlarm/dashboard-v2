@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Central\Course;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseResults;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 class CourseResultsController extends Controller
 {
-    public function __invoke(Request $request, Course $course)
+    public function __invoke(Request $request, Course $course): RedirectResponse
     {
         $count = count($course['questions']);
         $questions = collect($course['questions']);

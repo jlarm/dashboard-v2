@@ -9,6 +9,7 @@ use Livewire\Component;
 class Note extends Component
 {
     public $note;
+
     public $store;
 
     public function mount()
@@ -20,7 +21,7 @@ class Note extends Component
     public function update()
     {
         $this->store->update([
-            'note' => $this->note
+            'note' => $this->note,
         ]);
 
         Notification::make()
@@ -30,6 +31,7 @@ class Note extends Component
 
         return redirect()->route('dealer.dashboard');
     }
+
     public function render()
     {
         return view('livewire.dealer.home.note');

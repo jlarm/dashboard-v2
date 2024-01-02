@@ -4,27 +4,28 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         try {
             $validateUser = \Validator::make($request->all(), [
                 'email' => 'required|email',
-                'password' => 'required'
+                'password' => 'required',
             ]);
 
             if ($validateUser->fails()) {
                 return response()->json([
-                    'message' => 'Invalid credentials'
+                    'message' => 'Invalid credentials',
                 ], 401);
             }
 
-            if(!\Auth::attempt($request->all())) {
+            if (! \Auth::attempt($request->all())) {
                 return response()->json([
-                    'message' => 'Invalid credentials'
+                    'message' => 'Invalid credentials',
                 ], 401);
             }
 
@@ -33,12 +34,12 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'user' => $user,
-                'token' => $user->createToken('auth_token')->plainTextToken
+                'token' => $user->createToken('auth_token')->plainTextToken,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
                 'status' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

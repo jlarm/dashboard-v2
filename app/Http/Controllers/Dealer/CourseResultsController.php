@@ -9,6 +9,7 @@ use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,7 @@ class CourseResultsController extends Controller
         ]);
     }
 
-    public function store(Request $request, Course $course)
+    public function store(Request $request, Course $course): RedirectResponse
     {
         $count = count($course['questions']);
         $questions = collect($course['questions']);
@@ -52,7 +53,7 @@ class CourseResultsController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
-        if($course->slug === 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding' && $passed) {
+        if ($course->slug === 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding' && $passed) {
 
             $html = view('dealer.course.CertDownloadView', [
                 'user' => auth()->user(),
@@ -62,13 +63,13 @@ class CourseResultsController extends Controller
 
             $pdf = Browsershot::html($html)->landscape()->pdf();
 
-            $fileName = Str::slug(auth()->user()->name) . '-' . now()->format('m-d-Y') . '-dot-certificate.pdf';
+            $fileName = Str::slug(auth()->user()->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
 
             Storage::disk('local')->put($fileName, $pdf);
 
             $localFile = Storage::disk('local')->get($fileName);
 
-            Storage::disk('armp-certs')->put(tenant('id') . '/' . auth()->user()->id . '/' . $fileName, $localFile);
+            Storage::disk('armp-certs')->put(tenant('id').'/'.auth()->user()->id.'/'.$fileName, $localFile);
 
             Storage::delete($fileName);
 
@@ -88,7 +89,7 @@ class CourseResultsController extends Controller
                     Action::make('view-profile')
                         ->button()
                         ->color('primary')
-                        ->url(route('dealer.profile.edit'))
+                        ->url(route('dealer.profile.edit')),
                 ])
                 ->send();
 

@@ -21,7 +21,7 @@ class Index extends Component
         $storeName = $request->get('store')?->name;
 
         if ($storeName) {
-            return Store::where('name', $storeName)->select('id','slug')->first();
+            return Store::where('name', $storeName)->select('id', 'slug')->first();
         }
 
         return Store::first()->select('id')->first();

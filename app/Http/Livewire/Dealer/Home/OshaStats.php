@@ -13,8 +13,11 @@ class OshaStats extends Component
     use OshaGenerateRating;
 
     public ?float $rating;
+
     public Store $store;
+
     public $audits;
+
     public $dates;
 
     public function mount()
@@ -22,7 +25,7 @@ class OshaStats extends Component
         $this->store = $this->store ?? Store::first();
 
         $this->rating = OshaAudit::where('store_id', $this->store->id)->pluck('rating')->average();
-        
+
         $this->audits = OshaAudit::query()
             ->where('store_id', $this->store->id)
             ->where('pdf_path', '!=', null)

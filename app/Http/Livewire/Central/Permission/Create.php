@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Permission;
 class Create extends Component
 {
     public $name;
+
     protected $permissionTypes = ['create', 'edit', 'delete', 'view'];
 
     protected $rules = [
@@ -26,20 +27,20 @@ class Create extends Component
 
         foreach ($this->permissionTypes as $permissionType) {
             Permission::create([
-                'name' => $permissionType . '-' . lcfirst($this->name) . 's',
+                'name' => $permissionType.'-'.lcfirst($this->name).'s',
                 'guard_name' => 'web',
             ]);
         }
 
         $this->reset();
 
-//        $this->emit('permissionCreated');
+        //        $this->emit('permissionCreated');
 
         Notification::make()
             ->title('Permission Successfully Created!')
             ->success()
             ->send();
-        
+
         return redirect()->route('permission.index');
     }
 

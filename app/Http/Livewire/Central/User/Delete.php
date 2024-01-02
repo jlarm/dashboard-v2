@@ -28,7 +28,7 @@ class Delete extends Modal
                 ->title('User Deleted Successfully!')
                 ->success()
                 ->send();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e);
             $this->addError('file', 'An error occurred while deleting the file.');
         }

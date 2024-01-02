@@ -7,6 +7,7 @@ use App\Models\Dealer\Course;
 trait EmployeeCourses
 {
     protected $user;
+
     protected $courses;
 
     protected function loadCurrentUser(): void
@@ -23,7 +24,7 @@ trait EmployeeCourses
 
     public function getUserHasNoCaliforniaStore(): bool
     {
-        return !$this->user->stores()->where('state', 'California')->exists();
+        return ! $this->user->stores()->where('state', 'California')->exists();
     }
 
     protected function getCoursesForRoles(array $roles): array
@@ -49,7 +50,7 @@ trait EmployeeCourses
             ->with([
                 'results' => function ($query) {
                     $query->where('user_id', $this->user->id)->latest();
-                }
+                },
             ])
             ->when($californiaStore, function ($query) {
                 $query->where('slug', '!=', 'sexual-harassment-training-in-california');

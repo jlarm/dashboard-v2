@@ -14,8 +14,9 @@ class IndexItem extends Component
 
     public function mount()
     {
-        $this->link = Storage::disk('do-manuals')->url(tenant('id') . '/red-flags/' . $this->manual->pdf_path) ?? null;
+        $this->link = Storage::disk('do-manuals')->url(tenant('id').'/red-flags/'.$this->manual->pdf_path) ?? null;
     }
+
     public function render()
     {
         return view('livewire.dealer.manual.red-flag.index-item');

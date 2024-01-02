@@ -14,6 +14,7 @@ class ComplianceFormMail extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $signedUrl;
+
     public $storeName;
 
     public function __construct($signedUrl, $storeName)
@@ -26,7 +27,7 @@ class ComplianceFormMail extends Mailable implements ShouldQueue
     {
         return new Envelope(
             from: 'noreply@armp.app',
-            subject: $this->storeName . ' Compliance Form',
+            subject: $this->storeName.' Compliance Form',
         );
     }
 

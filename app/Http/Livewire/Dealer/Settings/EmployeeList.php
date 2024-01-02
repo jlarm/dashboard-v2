@@ -11,17 +11,29 @@ class EmployeeList extends Component
     public Store $store;
 
     public $dealer;
+
     public $qualified_individual_name;
+
     public $qualified_individual_phone;
+
     public $service_manager_name;
+
     public $service_manager_phone;
+
     public $parts_manager_name;
+
     public $parts_manager_phone;
+
     public $body_shop_manager_name;
+
     public $body_shop_manager_phone;
+
     public $general_manager_name;
+
     public $general_manager_phone;
+
     public $owner_name;
+
     public $owner_phone;
 
     protected $rules = [

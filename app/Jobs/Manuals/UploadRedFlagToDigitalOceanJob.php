@@ -24,12 +24,12 @@ class UploadRedFlagToDigitalOceanJob implements ShouldQueue
         return [new WithoutOverlapping($this->manual)];
     }
 
-    public function handle()
+    public function handle(): void
     {
-        $pdf = Storage::get('/' . $this->manual->pdf_path);
-        $moved = Storage::disk('do-manuals')->put(tenant('id') . '/red-flags/' . $this->manual->pdf_path, $pdf);
-        if($moved) {
-            Storage::delete('/' . $this->manual->pdf_path);
+        $pdf = Storage::get('/'.$this->manual->pdf_path);
+        $moved = Storage::disk('do-manuals')->put(tenant('id').'/red-flags/'.$this->manual->pdf_path, $pdf);
+        if ($moved) {
+            Storage::delete('/'.$this->manual->pdf_path);
         }
     }
 }

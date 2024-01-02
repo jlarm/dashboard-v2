@@ -21,7 +21,7 @@ class GenerateCmsManualJob implements ShouldQueue
     public function handle(): void
     {
         $fileName = 'cms-manual-'.now()->format('YmdHis').'.pdf';
-        $storagePath = storage_path('app/' . $fileName);
+        $storagePath = storage_path('app/'.$fileName);
 
         $html = view('dealer.manual.pdf.cms', [
             'cms' => $this->manual,

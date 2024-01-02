@@ -10,7 +10,9 @@ use Livewire\Component;
 class Edit extends Component
 {
     public Department $department;
+
     public $name;
+
     public $assignedCourses = [];
 
     public function mount()

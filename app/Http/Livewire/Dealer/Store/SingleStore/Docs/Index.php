@@ -8,12 +8,13 @@ use Livewire\Component;
 class Index extends Component
 {
     public Store $store;
+
     protected $listeners = ['saved' => '$refresh'];
 
     public function render()
     {
         return view('livewire.dealer.store.single-store.docs.index', [
-            'docs' => $this->store->docs
+            'docs' => $this->store->docs,
         ])->layout('components.dealer-app');
     }
 }

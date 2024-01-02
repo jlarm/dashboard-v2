@@ -15,6 +15,7 @@ class Show extends Component
     use WithMedia;
 
     public Store $store;
+
     public FinanceAudit $financeAudit;
 
     public $search = '';
@@ -68,206 +69,403 @@ class Show extends Component
         'finance_q46_images',
         'finance_q47_images',
         'finance_q48_images',
-        'finance_q49_images'
+        'finance_q49_images',
     ];
 
     public $draft;
+
     public $audit_date;
+
     public $finance_q1_answer;
+
     public $finance_q1_comment;
+
     public $finance_q1_danger;
+
     public $finance_q1_images;
+
     public $finance_q2_answer;
+
     public $finance_q2_comment;
+
     public $finance_q2_danger;
+
     public $finance_q2_images;
+
     public $finance_q3_answer;
+
     public $finance_q3_comment;
+
     public $finance_q3_danger;
+
     public $finance_q3_images;
+
     public $finance_q4_answer;
+
     public $finance_q4_comment;
+
     public $finance_q4_danger;
+
     public $finance_q4_images;
+
     public $finance_q5_answer;
+
     public $finance_q5_comment;
+
     public $finance_q5_danger;
+
     public $finance_q5_images;
+
     public $finance_q6_answer;
+
     public $finance_q6_comment;
+
     public $finance_q6_danger;
+
     public $finance_q6_images;
+
     public $finance_q7_answer;
+
     public $finance_q7_comment;
+
     public $finance_q7_danger;
+
     public $finance_q7_images;
+
     public $finance_q8_answer;
+
     public $finance_q8_comment;
+
     public $finance_q8_danger;
+
     public $finance_q8_images;
+
     public $finance_q9_answer;
+
     public $finance_q9_comment;
+
     public $finance_q9_danger;
+
     public $finance_q9_images;
+
     public $finance_q10_answer;
+
     public $finance_q10_comment;
+
     public $finance_q10_danger;
+
     public $finance_q10_images;
+
     public $finance_q11_answer;
+
     public $finance_q11_comment;
+
     public $finance_q11_danger;
+
     public $finance_q11_images;
+
     public $finance_q12_answer;
+
     public $finance_q12_comment;
+
     public $finance_q12_danger;
+
     public $finance_q12_images;
+
     public $finance_q13_answer;
+
     public $finance_q13_comment;
+
     public $finance_q13_danger;
+
     public $finance_q13_images;
+
     public $finance_q14_answer;
+
     public $finance_q14_comment;
+
     public $finance_q14_danger;
+
     public $finance_q14_images;
+
     public $finance_q15_answer;
+
     public $finance_q15_comment;
+
     public $finance_q15_danger;
+
     public $finance_q15_images;
+
     public $finance_q16_answer;
+
     public $finance_q16_comment;
+
     public $finance_q16_danger;
+
     public $finance_q16_images;
+
     public $finance_q17_answer;
+
     public $finance_q17_comment;
+
     public $finance_q17_danger;
+
     public $finance_q17_images;
+
     public $finance_q18_answer;
+
     public $finance_q18_comment;
+
     public $finance_q18_danger;
+
     public $finance_q18_images;
+
     public $finance_q19_answer;
+
     public $finance_q19_comment;
+
     public $finance_q19_danger;
+
     public $finance_q19_images;
+
     public $finance_q20_answer;
+
     public $finance_q20_comment;
+
     public $finance_q20_danger;
+
     public $finance_q20_images;
+
     public $finance_q21_answer;
+
     public $finance_q21_comment;
+
     public $finance_q21_danger;
+
     public $finance_q21_images;
+
     public $finance_q22_answer;
+
     public $finance_q22_comment;
+
     public $finance_q22_danger;
+
     public $finance_q22_images;
+
     public $finance_q23_answer;
+
     public $finance_q23_comment;
+
     public $finance_q23_danger;
+
     public $finance_q23_images;
+
     public $finance_q24_answer;
+
     public $finance_q24_comment;
+
     public $finance_q24_danger;
+
     public $finance_q24_images;
+
     public $finance_q25_answer;
+
     public $finance_q25_comment;
+
     public $finance_q25_danger;
+
     public $finance_q25_images;
+
     public $finance_q26_answer;
+
     public $finance_q26_comment;
+
     public $finance_q26_danger;
+
     public $finance_q26_images;
+
     public $finance_q27_answer;
+
     public $finance_q27_comment;
+
     public $finance_q27_danger;
+
     public $finance_q27_images;
+
     public $finance_q28_answer;
+
     public $finance_q28_comment;
+
     public $finance_q28_danger;
+
     public $finance_q28_images;
+
     public $finance_q29_answer;
+
     public $finance_q29_comment;
+
     public $finance_q29_danger;
+
     public $finance_q29_images;
+
     public $finance_q30_answer;
+
     public $finance_q30_comment;
+
     public $finance_q30_danger;
+
     public $finance_q30_images;
+
     public $finance_q31_answer;
+
     public $finance_q31_comment;
+
     public $finance_q31_danger;
+
     public $finance_q31_images;
+
     public $finance_q32_answer;
+
     public $finance_q32_comment;
+
     public $finance_q32_danger;
+
     public $finance_q32_images;
+
     public $finance_q33_answer;
+
     public $finance_q33_comment;
+
     public $finance_q33_danger;
+
     public $finance_q33_images;
+
     public $finance_q34_answer;
+
     public $finance_q34_comment;
+
     public $finance_q34_danger;
+
     public $finance_q34_images;
+
     public $finance_q35_answer;
+
     public $finance_q35_comment;
+
     public $finance_q35_danger;
+
     public $finance_q35_images;
+
     public $finance_q36_answer;
+
     public $finance_q36_comment;
+
     public $finance_q36_danger;
+
     public $finance_q36_images;
+
     public $finance_q37_answer;
+
     public $finance_q37_comment;
+
     public $finance_q37_danger;
+
     public $finance_q37_images;
+
     public $finance_q38_answer;
+
     public $finance_q38_comment;
+
     public $finance_q38_danger;
+
     public $finance_q38_images;
+
     public $finance_q39_answer;
+
     public $finance_q39_comment;
+
     public $finance_q39_danger;
+
     public $finance_q39_images;
+
     public $finance_q40_answer;
+
     public $finance_q40_comment;
+
     public $finance_q40_danger;
+
     public $finance_q40_images;
+
     public $finance_q41_answer;
+
     public $finance_q41_comment;
+
     public $finance_q41_danger;
+
     public $finance_q41_images;
+
     public $finance_q42_answer;
+
     public $finance_q42_comment;
+
     public $finance_q42_danger;
+
     public $finance_q42_images;
+
     public $finance_q43_answer;
+
     public $finance_q43_comment;
+
     public $finance_q43_danger;
+
     public $finance_q43_images;
+
     public $finance_q44_answer;
+
     public $finance_q44_comment;
+
     public $finance_q44_danger;
+
     public $finance_q44_images;
+
     public $finance_q45_answer;
+
     public $finance_q45_comment;
+
     public $finance_q45_danger;
+
     public $finance_q45_images;
+
     public $finance_q46_answer;
+
     public $finance_q46_comment;
+
     public $finance_q46_danger;
+
     public $finance_q46_images;
+
     public $finance_q47_answer;
+
     public $finance_q47_comment;
+
     public $finance_q47_danger;
+
     public $finance_q47_images;
+
     public $finance_q48_answer;
+
     public $finance_q48_comment;
+
     public $finance_q48_danger;
+
     public $finance_q48_images;
+
     public $finance_q49_answer;
+
     public $finance_q49_comment;
+
     public $finance_q49_danger;
+
     public $finance_q49_images;
 
     protected $rules = [
@@ -468,7 +666,7 @@ class Show extends Component
         'finance_q49_answer' => 'nullable',
         'finance_q49_danger' => 'nullable',
         'finance_q49_comment' => 'nullable',
-        'finance_q49_images' => 'nullable'
+        'finance_q49_images' => 'nullable',
     ];
 
     public function mount()
@@ -771,12 +969,12 @@ class Show extends Component
             'finance_q48_comment' => $this->finance_q48_comment,
             'finance_q49_answer' => $this->finance_q49_answer,
             'finance_q49_danger' => $this->finance_q49_danger,
-            'finance_q49_comment' => $this->finance_q49_comment
+            'finance_q49_comment' => $this->finance_q49_comment,
         ]);
 
         for ($i = 1; $i <= 49; $i++) {
-            $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
-                ->toMediaCollection( 'finance_q' . $i . '_images', 'digitalocean');
+            $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q'.$i.'_images'})
+                ->toMediaCollection('finance_q'.$i.'_images', 'digitalocean');
         }
 
         Notification::make()
@@ -785,9 +983,10 @@ class Show extends Component
             ->send();
 
         if ($exit) {
-            if (!tenant('locations')) {
+            if (! tenant('locations')) {
                 return redirect()->route('dealer.audit.finance.index');
             }
+
             return redirect()->route('dealer.stores.audits.finance.index', [$store->slug]);
         }
     }
@@ -797,7 +996,7 @@ class Show extends Component
         return view('livewire.dealer.audit.finance.show', [
             'questions' => tenancy()->central(function ($tenant) {
                 return FinanceQuestions::query()->whereNot('id', 24)->search('question', $this->search)->get();
-            })
+            }),
         ]);
     }
 }

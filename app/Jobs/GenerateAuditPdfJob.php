@@ -23,30 +23,31 @@ class GenerateAuditPdfJob implements ShouldQueue
     {
         $sum = 0;
         for ($i = 1; $i <= 43; $i++) {
-            if ($this->financeAudit->{'finance_q' . $i .'_answer'} == 2) {
+            if ($this->financeAudit->{'finance_q'.$i.'_answer'} == 2) {
                 $sum += 1;
             }
         }
 
         $wrong = $sum;
+
         return number_format(100 * (43 - $wrong) / 43, 2, '.', '');
     }
 
     public function handle(): void
     {
         $path = storage_path('app/finance-audits');
-        if(tenant('locations')){
+        if (tenant('locations')) {
             $dealerName = str_replace(' ', '-', $this->financeAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
         }
-        $fileName = $this->financeAudit->audit_date->format('Ymd') . '-' . $dealerName . '-finance-audit.pdf';
+        $fileName = $this->financeAudit->audit_date->format('Ymd').'-'.$dealerName.'-finance-audit.pdf';
 
         $html = view('dealer.audit.finance.download', [
-            'audit' => $this->financeAudit
+            'audit' => $this->financeAudit,
         ])->render();
 
-        if(!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
 
@@ -55,7 +56,7 @@ class GenerateAuditPdfJob implements ShouldQueue
             ->format('A4')
             ->scale(0.75)
             ->waitUntilNetworkIdle()
-            ->save(storage_path('app/finance-audits/' . $fileName));
+            ->save(storage_path('app/finance-audits/'.$fileName));
 
         $updatePath = $this->financeAudit->update([
             'pdf_path' => $fileName,

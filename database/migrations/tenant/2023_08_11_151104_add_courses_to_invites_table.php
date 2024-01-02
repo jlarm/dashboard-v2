@@ -8,10 +8,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('invites', function (Blueprint $table) {
             $table->json('courses')->nullable()->after('roles');
@@ -20,13 +18,11 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('invites', function (Blueprint $table) {
-             $table->dropColumn('courses');
+            $table->dropColumn('courses');
         });
     }
 };

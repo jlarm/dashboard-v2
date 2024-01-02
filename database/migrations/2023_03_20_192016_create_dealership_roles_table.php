@@ -8,31 +8,27 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('dealership_roles', function (Blueprint $table) {
             $table->id();
 
-//            $table->string('tenant_id');
-//            $table->string('global_role_id');
-//
-//            $table->unique(['tenant_id', 'global_role_id']);
-//
-//            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
-//            $table->foreign('global_role_id')->references('global_id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
+            //            $table->string('tenant_id');
+            //            $table->string('global_role_id');
+            //
+            //            $table->unique(['tenant_id', 'global_role_id']);
+            //
+            //            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+            //            $table->foreign('global_role_id')->references('global_id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
 
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('dealership_roles');
     }

@@ -21,7 +21,7 @@ class Index extends Component
         }
 
         return view('livewire.dealer.store.single-store.audit.osha.index', [
-            'oshaAudits' => $query->get()
+            'oshaAudits' => $query->get(),
         ])->layout('components.dealer-app');
     }
 }

@@ -29,7 +29,6 @@ return [
     */
 
     'disks' => [
-
         'courses' => [
             'driver' => 'local',
             'root' => storage_path('/app/courses'),
@@ -58,7 +57,7 @@ return [
             'endpoint' => env('DIGITALOCEAN_SPACES_ENDPOINT'),
             'region' => env('DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('DIGITALOCEAN_SPACES_BUCKET'),
-            "visibility" => "public",
+            'visibility' => 'public',
         ],
 
         'do-audits' => [
@@ -68,7 +67,7 @@ return [
             'endpoint' => env('AUDITS_DIGITALOCEAN_SPACES_ENDPOINT'),
             'region' => env('AUDITS_DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('AUDITS_DIGITALOCEAN_SPACES_BUCKET'),
-            "visibility" => "public",
+            'visibility' => 'public',
         ],
 
         'do-manuals' => [
@@ -78,7 +77,7 @@ return [
             'endpoint' => env('MANUALS_DIGITALOCEAN_SPACES_ENDPOINT'),
             'region' => env('MANUALS_DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('MANUALS_DIGITALOCEAN_SPACES_BUCKET'),
-            "visibility" => "public",
+            'visibility' => 'public',
         ],
 
         'do-scans' => [
@@ -88,7 +87,7 @@ return [
             'endpoint' => env('SCANS_DIGITALOCEAN_SPACES_ENDPOINT'),
             'region' => env('SCANS_DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('SCANS_DIGITALOCEAN_SPACES_BUCKET'),
-            "visibility" => "public",
+            'visibility' => 'public',
         ],
 
         'dealer-docs' => [
@@ -98,7 +97,7 @@ return [
             'endpoint' => env('DOCS_DIGITALOCEAN_SPACES_ENDPOINT'),
             'region' => env('DOCS_DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('DOCS_DIGITALOCEAN_SPACES_BUCKET'),
-            "visibility" => "public",
+            'visibility' => 'public',
         ],
 
         'armp-certs' => [
@@ -108,7 +107,7 @@ return [
             'endpoint' => env('CERTS_DIGITALOCEAN_SPACES_ENDPOINT'),
             'region' => env('CERTS_DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('CERTS_DIGITALOCEAN_SPACES_BUCKET'),
-            "visibility" => "public",
+            'visibility' => 'public',
         ],
 
         'central-docs' => [
@@ -118,7 +117,19 @@ return [
             'endpoint' => env('CENTRAL_DOCS_DIGITALOCEAN_SPACES_ENDPOINT'),
             'region' => env('CENTRAL_DOCS_DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('CENTRAL_DOCS_DIGITALOCEAN_SPACES_BUCKET'),
-            "visibility" => "public",
+            'visibility' => 'public',
+        ],
+
+        's3' => [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'url' => env('AWS_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
         ],
 
     ],

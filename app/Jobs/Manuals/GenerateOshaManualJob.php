@@ -21,7 +21,7 @@ class GenerateOshaManualJob implements ShouldQueue
     public function handle(): void
     {
         $fileName = 'osha-manual-'.now()->format('YmdHis').'.pdf';
-        $storagePath = storage_path('app/' . $fileName);
+        $storagePath = storage_path('app/'.$fileName);
 
         $html = view('dealer.manual.pdf.osha', [
             'osha' => $this->manual,

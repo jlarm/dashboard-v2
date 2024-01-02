@@ -11,6 +11,7 @@ use Livewire\Component;
 class GroupRating extends Component
 {
     public $rating;
+
     public $grades = [];
 
     private function calculateGrade(array $grades): ?string

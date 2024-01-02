@@ -9,7 +9,9 @@ use Livewire\Component;
 class Edit extends Component
 {
     public Store $store;
+
     public IndividualAudit $individualAudit;
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.individual.edit')->layout('components.dealer-app');

@@ -8,10 +8,12 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Auth;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function create(CreateUserRequest $request)
+    public function create(CreateUserRequest $request): View
     {
         return view('central.employee.register', [
             'email' => $request['email'],
@@ -20,7 +22,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -34,7 +36,7 @@ class UserController extends Controller
 
         $user->assignRole($validated['role']);
 
-//        Invite::where('id', $request['id'])->delete();
+        //        Invite::where('id', $request['id'])->delete();
 
         event(new Registered($user));
 

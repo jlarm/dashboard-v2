@@ -9,6 +9,7 @@ use Livewire\Component;
 class GeneratedReportIndex extends Component
 {
     public Store $store;
+
     public function render()
     {
         return view('livewire.dealer.audit.individual.generated-report-index', [
@@ -17,7 +18,7 @@ class GeneratedReportIndex extends Component
                 ->orderBy('audit_date', 'desc')
                 ->select('id', 'audit_date', 'pdf_path')
                 ->where('store_id', $this->store->id)
-                ->get()
+                ->get(),
         ]);
     }
 }

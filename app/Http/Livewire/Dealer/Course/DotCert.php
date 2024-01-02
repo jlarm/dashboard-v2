@@ -5,8 +5,8 @@ namespace App\Http\Livewire\Dealer\Course;
 use App\Models\Certificate;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
-use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -19,7 +19,7 @@ class DotCert extends Component
 
     public function mount()
     {
-        if (!$this->passingGrades() || auth()->user()->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
+        if (! $this->passingGrades() || auth()->user()->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
             $this->showCertButton = false;
         } else {
             if ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 365) {
@@ -54,13 +54,13 @@ class DotCert extends Component
 
         $pdf = Browsershot::html($html)->landscape()->pdf();
 
-        $fileName = Str::slug(auth()->user()->name) . '-' . now()->format('m-d-Y') . '-dot-certificate.pdf';
+        $fileName = Str::slug(auth()->user()->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
 
         Storage::disk('local')->put($fileName, $pdf);
 
         $localFile = Storage::disk('local')->get($fileName);
 
-        Storage::disk('armp-certs')->put(tenant('id') . '/' . auth()->user()->id . '/' . $fileName, $localFile);
+        Storage::disk('armp-certs')->put(tenant('id').'/'.auth()->user()->id.'/'.$fileName, $localFile);
 
         Storage::delete($fileName);
 
@@ -82,7 +82,7 @@ class DotCert extends Component
                 Action::make('view-profile')
                     ->button()
                     ->color('primary')
-                    ->url(route('dealer.profile.edit'))
+                    ->url(route('dealer.profile.edit')),
             ])
             ->send();
 

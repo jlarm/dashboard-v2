@@ -4,12 +4,13 @@ namespace App\Http\Livewire\Dealer\Settings;
 
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
-use Livewire\Component;
 use Illuminate\Support\Facades\Mail;
+use Livewire\Component;
 
 class SendComplianceEmailLink extends Component
 {
     public Store $store;
+
     public $email;
 
     public function sendEmail()
@@ -25,6 +26,7 @@ class SendComplianceEmailLink extends Component
             ->success()
             ->send();
     }
+
     public function render()
     {
         return view('livewire.dealer.settings.send-compliance-email-link');

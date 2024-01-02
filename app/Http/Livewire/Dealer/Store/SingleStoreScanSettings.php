@@ -9,7 +9,9 @@ use Livewire\Component;
 class SingleStoreScanSettings extends Component
 {
     public $store;
+
     public $dealer;
+
     public $name;
 
     public function mount(Store $store)
@@ -36,6 +38,7 @@ class SingleStoreScanSettings extends Component
         return redirect(route('dealer.stores.scans'));
 
     }
+
     public function render()
     {
         return view('livewire.dealer.store.single-store-scan-settings')->layout('components.dealer-app');

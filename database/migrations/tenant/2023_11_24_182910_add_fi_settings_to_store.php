@@ -8,10 +8,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('stores', function (Blueprint $table) {
             $table->longText('fi_products_sold')->nullable()->after('compliance_issues');
@@ -27,10 +25,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('stores', function (Blueprint $table) {
             $table->dropColumn([

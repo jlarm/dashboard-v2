@@ -13,21 +13,22 @@ class Create extends Component
     use WithFileUploads;
 
     public $title;
+
     public $file;
 
     protected $messages = [
-        'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.'
+        'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
     ];
 
     protected $rules = [
         'title' => 'required',
-        'file' => 'required|mimes:pdf|max:1024'
+        'file' => 'required|mimes:pdf|max:1024',
     ];
 
     public function save()
     {
         try {
-//            $this->validate();
+            //            $this->validate();
 
             $fileUpload = $this->file->store(tenant()->id, 'dealer-docs');
 
@@ -48,7 +49,7 @@ class Create extends Component
                 ->title('Document Added Successfully!')
                 ->success()
                 ->send();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e);
             \Sentry\captureException($e);
             if (str_contains($e->getMessage(), 'max.')) {

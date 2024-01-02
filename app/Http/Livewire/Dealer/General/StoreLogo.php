@@ -8,6 +8,7 @@ use Livewire\Component;
 class StoreLogo extends Component
 {
     public $logo;
+
     public function mount()
     {
         $this->logo = Store::first()->getFirstMediaUrl('logo');

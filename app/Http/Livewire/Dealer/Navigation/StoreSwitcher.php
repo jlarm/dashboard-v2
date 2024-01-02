@@ -9,7 +9,9 @@ use Livewire\Component;
 class StoreSwitcher extends Component
 {
     public Store $store;
+
     public $currentStore;
+
     public $storeSlug;
 
     public function mount(Request $request): void

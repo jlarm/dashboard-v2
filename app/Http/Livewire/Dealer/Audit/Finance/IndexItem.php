@@ -9,9 +9,13 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public FinanceAudit $financeAudit;
+
     public Store $store;
+
     public $rating;
+
     protected $sum;
+
     protected $audit;
 
     protected $listeners = [
@@ -23,7 +27,7 @@ class IndexItem extends Component
         $this->audit = FinanceAudit::where('id', $this->financeAudit->id)->get();
         $this->audit->filter(function ($value) {
             for ($i = 1; $i <= 46; $i++) {
-                if ($value->{'finance_q' . $i .'_answer'} == 2) {
+                if ($value->{'finance_q'.$i.'_answer'} == 2) {
                     $this->sum += 1;
                 }
             }

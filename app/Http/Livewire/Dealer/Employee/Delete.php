@@ -28,7 +28,7 @@ class Delete extends Modal
                 ->send();
 
             return redirect()->route('dealer.employees.index');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e);
             $this->addError('file', 'An error occurred while deleting the user.');
         }

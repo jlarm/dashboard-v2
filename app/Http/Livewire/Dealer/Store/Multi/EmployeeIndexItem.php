@@ -13,8 +13,11 @@ class EmployeeIndexItem extends Component
     public User $user;
 
     public Store $store;
+
     public $completed;
+
     public $totalCourses;
+
     public $courseWithRole;
 
     public function mount()
@@ -45,7 +48,7 @@ class EmployeeIndexItem extends Component
             ->with([
                 'results' => function ($query) {
                     $query->where('user_id', $this->user->id)->latest();
-                }
+                },
             ])->count();
     }
 

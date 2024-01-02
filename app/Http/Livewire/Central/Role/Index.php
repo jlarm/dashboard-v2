@@ -17,7 +17,7 @@ class Index extends Component
             'roles' => Role::orderBy('name', 'asc')
                 ->with('permissions')
                 ->whereNotIn('name', ['super-admin'])
-                ->get()
+                ->get(),
         ]);
     }
 }

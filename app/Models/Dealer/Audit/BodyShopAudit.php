@@ -33,7 +33,7 @@ class BodyShopAudit extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this
             ->addMediaConversion('preview')
@@ -43,6 +43,6 @@ class BodyShopAudit extends Model implements HasMedia
 
     public function getPathToMedia(Media $media): string
     {
-        return tenant('id') . '/' . $media->collection_name . '/' . $media->id . '/';
+        return tenant('id').'/'.$media->collection_name.'/'.$media->id.'/';
     }
 }

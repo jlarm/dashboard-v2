@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Dealer\Audit;
 use App\Http\Controllers\Controller;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Store;
+use Illuminate\Http\RedirectResponse;
 
 class OshaCreateController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): RedirectResponse
     {
         $audit = OshaAudit::create([
             'user_id' => auth()->id(),

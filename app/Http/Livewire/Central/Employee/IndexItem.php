@@ -10,7 +10,9 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public User $user;
+
     public int $totalCourses;
+
     public $completed;
 
     public function mount()

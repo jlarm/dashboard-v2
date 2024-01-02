@@ -13,20 +13,35 @@ use Livewire\Component;
 class Create extends Component
 {
     public $store;
+
     public $employeeList;
+
     public $store_id;
+
     public $qi;
+
     public $qip;
+
     public $sm;
+
     public $smp;
+
     public $pm;
+
     public $pmp;
+
     public $bsm;
+
     public $bsmp;
+
     public $gm;
+
     public $gmp;
+
     public $owner;
+
     public $ownerp;
+
     public $signature;
 
     public function mount(Request $request)
@@ -69,7 +84,7 @@ class Create extends Component
         $manual = RedFlag::create([
             'store_id' => $this->employeeList->store_id,
             'user_id' => auth()->user()->id,
-            'qualified_individual_name' =>  $this->employeeList->qualified_individual_name ?? '',
+            'qualified_individual_name' => $this->employeeList->qualified_individual_name ?? '',
             'qualified_individual_phone' => $this->employeeList->qualified_individual_phone ?? '',
             'service_manager_name' => $this->employeeList->service_manager_name ?? '',
             'service_manager_phone' => $this->employeeList->service_manager_phone ?? '',
@@ -97,7 +112,7 @@ class Create extends Component
             new UploadRedFlagToDigitalOceanJob($manual),
         ])->dispatch();
 
-        (!tenant('locations')) ? $this->redirect(route('dealer.manual.red-flag.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.red-flag.index', $this->store));
+        (! tenant('locations')) ? $this->redirect(route('dealer.manual.red-flag.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.red-flag.index', $this->store));
 
     }
 

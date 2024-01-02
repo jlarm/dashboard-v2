@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
@@ -30,7 +29,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, HasSlug;
+    use HasApiTokens, HasFactory, HasRoles, HasSlug, Notifiable, SoftDeletes;
 
     protected $appends = ['user_has_not_completed_courses'];
 
@@ -84,14 +83,14 @@ class User extends Authenticatable
 
     private function userHasNoCaliforniaStore(): bool
     {
-        return !$this->stores()->where('state', 'California')->exists();
+        return ! $this->stores()->where('state', 'California')->exists();
     }
 
     private function totalUserCourses(): array
     {
         if (is_null($this->userCoursesCache)) {  // Check if already computed and cached
             // Fetch the role IDs excluding the ID 5
-            $userRoles = $this->roles->pluck('id')->reject(fn($id) => $id == 5);
+            $userRoles = $this->roles->pluck('id')->reject(fn ($id) => $id == 5);
 
             // If there are no valid roles, return an empty array
             if ($userRoles->isEmpty()) {
@@ -107,7 +106,7 @@ class User extends Authenticatable
                 $this->userCoursesCache = Course::with('departments')
                     ->where('slug', '!=', 'patriot-act-ofac')
                     ->where(function ($query) use ($courseWithRole) {
-                        $query->whereHas('departments', fn($q) => $q->where('id', $this->department_id))
+                        $query->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
                             ->whereIn('id', $courseWithRole);
                     })
                     ->orWhereDoesntHave('departments')
@@ -122,11 +121,11 @@ class User extends Authenticatable
                 $this->userCoursesCache = Course::with('departments')
                     ->where('slug', '!=', 'patriot-act-ofac')
                     ->where(function ($query) use ($courseWithRole) {
-                        $query->whereHas('departments', fn($q) => $q->where('id', $this->department_id))
+                        $query->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
                             ->whereIn('id', $courseWithRole);
                     })
                     ->orWhereDoesntHave('departments')
-                    ->when($this->userHasNoCaliforniaStore(), fn($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
+                    ->when($this->userHasNoCaliforniaStore(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
                     ->pluck('id')
                     ->toArray();
             }
@@ -156,8 +155,6 @@ class User extends Authenticatable
     {
         return $this->total_completed_courses != $this->total_user_courses;
     }
-
-
 
     public function dealerships(): HasMany
     {
@@ -245,14 +242,13 @@ class User extends Authenticatable
 
     public function scopeCurrentUserIsManager($query, $currentUser): void
     {
-        if ($currentUser->hasRole('Manager') && !$currentUser->hasRole('Qualified Individual')) {
+        if ($currentUser->hasRole('Manager') && ! $currentUser->hasRole('Qualified Individual')) {
             $query->where('department_id', $currentUser->department_id);
         }
     }
 
     public function scopeUsersNotCompletedCourses($query, $showNotCompleted): void
     {
-        $query->when($showNotCompleted, fn($query) => $query->where($this->user_has_not_completed_courses, true));
+        $query->when($showNotCompleted, fn ($query) => $query->where($this->user_has_not_completed_courses, true));
     }
-
 }

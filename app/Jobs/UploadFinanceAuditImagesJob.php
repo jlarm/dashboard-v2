@@ -24,8 +24,8 @@ class UploadFinanceAuditImagesJob implements ShouldQueue
     public function handle(): void
     {
         for ($i = 1; $i <= 49; $i++) {
-            $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q' . $i . '_images'})
-                ->toMediaCollection('finance_q' . $i . '_images', 'digitalocean');
+            $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q'.$i.'_images'})
+                ->toMediaCollection('finance_q'.$i.'_images', 'digitalocean');
         }
     }
 }

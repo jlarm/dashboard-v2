@@ -8,6 +8,7 @@ use Livewire\Component;
 class ComplianceInfoDownloadView extends Component
 {
     public Store $store;
+
     public function render()
     {
         return view('livewire.dealer.settings.compliance-info-download-view', [

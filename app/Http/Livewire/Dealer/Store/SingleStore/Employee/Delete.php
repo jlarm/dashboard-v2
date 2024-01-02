@@ -10,6 +10,7 @@ use WireElements\Pro\Components\Modal\Modal;
 class Delete extends Modal
 {
     public $user;
+
     public $store;
 
     public function mount(User $user, Store $store)
@@ -31,11 +32,12 @@ class Delete extends Modal
                 ->send();
 
             return redirect()->route('dealer.stores.employees', $this->store->slug);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e);
             $this->addError('file', 'An error occurred while deleting the user.');
         }
     }
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.employee.delete');

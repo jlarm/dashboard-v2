@@ -38,9 +38,9 @@ class VendorFormNotification extends Notification
 
         return (new MailMessage)
             ->greeting('Hello '.$this->vendor->contact_name.',')
-            ->line('Please click the button below to fill out our 3rd party service provider form for ' . tenant('name').'.')
+            ->line('Please click the button below to fill out our 3rd party service provider form for '.tenant('name').'.')
             ->action('Click Here', url($url))
-            ->line('If you have any questions, please contact ' . $user->name . ' at ' . $user->email)
+            ->line('If you have any questions, please contact '.$user->name.' at '.$user->email)
             ->salutation('Thank you for your time!'.'<br>'.tenant('name'));
     }
 

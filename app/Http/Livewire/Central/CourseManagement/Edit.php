@@ -8,8 +8,11 @@ use Livewire\Component;
 class Edit extends Component
 {
     public Course $course;
+
     public $name;
+
     public array $slides;
+
     public $questions;
 
     public function mount()

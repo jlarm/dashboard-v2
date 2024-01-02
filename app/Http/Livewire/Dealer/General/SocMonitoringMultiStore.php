@@ -8,6 +8,7 @@ use Livewire\Component;
 class SocMonitoringMultiStore extends Component
 {
     public Store $store;
+
     public $active;
 
     public function mount()
@@ -18,6 +19,7 @@ class SocMonitoringMultiStore extends Component
             ->first()
             ?->pluck('monitoring_start_date');
     }
+
     public function render()
     {
         return view('livewire.dealer.general.soc-monitoring-multi-store');

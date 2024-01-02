@@ -9,7 +9,9 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public IndividualAudit $individualAudit;
+
     public Store $store;
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.audit.individual.index-item')->layout('components.dealer-app');

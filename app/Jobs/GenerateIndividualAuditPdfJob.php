@@ -16,16 +16,27 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $timeout = 240;
+
     public $audits;
+
     public int $count = 0;
+
     protected $sum;
+
     public $issueCountByManager;
+
     public $issuesByManager;
+
     public $array = [];
+
     protected $parent;
+
     public $results = [];
+
     public $totals = [];
+
     public $grandTotal;
+
     public $managerIssueCount = [];
 
     public function __construct(protected IndividualAudit $individualAudit)
@@ -66,6 +77,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                         }
                     }
                 });
+
                 return count($this->array);
             });
 
@@ -92,12 +104,13 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                         ) {
                             if ($value === 2) {
                                 preg_match('/^[^_]*_q\K[^_]+/', $key, $matches);
-                                $comment = $item->getAttributes()['individual_q' . $matches[0] . '_comment'];
+                                $comment = $item->getAttributes()['individual_q'.$matches[0].'_comment'];
                                 $this->array[] = [$key, $item->customer_number, $key, $comment];
                             }
                         }
                     }
                 });
+
                 return collect($this->array)->groupBy(function ($item) {
                     return $item[0];
                 });
@@ -130,16 +143,17 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                         }
                     }
                 });
+
                 return array_count_values($this->array);
             });
 
         foreach ($this->managerIssueCount as $name => $answers) {
             foreach ($answers as $question => $answer) {
-                if (!isset($this->results[$question])) {
+                if (! isset($this->results[$question])) {
                     $this->results[$question] = [];
                 }
                 $this->results[$question][$name] = $answer;
-                if (!isset($this->results[$question]['Total'])) {
+                if (! isset($this->results[$question]['Total'])) {
                     $this->results[$question]['Total'] = 0;
                 }
                 $this->results[$question]['Total'] += $answer;
@@ -150,14 +164,14 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
         $allNames = array_keys($this->managerIssueCount->toArray());
         foreach ($this->results as $question => $answers) {
             foreach ($allNames as $name) {
-                if (!isset($answers[$name])) {
+                if (! isset($answers[$name])) {
                     $this->results[$question][$name] = 0;
                 }
             }
         }
 
         // Rearrange "Total" to be at the end of each sub-array
-        foreach($this->results as &$subArray){
+        foreach ($this->results as &$subArray) {
             // Check if "Total" key exists
             if (isset($subArray['Total'])) {
                 // Remove "Total" key-value pair from array
@@ -185,7 +199,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
         foreach ($this->audits as $audit) {
             $sum = 0;
             for ($i = 3; $i <= 40; $i++) {
-                if ($audit->{'individual_q' . $i . '_answer'} == 2) {
+                if ($audit->{'individual_q'.$i.'_answer'} == 2) {
                     $sum += 1;
                 }
             }
@@ -200,17 +214,17 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     public function handle(): void
     {
         $path = storage_path('app/individual-audits');
-        if(!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
 
-        if(tenant('locations')){
+        if (tenant('locations')) {
             $dealerName = str_replace(' ', '-', $this->individualAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
         }
 
-        $fileName = $this->individualAudit->audit_date->format('Ymd') . '-'. $this->individualAudit->created_at->format('his') . '-' . $dealerName . '-deal-jacket-audit.pdf';
+        $fileName = $this->individualAudit->audit_date->format('Ymd').'-'.$this->individualAudit->created_at->format('his').'-'.$dealerName.'-deal-jacket-audit.pdf';
 
         $html = view('dealer.audit.individual.download', [
             'audit' => $this->parent,
@@ -226,7 +240,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             ->margins(10, 10, 10, 10)
             ->scale(0.75)
             ->waitUntilNetworkIdle()
-            ->save(storage_path('app/individual-audits/' . $fileName));
+            ->save(storage_path('app/individual-audits/'.$fileName));
 
         $updatePath = $this->parent->update([
             'pdf_path' => $fileName,

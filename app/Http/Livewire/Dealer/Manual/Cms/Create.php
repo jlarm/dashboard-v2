@@ -8,32 +8,51 @@ use App\Models\CmsManual;
 use App\Models\Dealer\Store;
 use App\Models\Role;
 use App\Models\User;
-use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Livewire\Component;
 
 class Create extends Component
 {
     public $store;
+
     public $qi;
+
     public $qiRole;
+
     public $standard_dpp_rate;
+
     public $adoption_approval_name_one;
+
     public $adoption_approval_signature_one;
+
     public $adoption_approval_name_two;
+
     public $adoption_approval_signature_two;
+
     public $adoption_approval_name_three;
+
     public $adoption_approval_signature_three;
+
     public $dealer_participation_name;
+
     public $dealer_participation_signature;
+
     public $appointment_program_name_one;
+
     public $appointment_program_signature_one;
+
     public $appointment_program_name_two;
+
     public $appointment_program_signature_two;
+
     public $appointment_program_name_three;
+
     public $appointment_program_signature_three;
+
     public $acknowledgement_name;
+
     public $acknowledgement_signature;
 
     public function mount(Request $request)
@@ -46,7 +65,6 @@ class Create extends Component
 
         $this->loadQi();
 
-
         $this->standard_dpp_rate = $this->store->standard_dpp_rate;
 
         if ($this->standard_dpp_rate === null) {
@@ -56,7 +74,7 @@ class Create extends Component
 
     private function loadQi()
     {
-        if(tenant('locations')) {
+        if (tenant('locations')) {
             $this->qi = User::whereHas('roles', function ($query) {
                 $query->where('name', 'Qualified Individual');
             })->whereHas('stores', function ($query) {
@@ -66,14 +84,14 @@ class Create extends Component
             $this->qi = User::role('Qualified Individual')->pluck('name')->first() ?? null;
         }
 
-        if (!$this->qi) {
+        if (! $this->qi) {
             $this->sendQiMissingNotification();
         }
     }
 
     private function sendQiMissingNotification()
     {
-        $route = (!tenant('locations')) ? route('dealer.employees.index') : route('dealer.stores.employees', $this->store);
+        $route = (! tenant('locations')) ? route('dealer.employees.index') : route('dealer.stores.employees', $this->store);
         Notification::make()
             ->title('Qualified Individual Missing')
             ->body('Please assign an employee the Qualified Individual role.')
@@ -89,7 +107,7 @@ class Create extends Component
 
     private function sendStandardDppRateMissingNotification()
     {
-        $route = (!tenant('locations')) ? route('dealer.dealer.settings') : route('dealer.stores.settings', $this->store);
+        $route = (! tenant('locations')) ? route('dealer.dealer.settings') : route('dealer.stores.settings', $this->store);
         Notification::make()
             ->title('Standard DPP Rate Missing')
             ->body('Please set the standard DPP rate in the Dealer Settings.')
@@ -129,17 +147,33 @@ class Create extends Component
 
         $this->validate();
 
-        if($this->adoption_approval_name_one) {$aanOne = \Str::of($this->adoption_approval_name_one)->replace(' ', '_')->lower() . '_' . now()->format('YmdHis') . '.png';}
-        if($this->adoption_approval_name_two) {$aanTwo = \Str::of($this->adoption_approval_name_two)->replace(' ', '_')->lower() . '_' . now()->format('YmdHis') . '.png';}
-        if($this->adoption_approval_name_three) {$aanThree = \Str::of($this->adoption_approval_name_three)->replace(' ', '_')->lower() . '_' . now()->format('YmdHis') . '.png';}
+        if ($this->adoption_approval_name_one) {
+            $aanOne = \Str::of($this->adoption_approval_name_one)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
+        }
+        if ($this->adoption_approval_name_two) {
+            $aanTwo = \Str::of($this->adoption_approval_name_two)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
+        }
+        if ($this->adoption_approval_name_three) {
+            $aanThree = \Str::of($this->adoption_approval_name_three)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
+        }
 
-        if($this->dealer_participation_name) {$dpn = \Str::of($this->dealer_participation_name)->replace(' ', '_')->lower() . '_' . now()->format('YmdHis') . '.png';}
+        if ($this->dealer_participation_name) {
+            $dpn = \Str::of($this->dealer_participation_name)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
+        }
 
-        if($this->appointment_program_name_one) {$apnOne = \Str::of($this->appointment_program_name_one)->replace(' ', '_')->lower() . '_' . now()->format('YmdHis') . '.png';}
-        if($this->appointment_program_name_two) {$apnTwo = \Str::of($this->appointment_program_name_two)->replace(' ', '_')->lower() . '_' . now()->format('YmdHis') . '.png';}
-        if($this->appointment_program_name_three) {$apnThree = \Str::of($this->appointment_program_name_three)->replace(' ', '_')->lower() . '_' . now()->format('YmdHis') . '.png';}
+        if ($this->appointment_program_name_one) {
+            $apnOne = \Str::of($this->appointment_program_name_one)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
+        }
+        if ($this->appointment_program_name_two) {
+            $apnTwo = \Str::of($this->appointment_program_name_two)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
+        }
+        if ($this->appointment_program_name_three) {
+            $apnThree = \Str::of($this->appointment_program_name_three)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
+        }
 
-        if($this->acknowledgement_name) {$an = \Str::of($this->acknowledgement_name)->replace(' ', '_')->lower() . '_' . now()->format('YmdHis') . '.png';}
+        if ($this->acknowledgement_name) {
+            $an = \Str::of($this->acknowledgement_name)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
+        }
 
         $manual = CmsManual::create([
             'user_id' => auth()->user()->id,
@@ -164,26 +198,42 @@ class Create extends Component
             'acknowledgement_signature' => $an ?? '',
         ]);
 
+        if ($this->adoption_approval_signature_one) {
+            \Storage::put('cms-signatures/'.$aanOne, base64_decode(\Str::of($this->adoption_approval_signature_one)->after(',')));
+        }
+        if ($this->adoption_approval_signature_two) {
+            \Storage::put('cms-signatures/'.$aanTwo, base64_decode(\Str::of($this->adoption_approval_signature_two)->after(',')));
+        }
+        if ($this->adoption_approval_signature_three) {
+            \Storage::put('cms-signatures/'.$aanThree, base64_decode(\Str::of($this->adoption_approval_signature_three)->after(',')));
+        }
 
-        if($this->adoption_approval_signature_one) {\Storage::put('cms-signatures/'.$aanOne, base64_decode(\Str::of($this->adoption_approval_signature_one)->after(',')));}
-        if($this->adoption_approval_signature_two) {\Storage::put('cms-signatures/'.$aanTwo, base64_decode(\Str::of($this->adoption_approval_signature_two)->after(',')));}
-        if($this->adoption_approval_signature_three) {\Storage::put('cms-signatures/'.$aanThree, base64_decode(\Str::of($this->adoption_approval_signature_three)->after(',')));}
+        if ($this->dealer_participation_signature) {
+            \Storage::put('cms-signatures/'.$dpn, base64_decode(\Str::of($this->dealer_participation_signature)->after(',')));
+        }
 
-        if($this->dealer_participation_signature) {\Storage::put('cms-signatures/'.$dpn, base64_decode(\Str::of($this->dealer_participation_signature)->after(',')));}
+        if ($this->appointment_program_signature_one) {
+            \Storage::put('cms-signatures/'.$apnOne, base64_decode(\Str::of($this->appointment_program_signature_one)->after(',')));
+        }
+        if ($this->appointment_program_signature_two) {
+            \Storage::put('cms-signatures/'.$apnTwo, base64_decode(\Str::of($this->appointment_program_signature_two)->after(',')));
+        }
+        if ($this->appointment_program_signature_three) {
+            \Storage::put('cms-signatures/'.$apnThree, base64_decode(\Str::of($this->appointment_program_signature_three)->after(',')));
+        }
 
-        if($this->appointment_program_signature_one) {\Storage::put('cms-signatures/'.$apnOne, base64_decode(\Str::of($this->appointment_program_signature_one)->after(',')));}
-        if($this->appointment_program_signature_two) {\Storage::put('cms-signatures/'.$apnTwo, base64_decode(\Str::of($this->appointment_program_signature_two)->after(',')));}
-        if($this->appointment_program_signature_three) {\Storage::put('cms-signatures/'.$apnThree, base64_decode(\Str::of($this->appointment_program_signature_three)->after(',')));}
-
-        if($this->acknowledgement_signature) {\Storage::put('cms-signatures/'.$an, base64_decode(\Str::of($this->acknowledgement_signature)->after(',')));}
+        if ($this->acknowledgement_signature) {
+            \Storage::put('cms-signatures/'.$an, base64_decode(\Str::of($this->acknowledgement_signature)->after(',')));
+        }
 
         \Bus::chain([
             new GenerateCmsManualJob($manual),
             new UploadCmsToDigitalOceanJob($manual),
         ])->dispatch();
 
-        (!tenant('locations')) ? $this->redirect(route('dealer.manual.cms.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.cms.index', $this->store));
+        (! tenant('locations')) ? $this->redirect(route('dealer.manual.cms.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.cms.index', $this->store));
     }
+
     public function render()
     {
         return view('livewire.dealer.manual.cms.create')->layout('components.dealer-app');

@@ -9,6 +9,7 @@ use Str;
 class IndexItem extends Component
 {
     public Permission $permission;
+
     public bool $enableEditing;
 
     public function mount()

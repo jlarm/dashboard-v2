@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 class Create extends Component
 {
     public $name;
+
     public $assignedPermissions = [];
 
     protected $rules = [
@@ -33,10 +34,11 @@ class Create extends Component
             ->success()
             ->send();
     }
+
     public function render()
     {
         return view('livewire.central.role.create', [
-            'permissions' => Permission::all()
+            'permissions' => Permission::all(),
         ]);
     }
 }

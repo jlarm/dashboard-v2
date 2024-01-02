@@ -29,6 +29,7 @@ class Create extends Component
             ->success()
             ->send();
     }
+
     public function render()
     {
         return view('livewire.central.department.create');

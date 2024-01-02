@@ -22,5 +22,4 @@ class SocMonitoring extends Component
     {
         return view('livewire.dealer.general.soc-monitoring');
     }
-
 }

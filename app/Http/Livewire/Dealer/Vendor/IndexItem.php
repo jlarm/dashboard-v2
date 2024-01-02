@@ -9,15 +9,18 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public Vendor $vendor;
+
     public $noCount;
+
     public $totalQuestions = 0;
+
     public $array = [];
 
     public function mount()
     {
-        foreach($this->vendor->getAttributes() as $key => $value) {
-            if(str_starts_with($key, 'q') && str_ends_with($key, 'a')) {
-                if($value === 'no') {
+        foreach ($this->vendor->getAttributes() as $key => $value) {
+            if (str_starts_with($key, 'q') && str_ends_with($key, 'a')) {
+                if ($value === 'no') {
                     $this->array[] = $value;
                 }
                 $this->totalQuestions++;

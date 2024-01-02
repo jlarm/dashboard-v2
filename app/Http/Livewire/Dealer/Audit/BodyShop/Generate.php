@@ -19,6 +19,7 @@ class Generate extends Component
             new UploadBodyShopAuditToDigitalOceanJob($this->bodyShopAudit),
         ])->dispatch();
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.body-shop.generate');

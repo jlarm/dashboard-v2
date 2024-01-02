@@ -9,13 +9,21 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public IndividualAudit $individualAudit;
+
     public Store $store;
+
     public $drafts;
+
     public $tenants;
+
     public $deals;
+
     public $sum;
+
     public $rating;
+
     public $flat;
+
     public $test;
 
     public function mount()
@@ -26,7 +34,7 @@ class IndexItem extends Component
 
         $this->test = $this->flat->pluck('rating');
 
-        if ($this->test->contains(null)){
+        if ($this->test->contains(null)) {
             $this->rating = 0;
         } else {
             $this->rating = $this->test->avg();
@@ -35,17 +43,16 @@ class IndexItem extends Component
 
     public function getQuarterNameAttribute()
     {
-        if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3){
+        if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3) {
             return 'Q1';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 4 && $this->individualAudit->audit_date->format('m') <= 6){
+        } elseif ($this->individualAudit->audit_date->format('m') >= 4 && $this->individualAudit->audit_date->format('m') <= 6) {
             return 'Q2';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 7 && $this->individualAudit->audit_date->format('m') <= 9){
+        } elseif ($this->individualAudit->audit_date->format('m') >= 7 && $this->individualAudit->audit_date->format('m') <= 9) {
             return 'Q3';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12){
+        } elseif ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
             return 'Q4';
         }
     }
-
 
     protected $listeners = [
         'refreshIndividualAudits' => '$refresh',

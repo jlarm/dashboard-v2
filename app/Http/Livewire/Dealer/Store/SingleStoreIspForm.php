@@ -11,24 +11,43 @@ use Livewire\Component;
 class SingleStoreIspForm extends Component
 {
     public Store $store;
+
     public $qi;
+
     public $qip;
+
     public $sm;
+
     public $smp;
+
     public $pm;
+
     public $pmp;
+
     public $bsm;
+
     public $bsmp;
+
     public $gm;
+
     public $gmp;
+
     public $owner;
+
     public $ownerp;
+
     public $pepn;
+
     public $pnepn;
+
     public $fepn;
+
     public $fnepn;
+
     public $alarmSystem;
+
     public $burglarSystem;
+
     public $signature;
 
     public function mount()
@@ -137,7 +156,6 @@ class SingleStoreIspForm extends Component
             })
             ->first()->phone ?? '';
 
-
         $this->pepn = $settings->police_emergency_phone ?? '';
         $this->pnepn = $settings->police_non_emergency_phone ?? '';
         $this->fepn = $settings->fire_emergency_phone ?? '';
@@ -204,6 +222,7 @@ class SingleStoreIspForm extends Component
 
         $this->redirect(route('dealer.manual.index'));
     }
+
     public function render()
     {
         return view('livewire.dealer.store.single-store-isp-form')->layout('components.dealer-app');

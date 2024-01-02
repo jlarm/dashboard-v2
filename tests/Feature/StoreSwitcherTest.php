@@ -1,6 +1,6 @@
 <?php
 
-it ('can render the store switcher', function() {
+it('can render the store switcher', function () {
     $store = \App\Models\Dealer\Store::first();
 
     session(['stores' => $store->name]);

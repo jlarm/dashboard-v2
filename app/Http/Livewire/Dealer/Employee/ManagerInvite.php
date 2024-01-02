@@ -11,7 +11,9 @@ use WireElements\Pro\Components\Modal\Modal;
 class ManagerInvite extends Modal
 {
     public $name;
+
     public $email;
+
     public $role;
 
     protected $rules = [

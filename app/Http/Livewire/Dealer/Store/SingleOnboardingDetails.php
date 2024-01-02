@@ -12,43 +12,81 @@ use Spatie\Browsershot\Browsershot;
 class SingleOnboardingDetails extends Component
 {
     public $store;
+
     public $dealer;
+
     public $pep;
+
     public $pnep;
+
     public $fep;
+
     public $fnep;
+
     public $fireAlarm;
+
     public $burglarAlarm;
+
     public $firewallCompany;
+
     public Collection $ipAddresses;
+
     public $mfa;
+
     public $vulnerability;
+
     public $monitoring;
+
     public $antivirus;
+
     public $antivirusComputers;
+
     public $antivirusMinutes;
+
     public $screensaverMinutes;
+
     public $dmsProvider;
+
     public $backups;
+
     public Collection $websiteUrls;
+
     public $designatedRedFlagCoordinator;
+
     public $documentShredding;
+
     public $serviceProviderAgreements;
+
     public $offsiteStorage;
+
     public $otherBusiness;
+
     public $vendorAccess;
+
     public $personalDevices;
+
     public $complianceIssues;
+
     public $fi_products_sold;
+
     public Collection $service_contracts;
+
     public Collection $tire_wheel;
+
     public Collection $other_fi;
+
     public $fi_system;
+
     public $appearance_protection_sold;
+
     public $reinsurance;
+
     public $admin_name;
+
     public $fi_username;
+
     public $fi_password;
+
     public $standard_dpp_rate;
 
     public function addIpAddress()
@@ -193,7 +231,6 @@ class SingleOnboardingDetails extends Component
         $this->standard_dpp_rate = $this->store->standard_dpp_rate;
     }
 
-
     public function update(): void
     {
         $this->validate();
@@ -257,7 +294,7 @@ class SingleOnboardingDetails extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, str_replace(' ', '-', strtolower($this->store->name)) . '-compliance-info-' . now()->format('m-d-y') . '.pdf');
+        }, str_replace(' ', '-', strtolower($this->store->name)).'-compliance-info-'.now()->format('m-d-y').'.pdf');
     }
 
     public function render()

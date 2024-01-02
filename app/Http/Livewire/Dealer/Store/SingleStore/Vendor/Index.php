@@ -12,7 +12,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.store.single-store.vendor.index', [
-            'vendors' => $this->store->vendors()->get()
+            'vendors' => $this->store->vendors()->get(),
         ])->layout('components.dealer-app');
     }
 }

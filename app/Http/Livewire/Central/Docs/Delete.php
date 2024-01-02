@@ -30,11 +30,12 @@ class Delete extends Modal
                 ->title('Document Deleted Successfully!')
                 ->success()
                 ->send();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e);
             $this->addError('file', 'An error occurred while deleting the file.');
         }
     }
+
     public function render()
     {
         return view('livewire.central.docs.delete');

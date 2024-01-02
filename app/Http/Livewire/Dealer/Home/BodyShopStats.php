@@ -13,8 +13,11 @@ class BodyShopStats extends Component
     use BodyShopGenerateRating;
 
     public Store $store;
+
     public ?float $rating;
+
     public $audits;
+
     public $dates;
 
     public function mount()
@@ -43,6 +46,7 @@ class BodyShopStats extends Component
             ->values()
             ->toArray();
     }
+
     public function render()
     {
         return view('livewire.dealer.home.body-shop-stats');

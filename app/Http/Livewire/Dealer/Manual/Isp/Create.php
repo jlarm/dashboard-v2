@@ -7,38 +7,65 @@ use App\Jobs\Manuals\UploadIspToDigitaloceanJob;
 use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
-use Livewire\Component;
 use Illuminate\Http\Request;
+use Livewire\Component;
 
 class Create extends Component
 {
     public $store;
+
     public $store_id;
+
     public $employeeList;
+
     public $qi;
+
     public $qit = 'Qualified Individual';
+
     public $qip;
+
     public $sm;
+
     public $smt = 'Service Manager';
+
     public $smp;
+
     public $pm;
+
     public $pmt = 'Parts Manager';
+
     public $pmp;
+
     public $bsm;
+
     public $bsmt = 'Body Shop Manager';
+
     public $bsmp;
+
     public $gm;
+
     public $gmt = 'General Manager';
+
     public $gmp;
+
     public $owner;
+
     public $ownert = 'Owner';
+
     public $ownerp;
+
     public $pepn;
+
     public $pnepn;
+
     public $fepn;
+
     public $fnepn;
+
     public $alarmSystem;
+
     public $burglarSystem;
+
     public $signature;
 
     public function mount(Request $request): void
@@ -81,7 +108,7 @@ class Create extends Component
         $manual = Isp::create([
             'store_id' => $this->store->id,
             'user_id' => auth()->user()->id,
-            'qualified_individual_name' =>  $this->employeeList->qualified_individual_name ?? '',
+            'qualified_individual_name' => $this->employeeList->qualified_individual_name ?? '',
             'qualified_individual_phone' => $this->employeeList->qualified_individual_phone ?? '',
             'service_manager_name' => $this->employeeList->service_manager_name ?? '',
             'service_manager_phone' => $this->employeeList->service_manager_phone ?? '',
@@ -109,8 +136,9 @@ class Create extends Component
             new UploadIspToDigitaloceanJob($manual),
         ])->dispatch();
 
-        (!tenant('locations')) ? $this->redirect(route('dealer.manual.isp.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.isp.index', $this->store));
+        (! tenant('locations')) ? $this->redirect(route('dealer.manual.isp.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.isp.index', $this->store));
     }
+
     public function render()
     {
         return view('livewire.dealer.manual.isp.create')->layout('components.dealer-app');

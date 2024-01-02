@@ -14,13 +14,14 @@ class RedFlagCard extends Component
     public Store $store;
 
     public $manual;
+
     public $content;
 
     public function mount()
     {
         $this->manual = RedFlag::where('store_id', $this->store->id)->latest()->first();
-        if($this->manual && $this->manual->pdf_path) {
-            $this->content = Storage::disk('do-manuals')->url(tenant('id') . '/red-flags/' . $this->manual->pdf_path) ?? null;
+        if ($this->manual && $this->manual->pdf_path) {
+            $this->content = Storage::disk('do-manuals')->url(tenant('id').'/red-flags/'.$this->manual->pdf_path) ?? null;
         }
     }
 

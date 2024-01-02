@@ -9,9 +9,13 @@ use Livewire\Component;
 class GeneratedReportIndexItem extends Component
 {
     public FinanceAudit $financeAudit;
+
     public Store $store;
+
     public $rating;
+
     protected $sum;
+
     protected $audit;
 
     protected $listeners = [
@@ -23,7 +27,7 @@ class GeneratedReportIndexItem extends Component
         $this->audit = FinanceAudit::where('id', $this->financeAudit->id)->get();
         $this->audit->filter(function ($value) {
             for ($i = 1; $i <= 46; $i++) {
-                if ($value->{'finance_q' . $i .'_answer'} == 2) {
+                if ($value->{'finance_q'.$i.'_answer'} == 2) {
                     $this->sum += 1;
                 }
             }
@@ -32,6 +36,7 @@ class GeneratedReportIndexItem extends Component
         $wrong = $this->sum;
         $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.finance.generated-report-index-item');

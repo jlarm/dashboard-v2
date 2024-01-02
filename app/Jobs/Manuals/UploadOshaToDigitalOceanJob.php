@@ -26,10 +26,10 @@ class UploadOshaToDigitalOceanJob implements ShouldQueue
 
     public function handle(): void
     {
-        $pdf = Storage::get('/' . $this->manual->pdf_path);
-        $moved = Storage::disk('do-manuals')->put(tenant('id') . '/osha/' . $this->manual->pdf_path, $pdf);
-        if($moved) {
-            Storage::delete('/' . $this->manual->pdf_path);
+        $pdf = Storage::get('/'.$this->manual->pdf_path);
+        $moved = Storage::disk('do-manuals')->put(tenant('id').'/osha/'.$this->manual->pdf_path, $pdf);
+        if ($moved) {
+            Storage::delete('/'.$this->manual->pdf_path);
         }
     }
 }

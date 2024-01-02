@@ -15,7 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class IndividualAudit extends Model implements HasMedia
 {
-    use InteractsWithMedia, HasUUID;
+    use HasUUID, InteractsWithMedia;
 
     protected $guarded = [];
 
@@ -30,7 +30,7 @@ class IndividualAudit extends Model implements HasMedia
         return $this->belongsTo(Store::class);
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this
             ->addMediaConversion('preview')
@@ -40,7 +40,7 @@ class IndividualAudit extends Model implements HasMedia
 
     public function getPathToMedia(Media $media): string
     {
-        return tenant('id') . '/' . $media->collection_name . '/' . $media->id . '/';
+        return tenant('id').'/'.$media->collection_name.'/'.$media->id.'/';
     }
 
     public function children(): HasMany
@@ -65,15 +65,14 @@ class IndividualAudit extends Model implements HasMedia
 
     public function getQuarterNameAttribute()
     {
-        if ($this->audit_date->format('m') >= 1 && $this->audit_date->format('m') <= 3){
+        if ($this->audit_date->format('m') >= 1 && $this->audit_date->format('m') <= 3) {
             return 'Q1';
-        } elseif ($this->audit_date->format('m') >= 4 && $this->audit_date->format('m') <= 6){
+        } elseif ($this->audit_date->format('m') >= 4 && $this->audit_date->format('m') <= 6) {
             return 'Q2';
-        } elseif ($this->audit_date->format('m') >= 7 && $this->audit_date->format('m') <= 9){
+        } elseif ($this->audit_date->format('m') >= 7 && $this->audit_date->format('m') <= 9) {
             return 'Q3';
-        } elseif ($this->audit_date->format('m') >= 10 && $this->audit_date->format('m') <= 12){
+        } elseif ($this->audit_date->format('m') >= 10 && $this->audit_date->format('m') <= 12) {
             return 'Q4';
         }
     }
-
 }

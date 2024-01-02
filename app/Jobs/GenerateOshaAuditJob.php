@@ -24,31 +24,32 @@ class GenerateOshaAuditJob implements ShouldQueue
         $sum = 0;
         $exclude = [7, 21, 62];
         for ($i = 1; $i <= 65; $i++) {
-            if (!in_array($i, $exclude) && $this->oshaAudit->{'osha_q' . $i . '_answer'} == 2) {
+            if (! in_array($i, $exclude) && $this->oshaAudit->{'osha_q'.$i.'_answer'} == 2) {
                 $sum += 1;
             }
         }
 
         $wrong = $sum;
+
         return number_format(100 * (62 - $wrong) / 62, 2, '.', '');
     }
 
     public function handle(): void
     {
         $path = storage_path('app/osha');
-        if(tenant('locations')){
+        if (tenant('locations')) {
             $dealerName = str_replace(' ', '-', $this->oshaAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
         }
-        $fileName = $this->oshaAudit->audit_date->format('Ymd') . '-'. $this->oshaAudit->created_at->format('his') . '-' . $dealerName . '-osha-audit.pdf';
+        $fileName = $this->oshaAudit->audit_date->format('Ymd').'-'.$this->oshaAudit->created_at->format('his').'-'.$dealerName.'-osha-audit.pdf';
 
-        if(!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
 
         $html = view('dealer.audit.osha.download', [
-            'audit' => $this->oshaAudit
+            'audit' => $this->oshaAudit,
         ])->render();
 
         $footer = view('pdf.audit-footer')->render();
@@ -61,11 +62,11 @@ class GenerateOshaAuditJob implements ShouldQueue
             ->showBrowserHeaderAndFooter()
             ->hideHeader()
             ->footerHtml($footer)
-            ->save(storage_path('app/' . $fileName));
+            ->save(storage_path('app/'.$fileName));
 
         $updatePath = $this->oshaAudit->update([
             'pdf_path' => $fileName,
-            'rating' => $this->rating()
+            'rating' => $this->rating(),
         ]);
     }
 }

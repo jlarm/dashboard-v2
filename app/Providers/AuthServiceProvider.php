@@ -21,13 +21,9 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->registerPolicies();
-
         Builder::macro('search', function ($field, $string) {
             return $string ? $this->where($field, 'like', "%$string%") : $this;
         });

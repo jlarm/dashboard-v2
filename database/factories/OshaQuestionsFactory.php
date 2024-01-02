@@ -2,14 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\OshaQuestions;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
 class OshaQuestionsFactory extends Factory
 {
-    protected $model = OshaQuestions::class;
-
     public function definition(): array
     {
         return [

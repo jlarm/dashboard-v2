@@ -16,9 +16,10 @@ class Generate extends Component
     {
         Bus::chain([
             new GenerateAuditPdfJob($this->financeAudit),
-            new UploadAuditToDigitalOceanJob($this->financeAudit)
+            new UploadAuditToDigitalOceanJob($this->financeAudit),
         ])->dispatch();
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.finance.generate');

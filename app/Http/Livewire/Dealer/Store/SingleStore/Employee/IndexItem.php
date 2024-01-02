@@ -14,8 +14,11 @@ class IndexItem extends Component
     public $completed;
 
     public $totalCourses;
+
     public $departmentCourseCount;
+
     public $unassignedCourseCount;
+
     public $courseWithRole;
 
     public function mount()
@@ -38,11 +41,11 @@ class IndexItem extends Component
         $this->completed = collect($this->completed->where('passed', 1))->count();
 
         // Get all courses for this user's department
-//        if ($this->user->department_id) {
-//            $this->departmentCourseCount = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
-//        }
-//
-//        $this->unassignedCourseCount = Course::whereDoesntHave('departments')->count();
+        //        if ($this->user->department_id) {
+        //            $this->departmentCourseCount = Department::where('id', $this->user->department_id)->with('courses')->first()->courses()->count();
+        //        }
+        //
+        //        $this->unassignedCourseCount = Course::whereDoesntHave('departments')->count();
 
         $this->totalCourses = Course::query()
             ->WhereHas('departments', function ($query) {
@@ -60,6 +63,7 @@ class IndexItem extends Component
             $this->totalCourses = $this->totalCourses - 1;
         }
     }
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.employee.index-item', [

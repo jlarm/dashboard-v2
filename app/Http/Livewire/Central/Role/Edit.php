@@ -11,8 +11,11 @@ use Spatie\Permission\Models\Permission;
 class Edit extends Component
 {
     public Role $role;
+
     public $name;
+
     public $assignedPermissions = [];
+
     public $assignedCourses = [];
 
     public function mount()
@@ -46,7 +49,7 @@ class Edit extends Component
     public function updateCourses(): void
     {
         $this->role->courses()->detach();
-        $this->role->courses()->attach($this->assignedCourses, ['model_type' => 'App\Models\Course']);
+        $this->role->courses()->attach($this->assignedCourses, ['model_type' => \App\Models\Course::class]);
 
         Notification::make()
             ->title('Courses Successfully Updated!')

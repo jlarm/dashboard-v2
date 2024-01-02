@@ -13,7 +13,7 @@ class CertIndexItem extends Component
     public function render()
     {
         return view('livewire.dealer.profile.cert-index-item', [
-            'url' => Storage::disk('armp-certs')->temporaryUrl(tenant('id') . '/' . auth()->user()->id . '/' . $this->cert->file_name, now()->addSeconds(15))
+            'url' => Storage::disk('armp-certs')->temporaryUrl(tenant('id').'/'.auth()->user()->id.'/'.$this->cert->file_name, now()->addSeconds(15)),
         ]);
     }
 }

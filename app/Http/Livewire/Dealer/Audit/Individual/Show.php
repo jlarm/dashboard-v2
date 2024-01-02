@@ -8,9 +8,13 @@ use Livewire\Component;
 class Show extends Component
 {
     public IndividualAudit $individualAudit;
+
     public $audits;
+
     public $children;
+
     protected $sum;
+
     public $rating;
 
     protected $listeners = ['refreshComponent' => '$refresh'];
@@ -22,13 +26,13 @@ class Show extends Component
 
     public function getQuarterNameAttribute()
     {
-        if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3){
+        if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3) {
             return 'Q1';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 4 && $this->individualAudit->audit_date->format('m') <= 6){
+        } elseif ($this->individualAudit->audit_date->format('m') >= 4 && $this->individualAudit->audit_date->format('m') <= 6) {
             return 'Q2';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 7 && $this->individualAudit->audit_date->format('m') <= 9){
+        } elseif ($this->individualAudit->audit_date->format('m') >= 7 && $this->individualAudit->audit_date->format('m') <= 9) {
             return 'Q3';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12){
+        } elseif ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
             return 'Q4';
         }
     }
@@ -39,6 +43,7 @@ class Show extends Component
 
         return redirect()->route('dealer.audit.individual.index');
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.individual.show');

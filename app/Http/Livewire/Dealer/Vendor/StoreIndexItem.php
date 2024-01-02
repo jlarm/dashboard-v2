@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
-use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Livewire\Component;

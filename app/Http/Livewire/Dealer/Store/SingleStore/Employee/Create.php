@@ -13,6 +13,7 @@ class Create extends Component
     {
         $this->store = $request->get('store') ?? '';
     }
+
     public function render()
     {
         return view('livewire.dealer.store.single-store.employee.create')->layout('components.dealer-app');

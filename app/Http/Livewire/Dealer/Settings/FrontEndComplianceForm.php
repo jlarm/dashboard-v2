@@ -10,54 +10,103 @@ use Livewire\Component;
 class FrontEndComplianceForm extends Component
 {
     public $store;
+
     public $qualified_individual_name;
+
     public $qualified_individual_phone;
+
     public $service_manager_name;
+
     public $service_manager_phone;
+
     public $parts_manager_name;
+
     public $parts_manager_phone;
+
     public $body_shop_manager_name;
+
     public $body_shop_manager_phone;
+
     public $general_manager_name;
+
     public $general_manager_phone;
+
     public $owner_name;
+
     public $owner_phone;
+
     public $pep;
+
     public $pnep;
+
     public $fep;
+
     public $fnep;
+
     public $fireAlarm;
+
     public $burglarAlarm;
+
     public $firewallCompany;
+
     public Collection $ipAddresses;
+
     public $mfa;
+
     public $vulnerability;
+
     public $monitoring;
+
     public $antivirus;
+
     public $antivirusComputers;
+
     public $antivirusMinutes;
+
     public $screensaverMinutes;
+
     public $dmsProvider;
+
     public $backups;
+
     public Collection $websiteUrls;
+
     public $designatedRedFlagCoordinator;
+
     public $documentShredding;
+
     public $serviceProviderAgreements;
+
     public $offsiteStorage;
+
     public $otherBusiness;
+
     public $vendorAccess;
+
     public $personalDevices;
+
     public $complianceIssues;
+
     public $fi_products_sold;
+
     public Collection $service_contracts;
+
     public Collection $tire_wheel;
+
     public Collection $other_fi;
+
     public $fi_system;
+
     public $appearance_protection_sold;
+
     public $reinsurance;
+
     public $admin_name;
+
     public $user_submitted;
+
     public $fi_username;
+
     public $fi_password;
 
     public function addIpAddress(): void
@@ -217,8 +266,9 @@ class FrontEndComplianceForm extends Component
 
     public function update()
     {
-        if($this->user_submitted == 1) {
+        if ($this->user_submitted == 1) {
             $this->dispatchBrowserEvent('refresh-page');
+
             return;
         }
 
@@ -283,7 +333,6 @@ class FrontEndComplianceForm extends Component
 
         $this->dispatchBrowserEvent('refresh-page');
     }
-
 
     public function render()
     {

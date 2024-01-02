@@ -4,11 +4,11 @@ namespace App\Enums;
 
 enum Departments: string
 {
-    case  SALES = 'sales';
-    case  MARKETING = 'marketing';
-    case  FINANCE = 'finance';
-    case  HR = 'hr';
-    case  IT = 'it';
+    case SALES = 'sales';
+    case MARKETING = 'marketing';
+    case FINANCE = 'finance';
+    case HR = 'hr';
+    case IT = 'it';
     case PARTS = 'parts';
     case SERVICE = 'service';
 

@@ -7,16 +7,17 @@ use App\Models\Dealer\Audit\IndividualAudit;
 trait DealJacketGenerateRating
 {
     protected int $sum = 0;
+
     public $audits;
 
     public function rating()
     {
-        $this->audits = cache()->remember('individual_stats', 60*60*24, function () {
+        $this->audits = cache()->remember('individual_stats', 60 * 60 * 24, function () {
             return IndividualAudit::all();
         });
         $this->audits->filter(function ($value) {
             for ($i = 1; $i <= 43; $i++) {
-                if ($value->{'individual_q' . $i . '_answer'} == 2) {
+                if ($value->{'individual_q'.$i.'_answer'} == 2) {
                     $this->sum += 1;
                 }
             }

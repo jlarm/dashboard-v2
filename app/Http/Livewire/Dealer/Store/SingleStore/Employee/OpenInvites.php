@@ -12,13 +12,14 @@ class OpenInvites extends Component
     use WithPagination;
 
     public Store $store;
+
     public $search = '';
 
     public function render()
     {
         return view('livewire.dealer.store.single-store.employee.open-invites', [
             'invites' => Invite::query()
-                ->whereJsonContains('stores', (string)$this->store->id)
+                ->whereJsonContains('stores', (string) $this->store->id)
                 ->where('registered_at', null)
                 ->with('user')
                 ->orderBy('created_at', 'desc')

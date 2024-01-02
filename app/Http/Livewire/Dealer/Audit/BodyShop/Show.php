@@ -15,6 +15,7 @@ class Show extends Component
     use WithMedia;
 
     public Store $store;
+
     public BodyShopAudit $bodyShopAudit;
 
     public $search = '';
@@ -68,142 +69,279 @@ class Show extends Component
     ];
 
     public $draft;
+
     public $audit_date;
+
     public $body_shop_q1_answer;
+
     public $body_shop_q1_comment;
+
     public $body_shop_q1_images;
+
     public $body_shop_q2_answer;
+
     public $body_shop_q2_comment;
+
     public $body_shop_q2_images;
+
     public $body_shop_q3_answer;
+
     public $body_shop_q3_comment;
+
     public $body_shop_q3_images;
+
     public $body_shop_q4_answer;
+
     public $body_shop_q4_comment;
+
     public $body_shop_q4_images;
+
     public $body_shop_q5_answer;
+
     public $body_shop_q5_comment;
+
     public $body_shop_q5_images;
+
     public $body_shop_q6_answer;
+
     public $body_shop_q6_comment;
+
     public $body_shop_q6_images;
+
     public $body_shop_q7_answer;
+
     public $body_shop_q7_comment;
+
     public $body_shop_q7_images;
+
     public $body_shop_q8_answer;
+
     public $body_shop_q8_comment;
+
     public $body_shop_q8_images;
+
     public $body_shop_q9_answer;
+
     public $body_shop_q9_comment;
+
     public $body_shop_q9_images;
+
     public $body_shop_q10_answer;
+
     public $body_shop_q10_comment;
+
     public $body_shop_q10_images;
+
     public $body_shop_q11_answer;
+
     public $body_shop_q11_comment;
+
     public $body_shop_q11_images;
+
     public $body_shop_q12_answer;
+
     public $body_shop_q12_comment;
+
     public $body_shop_q12_images;
+
     public $body_shop_q13_answer;
+
     public $body_shop_q13_comment;
+
     public $body_shop_q13_images;
+
     public $body_shop_q14_answer;
+
     public $body_shop_q14_comment;
+
     public $body_shop_q14_images;
+
     public $body_shop_q15_answer;
+
     public $body_shop_q15_comment;
+
     public $body_shop_q15_images;
+
     public $body_shop_q16_answer;
+
     public $body_shop_q16_comment;
+
     public $body_shop_q16_inspection_date;
+
     public $body_shop_q16_images;
+
     public $body_shop_q17_answer;
+
     public $body_shop_q17_comment;
+
     public $body_shop_q17_images;
+
     public $body_shop_q18_answer;
+
     public $body_shop_q18_comment;
+
     public $body_shop_q18_images;
+
     public $body_shop_q19_answer;
+
     public $body_shop_q19_comment;
+
     public $body_shop_q19_images;
+
     public $body_shop_q20_answer;
+
     public $body_shop_q20_comment;
+
     public $body_shop_q20_images;
+
     public $body_shop_q21_answer;
+
     public $body_shop_q21_comment;
+
     public $body_shop_q21_images;
+
     public $body_shop_q22_answer;
+
     public $body_shop_q22_comment;
+
     public $body_shop_q22_images;
+
     public $body_shop_q23_answer;
+
     public $body_shop_q23_comment;
+
     public $body_shop_q23_images;
+
     public $body_shop_q24_answer;
+
     public $body_shop_q24_comment;
+
     public $body_shop_q24_images;
+
     public $body_shop_q25_answer;
+
     public $body_shop_q25_comment;
+
     public $body_shop_q25_images;
+
     public $body_shop_q26_answer;
+
     public $body_shop_q26_comment;
+
     public $body_shop_q26_images;
+
     public $body_shop_q27_answer;
+
     public $body_shop_q27_comment;
+
     public $body_shop_q27_images;
+
     public $body_shop_q28_answer;
+
     public $body_shop_q28_comment;
+
     public $body_shop_q28_images;
+
     public $body_shop_q29_answer;
+
     public $body_shop_q29_comment;
+
     public $body_shop_q29_images;
+
     public $body_shop_q30_answer;
+
     public $body_shop_q30_comment;
+
     public $body_shop_q30_images;
+
     public $body_shop_q31_answer;
+
     public $body_shop_q31_comment;
+
     public $body_shop_q31_images;
+
     public $body_shop_q32_answer;
+
     public $body_shop_q32_comment;
+
     public $body_shop_q32_images;
+
     public $body_shop_q33_answer;
+
     public $body_shop_q33_comment;
+
     public $body_shop_q33_images;
+
     public $body_shop_q34_answer;
+
     public $body_shop_q34_comment;
+
     public $body_shop_q34_images;
+
     public $body_shop_q35_answer;
+
     public $body_shop_q35_comment;
+
     public $body_shop_q35_images;
+
     public $body_shop_q36_answer;
+
     public $body_shop_q36_comment;
+
     public $body_shop_q36_images;
+
     public $body_shop_q37_answer;
+
     public $body_shop_q37_comment;
+
     public $body_shop_q37_images;
+
     public $body_shop_q38_answer;
+
     public $body_shop_q38_comment;
+
     public $body_shop_q38_images;
+
     public $body_shop_q39_answer;
+
     public $body_shop_q39_comment;
+
     public $body_shop_q39_images;
+
     public $body_shop_q40_answer;
+
     public $body_shop_q40_comment;
+
     public $body_shop_q40_images;
+
     public $body_shop_q41_answer;
+
     public $body_shop_q41_comment;
+
     public $body_shop_q41_images;
+
     public $body_shop_q42_answer;
+
     public $body_shop_q42_comment;
+
     public $body_shop_q42_images;
+
     public $body_shop_q43_answer;
+
     public $body_shop_q43_comment;
+
     public $body_shop_q43_images;
+
     public $body_shop_q44_answer;
+
     public $body_shop_q44_comment;
+
     public $body_shop_q44_images;
+
     public $body_shop_q45_answer;
+
     public $body_shop_q45_comment;
+
     public $body_shop_q45_images;
 
     protected $rules = [
@@ -389,7 +527,7 @@ class Show extends Component
         'body_shop_q45_answer' => 'nullable',
         'body_shop_q45_comment' => 'nullable',
         'body_shop_q45_danger' => 'nullable',
-        'body_shop_q45_images' => 'nullable'
+        'body_shop_q45_images' => 'nullable',
     ];
 
     public function mount()
@@ -680,8 +818,8 @@ class Show extends Component
         ]);
 
         for ($i = 1; $i <= 45; $i++) {
-            $this->bodyShopAudit->syncFromMediaLibraryRequest($this->{'body_shop_q' . $i . '_images'})
-                ->toMediaCollection('body_shop_q' . $i . '_images');
+            $this->bodyShopAudit->syncFromMediaLibraryRequest($this->{'body_shop_q'.$i.'_images'})
+                ->toMediaCollection('body_shop_q'.$i.'_images');
         }
 
         Notification::make()
@@ -690,9 +828,10 @@ class Show extends Component
             ->send();
 
         if ($exit) {
-            if (!tenant('locations')) {
+            if (! tenant('locations')) {
                 return redirect()->route('dealer.audit.body-shop.index');
             }
+
             return redirect()->route('dealer.stores.audits.body-shop.index', $store);
         }
     }
@@ -702,7 +841,7 @@ class Show extends Component
         return view('livewire.dealer.audit.body-shop.show', [
             'questions' => tenancy()->central(function ($tenant) {
                 return BodyShopQuestions::query()->search('question', $this->search)->get();
-            })
+            }),
         ]);
     }
 }

@@ -11,16 +11,27 @@ use Livewire\Component;
 class Create extends Component
 {
     public $name;
+
     public $initials;
+
     public $address;
+
     public $city;
+
     public $state;
+
     public $zip_code;
+
     public $phone;
+
     public $fax;
+
     public $domain;
+
     public $url;
+
     public $locations = false;
+
     public $password;
 
     public function mount()
@@ -99,7 +110,7 @@ class Create extends Component
                     'name' => auth()->user()->name,
                     'email' => auth()->user()->email,
                     'phone' => auth()->user()->phone,
-                    'password' => bcrypt('Autorisknow' . $this->initials . '!'),
+                    'password' => bcrypt('Autorisknow'.$this->initials.'!'),
                 ]);
 
                 if ($user->name == 'Joe Lohr' || $user->name == 'Terry Dortch' || $user->name == 'Mike Backer') {
@@ -149,7 +160,7 @@ class Create extends Component
     {
         return view('livewire.central.dealership.create', [
             'users' => User::whereNot('id', auth()->user()->id)
-                ->get()
+                ->get(),
         ]);
     }
 }

@@ -26,6 +26,7 @@ class Delete extends Modal
             ->success()
             ->send();
     }
+
     public function render()
     {
         return view('livewire.dealer.store.delete');

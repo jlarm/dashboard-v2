@@ -13,7 +13,9 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
+
     public $user;
+
     public $qi;
 
     public $contact_name;

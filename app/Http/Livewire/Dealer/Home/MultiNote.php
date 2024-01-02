@@ -9,6 +9,7 @@ use Livewire\Component;
 class MultiNote extends Component
 {
     public Store $store;
+
     public $note;
 
     public function mount()
@@ -19,7 +20,7 @@ class MultiNote extends Component
     public function update()
     {
         $this->store->update([
-            'note' => $this->note
+            'note' => $this->note,
         ]);
 
         Notification::make()
@@ -29,6 +30,7 @@ class MultiNote extends Component
 
         return redirect(request()->header('referer'));
     }
+
     public function render()
     {
         return view('livewire.dealer.home.multi-note');

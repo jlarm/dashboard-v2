@@ -2,7 +2,6 @@
 
 namespace App\View\Components;
 
-use App\Models\Dealer\Store;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 

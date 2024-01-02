@@ -3,12 +3,12 @@
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class CertIndex extends Component
 {
     public User $user;
+
     public function render()
     {
         return view('livewire.dealer.employee.cert-index', [

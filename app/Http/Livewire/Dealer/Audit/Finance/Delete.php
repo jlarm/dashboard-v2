@@ -19,13 +19,11 @@ class Delete extends Modal
     {
         $this->financeAudit->delete();
 
-        if(tenant('locations')) {
+        if (tenant('locations')) {
             $this->emitTo('dealer.store.single-store.audit.finance.index', 'refreshAudits');
         } else {
             $this->emitTo('dealer.audit.finance.index', 'refreshFinanceAudits');
         }
-
-
 
         $this->close();
 
@@ -34,6 +32,7 @@ class Delete extends Modal
             ->success()
             ->send();
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.finance.delete');

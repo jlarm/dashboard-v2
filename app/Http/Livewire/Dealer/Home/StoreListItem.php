@@ -8,6 +8,7 @@ use Livewire\Component;
 class StoreListItem extends Component
 {
     public Store $store;
+
     public function render()
     {
         return view('livewire.dealer.home.store-list-item');

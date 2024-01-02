@@ -14,8 +14,7 @@ class CourseSeeder extends Seeder
         $files = File::allFiles($path);
         sort($files, SORT_NATURAL);
 
-        foreach($files as $file)
-        {
+        foreach ($files as $file) {
             $course = File::get($file);
             $json = json_decode($course);
             foreach ($json as $key => $value) {

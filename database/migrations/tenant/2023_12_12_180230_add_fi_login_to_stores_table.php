@@ -8,10 +8,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('stores', function (Blueprint $table) {
             $table->string('fi_username')->after('user_submitted')->nullable();
@@ -21,10 +19,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('stores', function (Blueprint $table) {
             if (Schema::hasColumn('stores', 'fi_username')) {

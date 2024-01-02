@@ -10,8 +10,11 @@ use Livewire\Component;
 class Login extends Component
 {
     public Store $store;
+
     public string $email;
+
     public string $password;
+
     public string $token;
 
     public function login()
@@ -26,7 +29,7 @@ class Login extends Component
 
             Cookie::queue('sentry', $this->token, 604800);
 
-            if(tenant('locations')) {
+            if (tenant('locations')) {
                 return redirect()->route('dealer.stores.scans', $this->store);
             } else {
                 return redirect()->route('dealer.scan.index');
@@ -35,6 +38,7 @@ class Login extends Component
             $this->addError('email', 'Invalid credentials');
         }
     }
+
     public function render()
     {
         return view('livewire.dealer.scan.login');

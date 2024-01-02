@@ -11,6 +11,7 @@ use Livewire\Component;
 class Generate extends Component
 {
     public IndividualAudit $individualAudit;
+
     public $managerCheck;
 
     public function mount(IndividualAudit $individualAudit)
@@ -34,6 +35,7 @@ class Generate extends Component
             new UploadIndividualAuditToDigitalOceanJob($this->individualAudit),
         ])->dispatch();
     }
+
     public function render()
     {
         return view('livewire.dealer.audit.individual.generate');

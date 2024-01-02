@@ -6,33 +6,35 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserInviteRequest;
 use App\Models\User;
 use App\Notifications\UserInviteNotification;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Notification;
 use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         return view('central.employee.index', [
             'users' => User::latest()->get(),
         ]);
     }
 
-    public function show(User $user)
+    public function show(User $user): View
     {
         return view('central.employee.view', [
             'user' => $user,
         ]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('central.employee.create', [
             'roles' => Role::all(),
         ]);
     }
 
-    public function send(StoreUserInviteRequest $request)
+    public function send(StoreUserInviteRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 

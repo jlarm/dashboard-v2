@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Store;
+use Illuminate\Http\RedirectResponse;
 
 class FinanceCreateController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): RedirectResponse
     {
         $audit = FinanceAudit::create([
             'user_id' => auth()->id(),

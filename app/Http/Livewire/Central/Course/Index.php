@@ -22,10 +22,10 @@ class Index extends Component
                     'results' => function ($query) {
                         $query->where('user_id', auth()->user()->id)
                             ->latest();
-                    }
+                    },
                 ])
                 ->orderBy('id')
-                ->paginate(15)
+                ->paginate(15),
         ]);
     }
 }

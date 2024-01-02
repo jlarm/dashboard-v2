@@ -15,7 +15,9 @@ class Show extends Component
     use WithMedia;
 
     public Store $store;
+
     public OshaAudit $oshaAudit;
+
     public $search = '';
 
     public $mediaComponentNames = [
@@ -89,284 +91,563 @@ class Show extends Component
         'osha_q68_images',
         'osha_q69_images',
     ];
+
     public $draft;
+
     public $audit_date;
+
     public $osha_q1_answer;
+
     public $osha_q1_comment;
+
     public $osha_q1_danger;
+
     public $osha_q1_images;
+
     public $osha_q2_answer;
+
     public $osha_q2_comment;
+
     public $osha_q2_danger;
+
     public $osha_q2_images;
+
     public $osha_q3_answer;
+
     public $osha_q3_comment;
+
     public $osha_q3_danger;
+
     public $osha_q3_images;
+
     public $osha_q4_answer;
+
     public $osha_q4_comment;
+
     public $osha_q4_danger;
+
     public $osha_q4_images;
+
     public $osha_q5_answer;
+
     public $osha_q5_comment;
+
     public $osha_q5_danger;
+
     public $osha_q5_images;
+
     public $osha_q6_answer;
+
     public $osha_q6_comment;
+
     public $osha_q6_danger;
+
     public $osha_q6_images;
+
     public $osha_q7_answer;
+
     public $osha_q7_comment;
+
     public $osha_q7_danger;
+
     public $osha_q7_images;
+
     public $osha_q8_answer;
+
     public $osha_q8_comment;
+
     public $osha_q8_danger;
+
     public $osha_q8_images;
+
     public $osha_q9_answer;
+
     public $osha_q9_comment;
+
     public $osha_q9_danger;
+
     public $osha_q9_images;
+
     public $osha_q10_answer;
+
     public $osha_q10_comment;
+
     public $osha_q10_danger;
+
     public $osha_q10_images;
+
     public $osha_q11_answer;
+
     public $osha_q11_comment;
+
     public $osha_q11_danger;
+
     public $osha_q11_images;
+
     public $osha_q12_answer;
+
     public $osha_q12_comment;
+
     public $osha_q12_danger;
+
     public $osha_q12_images;
+
     public $osha_q13_answer;
+
     public $osha_q13_comment;
+
     public $osha_q13_danger;
+
     public $osha_q13_images;
+
     public $osha_q14_answer;
+
     public $osha_q14_comment;
+
     public $osha_q14_danger;
+
     public $osha_q14_images;
+
     public $osha_q15_answer;
+
     public $osha_q15_comment;
+
     public $osha_q15_danger;
+
     public $osha_q15_images;
+
     public $osha_q16_answer;
+
     public $osha_q16_comment;
+
     public $osha_q16_danger;
+
     public $osha_q16_images;
+
     public $osha_q17_answer;
+
     public $osha_q17_comment;
+
     public $osha_q17_danger;
+
     public $osha_q17_images;
+
     public $osha_q18_answer;
+
     public $osha_q18_comment;
+
     public $osha_q18_danger;
+
     public $osha_q18_images;
+
     public $osha_q19_answer;
+
     public $osha_q19_comment;
+
     public $osha_q19_danger;
+
     public $osha_q19_images;
+
     public $osha_q20_answer;
+
     public $osha_q20_comment;
+
     public $osha_q20_danger;
+
     public $osha_q20_images;
+
     public $osha_q21_answer;
+
     public $osha_q21_comment;
+
     public $osha_q21_danger;
+
     public $osha_q21_images;
+
     public $osha_q22_answer;
+
     public $osha_q22_comment;
+
     public $osha_q22_danger;
+
     public $osha_q22_images;
+
     public $osha_q23_answer;
+
     public $osha_q23_comment;
+
     public $osha_q23_danger;
+
     public $osha_q23_images;
+
     public $osha_q24_answer;
+
     public $osha_q24_comment;
+
     public $osha_q24_danger;
+
     public $osha_q24_images;
+
     public $osha_q25_answer;
+
     public $osha_q25_comment;
+
     public $osha_q25_danger;
+
     public $osha_q25_images;
+
     public $osha_q26_answer;
+
     public $osha_q26_comment;
+
     public $osha_q26_danger;
+
     public $osha_q26_images;
+
     public $osha_q27_answer;
+
     public $osha_q27_comment;
+
     public $osha_q27_danger;
+
     public $osha_q27_images;
+
     public $osha_q28_answer;
+
     public $osha_q28_comment;
+
     public $osha_q28_danger;
+
     public $osha_q28_images;
+
     public $osha_q29_answer;
+
     public $osha_q29_comment;
+
     public $osha_q29_danger;
+
     public $osha_q29_images;
+
     public $osha_q30_answer;
+
     public $osha_q30_comment;
+
     public $osha_q30_danger;
+
     public $osha_q30_images;
+
     public $osha_q31_answer;
+
     public $osha_q31_comment;
+
     public $osha_q31_danger;
+
     public $osha_q31_images;
+
     public $osha_q32_answer;
+
     public $osha_q32_comment;
+
     public $osha_q32_danger;
+
     public $osha_q32_images;
+
     public $osha_q33_answer;
+
     public $osha_q33_comment;
+
     public $osha_q33_danger;
+
     public $osha_q33_images;
+
     public $osha_q34_answer;
+
     public $osha_q34_comment;
+
     public $osha_q34_danger;
+
     public $osha_q34_images;
+
     public $osha_q35_answer;
+
     public $osha_q35_comment;
+
     public $osha_q35_danger;
+
     public $osha_q35_images;
+
     public $osha_q36_answer;
+
     public $osha_q36_comment;
+
     public $osha_q36_danger;
+
     public $osha_q36_images;
+
     public $osha_q37_answer;
+
     public $osha_q37_comment;
+
     public $osha_q37_danger;
+
     public $osha_q37_images;
+
     public $osha_q38_answer;
+
     public $osha_q38_comment;
+
     public $osha_q38_danger;
+
     public $osha_q38_images;
+
     public $osha_q39_answer;
+
     public $osha_q39_comment;
+
     public $osha_q39_danger;
+
     public $osha_q39_images;
+
     public $osha_q40_answer;
+
     public $osha_q40_comment;
+
     public $osha_q40_danger;
+
     public $osha_q40_images;
+
     public $osha_q41_answer;
+
     public $osha_q41_comment;
+
     public $osha_q41_danger;
+
     public $osha_q41_images;
+
     public $osha_q42_answer;
+
     public $osha_q42_comment;
+
     public $osha_q42_danger;
+
     public $osha_q42_images;
+
     public $osha_q43_answer;
+
     public $osha_q43_comment;
+
     public $osha_q43_danger;
+
     public $osha_q43_images;
+
     public $osha_q44_answer;
+
     public $osha_q44_comment;
+
     public $osha_q44_danger;
+
     public $osha_q44_images;
+
     public $osha_q45_answer;
+
     public $osha_q45_comment;
+
     public $osha_q45_danger;
+
     public $osha_q45_images;
+
     public $osha_q46_answer;
+
     public $osha_q46_comment;
+
     public $osha_q46_danger;
+
     public $osha_q46_images;
+
     public $osha_q47_answer;
+
     public $osha_q47_comment;
+
     public $osha_q47_danger;
+
     public $osha_q47_images;
+
     public $osha_q48_answer;
+
     public $osha_q48_comment;
+
     public $osha_q48_danger;
+
     public $osha_q48_images;
+
     public $osha_q49_answer;
+
     public $osha_q49_comment;
+
     public $osha_q49_danger;
+
     public $osha_q49_images;
+
     public $osha_q50_answer;
+
     public $osha_q50_comment;
+
     public $osha_q50_danger;
+
     public $osha_q50_images;
+
     public $osha_q51_answer;
+
     public $osha_q51_comment;
+
     public $osha_q51_danger;
+
     public $osha_q51_images;
+
     public $osha_q52_answer;
+
     public $osha_q52_comment;
+
     public $osha_q52_danger;
+
     public $osha_q52_images;
+
     public $osha_q53_answer;
+
     public $osha_q53_comment;
+
     public $osha_q53_danger;
+
     public $osha_q53_images;
+
     public $osha_q54_answer;
+
     public $osha_q54_comment;
+
     public $osha_q54_danger;
+
     public $osha_q54_images;
+
     public $osha_q55_answer;
+
     public $osha_q55_comment;
+
     public $osha_q55_danger;
+
     public $osha_q55_images;
+
     public $osha_q56_answer;
+
     public $osha_q56_comment;
+
     public $osha_q56_danger;
+
     public $osha_q56_images;
+
     public $osha_q57_answer;
+
     public $osha_q57_comment;
+
     public $osha_q57_danger;
+
     public $osha_q57_images;
+
     public $osha_q58_answer;
+
     public $osha_q58_comment;
+
     public $osha_q58_danger;
+
     public $osha_q58_images;
+
     public $osha_q59_answer;
+
     public $osha_q59_comment;
+
     public $osha_q59_danger;
+
     public $osha_q59_images;
+
     public $osha_q60_answer;
+
     public $osha_q60_comment;
+
     public $osha_q60_danger;
+
     public $osha_q60_images;
+
     public $osha_q61_answer;
+
     public $osha_q61_comment;
+
     public $osha_q61_danger;
+
     public $osha_q61_images;
+
     public $osha_q62_answer;
+
     public $osha_q62_comment;
+
     public $osha_q62_danger;
+
     public $osha_q62_images;
+
     public $osha_q63_answer;
+
     public $osha_q63_comment;
+
     public $osha_q63_danger;
+
     public $osha_q63_images;
+
     public $osha_q64_answer;
+
     public $osha_q64_comment;
+
     public $osha_q64_danger;
+
     public $osha_q64_images;
+
     public $osha_q64_date;
+
     public $osha_q65_answer;
+
     public $osha_q65_comment;
+
     public $osha_q65_danger;
+
     public $osha_q65_images;
+
     public $osha_q66_answer;
+
     public $osha_q66_comment;
+
     public $osha_q66_danger;
+
     public $osha_q66_images;
+
     public $osha_q67_answer;
+
     public $osha_q67_comment;
+
     public $osha_q67_danger;
+
     public $osha_q67_images;
+
     public $osha_q68_answer;
+
     public $osha_q68_comment;
+
     public $osha_q68_danger;
+
     public $osha_q68_images;
+
     public $osha_q69_answer;
+
     public $osha_q69_comment;
+
     public $osha_q69_danger;
+
     public $osha_q69_images;
 
     protected $rules = [
@@ -1083,8 +1364,8 @@ class Show extends Component
         ]);
 
         for ($i = 1; $i <= 69; $i++) {
-            $this->oshaAudit->syncFromMediaLibraryRequest($this->{'osha_q' . $i . '_images'})
-                ->toMediaCollection('osha_q' . $i . '_images', 'digitalocean');
+            $this->oshaAudit->syncFromMediaLibraryRequest($this->{'osha_q'.$i.'_images'})
+                ->toMediaCollection('osha_q'.$i.'_images', 'digitalocean');
         }
 
         Notification::make()
@@ -1093,9 +1374,10 @@ class Show extends Component
             ->send();
 
         if ($exit) {
-            if (!tenant('locations')) {
+            if (! tenant('locations')) {
                 return redirect()->route('dealer.audit.osha.index');
             }
+
             return redirect()->route('dealer.stores.audits.osha.index', [$store->slug]);
         }
     }
@@ -1105,7 +1387,7 @@ class Show extends Component
         return view('livewire.dealer.audit.osha.show', [
             'questions' => tenancy()->central(function ($tenant) {
                 return OshaQuestions::query()->search('question', $this->search)->get();
-            })
+            }),
         ]);
     }
 }

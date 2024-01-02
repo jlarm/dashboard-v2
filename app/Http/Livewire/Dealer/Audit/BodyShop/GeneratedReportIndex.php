@@ -10,7 +10,7 @@ class GeneratedReportIndex extends Component
     public function render()
     {
         return view('livewire.dealer.audit.body-shop.generated-report-index', [
-            'bodyShopAudits' => BodyShopAudit::whereNot('pdf_path', '')->orderBy('audit_date', 'desc')->select('id', 'audit_date', 'pdf_path')->get()
+            'bodyShopAudits' => BodyShopAudit::whereNot('pdf_path', '')->orderBy('audit_date', 'desc')->select('id', 'audit_date', 'pdf_path')->get(),
         ]);
     }
 }
