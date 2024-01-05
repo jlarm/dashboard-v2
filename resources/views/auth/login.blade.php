@@ -1,6 +1,4 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')"/>
     <div class="flex min-h-full">
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
@@ -12,6 +10,8 @@
 
                 <div class="mt-10">
                     <div>
+                        <!-- Session Status -->
+                        <x-auth-session-status class="mb-4" :status="session('status')"/>
                         <form method="POST" action="{{ route('login') }}" class="space-y-6">
                             @csrf
                             <div>
