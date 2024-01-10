@@ -26,7 +26,7 @@
                     <livewire:dealer.employee.course-results :user="$user"/>
                 @endif
             </div>
-            <div class="hidden xl:block xl:pl-8">
+            <div class="xl:block xl:pl-8">
                 <livewire:dealer.employee.details :user="$user"/>
                 <livewire:dealer.employee.cert-index :user="$user"/>
             </div>

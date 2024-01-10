@@ -21,14 +21,14 @@ use Spatie\Browsershot\Browsershot;
 
 class UserController extends Controller
 {
-    public function show(User $user): View
+    public function show(User $user)
     {
         return view('dealer.employee.show', [
             'user' => $user,
         ]);
     }
 
-    public function create(Invite $invite): View
+    public function create(Invite $invite)
     {
         return view('dealer.employee.register', [
             'invite' => $invite,

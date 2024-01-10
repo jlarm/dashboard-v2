@@ -7,7 +7,6 @@ use App\Models\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
-use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Livewire\Component;
