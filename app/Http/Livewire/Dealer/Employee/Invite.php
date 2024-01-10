@@ -55,14 +55,21 @@ class Invite extends Modal
 
     public function render()
     {
+        $qualifiedIndividualCount = \App\Models\User::role('Qualified Individual')->count();
+
+        $rolesQuery = Role::whereNot('name', 'super-admin')
+            ->whereNot('name', 'Admin')
+            ->whereNot('name', 'Consultant')
+            ->orderBy('name');
+
+        if ($qualifiedIndividualCount >= 2) {
+            $rolesQuery->whereNot('name', 'Qualified Individual');
+        }
+
         return view('livewire.dealer.employee.invite', [
             'allStore' => Store::orderBy('name')->get(),
             'departments' => Department::orderBy('name')->get(),
-            'allRoles' => Role::whereNot('name', 'super-admin')
-                ->whereNot('name', 'Admin')
-                ->whereNot('name', 'Consultant')
-                ->orderBy('name')
-                ->get(),
+            'allRoles' => $rolesQuery->get(),
         ]);
     }
 }

@@ -81,16 +81,21 @@ class Create extends Component
 
     public function render()
     {
+        $qualifiedIndividualCount = \App\Models\User::role('Qualified Individual')->count();
+
+        $rolesQuery = Role::query()
+            ->whereNot('name', 'super-admin')
+            ->whereNot('name', 'Admin')
+            ->whereNot('name', 'Consultant')
+            ->orderBy('name');
+
+        if ($qualifiedIndividualCount >= 2) {
+            $rolesQuery->whereNot('name', 'Qualified Individual');
+        }
+
         return view('livewire.dealer.employee.create', [
             'departments' => Department::all(),
-            'allRoles' => Role::whereNot('name', 'super-admin')
-                ->whereNot('name', 'Admin')
-                ->whereNot('name', 'Consultant')
-                ->orderBy('name')
-                ->get(),
-            'qualifiedCount' => User::with('roles')->get()->filter(function ($user) {
-                return $user->roles->where('name', 'Qualified Individual')->count();
-            })->count(),
+            'allRoles' => $rolesQuery->get(),
             'allCourses' => Course::select('id', 'name')->get(),
             'stores' => Store::orderBy('name')->get(),
         ]);

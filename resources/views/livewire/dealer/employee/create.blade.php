@@ -59,7 +59,7 @@
                 <div class="space-y-2 columns-2">
                     @foreach($allRoles as $role)
                         <div
-                            class="@if($qualifiedCount > 0 && $role['name'] === 'Qualified Individual') hidden @endif relative flex items-start">
+                            class="relative flex items-start">
                             <div class="flex h-6 items-center">
                                 <input
                                     wire:model.defer="roles"

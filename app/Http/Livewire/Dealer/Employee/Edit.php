@@ -58,14 +58,22 @@ class Edit extends SlideOver
 
     public function render()
     {
+        $qualifiedIndividualCount = \App\Models\User::role('Qualified Individual')->count();
+        $currentUserHasRole = $this->user->hasRole('Qualified Individual');
+
+        $rolesQuery = Role::whereNot('name', 'super-admin')
+            ->whereNot('name', 'Admin')
+            ->whereNot('name', 'Consultant')
+            ->orderBy('name');
+
+        if ($qualifiedIndividualCount >= 2 && !$currentUserHasRole) {
+            $rolesQuery->whereNot('name', 'Qualified Individual');
+        }
+
         return view('livewire.dealer.employee.edit', [
             'stores' => Store::all(),
             'departments' => Department::all(),
-            'allRoles' => Role::whereNot('name', 'super-admin')
-                ->whereNot('name', 'Admin')
-                ->whereNot('name', 'Consultant')
-                ->orderBy('name')
-                ->get(),
+            'allRoles' => $rolesQuery->get(),
         ]);
     }
 }
