@@ -36,7 +36,7 @@ class RedSentryReportGenerationCommand extends Command
             $stores = Store::all();
 
             $storesWithScanSettings = $stores->filter(function ($store) {
-                return $store->scanSetting->name;
+                return $store->scanSetting->name ?? null;
             });
 
             if ($storesWithScanSettings->isNotEmpty()) {
