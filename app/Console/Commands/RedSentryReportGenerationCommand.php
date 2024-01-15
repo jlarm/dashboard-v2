@@ -59,6 +59,8 @@ class RedSentryReportGenerationCommand extends Command
 
                             $lastRunDate = $store->scanReports()->where('scan_type', $scanType)->where('type', $reportType)->latest()->first()->last_scan ?? null;
 
+                            $this->info('Last Run Date in database: '.$lastRunDate);
+
                             $this->generateReport($store, $scanType, $reportType, $token, $tenant, $lastRunDate);
                         }
                     }
@@ -106,7 +108,7 @@ class RedSentryReportGenerationCommand extends Command
         $nextScanDate = DateTime::createFromFormat('m/d/Y - H:i:s', $nextScan);
         $nextScanFormatted = $nextScanDate->format('Y-m-d');
 
-        $this->info('Last Scan: '.$lastScanFormatted.'-'.$lastRunDate);
+        $this->info('Last Scan: '.$lastScanFormatted);
 
         if ($lastRunDate != null && $lastScanFormatted === $lastRunDate) {
             return;
