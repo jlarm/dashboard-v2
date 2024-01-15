@@ -73,6 +73,8 @@ class RedSentryReportGenerationCommand extends Command
 
     private function generateReport($store, $scanType, $reportType, $token, $tenant, $lastRunDate)
     {
+        $this->info('Running for '.$store->scanSetting->name);
+
         if ($store->scanSetting->name === null) {
             return;
         }

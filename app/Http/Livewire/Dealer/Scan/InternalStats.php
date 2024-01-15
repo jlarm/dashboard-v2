@@ -9,6 +9,7 @@ use Livewire\Component;
 class InternalStats extends Component
 {
     public Store $store;
+
     public function render()
     {
         return view('livewire.dealer.scan.internal-stats', [
