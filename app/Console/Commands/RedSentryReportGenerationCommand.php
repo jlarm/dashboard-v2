@@ -106,6 +106,8 @@ class RedSentryReportGenerationCommand extends Command
         $nextScanDate = DateTime::createFromFormat('m/d/Y - H:i:s', $nextScan);
         $nextScanFormatted = $nextScanDate->format('Y-m-d');
 
+        $this->info('Last Scan: '.$lastScanFormatted . '-' . $lastRunDate);
+
         if ($lastRunDate != null && $lastScanFormatted === $lastRunDate) {
             return;
         }
