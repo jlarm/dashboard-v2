@@ -10,39 +10,42 @@ class ReportIndex extends Component
 {
     public Store $store;
 
+    protected function formattedlastScanDate($date): string
+    {
+        return date('F d, Y', strtotime($date));
+    }
+
+    protected function fetchReports()
+    {
+        $query = ScanReport::where('scan_type', 'external')->latest();
+
+        if (tenant('locations')) {
+            $query->where('store_id', $this->store->id);
+        }
+
+        return $query->get();
+    }
+
+    protected function groupAndMapReports($reports)
+    {
+        return $reports->groupBy(function ($data) {
+            return $this->formattedlastScanDate($data->last_scan);
+        })->map(function ($data) {
+            return $data->groupBy('type');
+        })->map(function ($data) {
+            return $data->map(function ($data) {
+                return $data->first();
+            });
+        });
+    }
+
     public function render()
     {
-        if (tenant('locations')) {
-            return view('livewire.dealer.scan.report-index', [
-                'reports' => ScanReport::where('scan_type', 'external')
-                    ->where('store_id', $this->store->id)
-                    ->latest()
-                    ->get()
-                    ->groupBy(function ($data) {
-                        return $data->created_at->format('F d, Y');
-                    })->map(function ($data) {
-                        return $data->groupBy('type');
-                    })->map(function ($data) {
-                        return $data->map(function ($data) {
-                            return $data->first();
-                        });
-                    }),
-            ]);
-        } else {
-            return view('livewire.dealer.scan.report-index', [
-                'reports' => ScanReport::where('scan_type', 'external')
-                    ->latest()
-                    ->get()
-                    ->groupBy(function ($data) {
-                        return $data->created_at->format('F d, Y');
-                    })->map(function ($data) {
-                        return $data->groupBy('type');
-                    })->map(function ($data) {
-                        return $data->map(function ($data) {
-                            return $data->first();
-                        });
-                    }),
-            ]);
-        }
+        $reports = $this->fetchReports();
+        $groupedReports = $this->groupAndMapReports($reports);
+
+        return view('livewire.dealer.scan.report-index', [
+            'reports' => $groupedReports,
+        ]);
     }
 }

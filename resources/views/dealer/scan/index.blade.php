@@ -101,18 +101,14 @@
                     role="tabpanel"
                     class="p-8"
                 >
-                    @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
-                        @role('super-admin|Consultant')
-                        @if(Cookie::get('sentry'))
-                            <livewire:dealer.scan.index/>
-                        @else
-                            <div class="max-w-md mx-auto">
-                                <livewire:dealer.scan.login/>
-                            </div>
-                        @endif
-                        @endrole
-                    @endif
-                    <livewire:dealer.scan.report-index/>
+                    <div class="grid grid-cols-1 md:grid-cols-3 md:gap-10">
+                        <div class="col-span-2">
+                            <livewire:dealer.scan.report-index/>
+                        </div>
+                        <div class="col-span-1">
+                            <livewire:dealer.scan.external-stats />
+                        </div>
+                    </div>
                 </section>
 
                 <section
@@ -121,18 +117,14 @@
                     role="tabpanel"
                     class="p-8"
                 >
-                    @if(tenant('id') != 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
-                        @role('super-admin|Consultant')
-                        @if(Cookie::get('sentry'))
-                            <livewire:dealer.scan.internal-report-generator/>
-                        @else
-                            <div class="max-w-md mx-auto">
-                                <livewire:dealer.scan.login/>
-                            </div>
-                        @endif
-                        @endrole
-                    @endif
-                    <livewire:dealer.scan.internal-report-index/>
+                    <div class="grid grid-cols-1 md:grid-cols-3 md:gap-10">
+                        <div class="col-span-2">
+                            <livewire:dealer.scan.internal-report-index/>
+                        </div>
+                        <div class="col-span-1">
+                            <livewire:dealer.scan.internal-stats />
+                        </div>
+                    </div>
                 </section>
                 @can('create-stores')
                 <section

@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Http\Livewire\Dealer\Scan;
+
+use App\Models\Dealer\ScanReport;
+use Livewire\Component;
+
+class ScanDates extends Component
+{
+    public function render()
+    {
+        return view('livewire.dealer.scan.scan-dates', [
+            'scanDates' => ScanReport::query()
+                ->where('scan_type', '=', 'external')
+                ->latest()
+                ->select('last_scan', 'next_scan')
+                ->first(),
+        ]);
+    }
+}

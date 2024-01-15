@@ -66,7 +66,7 @@ class Edit extends SlideOver
             ->whereNot('name', 'Consultant')
             ->orderBy('name');
 
-        if ($qualifiedIndividualCount >= 2 && !$currentUserHasRole) {
+        if ($qualifiedIndividualCount >= 2 && ! $currentUserHasRole) {
             $rolesQuery->whereNot('name', 'Qualified Individual');
         }
 

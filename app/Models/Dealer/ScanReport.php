@@ -13,6 +13,19 @@ class ScanReport extends Model
         'path',
         'type',
         'scan_type',
+        'grade',
+        'exploits_high',
+        'exploits_medium',
+        'exploits_low',
+        'cves_high',
+        'cves_medium',
+        'cves_low',
+        'assets',
+        'last_scan',
+        'next_scan',
+        'last_scan_status',
+        'last_scan_progress',
+        'last_scan_errors',
     ];
 
     public function store(): BelongsTo
