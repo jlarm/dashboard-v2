@@ -52,18 +52,15 @@ class RedSentryReportGenerationCommand extends Command
                 $token = $user['token'];
 
                 foreach ($stores as $store) {
-                    $this->info($store->name);
-                    if ($store->name === 'Ken Houtz Chevrolet Buick') {
-                        $this->info('Running for '.$store->name);
-                        foreach ($scanTypes as $scanType) {
-                            foreach ($reportTypes as $reportType) {
 
-                                $lastRunDate = $store->scanReports()->where('scan_type', $scanType)->where('type', $reportType)->latest()->first()->last_scan ?? null;
+                    foreach ($scanTypes as $scanType) {
+                        foreach ($reportTypes as $reportType) {
 
-                                $this->info('Last Run Date in database: '.$lastRunDate);
+                            $lastRunDate = $store->scanReports()->where('scan_type', $scanType)->where('type', $reportType)->latest()->first()->last_scan ?? null;
 
-                                $this->generateReport($store, $scanType, $reportType, $token, $tenant, $lastRunDate);
-                            }
+                            $this->info('Last Run Date in database: '.$lastRunDate);
+
+                            $this->generateReport($store, $scanType, $reportType, $token, $tenant, $lastRunDate);
                         }
                     }
                 }
@@ -112,9 +109,9 @@ class RedSentryReportGenerationCommand extends Command
 
         $this->info('Last Scan: '.$lastScanFormatted);
 
-        //        if ($lastRunDate != null && $lastScanFormatted === $lastRunDate) {
-        //            return;
-        //        }
+        if ($lastRunDate != null && $lastScanFormatted === $lastRunDate) {
+            return;
+        }
 
         $reportRequest = new Request('GET', env('RED_SENTRY_API_BASE_URL').($scanType === 'external' ? '/v2' : '').'/'.$scanType.'/'.$store->scanSetting->name.'/report/'.$reportType, [
             'Authorization' => $token,
