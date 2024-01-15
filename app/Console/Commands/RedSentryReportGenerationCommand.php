@@ -53,6 +53,8 @@ class RedSentryReportGenerationCommand extends Command
 
                 foreach ($stores as $store) {
 
+                    $this->info('Running for '.$store->name);
+
                     if ($store->name === 'Ken Houtz Chevrolet Buick') {
                         foreach ($scanTypes as $scanType) {
                             foreach ($reportTypes as $reportType) {
@@ -111,9 +113,9 @@ class RedSentryReportGenerationCommand extends Command
 
         $this->info('Last Scan: '.$lastScanFormatted);
 
-//        if ($lastRunDate != null && $lastScanFormatted === $lastRunDate) {
-//            return;
-//        }
+        //        if ($lastRunDate != null && $lastScanFormatted === $lastRunDate) {
+        //            return;
+        //        }
 
         $reportRequest = new Request('GET', env('RED_SENTRY_API_BASE_URL').($scanType === 'external' ? '/v2' : '').'/'.$scanType.'/'.$store->scanSetting->name.'/report/'.$reportType, [
             'Authorization' => $token,
