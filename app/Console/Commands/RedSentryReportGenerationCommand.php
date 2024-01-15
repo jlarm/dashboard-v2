@@ -53,9 +53,8 @@ class RedSentryReportGenerationCommand extends Command
 
                 foreach ($stores as $store) {
 
-                    $this->info('Running for '.$store->name);
-
                     if ($store->name === 'Ken Houtz Chevrolet Buick') {
+                        $this->info('Running for '.$store->name);
                         foreach ($scanTypes as $scanType) {
                             foreach ($reportTypes as $reportType) {
 
