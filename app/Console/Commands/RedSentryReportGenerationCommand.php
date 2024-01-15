@@ -53,15 +53,16 @@ class RedSentryReportGenerationCommand extends Command
 
                 foreach ($stores as $store) {
 
-                    foreach ($scanTypes as $scanType) {
+                    if ($store->name === 'Ken Houtz Chevrolet Buick') {
+                        foreach ($scanTypes as $scanType) {
+                            foreach ($reportTypes as $reportType) {
 
-                        foreach ($reportTypes as $reportType) {
+                                $lastRunDate = $store->scanReports()->where('scan_type', $scanType)->where('type', $reportType)->latest()->first()->last_scan ?? null;
 
-                            $lastRunDate = $store->scanReports()->where('scan_type', $scanType)->where('type', $reportType)->latest()->first()->last_scan ?? null;
+                                $this->info('Last Run Date in database: '.$lastRunDate);
 
-                            $this->info('Last Run Date in database: '.$lastRunDate);
-
-                            $this->generateReport($store, $scanType, $reportType, $token, $tenant, $lastRunDate);
+                                $this->generateReport($store, $scanType, $reportType, $token, $tenant, $lastRunDate);
+                            }
                         }
                     }
                 }
