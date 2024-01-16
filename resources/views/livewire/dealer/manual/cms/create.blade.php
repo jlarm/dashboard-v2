@@ -81,7 +81,10 @@
         {{--        Dealer Participation Program Form--}}
         <div>
             <h2>Dealer Participation Program Form</h2>
-            <div class="max-w-3xl text-sm space-y-10">
+            <div class="relative max-w-3xl text-sm space-y-10 border rounded-md p-5">
+                <div class="absolute flex justify-center items-center w-[500px] h-[500px] top-0 left-0 right-0 bottom-0 -rotate-45 z-10 m-auto">
+                    <span class="text-[100px] leading-0 font-extrabold opacity-75">EXAMPLE</span>
+                </div>
                 <div class="grid grid-cols-4 gap-5">
                     <div class="col-span-3 flex items-end">
                         <span>Customer:</span>
@@ -125,7 +128,7 @@
                     <div class="space-y-2">
                         <div class="relative flex items-start">
                             <div class="flex h-6 items-center">
-                                <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <input disabled id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             </div>
                             <div class="ml-3 text-sm leading-6">
                                 <label for="comments">Financing source imposed participation rate less than DPP Rates.</label>
@@ -143,7 +146,7 @@
                     </div>
                     <div class="relative flex items-start">
                         <div class="flex h-6 items-center">
-                            <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <input disabled id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         </div>
                         <div class="ml-3 text-sm leading-6">
                             <label for="comments">Customer qualifies for Dealer participation program (employee, family member, or other program qualified individual).</label>
@@ -152,7 +155,7 @@
                     <div class="space-y-2">
                         <div class="relative flex items-start">
                             <div class="flex h-6 items-center">
-                                <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <input disabled id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             </div>
                             <div class="ml-3 text-sm leading-6">
                                 <label for="comments">Customer negotiated rate.</label>
@@ -207,7 +210,7 @@
                     <div class="space-y-2">
                         <div class="relative flex items-start">
                             <div class="flex h-6 items-center">
-                                <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <input disabled id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             </div>
                             <div class="ml-3 text-sm leading-6">
                                 <label for="comments">Dealer Promotion.</label>
@@ -226,7 +229,7 @@
                     <div class="space-y-2">
                         <div class="relative flex items-start">
                             <div class="flex h-6 items-center">
-                                <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <input disabled id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             </div>
                             <div class="ml-3 text-sm leading-6">
                                 <label for="comments">PTI Constraint.</label>
@@ -245,7 +248,7 @@
                     <div class="flex flex-start">
                         <div class="relative flex items-start">
                             <div class="flex h-6 items-center">
-                                <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <input disabled id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             </div>
                             <div class="ml-3 text-sm leading-6">
                                 <label for="comments">Subvented Rate</label>
@@ -263,7 +266,7 @@
                     <div class="space-y-2">
                         <div class="relative flex items-start">
                             <div class="flex h-6 items-center">
-                                <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <input disabled id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             </div>
                             <div class="ml-3 text-sm leading-6">
                                 <label for="comments">Inventory reduction considerations (describe approximate number of days in inventory, approximate number in stock, declining value of vehicle, etc.)
@@ -340,26 +343,6 @@
             <p>Dealership has adopted and approved a Fair Credit Compliance Policy and Program to be implemented throughout the dealership.</p>
             <p>By signing below, the undersigned, constituting all of the members of the Dealership Board of Directors, acknowledge the Board’s approval of the foregoing Dealership Fair Credit Policy and Fair Credit Compliance Program and its appointment of the Dealership Fair Credit Compliance Program.</p>
             <p>Coordinator this {{ now()->format('jS') }} day of {{ now()->format('F') }}, {{ now()->format('Y') }}.</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="p-3 rounded-md">
-                    <x-text-input placeholder="Type your name" wire:model.defer="appointment_program_name_one" id="title" class="block mb-1 w-[302px] shadow-none" type="text"
-                                  name="title"
-                                  :value="old('title')" />
-                    <x-signature-pad wire:model.defer="appointment_program_signature_one"/>
-                </div>
-                <div class="p-3 rounded-md">
-                    <x-text-input placeholder="Type your name" wire:model.defer="appointment_program_name_two" id="title" class="block mb-1 w-[302px] shadow-none" type="text"
-                                  name="title"
-                                  :value="old('title')" />
-                    <x-signature-pad wire:model.defer="appointment_program_signature_two"/>
-                </div>
-                <div class="p-3 rounded-md">
-                    <x-text-input placeholder="Type your name" wire:model.defer="appointment_program_name_three" id="title" class="block mb-1 w-[302px] shadow-none" type="text"
-                                  name="title"
-                                  :value="old('title')" />
-                    <x-signature-pad wire:model.defer="appointment_program_signature_three"/>
-                </div>
-            </div>
         </div>
         {{--        Acknowledgement--}}
         <div>
