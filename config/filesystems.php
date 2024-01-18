@@ -120,6 +120,16 @@ return [
             'visibility' => 'public',
         ],
 
+        'armp-backups' => [
+            'driver' => 's3',
+            'key' => env('BACKUPS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('BACKUPS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('BACKUPS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('BACKUPS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('BACKUPS_DIGITALOCEAN_SPACES_BUCKET'),
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
