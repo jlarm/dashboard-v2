@@ -13,7 +13,7 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function create(CreateUserRequest $request): View
+    public function create(CreateUserRequest $request)
     {
         return view('central.employee.register', [
             'email' => $request['email'],
