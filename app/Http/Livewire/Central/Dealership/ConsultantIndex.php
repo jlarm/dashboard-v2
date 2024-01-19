@@ -15,6 +15,7 @@ class ConsultantIndex extends Component
             'dealerships' => Dealership::query()
                 ->where('user_id', auth()->user()->id)
                 ->orWhere('id', 'e44653a5-c049-4be0-92e3-b8aacea4bf20')
+                ->orderBy('name')
                 ->get(),
         ]);
     }

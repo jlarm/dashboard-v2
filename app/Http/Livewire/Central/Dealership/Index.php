@@ -18,7 +18,12 @@ class Index extends Component
     public function render()
     {
         return view('livewire.central.dealership.index', [
-            'dealerships' => Dealership::search('name', $this->search)->latest()->with('user')->get(),
+            'dealerships' => Dealership::query()
+                ->orderBy('name')
+                ->search('name', $this->search)
+                ->latest()
+                ->with('user')
+                ->get(),
         ]);
     }
 }
