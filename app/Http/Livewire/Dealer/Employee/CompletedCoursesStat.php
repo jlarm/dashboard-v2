@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Livewire\Dealer\Employee;
+
+use App\Models\Dealer\Store;
+use App\Traits\EmployeeCourseStatTrait;
+use Livewire\Component;
+
+class CompletedCoursesStat extends Component
+{
+    use EmployeeCourseStatTrait;
+
+    public ?Store $store = null;
+
+    public ?int $department = null;
+
+    public string $name = '';
+
+    public $formattedName;
+
+    public function mount(): void
+    {
+        $this->formattedName = str_replace(' ', '', $this->name);
+        $this->formattedName = str_replace('/', '', $this->formattedName);
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.employee.completed-courses-stat', [
+            'percentage' => $this->percentageByDepartment($this->store, $this->department),
+        ]);
+    }
+}

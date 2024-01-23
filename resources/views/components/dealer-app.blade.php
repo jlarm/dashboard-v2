@@ -21,10 +21,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script
-        src="https://js.sentry-cdn.com/487c58c833df4192b1a5311b2e1a849e.min.js"
-        crossorigin="anonymous"
-    ></script>
+    <script src="https://js.sentry-cdn.com/487c58c833df4192b1a5311b2e1a849e.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="font-sans antialiased bg-white">
 <div x-data="{ open: false }" @keydown.window.escape="open = false">

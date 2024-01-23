@@ -9,7 +9,6 @@ use App\Providers\RouteServiceProvider;
 use Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 
 class UserController extends Controller
 {
