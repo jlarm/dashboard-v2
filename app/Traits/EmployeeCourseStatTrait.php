@@ -95,11 +95,13 @@ trait EmployeeCourseStatTrait
         return collect($this->users($store, $department))
             ->sum(function ($userId) use ($store, $department) {
                 return \DB::table('course_results')
-                    ->distinct()
+                    ->select('course_id', 'user_id', \DB::raw('MAX(created_at) as latest'))
                     ->where('user_id', $userId)
                     ->where('passed', 1)
                     ->whereIn('course_id', $this->courseIdsByDepartment($store, $department))
                     ->where('created_at', '>=', now()->subYear())
+                    ->groupBy('course_id', 'user_id')
+                    ->get()
                     ->count();
             });
     }
