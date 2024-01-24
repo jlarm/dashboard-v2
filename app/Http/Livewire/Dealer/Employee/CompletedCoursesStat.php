@@ -33,9 +33,10 @@ class CompletedCoursesStat extends Component
 
     public function render()
     {
-        $percentage = \Cache::remember('course_stat_' . $this->formattedName, now()->addDay(), function () {
+        $percentage = \Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
             return $this->readyToLoad ? $this->percentageByDepartment($this->store, $this->department) : '';
         });
+
         return view('livewire.dealer.employee.completed-courses-stat', compact('percentage'));
     }
 }
