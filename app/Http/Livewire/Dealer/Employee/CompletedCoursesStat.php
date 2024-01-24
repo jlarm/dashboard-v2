@@ -16,6 +16,8 @@ class CompletedCoursesStat extends Component
 
     public string $name = '';
 
+    public $readyToLoad = false;
+
     public $formattedName;
 
     public function mount(): void
@@ -24,10 +26,15 @@ class CompletedCoursesStat extends Component
         $this->formattedName = str_replace('/', '', $this->formattedName);
     }
 
+    public function loadStat(): void
+    {
+        $this->readyToLoad = true;
+    }
+
     public function render()
     {
         return view('livewire.dealer.employee.completed-courses-stat', [
-            'percentage' => $this->percentageByDepartment($this->store, $this->department),
+            'percentage' => $this->readyToLoad ? $this->percentageByDepartment($this->store, $this->department) : '',
         ]);
     }
 }
