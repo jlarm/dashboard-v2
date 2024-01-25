@@ -229,7 +229,7 @@ class User extends Authenticatable
         return $this->phone;
     }
 
-    public function scopeUserStore($query, $store)
+    public function scopeUserStore($query, $store): void
     {
         if ($store) {
             $query->whereHas('stores', function ($q) use ($store) {

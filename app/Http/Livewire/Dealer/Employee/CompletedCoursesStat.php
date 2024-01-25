@@ -3,13 +3,11 @@
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
-use App\Traits\EmployeeCourseStatTrait;
+use App\Models\User;
 use Livewire\Component;
 
 class CompletedCoursesStat extends Component
 {
-    use EmployeeCourseStatTrait;
-
     public ?Store $store = null;
 
     public ?int $department = null;
@@ -31,10 +29,51 @@ class CompletedCoursesStat extends Component
         $this->readyToLoad = true;
     }
 
+    protected function users()
+    {
+        $query = User::query()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer']);
+
+        if ($this->store !== null) {
+            $query = $this->store->users()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer']);
+        }
+
+        if ($this->department !== null) {
+            $query->where('department_id', $this->department);
+        }
+
+        return $query->get();
+    }
+
+    protected function incompleteCount()
+    {
+        return $this->users()
+            ->filter(function ($user) {
+                return $user->user_has_not_completed_courses;
+            })
+            ->count();
+    }
+
+    protected function userCount()
+    {
+        return $this->users()->count();
+    }
+
+    public function percentage()
+    {
+        $userCount = $this->userCount();
+        if ($userCount == 0) {
+            return 0;
+        }
+
+        $complete = $userCount - $this->incompleteCount();
+
+        return round(($complete / $userCount) * 100);
+    }
+
     public function render()
     {
         $percentage = \Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
-            return $this->readyToLoad ? $this->percentageByDepartment($this->store, $this->department) : '';
+            return $this->readyToLoad ? $this->percentage() : '';
         });
 
         return view('livewire.dealer.employee.completed-courses-stat', compact('percentage'));
