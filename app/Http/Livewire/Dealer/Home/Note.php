@@ -28,8 +28,6 @@ class Note extends Component
             ->title('Note Updated Successfully!')
             ->success()
             ->send();
-
-        return redirect()->route('dealer.dashboard');
     }
 
     public function render()

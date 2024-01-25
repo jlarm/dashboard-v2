@@ -27,8 +27,6 @@ class MultiNote extends Component
             ->title('Note Updated Successfully!')
             ->success()
             ->send();
-
-        return redirect(request()->header('referer'));
     }
 
     public function render()
