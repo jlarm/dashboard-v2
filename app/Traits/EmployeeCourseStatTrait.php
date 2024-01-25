@@ -12,7 +12,7 @@ trait EmployeeCourseStatTrait
 
     protected function getUserById(int $userId): User
     {
-        if (!isset($this->usersCache[$userId])) {
+        if (! isset($this->usersCache[$userId])) {
             $this->usersCache[$userId] = User::with(['roles', 'stores'])->find($userId);
         }
 
@@ -21,7 +21,7 @@ trait EmployeeCourseStatTrait
 
     protected function users($store, ?string $department): array
     {
-        $cacheKey = 'users_' . optional($store)->id . '_' . $department;
+        $cacheKey = 'users_'.optional($store)->id.'_'.$department;
 
         return Cache::remember($cacheKey, now()->addDay(), function () use ($store, $department) {
             if ($store != null) {
