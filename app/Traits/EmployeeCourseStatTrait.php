@@ -4,33 +4,44 @@ namespace App\Traits;
 
 use App\Models\Dealer\Course;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 trait EmployeeCourseStatTrait
 {
+    protected $usersCache = [];
+
     protected function getUserById(int $userId): User
     {
-        return User::with(['roles', 'stores'])->find($userId);
+        if (!isset($this->usersCache[$userId])) {
+            $this->usersCache[$userId] = User::with(['roles', 'stores'])->find($userId);
+        }
+
+        return $this->usersCache[$userId];
     }
 
     protected function users($store, ?string $department): array
     {
-        if ($store != null) {
-            return $store->users()
+        $cacheKey = 'users_' . optional($store)->id . '_' . $department;
+
+        return Cache::remember($cacheKey, now()->addDay(), function () use ($store, $department) {
+            if ($store != null) {
+                return $store->users()
+                    ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
+                    ->when($department, function ($query, $department) {
+                        return $query->where('department_id', $department);
+                    })
+                    ->pluck('id')
+                    ->toArray();
+            }
+
+            return User::query()
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->when($department, function ($query, $department) {
                     return $query->where('department_id', $department);
                 })
                 ->pluck('id')
                 ->toArray();
-        }
-
-        return User::query()
-            ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
-            ->when($department, function ($query, $department) {
-                return $query->where('department_id', $department);
-            })
-            ->pluck('id')
-            ->toArray();
+        });
     }
 
     protected function roles(int $excludeRoleId, $store, ?string $department): array
