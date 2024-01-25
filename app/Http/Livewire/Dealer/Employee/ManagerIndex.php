@@ -17,9 +17,9 @@ class ManagerIndex extends Component
     public $showIncompleteCourseUsers = false;
 
     public $queryString = [
-        'search' => ['except' => ''],
-        'selectedDepartment' => ['except' => null],
-        'showIncompleteCourseUsers' => ['except' => false],
+        'search' => ['except' => '', 'as' => 's'],
+        'selectedDepartment' => ['except' => null, 'as' => 'd'],
+        'showIncompleteCourseUsers' => ['except' => false, 'as' => 'i'],
     ];
 
     public function getUsersQueryProperty()
