@@ -25,6 +25,12 @@ class Index extends Component
 
     public $email;
 
+    public $queryString = [
+        'search' => ['except' => ''],
+        'selectedDepartment' => ['except' => null],
+        'showIncompleteCourseUsers' => ['except' => false],
+    ];
+
     public function getUsersQueryProperty()
     {
         return User::query()
