@@ -29,6 +29,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        activity()
+            ->causedBy(Auth::user())
+            ->withProperties(['ip' => $request->getClientIp()])
+            ->event('login')
+            ->log('logged-in');
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
