@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -15,7 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class IndividualAudit extends Model implements HasMedia
 {
-    use HasUUID, InteractsWithMedia;
+    use HasUUID, InteractsWithMedia, LogsActivity;
 
     protected $guarded = [];
 
@@ -74,5 +76,10 @@ class IndividualAudit extends Model implements HasMedia
         } elseif ($this->audit_date->format('m') >= 10 && $this->audit_date->format('m') <= 12) {
             return 'Q4';
         }
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
     }
 }

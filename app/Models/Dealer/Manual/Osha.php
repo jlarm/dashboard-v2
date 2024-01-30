@@ -6,9 +6,13 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Osha extends Model
 {
+    use LogsActivity;
+
     protected $fillable = [
         'store_id',
         'user_id',
@@ -50,5 +54,10 @@ class Osha extends Model
         preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
 
         return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
     }
 }

@@ -23,13 +23,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasRoles, HasSlug, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, HasRoles, HasSlug, LogsActivity, Notifiable, SoftDeletes;
 
     protected $appends = ['user_has_not_completed_courses'];
 
@@ -248,5 +250,10 @@ class User extends Authenticatable
     public function scopeUsersNotCompletedCourses($query, $showNotCompleted): void
     {
         $query->when($showNotCompleted, fn ($query) => $query->where($this->user_has_not_completed_courses, true));
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
     }
 }

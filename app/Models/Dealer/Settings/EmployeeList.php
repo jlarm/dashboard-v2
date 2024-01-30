@@ -4,9 +4,13 @@ namespace App\Models\Dealer\Settings;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class EmployeeList extends Model
 {
+    use LogsActivity;
+
     protected $fillable = [
         'store_id',
         'qualified_individual_name',
@@ -26,5 +30,10 @@ class EmployeeList extends Model
     public function store(): BelongsTo
     {
         return $this->belongsTo(\App\Models\Dealer\Store::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
     }
 }

@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('activitylog:clean')->daily()->runInBackground();
         $schedule->command('invite:reminder-ten-days')->dailyAt('23:00')->runInBackground();
         $schedule->command('invite:reminder-twenty-days')->dailyAt('23:30')->runInBackground();
         $schedule->command('delete:temporary-uploads')->dailyAt('00:00')->runInBackground();

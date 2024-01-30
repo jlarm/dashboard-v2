@@ -3,9 +3,13 @@
 namespace App\Models\Dealer\Manual;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Glb extends Model
 {
+    use LogsActivity;
+
     protected $fillable = [
         'user_id',
         'name',
@@ -50,4 +54,9 @@ class Glb extends Model
         'receptacles' => 'array',
         'managers' => 'array',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
 }

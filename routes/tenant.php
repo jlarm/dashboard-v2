@@ -118,6 +118,9 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
             })->name('new');
         });
 
+        Route::get('logs', \App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
+        Route::get('logs/{activity:id}', \App\Http\Livewire\Dealer\Log\Show::class)->name('logs.show');
+
     });
 
     // **************************************************
