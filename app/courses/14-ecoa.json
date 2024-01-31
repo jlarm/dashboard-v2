@@ -94,80 +94,63 @@
         ],
         "questions": [
             {
-                "question": "What are we required to disclose (pertaining to the retail installment contract) to the customer prior to the customer signing the retail installment contract?",
-                "answers": [
-                    {
-                        "a": "The amount financed, the finance charge, the APR, sale price, and total of payments.",
-                        "b": "Amount financed, Finance charge, Name of the customer, APR, total sale price, total of payments, and a statement about the consequences around default or nonpayment.",
-                        "c": "The creditors identity, amount financed, an itemization of the amount financed, the finance charge, the APR, Payment Schedule, total of payments, total sale price, a prepayment statement, statement around any late fees, statement excluding the cost of insurance or any debt cancelling contracts from the finance charge, statement around the consequences of default or nonpayment, and the fact that the dealer will acquire a security interest in the vehicle.",
-                        "d": "None of the above"
-                    }
-                ],
-                "correctAnswer": "c"
-            },
-            {
-                "question": "It is ok to have the customer sign a generic contract without the name of the lender so that it can be shopped around to many lenders so as to secure the best buy rate.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "What is the purpose of the Equal Credit Opportunity Act (ECOA)?",
                 "answers": [
                     {
                         "a": "To make sure that those individuals whom are not credit worthy have the ability to secure financing.",
-                        "b": "To provide an additional regulatory arm to prevent the dealer from making money off the retail installment contract that is sold to the lender.",
-                        "c": "To not discriminate against an applicant because of race, age, sex, national origin, color, religion, or marital status.",
-                        "d": "None of the above"
+                        "b": "To provide an additional regulatory arm to prevent dealer from making money off the retail installment contract that is sold to the lender.",
+                        "c": "To not discriminate against an applicant because of race, sex, national origin, religion and marital status.",
+                        "d": "A & B",
+                        "e": "None of the above"
                     }
                 ],
-                "correctAnswer": "d"
+                "question": "What is the purpose of the Equal Credit Opportunity Act (ECOA)?",
+                "correctAnswer": "c"
             },
             {
-                "question": "Bankruptcies remain on the credit bureau for a period of 7 years.",
+                "answers": [
+                    {
+                        "a": "Race, ethnicity, color and religion",
+                        "b": "National origin or sex, childbearing or child rearing, gender",
+                        "c": "Marital status unless needed to secure collateral, need assets listed to support loan application and reside in a community property state.",
+                        "d": "A & C",
+                        "e": "All of the above"
+                    }
+                ],
+                "question": "What is not permitted to ask credit applicants concerning the credit applications process?",
+                "correctAnswer": "e"
+            },
+            {
+                "answers": [
+                    {
+                        "a": "15 days",
+                        "b": "30 days",
+                        "c": "90 days",
+                        "d": "120 days",
+                        "e": "None of the above"
+                    }
+                ],
+                "question": "What is the time frame involved in notifying a applicant after a credit decision was made by dealership?",
+                "correctAnswer": "b"
+            },
+            {
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "b"
+                "question": "If a credit application was incomplete, does the dealer need to give the applicant a response?",
+                "correctAnswer": "a"
             },
             {
-                "question": "We sell extended Warranties in the F&I office as an additional profit center and to help protect the customer from unwanted expenses that may occur from a defect in workmanship.",
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "In which case do we have to fill out an 8300 form?",
-                "answers": [
-                    {
-                        "a": "Customer gives you a personal check for $15,000.00 for payment in full.",
-                        "b": "Customer gives you $9500.00 in cash (small bills rolled up with rubber bands around them in increments of $1,000.00) as a down payment on a $43,000.00 amount financed.",
-                        "c": "Customer gives you a cashiers check for $11,000.00 as a down payment on a $43,000.00 amount financed.",
-                        "d": "B and C"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "If a customer buys a car from you and gives you $6500.00 cash down and two weeks later comes in and buys a car for his/her daughter and and gives you $5,000.00 cash as payment in full you do not have to fill out the 8300 because they are two separate transactions.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
+                "question": "Does the ECOA apply to all credit?",
+                "correctAnswer": "a"
             }
         ]
     }
