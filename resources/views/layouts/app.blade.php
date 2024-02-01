@@ -31,13 +31,14 @@
     <div class="lg:pl-72">
         @include('layouts.nav')
         <div class="py-10 px-4 sm:px-6 lg:px-8">
-            @if (isset($header))
-                <header class="p-5">
-                    {{ $header }}
-                </header>
-            @endif
-
-            {{ $slot }}
+            <div class="bg-white rounded-md p-6">
+                @if (isset($header))
+                    <header class="p-5">
+                        {{ $header }}
+                    </header>
+                @endif
+                {{ $slot }}
+            </div>
         </div>
     </div>
 </div>

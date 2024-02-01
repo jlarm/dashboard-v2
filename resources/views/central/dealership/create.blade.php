@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-xl font-bold leading-none tracking-tight text-neutral-900">
                 {{ __('Create a Dealership') }}
             </h2>
         </div>
     </x-slot>
 
-    <div class="py-12" x-data>
+    <div class="pb-12" x-data>
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900">
