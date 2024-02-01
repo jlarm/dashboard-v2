@@ -28,7 +28,12 @@
                                 @endif
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                @if($course->results->first() && $course->results->first()->passed === 1)
+                                @if($course->results->first() && $course->results->first()->passed === 1 && $course->results->first()->created_at < now()->subMonths(12))
+                                    <span
+                                        class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-600/10">
+                                    Expired
+                                </span>
+                                @elseif($course->results->first() && $course->results->first()->passed === 1)
                                     <span
                                         class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                                     Passed: {{ $course->results->first()->percentage }}%

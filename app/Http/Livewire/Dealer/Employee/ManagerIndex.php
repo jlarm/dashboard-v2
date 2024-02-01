@@ -14,6 +14,10 @@ class ManagerIndex extends Component
 
     public $store;
 
+    public $selectedDepartment = null;
+
+    public $selectedDepartmentName = null;
+
     public $showIncompleteCourseUsers = false;
 
     public $queryString = [
