@@ -141,7 +141,13 @@ class User extends Authenticatable
             ->select('course_id')
             ->where('user_id', $this->id)
             ->whereIn('course_id', $this->totalUserCourses())
-            ->where('created_at', '>=', now()->subYear())
+            ->where(function ($query) {
+                $query->where('created_at', '>=', now()->subYear())
+                    ->orWhere(function ($query) {
+                        $query->whereIn('course_id', [9,10,11,12])
+                            ->where('created_at', '>=', now()->subYears(3));
+                    });
+            })
             ->where('passed', 1)
             ->count('course_id');
     }
