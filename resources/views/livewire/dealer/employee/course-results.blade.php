@@ -28,23 +28,48 @@
                                 @endif
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                @if($course->results->first() && $course->results->first()->passed === 1 && $course->results->first()->created_at < now()->subMonths(12))
-                                    <span
-                                        class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-600/10">
+                                @if($course->slug === 'dot-hazardous-materials-transportation' ||
+                                $course->slug === 'dot-hazardous-materials-transportation-identifying-hazardous-materials' ||
+                                $course->slug === 'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment' ||
+                                $course->slug === 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding'
+                                )
+                                    @if($course->results->first() && $course->results->first()->passed === 1 && $course->results->first()->created_at < now()->subMonths(36))
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-600/10">
                                     Expired
                                 </span>
-                                @elseif($course->results->first() && $course->results->first()->passed === 1)
-                                    <span
-                                        class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                    @elseif($course->results->first() && $course->results->first()->passed === 1)
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                                     Passed: {{ $course->results->first()->percentage }}%
                                 </span>
-                                @elseif($course->results->first() && $course->results->first()->passed === 0)
-                                    <span
-                                        class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                                    @elseif($course->results->first() && $course->results->first()->passed === 0)
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
                                     Failed: {{ $course->results->first()->percentage }}%
                                 </span>
+                                    @else
+                                        {{ __('-') }}
+                                    @endif
                                 @else
-                                    {{ __('-') }}
+                                    @if($course->results->first() && $course->results->first()->passed === 1 && $course->results->first()->created_at < now()->subMonths(12))
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-600/10">
+                                    Expired
+                                </span>
+                                    @elseif($course->results->first() && $course->results->first()->passed === 1)
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                    Passed: {{ $course->results->first()->percentage }}%
+                                </span>
+                                    @elseif($course->results->first() && $course->results->first()->passed === 0)
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                                    Failed: {{ $course->results->first()->percentage }}%
+                                </span>
+                                    @else
+                                        {{ __('-') }}
+                                    @endif
                                 @endif
                             </td>
                             <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

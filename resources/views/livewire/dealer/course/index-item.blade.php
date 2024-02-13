@@ -35,21 +35,45 @@
             </p>
             <div class="w-full flex justify-between">
                 <p class="truncate text-sm text-gray-500">
-                    @if(is_null($course->results->first()))
-                        {{ __('Not taken yet') }}
-                    @elseif($course->results->first()->passed === 1 && $course->results->first()->created_at->diffInDays() > 365)
-                        <span class="text-orange-500">
+                @if($course->slug === 'dot-hazardous-materials-transportation' ||
+                    $course->slug === 'dot-hazardous-materials-transportation-identifying-hazardous-materials' ||
+                    $course->slug === 'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment' ||
+                    $course->slug === 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding'
+                    )
+                        @if(is_null($course->results->first()))
+                            {{ __('Not taken yet') }}
+                        @elseif($course->results->first()->passed === 1 && $course->results->first()->created_at->diffInDays() > 1095)
+                            <span class="text-orange-500">
                             {{ __('Expired On: ') }} {{ $course->results->first()->created_at->format('F d, Y') }}
                         </span>
-                    @else
-                        @if($course->results->first()->passed === 1)
-                            <span class="text-green-500">
+                        @else
+                            @if($course->results->first()->passed === 1)
+                                <span class="text-green-500">
                                         {{ __('Passed On')}}: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
                                     </span>
-                        @else
-                            <span class="text-red-800">
+                            @else
+                                <span class="text-red-800">
                                         {{ __('Last Attempt') }}: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
                                     </span>
+                            @endif
+                        @endif
+                    @else
+                        @if(is_null($course->results->first()))
+                            {{ __('Not taken yet') }}
+                        @elseif($course->results->first()->passed === 1 && $course->results->first()->created_at->diffInDays() > 365)
+                            <span class="text-orange-500">
+                            {{ __('Expired On: ') }} {{ $course->results->first()->created_at->format('F d, Y') }}
+                        </span>
+                        @else
+                            @if($course->results->first()->passed === 1)
+                                <span class="text-green-500">
+                                        {{ __('Passed On')}}: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                    </span>
+                            @else
+                                <span class="text-red-800">
+                                        {{ __('Last Attempt') }}: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                    </span>
+                            @endif
                         @endif
                     @endif
                 </p>
