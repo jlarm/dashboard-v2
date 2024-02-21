@@ -2,7 +2,7 @@
     <div>
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-                <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Edit OSHA Violation Statement</h1>
+                <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Edit Body Shop Violation Statement</h1>
             </div>
         </div>
         <div class="mt-8 flow-root">
@@ -46,7 +46,7 @@
                     </div>
                     <div>
                         <x-primary-button>Submit</x-primary-button>
-                        <x-button.secondary href="{{ route('osha-violations.index') }}">Cancel</x-button.secondary>
+                        <x-button.secondary href="{{ route('body-shop-violations.index') }}">Cancel</x-button.secondary>
                     </div>
                 </div>
 

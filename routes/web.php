@@ -71,6 +71,10 @@ Route::middleware('can:delete-users', 'auth', 'verified')->group(function () {
     Route::get('osha-violations', \App\Http\Livewire\Central\AuditStatements\Osha\Index::class)->name('osha-violations.index');
     Route::get('osha-violations/create', \App\Http\Livewire\Central\AuditStatements\Osha\Create::class)->name('osha-violations.create');
     Route::get('osha-violations/{oshaViolation}', \App\Http\Livewire\Central\AuditStatements\Osha\Edit::class)->name('osha-violations.edit');
+
+    Route::get('body-shop-violations', \App\Http\Livewire\Central\AuditStatements\BodyShop\Index::class)->name('body-shop-violations.index');
+    Route::get('body-shop-violations/create', \App\Http\Livewire\Central\AuditStatements\BodyShop\Create::class)->name('body-shop-violations.create');
+    Route::get('body-shop-violations/{bodyShopViolation}', \App\Http\Livewire\Central\AuditStatements\BodyShop\Edit::class)->name('body-shop-violations.edit');
 });
 
 require __DIR__.'/auth.php';

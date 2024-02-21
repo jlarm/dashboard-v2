@@ -111,6 +111,14 @@
                                                 <span class="truncate">OSHA Violations Statements</span>
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="{{ route('body-shop-violations.index') }}"
+                                               class="{{ (request()->segment(1) == 'body-shop-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                                <span
+                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">O</span>
+                                                <span class="truncate">Body Shop Violations Statements</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                 @endcan

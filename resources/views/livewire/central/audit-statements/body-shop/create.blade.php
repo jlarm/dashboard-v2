@@ -2,11 +2,11 @@
     <div>
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-                <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Edit OSHA Violation Statement</h1>
+                <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Create Body Shop Violation Statement</h1>
             </div>
         </div>
         <div class="mt-8 flow-root">
-            <form wire:submit.prevent="update" x-data @keydown.enter.prevent class="max-w-3xl mx-auto space-y-5">
+            <form wire:submit.prevent="create" x-data @keydown.enter.prevent class="max-w-3xl mx-auto space-y-5">
                 <div>
                     <x-input-label for="statement" :value="__('Violation Statement')"/>
                     <x-text-input
@@ -32,24 +32,21 @@
                         />
                         <p class="mt-2 text-sm text-gray-500" id="email-description">Hit the enter key to add a keyword.</p>
                     </div>
-                    <div class="flex gap-2 flex-wrap">
-                        @if ($keywords)
-                            @foreach ($keywords as $index => $keyword)
-                                <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                    <div class="flex gap-2">
+                        @foreach ($keywords as $index => $keyword)
+                            <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                                 {{ $keyword }}
                                 <button type="button" wire:click="removeKeyword({{ $index }})" class="text-blue-700 ml-2">
                                     &times;
                                 </button>
                             </span>
-                            @endforeach
-                        @endif
+                        @endforeach
                     </div>
                     <div>
                         <x-primary-button>Submit</x-primary-button>
-                        <x-button.secondary href="{{ route('osha-violations.index') }}">Cancel</x-button.secondary>
+                        <x-button.secondary href="{{ route('body-shop-violations.index') }}">Cancel</x-button.secondary>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
