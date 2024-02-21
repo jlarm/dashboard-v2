@@ -41,6 +41,7 @@ class Create extends Component
             ->send();
 
     }
+
     public function render()
     {
         return view('livewire.central.audit-statements.osha.create');

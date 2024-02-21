@@ -48,7 +48,9 @@ Route::post('employees/store', [UserController::class, 'store'])->name('employee
 
 Route::middleware('can:delete-users', 'auth', 'verified')->group(function () {
     Route::get('employees', \App\Http\Livewire\Central\Employee\Index::class)->name('employees.index');
-    Route::get('/employees/deleted', function () { return view('central.employee.deleted'); })->name('employees.deleted');
+    Route::get('/employees/deleted', function () {
+        return view('central.employee.deleted');
+    })->name('employees.deleted');
     Route::get('employees/invite', [EmployeeController::class, 'create'])->name('invite.create');
     Route::post('employees/invite', [EmployeeController::class, 'send'])->name('invite.send');
     Route::get('employees/{user}', [EmployeeController::class, 'show'])->name('employees.view');
