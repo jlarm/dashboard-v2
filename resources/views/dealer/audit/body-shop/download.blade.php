@@ -65,9 +65,7 @@
                         <span class="text-red-500 italic">Potential High Risk Violation</span>
                     @endif
                     @if($audit->body_shop_q1_answer === 2)
-                        <p>Filters shall be checked and changed
-                            as needed based on volume of spray
-                            booth activity. Filter log will be kept up-to-date on filter change outs.</p>
+                        <p>Filters shall be checked and changed as needed based on volume of spray booth activity. Filter log will be kept up-to-date on filter change outs.</p>
                     @endif
                     @if($audit->body_shop_q1_comment)
                         <div>

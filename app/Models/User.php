@@ -144,7 +144,7 @@ class User extends Authenticatable
             ->where(function ($query) {
                 $query->where('created_at', '>=', now()->subYear())
                     ->orWhere(function ($query) {
-                        $query->whereIn('course_id', [9,10,11,12])
+                        $query->whereIn('course_id', [9, 10, 11, 12])
                             ->where('created_at', '>=', now()->subYears(3));
                     });
             })
