@@ -65,45 +65,55 @@
                         </li>
                     </ul>
                 </li>
-                {{--                Admin Menu--}}
-                {{--                <li>--}}
-                {{--                    <div class="text-xs font-semibold leading-6 text-gray-400">Admin Menu</div>--}}
-                {{--                    <ul role="list" class="-mx-2 mt-2 space-y-1">--}}
-                {{--                        <li>--}}
-                {{--                            <!-- Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" -->--}}
-                {{--                            <a href="{{ route('role.index') }}"--}}
-                {{--                               class="{{ (request()->segment(1) == 'roles') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">--}}
-                {{--                                <span--}}
-                {{--                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">R</span>--}}
-                {{--                                <span class="truncate">Employee Roles</span>--}}
-                {{--                            </a>--}}
-                {{--                        </li>--}}
-                {{--                        <li>--}}
-                {{--                            <a href="{{ route('permission.index') }}"--}}
-                {{--                               class="{{ (request()->segment(1) == 'permissions') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">--}}
-                {{--                                <span--}}
-                {{--                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">P</span>--}}
-                {{--                                <span class="truncate">Employee Permissions</span>--}}
-                {{--                            </a>--}}
-                {{--                        </li>--}}
-                {{--                        <li>--}}
-                {{--                            <a href="{{ route('department.index') }}"--}}
-                {{--                               class="{{ (request()->segment(1) == 'departments') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">--}}
-                {{--                                <span--}}
-                {{--                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">D</span>--}}
-                {{--                                <span class="truncate">Departments</span>--}}
-                {{--                            </a>--}}
-                {{--                        </li>--}}
-                {{--                        <li>--}}
-                {{--                            <a href="{{ route('course-management.index') }}"--}}
-                {{--                               class="{{ (request()->segment(1) == 'course-management') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">--}}
-                {{--                                <span--}}
-                {{--                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">C</span>--}}
-                {{--                                <span class="truncate">Courses</span>--}}
-                {{--                            </a>--}}
-                {{--                        </li>--}}
-                {{--                    </ul>--}}
-                {{--                </li>--}}
+                @can('delete-users')
+
+                                <li>
+                                    <div class="text-xs font-semibold leading-6 text-gray-400">Admin Menu</div>
+                                    <ul role="list" class="-mx-2 mt-2 space-y-1">
+{{--                                        <li>--}}
+{{--                                            <!-- Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" -->--}}
+{{--                                            <a href="{{ route('role.index') }}"--}}
+{{--                                               class="{{ (request()->segment(1) == 'roles') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">--}}
+{{--                                                <span--}}
+{{--                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">R</span>--}}
+{{--                                                <span class="truncate">Employee Roles</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <li>--}}
+{{--                                            <a href="{{ route('permission.index') }}"--}}
+{{--                                               class="{{ (request()->segment(1) == 'permissions') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">--}}
+{{--                                                <span--}}
+{{--                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">P</span>--}}
+{{--                                                <span class="truncate">Employee Permissions</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <li>--}}
+{{--                                            <a href="{{ route('department.index') }}"--}}
+{{--                                               class="{{ (request()->segment(1) == 'departments') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">--}}
+{{--                                                <span--}}
+{{--                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">D</span>--}}
+{{--                                                <span class="truncate">Departments</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <li>--}}
+{{--                                            <a href="{{ route('course-management.index') }}"--}}
+{{--                                               class="{{ (request()->segment(1) == 'course-management') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">--}}
+{{--                                                <span--}}
+{{--                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">C</span>--}}
+{{--                                                <span class="truncate">Courses</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+                                        <li>
+                                            <a href="{{ route('osha-violations.index') }}"
+                                               class="{{ (request()->segment(1) == 'osha-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                                <span
+                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">O</span>
+                                                <span class="truncate">OSHA Violations Statements</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                @endcan
                 <li class="mt-auto">
                     <a href="https://docs.armp.app/"
                        target="_blank"

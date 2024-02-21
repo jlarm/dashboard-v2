@@ -48,9 +48,7 @@ Route::post('employees/store', [UserController::class, 'store'])->name('employee
 
 Route::middleware('can:delete-users', 'auth', 'verified')->group(function () {
     Route::get('employees', \App\Http\Livewire\Central\Employee\Index::class)->name('employees.index');
-    Route::get('/employees/deleted', function () {
-        return view('central.employee.deleted');
-    })->name('employees.deleted');
+    Route::get('/employees/deleted', function () { return view('central.employee.deleted'); })->name('employees.deleted');
     Route::get('employees/invite', [EmployeeController::class, 'create'])->name('invite.create');
     Route::post('employees/invite', [EmployeeController::class, 'send'])->name('invite.send');
     Route::get('employees/{user}', [EmployeeController::class, 'show'])->name('employees.view');
@@ -67,6 +65,10 @@ Route::middleware('can:delete-users', 'auth', 'verified')->group(function () {
     Route::get('course-management', \App\Http\Livewire\Central\CourseManagement\Index::class)->name('course-management.index');
     Route::get('course-management/{course:slug}', \App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
     Route::get('course-management/quiz/{course:slug}', \App\Http\Livewire\Central\CourseManagement\EditQuiz::class)->name('course-management.edit-quiz');
+
+    Route::get('osha-violations', \App\Http\Livewire\Central\AuditStatements\Osha\Index::class)->name('osha-violations.index');
+    Route::get('osha-violations/create', \App\Http\Livewire\Central\AuditStatements\Osha\Create::class)->name('osha-violations.create');
+    Route::get('osha-violations/{oshaViolation}', \App\Http\Livewire\Central\AuditStatements\Osha\Edit::class)->name('osha-violations.edit');
 });
 
 require __DIR__.'/auth.php';
