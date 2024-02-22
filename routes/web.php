@@ -79,6 +79,8 @@ Route::middleware('can:delete-users', 'auth', 'verified')->group(function () {
     Route::get('glba-violations', \App\Http\Livewire\Central\AuditStatements\Glba\Index::class)->name('glba-violations.index');
     Route::get('glba-violations/create', \App\Http\Livewire\Central\AuditStatements\Glba\Create::class)->name('glba-violations.create');
     Route::get('glba-violations/{glbaViolation}', \App\Http\Livewire\Central\AuditStatements\Glba\Edit::class)->name('glba-violations.edit');
+
+    Route::get('logs', \App\Http\Livewire\Central\Logs\Index::class)->name('logs.index');
 });
 
 require __DIR__.'/auth.php';

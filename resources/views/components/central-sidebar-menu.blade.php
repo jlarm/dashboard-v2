@@ -115,7 +115,7 @@
                                             <a href="{{ route('body-shop-violations.index') }}"
                                                class="{{ (request()->segment(1) == 'body-shop-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
                                                 <span
-                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">O</span>
+                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">B</span>
                                                 <span class="truncate">Body Shop Statements</span>
                                             </a>
                                         </li>
@@ -123,8 +123,16 @@
                                             <a href="{{ route('glba-violations.index') }}"
                                                class="{{ (request()->segment(1) == 'glba-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
                                                 <span
-                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">O</span>
+                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">G</span>
                                                 <span class="truncate">GLBA Statements</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('logs.index') }}"
+                                               class="{{ (request()->segment(1) == 'logs') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                                <span
+                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">L</span>
+                                                <span class="truncate">Logs</span>
                                             </a>
                                         </li>
                                     </ul>
