@@ -1,0 +1,103 @@
+[
+    {
+        "id": 38,
+        "uuid": "3b66eea2-ec4f-4932-bc96-ef09556e8919",
+        "name": "Phishing",
+        "slug": "phishing",
+        "department": [],
+        "roles": [],
+        "slides": [
+            {
+                "title": "Introduction to Phishing",
+                "description": "<p><strong>Definition of phishing</strong></p><p>The fraudulent practice of sending emails or other messages purporting to be from reputable companies in order to induce individuals to reveal personal information, such as passwords and credit card numbers.</p><p><strong>Importance of recognizing phishing attacks</strong></p><p>This awareness helps make you more resilient to cyber-attacks, creating a robust defense against threats. It's a great way to help your team spot phishing attacks, keeping everyone's data safer. Acts as a refresher on the company's cyber security policies and procedures.</p><p><strong>Examples of real-world consequences of successful phishing attacks</strong></p><ul><li>Data Loss</li><li>Damaged Reputation</li><li>Direct Monetary Loss</li><li>Loss of Productivity</li><li>Loss of Customers</li><li>Financial Penalties</li><li>Intellectual Property</li><li>Loss of Companies Value</li></ul>"
+            },
+            {
+                "title": "Types of Phishing Attacks",
+                "description": "<p><strong>Email phishing</strong>- Phishing is a type of online scam that targets consumers by sending them an email that appears to be from a well-known source - an internet service provider, a bank, or a mortgage company, for example.</p><p><strong>Spear phishing</strong>- The fraudulent practice of sending emails ostensibly from a known or trusted sender in order to induce targeted individuals to reveal confidential information.</p><p><strong>Whaling</strong>- Whaling is a highly targeted phishing attack - aimed at a senior executives - masquerading as a legitimate email. Whaling is digitally enabled fraud through social engineering, designed to encourage victims to perform a secondary action, such as initiating a wire transfer of funds.</p><p><strong>Vishing</strong>- Vishing, short for voice phishing, uses fraudulent phone calls to trick victims into providing sensitive information, like login credentials, credit card numbers, or bank details.</p><p><strong>Smishing (SMS phishing)</strong>- Smishing is a form of phishing that specifically targets users through text messages.</p><p><strong>Social media phishing</strong>- Is used by attackers seeking to steal personal data to sell on dark web or to gain access, typically to financial accounts.</p><p><strong>Clone phishing H. Pharming</strong>- Pharming (a play on the words “phishing” and “farming”) occurs when an attacker alters your computer or router's settings to redirect legitimate users to malicious sites.</p>"
+            },
+            {
+                "title": "Techniques Used in Phishing Attacks",
+                "description": "<p><strong>Social engineering tactics</strong>- 5 most common are:</p><ol><li>Baiting</li><li>Scareware</li><li>Pretexting</li><li>Phishing</li><li>Spear Phishing</li></ol><p><strong>Spoofing</strong>- Utilizing cybersecurity that involves scammers pretending to be someone else to steal data or money or to spread malware.</p><p><strong>Malicious attachments</strong>- email attachments are an increasingly dangerous threat to corporate security. Disguised as documents, voicemails, e-faxes or PDFs, malicious email attachments are an attack on the victim’s computer when the attachment is opened.</p><p><strong>Malicious links</strong>- Are disguised as documents, voicemails, e-faxes or PDFs, malicious email attachments are designed to launch an attack on the victim's computer when the attachment is opened.</p><p><strong>Domain spoofing</strong>- Domain spoofing is when cyber criminals fake a website name or email domain to try to fool users.</p><p><strong>Impersonation</strong>- Example “Online Identity Theft”: Impersonating someone on social media or creating fake profiles to deceive others.</p>"
+            },
+            {
+                "title": "Identifying Phishing Emails",
+                "description": "<ul><li>Suspicious sender email addresses</li><li>Grammatical and spelling errors</li><li>Requests for sensitive information</li><li>Urgency or threats</li><li>Unexpected attachments or links</li><li>Spoofed URLs</li><li>Unusual sender behavior</li></ul>"
+            },
+            {
+                "title": "Best Practices for Avoiding Phishing Attacks",
+                "description": "<ul><li>Think before clicking</li><li>Verify the sender’s identity</li><li>Check URLs before clicking</li><li>Be cautious with attachments and downloads</li><li>Use multi-factor authentication</li><li>Keep software updated</li><li>Report suspicious emails</li></ul>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "What are several types of phishing attacks listed below?",
+                "answers": [
+                    {
+                        "a": "Smishing",
+                        "b": "Spear phishing",
+                        "c": "Cellular phishing",
+                        "d": "Whaling",
+                        "e": "All the above",
+                        "f": "A,B,D",
+                        "g": "A,C,D"
+                    }
+                ],
+                "correctAnswer": "f"
+            },
+            {
+                "question": "What is one of the main phishing techniques used?",
+                "answers": [
+                    {
+                        "a": "Cloning",
+                        "b": "Impersonation",
+                        "c": "Font variable signatures",
+                        "d": "Logo adaptation",
+                        "e": "A &amp; B",
+                        "f": "All of the above"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "How to Identifying Phishing Emails?",
+                "answers": [
+                    {
+                        "a": "Suspicious sender email addresses",
+                        "b": "Grammatical and spelling errors",
+                        "c": "Requests for sensitive information",
+                        "d": "Urgency or threats",
+                        "e": "A,B",
+                        "f": "A,C,D",
+                        "g": "All of the above"
+                    }
+                ],
+                "correctAnswer": "g"
+            },
+            {
+                "question": "What are the top 3 Best Practices for Avoiding Phishing Attacks?",
+                "answers": [
+                    {
+                        "a": "Think before clicking",
+                        "b": "Verify the sender’s identity",
+                        "c": "Report suspicious emails",
+                        "d": "Check URLs before clicking",
+                        "e": "A,B,C",
+                        "f": "A,C,D",
+                        "g": "A,B,D"
+                    }
+                ],
+                "correctAnswer": "g"
+            },
+            {
+                "question": "Passwords and Credit Cards are two of the most sought after items to steal?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            }
+        ]
+    }
+]
