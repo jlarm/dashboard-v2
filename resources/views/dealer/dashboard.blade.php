@@ -9,7 +9,8 @@
                                 <livewire:dealer.home.note/>
                             </div>
                         @endcan
-                        <h1 class="font-bold text-2xl mt-10 mb-5">Course Completion by Department</h1>
+                        <h1 class="font-bold text-2xl mt-10">Course Completion by Department</h1>
+                        <p class="text-sm mb-5 text-gray-400 italic">*Based on the total number of employees who finished all required training courses.</p>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
                             <a href="{{ route('employees.index') }}" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
                                 <livewire:dealer.employee.completed-courses-stat name="All" />
@@ -56,7 +57,8 @@
             @can('edit-stores')
                     <div class="p-6">
                         <h1 class="font-bold text-2xl mt-10">Course Completion by Department</h1>
-                        <p class="text-sm text-gray-500 mb-5">Based on all stores in your group</p>
+                        <p class="text-sm text-gray-500">Based on all stores in your group</p>
+                        <p class="text-sm mb-5 text-gray-400 italic">*Based on the total number of employees who finished all required training courses.</p>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
                             <a href="{{ route('employees.index') }}" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
                                 <livewire:dealer.employee.completed-courses-stat name="All" />
