@@ -7,6 +7,7 @@
             <livewire:dealer.layout.current-store-name />
         </div>
         <div class="ml-4 flex items-center md:ml-6 space-x-5">
+            <livewire:dealer.components.notifications />
             <x-navigation.user-dropdown/>
         </div>
     </div>

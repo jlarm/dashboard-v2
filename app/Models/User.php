@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -100,9 +101,9 @@ class User extends Authenticatable
             }
 
             if (request()->getHost() === config('tenancy.central_domains')[0]) {
-                $courseWithRole = \DB::table('course_role')
+                $courseWithRole = DB::table('course_role')
                     ->whereIn('role_id', $userRoles)
-                    ->pluck('model_id')
+                    ->pluck('course_id')
                     ->toArray();
 
                 $this->userCoursesCache = Course::with('departments')
@@ -114,7 +115,7 @@ class User extends Authenticatable
                     ->pluck('id')
                     ->toArray();
             } else {
-                $courseWithRole = \DB::table('course_role')
+                $courseWithRole = DB::table('course_role')
                     ->whereIn('role_id', $userRoles)
                     ->pluck('course_id')
                     ->toArray();
@@ -136,7 +137,7 @@ class User extends Authenticatable
 
     public function getTotalCompletedCoursesAttribute(): int
     {
-        return \DB::table('course_results')
+        return DB::table('course_results')
             ->distinct()
             ->select('course_id')
             ->where('user_id', $this->id)
