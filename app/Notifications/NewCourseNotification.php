@@ -22,7 +22,7 @@ class NewCourseNotification extends Notification implements ShouldQueue
     public function toDatabase($notifiable)
     {
         return [
-            'message' => 'New course has been added',
+            'message' => 'New Phishing Training course added.',
         ];
     }
 }
