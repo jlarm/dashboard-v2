@@ -33,26 +33,26 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
     // All Access
     // **************************************************
 
-    Route::get('/language/{locale}', function ($locale) {
-        app()->setLocale($locale);
-        session()->put('locale', $locale);
-
-        return redirect()->back();
-    });
+//    Route::get('/language/{locale}', function ($locale) {
+//        app()->setLocale($locale);
+//        session()->put('locale', $locale);
+//
+//        return redirect()->back();
+//    });
 
     Route::get('/', function () {
         return view('dealer.welcome');
     });
 
-    if (config('app.env') === 'local') {
-        Route::get('osha-audit-pdf', \App\Http\Controllers\OshaPdfTestController::class);
-        Route::get('deal-jacket-audit-pdf', \App\Http\Controllers\DealJacketPdfTestController::class);
-        Route::get('glba-audit-pdf', \App\Http\Controllers\GlbaPdfTestController::class);
-        Route::get('body-shop-audit-pdf', \App\Http\Controllers\BodyShopPdfTestController::class);
-        Route::Get('dot-cert', function () {
-            return view('dealer.course.CertDownloadView');
-        });
-    }
+//    if (config('app.env') === 'local') {
+//        Route::get('osha-audit-pdf', \App\Http\Controllers\OshaPdfTestController::class);
+//        Route::get('deal-jacket-audit-pdf', \App\Http\Controllers\DealJacketPdfTestController::class);
+//        Route::get('glba-audit-pdf', \App\Http\Controllers\GlbaPdfTestController::class);
+//        Route::get('body-shop-audit-pdf', \App\Http\Controllers\BodyShopPdfTestController::class);
+//        Route::Get('dot-cert', function () {
+//            return view('dealer.course.CertDownloadView');
+//        });
+//    }
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
