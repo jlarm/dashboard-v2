@@ -103,7 +103,7 @@ class User extends Authenticatable
             if (request()->getHost() === config('tenancy.central_domains')[0]) {
                 $courseWithRole = DB::table('course_role')
                     ->whereIn('role_id', $userRoles)
-                    ->pluck('course_id')
+                    ->pluck('model_id')
                     ->toArray();
 
                 $this->userCoursesCache = Course::with('departments')
