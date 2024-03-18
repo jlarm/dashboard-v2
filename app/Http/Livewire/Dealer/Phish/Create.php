@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Http\Livewire\Dealer\Phish;
+
+use Illuminate\Support\Facades\Http;
+use Livewire\Component;
+
+class Create extends Component
+{
+    public $groups;
+    public $emails;
+    public $pages;
+    public $profiles;
+    public $name;
+    public $date;
+    public $group;
+    public $template;
+    public $page;
+    public $smtp;
+    public $error;
+
+    public function mount()
+    {
+
+        try {
+            $this->groups = Http::withoutVerifying()->get('https://'. config('gophish.ip') .':3333/api/groups/?api_key='. config('gophish.key') .'');
+            $this->groups = $this->groups->json();
+
+
+            $this->emails = Http::withoutVerifying()->get('https://'. config('gophish.ip') .':3333/api/templates/?api_key='. config('gophish.key') .'');
+            $this->emails = $this->emails->json();
+
+            $this->pages = Http::withoutVerifying()->get('https://'. config('gophish.ip') .':3333/api/pages/?api_key='. config('gophish.key') .'');
+            $this->pages = $this->pages->json();
+
+            $this->profiles = Http::withoutVerifying()->get('https://'. config('gophish.ip') .':3333/api/smtp/?api_key='. config('gophish.key') .'');
+            $this->profiles = $this->profiles->json();
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
+            \Log::error($e->getMessage());
+            $this->groups = [];
+            $this->emails = [];
+            $this->pages = [];
+            $this->profiles = [];
+        }
+    }
+
+    public function create()
+    {
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => config('gophish.key'),
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])
+                ->withoutVerifying()
+                ->post('https://'. config('gophish.ip') .':3333/api/campaigns/', [
+                    'name' => $this->name,
+                    'template' => ['name' => $this->template],
+                    'url' => 'http://'. config('gophish.ip'),
+                    'page' => ['name' => $this->page],
+                    'smtp' => ['name' => $this->smtp],
+                    'launch_date' => null,
+                    'send_by_date' => null,
+                    'groups' => [['name' => $this->group]]
+                ]);
+            ray($response->json());
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
+            \Log::error($e->getMessage());
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.phish.create')->layout('components.dealer-app');
+    }
+}

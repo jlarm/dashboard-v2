@@ -201,6 +201,8 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
         Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
 
         Route::get('phishing', \App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
+        Route::get('phishing/create', \App\Http\Livewire\Dealer\Phish\Create::class)->name('phishing.create');
+        Route::get('phishing/{campaignId}', \App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
     });
 
     Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
