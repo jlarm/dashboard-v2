@@ -159,18 +159,6 @@
             Vendors
         </a>
     @endcan
-    @can('create-users')
-        <a
-            href="{{ $currentStore ? route('dealer.stores.vendor.index', $currentStore) : route('dealer.phishing.index') }}"
-            class="{{ (request()->segment(1) === 'phishing' || request()->segment(3) === 'phishing') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
-        >
-            <svg class="mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" color="#000" viewBox="0 0 24 24">
-                <path class="{{ (request()->segment(1) === 'phishing' || request()->segment(3) === 'phishing') ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-linejoin="round" stroke-width="1.5" d="m18.004 12 1.5 1.5m0 0 1.501 1.5m-1.5-1.5 1.5-1.5m-1.5 1.5-1.5 1.5m-5.002-3 1.5 1.5m0 0 1.5 1.5m-1.5-1.5 1.5-1.5m-1.5 1.5-1.5 1.5M8 12l1.5 1.5m0 0 1.501 1.5m-1.5-1.5 1.5-1.5m-1.5 1.5-1.5 1.5M3 12l1.5 1.5m0 0L6 15m-1.5-1.5L6 12m-1.5 1.5L3 15"/>
-                <path class="{{ (request()->segment(1) === 'phishing' || request()->segment(3) === 'phishing') ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-width="1.5" d="M18.626 18.099c-1.635 1.918-3.89 3.233-6.566 3.902-2.618-.586-4.966-1.95-6.68-4.034M21.496 9.06a22.456 22.456 0 0 0-.488-4.084c-3.661 0-5.408-3.043-8.98-2.976-3.624 0-5.761 3.16-9.075 2.934A21.404 21.404 0 0 0 2.5 9.06"/>
-            </svg>
-            Phishing
-        </a>
-    @endcan
     <!-- DOCS -->
     @can('create-users')
         @if (request()->segment(1) === 'stores' || !tenant('locations'))
