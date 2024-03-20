@@ -92,6 +92,9 @@ class User extends Authenticatable
     private function totalUserCourses(): array
     {
         if (is_null($this->userCoursesCache)) {  // Check if already computed and cached
+            // Eager load the roles relationship
+            $this->load('roles');
+
             // Fetch the role IDs excluding the ID 5
             $userRoles = $this->roles->pluck('id')->reject(fn ($id) => $id == 5);
 
