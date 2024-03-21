@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Phish;
 
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
@@ -14,6 +15,7 @@ class Show extends Component
     public $counts = [];
     public $sentCount;
     public $error;
+    public $color;
     public function mount()
     {
         try {
@@ -42,6 +44,18 @@ class Show extends Component
             \Log::error($e->getMessage());
             $this->campaign = [];
         }
+
+        $this->color = $this->statusColor();
+    }
+
+    public function statusColor(): string
+    {
+        return match ($this->campaign['status']) {
+            'Completed' => 'green',
+            'In progress' => 'blue',
+            'Queues' => 'yellow',
+            default => 'gray'
+        };
     }
 
     public function statCount(): void
@@ -70,6 +84,52 @@ class Show extends Component
         $this->counts['clicked'] = $clickedCount;
         $this->counts['submitted'] = $submittedCount;
         $this->counts['reported'] = $reportedCount;
+    }
+
+    public function completeCampaign()
+    {
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => config('gophish.key'),
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])
+                ->withoutVerifying()
+                ->get('https://'. config('gophish.ip') .':3333/api/campaigns/' . $this->campaignId . '/complete');
+
+            Notification::make()
+                ->title('Campaign Completed Successfully!')
+                ->success()
+                ->send();
+
+            return redirect()->route('dealer.phishing.index');
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
+            \Log::error($e->getMessage());
+        }
+    }
+
+    public function deleteCampaign()
+    {
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => config('gophish.key'),
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])
+                ->withoutVerifying()
+                ->delete('https://'. config('gophish.ip') .':3333/api/campaigns/' . $this->campaignId);
+
+            Notification::make()
+                ->title('Campaign Deleted Successfully!')
+                ->success()
+                ->send();
+
+            return redirect()->route('dealer.phishing.index');
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
+            \Log::error($e->getMessage());
+        }
     }
 
     public function render()

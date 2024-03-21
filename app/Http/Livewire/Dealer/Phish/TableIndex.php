@@ -18,7 +18,7 @@ class TableIndex extends Component
         $this->readyToLoad = true;
     }
 
-    public function campaigns()
+    public function campaigns(): void
     {
         try {
             $this->campaigns = Http::withoutVerifying()->get('https://'. config('gophish.ip') .':3333/api/campaigns/?api_key='. config('gophish.key') .'');
