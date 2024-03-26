@@ -202,7 +202,7 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
 
         Route::get('phishing', \App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
         Route::get('phishing/create', \App\Http\Livewire\Dealer\Phish\Create::class)->name('phishing.create');
-        Route::get('phishing/{campaign_id}', \App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
+        Route::get('phishing/{phishingCampaign}', \App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
     });
 
     Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');

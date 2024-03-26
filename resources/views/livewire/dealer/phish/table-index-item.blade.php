@@ -25,7 +25,7 @@
     </x-table.cell>
     <x-table.cell class="pl-3 pr-4 sm:pr-0">
         @if($campaign['status'] != 'Queued')
-            <a href="{{ route('dealer.phishing.show', $campaign->campaign_id) }}" class="text-arm-blue-600 hover:text-arm-blue-900">View</a>
+            <a href="{{ route('dealer.phishing.show', $campaign) }}" class="text-arm-blue-600 hover:text-arm-blue-900">View</a>
         @endif
     </x-table.cell>
 </x-table.row>

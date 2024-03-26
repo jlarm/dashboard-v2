@@ -1,16 +1,16 @@
 <div>
     <div class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
         <div class="w-full flex justify-between space-x-3">
-            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">{{ $campaign['name'] }}</h1>
+            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">{{ $phishingCampaign->name }}</h1>
             <div class="flex items-center gap-5">
                 <div class="flex items-baseline space-x-2">
-{{--                    <span class="relative flex h-3 w-3">--}}
-{{--                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-{{ $color }}-400 opacity-75"></span>--}}
-{{--                      <span class="relative inline-flex rounded-full h-3 w-3 bg-{{ $color }}-500"></span>--}}
-{{--                    </span>--}}
-{{--                    <span class="text-sm font-medium text-{{ $color }}-700">{{ $campaign['status'] }}</span>--}}
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-{{ $this->color() }}-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-{{ $this->color() }}-500"></span>
+                    </span>
+                    <span class="text-sm font-medium text-{{ $this->color() }}-700">{{ $phishingCampaign['status'] }}</span>
                 </div>
-                @if($campaign['status'] != 'Completed')
+                @if($phishingCampaign->status != 'Completed')
                     <x-secondary-button wire:click="completeCampaign">Mark as Complete</x-secondary-button>
                 @endif
             </div>
@@ -18,11 +18,6 @@
         <div class="mt-4 flex sm:mt-0 sm:ml-4">
         </div>
     </div>
-
-{{--    @foreach($users as $user => $timeline)--}}
-{{--        {{ dump($user) }}--}}
-{{--        {{ dump($timeline) }}--}}
-{{--    @endforeach--}}
 
     <div class="px-6">
         <div class="grid grid-cols-3 gap-3">
@@ -195,23 +190,23 @@
                 <dl class="mx-auto grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2">
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Email Sent</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->emails_sent }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $phishingCampaign->emails_sent }}</dd>
                     </div>
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Email Opened</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->emails_opened }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $phishingCampaign->emails_opened }}</dd>
                     </div>
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Clicked Link</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->links_clicked }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $phishingCampaign->links_clicked }}</dd>
                     </div>
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Submitted Data</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->data_submitted }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $phishingCampaign->data_submitted }}</dd>
                     </div>
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Email Reported</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->emails_reported }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $phishingCampaign->emails_reported }}</dd>
                     </div>
                 </dl>
                 <div class="w-full flex justify-end mt-3">
