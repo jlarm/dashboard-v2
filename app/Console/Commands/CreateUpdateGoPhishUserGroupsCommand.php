@@ -15,7 +15,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
     public function handle()
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            $this->info('Running for tenant: ' . $tenant->name);
+            $this->info('Running for tenant: '.$tenant->name);
 
             $groups = $this->getGroups();
             $userData = $this->getUsers();
@@ -27,7 +27,8 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
     private function getGroups()
     {
-        $groups = Http::withoutVerifying()->get('https://'. config('gophish.ip') .':3333/api/groups/?api_key='. config('gophish.key') .'');
+        $groups = Http::withoutVerifying()->get('https://'.config('gophish.ip').':3333/api/groups/?api_key='.config('gophish.key').'');
+
         return collect($groups->json())->pluck('id', 'name');
     }
 
@@ -44,6 +45,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
             $splitName = explode(' ', $user->name);
             $firstName = $splitName[0];
             $lastName = $splitName[1];
+
             return [
                 'email' => $user->email,
                 'first_name' => $firstName,
@@ -55,7 +57,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
     private function createOrUpdateGroup($groups, $userData)
     {
-        if (!array_key_exists('All Employees', $groups->toArray())) {
+        if (! array_key_exists('All Employees', $groups->toArray())) {
             $this->createGroup($userData);
         } else {
             $this->updateGroup($groups->get('All Employees'), $userData);
@@ -76,7 +78,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->post('https://'. config('gophish.ip') .':3333/api/groups/', $requestBody);
+                ->post('https://'.config('gophish.ip').':3333/api/groups/', $requestBody);
 
             if ($response->status() === 200) {
                 $this->info('Group Created');
@@ -102,7 +104,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->put('https://'. config('gophish.ip') .':3333/api/groups/'. $groupId .'', $requestBody);
+                ->put('https://'.config('gophish.ip').':3333/api/groups/'.$groupId.'', $requestBody);
 
             if ($response->status() === 200) {
                 $this->info('Group Updated');

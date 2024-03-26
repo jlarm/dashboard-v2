@@ -241,6 +241,11 @@ class Store extends Model implements HasMedia
         return $this->hasMany(Vendor::class);
     }
 
+    public function phishingCampaigns(): HasMany
+    {
+        return $this->hasMany(PhishingCampaign::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();

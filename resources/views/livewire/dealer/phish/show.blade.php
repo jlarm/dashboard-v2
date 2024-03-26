@@ -4,11 +4,11 @@
             <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">{{ $campaign['name'] }}</h1>
             <div class="flex items-center gap-5">
                 <div class="flex items-baseline space-x-2">
-                    <span class="relative flex h-3 w-3">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-{{ $color }}-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-{{ $color }}-500"></span>
-                    </span>
-                    <span class="text-sm font-medium text-{{ $color }}-700">{{ $campaign['status'] }}</span>
+{{--                    <span class="relative flex h-3 w-3">--}}
+{{--                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-{{ $color }}-400 opacity-75"></span>--}}
+{{--                      <span class="relative inline-flex rounded-full h-3 w-3 bg-{{ $color }}-500"></span>--}}
+{{--                    </span>--}}
+{{--                    <span class="text-sm font-medium text-{{ $color }}-700">{{ $campaign['status'] }}</span>--}}
                 </div>
                 @if($campaign['status'] != 'Completed')
                     <x-secondary-button wire:click="completeCampaign">Mark as Complete</x-secondary-button>
@@ -16,15 +16,19 @@
             </div>
         </div>
         <div class="mt-4 flex sm:mt-0 sm:ml-4">
-
         </div>
     </div>
+
+{{--    @foreach($users as $user => $timeline)--}}
+{{--        {{ dump($user) }}--}}
+{{--        {{ dump($timeline) }}--}}
+{{--    @endforeach--}}
 
     <div class="px-6">
         <div class="grid grid-cols-3 gap-3">
             <div class="col-span-2">
                 <ul x-data="{ active: 0 }" role="list" class="space-y-3">
-                    @foreach($users as $user)
+                    @foreach($users as $user => $timeline)
                         <li
                             x-data="{
                                     id: {{ $loop->index }} + 1,
@@ -38,7 +42,7 @@
                             class="border rounded-md"
                         >
                             <div x-on:click="expanded = !expanded" class="flex items-center gap-x-3 p-4 hover:cursor-pointer">
-                                <h3 class="flex-auto truncate text-sm font-semibold leading-6 text-gray-900">{{ $user['first_name'] }} {{ $user['last_name'] }}</h3>
+                                <h3 class="flex-auto truncate text-sm font-semibold leading-6 text-gray-900">{{ $user }}</h3>
                                 <button>
                                     <svg x-show="!expanded" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -46,15 +50,12 @@
                                     <svg x-show="expanded" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                                     </svg>
-
                                 </button>
                             </div>
                             <div class="px-4" x-show="expanded" x-collapse x-cloak>
-                                <p class="text-sm text-gray-400 italic">Email: {{ $user['email'] }}</p>
-                                <p class="text-sm text-gray-400 italic">Result ID: {{ $user['id'] }}</p>
                                 <div class="flow-root my-5">
                                     <ul role="list" class="-mb-8">
-                                        @foreach($user['timeline'] as $entry)
+                                        @foreach($timeline as $entry)
                                             <li>
                                                 <div class="relative pb-8">
                                                     <span class="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200 {{ $loop->last ? 'hidden' : '' }}" aria-hidden="true"></span>
@@ -185,7 +186,6 @@
                                         @endforeach
                                     </ul>
                                 </div>
-
                             </div>
                         </li>
                     @endforeach
@@ -195,23 +195,23 @@
                 <dl class="mx-auto grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2">
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Email Sent</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $sentCount }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->emails_sent }}</dd>
                     </div>
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Email Opened</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $counts['opened'] }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->emails_opened }}</dd>
                     </div>
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Clicked Link</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $counts['clicked'] }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->links_clicked }}</dd>
                     </div>
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Submitted Data</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $counts['submitted'] }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->data_submitted }}</dd>
                     </div>
                     <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
                         <dt class="text-sm font-medium leading-6 text-gray-500">Email Reported</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $counts['reported'] }}</dd>
+                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $campaign->emails_reported }}</dd>
                     </div>
                 </dl>
                 <div class="w-full flex justify-end mt-3">

@@ -2,89 +2,31 @@
 
 namespace App\Http\Livewire\Dealer\Phish;
 
+use App\Models\Dealer\PhishingCampaign;
+use App\Models\Dealer\Timeline;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
 class Show extends Component
 {
-    public $campaignId;
+    public $campaign_id;
+
     public $campaign;
-    public $users = [];
-    public $count;
-    public $counts = [];
-    public $sentCount;
-    public $error;
-    public $color;
+    public $users;
+
     public function mount()
     {
-        try {
-            $this->campaign = Http::withoutVerifying()->get('https://'. config('gophish.ip') .':3333/api/campaigns/' . $this->campaignId . '/results/?api_key='. config('gophish.key') .'');
+        $this->campaign = PhishingCampaign::where('campaign_id', $this->campaign_id)->with('timelines.user')->first();
 
-            $this->campaign = $this->campaign->json();
+        $t = Timeline::query()
+            ->where('campaign_id', $this->campaign_id)
+            ->with('user')
+            ->get();
 
-            foreach ($this->campaign["results"] as $user) {
-                $this->users[] = $user;
-                foreach ($this->campaign["timeline"] as $item) {
-                    if ($item["email"] === $user["email"]) {
-                        $this->users[count($this->users) - 1]["timeline"][] = [
-                            "time" => $item["time"],
-                            "message" => $item["message"],
-                            "details" => $item["details"]
-                        ];
-                    }
-                }
-            }
-
-            $this->sentCount = count($this->campaign['results']);
-
-            $this->statCount();
-        } catch (\Exception $e) {
-            $this->error = $e->getMessage();
-            \Log::error($e->getMessage());
-            $this->campaign = [];
-        }
-
-        $this->color = $this->statusColor();
+        $this->users = $t->groupBy('user.name')->toBase();
     }
 
-    public function statusColor(): string
-    {
-        return match ($this->campaign['status']) {
-            'Completed' => 'green',
-            'In progress' => 'blue',
-            'Queues' => 'yellow',
-            default => 'gray'
-        };
-    }
-
-    public function statCount(): void
-    {
-        $openedCount = 0;
-        $clickedCount = 0;
-        $submittedCount = 0;
-        $reportedCount = 0;
-
-        foreach ($this->campaign['timeline'] as $emailStatistic) {
-            if ($emailStatistic['message'] === 'Email Opened') {
-                $openedCount++;
-            }
-            if ($emailStatistic['message'] === 'Clicked Link') {
-                $clickedCount++;
-            }
-            if ($emailStatistic['message'] === 'Submitted Data') {
-                $submittedCount++;
-            }
-            if ($emailStatistic['message'] === 'Email Reported') {
-                $reportedCount++;
-            }
-        }
-
-        $this->counts['opened'] = $openedCount;
-        $this->counts['clicked'] = $clickedCount;
-        $this->counts['submitted'] = $submittedCount;
-        $this->counts['reported'] = $reportedCount;
-    }
 
     public function completeCampaign()
     {
@@ -95,7 +37,7 @@ class Show extends Component
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->get('https://'. config('gophish.ip') .':3333/api/campaigns/' . $this->campaignId . '/complete');
+                ->get('https://'.config('gophish.ip').':3333/api/campaigns/'.$this->campaign_id.'/complete');
 
             Notification::make()
                 ->title('Campaign Completed Successfully!')
@@ -104,7 +46,6 @@ class Show extends Component
 
             return redirect()->route('dealer.phishing.index');
         } catch (\Exception $e) {
-            $this->error = $e->getMessage();
             \Log::error($e->getMessage());
         }
     }
@@ -118,7 +59,7 @@ class Show extends Component
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->delete('https://'. config('gophish.ip') .':3333/api/campaigns/' . $this->campaignId);
+                ->delete('https://'.config('gophish.ip').':3333/api/campaigns/'.$this->campaign_id);
 
             Notification::make()
                 ->title('Campaign Deleted Successfully!')
@@ -127,7 +68,6 @@ class Show extends Component
 
             return redirect()->route('dealer.phishing.index');
         } catch (\Exception $e) {
-            $this->error = $e->getMessage();
             \Log::error($e->getMessage());
         }
     }

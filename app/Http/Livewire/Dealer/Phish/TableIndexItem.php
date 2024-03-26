@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Dealer\Phish;
 
-use App\Enums\GoPhishCampaignStatus;
 use Livewire\Component;
 
 class TableIndexItem extends Component

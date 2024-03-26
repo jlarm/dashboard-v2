@@ -1,24 +1,23 @@
-<div wire:init="loadSims">
-    @if($campaigns != null)
-{{--        {{ var_export($campaigns) }}--}}
-        <x-table>
-            <x-slot name="head">
-                <x-table.heading class="pl-4 pr-3">Name</x-table.heading>
-                <x-table.heading class="px-2">Created</x-table.heading>
-                <x-table.heading class="px-2">Status</x-table.heading>
-                <x-table.heading class="pl-3 pr-4 sm:pr-0"></x-table.heading>
-            </x-slot>
-            <x-slot name="body">
-                @foreach($campaigns as $campaign)
-                    <livewire:dealer.phish.table-index-item :campaign="$campaign" :key="$campaign['id']" />
-                @endforeach
-            </x-slot>
-        </x-table>
-    @endif
-    <div wire:loading class="w-full flex justify-center items-center">
-        <svg class="animate-spin h-16 w-16 text-arm-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-    </div>
+<div>
+    <table class="min-w-full divide-y divide-gray-300">
+        <thead>
+        <tr>
+            <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
+            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Created At</th>
+            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+            <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
+                <span class="sr-only">View</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+        @forelse($campaigns as $campaign)
+            <livewire:dealer.phish.table-index-item :campaign="$campaign" :key="$campaign->campaign_id" />
+        @empty
+            <tr>
+                <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0" colspan="4">No campaigns have been created.</td>
+            </tr>
+        @endforelse
+        </tbody>
+    </table>
 </div>

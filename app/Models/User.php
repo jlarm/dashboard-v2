@@ -14,6 +14,7 @@ use App\Models\Dealer\Invite;
 use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Manual\RedFlag;
+use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -231,6 +232,11 @@ class User extends Authenticatable
     public function certificates(): HasMany
     {
         return $this->hasMany(Certificate::class);
+    }
+
+    public function phishingCampaigns(): HasMany
+    {
+        return $this->hasMany(PhishingCampaign::class);
     }
 
     public function routeNotificationForVonage($notification)
