@@ -20,6 +20,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('red-sentry:report-generation')->dailyAt('01:00')->runInBackground()->emailOutputTo('jlohr@autorisknow.com');
         $schedule->command('backups:go')->dailyAt('01:30')->runInBackground()->withoutOverlapping();
         $schedule->command('backups:clean')->dailyAt('03:01')->runInBackground()->withoutOverlapping();
+        $schedule->command('run:go-phish-user-groups')->daily()->runInBackground();
+        $schedule->command('run:go-phish-user-group-departments')->daily()->runInBackground();
     }
 
     /**

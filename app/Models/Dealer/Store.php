@@ -40,6 +40,7 @@ class Store extends Model implements HasMedia
         'logo',
         'note',
         'active_monitoring',
+        'phishing_is_enabled',
         'monitoring_start_date',
         'police_emergency_phone',
         'police_non_emergency_phone',
@@ -239,6 +240,11 @@ class Store extends Model implements HasMedia
     public function vendors(): HasMany
     {
         return $this->hasMany(Vendor::class);
+    }
+
+    public function phishingCampaigns(): HasMany
+    {
+        return $this->hasMany(PhishingCampaign::class);
     }
 
     public function getActivitylogOptions(): LogOptions

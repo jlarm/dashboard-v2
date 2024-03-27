@@ -4,10 +4,11 @@ namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
-use Storage;
 
 class SingleStoreDetails extends Component
 {
@@ -37,6 +38,8 @@ class SingleStoreDetails extends Component
 
     public $active_monitoring = false;
 
+    public $phishing_is_enabled = false;
+
     public $monitoring_start_date;
 
     protected $rules = [
@@ -49,6 +52,7 @@ class SingleStoreDetails extends Component
         'website' => 'nullable',
         'active_monitoring' => 'boolean|required',
         'monitoring_start_date' => 'date|nullable',
+        'phishing_is_enabled' => 'boolean|required',
     ];
 
     public function mount(): void
@@ -64,6 +68,7 @@ class SingleStoreDetails extends Component
         $this->website = $this->dealer->website;
         $this->active_monitoring = $this->dealer->active_monitoring;
         $this->monitoring_start_date = $this->dealer->monitoring_start_date?->format('Y-m-d');
+        $this->phishing_is_enabled = $this->dealer->phishing_is_enabled;
     }
 
     public function updatedLogo(): void
@@ -92,13 +97,14 @@ class SingleStoreDetails extends Component
                 'website' => $this->website,
                 'active_monitoring' => $this->active_monitoring,
                 'monitoring_start_date' => $this->monitoring_start_date,
+                'phishing_is_enabled' => $this->phishing_is_enabled,
             ]);
 
             $this->dealer->syncFromMediaLibraryRequest($this->logo)
                 ->toMediaCollection('logo', 'digitalocean');
 
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             Notification::make()
                 ->title('Something went wrong!')
                 ->danger()

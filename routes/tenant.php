@@ -33,26 +33,24 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
     // All Access
     // **************************************************
 
-//    Route::get('/language/{locale}', function ($locale) {
-//        app()->setLocale($locale);
-//        session()->put('locale', $locale);
-//
-//        return redirect()->back();
-//    });
+    //    Route::get('/language/{locale}', function ($locale) {
+    //        app()->setLocale($locale);
+    //        session()->put('locale', $locale);
+    //
+    //        return redirect()->back();
+    //    });
 
-    Route::get('/', function () {
-        return view('dealer.welcome');
-    });
+    Route::view('/', 'dealer.welcome');
 
-//    if (config('app.env') === 'local') {
-//        Route::get('osha-audit-pdf', \App\Http\Controllers\OshaPdfTestController::class);
-//        Route::get('deal-jacket-audit-pdf', \App\Http\Controllers\DealJacketPdfTestController::class);
-//        Route::get('glba-audit-pdf', \App\Http\Controllers\GlbaPdfTestController::class);
-//        Route::get('body-shop-audit-pdf', \App\Http\Controllers\BodyShopPdfTestController::class);
-//        Route::Get('dot-cert', function () {
-//            return view('dealer.course.CertDownloadView');
-//        });
-//    }
+    //    if (config('app.env') === 'local') {
+    //        Route::get('osha-audit-pdf', \App\Http\Controllers\OshaPdfTestController::class);
+    //        Route::get('deal-jacket-audit-pdf', \App\Http\Controllers\DealJacketPdfTestController::class);
+    //        Route::get('glba-audit-pdf', \App\Http\Controllers\GlbaPdfTestController::class);
+    //        Route::get('body-shop-audit-pdf', \App\Http\Controllers\BodyShopPdfTestController::class);
+    //        Route::Get('dot-cert', function () {
+    //            return view('dealer.course.CertDownloadView');
+    //        });
+    //    }
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
@@ -61,9 +59,7 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 
-    Route::get('/dashboard', function () {
-        return view('dealer.dashboard');
-    })->middleware('auth')->name('dashboard');
+    Route::view('/dashboard', 'dealer.dashboard')->middleware('auth')->name('dashboard');
 
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])
         ->missing(function () {
@@ -73,12 +69,8 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('employees.store');
 
     Route::prefix('courses/')->name('courses.')->group(function () {
-        Route::get('/', function () {
-            return view('dealer.course.index');
-        })->middleware('auth')->name('index');
-        Route::get('all', function () {
-            return view('dealer.course.all');
-        })->middleware(['auth', 'role:super-admin|Consultant'])->name('all');
+        Route::view('/', 'dealer.course.index')->middleware('auth')->name('index');
+        Route::view('all', 'dealer.course.all')->middleware(['auth', 'role:super-admin|Consultant'])->name('all');
         Route::get('{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('show');
         Route::post('{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('results.store');
         Route::get('{course:slug}/edit', [CourseController::class, 'edit'])->middleware('auth')->name('edit');
@@ -86,9 +78,7 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
     });
 
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
-    Route::get('/vendors/thankyou', function () {
-        return view('dealer.vendor.thankyou');
-    })->middleware('web')->name('vendors.thankyou');
+    Route::view('/vendors/thankyou', 'dealer.vendor.thankyou')->middleware('web')->name('vendors.thankyou');
 
     Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
@@ -113,10 +103,10 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
     Route::middleware('role:super-admin|Consultant')->group(function () {
 
         Route::prefix('employees/')->name('employees.')->group(function () {
-            Route::get('create', function () {
-                return view('dealer.employee.create');
-            })->name('new');
+            Route::view('create', 'dealer.employee.create')->name('new');
         });
+
+        Route::get('phishing/create', \App\Http\Livewire\Dealer\Phish\Create::class)->name('phishing.create');
 
         Route::get('logs', \App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
         Route::get('logs/{activity:id}', \App\Http\Livewire\Dealer\Log\Show::class)->name('logs.show');
@@ -131,33 +121,21 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
 
         Route::prefix('employees/')->name('employees.')->group(function () {
             Route::get('/', \App\Http\Controllers\Dealer\EmployeeIndexController::class)->name('index');
-            Route::get('create', function () {
-                return view('dealer.employee.create');
-            })->name('new');
-            Route::get('open-invites', function () {
-                return view('dealer.employee.open-invites');
-            })->name('open-invites');
+            Route::view('create', 'dealer.employee.create')->name('new');
+            Route::view('open-invites', 'dealer.employee.open-invites')->name('open-invites');
             Route::get('{user:slug}', [UserController::class, 'show'])->name('show');
         });
 
-        Route::get('scans', function () {
-            return view('dealer.scan.index');
-        })->middleware(['auth', 'single.store'])->name('scan.index');
+        Route::view('scans', 'dealer.scan.index')->middleware(['auth', 'single.store'])->name('scan.index');
 
         Route::prefix('manuals/')->name('manual.')->middleware('auth', 'single.store')->group(function () {
             Route::get('/', \App\Http\Controllers\Dealer\ManualController::class)->name('index');
         });
 
         Route::prefix('audits/')->name('audit.')->middleware('auth', 'single.store')->group(function () {
-            Route::get('osha', function () {
-                return view('dealer.audit.osha.index');
-            })->name('osha.index');
-            Route::get('body-shop', function () {
-                return view('dealer.audit.body-shop.index');
-            })->name('body-shop.index');
-            Route::get('finance', function () {
-                return view('dealer.audit.finance.index');
-            })->name('finance.index');
+            Route::view('osha', 'dealer.audit.osha.index')->name('osha.index');
+            Route::view('body-shop', 'dealer.audit.body-shop.index')->name('body-shop.index');
+            Route::view('finance', 'dealer.audit.finance.index')->name('finance.index');
             Route::get('deal-jackets', \App\Http\Controllers\Dealer\Audit\IndividualIndexController::class)->name('individual.index');
         });
 
@@ -199,6 +177,9 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
         });
 
         Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
+
+        Route::get('phishing', \App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
+        Route::get('phishing/{phishingCampaign}', \App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
     });
 
     Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
