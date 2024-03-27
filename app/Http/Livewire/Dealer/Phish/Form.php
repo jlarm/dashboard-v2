@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Phish;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\PhishingCampaign;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
@@ -49,7 +50,7 @@ class Form extends Component
             $this->profiles = $this->profiles->json();
         } catch (\Exception $e) {
             $this->error = $e->getMessage();
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             $this->groups = [];
             $this->emails = [];
             $this->pages = [];
@@ -103,7 +104,7 @@ class Form extends Component
 
         } catch (\Exception $e) {
             $this->error = $e->getMessage();
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 

@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\Dealer\Store;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 class SingleStoreDetails extends Component
 {
@@ -103,7 +104,7 @@ class SingleStoreDetails extends Component
                 ->toMediaCollection('logo', 'digitalocean');
 
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             Notification::make()
                 ->title('Something went wrong!')
                 ->danger()

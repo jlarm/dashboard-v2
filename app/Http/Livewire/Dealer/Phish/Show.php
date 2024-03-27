@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Phish;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Timeline;
 use Filament\Notifications\Notification;
@@ -59,7 +60,7 @@ class Show extends Component
 
             return redirect()->route('dealer.phishing.index');
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
@@ -85,7 +86,7 @@ class Show extends Component
 
             return redirect()->route('dealer.phishing.index');
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 

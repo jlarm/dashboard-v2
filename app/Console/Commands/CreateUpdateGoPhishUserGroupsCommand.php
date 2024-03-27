@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -88,7 +89,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
             }
 
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
@@ -114,7 +115,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
             }
 
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Dealer\Store;
-use Cache;
+use Illuminate\Support\Facades\Cache;
 use Closure;
 use Illuminate\Http\Request;
 
