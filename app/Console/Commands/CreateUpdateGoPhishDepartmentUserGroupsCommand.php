@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 {

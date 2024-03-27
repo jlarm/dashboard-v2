@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Symfony\Component\HttpFoundation\Response;
 use App\Models\Dealer\Store;
-use Illuminate\Support\Facades\Cache;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckPhishingStatusMiddleware
 {
