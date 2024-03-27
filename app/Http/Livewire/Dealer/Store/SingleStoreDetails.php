@@ -36,6 +36,7 @@ class SingleStoreDetails extends Component
     public $logo = null;
 
     public $active_monitoring = false;
+    public $phishing_is_enabled = false;
 
     public $monitoring_start_date;
 
@@ -49,6 +50,7 @@ class SingleStoreDetails extends Component
         'website' => 'nullable',
         'active_monitoring' => 'boolean|required',
         'monitoring_start_date' => 'date|nullable',
+        'phishing_is_enabled' => 'boolean|required',
     ];
 
     public function mount(): void
@@ -64,6 +66,7 @@ class SingleStoreDetails extends Component
         $this->website = $this->dealer->website;
         $this->active_monitoring = $this->dealer->active_monitoring;
         $this->monitoring_start_date = $this->dealer->monitoring_start_date?->format('Y-m-d');
+        $this->phishing_is_enabled = $this->dealer->phishing_is_enabled;
     }
 
     public function updatedLogo(): void
@@ -92,6 +95,7 @@ class SingleStoreDetails extends Component
                 'website' => $this->website,
                 'active_monitoring' => $this->active_monitoring,
                 'monitoring_start_date' => $this->monitoring_start_date,
+                'phishing_is_enabled' => $this->phishing_is_enabled,
             ]);
 
             $this->dealer->syncFromMediaLibraryRequest($this->logo)

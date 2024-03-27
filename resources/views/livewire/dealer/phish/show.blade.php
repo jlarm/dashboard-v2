@@ -10,9 +10,11 @@
                     </span>
                     <span class="text-sm font-medium text-{{ $this->color() }}-700">{{ $phishingCampaign['status'] }}</span>
                 </div>
+                @can('create-dealerships')
                 @if($phishingCampaign->status != 'Completed')
                     <x-secondary-button wire:click="completeCampaign">Mark as Complete</x-secondary-button>
                 @endif
+                @endcan
             </div>
         </div>
         <div class="mt-4 flex sm:mt-0 sm:ml-4">
@@ -209,6 +211,7 @@
                         <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $phishingCampaign->emails_reported }}</dd>
                     </div>
                 </dl>
+                @can('create-dealerships')
                 <div class="w-full flex justify-end mt-3">
                     <div class="flex justify-center">
                         <div
@@ -273,6 +276,7 @@
                         </div>
                     </div>
                 </div>
+                @endcan
             </div>
         </div>
     </div>

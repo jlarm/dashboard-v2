@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -15,13 +16,15 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
     public function handle()
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            $this->info('Running for tenant: '.$tenant->name);
+            if (Store::first()->phishing_is_enabled) {
+                $this->info('Running for tenant: '.$tenant->name);
 
-            $groups = $this->getGroups();
-            $userData = $this->getUsers();
+                $groups = $this->getGroups();
+                $userData = $this->getUsers();
 
-            $this->info('Sending request to Gophish');
-            $this->createOrUpdateGroup($groups, $userData);
+                $this->info('Sending request to Gophish');
+                $this->createOrUpdateGroup($groups, $userData);
+            }
         });
     }
 

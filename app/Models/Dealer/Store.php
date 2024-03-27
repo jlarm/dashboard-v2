@@ -40,6 +40,7 @@ class Store extends Model implements HasMedia
         'logo',
         'note',
         'active_monitoring',
+        'phishing_is_enabled',
         'monitoring_start_date',
         'police_emergency_phone',
         'police_non_emergency_phone',

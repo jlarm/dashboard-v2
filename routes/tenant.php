@@ -118,6 +118,8 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
             })->name('new');
         });
 
+        Route::get('phishing/create', \App\Http\Livewire\Dealer\Phish\Create::class)->name('phishing.create');
+
         Route::get('logs', \App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
         Route::get('logs/{activity:id}', \App\Http\Livewire\Dealer\Log\Show::class)->name('logs.show');
 
@@ -201,7 +203,6 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
         Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
 
         Route::get('phishing', \App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
-        Route::get('phishing/create', \App\Http\Livewire\Dealer\Phish\Create::class)->name('phishing.create');
         Route::get('phishing/{phishingCampaign}', \App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
     });
 
