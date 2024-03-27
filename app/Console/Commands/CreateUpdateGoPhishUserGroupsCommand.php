@@ -14,7 +14,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
     protected $description = 'Create/Update User Groups for GoPhish';
 
-    public function handle()
+    public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
             if (Store::first()->phishing_is_enabled) {

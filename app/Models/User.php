@@ -179,17 +179,17 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
-    public function invites()
+    public function invites(): HasMany
     {
         return $this->hasMany(Invite::class);
     }
 
-    public function courses()
+    public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class);
     }
 
-    public function results()
+    public function results(): HasMany
     {
         return $this->hasMany(CourseResults::class);
     }
