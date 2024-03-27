@@ -36,6 +36,7 @@ class SingleStoreDetails extends Component
     public $logo = null;
 
     public $active_monitoring = false;
+
     public $phishing_is_enabled = false;
 
     public $monitoring_start_date;

@@ -11,6 +11,7 @@ use Livewire\Component;
 class Show extends Component
 {
     public PhishingCampaign $phishingCampaign;
+
     public $users;
 
     public function mount()
@@ -25,7 +26,7 @@ class Show extends Component
 
     public function color()
     {
-        return match($this->phishingCampaign->status) {
+        return match ($this->phishingCampaign->status) {
             'In progress' => 'blue',
             'Completed' => 'green',
             'Queued' => 'yellow',
