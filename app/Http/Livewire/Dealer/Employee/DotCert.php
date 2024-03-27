@@ -24,7 +24,7 @@ class DotCert extends Component
         if (! $this->passingGrades() || $this->user->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
             $this->showCertButton = false;
         } else {
-            if ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 365) {
+            if ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 1095) {
                 $this->showCertButton = true;
             } else {
                 $this->showCertButton = false;
