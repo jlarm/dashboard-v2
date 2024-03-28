@@ -23,7 +23,6 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
             $token = $store->phishing_token ?? null;
             $ip = $store->phishing_ip ?? null;
 
-            $this->info('Store: '.$store->name);
             $this->info('Token: '.$token);
             $this->info('IP: '.$ip);
 
