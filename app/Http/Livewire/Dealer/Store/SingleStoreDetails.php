@@ -42,6 +42,10 @@ class SingleStoreDetails extends Component
     public $phishing_token;
     public $phishing_ip;
 
+    public $phishing_token;
+
+    public $phishing_ip;
+
     public $monitoring_start_date;
 
     protected $rules = [
