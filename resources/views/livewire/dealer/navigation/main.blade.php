@@ -161,6 +161,7 @@
     @endcan
     @role('super-admin')
     @can('create-users')
+        @if($phishingIsEnabled->phishing_is_enabled)
         <a
             href="{{ $currentStore ? route('dealer.stores.vendor.index', $currentStore) : route('dealer.phishing.index') }}"
             class="{{ (request()->segment(1) === 'phishing' || request()->segment(3) === 'phishing') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
@@ -171,6 +172,7 @@
             </svg>
             Phishing
         </a>
+        @endif
     @endcan
     @endrole
     <!-- DOCS -->
