@@ -17,6 +17,7 @@ use Spatie\Browsershot\Browsershot;
 class DotCert extends Component
 {
     public User $user;
+
     public $showCertButton;
 
     public function mount()
