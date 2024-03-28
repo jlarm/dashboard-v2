@@ -28,6 +28,7 @@
             </div>
             <div class="xl:block xl:pl-8">
                 <livewire:dealer.employee.details :user="$user"/>
+                <livewire:dealer.employee.dot-cert :user="$user" />
                 <livewire:dealer.employee.cert-index :user="$user"/>
             </div>
         </div>

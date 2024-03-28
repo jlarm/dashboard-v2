@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Dealer\Course;
+namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Certificate;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
+use App\Models\User;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
@@ -15,11 +16,12 @@ use Spatie\Browsershot\Browsershot;
 
 class DotCert extends Component
 {
+    public User $user;
     public $showCertButton;
 
     public function mount()
     {
-        if (! $this->passingGrades() || auth()->user()->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
+        if (! $this->passingGrades() || $this->user->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
             $this->showCertButton = false;
         } else {
             if ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 1095) {
@@ -39,7 +41,7 @@ class DotCert extends Component
             ->first();
 
         return CourseResults::query()
-            ->where('user_id', auth()->user()->id)
+            ->where('user_id', $this->user->id)
             ->where('course_id', $course)
             ->first();
     }
@@ -47,25 +49,25 @@ class DotCert extends Component
     public function download(Request $request)
     {
         $html = view('dealer.course.CertDownloadView', [
-            'user' => auth()->user(),
+            'user' => $this->user,
             'store' => $request->get('store')?->name ?? tenant('name'),
             'passed_on' => $this->passingGrades()->created_at->format('F d, Y'),
         ])->render();
 
         $pdf = Browsershot::html($html)->landscape()->pdf();
 
-        $fileName = Str::slug(auth()->user()->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
+        $fileName = Str::slug($this->user->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
 
         Storage::disk('local')->put($fileName, $pdf);
 
         $localFile = Storage::disk('local')->get($fileName);
 
-        Storage::disk('armp-certs')->put(tenant('id').'/'.auth()->user()->id.'/'.$fileName, $localFile);
+        Storage::disk('armp-certs')->put(tenant('id').'/'.$this->user->id.'/'.$fileName, $localFile);
 
         Storage::delete($fileName);
 
         Certificate::create([
-            'user_id' => auth()->user()->id,
+            'user_id' => $this->user->id,
             'course_name' => 'DOT Hazardous Materials Transportation',
             'file_name' => $fileName,
         ]);
@@ -90,6 +92,6 @@ class DotCert extends Component
 
     public function render()
     {
-        return view('livewire.dealer.course.dot-cert');
+        return view('livewire.dealer.employee.dot-cert');
     }
 }
