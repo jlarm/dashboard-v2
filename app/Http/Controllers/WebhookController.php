@@ -13,7 +13,7 @@ class WebhookController extends Controller
     public function gophish(Request $request): JsonResponse
     {
         Timeline::create([
-            'campaign_id' => $request->input('campaign_id'),
+            'phishing_campaign_id' => $request->input('campaign_id'),
             'email' => $request->input('email'),
             'time' => $request->input('time'),
             'message' => $request->input('message'),
