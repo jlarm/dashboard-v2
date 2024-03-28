@@ -17,22 +17,37 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            if (Store::first()->phishing_is_enabled && Store::first()->phishing_token && Store::first()->phishing_ip) {
+            $this->info('Starting run for tenant: '.$tenant->name);
+            $store = Store::where('name', $tenant->name)->first() ?? null;
+            $token = $store->phishing_token ?? null;
+            $ip = $store->phishing_ip ?? null;
+
+            if ($store === null) {
+                $this->info('No store found for tenant: '.$tenant->name);
+                return;
+            }
+
+            if ($token === null || ! $ip === null) {
+                $this->info('No token or IP found for tenant: '.$tenant->name);
+                return;
+            }
+
+            if ($token && $ip) {
                 $this->info('Running for tenant: '.$tenant->name);
 
-                $groups = $this->getGroups();
+                $groups = $this->getGroups($ip, $token);
                 $userData = $this->getUsers();
 
                 $this->info('Sending request to Gophish');
 
-                $this->createOrUpdateGroup($groups, $userData);
+                $this->createOrUpdateGroup($groups, $userData, $ip, $token);
             }
         });
     }
 
-    private function getGroups()
+    private function getGroups($ip, $token)
     {
-        $groups = Http::withoutVerifying()->get('https://'.config('gophish.ip').':3333/api/groups/?api_key='.config('gophish.key').'');
+        $groups = Http::withoutVerifying()->get('https://'.$ip.':3333/api/groups/?api_key='.$token.'');
 
         return collect($groups->json())->pluck('id', 'name');
     }
@@ -60,20 +75,20 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 
     }
 
-    private function createOrUpdateGroup($groups, $userData)
+    private function createOrUpdateGroup($groups, $userData, $ip, $token)
     {
-        $this->deleteGroups($groups, $userData);
+        $this->deleteGroups($groups, $userData, $ip, $token);
 
         foreach ($userData as $department => $users) {
             if (! array_key_exists($department, $groups->toArray())) {
-                $this->createGroup($department, $users);
+                $this->createGroup($department, $users, $ip, $token);
             } else {
-                $this->updateGroup($groups->get($department), $department, $users);
+                $this->updateGroup($groups->get($department), $department, $users, $ip, $token);
             }
         }
     }
 
-    private function createGroup($department, $userData)
+    private function createGroup($department, $userData, $ip, $token)
     {
         try {
             $requestBody = [
@@ -82,12 +97,12 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
             ];
 
             $response = Http::withHeaders([
-                'Authorization' => config('gophish.key'),
+                'Authorization' => $token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->post('https://'.config('gophish.ip').':3333/api/groups/', $requestBody);
+                ->post('https://'.$ip.':3333/api/groups/', $requestBody);
 
             if ($response->status() === 200) {
                 $this->info('Group Created');
@@ -98,7 +113,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
         }
     }
 
-    private function updateGroup($groupId, $department, $userData)
+    private function updateGroup($groupId, $department, $userData, $ip, $token)
     {
         try {
             $requestBody = [
@@ -108,12 +123,12 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
             ];
 
             $response = Http::withHeaders([
-                'Authorization' => config('gophish.key'),
+                'Authorization' => $token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->put('https://'.config('gophish.ip').':3333/api/groups/'.$groupId.'', $requestBody);
+                ->put('https://'.$ip.':3333/api/groups/'.$groupId.'', $requestBody);
 
             if ($response->status() === 200) {
                 $this->info('Group Updated');
@@ -124,7 +139,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
         }
     }
 
-    private function deleteGroups($groups, $userData)
+    private function deleteGroups($groups, $userData, $ip, $token)
     {
         $departments = array_filter(array_keys($userData));
         $groupNames = array_filter(array_keys($groups->toArray()));
@@ -134,12 +149,12 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
             if ($group != 'All Employees') {
                 $this->info('Deleting group: '.$group);
                 $response = Http::withHeaders([
-                    'Authorization' => config('gophish.key'),
+                    'Authorization' => $token,
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
                 ])
                     ->withoutVerifying()
-                    ->delete('https://'.config('gophish.ip').':3333/api/groups/'.$groups->get($group).'');
+                    ->delete('https://'.$ip.':3333/api/groups/'.$groups->get($group).'');
             }
         }
     }

@@ -17,21 +17,38 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            if (Store::first()->phishing_is_enabled && Store::first()->phishing_token && Store::first()->phishing_ip) {
+            $this->info('Starting run for tenant: '.$tenant->name);
+            $store = Store::where('name', $tenant->name)->first() ?? null;
+            $token = $store->phishing_token ?? null;
+            $ip = $store->phishing_ip ?? null;
+
+            if ($store === null) {
+                $this->info('No store found for tenant: '.$tenant->name);
+                return;
+            }
+
+            if ($token === null || ! $ip === null) {
+                $this->info('No token or IP found for tenant: '.$tenant->name);
+                return;
+            }
+
+            if ($token && $ip) {
                 $this->info('Running for tenant: '.$tenant->name);
 
-                $groups = $this->getGroups();
+                $groups = $this->getGroups($ip, $token);
                 $userData = $this->getUsers();
 
                 $this->info('Sending request to Gophish');
-                $this->createOrUpdateGroup($groups, $userData);
+                $this->createOrUpdateGroup($groups, $userData, $ip, $token);
             }
+
+            $this->info('Finished running for tenant: '.$tenant->name);
         });
     }
 
-    private function getGroups()
+    private function getGroups($ip, $token)
     {
-        $groups = Http::withoutVerifying()->get('https://'.config('gophish.ip').':3333/api/groups/?api_key='.config('gophish.key').'');
+        $groups = Http::withoutVerifying()->get('https://'.$ip.':3333/api/groups/?api_key='.$token.'');
 
         return collect($groups->json())->pluck('id', 'name');
     }
@@ -59,16 +76,16 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
         })->toArray();
     }
 
-    private function createOrUpdateGroup($groups, $userData)
+    private function createOrUpdateGroup($groups, $userData, $ip, $token)
     {
         if (! array_key_exists('All Employees', $groups->toArray())) {
-            $this->createGroup($userData);
+            $this->createGroup($userData, $ip, $token);
         } else {
-            $this->updateGroup($groups->get('All Employees'), $userData);
+            $this->updateGroup($groups->get('All Employees'), $userData, $ip , $token);
         }
     }
 
-    private function createGroup($userData)
+    private function createGroup($userData, $ip, $token)
     {
         try {
             $requestBody = [
@@ -77,12 +94,12 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
             ];
 
             $response = Http::withHeaders([
-                'Authorization' => config('gophish.key'),
+                'Authorization' => $token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->post('https://'.config('gophish.ip').':3333/api/groups/', $requestBody);
+                ->post('https://'.$ip.':3333/api/groups/', $requestBody);
 
             if ($response->status() === 200) {
                 $this->info('Group Created');
@@ -93,7 +110,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
         }
     }
 
-    private function updateGroup($groupId, $userData)
+    private function updateGroup($groupId, $userData, $ip, $token)
     {
         try {
             $requestBody = [
@@ -103,12 +120,12 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
             ];
 
             $response = Http::withHeaders([
-                'Authorization' => config('gophish.key'),
+                'Authorization' => $token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->put('https://'.config('gophish.ip').':3333/api/groups/'.$groupId.'', $requestBody);
+                ->put('https://'.$ip.':3333/api/groups/'.$groupId.'', $requestBody);
 
             if ($response->status() === 200) {
                 $this->info('Group Updated');
