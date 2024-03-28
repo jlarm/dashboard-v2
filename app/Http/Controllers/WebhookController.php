@@ -12,15 +12,16 @@ class WebhookController extends Controller
 {
     public function gophish(Request $request): JsonResponse
     {
+        $campaign = PhishingCampaign::where('campaign_id', $request->input('campaign_id'))->first();
+
         Timeline::create([
-            'phishing_campaign_id' => $request->input('campaign_id'),
+            'phishing_campaign_id' => $campaign->id,
             'email' => $request->input('email'),
             'time' => $request->input('time'),
             'message' => $request->input('message'),
             'details' => $request->input('details'),
         ]);
 
-        $campaign = PhishingCampaign::where('campaign_id', $request->input('campaign_id'))->first();
 
         match ($request->input('message')) {
             'Email Opened' => $campaign->increment('emails_opened'),
