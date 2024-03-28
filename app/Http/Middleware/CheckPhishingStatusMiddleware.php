@@ -11,10 +11,6 @@ class CheckPhishingStatusMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $enabled = Store::first()->phishing_is_enabled;
-
-        $request->session()->put('phishing_is_enabled', $enabled);
-
         return $next($request);
     }
 }
