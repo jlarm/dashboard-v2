@@ -33,8 +33,8 @@ class Form extends Component
     public $smtp;
 
     public $error;
-    protected $token;
-    protected $ip;
+    public $token;
+    public $ip;
 
     public function mount()
     {
