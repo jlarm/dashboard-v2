@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        Model::preventLazyLoading(! $this->app->isProduction());
+        //        Model::preventLazyLoading(! $this->app->isProduction());
 
         view()->composer('layouts.top-bar', function ($view) {
             $view->with('current_locale', app()->getLocale());
@@ -34,9 +34,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Collection::macro('incomplete_courses', function () {
-            return $this->map(function ($user) {
-                return $user->incomplete_courses();
-            });
+            return $this->map(fn ($user) => $user->incomplete_courses());
         });
 
         Builder::macro('toCsv', function () {
