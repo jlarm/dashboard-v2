@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Phish;
 
 use App\Models\Dealer\PhishingCampaign;
+use App\Models\Dealer\Store;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
@@ -35,18 +36,21 @@ class Form extends Component
 
     public function mount()
     {
+        $store = Store::first();
+        $token = $store->phishing_token;
+        $ip = $store->phishing_ip;
 
         try {
-            $this->groups = Http::withoutVerifying()->get('https://'.config('gophish.ip').':3333/api/groups/?api_key='.config('gophish.key').'');
+            $this->groups = Http::withoutVerifying()->get('https://'.$ip.':3333/api/groups/?api_key='.$token.'');
             $this->groups = $this->groups->json();
 
-            $this->emails = Http::withoutVerifying()->get('https://'.config('gophish.ip').':3333/api/templates/?api_key='.config('gophish.key').'');
+            $this->emails = Http::withoutVerifying()->get('https://'.$ip.':3333/api/templates/?api_key='.$token.'');
             $this->emails = $this->emails->json();
 
-            $this->pages = Http::withoutVerifying()->get('https://'.config('gophish.ip').':3333/api/pages/?api_key='.config('gophish.key').'');
+            $this->pages = Http::withoutVerifying()->get('https://'.$ip.':3333/api/pages/?api_key='.$token.'');
             $this->pages = $this->pages->json();
 
-            $this->profiles = Http::withoutVerifying()->get('https://'.config('gophish.ip').':3333/api/smtp/?api_key='.config('gophish.key').'');
+            $this->profiles = Http::withoutVerifying()->get('https://'.$ip.':3333/api/smtp/?api_key='.$token.'');
             $this->profiles = $this->profiles->json();
         } catch (\Exception $e) {
             $this->error = $e->getMessage();
@@ -58,19 +62,19 @@ class Form extends Component
         }
     }
 
-    public function create()
+    public function create($ip, $token)
     {
         try {
             $response = Http::withHeaders([
-                'Authorization' => config('gophish.key'),
+                'Authorization' => $token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->post('https://'.config('gophish.ip').':3333/api/campaigns/', [
+                ->post('https://'.$ip.':3333/api/campaigns/', [
                     'name' => $this->name,
                     'template' => ['name' => $this->template],
-                    'url' => 'http://'.config('gophish.ip'),
+                    'url' => 'http://'.$ip,
                     'page' => ['name' => $this->page],
                     'smtp' => ['name' => $this->smtp],
                     'launch_date' => ($this->date) ? $this->date.'T00:00:00+00:00' : null,

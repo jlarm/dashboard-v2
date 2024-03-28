@@ -180,6 +180,22 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="flex gap-5">
+                            <div class="w-full">
+                                <x-input-label for="phishing_token" :value="__('Token')"/>
+                                <x-text-input wire:model.defer="phishing_token" id="phishing_token" class="block mt-1 w-full" type="text"
+                                              :value="old('phishing_token')"
+                                               autofocus/>
+                                <x-input-error :messages="$errors->get('phishing_token')" class="mt-2"/>
+                            </div>
+                            <div class="w-full">
+                                <x-input-label for="phishing_ip" :value="__('IP Address')"/>
+                                <x-text-input wire:model.defer="phishing_ip" id="phishing_ip" class="block mt-1 w-full" type="text"
+                                              :value="old('phishing_ip')"
+                                               autofocus/>
+                                <x-input-error :messages="$errors->get('phishing_ip')" class="mt-2"/>
+                            </div>
+                        </div>
                     </div>
                 @endrole
                 <div class="py-3 text-right">
