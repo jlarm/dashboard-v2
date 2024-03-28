@@ -11,11 +11,6 @@ class Main extends Component
     public $currentStore;
     public $phishingIsEnabled;
 
-    public $phishingIsEnabled;
-
-    public $phishingIsEnabled;
-
-
     public function mount(Request $request): void
     {
         $this->currentStore = Store::where('name', $request->get('store')?->name)->first();
