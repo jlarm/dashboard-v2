@@ -27,7 +27,11 @@ use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class)->group(function () {
+Route::name('dealer.')->middleware([
+    'web',
+    InitializeTenancyByDomain::class,
+    PreventAccessFromCentralDomains::class
+])->group(function () {
 
     // **************************************************
     // All Access
@@ -184,6 +188,14 @@ Route::name('dealer.')->middleware('web', InitializeTenancyByDomain::class, Prev
 
     Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
 
+});
+
+Route::middleware([
+    'api',
+    InitializeTenancyByDomain::class,
+    PreventAccessFromCentralDomains::class
+])->group(function () {
+    Route::post('/webhooks/gophish/', 'App\Http\Controllers\WebhookController@gophish')->name('webhooks.gophish');
 });
 
 require __DIR__.'/stores.php';
