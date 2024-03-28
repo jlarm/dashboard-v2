@@ -18,7 +18,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
             $this->info('Starting run for tenant: '.$tenant->name);
-            $store = Store::where('name', $tenant->name)->first() ?? null;
+            $store = Store::first() ?? null;
             $token = $store->phishing_token ?? null;
             $ip = $store->phishing_ip ?? null;
 
