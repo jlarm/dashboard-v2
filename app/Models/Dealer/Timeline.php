@@ -23,7 +23,7 @@ class Timeline extends Model
 
     public function campaign(): BelongsTo
     {
-        return $this->belongsTo(PhishingCampaign::class, 'campaign_id', 'campaign_id');
+        return $this->belongsTo(PhishingCampaign::class);
     }
 
     public function user(): BelongsTo
