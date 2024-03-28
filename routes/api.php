@@ -5,8 +5,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 Route::middleware([
-    InitializeTenancyByDomain::class,
-    PreventAccessFromCentralDomains::class,
+    'api'
 ])->group(function () {
     Route::post('/webhooks/gophish/', 'App\Http\Controllers\WebhookController@gophish')->name('webhooks.gophish');
 });
