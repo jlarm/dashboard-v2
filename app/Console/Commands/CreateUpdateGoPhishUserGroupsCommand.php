@@ -17,7 +17,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            if (Store::first()->phishing_is_enabled) {
+            if (Store::first()->phishing_is_enabled && Store::first()->phishing_token && Store::first()->phishing_ip) {
                 $this->info('Running for tenant: '.$tenant->name);
 
                 $groups = $this->getGroups();
