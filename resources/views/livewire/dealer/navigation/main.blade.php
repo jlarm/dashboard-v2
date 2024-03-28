@@ -160,7 +160,6 @@
         </a>
     @endcan
     @role('super-admin')
-    @if(session('phishing_is_enabled'))
     @can('create-users')
         <a
             href="{{ $currentStore ? route('dealer.stores.vendor.index', $currentStore) : route('dealer.phishing.index') }}"
@@ -173,7 +172,6 @@
             Phishing
         </a>
     @endcan
-    @endif
     @endrole
     <!-- DOCS -->
     @can('create-users')
