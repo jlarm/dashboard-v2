@@ -28,11 +28,13 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 
             if ($store === null) {
                 $this->info('No store found for tenant: '.$tenant->name);
+
                 return;
             }
 
             if ($token === null || ! $ip === null) {
                 $this->info('No token or IP found for tenant: '.$tenant->name);
+
                 return;
             }
 

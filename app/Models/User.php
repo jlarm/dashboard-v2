@@ -16,6 +16,7 @@ use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
+use App\Models\Dealer\Timeline;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -240,6 +241,11 @@ class User extends Authenticatable
     public function phishingCampaigns(): HasMany
     {
         return $this->hasMany(PhishingCampaign::class);
+    }
+
+    public function timelines(): HasMany
+    {
+        return $this->hasMany(Timeline::class, 'email', 'email');
     }
 
     public function routeNotificationForVonage($notification)

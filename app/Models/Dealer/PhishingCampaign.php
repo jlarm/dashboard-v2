@@ -33,7 +33,7 @@ class PhishingCampaign extends Model
 
     public function timelines(): HasMany
     {
-        return $this->hasMany(Timeline::class);
+        return $this->hasMany(Timeline::class, 'campaign_id', 'campaign_id');
     }
 
     protected function store(): BelongsTo

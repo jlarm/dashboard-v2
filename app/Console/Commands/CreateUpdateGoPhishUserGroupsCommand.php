@@ -28,11 +28,13 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
             if ($store === null) {
                 $this->info('No store found for tenant: '.$tenant->name);
+
                 return;
             }
 
             if ($token === null || ! $ip === null) {
                 $this->info('No token or IP found for tenant: '.$tenant->name);
+
                 return;
             }
 
@@ -85,7 +87,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
         if (! array_key_exists('All Employees', $groups->toArray())) {
             $this->createGroup($userData, $ip, $token);
         } else {
-            $this->updateGroup($groups->get('All Employees'), $userData, $ip , $token);
+            $this->updateGroup($groups->get('All Employees'), $userData, $ip, $token);
         }
     }
 

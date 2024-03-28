@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Timeline extends Model
 {
     protected $fillable = [
-        'phishing_campaign_id',
+        'campaign_id',
         'email',
         'time',
         'message',
@@ -23,7 +23,7 @@ class Timeline extends Model
 
     public function campaign(): BelongsTo
     {
-        return $this->belongsTo(PhishingCampaign::class);
+        return $this->belongsTo(PhishingCampaign::class, 'campaign_id', 'campaign_id');
     }
 
     public function user(): BelongsTo
