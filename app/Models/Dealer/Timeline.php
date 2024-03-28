@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Timeline extends Model
 {
     protected $fillable = [
-        'campaign_id',
+        'phishing_campaign_id',
         'email',
         'time',
         'message',
