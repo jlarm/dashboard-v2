@@ -24,6 +24,7 @@ class WebhookController extends Controller
 
 
         match ($request->input('message')) {
+            'Email Sent' => $campaign->increment('emails_sent'),
             'Email Opened' => $campaign->increment('emails_opened'),
             'Clicked Link' => $campaign->increment('links_clicked'),
             'Submitted Data' => $campaign->increment('data_submitted'),

@@ -27,7 +27,7 @@
                 </div>
                 <div>
                     <x-input-label for="name" :value="__('Sending Group')" />
-                    <select wire:model="group" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <select wire:model="group" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
                             <option selected></option>
                         @foreach($groups as $group)
                             <option value="{{ $group['name'] }}">{{ $group['name'] }}</option>
@@ -36,7 +36,7 @@
                 </div>
                 <div>
                     <x-input-label for="name" :value="__('Email Template')" />
-                    <select wire:model="template" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <select wire:model="template" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
                         @foreach($emails as $email)
                             <option selected></option>
                             <option value="{{ $email['name'] }}">{{ $email['name'] }}</option>
@@ -45,7 +45,7 @@
                 </div>
                 <div>
                     <x-input-label for="name" :value="__('Landing Page')" />
-                    <select wire:model="page" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <select wire:model="page" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
                         @foreach($pages as $page)
                             <option selected></option>
                             <option value="{{ $page['name'] }}">{{ $page['name'] }}</option>
@@ -54,7 +54,7 @@
                 </div>
                 <div>
                     <x-input-label for="name" :value="__('Sending Profile')" />
-                    <select wire:model="smtp" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <select wire:model="smtp" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
                         @foreach($profiles as $profile)
                             <option selected></option>
                             <option value="{{ $profile['name'] }}">{{ $profile['name'] }}</option>
