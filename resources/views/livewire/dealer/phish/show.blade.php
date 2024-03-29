@@ -50,6 +50,7 @@
                                 </button>
                             </div>
                             <div class="px-4" x-show="expanded" x-collapse x-cloak>
+                                <span class="text-sm italic text-gray-400">{{ $user['email'] }}</span>
                                 <div class="flow-root my-5">
                                     <ul role="list" class="-mb-8">
                                         @foreach($user['timeline'] as $entry)
