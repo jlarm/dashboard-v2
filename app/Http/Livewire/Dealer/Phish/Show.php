@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Phish;
 
 use App\Models\Dealer\PhishingCampaign;
+use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
@@ -14,9 +15,15 @@ class Show extends Component
     public PhishingCampaign $phishingCampaign;
 
     public $users;
+    public $token;
+    public $ip;
 
     public function mount()
     {
+        $store = Store::first();
+        $this->token = $store->phishing_token;
+        $this->ip = $store->phishing_ip;
+
         $timelines = Timeline::query()
             ->where('phishing_campaign_id', $this->phishingCampaign->id)
             ->with('user')
@@ -56,12 +63,12 @@ class Show extends Component
     {
         try {
             $response = Http::withHeaders([
-                'Authorization' => config('gophish.key'),
+                'Authorization' => $this->token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->get('https://'.config('gophish.ip').':3333/api/campaigns/'.$this->phishingCampaign->campaign_id.'/complete');
+                ->get('https://'.$this->ip.':3333/api/campaigns/'.$this->phishingCampaign->campaign_id.'/complete');
 
             Notification::make()
                 ->title('Campaign Completed Successfully!')
@@ -84,12 +91,12 @@ class Show extends Component
     {
         try {
             $response = Http::withHeaders([
-                'Authorization' => config('gophish.key'),
+                'Authorization' => $this->token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])
                 ->withoutVerifying()
-                ->delete('https://'.config('gophish.ip').':3333/api/campaigns/'.$this->phishingCampaign->campaign_id);
+                ->delete('https://'.$this->ip.':3333/api/campaigns/'.$this->phishingCampaign->campaign_id);
 
             Notification::make()
                 ->title('Campaign Deleted Successfully!')
