@@ -15,8 +15,8 @@ class Show extends Component
     public PhishingCampaign $phishingCampaign;
 
     public $users;
-    public $token;
-    public $ip;
+    private $token;
+    private $ip;
 
     public function mount()
     {
@@ -57,34 +57,6 @@ class Show extends Component
             'Error' => 'red',
             default => 'gray',
         };
-    }
-
-    public function completeCampaign()
-    {
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => $this->token,
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ])
-                ->withoutVerifying()
-                ->get('https://'.$this->ip.':3333/api/campaigns/'.$this->phishingCampaign->campaign_id.'/complete');
-
-            Notification::make()
-                ->title('Campaign Completed Successfully!')
-                ->success()
-                ->send();
-
-            if ($response->status() === 200) {
-                $this->phishingCampaign->update([
-                    'status' => 'Completed',
-                ]);
-            }
-
-            return redirect()->route('dealer.phishing.index');
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
     }
 
     public function deleteCampaign()

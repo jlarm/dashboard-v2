@@ -1,5 +1,4 @@
 <div>
-{{--    {{ dd($users) }}--}}
     <div class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
         <div class="w-full flex justify-between space-x-3">
             <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">{{ $phishingCampaign->name }}</h1>
@@ -13,7 +12,7 @@
                 </div>
                 @can('create-dealerships')
                 @if($phishingCampaign->status != 'Completed')
-                    <x-secondary-button wire:click="completeCampaign">Mark as Complete</x-secondary-button>
+                    <livewire:dealer.phish.complete-sim-action :phishingCampaign="$phishingCampaign" />
                 @endif
                 @endcan
             </div>
