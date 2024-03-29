@@ -17,12 +17,28 @@ class Show extends Component
 
     public function mount()
     {
-        $this->users = Timeline::query()
-            ->where('id', $this->phishingCampaign->id)
+        $timelines = Timeline::query()
+            ->where('phishing_campaign_id', $this->phishingCampaign->id)
             ->with('user')
-            ->get()
-            ->groupBy('user.name')
-            ->toBase();
+            ->get();
+
+        $this->users = [];
+
+        foreach ($timelines as $timeline) {
+            if ($timeline->user) {
+                $userEmail = $timeline->user->email;
+
+                if (!isset($this->users[$userEmail])) {
+                    $this->users[$userEmail] = [
+                        'name' => $timeline->user->name,
+                        'email' => $userEmail,
+                        'timeline' => []
+                    ];
+                }
+
+                $this->users[$userEmail]['timeline'][] = $timeline;
+            }
+        }
     }
 
     public function color()

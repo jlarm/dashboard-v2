@@ -1,4 +1,5 @@
 <div>
+{{--    {{ dd($users) }}--}}
     <div class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
         <div class="w-full flex justify-between space-x-3">
             <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">{{ $phishingCampaign->name }}</h1>
@@ -25,7 +26,7 @@
         <div class="grid grid-cols-3 gap-3">
             <div class="col-span-2">
                 <ul x-data="{ active: 0 }" role="list" class="space-y-3">
-                    @foreach($users as $user => $timeline)
+                    @foreach($users as $user)
                         <li
                             x-data="{
                                     id: {{ $loop->index }} + 1,
@@ -39,7 +40,7 @@
                             class="border rounded-md"
                         >
                             <div x-on:click="expanded = !expanded" class="flex items-center gap-x-3 p-4 hover:cursor-pointer">
-                                <h3 class="flex-auto truncate text-sm font-semibold leading-6 text-gray-900">{{ $user }}</h3>
+                                <h3 class="flex-auto truncate text-sm font-semibold leading-6 text-gray-900">{{ $user['name'] }}</h3>
                                 <button>
                                     <svg x-show="!expanded" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -52,7 +53,7 @@
                             <div class="px-4" x-show="expanded" x-collapse x-cloak>
                                 <div class="flow-root my-5">
                                     <ul role="list" class="-mb-8">
-                                        @foreach($timeline as $entry)
+                                        @foreach($user['timeline'] as $entry)
                                             <li>
                                                 <div class="relative pb-8">
                                                     <span class="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200 {{ $loop->last ? 'hidden' : '' }}" aria-hidden="true"></span>
