@@ -59,32 +59,6 @@ class Show extends Component
         };
     }
 
-    public function deleteCampaign()
-    {
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => $this->token,
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ])
-                ->withoutVerifying()
-                ->delete('https://'.$this->ip.':3333/api/campaigns/'.$this->phishingCampaign->campaign_id);
-
-            Notification::make()
-                ->title('Campaign Deleted Successfully!')
-                ->success()
-                ->send();
-
-            if ($response->status() === 200) {
-                $this->phishingCampaign->delete();
-            }
-
-            return redirect()->route('dealer.phishing.index');
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-    }
-
     public function render()
     {
         return view('livewire.dealer.phish.show')->layout('components.dealer-app');
