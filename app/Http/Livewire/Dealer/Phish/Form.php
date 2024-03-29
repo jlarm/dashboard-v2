@@ -88,6 +88,8 @@ class Form extends Component
 
             $campaign = $response->json();
 
+            Log::info($campaign);
+
             if ($response->successful()) {
                 $launched_at = Carbon::parse($campaign['launch_date']);
                 $campaign_created_at = Carbon::parse($campaign['created_date']);

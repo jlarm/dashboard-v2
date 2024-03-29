@@ -14,7 +14,7 @@
         </div>
     @else
         <div class="max-w-3xl mx-auto">
-            <form wire:submit="create" class="space-y-3">
+            <form wire:submit.prevent="create" class="space-y-3">
                 <div>
                     <x-input-label for="name" :value="__('Campaign Name')" />
                     <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
