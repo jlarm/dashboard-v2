@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Dealer\Phish;
 
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\PhishingCampaign;
-use App\Models\Dealer\Store;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;

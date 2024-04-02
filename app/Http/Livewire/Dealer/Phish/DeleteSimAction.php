@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Dealer\Phish;
 
+use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\PhishingCampaign;
-use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +19,7 @@ class DeleteSimAction extends Component
 
     public function mount()
     {
-        $store = Store::first();
+        $store = GlobalSetting::first();
         $this->token = $store->phishing_token;
         $this->ip = $store->phishing_ip;
     }

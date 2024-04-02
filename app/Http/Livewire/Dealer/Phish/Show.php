@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Dealer\Phish;
 
+use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\PhishingCampaign;
-use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
 use Livewire\Component;
 
@@ -19,7 +19,7 @@ class Show extends Component
 
     public function mount()
     {
-        $store = Store::first();
+        $store = GlobalSetting::first();
         $this->token = $store->phishing_token;
         $this->ip = $store->phishing_ip;
 
