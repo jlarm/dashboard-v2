@@ -78,7 +78,7 @@ class SingleStoreDetails extends Component
         $this->website = $this->dealer->website;
         $this->active_monitoring = $this->dealer->active_monitoring;
         $this->monitoring_start_date = $this->dealer->monitoring_start_date?->format('Y-m-d');
-        $this->phishing_active = $this->settings->phishing_active;
+        $this->phishing_active = $this->settings->phishing_active ?? false;
         $this->phishing_token = $this->settings->phishing_token ?? null;
         $this->phishing_ip = $this->settings->phishing_ip ?? null;
     }
