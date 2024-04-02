@@ -12,7 +12,9 @@ use Livewire\Component;
 class DeleteSimAction extends Component
 {
     public PhishingCampaign $phishingCampaign;
+
     public $token;
+
     public $ip;
 
     public function mount()

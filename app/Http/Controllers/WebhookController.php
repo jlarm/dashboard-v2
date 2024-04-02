@@ -6,7 +6,6 @@ use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Timeline;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Stancl\Tenancy\Contracts\TenantDatabaseManager;
 
 class WebhookController extends Controller
 {
@@ -21,7 +20,6 @@ class WebhookController extends Controller
             'message' => $request->input('message'),
             'details' => $request->input('details'),
         ]);
-
 
         match ($request->input('message')) {
             'Email Sent' => $campaign->increment('emails_sent'),

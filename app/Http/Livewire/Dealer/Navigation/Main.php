@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Navigation;
 
+use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
 use Illuminate\Http\Request;
 use Livewire\Component;
@@ -15,7 +16,7 @@ class Main extends Component
     public function mount(Request $request): void
     {
         $this->currentStore = Store::where('name', $request->get('store')?->name)->first();
-        $this->phishingIsEnabled = Store::first();
+        $this->phishingIsEnabled = GlobalSetting::first()->phishing_active ?? null;
     }
 
     public function render()

@@ -160,8 +160,7 @@
         </a>
     @endcan
     @role('super-admin')
-    @can('create-users')
-        @if($phishingIsEnabled->phishing_is_enabled)
+        @if($phishingIsEnabled)
         <a
             href="{{ $currentStore ? route('dealer.stores.vendor.index', $currentStore) : route('dealer.phishing.index') }}"
             class="{{ (request()->segment(1) === 'phishing' || request()->segment(3) === 'phishing') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
@@ -173,7 +172,6 @@
             Phishing
         </a>
         @endif
-    @endcan
     @endrole
     <!-- DOCS -->
     @can('create-users')
@@ -245,6 +243,24 @@
         @endif
     @endcan
 
+    @if(tenant('locations'))
+        @if(request()->segment(1) != 'stores')
+        <!--  Global Settings -->
+        @role('super-admin')
+            <a
+                href="{{ $currentStore ? route('dealer.settings.global', $currentStore) : route('dealer.settings.global') }}"
+                class="{{ (request()->routeIs('dealer.settings.global') || request()->routeIs('dealer.settings.global')) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
+            >
+                <svg class="mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path class="{{ (request()->routeIs('dealer.settings.global') || request()->routeIs('dealer.settings.global')) ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-linejoin="round" stroke-width="1.5" d="M14.953 2H9.047v2.582L7.155 5.694 4.953 4.402 2 9.598l2.202 1.291v2.222L2 14.4l2.953 5.197 2.202-1.292 1.892 1.113V22h5.906v-2.581l1.892-1.113 2.202 1.292L22 14.402l-2.201-1.291v-2.222L22 9.6l-2.953-5.197-2.202 1.292-1.892-1.112V2Z"/>
+                    <path class="{{ (request()->routeIs('dealer.settings.global') || request()->routeIs('dealer.settings.global')) ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-width="1.5" d="M15.5 12a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"/>
+                </svg>
+                Global Settings
+            </a>
+        @endrole
+        @endif
+    @endif
+
     <!--  LOGS -->
     @can('delete-stores')
         <a
@@ -292,6 +308,15 @@
                     All Vendors
                 </a>
             @endcan
+            <!-- Global Settings -->
+            @role('super-admin')
+                <a
+                    href="{{ route('dealer.settings.global') }}"
+                    class="{{ (request()->segment(1) == 'global-settings') ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent group border-l-4 py-2 px-3 flex items-center text-xs"
+                >
+                   Global Settings
+                </a>
+            @endrole
         </div>
     </div>
     @endif

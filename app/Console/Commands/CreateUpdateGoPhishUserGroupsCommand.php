@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use App\Services\GoPhishService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class CreateUpdateGoPhishUserGroupsCommand extends Command
 {
@@ -14,59 +14,83 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
     protected $description = 'Create/Update User Groups for GoPhish';
 
+    protected $token;
+
+    protected $ip;
+
+    protected $goPhishService;
+
+    public function __construct(GoPhishService $goPhishService)
+    {
+        parent::__construct();
+
+        $this->goPhishService = $goPhishService;
+    }
+
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+
+            if (GlobalSetting::first()->phishing_active === 0) {
+                $this->info('Phishing is disabled for tenant: '.$tenant->name);
+
+                return;
+            }
+
             $this->info('Starting run for tenant: '.$tenant->name);
 
-            $store = Store::first() ?? null;
-            $token = $store->phishing_token ?? null;
-            $ip = $store->phishing_ip ?? null;
+            $settings = GlobalSetting::first();
+            $this->token = $settings->phishing_token;
+            $this->ip = $settings->phishing_ip;
 
-            $this->info('Token: '.$token);
-            $this->info('IP: '.$ip);
+            $stores = Store::all();
 
-            if ($store === null) {
-                $this->info('No store found for tenant: '.$tenant->name);
+            // Get current groups in GoPhish
+            $groups = $this->goPhishService->getGroups($this->token, $this->ip);
 
-                return;
-            }
+            foreach ($stores as $store) {
 
-            if ($token === null || ! $ip === null) {
-                $this->info('No token or IP found for tenant: '.$tenant->name);
+                if ($store === null) {
+                    $this->info('No store found for tenant: '.$tenant->name);
 
-                return;
-            }
+                    return;
+                }
 
-            if ($token && $ip) {
-                $this->info('Running for tenant: '.$tenant->name);
+                if ($this->token === null || ! $this->ip === null) {
+                    $this->info('No token or IP found for tenant: '.$tenant->name);
 
-                $groups = $this->getGroups($ip, $token);
-                $userData = $this->getUsers();
+                    return;
+                }
 
-                $this->info('Sending request to Gophish');
-                $this->createOrUpdateGroup($groups, $userData, $ip, $token);
+                if ($this->token && $this->ip) {
+                    $this->info('Running for tenant: '.$tenant->name);
+
+                    // Get all users for the tenant
+                    $userData = $this->getUsers($store);
+
+                    $this->info('Sending request to Gophish');
+                    $this->goPhishService->createOrUpdateGroup($groups, $userData, $tenant, $store, $this->token, $this->ip);
+                }
+
             }
 
             $this->info('Finished running for tenant: '.$tenant->name);
+
         });
     }
 
-    private function getGroups($ip, $token)
+    public function getUsers($store)
     {
-        $groups = Http::withoutVerifying()->get('https://'.$ip.':3333/api/groups/?api_key='.$token.'');
-
-        return collect($groups->json())->pluck('id', 'name');
-    }
-
-    private function getUsers()
-    {
-        $users = User::query()
-            ->select('name', 'email')
-            ->whereNot('name', 'Joe Lohr')
-            ->whereNot('name', 'Terry Dortch')
-            ->whereNot('name', 'Mike Backer')
-            ->get();
+        if (tenant('locations')) {
+            $users = $store->users()
+                ->select('name', 'email')
+                ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
+                ->get();
+        } else {
+            $users = User::select('name', 'email')
+                ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
+                ->get();
+        }
 
         return $users->map(function ($user) {
             $splitName = explode(' ', $user->name);
@@ -80,65 +104,5 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
                 'position' => null,
             ];
         })->toArray();
-    }
-
-    private function createOrUpdateGroup($groups, $userData, $ip, $token)
-    {
-        if (! array_key_exists('All Employees', $groups->toArray())) {
-            $this->createGroup($userData, $ip, $token);
-        } else {
-            $this->updateGroup($groups->get('All Employees'), $userData, $ip, $token);
-        }
-    }
-
-    private function createGroup($userData, $ip, $token)
-    {
-        try {
-            $requestBody = [
-                'name' => 'All Employees',
-                'targets' => $userData,
-            ];
-
-            $response = Http::withHeaders([
-                'Authorization' => $token,
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ])
-                ->withoutVerifying()
-                ->post('https://'.$ip.':3333/api/groups/', $requestBody);
-
-            if ($response->status() === 200) {
-                $this->info('Group Created');
-            }
-
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-    }
-
-    private function updateGroup($groupId, $userData, $ip, $token)
-    {
-        try {
-            $requestBody = [
-                'id' => $groupId,
-                'name' => 'All Employees',
-                'targets' => $userData,
-            ];
-
-            $response = Http::withHeaders([
-                'Authorization' => $token,
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ])
-                ->withoutVerifying()
-                ->put('https://'.$ip.':3333/api/groups/'.$groupId.'', $requestBody);
-
-            if ($response->status() === 200) {
-                $this->info('Group Updated');
-            }
-
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
     }
 }

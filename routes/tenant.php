@@ -30,7 +30,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 Route::name('dealer.')->middleware([
     'web',
     InitializeTenancyByDomain::class,
-    PreventAccessFromCentralDomains::class
+    PreventAccessFromCentralDomains::class,
 ])->group(function () {
 
     // **************************************************
@@ -99,6 +99,14 @@ Route::name('dealer.')->middleware([
     Route::put('password', [PasswordController::class, 'update'])->name('password.update')->middleware('auth');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
+
+    // **************************************************
+    // Roles to Super Admin
+    // **************************************************
+
+    Route::middleware('role:super-admin')->group(function () {
+        Route::get('global-settings', \App\Http\Livewire\Dealer\Settings\GlobalSettings::class)->name('settings.global');
+    });
 
     // **************************************************
     // Roles to Consultant
@@ -193,7 +201,7 @@ Route::name('dealer.')->middleware([
 Route::middleware([
     'api',
     InitializeTenancyByDomain::class,
-    PreventAccessFromCentralDomains::class
+    PreventAccessFromCentralDomains::class,
 ])->group(function () {
     Route::post('/webhooks/gophish/', 'App\Http\Controllers\WebhookController@gophish')->name('webhooks.gophish');
 });

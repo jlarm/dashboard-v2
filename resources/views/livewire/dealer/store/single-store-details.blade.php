@@ -163,7 +163,7 @@
                     <div class="border-t pt-5">
                         <div class="flex items-start mb-6">
                             <div class="flex items-center h-5">
-                                <input wire:model="phishing_is_enabled"
+                                <input wire:model="phishing_active"
                                        id="phishing-sim"
                                        type="checkbox" class="hidden peer">
                                 <label for="phishing-sim"

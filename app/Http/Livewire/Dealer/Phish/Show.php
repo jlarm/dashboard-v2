@@ -5,9 +5,6 @@ namespace App\Http\Livewire\Dealer\Phish;
 use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
-use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Show extends Component
@@ -15,7 +12,9 @@ class Show extends Component
     public PhishingCampaign $phishingCampaign;
 
     public $users;
+
     private $token;
+
     private $ip;
 
     public function mount()
@@ -35,11 +34,11 @@ class Show extends Component
             if ($timeline->user) {
                 $userEmail = $timeline->user->email;
 
-                if (!isset($this->users[$userEmail])) {
+                if (! isset($this->users[$userEmail])) {
                     $this->users[$userEmail] = [
                         'name' => $timeline->user->name,
                         'email' => $userEmail,
-                        'timeline' => []
+                        'timeline' => [],
                     ];
                 }
 

@@ -12,7 +12,9 @@ use Livewire\Component;
 class CompleteSimAction extends Component
 {
     public PhishingCampaign $phishingCampaign;
+
     public $token;
+
     public $ip;
 
     public function mount()
@@ -49,6 +51,7 @@ class CompleteSimAction extends Component
             Log::error($e->getMessage());
         }
     }
+
     public function render()
     {
         return view('livewire.dealer.phish.complete-sim-action');
