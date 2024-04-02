@@ -31,7 +31,9 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
 
-            if (GlobalSetting::first()->phishing_active === 0 || GlobalSetting::first()->phishing_active === null) {
+            $globalSetting = GlobalSetting::first();
+
+            if ($globalSetting === null || $globalSetting->phishing_active === 0 || $globalSetting->phishing_active === null) {
                 $this->info('Phishing is disabled for tenant: '.$tenant->name);
 
                 return;
