@@ -159,7 +159,8 @@
             Vendors
         </a>
     @endcan
-    @role('super-admin')
+{{--    Qualified Individual and up can see phishing results--}}
+    @can('create-manuals')
         @if($phishingIsEnabled)
         <a
             href="{{ $currentStore ? route('dealer.stores.vendor.index', $currentStore) : route('dealer.phishing.index') }}"
@@ -172,7 +173,7 @@
             Phishing
         </a>
         @endif
-    @endrole
+    @endcan
     <!-- DOCS -->
     @can('create-users')
         @if (request()->segment(1) === 'stores' || !tenant('locations'))
