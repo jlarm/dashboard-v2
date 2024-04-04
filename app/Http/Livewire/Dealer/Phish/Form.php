@@ -69,6 +69,12 @@ class Form extends Component
     public function create()
     {
         try {
+            $send_by_date = null;
+            if ($this->date) {
+                $date = Carbon::parse($this->date);
+                $send_by_date = $date->addDays(3)->format('Y-m-d').'T00:00:00+00:00';
+            }
+
             $response = Http::withHeaders([
                 'Authorization' => $this->token,
                 'Content-Type' => 'application/json',
@@ -79,10 +85,10 @@ class Form extends Component
                     'name' => $this->name,
                     'template' => ['name' => $this->template],
                     'url' => 'http://'.$this->ip,
-                    'page' => ['name' => $this->page],
+                    'page' => ['name' => $this->template],
                     'smtp' => ['name' => $this->smtp],
                     'launch_date' => ($this->date) ? $this->date.'T00:00:00+00:00' : null,
-                    'send_by_date' => null,
+                    'send_by_date' => $send_by_date,
                     'groups' => [['name' => $this->group]],
                 ]);
 

@@ -14,7 +14,7 @@
         </div>
     @else
         <div class="max-w-3xl mx-auto">
-            <form wire:submit.prevent="create" class="space-y-3">
+            <form wire:submit.prevent="create" class="space-y-8">
                 <div>
                     <x-input-label for="name" :value="__('Campaign Name')" />
                     <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
@@ -23,6 +23,7 @@
                 <div>
                     <x-input-label for="date" :value="__('Schedule Date')" />
                     <x-text-input wire:model="date" id="date" class="block mt-1 w-full" type="date" name="datetime-local" autofocus autocomplete="date" />
+                    <p class="mt-2 text-sm text-gray-500" id="email-description">If you would like to run the simulation immediately leave the date field blank.</p>
                     <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
                 <div>
@@ -35,20 +36,11 @@
                     </select>
                 </div>
                 <div>
-                    <x-input-label for="name" :value="__('Email Template')" />
+                    <x-input-label for="name" :value="__('Template')" />
                     <select wire:model="template" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                        <option></option>
                         @foreach($emails as $email)
-                            <option selected></option>
                             <option value="{{ $email['name'] }}">{{ $email['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <x-input-label for="name" :value="__('Landing Page')" />
-                    <select wire:model="page" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
-                        @foreach($pages as $page)
-                            <option selected></option>
-                            <option value="{{ $page['name'] }}">{{ $page['name'] }}</option>
                         @endforeach
                     </select>
                 </div>
