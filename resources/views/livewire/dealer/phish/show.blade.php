@@ -217,10 +217,6 @@
                         <dt class="text-sm font-medium leading-6 text-gray-500">Submitted Data</dt>
                         <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $phishingCampaign->data_submitted }}</dd>
                     </div>
-                    <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 px-4 py-10 sm:px-6 xl:px-8 border rounded-md hover:bg-gray-50">
-                        <dt class="text-sm font-medium leading-6 text-gray-500">Email Reported</dt>
-                        <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ $phishingCampaign->emails_reported }}</dd>
-                    </div>
                 </dl>
                 @can('create-dealerships')
                 <livewire:dealer.phish.delete-sim-action :phishingCampaign="$phishingCampaign" />
