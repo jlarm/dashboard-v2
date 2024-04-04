@@ -17,18 +17,18 @@
             <form wire:submit.prevent="create" class="space-y-8">
                 <div>
                     <x-input-label for="name" :value="__('Campaign Name')" />
-                    <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
+                    <x-text-input wire:model.defer="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
                 <div>
                     <x-input-label for="date" :value="__('Schedule Date')" />
-                    <x-text-input wire:model="date" id="date" class="block mt-1 w-full" type="date" name="datetime-local" autofocus autocomplete="date" />
+                    <x-text-input wire:model.defer="date" id="date" class="block mt-1 w-full" type="date" name="datetime-local" autofocus autocomplete="date" />
                     <p class="mt-2 text-sm text-gray-500" id="email-description">If you would like to run the simulation immediately leave the date field blank.</p>
                     <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
                 <div>
                     <x-input-label for="name" :value="__('Sending Group')" />
-                    <select wire:model="group" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                    <select wire:model.defer="group" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
                             <option selected></option>
                         @foreach($groups as $group)
                             <option value="{{ $group['name'] }}">{{ $group['name'] }}</option>
@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <x-input-label for="name" :value="__('Template')" />
-                    <select wire:model="template" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                    <select wire:model.defer="template" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
                         <option></option>
                         @foreach($emails as $email)
                             <option value="{{ $email['name'] }}">{{ $email['name'] }}</option>
@@ -46,7 +46,7 @@
                 </div>
                 <div>
                     <x-input-label for="name" :value="__('Sending Profile')" />
-                    <select wire:model="smtp" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                    <select wire:model.defer="smtp" class="mt-1 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
                         @foreach($profiles as $profile)
                             <option selected></option>
                             <option value="{{ $profile['name'] }}">{{ $profile['name'] }}</option>
