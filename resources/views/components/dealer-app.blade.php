@@ -24,6 +24,7 @@
     <script src="https://js.sentry-cdn.com/487c58c833df4192b1a5311b2e1a849e.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="font-sans antialiased bg-white">
+<x-course-completion-modal />
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
     <!-- Static sidebar for desktop -->
 {{--    @include('layouts.nav-main')--}}

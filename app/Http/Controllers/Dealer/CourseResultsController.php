@@ -95,6 +95,10 @@ class CourseResultsController extends Controller
 
         }
 
+        session()->flash('flash.quizPercentage', round($score));
+        session()->flash('flash.quizPassed', $passed);
+        session()->flash('flash.courseName' , $course->name);
+
         return redirect()->route('dealer.courses.index');
     }
 }
