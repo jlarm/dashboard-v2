@@ -6,6 +6,7 @@ use App\Mail\TenDayOpenInviteReminderMail;
 use App\Models\Dealer\Invite;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class InviteReminderTenDaysCommand extends Command
@@ -22,7 +23,12 @@ class InviteReminderTenDaysCommand extends Command
             $invites = Invite::where('created_at', '=', Carbon::now()->subDays(10))->get();
 
             foreach ($invites as $invite) {
-                Mail::to($invite->email)->send(new TenDayOpenInviteReminderMail($invite));
+                try {
+                    Mail::to($invite->email)->send(new TenDayOpenInviteReminderMail($invite));
+                    Log::info('Ten day reminder sent for invite ' . $invite->email);
+                } catch (\Exception $e) {
+                    Log::error('Error sending ten day reminder for invite ' . $invite->email . ': ' . $e->getMessage());
+                }
             }
 
             $this->info('Command completed successfully');

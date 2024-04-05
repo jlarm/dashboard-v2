@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Dealer\Invite;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Stancl\Tenancy\Concerns\HasATenantsOption;
 
 class DeleteOldInvitesCommand extends Command
@@ -25,7 +26,7 @@ class DeleteOldInvitesCommand extends Command
             foreach ($invites as $invite) {
                 $invite->delete();
             }
-
+            Log::info('Old invites deleted for tenant ' . $tenant->name);
             $this->info('Command completed successfully');
         });
     }
