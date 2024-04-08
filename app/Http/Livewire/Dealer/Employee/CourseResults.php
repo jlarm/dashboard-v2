@@ -39,7 +39,7 @@ class CourseResults extends Component
                 ->orWhereDoesntHave('departments')
                 ->with([
                     'results' => function ($query) {
-                        $query->where('user_id', $this->user->id)->latest();
+                        $query->where('user_id', $this->user->id)->latest('id');
                     },
                 ])->orderBy('name')->paginate(24),
         ]);
