@@ -30,7 +30,7 @@ class TwentyDayOpenInviteReminderMail extends Mailable implements ShouldQueue
         );
     }
 
-    public function content()
+    public function content(): Content
     {
         return new Content(
             markdown: 'emails.twenty-day-open-invite-reminder',

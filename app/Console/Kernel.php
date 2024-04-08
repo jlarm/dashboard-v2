@@ -13,10 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('activitylog:clean')->daily()->runInBackground();
-        $schedule->command('invite:reminder-ten-days')->daily()->runInBackground();
-        $schedule->command('invite:reminder-twenty-days')->daily()->runInBackground();
+        $schedule->command('run:invites')->daily()->runInBackground();
         $schedule->command('delete:temporary-uploads')->daily()->runInBackground();
-        $schedule->command('delete:old-invites')->daily()->runInBackground();
         $schedule->command('red-sentry:report-generation')->dailyAt('01:00')->runInBackground()->emailOutputTo('jlohr@autorisknow.com');
         $schedule->command('backups:go')->dailyAt('01:30')->runInBackground()->withoutOverlapping();
         $schedule->command('backups:clean')->dailyAt('03:01')->runInBackground()->withoutOverlapping();
