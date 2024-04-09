@@ -25,7 +25,7 @@ class UserInviteNotification extends Notification
         return URL::temporarySignedRoute('employees.create', now()->addDay(), [
             'email' => $email,
             'name' => $this->validated['name'],
-            'role' => $this->validated['role'],
+            'role' => 'Consultant',
         ]);
     }
 
@@ -35,9 +35,8 @@ class UserInviteNotification extends Notification
 
         return (new MailMessage)
             ->subject($this->validated['name'].' ,Invitation to join '.tenant('name'))
-            ->line('Click the button below to register .')
-            ->action('Register', url($url))
-            ->line('Thank you for using our application!');
+            ->line('Click the button below to register.')
+            ->action('Register', url($url));
     }
 
     public function toArray($notifiable): array

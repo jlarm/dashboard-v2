@@ -6,8 +6,7 @@
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                 <div class="flex justify-end">
-                    <x-primary-button onclick="Livewire.emit('modal.open', 'central.employee.invite')">Invite Employee
-                    </x-primary-button>
+                    <x-primary-link-button href="{{ route('employees.invite') }}">Add Employee</x-primary-link-button>
                     <div class="ml-5">
                         <div>
                             <label for="search" class="sr-only">Email</label>

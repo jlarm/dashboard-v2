@@ -24,7 +24,7 @@
     @livewireStyles
 </head>
 <body class="h-full font-sans antialiased min-h-screen bg-gray-100">
-
+<x-notification />
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
     @include('components.central-sidebar-menu')
     @include('components.navigation.mobile-central-sidebar-menu')

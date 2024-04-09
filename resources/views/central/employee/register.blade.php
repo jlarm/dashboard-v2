@@ -4,7 +4,7 @@
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
                     <x-application-logo class="w-64 h-auto fill-current text-gray-500"/>
-                    <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Complete registration</h2>
+                    <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Complete Registration</h2>
                 </div>
 
                 <div class="mt-10">
@@ -14,6 +14,30 @@
                             <input type="hidden" id="name" name="name" value="{{ $name }}">
                             <input type="hidden" id="email" name="email" value="{{ $email }}">
                             <input type="hidden" id="role" name="role" value="{{ $role }}">
+
+                            <!-- Name -->
+                            <div>
+                                <x-input-label for="name" :value="__('Name')"/>
+                                <x-text-input id="name" class="block mt-1 w-full"
+                                              type="text"
+                                              name="name"
+                                              value="{{ $name }}"
+                                              disabled />
+
+                                <x-input-error :messages="$errors->get('name')" class="mt-2"/>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mt-4">
+                                <x-input-label for="email" :value="__('Email')"/>
+                                <x-text-input id="email" class="block mt-1 w-full"
+                                              type="email"
+                                              name="email"
+                                              value="{{ $email }}"
+                                              disabled />
+
+                                <x-input-error :messages="$errors->get('email')" class="mt-2"/>
+                            </div>
 
                             <!-- Phone -->
                             <div class="mt-4">

@@ -2,58 +2,67 @@
 
 use App\Http\Controllers\Central\Course\CourseResultsController;
 use App\Http\Controllers\Central\Dealership\CreateController;
+use App\Http\Controllers\Central\Employee\StoreController;
 use App\Http\Controllers\Central\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Central\Course\Index;
 use App\Http\Livewire\Central\Course\Quiz;
 use App\Http\Livewire\Central\Course\Show;
+use App\Http\Livewire\Central\Dashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', function () { return view('welcome'); })->name('home');
 
-Route::middleware('auth', 'verified')->group(function () {
+// **************************************************
+// Consultant Access
+// **************************************************
 
-    Route::get('/dashboard', \App\Http\Livewire\Central\Dashboard::class)->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/dealerships', function () {
-        return view('central.dealership.index');
-    })->name('dealerships.index');
-    Route::get('dealerships/create', function () {
-        return view('central.dealership.create');
-    })->name('dealerships.create');
-    Route::post('dealerships/create', CreateController::class)->name('dealerships.store');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+
+    Route::prefix('dealerships/')->name('dealerships.')->group(function () {
+        Route::get('/', function () { return view('central.dealership.index'); })->name('index');
+        Route::get('create', function () { return view('central.dealership.create'); })->name('create');
+        Route::post('create', CreateController::class)->name('store');
+    });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('courses', Index::class)->name('courses.index');
-    Route::get('courses/{course:slug}', Show::class)->name('courses.show');
-    Route::get('courses/{course:slug}/quiz', Quiz::class)->name('courses.quiz');
-    Route::post('courses/{course:slug}/quiz', CourseResultsController::class)->name('courses.quiz.store');
-
-    Route::get('/update', function () {
-        $course = \App\Models\Course::findOrFail(1)->update(['name' => 'NESHAP 6-H TEST']);
+    Route::prefix('courses/')->name('courses.')->group(function () {
+        Route::get('/', Index::class)->name('index');
+        Route::get('{course:slug}', Show::class)->name('show');
+        Route::get('{course:slug}/quiz', Quiz::class)->name('quiz');
+        Route::post('{course:slug}/quiz', CourseResultsController::class)->name('quiz.store');
     });
 
     Route::get('documents', \App\Http\Livewire\Central\Docs\Index::class)->name('docs.index');
 
 });
 
-Route::get('employees/create', [UserController::class, 'create'])->middleware('signed')->name('employees.create');
-Route::post('employees/store', [UserController::class, 'store'])->name('employees.store');
+// **************************************************
+// Public Access
+// **************************************************
 
-Route::middleware('can:delete-users', 'auth', 'verified')->group(function () {
-    Route::get('employees', \App\Http\Livewire\Central\Employee\Index::class)->name('employees.index');
-    Route::get('/employees/deleted', function () {
-        return view('central.employee.deleted');
-    })->name('employees.deleted');
-    Route::get('employees/invite', [EmployeeController::class, 'create'])->name('invite.create');
-    Route::post('employees/invite', [EmployeeController::class, 'send'])->name('invite.send');
-    Route::get('employees/{user}', [EmployeeController::class, 'show'])->name('employees.view');
+Route::get('employees/register', \App\Http\Controllers\Central\Employee\RegisterController::class)->middleware('signed')->name('employees.create');
+Route::post('employees/store', \App\Http\Controllers\Central\Employee\StoreRegistrationController::class)->name('employees.store');
+
+// **************************************************
+// Admin Access
+// **************************************************
+
+Route::middleware(['can:delete-users', 'auth', 'verified'])->group(function () {
+
+    Route::prefix('employees/')->name('employees.')->group(function () {
+        Route::get('/', \App\Http\Livewire\Central\Employee\Index::class)->name('index');
+        Route::get('deleted', function () { return view('central.employee.deleted'); })->name('deleted');
+        Route::get('invite', \App\Http\Controllers\Central\Employee\CreateController::class)->name('invite');
+        Route::post('invite', StoreController::class)->name('send');
+        Route::get('{user}', \App\Http\Controllers\Central\Employee\ShowController::class)->name('view');
+    });
 
     Route::get('roles', \App\Http\Livewire\Central\Role\Index::class)->name('role.index');
     Route::get('roles/{role:id}', \App\Http\Livewire\Central\Role\Edit::class)->name('role.edit');

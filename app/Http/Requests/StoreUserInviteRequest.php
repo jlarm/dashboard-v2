@@ -11,7 +11,6 @@ class StoreUserInviteRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'role' => 'required|string',
         ];
     }
 
