@@ -26,7 +26,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', function () { return view('central.dealership.index'); })->name('index');
         Route::get('create', function () { return view('central.dealership.create'); })->name('create');
         Route::post('create', CreateController::class)->name('store');
-        Route::get('edit/{dealership}', \App\Http\Controllers\Central\Dealership\EditController::class)->name('edit');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
