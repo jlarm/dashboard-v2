@@ -27,15 +27,15 @@ class RunInvitesCommand extends Command
                 if ($invite->created_at->diffInDays(now()) === 10) {
                     // Send 10 day reminder
                     Mail::to($invite->email)->send(new TenDayOpenInviteReminderMail($invite));
-                    Log::info('Ten day reminder sent for invite ' . $invite->email);
+                    Log::info('Ten day reminder sent for invite '.$invite->email);
                 } elseif ($invite->created_at->diffInDays(now()) === 20) {
                     // Send 20 day reminder
                     Mail::to($invite->email)->send(new TwentyDayOpenInviteReminderMail($invite));
-                    Log::info('Twenty day reminder sent for invite ' . $invite->email);
+                    Log::info('Twenty day reminder sent for invite '.$invite->email);
                 } elseif ($invite->created_at->diffInDays(Carbon::now()) > 30) {
                     // Delete old invites older than 30 days
                     $invite->delete();
-                    Log::info('Old invite deleted for ' . $invite->email);
+                    Log::info('Old invite deleted for '.$invite->email);
                 }
             }
         });

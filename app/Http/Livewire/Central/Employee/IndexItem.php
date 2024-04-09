@@ -25,9 +25,7 @@ class IndexItem extends Component
             ->latest()
             ->get()
             ->groupBy('course_id')
-            ->map(function ($item) {
-                return $item->first();
-            });
+            ->map(fn ($item) => $item->first());
 
         $this->completed = collect($this->completed->where('passed', 1))->count();
     }

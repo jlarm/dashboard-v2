@@ -30,7 +30,6 @@ class CourseSeeder extends Seeder
                 if ($value->roles != null) {
                     $course->roles()->attach($value->roles);
                 }
-                ray($json);
             }
         }
     }

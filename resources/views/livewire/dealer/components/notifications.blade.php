@@ -54,15 +54,17 @@
         <ul class="divide-y divide-gray-200">
             @foreach(auth()->user()->unreadNotifications as $notification)
                 <li class="px-2 py-3 flex justify-between items-center hover:bg-gray-50 group">
-                    <p class="text-sm">
+                    <p class="text-xs w-5/6">
                         {{ $notification->data['message'] }}<br />
                         <span class="text-xs text-gray-400">{{ $notification->created_at->diffForHumans() }}</span>
                     </p>
-                    <button wire:click="markAsRead({{ $notification }})" class="hidden group-hover:block hover:bg-white rounded-full p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                    <div>
+                        <button wire:click="markAsRead({{ $notification }})" class="w-1/6 hidden group-hover:block hover:bg-white rounded-full p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </li>
             @endforeach
             <li class="p-1">
