@@ -30,7 +30,7 @@
     @include('components.navigation.mobile-central-sidebar-menu')
     <div class="lg:pl-72">
         @include('layouts.nav')
-        <div class="py-10 px-4 sm:px-6 lg:px-8">
+        <div class="p-2">
             <div class="bg-white rounded-md p-6">
                 @if (isset($header))
                     <header class="p-5">
@@ -42,7 +42,6 @@
         </div>
     </div>
 </div>
-<x-notification/>
 @livewire('slide-over-pro')
 @livewire('modal-pro')
 @livewire('notifications')

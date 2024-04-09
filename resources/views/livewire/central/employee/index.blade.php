@@ -22,40 +22,21 @@
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead>
-                        <tr>
-                            <th scope="col"
-                                class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                                Name
-                            </th>
-                            <th scope="col"
-                                class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Email
-                            </th>
-                            <th scope="col"
-                                class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Phone
-                            </th>
-                            <th scope="col"
-                                class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Completed Courses
-                            </th>
-                            <th scope="col"
-                                class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Role
-                            </th>
-                            <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
-                                <span class="sr-only">View</span>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                        @foreach($users as $user)
-                            <livewire:central.employee.index-item :user="$user" :key="$user->id"/>
-                        @endforeach
-                        </tbody>
-                    </table>
+                    <x-table>
+                        <x-slot name="head">
+                            <x-table.heading>Name</x-table.heading>
+                            <x-table.heading>Email</x-table.heading>
+                            <x-table.heading>Phone</x-table.heading>
+                            <x-table.heading>Completed Courses</x-table.heading>
+                            <x-table.heading>Role</x-table.heading>
+                            <x-table.heading></x-table.heading>
+                        </x-slot>
+                        <x-slot name="body">
+                            @foreach($users as $user)
+                                <livewire:central.employee.index-item :user="$user" :key="$user->id"/>
+                            @endforeach
+                        </x-slot>
+                    </x-table>
                 </div>
             </div>
         </div>

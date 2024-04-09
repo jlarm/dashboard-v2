@@ -39,6 +39,11 @@ class CreateController extends Controller
             $this->createUserAndAssignRole($validated);
         });
 
+        session()->flash('flash.type', 'success');
+        session()->flash('flash.title', 'Dealership Created');
+        session()->flash('flash.message', $validated['name'] . ' has successfully been created.');
+
+
         return redirect()->route('dealerships.index');
     }
 
