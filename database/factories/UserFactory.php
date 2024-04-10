@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -17,18 +18,23 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $this->fName = fake()->firstName();
-        $this->lName = fake()->lastName();
-
         return [
-            'name' => $this->fName.' '.$this->lName,
-            'email' => $this->fName.'.'.$this->lName.'@libertyautoplaza.com',
-            'phone' => fake()->phoneNumber(),
+            'department_id' => null,
+            'name' => 'John Doe',
+            'email' => 'jdoe@email.com',
+            'phone' => '9876543211',
             'email_verified_at' => now(),
-            'department_id' => fake()->numberBetween(1, 3),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => 'password',
             'remember_token' => Str::random(10),
         ];
+
+    }
+
+    public function configure(): Factory|UserFactory
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole('super-admin');
+        });
     }
 
     /**

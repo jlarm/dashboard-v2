@@ -24,6 +24,9 @@ class AuthenticationTest extends TestCase
 
         $response = $this->post('/login', [
             'email' => $user->email,
+            'slug' => 'john-doe',
+            'phone' => '1234567890',
+            'department_id' => 1,
             'password' => 'password',
         ]);
 
