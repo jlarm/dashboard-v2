@@ -7,7 +7,7 @@ use App\Models\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
-use Filament\Notifications\Notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -23,6 +23,8 @@ class Create extends Component
     public string $departmentId;
 
     public string $role;
+
+    public bool $qi = false;
 
     public array $roles = [];
 
@@ -44,6 +46,7 @@ class Create extends Component
         'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
         //        'department' => ['required', 'integer'],
         'roles' => ['min:1', 'array'],
+        'qi' => ['nullable', 'boolean'],
         'courses' => ['nullable', 'array'],
     ];
 
@@ -55,6 +58,10 @@ class Create extends Component
     public function submit()
     {
         $this->validate();
+
+        if ($this->qi) {
+            $this->roles[] = 'Qualified Individual';
+        }
 
         $invite = Invite::create([
             'name' => $this->name,
@@ -69,34 +76,31 @@ class Create extends Component
 
         SendQueueEmailJob::dispatch($invite, 'invite');
 
-        Notification::make()
-            ->title('Invite Successfully Sent!')
-            ->success()
-            ->send();
+        session()->flash('flash.type', 'success');
+        session()->flash('flash.title', 'Employee Invited');
+        session()->flash('flash.message', $this->name.' has been successfully invited.');
 
         return redirect()->route('dealer.employees.index');
 
     }
 
+    public function qiAvailable(): bool
+    {
+        return User::role('Qualified Individual')->count() < 2;
+    }
+
     public function render()
     {
-        $qualifiedIndividualCount = \App\Models\User::role('Qualified Individual')->count();
-
         $rolesQuery = Role::query()
-            ->whereNot('name', 'super-admin')
-            ->whereNot('name', 'Admin')
-            ->whereNot('name', 'Consultant')
+            ->whereNotIn('name', ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'])
             ->orderBy('name');
-
-        if ($qualifiedIndividualCount >= 2) {
-            $rolesQuery->whereNot('name', 'Qualified Individual');
-        }
 
         return view('livewire.dealer.employee.create', [
             'departments' => Department::all(),
             'allRoles' => $rolesQuery->get(),
             'allCourses' => Course::select('id', 'name')->get(),
             'stores' => Store::orderBy('name')->get(),
+            'qiAvailable' => $this->qiAvailable(),
         ]);
     }
 }

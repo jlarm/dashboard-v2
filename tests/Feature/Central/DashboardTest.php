@@ -33,7 +33,7 @@ test('guest redirects to login page', function () {
 });
 
 test('logged in user can see dashboard', function () {
-   $response = $this->actingAs(User::first())->get('/dashboard');
+    $response = $this->actingAs(User::first())->get('/dashboard');
 
     $response
         ->assertOk()

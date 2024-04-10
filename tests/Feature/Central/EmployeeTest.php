@@ -11,7 +11,7 @@ beforeEach(function () {
     $this->seed(DepartmentSeeder::class);
     $this->seed(RoleAndPermissionSeeder::class);
 
-    $admin= User::create([
+    $admin = User::create([
         'name' => 'John Doe',
         'email' => 'jdoe@email.com',
         'phone' => '9876543211',

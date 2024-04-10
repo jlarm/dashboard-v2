@@ -41,8 +41,7 @@ class CreateController extends Controller
 
         session()->flash('flash.type', 'success');
         session()->flash('flash.title', 'Dealership Created');
-        session()->flash('flash.message', $validated['name'] . ' has successfully been created.');
-
+        session()->flash('flash.message', $validated['name'].' has successfully been created.');
 
         return redirect()->route('dealerships.index');
     }

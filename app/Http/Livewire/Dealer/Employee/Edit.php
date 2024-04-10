@@ -21,6 +21,8 @@ class Edit extends SlideOver
 
     public $assignedRoles;
 
+    public $qi;
+
     public $qiCount;
 
     public function mount(User $user)
@@ -30,6 +32,7 @@ class Edit extends SlideOver
         $this->assignedStores = $user->stores()->pluck('name')->toArray();
         $this->department = $user->department_id;
         $this->assignedRoles = $user->getRoleNames()->toArray();
+        $this->qi = $this->user->hasRole('Qualified Individual');
         $this->qiCount = Role::find(5)->users()->count();
     }
 
@@ -40,6 +43,17 @@ class Edit extends SlideOver
         ]);
 
         $this->user->stores()->sync(Store::whereIn('name', $this->assignedStores)->pluck('id')->toArray());
+
+        if ($this->qi) {
+            if (! in_array('Qualified Individual', $this->assignedRoles)) {
+                $this->assignedRoles[] = 'Qualified Individual';
+            }
+        } else {
+            $key = array_search('Qualified Individual', $this->assignedRoles);
+            if ($key !== false) {
+                unset($this->assignedRoles[$key]);
+            }
+        }
 
         $this->user->syncRoles($this->assignedRoles);
 
@@ -58,22 +72,15 @@ class Edit extends SlideOver
 
     public function render()
     {
-        $qualifiedIndividualCount = \App\Models\User::role('Qualified Individual')->count();
-        $currentUserHasRole = $this->user->hasRole('Qualified Individual');
-
-        $rolesQuery = Role::whereNot('name', 'super-admin')
-            ->whereNot('name', 'Admin')
-            ->whereNot('name', 'Consultant')
+        $rolesQuery = Role::query()
+            ->whereNotIn('name', ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'])
             ->orderBy('name');
-
-        if ($qualifiedIndividualCount >= 2 && ! $currentUserHasRole) {
-            $rolesQuery->whereNot('name', 'Qualified Individual');
-        }
 
         return view('livewire.dealer.employee.edit', [
             'stores' => Store::all(),
             'departments' => Department::all(),
             'allRoles' => $rolesQuery->get(),
+            'qiAvailable' => User::role('Qualified Individual')->count() < 2 || $this->qi,
         ]);
     }
 }

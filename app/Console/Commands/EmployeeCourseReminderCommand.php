@@ -25,7 +25,7 @@ class EmployeeCourseReminderCommand extends Command
             User::select(['id', 'name', 'email'])
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get()
-                ->each(fn($user) => $this->processUserResults($user));
+                ->each(fn ($user) => $this->processUserResults($user));
 
             $this->info("Command for tenant $tenant->id ($tenant->name) completed");
         });
@@ -44,14 +44,14 @@ class EmployeeCourseReminderCommand extends Command
                 return $result->first();
             });
 
-        $results->each(fn($result) => CourseUserNotificationSent::where('user_id', $user->id)
+        $results->each(fn ($result) => CourseUserNotificationSent::where('user_id', $user->id)
             ->where('course_id', $result->course_id)
             ->firstOr(function () use ($user, $result) {
                 $user->notify(new ExpiredCourseNotification($result->course_id));
                 CourseUserNotificationSent::create([
                     'user_id' => $user->id,
                     'course_id' => $result->course_id,
-                    'sent' => Carbon::now()
+                    'sent' => Carbon::now(),
                 ]);
             }));
     }

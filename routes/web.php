@@ -3,16 +3,16 @@
 use App\Http\Controllers\Central\Course\CourseResultsController;
 use App\Http\Controllers\Central\Dealership\CreateController;
 use App\Http\Controllers\Central\Employee\StoreController;
-use App\Http\Controllers\Central\EmployeeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use App\Http\Livewire\Central\Course\Index;
 use App\Http\Livewire\Central\Course\Quiz;
 use App\Http\Livewire\Central\Course\Show;
 use App\Http\Livewire\Central\Dashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () { return view('welcome'); })->name('home');
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
 // **************************************************
 // Consultant Access
@@ -23,8 +23,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
     Route::prefix('dealerships/')->name('dealerships.')->group(function () {
-        Route::get('/', function () { return view('central.dealership.index'); })->name('index');
-        Route::get('create', function () { return view('central.dealership.create'); })->name('create');
+        Route::get('/', function () {
+            return view('central.dealership.index');
+        })->name('index');
+        Route::get('create', function () {
+            return view('central.dealership.create');
+        })->name('create');
         Route::post('create', CreateController::class)->name('store');
     });
 
@@ -58,7 +62,9 @@ Route::middleware(['can:delete-users', 'auth', 'verified'])->group(function () {
 
     Route::prefix('employees/')->name('employees.')->group(function () {
         Route::get('/', \App\Http\Livewire\Central\Employee\Index::class)->name('index');
-        Route::get('deleted', function () { return view('central.employee.deleted'); })->name('deleted');
+        Route::get('deleted', function () {
+            return view('central.employee.deleted');
+        })->name('deleted');
         Route::get('invite', \App\Http\Controllers\Central\Employee\CreateController::class)->name('invite');
         Route::post('invite', StoreController::class)->name('send');
         Route::get('{user:slug}', \App\Http\Controllers\Central\Employee\ShowController::class)->name('view');
