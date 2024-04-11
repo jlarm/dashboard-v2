@@ -1,4 +1,4 @@
-<li class="flex items-center justify-between gap-x-6 py-5">
+<li class="flex items-center justify-between gap-x-6 p-5 bg-gray-50 rounded-md">
     <div class="min-w-0">
         <div class="flex items-start gap-x-3">
             <p class="text-sm font-semibold leading-6 text-gray-900">{{ $vendor->name }}</p>
@@ -22,25 +22,31 @@
                 <circle cx="1" cy="1" r="1" />
             </svg>
             <p class="truncate">To {{ $vendor->contact_name }}</p>
+            @if($noCount > 0)
+                <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+                    <circle cx="1" cy="1" r="1" />
+                </svg>
+                <p class="truncate text-red-500">{{ $noCount }} No's</p>
+            @endif
         </div>
     </div>
     <div class="flex flex-none items-center gap-x-4">
         <div
             x-data="{
-                                open: false,
-                                toggle() {
-                                    if (this.open) {
-                                        return this.close()
-                                    }
-                                    this.$refs.button.focus()
-                                    this.open = true
-                                },
-                                close(focusAfter) {
-                                    if (! this.open) return
-                                    this.open = false
-                                    focusAfter && focusAfter.focus()
-                                }
-                            }"
+                open: false,
+                toggle() {
+                    if (this.open) {
+                        return this.close()
+                    }
+                    this.$refs.button.focus()
+                    this.open = true
+                },
+                close(focusAfter) {
+                    if (! this.open) return
+                    this.open = false
+                    focusAfter && focusAfter.focus()
+                }
+            }"
             x-on:keydown.escape.prevent.stop="close($refs.button)"
             x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
             x-id="['dropdown-button']"
