@@ -64,8 +64,8 @@ class Create extends Component
         }
 
         $invite = Invite::create([
-            'name' => $this->name,
-            'email' => $this->email,
+            'name' => mb_convert_case($this->name, MB_CASE_TITLE, "UTF-8"),
+            'email' => strtolower($this->email),
             'stores' => $this->dealers,
             'department_id' => $this->department,
             'user_id' => auth()->user()->id,
