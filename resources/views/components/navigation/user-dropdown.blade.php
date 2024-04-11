@@ -28,7 +28,7 @@
             id="user-menu-button" aria-expanded="false" aria-haspopup="true"
         >
             <span class="sr-only">Open user menu</span>
-            {{ auth()->user()->name }}
+            {{ mb_convert_case(auth()->user()->name, MB_CASE_TITLE, "UTF-8") }}
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="w-3 h-3 ml-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
