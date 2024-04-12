@@ -46,7 +46,10 @@ class Index extends Component
                 $query->where('department_id', $this->selectedDepartment);
             })
             ->currentUserIsManager(auth()->user())
-            ->search('name', $this->search);
+            ->when($this->search, function ($query) {
+                $query->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%');
+            });
     }
 
     public function updatingSearch()

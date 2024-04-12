@@ -37,7 +37,10 @@ class ManagerIndex extends Component
                 $query->where('name', 'Consultant');
             })
             ->currentUserIsManager(auth()->user())
-            ->search('name', $this->search);
+            ->when($this->search, function ($query) {
+                $query->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%');
+            });
     }
 
     public function updatingSearch()
