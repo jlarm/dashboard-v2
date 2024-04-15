@@ -6,6 +6,7 @@
 /storage/app
 /storage/*.key
 /storage/tenent*.*
+/storage/tenant*-
 /vendor
 .env
 .env.backup
