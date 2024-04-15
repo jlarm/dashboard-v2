@@ -15,7 +15,7 @@
                 </div>
             </div>
             @foreach($questions as $question)
-                <div class="bg-gray-50 p-3 space-y-7" :id="filtration">
+                <div class="bg-gray-50 p-3 space-y-7" id="filtration">
                     <div>
                         <label class="text-base font-semibold text-gray-900">{{ $question->id }}
                             . {{ $question->question }}</label>
