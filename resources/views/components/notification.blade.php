@@ -9,7 +9,7 @@
     x-show="show && type && title && message"
     x-effect="if (show) setTimeout(function() {show = false}, 3000)"
     aria-live="assertive"
-    class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start z-50 sm:p-6"
+    class="fixed inset-0 flex items-end px-4 py-6 sm:items-start z-50 sm:p-6"
     x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="opacity-0 transform"
     x-transition:enter-end="opacity-100 transform"
