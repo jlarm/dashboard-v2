@@ -1,4 +1,4 @@
-<div class="border rounded-md">
+<div class="border rounded-md overflow-x-auto">
     <div class="p-6">
         <table class="min-w-full divide-y divide-gray-300">
             <thead>

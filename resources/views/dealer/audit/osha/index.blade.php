@@ -18,7 +18,7 @@
 
     <div class="px-6">
         <div class="border rounded-md">
-            <div class="p-6">
+            <div class="p-6 overflow-x-auto">
                 @can('create-audits')
                     <livewire:dealer.audit.osha.index/>
                 @endcan

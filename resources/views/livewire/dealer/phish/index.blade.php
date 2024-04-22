@@ -11,7 +11,7 @@
     </div>
 
     <div class="px-6">
-        <div class="border rounded-md p-6">
+        <div class="border rounded-md p-6 overflow-x-auto">
             <livewire:dealer.phish.table-index />
         </div>
     </div>
