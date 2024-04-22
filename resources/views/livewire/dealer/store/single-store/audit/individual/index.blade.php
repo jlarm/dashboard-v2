@@ -16,7 +16,7 @@
             @endcan
         </div>
         <div class="border rounded-md">
-            <div class="p-6">
+            <div class="p-6 overflow-x-auto">
                 <div class="inline-block min-w-full py-2 align-middle">
                     @can('create-audits')
                         <livewire:dealer.audit.individual.index :store="$store"/>

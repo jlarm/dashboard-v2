@@ -11,7 +11,7 @@
         </div>
         @endcan
     </div>
-    <div class="bg-white border rounded-md p-6">
+    <div class="bg-white border rounded-md p-6 overflow-x-auto">
         <div class="-mx-4 md:-mx-0 -my-2 md:-my-0">
             <div class="inline-block min-w-full align-middle">
                 <table class="min-w-full divide-y divide-gray-300">

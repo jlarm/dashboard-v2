@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="border rounded-md">
-            <div class="p-6">
+            <div class="p-6 overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-300">
             <thead>
             <tr>

@@ -1,6 +1,6 @@
 <div class="w-full bg-white">
     <div>
-        <div class="inline-block min-w-full align-middle">
+        <div class="inline-block min-w-full align-middle overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                 <tr>
