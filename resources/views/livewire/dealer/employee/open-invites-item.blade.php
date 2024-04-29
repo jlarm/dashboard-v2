@@ -1,4 +1,7 @@
 <x-table.row>
+    <x-table.cell>
+        <input wire:model="parent.selected" value="{{ $invite->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
+    </x-table.cell>
     <x-table.cell class="pl-4 pr-3">{{ $invite->name }}</x-table.cell>
     <x-table.cell>{{ $invite->email }}</x-table.cell>
     <x-table.cell>{{ $invite->created_at->format('F d, Y') }}</x-table.cell>
