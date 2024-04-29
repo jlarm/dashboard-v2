@@ -32,10 +32,6 @@ class RunInvitesCommand extends Command
                     // Send 20 day reminder
                     Mail::to($invite->email)->send(new TwentyDayOpenInviteReminderMail($invite));
                     Log::info('Twenty day reminder sent for invite '.$invite->email);
-                } elseif ($invite->created_at->diffInDays(Carbon::now()) > 30) {
-                    // Delete old invites older than 30 days
-                    $invite->delete();
-                    Log::info('Old invite deleted for '.$invite->email);
                 }
             }
         });
