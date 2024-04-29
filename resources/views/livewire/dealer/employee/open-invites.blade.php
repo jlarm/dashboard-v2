@@ -10,61 +10,28 @@
                            placeholder="Search by Name...">
                 </div>
             </div>
-            <div class="-mx-4 md:-mx-0 -my-2 md:-my-0 overflow-x-auto">
+            <div class="-mx-4 md:-mx-0 -my-2 md:-my-0 max-md:overflow-x-auto">
                 <div class="inline-block min-w-full py-2 align-middle">
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead>
-                        <tr>
-                            <th scope="col"
-                                class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                                Name
-                            </th>
-                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
-                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Invite
-                                Sent
-                            </th>
-                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Sent
-                                By
-                            </th>
-                            <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
-                                <span class="sr-only">Edit</span>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                        @forelse($invites as $invite)
-                            <tr>
-                                <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-                                    {{ $invite->name }}
-                                </td>
-                                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                                    {{ $invite->email }}
-                                </td>
-                                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                                    {{ $invite->created_at->format('F d, Y') }}
-                                </td>
-                                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                                    {{ $invite->user->name }}
-                                </td>
-                                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                                    <button
-                                        class="text-red-500"
-                                        wire:click="$emit('modal.open', 'dealer.employee.delete-invite',  @js(['invite' => $invite->id]))"
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7"
-                                    class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
-                                    No Open Invites
-                                </td>
-                            </tr>
-                        @endforelse
-                        </tbody>
-                    </table>
+                    <x-table>
+                        <x-slot name="head">
+                            <x-table.heading class="pl-4 pr-3">Name</x-table.heading>
+                            <x-table.heading>Email</x-table.heading>
+                            <x-table.heading>Original Invite Sent</x-table.heading>
+                            <x-table.heading>Sent By</x-table.heading>
+                            <x-table.heading></x-table.heading>
+                        </x-slot>
+                        <x-slot name="body">
+                            @forelse($invites as $invite)
+                                <livewire:dealer.employee.open-invites-item :invite="$invite" :key="$invite->id"/>
+                            @empty
+                                <x-table.row>
+                                    <x-table.cell colspan="5" class="text-center text-xl text-arm-blue-500 font-medium">
+                                        No Open Invites
+                                    </x-table.cell>
+                                </x-table.row>
+                            @endforelse
+                        </x-slot>
+                    </x-table>
                 </div>
             </div>
         </div>
