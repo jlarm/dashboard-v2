@@ -153,20 +153,8 @@ class Edit extends Component
         $this->emit('contractUpdated');
     }
 
-    public function progress()
-    {
-        $progress = $this->contract->status->pluck('step')->toArray();
-        $progress = array_unique($progress);
-        return array_filter($progress, function ($value) {
-            return $value !== null;
-        });
-    }
-
     public function render()
     {
-
-        return view('livewire.central.contracts.edit', [
-            'progress' => $this->contract->status,
-        ]);
+        return view('livewire.central.contracts.edit');
     }
 }

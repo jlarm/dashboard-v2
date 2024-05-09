@@ -266,7 +266,7 @@
                     </div>
                     <div class="sm:col-span-3">
                         @if($contract->armp_signature)
-                            <img class="border w-96 h-auto" src="{{ global_asset($contract->armp_signature) }}" alt="">
+                            <img class="border w-96 h-auto" src="{{ asset($contract->armp_signature) }}" alt="">
                         @else
                             <x-signature-pad wire:model.defer="armpSignature" id="armpSignature" class="block mt-1 w-full" name="armpSignature" />
                         @endif
@@ -281,120 +281,18 @@
                     Update
                 </button>
             @else
-                <p class="text-gray-400 italic">*Contract cannot be updated after both parties have signed the contract.</p>
+                <p class="text-gray-400 italic">* The Contract cannot be updated after both parties have signed.</p>
             @endif
         </form>
     </div>
     <div class="space-y-5">
-        <div class="border rounded-md p-3 max-h-[300px] overflow-y-auto">
-            <h2 class="text-sm font-semibold leading-6 text-gray-900">Activity</h2>
-            <ul role="list" class="space-y-6 mt-2">
-                @foreach($progress as $a)
-                    <li class="relative flex gap-x-4">
-                        @if(!$loop->last)
-                            <div class="absolute left-0 top-0 flex w-6 justify-center -bottom-6">
-                                <div class="w-px bg-gray-200"></div>
-                            </div>
-                        @endif
-                        <div class="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
-                            <div class="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300"></div>
-                        </div>
-                        <p class="flex-auto py-0.5 text-xs leading-5 text-gray-500">
-                            <span class="font-medium text-gray-900">{{ $a->name }}</span>
-                            {{ $a->status }}.
-                        </p>
-                        <time class="flex-none py-0.5 text-xs leading-5 text-gray-500">{{ $a->created_at->diffForHumans() }}</time>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
 
-        <div class="border rounded-md p-3">
-            <h2 class="text-sm font-semibold leading-6 text-gray-900">Checklist</h2>
-            <ul class="divide-y divide-gray-100">
-                <li class="flex justify-between gap-x-6 py-3">
-                    <div class="flex items-center gap-x-3">
-                        @if(in_array(1, $this->progress()))
-                            <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @else
-                            <div class="flex-none rounded-full p-1 text-gray-500 bg-gray-100">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @endif
-                        <h2 class="min-w-0 text-sm leading-6">
-                            Create Contract
-                        </h2>
-                    </div>
-                </li>
-                <li class="flex justify-between gap-x-6 py-3">
-                    <div class="flex items-center gap-x-3">
-                        @if(in_array(2, $this->progress()))
-                            <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @else
-                            <div class="flex-none rounded-full p-1 text-gray-500 bg-gray-100">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @endif
-                        <h2 class="min-w-0 text-sm leading-6">
-                            Contract sent for review
-                        </h2>
-                    </div>
-                </li>
-                <li class="flex justify-between gap-x-6 py-3">
-                    <div class="flex items-center gap-x-3">
-                        @if(in_array(3, $this->progress()))
-                            <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @else
-                            <div class="flex-none rounded-full p-1 text-gray-500 bg-gray-100">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @endif
-                        <h2 class="min-w-0 text-sm leading-6">
-                            Contract signed by Dealer
-                        </h2>
-                    </div>
-                </li>
-                <li class="flex justify-between gap-x-6 py-3">
-                    <div class="flex items-center gap-x-3">
-                        @if(in_array(4, $this->progress()))
-                            <div class="flex-none rounded-full p-1 text-green-400 bg-green-400/10">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @else
-                            <div class="flex-none rounded-full p-1 text-gray-500 bg-gray-100">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @endif
-                        <h2 class="min-w-0 text-sm leading-6">
-                            Contract signed by ARMP
-                        </h2>
-                    </div>
-                </li>
-                <li class="flex justify-between gap-x-6 py-3">
-                    <div class="flex items-center gap-x-3">
-                        @if(in_array(5, $this->progress()))
-                            <span>🎉</span>
-                        @else
-                            <div class="flex-none rounded-full p-1 text-gray-500 bg-gray-100">
-                                <div class="h-2 w-2 rounded-full bg-current"></div>
-                            </div>
-                        @endif
-                        <h2 class="min-w-0 text-sm leading-6">
-                            Contract approved and completed
-                        </h2>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <livewire:central.contracts.activity :contract="$this->contract" :key="$this->contract->id" />
+
+        <livewire:central.contracts.checklist :contract="$this->contract" :key="$this->contract->id" />
 
         @if(!$this->contract->dealer_signature)
-        <livewire:central.contracts.send-contract :contract="$this->contract" :key="$this->contract->id" />
+            <livewire:central.contracts.send-contract :contract="$this->contract" :key="$this->contract->id" />
         @endif
 
         @if($this->contract->dealer_signature && $this->contract->armp_signature)
