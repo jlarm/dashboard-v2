@@ -266,7 +266,7 @@
                     </div>
                     <div class="sm:col-span-3">
                         @if($contract->armp_signature)
-                            <img class="border w-96 h-auto" src="{{  Storage::url($contract->armp_signature) }}" alt="">
+                            <img class="border w-96 h-auto" src="{{ Storage::disk('public')->get($contract->armp_signature) }}" alt="">
                         @else
                             <x-signature-pad wire:model.defer="armpSignature" id="armpSignature" class="block mt-1 w-full" name="armpSignature" />
                         @endif
