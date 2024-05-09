@@ -100,7 +100,7 @@ class Contract extends Model
 
         return Browsershot::html($html)
             ->showBrowserHeaderAndFooter()
-            ->headerHtml('-')
+            ->headerHtml('.')
             ->footerHtml(\View::make('pdf.contract.footer'))
             ->format('A4')
             ->margins(10, 20, 10, 20)

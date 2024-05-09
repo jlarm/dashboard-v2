@@ -77,10 +77,9 @@ class Review extends Component
         $this->validate();
 
         if ($this->dealerPrintedName != '' && $this->dealerSignature) {
-            $name = Str::of($this->dealerPrintedName)->replace(' ', '-')->lower();
-            $time = now()->format('Y-m-d-H-i-s');
-            $filename = "contracts/{$this->contract->uuid}/{$name}-{$time}.png";
-            Storage::disk('public')->put($filename, base64_decode(Str::of($this->dealerSignature)->after(',') ));
+            $id = Str::uuid();
+            $filename = $this->contract->uuid . '/' . $id . '.png';
+            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->dealerSignature)->after(',') ));
 
             $this->contract->update([
                 'dealer_physical_address' => $this->dealerPhysicalAddress,

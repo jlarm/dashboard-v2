@@ -123,10 +123,9 @@ class Edit extends Component
         ]);
 
         if ($this->contract->armp_printed_name != '' && $this->armpSignature) {
-            $name = Str::of($this->armpPrintedName)->replace(' ', '-')->lower();
-            $time = now()->format('Y-m-d-H-i-s');
-            $filename = "contracts/{$this->contract->uuid}/{$name}-{$time}.png";
-            Storage::disk('public')->put($filename, base64_decode(Str::of($this->armpSignature)->after(',') ));
+            $id = Str::uuid();
+            $filename = $this->contract->uuid . '/' . $id . '.png';
+            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->armpSignature)->after(',') ));
 
             $this->contract->update([
                 'armp_signature' => $filename,

@@ -130,6 +130,15 @@ return [
             'visibility' => 'public',
         ],
 
+        'armpcon' => [
+            'driver' => 's3',
+            'key' => env('CONS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('CONS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('CONS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('CONS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('CONS_DIGITALOCEAN_SPACES_BUCKET'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

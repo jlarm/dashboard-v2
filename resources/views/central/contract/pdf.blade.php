@@ -61,13 +61,13 @@
         <div class="flex flex-row justify-between mt-10">
             <div class="w-1/2">
                 <p><strong>AUTOMOTIVE RISK MANAGEMENT PARTNERS INC.</strong></p>
-                <img class="w-[200px] h-auto" src="{{ global_asset($contract->armp_signature) }}" alt="">
+                <img class="w-[200px] h-auto" src="{{ Storage::disk('armpcon')->temporaryUrl($contract->armp_signature, now()->addMinutes(5)) }}" alt="">
                 <p>{{ $contract->armp_printed_name }}</p>
                 <p>{{ $contract->armp_date_signed->format('F d, Y') }}</p>
             </div>
             <div class="w-1/2">
                 <p><strong>{{ $contract->dealer_name }}</strong></p>
-                <img class="w-[200px] h-auto" src="{{ global_asset($contract->dealer_signature) }}" alt="">
+                <img class="w-[200px] h-auto" src="{{ Storage::disk('armpcon')->temporaryUrl($contract->dealer_signature, now()->addMinutes(5)) }}" alt="">
                 <p>{{ $contract->dealer_printed_name }}</p>
                 <p>{{ $contract->dealer_date_signed->format('F d, Y') }}</p>
             </div>

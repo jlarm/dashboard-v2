@@ -9,6 +9,8 @@ class Checklist extends Component
 {
     public Contract $contract;
 
+    protected $listeners = ['contractUpdated' => '$refresh'];
+
     public function progress()
     {
         $progress = $this->contract->status->pluck('step')->toArray();

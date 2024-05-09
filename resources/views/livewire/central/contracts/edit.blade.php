@@ -266,7 +266,7 @@
                     </div>
                     <div class="sm:col-span-3">
                         @if($contract->armp_signature)
-                            <img class="border w-96 h-auto" src="{{ global_asset($contract->armp_signature) }}" alt="">
+                            <img class="border w-auto h-32" src="{{ Storage::disk('armpcon')->temporaryUrl($contract->armp_signature, now()->addMinutes(5)) }}" alt="">
                         @else
                             <x-signature-pad wire:model.defer="armpSignature" id="armpSignature" class="block mt-1 w-full" name="armpSignature" />
                         @endif
@@ -286,16 +286,16 @@
         </form>
     </div>
     <div class="space-y-5">
-        <livewire:central.contracts.activity :contract="$this->contract" :key="$this->contract->id" />
+        <livewire:central.contracts.activity :contract="$this->contract" />
 
-        <livewire:central.contracts.checklist :contract="$this->contract" :key="$this->contract->id" />
+        <livewire:central.contracts.checklist :contract="$this->contract" />
 
         @if(!$this->contract->dealer_signature)
-            <livewire:central.contracts.send-contract :contract="$this->contract" :key="$this->contract->id" />
+            <livewire:central.contracts.send-contract :contract="$this->contract" />
         @endif
 
         @if($this->contract->dealer_signature && $this->contract->armp_signature)
-            <livewire:central.contracts.send-contract-pdf :contract="$this->contract" :key="$this->contract->id" />
+            <livewire:central.contracts.send-contract-pdf :contract="$this->contract" />
         @endif
     </div>
 </div>
