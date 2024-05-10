@@ -59,7 +59,7 @@ class GeneratePdfJob implements ShouldQueue
             ->headerHtml('.')
             ->footerHtml(\View::make('pdf.contract.footer'))
             ->format('A4')
-            ->margins(10, 20, 10, 20)
+            ->margins(5, 20, 20, 20)
             ->scale(0.75)
             ->save(storage_path('app/contracts/'.$this->createFileName()));
 
