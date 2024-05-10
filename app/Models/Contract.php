@@ -44,6 +44,8 @@ class Contract extends Model
         'dealer_billing_contact_name',
         'dealer_billing_contact_title',
         'dealer_billing_contact_email',
+        'additional_locations',
+        'pdf_path',
     ];
 
     protected $casts = [
@@ -54,6 +56,7 @@ class Contract extends Model
         'dealer_date_signed' => 'date',
         'initial_fee' => MoneyCast::class,
         'monthly_fee' => MoneyCast::class,
+        'additional_locations' => 'array',
     ];
 
     public function user(): BelongsTo
@@ -73,39 +76,4 @@ class Contract extends Model
             $contract->uuid = (string) \Str::uuid();
         });
     }
-
-    protected function reviewLabel($service): string
-    {
-        return match ($service) {
-            'glba' => 'GLBA - Safeguards Rule, Sales & Finance',
-            'osha' => 'OSHA',
-            'it' => 'IT Security',
-            'ces' => 'Cyber Enhanced Security',
-        };
-    }
-
-    public function pdf()
-    {
-        $services = json_decode($this->services);
-        $reviewedServices = [];
-
-        foreach ($services as $service) {
-            $reviewedServices[] = $this->reviewLabel($service);
-        }
-
-        $html = view('central.contract.pdf', [
-            'contract' => $this,
-            'services' => $reviewedServices
-        ])->render();
-
-        return Browsershot::html($html)
-            ->showBrowserHeaderAndFooter()
-            ->headerHtml('.')
-            ->footerHtml(\View::make('pdf.contract.footer'))
-            ->format('A4')
-            ->margins(10, 20, 10, 20)
-            ->scale(0.75)
-            ->pdf();
-    }
-
 }

@@ -10,6 +10,7 @@ class Activity extends Component
     public Contract $contract;
 
     protected $listeners = ['contractUpdated' => '$refresh'];
+
     public function render()
     {
         return view('livewire.central.contracts.activity', [

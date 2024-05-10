@@ -9,6 +9,7 @@ use Notification;
 class SendContract extends Component
 {
     public Contract $contract;
+
     public $sendEmailAddress;
 
     public function sendContract()
@@ -26,7 +27,7 @@ class SendContract extends Component
 
         $this->contract->status()->create([
             'name' => auth()->user()->name,
-            'status' => 'sent contract to ' . $this->sendEmailAddress,
+            'status' => 'sent contract to '.$this->sendEmailAddress,
             'step' => 2,
         ]);
 

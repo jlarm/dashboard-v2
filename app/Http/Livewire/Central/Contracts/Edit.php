@@ -2,42 +2,86 @@
 
 namespace App\Http\Livewire\Central\Contracts;
 
-use App\Jobs\GenerateContractPdfJob;
 use App\Models\Contract;
+use Illuminate\Support\Collection;
 use Livewire\Component;
-use Notification;
 use Storage;
 use Str;
 
 class Edit extends Component
 {
     public Contract $contract;
+
     public $agreementDate;
+
     public $dealerName;
+
     public $services = [];
+
     public $commenceDate;
+
     public $yearlyInspectionTotal;
+
     public $initialFee;
+
     public $monthlyFee;
+
     public $armpSignature;
+
     public $armpPrintedName;
+
     public $dealerPhysicalAddress;
+
     public $dealerPhysicalCity;
+
     public $dealerPhysicalState;
+
     public $dealerPhysicalZip;
+
     public $dealerPhone;
+
     public $dealerQiName;
+
     public $dealerQiEmail;
+
     public $dealerBillingAddress;
+
     public $dealerBillingCity;
+
     public $dealerBillingState;
+
     public $dealerBillingZip;
+
     public $dealerBillingFax;
+
     public $dealerBillingContactName;
+
     public $dealerBillingContactTitle;
+
     public $dealerBillingContactEmail;
 
+    public Collection $additionalLocations;
+
     protected $listeners = ['contractUpdated' => '$refresh'];
+
+    public function addLocation(): void
+    {
+        $this->additionalLocations->push([
+            'name' => '',
+            'address' => '',
+            'city' => '',
+            'state' => '',
+            'zip' => '',
+            'contact_name' => '',
+            'contact_title' => '',
+            'contact_email' => '',
+        ]);
+    }
+
+    public function removeLocation($locationKey): void
+    {
+        $this->additionalLocations->pull($locationKey);
+    }
 
     public function mount()
     {
@@ -65,6 +109,16 @@ class Edit extends Component
         $this->dealerBillingContactName = $this->contract->dealer_billing_contact_name;
         $this->dealerBillingContactTitle = $this->contract->dealer_billing_contact_title;
         $this->dealerBillingContactEmail = $this->contract->dealer_billing_contact_email;
+        $this->additionalLocations = collect($this->contract->additional_locations)->map(fn ($location) => [
+            'name' => $location['name'],
+            'address' => $location['address'],
+            'city' => $location['city'],
+            'state' => $location['state'],
+            'zip' => $location['zip'],
+            'contact_name' => $location['contact_name'] ?? '',
+            'contact_title' => $location['contact_title'] ?? '',
+            'contact_email' => $location['contact_email'] ?? '',
+        ]);
     }
 
     protected $rules = [
@@ -92,10 +146,20 @@ class Edit extends Component
         'dealerBillingContactName' => 'nullable|string',
         'dealerBillingContactTitle' => 'nullable|string',
         'dealerBillingContactEmail' => 'nullable|email',
+        'additionalLocations.*.name' => 'required|string',
+        'additionalLocations.*.address' => 'required|string',
+        'additionalLocations.*.city' => 'required|string',
+        'additionalLocations.*.state' => 'required|string',
+        'additionalLocations.*.zip' => 'required|string',
+        'additionalLocations.*.contact_name' => 'nullable|string',
+        'additionalLocations.*.contact_title' => 'nullable|string',
+        'additionalLocations.*.contact_email' => 'nullable|email',
     ];
 
     public function update()
     {
+        $this->validate();
+
         $this->contract->update([
             'agreement_date' => $this->agreementDate,
             'dealer_name' => $this->dealerName,
@@ -120,12 +184,13 @@ class Edit extends Component
             'dealer_billing_contact_name' => $this->dealerBillingContactName,
             'dealer_billing_contact_title' => $this->dealerBillingContactTitle,
             'dealer_billing_contact_email' => $this->dealerBillingContactEmail,
+            'additional_locations' => $this->additionalLocations->toArray(),
         ]);
 
         if ($this->contract->armp_printed_name != '' && $this->armpSignature) {
             $id = Str::uuid();
-            $filename = $this->contract->uuid . '/' . $id . '.png';
-            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->armpSignature)->after(',') ));
+            $filename = $this->contract->uuid.'/'.$id.'.png';
+            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->armpSignature)->after(',')));
 
             $this->contract->update([
                 'armp_signature' => $filename,
@@ -141,7 +206,7 @@ class Edit extends Component
 
         $this->contract->status()->create([
             'name' => auth()->user()->name,
-            'status' => 'updated contract'
+            'status' => 'updated contract',
         ]);
 
         \Filament\Notifications\Notification::make()

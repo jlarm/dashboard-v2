@@ -3,17 +3,18 @@
 namespace App\Notifications;
 
 use App\Models\Contract;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\URL;
 
 class ContractNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     protected $name;
+
     protected $email;
 
     public function __construct(protected Contract $contract)
@@ -45,7 +46,7 @@ class ContractNotification extends Notification implements ShouldQueue
             ->action('Review Contract', url($url))
             ->line('This link will expire in 7 days.')
             ->line('If you have any questions please feel free to contact us at any time.')
-            ->line('Your contact: ' . $this->name . ' - ' . $this->email);
+            ->line('Your contact: '.$this->name.' - '.$this->email);
     }
 
     public function toArray($notifiable): array

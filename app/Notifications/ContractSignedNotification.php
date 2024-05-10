@@ -24,8 +24,8 @@ class ContractSignedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject($this->contract->dealer_name . ' Contract Signed')
-            ->line($this->contract->dealer_name . ' has reviewed and signed the contract. Click the link below to view the contract.')
+            ->subject($this->contract->dealer_name.' Contract Signed')
+            ->line($this->contract->dealer_name.' has reviewed and signed the contract. Click the link below to view the contract.')
             ->action('View Contract', route('contracts.edit', $this->contract));
     }
 

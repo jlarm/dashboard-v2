@@ -3,12 +3,11 @@
 namespace App\Notifications;
 
 use App\Models\Contract;
-use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Spatie\Browsershot\Browsershot;
+use Storage;
 
 class ContractPdfNotification extends Notification implements ShouldQueue
 {
@@ -23,19 +22,14 @@ class ContractPdfNotification extends Notification implements ShouldQueue
         return ['mail'];
     }
 
-    private function createFileName(): string
-    {
-        return strtolower(str_replace(' ', '-', $this->contract->dealer_name)) . '-' . 'armp-contract' . '-' . $this->contract->created_at->format('Y-m-d') . '.pdf';
-    }
-
     public function toMail($notifiable): MailMessage
     {
-        $pdfContent = $this->contract->pdf();
-
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->line('Thank you for using our application!')
-            ->attachData($pdfContent, $this->createFileName(), [
+            ->subject($this->contract->dealer_name . ' ARMP Contract PDF')
+            ->line('Thank you for your patronage please see finalized contract should you have any questions or concerns please let us know.')
+            ->line($this->contract->user->name . ' - ' . $this->contract->user->email)
+            ->attach(Storage::disk('armpcon')->temporaryUrl($this->contract->pdf_path, now()->addMinutes(2)), [
+                'as' => str_replace(' ', '-', strtolower($this->contract->dealer_name)) . '-armp-contract.pdf',
                 'mime' => 'application/pdf',
             ]);
     }

@@ -27,6 +27,7 @@ class IndexItem extends Component
             ],
         );
     }
+
     public function render()
     {
         return view('livewire.central.contracts.index-item');

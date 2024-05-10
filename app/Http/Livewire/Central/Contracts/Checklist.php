@@ -15,6 +15,7 @@ class Checklist extends Component
     {
         $progress = $this->contract->status->pluck('step')->toArray();
         $progress = array_unique($progress);
+
         return array_filter($progress, function ($value) {
             return $value !== null;
         });

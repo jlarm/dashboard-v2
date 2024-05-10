@@ -54,7 +54,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('employees/register', \App\Http\Controllers\Central\Employee\RegisterController::class)->middleware('signed')->name('employees.create');
 Route::post('employees/store', \App\Http\Controllers\Central\Employee\StoreRegistrationController::class)->name('employees.store');
 Route::get('contract/view/{contract:uuid}', \App\Http\Livewire\Central\Contracts\Review::class)->middleware('signed')->name('contracts.show');
-Route::get('/thank-you', function () { return view('central.contract.review-submitted'); })->name('thank-you');
+Route::get('/thank-you', function () {
+    return view('central.contract.review-submitted');
+})->name('thank-you');
 
 // **************************************************
 // Admin Access

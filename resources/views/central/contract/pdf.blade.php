@@ -58,39 +58,49 @@
         <p>By SIGNING BELOW, the DEALER and ARMP each accept and agree to the terms and conditions set forth in this agreement.</p>
     </div>
     <div>
-        <div class="flex flex-row justify-between mt-10">
-            <div class="w-1/2">
-                <p><strong>AUTOMOTIVE RISK MANAGEMENT PARTNERS INC.</strong></p>
+        <div class="grid grid-cols-2 gap-10 mt-10">
+            <div>
+                <p class="text-sm"><strong>AUTOMOTIVE RISK MANAGEMENT PARTNERS INC.</strong></p>
                 <img class="w-[200px] h-auto" src="{{ Storage::disk('armpcon')->temporaryUrl($contract->armp_signature, now()->addMinutes(5)) }}" alt="">
                 <p>{{ $contract->armp_printed_name }}</p>
                 <p>{{ $contract->armp_date_signed->format('F d, Y') }}</p>
             </div>
-            <div class="w-1/2">
-                <p><strong>{{ $contract->dealer_name }}</strong></p>
+            <div>
+                <p class="text-sm"><strong>{{ $contract->dealer_name }}</strong></p>
                 <img class="w-[200px] h-auto" src="{{ Storage::disk('armpcon')->temporaryUrl($contract->dealer_signature, now()->addMinutes(5)) }}" alt="">
                 <p>{{ $contract->dealer_printed_name }}</p>
                 <p>{{ $contract->dealer_date_signed->format('F d, Y') }}</p>
             </div>
         </div>
         <p class="text-center mt-20 mb-10"><strong>Dealership Information</strong></p>
-        <div class="flex flex-row justify-between mt-10">
-            <div class="w-1/2">
-                <p class="mb-5">Dealership Physical Address</p>
+        <div class="grid grid-cols-2 gap-10 mt-10">
+            <div>
+                <p class="mb-5 italic">Dealership Physical Address</p>
                 <p>{{ $contract->dealer_physical_address }}</p>
                 <p>{{ $contract->dealer_physical_city }}, {{ $contract->dealer_physical_state }} {{ $contract->dealer_physical_zip }}</p>
                 <p>Qualified Individual: {{ $contract->dealer_qi_name }}</p>
                 <p>Qualified Individual Email: {{ $contract->dealer_qi_email }}</p>
             </div>
-            <div class="w-1/2">
-                <p class="mb-5">Dealership Billing Address</p>
+            @foreach($contract->additional_locations as $location)
+                <div>
+                    <p class="mb-5 italic">Additional Location</p>
+                    <p>{{ $location['address'] }}</p>
+                    <p>{{ $location['city'] }}, {{ $location['state'] }} {{ $location['zip'] }}</p>
+                    @if($location['contact_name'])<p>Contact Name: {{ $location['contact_name'] }}</p>@endif
+                    @if($location['contact_title'])<p>Contact Title: {{ $location['contact_title'] }}</p>@endif
+                    @if($location['contact_email'])<p>Contact Email: {{ $location['contact_email'] }}</p>@endif
+                </div>
+            @endforeach
+            <div>
+                <p class="mb-5 italic">Dealership Billing Address</p>
                 <p>{{ $contract->dealer_billing_address }}</p>
                 <p>{{ $contract->dealer_billing_city }}, {{ $contract->dealer_billing_state }} {{ $contract->dealer_billing_zip }}</p>
                 @if($contract->dealer_billing_fax)
                     <p>Fax: {{ $contract->dealer_billing_fax }}</p>
                 @endif
-                <p>Other Contact Name: {{ $contract->dealer_billing_contact_name }}}</p>
-                <p>Other Contact Title: {{ $contract->dealer_billing_contact_title }}</p>
-                <p>Other Contact Email: {{ $contract->dealer_billing_contact_email }}</p>
+                @if($contract->dealer_billing_contact_name)<p>Contact Name: {{ $contract->dealer_billing_contact_name }}</p>@endif
+                @if($contract->dealer_billing_contact_title)<p>Contact Title: {{ $contract->dealer_billing_contact_title }}</p>@endif
+                @if($contract->dealer_billing_contact_email)<p>Contact Email: {{ $contract->dealer_billing_contact_email }}</p>@endif
             </div>
         </div>
     </div>

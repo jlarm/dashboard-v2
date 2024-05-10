@@ -2,41 +2,66 @@
 
 namespace App\Http\Livewire\Central\Contracts;
 
-use App\Enums\ContractStatus;
 use App\Models\Contract;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Collection;
 use Livewire\Component;
-use Storage;
-use Str;
 
 class Create extends Component
 {
     public $agreementDate;
+
     public $dealerName;
+
     public $services = [];
+
     public $commenceDate;
+
     public $yearlyInspectionTotal;
+
     public $initialFee;
+
     public $monthlyFee;
+
     public $armpSignature;
+
     public $armpPrintedName;
+
     public $armpDateSigned;
+
     public $dealerPhysicalAddress;
+
     public $dealerPhysicalCity;
+
     public $dealerPhysicalState;
+
     public $dealerPhysicalZip;
+
     public $dealerPhone;
+
     public $dealerQiName;
+
     public $dealerQiPhone;
+
     public $dealerQiEmail;
+
     public $dealerBillingAddress;
+
     public $dealerBillingCity;
+
     public $dealerBillingState;
+
     public $dealerBillingZip;
+
     public $dealerBillingFax;
+
     public $dealerBillingContactName;
+
     public $dealerBillingContactTitle;
+
     public $dealerBillingContactEmail;
+
+    public Collection $additionalLocations;
 
     protected $rules = [
         'agreementDate' => 'required|date',
@@ -62,7 +87,39 @@ class Create extends Component
         'dealerBillingContactName' => 'nullable|string',
         'dealerBillingContactTitle' => 'nullable|string',
         'dealerBillingContactEmail' => 'nullable|email',
+        'additionalLocations.*.name' => 'required|string',
+        'additionalLocations.*.address' => 'required|string',
+        'additionalLocations.*.city' => 'required|string',
+        'additionalLocations.*.state' => 'required|string',
+        'additionalLocations.*.zip' => 'required|string',
+        'additionalLocations.*.contact_name' => 'nullable|string',
+        'additionalLocations.*.contact_title' => 'nullable|string',
+        'additionalLocations.*.contact_email' => 'nullable|email',
     ];
+
+    public function mount()
+    {
+        $this->additionalLocations = collect();
+    }
+
+    public function addLocation(): void
+    {
+        $this->additionalLocations->push([
+            'name' => '',
+            'address' => '',
+            'city' => '',
+            'state' => '',
+            'zip' => '',
+            'contact_name' => '',
+            'contact_title' => '',
+            'contact_email' => '',
+        ]);
+    }
+
+    public function removeLocation($locationKey): void
+    {
+        $this->additionalLocations->pull($locationKey);
+    }
 
     public function create()
     {
@@ -91,6 +148,7 @@ class Create extends Component
             'dealer_billing_contact_name' => $this->dealerBillingContactName,
             'dealer_billing_contact_title' => $this->dealerBillingContactTitle,
             'dealer_billing_contact_email' => $this->dealerBillingContactEmail,
+            'additional_locations' => $this->additionalLocations->toArray(),
         ]);
 
         $contract->status()->create([
@@ -104,10 +162,10 @@ class Create extends Component
             ->success()
             ->send();
 
-
         return redirect()->route('contracts.edit', $contract);
 
     }
+
     public function render()
     {
         return view('livewire.central.contracts.create');

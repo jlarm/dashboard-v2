@@ -167,6 +167,98 @@
                 </div>
             </div>
 
+            <!-- Additional Locations -->
+            <!-- Additional Locations -->
+            <div class="space-y-4">
+                @if($additionalLocations)
+                    <div class="space-y-8">
+                        @foreach($additionalLocations as $key => $location)
+                            <div>
+                                <div class="flex justify-between items-center">
+                                    <h2 class="text-base font-semibold leading-7">Additional Location {{ $key +1 }}</h2>
+                                    <button class="text-sm text-red-500 hover:text-red-700" wire:click.prevent="removeLocation({{ $key }})">Remove</button>
+                                </div>
+                                <div class="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                    <div class="sm:col-span-6">
+                                        <x-input-label for="additionalDealerName" :value="__('Dealership Name')" />
+                                        <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.name" id="additionalDealerName" class="block mt-1 w-full" type="text" name="additionalDealerName" />
+                                        @error('additionalLocations.'.$key.'.name')
+                                        <div class="text-red-500 text-sm mt-2">
+                                            {{ __('*Required') }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="sm:col-span-6">
+                                        <x-input-label for="additionalDealerAddress" :value="__('Address')" />
+                                        <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.address" id="additionalDealerAddress" class="block mt-1 w-full" type="text" name="additionalDealerAddress" />
+                                        @error('additionalLocations.'.$key.'.address')
+                                        <div class="text-red-500 text-sm mt-2">
+                                            {{ __('*Required') }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <x-input-label for="additionalDealerCity" :value="__('City')" />
+                                        <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.city" id="additionalDealerCity" class="block mt-1 w-full" type="text" name="additionalDealerCity" />
+                                        @error('additionalLocations.'.$key.'.city')
+                                        <div class="text-red-500 text-sm mt-2">
+                                            {{ __('*Required') }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <x-input-label for="additionalDealerState" :value="__('State')" />
+                                        <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.state" id="additionalDealerState" class="block mt-1 w-full" type="text" name="additionalDealerState" />
+                                        @error('additionalLocations.'.$key.'.state')
+                                        <div class="text-red-500 text-sm mt-2">
+                                            {{ __('*Required') }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <x-input-label for="additionalDealerZip" :value="__('Zip Code')" />
+                                        <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.zip" id="additionalDealerZip" class="block mt-1 w-full" type="text" name="additionalDealerZip" />
+                                        @error('dealerPhysicalZip')
+                                        <div class="text-red-500 text-sm mt-2">
+                                            {{ __('*Required') }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <x-input-label for="additionalDealerContactName" :value="__('Contact Name')" />
+                                        <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.contact_name" id="additionalDealerContactName" class="block mt-1 w-full" type="text" name="additionalDealerContactName" :value="old('dealerBillingContactName')" />
+                                        @error('dealerBillingContactName')
+                                        <div class="text-red-500 text-sm mt-2">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <x-input-label for="additionalDealerContactTitle" :value="__('Contact Title')" />
+                                        <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.contact_title" id="additionalDealerContactTitle" class="block mt-1 w-full" type="text" name="additionalDealerContactTitle" :value="old('dealerBillingContactTitle')" />
+                                        @error('dealerBillingContactTitle')
+                                        <div class="text-red-500 text-sm mt-2">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <x-input-label for="additionalDealerContactEmail" :value="__('Contact Email Address')" />
+                                        <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.contact_email" id="additionalDealerContactEmail" class="block mt-1 w-full" type="text" name="additionalDealerContactEmail" :value="old('dealerBillingContactEmail')" />
+                                        @error('dealerBillingContactEmail')
+                                        <div class="text-red-500 text-sm mt-2">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+                <x-primary-button wire:click.prevent="addLocation">Add Location</x-primary-button>
+            </div>
+
             <!-- Dealership Billing Address -->
             <div class="{{ $this->contract->dealer_signature ? 'border-b pb-12' : '' }}">
                 <h2 class="text-base font-semibold leading-7">Dealership Billing Address</h2>
@@ -277,9 +369,13 @@
             @endif
 
             @if(!$this->contract->armp_signature)
-                <button type="submit" class="bg-arm-blue-800 hover:bg-arm-blue-700 inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Update
-                </button>
+                <div class="flex gap-3 items-center">
+                    <x-primary-button wire:loading.attr="disabled">Update</x-primary-button>
+                    <svg wire:loading class="animate-spin -ml-1 mr-3 h-5 w-5 text-arm-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
             @else
                 <p class="text-gray-400 italic">* The Contract cannot be updated after both parties have signed.</p>
             @endif
@@ -294,8 +390,13 @@
             <livewire:central.contracts.send-contract :contract="$this->contract" />
         @endif
 
-        @if($this->contract->dealer_signature && $this->contract->armp_signature)
+        @if($this->contract->armp_signature && !$this->contract->pdf_path)
+            <livewire:central.contracts.generate-pdf :contract="$this->contract" />
+        @endif
+
+        @if($this->contract->pdf_path)
             <livewire:central.contracts.send-contract-pdf :contract="$this->contract" />
+            <livewire:central.contracts.download-pdf :contract="$this->contract" />
         @endif
     </div>
 </div>

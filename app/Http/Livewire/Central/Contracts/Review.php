@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Central\Contracts;
 
 use App\Models\Contract;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Storage;
 use Str;
@@ -10,24 +11,44 @@ use Str;
 class Review extends Component
 {
     public Contract $contract;
+
     public $dealerPhysicalAddress;
+
     public $dealerPhysicalCity;
+
     public $dealerPhysicalState;
+
     public $dealerPhysicalZip;
+
     public $dealerPhone;
+
     public $dealerQiName;
+
     public $dealerQiEmail;
+
     public $dealerBillingAddress;
+
     public $dealerBillingCity;
+
     public $dealerBillingState;
+
     public $dealerBillingZip;
+
     public $dealerBillingFax;
+
     public $dealerBillingContactName;
+
     public $dealerBillingContactTitle;
+
     public $dealerBillingContactEmail;
+
     public $dealerPrintedName;
+
     public $dealerDateSigned;
+
     public $dealerSignature;
+
+    public Collection $additionalLocations;
 
     protected $rules = [
         'dealerPhysicalAddress' => 'required|string|max:255',
@@ -47,6 +68,14 @@ class Review extends Component
         'dealerBillingContactEmail' => 'required|string|max:255',
         'dealerPrintedName' => 'required|string|max:255',
         'dealerSignature' => 'required',
+        'additionalLocations.*.name' => 'required|string',
+        'additionalLocations.*.address' => 'required|string',
+        'additionalLocations.*.city' => 'required|string',
+        'additionalLocations.*.state' => 'required|string',
+        'additionalLocations.*.zip' => 'required|string',
+        'additionalLocations.*.contact_name' => 'nullable|string',
+        'additionalLocations.*.contact_title' => 'nullable|string',
+        'additionalLocations.*.contact_email' => 'nullable|email',
     ];
 
     public function mount()
@@ -70,6 +99,16 @@ class Review extends Component
         $this->dealerBillingContactName = $this->contract->dealer_billing_contact_name;
         $this->dealerBillingContactTitle = $this->contract->dealer_billing_contact_title;
         $this->dealerBillingContactEmail = $this->contract->dealer_billing_contact_email;
+        $this->additionalLocations = collect($this->contract->additional_locations)->map(fn ($location) => [
+            'name' => $location['name'],
+            'address' => $location['address'],
+            'city' => $location['city'],
+            'state' => $location['state'],
+            'zip' => $location['zip'],
+            'contact_name' => $location['contact_name'] ?? '',
+            'contact_title' => $location['contact_title'] ?? '',
+            'contact_email' => $location['contact_email'] ?? '',
+        ]);
     }
 
     public function submit()
@@ -78,8 +117,8 @@ class Review extends Component
 
         if ($this->dealerPrintedName != '' && $this->dealerSignature) {
             $id = Str::uuid();
-            $filename = $this->contract->uuid . '/' . $id . '.png';
-            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->dealerSignature)->after(',') ));
+            $filename = $this->contract->uuid.'/'.$id.'.png';
+            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->dealerSignature)->after(',')));
 
             $this->contract->update([
                 'dealer_physical_address' => $this->dealerPhysicalAddress,
@@ -101,6 +140,7 @@ class Review extends Component
                 'dealer_date_signed' => now(),
                 'dealer_signature' => $filename,
                 'status' => 'pending',
+                'additional_locations' => $this->additionalLocations->toArray(),
             ]);
 
             $this->contract->status()->create([

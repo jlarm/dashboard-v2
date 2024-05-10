@@ -10,7 +10,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.central.contracts.index', [
-            'contracts' => Contract::all()
+            'contracts' => Contract::all(),
         ]);
     }
 }

@@ -35,10 +35,10 @@
         <p>This Agreement represents the whole and entire agreement between the parties.  No other agreement or representations, oral or written, have been made by ARMP.  This Agreement may not be altered, modified, or amended except in writing properly executed by the parties to it.</p>
         <p>By SIGNING BELOW, the DEALER and ARMP each accept and agree to the terms and conditions set forth in this agreement.</p>
         <form wire:submit.prevent="submit">
-            <div class="border-y grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12">
                 <!-- Dealership Physical Address -->
-                <div class="pb-12">
-                    <h2 class="text-base font-semibold leading-7">Dealership Physical Address</h2>
+                <div>
+                    <h2 class="text-base font-semibold leading-7 text-arm-blue-500">Dealership Physical Address</h2>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-6">
@@ -108,8 +108,8 @@
                 </div>
 
                 <!-- Dealership Billing Address -->
-                <div class="pb-12">
-                    <h2 class="text-base font-semibold leading-7">Dealership Billing Address</h2>
+                <div>
+                    <h2 class="text-base font-semibold leading-7 text-arm-blue-500">Dealership Billing Address</h2>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-6">
@@ -186,6 +186,92 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Additional Locations -->
+                @if($additionalLocations)
+                    @foreach($additionalLocations as $key => $location)
+                        <div>
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-base font-semibold leading-7 text-arm-blue-500">Additional Location {{ $key +1 }}</h2>
+                            </div>
+                            <div class="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                <div class="sm:col-span-6">
+                                    <x-input-label for="additionalDealerName" :value="__('Dealership Name')" />
+                                    <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.name" id="additionalDealerName" class="block mt-1 w-full" type="text" name="additionalDealerName" />
+                                    @error('additionalLocations.'.$key.'.name')
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {{ __('*Required') }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="sm:col-span-6">
+                                    <x-input-label for="additionalDealerAddress" :value="__('Address')" />
+                                    <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.address" id="additionalDealerAddress" class="block mt-1 w-full" type="text" name="additionalDealerAddress" />
+                                    @error('additionalLocations.'.$key.'.address')
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {{ __('*Required') }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <x-input-label for="additionalDealerCity" :value="__('City')" />
+                                    <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.city" id="additionalDealerCity" class="block mt-1 w-full" type="text" name="additionalDealerCity" />
+                                    @error('additionalLocations.'.$key.'.city')
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {{ __('*Required') }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <x-input-label for="additionalDealerState" :value="__('State')" />
+                                    <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.state" id="additionalDealerState" class="block mt-1 w-full" type="text" name="additionalDealerState" />
+                                    @error('additionalLocations.'.$key.'.state')
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {{ __('*Required') }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <x-input-label for="additionalDealerZip" :value="__('Zip Code')" />
+                                    <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.zip" id="additionalDealerZip" class="block mt-1 w-full" type="text" name="additionalDealerZip" />
+                                    @error('dealerPhysicalZip')
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {{ __('*Required') }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <x-input-label for="additionalDealerContactName" :value="__('Contact Name')" />
+                                    <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.contact_name" id="additionalDealerContactName" class="block mt-1 w-full" type="text" name="additionalDealerContactName" :value="old('dealerBillingContactName')" />
+                                    @error('dealerBillingContactName')
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <x-input-label for="additionalDealerContactTitle" :value="__('Contact Title')" />
+                                    <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.contact_title" id="additionalDealerContactTitle" class="block mt-1 w-full" type="text" name="additionalDealerContactTitle" :value="old('dealerBillingContactTitle')" />
+                                    @error('dealerBillingContactTitle')
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <x-input-label for="additionalDealerContactEmail" :value="__('Contact Email Address')" />
+                                    <x-text-input wire:key="location-{{ $key }}" wire:model.defer="additionalLocations.{{ $key }}.contact_email" id="additionalDealerContactEmail" class="block mt-1 w-full" type="email" name="additionalDealerContactEmail" :value="old('dealerBillingContactEmail')" />
+                                    @error('dealerBillingContactEmail')
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+
             </div>
             <div>
                 <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -205,8 +291,14 @@
                             {{ __('The contract must be signed before submitting.') }}
                         </div>
                         @enderror
-                        <p class="italic text-red-500">* Please make sure the Physical and Billing address information has been filled out and correct prior to submitting.</p>
-                        <x-primary-button>Submit</x-primary-button>
+                        <p class="italic text-red-500">* Please make sure all information has been filled out and correct prior to submitting.</p>
+                        <div class="flex gap-3 items-center">
+                            <x-primary-button wire:loading.attr="disabled">Submit</x-primary-button>
+                            <svg wire:loading class="animate-spin -ml-1 mr-3 h-5 w-5 text-arm-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>

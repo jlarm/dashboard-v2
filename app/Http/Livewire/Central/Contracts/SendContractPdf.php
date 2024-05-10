@@ -9,16 +9,17 @@ use Notification;
 class SendContractPdf extends Component
 {
     public Contract $contract;
+
     public $sendPdfEmailAddress;
 
     public function sendContractPdf(): void
     {
         Notification::route('mail', $this->sendPdfEmailAddress)
-            ->notify(new \App\Notifications\ContractPdfNotification($this->contract) );
+            ->notify(new \App\Notifications\ContractPdfNotification($this->contract));
 
         $this->contract->status()->create([
             'name' => auth()->user()->name,
-            'status' => 'sent contract pdf to ' . $this->sendPdfEmailAddress,
+            'status' => 'sent contract pdf to '.$this->sendPdfEmailAddress,
             'step' => 5,
         ]);
 
