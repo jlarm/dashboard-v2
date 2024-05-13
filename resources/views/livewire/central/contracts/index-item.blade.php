@@ -21,10 +21,12 @@
             <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Contract Completed</span>
         @endif
     </x-table.cell>
-    <x-table.cell class="flex justify-end gap-5">
-        <a href="{{ route('contracts.edit', $contract) }}">View</a>
-        @if(!$contract->dealer_signature)
-           <livewire:central.contracts.delete :contract="$contract" />
-        @endif
+    <x-table.cell class="text-right pr-0">
+        <div class="flex justify-end gap-3">
+            <a href="{{ route('contracts.edit', $contract) }}">View</a>
+            @if(!$contract->dealer_signature)
+                <livewire:central.contracts.delete :contract="$contract" />
+            @endif
+        </div>
     </x-table.cell>
 </x-table.row>
