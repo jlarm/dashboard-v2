@@ -12,6 +12,18 @@ class IndexItem extends Component
 
     public Contract $contract;
 
+    public function progress()
+    {
+        $progress = $this->contract->status->pluck('step')->toArray();
+        $progress = array_unique($progress);
+
+        $progress = array_filter($progress, function ($value) {
+            return $value !== null;
+        });
+
+        return end($progress);
+    }
+
     public function render()
     {
         return view('livewire.central.contracts.index-item');
