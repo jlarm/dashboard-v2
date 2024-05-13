@@ -1,6 +1,13 @@
 <x-table.row>
+    @can('delete-users')
     <x-table.cell>{{ $contract->id }}</x-table.cell>
-    <x-table.cell>{{ $contract->dealer_name }}</x-table.cell>
+    @endcan
+    <x-table.cell>
+        {{ $contract->dealer_name }}
+        @can('delete-users')
+        <div class="font-mono text-xs leading-6 text-gray-400">{{ $contract->uuid }}</div>
+        @endcan
+    </x-table.cell>
     <x-table.cell>
         @if($this->progress() == 1)
             <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-600/20">Contract Created</span>

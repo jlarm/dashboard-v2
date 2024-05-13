@@ -12,7 +12,9 @@
     <div class="mt-8">
         <x-table>
             <x-slot name="head">
+                @can('delete-users')
                 <x-table.heading>Id</x-table.heading>
+                @endcan
                 <x-table.heading>Dealership</x-table.heading>
                 <x-table.heading>Status</x-table.heading>
                 <x-table.heading></x-table.heading>
