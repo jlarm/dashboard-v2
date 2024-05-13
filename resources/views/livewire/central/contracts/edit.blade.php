@@ -1,12 +1,22 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
     <div class="col-span-2 border rounded-md p-5">
         <form wire:submit.prevent="update" class="space-y-12">
+
+            <!-- Contract Type -->
+            <div>
+                <label for="contract_type" class="block text-sm font-medium leading-6 text-gray-900">Contract Type</label>
+                <select wire:model.defer="contractType" id="contract_type" name="contract_type" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                    <option value="yearly">Yearly</option>
+                    <option value="monthly">Month to Month</option>
+                </select>
+            </div>
+
             <!-- Contract Information -->
             <div class="border-b pb-12">
                 <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-6">
                         <x-input-label for="dealerName" :value="__('Dealership Name')" />
-                        <x-text-input wire:model.defer="dealerName" id="dealerName" class="block mt-1 w-full" type="text" name="dealerName" :value="old('dealerName')" required />
+                        <x-text-input wire:model.defer="dealerName" id="dealerName" class="block mt-1 w-full" type="text" name="dealerName" :value="old('dealerName')" />
                         @error('dealerName')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -16,7 +26,7 @@
 
                     <div class="sm:col-span-3">
                         <x-input-label for="agreementDate" :value="__('Agreement Date')" />
-                        <x-text-input wire:model.defer="agreementDate" id="agreementDate" class="block mt-1 w-full" type="date" name="agreementDate" :value="old('agreementDate')" required />
+                        <x-text-input wire:model.defer="agreementDate" id="agreementDate" class="block mt-1 w-full" type="date" name="agreementDate" :value="old('agreementDate')" />
                         @error('agreementDate')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -26,7 +36,7 @@
 
                     <div class="sm:col-span-3">
                         <x-input-label for="commenceDate" :value="__('Commencement Date')" />
-                        <x-text-input wire:model.defer="commenceDate" id="commenceDate" class="block mt-1 w-full" type="date" name="commenceDate" :value="old('commenceDate')" required />
+                        <x-text-input wire:model.defer="commenceDate" id="commenceDate" class="block mt-1 w-full" type="date" name="commenceDate" :value="old('commenceDate')" />
                         @error('commenceDate')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -36,7 +46,7 @@
 
                     <div class="sm:col-span-6">
                         <x-input-label for="yearlyInspectionTotal" :value="__('Total Number of Yearly Inspections')" />
-                        <x-text-input wire:model.defer="yearlyInspectionTotal" id="yearlyInspectionTotal" class="block mt-1 w-full" type="number" name="yearlyInspectionTotal" :value="old('yearlyInspectionTotal')" required />
+                        <x-text-input wire:model.defer="yearlyInspectionTotal" id="yearlyInspectionTotal" class="block mt-1 w-full" type="number" name="yearlyInspectionTotal" :value="old('yearlyInspectionTotal')" />
                         @error('yearlyInspectionTotal')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -50,7 +60,7 @@
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">$</span>
                             </div>
-                            <x-text-input x-mask:dynamic="$money($input)" wire:model.defer="initialFee" id="initialFee" class="block mt-1 w-full pl-7" type="text" name="initialFee" :value="old('initialFee')" placeholder="0.00" required />
+                            <x-text-input x-mask:dynamic="$money($input)" wire:model.defer="initialFee" id="initialFee" class="block mt-1 w-full pl-7" type="text" name="initialFee" :value="old('initialFee')" placeholder="0.00" />
                         </div>
                         @error('initialFee')
                         <div class="text-red-500 text-sm mt-2">
@@ -65,7 +75,7 @@
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">$</span>
                             </div>
-                            <x-text-input x-mask:dynamic="$money($input)" wire:model.defer="monthlyFee" id="monthlyFee" class="block mt-1 w-full pl-7" type="text" name="monthlyFee" :value="old('monthlyFee')" placeholder="0.00" required />
+                            <x-text-input x-mask:dynamic="$money($input)" wire:model.defer="monthlyFee" id="monthlyFee" class="block mt-1 w-full pl-7" type="text" name="monthlyFee" :value="old('monthlyFee')" placeholder="0.00" />
                         </div>
                         @error('monthlyFee')
                         <div class="text-red-500 text-sm mt-2">
@@ -103,7 +113,7 @@
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-6">
                         <x-input-label for="dealerName" :value="__('Address')" />
-                        <x-text-input wire:model.defer="dealerPhysicalAddress" id="dealerPhysicalAddress" class="block mt-1 w-full" type="text" name="dealerPhysicalAddress" :value="old('dealerPhysicalAddress')" required />
+                        <x-text-input wire:model.defer="dealerPhysicalAddress" id="dealerPhysicalAddress" class="block mt-1 w-full" type="text" name="dealerPhysicalAddress" :value="old('dealerPhysicalAddress')" />
                         @error('dealerPhysicalAddress')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -112,7 +122,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerPhysicalCity" :value="__('City')" />
-                        <x-text-input wire:model.defer="dealerPhysicalCity" id="dealerPhysicalCity" class="block mt-1 w-full" type="text" name="dealerPhysicalCity" :value="old('dealerPhysicalCity')" required />
+                        <x-text-input wire:model.defer="dealerPhysicalCity" id="dealerPhysicalCity" class="block mt-1 w-full" type="text" name="dealerPhysicalCity" :value="old('dealerPhysicalCity')" />
                         @error('dealerPhysicalCity')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -121,7 +131,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerPhysicalState" :value="__('State')" />
-                        <x-text-input wire:model.defer="dealerPhysicalState" id="dealerPhysicalState" class="block mt-1 w-full" type="text" name="dealerPhysicalState" :value="old('dealerPhysicalState')" required />
+                        <x-text-input wire:model.defer="dealerPhysicalState" id="dealerPhysicalState" class="block mt-1 w-full" type="text" name="dealerPhysicalState" :value="old('dealerPhysicalState')" />
                         @error('dealerPhysicalState')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -130,7 +140,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerPhysicalZip" :value="__('Zip Code')" />
-                        <x-text-input wire:model.defer="dealerPhysicalZip" id="dealerPhysicalZip" class="block mt-1 w-full" type="text" name="dealerPhysicalZip" :value="old('dealerPhysicalZip')" required />
+                        <x-text-input wire:model.defer="dealerPhysicalZip" id="dealerPhysicalZip" class="block mt-1 w-full" type="text" name="dealerPhysicalZip" :value="old('dealerPhysicalZip')" />
                         @error('dealerPhysicalZip')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -139,7 +149,7 @@
                     </div>
                     <div class="sm:col-span-6">
                         <x-input-label for="dealerPhone" :value="__('Phone Number')" />
-                        <x-text-input x-mask="999-999-9999" wire:model.defer="dealerPhone" id="dealerPhone" class="block mt-1 w-full" type="tel" name="dealerPhone" :value="old('dealerPhone')" required />
+                        <x-text-input x-mask="999-999-9999" wire:model.defer="dealerPhone" id="dealerPhone" class="block mt-1 w-full" type="tel" name="dealerPhone" :value="old('dealerPhone')" />
                         @error('dealerPhone')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -148,7 +158,7 @@
                     </div>
                     <div class="sm:col-span-3">
                         <x-input-label for="dealerQiName" :value="__('Qualified Individual Name')" />
-                        <x-text-input wire:model.defer="dealerQiName" id="dealerQiName" class="block mt-1 w-full" type="text" name="dealerQiName" :value="old('dealerQiName')" required />
+                        <x-text-input wire:model.defer="dealerQiName" id="dealerQiName" class="block mt-1 w-full" type="text" name="dealerQiName" :value="old('dealerQiName')" />
                         @error('dealerQiName')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -157,7 +167,7 @@
                     </div>
                     <div class="sm:col-span-3">
                         <x-input-label for="dealerQiEmail" :value="__('Qualified Individual Email Address')" />
-                        <x-text-input wire:model.defer="dealerQiEmail" id="dealerQiEmail" class="block mt-1 w-full" type="text" name="dealerQiEmail" :value="old('dealerQiEmail')" required />
+                        <x-text-input wire:model.defer="dealerQiEmail" id="dealerQiEmail" class="block mt-1 w-full" type="text" name="dealerQiEmail" :value="old('dealerQiEmail')" />
                         @error('dealerQiEmail')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -167,7 +177,6 @@
                 </div>
             </div>
 
-            <!-- Additional Locations -->
             <!-- Additional Locations -->
             <div class="space-y-4">
                 @if($additionalLocations)
@@ -266,7 +275,7 @@
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-6">
                         <x-input-label for="dealerBillingAddress" :value="__('Address')" />
-                        <x-text-input wire:model.defer="dealerBillingAddress" id="dealerBillingAddress" class="block mt-1 w-full" type="text" name="dealerBillingAddress" :value="old('dealerBillingAddress')" required />
+                        <x-text-input wire:model.defer="dealerBillingAddress" id="dealerBillingAddress" class="block mt-1 w-full" type="text" name="dealerBillingAddress" :value="old('dealerBillingAddress')" />
                         @error('dealerBillingAddress')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -275,7 +284,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerBillingCity" :value="__('City')" />
-                        <x-text-input wire:model.defer="dealerBillingCity" id="dealerBillingCity" class="block mt-1 w-full" type="text" name="dealerBillingCity" :value="old('dealerBillingCity')" required />
+                        <x-text-input wire:model.defer="dealerBillingCity" id="dealerBillingCity" class="block mt-1 w-full" type="text" name="dealerBillingCity" :value="old('dealerBillingCity')" />
                         @error('dealerBillingCity')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -284,7 +293,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerBillingState" :value="__('State')" />
-                        <x-text-input wire:model.defer="dealerBillingState" id="dealerBillingState" class="block mt-1 w-full" type="text" name="dealerBillingState" :value="old('dealerBillingState')" required />
+                        <x-text-input wire:model.defer="dealerBillingState" id="dealerBillingState" class="block mt-1 w-full" type="text" name="dealerBillingState" :value="old('dealerBillingState')" />
                         @error('dealerBillingState')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -293,7 +302,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerBillingZip" :value="__('Zip Code')" />
-                        <x-text-input wire:model.defer="dealerBillingZip" id="dealerBillingZip" class="block mt-1 w-full" type="text" name="dealerBillingZip" :value="old('dealerBillingZip')" required />
+                        <x-text-input wire:model.defer="dealerBillingZip" id="dealerBillingZip" class="block mt-1 w-full" type="text" name="dealerBillingZip" :value="old('dealerBillingZip')" />
                         @error('dealerBillingZip')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -311,7 +320,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerBillingContactName" :value="__('Other Contact Name')" />
-                        <x-text-input wire:model.defer="dealerBillingContactName" id="dealerBillingContactName" class="block mt-1 w-full" type="text" name="dealerBillingContactName" :value="old('dealerBillingContactName')" required />
+                        <x-text-input wire:model.defer="dealerBillingContactName" id="dealerBillingContactName" class="block mt-1 w-full" type="text" name="dealerBillingContactName" :value="old('dealerBillingContactName')" />
                         @error('dealerBillingContactName')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -320,7 +329,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerBillingContactTitle" :value="__('Other Contact Title')" />
-                        <x-text-input wire:model.defer="dealerBillingContactTitle" id="dealerBillingContactTitle" class="block mt-1 w-full" type="text" name="dealerBillingContactTitle" :value="old('dealerBillingContactTitle')" required />
+                        <x-text-input wire:model.defer="dealerBillingContactTitle" id="dealerBillingContactTitle" class="block mt-1 w-full" type="text" name="dealerBillingContactTitle" :value="old('dealerBillingContactTitle')" />
                         @error('dealerBillingContactTitle')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -329,7 +338,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <x-input-label for="dealerBillingContactEmail" :value="__('Other Contact Email Address')" />
-                        <x-text-input wire:model.defer="dealerBillingContactEmail" id="dealerBillingContactEmail" class="block mt-1 w-full" type="text" name="dealerBillingContactEmail" :value="old('dealerBillingContactEmail')" required />
+                        <x-text-input wire:model.defer="dealerBillingContactEmail" id="dealerBillingContactEmail" class="block mt-1 w-full" type="text" name="dealerBillingContactEmail" :value="old('dealerBillingContactEmail')" />
                         @error('dealerBillingContactEmail')
                         <div class="text-red-500 text-sm mt-2">
                             {{ $message }}
