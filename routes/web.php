@@ -32,6 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('create', CreateController::class)->name('store');
     });
 
+    Route::get('contracts', \App\Http\Livewire\Central\Contracts\Index::class)->name('contracts.index');
+    Route::get('contracts/create', \App\Http\Livewire\Central\Contracts\Create::class)->name('contracts.create');
+    Route::get('contracts/{contract:uuid}', \App\Http\Livewire\Central\Contracts\Edit::class)->name('contracts.edit');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -73,10 +77,6 @@ Route::middleware(['can:delete-users', 'auth', 'verified'])->group(function () {
         Route::post('invite', StoreController::class)->name('send');
         Route::get('{user:slug}', \App\Http\Controllers\Central\Employee\ShowController::class)->name('view');
     });
-
-    Route::get('contracts', \App\Http\Livewire\Central\Contracts\Index::class)->name('contracts.index');
-    Route::get('contracts/create', \App\Http\Livewire\Central\Contracts\Create::class)->name('contracts.create');
-    Route::get('contracts/{contract:uuid}', \App\Http\Livewire\Central\Contracts\Edit::class)->name('contracts.edit');
 
     Route::get('roles', \App\Http\Livewire\Central\Role\Index::class)->name('role.index');
     Route::get('roles/{role:id}', \App\Http\Livewire\Central\Role\Edit::class)->name('role.edit');
