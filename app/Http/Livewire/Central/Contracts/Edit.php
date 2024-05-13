@@ -199,7 +199,7 @@ class Edit extends Component
 
             $this->contract->status()->create([
                 'name' => auth()->user()->name,
-                'status' => 'uploaded signature',
+                'status' => 'signed the contract',
                 'step' => 4,
             ]);
         }
