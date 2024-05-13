@@ -15,9 +15,7 @@ class UploadToDigitalOceanJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected Contract $contract)
-    {
-    }
+    public function __construct(protected Contract $contract) {}
 
     public function middleware(): array
     {
@@ -35,5 +33,7 @@ class UploadToDigitalOceanJob implements ShouldQueue
                 'pdf_path' => $this->contract->uuid. '/' . $this->contract->pdf_path,
             ]);
         }
+
+
     }
 }

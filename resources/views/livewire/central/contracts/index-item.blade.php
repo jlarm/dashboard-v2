@@ -11,7 +11,7 @@
     <x-table.cell class="flex justify-end gap-5">
         <a href="{{ route('contracts.edit', $contract) }}">View</a>
         @if(!$contract->dealer_signature)
-            <button class="text-red-500" wire:click="delete({{ $contract }})">Delete</button>
+           <livewire:central.contracts.delete :contract="$contract" />
         @endif
     </x-table.cell>
 </x-table.row>
