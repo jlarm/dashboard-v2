@@ -1,6 +1,16 @@
 <div class="w-full max-w-2xl mx-auto">
     <form wire:submit.prevent="create" class="space-y-12">
 
+        <!-- Contract Type -->
+        <div>
+            <label for="contract_type" class="block text-sm font-medium leading-6 text-gray-900">Contract Type *</label>
+            <select wire:model.defer="contractType" id="contract_type" name="contract_type" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                <option></option>
+                <option value="yearly">Yearly</option>
+                <option value="monthly">Month to Month</option>
+            </select>
+        </div>
+
         <!-- Contract Information -->
         <div class="border-b pb-12">
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">

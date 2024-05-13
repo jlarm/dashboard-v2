@@ -16,6 +16,7 @@ class Contract extends Model
     protected $fillable = [
         'uuid',
         'user_id',
+        'contract_type',
         'agreement_date',
         'dealer_name',
         'services',

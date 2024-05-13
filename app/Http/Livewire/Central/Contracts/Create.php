@@ -9,6 +9,7 @@ use Livewire\Component;
 
 class Create extends Component
 {
+    public $contractType;
     public $agreementDate;
 
     public $dealerName;
@@ -64,6 +65,7 @@ class Create extends Component
     public Collection $additionalLocations;
 
     protected $rules = [
+        'contractType' => 'required|string',
         'agreementDate' => 'required|date',
         'dealerName' => 'required|string',
         'services' => 'required|min:1|array',
@@ -126,6 +128,7 @@ class Create extends Component
         $this->validate();
 
         $contract = Contract::create([
+            'contract_type' => $this->contractType,
             'agreement_date' => $this->agreementDate,
             'dealer_name' => $this->dealerName,
             'services' => json_encode($this->services),

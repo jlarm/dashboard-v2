@@ -11,6 +11,7 @@ use Str;
 class Edit extends Component
 {
     public Contract $contract;
+    public $contractType;
 
     public $agreementDate;
 
@@ -85,6 +86,7 @@ class Edit extends Component
 
     public function mount()
     {
+        $this->contractType = $this->contract->contract_type;
         $this->agreementDate = $this->contract->agreement_date->format('Y-m-d');
         $this->dealerName = $this->contract->dealer_name;
         $this->services = json_decode($this->contract->services);
@@ -122,6 +124,7 @@ class Edit extends Component
     }
 
     protected $rules = [
+        'contractType' => 'required|string',
         'agreementDate' => 'required|date',
         'dealerName' => 'required|string',
         'services.*' => 'required|string',
@@ -161,6 +164,7 @@ class Edit extends Component
         $this->validate();
 
         $this->contract->update([
+            'contract_type' => $this->contractType,
             'agreement_date' => $this->agreementDate,
             'dealer_name' => $this->dealerName,
             'services' => json_encode($this->services),
