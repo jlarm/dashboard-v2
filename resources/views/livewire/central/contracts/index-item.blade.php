@@ -1,6 +1,7 @@
 <x-table.row>
     @can('delete-users')
     <x-table.cell>{{ $contract->id }}</x-table.cell>
+    <x-table.cell>{{ $contract->user->name }}</x-table.cell>
     @endcan
     <x-table.cell>
         {{ $contract->dealer_name }}

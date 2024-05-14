@@ -2,6 +2,18 @@
     <div class="col-span-2 border rounded-md p-5">
         <form wire:submit.prevent="update" class="space-y-12">
 
+            <!-- Consultant -->
+            @can('delete-users')
+            <div>
+                <label for="contract_type" class="block text-sm font-medium leading-6 text-gray-900">Consultant</label>
+                <select wire:model.defer="user" id="contract_type" name="contract_type" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                    @foreach($consultants as $consultant)
+                        <option value="{{ $consultant->id }}">{{ $consultant->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            @endcan
+
             <!-- Contract Type -->
             <div>
                 <label for="contract_type" class="block text-sm font-medium leading-6 text-gray-900">Contract Type</label>

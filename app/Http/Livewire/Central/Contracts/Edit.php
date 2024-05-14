@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Central\Contracts;
 
 use App\Models\Contract;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Storage;
@@ -11,6 +12,7 @@ use Str;
 class Edit extends Component
 {
     public Contract $contract;
+    public $user;
     public $contractType;
 
     public $agreementDate;
@@ -86,6 +88,7 @@ class Edit extends Component
 
     public function mount()
     {
+        $this->user = $this->contract->user_id;
         $this->contractType = $this->contract->contract_type;
         $this->agreementDate = $this->contract->agreement_date->format('Y-m-d');
         $this->dealerName = $this->contract->dealer_name;
@@ -124,6 +127,7 @@ class Edit extends Component
     }
 
     protected $rules = [
+        'user' => 'required|exists:users,id',
         'contractType' => 'required|string',
         'agreementDate' => 'required|date',
         'dealerName' => 'required|string',
@@ -164,6 +168,7 @@ class Edit extends Component
         $this->validate();
 
         $this->contract->update([
+            'user_id' => $this->user,
             'contract_type' => $this->contractType,
             'agreement_date' => $this->agreementDate,
             'dealer_name' => $this->dealerName,
@@ -223,6 +228,8 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.central.contracts.edit');
+        return view('livewire.central.contracts.edit', [
+            'consultants' => User::whereNot('name', 'Joe Lohr')->get(),
+        ]);
     }
 }
