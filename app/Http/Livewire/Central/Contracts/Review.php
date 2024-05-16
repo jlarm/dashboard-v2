@@ -152,7 +152,7 @@ class Review extends Component
                     'step' => 3,
                 ]);
 
-                \Notification::route('mail', $this->contract->user->email)
+                \Notification::route('mail', 'tdortch@autorisknow.com')
                     ->notify(new \App\Notifications\ContractSignedNotification($this->contract));
 
                 \Notification::route('mail', $this->contract->user->email)
