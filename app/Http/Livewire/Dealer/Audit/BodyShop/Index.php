@@ -2,22 +2,27 @@
 
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
-use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Store;
 use Livewire\Component;
 
 class Index extends Component
 {
-    protected $listeners = ['refreshBodyShopAudits' => '$refresh'];
+    public $store;
+
+    protected $listeners = [
+        'refreshAudits' => '$refresh',
+    ];
+
+    public function mount()
+    {
+        $this->store = Store::with('bodyShopAudits')->where('id', app('currentStore'))->firstOrFail();
+    }
 
     public function render()
     {
         return view('livewire.dealer.audit.body-shop.index', [
-            'audits' => BodyShopAudit::orderBy('audit_date', 'desc')
-                ->latest()
-                ->with('store')
-                ->orderBy('audit_date')
-                ->select('id', 'store_id', 'audit_date', 'pdf_path')
-                ->get(),
-        ]);
+            'bodyShopAudits' => $this->store->bodyShopAudits->sortByDesc('audit_date'),
+            'audits' => $this->store->bodyShopViolationAudits->sortByDesc('date'),
+        ])->layout('components.dealer-app');
     }
 }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\BodyShopAuditController;
 use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
-use App\Http\Controllers\Dealer\Audit\FinanceController;
 use App\Http\Controllers\Dealer\Audit\IndividualController;
 use App\Http\Controllers\Dealer\Audit\IndividualCreateController;
+use App\Http\Controllers\Dealer\Audit\IndividualIndexController;
 use App\Http\Controllers\Dealer\Audit\OshaCreateController;
+use App\Http\Controllers\Dealer\Audit\SingleIndividualController;
 use App\Http\Controllers\Dealer\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Dealer\Auth\EmailVerificationNotificationController;
@@ -18,11 +18,18 @@ use App\Http\Controllers\Dealer\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Dealer\Auth\VerifyEmailController;
 use App\Http\Controllers\Dealer\CourseController;
 use App\Http\Controllers\Dealer\CourseResultsController;
+use App\Http\Controllers\Dealer\EmployeeIndexController;
+use App\Http\Controllers\Dealer\ManualController;
 use App\Http\Controllers\Dealer\ProfileController;
+use App\Http\Controllers\Dealer\Store\SettingsController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
-use App\Http\Controllers\FinanceCreateController;
-use App\Http\Controllers\OshaAuditController;
+use App\Http\Livewire\Dealer\Audit\Osha\Edit;
+use App\Http\Livewire\Dealer\Audit\Osha\Single;
+use App\Http\Livewire\Dealer\Docs\Index;
+use App\Http\Livewire\Dealer\Manual\Isp\Create;
+use App\Http\Livewire\Dealer\Phish\Show;
+use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -46,15 +53,15 @@ Route::name('dealer.')->middleware([
 
     Route::view('/', 'dealer.welcome');
 
-    //    if (config('app.env') === 'local') {
-    //        Route::get('osha-audit-pdf', \App\Http\Controllers\OshaPdfTestController::class);
-    //        Route::get('deal-jacket-audit-pdf', \App\Http\Controllers\DealJacketPdfTestController::class);
-    //        Route::get('glba-audit-pdf', \App\Http\Controllers\GlbaPdfTestController::class);
-    //        Route::get('body-shop-audit-pdf', \App\Http\Controllers\BodyShopPdfTestController::class);
-    //        Route::Get('dot-cert', function () {
-    //            return view('dealer.course.CertDownloadView');
-    //        });
-    //    }
+    if (config('app.env') === 'local') {
+        Route::get('osha-audit-pdf', \App\Http\Controllers\OshaPdfTestController::class);
+        Route::get('deal-jacket-audit-pdf', \App\Http\Controllers\DealJacketPdfTestController::class);
+        Route::get('glba-audit-pdf', \App\Http\Controllers\GlbaPdfTestController::class);
+        Route::get('body-shop-audit-pdf', \App\Http\Controllers\BodyShopPdfTestController::class);
+        Route::Get('dot-cert', function () {
+            return view('dealer.course.CertDownloadView');
+        });
+    }
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
@@ -84,7 +91,7 @@ Route::name('dealer.')->middleware([
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
     Route::view('/vendors/thankyou', 'dealer.vendor.thankyou')->middleware('web')->name('vendors.thankyou');
 
-    Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
+    Route::get('email/settings', FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
@@ -118,6 +125,18 @@ Route::name('dealer.')->middleware([
             Route::view('create', 'dealer.employee.create')->name('new');
         });
 
+        Route::prefix('audits/')->name('audit.')->middleware(['auth'])->group(function () {
+            Route::get('osha/create/{store}', OshaCreateController::class)->name('osha.create');
+            Route::get('osha/{oshaViolationAudit:uuid}/edit', Edit::class)->name('osha.edit');
+            Route::get('body-shop/create/{store}', BodyShopCreateController::class)->name('body-shop.create');
+            Route::get('body-shop/{bodyShopViolationAudit:uuid}/edit', \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::class)->name('body-shop.edit');
+            Route::get('finance/create/{store}', \App\Http\Controllers\Dealer\Audit\FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
+            Route::get('finance/{glbaViolationAudit:uuid}/edit', \App\Http\Livewire\Dealer\Audit\Finance\Edit::class)->name('finance.edit');
+            Route::get('deal-jackets/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
+            Route::get('deal-jackets/{individualAudit:uuid}', IndividualController::class)->name('individual.show');
+            Route::get('deal-jackets/{individualAudit:uuid}/edit', SingleIndividualController::class)->name('individual.edit');
+        });
+
         Route::get('phishing/create', \App\Http\Livewire\Dealer\Phish\Create::class)->name('phishing.create');
 
         Route::get('logs', \App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
@@ -129,10 +148,10 @@ Route::name('dealer.')->middleware([
     // Roles to Manager
     // **************************************************
 
-    Route::middleware('role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Manager|Consultant')->group(function () {
+    Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual|Manager')->group(function () {
 
         Route::prefix('employees/')->name('employees.')->group(function () {
-            Route::get('/', \App\Http\Controllers\Dealer\EmployeeIndexController::class)->name('index');
+            Route::get('/', EmployeeIndexController::class)->name('index');
             Route::view('create', 'dealer.employee.create')->name('new');
             Route::view('open-invites', 'dealer.employee.open-invites')->name('open-invites');
             Route::get('{user:slug}', [UserController::class, 'show'])->name('show');
@@ -140,21 +159,24 @@ Route::name('dealer.')->middleware([
 
         Route::view('scans', 'dealer.scan.index')->middleware(['auth', 'single.store'])->name('scan.index');
 
-        Route::prefix('manuals/')->name('manual.')->middleware('auth', 'single.store')->group(function () {
-            Route::get('/', \App\Http\Controllers\Dealer\ManualController::class)->name('index');
+        Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function () {
+            Route::get('/', ManualController::class)->name('index');
         });
 
-        Route::prefix('audits/')->name('audit.')->middleware('auth', 'single.store')->group(function () {
-            Route::view('osha', 'dealer.audit.osha.index')->name('osha.index');
-            Route::view('body-shop', 'dealer.audit.body-shop.index')->name('body-shop.index');
-            Route::view('finance', 'dealer.audit.finance.index')->name('finance.index');
-            Route::get('deal-jackets', \App\Http\Controllers\Dealer\Audit\IndividualIndexController::class)->name('individual.index');
+        Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function () {
+            Route::get('osha', \App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('osha.index');
+            Route::get('osha/{oshaViolationAudit:uuid}', Single::class)->name('osha.show');
+            Route::get('body-shop', \App\Http\Livewire\Dealer\Audit\BodyShop\Index::class)->name('body-shop.index');
+            Route::get('body-shop/{bodyShopViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('body-shop.show');
+            Route::get('finance', \App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('finance.index');
+            Route::get('/finance/{glbaViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\Finance\Single::class)->name('finance.show');
+            Route::get('deal-jackets', IndividualIndexController::class)->name('individual.index');
         });
 
         Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
 
         Route::prefix('documents/')->name('doc.')->middleware('auth')->group(function () {
-            Route::get('/', \App\Http\Livewire\Dealer\Docs\Index::class)->name('index');
+            Route::get('/', Index::class)->name('index');
         });
 
     });
@@ -163,38 +185,26 @@ Route::name('dealer.')->middleware([
     // Roles to QA
     // **************************************************
 
-    Route::middleware('role:super-admin|Owner|CFO|GM|GSM|Qualified Individual|Consultant')->group(function () {
+    Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function () {
 
-        Route::prefix('manuals/')->name('manual.')->middleware('auth', 'single.store')->group(function () {
-            Route::get('/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
-            Route::get('/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('isp.create');
-            Route::get('/osha', \App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('osha.index');
-            Route::get('/osha/create', \App\Http\Livewire\Dealer\Manual\Osha\Create::class)->name('osha.create');
-            Route::get('/red-flag', App\Http\Livewire\Dealer\Manual\RedFlag\Index::class)->name('red-flag.index');
-            Route::get('/red-flag/create', App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->name('red-flag.create');
-            Route::get('cms', \App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('cms.index');
-            Route::get('cms/create', \App\Http\Livewire\Dealer\Manual\Cms\Create::class)->name('cms.create');
+        Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function () {
+            Route::get('/isp', Index::class)->name('isp.index');
+            Route::get('/isp/create', Create::class)->name('isp.create');
+            Route::get('/osha', Index::class)->name('osha.index');
+            Route::get('/osha/create', Create::class)->name('osha.create');
+            Route::get('/red-flag', Index::class)->name('red-flag.index');
+            Route::get('/red-flag/create', Create::class)->name('red-flag.create');
+            Route::get('cms', Index::class)->name('cms.index');
+            Route::get('cms/create', Create::class)->name('cms.create');
         });
 
-        Route::prefix('audits/')->name('audit.')->middleware('auth', 'single.store')->group(function () {
-            Route::get('osha/create', OshaCreateController::class)->name('osha.create');
-            Route::get('osha/{oshaAudit:id}', OshaAuditController::class)->name('osha.show');
-            Route::get('body-shop/create', BodyShopCreateController::class)->name('body-shop.create');
-            Route::get('body-shop/{bodyShopAudit:id}', BodyShopAuditController::class)->name('body-shop.show');
-            Route::get('finance/create', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
-            Route::get('finance/{financeAudit:id}', FinanceController::class)->middleware('can:create-audits')->name('finance.show');
-            Route::get('deal-jackets/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
-            Route::get('deal-jackets/{individualAudit:uuid}', IndividualController::class)->name('individual.show');
-            Route::get('deal-jackets/{individualAudit:uuid}/edit', \App\Http\Controllers\Dealer\Audit\SingleIndividualController::class)->name('individual.edit');
-        });
+        Route::get('settings', SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
 
-        Route::get('settings', \App\Http\Controllers\Dealer\Store\SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
-
-        Route::get('phishing', \App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
-        Route::get('phishing/{phishingCampaign}', \App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
+        Route::get('phishing', Index::class)->name('phishing.index');
+        Route::get('phishing/{phishingCampaign}', Show::class)->name('phishing.show');
     });
 
-    Route::get('email/settings', \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
+    Route::get('email/settings', FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
 
 });
 

@@ -16,8 +16,11 @@ class OpenInvites extends Component
     public Store $store;
 
     public $search = '';
+
     public $selectPage = false;
+
     public $selectAll = false;
+
     public $selected = [];
 
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
@@ -29,7 +32,7 @@ class OpenInvites extends Component
         SendQueueEmailJob::dispatch($invite);
 
         Notification::make()
-            ->title('Invite to ' . $invite->name . ' sent')
+            ->title('Invite to '.$invite->name.' sent')
             ->success()
             ->send();
     }
@@ -56,12 +59,12 @@ class OpenInvites extends Component
 
     public function getInvitesProperty()
     {
-     return Invite::query()
-         ->whereJsonContains('stores', (string) $this->store->id)
-         ->where('registered_at', null)
-         ->with('user')
-         ->orderBy('created_at', 'desc')
-         ->search('name', $this->search);
+        return Invite::query()
+            ->whereJsonContains('stores', (string) $this->store->id)
+            ->where('registered_at', null)
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->search('name', $this->search);
     }
 
     public function updatedSelected()

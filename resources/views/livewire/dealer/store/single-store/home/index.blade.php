@@ -1,44 +1,62 @@
-<div>
-    <div class="mx-auto px-6 pt-6">
-        @can('create-dealerships')
-            <div class="col-span-2">
-                <livewire:dealer.home.multi-note :store="$store"/>
+<div class="p-5 space-y-5">
+    {{--             Audit Stats--}}
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 xl:gap-5">
+        <livewire:dealer.home.osha-stats :store="$store" />
+        <livewire:dealer.home.body-shop-stats :store="$store" />
+        <livewire:dealer.home.glba-stats :store="$store" />
+        <livewire:dealer.home.deal-jacket-stats :store="$store" />
+    </div>
+
+    {{--            Course Stats--}}
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5">
+        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+            <!-- Header -->
+            <div class="p-5 pb-4">
+                <div>
+                    <h2 class="inline-block font-semibold text-gray-800 dark:text-neutral-200">
+                        Course Completion by Department
+                    </h2>
+                    <p class="text-xs mb-5 text-gray-400 italic">*Based on the total number of employees who finished all required training courses.</p>
+                </div>
+                <!-- End Col -->
             </div>
-        @endcan
-        <h1 class="font-bold text-2xl mt-10">Course Completion by Department</h1>
-            <p class="text-sm mb-5 text-gray-400 italic">*Based on the total number of employees who finished all required training courses.</p>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-            <a href="{{ route('dealer.stores.employees', $store) }}" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
-                <livewire:dealer.employee.completed-courses-stat :store="$store" name="All" />
-            </a>
-            <a href="{{ route('dealer.stores.employees', $store) }}?d=1" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
-                <livewire:dealer.employee.completed-courses-stat :store="$store" :department="1" name="Sales" />
-            </a>
-            <a href="{{ route('dealer.stores.employees', $store) }}?d=2" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
-                <livewire:dealer.employee.completed-courses-stat :store="$store" :department="2" name="Accounting" />
-            </a>
-            <a href="{{ route('dealer.stores.employees', $store) }}?d=3" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
-                <livewire:dealer.employee.completed-courses-stat :store="$store" :department="3" name="Service" />
-            </a>
-            <a href="{{ route('dealer.stores.employees', $store) }}?d=4" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
-                <livewire:dealer.employee.completed-courses-stat :store="$store" :department="4" name="Parts" />
-            </a>
-            <a href="{{ route('dealer.stores.employees', $store) }}?d=5" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
-                <livewire:dealer.employee.completed-courses-stat :store="$store" :department="5" name="Body Shop" />
-            </a>
-            <a href="{{ route('dealer.stores.employees', $store) }}?d=6" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
-                <livewire:dealer.employee.completed-courses-stat :store="$store" :department="6" name="Finance" />
-            </a>
-            <a href="{{ route('dealer.stores.employees', $store) }}?d=7" class="h-[223px] border rounded-md flex flex-col justify-center items-center py-10">
-                <livewire:dealer.employee.completed-courses-stat :store="$store" :department="7" name="Porter/Driver" />
-            </a>
+            <!-- End Header -->
+
+            <!-- Body -->
+            <div class="h-full p-5 pt-0 space-y-4">
+                <!-- List Group -->
+                <ul class="space-y-4">
+                    <livewire:dealer.employee.completed-courses-stat :store="$store" name="All" />
+                    <livewire:dealer.employee.completed-courses-stat :store="$store" :department="1" name="Sales" />
+                    <livewire:dealer.employee.completed-courses-stat :store="$store" :department="2" name="Accounting" />
+                    <livewire:dealer.employee.completed-courses-stat :store="$store" :department="3" name="Service" />
+                    <livewire:dealer.employee.completed-courses-stat :store="$store" :department="4" name="Parts" />
+                    <livewire:dealer.employee.completed-courses-stat :store="$store" :department="5" name="Body Shop" />
+                    <livewire:dealer.employee.completed-courses-stat :store="$store" :department="6" name="Finance" />
+                    <livewire:dealer.employee.completed-courses-stat :store="$store" :department="7" name="Porter/Driver" />
+                </ul>
+                <!-- End List Group -->
+            </div>
+            <!-- End Body -->
         </div>
-        <h1 class="font-bold text-2xl mt-10 mb-5">Audit Ratings</h1>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-            <livewire:dealer.home.osha-stats :store="$store"/>
-            <livewire:dealer.home.body-shop-stats :store="$store"/>
-            <livewire:dealer.home.glba-stats :store="$store"/>
-            <livewire:dealer.home.deal-jacket-stats :store="$store"/>
+        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+            @can('create-dealerships')
+                <!-- Header -->
+                <div class="p-5 pb-4">
+                    <div>
+                        <h2 class="inline-block font-semibold text-gray-800 dark:text-neutral-200">
+                            Consultant Notes
+                        </h2>
+                        <p class="text-xs mb-5 text-gray-400 italic">Add any notes you would like to refer back to. Only you as the consultant will see these notes.</p>
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Header -->
+
+                <div class="h-full p-5 pt-0 space-y-4">
+                    <livewire:dealer.home.note :store="$store"/>
+                </div>
+            @endcan
         </div>
     </div>
 </div>

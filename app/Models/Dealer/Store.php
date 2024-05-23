@@ -4,9 +4,12 @@ namespace App\Models\Dealer;
 
 use App\Models\CmsManual;
 use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaAudit;
+use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Manual\RedFlag;
@@ -217,6 +220,21 @@ class Store extends Model implements HasMedia
     public function oshas(): HasMany
     {
         return $this->hasMany(Osha::class);
+    }
+
+    public function oshaViolationAudits(): HasMany
+    {
+        return $this->hasMany(OshaViolationAudit::class);
+    }
+
+    public function BodyShopViolationAudits(): HasMany
+    {
+        return $this->hasMany(BodyShopViolationAudit::class);
+    }
+
+    public function GlbaViolationAudits(): HasMany
+    {
+        return $this->hasMany(GlbaViolationAudit::class);
     }
 
     public function redflags(): HasMany

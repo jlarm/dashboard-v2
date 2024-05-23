@@ -18,6 +18,4 @@ enum Service: String
             self::CES => 'Cyber Enhanced Security',
         };
     }
-
 }
-

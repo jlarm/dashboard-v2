@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
-use App\Models\Dealer\Audit\OshaAudit;
+use App\Models\Dealer\Audit\OshaViolationAudit;
 use Filament\Notifications\Notification;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -10,9 +10,18 @@ class Delete extends Modal
 {
     public $oshaAudit;
 
-    public function mount(OshaAudit $oshaAudit)
+    public function mount(OshaViolationAudit $oshaAudit)
     {
         $this->oshaAudit = $oshaAudit;
+    }
+
+    protected function deleteViolationPhotos(): void
+    {
+        $this->oshaAudit->violations->each(function ($violation) {
+            $violation->clearMediaCollection('violations_files_0');
+            $violation->clearMediaCollection('violations_files_1');
+            $violation->clearMediaCollection('violations_files_2');
+        });
     }
 
     public function delete()
@@ -20,7 +29,6 @@ class Delete extends Modal
         $this->oshaAudit->delete();
 
         $this->emitTo('dealer.audit.osha.index', 'refreshAudits');
-        $this->emitTo('dealer.store.single-store.audit.osha.index', 'refreshAudits');
 
         $this->close();
 

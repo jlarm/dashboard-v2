@@ -14,8 +14,10 @@ class Index extends Component
         if (auth()->user()->hasRole('super-admin')) {
             return Contract::with('user')->get();
         }
+
         return Contract::where('user_id', auth()->id())->get();
     }
+
     public function render()
     {
         return view('livewire.central.contracts.index', [

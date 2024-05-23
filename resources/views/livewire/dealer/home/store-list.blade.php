@@ -1,26 +1,17 @@
-<div class="px-6 mt-6">
-    <div class="border rounded-md p-6">
-        <div class="sm:flex sm:items-center">
-            <div class="sm:flex-auto">
-                <h1 class="text-base font-semibold leading-6 text-gray-900">Stores</h1>
-                <p class="mt-2 text-sm text-gray-700">Listings of all stores in your dealer group.</p>
-            </div>
-            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                <button onclick="Livewire.emit('modal.open', 'dealer.store.create')" type="button" class="block rounded-md bg-arm-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">Add Store</button>
-            </div>
-        </div>
-        <div class="mt-8 flow-root">
-            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+<div class="p-5">
+    <div>
+        <div class="flow-root overflow-x-auto md:overflow-visible">
+            <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                         <tr>
-                            <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
-                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Overall</th>
-                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Deal Jackets</th>
-                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">OSHA</th>
-                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">GLBA</th>
-                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Body Shop</th>
+                            <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-gray-900 sm:pl-0">Name</th>
+                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-xs font-semibold text-gray-900">Overall</th>
+                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-xs font-semibold text-gray-900">Deal Jackets</th>
+                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-xs font-semibold text-gray-900">OSHA</th>
+                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-xs font-semibold text-gray-900">GLBA</th>
+                            <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-xs font-semibold text-gray-900">Body Shop</th>
                             <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
                                 <span class="sr-only">Edit</span>
                             </th>

@@ -2,28 +2,33 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
-use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Audit\GlbaViolationAudit;
 use Filament\Notifications\Notification;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
 {
-    public $financeAudit;
+    public $glbaAudit;
 
-    public function mount(FinanceAudit $financeAudit)
+    public function mount(GlbaViolationAudit $glbaAudit)
     {
-        $this->financeAudit = $financeAudit;
+        $this->glbaAudit = $glbaAudit;
+    }
+
+    protected function deleteViolationPhotos(): void
+    {
+        $this->glbaAudit->violations->each(function ($violation) {
+            $violation->clearMediaCollection('violations_files_0');
+            $violation->clearMediaCollection('violations_files_1');
+            $violation->clearMediaCollection('violations_files_2');
+        });
     }
 
     public function delete()
     {
-        $this->financeAudit->delete();
+        $this->glbaAudit->delete();
 
-        if (tenant('locations')) {
-            $this->emitTo('dealer.store.single-store.audit.finance.index', 'refreshAudits');
-        } else {
-            $this->emitTo('dealer.audit.finance.index', 'refreshFinanceAudits');
-        }
+        $this->emitTo('dealer.audit.finance.index', 'refreshAudits');
 
         $this->close();
 

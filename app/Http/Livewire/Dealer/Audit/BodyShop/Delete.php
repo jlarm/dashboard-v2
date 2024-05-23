@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
-use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use Filament\Notifications\Notification;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -10,17 +10,25 @@ class Delete extends Modal
 {
     public $bodyShopAudit;
 
-    public function mount(BodyShopAudit $bodyShopAudit)
+    public function mount(BodyShopViolationAudit $bodyShopAudit)
     {
         $this->bodyShopAudit = $bodyShopAudit;
+    }
+
+    protected function deleteViolationPhotos(): void
+    {
+        $this->bodyShopAudit->violations->each(function ($violation) {
+            $violation->clearMediaCollection('violations_files_0');
+            $violation->clearMediaCollection('violations_files_1');
+            $violation->clearMediaCollection('violations_files_2');
+        });
     }
 
     public function delete()
     {
         $this->bodyShopAudit->delete();
 
-        $this->emitTo('dealer.audit.body-shop.index', 'refreshBodyShopAudits');
-        $this->emitTo('dealer.store.single-store.audit.body-shop.index', 'refreshStoreBodyShopAudits');
+        $this->emitTo('dealer.audit.body-shop.index', 'refreshAudits');
 
         $this->close();
 

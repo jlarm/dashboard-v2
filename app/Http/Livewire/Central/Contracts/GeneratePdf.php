@@ -7,7 +7,6 @@ use App\Jobs\Contracts\UploadToDigitalOceanJob;
 use App\Models\Contract;
 use Bus;
 use Livewire\Component;
-use Spatie\Browsershot\Browsershot;
 
 class GeneratePdf extends Component
 {
@@ -20,6 +19,7 @@ class GeneratePdf extends Component
             new UploadToDigitalOceanJob($this->contract),
         ])->dispatch();
     }
+
     public function render()
     {
         return view('livewire.central.contracts.generate-pdf');

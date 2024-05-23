@@ -2,26 +2,27 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
-use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Store;
 use Livewire\Component;
 
 class Index extends Component
 {
-    public Store $store;
+    public $store;
 
     protected $listeners = [
-        'refreshFinanceAudits' => '$refresh',
+        'refreshAudits' => '$refresh',
     ];
+
+    public function mount()
+    {
+        $this->store = Store::with('glbaViolationAudits')->where('id', app('currentStore'))->firstOrFail();
+    }
 
     public function render()
     {
         return view('livewire.dealer.audit.finance.index', [
-            'financeAudits' => FinanceAudit::orderBy('audit_date', 'desc')
-                ->latest()
-                ->with('store')
-                ->select('id', 'store_id', 'audit_date', 'pdf_path')
-                ->get(),
-        ]);
+            'financeAudits' => $this->store->financeAudits->sortByDesc('audit_date'),
+            'audits' => $this->store->glbaViolationAudits->sortByDesc('date'),
+        ])->layout('components.dealer-app');
     }
 }

@@ -139,6 +139,15 @@ return [
             'bucket' => env('CONS_DIGITALOCEAN_SPACES_BUCKET'),
         ],
 
+        'armpaudits' => [
+            'driver' => 's3',
+            'key' => env('ARMP_AUDITS_DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('ARMP_AUDITS_DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('ARMP_AUDITS_DIGITALOCEAN_SPACES_ENDPOINT'),
+            'region' => env('ARMP_AUDITS_DIGITALOCEAN_SPACES_REGION'),
+            'bucket' => env('ARMP_AUDITS_DIGITALOCEAN_SPACES_BUCKET'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

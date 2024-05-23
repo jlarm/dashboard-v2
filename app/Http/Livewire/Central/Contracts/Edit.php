@@ -12,7 +12,9 @@ use Str;
 class Edit extends Component
 {
     public Contract $contract;
+
     public $user;
+
     public $contractType;
 
     public $agreementDate;

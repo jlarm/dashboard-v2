@@ -25,11 +25,11 @@ class ContractPdfNotification extends Notification implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject($this->contract->dealer_name . ' ARMP Contract PDF')
+            ->subject($this->contract->dealer_name.' ARMP Contract PDF')
             ->line('Thank you for your patronage please see finalized contract should you have any questions or concerns please let us know.')
-            ->line($this->contract->user->name . ' - ' . $this->contract->user->email)
+            ->line($this->contract->user->name.' - '.$this->contract->user->email)
             ->attach(Storage::disk('armpcon')->temporaryUrl($this->contract->pdf_path, now()->addMinutes(2)), [
-                'as' => str_replace(' ', '-', strtolower($this->contract->dealer_name)) . '-armp-contract.pdf',
+                'as' => str_replace(' ', '-', strtolower($this->contract->dealer_name)).'-armp-contract.pdf',
                 'mime' => 'application/pdf',
             ]);
     }

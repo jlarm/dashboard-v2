@@ -2,39 +2,27 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
-use App\Models\Dealer\Audit\FinanceAudit;
-use App\Models\Dealer\Store;
+use App\Models\Dealer\Audit\GlbaViolationAudit;
 use Livewire\Component;
 
 class IndexItem extends Component
 {
-    public FinanceAudit $financeAudit;
+    public GlbaViolationAudit $glbaAudit;
 
-    public Store $store;
-
-    public $rating;
-
-    protected $sum;
-
-    protected $audit;
+    public $store;
 
     protected $listeners = [
-        'refreshFinanceAudits' => '$refresh',
+        'pdfGenerated' => '$refresh',
     ];
 
-    public function mount()
+    public function quarter(): string
     {
-        $this->audit = FinanceAudit::where('id', $this->financeAudit->id)->get();
-        $this->audit->filter(function ($value) {
-            for ($i = 1; $i <= 46; $i++) {
-                if ($value->{'finance_q'.$i.'_answer'} == 2) {
-                    $this->sum += 1;
-                }
-            }
-        });
-        $total = count($this->audit) * 46;
-        $wrong = $this->sum;
-        $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
+        return $this->glbaAudit->date->format('Y').' Q'.ceil($this->glbaAudit->date->format('n') / 3);
+    }
+
+    public function download()
+    {
+        return \Storage::disk('armpaudits')->download($this->glbaAudit->pdf_path);
     }
 
     public function render()

@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Dealer\Home;
 
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
-use Carbon\Carbon;
 use Livewire\Component;
 
 class DealJacketStats extends Component
@@ -26,28 +25,34 @@ class DealJacketStats extends Component
         $this->store = $this->store ?? Store::first();
 
         $this->rating = IndividualAudit::where('store_id', $this->store->id)->pluck('rating')->average();
+    }
 
-        $this->audits = IndividualAudit::query()
-            ->where('store_id', $this->store->id)
-            ->where('audit_date', '>=', Carbon::now()->subYears(2))
-            ->where('pdf_path', '!=', null)
-            ->where('parent_id', null)
-            ->orderBy('audit_date', 'desc')
-            ->pluck('rating')
-            ->values()
-            ->toArray();
+    public function rating()
+    {
+        $avg = $this->rating;
 
-        $this->dates = IndividualAudit::query()
-            ->where('store_id', $this->store->id)
-            ->where('audit_date', '>=', Carbon::now()->subYears(2))
-            ->where('pdf_path', '!=', null)
-            ->where('parent_id', null)
-            ->selectRaw('DATE_FORMAT(audit_date, "%Y-%m-%d") as date')
-            ->orderBy('date', 'desc')
-            ->groupBy('date')
-            ->pluck('date')
-            ->values()
-            ->toArray();
+        return match (true) {
+            $avg >= 90 && $avg <= 100 => 'A',
+            $avg >= 80 && $avg <= 89 => 'B',
+            $avg >= 70 && $avg <= 79 => 'C',
+            $avg >= 60 && $avg <= 69 => 'D',
+            $avg > 0 && $avg <= 59 => 'F',
+            default => 'N/A',
+        };
+    }
+
+    public function ratingColor(): string
+    {
+        $value = $this->rating();
+
+        return match (true) {
+            $value == 'A' => 'teal',
+            $value == 'B' => 'blue',
+            $value == 'C' => 'purple',
+            $value == 'D' => 'orange',
+            $value == 'F' => 'red',
+            default => 'gray',
+        };
     }
 
     public function render()

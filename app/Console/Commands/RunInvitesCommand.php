@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Mail\TenDayOpenInviteReminderMail;
 use App\Mail\TwentyDayOpenInviteReminderMail;
 use App\Models\Dealer\Invite;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Log;
 use Mail;

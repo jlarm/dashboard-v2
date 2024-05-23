@@ -15,7 +15,9 @@ class UploadToDigitalOceanJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected Contract $contract) {}
+    public function __construct(protected Contract $contract)
+    {
+    }
 
     public function middleware(): array
     {
@@ -25,15 +27,14 @@ class UploadToDigitalOceanJob implements ShouldQueue
     public function handle(): void
     {
         $pdf = Storage::get('contracts/'.$this->contract->pdf_path);
-        $move = Storage::disk('armpcon')->put($this->contract->uuid. '/' . $this->contract->pdf_path, $pdf);
+        $move = Storage::disk('armpcon')->put($this->contract->uuid.'/'.$this->contract->pdf_path, $pdf);
         if ($move) {
             Storage::delete('contracts/'.$this->contract->pdf_path);
 
             $this->contract->update([
-                'pdf_path' => $this->contract->uuid. '/' . $this->contract->pdf_path,
+                'pdf_path' => $this->contract->uuid.'/'.$this->contract->pdf_path,
             ]);
         }
-
 
     }
 }

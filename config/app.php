@@ -176,6 +176,7 @@ return [
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\TenancyServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        App\Providers\StoreServiceProvider::class,
     ])->toArray(),
 
     /*

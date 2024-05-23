@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Models\Dealer\Violation;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
+
+class UploadAuditImagesJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected Violation $violation;
+
+    protected array $files;
+
+    public function __construct(Violation $violation, array $files)
+    {
+        $this->violation = $violation;
+        $this->files = $files;
+    }
+
+    public function handle(): void
+    {
+        foreach ($this->files as $path) {
+            // Check if a file exists at the path
+            if (Storage::disk('public')->exists($path)) {
+                // Retrieve the file using the path
+                $file = Storage::disk('public')->get($path);
+                $this->violation->addMediaFromDisk($file, 'public')
+                    ->toMediaCollection('violation_files');
+                // Delete the temporary file
+                Storage::disk('public')->delete($path);
+            }
+        }
+    }
+}

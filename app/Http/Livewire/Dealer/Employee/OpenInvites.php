@@ -13,8 +13,11 @@ class OpenInvites extends Component
     use WithPagination;
 
     public $search = '';
+
     public $selectPage = false;
+
     public $selectAll = false;
+
     public $selected = [];
 
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
@@ -26,7 +29,7 @@ class OpenInvites extends Component
         SendQueueEmailJob::dispatch($invite);
 
         Notification::make()
-            ->title('Invite to ' . $invite->name . ' sent')
+            ->title('Invite to '.$invite->name.' sent')
             ->success()
             ->send();
     }

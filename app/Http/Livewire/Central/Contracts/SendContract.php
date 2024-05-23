@@ -11,6 +11,7 @@ class SendContract extends Component
     public Contract $contract;
 
     public $emailAddresses = [];
+
     public $emailAddress;
 
     public function addEmailAddress(): void
@@ -21,6 +22,7 @@ class SendContract extends Component
 
         if (in_array($this->emailAddress, $this->emailAddresses)) {
             $this->addError('emailAddress', 'The email address already exists in the list.');
+
             return;
         }
 
@@ -39,6 +41,7 @@ class SendContract extends Component
     {
         if ($this->emailAddresses === []) {
             $this->addError('emailAddresses', 'Please add at least one email address.');
+
             return;
         }
 

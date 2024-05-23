@@ -12,8 +12,9 @@ class DownloadPdf extends Component
     public function download()
     {
         return \Storage::disk('armpcon')->download($this->contract->pdf_path);
-//        return response()->download(\Storage::disk('armpcon')->get($this->contract->pdf_path, now()->minutes(5), []));
+        //        return response()->download(\Storage::disk('armpcon')->get($this->contract->pdf_path, now()->minutes(5), []));
     }
+
     public function render()
     {
         return view('livewire.central.contracts.download-pdf');

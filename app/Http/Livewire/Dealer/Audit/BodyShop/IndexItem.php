@@ -2,15 +2,28 @@
 
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
-use App\Models\Dealer\Audit\BodyShopAudit;
-use App\Models\Dealer\Store;
+use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use Livewire\Component;
 
 class IndexItem extends Component
 {
-    public BodyShopAudit $bodyShopAudit;
+    public BodyShopViolationAudit $bodyShopAudit;
 
-    public Store $store;
+    public $store;
+
+    protected $listeners = [
+        'pdfGenerated' => '$refresh',
+    ];
+
+    public function quarter(): string
+    {
+        return $this->bodyShopAudit->date->format('Y').' Q'.ceil($this->bodyShopAudit->date->format('n') / 3);
+    }
+
+    public function download()
+    {
+        return \Storage::disk('armpaudits')->download($this->bodyShopAudit->pdf_path);
+    }
 
     public function render()
     {

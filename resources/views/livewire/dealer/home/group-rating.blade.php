@@ -1,4 +1,4 @@
-<div class="px-6">
+<div>
     <p class="font-bold text-2xl mt-10">Overall Audit Ratings</p>
     <p class="text-sm text-gray-500 mb-5">Based on all stores in your group</p>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

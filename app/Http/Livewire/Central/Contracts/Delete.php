@@ -12,6 +12,7 @@ class Delete extends Modal
     use InteractsWithConfirmationModal;
 
     public Contract $contract;
+
     public function delete(): void
     {
         $this->askForConfirmation(

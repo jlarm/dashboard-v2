@@ -10,6 +10,7 @@ use Livewire\Component;
 class Create extends Component
 {
     public $contractType;
+
     public $agreementDate;
 
     public $dealerName;

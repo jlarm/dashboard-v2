@@ -3,20 +3,28 @@
 namespace App\Http\Controllers\Dealer\Audit;
 
 use App\Http\Controllers\Controller;
-use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Store;
 use Illuminate\Http\RedirectResponse;
+use Str;
 
 class BodyShopCreateController extends Controller
 {
-    public function __invoke(): RedirectResponse
+    public function __invoke($store): RedirectResponse
     {
-        $audit = BodyShopAudit::create([
+        $audit = BodyShopViolationAudit::create([
+            'uuid' => (string) Str::uuid(),
             'user_id' => auth()->id(),
-            'store_id' => request()->store_id ?? Store::first()->id,
-            'audit_date' => now()->format('Y-m-d'),
+            'store_id' => $store,
+            'date' => now()->format('Y-m-d'),
         ]);
 
-        return redirect()->to(route('dealer.audit.body-shop.show', $audit->id));
+        if (tenant('locations')) {
+            $currentStore = Store::find($store);
+
+            return redirect()->to(route('dealer.stores.audits.body-shop.edit', [$currentStore->slug, $audit->uuid]));
+        }
+
+        return redirect()->to(route('dealer.audit.body-shop.edit', $audit->uuid));
     }
 }

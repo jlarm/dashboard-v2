@@ -7,10 +7,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-    scrollbar-gutter: stable;
-}
-
 [x-cloak] {
     display: none !important;
 }
