@@ -63,6 +63,7 @@ class OshaStats extends Component
 
     public function rating(): string
     {
+        $gradesCount = count($this->grades());
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
         $total = 0;
 
@@ -70,7 +71,11 @@ class OshaStats extends Component
             $total += $gradeValues[$grade];
         }
 
-        $avg = $total / count($this->grades());
+        if ($gradesCount == 0) {
+            return 'N/A';
+        } else {
+            $avg = $total / count($this->grades());
+        }
 
         return match (true) {
             $avg >= 3.5 && $avg <= 4 => 'A',
