@@ -40,7 +40,7 @@ class OshaStats extends Component
             $avg >= 80 && $avg <= 89 => 'B',
             $avg >= 70 && $avg <= 79 => 'C',
             $avg >= 60 && $avg <= 69 => 'D',
-            $avg >= 0 && $avg <= 59 => 'F',
+            default => 'F',
         };
 
     }
