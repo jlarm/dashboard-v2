@@ -1,6 +1,6 @@
 <div>
     <div class="relative overflow-hidden p-4 sm:p-5 bg-white border border-gray-200 rounded-xl shadow-sm before:absolute before:top-0 before:end-0 before:size-full before:bg-gradient-to-br before:from-{{ $this->ratingColor() }}-100 before:via-transparent before:blur-xl dark:bg-neutral-800 dark:border-neutral-700 dark:before:from-{{ $this->ratingColor() }}-800/30 dark:before:via-transparent">
-        <a href="{{ !tenant('locations') ? route('dealer.audit.osha.index') : route('dealer.stores.audits.osha.index', $store) }}" class="relative z-10">
+        <a href="{{ !tenant('locations') ? route('dealer.audit.body-shop.index') : route('dealer.stores.audits.body-shop.index', $store) }}" class="relative z-10">
             <!-- Header -->
             <div class="flex justify-between gap-x-3">
                 <!-- Icon -->
