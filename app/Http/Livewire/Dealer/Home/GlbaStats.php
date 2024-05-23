@@ -28,6 +28,7 @@ class GlbaStats extends Component
         $avg = FinanceAudit::query()
             ->where('store_id', $this->store->id)
             ->where('rating', '!=', null)
+            ->where('rating', '!=', 'N/A')
             ->pluck('rating')
             ->average();
 

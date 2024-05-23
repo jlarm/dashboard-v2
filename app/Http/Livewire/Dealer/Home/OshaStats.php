@@ -28,6 +28,7 @@ class OshaStats extends Component
         $avg = OshaAudit::query()
             ->where('store_id', $this->store->id)
             ->where('rating', '!=', null)
+            ->where('rating', '!=', 'N/A')
             ->pluck('rating')
             ->average();
 
