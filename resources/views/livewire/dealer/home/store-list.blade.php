@@ -20,7 +20,7 @@
                         <tbody class="divide-y divide-gray-200 bg-white">
                         @forelse($stores as $store)
                         <tr class="hover:cursor-pointer" onclick="window.location='{{ route('dealer.stores.home', $store) }}'">
-                            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">{{ $store->name }}</td>
+                            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">{{ Str::limit($store->name, 20) }}</td>
                             <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
                                 <span class="@if($store->overall_grade == 'A') bg-green-100 text-green-700
                                     @elseif($store->overall_grade == 'B') bg-blue-100 text-blue-700
