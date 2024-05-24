@@ -1,6 +1,6 @@
 <tr>
     <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-        {{ $manual->created_at->format('F d, Y') }}
+        {{ $manual->created_at?->format('F d, Y') }}
     </td>
     <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 flex justify-end">
         <a href="{{ $link }}" target="_blank" rel="noopener noreferrer" class="flex items-center">
