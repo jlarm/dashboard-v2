@@ -47,6 +47,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('{course:slug}/quiz', CourseResultsController::class)->name('quiz.store');
     });
 
+    Route::get('osha-violations', \App\Http\Livewire\Central\AuditStatements\Osha\Index::class)->name('osha-violations.index');
+    Route::get('body-shop-violations', \App\Http\Livewire\Central\AuditStatements\BodyShop\Index::class)->name('body-shop-violations.index');
+    Route::get('glba-violations', \App\Http\Livewire\Central\AuditStatements\Glba\Index::class)->name('glba-violations.index');
+
     Route::get('documents', \App\Http\Livewire\Central\Docs\Index::class)->name('docs.index');
 
 });
@@ -91,15 +95,12 @@ Route::middleware(['can:delete-users', 'auth', 'verified'])->group(function () {
     Route::get('course-management/{course:slug}', \App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
     Route::get('course-management/quiz/{course:slug}', \App\Http\Livewire\Central\CourseManagement\EditQuiz::class)->name('course-management.edit-quiz');
 
-    Route::get('osha-violations', \App\Http\Livewire\Central\AuditStatements\Osha\Index::class)->name('osha-violations.index');
     Route::get('osha-violations/create', \App\Http\Livewire\Central\AuditStatements\Osha\Create::class)->name('osha-violations.create');
     Route::get('osha-violations/{oshaViolation}', \App\Http\Livewire\Central\AuditStatements\Osha\Edit::class)->name('osha-violations.edit');
 
-    Route::get('body-shop-violations', \App\Http\Livewire\Central\AuditStatements\BodyShop\Index::class)->name('body-shop-violations.index');
     Route::get('body-shop-violations/create', \App\Http\Livewire\Central\AuditStatements\BodyShop\Create::class)->name('body-shop-violations.create');
     Route::get('body-shop-violations/{bodyShopViolation}', \App\Http\Livewire\Central\AuditStatements\BodyShop\Edit::class)->name('body-shop-violations.edit');
 
-    Route::get('glba-violations', \App\Http\Livewire\Central\AuditStatements\Glba\Index::class)->name('glba-violations.index');
     Route::get('glba-violations/create', \App\Http\Livewire\Central\AuditStatements\Glba\Create::class)->name('glba-violations.create');
     Route::get('glba-violations/{glbaViolation}', \App\Http\Livewire\Central\AuditStatements\Glba\Edit::class)->name('glba-violations.edit');
 

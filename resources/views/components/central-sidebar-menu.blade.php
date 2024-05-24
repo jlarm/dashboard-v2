@@ -75,7 +75,6 @@
                         </li>
                     </ul>
                 </li>
-                @can('delete-users')
 
                                 <li>
                                     <div class="text-xs font-semibold leading-6 text-gray-400">Admin Menu</div>
@@ -137,6 +136,7 @@
                                                 <span class="truncate">GLBA Statements</span>
                                             </a>
                                         </li>
+                                        @can('delete-users')
                                         <li>
                                             <a href="{{ route('logs.index') }}"
                                                class="{{ (request()->segment(1) == 'logs') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
@@ -145,9 +145,9 @@
                                                 <span class="truncate">Logs</span>
                                             </a>
                                         </li>
+                                        @endcan
                                     </ul>
                                 </li>
-                @endcan
                 <li class="mt-auto">
                     <a href="https://docs.armp.app/"
                        target="_blank"
