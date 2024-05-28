@@ -48,8 +48,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::get('osha-violations', \App\Http\Livewire\Central\AuditStatements\Osha\Index::class)->name('osha-violations.index');
+    Route::get('osha-violations/print', App\Http\Livewire\Central\AuditStatements\Osha\PrintView::class)->name('osha-violations.print');
     Route::get('body-shop-violations', \App\Http\Livewire\Central\AuditStatements\BodyShop\Index::class)->name('body-shop-violations.index');
+    Route::get('body-shop-violations/print', App\Http\Livewire\Central\AuditStatements\BodyShop\PrintView::class)->name('body-shop-violations.print');
     Route::get('glba-violations', \App\Http\Livewire\Central\AuditStatements\Glba\Index::class)->name('glba-violations.index');
+    Route::get('glba-violations/print', App\Http\Livewire\Central\AuditStatements\Glba\PrintView::class)->name('glba-violations.print');
 
     Route::get('documents', \App\Http\Livewire\Central\Docs\Index::class)->name('docs.index');
 

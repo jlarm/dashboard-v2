@@ -4,7 +4,8 @@
             <div class="sm:flex-auto">
                 <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">GLBA Violation Statements</h1>
             </div>
-            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none flex gap-3">
+                <x-primary-link-button target="_blank" href="{{ route('glba-violations.print') }}">Print View</x-primary-link-button>
                 @can('delete-users')
                 <a href="{{ route('glba-violations.create') }}" class="block rounded-md bg-arm-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">Add Violation</a>
                 @endcan
