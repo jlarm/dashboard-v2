@@ -14,6 +14,10 @@ class StoreIdentifierMiddleware
             return $next($request);
         }
 
+        if (!Store::exists($request->store)) {
+            return $next($request);
+        }
+
         $path = $request->path();
         $segments = explode('/', $path);
 
