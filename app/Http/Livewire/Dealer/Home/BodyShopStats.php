@@ -6,11 +6,12 @@ use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\BodyShopGenerateRating;
+use App\Traits\HasAuditStats;
 use Livewire\Component;
 
 class BodyShopStats extends Component
 {
-    use BodyShopGenerateRating;
+    use BodyShopGenerateRating, HasAuditStats;
 
     public Store $store;
 
@@ -21,6 +22,11 @@ class BodyShopStats extends Component
     public function mount()
     {
         $this->store = $this->store ?? Store::first();
+    }
+
+    private function violationAudits()
+    {
+        return BodyShopViolationAudit::query()->where('store_id', $this->store->id);
     }
 
     private function convertRatingToGrade()
@@ -48,8 +54,7 @@ class BodyShopStats extends Component
 
     private function grades(): array
     {
-        $grades = BodyShopViolationAudit::query()
-            ->where('store_id', $this->store->id)
+        $grades = $this->violationAudits()
             ->whereNotNull('grade')
             ->where('grade', '!=', 'N/A')
             ->pluck('grade')

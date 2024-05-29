@@ -6,11 +6,12 @@ use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\GlbaGenerateRating;
+use App\Traits\HasAuditStats;
 use Livewire\Component;
 
 class GlbaStats extends Component
 {
-    use GlbaGenerateRating;
+    use GlbaGenerateRating, HasAuditStats;
 
     public Store $store;
 
@@ -21,6 +22,11 @@ class GlbaStats extends Component
     public function mount()
     {
         $this->store = $this->store ?? Store::first();
+    }
+
+    private function violationAudits()
+    {
+        return GlbaViolationAudit::query()->where('store_id', $this->store->id);
     }
 
     private function convertRatingToGrade()
@@ -48,8 +54,7 @@ class GlbaStats extends Component
 
     private function grades(): array
     {
-        $grades = GlbaViolationAudit::query()
-            ->where('store_id', $this->store->id)
+        $grades = $this->violationAudits()
             ->whereNotNull('grade')
             ->where('grade', '!=', 'N/A')
             ->pluck('grade')

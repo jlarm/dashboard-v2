@@ -6,11 +6,12 @@ use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\OshaGenerateRating;
+use App\Traits\HasAuditStats;
 use Livewire\Component;
 
 class OshaStats extends Component
 {
-    use OshaGenerateRating;
+    use OshaGenerateRating, HasAuditStats;
 
     public Store $store;
 
@@ -21,6 +22,11 @@ class OshaStats extends Component
     public function mount()
     {
         $this->store = $this->store ?? Store::first();
+    }
+
+    private function violationAudits()
+    {
+        return OshaViolationAudit::query()->where('store_id', $this->store->id);
     }
 
     private function convertRatingToGrade()
@@ -48,8 +54,7 @@ class OshaStats extends Component
 
     private function grades(): array
     {
-        $grades = OshaViolationAudit::query()
-            ->where('store_id', $this->store->id)
+        $grades = $this->violationAudits()
             ->whereNotNull('grade')
             ->where('grade', '!=', 'N/A')
             ->pluck('grade')
