@@ -1,5 +1,4 @@
 <x-wire-elements-pro::tailwind.modal
-    on-submit="save"
     :content-padding="false"
 >
     <div class="relative z-10" role="dialog" aria-modal="true">
