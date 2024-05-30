@@ -1,32 +1,32 @@
-<div>
-    <div class="w-full max-w-3xl mx-auto">
+<div class="mb-10">
+    <div class="w-full max-w-3xl mx-auto px-6">
         <div class="space-y-3 flex flex-col bg-white my-10">
 
             <!-- Progress -->
-            <div class="my-4">
+            <div>
                 <!-- Header -->
-                <div class="mb-3 flex justify-between">
-                    <span class="block text-xl font-semibold text-gray-800 dark:text-neutral-200">
+                <div class="mb-3 flex flex-col md:flex-row justify-between items-center gap-3">
+                    <span class="block text-xl font-semibold text-gray-800">
                         GLBA Walkthrough Audit for {{ $glbaViolationAudit->date->format('F d, Y') }}
                     </span>
                     @if($glbaViolationAudit->pdf_path)
-                        <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Completed</span>
+                        <span class="flex-shrink-0 inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Completed</span>
                     @else
-                        <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-sky-100 text-sky-800 dark:bg-sky-800/30 dark:text-sky-500">In Progress</span>
+                        <span class="flex-shrink-0 inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-sky-100 text-sky-800 dark:bg-sky-800/30 dark:text-sky-500">In Progress</span>
                     @endif
                 </div>
                 <!-- End Header -->
             </div>
             <!-- End Progress -->
         </div>
-        <div class="space-y-10">
+        <div class="space-y-2">
             @forelse($violations as $violation)
                 <div class="space-y-5 border rounded-md p-5 relative">
-                    <div class="flex justify-between">
-                        <p class="text-sm text-gray-600 w-5/6">{{ $violation->statement }}</p>
-                        <div class="w-1/6 text-right">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-y-3">
+                        <p class="col-span-3 text-sm text-gray-600">{{ $violation->statement }}</p>
+                        <div class="md:text-right">
                             @if($violation->risk)
-                                <span class="inline-flex items-center gap-x-1.5 rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
+                                <span class="lex-shrink-0 inline-flex items-center gap-x-1.5 rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
                                   <svg class="h-1.5 w-1.5 fill-red-500" viewBox="0 0 6 6" aria-hidden="true">
                                     <circle cx="3" cy="3" r="3" />
                                   </svg>

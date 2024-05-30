@@ -1,4 +1,4 @@
-<div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+<div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
     <div class="space-y-1">
         <div class="flex justify-between">
             <h4 class="mb-2.5 font-medium text-sm text-gray-800 dark:text-neutral-300">
