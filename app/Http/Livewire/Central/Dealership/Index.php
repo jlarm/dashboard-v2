@@ -11,17 +11,19 @@ class Index extends Component
 
     protected $listeners = ['refreshDealerships' => '$refresh'];
 
-    public function dashboardLink()
+    private function query()
     {
+        return auth()->user()->hasRole('super-admin')
+            ? Dealership::query()
+            : Dealership::query()->where('user_id', auth()->id());
     }
 
     public function render()
     {
         return view('livewire.central.dealership.index', [
-            'dealerships' => Dealership::query()
+            'dealerships' => $this->query()
                 ->orderBy('name')
                 ->search('name', $this->search)
-                ->latest()
                 ->with('user')
                 ->get(),
         ]);

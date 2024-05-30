@@ -11,9 +11,9 @@
                     <div>
                         <form method="POST" action="{{ route('employees.store') }}">
                             @csrf
-                            <input type="hidden" id="name" name="name" value="{{ $name }}">
-                            <input type="hidden" id="email" name="email" value="{{ $email }}">
-                            <input type="hidden" id="role" name="role" value="{{ $role }}">
+                            <input type="hidden" id="nameHidden" name="name" value="{{ $name }}">
+                            <input type="hidden" id="emailHidden" name="email" value="{{ $email }}">
+                            <input type="hidden" id="roleHidden" name="role" value="{{ $role }}">
 
                             <!-- Name -->
                             <div>
@@ -51,6 +51,7 @@
                                     :value="old('phone')"
                                     required
                                     autofocus
+                                    x-mask="999-999-9999"
                                 />
 
                                 <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
