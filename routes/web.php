@@ -54,6 +54,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('glba-violations', \App\Http\Livewire\Central\AuditStatements\Glba\Index::class)->name('glba-violations.index');
     Route::get('glba-violations/print', App\Http\Livewire\Central\AuditStatements\Glba\PrintView::class)->name('glba-violations.print');
 
+    Route::get('sds', \App\Http\Livewire\Central\Sds\Index::class)->name('sds.index');
+    Route::get('sds/create', \App\Http\Livewire\Central\Sds\Create::class)->name('sds.create');
+    Route::get('sds/{sds:uuid}', \App\Http\Livewire\Central\Sds\Edit::class)->name('sds.edit');
+
     Route::get('documents', \App\Http\Livewire\Central\Docs\Index::class)->name('docs.index');
 
 });
