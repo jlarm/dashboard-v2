@@ -4,12 +4,20 @@ namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
+
     public $search = '';
 
     protected $listeners = ['refreshDealerships' => '$refresh'];
+
+    public function updatedSearch($value)
+    {
+        $this->resetPage();
+    }
 
     private function query()
     {
@@ -25,7 +33,7 @@ class Index extends Component
                 ->orderBy('name')
                 ->search('name', $this->search)
                 ->with('user')
-                ->get(),
+                ->paginate(10),
         ]);
     }
 }

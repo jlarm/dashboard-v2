@@ -46,4 +46,7 @@
             </tbody>
         </table>
     </div>
+    <div>
+        {{ $dealerships->links() }}
+    </div>
 </div>
