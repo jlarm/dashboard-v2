@@ -93,20 +93,6 @@ class OshaStats extends Component
         };
     }
 
-    public function ratingColor(): string
-    {
-        $value = $this->rating();
-
-        return match (true) {
-            $value == 'A' => 'teal',
-            $value == 'B' => 'blue',
-            $value == 'C' => 'purple',
-            $value == 'D' => 'orange',
-            $value == 'F' => 'red',
-            default => 'gray',
-        };
-    }
-
     public function render()
     {
         return view('livewire.dealer.home.osha-stats');
