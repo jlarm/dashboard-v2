@@ -14,6 +14,8 @@ class StoreSwitcher extends Component
 
     public $storeSlug;
 
+    protected $listeners = ['refreshStores' => 'mount'];
+
     public function mount(Request $request): void
     {
         $this->setStoreSlug();
