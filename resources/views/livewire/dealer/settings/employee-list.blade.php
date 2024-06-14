@@ -6,7 +6,7 @@
         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
             <form wire:submit.prevent="update">
                 <div class="pb-10 space-y-6">
-                    <div class="grid grid-cols-1 mg:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label for="qi" class="block text-sm font-medium text-gray-700">Qualified Individual
                                 Name</label>
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 mg:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label for="service_manager_name" class="block text-sm font-medium text-gray-700">Service
                                 Manager</label>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 mg:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label for="parts_manager_name" class="block text-sm font-medium text-gray-700">Parts
                                 Manager</label>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 mg:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label for="body_shop_manager_name" class="block text-sm font-medium text-gray-700">Body
                                 Shop
@@ -110,7 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 mg:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label for="general_manager_name" class="block text-sm font-medium text-gray-700">General
                                 Manager</label>
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 mg:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label for="owner_name" class="block text-sm font-medium text-gray-700">Owner</label>
                             <div class="mt-1">
