@@ -20,6 +20,7 @@
                             return Array.from(parent.children).indexOf(el) + 1
                         }
                     }"
+                    class="border rounded-xl border-gray-200 shadow-sm p-6"
                     x-id="['tab']"
                 >
                     <!-- Tab List -->
@@ -44,8 +45,8 @@
                                 type="button"
                                 :tabindex="isSelected($el.id) ? 0 : -1"
                                 :aria-selected="isSelected($el.id)"
-                                :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
-                                class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                                :class="isSelected($el.id) ? 'border-b border-arm-blue-500 text-arm-blue-500' : 'border-transparent'"
+                                class="inline-flex px-5 py-2.5"
                                 role="tab"
                             >External Scans
                             </button>
@@ -60,8 +61,8 @@
                                 type="button"
                                 :tabindex="isSelected($el.id) ? 0 : -1"
                                 :aria-selected="isSelected($el.id)"
-                                :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
-                                class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                                :class="isSelected($el.id) ? 'border-b border-arm-blue-500 text-arm-blue-500' : 'border-transparent'"
+                                class="inline-flex px-5 py-2.5"
                                 role="tab"
                             >Internal Scans
                             </button>
@@ -77,8 +78,8 @@
                                     type="button"
                                     :tabindex="isSelected($el.id) ? 0 : -1"
                                     :aria-selected="isSelected($el.id)"
-                                    :class="isSelected($el.id) ? 'border-gray-200 bg-white' : 'border-transparent'"
-                                    class="inline-flex rounded-t-md border-t border-l border-r px-5 py-2.5"
+                                    :class="isSelected($el.id) ? 'border-b border-arm-blue-500 text-arm-blue-500' : 'border-transparent'"
+                                    class="inline-flex px-5 py-2.5"
                                     role="tab"
                                 >Settings
                                 </button>
@@ -88,7 +89,7 @@
                     </ul>
 
                     <!-- Panels -->
-                    <div role="tabpanels" class="rounded-b-md border border-gray-200 bg-white">
+                    <div role="tabpanels" class="rounded-b-md border-t border-gray-200 bg-white">
                         <!-- Panel -->
                         <section
                             x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"

@@ -107,7 +107,7 @@
         </div>
 
         <div x-cloak x-show="open" class="space-y-3 grid grid-cols-1 gap-3">
-            <p>Add the completion date of any courses completed in the past year.</p>
+            <p>Add completed courses that are still valid.</p>
             @foreach($allCourses as $course)
                 <div>
                     <p class="text-sm">{{ $course->name }}</p>

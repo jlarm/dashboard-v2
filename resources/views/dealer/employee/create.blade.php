@@ -13,7 +13,7 @@
     </div>
 
     <div class="px-6">
-        <div class="border rounded-md p-6">
+        <div class="border rounded-xl border-gray-200 shadow-sm p-6">
             <livewire:dealer.employee.create/>
         </div>
     </div>

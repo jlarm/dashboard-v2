@@ -32,7 +32,7 @@
     </div>
 
     <div class="px-6">
-        <div class="p-6 border rounded-md">
+        <div class="p-6 border rounded-xl border-gray-200 shadow-sm">
             @can('edit-stores')
                 <livewire:dealer.employee.index/>
             @endcan
