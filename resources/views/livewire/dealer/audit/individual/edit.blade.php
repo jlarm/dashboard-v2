@@ -1,8 +1,8 @@
 <div class="min-h-screen">
     <form class="md:px-4" wire:loading.class="opacity-25">
-        <div class="space-y-6">
+        <div class="max-w-3xl mx-auto px-3 mb-5 space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="ml-3 sm:ml-0">
+                <div>
                     <label for="audit_date" class="block text-sm font-medium leading-6 text-gray-900">Audit Date</label>
                     <div class="mt-2">
                         <input
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <!-- Deal Jacket Date -->
-                <div class="ml-3 md:ml-0">
+                <div>
                     <label for="deal_jacket_date" class="block text-sm font-medium leading-6 text-gray-900">Date of Deal
                         Jacket</label>
                     <div class="mt-2">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <!-- Customer Name -->
-                <div class="ml-3 md:ml-0">
+                <div>
                     <label for="customer_name" class="block text-sm font-medium leading-6 text-gray-900">Customer
                         Name</label>
                     <div class="mt-2">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <!-- Customer Number -->
-                <div class="ml-3 md:ml-0">
+                <div>
                     <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Customer Deal
                         Number</label>
                     <div class="mt-2">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <!-- Manager Name -->
-                <div class="ml-3 md:ml-0">
+                <div>
                     <label for="manager_id" class="block text-sm font-medium leading-6 text-gray-900">Finance
                         Manager</label>
                     <div class="mt-2">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <!-- Mileage -->
-                <div class="ml-3 md:ml-0">
+                <div>
                     <label for="customer_number" class="block text-sm font-medium leading-6 text-gray-900">Mileage</label>
                     <div class="mt-2">
                         <input
@@ -86,160 +86,79 @@
                     </div>
                 </div>
             </div>
-            @foreach($questions as $question)
-                <div class="bg-gray-50 p-3 space-y-7">
-                    @if($question->id == 1)
-                        <div>
-                            <label class="text-base font-semibold text-gray-900">{{ $question->id }}
-                                . {{ $question->question }}</label>
-                            <fieldset class="mt-4">
-                                <div class="flex items-center space-x-5">
-                                    <div class="flex items-center">
-                                        <input
-                                            wire:model.defer="individual_q{{ $question->id }}_answer"
-                                            value="1"
-                                            name="individual_q{{ $question->id }}_answer"
-                                            id="individual_q{{ $question->id }}_answer_1"
-                                            type="radio"
-                                            class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                                        >
-                                        <label for="individual_q{{ $question->id }}_answer_1"
-                                               class="ml-3 block text-sm font-medium leading-6 text-gray-900">Cash</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input
-                                            wire:model.defer="individual_q{{ $question->id }}_answer"
-                                            value="2"
-                                            name="individual_q{{ $question->id }}_answer"
-                                            id="individual_q{{ $question->id }}_answer_2"
-                                            type="radio"
-                                            class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                                        >
-                                        <label for="individual_q{{ $question->id }}_answer_2"
-                                               class="ml-3 block text-sm font-medium leading-6 text-gray-900">Finance</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input
-                                            wire:model.defer="individual_q{{ $question->id }}_answer"
-                                            value="3"
-                                            name="individual_q{{ $question->id }}_answer"
-                                            id="individual_q{{ $question->id }}_answer_3"
-                                            type="radio"
-                                            class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                                        >
-                                        <label for="individual_q{{ $question->id }}_answer_3"
-                                               class="ml-3 block text-sm font-medium leading-6 text-gray-900">Lease</label>
-                                    </div>
+            @foreach($questions as $index => $question)
+                <div class="border border-gray-200 shadow-sm rounded-xl p-5">
+                    <label class="text-base font-semibold text-gray-900">{{ $index + 1 }}. {{ $question->question }}</label>
+                    <div class="space-y-4 mt-4">
+                        <fieldset>
+                            <div class="flex items-center space-x-5">
+                                <div class="flex items-center">
+                                    <input
+                                        wire:model.defer="individual_q{{ $question->id }}_answer"
+                                        value="1"
+                                        name="individual_q{{ $question->id }}_answer"
+                                        id="individual_q{{ $question->id }}_answer_1"
+                                        type="radio"
+                                        class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                                    >
+                                    <label for="individual_q{{ $question->id }}_answer_1"
+                                           class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
                                 </div>
-                            </fieldset>
-                        </div>
-                    @elseif($question->id == 2)
-                        <div>
-                            <label class="text-base font-semibold text-gray-900">{{ $question->id }}
-                                . {{ $question->question }}</label>
-                            <fieldset class="mt-4">
-                                <div class="flex items-center space-x-5">
-                                    <div class="flex items-center">
-                                        <input
-                                            wire:model.defer="individual_q{{ $question->id }}_answer"
-                                            value="1"
-                                            name="individual_q{{ $question->id }}_answer"
-                                            id="individual_q{{ $question->id }}_answer_1"
-                                            type="radio"
-                                            class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                                        >
-                                        <label for="individual_q{{ $question->id }}_answer_1"
-                                               class="ml-3 block text-sm font-medium leading-6 text-gray-900">New</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input
-                                            wire:model.defer="individual_q{{ $question->id }}_answer"
-                                            value="2"
-                                            name="individual_q{{ $question->id }}_answer"
-                                            id="individual_q{{ $question->id }}_answer_2"
-                                            type="radio"
-                                            class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                                        >
-                                        <label for="individual_q{{ $question->id }}_answer_2"
-                                               class="ml-3 block text-sm font-medium leading-6 text-gray-900">Used</label>
-                                    </div>
+                                <div class="flex items-center">
+                                    <input
+                                        wire:model.defer="individual_q{{ $question->id }}_answer"
+                                        value="2"
+                                        name="individual_q{{ $question->id }}_answer"
+                                        id="individual_q{{ $question->id }}_answer_2"
+                                        type="radio"
+                                        class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                                    >
+                                    <label for="individual_q{{ $question->id }}_answer_2"
+                                           class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
                                 </div>
-                            </fieldset>
-                        </div>
-                    @else
-                        <div>
-                            <label class="text-base font-semibold text-gray-900">{{ $question->id }}
-                                . {{ $question->question }}</label>
-                            <fieldset class="mt-4">
-                                <div class="flex items-center space-x-5">
-                                    <div class="flex items-center">
-                                        <input
-                                            wire:model.defer="individual_q{{ $question->id }}_answer"
-                                            value="1"
-                                            name="individual_q{{ $question->id }}_answer"
-                                            id="individual_q{{ $question->id }}_answer_1"
-                                            type="radio"
-                                            class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                                        >
-                                        <label for="individual_q{{ $question->id }}_answer_1"
-                                               class="ml-3 block text-sm font-medium leading-6 text-gray-900">Yes</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input
-                                            wire:model.defer="individual_q{{ $question->id }}_answer"
-                                            value="2"
-                                            name="individual_q{{ $question->id }}_answer"
-                                            id="individual_q{{ $question->id }}_answer_2"
-                                            type="radio"
-                                            class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                                        >
-                                        <label for="individual_q{{ $question->id }}_answer_2"
-                                               class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input
-                                            wire:model.defer="individual_q{{ $question->id }}_answer"
-                                            value="3"
-                                            name="individual_q{{ $question->id }}_answer"
-                                            id="individual_q{{ $question->id }}_answer_3"
-                                            type="radio"
-                                            class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
-                                        >
-                                        <label for="individual_q{{ $question->id }}_answer_3"
-                                               class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
-                                    </div>
+                                <div class="flex items-center">
+                                    <input
+                                        wire:model.defer="individual_q{{ $question->id }}_answer"
+                                        value="3"
+                                        name="individual_q{{ $question->id }}_answer"
+                                        id="individual_q{{ $question->id }}_answer_3"
+                                        type="radio"
+                                        class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                                    >
+                                    <label for="individual_q{{ $question->id }}_answer_3"
+                                           class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
+                        <div class="relative flex items-start">
+                            <div class="flex h-6 items-center">
+                                <label>
+                                    <input
+                                        wire:model.defer="individual_q{{ $question->id }}_danger"
+                                        id="individual_q{{ $question->id }}_danger"
+                                        type="checkbox"
+                                        class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
+                                    />
+                                </label>
+                            </div>
+                            <div class="ml-3 text-sm leading-6">
+                                <label for="individual_q{{ $question->id }}_danger" class="font-medium text-red-500">Flag as
+                                    high
+                                    risk</label>
+                            </div>
                         </div>
-                    @endif
-                    <div class="relative flex items-start">
-                        <div class="flex h-6 items-center">
-                            <label>
-                                <input
-                                    wire:model.defer="individual_q{{ $question->id }}_danger"
-                                    id="individual_q{{ $question->id }}_danger"
-                                    type="checkbox"
-                                    class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600"
-                                />
-                            </label>
+                        <div>
+                            <label class="text-base font-semibold text-gray-900">Comments</label>
+                            <textarea wire:model.defer="individual_q{{ $question->id }}_comment"
+                                      id="individual_q{{ $question->id }}_comment"
+                                      name="individual_q{{ $question->id }}_comment"
+                                      rows="3"
+                                      class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 disabled:opacity-50 disabled:pointer-events-none"></textarea>
                         </div>
-                        <div class="ml-3 text-sm leading-6">
-                            <label for="individual_q{{ $question->id }}_danger" class="font-medium text-red-500">Flag as
-                                high
-                                risk</label>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="text-base font-semibold text-gray-900">Comments</label>
-                        <textarea wire:model.defer="individual_q{{ $question->id }}_comment"
-                                  id="individual_q{{ $question->id }}_comment"
-                                  name="individual_q{{ $question->id }}_comment"
-                                  rows="3"
-                                  class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                     </div>
                 </div>
             @endforeach
-            <div class="bg-gray-50 p-3 space-y-7">
+            <div class="border border-gray-200 shadow-sm rounded-xl p-5 space-y-7">
                 <label class="text-base font-semibold text-gray-900">Image Upload</label>
                 <!-- Images -->
                 <x-media-library-collection
