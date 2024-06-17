@@ -1,7 +1,7 @@
 <ul role="list" class="divide-y divide-gray-100">
     @forelse($events as $event)
         <li>
-            <a class="flex justify-between gap-x-6 py-5" href="{{ $event->link }}" target="_blank">
+            <a class="flex justify-between gap-x-6 py-5" @if($event->link) href="{{ $event->link }}" @endif target="_blank">
                 <div class="flex min-w-0 gap-x-4">
                     <div class="min-w-0 flex-auto">
                         <p class="text-sm font-semibold leading-6 text-gray-900">{{ $event->name }}</p>

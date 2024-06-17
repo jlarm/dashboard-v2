@@ -7,7 +7,7 @@
         <div>
             <x-input-label for="name" :value="__('Event Name*')"/>
             <x-text-input wire:model.defer="name" id="name" class="block mt-1 w-full" type="text" name="name"
-                          :value="old('name')" required/>
+                          :value="old('name')" />
             <x-input-error :messages="$errors->get('name')" class="mt-2"/>
         </div>
 
@@ -17,7 +17,7 @@
                 <x-input-label for="startDate" :value="__('Start Date*')"/>
                 <x-text-input wire:model.defer="startDate" id="startDate" class="block mt-1 w-full" type="date"
                               name="startDate"
-                              :value="old('startDate')" required/>
+                              :value="old('startDate')" />
                 <x-input-error :messages="$errors->get('startDate')" class="mt-2"/>
             </div>
             <!-- End Date -->
@@ -25,7 +25,7 @@
                 <x-input-label for="endDate" :value="__('End Date*')"/>
                 <x-text-input wire:model.defer="endDate" id="endDate" class="block mt-1 w-full" type="date"
                               name="endDate"
-                              :value="old('endDate')" required/>
+                              :value="old('endDate')" />
                 <x-input-error :messages="$errors->get('endDate')" class="mt-2"/>
             </div>
         </div>

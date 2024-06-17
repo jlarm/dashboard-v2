@@ -100,10 +100,10 @@
                     x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
                     :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
                     role="tabpanel"
-                    class="p-8"
+                    class="py-5"
                 >
                     <div class="grid grid-cols-1 md:grid-cols-3 md:gap-10">
-                        <div class="col-span-2">
+                        <div class="col-span-2 mb-5 md:mb-0">
                             <livewire:dealer.scan.report-index/>
                         </div>
                         <div class="col-span-1">
@@ -116,10 +116,10 @@
                     x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
                     :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
                     role="tabpanel"
-                    class="p-8"
+                    class="py-5"
                 >
                     <div class="grid grid-cols-1 md:grid-cols-3 md:gap-10">
-                        <div class="col-span-2">
+                        <div class="col-span-2 mb-5 md:mb-0">
                             <livewire:dealer.scan.internal-report-index/>
                         </div>
                         <div class="col-span-1">

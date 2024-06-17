@@ -1,6 +1,6 @@
 <div>
     @if($stats)
-        <div class="border rounded-md p-5">
+        <div class="border border-gray-200 shadow-sm rounded-xl p-5">
             <h1 class="font-bold text-xl">Grade</h1>
             <div class="text-center">
             <span class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-gray-500 mx-auto">
@@ -8,7 +8,7 @@
             </span>
             </div>
         </div>
-        <div class="border rounded-md p-5 mt-5">
+        <div class="border border-gray-200 shadow-sm rounded-xl p-5 mt-5">
             <h1 class="font-bold text-xl">Exploits</h1>
             <ul class="text-xs text-gray-500 divide-y divide-gray-100">
                 <li class="flex justify-between gap-x-4 py-2">
@@ -25,7 +25,7 @@
                 </li>
             </ul>
         </div>
-        <div class="border rounded-md p-5 mt-5">
+        <div class="border border-gray-200 shadow-sm rounded-xl p-5 mt-5">
             <h1 class="font-bold text-xl">CVEs</h1>
             <ul class="text-xs text-gray-500 divide-y divide-gray-100">
                 <li class="flex justify-between gap-x-4 py-2">
