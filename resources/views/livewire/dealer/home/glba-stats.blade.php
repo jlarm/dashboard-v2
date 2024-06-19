@@ -1,6 +1,6 @@
 <div>
     <div class="relative overflow-hidden p-4 sm:p-5 bg-white border border-gray-200 rounded-xl shadow-sm before:absolute before:top-0 before:end-0 before:size-full before:bg-gradient-to-br before:from-orange-100 before:via-transparent before:blur-xl">
-        <a href="{{ !tenant('locations') ? route('dealer.audit.finance.index') : route('dealer.stores.audits.finance.index', $store) }}" class="relative z-10">
+        <a href="{{ !tenant('locations') ? route('dealer.audit.finance.index') : route('dealer.stores.audits.finance.index', $store) }}" class="relative z-0">
             <!-- Header -->
             <div class="flex justify-between items-center gap-x-3">
                 <!-- Icon -->

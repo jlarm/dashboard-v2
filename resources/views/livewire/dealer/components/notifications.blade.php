@@ -49,7 +49,7 @@
         x-on:click.outside="close($refs.button)"
         :id="$id('dropdown-button')"
         style="display: none;"
-        class="absolute right-0 mt-2 w-72 rounded-md bg-white shadow-md border"
+        class="absolute right-0 mt-2 w-72 rounded-md bg-white shadow-md border z-30"
     >
         <ul class="divide-y divide-gray-200">
             @foreach(auth()->user()->unreadNotifications as $notification)
