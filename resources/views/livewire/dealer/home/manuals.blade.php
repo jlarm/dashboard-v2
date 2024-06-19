@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <a class="after:absolute after:inset-0 after:z-10" href="{{ route('dealer.manual.isp.index') }}"></a>
+            <a class="after:absolute after:inset-0 after:z-10" href="{{ tenant('locations') ? route('dealer.stores.manuals.isp.index', $store) : route('dealer.manual.isp.index') }}"></a>
         </div>
         <!-- End Card -->
 
@@ -88,8 +88,7 @@
                     </div>
                 </div>
             </div>
-
-            <a class="after:absolute after:inset-0 after:z-10" href="{{ route('dealer.manual.osha.index') }}"></a>
+            <a class="after:absolute after:inset-0 after:z-10" href="{{ tenant('locations') ? route('dealer.stores.manuals.osha.index', $store) : route('dealer.manual.osha.index') }}"></a>
         </div>
         <!-- End Card -->
 
@@ -131,7 +130,7 @@
                 </div>
             </div>
 
-            <a class="after:absolute after:inset-0 after:z-10" href="{{ route('dealer.manual.red-flag.index') }}"></a>
+            <a class="after:absolute after:inset-0 after:z-10" href="{{ tenant('locations') ? route('dealer.stores.manuals.red-flag.index', $store) : route('dealer.manual.red-flag.index') }}"></a>
         </div>
         <!-- End Card -->
 
@@ -175,7 +174,7 @@
                 </div>
             </div>
 
-            <a class="after:absolute after:inset-0 after:z-10" href="{{ route('dealer.manual.cms.index') }}"></a>
+            <a class="after:absolute after:inset-0 after:z-10" href="{{ tenant('locations') ? route('dealer.stores.manuals.cms.index', $store) : route('dealer.manual.cms.index') }}"></a>
         </div>
         <!-- End Card -->
     </div>
