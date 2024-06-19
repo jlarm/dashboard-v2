@@ -57,6 +57,11 @@
                     <livewire:dealer.home.note :store="$store"/>
                 </div>
             @endcan
+            @role('Qualified Individual')
+            <div class="p-5 pb-4">
+                <livewire:dealer.home.manuals :store="$store" />
+            </div>
+            @endrole
         </div>
     </div>
 </div>

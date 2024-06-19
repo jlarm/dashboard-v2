@@ -60,6 +60,11 @@
                         <livewire:dealer.home.note/>
                     </div>
                     @endcan
+                    @role('Qualified Individual')
+                        <div class="p-5 pb-4">
+                            <livewire:dealer.home.manuals />
+                        </div>
+                    @endrole
                 </div>
             </div>
             @endcan

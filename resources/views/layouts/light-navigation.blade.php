@@ -54,9 +54,7 @@
                     <div class="my-5 px-4">
                         @if (tenant('locations'))
                             @can('create-users')
-                                @if(count(auth()->user()->stores) != 1)
-                                    <livewire:dealer.navigation.store-switcher />
-                                @endif
+                                <livewire:dealer.navigation.store-switcher />
                             @endcan
                         @endif
                     </div>
@@ -80,9 +78,7 @@
             <div class="my-5 px-4">
                 @if (tenant('locations'))
                     @can('create-users')
-                        @if(count(auth()->user()->stores) != 1)
-                            <livewire:dealer.navigation.store-switcher />
-                        @endif
+                        <livewire:dealer.navigation.store-switcher />
                     @endcan
                 @endif
             </div>
