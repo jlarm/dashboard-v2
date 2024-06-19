@@ -189,13 +189,13 @@ Route::name('dealer.')->middleware([
 
         Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function () {
             Route::get('/isp',  \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
-            Route::get('/isp/create', Create::class)->name('isp.create');
+            Route::get('/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('isp.create');
             Route::get('/osha', \App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('osha.index');
-            Route::get('/osha/create', Create::class)->name('osha.create');
+            Route::get('/osha/create', \App\Http\Livewire\Dealer\Manual\Osha\Create::class)->name('osha.create');
             Route::get('/red-flag', \App\Http\Livewire\Dealer\Manual\RedFlag\Index::class)->name('red-flag.index');
-            Route::get('/red-flag/create', Create::class)->name('red-flag.create');
+            Route::get('/red-flag/create', \App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->name('red-flag.create');
             Route::get('cms', \App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('cms.index');
-            Route::get('cms/create', Create::class)->name('cms.create');
+            Route::get('cms/create', \App\Http\Livewire\Dealer\Manual\Cms\Create::class)->name('cms.create');
         });
 
         Route::get('settings', SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
