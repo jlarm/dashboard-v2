@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Vendor;
 use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
+use App\Models\Dealer\VendorForm;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -13,41 +14,33 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
-
     public $user;
-
     public $qi;
-
     public $contact_name;
-
     public $contact_email;
-
-    public $store_id;
+    public $store;
 
     protected $rules = [
         'name' => 'required|max:255|unique:vendors,name',
         'contact_name' => 'required|max:255',
         'contact_email' => 'required|max:255',
-        'store_id' => 'nullable|max:255',
+        'store' => 'nullable|integer|exists:stores,id',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->qi = User::role('Qualified Individual')->first();
     }
 
-    public function create()
+    public function create(): void
     {
-        $validated = $this->validate();
+        $this->validate();
 
-        $vendor = Vendor::create([
-            'name' => $this->name,
-            'contact_name' => $this->contact_name,
-            'contact_email' => $this->contact_email,
-            'store_id' => $this->store_id ?? null,
-        ]);
+        $vendor = $this->createVendor();
 
-        SendVendorEmailJob::dispatch($vendor, $this->user);
+        $vendorForm = $this->createVendorForm($vendor);
+
+        SendVendorEmailJob::dispatch($vendorForm);
 
         $this->reset();
 
@@ -61,10 +54,28 @@ class Create extends Modal
             ->send();
     }
 
+    private function createVendor()
+    {
+        return Vendor::create([
+            'name' => $this->name,
+            'contact_name' => $this->contact_name,
+            'contact_email' => $this->contact_email,
+            'store_id' => $this->store !== '' ? $this->store : null,
+        ]);
+    }
+
+    private function createVendorForm($vendor)
+    {
+        return $vendor->forms()->create([
+            'name' => $vendor->contact_name,
+            'email' => $vendor->contact_email,
+        ]);
+    }
+
     public function render(): View
     {
         return view('livewire.dealer.vendor.create', [
-            'stores' => Store::orderBy('name')->get(),
+            'stores' => tenant('locations') ? Store::orderBy('name')->get() : null,
         ]);
     }
 }

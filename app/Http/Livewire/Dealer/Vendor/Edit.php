@@ -2,65 +2,66 @@
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
+use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
 use Filament\Notifications\Notification;
-use WireElements\Pro\Components\Modal\Modal;
+use Livewire\WithPagination;
+use WireElements\Pro\Components\SlideOver\SlideOver;
 
-class Edit extends Modal
+class Edit extends SlideOver
 {
+    use WithPagination;
+
     public $vendor;
+    public string $name = '';
+    public string $email = '';
 
-    public $name;
+    protected $listeners = ['refreshVendorForms' => '$refresh'];
 
-    public $contactName;
+    protected $rules = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email',
+    ];
 
-    public $contactEmail;
-
-    public $store_id;
-
-    public function rules()
-    {
-        return [
-            'name' => 'required',
-            'contactName' => 'required',
-            'contactEmail' => 'required|email',
-            'store_id' => 'nullable',
-        ];
-    }
 
     public function mount(Vendor $vendor)
     {
         $this->vendor = $vendor;
-        $this->name = $vendor->name;
-        $this->contactName = $vendor->contact_name;
-        $this->contactEmail = $vendor->contact_email;
-        $this->store_id = $vendor->store_id;
     }
 
-    public function update()
+    public function send(): void
     {
         $this->validate();
-        $this->vendor->update([
-            'name' => $this->name,
-            'contact_name' => $this->contactName,
-            'contact_email' => $this->contactEmail,
-            'store_id' => $this->store_id,
-        ]);
 
+        $vendorForm = $this->createVendorForm();
+
+        SendVendorEmailJob::dispatch($vendorForm);
+
+        $this->reset(['name', 'email']);
+
+        $this->emit('refreshVendorForms');
         $this->emit('refreshVendors');
 
-        $this->close();
-
         Notification::make()
-            ->title('Vendor Successfully Updated')
+            ->title('Email Successfully Sent!')
             ->success()
             ->send();
+    }
+
+    private function createVendorForm()
+    {
+        return $this->vendor->forms()->create([
+            'name' => $this->name,
+            'email' => $this->email,
+        ]);
     }
 
     public function render()
     {
         return view('livewire.dealer.vendor.edit', [
-            'stores' => Store::orderBy('name')->get(), ]);
+            'forms' => $this->vendor->forms()->latest()->paginate(5),
+            'stores' => Store::orderBy('name')->get(),
+        ]);
     }
 }

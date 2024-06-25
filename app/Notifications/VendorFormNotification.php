@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Dealer\VendorForm;
 use App\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -9,11 +10,8 @@ use Illuminate\Support\Facades\URL;
 
 class VendorFormNotification extends Notification
 {
-    public $vendor;
-
-    public function __construct($vendor)
+    public function __construct(public VendorForm $vendor)
     {
-        $this->vendor = $vendor;
     }
 
     public function via($notifiable): array
@@ -23,8 +21,9 @@ class VendorFormNotification extends Notification
 
     public function generateUrl(string $email)
     {
-        return URL::temporarySignedRoute('dealer.vendor.create', now()->addDay(), [
-            'id' => $this->vendor->id,
+        return URL::temporarySignedRoute('dealer.vendor.form', now()->addYear(), [
+            'vid' => $this->vendor->id,
+            'email' => $email,
         ]);
     }
 
@@ -34,10 +33,8 @@ class VendorFormNotification extends Notification
         $url = $this->generateUrl($notifiable->routes['mail']);
         $user = User::role('Qualified Individual')->select('name', 'email')->first();
 
-        ray($user);
-
         return (new MailMessage)
-            ->greeting('Hello '.$this->vendor->contact_name.',')
+            ->greeting('Hello '.$this->vendor->vendor->name.',')
             ->line('Please click the button below to fill out our 3rd party service provider form for '.tenant('name').'.')
             ->action('Click Here', url($url))
             ->line('If you have any questions, please contact '.$user->name.' at '.$user->email)

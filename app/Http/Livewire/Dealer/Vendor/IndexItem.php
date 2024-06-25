@@ -16,6 +16,8 @@ class IndexItem extends Component
 
     public $array = [];
 
+    protected $listeners = ['refreshVendors' => '$refresh'];
+
     public function mount()
     {
         foreach ($this->vendor->getAttributes() as $key => $value) {
@@ -41,6 +43,8 @@ class IndexItem extends Component
 
     public function render()
     {
-        return view('livewire.dealer.vendor.index-item');
+        return view('livewire.dealer.vendor.index-item', [
+            'status' => $this->vendor->forms()->latest()->pluck('signature')->first(),
+        ]);
     }
 }

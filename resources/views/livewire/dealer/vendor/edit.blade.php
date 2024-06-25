@@ -1,63 +1,202 @@
-<x-wire-elements-pro::tailwind.modal on-submit="update">
-    <x-slot name="title">Edit {{ $vendor->name }}</x-slot>
-
-    <div class="space-y-5">
-        <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Company Name</label>
-            <div class="mt-1">
-                <input wire:model.defer="name" type="text" name="name" id="name"
-                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
-                @error('name')
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-        </div>
-
-        <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Contact Name</label>
-            <div class="mt-1">
-                <input wire:model.defer="contactName" type="text" name="contactName" id="contactName"
-                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
-                @error('contactName')
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-        </div>
-
-        <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Contact Email</label>
-            <div class="mt-1">
-                <input wire:model.defer="contactEmail" type="text" name="contactEmail" id="contactEmail"
-                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm">
-                @error('contactEmail')
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-        </div>
-
+<x-wire-elements-pro::tailwind.slide-over on-submit="send" :content-padding="false">
+    <x-slot name="title">
+        {{ ucwords(strtolower($vendor->name)) }}
         @if(tenant('locations'))
-            <div>
-                <div class="col-span-3">
-                    <x-input-label for="store_id"
-                                   :value="__('Select a Store if the vendor is only used at a specific store')"/>
-                    <select
-                        wire:model.defer="store_id"
-                        name="store_id"
-                        id="store_id"
-                        class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
-                    >
-                        <option></option>
-                        @foreach($stores as $store)
-                            <option value="{{ $store->id }}">{{ $store->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+        <p class="text-sm text-gray-500 font-normal"> {{ $vendor->store->name ?? 'All Stores' }}</p>
         @endif
+    </x-slot>
+
+    <div class="border-t border-gray-200 p-3">
+        <div class="mb-10 bg-gray-100 p-4 rounded-xl">
+            <p class="text-sm text-gray-700 mb-2">Send new request</p>
+            <form>
+                <div class="flex gap-1">
+                    <div>
+                        <input wire:model.defer="name" type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm placeholder:text-gray-400 focus:border-arm-blue-500 focus:ring-arm-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Name">
+                        @error('name')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+                    </div>
+                    <div>
+                        <input wire:model.defer="email" type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm placeholder:text-gray-400 focus:border-arm-blue-500 focus:ring-arm-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Email Address">
+                        @error('email')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+                    </div>
+                    <button type="submit" class="self-start py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-arm-blue-600 border border-arm-blue-600 text-white text-xs font-medium rounded-lg shadow-sm align-middle hover:bg-arm-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-arm-blue-300 dark:focus:ring-arm-blue-500">
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- List Group -->
+        <div>
+            <!-- Header Grid -->
+            <div class="hidden md:grid md:grid-cols-12 md:gap-6 py-2">
+                <div class="col-span-5">
+                    <h5 class="text-sm text-gray-500 dark:text-neutral-500">
+                        Sent To
+                    </h5>
+                </div>
+                <!-- End Col -->
+
+                <div class="col-span-3">
+                    <h5 class="text-sm text-gray-500 dark:text-neutral-500">
+                        Date
+                    </h5>
+                </div>
+                <!-- End Col -->
+
+                <div class="col-span-3">
+                </div>
+                <!-- End Col -->
+
+                <div class="col-span-1">
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Header Grid -->
+
+            @foreach($forms as $form)
+                <!-- List -->
+                <ul class="grid md:grid-cols-12 md:items-center gap-2 md:gap-6 py-3 border-t border-gray-200 dark:border-neutral-700">
+                    <!-- Item -->
+                    <li class="md:col-span-5">
+                        <div class="flex md:block gap-x-2">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                              Type:
+                            </span>
+                            <p class="text-xs font-medium text-gray-800 dark:text-neutral-200">
+                                {{ $form->name }}
+                                <span class="block text-gray-400">{{ $form->email }}</span>
+                            </p>
+                        </div>
+                    </li>
+                    <!-- End Item -->
+
+                    <!-- Item -->
+                    <li class="col-span-3">
+                        <div class="flex md:block gap-x-2">
+                        <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                          Date:
+                        </span>
+                            <p class="text-xs text-gray-500 dark:text-neutral-500">
+                                @if(!$form->signature)
+                                {{ $form->created_at->format('M d, Y') }}
+                                @else
+                                {{ $form->updated_at->format('M d, Y') }}
+                                @endif
+                            </p>
+                        </div>
+                    </li>
+                    <!-- End Item -->
+
+                    <!-- Item -->
+                    <li class="col-span-2">
+                        <div class="flex md:block gap-x-2">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                              Status:
+                            </span>
+                            <p class="text-sm text-arm-blue-600 dark:text-arm-blue-500">
+                                @if(!$form->signature)
+                                <span class="py-1.5 px-2 inline-flex items-center gap-x-1.5 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
+                                  Sent
+                                </span>
+                                @else
+                                <span class="py-1.5 px-2 inline-flex items-center gap-x-1.5 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                                  Signed
+                                </span>
+                                @endif
+                            </p>
+                        </div>
+                    </li>
+                    <!-- End Item -->
+
+                    <!-- Item -->
+                    <li class="col-span-2">
+                        <div class="flex md:block gap-x-2 text-right">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                              Download:
+                            </span>
+                            <livewire:dealer.vendor.download :vendorForm="$form" :key="$form->id" />
+                        </div>
+                    </li>
+                    <!-- End Item -->
+                </ul>
+                <!-- End List -->
+            @endforeach
+
+            <div class="mt-5">
+                {{ $forms->links() }}
+            </div>
+
+            @if($vendor->created_at < \Carbon\Carbon::create(2024, 06, 23, 0, 0, 0))
+            <ul class="grid md:grid-cols-12 md:items-center gap-2 md:gap-6 py-3 border-t border-gray-200 dark:border-neutral-700">
+                <!-- Item -->
+                <li class="md:col-span-5">
+                    <div class="flex md:block gap-x-2">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                              Type:
+                            </span>
+                        <p class="text-xs font-medium text-gray-800 dark:text-neutral-200">
+                            {{ ucwords(strtolower($vendor->contact_name)) }}
+                            <span class="block text-gray-400">{{ Str::lower($vendor->contact_email) }}</span>
+                        </p>
+                    </div>
+                </li>
+                <!-- End Item -->
+
+                <!-- Item -->
+                <li class="col-span-3">
+                    <div class="flex md:block gap-x-2">
+                        <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                          Date:
+                        </span>
+                        <p class="text-xs text-gray-500 dark:text-neutral-500">
+                            @if(!$vendor->signature)
+                                {{ $vendor->created_at->format('M d, Y') }}
+                            @else
+                                {{ $vendor->updated_at->format('M d, Y') }}
+                            @endif
+                        </p>
+                    </div>
+                </li>
+                <!-- End Item -->
+
+                <!-- Item -->
+                <li class="col-span-2">
+                    <div class="flex md:block gap-x-2">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                              Status:
+                            </span>
+                        <p class="text-sm text-arm-blue-600 dark:text-arm-blue-500">
+                            @if(!$vendor->signature)
+                                <span class="py-1.5 px-2 inline-flex items-center gap-x-1.5 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
+                                  Sent
+                                </span>
+                            @else
+                                <span class="py-1.5 px-2 inline-flex items-center gap-x-1.5 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                                  Signed
+                                </span>
+                            @endif
+                        </p>
+                    </div>
+                </li>
+                <!-- End Item -->
+
+                <!-- Item -->
+                <li class="col-span-2">
+                    <div class="flex md:block gap-x-2 text-right">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                              Download:
+                            </span>
+                            <livewire:dealer.vendor.old-download :vendor="$vendor" />
+                    </div>
+                </li>
+                <!-- End Item -->
+            </ul>
+            @endif
+        </div>
+        <!-- End List Group -->
     </div>
 
     <x-slot name="buttons">
-        <x-primary-button type="submit">Update</x-primary-button>
-        <x-secondary-button type="button" wire:click="$emit('modal.close')">Cancel</x-secondary-button>
+
     </x-slot>
-</x-wire-elements-pro::tailwind.modal>
+</x-wire-elements-pro::tailwind.slide-over>

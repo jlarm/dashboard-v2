@@ -1,6 +1,6 @@
 @props(['closeButton' => true, 'onSubmit' => null, 'contentPadding' => true])
 <form class="flex h-full flex-col" wire:submit.prevent="{{ $onSubmit }}">
-    <div class="px-4 sm:px-6">
+    <div class="px-3">
         <div class="flex items-start justify-between">
             @if($title ?? false)
             <h2 class="text-lg font-medium text-gray-900">{{ $title }}</h2>
@@ -8,7 +8,7 @@
             @if($closeButton)
             <div class="ml-3 flex h-7 items-center">
                 <button type="button"
-                        class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
                         wire:click="$emit('slide-over.close')">
                     <span class="sr-only">Close panel</span>
                     <svg class="h-6 w-6"

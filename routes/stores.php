@@ -50,7 +50,7 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('audits/finance', \App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('audits.finance.index');
             Route::get('audits/deal-jackets', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->name('audits.individual.index');
 
-            Route::get('vendors', \App\Http\Livewire\Dealer\Store\SingleStore\Vendor\Index::class)->name('vendor.index');
+            Route::get('vendors', \App\Http\Livewire\Dealer\Vendor\Index::class)->name('vendor.index');
 
             Route::get('documents', \App\Http\Livewire\Dealer\Store\SingleStore\Docs\Index::class)->name('doc.index');
 

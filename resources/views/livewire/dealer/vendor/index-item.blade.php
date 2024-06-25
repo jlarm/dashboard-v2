@@ -1,124 +1,46 @@
-<tr>
-    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-        {{ $vendor->name }}
-    </td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-        {{ $vendor->contact_name ?? '-' }}
-        <a class="block text-xs text-gray-400" href="mailto:{{ $vendor->contact_email }}">{{ $vendor->contact_email }}</a>
-    </td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-        @if(\Carbon\Carbon::now() <= $vendor->updated_at->addYear() && $vendor->signature)
-            <p class="whitespace-nowrap">Completed <time>{{ $vendor->updated_at->format('M d, Y') }}</time></p>
-        @elseif(\Carbon\Carbon::now() > $vendor->updated_at->addYear() && $vendor->signature)
-            <p class="whitespace-nowrap">Expired <time>{{ $vendor->updated_at->addYear()->format('M d, Y') }}</time></p>
-        @else
-            <p class="whitespace-nowrap">Sent <time>{{ $vendor->created_at->format('M d, Y') }}</time></p>
-        @endif
-    </td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-        @if(\Carbon\Carbon::now() <= $vendor->updated_at->addYear() && !$vendor->signature)
-            <span
-                class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/10">Incomplete</span>
-        @elseif(\Carbon\Carbon::now() > $vendor->updated_at->addYear() && $vendor->signature)
-            <span
-                class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Expired</span>
-        @else
-            <span
-                class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Current</span>
-        @endif
-    </td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-        @if($noCount > 0)
-            {{ $noCount }}/{{ $totalQuestions }}
-        @else
-            {{ __('-') }}
-        @endif
-    </td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-        <div class="flex space-x-3 justify-end items-end">
-            <div class="flex flex-none items-center gap-x-4">
-                <div
-                    x-data="{
-                                open: false,
-                                toggle() {
-                                    if (this.open) {
-                                        return this.close()
-                                    }
-                                    this.$refs.button.focus()
-                                    this.open = true
-                                },
-                                close(focusAfter) {
-                                    if (! this.open) return
-                                    this.open = false
-                                    focusAfter && focusAfter.focus()
-                                }
-                            }"
-                    x-on:keydown.escape.prevent.stop="close($refs.button)"
-                    x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-                    x-id="['dropdown-button']"
-                    class="relative flex-none"
-                >
-                    <button
-                        x-ref="button"
-                        x-on:click="toggle()"
-                        :aria-expanded="open"
-                        :aria-controls="$id('dropdown-button')"
-                        type="button"
-                        class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900"
-                        id="options-menu-0-button"
-                        aria-expanded="false"
-                        aria-haspopup="true"
-                    >
-                        <span class="sr-only">Open options</span>
-                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
-                        </svg>
-                    </button>
-                    <div
-                        x-ref="panel"
-                        x-show="open"
-                        x-transition.origin.top.left
-                        x-on:click.outside="close($refs.button)"
-                        :id="$id('dropdown-button')"
-                        style="display: none;"
-                        class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
-                        role="menu"
-                        aria-orientation="vertical"
-                        aria-labelledby="options-menu-0-button"
-                        tabindex="-1"
-                    >
-                        @if($vendor->signature)
-                            <button
-                                wire:click.prevent="download"
-                                type="button"
-                                class="block px-3 py-1 text-sm leading-6 text-gray-900"
-                                tabindex="-1"
-                                id="options-menu-0-item-0"
-                            >
-                                Download
-                            </button>
-                        @endif
-                        @can('create-stores')
-                        <button
-                            wire:click="$emit('modal.open', 'dealer.vendor.edit',  @js(['vendor' => $vendor->id]))"
-                            class="block px-3 py-1 text-sm leading-6 text-gray-900"
-                            tabindex="-1"
-                            id="options-menu-0-item-2"
-                        >
-                            Edit
-                        </button>
-                        <button
-                            wire:click="$emit('modal.open', 'dealer.vendor.delete',  @js(['vendor' => $vendor->id]))"
-                            class="block px-3 py-1 text-sm leading-6 text-gray-900"
-                            tabindex="-1"
-                            id="options-menu-0-item-2"
-                        >
-                            Delete
-                        </button>
-                        @endcan
-                    </div>
-                </div>
-            </div>
+<div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+    <div class="space-y-1">
+        <div class="flex justify-between items-center mb-2.5">
+            <h4 class="font-medium text-sm text-gray-800 dark:text-neutral-300">
+                {{ ucwords(strtolower(Str::limit($vendor->name, 20)))  }}
+            </h4>
+            <button onclick="Livewire.emit('slide-over.open', 'dealer.vendor.edit', @js(['vendor' => $vendor->id]))" type="button" class="size-[30px] inline-flex justify-center items-center rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 focus:outline-none focus:bg-gray-100 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
+                <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#000000" fill="none">
+                    <path d="M3 7.5V20.5H10M21 7.5V13" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                    <path d="M9.5 10.5H14.5" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M17 18H17.009" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M17 21.5C19.7614 21.5 22 18 22 18C22 18 19.7614 14.5 17 14.5C14.2386 14.5 12 18 12 18C12 18 14.2386 21.5 17 21.5Z" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M21.9 2.5H2.1C2.04477 2.5 2 2.54477 2 2.6V7.5H22V2.6C22 2.54477 21.9552 2.5 21.9 2.5Z" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+            </button>
         </div>
-    </td>
-</tr>
+
+        @if(tenant('locations'))
+        <!-- Item -->
+        <div class="flex justify-between items-center gap-x-2">
+            <span class="text-xs text-gray-600 dark:text-neutral-400">
+              Store:
+            </span>
+
+            <span class="text-xs text-gray-600 dark:text-neutral-400">
+              {{ $vendor->store ? Str::limit($vendor->store->name, 20) : 'All Stores' }}
+            </span>
+        </div>
+        <!-- End Item -->
+        @endif
+
+        <!-- Item -->
+        <div class="flex justify-between items-center gap-x-2">
+            <span class="text-xs text-gray-600 dark:text-neutral-400">
+              Status:
+            </span>
+
+            @if($status !== '' && $status !== null || $vendor->signature)
+            <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Current</span>
+            @else
+            <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">Incomplete</span>
+            @endif
+        </div>
+        <!-- End Item -->
+    </div>
+</div>

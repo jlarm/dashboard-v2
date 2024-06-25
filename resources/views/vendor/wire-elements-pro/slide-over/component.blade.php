@@ -20,7 +20,7 @@
 
     <div class="wep-slide-over-container">
         <div class="wep-slide-over-container-backdrop" @click="closeIf('close-on-backdrop-click')" aria-hidden="true"></div>
-        <div class="wep-slide-over-container-inner">
+        <div class="wep-slide-over-container-inner mr-3 my-3">
             <div x-show="open && showActiveComponent"
                  x-trap.inert.noscroll="getElementBehavior('trap-focus') && open"
                  x-transition:enter="enter"
@@ -33,7 +33,7 @@
                  class="wep-slide-over-container-inner-wrap">
 
                 @foreach($components as $id => $component)
-                    <div x-show.immediate="activeComponent === '{{ $id }}'" x-ref="{{ $id }}" wire:key="{{ $id }}" class="wep-slide-over-container-inner-content">
+                    <div x-show.immediate="activeComponent === '{{ $id }}'" x-ref="{{ $id }}" wire:key="{{ $id }}" class="rounded-xl overflow-hidden wep-slide-over-container-inner-content">
                         @livewire($component['name'], $component['parameters'], key($id))
                     </div>
                 @endforeach

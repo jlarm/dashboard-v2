@@ -89,6 +89,7 @@ Route::name('dealer.')->middleware([
     });
 
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
+    Route::get('form', \App\Http\Livewire\Dealer\Vendor\NewForm::class)->middleware('signed')->name('vendor.form');
     Route::view('/vendors/thankyou', 'dealer.vendor.thankyou')->middleware('web')->name('vendors.thankyou');
 
     Route::get('email/settings', FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
@@ -173,7 +174,7 @@ Route::name('dealer.')->middleware([
             Route::get('deal-jackets', IndividualIndexController::class)->name('individual.index');
         });
 
-        Route::get('vendors', [VendorController::class, 'index'])->middleware('auth')->name('vendor.index');
+        Route::get('vendors', \App\Http\Livewire\Dealer\Vendor\Index::class)->middleware('auth')->name('vendor.index');
 
         Route::prefix('documents/')->name('doc.')->middleware('auth')->group(function () {
             Route::get('/', Index::class)->name('index');
