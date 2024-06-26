@@ -1,4 +1,4 @@
-<div class="p-6">
+<div class="space-y-5">
     <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
             <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Contracts</h1>
@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>
-    <div class="mt-8">
+    <div class="p-5 border border-gray-200 shadow-sm rounded-xl">
         <x-table>
             <x-slot name="head">
                 @can('delete-users')

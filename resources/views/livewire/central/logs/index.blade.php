@@ -1,4 +1,4 @@
-<div class="bg-white rounded-md p-6 flex flex-col space-y-5">
+<div class="space-y-5">
     <div>
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
@@ -6,8 +6,8 @@
             </div>
         </div>
         <div class="mt-8 flow-root">
-            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <div>
+                <div class="p-5 border border-gray-200 shadow-sm rounded-xl">
                     <x-table>
                         <x-slot name="head">
                             <x-table.heading></x-table.heading>
@@ -60,9 +60,9 @@
                             @endforelse
                         </x-slot>
                     </x-table>
-                    <div class="mt-5">
-                        {{ $logs->links() }}
-                    </div>
+                </div>
+                <div class="mt-5">
+                    {{ $logs->links() }}
                 </div>
             </div>
         </div>

@@ -1,7 +1,6 @@
 <x-table.row>
     <x-table.cell>{{ $user->name }}</x-table.cell>
     <x-table.cell>{{ $user->email }}</x-table.cell>
-    <x-table.cell>{{ $user->phoneNumber }}</x-table.cell>
     <x-table.cell>{{ $completed }} of {{ $totalCourses }} passed</x-table.cell>
     <x-table.cell>
         @if( $user->roles->first()->name == 'super-admin')

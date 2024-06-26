@@ -1,5 +1,4 @@
-<div class="bg-white rounded-md p-6">
-    <div>
+<div class="space-y-5">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
                 <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Employees</h1>
@@ -19,27 +18,23 @@
                 </div>
             </div>
         </div>
-        <div class="mt-8 flow-root">
-            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <x-table>
-                        <x-slot name="head">
-                            <x-table.heading>Name</x-table.heading>
-                            <x-table.heading>Email</x-table.heading>
-                            <x-table.heading>Phone</x-table.heading>
-                            <x-table.heading>Completed Courses</x-table.heading>
-                            <x-table.heading>Role</x-table.heading>
-                            <x-table.heading></x-table.heading>
-                        </x-slot>
-                        <x-slot name="body">
-                            @foreach($users as $user)
-                                <livewire:central.employee.index-item :user="$user" :key="$user->id"/>
-                            @endforeach
-                        </x-slot>
-                    </x-table>
-                </div>
+        <div>
+            <div class="p-5 border border-gray-200 shadow-sm rounded-xl">
+                <x-table>
+                    <x-slot name="head">
+                        <x-table.heading>Name</x-table.heading>
+                        <x-table.heading>Email</x-table.heading>
+                        <x-table.heading>Completed Courses</x-table.heading>
+                        <x-table.heading>Role</x-table.heading>
+                        <x-table.heading></x-table.heading>
+                    </x-slot>
+                    <x-slot name="body">
+                        @foreach($users as $user)
+                            <livewire:central.employee.index-item :user="$user" :key="$user->id"/>
+                        @endforeach
+                    </x-slot>
+                </x-table>
             </div>
         </div>
         {{ $users->links() }}
-    </div>
 </div>
