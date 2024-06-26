@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 xl:gap-5">
+    <div class="grid grid-cols-2 gap-x-5 gap-y-10 xl:gap-5">
         @forelse($docs as $doc)
             <div class="flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
                 <div class="relative group">
