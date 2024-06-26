@@ -27,13 +27,8 @@ class Create extends Component
     public function save()
     {
         try {
-            //            $this->validate();
-
-            //            $fileUpload = $this->file->store('documents', 'public');
 
             $fileName = $this->file->getClientOriginalName();
-
-            //            \Storage::disk('central-docs')->put('/', $fileName, $this->file);
 
             \Storage::disk('central-docs')->putFileAs('/', $this->file, $fileName);
 

@@ -59,6 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('sds/{sds:uuid}', \App\Http\Livewire\Central\Sds\Edit::class)->name('sds.edit');
 
     Route::get('documents', \App\Http\Livewire\Central\Docs\Index::class)->name('docs.index');
+    Route::get('documents/create', \App\Http\Livewire\Central\Docs\Create::class)->name('docs.create');
 
 });
 
