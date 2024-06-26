@@ -19,7 +19,7 @@ class SecurityHeadersMiddleware
 
         $response->headers->set('Referrer-Policy', 'no-referrer');
 
-        $response->headers->set('Permission-Policy', 'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()');
+        $response->headers->set('Permissions-Policy', 'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()');
 
         return $response;
     }
