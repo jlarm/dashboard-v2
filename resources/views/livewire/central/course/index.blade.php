@@ -9,67 +9,66 @@
             </div>
         </div>
     </div>
-    <div>
-        <div>
-            <div class="p-5 border border-gray-200 shadow-sm rounded-xl">
-                <table class="min-w-full divide-y divide-gray-300">
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                    @foreach($courses as $course)
-                        <tr>
-                            <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                                <span class="truncate">{{ $course->name }}</span>
-                            </td>
-                            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-                                @if(is_null($course->results->first()))
-                                    {{ __('Not taken yet') }}
-                                @else
-                                    @if(Carbon\Carbon::parse($course->results->first()->created_at)->diffInDays() > 365)
-                                        <span class="text-arm-orange-600">Outdated: Need To Retake</span>
-                                    @else
-                                        @if($course->results->first()->passed === 1)
-                                            Passed
-                                            On: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
-                                        @else
-                                            Last
-                                            Attempt: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
-                                        @endif
-                                    @endif
-                                @endif
-                            </td>
-                            <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                                @if($course->results->first() && Carbon\Carbon::parse($course->results->first()->created_at)->diffInDays() < 365)
-                                    @if($course->results->first() && $course->results->first()->passed === 1)
-                                        <span
-                                            class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                        {{ $course->results->first()->percentage }}%
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
+        @foreach($courses as $course)
+            <div class="relative p-4 flex flex-col bg-white hover:border-gray-400 border border-gray-200 rounded-xl">
+                <div class="space-y-1">
+                    <h4 class="mb-2.5 font-medium text-sm text-gray-800">
+                        {{ $course->name }}
+                    </h4>
+
+                    <!-- Item -->
+                    <div class="flex justify-between items-center gap-x-2">
+                        <span class="text-xs text-gray-600">
+                          Grade:
+                        </span>
+                        <span class="text-sm font-medium text-gray-800">
+                           @if($course->results->first() && Carbon\Carbon::parse($course->results->first()->created_at)->diffInDays() < 365)
+                                    {{ $course->results->first()->percentage }}%
+                            @else
+                                {{ __('-') }}
+                            @endif
+                        </span>
+                    </div>
+                    <!-- End Item -->
+
+                    <!-- Item -->
+                    <div class="flex justify-between items-center gap-x-2">
+                        <span class="text-xs text-gray-600">
+                          Status:
+                        </span>
+
+                        @if($course->results->isEmpty())
+                            <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
+                                {{ __('Not taken yet') }}
+                            </span>
+                        @else
+                            @if(Carbon\Carbon::parse($course->results->first()->created_at)->diffInDays() > 365)
+                                <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-red-100 text-red-800">
+                                    {{ __('Expired: Need To Retake') }}
+                                </span>
+                            @else
+                                @if($course->results->first()->passed === 1)
+                                    <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-teal-100 text-teal-800">
+                                        Passed On: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
                                     </span>
-                                    @elseif($course->results->first() && $course->results->first()->passed === 0)
-                                        <span
-                                            class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                                        {{ $course->results->first()->percentage }}%
-                                    </span>
-                                    @else
-                                        {{ __('') }}
-                                    @endif
-                                @endif
-                            </td>
-                            <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                @if(count($course->questions))
-                                    <a href="{{ route('courses.show', $course) }}"
-                                       class="text-arm-blue-600 hover:text-arm-blue-900">Take<span
-                                            class="sr-only">, {{ $course->name }}</span></a>
                                 @else
-                                    <span class="text-gray-300">No quiz</span>
+                                    <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-red-100 text-red-800">
+                                        Last Attempt: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                    </span>
                                 @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                            @endif
+                        @endif
+                    </div>
+                    <!-- End Item -->
+                </div>
+                @if(count($course->questions))
+                <a class="after:absolute after:inset-0 after:z-10" href="{{ route('courses.show', $course) }}"></a>
+                @endif
             </div>
-            <div class="border-t pt-5 mt-5">
-                {{ $courses->links() }}
-            </div>
-        </div>
+        @endforeach
+    </div>
+    <div class="mt-5">
+        {{ $courses->links() }}
     </div>
 </div>

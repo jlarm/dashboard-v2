@@ -18,14 +18,13 @@ class Index extends Component
             'courses' => Course::query()
                 ->select(['id', 'name', 'slug', 'questions'])
                 ->whereNot('slug', 'patriot-act-ofac')
-                ->with([
-                    'results' => function ($query) {
+                ->with(['results' => function ($query) {
                         $query->where('user_id', auth()->user()->id)
                             ->latest();
                     },
                 ])
                 ->orderBy('id')
-                ->paginate(15),
+                ->paginate(20),
         ]);
     }
 }
