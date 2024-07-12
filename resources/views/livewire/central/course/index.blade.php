@@ -50,11 +50,11 @@
                             @else
                                 @if($course->results->first()->passed === 1)
                                     <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-teal-100 text-teal-800">
-                                        Passed On: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                        Passed On: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('M d, Y') }}
                                     </span>
                                 @else
                                     <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-red-100 text-red-800">
-                                        Last Attempt: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('F d, Y') }}
+                                        Last Attempt: {{ Carbon\Carbon::parse($course->results->first()->created_at)->format('M d, Y') }}
                                     </span>
                                 @endif
                             @endif
