@@ -14,7 +14,7 @@
             <div class="relative p-4 flex flex-col bg-white hover:border-gray-400 border border-gray-200 rounded-xl">
                 <div class="space-y-1">
                     <h4 class="mb-2.5 font-medium text-sm text-gray-800">
-                        {{ $course->name }}
+                        {{ Str::limit($course->name, 30) }}
                     </h4>
 
                     <!-- Item -->

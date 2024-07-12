@@ -29,7 +29,7 @@ class RedSentryReportGenerationCommand extends Command
         $this->storage = $storage;
     }
 
-    public function handle()
+    public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
 
