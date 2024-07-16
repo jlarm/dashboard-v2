@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 class UploadGlbaPdfJob implements ShouldQueue
 {
@@ -26,7 +26,7 @@ class UploadGlbaPdfJob implements ShouldQueue
 
     public function handle(): void
     {
-        $pdf = Storage::get('/'.$this->glbaViolationAudit->pdf_path);
+        $pdf = Storage::get('/glba/'.$this->glbaViolationAudit->pdf_path);
         $path = tenant('id').'/glba/'.$this->glbaViolationAudit->pdf_path;
         $move = Storage::disk('armpaudits')->put(tenant('id').'/glba/'.$this->glbaViolationAudit->pdf_path, $pdf);
         if ($move) {
