@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 use App\Jobs\Audit\GenerateBodyShopPdfJob;
 use App\Jobs\Audit\UploadBodyShopPdfJob;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
-use Bus;
+use Illuminate\Support\Facades\Bus;
 use Livewire\Component;
 
 class GenerateButton extends Component
