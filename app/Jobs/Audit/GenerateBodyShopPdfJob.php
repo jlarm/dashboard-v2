@@ -5,6 +5,7 @@ namespace App\Jobs\Audit;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use File;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,7 +13,7 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Browsershot\Browsershot;
 
-class GenerateBodyShopPdfJob implements ShouldQueue
+class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
