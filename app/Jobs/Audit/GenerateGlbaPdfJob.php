@@ -5,6 +5,7 @@ namespace App\Jobs\Audit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use File;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,7 +13,7 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Browsershot\Browsershot;
 
-class GenerateGlbaPdfJob implements ShouldQueue
+class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -89,7 +90,7 @@ class GenerateGlbaPdfJob implements ShouldQueue
             ->showBrowserHeaderAndFooter()
             ->hideHeader()
             ->footerHtml($footer)
-            ->save(storage_path('app/'.$fileName));
+            ->save(storage_path('app/glba/'.$fileName));
     }
 
     private function updateAudit(string $fileName): void
