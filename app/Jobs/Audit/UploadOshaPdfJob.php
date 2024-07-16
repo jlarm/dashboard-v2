@@ -26,7 +26,7 @@ class UploadOshaPdfJob implements ShouldQueue
 
     public function handle(): void
     {
-        $pdf = Storage::get('/'.$this->oshaViolationAudit->pdf_path);
+        $pdf = Storage::get('/osha/'.$this->oshaViolationAudit->pdf_path);
         $path = tenant('id').'/osha/'.$this->oshaViolationAudit->pdf_path;
         $move = Storage::disk('armpaudits')->put(tenant('id').'/osha/'.$this->oshaViolationAudit->pdf_path, $pdf);
         if ($move) {
