@@ -92,7 +92,7 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
             ->showBrowserHeaderAndFooter()
             ->hideHeader()
             ->footerHtml($footer)
-            ->save(storage_path('app/'.$fileName));
+            ->save(storage_path('app/bodyshop/'.$fileName));
     }
 
     private function updateAudit(string $fileName): void
