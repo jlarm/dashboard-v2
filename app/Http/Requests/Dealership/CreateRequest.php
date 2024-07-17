@@ -9,7 +9,7 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:tenants'],
+            'name' => ['required', 'string', 'max:255', 'unique:tenants', 'alpha_num'],
             'address' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
