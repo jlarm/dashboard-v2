@@ -26,7 +26,7 @@ class Create extends Modal
     public $website;
 
     protected $rules = [
-        'name' => 'required|max:255|unique:stores,name|alpha_num',
+        'name' => 'required|max:255|unique:stores,name|regex:/^[a-zA-Z0-9 ]+$/',
         'address' => 'required|max:255',
         'city' => 'required|max:255',
         'state' => 'required|max:255',
