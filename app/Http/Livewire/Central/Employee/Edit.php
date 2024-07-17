@@ -14,9 +14,6 @@ class Edit extends SlideOver
 
     public $role;
 
-    public function updateEmployee()
-    {
-    }
 
     public function render()
     {
