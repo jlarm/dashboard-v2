@@ -9,6 +9,7 @@ use Livewire\Component;
 class Show extends Component
 {
     public Course $course;
+
     public $slides;
 
     public function mount()
@@ -28,6 +29,7 @@ class Show extends Component
     public function render()
     {
         $quizLink = $this->quizLink();
+
         return view('livewire.central.course.show', compact('quizLink'));
     }
 }

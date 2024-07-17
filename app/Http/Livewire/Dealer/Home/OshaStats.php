@@ -5,13 +5,13 @@ namespace App\Http\Livewire\Dealer\Home;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
-use App\Traits\OshaGenerateRating;
 use App\Traits\HasAuditStats;
+use App\Traits\OshaGenerateRating;
 use Livewire\Component;
 
 class OshaStats extends Component
 {
-    use OshaGenerateRating, HasAuditStats;
+    use HasAuditStats, OshaGenerateRating;
 
     public Store $store;
 

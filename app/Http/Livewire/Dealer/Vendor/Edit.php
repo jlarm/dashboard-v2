@@ -14,7 +14,9 @@ class Edit extends SlideOver
     use WithPagination;
 
     public $vendor;
+
     public string $name = '';
+
     public string $email = '';
 
     protected $listeners = ['refreshVendorForms' => '$refresh'];
@@ -23,7 +25,6 @@ class Edit extends SlideOver
         'name' => 'required|string|max:255',
         'email' => 'required|email',
     ];
-
 
     public function mount(Vendor $vendor)
     {

@@ -24,7 +24,7 @@ class OldDownload extends Component
 
             return response()->streamDownload(function () use ($pdf) {
                 echo $pdf;
-            }, $this->vendor->name . '-vendor-form.pdf');
+            }, $this->vendor->name.'-vendor-form.pdf');
         } catch (\Exception $e) {
             \Log::log('error', $e->getMessage());
         }

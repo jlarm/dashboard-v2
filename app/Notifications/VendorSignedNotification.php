@@ -16,7 +16,7 @@ class VendorSignedNotification extends Notification implements ShouldQueue
     public function __construct(VendorForm $vendor)
     {
         $this->vendor = $vendor;
-        ray($vendor->vendor->name . ' signed the vendor form.');
+        ray($vendor->vendor->name.' signed the vendor form.');
     }
 
     public function via($notifiable): array
@@ -27,7 +27,7 @@ class VendorSignedNotification extends Notification implements ShouldQueue
     public function toDatabase($notifiable): array
     {
         return [
-            'message' => $this->vendor->vendor->name . ' signed the vendor form.'
+            'message' => $this->vendor->vendor->name.' signed the vendor form.',
         ];
     }
 

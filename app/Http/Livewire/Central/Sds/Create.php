@@ -2,12 +2,9 @@
 
 namespace App\Http\Livewire\Central\Sds;
 
-use App\Events\LocalTransferCreated;
 use App\Models\Sds;
-use App\Models\TransferFile;
 use Filament\Notifications\Notification;
 use Livewire\Component;
-use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class Create extends Component
@@ -15,14 +12,23 @@ class Create extends Component
     use WithFileUploads;
 
     public string $name = '';
+
     public string $productIdentifier = '';
+
     public array $productIdentificationNumbers = [];
+
     public string $newPin = '';
+
     public string $manufacturer = '';
+
     public array $casNos = [];
+
     public string $newCasNo = '';
+
     public string $commonName = '';
+
     public $file;
+
     protected $messages = [
         'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
     ];

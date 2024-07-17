@@ -27,7 +27,6 @@ use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Docs\Index;
-use App\Http\Livewire\Dealer\Manual\Isp\Create;
 use App\Http\Livewire\Dealer\Phish\Show;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use Illuminate\Support\Facades\Route;
@@ -189,7 +188,7 @@ Route::name('dealer.')->middleware([
     Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function () {
 
         Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function () {
-            Route::get('/isp',  \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
+            Route::get('/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
             Route::get('/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('isp.create');
             Route::get('/osha', \App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('osha.index');
             Route::get('/osha/create', \App\Http\Livewire\Dealer\Manual\Osha\Create::class)->name('osha.create');

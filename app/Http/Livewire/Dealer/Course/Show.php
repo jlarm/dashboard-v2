@@ -9,6 +9,7 @@ use Livewire\Component;
 class Show extends Component
 {
     public Course $course;
+
     public $slides;
 
     public function mount()

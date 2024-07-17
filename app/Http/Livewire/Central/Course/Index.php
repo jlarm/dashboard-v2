@@ -19,9 +19,9 @@ class Index extends Component
                 ->select(['id', 'name', 'slug', 'questions'])
                 ->whereNot('slug', 'patriot-act-ofac')
                 ->with(['results' => function ($query) {
-                        $query->where('user_id', auth()->user()->id)
-                            ->latest();
-                    },
+                    $query->where('user_id', auth()->user()->id)
+                        ->latest();
+                },
                 ])
                 ->orderBy('id')
                 ->paginate(20),

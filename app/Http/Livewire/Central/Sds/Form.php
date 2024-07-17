@@ -12,14 +12,23 @@ class Form extends Component
     use WithFileUploads;
 
     public ?Sds $sds;
+
     public string $name = '';
+
     public string $productIdentifier = '';
+
     public array $productIdentificationNumbers = [];
+
     public string $newPin = '';
+
     public string $manufacturer = '';
+
     public array $casNos = [];
+
     public string $newCasNo = '';
+
     public string $commonName = '';
+
     public $file;
 
     protected $rules = [
@@ -39,7 +48,7 @@ class Form extends Component
         $this->productIdentifier = $this->sds->product_identifier ?? '';
         $this->productIdentificationNumbers = $this->sds->product_identification_numbers;
         $this->manufacturer = $this->sds->manufacturer ?? '';
-        $this->casNos = array($this->sds->cas_nos);
+        $this->casNos = [$this->sds->cas_nos];
         $this->commonName = $this->sds->common_name ?? '';
 
         dd(gettype($this->productIdentificationNumbers));

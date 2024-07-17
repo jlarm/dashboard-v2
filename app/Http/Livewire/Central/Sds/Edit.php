@@ -12,15 +12,25 @@ class Edit extends Component
     use WithFileUploads;
 
     public Sds $sds;
+
     public string $name = '';
+
     public string $productIdentifier = '';
+
     public array $productIdentificationNumbers = [];
+
     public string $newPin = '';
+
     public string $manufacturer = '';
+
     public array $casNos = [];
+
     public string $newCasNo = '';
+
     public string $commonName = '';
+
     public $file;
+
     protected $messages = [
         'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
     ];
@@ -119,6 +129,7 @@ class Edit extends Component
             }
         }
     }
+
     public function render()
     {
         return view('livewire.central.sds.edit');

@@ -14,7 +14,7 @@ class StoreIdentifierMiddleware
             return $next($request);
         }
 
-        if (!Store::exists($request->store)) {
+        if (! Store::exists($request->store)) {
             return $next($request);
         }
 

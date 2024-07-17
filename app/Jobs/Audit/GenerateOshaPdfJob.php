@@ -75,9 +75,9 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     private function createPdf(string $path, string $fileName): void
     {
-        $directoryPath = dirname($path . '/' . $fileName);
+        $directoryPath = dirname($path.'/'.$fileName);
 
-        if (!File::isDirectory($directoryPath)) {
+        if (! File::isDirectory($directoryPath)) {
             File::makeDirectory($directoryPath, 0755, true, true);
         }
 
@@ -96,7 +96,7 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
             ->showBrowserHeaderAndFooter()
             ->hideHeader()
             ->footerHtml($footer)
-            ->save($path . '/' . $fileName);
+            ->save($path.'/'.$fileName);
     }
 
     private function updateAudit(string $fileName): void

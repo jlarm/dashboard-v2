@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Dealer\Vendor;
 use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
-use App\Models\Dealer\VendorForm;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -14,10 +13,15 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
+
     public $user;
+
     public $qi;
+
     public $contact_name;
+
     public $contact_email;
+
     public $store;
 
     protected $rules = [

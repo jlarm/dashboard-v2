@@ -13,10 +13,15 @@ use Livewire\Component;
 class NewForm extends Component
 {
     public $vid;
+
     public $vendor;
+
     public $data = [];
+
     public $signature;
+
     public $storeName;
+
     public $qis;
 
     protected $queryString = ['vid'];
@@ -66,8 +71,8 @@ class NewForm extends Component
         $fileName = $fName.$cTime.'.png';
 
         $this->vendor->update([
-            'data'=> $this->data,
-            'signature'=> $fileName,
+            'data' => $this->data,
+            'signature' => $fileName,
         ]);
 
         \Storage::put('signatures/'.$fileName, base64_decode(explode(',', $this->signature)[1]));

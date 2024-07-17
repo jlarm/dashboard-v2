@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait HasAuditStats
 {
-    public function progress(): null|array
+    public function progress(): ?array
     {
         if ($this->violationAudits()->whereNotNull('grade')->get()->count() < 2) {
             return null;
