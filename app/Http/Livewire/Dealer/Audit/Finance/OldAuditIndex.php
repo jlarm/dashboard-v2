@@ -28,7 +28,8 @@ class OldAuditIndex extends Component
 
     public function download()
     {
-        return \Storage::disk('do-audits')->download(tenant('id').'/osha/'.$this->financeAudit->pdf_path);
+        return \Storage::disk('do-audits')
+            ->download(tenant('id').'/finance/'.$this->financeAudit->pdf_path);
     }
 
     public function render()
