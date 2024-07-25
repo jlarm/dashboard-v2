@@ -242,7 +242,7 @@
                     believes an
                     emergency might threaten human health. The following potential emergencies might reasonably
                     be expected at this facility and thus call for the implementation of this EAP:</p>
-                <p>Fire hazards and chemical spills</p>
+                <p><strong>Fire Hazards</strong> and <strong>Chemical Spills</strong> and <strong>Heat Related illnesses</strong></p>
                 <p>The following personnel can be contacted regarding further information about duties under
                     this
                     written Emergency Action Plan:</p>
