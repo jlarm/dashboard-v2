@@ -2704,6 +2704,93 @@
                 </li>
             </ul>
         </article>
+        <article id="heat">
+            <h1 class="text-arm-blue-600">Heat Illness and Prevention Program</h1>
+            <p>Here are some key components included your program:</p>
+            <ul>
+                <li><strong>Risk Assessment:</strong> Identify tasks and environments where workers or individuals are
+                    exposed to high temperatures. Assess factors such as temperature, humidity, and
+                    radiant heat. The following areas are noted as potential HOT spots:
+                    <ul>
+                        <li>Service Shop Area, Body Shops and exterior of building</li>
+                    </ul>
+                </li>
+                <li><strong>Training:</strong> Educate workers and supervisors about the risks of heat illness, symptoms
+                    to watch for, and preventive measures. Training should also cover emergency
+                    procedures. See Dealerships <a href="#eap">“Emergency Action Plan”</a>.
+                </li>
+                <li><strong>Hydration:</strong> Encourage frequent hydration with cool water. Provide access to water
+                    sources and encourage workers to drink water often, even if they do not feel thirsty.
+                    <ul>
+                        <li><strong>Water Intake:</strong> Drink plenty of water throughout the day, even if you don&#39;t feel
+                            thirsty. Thirst is not always a reliable indicator of hydration status.</li>
+                        <li><strong>Monitor Urine Color:</strong> Check the color of your urine. Pale yellow or clear urine
+                            usually indicates adequate hydration, while dark yellow or amber-colored urine
+                            may indicate dehydration.</li>
+                        <li><strong>Hydration Before Activity:</strong> Drink fluids before starting any physical activity,
+                            especially in hot environments. This helps to preemptively hydrate your body.</li>
+                        <li><strong>During Activity:</strong> Drink fluids regularly during physical activity, particularly
+                            water or sports drinks that replenish electrolytes lost through sweating.</li>
+                        <li><strong>Electrolytes:</strong> In situations of prolonged physical activity or sweating, consider
+                            beverages or foods that contain electrolytes (such as sodium and potassium) to
+                            help maintain electrolyte balance.</li>
+                        <li><strong>Avoid Excessive Caffeine and Alcohol:</strong> Limit consumption of caffeinated
+                            beverages and alcohol, as they can contribute to dehydration.</li>
+                        <li><strong>Monitor Sweat Loss:</strong> If possible, weigh yourself before and after prolonged
+                            activity to estimate how much fluid you&#39;ve lost through sweat, and aim to replace
+                            it.</li>
+                        <li><strong>Personalize Hydration Needs:</strong> Individual hydration needs vary based on factors
+                            such as age, weight, activity level, and environmental conditions. Adjust your
+                            fluid intake accordingly.</li>
+                        <li><strong>Hydration in Hot Environments:</strong> In hot weather, increase your fluid intake and
+                            take breaks in shaded or cool areas to prevent overheating and dehydration.</li>
+                        <li><strong>Medical Conditions:</strong> Individuals with certain medical conditions or taking
+                            medications may have specific hydration needs. Consult a healthcare professional
+                            if you have concerns.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Remember that staying properly hydrated is not just about drinking water—it&#39;s about
+                maintaining a balance of fluids and electrolytes that support your body&#39;s functions and help
+                prevent dehydration and heat-related illnesses.</p>
+            <ul>
+                <li><strong>Rest Breaks:</strong> Schedule frequent breaks in shaded or cool areas. Encourage workers to
+                    take breaks to cool down and rest.</li>
+                <li><strong>Personal Protective Equipment (PPE):</strong> All workers have access to appropriate PPE
+                    that does not contribute to heat stress. Lightweight, breathable clothing and hats that
+                    provide shade are recommended if and where needed.</li>
+                <li><strong>Monitoring:</strong> Monitor workers for signs and symptoms of heat illness. Encourage
+                    workers to monitor each other for signs of heat illness as listed below:
+                    <ul>
+                        <li><strong>High Body Temperature:</strong> A core body temperature of 104°F (40°C) or higher
+                            is a key indicator of heat stroke.</li>
+                        <li><strong>Altered Mental Status:</strong> This can range from confusion and agitation to
+                            delirium or unconsciousness. The person may seem disoriented or behave
+                            strangely.</li>
+                        <li><strong>Hot, Dry Skin:</strong> The skin may feel hot to the touch and dry, as sweating may
+                            have ceased due to dehydration.</li>
+                        <li><strong>Flushed Skin:</strong> The skin may appear flushed or red in color due to increased
+                            blood circulation and dilation of blood vessels.</li>
+                        <li><strong>Rapid Breathing:</strong> Breathing may become rapid and shallow as the body tries
+                            to cool itself.</li>
+                        <li><strong>Rapid Heart Rate:</strong> The heart rate may be elevated as the body attempts to
+                            circulate blood to cool itself down.</li>
+                        <li><strong>Headache:</strong> A severe headache, possibly throbbing in nature, may occur due to
+                            the stress placed on the body&#39;s systems.</li>
+                        <li><strong>Nausea and Vomiting:</strong> The person may experience nausea, vomiting, or
+                            diarrhea, which can further exacerbate dehydration.</li>
+                        <li><strong>Muscle Cramps or Weakness:</strong> Muscle cramps or weakness may occur due to
+                            electrolyte imbalances and dehydration.</li>
+                        <li><strong>Seizures:</strong> In severe cases, seizures may occur as a result of the neurological
+                            effects of heat stroke.</li>
+                    </ul>
+                </li>
+                <li><strong>Acclimatization:</strong> Gradually increase exposure to hot environments for new workers
+                    or those returning from an absence. Allow time for workers to acclimatize to heat.</li>
+                <li><strong>Evaluation and Review:</strong> Regularly assess the effectiveness of the heat illness prevention
+                    program. Solicit feedback from workers and supervisors to make improvements.</li>
+            </ul>
+        </article>
         <p>{{ $osha->user->name }}</p>
         <img src="{{ storage_path() }}/app/osha-signatures/{{ $osha->signature }}" alt="Signature"/>
     </div>
