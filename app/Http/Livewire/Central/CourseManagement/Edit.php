@@ -26,11 +26,6 @@ class Edit extends Component
         'slides' => 'required',
     ];
 
-    public function update()
-    {
-        dd($this->validate());
-    }
-
     public function render()
     {
         return view('livewire.central.course-management.edit');

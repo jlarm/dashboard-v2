@@ -50,8 +50,6 @@ class Form extends Component
         $this->manufacturer = $this->sds->manufacturer ?? '';
         $this->casNos = [$this->sds->cas_nos];
         $this->commonName = $this->sds->common_name ?? '';
-
-        dd(gettype($this->productIdentificationNumbers));
     }
 
     public function addPin(): void

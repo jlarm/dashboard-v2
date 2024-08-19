@@ -29,11 +29,7 @@ class RedSentryReportGenerationJob implements ShouldQueue
 
             $token = $user['token'];
 
-            ray($token);
-
             $token = null;
-
-            ray($token);
 
         } catch (\Exception $e) {
 
