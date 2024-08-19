@@ -7,7 +7,7 @@ use App\Notifications\NewCourseNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
 
-class NewCourseNotificationCommand extends Command
+class  NewCourseNotificationCommand extends Command
 {
     protected $signature = 'new:course-notification {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
