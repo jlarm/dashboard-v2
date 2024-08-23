@@ -44,12 +44,12 @@
                 "answers": [
                     {
                         "a": "$5,000",
-                        "b": "$10,000",
-                        "c": "$12,000",
+                        "b": "$8,000",
+                        "c": "$10,000",
                         "d": "None of the above"
                     }
                 ],
-                "correctAnswer": "b"
+                "correctAnswer": "c"
             },
             {
                 "question": "What is considered a \"Cash\" transaction?",
