@@ -1,0 +1,102 @@
+[
+    {
+        "id": 40,
+        "uuid": "c30045a4-073f-4044-ab95-568ed1e0cd2a",
+        "name": "Title VII of the Civil Rights Act of 1964",
+        "slug": "title-seven",
+        "department": [],
+        "roles": [],
+        "slides": [
+            {
+                "title": "Introduction",
+                "description": "<ul><li>Purpose and Background<ol><li>Enacted on July 2, 1964</li><li>Aim: To eliminate discrimination based on:<ul><li>Race</li><li>Color</li><li>Religion</li><li>Sex<li>National origin in employment.</li></ul></li><li>Supreme Court up-date Ruling - June 15, 2020 added<ul><li>Sexual Orientation</li><li>Gender Identity</li></ul></li></ol></li><li>Jurisdiction<ol><li>Applies to employers with 15 or more employees</li><li>Covers all aspects of employment</li></ol></li></ul>"
+            },
+            {
+                "title": "Prohibited Employment Practices",
+                "description": "<p><strong>Prohibited employment practices</strong>are actions by employers that violate laws designed to protect employees&#39; rights and ensure fair treatment in the workplace. Key examples include:</p><ul><li><strong>Discrimination</strong>: Treating employees or job applicants unfairly based on race, color, religion, sex, national origin, age, disability, or genetic information. This includes hiring, firing, promotions, pay, job assignments, and other employment-related decisions.</li><li><strong>Harassment</strong>: Allowing or engaging in behavior that creates a hostile or intimidating work environment, such as sexual harassment or bullying based on protected characteristics.</li><li><strong>Retaliation</strong>: Punishing employees for exercising their rights under employment laws, such as reporting discrimination, participating in an investigation, or filing a complaintwith a government agency.</li><li><strong>Failure to Accommodate</strong>: Not providing reasonable accommodations for employees with disabilities or religious practices, as required by laws such as the Americans with Disabilities Act (ADA) or Title VII of the Civil Rights Act.</li><li><strong>Wage and Hour Violations</strong>: Not adhering to laws regarding minimum wage, overtime pay, or other compensation-related requirements.</li><li><strong>Violating Employment Contracts</strong>: Breaching terms of an employment contract, which could include unjust dismissal or failure to provide promised benefits.</li><li><strong>Health and Safety Violations</strong>: Ignoring regulations designed to ensure a safe and healthy work environment, such as those enforced by the Occupational Safety and Health Administration (OSHA).</li></ul><ol type=\"A\"><li>Discrimination Based on Race, Color, Religion, Sex, or National Origin<ol><li>Hiring and Firing</li><li>Promotions and Transfers</li><li>Compensation and Benefits</li><li>Training and Development</li></ol></li><li>Sexual Harassment<ol><li>Quid Pro Quo Harassment<ul><li>&quot;Quid pro quo&quot; is a Latin phrase that means &quot;something for something&quot; or &quot;this for that.&quot; It describes a situation where one thing is given or done in exchange for another thing of roughly equal value. It&#39;s often used in legal or business contexts to indicate a mutual agreement or trade. For example, if someone provides a service, they expect to receive compensation in return. It can also have negative connotations if it implies an unethical or corrupt exchange.</li></ul></li><li>Hostile Work Environment<ul><li>A &quot;<strong><i>hostile work environment</i></strong>&quot; refers to a workplace where an employee experiences harassment, discrimination, or other behaviors that create an intimidating, offensive, or abusive atmosphere. This can include:<ul><li><strong>Discriminatory Behavior</strong>: Harassment based on race, gender, sexual orientation, religion, disability, or other protected characteristics.</li><li><strong>Unwelcome Conduct</strong>: Persistent, severe, or pervasive conduct that disrupts work performance or creates a hostile atmosphere.</li><li><strong>Abusive Language</strong>: Verbal abuse, threats, or offensive comments.</li><li><strong>Bullying</strong>: Intimidation, belittling, or aggressive behavior by colleagues or supervisors.</li></ul></li></ul></li></ol></li><li>Retaliation<ol><li><strong>Retaliation</strong>in the workplace occurs when an employer takes adverse action against an employee for engaging in legally protected activities. This can include actions such as:<ul><li><strong>Reporting Discrimination or Harassment</strong>: If an employee complains about or reports discriminatory practices or harassment.</li><li><strong>Whistleblowing</strong>: When an employee reports illegal or unethical behavior within the organization.</li><li><strong>Exercising Legal Rights</strong>: Taking time off for medical reasons under the Family and Medical Leave Act (FMLA), or asserting other legal rights.</li></ul></li><li>Retaliatory actions might include:<ul><li><strong>Termination</strong>: Being fired or laid off after making a complaint.</li><li><strong>Demotion</strong>: Losing a job title or position as a form of punishment.</li><li><strong>Reduction in Hours or Pay</strong>: Experiencing a cut in salary or work hours.</li><li><strong>Harassment</strong>: Facing increased scrutiny, bullying, or exclusion following a complaint.</li></ul></li></ol></li></ol>"
+            },
+            {
+                "title": "Equal Employment Opportunity Commission (EEOC)",
+                "description": "<ol type=\"A\"><li>Role and Responsibilities<ol><li>Investigates Complaints</li><li>Mediates and Settles Disputes</li><li>Enforces Compliance</li></ol></li><li>Filing a Complaint<ol><li>Timeframe (typically within 180 days of the alleged discrimination)</li><li>Process and Procedures</li></ol></li></ol>"
+            },
+            {
+                "title": "Affirmative Action",
+                "description": "<ol type=\"A\"><li>Definition and Purpose<ol><li>Proactive Measures to Ensure Equal Opportunity</li><li>Focus on Increasing Representation of Historically Underrepresented Groups</li></ol><li>Implementation<ol><li>Voluntary Programs</li><li>Court-Ordered Affirmative Action Plans</li></ol></li></ol>"
+            },
+            {
+                "title": "Legal Remedies",
+                "description": "<ol type=\"A\"><li>Possible Outcomes<ol><li>Reinstatement</li><li>Back Pay</li><li>Compensatory Damages</li><li>Punitive Damages</li></ol><li>Legal Actions<ol><li>Filing a Lawsuit After EEOC Investigation</li><li>Statute of Limitations</li></ol></li></ol>"
+            },
+            {
+                "title": "Amendments and Related Laws",
+                "description": "<ol type=\"A\"><li>Overview of Significant Amendments<ol><li>Pregnancy Discrimination Act of 1978</li><li>Civil Rights Act of 1991 (including damages and jury trials)</li></ol><li>Interaction with Other Employment Laws<ol><li>Americans with Disabilities Act (ADA)</li><li>Age Discrimination in Employment Act (ADEA)</li></ol></li></ol>"
+            },
+            {
+                "title": "Conclusion",
+                "description": "<ol type=\"A\"><li>Importance of Title VII in Promoting Workplace Equality</li><li>Ongoing Challenges and Enforcement</li></ol>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "When was Title VII enacted?",
+                "answers": [
+                    {
+                        "a": "1962",
+                        "b": "1964",
+                        "c": "1968",
+                        "d": "1970"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Title VII applies to employers with 50 or more employees.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which one of the following is covered under Title VII",
+                "answers": [
+                    {
+                        "a": "Race",
+                        "b": "Color",
+                        "c": "National Origin",
+                        "d": "Sexual Orientation",
+                        "e": "A, B and D Only",
+                        "f": "All of the above"
+                    }
+                ],
+                "correctAnswer": "f"
+            },
+            {
+                "question": "What is the typical time frame that a discrimination charge can be filed?",
+                "answers": [
+                    {
+                        "a": "90 Days",
+                        "b": "30 Days",
+                        "c": "120 Days",
+                        "d": "180 Days"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "What does “Quid Pro Quo” harassment mean?",
+                "answers": [
+                    {
+                        "a": "Filing a complaint under false pretense",
+                        "b": "When management staff constantly berates a fellow employee in front of other employees",
+                        "c": "A form of harassment where employment benefits are conditional on sexual favors",
+                        "d": "A mutual exchange of services"
+                    }
+                ],
+                "correctAnswer": "c"
+            }
+        ]
+    }
+]
