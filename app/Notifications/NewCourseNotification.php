@@ -22,7 +22,7 @@ class NewCourseNotification extends Notification implements ShouldQueue
     public function toDatabase($notifiable)
     {
         return [
-            'message' => 'New Diversity course added.',
+            'message' => 'New Title VII course added.',
         ];
     }
 }
