@@ -12,11 +12,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('course:check-reminders')->daily()->runInBackground();
         $schedule->command('activitylog:clean')->daily()->runInBackground();
         $schedule->command('run:invites')->daily()->runInBackground();
         $schedule->command('run:course-reminder')->daily()->runInBackground();
         $schedule->command('delete:temporary-uploads')->daily()->runInBackground();
-        $schedule->command('red-sentry:report-generation')->dailyAt('01:00')->runInBackground()->emailOutputTo('jlohr@autorisknow.com');
+        $schedule->command('red-sentry:report-generation')->dailyAt('01:00')->runInBackground();
         $schedule->command('backups:go')->dailyAt('01:30')->runInBackground()->withoutOverlapping();
         $schedule->command('backups:clean')->dailyAt('03:01')->runInBackground()->withoutOverlapping();
         $schedule->command('run:go-phish-user-groups')->daily()->runInBackground();
