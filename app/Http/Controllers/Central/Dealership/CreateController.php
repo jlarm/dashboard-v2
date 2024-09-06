@@ -9,6 +9,7 @@ use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
+use App\Notifications\NewDealershipNotification;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CreateController extends Controller
@@ -39,11 +40,19 @@ class CreateController extends Controller
             $this->createUserAndAssignRole($validated);
         });
 
+        $this->sendNotification($validated['name']);
+
         session()->flash('flash.type', 'success');
         session()->flash('flash.title', 'Dealership Created');
         session()->flash('flash.message', $validated['name'].' has successfully been created.');
 
         return redirect()->route('dealerships.index');
+    }
+
+    private function sendNotification($dealerName)
+    {
+        $user = User::where('email', 'jlohr@autorisknow.com')->firstOrFail();
+        $user->notify(new NewDealershipNotification($dealerName));
     }
 
     private function createStoreAndSettings($validated)
