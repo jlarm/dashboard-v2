@@ -55,6 +55,9 @@ class CourseExpiringEmailCommand extends Command
             })
             ->get()
             ->groupBy('course_id')
+            ->map(function ($group) {
+                return $group->sortByDesc('created_at')->first();
+            })
             ->map(fn ($result) => $result->first());
     }
 }
