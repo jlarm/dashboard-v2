@@ -25,6 +25,7 @@ use App\Http\Controllers\Dealer\Store\SettingsController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
+use App\Http\Livewire\Dealer\Audit\Osha\Remediation;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Docs\Index;
 use App\Http\Livewire\Dealer\Phish\Show;
@@ -200,8 +201,8 @@ Route::name('dealer.')->middleware([
 
         Route::get('settings', SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
 
-        Route::get('phishing', Index::class)->name('phishing.index');
-        Route::get('phishing/{phishingCampaign}', Show::class)->name('phishing.show');
+        Route::get('phishing', App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
+        Route::get('phishing/{phishingCampaign}', App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
     });
 
     Route::get('email/settings', FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
