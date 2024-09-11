@@ -4,6 +4,7 @@
 /public/hot
 /public/storage
 /storage/app
+/storage/tenant*/
 /storage/*.key
 /storage/tenent*.*
 /storage/tenant*-
