@@ -20,6 +20,9 @@ use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
+use App\Traits\HasAudits;
+use App\Traits\HasCourses;
+use App\Traits\HasManuals;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -37,9 +40,16 @@ use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasRoles, HasSlug, LogsActivity, Notifiable, SoftDeletes;
-
-    //    protected $appends = ['user_has_not_completed_courses'];
+    use HasApiTokens,
+        HasFactory,
+        HasRoles,
+        HasSlug,
+        HasAudits,
+        HasCourses,
+        HasManuals,
+        LogsActivity,
+        Notifiable,
+        SoftDeletes;
 
     public function getSlugOptions(): SlugOptions
     {
@@ -48,11 +58,6 @@ class User extends Authenticatable
             ->saveSlugsTo('slug');
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -62,21 +67,11 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -92,67 +87,6 @@ class User extends Authenticatable
     private function userHasNoCaliforniaStore(): bool
     {
         return ! $this->stores()->where('state', 'California')->exists();
-    }
-
-    private function totalUserCourses(): array
-    {
-        if (is_null($this->userCoursesCache)) {  // Check if already computed and cached
-            // Eager load the roles relationship
-            $this->load('roles');
-
-            // Fetch the role IDs excluding the ID 5
-            $userRoles = $this->roles->pluck('id')->reject(fn ($id) => $id == 5);
-
-            // If there are no valid roles, return an empty array
-            if ($userRoles->isEmpty()) {
-                return [];
-            }
-
-            $courseWithRole = DB::table('course_role')
-                ->whereIn('role_id', $userRoles)
-                ->pluck('course_id')
-                ->toArray();
-
-            $this->userCoursesCache = Course::with('departments')
-                ->where(function ($query) use ($courseWithRole) {
-                    $query->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
-                        ->whereIn('id', $courseWithRole);
-                })
-                ->orWhereDoesntHave('departments')
-                ->when($this->userHasNoCaliforniaStore(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
-                ->pluck('id')
-                ->toArray();
-        }
-
-        return $this->userCoursesCache;
-    }
-
-    public function getTotalCompletedCoursesAttribute(): int
-    {
-        return DB::table('course_results')
-            ->distinct()
-            ->select('course_id')
-            ->where('user_id', $this->id)
-            ->whereIn('course_id', $this->totalUserCourses())
-            ->where(function ($query) {
-                $query->where('created_at', '>=', now()->subYear())
-                    ->orWhere(function ($query) {
-                        $query->whereIn('course_id', [9, 10, 11, 12])
-                            ->where('created_at', '>=', now()->subYears(3));
-                    });
-            })
-            ->where('passed', 1)
-            ->count('course_id');
-    }
-
-    public function getTotalUserCoursesAttribute(): int
-    {
-        return count($this->totalUserCourses());
-    }
-
-    public function getUserHasNotCompletedCoursesAttribute(): bool
-    {
-        return $this->total_completed_courses != $this->total_user_courses;
     }
 
     public function dealerships(): HasMany
@@ -173,66 +107,6 @@ class User extends Authenticatable
     public function invites(): HasMany
     {
         return $this->hasMany(Invite::class);
-    }
-
-    public function courses(): BelongsToMany
-    {
-        return $this->belongsToMany(Course::class);
-    }
-
-    public function results(): HasMany
-    {
-        return $this->hasMany(CourseResults::class);
-    }
-
-    public function redflags(): HasMany
-    {
-        return $this->hasMany(RedFlag::class);
-    }
-
-    public function individualAudits(): HasMany
-    {
-        return $this->hasMany(IndividualAudit::class, 'manager_id', 'id');
-    }
-
-    public function isps(): HasMany
-    {
-        return $this->hasMany(Isp::class);
-    }
-
-    public function oshas(): HasMany
-    {
-        return $this->hasMany(Osha::class);
-    }
-
-    public function oshaViolationAudits(): HasMany
-    {
-        return $this->hasMany(OshaViolationAudit::class);
-    }
-
-    public function BodyShopViolationAudits(): HasMany
-    {
-        return $this->hasMany(BodyShopViolationAudit::class);
-    }
-
-    public function GlbaViolationAudits(): HasMany
-    {
-        return $this->hasMany(GlbaViolationAudit::class);
-    }
-
-    public function oshaAudits(): HasMany
-    {
-        return $this->hasMany(OshaAudit::class);
-    }
-
-    public function bodyShopAudits(): HasMany
-    {
-        return $this->hasMany(BodyShopAudit::class);
-    }
-
-    public function glbaAudits(): HasMany
-    {
-        return $this->hasMany(FinanceAudit::class);
     }
 
     public function certificates(): HasMany

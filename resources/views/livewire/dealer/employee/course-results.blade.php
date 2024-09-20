@@ -90,5 +90,5 @@
             </div>
         </div>
     </div>
-    <div class="mt-10">{{ $courses->links() }}</div>
+{{--    <div class="mt-10">{{ $courses->links() }}</div>--}}
 </div>

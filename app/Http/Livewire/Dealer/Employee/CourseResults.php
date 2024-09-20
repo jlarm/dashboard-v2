@@ -20,7 +20,7 @@ class CourseResults extends Component
 
     protected $listeners = ['refreshEmployeeDetails' => '$refresh'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->store = $this->user->stores->first() ?? Store::first();
         $userRole = $this->user->roles()->pluck('id')->toArray();
@@ -30,18 +30,27 @@ class CourseResults extends Component
 
     public function render()
     {
+        $mainCourses = Course::query()
+            ->whereHas('departments', function ($query) {
+                $query->where('id', $this->user->department_id);
+            })
+            ->whereIn('id', $this->courseWithRole)
+            ->orWhereDoesntHave('departments')
+            ->with([
+                'results' => function ($query) {
+                    $query->where('user_id', $this->user->id)->latest('id');
+                },
+            ])->orderBy('name')
+            ->get();
+
+        $userCourses = $this->user->courses()->with(['results' => function ($query) {
+            $query->where('user_id', $this->user->id)->latest('id');
+        }])->get();
+
+        $courses = collect($mainCourses)->merge($userCourses)->sortBy('name');
+
         return view('livewire.dealer.employee.course-results', [
-            'courses' => Course::query()
-                ->WhereHas('departments', function ($query) {
-                    $query->where('id', $this->user->department_id);
-                })
-                ->whereIn('id', $this->courseWithRole)
-                ->orWhereDoesntHave('departments')
-                ->with([
-                    'results' => function ($query) {
-                        $query->where('user_id', $this->user->id)->latest('id');
-                    },
-                ])->orderBy('name')->paginate(24),
+            'courses' => $courses,
         ]);
     }
 }

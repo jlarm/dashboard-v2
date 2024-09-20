@@ -3,11 +3,12 @@
 namespace App\Traits;
 
 use App\Models\Dealer\Course;
+use DB;
+use Illuminate\Support\Collection;
 
 trait EmployeeCourses
 {
     protected $user;
-
     protected $courses;
 
     protected function loadCurrentUser(): void
@@ -17,45 +18,48 @@ trait EmployeeCourses
 
     protected function getUserRolesExcluding(int $excludeRoleId): array
     {
-        return $this->user->roles()->pluck('id')->reject(function ($roleId) use ($excludeRoleId) {
-            return $roleId === $excludeRoleId;
-        })->toArray();
+        return $this->user->roles()->pluck('id')->reject(fn($roleId) => $roleId === $excludeRoleId)->toArray();
     }
 
     public function getUserHasNoCaliforniaStore(): bool
     {
-        return ! $this->user->stores()->where('state', 'California')->exists();
+        return !$this->user->stores()->where('state', 'California')->exists();
     }
 
     protected function getCoursesForRoles(array $roles): array
     {
-        return \DB::table('course_role')
+        return DB::table('course_role')
             ->whereIn('role_id', $roles)
             ->pluck('course_id')
             ->toArray();
     }
 
-    public function loadCoursesForCurrentUser(): void
+    protected function getDepartmentCourses(array $courseWithRole): Collection
     {
-        $filteredRoles = $this->getUserRolesExcluding(5);
-        $courseWithRole = $this->getCoursesForRoles($filteredRoles);
-        $californiaStore = $this->getUserHasNoCaliforniaStore();
-
-        $this->courses = Course::query()
-            ->whereHas('departments', function ($query) {
-                $query->where('id', $this->user->department_id);
-            })
+        return Course::query()
+            ->whereHas('departments', fn($query) => $query->where('id', $this->user->department_id))
             ->whereIn('id', $courseWithRole)
             ->orWhereDoesntHave('departments')
-            ->with([
-                'results' => function ($query) {
-                    $query->where('user_id', $this->user->id)->latest('id');
-                },
-            ])
-            ->when($californiaStore, function ($query) {
-                $query->where('slug', '!=', 'sexual-harassment-training-in-california');
-            })
+            ->with(['results' => fn($query) => $query->where('user_id', $this->user->id)->latest('id')])
+            ->when($this->getUserHasNoCaliforniaStore(), fn($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
             ->orderBy('name')
             ->get();
+    }
+
+    protected function getUserCourses(): Collection
+    {
+        return $this->user->courses()->with(['results' => fn($query) => $query->where('user_id', $this->user->id)->latest('id')])->get();
+    }
+
+    public function loadCoursesForCurrentUser(): void
+    {
+        $this->loadCurrentUser();
+        $filteredRoles = $this->getUserRolesExcluding(5);
+        $courseWithRole = $this->getCoursesForRoles($filteredRoles);
+
+        $departmentCourses = $this->getDepartmentCourses($courseWithRole);
+        $userCourses = $this->getUserCourses();
+
+        $this->courses = $departmentCourses->merge($userCourses)->unique('id')->sortBy('name');
     }
 }
