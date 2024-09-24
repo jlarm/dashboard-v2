@@ -38,13 +38,17 @@ class CourseResults extends Component
             ->orWhereDoesntHave('departments')
             ->with([
                 'results' => function ($query) {
-                    $query->where('user_id', $this->user->id)->latest('created_at');
+                    $query->where('user_id', $this->user->id)
+                          ->latest('id')
+                          ->limit(1); // Get the latest result
                 },
             ])->orderBy('name')
             ->get();
 
         $userCourses = $this->user->courses()->with(['results' => function ($query) {
-            $query->where('user_id', $this->user->id)->latest('id');
+            $query->where('user_id', $this->user->id)
+                  ->latest('id')
+                  ->limit(1); // Get the latest result
         }])->get();
 
         $courses = collect($mainCourses)->merge($userCourses)->sortBy('name');
