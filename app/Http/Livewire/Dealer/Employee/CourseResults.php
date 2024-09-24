@@ -41,6 +41,7 @@ class CourseResults extends Component
                     $query->where('user_id', $this->user->id)->latest();
                 },
             ])->orderBy('name')
+            ->select(['id', 'name'])
             ->get();
 
         $userCourses = $this->user->courses()->with(['results' => function ($query) {
