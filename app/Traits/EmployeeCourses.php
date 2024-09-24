@@ -40,7 +40,7 @@ trait EmployeeCourses
             ->whereHas('departments', fn($query) => $query->where('id', $this->user->department_id))
             ->whereIn('id', $courseWithRole)
             ->orWhereDoesntHave('departments')
-            ->with(['results' => fn($query) => $query->where('user_id', $this->user->id)->latest('id')])
+            ->with(['results' => fn($query) => $query->where('user_id', $this->user->id)->latest()])
             ->when($this->getUserHasNoCaliforniaStore(), fn($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
             ->orderBy('name')
             ->get();
