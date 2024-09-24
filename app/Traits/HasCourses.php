@@ -45,12 +45,20 @@ trait HasCourses
 
     public function getTotalCompletedCoursesAttribute(): int
     {
-        return DB::table('course_results as cr')
-        ->join(DB::raw('(SELECT MAX(id) as id FROM course_results GROUP BY course_id) as latest'), 'cr.id', '=', 'latest.id')
-        ->where('cr.user_id', $this->id)
-        ->whereIn('cr.course_id', $this->totalUserCourses())
-        ->where('cr.passed', 1)
-        ->count();
+        return DB::table('course_results')
+            ->distinct()
+            ->select('course_id')
+            ->where('user_id', $this->id)
+            ->whereIn('course_id', $this->totalUserCourses())
+            ->where(function ($query) {
+                $query->where('created_at', '>=', now()->subYear())
+                    ->orWhere(function ($query) {
+                        $query->whereIn('course_id', [9, 10, 11, 12])
+                            ->where('created_at', '>=', now()->subYears(3));
+                    });
+            })
+            ->where('passed', 1)
+            ->count('course_id');
     }
 
     public function getTotalUserCoursesAttribute(): int

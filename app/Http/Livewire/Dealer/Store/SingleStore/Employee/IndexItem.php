@@ -38,19 +38,21 @@ class IndexItem extends Component
                 return $item->first();
             });
 
-        $this->completed = collect($this->completed->where('passed', 1))->count();
+        $this->completed = collect($this->completed)->count();
 
         $this->totalCourses = Course::query()
-            ->WhereHas('departments', function ($query) {
+            ->whereHas('departments', function ($query) {
                 $query->where('id', $this->user->department_id);
             })
             ->whereIn('id', $this->courseWithRole)
             ->orWhereDoesntHave('departments')
+            ->where('name', '!=', 'Sexual Harassment Training in California')
             ->with([
                 'results' => function ($query) {
                     $query->where('user_id', $this->user->id)->latest();
                 },
-            ])->count();
+            ])
+            ->count();
 
         if ($this->user->stores[0]->state != 'California') {
             $this->totalCourses = $this->totalCourses - 1;
