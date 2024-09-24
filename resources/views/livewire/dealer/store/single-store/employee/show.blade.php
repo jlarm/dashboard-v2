@@ -20,6 +20,9 @@
                 <div class="mx-auto xl:grid xl:grid-cols-3">
                     <div class="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
                         <livewire:dealer.employee.course-results :user="$user"/>
+                        @can('create-dealerships')
+                            <livewire:dealer.employee.assign-custom-courses-form :user="$user" />
+                        @endcan
                     </div>
                     <div class="hidden xl:block xl:pl-8">
                         <livewire:dealer.employee.details :user="$user"/>

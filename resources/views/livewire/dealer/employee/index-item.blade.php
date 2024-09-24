@@ -1,13 +1,4 @@
 <tr class="even:bg-gray-50 hover:bg-arm-blue-50">
-    {{--    @can('delete-stores')--}}
-    {{--        <td class="relative px-7 sm:w-12 sm:px-6">--}}
-    {{--            <input--}}
-    {{--                type="checkbox"--}}
-    {{--                class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"--}}
-    {{--                value="{{ $user->id }}"--}}
-    {{--            >--}}
-    {{--        </td>--}}
-    {{--    @endcan--}}
     <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500">
         {{ Str::headline($user->name) }}
     </td>

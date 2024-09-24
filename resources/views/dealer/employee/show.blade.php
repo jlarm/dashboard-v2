@@ -24,6 +24,9 @@
             <div class="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
                 @if($user->department)
                     <livewire:dealer.employee.course-results :user="$user"/>
+                    @can('create-dealerships')
+                        <livewire:dealer.employee.assign-custom-courses-form :user="$user" />
+                    @endcan
                 @endif
             </div>
             <div class="xl:block xl:pl-8">
