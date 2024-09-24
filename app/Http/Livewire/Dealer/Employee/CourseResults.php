@@ -36,6 +36,7 @@ class CourseResults extends Component
             })
             ->whereIn('id', $this->courseWithRole)
             ->orWhereDoesntHave('departments')
+            ->where('name', '!=', 'Sexual Harassment Training in California')
             ->with([
                 'results' => function ($query) {
                     $query->where('user_id', $this->user->id)->latest();
@@ -46,7 +47,8 @@ class CourseResults extends Component
 
         $userCourses = $this->user->courses()->with(['results' => function ($query) {
             $query->where('user_id', $this->user->id)->latest('id');
-        }])->get();
+        }])->where('name', '!=', 'Sexual Harassment Training in California')
+        ->get();
 
         $courses = collect($mainCourses)->merge($userCourses)->sortBy('name');
 
