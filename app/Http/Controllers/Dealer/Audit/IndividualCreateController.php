@@ -10,10 +10,10 @@ use Illuminate\Support\Str;
 
 class IndividualCreateController extends Controller
 {
-    public function __invoke(IndividualAudit $individualAudit, ?string $parentId = null): RedirectResponse
+    public function __invoke(IndividualAudit $individualAudit, ?string $parent = null): RedirectResponse
     {
         $audit = IndividualAudit::create([
-            'parent_id' => $parentId ?? $individualAudit->id ?? null,
+            'parent_id' => $parent ?? $individualAudit->id ?? null,
             'deal_jacket_date' => now()->format('Y-m-d'),
             'uuid' => (string) Str::uuid(),
             'user_id' => auth()->id(),
