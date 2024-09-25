@@ -239,14 +239,108 @@
                 />
             </div>
         </div>
-        <div class="w-full sticky bottom-0 bg-arm-blue-200 p-3 z-20">
+        <div class="w-full sticky bottom-0 bg-gray-200 p-3 z-20 md:block hidden">
             <div class="flex justify-evenly">
-                <a
-                    class="sm:mr-auto sm:ml-0 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150 hover:cursor-pointer"
-                    wire:click.prevent="update($exit = true, {{ $store }})"
+                <div class="mr-auto">
+                    <a
+                        class="sm:ml-0 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150 hover:cursor-pointer"
+                        wire:click.prevent="update($exit = true, {{ $store }})"
+                    >
+                        Exit
+                    </a>
+                    <a class="inline-flex items-center px-4 py-2 ml-5 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                       href="{{ route('dealer.audit.individual.create', $parent) }}">
+                        Next Audit
+                    </a>
+                </div>
+                <input type="search" name="search" id="search"
+                       wire:model="search"
+                       class="block sm:w-1/4 w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm mx-5"
+                       placeholder="Search Questions...">
+                <button
+                    wire:click.prevent="update($exit = false)"
+                    class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
                 >
-                    Exit
-                </a>
+                    <svg wire:loading
+                         class="animate-spin w-4 h-4 mr-2 text-gray-300 hover:cursor-pointer"
+                         xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Update
+                </button>
+            </div>
+        </div>
+        <div class="w-full sticky bottom-0 bg-gray-200 p-3 z-20 md:hidden block">
+            <div class="flex justify-evenly">
+                <div class="mr-auto">
+
+                    <div class="flex justify-center">
+                        <div
+                            x-data="{
+                                open: false,
+                                toggle() {
+                                    if (this.open) {
+                                        return this.close()
+                                    }
+
+                                    this.$refs.button.focus()
+
+                                    this.open = true
+                                },
+                                close(focusAfter) {
+                                    if (! this.open) return
+
+                                    this.open = false
+
+                                    focusAfter && focusAfter.focus()
+                                }
+                            }"
+                            x-on:keydown.escape.prevent.stop="close($refs.button)"
+                            x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                            x-id="['dropdown-button']"
+                            class="relative"
+                        >
+                            <!-- Button -->
+                            <button
+                                x-ref="button"
+                                x-on:click="toggle()"
+                                :aria-expanded="open"
+                                :aria-controls="$id('dropdown-button')"
+                                type="button"
+                                class="flex items-center gap-2 bg-white px-5 py-2.5 rounded-md shadow"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                </svg>
+
+                            </button>
+
+                            <!-- Panel -->
+                            <div
+                                x-ref="panel"
+                                x-show="open"
+                                x-transition.origin.top.left
+                                x-on:click.outside="close($refs.button)"
+                                :id="$id('dropdown-button')"
+                                style="display: none;"
+                                class="absolute -top-24 left-0 mt-2 w-40 rounded-md bg-white shadow-md"
+                            >
+                                <a href="{{ route('dealer.audit.individual.create', $parent) }}" class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500">
+                                    Next Audit
+                                </a>
+
+                                <a wire:click.prevent="update($exit = true, {{ $store }})" class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500">
+                                    Exit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <input type="search" name="search" id="search"
                        wire:model="search"
                        class="block sm:w-1/4 w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm mx-5"
