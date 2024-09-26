@@ -1,5 +1,5 @@
 <tr class="even:bg-gray-50 hover:bg-arm-blue-50">
-    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
+    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500">
         {{ Str::headline($user->name) }}
     </td>
     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
@@ -42,7 +42,7 @@
             {{ $user->total_completed_courses }} of {{ $user->total_user_courses }}
         @endif
     </td>
-    <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+    <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium">
         <a href="{{ route('dealer.stores.employees.show', [$store, $user]) }}" class="text-sm">View</a>
     </td>
 </tr>
