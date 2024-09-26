@@ -34,6 +34,7 @@ class Index extends Component
     public function getUsersQueryProperty()
     {
         return $this->store->users()
+            ->orderBy('name')
             ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')
