@@ -63,12 +63,7 @@ class DotCert extends Component
 
         $url = Storage::disk('armp-certs')->temporaryUrl($filePath, now()->addHour());
 
-        return response()->streamDownload(function () use ($filePath) {
-            echo Storage::disk('armp-certs')->get($filePath);
-        }, $fileName, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
-        ]);
+        $this->sendNotification($url);
     }
 
     private function generatePdf(Request $request): string
