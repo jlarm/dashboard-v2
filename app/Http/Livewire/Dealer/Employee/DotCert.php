@@ -17,55 +17,41 @@ use Spatie\Browsershot\Browsershot;
 class DotCert extends Component
 {
     public User $user;
-
     public $showCertButton;
 
     public function mount()
     {
-        if (! $this->passingGrades() || $this->user->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
-            $this->showCertButton = false;
-        } else {
-            if ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 1095) {
-                $this->showCertButton = true;
-            } else {
-                $this->showCertButton = false;
-            }
+        $this->showCertButton = $this->shouldShowCertButton();
+    }
+
+    private function shouldShowCertButton(): bool
+    {
+        $passingGrades = $this->passingGrades();
+
+        if (!$passingGrades || $this->user->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
+            return false;
         }
+
+        return $passingGrades->passed && $passingGrades->created_at->diffInDays(now()) <= 1095;
     }
 
     private function passingGrades()
     {
-        $course = Course::query()
+        $courseId = Course::query()
             ->where('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')
             ->latest()
-            ->pluck('id')
-            ->first();
+            ->value('id');
 
         return CourseResults::query()
             ->where('user_id', $this->user->id)
-            ->where('course_id', $course)
+            ->where('course_id', $courseId)
             ->first();
     }
 
     public function download(Request $request)
     {
-        $html = view('dealer.course.CertDownloadView', [
-            'user' => $this->user,
-            'store' => $request->get('store')?->name ?? tenant('name'),
-            'passed_on' => $this->passingGrades()->created_at->format('F d, Y'),
-        ])->render();
-
-        $pdf = Browsershot::html($html)->landscape()->pdf();
-
-        $fileName = Str::slug($this->user->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
-
-        Storage::disk('local')->put($fileName, $pdf);
-
-        $localFile = Storage::disk('local')->get($fileName);
-
-        Storage::disk('armp-certs')->put(tenant('id').'/'.$this->user->id.'/'.$fileName, $localFile);
-
-        Storage::delete($fileName);
+        $fileName = $this->generatePdf($request);
+        $filePath = $this->storePdf($fileName);
 
         Certificate::create([
             'user_id' => $this->user->id,
@@ -75,9 +61,43 @@ class DotCert extends Component
 
         $this->showCertButton = false;
 
+        $url = Storage::disk('armp-certs')->temporaryUrl($filePath, now()->addHour());
+
+        $this->sendNotification($url);
+    }
+
+    private function generatePdf(Request $request): string
+    {
+        $html = view('dealer.course.CertDownloadView', [
+            'user' => $this->user,
+            'store' => $request->get('store')?->name ?? tenant('name'),
+            'passed_on' => $this->passingGrades()->created_at->format('F d, Y'),
+        ])->render();
+
+        $pdf = Browsershot::html($html)->landscape()->pdf();
+        $fileName = Str::slug($this->user->name) . '-' . now()->format('m-d-Y') . '-dot-certificate.pdf';
+
+        Storage::disk('local')->put($fileName, $pdf);
+
+        return $fileName;
+    }
+
+    private function storePdf(string $fileName): string
+    {
+        $localFile = Storage::disk('local')->get($fileName);
+        $filePath = tenant('id') . '/' . $this->user->id . '/' . $fileName;
+
+        Storage::disk('armp-certs')->put($filePath, $localFile);
+        Storage::delete($fileName);
+
+        return $filePath;
+    }
+
+    private function sendNotification(string $url)
+    {
         Notification::make()
             ->title('Certificate Generated Successfully!')
-            ->body('You can find your certificate in the Certificates section of your profile.')
+            ->body('You can find your certificate in the Certificates section of your profile. <a href="' . $url . '">Download Certificate</a>')
             ->icon('heroicon-o-document-text')
             ->iconColor('success')
             ->success()
@@ -88,7 +108,6 @@ class DotCert extends Component
                     ->url(route('dealer.profile.edit')),
             ])
             ->send();
-
     }
 
     public function render()
