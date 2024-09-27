@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,47 +14,59 @@ class CourseResults extends Component
     use WithPagination;
 
     public Store $store;
-
     public User $user;
-
-    public $courseWithRole;
+    private array $courseWithRole = []; // Initialize the property
 
     protected $listeners = ['refreshEmployeeDetails' => '$refresh'];
 
     public function mount(): void
     {
-        $this->store = $this->user->stores->first() ?? Store::first();
-        $userRole = $this->user->roles()->pluck('id')->toArray();
-        $userRole = array_diff($userRole, [5]);
-        $this->courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
+        $this->initializeStore();
+        $this->initializeCourseWithRole();
     }
 
     public function render()
     {
-        $mainCourses = Course::query()
-            ->whereHas('departments', function ($query) {
-                $query->where('id', $this->user->department_id);
-            })
+        $courses = $this->getMainCourses()
+            ->merge($this->getUserCourses())
+            ->sortBy('name');
+
+        return view('livewire.dealer.employee.course-results', compact('courses'));
+    }
+
+    private function initializeStore(): void
+    {
+        $this->store = $this->user->stores->first() ?? Store::first();
+    }
+
+    private function initializeCourseWithRole(): void
+    {
+        $userRole = $this->user->roles()->pluck('id')->diff([5])->toArray();
+        $this->courseWithRole = \DB::table('course_role')
+            ->where('role_id', $userRole)
+            ->pluck('course_id')
+            ->toArray();
+    }
+
+    private function getMainCourses(): Collection
+    {
+        return Course::query()
+            ->whereHas('departments', fn ($query) => $query->where('id', $this->user->department_id))
             ->whereIn('id', $this->courseWithRole)
             ->orWhereDoesntHave('departments')
             ->where('name', '!=', 'Sexual Harassment Training in California')
-            ->with([
-                'results' => function ($query) {
-                    $query->where('user_id', $this->user->id)->latest();
-                },
-            ])->orderBy('name')
-            ->select(['id', 'name'])
+            ->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest()])
+            ->orderBy('name')
+            ->select(['id', 'name', 'slug']) // Ensure 'slug' is selected
             ->get();
+    }
 
-        $userCourses = $this->user->courses()->with(['results' => function ($query) {
-            $query->where('user_id', $this->user->id)->latest('id');
-        }])->where('name', '!=', 'Sexual Harassment Training in California')
-        ->get();
-
-        $courses = collect($mainCourses)->merge($userCourses)->sortBy('name');
-
-        return view('livewire.dealer.employee.course-results', [
-            'courses' => $courses,
-        ]);
+    private function getUserCourses(): Collection
+    {
+        return $this->user->courses()
+            ->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest('id')])
+            ->where('name', '!=', 'Sexual Harassment Training in California')
+            ->select(['id', 'name', 'slug']) // Ensure 'slug' is selected
+            ->get();
     }
 }
