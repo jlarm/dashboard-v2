@@ -18,7 +18,7 @@
             },
             {
                 "title": "Types of Extinguishers",
-                "description": "<img src=\\\"https://drive.google.com/uc?export=view&id=1g4xYqHIvK4Jtcq-I0YL_zJwrtzc7xSgP\\\"><img src=\\\"https://drive.google.com/uc?export=view&id=16EbdcwTLdGyhMF6ZG0HwEEY4pNgClmEm\\\">"
+                "description": "<img src=\"/course-images/fire-extinguisher-example.png\"><img src=\"/course-images/fire-ext-chart.jpeg\">"
             },
             {
                 "title": "Using a Fire Extinguisher",
@@ -26,7 +26,7 @@
             },
             {
                 "title": "In the event you catch fire",
-                "description": " <p>Reviewing the diagram to the right, observe how you should react if any part of your body catches fire. You should always follow the Stop Drop and Roll method.<img src=\\\"https://drive.google.com/uc?export=view&id=1Vc7zvzOWOmT4fUs8ae7i4AwTbeAMOGAp\\\"</p>"
+                "description": " <p>Reviewing the diagram to the right, observe how you should react if any part of your body catches fire. You should always follow the Stop Drop and Roll method.<img src=\"/course-images/sdr.png\"</p>"
             }
         ],
         "questions": [
