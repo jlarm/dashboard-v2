@@ -86,7 +86,7 @@ class Create extends Component
 
     public function qiAvailable(): bool
     {
-        return User::role('Qualified Individual')->count() < 2;
+        return User::role('Qualified Individual')->count() < 3;
     }
 
     public function render()

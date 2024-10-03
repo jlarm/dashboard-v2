@@ -80,7 +80,7 @@ class Edit extends SlideOver
             'stores' => Store::all(),
             'departments' => Department::all(),
             'allRoles' => $rolesQuery->get(),
-            'qiAvailable' => User::role('Qualified Individual')->count() < 2 || $this->qi,
+            'qiAvailable' => User::role('Qualified Individual')->count() < 3 || $this->qi,
         ]);
     }
 }
