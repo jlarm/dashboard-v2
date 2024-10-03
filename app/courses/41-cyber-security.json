@@ -1,0 +1,98 @@
+[
+    {
+        "id": 41,
+        "uuid": "17158c3a-5cc6-4f85-8b41-dde0e14cf7a3",
+        "name": "Introduction to Cyber Security",
+        "slug": "cyber-security",
+        "department": [],
+        "roles": [9],
+        "slides": [
+            {
+                "title": "What is Cyber Security?",
+                "description": "<p>Cybersecurity refers to the practice of protecting systems, networks, and data from digital attacks or unauthorized access.</p>"
+            },
+            {
+                "title": "Why the concern around cyber security?",
+                "description": "<ul><li>Protects sensitive information (personal, financial, business data)</li><li>Ensures system reliability and availability</li><li>Prevents financial loss and reputational damage</li></ul>"
+            },
+            {
+                "title": "Common Cyber Threats",
+                "description": "<ul><li><strong>Malware:</strong>Malicious software designed to harm or exploit systems (viruses, ransomware).</li><li><strong>Phishing:</strong>Fraudulent attempts to obtain sensitive information, typically through emails or websites.</li><li><strong>Man-in-the-Middle Attack (MITM):</strong>When attackers intercept communication between two parties.</li><li><strong>Denial of Service (DoS):</strong>Attack aimed at overwhelming a system to make it unavailable.</li></ul>"
+            },
+            {
+                "title": "Security Principles",
+                "description": "<ul><li><strong>Confidentiality:</strong>Ensuring that sensitive information is only accessible to authorized parties.</li><li><strong>Integrity:</strong>Protecting information from being altered or tampered with.</li><li><strong>Availability:</strong>Ensuring that authorized users have access to the information and systems they need when they need it.</li></ul>"
+            },
+            {
+                "title": "Types of Cyber Security Measures",
+                "description": "<ul><li><strong>Firewalls:</strong>Protect systems by filtering incoming and outgoing traffic.</li><li><strong>Antivirus/Anti-Malware Software:</strong>Detect and remove malicious software.</li><li><strong>Encryption:</strong>Secures data by converting it into unreadable code.</li><li><strong>Multi-Factor Authentication (MFA):</strong>Adds an additional layer of security by requiring multiple forms of verification.</li><li><strong>Backup and Recovery:</strong>Ensures data can be restored in case of an attack or disaster.</li></ul>"
+            },
+            {
+                "title": "Best practices for Cyber Security",
+                "description": "<ul><li><strong>Strong Passwords:</strong>Use complex passwords and change them regularly.</li><li><strong>Avoid Phishing Scams:</strong>Be cautious of suspicious emails and links.</li><li><strong>Regular Software Updates:</strong>Keep software and systems up to date to patch vulnerabilities.</li><li><strong>Employee Training:</strong>Ensure employees are aware of security protocols and threats.</li></ul>"
+            },
+            {
+                "title": "Conclusion",
+                "description": "<p>Cyber Security is much like protecting other assets in your world like you house, car, and bank account. You have to be aware of the threats that exist and do anything you can to avoid providing an opportunity for a thief to access your asset.</p><p>You do things like lock you car and house and you make sure to not share you bank information with anyone that doesn’t need it. These are all things we don’t think about anymore as it is just automatic and that is what we need to do with Cyber Security.</p>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "Cybersecurity is only concerned with protecting data, not systems or networks.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which of the following is an example of malware?",
+                "answers": [
+                    {
+                        "a": "Firewall",
+                        "b": "Ransomware",
+                        "c": "Encryption",
+                        "d": "Multi-Factor Authentication"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Phishing attacks are typically carried out through fraudulent emails that try to trick users into giving away personal information.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which principle of cybersecurity ensures that information is only accessible to authorized users?",
+                "answers": [
+                    {
+                        "a": "Confidentiality",
+                        "b": "Integrity",
+                        "c": "Availability",
+                        "d": "Firewall"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "What is the purpose of encryption in cybersecurity?",
+                "answers": [
+                    {
+                        "a": "To block malicious software from entering a system",
+                        "b": "To convert data into unreadable code for protection",
+                        "c": "To provide multiple layers of user authentication",
+                        "d": "To stop network traffic"
+                    }
+                ],
+                "correctAnswer": "b"
+            }
+        ]
+    }
+]
