@@ -43,7 +43,7 @@
                         "c": "Every 12 minutes"
                     }
                 ],
-                "correctAnswer": "b"
+                "correctAnswer": "a"
             },
             {
                 "question": "The most dangerous time to drive is?",
@@ -54,7 +54,7 @@
                         "c": "Both"
                     }
                 ],
-                "correctAnswer": "a"
+                "correctAnswer": "c"
             },
             {
                 "question": "What percentage of accidents are related to cell phone usage or texting?",
