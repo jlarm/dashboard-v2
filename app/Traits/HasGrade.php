@@ -42,10 +42,12 @@ trait HasGrade
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
         $total = 0;
 
-        $combinedRatings = array_merge($old, $new);
+        $combinedRatings = array_map([$this, 'convertRatingToGrade'], array_merge($old, $new)); // Convert ratings to grades
 
         foreach ($combinedRatings as $rating) {
-            $total += $gradeValues[$rating];
+            if (isset($gradeValues[$rating])) { // Check if the grade is valid
+                $total += $gradeValues[$rating];
+            }
         }
 
         if ($gradesCount == 0) {
