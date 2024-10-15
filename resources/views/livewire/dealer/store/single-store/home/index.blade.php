@@ -9,11 +9,11 @@
 
     {{--            Course Stats--}}
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5">
-        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl">
             <!-- Header -->
             <div class="p-5 pb-4">
                 <div>
-                    <h2 class="inline-block font-semibold text-gray-800 dark:text-neutral-200">
+                    <h2 class="inline-block font-semibold text-gray-800">
                         Course Completion by Department
                     </h2>
                     <p class="text-xs mb-5 text-gray-400 italic">*Based on the total number of employees who finished all required training courses.</p>
@@ -39,12 +39,12 @@
             </div>
             <!-- End Body -->
         </div>
-        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl">
             @can('create-dealerships')
                 <!-- Header -->
                 <div class="p-5 pb-4">
                     <div>
-                        <h2 class="inline-block font-semibold text-gray-800 dark:text-neutral-200">
+                        <h2 class="inline-block font-semibold text-gray-800">
                             Consultant Notes
                         </h2>
                         <p class="text-xs mb-5 text-gray-400 italic">Add any notes you would like to refer back to. Only you as the consultant will see these notes.</p>

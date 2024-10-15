@@ -1,7 +1,7 @@
-<div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+<div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
     <div class="space-y-1">
         <div class="flex justify-between">
-            <h4 class="mb-2.5 font-medium text-sm text-gray-800 dark:text-neutral-300">
+            <h4 class="mb-2.5 font-medium text-sm text-gray-800">
                 {{ $this->quarter() }}
             </h4>
             <div
@@ -110,10 +110,10 @@
 
         <!-- Item -->
         <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600 dark:text-neutral-400">
+        <span class="text-xs text-gray-600">
           Grade:
         </span>
-            <span class="text-sm font-medium text-gray-800 dark:text-white">
+            <span class="text-sm font-medium text-gray-800">
            {{ $bodyShopAudit->grade ?? 'N/A' }}
         </span>
         </div>
@@ -121,10 +121,10 @@
 
         <!-- Item -->
         <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600 dark:text-neutral-400">
+        <span class="text-xs text-gray-600">
           Total Violations:
         </span>
-            <span class="text-sm font-medium text-gray-800 dark:text-white">
+            <span class="text-sm font-medium text-gray-800">
            {{ $bodyShopAudit->violations->count() }}
         </span>
         </div>
@@ -132,13 +132,13 @@
 
         <!-- Item -->
         <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600 dark:text-neutral-400">
+        <span class="text-xs text-gray-600">
           Status:
         </span>
             @if($bodyShopAudit->grade === null)
-                <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-sky-100 text-sky-800 dark:bg-sky-800/30 dark:text-sky-500">In Progress</span>
+                <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-sky-100 text-sky-800">In Progress</span>
             @else
-                <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Completed</span>
+                <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-teal-100 text-teal-800">Completed</span>
             @endif
         </div>
         <!-- End Item -->

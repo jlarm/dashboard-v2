@@ -4,12 +4,12 @@
         x-autosize
         wire:model.defer="note"
         id="hs-textarea-ex-2"
-        class="p-4 pb-12 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+        class="p-4 pb-12 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-arm-blue-500 focus:ring-arm-blue-500"
         placeholder="Notes...">
     </textarea>
 
     <!-- Toolbar -->
-    <div class="absolute bottom-px inset-x-px p-2 rounded-b-md bg-gray-100 dark:bg-neutral-800">
+    <div class="absolute bottom-px inset-x-px p-2 rounded-b-md bg-gray-100">
         <div class="flex justify-between items-center">
             <!-- Button Group -->
             <div class="flex items-center"></div>
