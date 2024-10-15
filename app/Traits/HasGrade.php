@@ -39,19 +39,25 @@ trait HasGrade
 
     public function rating($old, $new): string
     {
+        if (empty($old) && empty($new)) {
+            return 'N/A';
+        }
+
         $gradesCount = count($this->grades($old, $new));
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
         $total = 0;
 
+        
         foreach (Arr::flatten($this->grades($old, $new)) as $rating) {
             $total += $gradeValues[$rating];
         }
-
+        
         if ($gradesCount == 0) {
             return 'N/A';
         } else {
             $avg = $total / count($this->grades($old, $new));
         }
+    
 
         return match (true) {
             $avg >= 3.5 && $avg <= 4 => 'A',
