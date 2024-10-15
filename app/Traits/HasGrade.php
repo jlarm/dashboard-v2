@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Dealer\Audit\OshaAudit;
+use Illuminate\Support\Arr;
 
 trait HasGrade
 {
@@ -24,7 +25,7 @@ trait HasGrade
 
     private function grades($old, $new): array
     {
-        $grades = is_array($new) ? $new : [$new]; // Ensure $new is an array
+        $grades[] = $new;
 
         if (!empty($old)) {
             $oldGrade = $this->convertRatingToGrade(array_sum($old) / count($old));
@@ -33,7 +34,7 @@ trait HasGrade
             }
         }
 
-        return array_merge(...array_map(fn($grade) => (array)$grade, $grades)); // Ensure all elements are arrays
+        return $grades;
     }
 
     public function rating($old, $new): string
@@ -42,12 +43,8 @@ trait HasGrade
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
         $total = 0;
 
-        $combinedRatings = array_map([$this, 'convertRatingToGrade'], array_merge($old, $new)); // Convert ratings to grades
-
-        foreach ($combinedRatings as $rating) {
-            if (isset($gradeValues[$rating])) { // Check if the grade is valid
-                $total += $gradeValues[$rating];
-            }
+        foreach (Arr::flatten($this->grades($old, $new)) as $rating) {
+            $total += $gradeValues[$rating];
         }
 
         if ($gradesCount == 0) {
