@@ -16,6 +16,7 @@ use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\DealerDoc;
 use App\Models\User;
+use App\Traits\HasGrade;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,7 +30,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Store extends Model implements HasMedia
 {
-    use HasSlug, InteractsWithMedia, LogsActivity;
+    use HasSlug, InteractsWithMedia, LogsActivity, HasGrade;
 
     protected $fillable = [
         'name',
@@ -142,17 +143,27 @@ class Store extends Model implements HasMedia
 
     public function getOshaGradeAttribute(): ?string
     {
-        return $this->calculateGrade($this->oshaAudits->where('rating', '!=', null)->pluck('rating')->toArray());
+        $old = $this->oshaAudits->where('rating', '!=', null)->pluck('rating')->toArray();
+
+        $new = $this->oshaViolationAudits->where('grade', '!=', null)->pluck('grade')->toArray();
+
+        return $this->rating($old, $new);
     }
 
     public function getGlbaGradeAttribute(): ?string
     {
-        return $this->calculateGrade($this->financeAudits->where('rating', '!=', null)->pluck('rating')->toArray());
+        $old = $this->financeAudits->where('rating', '!=', null)->pluck('rating')->toArray();
+        $new = $this->GlbaViolationAudits->where('grade', '!=', null)->pluck('grade')->toArray();
+    
+        return $this->rating($old, $new);
     }
 
     public function getBodyShopGradeAttribute(): ?string
     {
-        return $this->calculateGrade($this->bodyShopAudits->where('rating', '!=', null)->pluck('rating')->toArray());
+        $old = $this->bodyShopAudits->where('rating', '!=', null)->pluck('rating')->toArray();
+        $new = $this->BodyShopViolationAudits->where('grade', '!=', null)->pluck('grade')->toArray();
+
+        return $this->rating($old, $new);
     }
 
     public function getOverallGradeAttribute(): ?string
