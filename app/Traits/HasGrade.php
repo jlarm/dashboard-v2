@@ -24,7 +24,7 @@ trait HasGrade
 
     private function grades($old, $new): array
     {
-        $grades[] = $new;
+        $grades = is_array($new) ? $new : [$new]; // Ensure $new is an array
 
         if (!empty($old)) {
             $oldGrade = $this->convertRatingToGrade(array_sum($old) / count($old));
@@ -33,7 +33,7 @@ trait HasGrade
             }
         }
 
-        return array_merge(...$grades);
+        return array_merge(...array_map(fn($grade) => (array)$grade, $grades)); // Ensure all elements are arrays
     }
 
     public function rating($old, $new): string
