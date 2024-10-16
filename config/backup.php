@@ -195,9 +195,9 @@ return [
             \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['slack'],
             \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['slack'],
             \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['slack'],
-            //            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['slack'],
-            //            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['slack'],
-            //            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['slack'],
+            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['slack'],
+            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['slack'],
+            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['slack'],
         ],
 
         /*
@@ -210,8 +210,8 @@ return [
             'to' => 'jlohr@autorisknow.com',
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-                'name' => env('MAIL_FROM_NAME', 'Example'),
+                'address' => env('MAIL_FROM_ADDRESS', 'noreply@armp.app'),
+                'name' => env('MAIL_FROM_NAME', 'ARMP Backups'),
             ],
         ],
 
