@@ -6,10 +6,37 @@ use Illuminate\Support\Arr;
 
 trait HasGrade
 {
+    public function getOshaGradeAttribute(): ?string
+    {
+        return $this->oshaViolationAudits()
+            ->whereNotNull('grade')
+            ->latest()
+            ->first()
+            ->grade ?? '-';
+    }
+
+    public function getGlbaGradeAttribute(): ?string
+    {
+        return $this->GlbaViolationAudits()
+            ->whereNotNull('grade')
+            ->latest()
+            ->first()
+            ->grade ?? '-';
+    }
+
+    public function getBodyShopGradeAttribute(): ?string
+    {
+        return $this->BodyShopViolationAudits()
+            ->whereNotNull('grade')
+            ->latest()
+            ->first()
+            ->grade ?? null;
+    }
+
     private function convertRatingToGrade($avg)
     {
         if ($avg === null) {
-            return;
+            return null;
         }
 
         return match (true) {
@@ -19,12 +46,11 @@ trait HasGrade
             $avg >= 60 && $avg <= 69 => 'D',
             default => 'F',
         };
-
     }
 
     private function grades($old, $new): array
     {
-        $grades[] = $new;
+        $grades = [$new];
 
         if (! empty($old)) {
             $oldGrade = $this->convertRatingToGrade(array_sum($old) / count($old));
@@ -42,19 +68,21 @@ trait HasGrade
             return 'N/A';
         }
 
-        $gradesCount = count($this->grades($old, $new));
+        $old = Arr::flatten($old);
+        $new = Arr::flatten($new);
+
+        $grades = $this->grades($old, $new);
+        $gradesCount = count($grades);
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
-        $total = 0;
+        $total = array_reduce(Arr::flatten($grades), function ($carry, $rating) use ($gradeValues) {
+            return $carry + $gradeValues[$rating];
+        }, 0);
 
-        foreach (Arr::flatten($this->grades($old, $new)) as $rating) {
-            $total += $gradeValues[$rating];
-        }
-
-        if ($gradesCount == 0) {
+        if ($gradesCount === 0) {
             return 'N/A';
-        } else {
-            $avg = $total / count($this->grades($old, $new));
         }
+
+        $avg = $total / $gradesCount;
 
         return match (true) {
             $avg >= 3.5 && $avg <= 4 => 'A',

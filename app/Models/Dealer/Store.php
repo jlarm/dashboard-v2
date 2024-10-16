@@ -141,31 +141,6 @@ class Store extends Model implements HasMedia
         return $this->calculateGrade($this->individualAudits->where('rating', '!=', null)->pluck('rating')->toArray());
     }
 
-    public function getOshaGradeAttribute(): ?string
-    {
-        $old = $this->oshaAudits->where('rating', '!=', null)->pluck('rating')->toArray();
-
-        $new = $this->oshaViolationAudits->where('grade', '!=', null)->pluck('grade')->toArray();
-
-        return $this->rating($old, $new);
-    }
-
-    public function getGlbaGradeAttribute(): ?string
-    {
-        $old = $this->financeAudits->where('rating', '!=', null)->pluck('rating')->toArray();
-        $new = $this->GlbaViolationAudits->where('grade', '!=', null)->pluck('grade')->toArray();
-
-        return $this->rating($old, $new);
-    }
-
-    public function getBodyShopGradeAttribute(): ?string
-    {
-        $old = $this->bodyShopAudits->where('rating', '!=', null)->pluck('rating')->toArray();
-        $new = $this->BodyShopViolationAudits->where('grade', '!=', null)->pluck('grade')->toArray();
-
-        return $this->rating($old, $new);
-    }
-
     public function getOverallGradeAttribute(): ?string
     {
         $grades = array_merge(
