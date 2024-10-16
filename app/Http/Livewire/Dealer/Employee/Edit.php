@@ -44,6 +44,7 @@ class Edit extends SlideOver
                 ->title('At least one role must be assigned.')
                 ->warning()
                 ->send();
+
             return;
         }
 

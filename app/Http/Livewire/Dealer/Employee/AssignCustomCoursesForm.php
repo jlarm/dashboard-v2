@@ -9,7 +9,9 @@ use Livewire\Component;
 class AssignCustomCoursesForm extends Component
 {
     public User $user;
+
     public $courses;
+
     public $selectedCourses = [];
 
     public function mount(): void
@@ -27,7 +29,7 @@ class AssignCustomCoursesForm extends Component
             ->get();
 
         // Initialize selectedCourses with user's current courses
-        $this->selectedCourses = $this->user->courses->pluck('id')->flip()->map(fn() => true)->toArray();
+        $this->selectedCourses = $this->user->courses->pluck('id')->flip()->map(fn () => true)->toArray();
     }
 
     public function updatedSelectedCourses($value, $key): void

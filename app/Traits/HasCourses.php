@@ -4,9 +4,9 @@ namespace App\Traits;
 
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 trait HasCourses
 {

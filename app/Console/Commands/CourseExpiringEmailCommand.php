@@ -8,7 +8,6 @@ use App\Notifications\CourseExpiringSoonNotification;
 use App\Traits\HasCourses;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class CourseExpiringEmailCommand extends Command
 {

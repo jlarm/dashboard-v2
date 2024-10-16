@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 trait EmployeeCourses
 {
     protected $user;
+
     protected $courses;
 
     protected function loadCurrentUser(): void
@@ -18,12 +19,12 @@ trait EmployeeCourses
 
     protected function getUserRolesExcluding(int $excludeRoleId): array
     {
-        return $this->user->roles()->pluck('id')->reject(fn($roleId) => $roleId === $excludeRoleId)->toArray();
+        return $this->user->roles()->pluck('id')->reject(fn ($roleId) => $roleId === $excludeRoleId)->toArray();
     }
 
     public function getUserHasNoCaliforniaStore(): bool
     {
-        return !$this->user->stores()->where('state', 'California')->exists();
+        return ! $this->user->stores()->where('state', 'California')->exists();
     }
 
     protected function getCoursesForRoles(array $roles): array
@@ -37,18 +38,18 @@ trait EmployeeCourses
     protected function getDepartmentCourses(array $courseWithRole): Collection
     {
         return Course::query()
-            ->whereHas('departments', fn($query) => $query->where('id', $this->user->department_id))
+            ->whereHas('departments', fn ($query) => $query->where('id', $this->user->department_id))
             ->whereIn('id', $courseWithRole)
             ->orWhereDoesntHave('departments')
-            ->with(['results' => fn($query) => $query->where('user_id', $this->user->id)->latest()])
-            ->when($this->getUserHasNoCaliforniaStore(), fn($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
+            ->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest()])
+            ->when($this->getUserHasNoCaliforniaStore(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
             ->orderBy('name')
             ->get();
     }
 
     protected function getUserCourses(): Collection
     {
-        return $this->user->courses()->with(['results' => fn($query) => $query->where('user_id', $this->user->id)->latest('id')])->get();
+        return $this->user->courses()->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest('id')])->get();
     }
 
     public function loadCoursesForCurrentUser(): void

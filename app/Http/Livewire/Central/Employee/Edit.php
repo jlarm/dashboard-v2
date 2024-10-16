@@ -14,7 +14,6 @@ class Edit extends SlideOver
 
     public $role;
 
-
     public function render()
     {
         return view('livewire.central.employee.edit');

@@ -16,6 +16,7 @@ class ImportEmployeesJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $data;
+
     protected $userId;
 
     public function __construct(array $data, int $userId)
@@ -45,6 +46,7 @@ class ImportEmployeesJob implements ShouldQueue
                             'errors' => $validator->errors()->all(),
                             'values' => $item,
                         ];
+
                         continue;
                     }
 
@@ -69,7 +71,7 @@ class ImportEmployeesJob implements ShouldQueue
                 }
             }
 
-            if (!empty($importErrors)) {
+            if (! empty($importErrors)) {
                 throw new \Exception('Import failed due to errors');
             }
         });

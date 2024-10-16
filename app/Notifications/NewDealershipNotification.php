@@ -20,7 +20,7 @@ class NewDealershipNotification extends Notification
     {
         return (new MailMessage)
             ->subject('New Dealership Created')
-            ->line($this->name . ' has been added to the dashboard.');
+            ->line($this->name.' has been added to the dashboard.');
     }
 
     public function toArray($notifiable): array

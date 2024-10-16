@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('course:check-reminders')->daily()->runInBackground();
         $schedule->command('activitylog:clean')->daily()->runInBackground();
         $schedule->command('run:invites')->daily()->runInBackground();
-//        $schedule->command('run:course-reminder')->daily()->runInBackground();
+        //        $schedule->command('run:course-reminder')->daily()->runInBackground();
         $schedule->command('delete:temporary-uploads')->daily()->runInBackground();
         $schedule->command('red-sentry:report-generation')->dailyAt('01:00')->runInBackground();
         $schedule->command('backups:go')->dailyAt('01:30')->runInBackground()->withoutOverlapping();

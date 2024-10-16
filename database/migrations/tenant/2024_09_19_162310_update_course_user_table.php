@@ -22,13 +22,13 @@ return new class extends Migration
             $table->dropForeign(['user_id']);
 
             // Ensure columns exist before modifying them
-            if (!Schema::hasColumn('course_user', 'course_id')) {
+            if (! Schema::hasColumn('course_user', 'course_id')) {
                 $table->foreignId('course_id')->constrained()->cascadeOnDelete()->change();
             } else {
                 $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             }
 
-            if (!Schema::hasColumn('course_user', 'user_id')) {
+            if (! Schema::hasColumn('course_user', 'user_id')) {
                 $table->foreignId('user_id')->constrained()->cascadeOnDelete()->change();
             } else {
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

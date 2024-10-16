@@ -5,8 +5,8 @@ namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\User;
-use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 
 class IndexItem extends Component
 {
@@ -57,18 +57,18 @@ class IndexItem extends Component
             ->latest()
             ->get()
             ->groupBy('course_id')
-            ->map(fn($item) => $item->first())
+            ->map(fn ($item) => $item->first())
             ->count();
     }
 
     private function calculateTotalCourses(): void
     {
         $this->totalCourses = Course::query()
-            ->whereHas('departments', fn($query) => $query->where('id', $this->user->department_id))
+            ->whereHas('departments', fn ($query) => $query->where('id', $this->user->department_id))
             ->whereIn('id', $this->courseWithRole)
             ->orWhereDoesntHave('departments')
             ->where('name', '!=', 'Sexual Harassment Training in California')
-            ->with(['results' => fn($query) => $query->where('user_id', $this->user->id)->latest()])
+            ->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest()])
             ->count();
 
         if ($this->user->stores[0]->state != 'California') {

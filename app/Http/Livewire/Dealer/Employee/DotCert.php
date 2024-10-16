@@ -17,6 +17,7 @@ use Spatie\Browsershot\Browsershot;
 class DotCert extends Component
 {
     public User $user;
+
     public $showCertButton;
 
     public function mount()
@@ -28,7 +29,7 @@ class DotCert extends Component
     {
         $passingGrades = $this->passingGrades();
 
-        if (!$passingGrades || $this->user->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
+        if (! $passingGrades || $this->user->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
             return false;
         }
 
@@ -75,7 +76,7 @@ class DotCert extends Component
         ])->render();
 
         $pdf = Browsershot::html($html)->landscape()->pdf();
-        $fileName = Str::slug($this->user->name) . '-' . now()->format('m-d-Y') . '-dot-certificate.pdf';
+        $fileName = Str::slug($this->user->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
 
         Storage::disk('local')->put($fileName, $pdf);
 
@@ -85,7 +86,7 @@ class DotCert extends Component
     private function storePdf(string $fileName): string
     {
         $localFile = Storage::disk('local')->get($fileName);
-        $filePath = tenant('id') . '/' . $this->user->id . '/' . $fileName;
+        $filePath = tenant('id').'/'.$this->user->id.'/'.$fileName;
 
         Storage::disk('armp-certs')->put($filePath, $localFile);
         Storage::delete($fileName);
@@ -97,7 +98,7 @@ class DotCert extends Component
     {
         Notification::make()
             ->title('Certificate Generated Successfully!')
-            ->body('You can find your certificate in the Certificates section of your profile. <a href="' . $url . '">Download Certificate</a>')
+            ->body('You can find your certificate in the Certificates section of your profile. <a href="'.$url.'">Download Certificate</a>')
             ->icon('heroicon-o-document-text')
             ->iconColor('success')
             ->success()

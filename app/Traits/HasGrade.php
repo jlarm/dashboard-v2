@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Models\Dealer\Audit\OshaAudit;
 use Illuminate\Support\Arr;
 
 trait HasGrade
@@ -27,7 +26,7 @@ trait HasGrade
     {
         $grades[] = $new;
 
-        if (!empty($old)) {
+        if (! empty($old)) {
             $oldGrade = $this->convertRatingToGrade(array_sum($old) / count($old));
             if ($oldGrade !== null) {
                 $grades[] = $oldGrade;
@@ -47,17 +46,15 @@ trait HasGrade
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
         $total = 0;
 
-        
         foreach (Arr::flatten($this->grades($old, $new)) as $rating) {
             $total += $gradeValues[$rating];
         }
-        
+
         if ($gradesCount == 0) {
             return 'N/A';
         } else {
             $avg = $total / count($this->grades($old, $new));
         }
-    
 
         return match (true) {
             $avg >= 3.5 && $avg <= 4 => 'A',

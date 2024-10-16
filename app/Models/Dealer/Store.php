@@ -30,7 +30,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Store extends Model implements HasMedia
 {
-    use HasSlug, InteractsWithMedia, LogsActivity, HasGrade;
+    use HasGrade, HasSlug, InteractsWithMedia, LogsActivity;
 
     protected $fillable = [
         'name',
@@ -154,7 +154,7 @@ class Store extends Model implements HasMedia
     {
         $old = $this->financeAudits->where('rating', '!=', null)->pluck('rating')->toArray();
         $new = $this->GlbaViolationAudits->where('grade', '!=', null)->pluck('grade')->toArray();
-    
+
         return $this->rating($old, $new);
     }
 

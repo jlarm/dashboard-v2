@@ -3,20 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Dealer\Audit\BodyShopAudit;
-use App\Models\Dealer\Audit\BodyShopViolationAudit;
-use App\Models\Dealer\Audit\FinanceAudit;
-use App\Models\Dealer\Audit\GlbaViolationAudit;
-use App\Models\Dealer\Audit\IndividualAudit;
-use App\Models\Dealer\Audit\OshaAudit;
-use App\Models\Dealer\Audit\OshaViolationAudit;
-use App\Models\Dealer\Course;
-use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
-use App\Models\Dealer\Manual\Isp;
-use App\Models\Dealer\Manual\Osha;
-use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
@@ -30,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -41,12 +28,12 @@ use Spatie\Sluggable\SlugOptions;
 class User extends Authenticatable
 {
     use HasApiTokens,
-        HasFactory,
-        HasRoles,
-        HasSlug,
         HasAudits,
         HasCourses,
+        HasFactory,
         HasManuals,
+        HasRoles,
+        HasSlug,
         LogsActivity,
         Notifiable,
         SoftDeletes;

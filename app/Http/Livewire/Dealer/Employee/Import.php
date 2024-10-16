@@ -3,20 +3,21 @@
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Jobs\SendQueueEmailJob;
+use App\Models\Dealer\Invite;
 use DB;
 use Exception;
 use Filament\Notifications\Notification;
 use Livewire\WithFileUploads;
-use Maatwebsite\Excel\Validators\ValidationException;
 use WireElements\Pro\Components\Modal\Modal;
-use App\Models\Dealer\Invite;
 
 class Import extends Modal
 {
     use WithFileUploads;
 
     public $spreadsheet;
+
     public $importErrors = [];
+
     public $successCount = 0;
 
     protected function rules(): array
@@ -52,12 +53,13 @@ class Import extends Modal
                                 'errors' => $validator->errors()->all(),
                                 'values' => $item,
                             ];
+
                             continue;
                         }
 
                         // Transform Training array to the required format
                         $courses = [];
-                        if (!empty($item['Training'])) {
+                        if (! empty($item['Training'])) {
                             foreach ($item['Training'] as $training) {
                                 $courses[$training['Course']] = $training['Training Date'];
                             }
@@ -71,7 +73,7 @@ class Import extends Modal
                             'user_id' => auth()->id(),
                             'roles' => [$item['Position']],
                             'courses' => $courses, // Updated to use the transformed courses
-                            'invitation_token' => substr(md5(rand(0, 9) . $item['Email'] . time()), 0, 32),
+                            'invitation_token' => substr(md5(rand(0, 9).$item['Email'].time()), 0, 32),
                         ]);
                     } catch (Exception $e) {
                         $this->importErrors[] = [
@@ -82,7 +84,7 @@ class Import extends Modal
                     }
                 }
 
-                if (!empty($this->importErrors)) {
+                if (! empty($this->importErrors)) {
                     throw new Exception('Import failed due to errors');
                 }
             });

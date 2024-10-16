@@ -3,16 +3,19 @@
 namespace App\Notifications;
 
 use App\Models\Dealer\Course;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class CourseExpiredNotification extends Notification
 {
     public $course;
+
     public $domain;
+
     public $userName;
+
     public $expireDate;
+
     public function __construct($tenantDomain, $userName, protected int $courseId, $expireDate)
     {
         $this->course = Course::where('id', $this->courseId)->first();
