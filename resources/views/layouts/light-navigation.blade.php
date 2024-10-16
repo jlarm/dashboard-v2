@@ -77,7 +77,7 @@
             </div>
             <div class="my-5 px-4">
                 @if (tenant('locations'))
-                    @can('create-users')
+                    @can('create-stores')
                         <livewire:dealer.navigation.store-switcher />
                     @endcan
                 @endif
