@@ -38,6 +38,15 @@ class Edit extends SlideOver
 
     public function updateUser()
     {
+        // Ensure at least one role is assigned
+        if (empty($this->assignedRoles)) {
+            Notification::make()
+                ->title('At least one role must be assigned.')
+                ->warning()
+                ->send();
+            return;
+        }
+
         $this->user->update([
             'department_id' => $this->department,
         ]);

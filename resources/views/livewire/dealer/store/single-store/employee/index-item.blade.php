@@ -6,6 +6,9 @@
         <div><a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a></div>
     </td>
     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+        @if($user->roles->isEmpty())
+            <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">!! No Role Assigned !!</span>
+        @else
         @foreach($user->roles as $role)
             @if($role->name == 'Manager')
                 <span
@@ -19,8 +22,9 @@
             @else
                 <span
                     class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">{{ $role->name }}</span>
-            @endif
-        @endforeach
+                @endif
+            @endforeach
+        @endif
     </td>
     @if(tenant('locations'))
         <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">

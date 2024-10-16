@@ -6,6 +6,7 @@ use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class IndexItem extends Component
 {
@@ -23,46 +24,62 @@ class IndexItem extends Component
 
     public function mount()
     {
-        $this->user = User::find($this->user->id);
-        $userRole = $this->user->roles()->select('id')->first()->toArray();
-        $this->courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
+        $this->initializeUser();
+        $this->initializeCourseWithRole();
+        $this->calculateCompletedCourses();
+        $this->calculateTotalCourses();
+    }
 
-        // Get all passed courses within the last year for this user
-        $this->completed = \DB::table('course_results')
+    private function initializeUser(): void
+    {
+        $this->user = User::find($this->user->id);
+    }
+
+    private function initializeCourseWithRole(): void
+    {
+        $userRole = $this->user->roles()->select('id')->first();
+
+        if ($userRole) {
+            $this->courseWithRole = DB::table('course_role')
+                ->where('role_id', $userRole->id)
+                ->pluck('course_id')
+                ->toArray();
+        } else {
+            $this->courseWithRole = [];
+        }
+    }
+
+    private function calculateCompletedCourses(): void
+    {
+        $this->completed = DB::table('course_results')
             ->where('user_id', $this->user->id)
             ->where('created_at', '>=', now()->subYear())
             ->latest()
             ->get()
             ->groupBy('course_id')
-            ->map(function ($item) {
-                return $item->first();
-            });
+            ->map(fn($item) => $item->first())
+            ->count();
+    }
 
-        $this->completed = collect($this->completed)->count();
-
+    private function calculateTotalCourses(): void
+    {
         $this->totalCourses = Course::query()
-            ->whereHas('departments', function ($query) {
-                $query->where('id', $this->user->department_id);
-            })
+            ->whereHas('departments', fn($query) => $query->where('id', $this->user->department_id))
             ->whereIn('id', $this->courseWithRole)
             ->orWhereDoesntHave('departments')
             ->where('name', '!=', 'Sexual Harassment Training in California')
-            ->with([
-                'results' => function ($query) {
-                    $query->where('user_id', $this->user->id)->latest();
-                },
-            ])
+            ->with(['results' => fn($query) => $query->where('user_id', $this->user->id)->latest()])
             ->count();
 
         if ($this->user->stores[0]->state != 'California') {
-            $this->totalCourses = $this->totalCourses - 1;
+            $this->totalCourses -= 1;
         }
     }
 
     public function render()
     {
         return view('livewire.dealer.store.single-store.employee.index-item', [
-            'department' => Department::where('id', $this->user->department_id)->first(),
+            'department' => Department::find($this->user->department_id),
         ]);
     }
 }
