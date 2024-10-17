@@ -48,6 +48,16 @@ class Edit extends SlideOver
             return;
         }
 
+        // Ensure at least one store is selected
+        if (empty($this->assignedStores)) {
+            Notification::make()
+                ->title('At least one store must be selected.')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
         $this->user->update([
             'department_id' => $this->department,
         ]);
