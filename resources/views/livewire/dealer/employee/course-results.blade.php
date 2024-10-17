@@ -4,7 +4,7 @@
             <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                 <tr>
-                    @include('components.course-table.table-header', ['text' => 'Name', 'extraClasses' => 'sm:pl-6 lg:pl-8'])
+                    @include('components.course-table.table-header', ['text' => 'Name'])
                     @include('components.course-table.table-header', ['text' => 'Last Taken'])
                     @include('components.course-table.table-header', ['text' => 'Pass/Fail'])
                     <th></th>

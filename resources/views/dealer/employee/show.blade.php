@@ -1,38 +1,106 @@
 <x-dealer-app>
-    <div
-        class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
-        <div class="min-w-0 flex-1">
-            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate capitalize">{{ mb_convert_case($user->name, MB_CASE_TITLE, "UTF-8") }}</h1>
-            <p class="text-gray-400">{{ $user->department->name ?? '' }} - {{ $user->roles->first()->name ?? '' }}</p>
+    <div class="grid md:grid-cols-4 gap-10 p-5">
+        <div class="col-span-1">
+            <livewire:dealer.employee.details :user="$user"/>
+            <livewire:dealer.employee.dot-cert :user="$user" />
+            <livewire:dealer.employee.cert-index :user="$user"/>
         </div>
-        <div class="mt-4 flex space-x-5 sm:mt-0 sm:ml-4">
-            @can('create-stores')
-                @if(auth()->user()->id != $user->id)
-                    <button
-                        class="text-red-500 text-sm"
-                        onclick="Livewire.emit('modal.open', 'dealer.employee.delete', @js(['user' => $user->id]))"
-                    >
-                        Delete
-                    </button>
-                @endif
-            @endcan
-        </div>
-    </div>
+        <div class="col-span-3">
 
-    <div class="py-12">
-        <div class="mx-auto px-4 sm:px-6 lg:px-8 xl:grid xl:grid-cols-3">
-            <div class="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
-                @if($user->department)
-                    <livewire:dealer.employee.course-results :user="$user"/>
+            <!-- Tabs -->
+            <div
+                x-data="{
+                    selectedId: null,
+                    init() {
+                        // Set the first available tab on the page on page load.
+                        this.$nextTick(() => this.select(this.$id('tab', 1)))
+                    },
+                    select(id) {
+                        this.selectedId = id
+                    },
+                    isSelected(id) {
+                        return this.selectedId === id
+                    },
+                    whichChild(el, parent) {
+                        return Array.from(parent.children).indexOf(el) + 1
+                    }
+                }"
+                x-id="['tab']"
+                class="w-full"
+            >
+                <!-- Tab List -->
+                <ul
+                    x-ref="tablist"
+                    @keydown.right.prevent.stop="$focus.wrap().next()"
+                    @keydown.home.prevent.stop="$focus.first()"
+                    @keydown.page-up.prevent.stop="$focus.first()"
+                    @keydown.left.prevent.stop="$focus.wrap().prev()"
+                    @keydown.end.prevent.stop="$focus.last()"
+                    @keydown.page-down.prevent.stop="$focus.last()"
+                    role="tablist"
+                    class="-mb-px flex items-stretch"
+                >
+                    <!-- Tab -->
+                    <li>
+                        <button
+                            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                            @click="select($el.id)"
+                            @mousedown.prevent
+                            @focus="select($el.id)"
+                            type="button"
+                            :tabindex="isSelected($el.id) ? 0 : -1"
+                            :aria-selected="isSelected($el.id)"
+                            :class="isSelected($el.id) ? 'border-b border-arm-blue-500 text-arm-blue-500' : 'border-transparent'"
+                            class="inline-flex px-5 py-2.5 border-transparent"
+                            role="tab"
+                        >Courses</button>
+                    </li>
                     @can('create-dealerships')
-                        <livewire:dealer.employee.assign-custom-courses-form :user="$user" />
+                    <li>
+                        <button
+                            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                            @click="select($el.id)"
+                            @mousedown.prevent
+                            @focus="select($el.id)"
+                            type="button"
+                            :tabindex="isSelected($el.id) ? 0 : -1"
+                            :aria-selected="isSelected($el.id)"
+                            :class="isSelected($el.id) ? 'border-b border-arm-blue-500 text-arm-blue-500' : 'border-transparent'"
+                            class="inline-flex px-5 py-2.5 border-transparent"
+                            role="tab"
+                        >Additional Courses</button>
+                    </li>
                     @endcan
-                @endif
-            </div>
-            <div class="xl:block xl:pl-8">
-                <livewire:dealer.employee.details :user="$user"/>
-                <livewire:dealer.employee.dot-cert :user="$user" />
-                <livewire:dealer.employee.cert-index :user="$user"/>
+                </ul>
+
+                <!-- Panels -->
+                <div role="tabpanels" class="border-t border-gray-200 bg-white">
+                    <!-- Panel -->
+                    <section
+                        x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                        :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                        role="tabpanel"
+                        class="p-4"
+                    >
+                        @if($user->department)
+                            <livewire:dealer.employee.course-results :user="$user"/>
+                        @endif
+                    </section>
+                    @can('create-dealerships')
+                    <section
+                        x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                        :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                        role="tabpanel"
+                        class="p-4"
+                    >
+                        @if($user->department)
+                            @can('create-dealerships')
+                                <livewire:dealer.employee.assign-custom-courses-form :user="$user" />
+                            @endcan
+                        @endif
+                    </section>
+                    @endcan
+                </div>
             </div>
         </div>
     </div>

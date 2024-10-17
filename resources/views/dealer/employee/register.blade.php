@@ -1,24 +1,13 @@
 <x-guest-layout>
-    <div class="max-w-3xl mx-auto pt-32">
-        <h1 class="text-5xl font-black text-arm-blue-600 text-center">{{ tenant('name') }}</h1>
-        <p class="text-center mb-5">Please fill out the form to complete your registration.</p>
+    <div class="max-w-sm mx-auto pt-32">
+        <div class="text-center">
+            <h1 class="font-medium text-xl text-gray-800">{{ tenant('name') }}</h1>
+            <p class="text-xs mb-5">Please create a password to complete your registration</p>
+        </div>
         <div class="bg-white overflow-hidden rounded-md border p-5" x-data>
             <form method="POST" action="{{ route('dealer.employees.store') }}">
                 @csrf
                 <input type="hidden" id="id" name="id" value="{{ $invite->id }}">
-
-                <!-- Phone -->
-                <div class="mt-4">
-                    <x-input-label for="phone" :value="__('Phone')"/>
-
-                    <x-text-input id="phone" class="block mt-1 w-full"
-                                  x-mask="999-999-9999"
-                                  type="tel"
-                                  placeholder="111-111-1111"
-                                  name="phone" :value="old('phone')" required autofocus/>
-
-                    <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
-                </div>
 
                 <!-- Password -->
                 <div class="mt-4">

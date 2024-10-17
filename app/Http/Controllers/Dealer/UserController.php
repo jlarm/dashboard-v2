@@ -46,7 +46,6 @@ class UserController extends Controller
         $user = User::create([
             'name' => $invite['name'],
             'email' => $invite['email'],
-            'phone' => $request->input('phone'),
             'department_id' => $invite['department_id'],
             'password' => bcrypt($request->input('password')),
         ]);
