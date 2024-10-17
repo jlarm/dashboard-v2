@@ -1,6 +1,7 @@
 <x-guest-layout>
     <div class="max-w-sm mx-auto pt-32">
         <div class="text-center">
+            <x-application-icon class="w-auto h-10 mx-auto mb-3" />
             <h1 class="font-medium text-xl text-gray-800">{{ tenant('name') }}</h1>
             <p class="text-xs mb-5">Please create a password to complete your registration</p>
         </div>
