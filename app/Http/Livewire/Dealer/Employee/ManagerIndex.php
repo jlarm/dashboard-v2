@@ -29,18 +29,41 @@ class ManagerIndex extends Component
     public function getUsersQueryProperty()
     {
         return User::query()
-            ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
-            ->userStore($this->store ?? null)
-            ->select(['id', 'name', 'slug', 'email', 'department_id'])
-            ->with('roles', 'department', 'stores', 'courses')
-            ->whereDoesntHave('roles', function ($query) {
-                $query->where('name', 'Consultant');
-            })
-            ->currentUserIsManager(auth()->user())
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%'.$this->search.'%')
+        ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
+        ->select(['id', 'name', 'slug', 'email', 'department_id'])
+        ->with('roles', 'department', 'stores', 'courses')
+        ->whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Consultant');
+        })
+        ->whereHas('stores', function ($query) {
+            $query->whereIn('id', auth()->user()->stores->pluck('id'));
+        })
+        ->where('department_id', auth()->user()->department_id)
+        ->when($this->search, function ($query) {
+            $query->where(function ($subQuery) {
+                $subQuery->where('name', 'like', '%'.$this->search.'%')
                     ->orWhere('email', 'like', '%'.$this->search.'%');
-            });
+            })
+            ->whereHas('stores', function ($storeQuery) {
+                $storeQuery->whereIn('id', auth()->user()->stores->pluck('id'));
+            })
+            ->where('department_id', auth()->user()->department_id);
+        });
+        // return User::query()
+        //     ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
+        //     ->select(['id', 'name', 'slug', 'email', 'department_id'])
+        //     ->with('roles', 'department', 'stores', 'courses')
+        //     ->whereDoesntHave('roles', function ($query) {
+        //         $query->where('name', 'Consultant');
+        //     })
+        //     ->whereHas('stores', function ($query) {
+        //         $query->where('id', auth()->user()->store_id);
+        //     })
+        //     ->where('department_id', auth()->user()->department_id) // Filter by department
+        //     ->when($this->search, function ($query) {
+        //         $query->where('name', 'like', '%'.$this->search.'%')
+        //             ->orWhere('email', 'like', '%'.$this->search.'%');
+        //     });
     }
 
     public function updatingSearch()
