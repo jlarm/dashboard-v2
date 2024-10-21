@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('course:check-reminders')->daily()->runInBackground();
+//        $schedule->command('course:check-reminders')->daily()->runInBackground();
         $schedule->command('activitylog:clean')->daily()->runInBackground();
         $schedule->command('run:invites')->daily()->runInBackground();
         //        $schedule->command('run:course-reminder')->daily()->runInBackground();
