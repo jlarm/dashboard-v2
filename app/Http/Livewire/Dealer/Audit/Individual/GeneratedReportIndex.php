@@ -8,17 +8,21 @@ use Livewire\Component;
 
 class GeneratedReportIndex extends Component
 {
-    public Store $store;
+    public $store;
+
+    public function mount()
+    {
+        $this->store = Store::where('id', app('currentStore'))->firstOrFail();
+    }
 
     public function render()
     {
         return view('livewire.dealer.audit.individual.generated-report-index', [
-            'individualAudits' => IndividualAudit::where('parent_id', null)
+            'individualAudits' => $this->store->individualAudits()
                 ->whereNot('pdf_path', '')
                 ->orderBy('audit_date', 'desc')
-                ->select('id', 'audit_date', 'pdf_path')
-                ->where('store_id', $this->store->id)
-                ->get(),
+                ->select(['id', 'audit_date', 'pdf_path'])
+            ->get(),
         ]);
     }
 }

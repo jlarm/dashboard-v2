@@ -90,6 +90,8 @@ Route::name('dealer.')->middleware([
     Route::get('form', \App\Http\Livewire\Dealer\Vendor\NewForm::class)->middleware('signed')->name('vendor.form');
     Route::view('/vendors/thankyou', 'dealer.vendor.thankyou')->middleware('web')->name('vendors.thankyou');
 
+//    Route::view('disclosures', 'dealer.disclosure.index')->middleware(['auth', 'web'])->name('disclosure.index');
+
     Route::get('email/settings', FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
@@ -162,7 +164,7 @@ Route::name('dealer.')->middleware([
             Route::get('/', ManualController::class)->name('index');
         });
 
-        Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function () {
+        Route::prefix('audits/')->name('audit.')->middleware(['auth'])->group(function () {
             Route::get('osha', \App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('osha.index');
             Route::get('osha/{oshaViolationAudit:uuid}', Single::class)->name('osha.show');
             Route::get('body-shop', \App\Http\Livewire\Dealer\Audit\BodyShop\Index::class)->name('body-shop.index');
