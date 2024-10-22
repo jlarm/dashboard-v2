@@ -93,10 +93,7 @@
     <!-- AUDITS -->
     <div class="px-3 mb-1.5">
         @can('view-audits')
-        @if (request()->segment(1) === 'stores' || !tenant('locations'))
-        <div
-            x-data="{ open: '{{ request()->segment(1) == 'audits' || request()->segment(3) === 'audits' }}' }"
-        >
+        <div x-data="{ open: '{{ request()->segment(1) == 'audits' || request()->segment(3) === 'audits' }}' }">
             <button
                 class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'bg-gray-100 text-gray-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }} w-full border-transparent group py-2 px-3 rounded-lg flex items-center text-sm"
                 type="button"
@@ -140,8 +137,7 @@
                 </li>
             </ul>
         </div>
-        @endif
-    @endcan
+        @endcan
     </div>
     <!-- VENDORS -->
     @can('view-vendors')
