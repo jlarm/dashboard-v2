@@ -14,56 +14,44 @@ class OpenInvites extends Component
     use WithPagination;
 
     public Store $store;
-
     public $search = '';
-
     public $selectPage = false;
-
     public $selectAll = false;
-
     public $selected = [];
 
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
 
-    public function sendInvite($invite)
+    public function sendInvite($inviteId)
     {
-        $invite = Invite::findOrFail($invite);
-
-        SendQueueEmailJob::dispatch($invite);
-
-        Notification::make()
-            ->title('Invite to '.$invite->name.' sent')
-            ->success()
-            ->send();
+        $invite = $this->findInvite($inviteId);
+        $this->dispatchInvite($invite);
+        $this->notifyInviteSent($invite->name);
     }
 
     public function sendSelectedInvites()
     {
-        foreach ($this->selected as $invite) {
-            $invite = Invite::findOrFail($invite);
-            SendQueueEmailJob::dispatch($invite);
+        foreach ($this->selected as $inviteId) {
+            $invite = $this->findInvite($inviteId);
+            $this->dispatchInvite($invite);
         }
 
-        Notification::make()
-            ->title('Invites sent')
-            ->success()
-            ->send();
-
-        $this->selected = [];
+        $this->notifyInvitesSent();
+        $this->selectPage = false;
+        $this->resetSelection();
     }
 
     public function updatedSelectPage($value)
     {
-        $this->selected = $value ? $this->invites->pluck('id')->map(fn ($id) => (string) $id) : [];
+        $this->selected = $value ? $this->getInviteIds() : [];
     }
 
     public function getInvitesProperty()
     {
         return Invite::query()
             ->whereJsonContains('stores', (string) $this->store->id)
-            ->where('registered_at', null)
+            ->whereNull('registered_at')
             ->with('user')
-            ->orderBy('created_at', 'desc')
+            ->orderByDesc('created_at')
             ->search('name', $this->search);
     }
 
@@ -81,11 +69,54 @@ class OpenInvites extends Component
     public function render()
     {
         if ($this->selectAll) {
-            $this->selected = $this->invites->pluck('id')->map(fn ($id) => (string) $id);
+            $this->selected = $this->getInviteIds();
         }
 
         return view('livewire.dealer.store.single-store.employee.open-invites', [
             'invites' => $this->invites->paginate(25),
         ])->layout('components.dealer-app');
+    }
+
+    private function findInvite($inviteId)
+    {
+        return Invite::findOrFail($inviteId);
+    }
+
+    private function dispatchInvite($invite)
+    {
+        SendQueueEmailJob::dispatch($invite);
+        $invite->touch();
+    }
+
+    private function notifyInviteSent($inviteName)
+    {
+        Notification::make()
+            ->title("Invite to $inviteName sent")
+            ->success()
+            ->send();
+
+        $this->emit('refreshOpenInvites');
+    }
+
+    private function notifyInvitesSent()
+    {
+        Notification::make()
+            ->title('Invites sent')
+            ->success()
+            ->send();
+
+        $this->emit('refreshOpenInvites');
+    }
+
+    private function resetSelection()
+    {
+        $this->selectPage = false;
+        $this->selectAll = false; // Ensure selectAll is also reset
+        $this->selected = [];
+    }
+
+    private function getInviteIds()
+    {
+        return $this->invites->pluck('id')->map(fn($id) => (string) $id);
     }
 }

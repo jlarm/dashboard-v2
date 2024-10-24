@@ -13,54 +13,41 @@ class OpenInvites extends Component
     use WithPagination;
 
     public $search = '';
-
     public $selectPage = false;
-
     public $selectAll = false;
-
     public $selected = [];
 
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
 
-    public function sendInvite($invite)
+    public function sendInvite($inviteId)
     {
-        $invite = Invite::findOrFail($invite);
-
-        SendQueueEmailJob::dispatch($invite);
-
-        Notification::make()
-            ->title('Invite to '.$invite->name.' sent')
-            ->success()
-            ->send();
+        $invite = $this->findInvite($inviteId);
+        $this->dispatchInvite($invite);
+        $this->notifyInviteSent($invite->name);
     }
 
     public function sendSelectedInvites()
     {
-        foreach ($this->selected as $invite) {
-            $invite = Invite::findOrFail($invite);
-            SendQueueEmailJob::dispatch($invite);
+        foreach ($this->selected as $inviteId) {
+            $invite = $this->findInvite($inviteId);
+            $this->dispatchInvite($invite);
         }
 
-        Notification::make()
-            ->title('Invites sent')
-            ->success()
-            ->send();
-
-        $this->selected = [];
+        $this->notifyInvitesSent();
+        $this->resetSelection();
     }
 
     public function updatedSelectPage($value)
     {
-        $this->selected = $value ? $this->invites->pluck('id')->map(fn ($id) => (string) $id) : [];
+        $this->selected = $value ? $this->getInviteIds() : [];
     }
 
     public function getInvitesProperty()
     {
         return Invite::query()
-            ->where('registered_at', null)
-            ->with('user')
-            ->with('store')
-            ->orderBy('created_at', 'desc')
+            ->whereNull('registered_at')
+            ->with(['user', 'store'])
+            ->orderByDesc('created_at')
             ->search('name', $this->search);
     }
 
@@ -78,15 +65,61 @@ class OpenInvites extends Component
     public function render()
     {
         if ($this->selectAll) {
-            $this->selected = $this->invites->pluck('id')->map(fn ($id) => (string) $id);
+            $this->selected = $this->getInviteIds();
         }
 
+        $invites = $this->applyManagerFilter($this->invites)->paginate(25);
+
+        return view('livewire.dealer.employee.open-invites', compact('invites'));
+    }
+
+    private function findInvite($inviteId)
+    {
+        return Invite::findOrFail($inviteId);
+    }
+
+    private function dispatchInvite($invite)
+    {
+        SendQueueEmailJob::dispatch($invite);
+        $invite->touch();
+    }
+
+    private function notifyInviteSent($inviteName)
+    {
+        Notification::make()
+            ->title("Invite to $inviteName sent")
+            ->success()
+            ->send();
+
+        $this->emit('refreshOpenInvites');
+    }
+
+    private function notifyInvitesSent()
+    {
+        Notification::make()
+            ->title('Invites sent')
+            ->success()
+            ->send();
+
+        $this->emit('refreshOpenInvites');
+    }
+
+    private function resetSelection()
+    {
+        $this->selectPage = false;
+        $this->selected = [];
+    }
+
+    private function getInviteIds()
+    {
+        return $this->invites->pluck('id')->map(fn($id) => (string) $id);
+    }
+
+    private function applyManagerFilter($query)
+    {
         if (auth()->user()->hasRole('Manager')) {
-            $this->invites->where('department_id', auth()->user()->department_id);
+            $query->where('department_id', auth()->user()->department_id);
         }
-
-        return view('livewire.dealer.employee.open-invites', [
-            'invites' => $this->invites->paginate(25),
-        ]);
+        return $query;
     }
 }

@@ -35,7 +35,7 @@
                             </x-table.heading>
                             <x-table.heading>Name</x-table.heading>
                             <x-table.heading>Email</x-table.heading>
-                            <x-table.heading>Original Invite Sent</x-table.heading>
+                            <x-table.heading>Last Sent</x-table.heading>
                             <x-table.heading>Sent By</x-table.heading>
                             <x-table.heading></x-table.heading>
                         </x-slot>
@@ -62,7 +62,7 @@
                                     </x-table.cell>
                                     <x-table.cell class="pl-4 pr-3">{{ $invite->name }}</x-table.cell>
                                     <x-table.cell>{{ $invite->email }}</x-table.cell>
-                                    <x-table.cell>{{ $invite->created_at->format('F d, Y') }}</x-table.cell>
+                                    <x-table.cell>{{ $invite->updated_at->format('F d, Y') }}</x-table.cell>
                                     <x-table.cell>{{ $invite->user->name }}</x-table.cell>
                                     <x-table.cell class="flex justify-end gap-3">
                                         <div class="relative">
