@@ -138,7 +138,7 @@
             <div class="px-6">
                 <div class="border rounded-md">
                     <div class="p-6">
-                        {{-- <livewire:dealer.course.index/> --}}
+                        <livewire:dealer.course.index/>
                     </div>
                 </div>
             </div>
