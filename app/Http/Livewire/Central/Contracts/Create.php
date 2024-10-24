@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Central\Contracts;
 use App\Models\Contract;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Create extends Component
@@ -131,7 +132,7 @@ class Create extends Component
         $contract = Contract::create([
             'contract_type' => $this->contractType,
             'agreement_date' => $this->agreementDate,
-            'dealer_name' => $this->dealerName,
+            'dealer_name' => Str::title($this->dealerName),
             'services' => json_encode($this->services),
             'commence_date' => $this->commenceDate,
             'yearly_inspection_total' => $this->yearlyInspectionTotal,

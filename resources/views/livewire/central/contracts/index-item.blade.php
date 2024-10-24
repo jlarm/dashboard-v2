@@ -4,7 +4,7 @@
     <x-table.cell>{{ $contract->user->name }}</x-table.cell>
     @endcan
     <x-table.cell>
-        {{ $contract->dealer_name }}
+        {{ Str::title($contract->dealer_name) }}
         @can('delete-users')
         <div class="font-mono text-xs leading-6 text-gray-400">{{ $contract->uuid }}</div>
         @endcan
