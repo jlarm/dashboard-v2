@@ -21,4 +21,5 @@ class Index extends Component
             'courses' => $this->courses,
         ]);
     }
+    private function initializeUserAndCourses(): void
 }
