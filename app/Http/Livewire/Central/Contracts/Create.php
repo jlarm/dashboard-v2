@@ -68,7 +68,7 @@ class Create extends Component
     protected $rules = [
         'contractType' => 'required|string',
         'agreementDate' => 'required|date',
-        'dealerName' => 'required|string|alpha_num',
+        'dealerName' => 'required|string',
         'services' => 'required|min:1|array',
         'services.*' => 'required|string',
         'commenceDate' => 'required|date',
