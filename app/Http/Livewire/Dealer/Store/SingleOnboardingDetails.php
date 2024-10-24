@@ -176,7 +176,7 @@ class SingleOnboardingDetails extends Component
         'admin_name' => 'nullable',
         'fi_username' => 'nullable',
         'fi_password' => 'nullable',
-        'standard_dpp_rate' => 'nullable',
+        'standard_dpp_rate' => 'nullable|numeric|min:0|max:100',
     ];
 
     public function mount()

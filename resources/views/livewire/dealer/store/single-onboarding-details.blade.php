@@ -647,10 +647,13 @@
                 <div>
                     <x-input-label for="standard_dpp_rate" :value="__('Standard DPP Rate')"/>
                     <x-text-input wire:model.defer="standard_dpp_rate" id="standard_dpp_rate" class="block mt-1 w-full" type="text"
+                                  placeholder="e.g. 2.5"
                                   name="fi_products_sold"
                                   :value="old('standard_dpp_rate')"
                                   autofocus/>
-                    <x-input-error :messages="$errors->get('standard_dpp_rate')" class="mt-2"/>
+                                  @if ($errors->has('standard_dpp_rate'))
+                                      <x-input-error messages="Must be a number and not include a % sign" class="mt-2"/>
+                                  @endif
                 </div>
 
                 <div class="py-3 text-right">
