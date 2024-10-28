@@ -24,16 +24,6 @@
                             </div>
                         </div>
                     @endforeach
-                    {{--                    <select wire:model="dealers.defer" class="w-full rounded-md border-gray-300" multiple>--}}
-                    {{--                        @foreach($stores as $store)--}}
-                    {{--                            <option--}}
-                    {{--                                {{ in_array($store->name, $assignedStores) ? 'selected' : '' }}--}}
-                    {{--                                value="{{ $store->id }}"--}}
-                    {{--                            >--}}
-                    {{--                                {{ $store->name }}--}}
-                    {{--                            </option>--}}
-                    {{--                        @endforeach--}}
-                    {{--                    </select>--}}
                 </div>
             </div>
         @endif
@@ -80,8 +70,9 @@
         </div>
     </div>
 
+    @can('create-stores')
     <div class="relative flex items-start border-y py-5 mt-5">
-        @if($qiAvailable)
+        @if($qiAvailable))
         <div class="flex h-6 items-center">
             <input wire:model.defer="qi" id="qi" name="qi" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
         </div>
@@ -92,7 +83,7 @@
             <p>There are currently two Qualified Individuals set</p>
         @endif
     </div>
-
+    @endcan
 
     <x-slot name="buttons">
         <button

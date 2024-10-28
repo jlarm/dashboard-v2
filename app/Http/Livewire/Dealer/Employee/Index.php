@@ -84,74 +84,105 @@ class Index extends Component
 
     public function generateCsv()
     {
-
         try {
-            $this->validate([
-                'email' => 'required|email|exists:users,email',
-            ]);
+            $this->validateEmail();
 
-            // Get all users from the database
             $users = $this->usersQuery->get();
+            $csvContent = $this->generateCsvContent($users);
 
-            // Generate the CSV content
-            $csvContent = "Name,Email,Department,Courses\n";
-            foreach ($users as $user) {
-                if ($user->total_completed_courses != $user->total_user_courses) {
-                    $csvContent .= "{$user->name},{$user->email},{$user->department->name},$user->total_completed_courses of $user->total_user_courses\n";
-                }
-            }
+            $this->sendEmailWithCsv($csvContent);
 
-            $body = 'Attached is an outline of the progress your employees have made regarding completing their compliance training courses. If an employee is not noted, they have completed all courses assigned. If you have further questions regarding this, you can always access your compliance dashboard and review your departments progress as a whole.';
-
-            // Send the email with the CSV attachment
-            Mail::send([], [], function ($message) use ($csvContent, $body) {
-                $message->to($this->email)
-                    ->from('noreply@armp.app', tenant('name'))
-                    ->subject('Incomplete Employee Courses Report as of '.date('m/d/Y'))
-                    ->text($body)
-                    ->attachData($csvContent, 'incomplete-employee-courses-report-'.date('m-d-Y').'.csv', [
-                        'mime' => 'text/csv',
-                    ]);
-            });
-
-            // Reset the email field
             $this->email = '';
-
-            Notification::make()
-                ->title('User Report Sent Successfully')
-                ->success()
-                ->send();
+            $this->notifySuccess('User Report Sent Successfully');
 
         } catch (\Exception $e) {
             \Sentry::captureException($e);
-
-            Notification::make()
-                ->title('Error trying to send the User Report')
-                ->body('Please check the employees email address.')
-                ->danger()
-                ->send();
+            $this->notifyError('Error trying to send the User Report', 'Please check the employees email address.');
         }
     }
 
+    private function validateEmail()
+    {
+        $this->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+    }
+
+    private function generateCsvContent($users)
+    {
+        $csvContent = "Name,Email,Department,Courses\n";
+        foreach ($users as $user) {
+            if ($user->total_completed_courses != $user->total_user_courses) {
+                $csvContent .= "{$user->name},{$user->email},{$user->department->name},$user->total_completed_courses of $user->total_user_courses\n";
+            }
+        }
+        return $csvContent;
+    }
+
+    private function sendEmailWithCsv($csvContent)
+    {
+        $body = 'Attached is an outline of the progress your employees have made regarding completing their compliance training courses. If an employee is not noted, they have completed all courses assigned. If you have further questions regarding this, you can always access your compliance dashboard and review your departments progress as a whole.';
+
+        Mail::send([], [], function ($message) use ($csvContent, $body) {
+            $message->to($this->email)
+                ->from('noreply@armp.app', tenant('name'))
+                ->subject('Incomplete Employee Courses Report as of '.date('m/d/Y'))
+                ->text($body)
+                ->attachData($csvContent, 'incomplete-employee-courses-report-'.date('m-d-Y').'.csv', [
+                    'mime' => 'text/csv',
+                ]);
+        });
+    }
+
+    private function notifySuccess($title)
+    {
+        Notification::make()
+            ->title($title)
+            ->success()
+            ->send();
+    }
+
+    private function notifyError($title, $body)
+    {
+        Notification::make()
+            ->title($title)
+            ->body($body)
+            ->danger()
+            ->send();
+    }
+
     public function render()
+    {
+        $users = $this->getFilteredUsers();
+
+        return view('livewire.dealer.employee.index', [
+            'users' => $users,
+            'departments' => $this->getDepartments(),
+            $this->selectedDepartmentName = $this->getSelectedDepartmentName(),
+        ]);
+    }
+
+    private function getFilteredUsers()
     {
         $users = $this->usersQuery->paginate(25);
 
         if ($this->showIncompleteCourseUsers) {
             $users = $this->usersQuery
-                ->when($this->selectedDepartment, function ($query) {
-                    $query->where('department_id', $this->selectedDepartment);
-                })
+                ->when($this->selectedDepartment, fn($query) => $query->where('department_id', $this->selectedDepartment))
                 ->paginate(500)
-                ->filter(function ($user) {
-                    return $user->user_has_not_completed_courses;
-                });
+                ->filter(fn($user) => $user->user_has_not_completed_courses);
         }
 
-        return view('livewire.dealer.employee.index', [
-            'users' => $users,
-            'departments' => Department::whereHas('users')->orderBy('name')->get(),
-            $this->selectedDepartmentName = Department::where('id', $this->selectedDepartment)->first()->name ?? null,
-        ]);
+        return $users;
+    }
+
+    private function getDepartments()
+    {
+        return Department::whereHas('users')->orderBy('name')->get();
+    }
+
+    private function getSelectedDepartmentName()
+    {
+        return Department::where('id', $this->selectedDepartment)->first()->name ?? null;
     }
 }

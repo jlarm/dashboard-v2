@@ -1,0 +1,108 @@
+[
+    {
+        "id": 44,
+        "uuid": "d4daad09-bbba-4bf9-bbcb-4b884fa01019",
+        "name": "Sexual Harassment Explained",
+        "slug": "sexual-harassment-m",
+        "department": [],
+        "roles": [4,6,7,8,9],
+        "slides": [
+            {
+                "title": "What is Sexual Harassment?",
+                "description": "<p><strong>Definition:</strong> Sexual harassment refers to unwelcome sexual advances, requests for sexual favors, and other verbal or physical conduct of a sexual nature.</p>"
+            },
+            {
+                "title": "Types of Sexual Harassment",
+                "description": "<ul><li><strong>Quid Pro Quo:</strong> When submission to or rejection of unwelcome sexual conduct is used as a basis for employment decisions (e.g., promotions, raises).</li><li><strong>Hostile Work Environment:</strong> When unwelcome sexual behavior creates an intimidating, hostile, or offensive workplace.</li><li><strong>Verbal Harassment:</strong> Unwanted comments, jokes, or questions about a person’s sex life or appearance.</li><li><strong>Non-Verbal Harassment:</strong> Inappropriate gestures, sharing explicit images or videos, or leering.</li><li><strong>Physical Harassment:</strong> Unwanted touching, blocking movements, or physically intimidating behavior.</li></ul>"
+            },
+            {
+                "title": "Recognizing Sexual Harassment",
+                "description": "<p>Signs to Look For:</p><ul><li>Behavior that makes others uncomfortable or anxious.</li><li>Repeated unwanted advances, comments, or invitations.</li><li>Sexual comments or jokes that create a negative work environment.</li></ul>"
+            },
+            {
+                "title": "Impact of Sexual Harassment",
+                "description": "<ul><li><strong>Effects on Individuals:</strong> Stress, anxiety, depression, decreased job satisfaction, and lower productivity.</li><li><strong>Effects on the Organization:</strong> Legal liabilities, decreased morale, high turnover, and damage to reputation.</li></ul>"
+            },
+            {
+                "title": "Title VII of the Civil Rights Act of 1964 prohibits sexual harassment in the workplace.",
+                "description": "<ul><li><strong>Employer’s Responsibility:</strong> Provide a safe work environment and respond promptly to complaints.</li><li><strong>Employee Rights:</strong> Right to a harassment-free workplace and the right to report any incidents.</li></ul>"
+            },
+            {
+                "title": "What to Do If You Experience or Witness Sexual Harassment",
+                "description": "<p>Steps to Take:</p><ul><li><strong>Document the Incident:</strong> Write down dates, times, and details.</li><li><strong>Report to HR or a Supervisor:</strong> Follow company procedures for reporting.</li><li><strong>Seek Support:</strong> Talk to trusted colleagues or use external resources like hotlines.</li></ul>"
+            },
+            {
+                "title": "How to Prevent Sexual Harassment",
+                "description": "<p>Best Practices:</p><ul><li>Create clear policies and communicate them to all employees.</li><li>Conduct regular training sessions on sexual harassment awareness.</li><li>Promote a culture of respect and zero tolerance for harassment.</li></ul>"
+            },
+            {
+                "title": "Reporting Mechanisms",
+                "description": "<ul><li><strong>Internal Reporting:</strong> HR contacts, hotlines, or online reporting tools.</li><li><strong>External Reporting:</strong> EEOC (Equal Employment Opportunity Commission) and legal options.</li><li><strong>Protection from Retaliation:</strong> It’s illegal for employers to retaliate against someone for reporting harassment.</li></ul>"
+            },
+            {
+                "title": "Role of Managers and Supervisors",
+                "description": "<p>Responsibilities:</p><ul><li>Respond to complaints promptly and confidentially.</li><li>Ensure no retaliation occurs.</li><li>Set a positive example by treating all employees with respect.</li></ul>"
+            },
+            {
+                "title": "Creating a Respectful Workplace",
+                "description": "<ul><li><strong>Promote Inclusion and Diversity:</strong> Encourage a workplace culture that values all individuals.</li><li><strong>Encourage Open Communication:</strong> Create safe spaces for employees to express concerns.</li><li><strong>Lead by Example:</strong> Show respect in every interaction, at every level.</li></ul>"
+            }
+        ],
+        "questions": [
+            {
+                "question": "Sexual harassment only includes physical actions, such as unwanted touching",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which of the following is an example of quid pro quo sexual harassment?",
+                "answers": [
+                    {
+                        "a": "A supervisor offering a promotion in exchange for a date.",
+                        "b": "A coworker telling jokes about their weekend plans.",
+                        "c": "An employee asking another employee to lunch.",
+                        "d": "A colleague complimenting a new hairstyle."
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "It is illegal for an employer to retaliate against an employee who reports sexual harassment.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which of the following behaviors could create a hostile work environment?",
+                "answers": [
+                    {
+                        "a": "Regularly making unwanted sexual comments or jokes.",
+                        "b": "Discussing work projects with a coworker.",
+                        "c": "Participating in a team-building activity.",
+                        "d": "Offering feedback during a performance review."
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Reporting sexual harassment to HR is the only option available for an employee who experiences harassment.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            }
+        ]
+    }
+]

@@ -5,13 +5,14 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use App\Traits\EmployeeCourses;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class CourseResults extends Component
 {
-    use WithPagination;
+    use WithPagination, EmployeeCourses;
 
     public Store $store;
 
@@ -33,7 +34,9 @@ class CourseResults extends Component
             ->merge($this->getUserCourses())
             ->sortBy('name');
 
-        return view('livewire.dealer.employee.course-results', compact('courses'));
+        return view('livewire.dealer.employee.course-results', [
+            'courses' => $this->loadCoursesForCurrentUser($this->user)
+        ]);
     }
 
     private function initializeStore(): void
