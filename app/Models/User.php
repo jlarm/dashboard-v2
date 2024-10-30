@@ -8,8 +8,8 @@ use App\Models\Dealer\Invite;
 use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
-use App\Traits\EmployeeCourses;
 use App\Traits\HasAudits;
+use App\Traits\HasCourses;
 use App\Traits\HasManuals;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,7 +29,7 @@ class User extends Authenticatable
 {
     use HasApiTokens,
         HasAudits,
-        EmployeeCourses,
+        HasCourses,
         HasFactory,
         HasManuals,
         HasRoles,
@@ -109,16 +109,6 @@ class User extends Authenticatable
     public function timelines(): HasMany
     {
         return $this->hasMany(Timeline::class, 'email', 'email');
-    }
-
-    public function courses(): BelongsToMany
-    {
-        return $this->belongsToMany(Course::class);
-    }
-
-    public function results(): HasMany
-    {
-        return $this->hasMany(CourseResults::class);
     }
 
     public function routeNotificationForVonage($notification)

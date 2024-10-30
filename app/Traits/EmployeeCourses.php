@@ -3,85 +3,66 @@
 namespace App\Traits;
 
 use App\Models\Dealer\Course;
+use DB;
+use Illuminate\Support\Collection;
 
 trait EmployeeCourses
 {
-    public function loadCoursesForCurrentUser($user)
+    protected $user;
+
+    protected $courses;
+
+    protected function loadCurrentUser(): void
     {
-        $departmentId = $user->department_id;
-        $roleIds = $user->roles()->pluck('id')->toArray();
-
-        // Check if any of the user's stores are in California
-        $isInCalifornia = $user->stores->contains(function ($store) {
-            return $store->state === 'California';
-        });
-
-        // Eager load departments, roles, and results to prevent N+1
-        $courses = Course::with(['departments', 'roles', 'results' => function ($query) use ($user) {
-            $query->where('user_id', $user->id)->latest('id');
-        }])->get();
-
-        $coursesByDepartment = $courses->filter(function ($course) use ($departmentId) {
-            return $course->departments->contains('id', $departmentId);
-        });
-
-        $coursesByRole = $courses->filter(function ($course) use ($roleIds) {
-            return !$course->departments->count() && $course->roles->pluck('id')->intersect($roleIds)->isNotEmpty();
-        });
-
-        $coursesByDepartmentNoRoles = $courses->filter(function ($course) use ($departmentId) {
-            return $course->departments->contains('id', $departmentId) && !$course->roles->count();
-        });
-
-        $coursesNoDepartmentsNoRoles = $courses->filter(function ($course) {
-            return !$course->departments->count() && !$course->roles->count();
-        });
-
-        $userCourses = $user->courses()->get();
-
-        // Filter courses by department and roles
-        $coursesByDepartmentAndRole = $courses->filter(function ($course) use ($departmentId, $roleIds) {
-            return $course->departments->contains('id', $departmentId) &&
-                   $course->roles->pluck('id')->intersect($roleIds)->isNotEmpty();
-        });
-
-        $allCourses = $coursesByDepartmentAndRole
-            ->merge($coursesByRole)
-            ->merge($coursesByDepartmentNoRoles)
-            ->merge($coursesNoDepartmentsNoRoles)
-            ->merge($userCourses);
-
-        // Filter out the course with the specific slug if none of the stores are in California
-        if (!$isInCalifornia) {
-            $allCourses = $allCourses->reject(function ($course) {
-                return $course->slug === 'sexual-harassment-training-in-california';
-            });
-        }
-
-        return $allCourses->sortBy('name'); // Sort the final collection by name
+        $this->user = auth()->user();
     }
 
-    public function getTotalCoursesAttribute(): int
+    protected function getUserRolesExcluding(int $excludeRoleId): array
     {
-        return $this->loadCoursesForCurrentUser($this)->count();
+        return $this->user->roles()->pluck('id')->reject(fn ($roleId) => $roleId === $excludeRoleId)->toArray();
     }
 
-    public function getTotalCompletedCoursesAttribute(): int
+    public function getUserHasNoCaliforniaStore(): bool
     {
-        return $this->loadCoursesForCurrentUser($this)->filter(function ($course) {
-            $latestResult = $this->results()
-                ->where('course_id', $course->id)
-                ->where('passed', true)
-                ->where('created_at', '>=', now()->subYear())
-                ->latest()
-                ->first();
-            
-            return $latestResult !== null;
-        })->count();
+        return ! $this->user->stores()->where('state', 'California')->exists();
     }
 
-    public function getUserHasNotCompletedCoursesAttribute(): bool
+    protected function getCoursesForRoles(array $roles): array
     {
-        return $this->total_completed_courses != $this->total_courses;
+        return DB::table('course_role')
+            ->whereIn('role_id', $roles)
+            ->pluck('course_id')
+            ->toArray();
+    }
+
+    protected function getDepartmentCourses(array $courseWithRole): Collection
+    {
+        return Course::query()
+            ->whereHas('departments', fn ($query) => $query->where('id', $this->user->department_id))
+            ->whereIn('id', $courseWithRole)
+            ->orWhereDoesntHave('departments')
+            ->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest()])
+            ->when($this->getUserHasNoCaliforniaStore(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
+            ->when($this->user->roles()->where('id', 10)->exists(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-m'))
+            ->when($this->user->roles()->where('id', 9)->exists(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-e'))
+            ->orderBy('name')
+            ->get();
+    }
+
+    protected function getUserCourses(): Collection
+    {
+        return $this->user->courses()->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest('id')])->get();
+    }
+
+    public function loadCoursesForCurrentUser(): void
+    {
+        $this->loadCurrentUser();
+        $filteredRoles = $this->getUserRolesExcluding(5);
+        $courseWithRole = $this->getCoursesForRoles($filteredRoles);
+
+        $departmentCourses = $this->getDepartmentCourses($courseWithRole);
+        $userCourses = $this->getUserCourses();
+
+        $this->courses = $departmentCourses->merge($userCourses)->unique('id')->sortBy('name');
     }
 }

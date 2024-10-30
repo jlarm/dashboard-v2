@@ -9,10 +9,16 @@ class Index extends Component
 {
     use EmployeeCourses;
 
+    public function mount()
+    {
+        $this->loadCurrentUser();
+        $this->loadCoursesForCurrentUser();
+    }
+
     public function render()
     {
         return view('livewire.dealer.course.index', [
-            'courses' => $this->loadCoursesForCurrentUser(auth()->user())
+            'courses' => $this->courses,
         ]);
     }
 }
