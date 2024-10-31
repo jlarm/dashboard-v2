@@ -27,6 +27,7 @@ use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Docs\Index;
+use App\Http\Livewire\Dealer\Employee\DeletedIndex;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -187,6 +188,8 @@ Route::name('dealer.')->middleware([
     // **************************************************
 
     Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function () {
+
+        Route::get('deleted-employees', DeletedIndex::class)->name('deleted.index');
 
         Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function () {
             Route::get('/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');

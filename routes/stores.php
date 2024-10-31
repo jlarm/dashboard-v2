@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Dealer\StoreController;
+use App\Http\Livewire\Dealer\Employee\DeletedIndex;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -60,6 +61,8 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
         // Roles to QA
         // **************************************************
         Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function () {
+
+            Route::get('deleted-employees', DeletedIndex::class)->name('deleted.index');
 
             Route::get('manuals/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('manuals.isp.index');
             Route::get('manuals/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('manuals.isp.create');
