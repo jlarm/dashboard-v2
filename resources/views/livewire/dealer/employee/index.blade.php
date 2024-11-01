@@ -14,7 +14,7 @@
                                     <label>
                                         <input type="email" wire:model.defer="email"
                                                placeholder="Enter Manager Email Address"
-                                               class="flex w-full w-56 h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
+                                               class="flex w-56 h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-200 ring-offset-background placeholder:text-neutral-500 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"/>
                                     </label>
                                     <x-primary-button>
                                         <svg wire:loading class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
@@ -109,6 +109,7 @@
                                     </label>
                                 </div>
                             </div>
+                            @can('create-stores')
                             <div>
                                 <label for="department"
                                        class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Department</label>
@@ -120,6 +121,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @endcan
                         </div>
                     </div>
                 </div>

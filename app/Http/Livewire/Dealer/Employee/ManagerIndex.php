@@ -29,11 +29,10 @@ class ManagerIndex extends Component
     public function getUsersQueryProperty()
     {
         return User::query()
-            ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')
             ->whereDoesntHave('roles', function ($query) {
-                $query->where('name', 'Consultant');
+                $query->where('name', ['super-admin', 'Consultant']);
             })
             ->whereHas('stores', function ($query) {
                 $query->whereIn('id', auth()->user()->stores->pluck('id'));
@@ -49,21 +48,6 @@ class ManagerIndex extends Component
                     })
                     ->where('department_id', auth()->user()->department_id);
             });
-        // return User::query()
-        //     ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
-        //     ->select(['id', 'name', 'slug', 'email', 'department_id'])
-        //     ->with('roles', 'department', 'stores', 'courses')
-        //     ->whereDoesntHave('roles', function ($query) {
-        //         $query->where('name', 'Consultant');
-        //     })
-        //     ->whereHas('stores', function ($query) {
-        //         $query->where('id', auth()->user()->store_id);
-        //     })
-        //     ->where('department_id', auth()->user()->department_id) // Filter by department
-        //     ->when($this->search, function ($query) {
-        //         $query->where('name', 'like', '%'.$this->search.'%')
-        //             ->orWhere('email', 'like', '%'.$this->search.'%');
-        //     });
     }
 
     public function updatingSearch()

@@ -41,12 +41,16 @@
 
     <div class="px-6">
         <div class="p-6 border rounded-xl border-gray-200 shadow-sm">
-            @can('edit-stores')
+            @if(tenant('locations'))
+                @can('edit-stores')
+                    <livewire:dealer.employee.index/>
+                @endcan
+                @cannot('edit-stores')
+                    <livewire:dealer.employee.manager-index/>
+                @endcannot
+            @else
                 <livewire:dealer.employee.index/>
-            @endcan
-            @cannot('edit-stores')
-                <livewire:dealer.employee.manager-index/>
-            @endcannot
+            @endif
         </div>
     </div>
 </x-dealer-app>
