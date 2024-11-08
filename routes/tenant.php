@@ -69,6 +69,13 @@ Route::name('dealer.')->middleware([
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 
+    Route::get('language/{locale}', function ($locale) {
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+
+        return redirect()->back();
+    })->middleware('auth');
+
     Route::view('/dashboard', 'dealer.dashboard')->middleware('auth')->name('dashboard');
 
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])

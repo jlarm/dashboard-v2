@@ -7,13 +7,13 @@
             @endphp
             @foreach($course['questions'] as $c)
                 <div class="bg-gray-50 rounded-lg p-10 border-md">
-                    <p class="mb-5 font-bold">{{ $i }}. {{ $c['question'] ?? '' }}</p>
+                    <p class="mb-5 font-bold">{{ $i }}. {{ __($c['question']) ?? '' }}</p>
                     <div class="space-y-2">
                         @foreach($c['answers'][0] as $key => $value)
                             <label class="flex justify-start items-center space-x-3">
                                 <input name="question[{{ $i }}]" type="radio"
                                        value="{{ $key }}" {{ $key === 'a' ? 'required' : '' }}/>
-                                <span class="ml-2">{{ $value }}</span>
+                                <span class="ml-2">{{ __($value) }}</span>
                             </label>
                         @endforeach
                     </div>

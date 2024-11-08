@@ -24,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
     {
         //        Model::preventLazyLoading(! $this->app->isProduction());
 
+        view()->composer('components.language-switcher', function ($view) {
+            $view->with('current_locale', app()->getLocale());
+            $view->with('available_locales', config('app.available_locales'));
+        });
+
         view()->composer('layouts.top-bar', function ($view) {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));

@@ -26,7 +26,7 @@
         ">
         <div class="space-y-1">
             <h4 class="mb-2.5 font-medium text-sm text-gray-800">
-                {{ Str::limit($course->name, 30) }}
+                {{ Str::limit(__($course->name), 30) }}
             </h4>
             <!-- Item -->
             <div class="flex justify-between items-center gap-x-2">

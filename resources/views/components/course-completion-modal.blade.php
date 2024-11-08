@@ -27,17 +27,17 @@
                     <div class="mt-3 text-center sm:mt-5">
                         <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">
                             <span x-text="name"></span>
-                            <span x-show="passed">Passed!</span>
-                            <span x-show="!passed">Failed!</span>
+                            <span x-show="passed">{{ __('Passed') }}!</span>
+                            <span x-show="!passed">{{ __('Failed') }}!</span>
                         </h3>
                         <div class="mt-2">
-                            <p x-show="passed" class="text-sm text-gray-500">Congratulations, you passed with a score of <span x-text="score"></span>%. We will notify you when this course needs to be retaken.</p>
-                            <p x-show="!passed" class="text-sm text-gray-500">Unfortunately, you did not pass this course. You can retake the quiz at any time.</p>
+                            <p x-show="passed" class="text-sm text-gray-500">{{ __('Congratulations, you passed with a score of') }} <span x-text="score"></span>%. {{ __('We will notify you when this course needs to be retaken') }}.</p>
+                            <p x-show="!passed" class="text-sm text-gray-500">{{ __('Unfortunately, you did not pass this course. You can retake the quiz at any time.')  }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="mt-5 sm:mt-6">
-                    <button x-on:click="show = false" type="button" class="inline-flex w-full justify-center rounded-md bg-arm-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">Close</button>
+                    <button x-on:click="show = false" type="button" class="inline-flex w-full justify-center rounded-md bg-arm-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">{{ __('Close') }}</button>
                 </div>
             </div>
         </div>
