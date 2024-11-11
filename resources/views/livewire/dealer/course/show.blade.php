@@ -26,7 +26,7 @@
     <div class="mt-5">
         @foreach($slides as $index => $slide)
             <article x-show="activeSlide === {{ $index }}" class="border rounded-lg p-5 space-y-5" x-cloak>
-                <h1 class="font-bold">{{ __($slide['title']) ?? '' }}</h1>
+                <h1 class="font-bold">{{ __($slide['title']) ?? $course->name }}</h1>
                 <div class="prose min-w-full">
                     {!! __($slide['description']) !!}
                 </div>
