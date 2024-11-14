@@ -219,8 +219,8 @@
         <p>Written plan, in advance, of what actions you will take in the event of a “Security Event” i.e.,
             unauthorized access to or disruption or misuse of an information system, information stored
             on such system, or customer information held in physical form.</p>
-        <h2>NPI Breach Response</h2>
-        <p>&quot;Breach of security&quot; or &quot;breach&quot; means unauthorized access of personal information. Good
+        <h2>NPI Breach Response, Data Breach (Incident Response Plan)</h2>
+        <p>&quot;Breach of security&quot; or &quot;Data Breach&quot; means unauthorized access of personal information. Good
             faith access of personal information by an employee or agent of the dealership does not
             constitute a breach of security, provided that the information is not used for a purpose
             unrelated to the business or subject to further unauthorized use. In the event NPI is believed to
@@ -244,6 +244,17 @@
             <li><strong>[Provide notice to individuals and State departments pursuant to state law where
                     needed]</strong></li>
         </ul>
+        <h2>Data Breach Guidelines</h2>
+        <h4>Safeguards Rule</h4>
+        <p>Requires financial institutions to notify the FTC of a security breach that affects at least 500 consumers as soon as possible, but no later than 30 days after discovery.</p>
+        <p>ONLINE REPORTING FORM: <a
+                href="https://www.ftc.gov/business-guidance/privacy-security/gramm-leach-bliley-act/safeguards-rule-form" target="_blank">https://www.ftc.gov/business-guidance/privacy-security/gramm-leach-bliley-act/safeguards-rule-form</a></p>
+        <p>Now that the Safeguards Rule reporting requirement is in effect, what must businesses do? The amendment requires financial institutions to notify the FTC as soon as possible – and no later than 30 days after discovery – of a security breach involving the information of at least 500 consumers. Here’s how the Rule defines an incident that triggers notification:</p>
+        <p>An acquisition of unencrypted customer information without the authorization of the individual to which the information pertains. Customer information is considered unencrypted for this purpose if the encryption key was accessed by an unauthorized person. Unauthorized acquisition will be presumed to include unauthorized access to unencrypted customer information unless you have reliable evidence showing that there has not been, or could not reasonably have been, unauthorized acquisition of such information.</p>
+        <p>If that happens at your company, we want to make it as easy as possible for you comply with the reporting requirements of the Safeguards Rule. <a href="https://www.ftc.gov/business-guidance/privacy-security/gramm-leach-bliley-act/safeguards-rule-form" target="_blank">You must use a new online form</a> that explains in plain language the specific information you need to provide. Again the link for the online reporting is listed below</p>
+        <p>Link for the online form is listed below:</p>
+        <p>
+            <a href="https://www.ftc.gov/business-guidance/privacy-security/gramm-leach-bliley-act/safeguards-rule-form">https://www.ftc.gov/business-guidance/privacy-security/gramm-leach-bliley-act/safeguards-rule-form</a></p>
         <h2>Prepare an Annual Report to Board or Equivalent</h2>
         <p>Your SQI (Single Qualified Individual, {{ $qi }}) must prepare a written report
             annually to the Board or Equivalent to discuss the overall status of your ISP, compliance
