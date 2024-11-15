@@ -296,6 +296,7 @@
                         <li>access control</li>
                         <li>system inventory</li>
                         <li>Encryption</li>
+                        <li>Data Breach</li>
                         <li>Secure development practices</li>
                         <li>MFA – Multifactor Authentication</li>
                         <li>Disposal Procedures</li>
