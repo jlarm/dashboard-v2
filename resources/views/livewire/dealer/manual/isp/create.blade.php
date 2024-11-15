@@ -83,9 +83,10 @@
             <li>Periodic Risk Assessments of dealership</li>
             <li>Design and Implement safeguards for
                 <ul>
-                    <li>access control</li>
-                    <li>system inventory</li>
+                    <li>Access Control</li>
+                    <li>System Inventory</li>
                     <li>Encryption</li>
+                    <li>Data Breach</li>
                     <li>Secure development practices</li>
                     <li>MFA – Multifactor Authentication</li>
                     <li>Disposal Procedures</li>
@@ -911,6 +912,109 @@
             ownership, and {{ $qi }} is authorized to implement said plan, and authorized
             with
             the appropriate authority to monitor and enforce its provisions and policies.</p>
+        <h1>Records Retention List</h1>
+        <ul>
+            <li>Customer Information & Account Records
+                <ul>
+                    <li>Account Opening Forms: Retain for 5 to 7 years after account closure.</li>
+                    <li>Customer Identification Records (KYC/AML records): Retain for 5 years after the last transaction or account closure.</li>
+                    <li>Bank Statements & Transaction History: Retain for 7 years.</li>
+                    <li>Loan Documents (including approvals and rejections): Retain for 7 years after loan closure or termination.</li>
+                </ul>
+            </li>
+            <li>
+                Tax and Regulatory Records
+                <ul>
+                    <li>Tax Returns: Retain for 7 years after filing.</li>
+                    <li>Tax Filings and Supporting Documents: Retain for 7 years.</li>
+                    <li>Anti-Money Laundering (AML) and Suspicious Activity Reports (SARs): Retain for 5 years after the report was filed.</li>
+                </ul>
+            </li>
+            <li>
+                Investment & Trading Records
+                <ul>
+                    <li>Brokerage Statements & Investment Records: Retain for 7 years after account closure.</li>
+                    <li>Investment Transactions (Buy/Sell Orders, Trades): Retain for 7 years.</li>
+                    <li>Prospectuses & Offering Documents: Retain for 7 years after offering closure.</li>
+                    <li>Employee Trading Records: Retain for 5 years.</li>
+                </ul>
+            </li>
+            <li>
+                Financial Statements
+                <ul>
+                    <li>Annual Financial Statements: Retain for 7 years.</li>
+                    <li>Audit Reports: Retain for 7 years.</li>
+                    <li>General Ledger Entries & Journals: Retain for 7 years.</li>
+                    <li>Bank Reconciliations: Retain for 7 years.</li>
+                </ul>
+            </li>
+            <li>
+                Credit and Loan Documentation
+                <ul>
+                    <li>Loan Agreements & Contracts: Retain for 7 years after loan repayment.</li>
+                    <li>Mortgage Documentation: Retain for 7 years after payoff or foreclosure.</li>
+                    <li>Default or Delinquency Records: Retain for 7 years after resolution.</li>
+                    <li>Foreclosure Documentation: Retain for 7 years after resolution.</li>
+                </ul>
+            </li>
+            <li>
+                Employee and Payroll Records
+                <ul>
+                    <li>Employee Records: Retain for 5 to 7 years after termination.</li>
+                    <li>Payroll Records: Retain for 7 years.</li>
+                    <li>Tax Forms (W-2, 1099): Retain for 7 years.</li>
+                    <li>Benefits and Retirement Plan Records: Retain for 7 years after termination of plan.</li>
+                </ul>
+            </li>
+            <li>
+                Loan/Payment Systems & Electronic Records
+                <ul>
+                    <li>Electronic Transactions (e.g., wire transfers): Retain for 5 years.</li>
+                    <li>Data Retention for Digital Banking Services: Retain for 5 to 7 years, depending on the type of data.</li>
+                    <li>Digital Contracts/Signatures: Retain for 7 years.</li>
+                </ul>
+            </li>
+            <li>
+                Insurance and Risk Management
+                <ul>
+                    <li>Insurance Policies & Coverage Records: Retain for 5 years after expiration.</li>
+                    <li>Claims Records: Retain for 5 to 7 years after the settlement of claims.</li>
+                    <li>Risk Management Documents: Retain for 7 years.</li>
+                </ul>
+            </li>
+            <li>
+                Corporate & Legal Documents
+                <ul>
+                    <li>Corporate Charters, Bylaws, and Articles of Incorporation: Retain for permanent.</li>
+                    <li>Board Meeting Minutes: Retain for permanent.</li>
+                    <li>Legal Contracts and Agreements: Retain for 7 years after termination or expiration.</li>
+                    <li>Litigation Documents: Retain for 7 years after resolution.</li>
+                </ul>
+            </li>
+            <li>
+                General Business & Operational Records
+                <ul>
+                    <li>Vendor Contracts: Retain for 7 years after termination.</li>
+                    <li>General Correspondence: Retain for 3 years (or according to specific contractual or legal requirements).</li>
+                    <li>Internal Audit Reports: Retain for 7 years.</li>
+                    <li>Marketing and Promotional Materials: Retain for 3 years.</li>
+                </ul>
+            </li>
+            <li>
+                Security & Privacy Records
+                <ul>
+                    <li>Data Breach & Security Incident Reports: Retain for 5 years after resolution.</li>
+                    <li>Internal and External Security Audits: Retain for 7 years.</li>
+                </ul>
+            </li>
+            <li>
+                Miscellaneous Financial Records
+                <ul>
+                    <li>Bankruptcy & Insolvency Records: Retain for 7 years after resolution.</li>
+                    <li>Safe Deposit Box Records: Retain for 7 years after box closure.</li>
+                </ul>
+            </li>
+        </ul>
     </div>
     <form class="divide-y" wire:submit.prevent="submit">
         <div class="py-10">
