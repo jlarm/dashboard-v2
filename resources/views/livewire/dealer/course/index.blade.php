@@ -11,7 +11,7 @@
     <script>
         const div = document.getElementsByClassName('pointer-events-none');
         for (let i = 0; i < div.length; i++) {
-            div[i].parentElement.classList.add('opacity-25');
+            div[i].classList.add('opacity-25');
         }
     </script>
 </div>
