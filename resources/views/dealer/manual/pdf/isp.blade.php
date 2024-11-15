@@ -293,8 +293,8 @@
                 <li>Periodic Risk Assessments of dealership</li>
                 <li>Design and Implement safeguards for
                     <ul>
-                        <li>access control</li>
-                        <li>system inventory</li>
+                        <li>Access Control</li>
+                        <li>System Inventory</li>
                         <li>Encryption</li>
                         <li>Data Breach</li>
                         <li>Secure development practices</li>
