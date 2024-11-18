@@ -922,7 +922,7 @@
             <p>These areas will be monitored for future compliance</p>
         </div>
         <div class="h-screen">
-            <h2>Accounting Department</h2>
+            <h1>Accounting Department</h1>
             <p>Internal Security Plan</p>
             <h2>Handling and Processing Customer NPI:</h2>
             <ul>
