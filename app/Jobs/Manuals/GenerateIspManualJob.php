@@ -27,11 +27,21 @@ class GenerateIspManualJob implements ShouldQueue
             'isp' => $this->manual,
         ])->render();
 
+        $footerHtml = '
+             <div style="width: 100%; font-size: 10px; display: flex; justify-content: space-between; padding: 0 20px;">
+                 <span>Automotive Risk Management Partners</span>
+                 <span>Page <span class="pageNumber"></span></span>
+             </div>
+         ';
+
         $manual = Browsershot::html($html)
             ->showBackground()
             ->margins(10, 10, 10, 10)
             ->scale(0.75)
             ->waitUntilNetworkIdle()
+            ->showBrowserHeaderAndFooter()
+            ->hideHeader()
+            ->footerHtml($footerHtml)
             ->save($storagePath);
 
         $updatePath = $this->manual->update([

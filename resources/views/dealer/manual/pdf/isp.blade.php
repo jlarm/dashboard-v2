@@ -88,79 +88,84 @@
                 <span>6</span>
             </span>
             <span class="flex justify-between items-center">
-                <span>Data Breach Guidelines</span>
+                <span>Incident Response Plan</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
                 <span>8</span>
             </span>
             <span class="flex justify-between items-center">
-                <span>Information Storage IT Safeguards Cyber Security</span>
+                <span>Data Breach Guidelines</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
                 <span>9</span>
             </span>
             <span class="flex justify-between items-center">
+                <span>Information Storage IT Safeguards Cyber Security</span>
+                <span class="border-b border-dotted border-black flex-grow mx-2"></span>
+                <span>10</span>
+            </span>
+            <span class="flex justify-between items-center">
                 <span>Disposal of Consumer Information and Records</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>12</span>
+                <span>13</span>
             </span>
             <span class="flex justify-between items-center">
                 <span>Processing Customer NPI by Department</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>13</span>
+                <span>14</span>
             </span>
             <span class="ml-16 flex justify-between items-center">
                 <span>Sales</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>14</span>
+                <span>15</span>
             </span>
             <span class="ml-16 flex justify-between items-center">
                 <span>F&amp;I</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>16</span>
+                <span>17</span>
             </span>
             <span class="ml-16 flex justify-between items-center">
                 <span>Service</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>18</span>
+                <span>19</span>
             </span>
             <span class="ml-16 flex justify-between items-center">
                 <span>Parts</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>19</span>
+                <span>20</span>
             </span>
             <span class="ml-16 flex justify-between items-center">
                 <span>Accounting</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>20</span>
+                <span>21</span>
             </span>
             <span class="ml-16 flex justify-between items-center">
                 <span>Cashier</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>22</span>
+                <span>23</span>
             </span>
             <span class="ml-16 flex justify-between items-center">
                 <span>Body Shop</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>23</span>
+                <span>24</span>
             </span>
             <span class="flex justify-between items-center">
                 <span>Dealership Personnel</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>24</span>
+                <span>25</span>
             </span>
             <span class="flex justify-between items-center">
                 <span>Third Party Service Providers</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>25</span>
+                <span>26</span>
             </span>
             <span class="flex justify-between items-center">
                 <span>Records Retention List</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>27</span>
+                <span>28</span>
             </span>
             <span class="flex justify-between items-center">
                 <span>Signature Page</span>
                 <span class="border-b border-dotted border-black flex-grow mx-2"></span>
-                <span>29</span>
+                <span>30</span>
             </span>
         </div>
     </div>
@@ -427,7 +432,7 @@
         <div class="h-screen">
             <ul>
                 <li>All employees and third-party service providers will sign a security, confidentiality and non-
-                    discloser statement.
+                    disclosure statement.
                 </li>
                 <li>All information that is classified as customer or consumer NPI may only be accessed on a
                     need-to-know basis.
@@ -445,6 +450,8 @@
             <p>Written plan, in advance, of what actions you will take in the event of a “Security Event” i.e.,
                 unauthorized access to or disruption or misuse of an information system, information stored
                 on such system, or customer information held in physical form.</p>
+        </div>
+        <div class="h-screen">
             <h2>NPI Breach Response, Data Breach (Incident Response Plan)</h2>
             <p>&quot;Breach of security&quot; or &quot;breach&quot; means unauthorized access of personal information. Good
                 faith access of personal information by an employee or agent of the dealership does not
