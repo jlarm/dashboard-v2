@@ -178,7 +178,7 @@
                        Generate PDF
                    </button>
                @endcan
-               <x-button.secondary href="{{ route('dealer.audit.osha.index') }}">Cancel</x-button.secondary>
+               <x-button.secondary href="{{ tenant('locations') ? route('dealer.stores.audits.osha.index', $store) : route('dealer.audit.osha.index') }}">Cancel</x-button.secondary>
            </div>
         </div>
     </div>

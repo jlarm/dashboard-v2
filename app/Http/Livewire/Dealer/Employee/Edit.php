@@ -104,7 +104,6 @@ class Edit extends SlideOver
             'stores' => Store::all(),
             'departments' => Department::all(),
             'allRoles' => $this->getAvailableRoles(),
-            'qiAvailable' => $this->isQiAvailable(),
         ]);
     }
 
@@ -114,10 +113,5 @@ class Edit extends SlideOver
             ->whereNotIn('name', ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'])
             ->orderBy('name')
             ->get();
-    }
-
-    private function isQiAvailable()
-    {
-        return User::role('Qualified Individual')->count() < 3 || $this->qi;
     }
 }

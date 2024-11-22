@@ -51,6 +51,14 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('audits/finance', \App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('audits.finance.index');
             Route::get('audits/deal-jackets', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->name('audits.individual.index');
 
+            Route::get('osha/{oshaViolationAudit:uuid}/remediation', \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::class)->name('audits.osha.remediation');
+            Route::get('osha/{oshaViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\Osha\Single::class)->name('audits.osha.view');
+            Route::get('body-shop/{bodyShopViolationAudit:uuid}/remediation', \App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::class)->name('audits.body-shop.remediation');
+            Route::get('body-shop/{bodyShopViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('audits.body-shop.view');
+            Route::get('/finance/{glbaViolationAudit:uuid}/remediation', \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::class)->name('audits.finance.remediation');
+            Route::get('finance/{glbaViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\Finance\Single::class)->name('audits.finance.view');
+            Route::get('audits/deal-jackets/{individualAudit:uuid}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Show::class)->name('audits.individual.show');
+
             Route::get('vendors', \App\Http\Livewire\Dealer\Vendor\Index::class)->name('vendor.index');
 
             Route::get('documents', \App\Http\Livewire\Dealer\Store\SingleStore\Docs\Index::class)->name('doc.index');
@@ -72,11 +80,6 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('manuals/red-flag/create', \App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->name('manuals.red-flag.create');
             Route::get('manuals/cms', \App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('manuals.cms.index');
             Route::get('manuals/cms/create', \App\Http\Livewire\Dealer\Manual\Cms\Create::class)->name('manuals.cms.create');
-
-            Route::get('osha/{oshaViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\Osha\Single::class)->name('audits.osha.view');
-            Route::get('body-shop/{bodyShopViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('audits.body-shop.view');
-            Route::get('finance/{glbaViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\Finance\Single::class)->name('audits.finance.view');
-            Route::get('audits/deal-jackets/{individualAudit:uuid}', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Show::class)->name('audits.individual.show');
 
             Route::get('settings', \App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->name('settings');
 

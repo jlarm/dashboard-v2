@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Http\Livewire\Dealer\Audit\Traits\UpdateRemediations;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
+use App\Models\Dealer\Store;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
@@ -13,6 +14,7 @@ class RemediationForm extends Component
 {
     use WithFileUploads, WithMedia, InteractsWithConfirmationModal, UpdateRemediations;
 
+    public ?Store $store = null;
     public GlbaViolationAudit $glbaViolationAudit;
     public array $violationRemediations = [];
 

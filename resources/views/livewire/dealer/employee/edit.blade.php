@@ -72,16 +72,12 @@
 
     @can('create-stores')
     <div class="relative flex items-start border-y py-5 mt-5">
-        @if($qiAvailable)
-            <div class="flex h-6 items-center">
-                <input wire:model.defer="qi" id="qi" name="qi" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
-            </div>
-            <div class="ml-3 text-sm leading-6">
-                <label for="qi" class="font-medium text-gray-900">This employee will be a Qualified Individual</label>
-            </div>
-        @else
-            <p>There are currently two Qualified Individuals set</p>
-        @endif
+        <div class="flex h-6 items-center">
+            <input wire:model.defer="qi" id="qi" name="qi" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
+        </div>
+        <div class="ml-3 text-sm leading-6">
+            <label for="qi" class="font-medium text-gray-900">This employee will be a Qualified Individual</label>
+        </div>
     </div>
     @endcan
 
