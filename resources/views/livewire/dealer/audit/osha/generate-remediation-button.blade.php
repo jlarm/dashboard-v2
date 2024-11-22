@@ -1,6 +1,6 @@
 <button
     type="button"
-    wire:click="generatePdf('{{ $oshaViolationAudit->id }}')"
+    wire:click="downloadPdf"
     class="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
 >
     <svg wire: xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#4a4a4a" fill="none">
@@ -9,14 +9,15 @@
         <path d="M20.5011 12.9921V2.08333C20.5011 2.02814 20.4564 1.9834 20.4013 1.9834H10.5241L3.54102 8.98327V12.9726M10.5241 2.55662V8.97156L4.14241 8.98226" stroke="currentColor" stroke-width="1.5" />
         <path d="M3.54008 18.4807L3.5206 15.4766H5.36599C5.93851 15.4766 6.5158 15.7032 6.80935 16.1956C7.1749 16.8088 7.15154 17.2865 6.77731 17.8353C6.48024 18.271 5.94756 18.4629 5.42091 18.4668L3.54008 18.4807ZM3.54008 18.4807L3.52051 21.969M20.5208 15.5H17.1022C17.0467 15.5 17.002 15.5452 17.0024 15.6007L17.0267 18.4905M17.0016 21.9804L17.0267 18.4905M17.0267 18.4905H19.5121M10.028 15.4961L10.0281 21.479H11.0364C12.5701 21.479 13.8555 20.3174 14.013 18.789L14.0242 18.6808C14.055 18.3816 14.0181 18.0794 13.9161 17.7965L13.7725 17.3983C13.5195 16.6965 13.0238 16.0921 12.3363 15.805C11.2989 15.3717 10.8731 15.4628 10.028 15.4961Z" stroke="currentColor" stroke-width="1.5" />
     </svg>
-    {{ $oshaViolationAudit->grade != null ? 'Recreate PDF' : 'Create PDF' }}
+    Download PDF
     <svg
         wire:loading
+        wire:target="downloadPdf"
         class="animate-spin -ml-1 mr-1 h-3 w-3 text-gray-700"
         xmlns="http://www.w3.org/2000/svg"
         fill="none" viewBox="0 0 24 24"
     >
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0{{----}}18-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
     </svg>
 </button>

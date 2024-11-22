@@ -19,6 +19,7 @@ class BodyShopViolationAudit extends Model
         'user_id',
         'store_id',
         'pdf_path',
+        'remediation_pdf_path',
         'date',
         'grade',
     ];
@@ -42,5 +43,21 @@ class BodyShopViolationAudit extends Model
     public function violations(): MorphMany
     {
         return $this->morphMany(Violation::class, 'violationable');
+    }
+
+    public function getViolationCountAttribute(): int
+    {
+        return $this->violations()->count();
+    }
+
+    public function getRemediationCountAttribute(): int
+    {
+        $count = 0;
+        $this->violations()->each(function (Violation $violation) use (&$count) {
+            if ($violation->remediation) {
+                $count++;
+            }
+        });
+        return $count;
     }
 }

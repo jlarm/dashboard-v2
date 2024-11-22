@@ -2,7 +2,9 @@
 
 namespace App\Models\Dealer;
 
+use App\Models\Remediation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -44,5 +46,10 @@ class Violation extends Model implements HasMedia
     public function auditable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function remediation(): HasOne
+    {
+        return $this->hasOne(Remediation::class);
     }
 }

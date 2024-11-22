@@ -18,8 +18,8 @@
     <div class="p-6">
         <div class="w-full bg-white">
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
-                @foreach($audits as $glbaAudit)
-                    <livewire:dealer.audit.finance.index-item :store="$store" :glbaAudit="$glbaAudit" :key="$glbaAudit->id"/>
+                @foreach($audits as $glbaViolationAudit)
+                    <livewire:dealer.audit.finance.index-item :store="$store" :glbaViolationAudit="$glbaViolationAudit" :key="$glbaViolationAudit->id"/>
                 @endforeach
                 @foreach($financeAudits as $audit)
                     <livewire:dealer.audit.finance.old-audit-index :financeAudit="$audit" :key="$audit->id"/>

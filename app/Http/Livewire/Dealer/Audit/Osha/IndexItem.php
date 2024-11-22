@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class IndexItem extends Component
@@ -22,7 +23,7 @@ class IndexItem extends Component
 
     public function download()
     {
-        return \Storage::disk('armpaudits')->download($this->oshaAudit->pdf_path);
+        return Storage::disk('armpaudits')->download($this->oshaAudit->pdf_path);
     }
 
     public function render()

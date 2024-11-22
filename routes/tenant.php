@@ -174,10 +174,13 @@ Route::name('dealer.')->middleware([
 
         Route::prefix('audits/')->name('audit.')->middleware(['auth'])->group(function () {
             Route::get('osha', \App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('osha.index');
+            Route::get('osha/{oshaViolationAudit:uuid}/remediation', \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::class)->name('osha.remediation');
             Route::get('osha/{oshaViolationAudit:uuid}', Single::class)->name('osha.show');
             Route::get('body-shop', \App\Http\Livewire\Dealer\Audit\BodyShop\Index::class)->name('body-shop.index');
+            Route::get('body-shop/{bodyShopViolationAudit:uuid}/remediation', \App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::class)->name('body-shop.remediation');
             Route::get('body-shop/{bodyShopViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('body-shop.show');
             Route::get('finance', \App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('finance.index');
+            Route::get('/finance/{glbaViolationAudit:uuid}/remediation', \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::class)->name('finance.remediation');
             Route::get('/finance/{glbaViolationAudit:uuid}', \App\Http\Livewire\Dealer\Audit\Finance\Single::class)->name('finance.show');
             Route::get('deal-jackets', IndividualIndexController::class)->name('individual.index');
         });

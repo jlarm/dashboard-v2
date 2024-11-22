@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -26,8 +27,10 @@
     <div class="col-span-5 row-span-4 col-start-1 row-start-2 bg-arm-blue-500 z-10 py-10 pr-10">
         <div class="w-full h-full flex flex-row items-center border-t border-r border-b border-white ">
             <div class="flex flex-col ml-10">
-                <h1 class="text-7xl text-white">Body Shop Report<span
-                        class="block font-bold">{{ $audit->store->name }}</span></h1>
+                <h1 class="text-7xl text-white">Body Shop Report <span class="block font-bold">{{ $audit->store->name }}</span></h1>
+                @if(isset($remediation))
+                    <h1 class="text-7xl text-white">Remediation</h1>
+                @endif
                 <p class="text-white text-2xl my-10">Complete On: {{ $audit->date->format('n/d/Y') }}</p>
                 <p class="text-white text-2xl">Report Created By:</p>
                 <p class="text-white text-xl">
@@ -77,7 +80,20 @@
                         </div>
                     @endif
                 </div>
-                <p></p>
+                @if(isset($remediation))
+                    @if($violation->remediation)
+                        <div class="mb-10 bg-gray-100 p-5">
+                            <p class="font-bold">Remediation:</p>
+                            <p>{{ $violation->remediation?->comment }}</p>
+                            @if($violation->remediation->getFirstMedia('remediations'))
+                                <div class="size-64 overflow-hidden">
+                                    <img class="h-full w-full object-cover" src="{{ $violation->remediation->getFirstMedia('remediations')->getTemporaryUrl(Carbon::now()->addMinutes(5), 'thumb') }}" alt="">
+                                </div>
+                            @endif
+                            <p class="text-sm">{{ $violation->remediation->updated_at?->format('m-d-Y') }} by {{ $violation->remediation->user->name }}</p>
+                        </div>
+                    @endif
+                @endif
             </div>
         @endforeach
     </div>

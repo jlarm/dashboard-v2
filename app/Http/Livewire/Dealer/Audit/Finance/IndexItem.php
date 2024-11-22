@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class IndexItem extends Component
 {
-    public GlbaViolationAudit $glbaAudit;
+    public GlbaViolationAudit $glbaViolationAudit;
 
     public $store;
 
@@ -17,12 +17,12 @@ class IndexItem extends Component
 
     public function quarter(): string
     {
-        return $this->glbaAudit->date->format('Y').' Q'.ceil($this->glbaAudit->date->format('n') / 3);
+        return $this->glbaViolationAudit->date->format('Y').' Q'.ceil($this->glbaViolationAudit->date->format('n') / 3);
     }
 
     public function download()
     {
-        return \Storage::disk('armpaudits')->download($this->glbaAudit->pdf_path);
+        return \Storage::disk('armpaudits')->download($this->glbaViolationAudit->pdf_path);
     }
 
     public function render()
