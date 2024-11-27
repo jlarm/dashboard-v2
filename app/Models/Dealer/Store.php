@@ -253,6 +253,11 @@ class Store extends Model implements HasMedia
         return $this->hasMany(PhishingCampaign::class);
     }
 
+    public function ridgeback(): HasOne
+    {
+        return $this->hasOne(Ridgeback::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();

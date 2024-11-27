@@ -82,6 +82,22 @@
                     role="tab"
                 >Compliance Information</button>
             </li>
+            @can('create-dealerships')
+            <li>
+                <button
+                    :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+                    @click="select($el.id)"
+                    @mousedown.prevent
+                    @focus="select($el.id)"
+                    type="button"
+                    :tabindex="isSelected($el.id) ? 0 : -1"
+                    :aria-selected="isSelected($el.id)"
+                    :class="isSelected($el.id) ? 'border-b border-arm-blue-500 text-arm-blue-500' : 'border-transparent'"
+                    class="inline-flex px-5 py-2.5"
+                    role="tab"
+                >Ridgeback</button>
+            </li>
+            @endcan
         </ul>
 
         <!-- Panels -->
@@ -113,6 +129,16 @@
             >
                 <livewire:dealer.store.single-onboarding-details :store="$store"/>
             </section>
+            @can('create-dealerships')
+            <section
+                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                role="tabpanel"
+                class="p-8"
+            >
+                <livewire:dealer.settings.ridgeback-settings-form :store="$store"/>
+            </section>
+            @endcan
         </div>
     </div>
 </div>

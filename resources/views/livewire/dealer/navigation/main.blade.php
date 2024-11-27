@@ -153,6 +153,23 @@
             </a>
         </div>
     @endcan
+    <!-- RIDGEBACK -->
+    @can('create-dealerships')
+        @if (request()->segment(1) === 'stores' || !tenant('locations'))
+        <div class="px-3 mb-1.5">
+            <a
+                href="{{ $currentStore ? route('dealer.stores.ridgeback.index', $currentStore) : route('dealer.ridgeback.index') }}"
+                class="{{ (request()->segment(1) === 'ridgeback' || request()->segment(3) === 'ridgeback') ? 'bg-gray-100 text-gray-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }} border-transparent group py-2 px-3 rounded-lg flex items-center text-sm"
+            >
+                <svg class="mr-3 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                    <path class="{{ (request()->segment(1) === 'ridgeback' || request()->segment(3) === 'ridgeback') ? 'stroke-gray-600' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" d="M14 10.5V9C14 7.89543 13.1046 7 12 7C10.8954 7 10 7.89543 10 9V10.5M8.5 10.5H15.5V16H8.5V10.5Z" stroke="currentColor" stroke-width="1.5" />
+                    <path class="{{ (request()->segment(1) === 'ridgeback' || request()->segment(3) === 'ridgeback') ? 'stroke-gray-600' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" d="M21 11V5C16 4.5 12 2 12 2C12 2 8 4.5 3 5V11C3 18.5 12 22 12 22C12 22 21 18.5 21 11Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                Ridgeback
+            </a>
+        </div>
+        @endif
+    @endcan
     <!-- Qualified Individual and up can see phishing results -->
     @can('create-manuals')
         @if($phishingIsEnabled)

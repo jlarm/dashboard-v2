@@ -151,6 +151,8 @@ Route::name('dealer.')->middleware([
         Route::get('logs', \App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
         Route::get('logs/{activity:id}', \App\Http\Livewire\Dealer\Log\Show::class)->name('logs.show');
 
+        Route::get('ridgeback', \App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
+
     });
 
     // **************************************************

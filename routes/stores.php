@@ -31,6 +31,8 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
 
             Route::get('edit', [StoreController::class, 'edit'])->name('edit');
 
+            Route::get('ridgeback', \App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
+
         });
 
         // **************************************************
