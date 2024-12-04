@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Central\Docs;
 
 use App\Models\Document;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,12 +15,12 @@ class Index extends Component
 
     public $search = '';
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.central.docs.index', [
             'docs' => Document::query()

@@ -71,6 +71,11 @@ class Create extends Component
             // Rollback the transaction in case of any failure
             DB::rollBack();
 
+            Notification::make()
+                ->title('There was an error adding the file. Please try again.')
+                ->danger()
+                ->send();
+
             // Log the error for debugging
             Log::error($e);
             \Sentry\captureException($e);
