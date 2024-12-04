@@ -32,9 +32,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('create', CreateController::class)->name('store');
     });
 
-    Route::get('contracts', \App\Http\Livewire\Central\Contracts\Index::class)->name('contracts.index');
-    Route::get('contracts/create', \App\Http\Livewire\Central\Contracts\Create::class)->name('contracts.create');
-    Route::get('contracts/{contract:uuid}', \App\Http\Livewire\Central\Contracts\Edit::class)->name('contracts.edit');
+    Route::prefix('contracts/')->name('contracts.')->group(function () {
+        Route::get('/', \App\Http\Livewire\Central\Contracts\Index::class)->name('index');
+        Route::get('create', \App\Http\Livewire\Central\Contracts\Create::class)->name('create');
+        Route::get('{contract:uuid}', \App\Http\Livewire\Central\Contracts\Edit::class)->name('edit');
+    });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

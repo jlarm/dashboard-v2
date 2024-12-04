@@ -3,9 +3,12 @@
 namespace App\Http\Livewire\Central\Docs;
 
 use App\Models\Document;
+use DB;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Log;
+use Storage;
 
 class Create extends Component
 {
@@ -24,38 +27,59 @@ class Create extends Component
         'file' => 'required|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar|max:1024',
     ];
 
-    public function save()
+    public function save(): void
     {
-        try {
+        // Validate the input data
+        $this->validate();
 
+        // Begin a database transaction
+        DB::beginTransaction();
+
+        try {
             $fileName = $this->file->getClientOriginalName();
 
-            \Storage::disk('central-docs')->putFileAs('/', $this->file, $fileName);
+            // Attempt to upload the file
+            $filePath = Storage::disk('central-docs')->putFileAs('/', $this->file, $fileName);
 
+            // Check if the file was successfully uploaded
+            if (!$filePath) {
+                throw new \Exception('File upload failed. Please try again.');
+            }
+
+            // Create the Document record in the database
             Document::create([
                 'title' => $this->title,
                 'file_name' => $fileName,
             ]);
 
-            $this->reset();
+            // Commit the transaction since both operations succeeded
+            DB::commit();
 
-            $this->file = null;
+            // Reset the form fields
+            $this->reset(['title', 'file']);
 
+            // Emit the 'saved' event
             $this->emit('saved');
 
+            // Send a success notification
             Notification::make()
                 ->title('Document Added Successfully!')
                 ->success()
                 ->send();
 
         } catch (\Exception $e) {
+            // Rollback the transaction in case of any failure
+            DB::rollBack();
 
-            \Log::error($e);
+            // Log the error for debugging
+            Log::error($e);
             \Sentry\captureException($e);
+
+            // Handle specific error messages
             if (str_contains($e->getMessage(), 'max.')) {
                 $this->addError('file', $this->messages['file.max']);
             } else {
-                $this->addError('file', 'An error occurred while uploading the file.');
+                $this->addError('file', $e->getMessage());
             }
         }
     }
