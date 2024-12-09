@@ -34,13 +34,14 @@ class Index extends Component
     public function getUsersQueryProperty()
     {
         return User::query()
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'super-admin')
+                    ->orWhere('name', 'Consultant');
+            })
             ->orderBy('name')
             ->userStore($this->store ?? null)
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')
-            ->whereDoesntHave('roles', function ($query) {
-                $query->where('name', ['super-admin','Consultant']);
-            })
             ->when($this->selectedDepartment, function ($query) {
                 $query->where('department_id', $this->selectedDepartment);
             })

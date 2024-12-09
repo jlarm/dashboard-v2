@@ -35,11 +35,11 @@ class Index extends Component
     {
         return $this->store->users()
             ->orderBy('name')
-            ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses')
             ->whereDoesntHave('roles', function ($query) {
-                $query->where('name', 'Consultant');
+                $query->where('name', 'super-admin')
+                    ->orWhere('name', 'Consultant');
             })
             ->when($this->selectedDepartment, function ($query) {
                 $query->where('department_id', $this->selectedDepartment);

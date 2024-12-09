@@ -30,9 +30,10 @@ class ManagerIndex extends Component
     {
         return User::query()
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
-            ->with('roles', 'department', 'stores', 'courses')
+            ->with(['roles', 'department', 'stores', 'courses'])
             ->whereDoesntHave('roles', function ($query) {
-                $query->where('name', ['super-admin', 'Consultant']);
+                $query->where('name', 'super-admin')
+                    ->orWhere('name', 'Consultant');
             })
             ->whereHas('stores', function ($query) {
                 $query->whereIn('id', auth()->user()->stores->pluck('id'));
