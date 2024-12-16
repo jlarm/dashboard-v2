@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class CompletedCoursesStat extends Component
@@ -72,7 +73,7 @@ class CompletedCoursesStat extends Component
 
     public function render()
     {
-        $percentage = \Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
+        $percentage = Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
             return $this->readyToLoad ? $this->percentage() : '';
         });
 

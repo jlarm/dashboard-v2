@@ -25,6 +25,7 @@ class AssignCustomCoursesForm extends Component
                 $query->where('department_id', $this->user->department_id);
             })
             ->whereNotIn('name', $userRoleIds)
+            ->orWhere('optional', true)
             ->select(['id', 'name'])
             ->get();
 

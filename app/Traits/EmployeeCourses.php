@@ -3,8 +3,8 @@
 namespace App\Traits;
 
 use App\Models\Dealer\Course;
-use DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 trait EmployeeCourses
 {
@@ -63,6 +63,6 @@ trait EmployeeCourses
         $departmentCourses = $this->getDepartmentCourses($courseWithRole);
         $userCourses = $this->getUserCourses();
 
-        $this->courses = $departmentCourses->merge($userCourses)->unique('id')->sortBy('name');
+        $this->courses = $departmentCourses->merge($userCourses)->unique('id')->where('optional', false)->sortBy('name');
     }
 }

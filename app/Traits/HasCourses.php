@@ -28,7 +28,9 @@ trait HasCourses
                 ->pluck('course_id')
                 ->toArray();
 
-            $this->userCoursesCache = Course::with('departments')
+            $this->userCoursesCache = Course::query()
+                ->where('optional', false)
+                ->with('departments')
                 ->where(function ($query) use ($courseWithRole) {
                     $query->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
                         ->whereIn('id', $courseWithRole);

@@ -4,6 +4,7 @@
         "uuid": "2c66b58f-7178-46a9-b4a6-4ed476c2f19c",
         "name": "Powered Industrial Trucks",
         "slug": "powered-industrial-trucks",
+        "optional": true,
         "department": [
             3,
             4,

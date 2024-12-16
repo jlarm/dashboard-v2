@@ -4,6 +4,7 @@
         "uuid": "f24fc268-d3b0-42cf-a790-a10c0498ec13",
         "name": "DOT Module 4 Hazardous Materials Transportation, Shipping Papers, Emergency Response & Placarding ",
         "slug": "dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding",
+        "optional": true,
         "department": [
             4
         ],
