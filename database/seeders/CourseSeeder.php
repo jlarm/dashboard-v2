@@ -23,6 +23,7 @@ class CourseSeeder extends Seeder
                     'name' => $value->name,
                     'slides' => $value->slides,
                     'questions' => $value->questions,
+                    'optional' => $value->optional ?? false,
                 ]);
                 if ($value->department != null) {
                     $course->departments()->attach($value->department);
