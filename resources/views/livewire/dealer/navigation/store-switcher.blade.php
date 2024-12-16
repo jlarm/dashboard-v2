@@ -44,7 +44,7 @@
                 <li class="relative cursor-default select-none p-2 text-gray-900 hover:bg-gray-50" id="option-0" role="option" tabindex="-1">
                     <a href="{{ route('dealer.stores.home', $store) }}">
                         <div class="flex items-center">
-                            <span>{{ Str::limit($store->name, 25) }}</span>
+                            <span>{{ Str::limit($store->name, 23) }}</span>
                         </div>
                         @if($currentStore === $store->name)
                             <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-arm-blue-600">
