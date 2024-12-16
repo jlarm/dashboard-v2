@@ -143,6 +143,8 @@ class Store extends Model implements HasMedia
 
     public function getOverallGradeAttribute(): ?string
     {
+        $this->load(['individualAudits','financeAudits','oshaAudits','bodyShopAudits']);
+
         $grades = array_merge(
             $this->individualAudits->where('rating', '!=', null)->pluck('rating')->toArray(),
             $this->financeAudits->where('rating', '!=', null)->pluck('rating')->toArray(),
