@@ -31,7 +31,7 @@ class Edit extends Component
     ];
 
     protected $rules = [
-        'violations.*.comment' => 'required',
+        'violations.*.comment' => 'required', 'violations.*.comment',
         'violations.*.violation_date' => 'nullable|date',
         'violations.*.risk' => 'nullable|boolean',
     ];
@@ -45,7 +45,8 @@ class Edit extends Component
 
     public function edit(): void
     {
-        $this->validate();
+        try {
+            $this->validate();
 
         $this->oshaViolationAudit->update([
             'date' => $this->date,
@@ -75,9 +76,16 @@ class Edit extends Component
         $this->violations = $this->oshaViolationAudit->violations()->get();
 
         Notification::make()
-            ->title('Audit Updated!')
-            ->success()
-            ->send();
+                ->title('Audit Updated!')
+                ->success()
+                ->send();
+        } catch (\Exception $e) {
+            Notification::make()
+                ->title('Error updating audit')
+                ->body('All violations must have a comment')
+                ->danger()
+                ->send();
+        }
     }
 
     public function render()
