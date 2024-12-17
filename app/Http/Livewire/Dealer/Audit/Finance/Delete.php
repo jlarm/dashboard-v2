@@ -10,9 +10,9 @@ class Delete extends Modal
 {
     public $glbaAudit;
 
-    public function mount(GlbaViolationAudit $glbaAudit)
+    public function mount(GlbaViolationAudit $glbaViolationAudit)
     {
-        $this->glbaAudit = $glbaAudit;
+        $this->glbaAudit = $glbaViolationAudit;
     }
 
     protected function deleteViolationPhotos(): void
@@ -26,6 +26,8 @@ class Delete extends Modal
 
     public function delete()
     {
+        $this->deleteViolationPhotos();
+
         $this->glbaAudit->delete();
 
         $this->emitTo('dealer.audit.finance.index', 'refreshAudits');
@@ -33,7 +35,7 @@ class Delete extends Modal
         $this->close();
 
         Notification::make()
-            ->title('Finance Audit Deleted Successfully!')
+            ->title('GLBA Audit Deleted Successfully!')
             ->success()
             ->send();
     }
