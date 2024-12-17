@@ -7,10 +7,10 @@ use Str;
 
 trait HasBodyShopViolationStatements
 {
-    // public function updated($propertyName): void
-    // {
-    //     $this->validateOnly($propertyName);
-    // }
+    public function updated($propertyName): void
+    {
+        $this->validateOnly($propertyName);
+    }
 
     public function violationSelected($violation): void
     {

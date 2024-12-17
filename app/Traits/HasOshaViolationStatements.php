@@ -7,10 +7,12 @@ use Str;
 
 trait HasOshaViolationStatements
 {
-    // public function updated($propertyName): void
-    // {
-    //     $this->validateOnly($propertyName);
-    // }
+    public function updated($propertyName): void
+    {
+        if ($propertyName) {
+            $this->validateOnly($propertyName);
+        }
+    }
 
     public function violationSelected($violation): void
     {

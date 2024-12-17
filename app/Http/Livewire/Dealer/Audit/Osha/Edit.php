@@ -31,7 +31,7 @@ class Edit extends Component
     ];
 
     protected $rules = [
-        'violations.*.comment' => 'required', 'violations.*.comment',
+        'violations.*.comment' => 'required',
         'violations.*.violation_date' => 'nullable|date',
         'violations.*.risk' => 'nullable|boolean',
     ];

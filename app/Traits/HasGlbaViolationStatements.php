@@ -7,10 +7,10 @@ use Str;
 
 trait HasGlbaViolationStatements
 {
-    // public function updated($propertyName): void
-    // {
-    //     $this->validateOnly($propertyName);
-    // }
+    public function updated($propertyName): void
+    {
+        $this->validateOnly($propertyName);
+    }
 
     public function violationSelected($violation): void
     {
