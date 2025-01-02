@@ -1,10 +1,10 @@
 <div>
-    <h2 class="inline-block font-semibold text-gray-800 dark:text-neutral-200 mb-5">
+    <h2 class="inline-block font-semibold text-gray-800 mb-5">
         Manuals
     </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <!-- Card -->
-        <div class="p-4 group relative flex flex-col border border-gray-200 bg-white hover:border-gray-300 dark:bg-neutral-800 dark:border-neutral-700/50 dark:hover:border-neutral-700 rounded-lg">
+        <div class="p-4 group relative flex flex-col border border-gray-200 bg-white hover:border-gray-300 rounded-lg">
             <div class="h-full flex gap-x-5">
                 <div class="flex-shrink-0 size-8">
                     <svg class="flex-shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#4a90e2" fill="none">
@@ -17,7 +17,7 @@
                 <div class="grow">
                     <div class="h-full flex flex-col">
                         <div>
-                            <h3 class="inline-flex items-center gap-x-1 font-medium text-gray-800 dark:text-neutral-200">
+                            <h3 class="inline-flex items-center gap-x-1 font-medium text-gray-800">
                                 ISP
                                 @if(!$isp)
                                 <span class="relative ml-2 flex h-3 w-3">
@@ -30,11 +30,11 @@
 
                         <div class="pt-1 mt-auto">
                             @if(!$isp)
-                                <span class="inline-flex items-center gap-x-2 text-sm font-medium group-disabled:opacity-50 group-disabled:pointer-events-none text-red-600 group-hover:text-red-700 group-hover:underline group-hover:decoration-2 dark:text-blue-500 dark:group-hover:text-blue-400">
+                                <span class="inline-flex items-center gap-x-2 text-sm font-medium group-disabled:opacity-50 group-disabled:pointer-events-none text-red-600 group-hover:text-red-700 group-hover:underline group-hover:decoration-2">
                                   Needs to be Signed
                                 </span>
                             @else
-                                <span class="inline-flex items-center gap-x-2 text-sm font-medium text-green-600 dark:text-green-500">
+                                <span class="inline-flex items-center gap-x-2 text-sm font-medium text-green-600">
                               Signed
                             </span>
                             @endif
@@ -48,7 +48,7 @@
         <!-- End Card -->
 
         <!-- Card -->
-        <div class="p-4 group relative flex flex-col border border-gray-200 bg-white hover:border-gray-300 dark:bg-neutral-800 dark:border-neutral-700/50 dark:hover:border-neutral-700 rounded-lg">
+        <div class="p-4 group relative flex flex-col border border-gray-200 bg-white hover:border-gray-300">
             <div class="h-full flex gap-x-5">
                 <div class="flex-shrink-0 size-8">
                     <svg class="flex-shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#417505" fill="none">
@@ -63,7 +63,7 @@
                 <div class="grow">
                     <div class="h-full flex flex-col">
                         <div>
-                            <h3 class="inline-flex items-center gap-x-1 font-medium text-gray-800 dark:text-neutral-200">
+                            <h3 class="inline-flex items-center gap-x-1 font-medium text-gray-800">
                                 OSHA
                                 @if(!$osha)
                                     <span class="relative ml-2 flex h-3 w-3">
@@ -76,11 +76,11 @@
 
                         <div class="pt-1 mt-auto">
                             @if(!$osha)
-                                <span class="inline-flex items-center gap-x-2 text-sm font-medium group-disabled:opacity-50 group-disabled:pointer-events-none text-red-600 group-hover:text-red-700 group-hover:underline group-hover:decoration-2 dark:text-blue-500 dark:group-hover:text-blue-400">
+                                <span class="inline-flex items-center gap-x-2 text-sm font-medium group-disabled:opacity-50 group-disabled:pointer-events-none text-red-600 group-hover:text-red-700 group-hover:underline group-hover:decoration-2">
                               Needs to be Signed
                             </span>
                             @else
-                                <span class="inline-flex items-center gap-x-2 text-sm font-medium text-green-600 dark:text-green-500">
+                                <span class="inline-flex items-center gap-x-2 text-sm font-medium text-green-600">
                               Signed
                             </span>
                             @endif
@@ -93,7 +93,7 @@
         <!-- End Card -->
 
         <!-- Card -->
-        <div class="p-4 group relative flex flex-col border border-gray-200 bg-white hover:border-gray-300 dark:bg-neutral-800 dark:border-neutral-700/50 dark:hover:border-neutral-700 rounded-lg">
+        <div class="p-4 group relative flex flex-col border border-gray-200 bg-white hover:border-gray-300 rounded-lg">
             <div class="h-full flex gap-x-5">
                 <div class="flex-shrink-0 size-8">
                     <svg class="flex-shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#d0021b" fill="none">
@@ -104,7 +104,7 @@
                 <div class="grow">
                     <div class="h-full flex flex-col">
                         <div>
-                            <h3 class="inline-flex items-center gap-x-1 font-medium text-gray-800 dark:text-neutral-200">
+                            <h3 class="inline-flex items-center gap-x-1 font-medium text-gray-800">
                                 Red Flag
                                 @if(!$redflag)
                                     <span class="relative ml-2 flex h-3 w-3">
@@ -117,11 +117,11 @@
 
                         <div class="pt-1 mt-auto">
                             @if(!$redflag)
-                            <span class="inline-flex items-center gap-x-2 text-sm font-medium group-disabled:opacity-50 group-disabled:pointer-events-none text-red-600 group-hover:text-red-700 group-hover:underline group-hover:decoration-2 dark:text-blue-500 dark:group-hover:text-blue-400">
+                            <span class="inline-flex items-center gap-x-2 text-sm font-medium group-disabled:opacity-50 group-disabled:pointer-events-none text-red-600 group-hover:text-red-700 group-hover:underline group-hover:decoration-2">
                               Needs to be Signed
                             </span>
                             @else
-                            <span class="inline-flex items-center gap-x-2 text-sm font-medium text-green-600 dark:text-green-500">
+                            <span class="inline-flex items-center gap-x-2 text-sm font-medium text-green-600">
                               Signed
                             </span>
                             @endif
@@ -135,7 +135,7 @@
         <!-- End Card -->
 
         <!-- Card -->
-        <div class="p-4 group relative flex flex-col border border-gray-200 bg-white hover:border-gray-300 dark:bg-neutral-800 dark:border-neutral-700/50 dark:hover:border-neutral-700 rounded-lg">
+        <div class="p-4 group relative flex flex-col border border-gray-200 bg-white hover:border-gray-300">
             <div class="h-full flex gap-x-5">
                 <div class="flex-shrink-0 size-8">
                     <svg class="flex-shrink-0 size-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#f5a623" fill="none">
@@ -148,7 +148,7 @@
                 <div class="grow">
                     <div class="h-full flex flex-col">
                         <div>
-                            <h3 class="inline-flex items-center gap-x-1 font-medium text-gray-800 dark:text-neutral-200">
+                            <h3 class="inline-flex items-center gap-x-1 font-medium text-gray-800">
                                 CMS
                                 @if(!$cms)
                                     <span class="relative ml-2 flex h-3 w-3">
@@ -161,11 +161,11 @@
 
                         <div class="pt-1 mt-auto">
                             @if(!$cms)
-                                <span class="inline-flex items-center gap-x-2 text-sm font-medium group-disabled:opacity-50 group-disabled:pointer-events-none text-red-600 group-hover:text-red-700 group-hover:underline group-hover:decoration-2 dark:text-blue-500 dark:group-hover:text-blue-400">
+                                <span class="inline-flex items-center gap-x-2 text-sm font-medium group-disabled:opacity-50 group-disabled:pointer-events-none text-red-600 group-hover:text-red-700 group-hover:underline group-hover:decoration-2">
                               Needs to be Signed
                             </span>
                             @else
-                                <span class="inline-flex items-center gap-x-2 text-sm font-medium text-green-600 dark:text-green-500">
+                                <span class="inline-flex items-center gap-x-2 text-sm font-medium text-green-600">
                               Signed
                             </span>
                             @endif

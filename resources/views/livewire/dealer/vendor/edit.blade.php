@@ -19,7 +19,7 @@
                         <input wire:model.defer="email" type="text" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm placeholder:text-gray-400 focus:border-arm-blue-500 focus:ring-arm-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Email Address">
                         @error('email')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                     </div>
-                    <button type="submit" class="self-start py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-arm-blue-600 border border-arm-blue-600 text-white text-xs font-medium rounded-lg shadow-sm align-middle hover:bg-arm-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-arm-blue-300 dark:focus:ring-arm-blue-500">
+                    <button type="submit" class="self-start py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-arm-blue-600 border border-arm-blue-600 text-white text-xs font-medium rounded-lg shadow-sm align-middle hover:bg-arm-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-arm-blue-300">
                         Send
                     </button>
                 </div>
@@ -30,14 +30,14 @@
             <!-- Header Grid -->
             <div class="hidden md:grid md:grid-cols-12 md:gap-6 py-2">
                 <div class="col-span-5">
-                    <h5 class="text-sm text-gray-500 dark:text-neutral-500">
+                    <h5 class="text-sm text-gray-500">
                         Sent To
                     </h5>
                 </div>
                 <!-- End Col -->
 
                 <div class="col-span-3">
-                    <h5 class="text-sm text-gray-500 dark:text-neutral-500">
+                    <h5 class="text-sm text-gray-500">
                         Date
                     </h5>
                 </div>
@@ -55,14 +55,14 @@
 
             @foreach($forms as $form)
                 <!-- List -->
-                <ul class="grid md:grid-cols-12 md:items-center gap-2 md:gap-6 py-3 border-t border-gray-200 dark:border-neutral-700">
+                <ul class="grid md:grid-cols-12 md:items-center gap-2 md:gap-6 py-3 border-t border-gray-200">
                     <!-- Item -->
                     <li class="md:col-span-5">
                         <div class="flex md:block gap-x-2">
-                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600">
                               Type:
                             </span>
-                            <p class="text-xs font-medium text-gray-800 dark:text-neutral-200">
+                            <p class="text-xs font-medium text-gray-800">
                                 {{ $form->name }}
                                 <span class="block text-gray-400">{{ $form->email }}</span>
                             </p>
@@ -73,10 +73,10 @@
                     <!-- Item -->
                     <li class="col-span-3">
                         <div class="flex md:block gap-x-2">
-                        <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                        <span class="md:hidden min-w-[100px] text-sm text-gray-600">
                           Date:
                         </span>
-                            <p class="text-xs text-gray-500 dark:text-neutral-500">
+                            <p class="text-xs text-gray-500">
                                 @if(!$form->signature)
                                 {{ $form->created_at->format('M d, Y') }}
                                 @else
@@ -90,10 +90,10 @@
                     <!-- Item -->
                     <li class="col-span-2">
                         <div class="flex md:block gap-x-2">
-                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600">
                               Status:
                             </span>
-                            <p class="text-sm text-arm-blue-600 dark:text-arm-blue-500">
+                            <p class="text-sm text-arm-blue-600">
                                 @if(!$form->signature)
                                 <span class="py-1.5 px-2 inline-flex items-center gap-x-1.5 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
                                   Sent
@@ -111,7 +111,7 @@
                     <!-- Item -->
                     <li class="col-span-2">
                         <div class="flex md:block gap-x-2 text-right">
-                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600">
                               Download:
                             </span>
                             <livewire:dealer.vendor.download :vendorForm="$form" :key="$form->id" />
@@ -127,14 +127,14 @@
             </div>
 
             @if($vendor->created_at < \Carbon\Carbon::create(2024, 06, 23, 0, 0, 0))
-            <ul class="grid md:grid-cols-12 md:items-center gap-2 md:gap-6 py-3 border-t border-gray-200 dark:border-neutral-700">
+            <ul class="grid md:grid-cols-12 md:items-center gap-2 md:gap-6 py-3 border-t border-gray-200">
                 <!-- Item -->
                 <li class="md:col-span-5">
                     <div class="flex md:block gap-x-2">
-                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600">
                               Type:
                             </span>
-                        <p class="text-xs font-medium text-gray-800 dark:text-neutral-200">
+                        <p class="text-xs font-medium text-gray-800">
                             {{ ucwords(strtolower($vendor->contact_name)) }}
                             <span class="block text-gray-400">{{ Str::lower($vendor->contact_email) }}</span>
                         </p>
@@ -145,10 +145,10 @@
                 <!-- Item -->
                 <li class="col-span-3">
                     <div class="flex md:block gap-x-2">
-                        <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                        <span class="md:hidden min-w-[100px] text-sm text-gray-600">
                           Date:
                         </span>
-                        <p class="text-xs text-gray-500 dark:text-neutral-500">
+                        <p class="text-xs text-gray-500">
                             @if(!$vendor->signature)
                                 {{ $vendor->created_at->format('M d, Y') }}
                             @else
@@ -162,10 +162,10 @@
                 <!-- Item -->
                 <li class="col-span-2">
                     <div class="flex md:block gap-x-2">
-                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600">
                               Status:
                             </span>
-                        <p class="text-sm text-arm-blue-600 dark:text-arm-blue-500">
+                        <p class="text-sm text-arm-blue-600">
                             @if(!$vendor->signature)
                                 <span class="py-1.5 px-2 inline-flex items-center gap-x-1.5 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
                                   Sent
@@ -183,7 +183,7 @@
                 <!-- Item -->
                 <li class="col-span-2">
                     <div class="flex md:block gap-x-2 text-right">
-                            <span class="md:hidden min-w-[100px] text-sm text-gray-600 dark:text-neutral-400">
+                            <span class="md:hidden min-w-[100px] text-sm text-gray-600">
                               Download:
                             </span>
                             <livewire:dealer.vendor.old-download :vendor="$vendor" />

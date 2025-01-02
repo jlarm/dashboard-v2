@@ -59,11 +59,11 @@
                             class="absolute right-0 mt-2 w-64 rounded-md bg-white shadow-md p-6 space-y-6 z-20"
                         >
                             <div class="w-full flex justify-between items-center">
-                                <h4 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
+                                <h4 class="text-base font-semibold leading-6 text-gray-950">
                                     Filters</h4>
                                 <button
                                     wire:click="resetFilters"
-                                    class="fi-link fi-link-size-md relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus:underline gap-1.5 text-sm text-red-600 dark:text-red-400">
+                                    class="fi-link fi-link-size-md relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus:underline gap-1.5 text-sm text-red-600">
                                     Reset
                                 </button>
                             </div>

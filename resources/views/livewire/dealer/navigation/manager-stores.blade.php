@@ -40,23 +40,23 @@
                 >
                     <li>
                         <a href="{{ route('dealer.store.employees.store.employee.index', $store) }}"
-                           class="{{ (request()->is('store/'.$store->slug.'/employees')) ? 'bg-arm-blue-500 text-white' : 'text-gray-900' }} flex items-center w-full p-2 text-sm font-normal transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-16">Employees</a>
+                           class="{{ (request()->is('store/'.$store->slug.'/employees')) ? 'bg-arm-blue-500 text-white' : 'text-gray-900' }} flex items-center w-full p-2 text-sm font-normal transition duration-75 group hover:bg-gray-100 pl-16">
                     </li>
                     <li>
                         <a href="{{ route('dealer.store.employees.store.vendor.index', $store) }}"
-                           class="{{ (request()->is('store/'.$store->slug.'/vendors')) ? 'bg-arm-blue-100' : '' }} flex items-center w-full p-2 text-sm font-normal text-gray-900 transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-16">Vendors</a>
+                           class="{{ (request()->is('store/'.$store->slug.'/vendors')) ? 'bg-arm-blue-100' : '' }} flex items-center w-full p-2 text-sm font-normal text-gray-900 transition duration-75 group hover:bg-gray-100 pl-16">
                     </li>
                     <li>
                         <a href="{{ route('dealer.store.employees.store.scan.index', $store) }}"
-                           class="{{ (request()->is('store/'.$store->slug.'/scans')) ? 'bg-arm-blue-100' : '' }} flex items-center w-full p-2 text-sm font-normal text-gray-900 transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-16">Scans</a>
+                           class="{{ (request()->is('store/'.$store->slug.'/scans')) ? 'bg-arm-blue-100' : '' }} flex items-center w-full p-2 text-sm font-normal text-gray-900 transition duration-75 group hover:bg-gray-100 pl-16">
                     </li>
                     <li>
                         <a href="#"
-                           class="flex items-center w-full p-2 text-sm font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-16">Manuals</a>
+                           class="flex items-center w-full p-2 text-sm font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 pl-16">
                     </li>
                     <li>
                         <a href="#"
-                           class="flex items-center w-full p-2 text-sm font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-16">Courses</a>
+                           class="flex items-center w-full p-2 text-sm font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 pl-16">
                     </li>
                 </ul>
             </div>

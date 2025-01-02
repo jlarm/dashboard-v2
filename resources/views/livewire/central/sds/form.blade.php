@@ -42,9 +42,9 @@
         <div class="flex flex-wrap justify-start items-center gap-3">
             @if(!empty($productIdentificationNumbers))
             @foreach ($productIdentificationNumbers as $index => $pin)
-                <span class="p-1 ps-2 inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-800 text-xs rounded-full dark:bg-neutral-800 dark:text-neutral-200 dark:border-neutral-700">
+                <span class="p-1 ps-2 inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-800 text-xs rounded-full">
                     {{ $pin }}
-                    <button type="button" wire:click="removePin({{ $index }})" class="inline-flex flex-shrink-0 justify-center items-center size-5 ms-1 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-gray-300 text-sm dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:focus:bg-neutral-600 dark:text-neutral-400">
+                      <button type="button" wire:click="removePin({{ $index }})" class="inline-flex flex-shrink-0 justify-center items-center size-5 ms-1 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-gray-300 text-sm">
                       <svg class="flex-shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 6 6 18"></path>
                         <path d="m6 6 12 12"></path>
@@ -70,9 +70,10 @@
 {{--        </div>--}}
 {{--        <div class="flex flex-wrap justify-start items-center gap-3">--}}
 {{--            @foreach ($casNos as $index => $cas)--}}
-{{--                <span class="p-1 ps-2 inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-800 text-xs rounded-full dark:bg-neutral-800 dark:text-neutral-200 dark:border-neutral-700">--}}
-{{--                    {{ $cas }}--}}
-{{--                    <button type="button" wire:click="removeCas({{ $index }})" class="inline-flex flex-shrink-0 justify-center items-center size-5 ms-1 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-gray-300 text-sm dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:focus:bg-neutral-600 dark:text-neutral-400">--}}
+{{--                <span class="p-1 ps-2 inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-800 text-xs rounded-full">--}}
+                    <span class="p-1 ps-2 inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-800 text-xs rounded-full">
+
+                      <button type="button" wire:click="removeCas({{ $index }})" class="inline-flex flex-shrink-0 justify-center items-center size-5 ms-1 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-gray-300 text-sm">
 {{--                      <svg class="flex-shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">--}}
 {{--                        <path d="M18 6 6 18"></path>--}}
 {{--                        <path d="m6 6 12 12"></path>--}}

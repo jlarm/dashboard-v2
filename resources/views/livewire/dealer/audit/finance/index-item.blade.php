@@ -1,7 +1,7 @@
-<div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+<div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
     <div class="space-y-1">
         <div class="flex justify-between">
-            <h4 class="mb-2.5 font-medium text-sm text-gray-800 dark:text-neutral-300">
+            <h4 class="mb-2.5 font-medium text-sm text-gray-800">
                 {{ $this->quarter() }}
             </h4>
             <div
@@ -131,10 +131,10 @@
 
         <!-- Item -->
         <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600 dark:text-neutral-400">
+        <span class="text-xs text-gray-600">
           Grade:
         </span>
-            <span class="text-sm font-medium text-gray-800 dark:text-white">
+            <span class="text-sm font-medium text-gray-800">
            {{ $glbaViolationAudit->grade ?? 'N/A' }}
         </span>
         </div>
@@ -142,10 +142,10 @@
 
         <!-- Item -->
         <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600 dark:text-neutral-400">
+        <span class="text-xs text-gray-600">
           Total Violations:
         </span>
-            <span class="text-sm font-medium text-gray-800 dark:text-white">
+            <span class="text-sm font-medium text-gray-800">
            {{ $glbaViolationAudit->violation_count }}
         </span>
         </div>
@@ -164,7 +164,7 @@
 
         <!-- Item -->
         <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600 dark:text-neutral-400">
+        <span class="text-xs text-gray-600">
           Status:
         </span>
         <span @class([
