@@ -43,13 +43,13 @@
                 "question": "What is the total amount of cash given that dealerships must file an 8300 report?",
                 "answers": [
                     {
-                        "a": "$5,000",
-                        "b": "$8,000",
-                        "c": "$10,000",
+                        "a": "More than $5,000",
+                        "b": "More than $10,000",
+                        "c": "More than $12,000",
                         "d": "None of the above"
                     }
                 ],
-                "correctAnswer": "c"
+                "correctAnswer": "b"
             },
             {
                 "question": "What is considered a \"Cash\" transaction?",
@@ -68,7 +68,7 @@
                 "question": "When is an 8300 report need to be reported?",
                 "answers": [
                     {
-                        "a": "$10,000 cash or higher",
+                        "a": "More than $10,000 cash",
                         "b": "A related cash transaction",
                         "c": "Suspicious Activity",
                         "d": "Only A & B",
