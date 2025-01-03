@@ -72,7 +72,7 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
         // **************************************************
         Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function () {
 
-            Route::get('deleted-employees', DeletedIndex::class)->name('deleted.index');
+            Route::get('deleted-employees', DeletedIndex::class)->name('employee.deleted');
 
             Route::get('manuals/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('manuals.isp.index');
             Route::get('manuals/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('manuals.isp.create');

@@ -1,14 +1,12 @@
-<div class="p-5">
-    <div class="sm:flex sm:items-center sm:justify-between mb-5">
-        <div class="min-w-0 flex-1">
-            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Vendors</h1>
-        </div>
-        <div class="mt-4 flex sm:mt-0 sm:ml-4">
+<div>
+    <x-slot name="header">
+        <x-slot name="pageTitle">Vendors</x-slot>
+        <x-slot name="actions">
             @can('create-stores')
                 <x-primary-button onclick="Livewire.emit('modal.open', 'dealer.vendor.create')">Add Vendor</x-primary-button>
             @endcan
-        </div>
-    </div>
+        </x-slot>
+    </x-slot>
     <!-- Card Grid Group -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
         @forelse($vendors as $vendor)

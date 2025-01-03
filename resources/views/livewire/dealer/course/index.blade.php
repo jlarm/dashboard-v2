@@ -1,4 +1,7 @@
 <div>
+    <x-slot name="header">
+        <x-slot name="pageTitle">Courses</x-slot>
+    </x-slot>
     <div class="space-y-4">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
             @forelse($courses as $course)

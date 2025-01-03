@@ -1,4 +1,4 @@
-<div class="bg-white px-4 py-5 sm:p-6" x-data>
+<div x-data>
     <div class="mt-5 space-y-6 md:col-span-2 md:mt-0">
         <form wire:submit.prevent="update">
             <div class="pb-10 space-y-6">

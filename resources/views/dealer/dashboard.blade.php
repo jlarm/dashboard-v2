@@ -1,5 +1,5 @@
 <x-dealer-app>
-        <div class="p-5 space-y-5">
+        <div class="space-y-5">
         @if(!tenant('locations'))
             @can('create-stores')
 {{--             Audit Stats--}}
@@ -129,18 +129,8 @@
             @endcan
         @endif
         @cannot('create-stores')
-            <div class="px-6 py-4 sm:flex sm:items-center sm:justify-between">
-                <div class="min-w-0 flex-1">
-                    <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">{{ __('Courses') }}</h1>
-                </div>
-                <livewire:dealer.course.dot-cert />
-            </div>
-            <div class="px-6">
-                <div class="border rounded-md">
-                    <div class="p-6">
-                        <livewire:dealer.course.index/>
-                    </div>
-                </div>
+            <div class="p-5 bg-white border border-gray-200 shadow-sm rounded-xl">
+                <livewire:dealer.course.index/>
             </div>
         @endcannot
     </div>

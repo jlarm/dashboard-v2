@@ -1,20 +1,54 @@
 <x-dealer-app>
-    <div
-        class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
-        <div class="min-w-0 flex-1">
-            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Create Employee</h1>
-        </div>
-        <a
-            class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
-            href="{{ route('dealer.employees.index') }}"
-        >
-            Back to Employees
-        </a>
-    </div>
-
-    <div class="px-6">
-        <div class="border rounded-xl border-gray-200 shadow-sm p-6">
-            <livewire:dealer.employee.create/>
-        </div>
-    </div>
+    <x-slot name="header">
+        <x-slot name="pageTitle">Employees</x-slot>
+        <x-slot name="actions">
+            <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
+                <a
+                    href="{{ route('dealer.employees.index') }}"
+                    @class([
+                        'text-sm focus:outline-none',
+                        'text-arm-orange-500' => request()->routeIs('dealer.employees.index'),
+                        'text-gray-600' => !request()->routeIs('dealer.employees.index')
+                    ])>Employees</a>
+                @can('create-dealerships')
+                <button
+                    onclick="Livewire.emit('modal.open', 'dealer.employee.import')"
+                    type="button"
+                    class="text-sm focus:outline-none">Import</button>
+                <a
+                    href="{{ route('dealer.employees.new') }}"
+                    @class([
+                        'text-sm focus:outline-none',
+                        'text-arm-orange-500' => request()->routeIs('dealer.employees.new'),
+                        'text-gray-600' => !request()->routeIs('dealer.employees.new')
+                    ])>Invite Employee</a>
+                @endcan
+                @role('Manager')
+                @cannot('create-stores')
+                    <button type="button" onclick="Livewire.emit('modal.open', 'dealer.employee.manager-invite')" class="text-sm focus:outline-none">Invite Employee</button>
+                @endcannot
+                @endrole
+                @role('Qualified Individual')
+                    <button type="button" onclick="Livewire.emit('modal.open', 'dealer.employee.invite')" class="text-sm focus:outline-none">Invite Employee</button>
+                @endrole
+                <a
+                    href="{{ route('dealer.employees.open-invites') }}"
+                    @class([
+                        'text-sm focus:outline-none',
+                        'text-arm-orange-500' => request()->routeIs('dealer.employees.open-invites'),
+                        'text-gray-600' => !request()->routeIs('dealer.employees.open-invites')
+                    ])>Open Invites</a>
+                @can('create-stores')
+                    <a
+                        href="{{ route('dealer.employee.deleted') }}"
+                        @class([
+                            'text-sm focus:outline-none',
+                            'text-arm-orange-500' => request()->routeIs('dealer.employee.deleted'),
+                            'text-gray-600' => !request()->routeIs('dealer.employee.deleted')
+                        ])>Deleted</a>
+                @endcan
+            </div>
+        </x-slot>
+    </x-slot>
+    <livewire:dealer.employee.create/>
 </x-dealer-app>

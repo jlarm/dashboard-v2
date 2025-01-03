@@ -1,1 +1,1 @@
-<span class="text-xl text-arm-orange-500">{{ $storeName }}</span>
+<span class="text-arm-blue-500">{{ $storeName }}</span>

@@ -156,6 +156,31 @@ Route::name('dealer.')->middleware([
     });
 
     // **************************************************
+    // Roles to QA
+    // **************************************************
+
+    Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function () {
+
+        Route::get('employees/deleted', DeletedIndex::class)->name('employee.deleted');
+
+        Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function () {
+            Route::get('/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
+            Route::get('/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('isp.create');
+            Route::get('/osha', \App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('osha.index');
+            Route::get('/osha/create', \App\Http\Livewire\Dealer\Manual\Osha\Create::class)->name('osha.create');
+            Route::get('/red-flag', \App\Http\Livewire\Dealer\Manual\RedFlag\Index::class)->name('red-flag.index');
+            Route::get('/red-flag/create', \App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->name('red-flag.create');
+            Route::get('cms', \App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('cms.index');
+            Route::get('cms/create', \App\Http\Livewire\Dealer\Manual\Cms\Create::class)->name('cms.create');
+        });
+
+        Route::get('settings', SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
+
+        Route::get('phishing', App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
+        Route::get('phishing/{phishingCampaign}', App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
+    });
+
+    // **************************************************
     // Roles to Manager
     // **************************************************
 
@@ -169,10 +194,6 @@ Route::name('dealer.')->middleware([
         });
 
         Route::view('scans', 'dealer.scan.index')->middleware(['auth', 'single.store'])->name('scan.index');
-
-        Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function () {
-            Route::get('/', ManualController::class)->name('index');
-        });
 
         Route::prefix('audits/')->name('audit.')->middleware(['auth'])->group(function () {
             Route::get('osha', \App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('osha.index');
@@ -193,31 +214,6 @@ Route::name('dealer.')->middleware([
             Route::get('/', Index::class)->name('index');
         });
 
-    });
-
-    // **************************************************
-    // Roles to QA
-    // **************************************************
-
-    Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function () {
-
-        Route::get('deleted-employees', DeletedIndex::class)->name('deleted.index');
-
-        Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function () {
-            Route::get('/isp', \App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
-            Route::get('/isp/create', \App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('isp.create');
-            Route::get('/osha', \App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('osha.index');
-            Route::get('/osha/create', \App\Http\Livewire\Dealer\Manual\Osha\Create::class)->name('osha.create');
-            Route::get('/red-flag', \App\Http\Livewire\Dealer\Manual\RedFlag\Index::class)->name('red-flag.index');
-            Route::get('/red-flag/create', \App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->name('red-flag.create');
-            Route::get('cms', \App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('cms.index');
-            Route::get('cms/create', \App\Http\Livewire\Dealer\Manual\Cms\Create::class)->name('cms.create');
-        });
-
-        Route::get('settings', SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
-
-        Route::get('phishing', App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
-        Route::get('phishing/{phishingCampaign}', App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
     });
 
     Route::get('email/settings', FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');

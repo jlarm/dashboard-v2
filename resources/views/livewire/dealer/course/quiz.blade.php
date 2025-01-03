@@ -1,7 +1,7 @@
 <div>
     <form method="POST" action="{{ route('dealer.courses.results.store', $course) }}">
         @csrf
-        <div class="questions space-y-10">
+        <div class="questions space-y-5">
             @php
                 $i = 1
             @endphp

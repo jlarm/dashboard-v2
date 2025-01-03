@@ -1,53 +1,42 @@
-<div class="px-6">
-    <div>
-        <div class="py-5 sm:flex sm:items-center">
-            <div class="sm:flex-auto">
-                <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Deal Jackets
-                    for {{ $this->getQuarterNameAttribute() }} of {{ $individualAudit->audit_date->format('Y') }}</h1>
-            </div>
-            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                <div class="mt-4 flex sm:mt-0 sm:ml-4 space-x-5">
+<div>
+    <x-slot name="header">
+        <x-slot name="pageTitle">Deal Jackets for {{ $this->getQuarterNameAttribute() }} of {{ $individualAudit->audit_date->format('Y') }}</x-slot>
+        <x-slot name="actions">
+            <div class="flex gap-2">
+                @can('create-audits')
                     @if($individualAudit->pdf_path)
                         <livewire:dealer.audit.individual.download :individualAudit="$individualAudit"/>
                     @endif
                     @if(!$individualAudit->pdf_path)
                         <a
-                            class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                            class="inline-flex items-center gap-x-1.5 rounded-md bg-arm-blue-600 px-2.5 py-1.5 text-sm text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600"
                             href="{{ route('dealer.stores.audits.individual.create', [$store, $individualAudit]) }}"
                         >
                             Create Audit
                         </a>
                         <livewire:dealer.audit.individual.generate :individualAudit="$individualAudit"/>
                     @endif
-                </div>
+                @endcan
             </div>
-        </div>
-        <div class="border rounded-md">
-            <div class="p-6 overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-300">
-            <thead>
-            <tr>
-                <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                    Customer Number
-                </th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Customer Name</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Manager Name</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Rating</th>
-                <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
-                    <span class="sr-only">Edit</span>
-                </th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-            <livewire:dealer.store.single-store.audit.individual.parent-show-single :individualAudit="$individualAudit"
-                                                                                    :store="$store"/>
-            @foreach($audits as $audit)
-                <livewire:dealer.audit.individual.show-single :individualAudit="$individualAudit" :store="$store"
-                                                              :audit="$audit"/>
-            @endforeach
-            </tbody>
-        </table>
-            </div>
-        </div>
+        </x-slot>
+    </x-slot>
+    <div>
+        <x-table>
+            <x-slot name="head">
+                <x-table.row>
+                    <x-table.heading>Customer Number</x-table.heading>
+                    <x-table.heading>Customer Name</x-table.heading>
+                    <x-table.heading>Manager Name</x-table.heading>
+                    <x-table.heading>Rating</x-table.heading>
+                    <x-table.heading></x-table.heading>
+                </x-table.row>
+            </x-slot>
+            <x-slot name="body">
+                <livewire:dealer.store.single-store.audit.individual.parent-show-single :individualAudit="$individualAudit" :store="$store"/>
+                @foreach($audits as $audit)
+                    <livewire:dealer.audit.individual.show-single :individualAudit="$individualAudit" :store="$store" :audit="$audit"/>
+                @endforeach
+            </x-slot>
+        </x-table>
     </div>
 </div>

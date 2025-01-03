@@ -1,8 +1,8 @@
-<tr>
-    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">{{ $audit->customer_number }}</td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{{ $audit->customer_name }}</td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{{ $audit->manager->name ?? '' }}</td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+<x-table.row>
+    <x-table.cell class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">{{ $audit->customer_number }}</x-table.cell>
+    <x-table.cell class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{{ $audit->customer_name }}</x-table.cell>
+    <x-table.cell class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{{ $audit->manager->name ?? '' }}</x-table.cell>
+    <x-table.cell class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         @if($audit->rating > 0)
             @if($audit->rating >= 90)
                 <span
@@ -23,8 +23,8 @@
         @else
             -
         @endif
-    </td>
-    <td class="relative whitespace-nowrap py-4 pl-3 flex justify-end text-sm font-medium">
+    </x-table.cell>
+    <x-table.cell class="relative whitespace-nowrap py-4 pl-3 flex justify-end text-sm font-medium">
         <div class="space-x-5">
             <a
                 href="{{ (!tenant('locations') ? route('dealer.audit.individual.edit', $audit) : route('dealer.stores.audits.individual.edit', [$store, $audit])) }}"
@@ -39,5 +39,5 @@
                 Delete
             </button>
         </div>
-    </td>
-</tr>
+    </x-table.cell>
+</x-table.row>

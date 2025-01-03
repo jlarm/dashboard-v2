@@ -22,8 +22,16 @@ class UserController extends Controller
 {
     public function show(User $user)
     {
+        $user->load('department', 'stores', 'roles');
+
+        $isQi = $user->roles->contains('name', 'Qualified Individual');
+
+        $roles = $user->roles->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
+        
         return view('dealer.employee.show', [
             'user' => $user,
+            'isQi' => $isQi,
+            'roles' => $roles,
         ]);
     }
 

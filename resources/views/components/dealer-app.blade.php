@@ -1,5 +1,5 @@
 @props(['title'])
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -19,21 +19,33 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://js.sentry-cdn.com/487c58c833df4192b1a5311b2e1a849e.min.js" crossorigin="anonymous"></script>
 </head>
-<body class="font-sans antialiased bg-white">
+<body class="font-sans antialiased bg-gray-50">
 <x-notification />
 <x-course-completion-modal />
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
-    <!-- Static sidebar for desktop -->
-{{--    @include('layouts.nav-main')--}}
     @include('layouts.light-navigation')
 
     <div class="flex flex-col lg:pl-64">
 
         @include('layouts.top-bar')
 
-        <main class="flex-1 bg-white">
+        <main class="p-4">
+            @if(isset($header))
+            <div class="sm:flex sm:items-end sm:justify-between mb-2">
+                <div class="min-w-0 flex-1">
+                    <h1 class="font-bold text-arm-blue-900 sm:truncate leading-normal">{{ $pageTitle }}</h1>
+                </div>
+                <div>
+                    @if(isset($actions))
+                        {{ $actions}}
+                    @endif
+                </div>
+            </div>
+            @endif
             <div class="mx-auto">
-                {{ $slot }}
+                <div class="{{ (Route::currentRouteName() === 'dealer.dashboard' || Route::currentRouteName() === 'dealer.stores.home') ? '' : 'p-5 bg-white border border-gray-200 shadow-sm rounded-xl' }}">
+                    {{ $slot }}
+                </div>
             </div>
         </main>
     </div>

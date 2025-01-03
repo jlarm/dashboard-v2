@@ -46,7 +46,7 @@
     @endcan
     <!-- MANUALS -->
     <div class="px-3 mb-1.5">
-        @can('create-users')
+        @can('create-stores')
             @if (request()->segment(1) === 'stores' || !tenant('locations'))
                 <div x-data="{ open: '{{ request()->segment(1) == 'manuals' || request()->segment(3) === 'manuals' }}' }">
                     <button
@@ -93,50 +93,50 @@
     <!-- AUDITS -->
     <div class="px-3 mb-1.5">
         @can('view-audits')
-        <div x-data="{ open: '{{ request()->segment(1) == 'audits' || request()->segment(3) === 'audits' }}' }">
-            <button
-                class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'bg-gray-100 text-gray-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }} w-full border-transparent group py-2 px-3 rounded-lg flex items-center text-sm"
-                type="button"
-                @click="open = !open"
-            >
-                <svg class="mr-3 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-width="1.5" d="M19.007 11.493V2H3v19.985h9.004"/>
-                    <path class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-linejoin="round" stroke-width="1.5" d="M7.002 6.996h8.003m-8.003 3.997h4.002"/>
-                    <path class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-width="1.5" d="M18.863 19.838a3.371 3.371 0 0 0 1.008-2.442 3.438 3.438 0 0 0-3.44-3.436c-1.9 0-3.44 1.538-3.44 3.436a3.438 3.438 0 0 0 3.44 3.437c.937 0 1.811-.388 2.432-.995Zm0 0 2.136 2.16"/>
-                </svg>
-                Audits
-                <svg class="text-gray-400 ml-auto h-5 w-5 shrink-0" :class="{ '-rotate-180 text-gray-500': open, 'text-gray-400': !(open) }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#ffffff" fill="none">
-                    <path d="M6 9.00005L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="16" />
-                </svg>
-            </button>
-            <ul
-                x-cloak
-                class="x-cloak mt-1 ml-6 border-l-2 border-gray-100 space-y-1"
-                id="sub-menu-1"
-                x-show="open"
-                x-collapse
-            >
-                <li>
-                    <a href="{{ $currentStore ? route('dealer.stores.audits.osha.index', $currentStore) : route('dealer.audit.osha.index') }}"
-                       class="{{ (request()->segment(1) == 'audits' && request()->segment(2) == 'osha' || request()->segment(3) === 'audits' && request()->segment(4) === 'osha') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">OSHA</a>
-                </li>
-                <li>
-                    <a href="{{ $currentStore ? route('dealer.stores.audits.body-shop.index', $currentStore) : route('dealer.audit.body-shop.index') }}"
-                       class="{{ (request()->segment(2) == 'body-shop' || request()->segment(4) === 'body-shop') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">Body
-                        Shop</a>
-                </li>
-                <li>
-                    <a href="{{ $currentStore ? route('dealer.stores.audits.finance.index', $currentStore) : route('dealer.audit.finance.index') }}"
-                       class="{{ (request()->segment(2) == 'finance' || request()->segment(4) === 'finance') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">GLBA
-                        Walkthrough</a>
-                </li>
-                <li>
-                    <a href="{{ $currentStore ? route('dealer.stores.audits.individual.index', $currentStore) : route('dealer.audit.individual.index') }}"
-                       class="{{ (request()->segment(2) == 'deal-jackets' || request()->segment(4) === 'deal-jackets') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">Deal
-                        Jackets</a>
-                </li>
-            </ul>
-        </div>
+            <div x-data="{ open: '{{ request()->segment(1) == 'audits' || request()->segment(3) === 'audits' }}' }">
+                <button
+                    class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'bg-gray-100 text-gray-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }} w-full border-transparent group py-2 px-3 rounded-lg flex items-center text-sm"
+                    type="button"
+                    @click="open = !open"
+                >
+                    <svg class="mr-3 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-width="1.5" d="M19.007 11.493V2H3v19.985h9.004"/>
+                        <path class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-linejoin="round" stroke-width="1.5" d="M7.002 6.996h8.003m-8.003 3.997h4.002"/>
+                        <path class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'stroke-arm-blue-500' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" stroke-width="1.5" d="M18.863 19.838a3.371 3.371 0 0 0 1.008-2.442 3.438 3.438 0 0 0-3.44-3.436c-1.9 0-3.44 1.538-3.44 3.436a3.438 3.438 0 0 0 3.44 3.437c.937 0 1.811-.388 2.432-.995Zm0 0 2.136 2.16"/>
+                    </svg>
+                    Audits
+                    <svg class="text-gray-400 ml-auto h-5 w-5 shrink-0" :class="{ '-rotate-180 text-gray-500': open, 'text-gray-400': !(open) }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#ffffff" fill="none">
+                        <path d="M6 9.00005L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="16" />
+                    </svg>
+                </button>
+                <ul
+                    x-cloak
+                    class="x-cloak mt-1 ml-6 border-l-2 border-gray-100 space-y-1"
+                    id="sub-menu-1"
+                    x-show="open"
+                    x-collapse
+                >
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.audits.osha.index', $currentStore) : route('dealer.audit.osha.index') }}"
+                           class="{{ (request()->segment(1) == 'audits' && request()->segment(2) == 'osha' || request()->segment(3) === 'audits' && request()->segment(4) === 'osha') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">OSHA</a>
+                    </li>
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.audits.body-shop.index', $currentStore) : route('dealer.audit.body-shop.index') }}"
+                           class="{{ (request()->segment(2) == 'body-shop' || request()->segment(4) === 'body-shop') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">Body
+                            Shop</a>
+                    </li>
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.audits.finance.index', $currentStore) : route('dealer.audit.finance.index') }}"
+                           class="{{ (request()->segment(2) == 'finance' || request()->segment(4) === 'finance') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">GLBA
+                            Walkthrough</a>
+                    </li>
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.audits.individual.index', $currentStore) : route('dealer.audit.individual.index') }}"
+                           class="{{ (request()->segment(2) == 'deal-jackets' || request()->segment(4) === 'deal-jackets') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">Deal
+                            Jackets</a>
+                    </li>
+                </ul>
+            </div>
         @endcan
     </div>
     <!-- VENDORS -->

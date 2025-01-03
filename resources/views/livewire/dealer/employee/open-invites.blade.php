@@ -1,5 +1,5 @@
-<div class="border rounded-xl border-gray-200 shadow-sm">
-    <div class="p-6">
+<div>
+    <div>
         <div>
             <div class="w-full px-3 sm:px-0 mb-5 flex justify-between">
                 <div>

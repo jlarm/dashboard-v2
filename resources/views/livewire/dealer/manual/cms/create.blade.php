@@ -1,9 +1,13 @@
-<div class="p-6">
-    <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">CMS Manual</h1>
+<div>
+    <x-slot name="header">
+        <x-slot name="pageTitle">
+            {{ __('CMS Manual') }}
+        </x-slot>
+    </x-slot>
     <form wire:submit.prevent="create" class="prose min-w-full">
         {{--        Compliance Management System Program--}}
         <div>
-            <h2>Compliance Management System Program</h2>
+            <h2 class="mt-0">Compliance Management System Program</h2>
             <h3 class="font-bold">I. Purpose</h3>
             <p>Dealership is committed to complying with the letter and spirit of Federal and State laws and regulations designed to protect consumers, customers and employees. Dealership compliance is the responsibility of each owner, board member, manager and employee. Dealership has created a Compliance Management System (CMS) to ensure compliance in all aspects of day-to-day business operations. The CMS has been created to establish compliance responsibilities, provide necessary training, review and audit compliance systems and procedures, take necessary corrective action, and manage and respond to consumer complaints.</p>
             <h3 class="font-bold">II. Scope</h3>

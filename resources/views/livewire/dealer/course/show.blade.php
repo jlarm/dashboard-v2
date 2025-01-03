@@ -12,20 +12,9 @@
     }"
     x-init="init"
 >
-    <div class="sm:flex sm:items-center">
-        <div class="sm:flex-auto">
-            <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">{{ __($course->name) }}</h1>
-        </div>
-        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <div class="flex justify-end">
-
-            </div>
-        </div>
-    </div>
-
-    <div class="mt-5">
+    <div>
         @foreach($slides as $index => $slide)
-            <article x-show="activeSlide === {{ $index }}" class="border rounded-lg p-5 space-y-5" x-cloak>
+            <article x-show="activeSlide === {{ $index }}" class="space-y-5" x-cloak>
                 <h1 class="font-bold">{{ isset($slide['title']) ? __($slide['title']) : __($course->name) }}</h1>
                 <div class="prose min-w-full">
                     {!! __($slide['description']) !!}

@@ -1,12 +1,9 @@
-<div class="p-6">
+<div>
+    <x-slot name="header">
+        <x-slot name="pageTitle">Red Flag Manual</x-slot>
+    </x-slot>
     <div class="divide-y mb-10">
-        <div
-            class="sm:flex sm:items-center sm:justify-between">
-            <div class="min-w-0 flex-1">
-                <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Red Flag Manual</h1>
-            </div>
-        </div>
-        <div class="grid grid-cols-3 gap-x-5 gap-y-10 mb-10 pt-10">
+        <div class="grid grid-cols-3 gap-x-5 gap-y-10 mb-10">
             <div>
                 <p class="font-bold">Qualified Individual</p>
                 <p>{{ $qi }}</p>

@@ -1,7 +1,11 @@
 <div class="mx-auto px-4">
+    <x-slot name="header">
+        <x-slot name="pageTitle">
+            {{ __('ISP Manual') }}
+        </x-slot>
+    </x-slot>
     <div class="relative md:flex">
-        <div class="w-full md:w-64 md:fixed inset-y-0 z-10 flex flex-col pr-6 md:mt-20 md:border-r">
-            <h1 class="text-3xl font-black">ISP Manual</h1>
+        <div class="w-full md:w-64 md:fixed inset-y-0 z-10 flex flex-col pr-6 md:mt-32 md:border-r">
             <ul class="toc mt-3 space-y-3 text-sm text-gray-500">
                 <li>
                     <a href="#elements" class="hover:text-arm-orange-600 transition">8 Elements Dealerships Must Comply With</a>

@@ -6,6 +6,7 @@ use App\Models\Dealer\Store;
 use App\Models\Department;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -48,37 +49,37 @@ class Index extends Component
             ->search('name', $this->search);
     }
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function resetShowIncompleteCourseUsers()
+    public function resetShowIncompleteCourseUsers(): void
     {
         $this->reset(['showIncompleteCourseUsers']);
     }
 
-    public function updatingShowIncompleteCourseUsers()
+    public function updatingShowIncompleteCourseUsers(): void
     {
         $this->resetPage();
     }
 
-    public function resetSelectedDepartment()
+    public function resetSelectedDepartment(): void
     {
         $this->selectedDepartment = null;
     }
 
-    public function updatingSelectedDepartment()
+    public function updatingSelectedDepartment(): void
     {
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function resetFilters(): void
     {
         $this->reset(['showIncompleteCourseUsers', 'selectedDepartment']);
     }
 
-    public function generateCsv()
+    public function generateCsv(): void
     {
 
         try {
@@ -129,7 +130,7 @@ class Index extends Component
         }
     }
 
-    public function render()
+    public function render(): View
     {
         $users = $this->usersQuery->paginate(25);
 

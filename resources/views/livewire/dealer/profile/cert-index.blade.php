@@ -1,12 +1,12 @@
 <div>
     @if(count($certs) > 0)
-    <div class="p-4 sm:p-8 bg-white border sm:rounded-lg">
+    <div class="max-w-xl">
         <header>
-            <h2 class="text-lg font-medium text-gray-900">
+            <h2 class="font-medium text-gray-800">
                 {{ __('Certificates') }}
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="text-sm text-gray-500">
                 {{ __('List of all current and previous course certificates.') }}
             </p>
         </header>

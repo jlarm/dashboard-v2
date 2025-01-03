@@ -1,11 +1,12 @@
 <div class="mx-auto px-4">
+    <x-slot name="header">
+        <x-slot name="pageTitle">
+            {{ __('OSHA Manual') }}
+        </x-slot>
+    </x-slot>
     <div class="relative md:flex">
-        <div class="w-64 fixed inset-y-0 z-10 flex flex-col pr-6 mt-20 border-r">
-            <h1 class="text-3xl font-black">OSHA Manual</h1>
-            <ul class="toc mt-3 space-y-3 text-gray-500">
-{{--                <li>--}}
-{{--                    <a href="#gq" class="hover:text-arm-orange-500 transition">General Questions</a>--}}
-{{--                </li>--}}
+        <div class="w-64 fixed inset-y-0 z-10 flex flex-col pr-6 mt-32 border-r">
+            <ul class="toc mt-3 space-y-3 text-sm text-gray-500">
                 <li>
                     <a href="#eap" class="hover:text-arm-orange-600 transition">Emergency Action Plan</a>
                 </li>

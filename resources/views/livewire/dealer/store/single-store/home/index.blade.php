@@ -1,4 +1,4 @@
-<div class="p-5 space-y-5">
+<div class="space-y-5">
     {{--             Audit Stats--}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 xl:gap-5">
         <livewire:dealer.home.osha-stats :store="$store" />

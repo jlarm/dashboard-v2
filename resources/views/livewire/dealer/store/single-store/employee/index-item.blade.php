@@ -1,11 +1,7 @@
-<tr class="even:bg-gray-50 hover:bg-arm-blue-50">
-    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500">
-        {{ Str::headline($user->name) }}
-    </td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-        <div><a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a></div>
-    </td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+<x-table.row>
+    <x-table.cell>{{ Str::headline($user->name) }}</x-table.cell>
+    <x-table.cell>{{ Str::lower($user->email) }}</x-table.cell>
+    <x-table.cell>
         @if($user->roles->isEmpty())
             <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">!! No Role Assigned !!</span>
         @else
@@ -25,28 +21,24 @@
                 @endif
             @endforeach
         @endif
-    </td>
+    </x-table.cell>
     @if(tenant('locations'))
-        <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+        <x-table.cell>
             @foreach($user->stores as $store)
                 <div class="flex flex-col">
                     <span>{{ $store->name }}</span>
                 </div>
             @endforeach
-        </td>
+        </x-table.cell>
     @endif
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-        {{ $user->department->name ?? '-' }}
-    </td>
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+    <x-table.cell>{{ $user->department->name ?? '-' }}</x-table.cell>
+    <x-table.cell>
         @if($user->total_completed_courses === $user->total_user_courses)
             <span
                 class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700">Completed</span>
         @else
             {{ $user->total_completed_courses }} of {{ $user->total_user_courses }}
         @endif
-    </td>
-    <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium">
-        <a href="{{ route('dealer.stores.employees.show', [$store, $user]) }}" class="text-sm">View</a>
-    </td>
-</tr>
+    </x-table.cell>
+    <x-table.cell><a href="{{ route('dealer.stores.employees.show', [$store, $user]) }}" class="text-sm">View</a></x-table.cell>
+</x-table.row>

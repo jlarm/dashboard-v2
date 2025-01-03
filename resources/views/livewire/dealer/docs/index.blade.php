@@ -1,11 +1,8 @@
 <div>
-    <div
-        class="px-6 py-5 sm:flex sm:items-center sm:justify-between">
-        <div class="min-w-0 flex-1">
-            <h1 class="text-4xl font-bold text-arm-blue-900 sm:truncate leading-normal">Documents</h1>
-        </div>
-    </div>
-    <div class="px-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+    <x-slot name="header">
+        <x-slot name="pageTitle">Documents</x-slot>
+    </x-slot>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="border rounded-md p-5">
             <ul role="list" class="divide-y divide-gray-100">
                 @forelse($docs as $doc)

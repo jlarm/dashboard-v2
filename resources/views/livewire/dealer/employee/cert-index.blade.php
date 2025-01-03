@@ -1,6 +1,6 @@
 <div>
     @if(count($certs) > 0)
-    <div class="border rounded-md mt-10 p-3">
+    <div class="max-w-xl mx-auto border rounded-md mt-10 p-3">
         <div>
             <ul role="list" class="divide-y divide-gray-100">
                 @foreach($certs as $cert)
@@ -8,7 +8,6 @@
                 @endforeach
             </ul>
         </div>
-
     </div>
     @endif
 </div>

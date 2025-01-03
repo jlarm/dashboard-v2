@@ -4,13 +4,14 @@ namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class ReportIndex extends Component
 {
     public Store $store;
 
-    protected function formattedlastScanDate($date): string
+    protected function formattedLastScanDate($date): string
     {
         return date('F d, Y', strtotime($date));
     }
@@ -29,7 +30,7 @@ class ReportIndex extends Component
     protected function groupAndMapReports($reports)
     {
         return $reports->groupBy(function ($data) {
-            return $this->formattedlastScanDate($data->last_scan);
+            return $this->formattedLastScanDate($data->last_scan);
         })->map(function ($data) {
             return $data->groupBy('type');
         })->map(function ($data) {
@@ -39,7 +40,7 @@ class ReportIndex extends Component
         });
     }
 
-    public function render()
+    public function render(): View
     {
         $reports = $this->fetchReports();
         $groupedReports = $this->groupAndMapReports($reports);

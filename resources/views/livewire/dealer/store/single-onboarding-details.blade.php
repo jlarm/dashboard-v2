@@ -1,4 +1,4 @@
-<div class="bg-white px-4 py-5 sm:p-6">
+<div>
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <h3 class="text-base font-semibold leading-6 text-gray-900">Compliance Info</h3>
@@ -16,7 +16,7 @@
         </div>
         <div class="mt-5 space-y-6 md:col-span-2 md:mt-0" x-data="{ show: true }">
             <form wire:submit.prevent="update" class="space-y-5">
-                <div class="grid grid-cols-1 mg:grid-cols-2 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
                         <x-input-label for="pep" :value="__('Police Emergency Phone Number')"/>
                         <x-text-input wire:model.defer="pep" id="pep" class="block mt-1 w-full" type="text" name="pep"
@@ -68,6 +68,7 @@
                         <x-input-error :messages="$errors->get('burglarAlarm')" class="mt-2"/>
                     </div>
                 </div>
+                
                 <div>
                     <x-input-label for="firewallCompany" :value="__('Firewall Company')"/>
                     <x-text-input wire:model.defer="firewallCompany" id="firewallCompany" class="block mt-1 w-full"
