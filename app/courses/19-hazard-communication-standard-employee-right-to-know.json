@@ -44,11 +44,11 @@
             },
             {
                 "title": "OSHA Approved Labeling System",
-                "description": "<img src=\"/course-images/osha.jpg\"><p><strong>National Fire Protection Association (NFPA)</strong></p><p>Within the small squares or diamonds on the product label are entered numbers indicating what type of hazard, if any, is present in the container. 0 = No Hazard 1 = Slight Hazard 2 = Moderate Hazard 3 = Serious Hazard 4 = Sever Hazard</p><p>The white diamond on the NFPA label provides a place for special note.</p>"
+                "description": "<img src=\"{{ global_asset('course-images/osha.jpg') }}\"><p><strong>National Fire Protection Association (NFPA)</strong></p><p>Within the small squares or diamonds on the product label are entered numbers indicating what type of hazard, if any, is present in the container. 0 = No Hazard 1 = Slight Hazard 2 = Moderate Hazard 3 = Serious Hazard 4 = Sever Hazard</p><p>The white diamond on the NFPA label provides a place for special note.</p>"
             },
             {
                 "title": "OSHA Approved Labeling System",
-                "description": "<img src=\"/course-images/osha-chart.jpg\"><p>Hazardous Material Identification System (HMIS)</p><p>Within the small squares on the product label are entered numbers indicating what type of hazard, if any, is present in the container. 0 = No Hazard 1 = Slight Hazard 2 = Moderate Hazard 3 = Serious Hazard 4 = Sever Hazard</p><p>The white bar area on the HMIS label allows for the placement of any symbol for PPE.</p>"
+                "description": "<img src=\"{{ global_asset('course-images/osha-chart.jpg') }}\"><p>Hazardous Material Identification System (HMIS)</p><p>Within the small squares on the product label are entered numbers indicating what type of hazard, if any, is present in the container. 0 = No Hazard 1 = Slight Hazard 2 = Moderate Hazard 3 = Serious Hazard 4 = Sever Hazard</p><p>The white bar area on the HMIS label allows for the placement of any symbol for PPE.</p>"
             },
             {
                 "description": "<p>It is your responsibility to know how to read and understand these warning labels. If any information is missing from a container, your supervisor should contact the supplier immediately and request additional MSDS labels be sent and applied where necessary.</p>"

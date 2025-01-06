@@ -89,7 +89,7 @@
             },
             {
                 "title": "Vehicle Components",
-                "description": "<img src=\"/course-images/forklift.jpg\" />"
+                "description": "<img src=\"{{ global_asset('course-images/forklift.jpg') }}\" />"
             },
             {
                 "title": "Safe Vehicle Operations",

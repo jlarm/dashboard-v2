@@ -31,7 +31,7 @@
             },
             {
                 "title": "Identify and Classify the material",
-                "description": "<p>Go to the hazardous materials table (49 CFR 172.101) to see if the following chemicals are listed in the table.</p><ol><li>Methyl ethyl ketone</li><li>Hydrochloric acid</li><li>Mercury</li><li>Charcoal briquette</li><li>Acetone and methyl ethyl ketone mixture</li><li>10% isobutanol and 10% isopropanol mixture</li></ol><img src=\"/course-images/hazard-table.jpg\">"
+                "description": "<p>Go to the hazardous materials table (49 CFR 172.101) to see if the following chemicals are listed in the table.</p><ol><li>Methyl ethyl ketone</li><li>Hydrochloric acid</li><li>Mercury</li><li>Charcoal briquette</li><li>Acetone and methyl ethyl ketone mixture</li><li>10% isobutanol and 10% isopropanol mixture</li></ol><img src=\"{{ global_asset('course-images/hazard-table.jpg') }}\">"
             },
             {
                 "title": "Identify and Classify the material",
