@@ -17,7 +17,7 @@
         "slides": [
             {
                 "title": "Slips, Trips, and Falls",
-                "description": "<p>At the end of this training, you will be able to:</p><p>Identify 2 requirements of OSHA's walking and working surfaces standard that apply to your workplace.</p><p>Identify common causes of slips, trips and falls (STF) within your workplace.</p><p>Evaluate your workplace for hazards associated with walking and working surfaces.</p><p>Generate ideas on how to control for these identified hazards.</p><img src=\"/course-images/stf.jpg\">"
+                "description": "<p>At the end of this training, you will be able to:</p><p>Identify 2 requirements of OSHA's walking and working surfaces standard that apply to your workplace.</p><p>Identify common causes of slips, trips and falls (STF) within your workplace.</p><p>Evaluate your workplace for hazards associated with walking and working surfaces.</p><p>Generate ideas on how to control for these identified hazards.</p><img src=\"{{ global_asset('course-images/stf.jpg') }}\" />"
             },
             {
                 "title": "Injuries from Slips, Trips and Falls",
@@ -29,59 +29,59 @@
             },
             {
                 "title": "Contaminants on the Floor",
-                "description": "<p>See the photos below with fluid on the floor and dry contaminants both make for slippery situations</p><div class=\\\"grid grid-cols-2 gap-5\\\" /><img src=\"/course-images/floor.jpg\" /></div><p>See the photos below, surfaces that are highly polished such as marble and ceramic tile can be very slippery even dry. Freshly waxed surfaces can be slippery.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/wet-floor.jpg\"></div>"
+                "description": "<p>See the photos below with fluid on the floor and dry contaminants both make for slippery situations</p><div class=\\\"grid grid-cols-2 gap-5\\\" /><img src=\"{{ global_asset('course-images/floor.jpg') }}\" /></div><p>See the photos below, surfaces that are highly polished such as marble and ceramic tile can be very slippery even dry. Freshly waxed surfaces can be slippery.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/wet-floor.jpg') }}\"></div>"
             },
             {
                 "title": "",
-                "description": "<div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/caution-pad.jpg\"><p>Wall-mounted spill pads for use by employees and visitors</p><img src=\"/course-images/wf-sign.jpg\"><p>Spill pads and umbrella bags for use in building entryway</p><img src=\"/course-images/spill.jpg\"><p>High visibility caution sign with warning sign on top or a flashing light on top could be used</p></div>"
+                "description": "<div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/caution-pad.jpg') }}\"><p>Wall-mounted spill pads for use by employees and visitors</p><img src=\"{{ global_asset('course-images/wf-sign.jpg') }}\"><p>Spill pads and umbrella bags for use in building entryway</p><img src=\"{{ global_asset('course-images/spill.jpg') }}\"><p>High visibility caution sign with warning sign on top or a flashing light on top could be used</p></div>"
             },
             {
                 "title": "Indoor Walking Surface Irregularities",
-                "description": "<p>Damaged, warped, buckled, or uneven flooring surfaces inside facilities can cause employees to stumble, trip, slip, or fall.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/floor-panel.jpg\"> <img src=\"/course-images/stair-chip.jpg\"> <img src=\"/course-images/floor-warp.jpg\"> <img src=\"/course-images/floor-crack.jpg\"></div>"
+                "description": "<p>Damaged, warped, buckled, or uneven flooring surfaces inside facilities can cause employees to stumble, trip, slip, or fall.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/floor-panel.jpg') }}\"> <img src=\"{{ global_asset('course-images/stair-chip.jpg') }}\"> <img src=\"{{ global_asset('course-images/floor-warp.jpg') }}\"> <img src=\"{{ global_asset('course-images/floor-crack.jpg') }}\"></div>"
             },
             {
                 "title": "Outdoor Walking Surface Irregularities",
-                "description": "<p>Poorly maintained, uneven ground, protruding structures, holes, rocks, leaves, and other debris can cause employees and/or Customers to stumble, trip, slip, or fall. Holes in grassy area between a parking lot and building. Stones and debris on walking surfaces in a parking lot . Area of sloped pavement that should be highlighted with Safety Yellow paint.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/safety-yellow.jpg\"> <img src=\"/course-images/grass.jpg\"> <img src=\"/course-images/concrete.jpg\"> <img src=\"/course-images/curb.jpg\"></div>"
+                "description": "<p>Poorly maintained, uneven ground, protruding structures, holes, rocks, leaves, and other debris can cause employees and/or Customers to stumble, trip, slip, or fall. Holes in grassy area between a parking lot and building. Stones and debris on walking surfaces in a parking lot . Area of sloped pavement that should be highlighted with Safety Yellow paint.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/safety-yellow.jpg') }}\"> <img src=\"{{ global_asset('course-images/grass.jpg') }}\"> <img src=\"{{ global_asset('course-images/concrete.jpg') }}\"> <img src=\"{{ global_asset('course-images/curb.jpg') }}\"></div>"
             },
             {
                 "title": "Prevention Solutions",
-                "description": "<p>Wheelchair accessible curb leading to building entrance is highlighted and the surface is dimpled for better visibility and traction. Highlight or mark slip and trip hazards for better visibility. Always use bright colors usually bright yellow since it is a universal color for hazards.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/lot.jpg\"> <img src=\"/course-images/parking-lot.jpg\"></div>"
+                "description": "<p>Wheelchair accessible curb leading to building entrance is highlighted and the surface is dimpled for better visibility and traction. Highlight or mark slip and trip hazards for better visibility. Always use bright colors usually bright yellow since it is a universal color for hazards.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/lot.jpg') }}\"> <img src=\"{{ global_asset('course-images/parking-lot.jpg') }}\"></div>"
             },
             {
                 "title": "Weather Conditions:  Water, Ice, and Snow",
-                "description": "<p>Weather conditions can create hazardous situations which is why it is imperative that we keep up with clearing of any water, Ice, snow, or Leaves.</p><div class=\\\"grid grid-cols-3 gap-5\\\"><img src=\"/course-images/snow.jpg\"> <img src=\"/course-images/leaves.jpg\"> <img src=\"/course-images/snow-trees.jpg\"></div>"
+                "description": "<p>Weather conditions can create hazardous situations which is why it is imperative that we keep up with clearing of any water, Ice, snow, or Leaves.</p><div class=\\\"grid grid-cols-3 gap-5\\\"><img src=\"{{ global_asset('course-images/snow.jpg') }}\"> <img src=\"{{ global_asset('course-images/leaves.jpg') }}\"> <img src=\"{{ global_asset('course-images/snow-trees.jpg') }}\"></div>"
             },
             {
                 "title": "Inadequate Lighting",
-                "description": "<div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/dark.jpg\"><p>Inadequate lighting can occur in many places hallways, garages, store rooms, shops, stairwells. We need to make sure that everyone can see clearly in our work areas so they can identify any potential hazards.</p></div>"
+                "description": "<div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/dark.jpg') }}\"><p>Inadequate lighting can occur in many places hallways, garages, store rooms, shops, stairwells. We need to make sure that everyone can see clearly in our work areas so they can identify any potential hazards.</p></div>"
             },
             {
                 "title": "Stairs and Handrails",
-                "description": "<div class=\\\"grid grid-cols-3 gap-5\\\"><img src=\"/course-images/old-stairs.jpg\"> <img src=\"/course-images/handle.jpg\"> <img src=\"/course-images/rail.jpg\"></div>"
+                "description": "<div class=\\\"grid grid-cols-3 gap-5\\\"><img src=\"{{ global_asset('course-images/old-stairs.jpg') }}\"> <img src=\"{{ global_asset('course-images/handle.jpg') }}\"> <img src=\"{{ global_asset('course-images/rail.jpg') }}\"></div>"
             },
             {
                 "title": "Prevention Solutions",
-                "description": "<p>There are many different products that can placed on stairs to reduce potential slipping and usually for little money. Should always make sure that rails are secure.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/grip.jpg\"> <img src=\"/course-images/roll-matt.jpg\"></div>"
+                "description": "<p>There are many different products that can placed on stairs to reduce potential slipping and usually for little money. Should always make sure that rails are secure.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/grip.jpg') }}\"> <img src=\"{{ global_asset('course-images/roll-matt.jpg') }}\"></div>"
             },
             {
                 "title": "Stepstools and Ladders",
-                "description": "<p>Stepstools and ladders used incorrectly can lead to serious injury should only use them as intended.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/ladder.jpg\"> <img src=\"/course-images/chair.jpg\"></div>"
+                "description": "<p>Stepstools and ladders used incorrectly can lead to serious injury should only use them as intended.</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/ladder.jpg') }}\"> <img src=\"{{ global_asset('course-images/chair.jpg') }}\"></div>"
             },
             {
                 "title": "OSHA Walking and Working Surfaces Standard:  Subpart D 1910.25-26:  Portable Ladders:",
-                "description": "<div class=\\\"grid grid-cols-2 gap-5\\\">   <img src=\"/course-images/ladder-lean.jpg\">   <p>All ladders must be inspected periodically, kept in good condition at all times, and must be free from sharp edges, splinters, oil grease, or other defects which would affect their use.</p></div>"
+                "description": "<div class=\\\"grid grid-cols-2 gap-5\\\">   <img src=\"{{ global_asset('course-images/ladder-lean.jpg') }}\">   <p>All ladders must be inspected periodically, kept in good condition at all times, and must be free from sharp edges, splinters, oil grease, or other defects which would affect their use.</p></div>"
             },
             {
                 "title": "Tripping Hazards: Clutter, Loose Wires, etc.",
-                "description": "<p>Clutter can build up in storage areas, work areas, hallways, and walkways potentially leading to an STF incident. Exposed cords on the floor, stretched across walkways, and tangled near work spaces can catch an employee’s foot and lead to a trip and fall incident. Open cabinet, file, or desk drawers can cause a fall.</p><div class=\\\"grid grid-cols-3 gap-5\\\"><img src=\"/course-images/fall.jpg\"> <img src=\"/course-images/cables.jpg\"> <img src=\"/course-images/sandbag.jpg\"></div>"
+                "description": "<p>Clutter can build up in storage areas, work areas, hallways, and walkways potentially leading to an STF incident. Exposed cords on the floor, stretched across walkways, and tangled near work spaces can catch an employee’s foot and lead to a trip and fall incident. Open cabinet, file, or desk drawers can cause a fall.</p><div class=\\\"grid grid-cols-3 gap-5\\\"><img src=\"{{ global_asset('course-images/fall.jpg') }}\"> <img src=\"{{ global_asset('course-images/cables.jpg') }}\"> <img src=\"{{ global_asset('course-images/sandbag.jpg') }}\"></div>"
             },
             {
                 "title": "Prevention Solutions",
-                "description": "<div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/chord-bag.jpg\"><p>Retractable cord holder</p><img src=\"/course-images/chord-tape.jpg\"><p>Cords on floor partially secured with cord cover. Cover can extend over the length of the exposed cord.</p></div>"
+                "description": "<div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/chord-bag.jpg') }}\"><p>Retractable cord holder</p><img src=\"{{ global_asset('course-images/chord-tape.jpg') }}\"><p>Cords on floor partially secured with cord cover. Cover can extend over the length of the exposed cord.</p></div>"
             },
             {
                 "title": "Improper use of floor mats and runners:",
-                "description": "<p>Mats are used to prevent STFs to provide slip-resistant walking surfaces by absorbing liquid, and by removing dirt, debris, and liquid from shoes. Mats are only effective if properly used and maintained. Old or poorly placed mats can contribute to slips, trips, and falls</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"/course-images/folded-matt.jpg\"> <img src=\"/course-images/bent-matt.jpg\"></div>"
+                "description": "<p>Mats are used to prevent STFs to provide slip-resistant walking surfaces by absorbing liquid, and by removing dirt, debris, and liquid from shoes. Mats are only effective if properly used and maintained. Old or poorly placed mats can contribute to slips, trips, and falls</p><div class=\\\"grid grid-cols-2 gap-5\\\"><img src=\"{{ global_asset('course-images/folded-matt.jpg') }}\"> <img src=\"{{ global_asset('course-images/bent-matt.jpg') }}\"></div>"
             },
             {
                 "title": "Prevention Solutions",

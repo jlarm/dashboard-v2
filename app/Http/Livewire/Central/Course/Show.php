@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Central\Course;
 
 use App\Models\Course;
 use Illuminate\Support\Facades\URL;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Show extends Component
@@ -12,12 +13,12 @@ class Show extends Component
 
     public $slides;
 
-    public function mount()
+    public function mount(): void
     {
-        $this->slides = collect($this->course->slides);
+        $this->slides = $this->course->slides;
     }
 
-    public function quizLink()
+    public function quizLink(): string
     {
         return URL::temporarySignedRoute(
             'courses.quiz',
@@ -26,7 +27,7 @@ class Show extends Component
         );
     }
 
-    public function render()
+    public function render(): View
     {
         $quizLink = $this->quizLink();
 
