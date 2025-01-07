@@ -11,6 +11,7 @@ class DealerDoc extends Model
     protected $fillable = [
         'title',
         'store_id',
+        'url',
         'file_name',
         'file_path',
     ];

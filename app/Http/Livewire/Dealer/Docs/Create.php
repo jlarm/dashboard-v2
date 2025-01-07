@@ -13,6 +13,7 @@ class Create extends Component
     use WithFileUploads;
 
     public $title;
+    public $url;
 
     public $file;
 
@@ -22,21 +23,25 @@ class Create extends Component
 
     protected $rules = [
         'title' => 'required',
-        'file' => 'required|mimes:pdf|max:1024',
+        'url' => 'nullable|url',
+        'file' => 'nullable|mimes:pdf|max:10240',
     ];
 
-    public function save()
+    public function save(): void
     {
         try {
-            //            $this->validate();
+            $this->validate();
 
-            $fileUpload = $this->file->store(tenant()->id, 'dealer-docs');
+            if ($this->file) {
+                $fileUpload = $this->file->store(tenant()->id, 'dealer-docs');
+            }
 
             DealerDoc::create([
                 'store_id' => Store::first()->id,
                 'title' => $this->title,
-                'file_name' => $this->file->getClientOriginalName(),
-                'file_path' => $fileUpload,
+                'url' => $this->url,
+                'file_name' => $this->file?->getClientOriginalName() ?? '',
+                'file_path' => $fileUpload ?? '',
             ]);
 
             $this->reset();

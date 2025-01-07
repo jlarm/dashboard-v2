@@ -13,12 +13,22 @@
                             </div>
                         </div>
                         <div class="space-x-5 flex flex-col md:flex-row justify-end">
+                            @if($doc->url)
+                                <a target="_blank"
+                                   href="{{ $doc->url }}"
+                                   download
+                                   class="text-sm leading-6 text-gray-900">
+                                    Link
+                                </a>
+                            @endif
+                            @if($doc->file_name)
                             <a target="_blank"
                                href="https://armp-dealer-docs.nyc3.cdn.digitaloceanspaces.com//{{ $doc->file_path }}"
                                download
                                class="text-sm leading-6 text-gray-900">
                                 Download
                             </a>
+                            @endif
                             @can('create-dealerships')
                                 <button
                                     class="text-red-500 text-sm"
