@@ -15,8 +15,8 @@ class Create extends Component
     use WithFileUploads;
 
     public $title;
-
     public $file;
+    public $url;
 
     protected $messages = [
         'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
@@ -24,7 +24,8 @@ class Create extends Component
 
     protected $rules = [
         'title' => 'required',
-        'file' => 'required|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar|max:10240',
+        'url' => 'nullable|url',
+        'file' => 'nullable|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar|max:10240',
     ];
 
     public function save(): void
@@ -36,27 +37,39 @@ class Create extends Component
         DB::beginTransaction();
 
         try {
-            $fileName = $this->file->getClientOriginalName();
+            if (!$this->url && !$this->file) {
 
-            // Attempt to upload the file
-            $filePath = Storage::disk('central-docs')->putFileAs('/', $this->file, $fileName);
+                Notification::make()
+                    ->title('Please provide a URL or upload a file.')
+                    ->warning()
+                    ->send();
+                throw new \Exception('Please provide a URL or upload a file.');
+            }
 
-            // Check if the file was successfully uploaded
-            if (!$filePath) {
-                throw new \Exception('File upload failed. Please try again.');
+            if ($this->file) {
+                $fileName = $this->file->getClientOriginalName();
+
+                // Attempt to upload the file
+                $filePath = Storage::disk('central-docs')->putFileAs('/', $this->file, $fileName);
+
+                // Check if the file was successfully uploaded
+                if (!$filePath) {
+                    throw new \Exception('File upload failed. Please try again.');
+                }
             }
 
             // Create the Document record in the database
             Document::create([
                 'title' => $this->title,
-                'file_name' => $fileName,
+                'url' => $this->url,
+                'file_name' => $fileName ?? '',
             ]);
 
             // Commit the transaction since both operations succeeded
             DB::commit();
 
             // Reset the form fields
-            $this->reset(['title', 'file']);
+            $this->reset(['title', 'url', 'file']);
 
             // Emit the 'saved' event
             $this->emit('saved');
