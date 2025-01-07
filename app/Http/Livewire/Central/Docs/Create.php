@@ -24,7 +24,7 @@ class Create extends Component
 
     protected $rules = [
         'title' => 'required',
-        'file' => 'required|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar|max:1024',
+        'file' => 'required|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar|max:10240',
     ];
 
     public function save(): void

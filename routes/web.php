@@ -23,12 +23,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
     Route::prefix('dealerships/')->name('dealerships.')->group(function () {
-        Route::get('/', function () {
-            return view('central.dealership.index');
-        })->name('index');
-        Route::get('create', function () {
-            return view('central.dealership.create');
-        })->name('create');
+        Route::get('/', function () { return view('central.dealership.index'); })->name('index');
+        Route::get('create', function () { return view('central.dealership.create'); })->name('create');
         Route::post('create', CreateController::class)->name('store');
     });
 
