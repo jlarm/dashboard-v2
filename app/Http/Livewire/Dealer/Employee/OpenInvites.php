@@ -117,7 +117,7 @@ class OpenInvites extends Component
 
     private function applyManagerFilter($query)
     {
-        if (auth()->user()->hasRole('Manager')) {
+        if (auth()->user()->cannot('create-stores')) {
             $query->where('department_id', auth()->user()->department_id);
         }
         return $query;
