@@ -33,7 +33,7 @@ class RedSentryReportGenerationCommand extends Command
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
 
-            $stores = Store::all();
+            $stores = Store::with('scanSetting')->get();
 
             $storesWithScanSettings = $stores->filter(function ($store) {
                 return $store->scanSetting->name ?? null;
@@ -48,6 +48,8 @@ class RedSentryReportGenerationCommand extends Command
                     'username' => env('RED_SENTRY_USER'),
                     'password' => env('RED_SENTRY_PASS'),
                 ]);
+
+                $this->info('Attempting to connect to: '.env('RED_SENTRY_API_BASE_URL').'/login');
 
                 $token = $user['token'];
 
