@@ -44,12 +44,12 @@ class RedSentryReportGenerationCommand extends Command
                 $scanTypes = ['external', 'internal'];
                 $reportTypes = ['executive', 'technical'];
 
-                $user = Http::post(env('RED_SENTRY_API_BASE_URL').'/login', [
-                    'username' => env('RED_SENTRY_USER'),
-                    'password' => env('RED_SENTRY_PASS'),
+                $user = Http::post(config('redsentry.url').'/login', [
+                    'username' => config('redsentry.username'),
+                    'password' => config('redsentry.password'),
                 ]);
 
-                $this->info('Attempting to connect to: '.env('RED_SENTRY_API_BASE_URL').'/login');
+                $this->info('Attempting to connect to: '.config('redsentry.url').'/login');
 
                 $token = $user['token'];
 
@@ -89,7 +89,7 @@ class RedSentryReportGenerationCommand extends Command
         }
         $fileName = $dealerName.'-'.now()->format('Ymdhis').'-'.$reportType.'.pdf';
 
-        $statsRequest = new Request('GET', env('RED_SENTRY_API_BASE_URL').($scanType === 'external' ? '/v2' : '').'/'.$scanType.'/workbench?page=0&size=20&search='.$store->scanSetting->name.'&sort_dir=asc', [
+        $statsRequest = new Request('GET', config('redsentry.url').($scanType === 'external' ? '/v2' : '').'/'.$scanType.'/workbench?page=0&size=20&search='.$store->scanSetting->name.'&sort_dir=asc', [
             'Authorization' => $token,
         ]);
 
@@ -115,7 +115,7 @@ class RedSentryReportGenerationCommand extends Command
             return;
         }
 
-        $reportRequest = new Request('GET', env('RED_SENTRY_API_BASE_URL').($scanType === 'external' ? '/v2' : '').'/'.$scanType.'/'.$store->scanSetting->name.'/report/'.$reportType, [
+        $reportRequest = new Request('GET', config('redsentry.url').($scanType === 'external' ? '/v2' : '').'/'.$scanType.'/'.$store->scanSetting->name.'/report/'.$reportType, [
             'Authorization' => $token,
         ]);
 
