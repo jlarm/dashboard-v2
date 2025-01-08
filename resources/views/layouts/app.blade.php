@@ -7,9 +7,7 @@
     <link rel="shortcut icon" href="{{ url('/favicon.svg') }}" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url('/ios-icon.png') }}">
 
-    <title>@if(tenant('company'))
-            {{ tenant('company') }} |
-        @endif{{ config('app.name', 'ARMP') }}</title>
+    <title>{{ config('app.name', 'ARMP') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

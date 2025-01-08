@@ -12,10 +12,10 @@
     <div class="p-5 border border-gray-200 shadow-sm rounded-xl">
         <x-table>
             <x-slot name="head">
-                @can('delete-users')
+                @role('super-admin')
                 <x-table.heading>Id</x-table.heading>
                 <x-table.heading>Consultant</x-table.heading>
-                @endcan
+                @endrole
                 <x-table.heading>Dealership</x-table.heading>
                 <x-table.heading>Status</x-table.heading>
                 <x-table.heading></x-table.heading>

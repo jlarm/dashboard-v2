@@ -5,9 +5,9 @@
                 <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">SDS Sheets</h1>
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none flex gap-3">
-                @can('delete-users')
+                @role('super-admin')
                     <a href="{{ route('sds.create') }}" class="block rounded-md bg-arm-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">Add SDS Sheet</a>
-                @endcan
+                @endrole
             </div>
         </div>
         <div class="flex justify-start mt-3">

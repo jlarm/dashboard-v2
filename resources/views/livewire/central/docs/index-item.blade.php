@@ -19,7 +19,7 @@
                 @endif
 
                 <!-- Button Icon -->
-                @can('delete-dealerships')
+                    @role('super-admin')
                     <div class="hs-tooltip inline-block">
                         <button wire:click="$emit('modal.open', 'central.docs.delete',  @js(['doc' => $doc->id]))" type="button" class="hs-tooltip-toggle size-[30px] inline-flex justify-center items-center gap-x-2 rounded-lg border border-transparent text-red-600 hover:bg-red-100  disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-red-100" data-hs-overlay="#hs-pro-dupfmdl">
                             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>
@@ -29,7 +29,7 @@
                                     Delete
                                 </span>
                     </div>
-                @endcan
+                @endrole
                 <!-- End Button Icon -->
             </div>
         </div>

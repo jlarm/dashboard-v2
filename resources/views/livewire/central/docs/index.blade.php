@@ -4,9 +4,9 @@
             <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Documents</h1>
         </div>
         <div class="flex justify-end space-x-5">
-            @can('delete-dealerships')
+            @role('super-admin')
             <x-primary-link-button href="{{ route('docs.create') }}">Upload</x-primary-link-button>
-            @endcan
+            @endrole
             <div>
                 <div>
                     <label for="search" class="sr-only">Search Documents</label>

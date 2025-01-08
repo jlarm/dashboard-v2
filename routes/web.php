@@ -76,7 +76,7 @@ Route::get('/thank-you', function () {
 // Admin Access
 // **************************************************
 
-Route::middleware(['can:delete-users', 'auth', 'verified'])->group(function () {
+Route::middleware(['role:super-admin', 'auth', 'verified'])->group(function () {
 
     Route::prefix('employees/')->name('employees.')->group(function () {
         Route::get('/', \App\Http\Livewire\Central\Employee\Index::class)->name('index');
@@ -88,18 +88,18 @@ Route::middleware(['can:delete-users', 'auth', 'verified'])->group(function () {
         Route::get('{user:slug}', \App\Http\Controllers\Central\Employee\ShowController::class)->name('view');
     });
 
-    Route::get('roles', \App\Http\Livewire\Central\Role\Index::class)->name('role.index');
-    Route::get('roles/{role:id}', \App\Http\Livewire\Central\Role\Edit::class)->name('role.edit');
+//    Route::get('roles', \App\Http\Livewire\Central\Role\Index::class)->name('role.index');
+//    Route::get('roles/{role:id}', \App\Http\Livewire\Central\Role\Edit::class)->name('role.edit');
+//
+//    Route::get('permissions', \App\Http\Livewire\Central\Permission\Index::class)->name('permission.index');
+//    Route::get('permissions/{permission:id}', \App\Http\Livewire\Central\Permission\Edit::class)->name('permission.edit');
 
-    Route::get('permissions', \App\Http\Livewire\Central\Permission\Index::class)->name('permission.index');
-    Route::get('permissions/{permission:id}', \App\Http\Livewire\Central\Permission\Edit::class)->name('permission.edit');
+//    Route::get('departments', \App\Http\Livewire\Central\Department\Index::class)->name('department.index');
+//    Route::get('departments/{department:id}', \App\Http\Livewire\Central\Department\Edit::class)->name('department.edit');
 
-    Route::get('departments', \App\Http\Livewire\Central\Department\Index::class)->name('department.index');
-    Route::get('departments/{department:id}', \App\Http\Livewire\Central\Department\Edit::class)->name('department.edit');
-
-    Route::get('course-management', \App\Http\Livewire\Central\CourseManagement\Index::class)->name('course-management.index');
-    Route::get('course-management/{course:slug}', \App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
-    Route::get('course-management/quiz/{course:slug}', \App\Http\Livewire\Central\CourseManagement\EditQuiz::class)->name('course-management.edit-quiz');
+//    Route::get('course-management', \App\Http\Livewire\Central\CourseManagement\Index::class)->name('course-management.index');
+//    Route::get('course-management/{course:slug}', \App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
+//    Route::get('course-management/quiz/{course:slug}', \App\Http\Livewire\Central\CourseManagement\EditQuiz::class)->name('course-management.edit-quiz');
 
     Route::get('osha-violations/create', \App\Http\Livewire\Central\AuditStatements\Osha\Create::class)->name('osha-violations.create');
     Route::get('osha-violations/{oshaViolation}', \App\Http\Livewire\Central\AuditStatements\Osha\Edit::class)->name('osha-violations.edit');

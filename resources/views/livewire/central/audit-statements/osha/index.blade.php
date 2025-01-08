@@ -6,9 +6,9 @@
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none flex gap-3">
                 <x-primary-link-button target="_blank" href="{{ route('osha-violations.print') }}">Print View</x-primary-link-button>
-                @can('delete-users')
+                @role('super-admin')
                 <a href="{{ route('osha-violations.create') }}" class="block rounded-md bg-arm-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">Add Violation</a>
-                @endcan
+                @endrole
             </div>
         </div>
         <div class="mt-8 flow-root">
@@ -28,9 +28,9 @@
                             <tr>
                                 <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">{{ $violation->statement }}</td>
                                 <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                    @can('delete-users')
+                                    @role('super-admin')
                                     <a href="{{ route('osha-violations.edit', $violation) }}" class="text-arm-blue-600 hover:text-arm-blue-900">Edit<span class="sr-only">, {{ $violation->violation }}</span></a>
-                                    @endcan
+                                    @endrole
                                 </td>
                             </tr>
                         @empty
