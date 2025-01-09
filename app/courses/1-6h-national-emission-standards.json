@@ -23,10 +23,6 @@
                 "description": "<ul><li>Three Affected Source Categories<ul><li>Paint stripping operations<ul><li>Using Methylene Chloride (MeCl) to remove dried paint from wood, plastic, metal or other surfaces</li></ul></li><li>Motor vehicle and mobile equipment spraying-applied surface coating operations</li><li>Miscellaneous surface coating<ul><li>Spray application of coatings containing Cr, Pb, Mn, Ni, or Cd (target HAPs) to any metal or plastic parts or products that are not motor vehicles or mobile equipment</li></ul></li></ul></li></ul>"
             },
             {
-                "title": "NESHAP (better known as the 6H rule)",
-                "description": "<ul><li>Sources NOT affected</li><ul><li>Surface coating or paint stripping by Armed Forces, NASA, or National Nuclear Security Administration operations</li><li>Surface coating or paint stripping of military munitions or equipment for use by Armed Forces</li><li>Surface coating or paint stripping by individuals on personal vehicles, possessions, or property as a hobby or maintenance, or done by individuals for others without compensation.</li><ul><li>But, rule covers surface coating by individuals of more than 2 vehicles or mobile equipment in a year, whether or not compensated</li></ul></ul></ul>"
-            },
-            {
                 "title": "NESHAP (or better know as the 6H rule)",
                 "description": "<ul><li>Sources NOT affected<ul><li>Surface coating or paint stripping by Armed Forces, NASA, or National Nuclear Security Administration operations</li><li>Surface coating or paint stripping of military munitions or equipment for use by Armed Forces</li><li>Surface coating or paint stripping by individuals on personal vehicles, possessions, or property as a hobby or maintenance, or done by individuals for others without compensation.<ul><li>But, rule covers surface coating by individuals of more than 2 vehicles or mobile equipment in a year, whether or not compensated</li></ul></li></ul></li></ul>"
             },
