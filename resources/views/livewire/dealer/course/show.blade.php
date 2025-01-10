@@ -17,7 +17,7 @@
             <article x-show="activeSlide === {{ $index }}" class="space-y-5" x-cloak>
                 <h1 class="font-bold">{{ isset($slide['title']) ? __($slide['title']) : __($course->name) }}</h1>
                 <div class="prose min-w-full">
-                    {!! Blade::render($slide['description']) !!}
+                    {!! Blade::render(__($slide['description'])) !!}
                 </div>
             </article>
         @endforeach

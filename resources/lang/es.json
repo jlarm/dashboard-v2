@@ -830,6 +830,16 @@
      "24 hours": "24 horas",
      "10 days": "10 días",
      "15 days": "15 días",
-     "30 days": "30 días"
-
+     "30 days": "30 días",
+     "Can Spam": "Can Spam",
+     "<p>This Act may be cited as the \"Controlling the Assault of Non-Solicited Pornography and Marketing Act of 2003\", or the \"CAN-SPAM Act of 2003\".</p><p><strong>What it requires;</strong></p><ul><li>The law requires the following for all unsolicited commercial email, regardless of the number of emails sent:</li><li>Include a way to unsubscribe over the Internet<ul><li>Honor unsubscribes within 10 days</li><li>Unsubscribe mechanism must work for at least 30 days after message is sent</li></ul></li><li>Include the sender's valid postal mailing address</li><li>Clearly identify the email as an advertisement in some fashion</li><li>Use an accurate sender name and a valid email address</li><li>Accurately describe the content of the email in the subject line</li></ul>": "<p>Esta Ley puede ser citada como \"Ley para controlar el asalto de pornografía no solicitada y marketing de 2003\", o la \"Ley CAN-SPAM de 2003\".</p><p><strong>Lo que requiere;</strong></p><ul><li>La ley requiere lo siguiente para todas las transmisiones de correo electrónico comercial no solicitado, independientemente del número de transmisiones enviadas:</li><li>Incluir una manera de darse de baja a través de Internet<ul><li>Honore las solicitudes de baja dentro de 10 días</li><li>El mecanismo de cancelación debe funcionar al menos 30 días después de que se haya enviado el mensaje</li></ul></li><li>Incluir la dirección postal válida del remitente</li><li>Identificar claramente el correo electrónico como una publicidad de alguna manera</li><li>Usar un nombre y dirección de remitente válidos</li><li>Describir con precisión el contenido del correo electrónico en la línea de asunto</li></ul>",
+     "What does “Can SPAM” Act stand for?": "¿Qué significa la Ley \"Can SPAM\"?",
+     "Controlling the Annual Number of Solicitations Programs being Administered and Monitored Act of 2003": "Ley para controlar el número anual de programas de solicitudes administrados y supervisados de 2003",
+     "Controlling the Assault of Non-Solicited Pornography And Marketing Act of 2003": "Ley para controlar el asalto de pornografía no solicitada y marketing de 2003",
+     "Controlling the Assault of Non-Specific Program Act of Marketing of 2003": "Ley para controlar el asalto de programas no específicos de marketing de 2003",
+     "Controlling the Assault of Non-Specific Pornography And Marketing Act of 2003": "Ley para controlar el asalto de pornografía no específica y marketing de 2003",
+     "The law requires that each email must include a way to unsubscribe over the internet and must honor this unsubscribe within 24 hours.": "La ley requiere que cada correo electrónico incluya una manera de darse de baja a través de Internet y debe honrar esta cancelación dentro de 24 horas.",
+     "You must always describe the content of the email in the subject line.": "Debe siempre describir el contenido del correo electrónico en la línea de asunto.",
+     "Once you Unsubscribe the mechanism must work for at least 30 days after the message is sent.": "Una vez que se da de baja, el mecanismo debe funcionar al menos 30 días después de que se haya enviado el mensaje."
+     
 }
