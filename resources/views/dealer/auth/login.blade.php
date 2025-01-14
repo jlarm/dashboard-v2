@@ -1,13 +1,12 @@
 <x-guest-layout>
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')"/>
     <div class="flex min-h-full">
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
                     <x-application-logo class="w-64 h-auto fill-current text-gray-500"/>
-                    <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your
-                        account</h2>
+                    <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+                    <x-auth-session-status class="mb-4" :status="session('status')"/>
                 </div>
 
                 <div class="mt-10">

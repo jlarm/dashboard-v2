@@ -4,14 +4,13 @@
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
                     <x-application-logo class="w-64 h-auto fill-current text-gray-500"/>
-                    <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your
-                        account</h2>
+                    <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+                    <x-auth-session-status class="mb-4" :status="session('status')"/>
                 </div>
 
                 <div class="mt-10">
                     <div>
                         <!-- Session Status -->
-                        <x-auth-session-status class="mb-4" :status="session('status')"/>
                         <form method="POST" action="{{ route('login') }}" class="space-y-6">
                             @csrf
                             <div>
