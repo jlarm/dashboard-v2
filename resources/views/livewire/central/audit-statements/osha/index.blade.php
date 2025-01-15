@@ -24,15 +24,8 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                        @forelse($violations as $violation)
-                            <tr>
-                                <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">{{ $violation->statement }}</td>
-                                <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                    @role('super-admin')
-                                    <a href="{{ route('osha-violations.edit', $violation) }}" class="text-arm-blue-600 hover:text-arm-blue-900">Edit<span class="sr-only">, {{ $violation->violation }}</span></a>
-                                    @endrole
-                                </td>
-                            </tr>
+                        @forelse($violations as $oshaViolationStatements)
+                            <livewire:central.audit-statements.osha.index-item :oshaViolationStatements="$oshaViolationStatements" :wire:key="$oshaViolationStatements->id" />
                         @empty
                             <tr>
                                 <td colspan="3" class="py-4 text-sm text-gray-500 text-center">No violation statements found.</td>

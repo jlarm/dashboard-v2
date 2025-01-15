@@ -44,9 +44,12 @@
                             @endforeach
                         @endif
                     </div>
-                    <div>
-                        <x-primary-button>Submit</x-primary-button>
-                        <x-button.secondary href="{{ route('glba-violations.index') }}">Cancel</x-button.secondary>
+                    <div class="flex justify-between">
+                        <div>
+                            <x-primary-button>Submit</x-primary-button>
+                            <x-button.secondary href="{{ route('glba-violations.index') }}">Cancel</x-button.secondary>
+                        </div>
+                        <livewire:central.audit-statements.glba.delete :glba-violation-statements="$glbaViolation" />
                     </div>
                 </div>
 

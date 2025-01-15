@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Central\AuditStatements\Osha;
 
+use App\Models\OshaViolationStatements;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -9,10 +11,12 @@ class Index extends Component
 {
     use WithPagination;
 
-    public function render()
+    protected $listeners = ['statementDeleted' => '$refresh'];
+
+    public function render(): View
     {
         return view('livewire.central.audit-statements.osha.index', [
-            'violations' => \App\Models\OshaViolationStatements::orderBy('statement')->paginate(20),
+            'violations' => OshaViolationStatements::orderBy('statement')->paginate(20),
         ]);
     }
 }

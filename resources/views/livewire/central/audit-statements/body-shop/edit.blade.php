@@ -44,9 +44,12 @@
                             @endforeach
                         @endif
                     </div>
-                    <div>
-                        <x-primary-button>Submit</x-primary-button>
-                        <x-button.secondary href="{{ route('body-shop-violations.index') }}">Cancel</x-button.secondary>
+                    <div class="flex justify-between">
+                        <div>
+                            <x-primary-button>Update</x-primary-button>
+                            <x-button.secondary href="{{ route('body-shop-violations.index') }}">Cancel</x-button.secondary>
+                        </div>
+                        <livewire:central.audit-statements.body-shop.delete :body-shop-violation-statement="$bodyShopViolation" />
                     </div>
                 </div>
 
