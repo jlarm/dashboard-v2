@@ -4,9 +4,10 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Invite;
-use DB;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Livewire\WithFileUploads;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -39,7 +40,7 @@ class Import extends Modal
             DB::transaction(function () use ($data) {
                 foreach ($data['employees'] as $index => $item) {
                     try {
-                        $validator = \Validator::make($item, [
+                        $validator = Validator::make($item, [
                             'Name' => 'required|string',
                             'Email' => 'required|email|unique:users,email|unique:invites,email',
                             'Stores' => 'nullable',
@@ -49,8 +50,15 @@ class Import extends Modal
                         ]);
 
                         if ($validator->fails()) {
+                            $errors = $validator->errors()->all();
+
+                            // Skip only if the only error is email already taken
+                            if (count($errors) === 1 && str_contains($errors[0], 'email has already been taken')) {
+                                continue;
+                            }
+
                             $this->importErrors[] = [
-                                'errors' => $validator->errors()->all(),
+                                'errors' => $errors,
                                 'values' => $item,
                             ];
 
