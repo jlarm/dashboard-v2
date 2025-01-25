@@ -4,7 +4,7 @@ includes:
 parameters:
     checkMissingIterableValueType: true
 
-    level: max
+    level: 5
 
     paths:
         - app

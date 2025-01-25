@@ -4,6 +4,7 @@ namespace App\Models\Dealer;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
@@ -21,6 +22,7 @@ class Course extends Model
         'name',
         'slides',
         'questions',
+        'years_expires',
     ];
 
     protected $casts = [
@@ -56,5 +58,19 @@ class Course extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    public function lastResult(): BelongsTo
+    {
+        return $this->belongsTo(CourseResults::class);
+    }
+
+    public function scopeWithLastResult($query): void
+    {
+        $query->addSelect(['last_result_id' => CourseResults::select('id')
+            ->whereColumn('course_id', 'courses.id')
+            ->latest()
+            ->take(1)
+        ])->with('lastResult');
     }
 }

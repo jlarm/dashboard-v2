@@ -4,6 +4,7 @@ use App\Http\Controllers\Central\Course\CourseResultsController;
 use App\Http\Controllers\Central\Dealership\CreateController;
 use App\Http\Controllers\Central\Employee\StoreController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TenantLookupController;
 use App\Http\Livewire\Central\Course\Index;
 use App\Http\Livewire\Central\Course\Quiz;
 use App\Http\Livewire\Central\Course\Show;
@@ -65,6 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // Public Access
 // **************************************************
 
+Route::get('dealer-login', [TenantLookupController::class, 'index'])->name('dealer-login');
+Route::post('dealer-login', [TenantLookupController::class, 'lookup'])->middleware(['throttle:6,1'])->name('dealer-login.lookup');
 Route::get('employees/register', \App\Http\Controllers\Central\Employee\RegisterController::class)->middleware('signed')->name('employees.create');
 Route::post('employees/store', \App\Http\Controllers\Central\Employee\StoreRegistrationController::class)->name('employees.store');
 Route::get('contract/view/{contract:uuid}', \App\Http\Livewire\Central\Contracts\Review::class)->middleware('signed')->name('contracts.show');

@@ -29,6 +29,7 @@ use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Docs\Index;
 use App\Http\Livewire\Dealer\Employee\DeletedIndex;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
+use App\Http\Livewire\Tenant\Employee\Show;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -86,7 +87,7 @@ Route::name('dealer.')->middleware([
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('employees.store');
 
     Route::prefix('courses/')->name('courses.')->group(function () {
-        Route::view('/', 'dealer.course.index')->middleware('auth')->name('index');
+        Route::get('/', \App\Http\Livewire\Tenant\Course\Index::class)->middleware('auth')->name('index');
         Route::view('all', 'dealer.course.all')->middleware(['auth', 'role:super-admin|Consultant'])->name('all');
         Route::get('{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('show');
         Route::post('{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('results.store');
@@ -190,7 +191,7 @@ Route::name('dealer.')->middleware([
             Route::get('/', EmployeeIndexController::class)->name('index');
             Route::view('create', 'dealer.employee.create')->name('new');
             Route::view('open-invites', 'dealer.employee.open-invites')->name('open-invites');
-            Route::get('{user:slug}', [UserController::class, 'show'])->name('show');
+            Route::get('{user:slug}', Show::class)->name('show');
         });
 
         Route::view('scans', 'dealer.scan.index')->middleware(['auth', 'single.store'])->name('scan.index');
