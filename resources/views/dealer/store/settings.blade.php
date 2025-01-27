@@ -66,6 +66,19 @@
                     :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                     class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
                 >Compliance</button>
+                @can('create-dealerships')
+                <button
+                    :id="$id('tab', whichChild($el, $el.parentElement))"
+                    @click="select($el.id)"
+                    @mousedown.prevent
+                    @focus="select($el.id)"
+                    type="button"
+                    :tabindex="isSelected($el.id) ? 0 : -1"
+                    :aria-selected="isSelected($el.id)"
+                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
+                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
+                >Course Management</button>
+                @endcan
                 <button
                     :id="$id('tab', whichChild($el, $el.parentElement))"
                     @click="select($el.id)"
@@ -114,8 +127,16 @@
                 role="tabpanel"
                 class="p-2"
             >
-                <livewire:dealer.settings.ridgeback-settings-form :store="$store" />
+                <livewire:dealer.settings.optional-courses-form />
             </section>
+                <section
+                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                    role="tabpanel"
+                    class="p-2"
+                >
+                    <livewire:dealer.settings.ridgeback-settings-form :store="$store" />
+                </section>
             @endcan
         </div>
     </div>
