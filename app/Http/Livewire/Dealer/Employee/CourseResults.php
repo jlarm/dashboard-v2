@@ -5,8 +5,8 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Store;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -45,6 +45,7 @@ class CourseResults extends Component
     private function initializeCourseWithRole(): void
     {
         $userRole = $this->user->roles()->pluck('id')->diff([5])->toArray();
+
         $this->courseWithRole = DB::table('course_role')
             ->where('role_id', $userRole)
             ->pluck('course_id')
@@ -54,10 +55,10 @@ class CourseResults extends Component
     private function getMainCourses(): Collection
     {
         return Course::query()
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->whereHas('departments', fn ($q) => $q->where('id', $this->user->department_id))
-                      ->whereIn('id', $this->courseWithRole)
-                      ->orWhereDoesntHave('departments');
+                    ->whereIn('id', $this->courseWithRole)
+                    ->orWhereDoesntHave('departments');
             })
             ->where('optional', false)
             ->when($this->user->roles()->where('id', 10)->exists(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-m'))

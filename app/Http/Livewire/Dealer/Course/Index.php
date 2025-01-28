@@ -9,7 +9,7 @@ class Index extends Component
 {
     use EmployeeCourses;
 
-    public function mount()
+    public function mount(): void
     {
         $this->loadCurrentUser();
         $this->loadCoursesForCurrentUser();

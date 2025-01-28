@@ -19,7 +19,7 @@ class OptionalCoursesForm extends Component
         $this->selectedCourses = $this->courses
             ->where('optional', true)
             ->pluck('id')
-            ->mapWithKeys(fn($id) => [$id => true])
+            ->mapWithKeys(fn ($id) => [$id => true])
             ->toArray();
     }
 

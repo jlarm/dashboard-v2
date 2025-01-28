@@ -41,6 +41,7 @@ trait EmployeeCourses
             ->whereHas('departments', fn ($query) => $query->where('id', $this->user->department_id))
             ->whereIn('id', $courseWithRole)
             ->orWhereDoesntHave('departments')
+            ->where('optional', false)
             ->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest()])
             ->when($this->getUserHasNoCaliforniaStore(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
             ->when($this->user->roles()->where('id', 10)->exists(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-m'))
@@ -63,6 +64,6 @@ trait EmployeeCourses
         $departmentCourses = $this->getDepartmentCourses($courseWithRole);
         $userCourses = $this->getUserCourses();
 
-        $this->courses = $departmentCourses->merge($userCourses)->unique('id')->where('optional', false)->sortBy('name');
+        $this->courses = $departmentCourses->merge($userCourses)->unique('id')->sortBy('name');
     }
 }
