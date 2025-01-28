@@ -12,7 +12,7 @@
                     >
                 </div>
                 <div class="ml-3 text-sm leading-6">
-                    <label for="{{ $course->id }}" class="text-gray-700">{{ $course->name }}</label>
+                    <label for="{{ $course->id }}" class="text-gray-700">{{ $course->name }} {{ $course->slug === 'sexual-harassment-e' ? '(Employees)' : '' }} {{ $course->slug === 'sexual-harassment-m' ? '(Managers)' : '' }}</label>
                 </div>
             </div>
         @endforeach
