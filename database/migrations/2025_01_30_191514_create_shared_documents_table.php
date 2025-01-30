@@ -10,8 +10,8 @@ return new class extends Migration {
         Schema::create('shared_documents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('url');
             $table->string('file_name');
+            $table->string('file_type');
             $table->timestamps();
         });
     }

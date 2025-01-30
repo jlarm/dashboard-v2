@@ -7,7 +7,7 @@
             </div>
         </div>
         <div>
-
+            <livewire:central.shared-docs.create />
         </div>
     </div>
 </x-app-layout>

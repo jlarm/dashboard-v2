@@ -10,4 +10,7 @@
             </div>
         </div>
     </div>
+    <div class="mt-5">
+        <livewire:central.shared-docs.index />
+    </div>
 </x-app-layout>
