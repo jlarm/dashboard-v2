@@ -21,14 +21,18 @@
                                     Link
                                 </a>
                             @endif
-                            @if($doc->file_name)
-                            <a target="_blank"
-                               href="https://armp-dealer-docs.nyc3.cdn.digitaloceanspaces.com//{{ $doc->file_path }}"
-                               download
-                               class="text-sm leading-6 text-gray-900">
-                                Download
-                            </a>
-                            @endif
+                                @if(!$doc->shared)
+                                    @if($doc->file_name)
+                                        <a target="_blank"
+                                           href="https://armp-dealer-docs.nyc3.cdn.digitaloceanspaces.com//{{ $doc->file_path }}"
+                                           download
+                                           class="text-sm leading-6 text-gray-900">
+                                            Download
+                                        </a>
+                                    @endif
+                                @else
+                                    <button class="text-sm leading-6 text-gray-900" wire:click="download({{ $doc }})">Download</button>
+                                @endif
                             @can('create-dealerships')
                                 @if(!$doc->shared)
                                 <button
