@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Docs;
 
 use App\Models\Dealer\Store;
-use App\Models\DealerDoc;
 use App\Models\SharedDocument;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -26,8 +25,8 @@ class Index extends Component
     {
         $sharedDocs = tenancy()->central(function () {
             return SharedDocument::query()
-                ->select(['title','file_name','url'])
-                ->selectRaw("true as shared")
+                ->select(['title', 'file_name', 'url'])
+                ->selectRaw('true as shared')
                 ->get();
         });
         $docs = $this->store->docs;

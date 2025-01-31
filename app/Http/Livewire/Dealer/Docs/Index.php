@@ -23,8 +23,8 @@ class Index extends Component
     {
         $sharedDocs = tenancy()->central(function () {
             return SharedDocument::query()
-                ->select(['title','file_name','url'])
-                ->selectRaw("true as shared")
+                ->select(['title', 'file_name', 'url'])
+                ->selectRaw('true as shared')
                 ->get();
         });
         $docs = DealerDoc::all();
