@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
-use Illuminate\Database\Query\Builder;
+use App\Models\SharedDocument;
+use App\Policies\SharedDocumentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rules\Password;
@@ -16,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        SharedDocument::class => SharedDocumentPolicy::class,
     ];
 
     /**
@@ -24,9 +25,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Builder::macro('search', function ($field, $string) {
-            return $string ? $this->where($field, 'like', "%$string%") : $this;
-        });
+        $this->registerPolicies();
 
         Gate::before(function ($user, $ability) {
             return $user->hasRole('super-admin') ? true : null;
