@@ -11,9 +11,7 @@ use App\Http\Livewire\Central\Course\Show;
 use App\Http\Livewire\Central\Dashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::view('/', 'welcome')->name('home');
 
 // **************************************************
 // Consultant Access
@@ -24,12 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
     Route::prefix('dealerships/')->name('dealerships.')->group(function () {
-        Route::get('/', function () {
-            return view('central.dealership.index');
-        })->name('index');
-        Route::get('create', function () {
-            return view('central.dealership.create');
-        })->name('create');
+        Route::view('/', 'central.dealership.index')->name('index');
+        Route::view('create', 'central.dealership.create')->name('create');
         Route::post('create', CreateController::class)->name('store');
     });
 
@@ -75,9 +69,7 @@ Route::post('dealer-login', [TenantLookupController::class, 'lookup'])->middlewa
 Route::get('employees/register', \App\Http\Controllers\Central\Employee\RegisterController::class)->middleware('signed')->name('employees.create');
 Route::post('employees/store', \App\Http\Controllers\Central\Employee\StoreRegistrationController::class)->name('employees.store');
 Route::get('contract/view/{contract:uuid}', \App\Http\Livewire\Central\Contracts\Review::class)->middleware('signed')->name('contracts.show');
-Route::get('/thank-you', function () {
-    return view('central.contract.review-submitted');
-})->name('thank-you');
+Route::view('/thank-you', 'central.contract.review-submitted')->name('thank-you');
 
 // **************************************************
 // Admin Access
@@ -87,9 +79,7 @@ Route::middleware(['role:super-admin', 'auth', 'verified'])->group(function () {
 
     Route::prefix('employees/')->name('employees.')->group(function () {
         Route::get('/', \App\Http\Livewire\Central\Employee\Index::class)->name('index');
-        Route::get('deleted', function () {
-            return view('central.employee.deleted');
-        })->name('deleted');
+        Route::view('deleted', 'central.employee.deleted')->name('deleted');
         Route::get('invite', \App\Http\Controllers\Central\Employee\CreateController::class)->name('invite');
         Route::post('invite', StoreController::class)->name('send');
         Route::get('{user:slug}', \App\Http\Controllers\Central\Employee\ShowController::class)->name('view');
