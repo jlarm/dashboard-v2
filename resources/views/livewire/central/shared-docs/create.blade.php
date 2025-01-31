@@ -2,12 +2,27 @@
     <form wire:submit.prevent="save" class="space-y-5">
         <!-- Title -->
         <div>
-            <x-input-label for="title" :value="__('Title')"/>
+            <x-input-label for="title" :value="__('Title*')"/>
             <x-text-input wire:model.defer="title" id="title" class="block mt-1 w-full shadow-none" type="text"
                           name="title"
                           :value="old('title')" required/>
             @error('title') <p class="text-red-500">{{ $message }}</p> @enderror
         </div>
+        <!-- URL -->
+        <div>
+            <x-input-label for="title" :value="__('URL')"/>
+            <x-text-input
+                wire:model.defer="url"
+                id="url"
+                class="block mt-1 w-full shadow-none"
+                type="url"
+                name="url"
+                :value="old('url')"
+                placeholder="https://example.com"
+            />
+            @error('url') <p class="text-red-500">{{ $message }}</p> @enderror
+        </div>
+        <!-- Document -->
         <div class="col-span-full">
             <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">Document</label>
             <div

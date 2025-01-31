@@ -19,10 +19,12 @@ class Create extends Component
 
     public string $title = '';
     public $file = null;
+    public string $url = '';
 
     protected array $rules = [
         'title' => 'required|string|min:2|max:255',
         'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar|max:10240',
+        'url' => 'nullable|url',
     ];
 
     protected array $messages = [
@@ -36,6 +38,15 @@ class Create extends Component
         DB::beginTransaction();
 
         try {
+            if (!$this->file && !$this->url) {
+                Notification::make()
+                    ->title('Please provide a URL or upload a file')
+                    ->warning()
+                    ->send();
+
+                throw new Exception('Please provide a URL or upload a file');
+            }
+
             if ($this->file) {
                 $fileName = $this->file->getClientOriginalName();
 
@@ -51,12 +62,12 @@ class Create extends Component
             SharedDocument::create([
                 'title' => $this->title,
                 'file_name' => $filePath ?? null,
-                'file_type' => $this->file->getClientOriginalExtension(),
+                'url' => $this->url,
             ]);
 
             DB::commit();
 
-            $this->reset(['title','file']);
+            $this->reset(['title','file','url']);
 
             Notification::make()
                 ->title('Document Uploaded')

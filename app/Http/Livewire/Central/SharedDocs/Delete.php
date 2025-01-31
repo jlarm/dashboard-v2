@@ -22,7 +22,9 @@ class Delete extends Modal
     public function delete()
     {
         try {
-            Storage::disk('public')->delete($this->sharedDocument->file_name);
+            if ($this->sharedDocument->file_name) {
+                Storage::disk('public')->delete($this->sharedDocument->file_name);
+            }
 
             $this->sharedDocument->delete();
 
