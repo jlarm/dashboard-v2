@@ -22,6 +22,12 @@ it('can see dealers documentation if super-admin', function () {
         ->assertOk();
 });
 
+it('can not see dealers documentation if consultant', function () {
+    $response = asConsultant()->get(route('dealer-docs.index'));
+
+    $response->assertForbidden();
+});
+
 it('displays upload button', function () {
     $response = asSuperAdmin()
         ->get(route('dealer-docs.index'));
