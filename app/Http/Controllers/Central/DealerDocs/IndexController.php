@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Central\DealerDocs;
 
-use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\DealerDoc;
+use Illuminate\View\View;
 
 class IndexController extends Controller
 {
