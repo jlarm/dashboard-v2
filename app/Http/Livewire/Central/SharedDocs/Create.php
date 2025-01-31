@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+
 use function Sentry\captureException;
 
 class Create extends Component
@@ -18,7 +19,9 @@ class Create extends Component
     use WithFileUploads;
 
     public string $title = '';
+
     public $file = null;
+
     public string $url = '';
 
     protected array $rules = [
@@ -38,7 +41,7 @@ class Create extends Component
         DB::beginTransaction();
 
         try {
-            if (!$this->file && !$this->url) {
+            if (! $this->file && ! $this->url) {
                 Notification::make()
                     ->title('Please provide a URL or upload a file')
                     ->warning()
@@ -55,7 +58,7 @@ class Create extends Component
                 $filePath = Storage::disk('public')->putFileAs('/shared-documents', $this->file, $fileName);
 
                 if (! $filePath) {
-                    throw new Exception("Error uploading the file");
+                    throw new Exception('Error uploading the file');
                 }
             }
 
@@ -67,7 +70,7 @@ class Create extends Component
 
             DB::commit();
 
-            $this->reset(['title','file','url']);
+            $this->reset(['title', 'file', 'url']);
 
             Notification::make()
                 ->title('Document Uploaded')

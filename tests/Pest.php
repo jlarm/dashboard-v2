@@ -54,7 +54,6 @@ function asSuperAdmin(): TestCase
     return test()->actingAs($user);
 }
 
-
 function asConsultant(): TestCase
 {
     $user = User::factory()->create();

@@ -52,6 +52,6 @@ it('can not upload a document without title', function () {
     $component->call('save');
 
     $component->assertHasErrors([
-        'title' => 'required'
+        'title' => 'required',
     ]);
 });
