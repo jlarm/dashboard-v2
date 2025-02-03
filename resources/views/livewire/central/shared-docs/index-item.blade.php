@@ -2,6 +2,12 @@
     <div class="relative group">
         <div>
             <div class="p-0.5 sm:p-1 inline-flex items-center bg-white border border-gray-200 rounded-lg">
+                <div class="tooltip-container inline-block relative">
+                    <a href="{{ route('dealer-docs.edit', $sharedDocument) }}" class="tooltip-toggle size-[30px] inline-flex justify-center items-center gap-x-2 rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                        <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 5-2.414-2.414A2 2 0 0 0 14.172 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"/><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><path d="M8 18h1"/></svg>
+                    </a>
+                </div>
+                <div class="w-px h-5 mx-1 bg-gray-200"></div>
                 @if($sharedDocument->url)
                     <div class="tooltip-container inline-block relative">
                         <a href="{{ $sharedDocument->url }}" target="_blank" class="tooltip-toggle size-[30px] inline-flex justify-center items-center gap-x-2 rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">

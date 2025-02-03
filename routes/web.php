@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Central\Course\CourseResultsController;
+use App\Http\Controllers\Central\DealerDocs\EditController;
 use App\Http\Controllers\Central\Dealership\CreateController;
 use App\Http\Controllers\Central\Employee\StoreController;
 use App\Http\Controllers\ProfileController;
@@ -87,6 +88,7 @@ Route::middleware(['role:super-admin', 'auth', 'verified'])->group(function () {
 
     Route::get('dealer-docs', App\Http\Controllers\Central\DealerDocs\IndexController::class)->name('dealer-docs.index');
     Route::get('dealer-docs/create', App\Http\Controllers\Central\DealerDocs\CreateController::class)->name('dealer-docs.create');
+    Route::get('dealer-docs/{sharedDocument}/edit', EditController::class)->name('dealer-docs.edit');
 
     //    Route::get('roles', \App\Http\Livewire\Central\Role\Index::class)->name('role.index');
     //    Route::get('roles/{role:id}', \App\Http\Livewire\Central\Role\Edit::class)->name('role.edit');
