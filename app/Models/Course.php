@@ -26,6 +26,7 @@ class Course extends Model
     protected $casts = [
         'slides' => 'array',
         'questions' => 'array',
+        'answers' => 'array',
     ];
 
     public function users(): BelongsToMany
