@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Central\Dealership;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealership\CreateRequest;
+use App\Models\Course;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
@@ -11,6 +12,7 @@ use App\Models\Dealership;
 use App\Models\User;
 use App\Notifications\NewDealershipNotification;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class CreateController extends Controller
 {
@@ -38,6 +40,7 @@ class CreateController extends Controller
         $dealer->run(function () use ($validated) {
             $this->createStoreAndSettings($validated);
             $this->createUserAndAssignRole($validated);
+            $this->syncCentralCourses();
         });
 
         $this->sendNotification($validated['name']);
@@ -126,6 +129,41 @@ class CreateController extends Controller
                     'password' => bcrypt($details['password']),
                 ]);
                 $superAdmin->assignRole('super-admin');
+            }
+        }
+    }
+
+    private function syncCentralCourses(): void
+    {
+        // Get central courses first
+        $centralCourses = tenancy()->central(function () {
+            return \App\Models\Course::query()
+                ->select(['id', 'slug', 'slides', 'questions'])
+                ->get();
+        });
+
+        // Now we're in tenant context since we're inside dealer->run()
+        foreach ($centralCourses as $centralCourse) {
+
+            $tenantCourse = \App\Models\Dealer\Course::where('slug', $centralCourse->slug)->first();
+
+            if ($tenantCourse) {
+                try {
+                    // Force decode/encode to ensure proper JSON serialization
+                    $slides = json_decode(json_encode($centralCourse->slides), true);
+                    $questions = json_decode(json_encode($centralCourse->questions), true);
+                    
+                    DB::statement('UPDATE courses SET slides = ?, questions = ? WHERE id = ?', [
+                        json_encode($slides),
+                        json_encode($questions),
+                        $tenantCourse->id
+                    ]);
+
+                } catch (\Exception $e) {
+                    \Log::error('Failed to update tenant course: ' . $e->getMessage());
+                }
+            } else {
+                \Log::info('No matching tenant course found for slug: ' . $centralCourse->slug);
             }
         }
     }
