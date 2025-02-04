@@ -99,9 +99,9 @@ Route::middleware(['role:super-admin', 'auth', 'verified'])->group(function () {
     //    Route::get('departments', \App\Http\Livewire\Central\Department\Index::class)->name('department.index');
     //    Route::get('departments/{department:id}', \App\Http\Livewire\Central\Department\Edit::class)->name('department.edit');
 
-    //    Route::get('course-management', \App\Http\Livewire\Central\CourseManagement\Index::class)->name('course-management.index');
-    //    Route::get('course-management/{course:slug}', \App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
-    //    Route::get('course-management/quiz/{course:slug}', \App\Http\Livewire\Central\CourseManagement\EditQuiz::class)->name('course-management.edit-quiz');
+    Route::get('course-management', \App\Http\Livewire\Central\CourseManagement\Index::class)->name('course-management.index');
+    Route::get('course-management/{course:slug}', \App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
+    Route::get('course-management/quiz/{course:slug}', \App\Http\Livewire\Central\CourseManagement\EditQuiz::class)->name('course-management.edit-quiz');
 
     Route::get('osha-violations/create', \App\Http\Livewire\Central\AuditStatements\Osha\Create::class)->name('osha-violations.create');
     Route::get('osha-violations/{oshaViolation}', \App\Http\Livewire\Central\AuditStatements\Osha\Edit::class)->name('osha-violations.edit');
