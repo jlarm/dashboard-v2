@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Navigation;
 
 use App\Models\Dealer\Store;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class StoreSwitcher extends Component
@@ -22,7 +23,7 @@ class StoreSwitcher extends Component
         $this->currentStore = $request->get('store')?->name;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.navigation.store-switcher', [
             'stores' => $this->getStores(),
@@ -36,6 +37,9 @@ class StoreSwitcher extends Component
 
     private function getStores()
     {
-        return Store::orderBy('name')->get();
+        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+            return Store::orderBy('name')->get();
+        }
+        return auth()->user()->stores;
     }
 }

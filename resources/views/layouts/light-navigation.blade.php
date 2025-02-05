@@ -77,9 +77,9 @@
             </div>
             <div class="my-5 px-4">
                 @if (tenant('locations'))
-                    @can('create-stores')
-                        <livewire:dealer.navigation.store-switcher />
-                    @endcan
+                    @if(auth()->user()->stores->count() > 1 || auth()->user()->hasAnyRole(['super-admin', 'Consultant']))
+                    <livewire:dealer.navigation.store-switcher />
+                    @endif
                 @endif
             </div>
             <livewire:dealer.navigation.main />
