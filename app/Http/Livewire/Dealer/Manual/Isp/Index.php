@@ -11,6 +11,8 @@ class Index extends Component
 {
     public $store;
 
+    protected $listeners = ['$refresh'];
+
     public function mount(Request $request)
     {
         $this->store = $this->getStoreIdFromRequest($request);

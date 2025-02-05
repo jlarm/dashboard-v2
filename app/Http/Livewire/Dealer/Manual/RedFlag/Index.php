@@ -5,18 +5,21 @@ namespace App\Http\Livewire\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Store;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Index extends Component
 {
     public $store;
 
-    public function mount(Request $request)
+    protected $listeners = ['$refresh'];
+
+    public function mount(Request $request): void
     {
         $this->store = $this->getStoreIdFromRequest($request);
     }
 
-    private function getStoreIdFromRequest(Request $request)
+    private function getStoreIdFromRequest(Request $request): Store
     {
         $storeName = $request->get('store')?->name;
 
@@ -27,7 +30,7 @@ class Index extends Component
         return Store::first()->select('id')->first();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.manual.red-flag.index', [
             'manuals' => RedFlag::where('store_id', $this->store->id)->latest()->get(),
