@@ -51,9 +51,11 @@
                             <h3 class="mt-2 text-sm font-semibold text-gray-900">No stores</h3>
                             <p class="mt-1 text-sm text-gray-500">Get started by creating a new store.</p>
                             <div class="mt-6">
+                                @can('create-dealerships')
                                 <button onclick="Livewire.emit('modal.open', 'dealer.store.create')" type="button" class="inline-flex items-center rounded-md bg-arm-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">
                                     Add Store
                                 </button>
+                                @endcan
                             </div>
                         </div>
 

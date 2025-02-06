@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Home;
 
 use App\Models\Dealer\Store;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,11 +15,19 @@ class StoreList extends Component
 
     protected $listeners = ['refreshStores' => '$refresh'];
 
-    public function render()
+    protected function query()
+    {
+        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+            return Store::query();
+        }
+
+        return auth()->user()->stores();
+    }
+
+    public function render(): View
     {
         return view('livewire.dealer.home.store-list', [
-            'stores' => Store::query()
-                ->search('name', $this->search)
+            'stores' => $this->query()
                 ->select('id', 'name', 'slug')
                 ->paginate(10),
         ]);
