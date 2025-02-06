@@ -52,6 +52,7 @@ class User extends Authenticatable
         'store_id',
         'department_id',
         'password',
+        'current_store_id',
     ];
 
     protected $hidden = [
@@ -62,6 +63,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function currentStore(): BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'current_store_id');
+    }
 
     public function getPhoneNumberAttribute(): string
     {
