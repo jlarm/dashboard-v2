@@ -33,6 +33,7 @@ return [
         Stancl\Tenancy\Bootstrappers\RedisTenancyBootstrapper::class, // Note: phpredis is needed
 
         App\Tenancy\Bootstrappers\FixSignedUrls::class,
+        App\Tenancy\Bootstrappers\SpatiePermissionsBootstrapper::class,
     ],
 
     /**
