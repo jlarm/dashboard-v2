@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -79,7 +80,7 @@ class AppServiceProvider extends ServiceProvider
             foreach ($this as $row) {
                 if (is_array($row) && count(array_filter($row, 'is_array')) > 0) {
                     // Log the problematic row for inspection
-                    \Log::error('Problematic row:', $row);
+                    Log::error('Problematic row:', $row);
                 }
 
                 fputcsv($output, $row->toArray());

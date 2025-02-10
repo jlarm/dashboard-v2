@@ -10,7 +10,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class)->group(function () {
 
-    Route::prefix('stores/{store:slug}')->middleware(['stores', 'has.stores', 'auth','canAccessStore'])->group(function () {
+    Route::prefix('stores/{store:slug}')->middleware(['stores', 'has.stores', 'auth', 'canAccessStore'])->group(function () {
 
         Route::get('/', \App\Http\Livewire\Dealer\Store\SingleStore\Home\Index::class)->name('home');
 

@@ -6,23 +6,44 @@ use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class Edit extends SlideOver
 {
     public $user;
+
     public $name;
+
     public $assignedStores;
+
     public $department;
+
     public $assignedRoles;
+
     public $qi;
+
     public $qiCount;
 
-    public function mount(User $user)
+    public function mount(User $user): void
     {
         $this->initializeUserData($user);
     }
+
+    protected array $rules = [
+        'assignedStores' => 'required|array',
+        'department' => 'required|exists:departments,id',
+        'assignedRoles' => 'required|array',
+    ];
+
+    protected $messages = [
+        'assignedStores.required' => 'Please select at least one store.',
+        'department.required' => 'Please select a department.',
+        'department.exists' => 'Please select a valid department.',
+        'assignedRoles.required' => 'Please select at least one role.',
+    ];
 
     private function initializeUserData(User $user)
     {
@@ -35,22 +56,20 @@ class Edit extends SlideOver
         $this->qiCount = Role::find(5)->users()->count();
     }
 
-    public function updateUser()
+    public function updateUser(): void
     {
-        if (count($this->assignedRoles) > 1) {
-            $this->sendNotification('Only one role can be assigned unless it includes "Qualified Individual".', 'warning');
-            return;
-        }
+        $this->validate();
 
         $this->updateUserData();
         $this->syncUserRoles();
         $this->assignQiRole();
         $this->clearPermissionCache();
+        $this->updateCurrentStoreId();
         $this->emitRefreshEvents();
         $this->closeWithSuccessNotification();
     }
 
-    private function updateUserData()
+    private function updateUserData(): void
     {
         $this->user->update([
             'department_id' => $this->department,
@@ -59,7 +78,7 @@ class Edit extends SlideOver
         $this->user->stores()->sync(Store::whereIn('name', $this->assignedStores)->pluck('id')->toArray());
     }
 
-    private function assignQiRole()
+    private function assignQiRole(): void
     {
         if ($this->qi) {
             $this->user->assignRole('Qualified Individual');
@@ -68,29 +87,29 @@ class Edit extends SlideOver
         }
     }
 
-    private function syncUserRoles()
+    private function syncUserRoles(): void
     {
         $this->user->syncRoles($this->assignedRoles);
     }
 
-    private function clearPermissionCache()
+    private function clearPermissionCache(): void
     {
-        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
-    private function emitRefreshEvents()
+    private function emitRefreshEvents(): void
     {
         $this->emitTo('dealer.employee.details', 'refreshEmployeeDetails');
         $this->emitTo('dealer.employee.course-results', 'refreshEmployeeDetails');
     }
 
-    private function closeWithSuccessNotification()
+    private function closeWithSuccessNotification(): void
     {
         $this->close();
-        $this->sendNotification($this->user->name . ' successfully updated', 'success');
+        $this->sendNotification($this->user->name.' successfully updated', 'success');
     }
 
-    private function sendNotification($message, $type)
+    private function sendNotification($message, $type): void
     {
         Notification::make()
             ->title($message)
@@ -98,13 +117,24 @@ class Edit extends SlideOver
             ->send();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.employee.edit', [
             'stores' => Store::all(),
             'departments' => Department::all(),
             'allRoles' => $this->getAvailableRoles(),
         ]);
+    }
+
+    private function updateCurrentStoreId(): void
+    {
+        if (! in_array($this->user->current_store_id, $this->assignedStores)) {
+            $storeId = Store::where('name', $this->assignedStores[0])->first()->id;
+
+            $this->user->update([
+                'current_store_id' => $storeId,
+            ]);
+        }
     }
 
     private function getAvailableRoles()

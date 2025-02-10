@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dealer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dealer\StoreUserRequest;
 use App\Models\Certificate;
 use App\Models\Course;
 use App\Models\Dealer\CourseResults;
@@ -12,22 +13,22 @@ use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Spatie\Browsershot\Browsershot;
 
 class UserController extends Controller
 {
-    public function show(User $user)
+    public function show(User $user): View
     {
         $user->load('department', 'stores', 'roles');
 
         $isQi = $user->roles->contains('name', 'Qualified Individual');
 
         $roles = $user->roles->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
-        
+
         return view('dealer.employee.show', [
             'user' => $user,
             'isQi' => $isQi,
@@ -35,20 +36,16 @@ class UserController extends Controller
         ]);
     }
 
-    public function create(Invite $invite)
+    public function create(Invite $invite): View
     {
         return view('dealer.employee.register', [
             'invite' => $invite,
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $invite = Invite::where('id', $request['id'])->first();
-
-        $request->validate([
-            'password' => ['required', 'confirmed', 'min:8'],
-        ]);
 
         // Create user
         $user = User::create([
@@ -56,6 +53,7 @@ class UserController extends Controller
             'email' => $invite['email'],
             'department_id' => $invite['department_id'],
             'password' => bcrypt($request->input('password')),
+            'current_store_id' => (! empty($invite->stores)) ? (int) $invite->stores[0] : 1,
         ]);
 
         if ($invite['courses']) {
@@ -115,6 +113,6 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->to(RouteServiceProvider::HOME);
     }
 }

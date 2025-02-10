@@ -1,6 +1,11 @@
 <x-wire-elements-pro::tailwind.slide-over on-submit="updateUser">
     <x-slot name="title">Edit</x-slot>
-    <div class="space-y-10">
+    <div class="mb-3">
+        @foreach($errors->all() as $error)
+            <div class="text-red-500">{{ $error }}</div>
+        @endforeach
+    </div>
+        <div class="space-y-10">
         <!-- Store -->
         @if(tenant('locations'))
             <div class="col-span-3">
