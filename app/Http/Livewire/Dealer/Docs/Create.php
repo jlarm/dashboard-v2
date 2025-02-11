@@ -5,8 +5,11 @@ namespace App\Http\Livewire\Dealer\Docs;
 use App\Models\Dealer\Store;
 use App\Models\DealerDoc;
 use Filament\Notifications\Notification;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Log;
+use function Sentry\captureException;
 
 class Create extends Component
 {
@@ -14,7 +17,6 @@ class Create extends Component
 
     public $title;
     public $url;
-
     public $file;
 
     protected $messages = [
@@ -55,8 +57,8 @@ class Create extends Component
                 ->success()
                 ->send();
         } catch (\Exception $e) {
-            \Log::error($e);
-            \Sentry\captureException($e);
+            Log::error($e);
+            captureException($e);
             if (str_contains($e->getMessage(), 'max.')) {
                 $this->addError('file', $this->messages['file.max']);
             } else {
@@ -65,7 +67,7 @@ class Create extends Component
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.docs.create');
     }

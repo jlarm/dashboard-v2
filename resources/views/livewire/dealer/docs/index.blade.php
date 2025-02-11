@@ -23,7 +23,7 @@
                             @if(!$doc->shared)
                                 @if($doc->file_name)
                                     <a target="_blank"
-                                       href="https://armp-dealer-docs.nyc3.cdn.digitaloceanspaces.com//{{ $doc->file_path }}"
+                                       href="https://armp-dealer-docs.nyc3.cdn.digitaloceanspaces.com/{{ $doc->file_path }}"
                                        download
                                        class="text-sm leading-6 text-gray-900">
                                         Download
