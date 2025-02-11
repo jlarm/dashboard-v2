@@ -7,6 +7,8 @@ use App\Models\DealerDoc;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Log;
+use function Sentry\captureException;
 
 class Create extends Component
 {
@@ -16,7 +18,6 @@ class Create extends Component
 
     public $title;
     public $url;
-
     public $file;
 
     protected $messages = [
@@ -35,7 +36,7 @@ class Create extends Component
             $this->validate();
 
             if ($this->file) {
-                $fileUpload = $this->file->store('dealer-docs');
+                $fileUpload = $this->file->store(tenant()->id, 'dealer-docs');
             }
 
             DealerDoc::create([
@@ -57,8 +58,8 @@ class Create extends Component
                 ->success()
                 ->send();
         } catch (\Exception $e) {
-            \Log::error($e);
-            \Sentry\captureException($e);
+            Log::error($e);
+            captureException($e);
             if (str_contains($e->getMessage(), 'max.')) {
                 $this->addError('file', $this->messages['file.max']);
             } else {
