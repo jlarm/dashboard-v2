@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="flex min-h-full">
+    <div  x-data class="flex min-h-full">
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
@@ -44,14 +44,14 @@
                                 <x-input-label for="phone" :value="__('Phone')"/>
 
                                 <x-text-input
+                                    x-mask="999-999-9999"
+                                    placeholder="235-456-2346"
                                     id="phone"
                                     class="block mt-1 w-full"
                                     type="tel"
                                     name="phone"
                                     :value="old('phone')"
                                     required
-                                    autofocus
-                                    x-mask="999-999-9999"
                                 />
 
                                 <x-input-error :messages="$errors->get('phone')" class="mt-2"/>
