@@ -43,10 +43,18 @@
                                 </div>
                                 <div>
                                     <x-input-label for="state" :value="__('State')"/>
-                                    <x-text-input wire:model.lazy="state" id="state" class="block mt-1 w-full"
-                                                  type="text"
-                                                  name="state"
-                                                  :value="old('state')" required/>
+                                    <div class="mt-1">
+                                        <select wire:model="state" id="state" name="state" class="w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-arm-blue-500 sm:text-sm/6">
+                                            <option></option>
+                                            @foreach(App\Enums\State::cases() as $state)
+                                                <option>{{ $state->label() }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+{{--                                    <x-text-input wire:model.lazy="state" id="state" class="block mt-1 w-full"--}}
+{{--                                                  type="text"--}}
+{{--                                                  name="state"--}}
+{{--                                                  :value="old('state')" required/>--}}
                                     <x-input-error :messages="$errors->get('state')" class="mt-2"/>
                                 </div>
                                 <div>
