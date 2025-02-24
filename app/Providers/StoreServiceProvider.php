@@ -2,18 +2,39 @@
 
 namespace App\Providers;
 
+use App\Models\Dealer\Store;
 use Illuminate\Support\ServiceProvider;
 
 class StoreServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton('currentStore', function () {
+        $this->app->singleton('currentStore', function ($app) {
+            $request = $app['request'];
+
+            if ($storeSlug = $request->segment(2)) {
+                return Store::where('slug', $storeSlug)->first();
+            }
+
+            if ($store = $request->get('store')) {
+                return $store;
+            }
+
+            if (!tenant('locations')) {
+                return Store::first();
+            }
+
             return null;
         });
     }
 
     public function boot(): void
     {
+        if (!function_exists('current_store')) {
+            function current_store()
+            {
+                return app('currentStore');
+            }
+        }
     }
 }

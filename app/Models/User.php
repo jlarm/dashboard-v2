@@ -117,6 +117,11 @@ class User extends Authenticatable
         return $this->hasMany(Timeline::class, 'email', 'email');
     }
 
+    public function fitTests(): HasMany
+    {
+        return $this->hasMany(FitTestDoc::class);
+    }
+
     public function routeNotificationForVonage($notification)
     {
         return $this->phone;

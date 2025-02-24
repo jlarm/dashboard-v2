@@ -65,6 +65,8 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
 
             Route::get('documents', \App\Http\Livewire\Dealer\Store\SingleStore\Docs\Index::class)->name('doc.index');
 
+            Route::get('fit-tests', \App\Http\Livewire\Tenant\Audit\Fit\Index::class)->name('fit-tests.index');
+
         });
 
         // **************************************************

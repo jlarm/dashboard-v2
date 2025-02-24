@@ -215,6 +215,8 @@ Route::name('dealer.')->middleware([
             Route::get('/', Index::class)->name('index');
         });
 
+        Route::get('fit-tests', \App\Http\Livewire\Tenant\Audit\Fit\Index::class)->name('fit-tests.index');
+
     });
 
     Route::get('email/settings', FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');

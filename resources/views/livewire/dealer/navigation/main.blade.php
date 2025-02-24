@@ -93,7 +93,7 @@
     <!-- AUDITS -->
     <div class="px-3 mb-1.5">
         @can('view-audits')
-            <div x-data="{ open: '{{ request()->segment(1) == 'audits' || request()->segment(3) === 'audits' }}' }">
+            <div x-data="{ open: '{{ request()->segment(1) == 'audits' || request()->segment(3) === 'audits' || request()->segment(1) === 'fit-tests' || request()->segment(3) === 'fit-tests' }}' }">
                 <button
                     class="{{ (request()->segment(1) == 'audits' || request()->segment(3) === 'audits') ? 'bg-gray-100 text-gray-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }} w-full border-transparent group py-2 px-3 rounded-lg flex items-center text-sm"
                     type="button"
@@ -134,6 +134,10 @@
                         <a href="{{ $currentStore ? route('dealer.stores.audits.individual.index', $currentStore) : route('dealer.audit.individual.index') }}"
                            class="{{ (request()->segment(2) == 'deal-jackets' || request()->segment(4) === 'deal-jackets') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">Deal
                             Jackets</a>
+                    </li>
+                    <li>
+                        <a href="{{ $currentStore ? route('dealer.stores.fit-tests.index', $currentStore) : route('dealer.fit-tests.index') }}"
+                           class="{{ (request()->segment(1) == 'fit-tests' || request()->segment(3) === 'fit-tests') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">Fit Tests</a>
                     </li>
                 </ul>
             </div>

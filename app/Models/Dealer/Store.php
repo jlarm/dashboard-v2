@@ -15,6 +15,7 @@ use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\DealerDoc;
+use App\Models\FitTestDoc;
 use App\Models\User;
 use App\Traits\HasGrade;
 use Illuminate\Database\Eloquent\Model;
@@ -258,6 +259,11 @@ class Store extends Model implements HasMedia
     public function ridgeback(): HasOne
     {
         return $this->hasOne(Ridgeback::class);
+    }
+
+    public function fitTests(): HasMany
+    {
+        return $this->hasMany(FitTestDoc::class);
     }
 
     public function getActivitylogOptions(): LogOptions
