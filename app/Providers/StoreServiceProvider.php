@@ -30,11 +30,9 @@ class StoreServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        if (!function_exists('current_store')) {
-            function current_store()
-            {
-                return app('currentStore');
-            }
-        }
+        // Move the function declaration outside the class namespace
+        \Illuminate\Support\Facades\App::macro('current_store', function () {
+            return app('currentStore');
+        });
     }
 }
