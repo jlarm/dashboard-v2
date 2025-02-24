@@ -32,20 +32,36 @@ class Edit extends SlideOver
         $this->initializeUserData($user);
     }
 
-    protected array $rules = [
-        'assignedStores' => 'required|array',
-        'department' => 'required|exists:departments,id',
-        'assignedRoles' => 'required|array',
-    ];
+    protected function rules(): array
+    {
+        $rules = [
+            'department' => 'required|exists:departments,id',
+            'assignedRoles' => 'required|array',
+        ];
 
-    protected $messages = [
-        'assignedStores.required' => 'Please select at least one store.',
-        'department.required' => 'Please select a department.',
-        'department.exists' => 'Please select a valid department.',
-        'assignedRoles.required' => 'Please select at least one role.',
-    ];
+        if (tenant('locations')) {
+            $rules['assignedStores'] = 'required|array';
+        }
 
-    private function initializeUserData(User $user)
+        return $rules;
+    }
+
+    protected function messages(): array
+    {
+        $messages = [
+            'department.required' => 'Please select a department.',
+            'department.exists' => 'Please select a valid department.',
+            'assignedRoles.required' => 'Please select at least one role.',
+        ];
+
+        if (tenant('locations')) {
+            $messages['assignedStores.required'] = 'Please select at least one store.';
+        }
+
+        return $messages;
+    }
+
+    private function initializeUserData(User $user): void
     {
         $this->user = $user;
         $this->name = $user->name;
@@ -128,7 +144,7 @@ class Edit extends SlideOver
 
     private function updateCurrentStoreId(): void
     {
-        if (! in_array($this->user->current_store_id, $this->assignedStores)) {
+        if (tenant('locations') && ! in_array($this->user->current_store_id, $this->assignedStores)) {
             $storeId = Store::where('name', $this->assignedStores[0])->first()->id;
 
             $this->user->update([
