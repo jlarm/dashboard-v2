@@ -65,10 +65,11 @@ class Course extends Model
         return $this->belongsTo(CourseResults::class);
     }
 
-    public function scopeWithLastResult($query): void
+    public function scopeWithLastResult($query, $userId): void
     {
         $query->addSelect(['last_result_id' => CourseResults::select('id')
             ->whereColumn('course_id', 'courses.id')
+            ->where('user_id', $userId)
             ->latest()
             ->take(1)
         ])->with('lastResult');

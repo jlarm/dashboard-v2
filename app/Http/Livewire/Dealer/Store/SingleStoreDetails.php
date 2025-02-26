@@ -48,6 +48,7 @@ class SingleStoreDetails extends Component
     public $monitoring_start_date;
 
     public $settings;
+    public $notifications;
 
     protected $rules = [
         'name' => 'required',
@@ -62,6 +63,7 @@ class SingleStoreDetails extends Component
         'phishing_active' => 'boolean|required',
         'phishing_token' => 'nullable|string',
         'phishing_ip' => 'nullable|string',
+        'notifications' => 'nullable|boolean',
     ];
 
     public function mount(): void
@@ -81,6 +83,8 @@ class SingleStoreDetails extends Component
         $this->phishing_active = $this->settings->phishing_active ?? false;
         $this->phishing_token = $this->settings->phishing_token ?? null;
         $this->phishing_ip = $this->settings->phishing_ip ?? null;
+
+        $this->notifications = $this->dealer->courses_not_taken_notification;
     }
 
     public function updatedLogo(): void
@@ -109,6 +113,7 @@ class SingleStoreDetails extends Component
                 'website' => $this->website,
                 'active_monitoring' => $this->active_monitoring,
                 'monitoring_start_date' => $this->monitoring_start_date,
+                'courses_not_taken_notification' => $this->notifications,
             ]);
 
             if (is_null($this->settings)) {

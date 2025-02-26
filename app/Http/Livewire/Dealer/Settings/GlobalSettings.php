@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Settings;
 
 use App\Models\Dealer\GlobalSetting;
+use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
@@ -16,6 +17,8 @@ class GlobalSettings extends Component
 
     public $phishing_ip;
 
+    public $stores = [];
+
     public function mount()
     {
         $this->settings = GlobalSetting::first();
@@ -23,6 +26,22 @@ class GlobalSettings extends Component
         $this->phishing_active = $this->settings->phishing_active ?? false;
         $this->phishing_token = $this->settings->phishing_token ?? null;
         $this->phishing_ip = $this->settings->phishing_ip ?? null;
+
+        $this->stores = Store::query()->orderBy('name')->select(['id', 'name', 'courses_not_taken_notification'])->get();
+    }
+
+    public function toggleStoreNotifications($storeId): void
+    {
+        $store = Store::find($storeId);
+        
+        if ($store) {
+            $store->update([
+                'courses_not_taken_notification' => !$store->courses_not_taken_notification
+            ]);
+            
+            // Refresh the stores list
+            $this->stores = Store::query()->orderBy('name')->select(['id', 'name', 'courses_not_taken_notification'])->get();
+        }
     }
 
     public function update()

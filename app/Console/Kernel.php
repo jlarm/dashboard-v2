@@ -12,16 +12,72 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-//        $schedule->command('course:check-reminders')->daily()->runInBackground();
-        $schedule->command('activitylog:clean')->daily()->runInBackground();
-        $schedule->command('run:invites')->daily()->runInBackground();
-        //        $schedule->command('run:course-reminder')->daily()->runInBackground();
-        $schedule->command('delete:temporary-uploads')->daily()->runInBackground();
-        $schedule->command('red-sentry:report-generation')->dailyAt('01:00')->runInBackground();
-        $schedule->command('backups:go')->dailyAt('01:30')->runInBackground()->withoutOverlapping();
-        $schedule->command('backups:clean')->dailyAt('03:01')->runInBackground()->withoutOverlapping();
-        $schedule->command('run:go-phish-user-groups')->daily()->runInBackground();
-        $schedule->command('run:go-phish-user-group-departments')->daily()->runInBackground();
+        // Clean activity logs - removes old activity log records
+        $schedule->command('activitylog:clean')
+            ->dailyAt('00:15')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Process user invitations
+        $schedule->command('run:invites')
+            ->dailyAt('00:30')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Clean temporary uploads
+        $schedule->command('delete:temporary-uploads')
+            ->dailyAt('00:45')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Generate Red Sentry reports
+        $schedule->command('red-sentry:report-generation')
+            ->dailyAt('01:00')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Create backups
+        $schedule->command('backups:go')
+            ->dailyAt('01:30')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->timeout(60 * 60) // 1 hour timeout
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Clean old backups
+        $schedule->command('backups:clean')
+            ->dailyAt('03:01')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Synchronize GoPhish user groups
+        $schedule->command('run:go-phish-user-groups')
+            ->dailyAt('04:00')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Synchronize GoPhish user group departments
+        $schedule->command('run:go-phish-user-group-departments')
+            ->dailyAt('04:30')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        $schedule->command('course:reminder')
+            ->dailyAt('05:00')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Commented out commands - preserved for reference or future use
+        // $schedule->command('course:check-reminders')->dailyAt('05:00')->runInBackground();
+        // $schedule->command('run:course-reminder')->dailyAt('05:30')->runInBackground();
     }
 
     /**

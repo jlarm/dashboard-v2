@@ -53,6 +53,7 @@ class User extends Authenticatable
         'department_id',
         'password',
         'current_store_id',
+        'last_sent_course_reminder',
     ];
 
     protected $hidden = [
@@ -62,6 +63,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_sent_course_reminder' => 'datetime',
     ];
 
     public function currentStore(): BelongsTo

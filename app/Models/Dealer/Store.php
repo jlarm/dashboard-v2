@@ -87,6 +87,7 @@ class Store extends Model implements HasMedia
         'fi_username',
         'fi_password',
         'standard_dpp_rate',
+        'courses_not_taken_notification',
     ];
 
     protected $casts = [
@@ -99,6 +100,7 @@ class Store extends Model implements HasMedia
         'other_fi' => 'array',
         'reinsurance' => 'boolean',
         'user_submitted' => 'array',
+        'courses_not_taken_notification' => 'boolean',
     ];
 
     public function getSlugOptions(): SlugOptions
