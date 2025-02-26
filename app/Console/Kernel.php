@@ -45,7 +45,6 @@ class Kernel extends ConsoleKernel
             ->dailyAt('01:30')
             ->runInBackground()
             ->withoutOverlapping()
-            ->timeout(60 * 60) // 1 hour timeout
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Clean old backups
