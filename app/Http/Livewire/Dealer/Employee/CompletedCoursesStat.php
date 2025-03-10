@@ -33,18 +33,38 @@ class CompletedCoursesStat extends Component
 
     protected function users(): Collection
     {
-        $query = User::query()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer']);
-
+        // If a specific store is selected
         if ($this->store !== null) {
-            $query = $this->store->users()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer']);
+            return $this->store->users()
+                ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
+                ->when($this->department, function ($query) {
+                    $query->where('department_id', $this->department);
+                })
+                ->get();
         }
 
-        if ($this->department !== null) {
-            $query->where('department_id', $this->department);
+        // If the user is a super-admin or consultant
+        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+            return User::query()
+                ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
+                ->when($this->department, function ($query) {
+                    $query->where('department_id', $this->department);
+                })
+                ->get();
         }
 
-        return $query->get();
+        // If the user is not a super-admin or consultant
+        $currentUser = auth()->user();
+        return User::query()
+            ->whereHas('stores', function ($query) use ($currentUser) {
+                $query->whereIn('stores.id', $currentUser->stores->pluck('id'));
+            })
+            ->when($this->department, function ($query) {
+                $query->where('department_id', $this->department);
+            })
+            ->get();
     }
+
 
     protected function incompleteCount(): int
     {
