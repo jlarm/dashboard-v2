@@ -84,9 +84,9 @@ class User extends Authenticatable
         return ! $this->stores()->where('state', 'California')->exists();
     }
 
-    public function dealerships(): HasMany
+    public function dealerships(): BelongsToMany
     {
-        return $this->hasMany(Dealership::class);
+        return $this->belongsToMany(Dealership::class, 'tenant_user', 'user_id', 'tenant_id');
     }
 
     public function stores(): BelongsToMany
@@ -153,5 +153,17 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    public function getInitialsAttribute(): string
+    {
+        $name = explode(' ', $this->name);
+        $initials = '';
+
+        foreach ($name as $n) {
+            $initials .= strtoupper($n[0]);
+        }
+
+        return $initials;
     }
 }

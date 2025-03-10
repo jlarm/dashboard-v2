@@ -67,10 +67,10 @@
         <div>
             <x-input-label for="url" :value="__('Dealership Website URL')"/>
             <x-text-input
-                wire:model.defer="url"
+                wire:model.defer="domain"
                 id="url"
                 class="block mt-1 w-full"
-                type="url"
+                type="text"
                 name="url"
                 :value="old('url')"
                 placeholder="https://abcford.com"
@@ -79,16 +79,40 @@
             <x-input-error :messages="$errors->get('url')" class="mt-2"/>
         </div>
 
-        <!-- Consultant -->
+        <!-- Consultants -->
         <div>
-            <label for="user" class="block text-sm font-medium text-gray-700">Consultant</label>
-            <select wire:model.defer="user" id="user" name="user"
-                    class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                @endforeach
-            </select>
+            <label for="user" class="block text-sm font-medium text-gray-700">Consultants</label>
+            <div x-data="{ open: false, selectedUsers: @entangle('selectedUsers') }" class="relative mt-1">
+                <!-- Dropdown Trigger -->
+                <div @click="open = !open" class="bg-white border rounded p-2 cursor-pointer">
+                    Select Consultants
+                </div>
+
+                <!-- Dropdown List -->
+                <div x-show="open" @click.away="open = false" class="absolute z-10 bg-white border rounded w-full mt-1 max-h-40 overflow-y-auto shadow-lg">
+                    <template x-for="user in @js($users)" :key="user.id">
+                        <div @click="selectedUsers.push(user); open = false"
+                             x-show="!selectedUsers.some(u => u.id === user.id)"
+                             class="p-2 hover:bg-gray-200 cursor-pointer">
+                            <span x-text="user.name"></span>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Selected Users Pills -->
+                <div class="mt-2 flex flex-wrap gap-2">
+                    <template x-for="(user, index) in selectedUsers" :key="user.id">
+                        <div class="flex items-center bg-arm-blue-500 text-white text-xs px-3 py-1 rounded-full">
+                            <span x-text="user.name"></span>
+                            <button @click="selectedUsers.splice(index, 1)" class="ml-2 focus:outline-none">
+                                &times;
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
         </div>
+
 
         <!-- Multiple Locations -->
         <div>

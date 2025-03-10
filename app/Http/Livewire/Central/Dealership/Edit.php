@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
 use App\Models\User;
+use Illuminate\View\View;
 use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class Edit extends SlideOver
@@ -28,9 +29,11 @@ class Edit extends SlideOver
 
     public $url;
 
-    public $locations = false;
+    public $locations;
 
-    public $user;
+    public $users;
+
+    public array $selectedUsers = [];
 
     protected $rules = [
         'name' => 'required',
@@ -42,11 +45,11 @@ class Edit extends SlideOver
         'fax' => 'nullable',
         'domain' => 'required',
         'url' => 'required',
-        'locations' => 'required|boolean',
-        'user' => 'required',
+        'locations' => 'boolean',
+        'users' => 'array',
     ];
 
-    public function mount(Dealership $dealership)
+    public function mount(Dealership $dealership): void
     {
         $this->dealership = $dealership;
         $this->address = $dealership->address;
@@ -58,11 +61,19 @@ class Edit extends SlideOver
         $this->name = $dealership->name;
         $this->domain = $dealership->domain;
         $this->url = $dealership->url;
-        $this->locations = $dealership->locations;
-        $this->user = $dealership->user_id;
+        $this->locations = (bool) $dealership->locations;
+        $this->users = User::orderBy('name')->get();
+        $this->selectedUsers = $this->dealership->users->toArray();
     }
 
-    public function updateDealership()
+    public function removeUser($userId): void
+    {
+        $this->selectedUsers = array_filter($this->selectedUsers, function ($user) use ($userId) {
+            return $user['id'] !== $userId;
+        });
+    }
+
+    public function updateDealership(): void
     {
         $this->dealership->update([
             'name' => $this->name,
@@ -75,18 +86,15 @@ class Edit extends SlideOver
             'domain' => $this->domain,
             'url' => $this->url,
             'locations' => $this->locations,
-            'user_id' => $this->user,
         ]);
 
-        $this->emit('refreshDealerships');
+        $this->dealership->users()->sync(collect($this->selectedUsers)->pluck('id'));
 
         $this->close();
     }
 
-    public function render()
+    public function render(): View
     {
-        return view('livewire.central.dealership.edit', [
-            'users' => User::latest()->get(),
-        ]);
+        return view('livewire.central.dealership.edit');
     }
 }
