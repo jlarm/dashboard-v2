@@ -91,6 +91,7 @@
         @endcan
     </div>
     <!-- AUDITS -->
+    @if (request()->segment(1) === 'stores' || !tenant('locations'))
     <div class="px-3 mb-1.5">
         @can('view-audits')
             <div x-data="{ open: '{{ request()->segment(1) == 'audits' || request()->segment(3) === 'audits' || request()->segment(1) === 'fit-tests' || request()->segment(3) === 'fit-tests' }}' }">
@@ -143,6 +144,7 @@
             </div>
         @endcan
     </div>
+    @endif
     <!-- VENDORS -->
     @can('view-vendors')
         <div class="px-3 mb-1.5">
