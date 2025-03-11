@@ -4,18 +4,19 @@ namespace App\Http\Livewire\Dealer\Audit\Individual;
 
 use App\Models\Dealer\Audit\IndividualAudit;
 use Filament\Notifications\Notification;
+use Illuminate\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
 {
     public $individualAudit;
 
-    public function mount(IndividualAudit $individualAudit)
+    public function mount(IndividualAudit $individualAudit): void
     {
         $this->individualAudit = $individualAudit;
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->individualAudit->delete();
 
@@ -30,9 +31,11 @@ class Delete extends Modal
             ->title('Individual Audit Deleted Successfully!')
             ->success()
             ->send();
+
+        $this->dispatchBrowserEvent('refresh-page');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.audit.individual.delete');
     }

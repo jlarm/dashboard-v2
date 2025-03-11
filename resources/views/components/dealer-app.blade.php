@@ -54,5 +54,10 @@
 @livewire('modal-pro')
 @livewire('notifications')
 @livewireScripts
+<script>
+    window.addEventListener('refresh-page', event => {
+        location.reload();
+    });
+</script>
 </body>
 </html>
