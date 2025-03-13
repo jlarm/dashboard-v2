@@ -17,7 +17,8 @@ class Settings extends Component
 
     public function getScanProperty(): ScanSetting
     {
-        return ScanSetting::first();
+        $this->store = Store::find(app('currentStore'));
+        return $this->store->scanSetting()->first();
     }
 
     public function mount(): void

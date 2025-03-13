@@ -35,15 +35,13 @@ class RedSentryReportGenerationCommand extends Command
         try {
             tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
                 $stores = Store::with('scanSetting')->get();
-                $storesWithScanSettings = $this->filterStoresWithScanSettings($stores);
 
-                if ($storesWithScanSettings->isNotEmpty()) {
-                    try {
-                        $token = $this->authenticate();
-                        $this->processStores($storesWithScanSettings, $token, $tenant);
-                    } catch(Exception $e) {
-                        $this->logError("Authentication error for tenant {$tenant->id}: {$e->getMessage()}");
-                    }
+                $this->info('Running for tenant: ' . $tenant->name);
+                try {
+                    $token = $this->authenticate();
+                    $this->processStores($stores, $token, $tenant);
+                } catch(Exception $e) {
+                    $this->logError("Authentication error for tenant {$tenant->id}: {$e->getMessage()}");
                 }
             });
         } catch (Exception $e) {

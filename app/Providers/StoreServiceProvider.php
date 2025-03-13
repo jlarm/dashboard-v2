@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Dealer\Store;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 class StoreServiceProvider extends ServiceProvider
@@ -30,8 +31,7 @@ class StoreServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Move the function declaration outside the class namespace
-        \Illuminate\Support\Facades\App::macro('current_store', function () {
+        App::macro('current_store', function () {
             return app('currentStore');
         });
     }
