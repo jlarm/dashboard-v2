@@ -7,6 +7,9 @@
                 type="text"
                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
             />
+            @error('externalId')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>
@@ -16,6 +19,9 @@
                 type="text"
                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
             />
+            @error('internalId')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <x-primary-button>Update</x-primary-button>

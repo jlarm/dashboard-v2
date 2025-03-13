@@ -49,7 +49,7 @@ class Settings extends Component
             ->send();
 
         if (tenant('locations')) {
-            return redirect(route('dealer.stores.scans', $this->store));
+            return redirect(route('dealer.stores.scan.index', $this->store));
         }
 
         return redirect(route('dealer.scan.index'));
