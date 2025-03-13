@@ -30,7 +30,7 @@ class ReportIndex extends Component
     protected function groupAndMapReports($reports)
     {
         return $reports->groupBy(function ($data) {
-            return $this->formattedLastScanDate($data->last_scan);
+            return $this->formattedLastScanDate($data->created_at);
         })->map(function ($data) {
             return $data->groupBy('type');
         })->map(function ($data) {

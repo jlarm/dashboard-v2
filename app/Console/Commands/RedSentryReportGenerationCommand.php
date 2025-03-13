@@ -1,152 +1,309 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
+use App\Mail\RedSentryErrorNotification;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
 use DateTime;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use Http;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class RedSentryReportGenerationCommand extends Command
 {
     protected $signature = 'red-sentry:report-generation {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Generate Technical and Executive Reports from Red Sentry';
 
-    private $client;
+    private Client $client;
+    private array $errors = [];
 
-    private $storage;
-
-    public function __construct(Client $client, Storage $storage)
+    public function __construct(Client $client)
     {
         parent::__construct();
-
         $this->client = $client;
-        $this->storage = $storage;
     }
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        try {
+            tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+                $stores = Store::with('scanSetting')->get();
+                $storesWithScanSettings = $this->filterStoresWithScanSettings($stores);
 
-            $stores = Store::with('scanSetting')->get();
-
-            $storesWithScanSettings = $stores->filter(function ($store) {
-                return $store->scanSetting->name ?? null;
-            });
-
-            if ($storesWithScanSettings->isNotEmpty()) {
-
-                $scanTypes = ['external', 'internal'];
-                $reportTypes = ['executive', 'technical'];
-
-                $user = Http::post(config('redsentry.url').'/login', [
-                    'username' => config('redsentry.username'),
-                    'password' => config('redsentry.password'),
-                ]);
-
-                $this->info('Attempting to connect to: '.config('redsentry.url').'/login');
-
-                $token = $user['token'];
-
-                foreach ($stores as $store) {
-
-                    foreach ($scanTypes as $scanType) {
-                        foreach ($reportTypes as $reportType) {
-
-                            $lastRunDate = $store->scanReports()->where('scan_type', $scanType)->where('type', $reportType)->latest()->first()->last_scan ?? null;
-
-                            $this->info('Last Run Date in database: '.$lastRunDate);
-
-                            $this->generateReport($store, $scanType, $reportType, $token, $tenant, $lastRunDate);
-                        }
+                if ($storesWithScanSettings->isNotEmpty()) {
+                    try {
+                        $token = $this->authenticate();
+                        $this->processStores($storesWithScanSettings, $token, $tenant);
+                    } catch(Exception $e) {
+                        $this->logError("Authentication error for tenant {$tenant->id}: {$e->getMessage()}");
                     }
                 }
+            });
+        } catch (Exception $e) {
+            $this->logError("General error: {$e->getMessage()}");
+        }
 
-            }
-
-            $token = null;
-
-        });
+        if (!empty($this->errors)) {
+            $this->sendErrorNotification();
+        }
     }
 
-    private function generateReport($store, $scanType, $reportType, $token, $tenant, $lastRunDate)
+    private function logError(string $message): void
     {
-        $this->info('Running for '.$store->scanSetting->name);
+        $this->error($message);
+        $this->errors[] = $message;
+    }
 
-        if ($store->scanSetting->name === null) {
-            return;
-        }
+    private function sendErrorNotification(): void
+    {
+        $recipient = config('app.admin_email');
 
-        if (tenant('locations')) {
-            $dealerName = str_replace(' ', '-', $store->scanSetting->name);
+        if (!empty($recipient) && filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+            try {
+                Mail::to($recipient)->send(new RedSentryErrorNotification($this->errors));
+                $this->info('Error notification sent to: ' . $recipient);
+            } catch (Exception $e) {
+                $this->error('Failed to send error notification: ' . $e->getMessage());
+                \Log::error('RedSentry error notification failed: ' . $e->getMessage(), [
+                    'errors' => $this->errors
+                ]);
+            }
         } else {
-            $dealerName = str_replace(' ', '-', $tenant->name);
+            $this->error('Invalid or missing admin email configuration for error notifications: "' . $recipient . '"');
+            \Log::warning('RedSentry could not send error notification - invalid admin_email config', [
+                'configured_email' => $recipient,
+                'errors' => $this->errors
+            ]);
         }
-        $fileName = $dealerName.'-'.now()->format('Ymdhis').'-'.$reportType.'.pdf';
+    }
 
-        $statsRequest = new Request('GET', config('redsentry.url').($scanType === 'external' ? '/v2' : '').'/'.$scanType.'/workbench?page=0&size=20&search='.$store->scanSetting->name.'&sort_dir=asc', [
+    private function filterStoresWithScanSettings($stores)
+    {
+        return $stores->filter(fn($store) => $store->scanSetting->name ?? null);
+    }
+
+    private function authenticate(): string
+    {
+        $response = Http::post(config('redsentry.url').'/login', [
+            'username' => config('redsentry.username'),
+            'password' => config('redsentry.password'),
+        ]);
+
+        $this->info('Connected to: '.config('redsentry.url').'/login');
+        return $response['token'];
+    }
+
+    private function processStores($stores, string $token, $tenant): void
+    {
+        $this->info('Starting');
+        $reportTypes = ['executive', 'technical'];
+
+        foreach ($stores as $store) {
+            $scanTypes = $this->scanTypes($store);
+
+
+            foreach ($scanTypes as $scanType => $scanId) {
+
+                $stats = $this->getStats($store, $scanType, $scanId, $token);
+                $this->info('Stats: ' . json_encode($stats));
+
+                foreach ($reportTypes as $reportType) {
+                    $lastRunDate = $this->getLastRunDate($store, $scanType, $reportType);
+                    $this->generateReport($store, $scanType, $scanId, $reportType, $token, $tenant, $lastRunDate, $stats);
+                }
+            }
+        }
+        $this->info('Finished');
+    }
+
+    private function scanTypes(Store $store): array
+    {
+        $scanTypes = [];
+
+        if ($store->scanSetting->internal_id) {
+            $scanTypes['internal'] = $store->scanSetting->internal_id;
+        }
+
+        if ($store->scanSetting->external_id) {
+            $scanTypes['external'] = $store->scanSetting->external_id;
+        }
+
+        return $scanTypes;
+    }
+
+    private function getStats($store, string $scanType, int $scanId, string $token): array
+    {
+        $grade = $this->fetchGrade($store, $scanType, $scanId, $token);
+        $exploits = $this->fetchExploits($store, $scanType, $scanId, $token);
+        $cves = $this->fetchCves($store, $scanType, $scanId, $token);
+        $results = [
+            'grade' => $grade,
+            'exploits' => $exploits,
+            'cves' => $cves,
+        ];
+
+        return $results;
+    }
+
+    private function getLastRunDate($store, string $scanType, string $reportType): ?string
+    {
+        return $store->scanReports()
+            ->where('scan_type', $scanType)
+            ->where('type', $reportType)
+            ->latest()
+            ->first()
+            ->last_scan ?? null;
+    }
+
+    private function generateReport($store, string $scanType, int $scanId, string $reportType, string $token, $tenant, ?string $lastRunDate, $stats): void
+    {
+        try {
+            $dealerName = $this->getDealerName($store, $tenant);
+            $fileName = $this->generateFileName($dealerName, $reportType);
+
+
+            if (!$stats) {
+                $this->error('No valid scan data found for ' . $dealerName);
+                return;
+            }
+
+            $reportStatus = $this->fetchReport($store, $scanType, $scanId, $reportType, $token);
+
+            Storage::disk('do-scans')->put(tenant('id').'/'.$reportType.'/'.$fileName, $reportStatus);
+
+            $this->createScanReport($store, $reportType, $scanType, $fileName, $stats, $tenant);
+        } catch (Exception $e) {
+            $this->logError("Error generating report for store {$store->id}, scan type {$scanType}: {$e->getMessage()}");
+        }
+    }
+
+    private function getDealerName($store, $tenant): string
+    {
+        return str_replace(' ', '-', tenant('locations') ? $store->scanSetting->name : $tenant->name);
+    }
+
+    private function generateFileName(string $dealerName, string $reportType): string
+    {
+        return $dealerName.'-'.now()->format('Ymdhis').'-'.$reportType.'.pdf';
+    }
+
+    private function fetchGrade($store, string $scanType, int $scanId, string $token)
+    {
+        $statsRequest = new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/grade', [
             'Authorization' => $token,
         ]);
 
         $statsStatus = $this->client->send($statsRequest)->getBody()->getContents();
-
         $stats = json_decode($statsStatus);
 
-        if (empty($stats)) {
-            return;
-        }
+        $this->info('Grade: ' .$stats->grade);
 
-        $lastScan = $stats[0]->last_scan;
-        $lastScanDate = DateTime::createFromFormat('m/d/Y - H:i:s', $lastScan);
-        $lastScanFormatted = $lastScanDate->format('Y-m-d');
+        return $stats->grade;
+    }
 
-        $nextScan = $stats[0]->next_scan;
-        $nextScanDate = DateTime::createFromFormat('m/d/Y - H:i:s', $nextScan);
-        $nextScanFormatted = $nextScanDate->format('Y-m-d');
-
-        $this->info('Last Scan: '.$lastScanFormatted);
-
-        if ($lastRunDate != null && $lastScanFormatted === $lastRunDate) {
-            return;
-        }
-
-        $reportRequest = new Request('GET', config('redsentry.url').($scanType === 'external' ? '/v2' : '').'/'.$scanType.'/'.$store->scanSetting->name.'/report/'.$reportType, [
+    private function fetchExploits($store, string $scanType, int $scanId, string $token)
+    {
+        $request= new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/count/exploits', [
             'Authorization' => $token,
         ]);
 
-        $reportStatus = $this->client->send($reportRequest)->getBody()->getContents();
+        $status = $this->client->send($request)->getBody()->getContents();
+        $stats = json_decode($status, true);
 
-        $this->storage::disk('do-scans')->put(tenant('id').'/'.$reportType.'/'.$fileName, $reportStatus);
+        if (isset($stats[0]['name'])) {
+            $data = array_combine(
+                array_column($stats, 'name'),
+                array_column($stats, 'value')
+            );
+        } else {
+            $data = [
+                'high' => $stats['high'] ?? 0,
+                'medium' => $stats['medium'] ?? 0,
+                'low' => $stats['low'] ?? 0,
+            ];
+        }
 
-        $this->createScanReport($store, $reportType, $scanType, $fileName, $stats, $lastScanFormatted, $nextScanFormatted, $tenant);
+        $this->info('Exploits: ' . json_encode($data));
+
+        return $data;
     }
 
-    private function createScanReport($store, $reportType, $scanType, $fileName, $stats, $lastScanFormatted, $nextScanFormatted, $tenant)
+    private function fetchCves($store, string $scanType, int $scanId, string $token)
     {
+        $request= new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/count/cves', [
+            'Authorization' => $token,
+        ]);
+
+        $status = $this->client->send($request)->getBody()->getContents();
+        $stats = json_decode($status, true);
+
+        if (isset($stats[0]['name'])) {
+            $data = array_combine(
+                array_column($stats, 'name'),
+                array_column($stats, 'value')
+            );
+        } else {
+            $data = [
+                'high' => $stats['high'] ?? 0,
+                'medium' => $stats['medium'] ?? 0,
+                'low' => $stats['low'] ?? 0,
+            ];
+        }
+
+        $this->info('Cves: ' . json_encode($data));
+
+        return $data;
+    }
+
+    private function fetchReport($store, string $scanType, int $scanId, string $reportType, string $token)
+    {
+        $request = new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/report/'.$reportType, [
+            'Authorization' => $token,
+        ]);
+
+        return $this->client->send($request)->getBody()->getContents();
+    }
+
+    private function formatDate(?string $date): ?string
+    {
+        if (!$date) {
+            return null;
+        }
+
+        $dateTime = DateTime::createFromFormat('m/d/Y - H:i:s', $date);
+        return $dateTime ? $dateTime->format('Y-m-d') : null;
+    }
+
+    private function createScanReport(
+        $store,
+        string $reportType,
+        string $scanType,
+        string $fileName,
+        $stats,
+        $tenant): void
+    {
+        $this->info(json_encode($stats));
+
         ScanReport::create([
             'user_id' => 1,
             'store_id' => $store->id,
             'path' => $tenant->id.'/'.$reportType.'/'.$fileName,
             'type' => $reportType,
             'scan_type' => $scanType,
-            'grade' => $stats[0]->grade,
-            'exploits_high' => $stats[0]->exploits->high,
-            'exploits_medium' => $stats[0]->exploits->medium,
-            'exploits_low' => $stats[0]->exploits->low,
-            'cves_high' => $stats[0]->cves->high,
-            'cves_medium' => $stats[0]->cves->medium,
-            'cves_low' => $stats[0]->cves->low,
-            'assets' => $stats[0]->assets,
-            'last_scan' => $lastScanFormatted,
-            'next_scan' => $nextScanFormatted,
-            'last_scan_status' => $stats[0]->last_scan_status,
-            'last_scan_progress' => $stats[0]->last_scan_progress,
+            'grade' => $stats['grade'] ?? null,
+            'exploits_high' => $stats['exploits']['high'] ?? 0,
+            'exploits_medium' => $stats['exploits']['medium'] ?? 0,
+            'exploits_low' => $stats['exploits']['low'] ?? 0,
+            'cves_high' => $stats['cves']['high'] ?? 0,
+            'cves_medium' => $stats['cves']['medium'] ?? 0,
+            'cves_low' => $stats['cves']['low'] ?? 0,
         ]);
-
     }
 }

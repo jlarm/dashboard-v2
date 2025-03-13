@@ -10,7 +10,7 @@ class InternalReportIndex extends Component
 {
     public Store $store;
 
-    protected function formattedlastScanDate($date): string
+    protected function formattedLastScanDate($date): string
     {
         return date('F d, Y', strtotime($date));
     }
@@ -24,7 +24,7 @@ class InternalReportIndex extends Component
                     ->latest()
                     ->get()
                     ->groupBy(function ($data) {
-                        return $this->formattedlastScanDate($data->last_scan);
+                        return $this->formattedLastScanDate($data->created_at);
                     })->map(function ($data) {
                         return $data->groupBy('type');
                     })->map(function ($data) {
@@ -39,7 +39,7 @@ class InternalReportIndex extends Component
                     ->latest()
                     ->get()
                     ->groupBy(function ($data) {
-                        return $this->formattedlastScanDate($data->last_scan);
+                        return $this->formattedLastScanDate($data->created_at);
                     })->map(function ($data) {
                         return $data->groupBy('type');
                     })->map(function ($data) {

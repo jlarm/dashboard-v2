@@ -15,6 +15,8 @@ class ScanSetting extends Model
     protected $fillable = [
         'store_id',
         'name',
+        'external_id',
+        'internal_id',
     ];
 
     public function store()

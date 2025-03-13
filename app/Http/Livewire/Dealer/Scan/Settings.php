@@ -5,26 +5,32 @@ namespace App\Http\Livewire\Dealer\Scan;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Settings extends Component
 {
-    public $name;
-
     public Store $store;
+    public $name;
+    public $internalId;
+    public $externalId;
 
-    public function getScanProperty()
+    public function getScanProperty(): ScanSetting
     {
         return ScanSetting::first();
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->name = $this->scan->name ?? '';
+        $this->internalId = $this->scan->internal_id ?? '';
+        $this->externalId = $this->scan->external_id ?? '';
     }
 
     protected $rules = [
         'name' => 'string|max:255',
+        'internalId' => 'nullable|integer',
+        'externalId' => 'nullable|integer',
     ];
 
     public function update()
@@ -33,6 +39,8 @@ class Settings extends Component
 
         $this->scan->update([
             'name' => $this->name,
+            'internal_id' => $this->internalId !== '' ? $this->internalId : null,
+            'external_id' => $this->externalId !== '' ? $this->externalId : null,
         ]);
 
         Notification::make()
@@ -42,13 +50,12 @@ class Settings extends Component
 
         if (tenant('locations')) {
             return redirect(route('dealer.stores.scans', $this->store));
-        } else {
-            return redirect(route('dealer.scan.index'));
         }
 
+        return redirect(route('dealer.scan.index'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.scan.settings');
     }
