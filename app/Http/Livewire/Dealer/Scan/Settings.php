@@ -14,15 +14,11 @@ class Settings extends Component
     public $name;
     public $internalId;
     public $externalId;
-
-    public function getScanProperty(): ScanSetting
-    {
-        $this->store = Store::find(app('currentStore'));
-        return $this->store->scanSetting()->first();
-    }
-
+    public $scan;
     public function mount(): void
     {
+        $this->store = Store::find(app('currentStore'));
+        $this->scan = ScanSetting::find($this->store->id);
         $this->name = $this->scan->name ?? '';
         $this->internalId = $this->scan->internal_id ?? '';
         $this->externalId = $this->scan->external_id ?? '';
@@ -50,7 +46,7 @@ class Settings extends Component
             ->send();
 
         if (tenant('locations')) {
-            return redirect(route('dealer.stores.scan.index', $this->store));
+            return redirect(route('dealer.stores.scan.index', $this->store->slug));
         }
 
         return redirect(route('dealer.scan.index'));
