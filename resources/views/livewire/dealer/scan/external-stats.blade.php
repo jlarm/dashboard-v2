@@ -42,6 +42,6 @@
                 </li>
             </ul>
         </div>
-        <livewire:dealer.scan.scan-dates />
+{{--        <livewire:dealer.scan.scan-dates />--}}
     @endif
 </div>

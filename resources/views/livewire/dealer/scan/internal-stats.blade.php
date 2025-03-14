@@ -42,6 +42,6 @@
                 </li>
             </ul>
         </div>
-        <livewire:dealer.scan.internal-scan-dates />
+{{--        <livewire:dealer.scan.internal-scan-dates />--}}
     @endif
 </div>

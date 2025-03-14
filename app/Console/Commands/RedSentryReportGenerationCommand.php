@@ -15,6 +15,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Log;
 
 class RedSentryReportGenerationCommand extends Command
 {
@@ -36,7 +37,6 @@ class RedSentryReportGenerationCommand extends Command
             tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
                 $stores = Store::with('scanSetting')->get();
 
-                $this->info('Running for tenant: ' . $tenant->name);
                 try {
                     $token = $this->authenticate();
                     $this->processStores($stores, $token, $tenant);
@@ -66,25 +66,19 @@ class RedSentryReportGenerationCommand extends Command
         if (!empty($recipient) && filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
             try {
                 Mail::to($recipient)->send(new RedSentryErrorNotification($this->errors));
-                $this->info('Error notification sent to: ' . $recipient);
             } catch (Exception $e) {
                 $this->error('Failed to send error notification: ' . $e->getMessage());
-                \Log::error('RedSentry error notification failed: ' . $e->getMessage(), [
+                Log::error('RedSentry error notification failed: ' . $e->getMessage(), [
                     'errors' => $this->errors
                 ]);
             }
         } else {
             $this->error('Invalid or missing admin email configuration for error notifications: "' . $recipient . '"');
-            \Log::warning('RedSentry could not send error notification - invalid admin_email config', [
+            Log::warning('RedSentry could not send error notification - invalid admin_email config', [
                 'configured_email' => $recipient,
                 'errors' => $this->errors
             ]);
         }
-    }
-
-    private function filterStoresWithScanSettings($stores)
-    {
-        return $stores->filter(fn($store) => $store->scanSetting->name ?? null);
     }
 
     private function authenticate(): string
@@ -93,14 +87,12 @@ class RedSentryReportGenerationCommand extends Command
             'username' => config('redsentry.username'),
             'password' => config('redsentry.password'),
         ]);
-
-        $this->info('Connected to: '.config('redsentry.url').'/login');
+        
         return $response['token'];
     }
 
     private function processStores($stores, string $token, $tenant): void
     {
-        $this->info('Starting');
         $reportTypes = ['executive', 'technical'];
 
         foreach ($stores as $store) {
@@ -110,15 +102,19 @@ class RedSentryReportGenerationCommand extends Command
             foreach ($scanTypes as $scanType => $scanId) {
 
                 $stats = $this->getStats($store, $scanType, $scanId, $token);
-                $this->info('Stats: ' . json_encode($stats));
 
                 foreach ($reportTypes as $reportType) {
-                    $lastRunDate = $this->getLastRunDate($store, $scanType, $reportType);
-                    $this->generateReport($store, $scanType, $scanId, $reportType, $token, $tenant, $lastRunDate, $stats);
+
+                    $lastLocalRunDate = $this->getLastStoredRunDate($store, $scanType, $reportType);
+                    $lastRunDate = $this->getLastRunDate($scanType, $scanId, $token);
+
+                    if ($lastRunDate > $lastLocalRunDate) {
+                        $this->generateReport($store, $scanType, $scanId, $reportType, $token, $tenant, $lastRunDate, $stats);
+                    }
+
                 }
             }
         }
-        $this->info('Finished');
     }
 
     private function scanTypes(Store $store): array
@@ -138,7 +134,7 @@ class RedSentryReportGenerationCommand extends Command
 
     private function getStats($store, string $scanType, int $scanId, string $token): array
     {
-        $grade = $this->fetchGrade($store, $scanType, $scanId, $token);
+        $grade = $this->fetchGrade($scanType, $scanId, $token);
         $exploits = $this->fetchExploits($store, $scanType, $scanId, $token);
         $cves = $this->fetchCves($store, $scanType, $scanId, $token);
         $results = [
@@ -150,7 +146,7 @@ class RedSentryReportGenerationCommand extends Command
         return $results;
     }
 
-    private function getLastRunDate($store, string $scanType, string $reportType): ?string
+    private function getLastStoredRunDate($store, string $scanType, string $reportType): ?string
     {
         return $store->scanReports()
             ->where('scan_type', $scanType)
@@ -160,7 +156,22 @@ class RedSentryReportGenerationCommand extends Command
             ->last_scan ?? null;
     }
 
-    private function generateReport($store, string $scanType, int $scanId, string $reportType, string $token, $tenant, ?string $lastRunDate, $stats): void
+    private function getLastRunDate(string $scanType, int $scanId, string $token): ?string
+    {
+        $request = new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/scan/dates', [
+            'Authorization' => $token,
+        ]);
+        $response = $this->client->send($request)->getBody()->getContents();
+        $dates = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+
+        if (isset($dates[0]['id'])) {
+            return $this->formatDate($dates[0]['date']);
+        }
+
+        return null;
+    }
+
+    private function generateReport($store, string $scanType, int $scanId, string $reportType, string $token, $tenant, $lastRunDate, $stats): void
     {
         try {
             $dealerName = $this->getDealerName($store, $tenant);
@@ -176,7 +187,7 @@ class RedSentryReportGenerationCommand extends Command
 
             Storage::disk('do-scans')->put(tenant('id').'/'.$reportType.'/'.$fileName, $reportStatus);
 
-            $this->createScanReport($store, $reportType, $scanType, $fileName, $stats, $tenant);
+            $this->createScanReport($store, $reportType, $scanType, $fileName, $stats, $tenant, $lastRunDate);
         } catch (Exception $e) {
             $this->logError("Error generating report for store {$store->id}, scan type {$scanType}: {$e->getMessage()}");
         }
@@ -192,7 +203,7 @@ class RedSentryReportGenerationCommand extends Command
         return $dealerName.'-'.now()->format('Ymdhis').'-'.$reportType.'.pdf';
     }
 
-    private function fetchGrade($store, string $scanType, int $scanId, string $token)
+    private function fetchGrade(string $scanType, int $scanId, string $token)
     {
         $statsRequest = new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/grade', [
             'Authorization' => $token,
@@ -201,19 +212,17 @@ class RedSentryReportGenerationCommand extends Command
         $statsStatus = $this->client->send($statsRequest)->getBody()->getContents();
         $stats = json_decode($statsStatus);
 
-        $this->info('Grade: ' .$stats->grade);
-
         return $stats->grade;
     }
 
-    private function fetchExploits($store, string $scanType, int $scanId, string $token)
+    private function fetchExploits($store, string $scanType, int $scanId, string $token): array
     {
         $request= new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/count/exploits', [
             'Authorization' => $token,
         ]);
 
         $status = $this->client->send($request)->getBody()->getContents();
-        $stats = json_decode($status, true);
+        $stats = json_decode($status, true, 512, JSON_THROW_ON_ERROR);
 
         if (isset($stats[0]['name'])) {
             $data = array_combine(
@@ -228,12 +237,10 @@ class RedSentryReportGenerationCommand extends Command
             ];
         }
 
-        $this->info('Exploits: ' . json_encode($data));
-
         return $data;
     }
 
-    private function fetchCves($store, string $scanType, int $scanId, string $token)
+    private function fetchCves($store, string $scanType, int $scanId, string $token): array
     {
         $request= new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/count/cves', [
             'Authorization' => $token,
@@ -255,12 +262,10 @@ class RedSentryReportGenerationCommand extends Command
             ];
         }
 
-        $this->info('Cves: ' . json_encode($data));
-
         return $data;
     }
 
-    private function fetchReport($store, string $scanType, int $scanId, string $reportType, string $token)
+    private function fetchReport($store, string $scanType, int $scanId, string $reportType, string $token): string
     {
         $request = new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/report/'.$reportType, [
             'Authorization' => $token,
@@ -285,10 +290,10 @@ class RedSentryReportGenerationCommand extends Command
         string $scanType,
         string $fileName,
         $stats,
-        $tenant): void
+        $tenant,
+        $lastRunDate
+    ): void
     {
-        $this->info(json_encode($stats));
-
         ScanReport::create([
             'user_id' => 1,
             'store_id' => $store->id,
@@ -302,6 +307,7 @@ class RedSentryReportGenerationCommand extends Command
             'cves_high' => $stats['cves']['high'] ?? 0,
             'cves_medium' => $stats['cves']['medium'] ?? 0,
             'cves_low' => $stats['cves']['low'] ?? 0,
+            'last_scan' => $lastRunDate,
         ]);
     }
 }
