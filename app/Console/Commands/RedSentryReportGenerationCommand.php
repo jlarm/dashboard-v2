@@ -87,7 +87,7 @@ class RedSentryReportGenerationCommand extends Command
             'username' => config('redsentry.username'),
             'password' => config('redsentry.password'),
         ]);
-        
+
         return $response['token'];
     }
 
@@ -98,23 +98,46 @@ class RedSentryReportGenerationCommand extends Command
         foreach ($stores as $store) {
             $scanTypes = $this->scanTypes($store);
 
-
             foreach ($scanTypes as $scanType => $scanId) {
 
+                if ($this->statusCheck($store, $scanType, $scanId, $token) !== 'done') {
+                    $this->info("Scan not completed for store {$store->id}, scan type {$scanType}");
+                    continue;
+                }
+            
+                $lastRunDate = $this->getLastRunDate($scanType, $scanId, $token);
+                if (!$lastRunDate) {
+                    $this->info("No scan history found for store {$store->id}, scan type {$scanType}");
+                    continue;
+                }
+                
                 $stats = $this->getStats($store, $scanType, $scanId, $token);
 
                 foreach ($reportTypes as $reportType) {
+                    $localScanDate = $this->getLastStoredRunDate($store, $scanType, $reportType);
+                    $externalScanDate = $this->getLastRunDate($scanType, $scanId, $token);
 
-                    $lastLocalRunDate = $this->getLastStoredRunDate($store, $scanType, $reportType);
-                    $lastRunDate = $this->getLastRunDate($scanType, $scanId, $token);
-
-                    if ($lastRunDate > $lastLocalRunDate) {
+                    $existingReport = $store->latestScanReportDate()->where('type', $reportType)->first();
+                    
+                    if ($localScanDate === null || $externalScanDate > $localScanDate) {
+                        $this->info("Generating {$reportType} report for store {$store->id}, scan type {$scanType}");
                         $this->generateReport($store, $scanType, $scanId, $reportType, $token, $tenant, $lastRunDate, $stats);
+                    } else {
+                        $this->info("Skipping report generation - no new scans available for store {$store->id}, scan type {$scanType}");
                     }
-
                 }
             }
         }
+    }
+
+    private function statusCheck(Store $store, string $scanType, int $scanId, string $token): string
+    {
+        $request = new Request('GET', config('redsentry.url').'/v3/scanners/'.$scanType.'/'.$scanId.'/scan/status', [
+            'Authorization' => $token,
+        ]);
+        $response = $this->client->send($request)->getBody()->getContents();
+        $status = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+        return $status['status'];
     }
 
     private function scanTypes(Store $store): array
@@ -148,12 +171,9 @@ class RedSentryReportGenerationCommand extends Command
 
     private function getLastStoredRunDate($store, string $scanType, string $reportType): ?string
     {
-        return $store->scanReports()
-            ->where('scan_type', $scanType)
-            ->where('type', $reportType)
-            ->latest()
-            ->first()
-            ->last_scan ?? null;
+        $report = $store->latestScanReportDate()->where('type', $reportType)->first();
+
+        return $report ? $report->last_scan : null;
     }
 
     private function getLastRunDate(string $scanType, int $scanId, string $token): ?string
@@ -176,7 +196,6 @@ class RedSentryReportGenerationCommand extends Command
         try {
             $dealerName = $this->getDealerName($store, $tenant);
             $fileName = $this->generateFileName($dealerName, $reportType);
-
 
             if (!$stats) {
                 $this->error('No valid scan data found for ' . $dealerName);
@@ -280,8 +299,17 @@ class RedSentryReportGenerationCommand extends Command
             return null;
         }
 
-        $dateTime = DateTime::createFromFormat('m/d/Y - H:i:s', $date);
-        return $dateTime ? $dateTime->format('Y-m-d') : null;
+        try {
+            $dateTime = DateTime::createFromFormat('m/d/Y - H:i:s', $date);
+            if (!$dateTime) {
+                $this->warn("Could not parse date: {$date}");
+                return null;
+            }
+            return $dateTime->format('Y-m-d');
+        } catch (Exception $e) {
+            $this->warn("Error formatting date {$date}: {$e->getMessage()}");
+            return null;
+        }
     }
 
     private function createScanReport(
@@ -294,6 +322,8 @@ class RedSentryReportGenerationCommand extends Command
         $lastRunDate
     ): void
     {
+        $this->info(json_encode($stats));
+
         ScanReport::create([
             'user_id' => 1,
             'store_id' => $store->id,

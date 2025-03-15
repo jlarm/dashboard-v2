@@ -243,6 +243,11 @@ class Store extends Model implements HasMedia
         return $this->hasMany(ScanReport::class);
     }
 
+    public function latestScanReportDate(): HasOne
+    {
+        return $this->hasOne(ScanReport::class)->latest('last_scan');
+    }
+
     public function docs(): HasMany
     {
         return $this->hasMany(DealerDoc::class);
