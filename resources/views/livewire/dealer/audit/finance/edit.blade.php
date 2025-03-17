@@ -122,11 +122,12 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
                                                 </svg>
                                             @endif
-                                            <input type="file" wire:model="violationFiles.{{ $s['id'] }}.0" id="violationFiles.{{ $s['id'] }}.0" class="sr-only">
+                                            <input type="file" accept=".jpeg,.jpg" wire:model="violationFiles.{{ $s['id'] }}.0" id="violationFiles.{{ $s['id'] }}.0" class="sr-only">
                                         </label>
                                         @if($s->getMedia('violation_files_0')->first() !== null)
                                             <button wire:click="deletePhoto({{ $s['id'] }}, 0)">Clear</button>
                                         @endif
+                                        @error("violationFiles.{$s['id']}.0") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 1MB</p> @enderror
                                     </div>
                                     <div>
                                         <label for="violationFiles.{{ $s['id'] }}.1" class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center">
@@ -140,11 +141,12 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
                                                 </svg>
                                             @endif
-                                            <input type="file" wire:model="violationFiles.{{ $s['id'] }}.1" id="violationFiles.{{ $s['id'] }}.1" class="sr-only">
+                                            <input type="file" accept=".jpeg,.jpg" wire:model="violationFiles.{{ $s['id'] }}.1" id="violationFiles.{{ $s['id'] }}.1" class="sr-only">
                                         </label>
                                         @if($s->getMedia('violation_files_1')->first() !== null)
                                             <button wire:click="deletePhoto({{ $s['id'] }}, 1)">Clear</button>
                                         @endif
+                                        @error("violationFiles.{$s['id']}.1") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 1MB</p> @enderror
                                     </div>
                                     <div>
                                         <label for="violationFiles.{{ $s['id'] }}.2" class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center">
@@ -158,11 +160,12 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
                                                 </svg>
                                             @endif
-                                            <input type="file" wire:model="violationFiles.{{ $s['id'] }}.2" id="violationFiles.{{ $s['id'] }}.2" class="sr-only">
+                                            <input type="file" accept=".jpeg,.jpg" wire:model="violationFiles.{{ $s['id'] }}.2" id="violationFiles.{{ $s['id'] }}.2" class="sr-only">
                                         </label>
                                         @if($s->getMedia('violation_files_2')->first() !== null)
                                             <button wire:click="deletePhoto({{ $s['id'] }}, 2)">Clear</button>
                                         @endif
+                                        @error("violationFiles.{$s['id']}.2") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 1MB</p> @enderror
                                     </div>
                                 </div>
 
@@ -204,7 +207,7 @@
                     </svg>
                 </div>
             </div>
-            @if($errors->any())
+            @if($errors->has('violations.*.comment'))
                 <p class="text-sm text-red-500">All violations require a comment. Any violation with a red exclamation indicates a missing comment.</p>
             @endif
         </form>

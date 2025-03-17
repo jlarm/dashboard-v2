@@ -34,6 +34,7 @@ class Edit extends Component
         'violations.*.comment' => 'required',
         'violations.*.violation_date' => 'nullable|date',
         'violations.*.risk' => 'nullable|boolean',
+        'violationFiles.*.*' => 'nullable|mimes:jpg,jpeg|max:1024',
     ];
 
     public function mount(): void
