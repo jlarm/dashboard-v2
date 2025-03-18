@@ -122,7 +122,7 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
                                                 </svg>
                                             @endif
-                                            <input type="file" accept="image/jpeg,image/jpg" wire:model="violationFiles.{{ $s['id'] }}.0" id="violationFiles.{{ $s['id'] }}.0" class="sr-only">
+                                            <input type="file" accept="image/jpeg,image/jpg" capture="environment" wire:model="violationFiles.{{ $s['id'] }}.0" id="violationFiles.{{ $s['id'] }}.0" class="sr-only">
                                         </label>
                                         @if($s->getMedia('violation_files_0')->first() !== null)
                                             <button wire:click="deletePhoto({{ $s['id'] }}, 0)">Clear</button>
@@ -141,7 +141,7 @@
                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
                                                    </svg>
                                                @endif
-                                               <input type="file" accept="image/jpeg,image/jpg" wire:model="violationFiles.{{ $s['id'] }}.1" id="violationFiles.{{ $s['id'] }}.1" class="sr-only">
+                                               <input type="file" accept="image/jpeg,image/jpg" capture="environment" wire:model="violationFiles.{{ $s['id'] }}.1" id="violationFiles.{{ $s['id'] }}.1" class="sr-only">
                                            </label>
                                            @if($s->getMedia('violation_files_1')->first() !== null)
                                                <button wire:click="deletePhoto({{ $s['id'] }}, 1)">Clear</button>
@@ -160,7 +160,7 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
                                                     </svg>
                                                 @endif
-                                                <input type="file" accept="image/jpeg,image/jpg" wire:model="violationFiles.{{ $s['id'] }}.2" id="violationFiles.{{ $s['id'] }}.2" class="sr-only">
+                                                <input type="file" accept="image/jpeg,image/jpg" capture="environment" wire:model="violationFiles.{{ $s['id'] }}.2" id="violationFiles.{{ $s['id'] }}.2" class="sr-only">
                                             </label>
                                             @if($s->getMedia('violation_files_2')->first() !== null)
                                                 <button wire:click="deletePhoto({{ $s['id'] }}, 2)">Clear</button>
