@@ -127,7 +127,7 @@
                                         @if($s->getMedia('violation_files_0')->first() !== null)
                                             <button wire:click="deletePhoto({{ $s['id'] }}, 0)">Clear</button>
                                         @endif
-                                        @error("violationFiles.{$s['id']}.0") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 1MB</p> @enderror
+                                        @error("violationFiles.{$s['id']}.0") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 5MB</p> @enderror
                                     </div>
                                        <div>
                                            <label for="violationFiles.{{ $s['id'] }}.1" class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center">
@@ -146,7 +146,7 @@
                                            @if($s->getMedia('violation_files_1')->first() !== null)
                                                <button wire:click="deletePhoto({{ $s['id'] }}, 1)">Clear</button>
                                            @endif
-                                           @error("violationFiles.{$s['id']}.1") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 1MB</p> @enderror
+                                           @error("violationFiles.{$s['id']}.1") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 5MB</p> @enderror
                                        </div>
                                         <div>
                                             <label for="violationFiles.{{ $s['id'] }}.2" class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center">
@@ -165,7 +165,7 @@
                                             @if($s->getMedia('violation_files_2')->first() !== null)
                                                 <button wire:click="deletePhoto({{ $s['id'] }}, 2)">Clear</button>
                                             @endif
-                                            @error("violationFiles.{$s['id']}.2") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 1MB</p> @enderror
+                                            @error("violationFiles.{$s['id']}.2") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 5MB</p> @enderror
                                         </div>
                                 </div>
 
