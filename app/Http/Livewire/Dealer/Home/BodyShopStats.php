@@ -7,6 +7,7 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\BodyShopGenerateRating;
 use App\Traits\HasAuditStats;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class BodyShopStats extends Component
@@ -31,25 +32,26 @@ class BodyShopStats extends Component
 
     private function convertRatingToGrade()
     {
-        $avg = BodyShopAudit::query()
-            ->where('store_id', $this->store->id)
-            ->where('rating', '!=', null)
-            ->where('rating', '!=', 'N/A')
-            ->pluck('rating')
-            ->average();
+        return Cache::store('redis')->remember('body_shop_rating_grade_'.$this->store->id, 60, function () {
+            $avg = BodyShopAudit::query()
+                ->where('store_id', $this->store->id)
+                ->where('rating', '!=', null)
+                ->where('rating', '!=', 'N/A')
+                ->pluck('rating')
+                ->average();
 
-        if ($avg === null) {
-            return;
-        }
+            if ($avg === null) {
+                return;
+            }
 
-        return match (true) {
-            $avg >= 90 && $avg <= 100 => 'A',
-            $avg >= 80 && $avg <= 89 => 'B',
-            $avg >= 70 && $avg <= 79 => 'C',
-            $avg >= 60 && $avg <= 69 => 'D',
-            default => 'F',
-        };
-
+            return match (true) {
+                $avg >= 90 && $avg <= 100 => 'A',
+                $avg >= 80 && $avg <= 89 => 'B',
+                $avg >= 70 && $avg <= 79 => 'C',
+                $avg >= 60 && $avg <= 69 => 'D',
+                default => 'F',
+            };
+        });
     }
 
     private function grades(): array

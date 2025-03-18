@@ -6,6 +6,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class CompletedCoursesStat extends Component
@@ -68,7 +69,7 @@ class CompletedCoursesStat extends Component
 
     protected function incompleteCount(): int
     {
-        return Cache::remember('incomplete_count_'.$this->formattedName, now()->addDay(), function () {
+        return Cache::store('redis')->remember('incomplete_count_'.$this->formattedName, now()->addDay(), function () {
             return $this->users()
                 ->filter(function ($user) {
                     return $user->user_has_not_completed_courses;
@@ -79,7 +80,7 @@ class CompletedCoursesStat extends Component
 
     protected function userCount(): int
     {
-        return Cache::remember('user_count_'.$this->formattedName, now()->addDay(), function () {
+        return Cache::store('redis')->remember('user_count_'.$this->formattedName, now()->addDay(), function () {
             return $this->users()->count();
         });
     }
@@ -96,9 +97,9 @@ class CompletedCoursesStat extends Component
         return round(($complete / $userCount) * 100);
     }
 
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
-        $percentage = Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
+        $percentage = Cache::store('redis')->remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
             return $this->readyToLoad ? $this->percentage() : '';
         });
 
