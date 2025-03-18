@@ -109,7 +109,7 @@
                                 </div>
 
                                 {{-- Images --}}
-                                <div class="grid grid-cols-3 gap-5">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
                                     <div>
                                         <label for="violationFiles.{{ $s['id'] }}.0" class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center">
                                             @if(isset($violationFiles[$s['id']][0]))
