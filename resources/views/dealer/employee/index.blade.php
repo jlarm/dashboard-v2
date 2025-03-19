@@ -50,14 +50,5 @@
             </div>
         </x-slot>
     </x-slot>
-    @if(tenant('locations'))
-        @can('edit-stores')
-            <livewire:dealer.employee.index/>
-        @endcan
-        @cannot('edit-stores')
-            <livewire:dealer.employee.manager-index/>
-        @endcannot
-    @else
-        <livewire:dealer.employee.index/>
-    @endif
+    <livewire:dealer.employee.index/>
 </x-dealer-app>
