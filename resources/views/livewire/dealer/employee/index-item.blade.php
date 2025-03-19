@@ -43,7 +43,7 @@
         @endif
     </td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
-        @if(!$user->hasRole('Consultant'))
+        @if(auth()->user()->id !== $user->id && !$user->hasRole('Consultant'))
             <a href="{{ route('dealer.employees.show', $user) }}"
                class="text-sm text-arm-blue-500 hover:text-arm-blue-700">View</a>
         @endif

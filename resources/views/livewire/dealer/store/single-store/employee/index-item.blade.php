@@ -40,5 +40,9 @@
             {{ $user->total_completed_courses }} of {{ $user->total_user_courses }}
         @endif
     </x-table.cell>
-    <x-table.cell><a href="{{ route('dealer.stores.employees.show', [$store, $user]) }}" class="text-sm">View</a></x-table.cell>
+    <x-table.cell>
+        @if(auth()->user()->id !== $user->id && !$user->hasRole('Consultant'))
+            <a href="{{ route('dealer.stores.employees.show', [$store, $user]) }}" class="text-sm">View</a>
+        @endif
+    </x-table.cell>
 </x-table.row>
