@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             StoreIdentifierMiddleware::class,
             \App\Http\Middleware\Localization::class,
+            \App\Http\Middleware\ImpersonationMiddleware::class,
         ],
 
         'universal' => [],

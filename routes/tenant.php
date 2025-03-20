@@ -33,6 +33,8 @@ use App\Http\Livewire\Tenant\Employee\Show;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use Stancl\Tenancy\Features\UserImpersonation;
+use App\Http\Controllers\Dealer\ImpersonationController;
 
 Route::name('dealer.')->middleware([
     'web',
@@ -220,6 +222,19 @@ Route::name('dealer.')->middleware([
     });
 
     Route::get('email/settings', FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
+
+    // Impersonation routes
+    Route::get('/impersonate/{token}', function ($token) {
+        return UserImpersonation::makeResponse($token);
+    })->name('impersonate.token');
+    
+    Route::get('/employee/{user}/impersonate', [ImpersonationController::class, 'impersonate'])
+        ->name('employee.impersonate')
+        ->middleware('auth');
+        
+    Route::get('/stop-impersonation', [ImpersonationController::class, 'stopImpersonation'])
+        ->name('stop.impersonation')
+        ->middleware('auth');
 
 });
 

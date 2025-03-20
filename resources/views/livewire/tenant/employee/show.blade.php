@@ -28,10 +28,10 @@
                   <span class="text-sm text-gray-800">
                     Role:
                   </span>
-                        <span class="inline-flex items-center gap-x-2 text-sm text-gray-500">
+                <span class="inline-flex items-center gap-x-2 text-sm text-gray-500">
                     @foreach($roles as $role)
-                                {{ $role }}
-                            @endforeach
+                        {{ $role }}
+                    @endforeach
                   </span>
                     </li>
                 </ul>
