@@ -1,139 +1,46 @@
 <x-dealer-app>
-        <div class="space-y-5">
+    <div class="space-y-5">
+        {{-- Single Location Dealer View --}}
         @if(!tenant('locations'))
             @can('create-stores')
-{{--             Audit Stats--}}
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 xl:gap-5">
-                <livewire:dealer.home.osha-stats/>
-                <livewire:dealer.home.body-shop-stats/>
-                <livewire:dealer.home.glba-stats/>
-                <livewire:dealer.home.deal-jacket-stats/>
-            </div>
+                {{-- Audit Stats --}}
+                <x-dealer.dashboard.audit-stats />
 
-{{--            Course Stats--}}
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5">
-                <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl">
-                    <!-- Header -->
-                    <div class="p-5 pb-4">
-                        <div>
-                            <h2 class="inline-block font-semibold text-gray-800">
-                                Course Completion by Department
-                            </h2>
-                            <p class="text-xs mb-5 text-gray-400 italic">*Based on the total number of employees who finished all required training courses.</p>
-                        </div>
-                        <!-- End Col -->
-                    </div>
-                    <!-- End Header -->
+                {{-- Course Stats and Consultant Notes --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5">
+                    <x-dealer.dashboard.department-completion />
 
-                    <!-- Body -->
-                    <div class="h-full p-5 pt-0 space-y-4">
-                        <!-- List Group -->
-                        <ul class="space-y-4">
-                            <livewire:dealer.employee.completed-courses-stat name="All" />
-                            <livewire:dealer.employee.completed-courses-stat :department="1" name="Sales" />
-                            <livewire:dealer.employee.completed-courses-stat :department="2" name="Accounting" />
-                            <livewire:dealer.employee.completed-courses-stat :department="3" name="Service" />
-                            <livewire:dealer.employee.completed-courses-stat :department="4" name="Parts" />
-                            <livewire:dealer.employee.completed-courses-stat :department="5" name="Body Shop" />
-                            <livewire:dealer.employee.completed-courses-stat :department="6" name="Finance" />
-                            <livewire:dealer.employee.completed-courses-stat :department="7" name="Porter/Driver" />
-                        </ul>
-                        <!-- End List Group -->
-                    </div>
-                    <!-- End Body -->
-                </div>
-                <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl">
                     @can('create-dealerships')
-                    <!-- Header -->
-                    <div class="p-5 pb-4">
-                        <div>
-                            <h2 class="inline-block font-semibold text-gray-800">
-                                Consultant Notes
-                            </h2>
-                            <p class="text-xs mb-5 text-gray-400 italic">Add any notes you would like to refer back to. Only you as the consultant will see these notes.</p>
-                        </div>
-                        <!-- End Col -->
-                    </div>
-                    <!-- End Header -->
-
-                    <div class="h-full p-5 pt-0 space-y-4">
-                        <livewire:dealer.home.note/>
-                    </div>
+                        <x-dealer.dashboard.consultant-notes />
                     @endcan
+
                     @role('Qualified Individual')
-                        <div class="p-5 pb-4">
-                            <livewire:dealer.home.manuals />
+                        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl">
+                            <div class="p-5 pb-4">
+                                <livewire:dealer.home.manuals />
+                            </div>
                         </div>
                     @endrole
                 </div>
-            </div>
             @endcan
         @endif
 
+        {{-- Multiple Locations Dealer Group View --}}
         @if(tenant('locations'))
             @can('edit-stores')
-                    {{--            Course Stats--}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5">
-                        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl">
-                            <!-- Header -->
-                            <div class="p-5 pb-4">
-                                <div>
-                                    <h2 class="inline-block font-semibold text-gray-800">
-                                        Course Completion by Department
-                                    </h2>
-                                    <p class="text-xs text-gray-400 italic">*Based on all stores in your group</p>
-                                    <p class="text-xs mb-5 text-gray-400 italic">**Based on the total number of employees who finished all required training courses.</p>
-                                </div>
-                                <!-- End Col -->
-                            </div>
-                            <!-- End Header -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5">
+                    <x-dealer.dashboard.department-completion
+                        subtitle="*Based on all stores in your group and the total number of employees who completed required training." />
 
-                            <!-- Body -->
-                            <div class="h-full p-5 pt-0 space-y-4">
-                                <!-- List Group -->
-                                <ul class="space-y-4">
-                                    <livewire:dealer.employee.completed-courses-stat name="All" />
-                                    <livewire:dealer.employee.completed-courses-stat :department="1" name="Sales" />
-                                    <livewire:dealer.employee.completed-courses-stat :department="2" name="Accounting" />
-                                    <livewire:dealer.employee.completed-courses-stat :department="3" name="Service" />
-                                    <livewire:dealer.employee.completed-courses-stat :department="4" name="Parts" />
-                                    <livewire:dealer.employee.completed-courses-stat :department="5" name="Body Shop" />
-                                    <livewire:dealer.employee.completed-courses-stat :department="6" name="Finance" />
-                                    <livewire:dealer.employee.completed-courses-stat :department="7" name="Porter/Driver" />
-                                </ul>
-                                <!-- End List Group -->
-                            </div>
-                            <!-- End Body -->
-                        </div>
-                        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl">
-                            <!-- Header -->
-                            <div class="p-5 pb-4">
-                                <div class="flex justify-between">
-                                    <div>
-                                        <h2 class="inline-block font-semibold text-gray-800">
-                                            Stores
-                                        </h2>
-                                        <p class="text-xs text-gray-400 italic">Listings of all stores in your dealer group</p>
-                                    </div>
-                                    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                                        @can('create-dealerships')
-                                        <button onclick="Livewire.emit('modal.open', 'dealer.store.create')" type="button" class="block rounded-md bg-arm-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">Add Store</button>
-                                        @endcan
-                                    </div>
-                                </div>
-                                <!-- End Col -->
-                            </div>
-                            <!-- End Header -->
-                            <livewire:dealer.home.store-list/>
-                        </div>
-                    </div>
-                    <livewire:dealer.home.group-rating />
+                    <x-dealer.dashboard.stores-list />
+                </div>
+                <livewire:dealer.home.group-rating />
             @endcan
         @endif
+
+        {{-- Employee Course View --}}
         @cannot('create-stores')
-            <div class="p-5 bg-white border border-gray-200 shadow-sm rounded-xl">
-                <livewire:dealer.course.index/>
-            </div>
+            <x-dealer.dashboard.course-list />
         @endcannot
     </div>
 </x-dealer-app>
