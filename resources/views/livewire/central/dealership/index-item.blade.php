@@ -1,5 +1,5 @@
-<tr>
-    <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
+<x-table.row>
+    <x-table.cell>
         {{ $dealership->name }}
         @role('super-admin')
         <div
@@ -44,9 +44,9 @@
                 </a>
             </dd>
         </dl>
-    </td>
-    @role('super-admin')
-    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
+    </x-table.cell>
+    <x-table.cell>
+        @role('super-admin')
         <div class="flex items-center -space-x-2">
             @foreach($dealership->users as $user)
                 <div class="relative group" x-data="{ showTooltip: false }">
@@ -67,10 +67,9 @@
                 </div>
             @endforeach
         </div>
-
-    </td>
-    @endrole
-    <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
+        @endrole
+    </x-table.cell>
+    <x-table.cell>
         <a class="flex items-center space-y-3" target="_blank"
            href="https://{{ $dealership->domain }}/dashboard">
             {{ $dealership->domain }}
@@ -79,18 +78,18 @@
                 <path d="M10.9883 13.0016L20.5838 3.41584M20.9998 8.99185L21.0001 3H15.0108" stroke="currentColor" stroke-width="1.5" />
             </svg>
         </a>
-    </td>
-    <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-        <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
-            {{ $dealership->locations ? 'Yes' : 'No' }}
-        </span>
-    </td>
-    <td class="hidden py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 lg:table-cell">
+    </x-table.cell>
+    <x-table.cell>
         @if(auth()->user()->id === 1)
-            <button
-                wire:click="$emit('slide-over.open', 'central.dealership.edit', @js(['dealership' => $dealership->id]))"
-                class="text-arm-blue-600 hover:text-arm-blue-900">Edit
-            </button>
+            <div class="flex gap-x-2 justify-end">
+                <button
+                    wire:click="$emit('slide-over.open', 'central.dealership.edit', @js(['dealership' => $dealership->id]))"
+                    class="text-arm-blue-600 hover:text-arm-blue-900">Edit
+                </button>
+                @if(config('app.env') === 'local')
+                <livewire:central.dealership.delete :dealership="$dealership" />
+                @endif
+            </div>
         @endif
-    </td>
-</tr>
+    </x-table.cell>
+</x-table.row>
