@@ -63,7 +63,7 @@
                             Edit
                         </a>
                     @endcan
-                        @if($glbaViolationAudit->pdf_path)
+                        @if($remediations && $glbaViolationAudit->pdf_path)
                             @can('view-audits')
                                 <a href="{{ tenant('locations') ? route('dealer.stores.audits.finance.remediation', [$store, $glbaViolationAudit->uuid]) : route('dealer.audit.finance.remediation', $glbaViolationAudit->uuid) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#4a4a4a" fill="none">
@@ -109,7 +109,7 @@
                                 </svg>
                             </button>
                         @endif
-                        @if($glbaViolationAudit->remediation_pdf_path)
+                        @if($remediations && $glbaViolationAudit->remediation_pdf_path)
                             <span class="flex px-4 py-2 text-sm font-medium bg-gray-50">Remediations</span>
                             <livewire:dealer.audit.finance.generate-remediation-button :glbaViolationAudit="$glbaViolationAudit" />
                         @endif

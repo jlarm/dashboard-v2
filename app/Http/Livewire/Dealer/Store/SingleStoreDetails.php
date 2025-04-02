@@ -7,6 +7,7 @@ use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
@@ -49,6 +50,7 @@ class SingleStoreDetails extends Component
 
     public $settings;
     public $notifications;
+    public bool $remediations;
 
     protected $rules = [
         'name' => 'required',
@@ -64,6 +66,7 @@ class SingleStoreDetails extends Component
         'phishing_token' => 'nullable|string',
         'phishing_ip' => 'nullable|string',
         'notifications' => 'nullable|boolean',
+        'remediations' => 'nullable|boolean',
     ];
 
     public function mount(): void
@@ -85,6 +88,7 @@ class SingleStoreDetails extends Component
         $this->phishing_ip = $this->settings->phishing_ip ?? null;
 
         $this->notifications = $this->dealer->courses_not_taken_notification;
+        $this->remediations = $this->dealer->remediations;
     }
 
     public function updatedLogo(): void
@@ -94,7 +98,7 @@ class SingleStoreDetails extends Component
         ]);
     }
 
-    public function update()
+    public function update(): void
     {
         $this->validate();
 
@@ -114,6 +118,7 @@ class SingleStoreDetails extends Component
                 'active_monitoring' => $this->active_monitoring,
                 'monitoring_start_date' => $this->monitoring_start_date,
                 'courses_not_taken_notification' => $this->notifications,
+                'remediations' => $this->remediations,
             ]);
 
             if (is_null($this->settings)) {
@@ -161,7 +166,7 @@ class SingleStoreDetails extends Component
         return redirect()->route('dealer.dealer.settings');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.store.single-store-details');
     }

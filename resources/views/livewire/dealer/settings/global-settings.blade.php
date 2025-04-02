@@ -79,7 +79,7 @@
                     <div class="bg-white shadow-sm rounded-lg p-6">
                         <h2 class="text-lg font-medium text-gray-900 mb-4">Store Course Notifications</h2>
                         <p class="text-sm text-gray-600 mb-6">Enable or disable notifications for courses not taken for each store.</p>
-                        
+
                         <div class="divide-y divide-gray-200">
                             @forelse($stores as $store)
                                 <div class="py-4 flex items-center justify-between">
@@ -87,16 +87,48 @@
                                         <span class="text-sm font-medium text-gray-900">{{ $store->name }}</span>
                                     </div>
                                     <div>
-                                        <button 
+                                        <button
                                             type="button"
                                             wire:click="toggleStoreNotifications({{ $store->id }})"
                                             class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 {{ $store->courses_not_taken_notification ? 'bg-arm-blue-600' : 'bg-gray-200' }}"
                                             role="switch"
                                             aria-checked="{{ $store->courses_not_taken_notification ? 'true' : 'false' }}"
                                         >
-                                            <span 
-                                                aria-hidden="true" 
+                                            <span
+                                                aria-hidden="true"
                                                 class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {{ $store->courses_not_taken_notification ? 'translate-x-5' : 'translate-x-0' }}"
+                                            ></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="py-4 text-center text-sm text-gray-500">
+                                    No stores found.
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-sm rounded-lg p-6">
+                        <h2 class="text-lg font-medium text-gray-900 mb-4">Audit Remediations</h2>
+                        <p class="text-sm text-gray-600 mb-6">Enable or disable the ability to remediate audits for each store.</p>
+
+                        <div class="divide-y divide-gray-200">
+                            @forelse($stores as $store)
+                                <div class="py-4 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <span class="text-sm font-medium text-gray-900">{{ $store->name }}</span>
+                                    </div>
+                                    <div>
+                                        <button
+                                            type="button"
+                                            wire:click="toggleRemediations({{ $store->id }})"
+                                            class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 {{ $store->remediations ? 'bg-arm-blue-600' : 'bg-gray-200' }}"
+                                            role="switch"
+                                            aria-checked="{{ $store->remediations ? 'true' : 'false' }}"
+                                        >
+                                            <span
+                                                aria-hidden="true"
+                                                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {{ $store->remediations ? 'translate-x-5' : 'translate-x-0' }}"
                                             ></span>
                                         </button>
                                     </div>

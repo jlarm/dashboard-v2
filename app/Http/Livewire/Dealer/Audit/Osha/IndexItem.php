@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use App\Models\Dealer\Store;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -10,11 +11,18 @@ class IndexItem extends Component
 {
     public OshaViolationAudit $oshaAudit;
 
-    public $store;
+    public Store $store;
+    public bool $remediations;
 
     protected $listeners = [
         'pdfGenerated' => '$refresh',
     ];
+
+    public function mount(): void
+    {
+        $this->store = Store::find(app('currentStore'));
+        $this->remediations = $this->store->remediations;
+    }
 
     public function quarter(): string
     {

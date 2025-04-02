@@ -3,17 +3,26 @@
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\GlbaViolationAudit;
+use App\Models\Dealer\Store;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class IndexItem extends Component
 {
     public GlbaViolationAudit $glbaViolationAudit;
 
-    public $store;
+    public Store $store;
+    public bool $remediations;
 
     protected $listeners = [
         'pdfGenerated' => '$refresh',
     ];
+
+    public function mount(): void
+    {
+        $this->store = Store::find(app('currentStore'));
+        $this->remediations = $this->store->remediations;
+    }
 
     public function quarter(): string
     {
@@ -25,7 +34,7 @@ class IndexItem extends Component
         return \Storage::disk('armpaudits')->download($this->glbaViolationAudit->pdf_path);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.audit.finance.index-item');
     }

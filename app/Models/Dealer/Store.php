@@ -88,6 +88,7 @@ class Store extends Model implements HasMedia
         'fi_password',
         'standard_dpp_rate',
         'courses_not_taken_notification',
+        'remediations',
     ];
 
     protected $casts = [
