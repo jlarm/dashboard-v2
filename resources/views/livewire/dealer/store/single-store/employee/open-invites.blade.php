@@ -7,12 +7,27 @@
     </x-slot>
     <div>
         <div class="w-full px-3 sm:px-0 mb-5 flex justify-between">
-            <div>
-                <label for="search" class="sr-only">Search</label>
-                <input type="search" name="search" id="search"
-                       wire:model="search"
-                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
-                       placeholder="Search by Name...">
+            <div class="flex gap-x-2">
+                <div>
+                    <label for="search" class="sr-only">Search</label>
+                    <input type="search" name="search" id="search"
+                           wire:model="search"
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
+                           placeholder="Search by Name...">
+                </div>
+                @if(count($this->getDepartmentIds()) > 1)
+                    <div>
+                        <select wire:model="filterByDepartment" id="department" name="department" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-arm-blue-600 sm:text-sm/6">
+                            <option value="">Filter by Department</option>
+                            @foreach($this->getDepartmentIds() as $id)
+                                <option value="{{ $id }}">{{ $this->getDepartmentName($id) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+                @if($filterByDepartment || $search)
+                    <x-secondary-button wire:click="clearFilters">Clear Filters</x-secondary-button>
+                @endif
             </div>
             @if(count($selected) > 1)
                 <div class="flex items-center">
@@ -39,6 +54,7 @@
                             <input wire:model="selectPage" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                         </x-table.heading>
                         <x-table.heading>Name</x-table.heading>
+                        <x-table.heading>Department</x-table.heading>
                         <x-table.heading>Email</x-table.heading>
                         <x-table.heading>Last Sent</x-table.heading>
                         <x-table.heading>Sent By</x-table.heading>
@@ -66,6 +82,7 @@
                                     <input wire:model="selected" value="{{ $invite->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                                 </x-table.cell>
                                 <x-table.cell class="pl-4 pr-3">{{ Str::title($invite->name) }}</x-table.cell>
+                                <x-table.cell class="pl-4 pr-3">{{ $this->getDepartmentName($invite->department_id) }}</x-table.cell>
                                 <x-table.cell>{{ Str::lower($invite->email) }}</x-table.cell>
                                 <x-table.cell>{{ $invite->updated_at->format('F d, Y') }}</x-table.cell>
                                 <x-table.cell>{{ $invite->user->name }}</x-table.cell>
