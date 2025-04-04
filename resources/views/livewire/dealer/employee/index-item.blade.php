@@ -19,13 +19,13 @@
     </td>
     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
         @foreach($user->roles as $role)
-            @if($role->name == 'Manager')
+            @if($role->name === 'Manager')
                 <span
                     class="inline-flex items-center rounded-md bg-arm-blue-50 px-2 py-1 text-xs font-medium text-arm-blue-700 ring-1 ring-inset ring-arm-blue-700/10">{{ $role->name }}</span>
-            @elseif($role->name == 'Employee')
+            @elseif($role->name === 'Employee')
                 <span
                     class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">{{ $role->name }}</span>
-            @elseif($role->name == 'Consultant')
+            @elseif($role->name === 'Consultant')
                 <span
                     class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">{{ $role->name }}</span>
             @else
@@ -39,6 +39,7 @@
             <span
                 class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700">Completed</span>
         @else
+{{--            {{ var_export($user->total_user_courses) }}--}}
             {{ $user->total_completed_courses }} of {{ $user->total_user_courses }}
         @endif
     </td>

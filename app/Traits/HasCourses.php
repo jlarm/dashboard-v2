@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 trait HasCourses
 {
-    private $userCoursesCache;
+    private $userCourses;
 
     private function totalUserCourses(): array
     {
-        if (is_null($this->userCoursesCache)) {
+        if (is_null($this->userCourses)) {
             $this->load('roles');
 
             $userRoles = $this->roles->pluck('id')->reject(fn ($id) => $id == 5);
@@ -28,23 +28,30 @@ trait HasCourses
                 ->pluck('course_id')
                 ->toArray();
 
-            $this->userCoursesCache = Course::query()
-                ->where('optional', false)
+            $this->userCourses = Course::query()
                 ->with('departments')
+                ->where('optional', false)
                 ->where(function ($query) use ($courseWithRole) {
-                    $query->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
-                        ->whereIn('id', $courseWithRole);
+                    $query->where(function ($q) use ($courseWithRole) {
+                        $q->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
+                          ->whereIn('id', $courseWithRole);
+                    })
+                    ->orWhere(function ($q) {
+                        $q->whereDoesntHave('departments')
+                          ->when($this->roles()->where('id', 10)->exists(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-m'))
+                          ->when($this->roles()->where('id', 9)->exists(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-e'))
+                          ->when($this->userHasNoCaliforniaStore(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
+                    });
                 })
-                ->orWhereDoesntHave('departments')
-                ->when($this->roles()->where('id', 10)->exists(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-m'))
-                ->when($this->roles()->where('id', 9)->exists(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-e'))
-                ->when($this->userHasNoCaliforniaStore(), fn ($query) => $query->where('slug', '!=', 'sexual-harassment-training-in-california'))
-                ->orWhereHas('users', fn ($q) => $q->where('users.id', $this->id))
+                ->orWhere(function ($query) {
+                    $query->whereHas('users', fn ($q) => $q->where('users.id', $this->id))
+                          ->where('optional', false);
+                })
                 ->pluck('id')
                 ->toArray();
         }
 
-        return $this->userCoursesCache;
+        return $this->userCourses;
     }
 
     public function getTotalCompletedCoursesAttribute(): int
