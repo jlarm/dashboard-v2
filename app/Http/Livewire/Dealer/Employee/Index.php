@@ -28,7 +28,7 @@ class Index extends Component
 
     public User $currentUser;
 
-    public function mount()
+    public function mount(): void
     {
         $this->currentUser = auth()->user();
     }
@@ -49,20 +49,20 @@ class Index extends Component
             ->orderBy('name')
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses');
-        
+
         // Apply filters
         $this->applyDepartmentFilter($query);
         $this->applySearchFilter($query);
-        
+
         // Apply tenant location filter if needed
         if (tenant('locations')) {
             $query->whereHas('stores', function ($query) {
-                if (!$this->currentUser->hasRole('super-admin')) {
+                if (!$this->currentUser->hasAnyRole(['super-admin', 'Consultant'])) {
                     $query->whereIn('stores.id', $this->currentUser->stores->pluck('id'));
                 }
             });
         }
-        
+
         return $query;
     }
 
@@ -71,7 +71,7 @@ class Index extends Component
         if ($this->selectedDepartment) {
             $query->where('department_id', $this->selectedDepartment);
         }
-        
+
         return $query;
     }
 
@@ -83,7 +83,7 @@ class Index extends Component
                     ->orWhere('email', 'like', '%' . $this->search . '%');
             });
         }
-        
+
         return $query;
     }
 
@@ -119,7 +119,7 @@ class Index extends Component
             $users = $this->usersQuery->get();
             $csvContent = $this->generateCsvContent($users);
             $this->sendCsvEmail($csvContent);
-            
+
             Notification::make()
                 ->title('User Report Sent Successfully')
                 ->success()
@@ -144,7 +144,7 @@ class Index extends Component
                 $csvContent .= "{$user->name},{$user->email},{$user->department->name},$user->total_completed_courses of $user->total_user_courses\n";
             }
         }
-        
+
         return $csvContent;
     }
 
@@ -152,7 +152,7 @@ class Index extends Component
     {
         $body = 'Attached is an outline of the progress your employees have made regarding completing their compliance training courses. If an employee is not noted, they have completed all courses assigned. If you have further questions regarding this, you can always access your compliance dashboard and review your departments progress as a whole.';
         $filename = 'incomplete-employee-courses-report-' . date('m-d-Y') . '.csv';
-        
+
         Mail::send([], [], function ($message) use ($csvContent, $body, $filename) {
             $message->to($this->email)
                 ->from('noreply@armp.app', tenant('name'))
@@ -162,7 +162,7 @@ class Index extends Component
                     'mime' => 'text/csv',
                 ]);
         });
-        
+
         $this->email = '';
     }
 
@@ -171,14 +171,14 @@ class Index extends Component
         if (!$this->selectedDepartment) {
             return null;
         }
-        
+
         return Department::where('id', $this->selectedDepartment)->first()->name ?? null;
     }
 
     public function render(): View
     {
         $query = $this->usersQuery;
-        
+
         $users = $this->showIncompleteCourseUsers
             ? $query->paginate(500)->filter(fn($user) => $user->user_has_not_completed_courses)
             : $query->paginate(25);
@@ -192,10 +192,10 @@ class Index extends Component
 
     private function initialUsersQuery()
     {
-        if ($this->currentUser->cannot('create-stores')) {
-            return User::query()
-                ->where('department_id', $this->currentUser->department_id);
-        }
+//        if ($this->currentUser->cannot('create-stores')) {
+//            return User::query()
+//                ->where('department_id', $this->currentUser->department_id);
+//        }
 
         return User::query();
     }
