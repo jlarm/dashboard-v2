@@ -25,7 +25,7 @@
                     <x-table.heading>Name</x-table.heading>
                     @role('super-admin')<x-table.heading>Consultants</x-table.heading>@endrole
                     <x-table.heading>Dashboard</x-table.heading>
-                    <x-table.heading></x-table.heading>
+                    @if(auth()->user()->id === 1)<x-table.heading></x-table.heading>@endif
                 </x-table.row>
             </x-slot>
             <x-slot name="body">

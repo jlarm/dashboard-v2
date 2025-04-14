@@ -45,8 +45,8 @@
             </dd>
         </dl>
     </x-table.cell>
+    @role('super-admin')
     <x-table.cell>
-        @role('super-admin')
         <div class="flex items-center -space-x-2">
             @foreach($dealership->users as $user)
                 <div class="relative group" x-data="{ showTooltip: false }">
@@ -67,8 +67,8 @@
                 </div>
             @endforeach
         </div>
-        @endrole
     </x-table.cell>
+    @endrole
     <x-table.cell>
         <a class="flex items-center space-y-3" target="_blank"
            href="https://{{ $dealership->domain }}/dashboard">
@@ -79,8 +79,8 @@
             </svg>
         </a>
     </x-table.cell>
+    @if(auth()->user()->id === 1)
     <x-table.cell>
-        @if(auth()->user()->id === 1)
             <div class="flex gap-x-2 justify-end">
                 <button
                     wire:click="$emit('slide-over.open', 'central.dealership.edit', @js(['dealership' => $dealership->id]))"
@@ -90,6 +90,6 @@
                 <livewire:central.dealership.delete :dealership="$dealership" />
                 @endif
             </div>
-        @endif
     </x-table.cell>
+    @endif
 </x-table.row>
