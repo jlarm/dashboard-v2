@@ -149,9 +149,9 @@ class OpenInvites extends Component
     }
 
     private function getInviteIds()
-    {
-        return $this->invites->pluck('id')->map(fn($id) => (string) $id);
-    }
+{
+    return $this->invites->pluck('id')->map(fn($id) => (string) $id)->toArray();
+}
 
     private function applyManagerFilter($query)
     {
