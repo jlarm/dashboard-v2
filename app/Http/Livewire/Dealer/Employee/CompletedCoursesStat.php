@@ -53,6 +53,15 @@ class CompletedCoursesStat extends Component
                 ->get();
         }
 
+        if (!tenant('locations')) {
+            return User::query()
+                ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
+                ->when($this->department, function ($query) {
+                    $query->where('department_id', $this->department);
+                })
+                ->get();
+        }
+
         // If the user is not a super-admin or consultant
         $currentUser = auth()->user();
         return User::query()
