@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -69,26 +68,22 @@ class CompletedCoursesStat extends Component
 
     protected function incompleteCount(): int
     {
-        return Cache::remember('incomplete_count_'.$this->formattedName, now()->addDay(), function () {
-            return $this->users()
-                ->filter(function ($user) {
-                    return $user->user_has_not_completed_courses;
-                })
-                ->count();
-        });
+        return $this->users()
+            ->filter(function ($user) {
+                return $user->user_has_not_completed_courses;
+            })
+            ->count();
     }
 
     protected function userCount(): int
     {
-        return Cache::remember('user_count_'.$this->formattedName, now()->addDay(), function () {
-            return $this->users()->count();
-        });
+        return $this->users()->count();
     }
 
     public function percentage(): int
     {
         $userCount = $this->userCount();
-        if ($userCount == 0) {
+        if ($userCount === 0) {
             return 0;
         }
 
@@ -99,9 +94,7 @@ class CompletedCoursesStat extends Component
 
     public function render(): View
     {
-        $percentage = Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
-            return $this->readyToLoad ? $this->percentage() : '';
-        });
+        $percentage = $this->readyToLoad ? $this->percentage() : '';
 
         return view('livewire.dealer.employee.completed-courses-stat', compact('percentage'));
     }
