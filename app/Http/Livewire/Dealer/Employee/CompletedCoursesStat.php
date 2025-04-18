@@ -69,7 +69,7 @@ class CompletedCoursesStat extends Component
 
     protected function incompleteCount(): int
     {
-        return Cache::store('redis')->remember('incomplete_count_'.$this->formattedName, now()->addDay(), function () {
+        return Cache::remember('incomplete_count_'.$this->formattedName, now()->addDay(), function () {
             return $this->users()
                 ->filter(function ($user) {
                     return $user->user_has_not_completed_courses;
@@ -80,7 +80,7 @@ class CompletedCoursesStat extends Component
 
     protected function userCount(): int
     {
-        return Cache::store('redis')->remember('user_count_'.$this->formattedName, now()->addDay(), function () {
+        return Cache::remember('user_count_'.$this->formattedName, now()->addDay(), function () {
             return $this->users()->count();
         });
     }
@@ -99,7 +99,7 @@ class CompletedCoursesStat extends Component
 
     public function render(): View
     {
-        $percentage = Cache::store('redis')->remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
+        $percentage = Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
             return $this->readyToLoad ? $this->percentage() : '';
         });
 
