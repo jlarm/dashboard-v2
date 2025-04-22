@@ -13,40 +13,40 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(['name' => 'create-dealerships']);
-        Permission::create(['name' => 'edit-dealerships']);
-        Permission::create(['name' => 'delete-dealerships']);
-        Permission::create(['name' => 'view-dealerships']);
+        Permission::firstOrCreate(['name' => 'create-dealerships']);
+        Permission::firstOrCreate(['name' => 'edit-dealerships']);
+        Permission::firstOrCreate(['name' => 'delete-dealerships']);
+        Permission::firstOrCreate(['name' => 'view-dealerships']);
 
-        Permission::create(['name' => 'create-stores']);
-        Permission::create(['name' => 'edit-stores']);
-        Permission::create(['name' => 'delete-stores']);
-        Permission::create(['name' => 'view-stores']);
+        Permission::firstOrCreate(['name' => 'create-stores']);
+        Permission::firstOrCreate(['name' => 'edit-stores']);
+        Permission::firstOrCreate(['name' => 'delete-stores']);
+        Permission::firstOrCreate(['name' => 'view-stores']);
 
-        Permission::create(['name' => 'create-users']);
-        Permission::create(['name' => 'edit-users']);
-        Permission::create(['name' => 'delete-users']);
-        Permission::create(['name' => 'view-users']);
+        Permission::firstOrCreate(['name' => 'create-users']);
+        Permission::firstOrCreate(['name' => 'edit-users']);
+        Permission::firstOrCreate(['name' => 'delete-users']);
+        Permission::firstOrCreate(['name' => 'view-users']);
 
-        Permission::create(['name' => 'create-vendors']);
-        Permission::create(['name' => 'edit-vendors']);
-        Permission::create(['name' => 'delete-vendors']);
-        Permission::create(['name' => 'view-vendors']);
+        Permission::firstOrCreate(['name' => 'create-vendors']);
+        Permission::firstOrCreate(['name' => 'edit-vendors']);
+        Permission::firstOrCreate(['name' => 'delete-vendors']);
+        Permission::firstOrCreate(['name' => 'view-vendors']);
 
-        Permission::create(['name' => 'create-scans']);
-        Permission::create(['name' => 'edit-scans']);
-        Permission::create(['name' => 'delete-scans']);
-        Permission::create(['name' => 'view-scans']);
+        Permission::firstOrCreate(['name' => 'create-scans']);
+        Permission::firstOrCreate(['name' => 'edit-scans']);
+        Permission::firstOrCreate(['name' => 'delete-scans']);
+        Permission::firstOrCreate(['name' => 'view-scans']);
 
-        Permission::create(['name' => 'create-manuals']);
-        Permission::create(['name' => 'edit-manuals']);
-        Permission::create(['name' => 'delete-manuals']);
-        Permission::create(['name' => 'view-manuals']);
+        Permission::firstOrCreate(['name' => 'create-manuals']);
+        Permission::firstOrCreate(['name' => 'edit-manuals']);
+        Permission::firstOrCreate(['name' => 'delete-manuals']);
+        Permission::firstOrCreate(['name' => 'view-manuals']);
 
-        Permission::create(['name' => 'create-audits']);
-        Permission::create(['name' => 'edit-audits']);
-        Permission::create(['name' => 'delete-audits']);
-        Permission::create(['name' => 'view-audits']);
+        Permission::firstOrCreate(['name' => 'create-audits']);
+        Permission::firstOrCreate(['name' => 'edit-audits']);
+        Permission::firstOrCreate(['name' => 'delete-audits']);
+        Permission::firstOrCreate(['name' => 'view-audits']);
 
         Role::create(['name' => 'super-admin']);
 
