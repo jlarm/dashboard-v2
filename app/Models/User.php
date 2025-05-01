@@ -11,6 +11,7 @@ use App\Models\Dealer\Timeline;
 use App\Traits\HasAudits;
 use App\Traits\HasCourses;
 use App\Traits\HasManuals;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -24,6 +25,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Stancl\Tenancy\Tenancy;
 
 class User extends Authenticatable
 {
@@ -65,6 +67,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'last_sent_course_reminder' => 'datetime',
     ];
+
+    public function scopeWithoutSuperAdminsAndConsultants($query)
+    {
+        return $query->whereDoesntHave('roles', function ($q) {
+            $q->whereIn('name', ['super-admin', 'Consultant']);
+        });
+    }
 
     public function currentStore(): BelongsTo
     {

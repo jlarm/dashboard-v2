@@ -4,6 +4,7 @@ namespace App\Models\Dealer\Audit;
 
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Violation;
+use App\Models\RemediationReminders;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,6 +44,11 @@ class GlbaViolationAudit extends Model
     public function violations(): MorphMany
     {
         return $this->morphMany(Violation::class, 'violationable');
+    }
+
+    public function reminders(): MorphMany
+    {
+        return $this->morphMany(RemediationReminders::class, 'remindable');
     }
 
     public function getViolationCountAttribute(): int

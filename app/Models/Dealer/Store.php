@@ -2,6 +2,7 @@
 
 namespace App\Models\Dealer;
 
+use App\Enums\Frequency;
 use App\Models\CmsManual;
 use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
@@ -16,6 +17,7 @@ use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\DealerDoc;
 use App\Models\FitTestDoc;
+use App\Models\RemediationSetting;
 use App\Models\User;
 use App\Traits\HasGrade;
 use Illuminate\Database\Eloquent\Model;
@@ -89,6 +91,8 @@ class Store extends Model implements HasMedia
         'standard_dpp_rate',
         'courses_not_taken_notification',
         'remediations',
+        'remediation_notifications',
+        'frequency',
     ];
 
     protected $casts = [
@@ -102,6 +106,8 @@ class Store extends Model implements HasMedia
         'reinsurance' => 'boolean',
         'user_submitted' => 'array',
         'courses_not_taken_notification' => 'boolean',
+        'frequency' => Frequency::class,
+        'remediation_notifications_last_sent' => 'datetime',
     ];
 
     public function getSlugOptions(): SlugOptions
@@ -272,6 +278,11 @@ class Store extends Model implements HasMedia
     public function fitTests(): HasMany
     {
         return $this->hasMany(FitTestDoc::class);
+    }
+
+    public function remediationSettings(): HasOne
+    {
+        return $this->hasOne(RemediationSetting::class);
     }
 
     public function getActivitylogOptions(): LogOptions

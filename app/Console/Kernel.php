@@ -74,6 +74,12 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->emailOutputOnFailure(config('app.admin_email'));
 
+        $schedule->command('remediation:reminder')
+            ->dailyAt('05:30')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
         // Commented out commands - preserved for reference or future use
         // $schedule->command('course:check-reminders')->dailyAt('05:00')->runInBackground();
         // $schedule->command('run:course-reminder')->dailyAt('05:30')->runInBackground();

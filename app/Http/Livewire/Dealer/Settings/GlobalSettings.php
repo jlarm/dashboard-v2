@@ -28,12 +28,16 @@ class GlobalSettings extends Component
         $this->phishing_token = $this->settings->phishing_token ?? null;
         $this->phishing_ip = $this->settings->phishing_ip ?? null;
 
-        $this->stores = Store::query()->orderBy('name')->select(['id', 'name', 'courses_not_taken_notification', 'remediations'])->get();
+        $this->stores = Store::query()
+            ->with('remediationSettings')
+            ->orderBy('name')
+            ->select(['id', 'name', 'courses_not_taken_notification'])
+            ->get();
     }
 
     public function toggleStoreNotifications($storeId): void
     {
-        $store = Store::find($storeId);
+        $store = Store::with('remediationSettings')->find($storeId);
 
         if ($store) {
             $store->update([
@@ -41,21 +45,29 @@ class GlobalSettings extends Component
             ]);
 
             // Refresh the stores list
-            $this->stores = Store::query()->orderBy('name')->select(['id', 'name', 'courses_not_taken_notification', 'remediations'])->get();
+            $this->stores = Store::query()
+                ->with('remediationSettings')
+                ->orderBy('name')
+                ->select(['id', 'name', 'courses_not_taken_notification'])
+                ->get();
         }
     }
 
     public function toggleRemediations($storeId): void
     {
-        $store = Store::find($storeId);
+        $store = Store::with('remediationSettings')->find($storeId);
 
         if ($store) {
-            $store->update([
-                'remediations' => !$store->remediations
+            $store->remediationSettings()->updateOrCreate([], [
+                'active' => !$store->remediationSettings->active,
             ]);
 
             // Refresh the stores list
-            $this->stores = Store::query()->orderBy('name')->select(['id', 'name', 'courses_not_taken_notification', 'remediations'])->get();
+            $this->stores = Store::query()
+                ->with('remediationSettings')
+                ->orderBy('name')
+                ->select(['id', 'name', 'courses_not_taken_notification'])
+                ->get();
         }
     }
 
