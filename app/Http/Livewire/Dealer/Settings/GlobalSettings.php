@@ -59,9 +59,9 @@ class GlobalSettings extends Component
 
         if ($store) {
             $store->remediationSettings()->updateOrCreate([], [
-                'active' => !$store->remediationSettings->active,
+                'active' => !($store->remediationSettings->active ?? false),
             ]);
-
+        
             // Refresh the stores list
             $this->stores = Store::query()
                 ->with('remediationSettings')
