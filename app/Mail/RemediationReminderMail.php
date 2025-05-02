@@ -28,7 +28,7 @@ class RemediationReminderMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('noreply@'.tenant('domain')),
+            from: new Address('noreply@armp.app'),
             subject: $this->getLabel() . ' Remediation Reminder',
         );
     }
