@@ -116,6 +116,12 @@ class SingleStoreDetails extends Component
 
         foreach($audits as $name => $departmentIds) {
             $allManagers[$name] = collect();
+            $gms = $this->getUsers()    
+                ->role('GM')
+                ->select(['id', 'name', 'department_id'])
+                ->get()
+                ->toArray();
+            $allManagers[$name] = $allManagers[$name]->merge($gms);
             foreach($departmentIds as $id) {
                 $allManagers[$name] = $allManagers[$name]->merge(
                     $this->getUsers()
