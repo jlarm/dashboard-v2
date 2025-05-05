@@ -260,7 +260,7 @@
                                                         @forelse ($managers as $manager)
                                                         <label for="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-arm-blue-500 focus:ring-arm-blue-500">
                                                             <input type="checkbox" wire:model.defer="selectedManagerIds" value="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" id="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-arm-blue-600 focus:ring-arm-blue-500 checked:border-arm-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                                                            <span class="text-sm text-gray-500 ms-3">{{ $manager['name'] }}</span>
+                                                            <span class="text-sm text-gray-500 ms-3">{{ Str::title($manager['name']) }}</span>
                                                           </label>
                                                         @empty
                                                             <p>No managers found</p>
