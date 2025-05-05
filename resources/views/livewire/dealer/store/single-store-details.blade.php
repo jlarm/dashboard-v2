@@ -256,21 +256,15 @@
                                             @foreach($this->departmentManagers() as $departmentName => $managers)
                                                 <div class="mb-4">
                                                     <h1 class="text-sm font-semibold mb-1">{{ $departmentName }}</h1>
-                                                    <div>
-                                                        <ul class="flex flex-col sm:flex-row">
-                                                            @foreach($managers as $manager)
-                                                            <li class="inline-flex items-center gap-x-2.5 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg sm:-ms-px sm:mt-0 sm:first:rounded-se-none sm:first:rounded-es-lg sm:last:rounded-es-none sm:last:rounded-se-lg">
-                                                              <div class="relative flex items-start w-full">
-                                                                <div class="flex items-center h-5">
-                                                                  <input wire:model.defer="selectedManagerIds" value="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-arm-blue-600 focus:ring-arm-blue-500 checked:border-arm-blue-500 disabled:opacity-50 disabled:pointer-events-none" id="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}">
-                                                                </div>
-                                                                <label for="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" class="ms-3.5 block w-full text-sm text-gray-500">
-                                                                  {{ $manager['name'] }}
-                                                                </label>
-                                                              </div>
-                                                            </li>
-                                                            @endforeach
-                                                          </ul>
+                                                    <div class="grid sm:grid-cols-2 gap-2">
+                                                        @forelse ($managers as $manager)
+                                                        <label for="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-arm-blue-500 focus:ring-arm-blue-500">
+                                                            <input type="checkbox" wire:model.defer="selectedManagerIds" value="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" id="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-arm-blue-600 focus:ring-arm-blue-500 checked:border-arm-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+                                                            <span class="text-sm text-gray-500 ms-3">{{ $manager['name'] }}</span>
+                                                          </label>
+                                                        @empty
+                                                            <p>No managers found</p>
+                                                        @endforelse
                                                     </div>
                                                 </div>
                                             @endforeach
