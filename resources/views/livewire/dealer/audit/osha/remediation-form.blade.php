@@ -115,7 +115,7 @@
                             @endif
                         </div>
                         @if($violation->remediation)
-                            <p class="text-xs text-gray-400">Last Edited: {{ $violation->remediation->updated_at?->format('m-d-Y') }} by {{ $violation->remediation->user->name }}</p>
+                            <p class="text-xs text-gray-400">Last Edited: {{ $violation->remediation->updated_at?->format('m-d-Y') }} by {{ $violation->remediation->user ? $violation->remediation->user->name : '' }}</p>
                         @endif
                     </div>
                 </div>
