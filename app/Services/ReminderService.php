@@ -20,16 +20,16 @@ class ReminderService
 
         $setting = RemediationSetting::where('store_id', $model->store_id)->first();
 
+        if (!$setting) {
+            return;
+        }
+
         if ($setting->active === false) {
             return;
         }
 
         if ($setting->notifications === false) {
             return;
-        }
-
-        if (!$setting) {
-            throw new Exception('Not remediation setting found for store_id: ' . $model->store_id);
         }
 
         $interval = $setting->frequency->value();
