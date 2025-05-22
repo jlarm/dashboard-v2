@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class IndexItem extends Component
@@ -39,7 +40,7 @@ class IndexItem extends Component
         return $this->store->remediationSettings->first()->active;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.audit.osha.index-item');
     }

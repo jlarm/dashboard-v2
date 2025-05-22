@@ -34,6 +34,11 @@ class IndexItem extends Component
         return \Storage::disk('armpaudits')->download($this->bodyShopAudit->pdf_path);
     }
 
+    public function remediationsActive(): bool
+    {
+        return $this->store->remediationSettings->first()->active;
+    }
+
     public function render(): View
     {
         return view('livewire.dealer.audit.body-shop.index-item');

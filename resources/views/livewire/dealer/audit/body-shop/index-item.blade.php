@@ -63,7 +63,7 @@
                             Edit
                         </a>
                     @endcan
-                    @if($remediations && $bodyShopAudit->pdf_path)
+                    @if($this->remediationsActive() && $bodyShopAudit->grade)
                         @can('view-audits')
                             <a href="{{ tenant('locations') ? route('dealer.stores.audits.body-shop.remediation', [$store, $bodyShopAudit->uuid]) : route('dealer.audit.body-shop.remediation', $bodyShopAudit->uuid) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#4a4a4a" fill="none">
