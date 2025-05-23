@@ -98,7 +98,13 @@
                             @else
                                 @if(isset($violationRemediations[$violation->id]['photo']) && $violationRemediations[$violation->id]['photo'])
                                     <div class="relative w-24 h-24">
-                                        <img src="{{ $violationRemediations[$violation->id]['photo']->temporaryUrl() }}" alt="Temporary Image" class="w-full h-full object-cover rounded-md">
+                                        @if(method_exists($violationRemediations[$violation->id]['photo'], 'temporaryUrl') && $violationRemediations[$violation->id]['photo']->getRealPath() && file_exists($violationRemediations[$violation->id]['photo']->getRealPath()))
+                                            <img src="{{ $violationRemediations[$violation->id]['photo']->temporaryUrl() }}" alt="Temporary Image" class="w-full h-full object-cover rounded-md">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center bg-gray-100 rounded-md">
+                                                <span class="text-xs text-gray-500">Image preview unavailable</span>
+                                            </div>
+                                        @endif
                                         <button wire:click="removeTemporaryPhoto({{ $violation->id }})" type="button" class="absolute top-0.5 right-0.5 p-1 rounded-md bg-slate-200 bg-opacity-75 text-slate-600 hover:text-red-500">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
