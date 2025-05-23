@@ -36,7 +36,7 @@ class IndexItem extends Component
 
     public function remediationsActive(): bool
     {
-        return $this->store->remediationSettings->exists() && $this->store->remediationSettings->first()->active;
+        return $this->store->remediationSettings !== null && $this->store->remediationSettings->exists() && $this->store->remediationSettings->first()->active;
     }
 
     public function render(): View
