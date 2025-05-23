@@ -12,6 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('telescope:prune')->daily();
+        
         // Clean activity logs - removes old activity log records
         $schedule->command('activitylog:clean')
             ->dailyAt('00:15')
