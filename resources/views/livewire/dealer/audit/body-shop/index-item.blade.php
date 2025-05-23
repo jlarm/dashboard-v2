@@ -111,7 +111,7 @@
                             </svg>
                         </button>
                     @endif
-                    @if($remediations && $bodyShopAudit->remediation_pdf_path)
+                    @if($bodyShopAudit->remediation_pdf_path)
                         <span class="flex px-4 py-2 text-sm font-medium bg-gray-50">Remediations</span>
                         <livewire:dealer.audit.body-shop.generate-remediation-button :bodyShopViolationAudit="$bodyShopAudit" />
                     @endif

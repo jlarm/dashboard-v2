@@ -109,7 +109,7 @@
                             </svg>
                         </button>
                     @endif
-                    @if($remediations && $oshaAudit->remediation_pdf_path)
+                    @if($oshaAudit->remediation_pdf_path)
                         <span class="flex px-4 py-2 text-sm font-medium bg-gray-50">Remediations</span>
                         <livewire:dealer.audit.osha.generate-remediation-button :oshaViolationAudit="$oshaAudit" />
                     @endif
