@@ -15,7 +15,7 @@
         }
     }"
      x-on:keydown.escape.prevent.stop="close($refs.button)"
-     x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+     x-on:focusin.window="$refs.panel && !$refs.panel.contains($event.target) && close()"
      x-id="['dropdown-button']"
     >
         <input id="combobox" value="{{ $currentStore ? $currentStore : 'Select a Store'  }}" type="text" readonly class="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-8 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6" role="combobox" aria-controls="options" aria-expanded="false">
