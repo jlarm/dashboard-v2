@@ -20,8 +20,6 @@ class Delete extends Modal
         try {
             $this->user->delete();
 
-            $this->close();
-
             Notification::make()
                 ->title('Employee Deleted Successfully!')
                 ->success()
