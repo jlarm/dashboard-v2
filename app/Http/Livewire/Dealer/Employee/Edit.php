@@ -78,7 +78,7 @@ class Edit extends SlideOver
         $this->qi = $this->user->hasRole('Qualified Individual');
         $this->qiCount = Role::find(5)->users()->count();
         $this->selectedAuditTypes = $user->remediationReminderPreferences()->pluck('audit_type')->toArray();
-        $this->remediationRemindersActive = $this->store->remediationSettings()->first()->notifications;
+        $this->remediationRemindersActive = $this->store->remediationSettings()->first()?->notifications ?? false;
     }
 
     public function updateUser(): void

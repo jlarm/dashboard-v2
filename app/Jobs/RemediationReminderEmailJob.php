@@ -18,6 +18,7 @@ class RemediationReminderEmailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(
+        protected ?string $tenants,
         protected Store $store,
         protected ?Model $audit,
         protected AuditTypes $auditType
@@ -34,7 +35,7 @@ class RemediationReminderEmailJob implements ShouldQueue
         $users = GetRemediationReminderUsers::execute($this->store, $this->auditType);
 
         foreach ($users as $user) {
-            $user->notify(new InitialRemediationReminderNotification($user, $this->store, $this->auditType, $this->audit));
+            $user->notify(new InitialRemediationReminderNotification($this->tenants, $user, $this->store, $this->auditType, $this->audit));
         }
 
         if ($this->audit->reminder_logs === null) {

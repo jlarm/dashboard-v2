@@ -15,6 +15,7 @@ class RemediationReminderNotification extends Notification
      * Create a new notification instance.
      */
     public function __construct(
+        protected bool $tenants,
         protected $user,
         protected $store,
         protected $auditType,
@@ -38,11 +39,12 @@ class RemediationReminderNotification extends Notification
     {
         return (new MailMessage)
                     ->line("There " . ($this->audit->outstanding_remediation_count === 1 ? 'is' : 'are') . " {$this->audit->outstanding_remediation_count} outstanding {$this->auditType->label()} violation" . ($this->audit->outstanding_remediation_count === 1 ? '' : 's') . " to remediate for {$this->store->name}.")
-                    ->action('Remediation Form', route('dealer.audit.osha.remediation', $this->audit->uuid));
+                    ->line($this->tenants)
+                    ->action('Remediation Form', $this->tenants ? route('dealer.stores.audits.osha.remediation', [$this->store, $this->audit->uuid]) : route('dealer.audit.osha.remediation', $this->audit->uuid));
     }
 
     /**
-     * Get the array representation of the notification.
+     * Get the array representation of the notification.    
      *
      * @return array<string, mixed>
      */
