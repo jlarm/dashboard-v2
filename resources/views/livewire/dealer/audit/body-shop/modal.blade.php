@@ -29,7 +29,7 @@
                         @endforeach
                     @endif
                 </ul>
-            @elseif (strlen($violations) === 0)
+            @elseif (empty($violations) || count($violations) === 0)
             @else
                 <!-- Empty state, show/hide based on command palette state -->
                 <p class="p-4 text-sm text-gray-500">No results found.</p>

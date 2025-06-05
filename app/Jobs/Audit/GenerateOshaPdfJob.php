@@ -45,11 +45,15 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     public function handle(): void
     {
+        if (app()->isLocal()) {
+            return;
+        }
         $path = $this->createDirectory();
         $fileName = $this->createFileName();
         $this->createPdf($path, $fileName);
         $this->updateAudit($fileName);
     }
+
     private function createDirectory(): string
     {
         $path = storage_path('app/osha');

@@ -6,6 +6,7 @@ use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
+use Filament\Notifications\Notification;
 
 class IndexItem extends Component
 {
@@ -39,8 +40,35 @@ class IndexItem extends Component
         return $this->store->remediationSettings !== null && $this->store->remediationSettings->exists() && $this->store->remediationSettings->first()->active;
     }
 
+    public function remediationProgress(): int
+    {
+        return $this->glbaViolationAudit->violation_count === 0 ? 0 : round($this->glbaViolationAudit->remediation_count / $this->glbaViolationAudit->violation_count * 100);
+    }
+
+    public function delete(): void
+    {
+        $this->deleteViolationPhotos();
+        $this->glbaViolationAudit->delete();
+
+        $this->emitTo('dealer.audit.finance.index', 'refreshAudits');
+
+        Notification::make()
+            ->title('GLBA Audit Deleted Successfully!')
+            ->success()
+            ->send();
+    }
+
     public function render(): View
     {
         return view('livewire.dealer.audit.finance.index-item');
+    }
+    
+    private function deleteViolationPhotos(): void
+    {
+        $this->glbaViolationAudit->violations->each(function ($violation) {
+            $violation->clearMediaCollection('violations_files_0');
+            $violation->clearMediaCollection('violations_files_1');
+            $violation->clearMediaCollection('violations_files_2');
+        });
     }
 }

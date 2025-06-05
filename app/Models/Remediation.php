@@ -18,6 +18,13 @@ class Remediation extends Model implements HasMedia
         'violation_id',
         'user_id',
         'comment',
+        'completed',
+        'completed_date',
+    ];
+
+    protected $casts = [
+        'completed' => 'boolean',
+        'completed_date' => 'date',
     ];
 
     public function violation(): BelongsTo

@@ -21,14 +21,18 @@ class GlbaViolationAudit extends Model
         'store_id',
         'pdf_path',
         'remediation_pdf_path',
+        'completed_date',
         'date',
         'grade',
+        'reminder_logs',
     ];
 
     protected $casts = [
         'uuid' => 'string',
         'date' => 'date',
+        'completed_date' => 'date',
         'data' => 'array',
+        'reminder_logs' => 'array',
     ];
 
     public function user(): BelongsTo
@@ -58,12 +62,13 @@ class GlbaViolationAudit extends Model
 
     public function getRemediationCountAttribute(): int
     {
-        $count = 0;
-        $this->violations()->each(function (Violation $violation) use (&$count) {
-            if ($violation->remediation) {
-                $count++;
-            }
-        });
-        return $count;
+        return $this->violations()->whereHas('remediation', function ($query) {
+            $query->where('completed', true);
+        })->count();
+    }
+
+    public function getOutstandingRemediationCountAttribute(): int
+    {
+        return $this->violation_count - $this->remediation_count;
     }
 }

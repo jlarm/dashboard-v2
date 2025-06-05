@@ -133,6 +133,11 @@ class User extends Authenticatable
         return $this->hasMany(FitTestDoc::class);
     }
 
+    public function remediationReminderPreferences(): HasMany
+    {
+        return $this->hasMany(RemediationReminderPreference::class);
+    }
+
     public function routeNotificationForVonage($notification)
     {
         return $this->phone;

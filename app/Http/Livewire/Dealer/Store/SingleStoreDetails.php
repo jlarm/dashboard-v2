@@ -6,6 +6,7 @@ use App\Enums\Frequency;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use App\Models\RemediationReminderPreference;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Http\RedirectResponse;
@@ -47,10 +48,13 @@ class SingleStoreDetails extends Component
     public bool $remediations;
     public bool $remediationNotifications;
     public $frequency;
-    public array $selectedManagerIds = [];
+
+    public $selectedRemediationReminderUsers = [];
 
     public function mount(): void
     {
+        $this->store = Store::find(app('currentStore'));
+
         $this->settings = GlobalSetting::first();
 
         $this->name = $this->store->name;
@@ -70,18 +74,8 @@ class SingleStoreDetails extends Component
         $this->remediations = $this->store->remediationSettings->active ?? false;
         $this->remediationNotifications = $this->store->remediationSettings->notifications ?? false;
         $this->frequency = $this->store->remediationSettings->frequency ?? null;
-        $this->selectedManagerIds = [];
 
-        if ($this->remediationNotifications) {
-            $this->selectedManagerIds = collect($this->store->remediationSettings->managers)
-                ->map(function ($managers, $audit) {
-                    return collect($managers)->map(function ($manager) use ($audit) {
-                        return $audit . '_' . $manager;
-                    });
-                })
-                ->flatten()
-                ->toArray();
-        }
+        $this->selectedRemediationReminderUsers = $this->getRemediationReminderUsers();
     }
 
     public function update(): void
@@ -106,35 +100,6 @@ class SingleStoreDetails extends Component
                 ->danger()
                 ->send();
         }
-    }
-
-    public function departmentManagers(): Collection
-    {
-        $audits = $this->audits();
-
-        $allManagers = collect();
-
-        foreach($audits as $name => $departmentIds) {
-            $allManagers[$name] = collect();
-            $gms = $this->getUsers()    
-                ->role('GM')
-                ->select(['id', 'name', 'department_id'])
-                ->get()
-                ->toArray();
-            $allManagers[$name] = $allManagers[$name]->merge($gms);
-            foreach($departmentIds as $id) {
-                $allManagers[$name] = $allManagers[$name]->merge(
-                    $this->getUsers()
-                        ->role('Manager')
-                        ->where('department_id', $id)
-                        ->select(['id', 'name', 'department_id'])
-                        ->get()
-                        ->toArray()
-                );
-            }
-        }
-
-        return $allManagers;
     }
 
     public function deleteLogo(): RedirectResponse
@@ -181,7 +146,6 @@ class SingleStoreDetails extends Component
             'remediations' => ['nullable', 'boolean'],
             'remediationNotifications' => ['nullable', 'boolean'],
             'frequency' => ['nullable', Rule::enum(Frequency::class), 'required_if:remediationNotifications,true'],
-            'selectedManagerIds' => ['required_if:remediationNotifications,true'],
         ];
     }
 
@@ -189,7 +153,6 @@ class SingleStoreDetails extends Component
     {
         return [
             'frequency.required_if' => 'The frequency field is required when remediation notifications are enabled.',
-            'selectedManagerIds.required_if' => 'At least one manager must be selected.',
         ];
     }
 
@@ -209,13 +172,12 @@ class SingleStoreDetails extends Component
         ]);
     }
 
-    private function updateRemediationSettings(): Void
+    private function updateRemediationSettings(): void
     {
         $this->store->remediationSettings()->updateOrCreate([], [
             'active' => $this->remediations,
             'notifications' => $this->remediationNotifications,
             'frequency' => $this->frequency,
-            'managers' => $this->saveManagers(),
         ]);
     }
 
@@ -242,40 +204,33 @@ class SingleStoreDetails extends Component
             ->toMediaCollection('logo', 'digitalocean');
     }
 
-    private function audits(): array
-    {
-        return [
-            'Osha' => [3,4],
-            'Body Shop' => [5],
-            'Glba' => [1,6],
-        ];
-    }
-
-    private function saveManagers(): array
-    {
-        return collect($this->selectedManagerIds)
-            ->map(function ($managerId) {
-                [$audit, $userId] = explode('_', $managerId);
-                return [$audit => $userId];
-            })
-            ->groupBy(function ($item) {
-                return key($item);
-            })
-            ->map(function ($group) {
-                // Extract user IDs for this audit type
-                return collect($group)->map(function ($item) {
-                    return reset($item);
-                })->values()->toArray();
-            })
-            ->toArray();
-    }
-
-    private function getUsers()
+    private function getRemediationReminderUsers(): array
     {
         if (tenant('locations')) {
-            return $this->store->users()->withoutSuperAdminsAndConsultants();
+            $relevantUsersCollection = $this->store->users()->permission('create-users')->get(['id', 'name', 'slug'])->keyBy('id');
+        } else {
+            $relevantUsersCollection = User::permission('create-users')->get(['id', 'name', 'slug'])->keyBy('id');
         }
 
-        return User::query()->withoutSuperAdminsAndConsultants();
+        $userIdsForQuery = $relevantUsersCollection->keys()->all();
+
+        return RemediationReminderPreference::whereIn('user_id', $userIdsForQuery)
+            ->where('enabled', true)
+            ->get()
+            ->groupBy(fn ($preference) => $preference->audit_type->value)
+            ->map(function ($preferencesInGroup) use ($relevantUsersCollection) {
+                return $preferencesInGroup->map(function ($preference) use ($relevantUsersCollection) {
+                    $user = $relevantUsersCollection->get($preference->user_id);
+                    if ($user) {
+                        return [
+                            'id' => $user->id,
+                            'name' => $user->name,
+                            'slug' => $user->slug,
+                        ];
+                    }
+                    return null;
+                })->filter()->values()->toArray();
+            })
+            ->toArray();
     }
 }

@@ -250,29 +250,40 @@
                                         @endforeach
                                     </select>
                                     <x-input-error :messages="$errors->get('frequency')" class="mt-2"/>
-                                    <div class="mt-10">
-                                        <span class="text-sm">Select which managers should receive notifications</span>
-                                        <div class="mt-2">
-                                            @foreach($this->departmentManagers() as $departmentName => $managers)
-                                                <div class="mb-4">
-                                                    <h1 class="text-sm font-semibold mb-1">{{ $departmentName }}</h1>
-                                                    <div class="grid sm:grid-cols-2 gap-2">
-                                                        @forelse ($managers as $manager)
-                                                        <label for="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-arm-blue-500 focus:ring-arm-blue-500">
-                                                            <input type="checkbox" wire:model.defer="selectedManagerIds" value="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" id="{{ str_replace(' ', '', $departmentName) }}_{{ $manager['id'] }}" class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-arm-blue-600 focus:ring-arm-blue-500 checked:border-arm-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                                                            <span class="text-sm text-gray-500 ms-3">{{ Str::title($manager['name']) }}</span>
-                                                          </label>
-                                                        @empty
-                                                            <p>No managers found</p>
-                                                        @endforelse
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                        <x-input-error :messages="$errors->get('selectedManagerIds')" class="mt-2"/>
-                                    </div>
                                 @endif
                             </div>
+                            @if($remediationNotifications)
+                            @if (!empty($selectedRemediationReminderUsers))
+                                <div class="mt-6">
+                                    <p class="mt-1 text-sm text-gray-600">The following employees are configured to receive reminders based on audit types. When the audit has been completed, the employee will receive a notification. The employee will then receive two more notifications based on the frequency selected if all violations have not been remediated. </p>
+
+                                    <div class="mt-4 space-y-4">
+                                        <div class="grid grid-cols-1 md:grid-cols-3">
+                                            @foreach ($selectedRemediationReminderUsers as $auditType => $users)
+                                                <div>
+                                                    <h4 class="text-md font-medium text-gray-800">{{ Str::title(str_replace('_', ' ', $auditType)) }}</h4>
+                                                    @if (count($users) > 0)
+                                                        <ul class="mt-2 text-sm text-gray-700 space-y-1">
+                                                            @foreach ($users as $user)
+                                                                <li>
+                                                                    <a href="{{ route('dealer.employees.show', $user['slug']) }}" class="text-arm-blue-600 hover:text-arm-blue-500">{{ $user['name'] }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <p class="mt-2 text-sm text-gray-500">No employees selected for this audit type.</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="mt-6">
+                                    <p class="mt-1 text-sm text-gray-600">No employees are currently configured to receive remediation reminders.</p>
+                                </div>
+                            @endif
+                            @endif
                         @endif
                     </div>
                 </div>

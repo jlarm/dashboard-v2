@@ -1,181 +1,247 @@
-<div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
-    <div class="space-y-1">
-        <div class="flex justify-between">
-            <h4 class="mb-2.5 font-medium text-sm text-gray-800">
+<div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+    <div class="p-4">
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-lg font-semibold text-slate-800">
                 {{ $this->quarter() }}
-            </h4>
-            <div
-                x-data="{
-                            open: false,
-                            toggle() {
-                                if (this.open) {
-                                    return this.close()
-                                }
-                                this.$refs.button.focus()
-                                this.open = true
-                            },
-                            close(focusAfter) {
-                                if (! this.open) return
-                                this.open = false
-                                focusAfter && focusAfter.focus()
-                            }
-                        }"
-                x-on:keydown.escape.prevent.stop="close($refs.button)"
-                x-on:focusin.window="$refs.panel && !$refs.panel.contains($event.target) && close()"
-                x-id="['dropdown-button']"
-                class="relative flex-none"
-            >
+            </h3>
+            <div x-data="{ openModal: false }" class="relative flex-none">
                 <button
-                    x-ref="button"
-                    x-on:click="toggle()"
-                    :aria-expanded="open"
-                    :aria-controls="$id('dropdown-button')"
+                    x-on:click="openModal = true"
                     type="button"
-                    class="-m-2.5 block p-2.5 pr-1 text-gray-500 hover:text-gray-900"
-                    id="options-menu-0-button"
-                    aria-expanded="false"
-                    aria-haspopup="true"
+                    class="inline-flex items-center gap-x-1 rounded-md px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1"
+                    aria-label="More options"
                 >
-                    <span class="sr-only">Open options</span>
-                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <span>More</span>
+                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
                     </svg>
                 </button>
+
+                {{-- MODAL --}}
                 <div
-                    x-ref="panel"
-                    x-show="open"
-                    x-transition.origin.top.left
-                    x-on:click.outside="close($refs.button)"
-                    :id="$id('dropdown-button')"
-                    style="display: none;"
-                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="options-menu-0-button"
-                    tabindex="-1"
+                    x-show="openModal"
+                    style="display: none;" {{-- Ensure hidden initially to prevent flash of unstyled content --}}
+                    x-on:keydown.escape.prevent.stop="openModal = false"
+                    role="dialog"
+                    aria-modal="true"
+                    x-id="['modal-title']"
+                    :aria-labelledby="$id('modal-title')"
+                    class="fixed inset-0 z-50 overflow-y-auto"
                 >
-                    @can('create-audits')
-                        <a href="{{ tenant('locations') ? route('dealer.stores.audits.osha.edit', [$store, $oshaAudit->uuid]) : route('dealer.audit.osha.edit', $oshaAudit->uuid) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#4a4a4a" fill="none">
-                                <path d="M15.5 5.5L18 3L21 6L18.5 8.5M15.5 5.5L9 12L8 16L12 15L18.5 8.5M15.5 5.5L18.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                                <path d="M11 5H3V21H19V13" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                            </svg>
-                            Edit
-                        </a>
-                    @endcan
-                    @if($this->remediationsActive() && $oshaAudit->grade)
-                        @can('view-audits')
-                            <a href="{{ tenant('locations') ? route('dealer.stores.audits.osha.remediation', [$store, $oshaAudit->uuid]) : route('dealer.audit.osha.remediation', $oshaAudit->uuid) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#4a4a4a" fill="none">
-                                    <path d="M6.50256 17.4971L6.49622 17.5034" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round" />
-                                    <path d="M6.53145 21.4957C6.52756 21.4996 6.52126 21.4997 6.51734 21.4958L2.49907 17.5292C2.49513 17.5253 2.4951 17.5189 2.49901 17.515L9.74034 10.2469C8.77141 6.85634 10.7044 3.93772 13.2977 2.9258C14.8604 2.31602 16.6643 2.3761 17.9917 3.01986C17.5364 3.48022 16.8871 4.09505 16.3054 4.68145C15.6913 5.3006 15.0716 5.89067 14.7531 6.29192C13.3917 8.48441 15.9136 10.434 17.6375 9.27594C17.9219 9.08493 18.3556 8.57712 18.8641 8.09065C19.5963 7.39024 20.2333 6.7218 20.9465 6.01509C21.6586 7.67186 21.6489 9.33041 21.0551 10.7508C20.4803 12.126 19.3536 13.2789 18.0591 13.9344C16.7378 14.3924 15.4276 14.7886 13.753 14.259L6.53145 21.4957Z" stroke="currentColor" stroke-width="1.5" />
+                    {{-- OVERLAY --}}
+                    <div x-show="openModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black/30 backdrop-blur-sm"></div>
+
+                    {{-- PANEL --}}
+                    <div
+                        x-show="openModal"
+                        x-transition:enter="transition ease-out duration-200 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150 transform"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95"
+                        x-on:click.outside="openModal = false"
+                        class="relative mx-auto mt-8 mb-8 flex w-full max-w-xl flex-col rounded-xl bg-white p-0 shadow-xl"
+                    >
+                        {{-- HEADER --}}
+                        <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
+                            <h2 class="text-lg font-semibold text-gray-900" :id="$id('modal-title')">
+                                Audit Details & Actions
+                            </h2>
+                            <button type="button" x-on:click="openModal = false" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
-                                Remediate
-                            </a>
-                        @endcan
-                    @endif
-                    <a href="{{ tenant('locations') ? route('dealer.stores.audits.osha.view', [$store, $oshaAudit->uuid]) : route('dealer.audit.osha.show', $oshaAudit->uuid) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#4a4a4a" fill="none">
-                            <path d="M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12Z" stroke="currentColor" stroke-width="1.5" />
-                            <path d="M12 5C17.5228 5 22 12 22 12C22 12 17.5228 19 12 19C6.47715 19 2 12 2 12C2 12 6.47715 5 12 5Z" stroke="currentColor" stroke-width="1.5" />
-                        </svg>
-                        View
-                    </a>
-                    @if($oshaAudit->pdf_path)
-                        <span class="flex px-4 py-2 text-sm font-medium bg-gray-50">Violations</span>
-                    @endif
-                    @can('create-audits')
-                        @if(!$oshaAudit->pdf_path)
-                            <span class="flex px-4 py-2 text-sm font-medium bg-gray-50">Violations</span>
-                        @endif
-                        <livewire:dealer.audit.osha.generate-button :oshaViolationAudit="$oshaAudit"/>
-                    @endcan
-                    @if($oshaAudit->pdf_path)
-                        <button wire:click="download" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none">
-                                <path d="M21 3H3V21H21V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                                <path d="M8 17.0039H16M11.9961 7.00391V13.7212M9.49435 11.8211L11.9961 13.987L14.4978 11.8211" stroke="currentColor" stroke-width="1.5" />
-                            </svg>
-                            Download PDF
-                            <svg
-                                wire:loading
-                                wire:target="download"
-                                class="animate-spin -ml-1 mr-1 h-3 w-3 text-gray-700"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24"
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+
+                        {{-- CONTENT --}}
+                        <div class="space-y-4 p-6">
+                            {{-- PROGRESS BAR & STATS --}}
+                            <div class="space-y-3 rounded-lg border border-gray-200 p-4">
+                                <h3 class="text-base font-medium text-gray-800">Summary</h3>
+                                @if($this->remediationsActive())
+                                <div>
+                                    <div class="flex justify-between text-sm font-medium text-gray-700">
+                                        <span>Remediation Progress</span>
+                                        <span>{{ $this->remediationProgress() }}%</span>
+                                    </div>
+                                    <div class="mt-1 h-2.5 w-full rounded-full bg-gray-200">
+                                        <div class="h-2.5 rounded-full bg-blue-600" style="width: {{ $this->remediationProgress() }}%"></div>
+                                    </div>
+                                    <p class="mt-1 text-xs text-gray-500">{{ $this->oshaAudit->remediation_count }} of {{ $this->oshaAudit->violation_count }} remediated</p>
+                                </div>
+                                @endif
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-2 pt-2 text-sm">
+                                    <div>
+                                        <dt class="text-gray-500">Grade:</dt>
+                                        <dd class="font-medium text-gray-800">{{ $oshaAudit->grade ?? '-' }}</dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-gray-500">Status:</dt>
+                                        <dd @class(['font-medium', 'text-teal-600' => $oshaAudit->completed_date != null, 'text-sky-600' => $oshaAudit->completed_date === null])>
+                                            {{ $oshaAudit->completed_date ? 'Complete' : 'In Progress' }}
+                                        </dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-gray-500">Violations:</dt>
+                                        <dd class="font-medium text-gray-800">{{ $oshaAudit->violation_count }}</dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-gray-500">Remediations:</dt>
+                                        <dd class="font-medium text-gray-800">{{ $oshaAudit->completed_date ? $oshaAudit->remediation_count : '-' }}</dd>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- ACTION LINKS --}}
+                            <div class="space-y-1 pt-2">
+                                <h3 class="px-1 pt-2.5 pb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</h3>
+                                @can('create-audits')
+                                    <a href="{{ tenant('locations') ? route('dealer.stores.audits.osha.edit', [$store, $oshaAudit->uuid]) : route('dealer.audit.osha.edit', $oshaAudit->uuid) }}" class="group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="text-gray-400 group-hover:text-gray-500" fill="none">
+                                            <path d="M15.5 5.5L18 3L21 6L18.5 8.5M15.5 5.5L9 12L8 16L12 15L18.5 8.5M15.5 5.5L18.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                            <path d="M11 5H3V21H19V13" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                        </svg>
+                                        <span>Edit Audit</span>
+                                    </a>
+                                    <livewire:dealer.audit.osha.generate-button :oshaViolationAudit="$oshaAudit" :store="$store" />
+                                @endcan
+                                @if($this->remediationsActive() && $oshaAudit->completed_date)
+                                    @can('view-audits')
+                                        <a href="{{ tenant('locations') ? route('dealer.stores.audits.osha.remediation', [$store, $oshaAudit->uuid]) : route('dealer.audit.osha.remediation', $oshaAudit->uuid) }}" class="group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="text-gray-400 group-hover:text-gray-500" fill="none">
+                                                <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="currentColor" stroke-width="1.5" />
+                                                <path d="M13.7647 15.2353L16.5 12.5M16.5 12.5L13.7647 9.76471M16.5 12.5H7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <span>Remediate Violations</span>
+                                        </a>
+                                    @endcan
+                                @endif
+
+                                @if($oshaAudit->pdf_path)
+                                <h3 class="px-1 pt-4 pb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Downloads</h3>
+                                @endif
+                                @can('view-audits')
+                                    @if($oshaAudit->violation_pdf_path)
+                                        <div class="px-1 py-1.5"><livewire:dealer.audit.osha.generate-button :oshaViolationAudit="$oshaAudit" /></div>
+                                    @endif
+                                @endcan
+                                @if($oshaAudit->pdf_path)
+                                    <button wire:click="download" class="group w-full flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="text-gray-400 group-hover:text-gray-500" fill="none">
+                                            <path d="M4 15L4 18C4 19.1046 4.89543 20 6 20L18 20C19.1046 20 20 19.1046 20 18V15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M11 5H3V21H19V13" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                            <path d="M12 3L12 14M12 14L15.5 10.5M12 14L8.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span>Download Audit PDF</span>
+                                        <svg wire:loading wire:target="download" class="animate-spin ml-auto h-4 w-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </button>
+                                @endif
+                                @if($oshaAudit->remediation_pdf_path)
+                                    <livewire:dealer.audit.osha.generate-remediation-button :oshaViolationAudit="$oshaAudit" />
+                                @endif
+
+                                @can('delete-audits')
+                                    <div class="!my-3 border-t border-gray-200"></div>
+                                    <div x-data="{ showConfirmation: false }">
+                                        <!-- Initial Delete Button -->
+                                        <button 
+                                            x-show="!showConfirmation" 
+                                            x-on:click="showConfirmation = true" 
+                                            class="group w-full flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="text-red-500 group-hover:text-red-600" fill="none">
+                                                <path d="M19.5 5.5L18.5 22H5.5L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                                <path d="M2 5.5H8M22 5.5H16M16 5.5L14.5 2H9.5L8 5.5M16 5.5H8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                                <path d="M9.5 16.5L9.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                                <path d="M14.5 16.5L14.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                            </svg>
+                                            <span>Delete Audit</span>
+                                        </button>
+                                        
+                                        <!-- Confirmation UI -->
+                                        <div x-show="showConfirmation" class="p-2 bg-red-50 rounded-md">
+                                            <p class="text-sm text-red-700 font-medium mb-3">Are you sure you want to delete this audit?</p>
+                                            <div class="flex justify-end space-x-2">
+                                                <button 
+                                                    x-on:click="showConfirmation = false" 
+                                                    class="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                                                >
+                                                    Cancel
+                                                </button>
+                                                <button 
+                                                    wire:click="delete" 
+                                                    class="px-3 py-1.5 text-xs font-medium rounded-md bg-red-600 text-white hover:bg-red-700"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endcan
+                            </div>
+                        </div>
+
+                        {{-- FOOTER --}}
+                        <div class="flex flex-shrink-0 justify-end space-x-2 border-t border-gray-200 px-6 py-4">
+                            <button
+                                type="button"
+                                x-on:click="openModal = false"
+                                class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-1"
                             >
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0{{----}}18-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                        </button>
-                    @endif
-                    @if($oshaAudit->remediation_pdf_path)
-                        <span class="flex px-4 py-2 text-sm font-medium bg-gray-50">Remediations</span>
-                        <livewire:dealer.audit.osha.generate-remediation-button :oshaViolationAudit="$oshaAudit" />
-                    @endif
-                    @can('delete-audits')
-                        <div class="border-0 bg-gray-800/15 h-px w-full"></div>
-                        <button wire:click="$emit('modal.open', 'dealer.audit.osha.delete',  @js(['oshaAudit' => $oshaAudit->id]))" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-gray-100 hover:text-red-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none">
-                                <path d="M19.5 5.5L18.5 22H5.5L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                                <path d="M2 5.5H8M22 5.5H16M16 5.5L14.5 2H9.5L8 5.5M16 5.5H8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                                <path d="M9.5 16.5L9.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                                <path d="M14.5 16.5L14.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                            </svg>
-                            Delete
-                        </button>
-                    @endcan
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Item -->
-        <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600">
-          Grade:
-        </span>
-            <span class="text-sm font-medium text-gray-800">
-           {{ $oshaAudit->grade ?? 'N/A' }}
-        </span>
-        </div>
-        <!-- End Item -->
+        {{-- Stats Section --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4">
+            {{-- Grade --}}
+            <div>
+                <dt class="text-xs font-medium text-slate-500">Grade</dt>
+                <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">{{ $oshaAudit->grade ?? '-' }}</dd>
+            </div>
 
-        <!-- Item -->
-        <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600">
-          Total Violations:
-        </span>
-            <span class="text-sm font-medium text-gray-800">
-           {{ $oshaAudit->violation_count }}
-        </span>
-        </div>
-        <!-- End Item -->
+            {{-- Status --}}
+            <div>
+                <dt class="text-xs font-medium text-slate-500">Status</dt>
+                <dd class="mt-0.5">
+                    <span @class([
+                        'inline-flex items-center gap-x-1.5 py-0.5 px-2 rounded-md text-xs font-semibold',
+                        'bg-emerald-100 text-emerald-700' => $oshaAudit->completed_date,
+                        'bg-sky-100 text-sky-700' => !$oshaAudit->completed_date
+                    ])>
+                        @if($oshaAudit->completed_date)
+                            <svg class="h-4 w-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        @else
+                            <svg class="h-3 w-3 text-sky-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle> <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        @endif
+                        {{ $oshaAudit->completed_date ? 'Complete' : 'In Progress' }}
+                    </span>
+                </dd>
+            </div>
 
-        <!-- Item -->
-        <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600">
-          Total Remediations:
-        </span>
-            <span class="text-sm font-medium text-gray-800">
-           {{ $oshaAudit->grade ? $oshaAudit->remediation_count : '-' }}
-        </span>
-        </div>
-        <!-- End Item -->
+            {{-- Total Violations --}}
+            <div>
+                <dt class="text-xs font-medium text-slate-500">Total Violations</dt>
+                <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">{{ $oshaAudit->violation_count }}</dd>
+            </div>
 
-        <!-- Item -->
-        <div class="flex justify-between items-center gap-x-2">
-        <span class="text-xs text-gray-600">
-          Status:
-        </span>
-            <span @class([
-                'inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium',
-                'bg-teal-100 text-teal-800' => $oshaAudit->grade != null,
-                'bg-sky-100 text-sky-800' => $oshaAudit->grade === null
-            ])
-              >
-            {{ $oshaAudit->grade ? 'Complete' : 'In Progress' }}
-        </span>
+            {{-- Total Remediations --}}
+            @if($this->remediationsActive())
+            <div>
+                <dt class="text-xs font-medium text-slate-500">Total Remediations</dt>
+                <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">{{ $oshaAudit->completed_date ? $oshaAudit->remediation_count : '-' }}</dd>
+            </div>
+            @endif
         </div>
-        <!-- End Item -->
     </div>
 </div>

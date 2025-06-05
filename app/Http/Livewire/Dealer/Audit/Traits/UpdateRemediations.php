@@ -19,15 +19,22 @@ trait UpdateRemediations
             $remediationData = $this->violationRemediations[$violationId] ?? [];
 
             $comment = $remediationData['comment'] ?? '';
+            $completed = $remediationData['completed'] ?? false;
             $newPhoto = $remediationData['photo'] ?? null;
 
             $hasNewPhoto = !empty($newPhoto);
             $remediation = $violation->remediation ?? new Remediation(['violation_id' => $violationId]);
 
             $isDirty = false;
+            $newPhotoSuccessfullyAdded = false; // Initialize flag for successful photo addition
 
             if ($remediation->comment !== $comment) {
                 $remediation->comment = $comment;
+                $isDirty = true;
+            }
+
+            if ($completed !== $remediation->completed) {
+                $remediation->completed = $completed;
                 $isDirty = true;
             }
 
@@ -67,6 +74,7 @@ trait UpdateRemediations
                     
                     $remediation->addMedia($filePath)->toMediaCollection('remediations', 'armpaudits');
                     $isDirty = true;
+                    $newPhotoSuccessfullyAdded = true; // Mark photo as successfully added
                     
                 } catch (FileDoesNotExist $e) {
                     // Specifically handle Spatie's FileDoesNotExist exception
@@ -90,11 +98,45 @@ trait UpdateRemediations
                 }
             }
 
-            if ($isDirty) {
-                $remediation->user_id = auth()->id();
-                $remediation->save();
-            } elseif ($remediation->exists && !$hasNewPhoto && empty($comment)) {
-                $remediation->delete();
+            $isNewRemediation = !$remediation->exists; // Check if it was new before any potential save
+
+            // Current state of remediation after potential updates to ->comment and ->completed
+            $finalComment = $remediation->comment;
+            $finalCompleted = $remediation->completed;
+
+            // Determine if it will have photos after this operation
+            $willHavePhotos = $newPhotoSuccessfullyAdded;
+            if (!$newPhotoSuccessfullyAdded && !$isNewRemediation) {
+                // If no new photo was successfully added, and it's an existing remediation,
+                // check if it already has photos. This assumes getMedia reflects current photos
+                // and this code block doesn't handle explicit photo removal.
+                $willHavePhotos = $willHavePhotos || $remediation->getMedia('remediations')->isNotEmpty();
+            }
+
+            $hasQualifyingContent = !empty($finalComment) || $finalCompleted || $willHavePhotos;
+
+            if ($isNewRemediation) {
+                // For a new remediation instance
+                if ($hasQualifyingContent) {
+                    // If it has qualifying content, save it (create it in DB)
+                    $remediation->user_id = auth()->id();
+                    $remediation->save();
+                }
+                // Else: new instance, but no qualifying content. Do not save.
+            } else {
+                // For an existing remediation instance
+                if ($hasQualifyingContent) {
+                    // It has qualifying content. If any attributes were changed ($isDirty), save the updates.
+                    if ($isDirty) {
+                        $remediation->user_id = auth()->id();
+                        $remediation->save();
+                    }
+                    // Else: existing, has content, but not dirty. No changes to save.
+                } else {
+                    // It's an existing remediation, but it no longer has qualifying content.
+                    // So, delete it from the DB.
+                    $remediation->delete();
+                }
             }
         }
 

@@ -13,6 +13,8 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class Edit extends SlideOver
 {
+    public Store $store;
+
     public $user;
 
     public $name;
@@ -26,6 +28,10 @@ class Edit extends SlideOver
     public $qi;
 
     public $qiCount;
+
+    public bool $remediationRemindersActive;
+
+    public array $selectedAuditTypes = [];
 
     public function mount(User $user): void
     {
@@ -63,6 +69,7 @@ class Edit extends SlideOver
 
     private function initializeUserData(User $user): void
     {
+        $this->store = Store::find(app('currentStore'));
         $this->user = $user;
         $this->name = $user->name;
         $this->assignedStores = $user->stores()->pluck('name')->toArray();
@@ -70,6 +77,8 @@ class Edit extends SlideOver
         $this->assignedRoles = $user->roles()->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
         $this->qi = $this->user->hasRole('Qualified Individual');
         $this->qiCount = Role::find(5)->users()->count();
+        $this->selectedAuditTypes = $user->remediationReminderPreferences()->pluck('audit_type')->toArray();
+        $this->remediationRemindersActive = $this->store->remediationSettings()->first()->notifications;
     }
 
     public function updateUser(): void
@@ -92,6 +101,15 @@ class Edit extends SlideOver
         ]);
 
         $this->user->stores()->sync(Store::whereIn('name', $this->assignedStores)->pluck('id')->toArray());
+
+        $this->user->remediationReminderPreferences()->delete();
+
+        foreach ($this->selectedAuditTypes as $auditType) {
+            $this->user->remediationReminderPreferences()->create([
+                'audit_type' => $auditType,
+                'enabled' => true,
+            ]);
+        }
     }
 
     private function assignQiRole(): void

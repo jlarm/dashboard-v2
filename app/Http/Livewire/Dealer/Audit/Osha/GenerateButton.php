@@ -2,17 +2,22 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
+use App\Enums\AuditTypes;
 use App\Jobs\Audit\GenerateOshaPdfJob;
 use App\Jobs\Audit\UploadOshaPdfJob;
+use App\Jobs\RemediationReminderEmailJob;
 use App\Models\Dealer\Audit\OshaViolationAudit;
-use App\Services\ReminderService;
+use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
+use Throwable;
 
 class GenerateButton extends Component
 {
+    public Store $store;
     public OshaViolationAudit $oshaViolationAudit;
 
     public function generatePdf(): void
@@ -20,9 +25,20 @@ class GenerateButton extends Component
         Bus::chain([
             new GenerateOshaPdfJob($this->oshaViolationAudit),
             new UploadOshaPdfJob($this->oshaViolationAudit),
-        ])->dispatch();
-
-        $this->createRemediationReminders();
+            new RemediationReminderEmailJob(
+                store: $this->store,
+                audit: $this->oshaViolationAudit,
+                auditType: AuditTypes::OSHA
+            ),
+        ])->catch(function (Throwable $e) {
+            Notification::make()
+                ->title('Error in PDF generation process')
+                ->body($e->getMessage())
+                ->icon('heroicon-o-exclamation-circle')
+                ->iconColor('danger')
+                ->send();
+            Log::error($e->getMessage());
+        })->dispatch();
 
         Notification::make()
             ->title('Violation PDF Created Successfully')
@@ -36,10 +52,5 @@ class GenerateButton extends Component
     public function render(): View
     {
         return view('livewire.dealer.audit.osha.generate-button');
-    }
-
-    private function createRemediationReminders(): void
-    {
-        ReminderService::createRemediationReminders($this->oshaViolationAudit);
     }
 }

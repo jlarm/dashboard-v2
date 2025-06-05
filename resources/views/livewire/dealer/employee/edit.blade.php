@@ -81,11 +81,31 @@
             <input wire:model.defer="qi" id="qi" name="qi" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
         </div>
         <div class="ml-3 text-sm leading-6">
-            <label for="qi" class="font-medium text-gray-900">This employee will be a Qualified Individual</label>
+            <label for="qi" class="font-medium text-gray-900">Qualified Individual</label>
         </div>
     </div>
     @endcan
 
+
+    @if($user->can('create-users') && $remediationRemindersActive)
+        <div>
+            <x-input-label :value="__('Remediation Reminders')" class="mt-5"/>
+            <ul class="max-w-sm flex flex-col mt-1">
+                @foreach(\App\Enums\AuditTypes::cases() as $type)
+                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
+                        <div class="relative flex items-start w-full">
+                            <div class="flex items-center h-5">
+                                <input id="{{ $type->value }}" wire:model="selectedAuditTypes" value="{{ $type->value }}" name="{{ $type->value }}" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
+                            </div>
+                            <label for="{{ $type->value }}" class="ms-3.5 block w-full text-sm text-gray-600">
+                                {{ $type->label() }}
+                            </label>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <x-slot name="buttons">
         <button

@@ -5,10 +5,13 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 use App\Jobs\Audit\GenerateGlbaPdfJob;
 use App\Jobs\Audit\UploadGlbaPdfJob;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
-use App\Services\ReminderService;
+use App\Jobs\RemediationReminderEmailJob;
+use App\Enums\AuditTypes;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Throwable;
 
 class GenerateButton extends Component
 {
@@ -19,9 +22,22 @@ class GenerateButton extends Component
         Bus::chain([
             new GenerateGlbaPdfJob($this->glbaViolationAudit),
             new UploadGlbaPdfJob($this->glbaViolationAudit),
-        ])->dispatch();
-
-        $this->createRemediationReminders();
+            new RemediationReminderEmailJob(
+                store: $this->glbaViolationAudit->store,
+                audit: $this->glbaViolationAudit,
+                auditType: AuditTypes::GLBA
+            ),
+        ])
+        ->catch(function (Throwable $e) {
+            Notification::make()
+                ->title('Error in PDF generation process')
+                ->body($e->getMessage())
+                ->icon('heroicon-o-exclamation-circle')
+                ->iconColor('danger')
+                ->send();
+            Log::error($e->getMessage());
+        })
+        ->dispatch();
 
         Notification::make()
             ->title('Violation PDF Created Successfully')
@@ -35,10 +51,5 @@ class GenerateButton extends Component
     public function render()
     {
         return view('livewire.dealer.audit.finance.generate-button');
-    }
-
-    private function createRemediationReminders(): void
-    {
-        ReminderService::createRemediationReminders($this->glbaViolationAudit);
     }
 }

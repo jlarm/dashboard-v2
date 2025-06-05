@@ -1,4 +1,3 @@
-@php use Carbon\Carbon; @endphp
 <div x-data="{ loading: true }" class="mb-10">
     <div class="w-full max-w-3xl mx-auto px-6">
         <div class="space-y-3 flex flex-col bg-white my-10">
@@ -6,10 +5,11 @@
             <!-- Progress -->
             <div>
                 <!-- Header -->
-                <div class="mb-3 flex flex-col md:flex-row justify-between items-center gap-3">
+                <div class="mb-3 flex flex-col md:flex-col justify-between items-center gap-3">
                     <span class="block text-xl font-semibold text-gray-800">
                        Remediating the OSHA Audit for {{ $oshaViolationAudit->date->format('F d, Y') }}
                     </span>
+                    <p class="text-sm text-gray-600">Once you have remediated a violation make sure to mark it as completed.</p>
                 </div>
                 <!-- End Header -->
             </div>
@@ -119,6 +119,14 @@
                                     </label>
                                 @endif
                             @endif
+                        </div>
+                        <div class="flex items-center gap-x-3">
+                            <label for="{{ $violation->id }}" class="relative inline-block w-11 h-6 cursor-pointer">
+                                <input type="checkbox" id="{{ $violation->id }}" class="peer sr-only" wire:model.defer="violationRemediations.{{ $violation->id }}.completed">
+                                <span class="absolute inset-0 bg-gray-200 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-teal-600 peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-5 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full peer-checked:bg-white"></span>
+                            </label>
+                            <label for="{{ $violation->id }}" class="text-sm text-gray-800">{{ $violationRemediations[$violation->id]['completed'] ? 'Completed' : 'Mark as Completed' }}</label>
                         </div>
                         @if($violation->remediation)
                             <p class="text-xs text-gray-400">Last Edited: {{ $violation->remediation->updated_at?->format('m-d-Y') }} 

@@ -76,7 +76,9 @@ class OshaStats extends Component
         $total = 0;
 
         foreach ($this->grades() as $grade) {
-            $total += $gradeValues[$grade];
+            if (array_key_exists($grade, $gradeValues)) {
+                $total += $gradeValues[$grade];
+            }
         }
 
         if ($gradesCount == 0) {

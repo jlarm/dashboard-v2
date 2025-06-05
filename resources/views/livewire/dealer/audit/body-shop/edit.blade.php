@@ -183,7 +183,7 @@
                     </div>
                 @empty
                     <button
-                        onclick="Livewire.emit('modal.open', 'dealer.audit.body-shop.modal')"
+                        onclick="Livewire.emit('modal.open', 'dealer.audit.body-shop.modal'); setTimeout(() => { document.querySelector('[wire\\:model=search]').focus(); }, 300);"
                         type="button"
                         class="relative block w-full rounded-md border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2"
                     >
@@ -213,7 +213,7 @@
         </form>
     </div>
     <div class="fixed bottom-5 right-5">
-        <button class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-arm-blue-500" onclick="Livewire.emit('modal.open', 'dealer.audit.body-shop.modal')">
+        <button class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-arm-blue-500" onclick="Livewire.emit('modal.open', 'dealer.audit.body-shop.modal'); setTimeout(() => { document.querySelector('[wire\\:model=search]').focus(); }, 300);">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>

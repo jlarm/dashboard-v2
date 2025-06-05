@@ -25,20 +25,23 @@ class RemediationForm extends Component
 
     protected function violations()
     {
-        return $this->oshaViolationAudit->violations()->with('remediation');
+        return $this->oshaViolationAudit->violations()->with(['remediation', 'remediation.user']);
     }
 
     private function loadRemediations(): void
     {
-        $this->violationRemediations = $this->violations()->get()->pluck('remediation.comment', 'id')->map(function ($comment) {
-            return ['comment' => $comment ?? ''];
+        $this->violationRemediations = $this->violations()->get()->mapWithKeys(function ($violation) {
+            return [$violation->id => [
+                'comment' => $violation->remediation?->comment ?? '',
+                'completed' => $violation->remediation?->completed,
+            ]];
         })->toArray();
     }
 
     public function render()
     {
         return view('livewire.dealer.audit.osha.remediation-form', [
-            'violations' => $this->violations()->with('remediation')->get(),
+            'violations' => $this->violations()->get(),
         ])->layout('components.dealer-app');
     }
 }

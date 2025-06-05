@@ -5,10 +5,13 @@ namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 use App\Jobs\Audit\GenerateBodyShopPdfJob;
 use App\Jobs\Audit\UploadBodyShopPdfJob;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
-use App\Services\ReminderService;
+use App\Jobs\RemediationReminderEmailJob;
+use App\Enums\AuditTypes;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Throwable;
 
 class GenerateButton extends Component
 {
@@ -17,11 +20,24 @@ class GenerateButton extends Component
     public function generatePdf(): void
     {
          Bus::chain([
-             new GenerateBodyShopPdfJob($this->bodyShopViolationAudit),
-             new UploadBodyShopPdfJob($this->bodyShopViolationAudit),
-         ])->dispatch();
-
-        $this->createRemediationReminders();
+            new GenerateBodyShopPdfJob($this->bodyShopViolationAudit),
+            new UploadBodyShopPdfJob($this->bodyShopViolationAudit),
+            new RemediationReminderEmailJob(
+                store: $this->bodyShopViolationAudit->store,
+                audit: $this->bodyShopViolationAudit,
+                auditType: AuditTypes::BODYSHOP
+            ),
+         ])
+         ->catch(function (Throwable $e) {
+            Notification::make()
+                ->title('Error in PDF generation process')
+                ->body($e->getMessage())
+                ->icon('heroicon-o-exclamation-circle')
+                ->iconColor('danger')
+                ->send();
+            Log::error($e->getMessage());
+        })
+         ->dispatch();
 
         Notification::make()
             ->title('Violation PDF Created Successfully')
@@ -35,10 +51,5 @@ class GenerateButton extends Component
     public function render()
     {
         return view('livewire.dealer.audit.body-shop.generate-button');
-    }
-
-    private function createRemediationReminders(): void
-    {
-        ReminderService::createRemediationReminders($this->bodyShopViolationAudit);
     }
 }
