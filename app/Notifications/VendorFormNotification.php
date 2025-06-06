@@ -38,7 +38,8 @@ class VendorFormNotification extends Notification
             ->line('Please click the button below to fill out our 3rd party service provider form for '.tenant('name').'.')
             ->action('Click Here', url($url))
             ->line('If you have any questions, please contact '.$user->name.' at '.$user->email)
-            ->salutation('Thank you for your time!'.'<br>'.tenant('name'));
+            ->line('Thank you for your time!')
+            ->salutation(tenant('name'));
     }
 
     public function toArray($notifiable): array

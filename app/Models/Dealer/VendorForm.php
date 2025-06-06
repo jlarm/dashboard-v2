@@ -12,11 +12,13 @@ class VendorForm extends Model
         'name',
         'email',
         'signature',
+        'last_notification_sent_at',
         'data',
     ];
 
     protected $casts = [
         'data' => 'array',
+        'last_notification_sent_at' => 'datetime',
     ];
 
     public function vendor(): BelongsTo

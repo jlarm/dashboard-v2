@@ -34,6 +34,10 @@ class NewForm extends Component
     {
         $this->vendor = VendorForm::findOrFail($this->vid);
 
+        if ($this->vendor->signature) {
+            return redirect(route('dealer.vendors.thankyou'));
+        }
+
         $this->qis = User::role('Qualified Individual')->get();
 
         $this->storeName = $this->vendor->vendor->store->name ?? Store::first()->name;

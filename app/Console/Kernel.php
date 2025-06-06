@@ -13,6 +13,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('telescope:prune')->daily();
+
+        $schedule->command('vendor:send-notification')
+            ->daily()
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
         
         // Clean activity logs - removes old activity log records
         $schedule->command('activitylog:clean')
