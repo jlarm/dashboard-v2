@@ -36,7 +36,7 @@ class RemediationReminderCommand extends Command
     private function processStores(Collection $stores, bool $tenantSlug): void
     {
         foreach ($stores as $store) {
-            if (!$store->remediationSettings->notifications) {
+            if (!$store->remediationSettings || !$store->remediationSettings->notifications) {
                 continue;
             }
 
