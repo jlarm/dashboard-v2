@@ -18,7 +18,7 @@ class RemediationReminderEmailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(
-        protected ?string $tenants,
+        protected bool $tenants,
         protected Store $store,
         protected ?Model $audit,
         protected AuditTypes $auditType

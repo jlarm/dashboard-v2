@@ -12,7 +12,7 @@ class InitialRemediationReminderNotification extends Notification implements Sho
     use Queueable;
 
     public function __construct(
-        protected ?string $tenants,
+        protected bool $tenants,
         protected $user,
         protected $store,
         protected $auditType,

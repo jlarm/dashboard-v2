@@ -23,6 +23,7 @@ class GenerateButton extends Component
             new GenerateBodyShopPdfJob($this->bodyShopViolationAudit),
             new UploadBodyShopPdfJob($this->bodyShopViolationAudit),
             new RemediationReminderEmailJob(
+                tenants: tenant('locations'),
                 store: $this->bodyShopViolationAudit->store,
                 audit: $this->bodyShopViolationAudit,
                 auditType: AuditTypes::BODYSHOP
