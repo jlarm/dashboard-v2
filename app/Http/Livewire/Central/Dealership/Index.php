@@ -12,7 +12,7 @@ class Index extends Component
     use WithPagination;
 
     public $search = '';
-    public int $perPage = 10;
+    public int $perPage = 12;
 
     protected $listeners = ['refreshDealerships' => 'query'];
 
