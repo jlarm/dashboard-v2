@@ -31,6 +31,7 @@
             @endrole
         </div>
         
+        @role('super-admin')
         <div class="mt-4">
             <div class="flex items-center -space-x-2">
                 @foreach($dealership->users as $user)
@@ -53,11 +54,14 @@
                 @endforeach
             </div>
         </div>
+    @endrole
     </div>
     
     <div class="border-t border-gray-100 bg-gray-50 p-4">
         <div class="flex gap-x-2">
-            <button wire:click="$emit('slide-over.open', 'central.dealership.edit', @js(['dealership' => $dealership->id]))" class="inline-flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Edit</button>
+            @if(auth()->user()->id === 1)
+                <button wire:click="$emit('slide-over.open', 'central.dealership.edit', @js(['dealership' => $dealership->id]))" class="inline-flex w-full items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Edit</button>
+            @endif
             <a href="https://{{ $dealership->domain }}/dashboard" target="_blank" class="inline-flex w-full items-center justify-center rounded-md bg-arm-blue-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-arm-blue-700">View</a>
         </div>
     </div>

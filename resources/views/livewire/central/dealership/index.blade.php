@@ -1,5 +1,5 @@
 <div class="space-y-5">
-    <div class="">
+    <div>
         <div class="flex items-center justify-between gap-x-6">
             <input type="search" name="search" id="search"
                    wire:model="search"
@@ -18,29 +18,12 @@
         </div>
     </div>
 
-    <div class="p-5 space-y-4 flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl">
-        <x-table>
-            <x-slot name="head">
-                <x-table.row>
-                    <x-table.heading>Name</x-table.heading>
-                    @role('super-admin')<x-table.heading>Consultants</x-table.heading>@endrole
-                    <x-table.heading>Dashboard</x-table.heading>
-                    @if(auth()->user()->id === 1)<x-table.heading></x-table.heading>@endif
-                </x-table.row>
-            </x-slot>
-            <x-slot name="body">
-                @forelse($dealerships as $dealership)
-                    <livewire:central.dealership.index-item :dealership="$dealership" :key="$dealership->id"/>
-                @empty
-                    <x-table.row>
-                        <x-table.cell colspan="4" class="text-center">
-                            No dealerships found.
-                        </x-table.cell>
-                    </x-table.row>
-                @endforelse
-            </x-slot>
-        </x-table>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        @foreach($dealerships as $dealership)
+        <livewire:central.dealership.index-item :dealership="$dealership" :key="$dealership->id"/>
+        @endforeach
     </div>
+
     <div>
         {{ $dealerships->links() }}
     </div>
