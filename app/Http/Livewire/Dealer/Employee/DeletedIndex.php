@@ -19,9 +19,9 @@ class DeletedIndex extends Component
     public function render(): View
     {
         if ($this->store) {
-            $users = $this->store->users()->onlyTrashed();
+            $users = $this->store->users()->with('department')->onlyTrashed();
         } else {
-            $users = User::onlyTrashed();
+            $users = User::with('department')->onlyTrashed();
         }
         return view('livewire.dealer.employee.deleted-index', [
             'users' => $users->get(),
