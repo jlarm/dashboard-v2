@@ -27,6 +27,10 @@ class IncompleteVendorNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
+        if (!filter_var($this->vendor->email, FILTER_VALIDATE_EMAIL)) {
+            return;
+        }
+
         Notification::route('mail', $this->vendor->email)
             ->notify(new VendorFormNotification($this->vendor));
     }
