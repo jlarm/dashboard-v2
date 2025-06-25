@@ -59,6 +59,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('documents', \App\Http\Livewire\Central\Docs\Index::class)->name('docs.index');
     Route::get('documents/create', \App\Http\Livewire\Central\Docs\Create::class)->name('docs.create');
 
+    Route::get('videos', \App\Http\Livewire\Global\Video\Index::class)->name('videos.index');
+    Route::get('videos/{videoId}', \App\Http\Livewire\Global\Video\Show::class)->name('videos.show');
+
 });
 
 // **************************************************

@@ -133,6 +133,11 @@ class User extends Authenticatable
         return $this->hasMany(FitTestDoc::class);
     }
 
+    public function videoProgress(): HasMany
+    {
+        return $this->hasMany(VideoProgress::class);
+    }
+
     public function remediationReminderPreferences(): HasMany
     {
         return $this->hasMany(RemediationReminderPreference::class);

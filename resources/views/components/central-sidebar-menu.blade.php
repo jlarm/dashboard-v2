@@ -85,56 +85,66 @@
                             </a>
                         </li>
                         @endrole
+                        <li>
+                            <a href="{{ route('videos.index') }}"
+                               class="{{ (request()->routeIs('videos.*')) ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="size-6">
+                                    <path d="M17.0001 20.9998H3.00006V2.99976H21.0001V17.9998L18.0001 15.9998" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                    <path d="M10.0001 15.4998V8.49976L15.5001 11.9998L10.0001 15.4998Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                </svg>
+                                Videos
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
-                                <li>
-                                    <div class="text-xs font-semibold leading-6 text-gray-400">Admin Menu</div>
-                                    <ul role="list" class="-mx-2 mt-2 space-y-1">
-                                        <li>
-                                            <a href="{{ route('osha-violations.index') }}"
-                                               class="{{ (request()->segment(1) == 'osha-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
-                                                <span
-                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">O</span>
-                                                <span class="truncate">OSHA Statements</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('body-shop-violations.index') }}"
-                                               class="{{ (request()->segment(1) == 'body-shop-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
-                                                <span
-                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">B</span>
-                                                <span class="truncate">Body Shop Statements</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('glba-violations.index') }}"
-                                               class="{{ (request()->segment(1) == 'glba-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
-                                                <span
-                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">G</span>
-                                                <span class="truncate">GLBA Statements</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('sds.index') }}"
-                                               class="{{ (request()->segment(1) == 'sds') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
-                                                <span
-                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">S</span>
-                                                <span class="truncate">SDS Sheets</span>
-                                            </a>
-                                        </li>
-                                        @role('super-admin')
-                                        <li>
-                                            <a href="{{ route('logs.index') }}"
-                                               class="{{ (request()->segment(1) == 'logs') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
-                                                <span
-                                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">L</span>
-                                                <span class="truncate">Logs</span>
-                                            </a>
-                                        </li>
-                                        @endrole
-                                    </ul>
-                                </li>
+                <li>
+                    <div class="text-xs font-semibold leading-6 text-gray-400">Admin Menu</div>
+                    <ul role="list" class="-mx-2 mt-2 space-y-1">
+                        <li>
+                            <a href="{{ route('osha-violations.index') }}"
+                               class="{{ (request()->segment(1) == 'osha-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">O</span>
+                                <span class="truncate">OSHA Statements</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('body-shop-violations.index') }}"
+                               class="{{ (request()->segment(1) == 'body-shop-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">B</span>
+                                <span class="truncate">Body Shop Statements</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('glba-violations.index') }}"
+                               class="{{ (request()->segment(1) == 'glba-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">G</span>
+                                <span class="truncate">GLBA Statements</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('sds.index') }}"
+                               class="{{ (request()->segment(1) == 'sds') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">S</span>
+                                <span class="truncate">SDS Sheets</span>
+                            </a>
+                        </li>
+                        @role('super-admin')
+                        <li>
+                            <a href="{{ route('logs.index') }}"
+                               class="{{ (request()->segment(1) == 'logs') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">L</span>
+                                <span class="truncate">Logs</span>
+                            </a>
+                        </li>
+                        @endrole
+                    </ul>
+                </li>
                 <li class="mt-auto">
                     <a href="https://docs.armp.app/"
                        target="_blank"
