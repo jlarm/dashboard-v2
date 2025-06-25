@@ -1,4 +1,4 @@
-<div x-data="{ selectedCategory: '' }" class="space-y-5">
+<div x-data="{ selectedCategory: '' }" class="space-y-5" wire:init="loadVideos">
     <div class="flex justify-between items-center">
         <div class="sm:flex-auto">
             <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Training Videos</h1>
@@ -15,7 +15,23 @@
     </div>
 
     <div class="mt-5">
-        <div class="grid grid-cols-3 gap-5">
+        <!-- Loading Skeleton - Always rendered but conditionally shown -->
+        <div x-show="$wire.isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            @for ($i = 0; $i < 6; $i++)
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="animate-pulse">
+                        <div class="bg-gray-200 h-40 w-full"></div>
+                        <div class="p-4 space-y-3">
+                            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+                        </div>
+                    </div>
+                </div>
+            @endfor
+        </div>
+
+        <!-- Actual content - Always rendered but conditionally shown -->
+        <div x-show="!$wire.isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach($videos as $video)
                 <livewire:global.video.index-item
                     wire:key="video-{{ $video['id'] }}"

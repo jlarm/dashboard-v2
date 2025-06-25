@@ -8,13 +8,25 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public $readyToLoad = false;
+    public $isLoading = true;
+    
+    public function mount()
+    {
+        $this->isLoading = true;
+    }
+    
+    public function loadVideos()
+    {
+        $this->readyToLoad = true;
+        $this->isLoading = false;
+    }
+
     public function render(VimeoService $vimeoService): View
     {
-        $collection = collect($vimeoService->getVideos());
-
         return view('livewire.global.video.index', [
-            'videos' => $collection,
-            'categories' => $vimeoService->getCategories(),
+            'videos' => $this->readyToLoad ? collect($vimeoService->getVideos()) : [],
+            'categories' => $this->readyToLoad ? $vimeoService->getCategories() : [],
         ]);
     }
 }
