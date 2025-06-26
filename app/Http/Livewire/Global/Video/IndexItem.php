@@ -19,7 +19,10 @@ class IndexItem extends Component
 
     public function mount(): void
     {
-        $this->currentStore = Store::where('id', app('currentStore'))->first();
+        if (tenant()) {
+            $this->currentStore = Store::where('id', app('currentStore'))->first();
+        }
+
         $this->videoProgress = auth()->user()->videoProgress()->where('video_id', $this->videoId)->first();
     }
 
