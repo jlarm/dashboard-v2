@@ -27,6 +27,15 @@ class Index extends Component
         return view('livewire.global.video.index', [
             'videos' => $this->readyToLoad ? collect($vimeoService->getVideos()) : [],
             'categories' => $this->readyToLoad ? $vimeoService->getCategories() : [],
-        ]);
+        ])->layout($this->layout());
+    }
+
+    private function layout(): string
+    {
+        if (tenancy()->initialized) {
+            return 'components.dealer-app';
+        }
+
+        return 'layouts.app';
     }
 }

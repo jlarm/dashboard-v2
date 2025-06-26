@@ -254,9 +254,26 @@
             </a>
         </div>
     @endif
+    @if($videosActive)
+        @if(request()->segment(1) === 'stores' || !tenant('locations'))
+            <div class="px-3 mb-1.5">
+                <a
+                    href="{{ $currentStore ? route('dealer.stores.videos.index', $currentStore) : route('dealer.videos.index') }}"
+                    class="{{ (request()->routeIs('dealer.videos.*') || request()->routeIs('dealer.stores.videos.*')) ? 'bg-gray-100 text-gray-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }} border-transparent group py-2 px-3 rounded-lg flex items-center text-sm"
+                >
+                    <svg class="mr-3 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                        <path class="{{ (request()->routeIs('dealer.videos.*') || request()->routeIs('dealer.stores.videos.*')) ? 'stroke-gray-600' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" d="M17.0001 20.9998H3.00006V2.99976H21.0001V17.9998L18.0001 15.9998" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                        <path class="{{ (request()->routeIs('dealer.videos.*') || request()->routeIs('dealer.stores.videos.*')) ? 'stroke-gray-600' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" d="M10.0001 15.4998V8.49976L15.5001 11.9998L10.0001 15.4998Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                    </svg>
+
+                    Video Training
+                </a>
+            </div>
+        @endif
+    @endif
     <!--  SETTINGS -->
     @can('create-stores')
-        @if (request()->segment(1) === 'stores' || !tenant('locations'))
+        @if(request()->segment(1) === 'stores' || !tenant('locations'))
         <div class="px-3 mb-1.5">
             <a
                 href="{{ $currentStore ? route('dealer.stores.settings', $currentStore) : route('dealer.dealer.settings') }}"

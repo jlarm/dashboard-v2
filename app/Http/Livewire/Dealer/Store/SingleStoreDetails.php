@@ -50,6 +50,7 @@ class SingleStoreDetails extends Component
     public $frequency;
 
     public $selectedRemediationReminderUsers = [];
+    public bool $videos;
 
     public function mount(): void
     {
@@ -76,6 +77,8 @@ class SingleStoreDetails extends Component
         $this->frequency = $this->store->remediationSettings->frequency ?? null;
 
         $this->selectedRemediationReminderUsers = $this->getRemediationReminderUsers();
+
+        $this->videos = $this->store->videos;
     }
 
     public function update(): void
@@ -146,6 +149,7 @@ class SingleStoreDetails extends Component
             'remediations' => ['nullable', 'boolean'],
             'remediationNotifications' => ['nullable', 'boolean'],
             'frequency' => ['nullable', Rule::enum(Frequency::class), 'required_if:remediationNotifications,true'],
+            'videos' => ['nullable', 'boolean'],
         ];
     }
 
@@ -169,6 +173,7 @@ class SingleStoreDetails extends Component
             'active_monitoring' => $this->active_monitoring,
             'monitoring_start_date' => $this->monitoring_start_date,
             'courses_not_taken_notification' => $this->notifications,
+            'videos' => $this->videos,
         ]);
     }
 

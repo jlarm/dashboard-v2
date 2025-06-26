@@ -44,6 +44,15 @@ class Show extends Component
     {
         return view('livewire.global.video.show', [
             'video' => $vimeoService->getVideo($this->videoId),
-        ]);
+        ])->layout($this->layout());
+    }
+
+    private function layout(): string
+    {
+        if (tenancy()->initialized) {
+            return 'components.dealer-app';
+        }
+
+        return 'layouts.app';
     }
 }

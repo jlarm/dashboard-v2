@@ -93,6 +93,7 @@ class Store extends Model implements HasMedia
         'remediations',
         'remediation_notifications',
         'frequency',
+        'videos',
     ];
 
     protected $casts = [
@@ -108,6 +109,7 @@ class Store extends Model implements HasMedia
         'courses_not_taken_notification' => 'boolean',
         'frequency' => Frequency::class,
         'remediation_notifications_last_sent' => 'datetime',
+        'videos' => 'boolean',
     ];
 
     public function getSlugOptions(): SlugOptions

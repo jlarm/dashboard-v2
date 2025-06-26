@@ -1,5 +1,5 @@
 <a
-    href="{{ route('videos.show', $videoId) }}"
+    href="{{ tenant('locations') ? route('dealer.stores.videos.show', [$currentStore, $videoId]) : route('videos.show', $videoId) }}"
     class="hover:bg-gray-100 p-2 rounded-xl"
     x-show="selectedCategory === '' || selectedCategory === '{{ $videoCategory }}'"
     x-transition:enter="transition ease-out duration-300"

@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Global\Video;
 
+use App\Models\Dealer\Store;
 use App\Models\VideoProgress;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class IndexItem extends Component
 {
+    public $currentStore;
     public string $videoId;
     public string $videoTitle;
     public string $videoCategory;
@@ -17,7 +19,7 @@ class IndexItem extends Component
 
     public function mount(): void
     {
-        $this->videoProgress = auth()->user()->videoProgress()->where('video_id', $this->videoId)->first() ?? null;
+        $this->currentStore = Store::where('id', app('currentStore'))->first();
     }
 
     public function render(): View

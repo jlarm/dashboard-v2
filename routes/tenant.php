@@ -97,6 +97,9 @@ Route::name('dealer.')->middleware([
         Route::get('{course:slug}/quiz', [CourseController::class, 'quiz'])->middleware('auth')->name('quiz');
     });
 
+    Route::get('videos', App\Http\Livewire\Global\Video\Index::class)->middleware('auth')->name('videos.index');
+    Route::get('videos/{videoId}', \App\Http\Livewire\Global\Video\Show::class)->name('videos.show');
+
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
     Route::get('form', \App\Http\Livewire\Dealer\Vendor\NewForm::class)->middleware('signed')->name('vendor.form');
     Route::view('/vendors/thankyou', 'dealer.vendor.thankyou')->middleware('web')->name('vendors.thankyou');
@@ -227,11 +230,11 @@ Route::name('dealer.')->middleware([
     Route::get('/impersonate/{token}', function ($token) {
         return UserImpersonation::makeResponse($token);
     })->name('impersonate.token');
-    
+
     Route::get('/employee/{user}/impersonate', [ImpersonationController::class, 'impersonate'])
         ->name('employee.impersonate')
         ->middleware('auth');
-        
+
     Route::get('/stop-impersonation', [ImpersonationController::class, 'stopImpersonation'])
         ->name('stop.impersonation')
         ->middleware('auth');
