@@ -14,6 +14,9 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
 
         Route::get('/', \App\Http\Livewire\Dealer\Store\SingleStore\Home\Index::class)->name('home');
 
+        Route::get('videos', App\Http\Livewire\Global\Video\Index::class)->middleware('auth')->name('videos.index');
+        Route::get('videos/{videoId}', \App\Http\Livewire\Global\Video\Show::class)->name('videos.show');
+
         // **************************************************
         // Roles to Consultant
         // **************************************************
@@ -28,9 +31,6 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('audits/deal-jackets/{individualAudit:uuid}/edit', \App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->name('audits.individual.edit');
 
             Route::get('settings', \App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->name('settings');
-
-            Route::get('videos', App\Http\Livewire\Global\Video\Index::class)->middleware('auth')->name('videos.index');
-            Route::get('videos/{videoId}', \App\Http\Livewire\Global\Video\Show::class)->name('videos.show');
 
             Route::get('edit', [StoreController::class, 'edit'])->name('edit');
 

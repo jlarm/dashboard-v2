@@ -8,6 +8,7 @@ use App\Models\Certificate;
 use App\Models\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Invite;
+use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
@@ -29,10 +30,13 @@ class UserController extends Controller
 
         $roles = $user->roles->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
 
+        $store = Store::find(app('currentStore'));
+
         return view('dealer.employee.show', [
             'user' => $user,
             'isQi' => $isQi,
             'roles' => $roles,
+            'videosActive' => $store->videos,
         ]);
     }
 

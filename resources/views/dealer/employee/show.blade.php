@@ -68,7 +68,7 @@
                 <!-- Tab List -->
                 <div class="flex justify-center">
                     <div
-                        class="inline-flex h-10 rounded-lg bg-gray-800/5 p-1 max-w-[500px]"
+                        class="inline-flex h-10 rounded-lg bg-gray-800/5 p-1 max-w-[900px]"
                         x-ref="tablist"
                         @keydown.right.prevent.stop="$focus.wrap().next()"
                         @keydown.home.prevent.stop="$focus.first()"
@@ -113,6 +113,19 @@
                             :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                             class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
                         >DOT Certificates</button>
+                        @if($videosActive)
+                        <button
+                            :id="$id('tab', whichChild($el, $el.parentElement))"
+                            @click="select($el.id)"
+                            @mousedown.prevent
+                            @focus="select($el.id)"
+                            type="button"
+                            :tabindex="isSelected($el.id) ? 0 : -1"
+                            :aria-selected="isSelected($el.id)"
+                            :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
+                            class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
+                        >Video Training Progress</button>
+                        @endif
                     </div>
                 </div>
 
@@ -152,6 +165,16 @@
                         <div class="col-span-1">
                             <livewire:dealer.employee.dot-cert :user="$user" />
                             <livewire:dealer.employee.cert-index :user="$user"/>
+                        </div>
+                    </section>
+                    <section
+                        x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                        :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                        role="tabpanel"
+                        class="p-4"
+                    >
+                        <div class="col-span-1">
+                            <livewire:tenant.employee.video-progress :user="$user" />
                         </div>
                     </section>
                 </div>
