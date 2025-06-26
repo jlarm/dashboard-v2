@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Home;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class DealJacketStats extends Component
@@ -21,30 +22,28 @@ class DealJacketStats extends Component
 
     public $dates;
 
-    public function mount()
+    public function mount(): void
     {
         $this->store = $this->store ?? Store::first();
 
         $this->rating = IndividualAudit::where('store_id', $this->store->id)->pluck('rating')->average();
     }
 
-    public function rating()
+    public function rating(): string
     {
-        return Cache::store('redis')->remember('deal_jacket_rating_'.$this->store->id, 60, function () {
-            $avg = $this->rating;
+        $avg = $this->rating;
 
-            return match (true) {
-                $avg >= 90 && $avg <= 100 => 'A',
-                $avg >= 80 && $avg <= 89 => 'B',
-                $avg >= 70 && $avg <= 79 => 'C',
-                $avg >= 60 && $avg <= 69 => 'D',
-                $avg > 0 && $avg <= 59 => 'F',
-                default => 'N/A',
-            };
-        });
+        return match (true) {
+            $avg >= 90 && $avg <= 100 => 'A',
+            $avg >= 80 && $avg <= 89 => 'B',
+            $avg >= 70 && $avg <= 79 => 'C',
+            $avg >= 60 && $avg <= 69 => 'D',
+            $avg > 0 && $avg <= 59 => 'F',
+            default => 'N/A',
+        };
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.home.deal-jacket-stats');
     }

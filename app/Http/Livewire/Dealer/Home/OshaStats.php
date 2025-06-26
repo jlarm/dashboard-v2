@@ -32,26 +32,24 @@ class OshaStats extends Component
 
     private function convertRatingToGrade()
     {
-        return Cache::store('redis')->remember('osha_rating_grade_'.$this->store->id, 60, function () {
-            $avg = OshaAudit::query()
-                ->where('store_id', $this->store->id)
-                ->where('rating', '!=', null)
-                ->where('rating', '!=', 'N/A')
-                ->pluck('rating')
-                ->average();
+        $avg = OshaAudit::query()
+            ->where('store_id', $this->store->id)
+            ->where('rating', '!=', null)
+            ->where('rating', '!=', 'N/A')
+            ->pluck('rating')
+            ->average();
 
-            if ($avg === null) {
-                return null;
-            }
+        if ($avg === null) {
+            return null;
+        }
 
-            return match (true) {
-                $avg >= 90 && $avg <= 100 => 'A',
-                $avg >= 80 && $avg <= 89 => 'B',
-                $avg >= 70 && $avg <= 79 => 'C',
-                $avg >= 60 && $avg <= 69 => 'D',
-                default => 'F',
-            };
-        });
+        return match (true) {
+            $avg >= 90 && $avg <= 100 => 'A',
+            $avg >= 80 && $avg <= 89 => 'B',
+            $avg >= 70 && $avg <= 79 => 'C',
+            $avg >= 60 && $avg <= 69 => 'D',
+            default => 'F',
+        };
     }
 
     private function grades(): array

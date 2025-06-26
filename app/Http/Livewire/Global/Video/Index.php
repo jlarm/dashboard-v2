@@ -10,13 +10,13 @@ class Index extends Component
 {
     public $readyToLoad = false;
     public $isLoading = true;
-    
-    public function mount()
+
+    public function mount(): void
     {
         $this->isLoading = true;
     }
-    
-    public function loadVideos()
+
+    public function loadVideos(): void
     {
         $this->readyToLoad = true;
         $this->isLoading = false;
