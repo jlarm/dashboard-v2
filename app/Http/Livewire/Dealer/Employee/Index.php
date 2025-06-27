@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Dealer\Employee;
 
+use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
+use App\Services\VimeoService;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -173,6 +175,21 @@ class Index extends Component
         }
 
         return Department::where('id', $this->selectedDepartment)->first()->name ?? null;
+    }
+
+    public function videosAreActive(): bool
+    {
+        return Store::find(app('currentStore'))->videos;
+    }
+
+    public function completedVideosCount(): int
+    {
+        return $this->currentUser->videoProgress()->count();
+    }
+
+    public function totalVideosCount(): int
+    {
+        return VimeoService::totalVideos();
     }
 
     public function render(): View

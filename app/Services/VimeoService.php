@@ -111,6 +111,16 @@ class VimeoService
         });
     }
 
+    public static function totalVideos(): int
+    {
+        $cacheKey = 'vimeo_total_videos';
+
+        return Cache::store('redis')->remember($cacheKey, 3600, function () {
+            $vimeoService = new self();
+            return count($vimeoService->getVideos());
+        });
+    }
+
     public function clearCache(): void
     {
         Cache::forget('vimeo_videos');
