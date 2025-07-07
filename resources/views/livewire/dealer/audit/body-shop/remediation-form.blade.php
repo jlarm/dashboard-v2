@@ -82,7 +82,7 @@
                                     <div>
                                         <div x-show="loading" class="w-24 h-24 rounded-md bg-gray-400 animate-pulse"></div>
                                         <img
-                                            src="{{ $violation->remediation->getFirstMedia('remediations')->getTemporaryUrl(Carbon::now()->addMinutes(45), 'thumb') }}"
+                                            src="{{ $violation->remediation->getFirstMedia('remediations')->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}"
                                             class="w-full h-24 object-cover rounded-md"
                                             alt=""
                                             x-on:load="loading = false"
@@ -123,7 +123,7 @@
                             <label for="{{ $violation->id }}" class="text-sm text-gray-800">{{ $violationRemediations[$violation->id]['completed'] ? 'Completed' : 'Mark as Completed' }}</label>
                         </div>
                         @if($violation->remediation)
-                        <p class="text-xs text-gray-400">Last Edited: {{ $violation->remediation->updated_at?->format('m-d-Y') }} 
+                        <p class="text-xs text-gray-400">Last Edited: {{ $violation->remediation->updated_at?->format('m-d-Y') }}
                             @if ($violation->remediation->user)
                                 by {{ $violation->remediation->user->name }}
                             @endif
