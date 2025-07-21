@@ -41,13 +41,6 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->emailOutputOnFailure(config('app.admin_email'));
 
-        // Generate Red Sentry reports
-        $schedule->command('red-sentry:report-generation')
-            ->dailyAt('01:00')
-            ->runInBackground()
-            ->withoutOverlapping()
-            ->emailOutputOnFailure(config('app.admin_email'));
-
         // Create backups
         $schedule->command('backups:go')
             ->dailyAt('01:30')
