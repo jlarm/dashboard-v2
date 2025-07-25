@@ -10,6 +10,11 @@ class IndexItem extends Component
 {
     public Dealership $dealership;
 
+    public function deleteDealership()
+    {
+        $this->emit('deleteDealership', $this->dealership->id);
+    }
+
     public function render(): View
     {
         return view('livewire.central.dealership.index-item');
