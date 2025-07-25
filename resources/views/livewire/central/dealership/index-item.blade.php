@@ -1,7 +1,7 @@
 <div class="group relative overflow-hidden flex flex-col justify-between rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md">
     <div class="p-6">
-        <div class="flex items-start justify-between">
-            <h3 class="text-lg font-medium text-gray-900">{{ $dealership->name }}</h3>
+        <div class="flex items-start justify-between gap-3">
+            <h3 class="text-lg font-medium text-gray-900 truncate min-w-0 flex-1">{{ $dealership->name }}</h3>
             @role('super-admin')
                 <div
                     x-data="{
