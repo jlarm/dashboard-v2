@@ -48,34 +48,34 @@ class Edit extends Component
         try {
             $this->validate();
 
-        $this->bodyShopViolationAudit->update([
-            'date' => $this->date,
-        ]);
+            $this->bodyShopViolationAudit->update([
+                'date' => $this->date,
+            ]);
 
-        foreach ($this->violations as $violation) {
-            $data = [
-                'comment' => $violation['comment'],
-                'violation_date' => $violation['violation_date'],
-                'risk' => $violation['risk'],
-            ];
+            foreach ($this->violations as $violation) {
+                $data = [
+                    'comment' => $violation['comment'],
+                    'violation_date' => $violation['violation_date'],
+                    'risk' => $violation['risk'],
+                ];
 
-            foreach ($this->violationFiles as $index => $files) {
-                if ($violation->id == $index) {
-                    foreach ($files as $id => $file) {
-                        $violation->addMedia($file->getRealPath())
-                            ->toMediaCollection('violation_files_'.$id, 'armpaudits');
+                foreach ($this->violationFiles as $index => $files) {
+                    if ($violation->id == $index) {
+                        foreach ($files as $id => $file) {
+                            $violation->addMedia($file->getRealPath())
+                                ->toMediaCollection('violation_files_'.$id, 'armpaudits');
+                        }
                     }
                 }
+
+                $violation->update($data);
             }
 
-            $violation->update($data);
-        }
+            $this->violationFiles = [];
 
-        $this->violationFiles = [];
+            $this->violations = $this->bodyShopViolationAudit->violations()->get();
 
-        $this->violations = $this->bodyShopViolationAudit->violations()->get();
-
-        Notification::make()
+            Notification::make()
                 ->title('Audit Updated!')
                 ->success()
                 ->send();

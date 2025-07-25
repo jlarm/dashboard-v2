@@ -19,7 +19,7 @@ use App\Http\Controllers\Dealer\Auth\VerifyEmailController;
 use App\Http\Controllers\Dealer\CourseController;
 use App\Http\Controllers\Dealer\CourseResultsController;
 use App\Http\Controllers\Dealer\EmployeeIndexController;
-use App\Http\Controllers\Dealer\ManualController;
+use App\Http\Controllers\Dealer\ImpersonationController;
 use App\Http\Controllers\Dealer\ProfileController;
 use App\Http\Controllers\Dealer\Store\SettingsController;
 use App\Http\Controllers\Dealer\UserController;
@@ -29,12 +29,10 @@ use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Docs\Index;
 use App\Http\Livewire\Dealer\Employee\DeletedIndex;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
-use App\Http\Livewire\Tenant\Employee\Show;
 use Illuminate\Support\Facades\Route;
+use Stancl\Tenancy\Features\UserImpersonation;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use Stancl\Tenancy\Features\UserImpersonation;
-use App\Http\Controllers\Dealer\ImpersonationController;
 
 Route::name('dealer.')->middleware([
     'web',
@@ -104,7 +102,7 @@ Route::name('dealer.')->middleware([
     Route::get('form', \App\Http\Livewire\Dealer\Vendor\NewForm::class)->middleware('signed')->name('vendor.form');
     Route::view('/vendors/thankyou', 'dealer.vendor.thankyou')->middleware('web')->name('vendors.thankyou');
 
-//    Route::view('disclosures', 'dealer.disclosure.index')->middleware(['auth', 'web'])->name('disclosure.index');
+    //    Route::view('disclosures', 'dealer.disclosure.index')->middleware(['auth', 'web'])->name('disclosure.index');
 
     Route::get('email/settings', FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 

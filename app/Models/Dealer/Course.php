@@ -71,7 +71,7 @@ class Course extends Model
             ->whereColumn('course_id', 'courses.id')
             ->where('user_id', $userId)
             ->latest()
-            ->take(1)
+            ->take(1),
         ])->with('lastResult');
     }
 }

@@ -69,9 +69,9 @@ class Edit extends Component
                                     'file_id' => $id,
                                     'file_size' => $file->getSize(),
                                     'file_mime' => $file->getMimeType(),
-                                    'file_name' => $file->getClientOriginalName()
+                                    'file_name' => $file->getClientOriginalName(),
                                 ]);
-                                
+
                                 $violation->addMedia($file->getRealPath())
                                     ->toMediaCollection('violation_files_'.$id, 'armpaudits');
                             } catch (\Exception $uploadException) {
@@ -79,9 +79,9 @@ class Edit extends Component
                                     'violation_id' => $violation->id,
                                     'file_id' => $id,
                                     'error' => $uploadException->getMessage(),
-                                    'trace' => $uploadException->getTraceAsString()
+                                    'trace' => $uploadException->getTraceAsString(),
                                 ]);
-                                
+
                                 throw $uploadException;
                             }
                         }
@@ -96,21 +96,21 @@ class Edit extends Component
             $this->violations = $this->oshaViolationAudit->violations()->get();
 
             Notification::make()
-                    ->title('Audit Updated!')
-                    ->success()
-                    ->send();
+                ->title('Audit Updated!')
+                ->success()
+                ->send();
         } catch (\Exception $e) {
             \Log::error('Error updating audit', [
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
             ]);
-            
+
             $errorMessage = 'All violations must have a comment';
-            
+
             if (strpos($e->getMessage(), 'validation.max.file') !== false) {
                 $errorMessage = 'One or more files exceeded the 5MB size limit';
             }
-            
+
             Notification::make()
                 ->title('Error updating audit')
                 ->body($errorMessage)

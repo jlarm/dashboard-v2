@@ -12,7 +12,9 @@ use WireElements\Pro\Components\Modal\Modal;
 class EditCourseTakenModal extends Modal
 {
     public int|User $user;
+
     public int|Course $course;
+
     public $dateTaken;
 
     protected $rules = [
@@ -24,7 +26,6 @@ class EditCourseTakenModal extends Modal
         $this->user = $user;
         $this->course = $course;
     }
-
 
     public function create(): void
     {

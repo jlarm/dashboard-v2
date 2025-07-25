@@ -12,9 +12,7 @@ class SendContractPdfNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(protected Contract $contract)
-    {
-    }
+    public function __construct(protected Contract $contract) {}
 
     public function via($notifiable): array
     {

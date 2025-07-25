@@ -30,14 +30,14 @@ class IndexItem extends Component
 
     private function totalCourses(): int
     {
-        return Cache::store('redis')->remember('total_courses_' . $this->user->id, 3600, function () {
+        return Cache::store('redis')->remember('total_courses_'.$this->user->id, 3600, function () {
             return Course::count() - 1;
         });
     }
 
     private function completedCourseCount(): int
     {
-        return Cache::store('redis')->remember('completed_courses_' . $this->user->id, 3600, function () {
+        return Cache::store('redis')->remember('completed_courses_'.$this->user->id, 3600, function () {
             return DB::table('course_results')
                 ->where('user_id', $this->user->id)
                 ->whereBetween('created_at', [now()->subYear(), now()])

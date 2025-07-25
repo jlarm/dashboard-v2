@@ -12,10 +12,12 @@ use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
 class RemediationForm extends Component
 {
-    use WithFileUploads, WithMedia, InteractsWithConfirmationModal, UpdateRemediations;
+    use InteractsWithConfirmationModal, UpdateRemediations, WithFileUploads, WithMedia;
 
     public ?Store $store = null;
+
     public GlbaViolationAudit $glbaViolationAudit;
+
     public array $violationRemediations = [];
 
     public function mount(): void

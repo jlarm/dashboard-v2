@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
             ->runInBackground()
             ->withoutOverlapping()
             ->emailOutputOnFailure(config('app.admin_email'));
-        
+
         // Clean activity logs - removes old activity log records
         $schedule->command('activitylog:clean')
             ->dailyAt('00:15')

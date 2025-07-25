@@ -23,6 +23,7 @@ class DeletedIndex extends Component
         } else {
             $users = User::with('department')->onlyTrashed();
         }
+
         return view('livewire.dealer.employee.deleted-index', [
             'users' => $users->get(),
         ])->layout('components.dealer-app');

@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Dealer\Employee;
 
-use Livewire\Component;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Livewire\Component;
 
 class Restore extends Component
 {

@@ -10,8 +10,11 @@ use Vimeo\Vimeo;
 class VimeoService
 {
     protected Vimeo $client;
+
     protected mixed $userId;
+
     protected int $cacheTtl = 3600;
+
     public function __construct()
     {
         $this->client = new Vimeo(
@@ -35,7 +38,7 @@ class VimeoService
             try {
                 $response = $this->client->request('/me/videos', ['per_page' => 10], 'GET');
 
-                if (isset($response['body']['data']) && !isset($response['body']['error'])) {
+                if (isset($response['body']['data']) && ! isset($response['body']['error'])) {
                     $videos = [];
 
                     foreach ($response['body']['data'] as $video) {
@@ -45,9 +48,9 @@ class VimeoService
                         $videos[] = [
                             'id' => $videoId,
                             'title' => $video['name'] ?? 'Untitled',
-                            'thumbnail' => !empty($video['pictures']['sizes']) ?
+                            'thumbnail' => ! empty($video['pictures']['sizes']) ?
                                 end($video['pictures']['sizes'])['link'] : null,
-                            'category' => $video['parent_folder']['name'] ?? null
+                            'category' => $video['parent_folder']['name'] ?? null,
                         ];
                     }
 
@@ -56,7 +59,8 @@ class VimeoService
 
                 return null;
             } catch (Exception $e) {
-                Log::error('Vimeo API Error: ' . $e->getMessage());
+                Log::error('Vimeo API Error: '.$e->getMessage());
+
                 return null;
             }
         });
@@ -69,7 +73,7 @@ class VimeoService
         return Cache::store('redis')->remember($cacheKey, $this->cacheTtl, function () {
             $response = $this->client->request('/me/videos', ['per_page' => 10], 'GET');
 
-            if (isset($response['body']['data']) && !isset($response['body']['error'])) {
+            if (isset($response['body']['data']) && ! isset($response['body']['error'])) {
                 $categories = [];
 
                 foreach ($response['body']['data'] as $video) {
@@ -91,7 +95,7 @@ class VimeoService
             try {
                 $response = $this->client->request("/videos/{$videoId}", [], 'GET');
 
-                if (isset($response['body']) && !isset($response['body']['error'])) {
+                if (isset($response['body']) && ! isset($response['body']['error'])) {
                     $video = $response['body'];
 
                     return [
@@ -105,7 +109,8 @@ class VimeoService
 
                 return null;
             } catch (Exception $e) {
-                Log::error('Vimeo API Error: ' . $e->getMessage());
+                Log::error('Vimeo API Error: '.$e->getMessage());
+
                 return null;
             }
         });
@@ -116,7 +121,8 @@ class VimeoService
         $cacheKey = 'vimeo_total_videos';
 
         return Cache::store('redis')->remember($cacheKey, 3600, function () {
-            $vimeoService = new self();
+            $vimeoService = new self;
+
             return count($vimeoService->getVideos());
         });
     }

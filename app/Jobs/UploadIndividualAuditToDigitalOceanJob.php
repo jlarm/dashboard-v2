@@ -15,9 +15,7 @@ class UploadIndividualAuditToDigitalOceanJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected IndividualAudit $individualAudit)
-    {
-    }
+    public function __construct(protected IndividualAudit $individualAudit) {}
 
     public function middleware(): array
     {

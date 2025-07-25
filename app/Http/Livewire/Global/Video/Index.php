@@ -9,6 +9,7 @@ use Livewire\Component;
 class Index extends Component
 {
     public $readyToLoad = false;
+
     public $isLoading = true;
 
     public function mount(): void

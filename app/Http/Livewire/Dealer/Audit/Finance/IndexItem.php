@@ -4,15 +4,16 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
-use Filament\Notifications\Notification;
 
 class IndexItem extends Component
 {
     public GlbaViolationAudit $glbaViolationAudit;
 
     public Store $store;
+
     public bool $remediations;
 
     protected $listeners = [
@@ -62,7 +63,7 @@ class IndexItem extends Component
     {
         return view('livewire.dealer.audit.finance.index-item');
     }
-    
+
     private function deleteViolationPhotos(): void
     {
         $this->glbaViolationAudit->violations->each(function ($violation) {

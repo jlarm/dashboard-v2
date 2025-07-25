@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use App\Models\Dealer\Store;
-use App\Queries\Feeds\CoursesFeed;
+use App\Models\User;
 use App\Notifications\IncompleteCoursesNotification;
-use Illuminate\Console\Command;
+use App\Queries\Feeds\CoursesFeed;
 use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class CourseReminderCommand extends Command
 {
@@ -21,21 +21,21 @@ class CourseReminderCommand extends Command
     {
         $isTestMode = $this->option('test');
         $debugEnabled = $this->option('debug');
-        
+
         // If in test mode, display a test case scenario
         if ($isTestMode) {
             $this->info('===== TEST MODE =====');
             $testDate = now()->subDays(15); // 15 days ago
             $thirtyDaysAgo = now()->subDays(30);
-            
-            $this->info("Test date: " . $testDate->format('Y-m-d H:i:s'));
-            $this->info("30 days ago: " . $thirtyDaysAgo->format('Y-m-d H:i:s'));
-            $this->info("Is test date before 30 days ago? " . ($testDate->lt($thirtyDaysAgo) ? 'Yes' : 'No'));
-            $this->info("Is test date after 30 days ago? " . ($testDate->gt($thirtyDaysAgo) ? 'Yes' : 'No'));
-            $this->info("Days difference: " . $testDate->diffInDays($thirtyDaysAgo));
+
+            $this->info('Test date: '.$testDate->format('Y-m-d H:i:s'));
+            $this->info('30 days ago: '.$thirtyDaysAgo->format('Y-m-d H:i:s'));
+            $this->info('Is test date before 30 days ago? '.($testDate->lt($thirtyDaysAgo) ? 'Yes' : 'No'));
+            $this->info('Is test date after 30 days ago? '.($testDate->gt($thirtyDaysAgo) ? 'Yes' : 'No'));
+            $this->info('Days difference: '.$testDate->diffInDays($thirtyDaysAgo));
             $this->info('=====================');
-            
-            if (!$this->confirm('Continue with reminder processing?', true)) {
+
+            if (! $this->confirm('Continue with reminder processing?', true)) {
                 return;
             }
         }
@@ -59,18 +59,19 @@ class CourseReminderCommand extends Command
     {
         // Get all stores where courses_not_taken_notification is enabled
         $stores = Store::where('courses_not_taken_notification', true)->get();
-        
+
         if ($stores->isEmpty()) {
             $this->info("No stores with course notifications enabled for tenant: {$tenant->id}");
+
             return;
         }
-        
-        $this->info("Found " . $stores->count() . " stores with course notifications enabled");
-        
+
+        $this->info('Found '.$stores->count().' stores with course notifications enabled');
+
         // Loop through each store with notifications enabled
         foreach ($stores as $store) {
             $this->info("Processing store: {$store->name} (ID: {$store->id})");
-            
+
             // Get all users associated with this store
             $users = $store->users()
                 ->whereDoesntHave('roles', function ($query) {
@@ -79,9 +80,9 @@ class CourseReminderCommand extends Command
                 })
                 ->select('users.id', 'users.name', 'users.email', 'users.created_at', 'users.last_sent_course_reminder')
                 ->get();
-            
-            $this->info("Found " . $users->count() . " users for store {$store->name}");
-            
+
+            $this->info('Found '.$users->count()." users for store {$store->name}");
+
             // Process each user
             $users->each(function ($user) use ($tenant, $debugEnabled, $isTestMode, $store) {
                 $this->processUser($user, $tenant, $debugEnabled, $isTestMode, $store);
@@ -96,10 +97,10 @@ class CourseReminderCommand extends Command
     {
         $this->info("Tenant {$tenant->id} doesn't have locations enabled, processing all users");
 
-        if (!Store::first()->courses_not_taken_notification) {
+        if (! Store::first()->courses_not_taken_notification) {
             return;
         }
-        
+
         User::query()
             ->whereDoesntHave('roles', function ($query) {
                 $query->where('name', 'super-admin')
@@ -120,21 +121,21 @@ class CourseReminderCommand extends Command
         // Get current time once to ensure consistency in comparisons
         $now = Carbon::now();
         $thirtyDaysAgo = $now->copy()->subDays(30);
-        
+
         if ($debugEnabled) {
             $this->info("User: {$user->name} ({$user->email})");
-            $this->info("Last reminder sent: " . ($user->last_sent_course_reminder ? $user->last_sent_course_reminder->format('Y-m-d H:i:s') : 'Never'));
-            $this->info("30 days ago: " . $thirtyDaysAgo->format('Y-m-d H:i:s'));
+            $this->info('Last reminder sent: '.($user->last_sent_course_reminder ? $user->last_sent_course_reminder->format('Y-m-d H:i:s') : 'Never'));
+            $this->info('30 days ago: '.$thirtyDaysAgo->format('Y-m-d H:i:s'));
         }
-        
+
         // Check if user has never received a reminder or if the last reminder was sent > 30 days ago
-        $shouldSendReminder = is_null($user->last_sent_course_reminder) || 
+        $shouldSendReminder = is_null($user->last_sent_course_reminder) ||
                              $user->last_sent_course_reminder->lt($thirtyDaysAgo);
-        
+
         if ($debugEnabled) {
-            $this->info("Should send reminder? " . ($shouldSendReminder ? 'Yes' : 'No'));
-            
-            if (!is_null($user->last_sent_course_reminder)) {
+            $this->info('Should send reminder? '.($shouldSendReminder ? 'Yes' : 'No'));
+
+            if (! is_null($user->last_sent_course_reminder)) {
                 $daysSinceLastReminder = $now->diffInDays($user->last_sent_course_reminder);
                 $this->info("Days since last reminder: {$daysSinceLastReminder}");
             }
@@ -145,10 +146,10 @@ class CourseReminderCommand extends Command
             $courseCounts = $courseFeed->getCourseCounts();
 
             if ($courseCounts['incomplete'] > 0) {
-                $storeInfo = $store ? " for store {$store->name}" : "";
+                $storeInfo = $store ? " for store {$store->name}" : '';
                 $this->info("User {$user->name} has {$courseCounts['incomplete']} incomplete courses{$storeInfo}");
-                
-                if (!$isTestMode) {
+
+                if (! $isTestMode) {
                     $user->update(['last_sent_course_reminder' => $now]);
                     $user->notify(new IncompleteCoursesNotification(
                         $user->name,
@@ -157,7 +158,7 @@ class CourseReminderCommand extends Command
                 } else {
                     $this->info("[TEST MODE] Would send notification to {$user->email}{$storeInfo}");
                 }
-            } else if ($debugEnabled) {
+            } elseif ($debugEnabled) {
                 $this->info("User {$user->name} has no incomplete courses");
             }
         }

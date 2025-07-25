@@ -10,9 +10,7 @@ use Illuminate\Support\Collection;
 
 class GetRemediationReminderUsers
 {
-    public function __construct(protected Store $store, protected AuditTypes $auditType)
-    {
-    }
+    public function __construct(protected Store $store, protected AuditTypes $auditType) {}
 
     public static function execute(Store $store, AuditTypes $auditType): Collection
     {

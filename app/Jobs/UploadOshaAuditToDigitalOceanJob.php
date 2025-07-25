@@ -15,9 +15,7 @@ class UploadOshaAuditToDigitalOceanJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected OshaAudit $oshaAudit)
-    {
-    }
+    public function __construct(protected OshaAudit $oshaAudit) {}
 
     public function middleware(): array
     {

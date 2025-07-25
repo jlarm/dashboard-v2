@@ -14,9 +14,7 @@ class GenerateIspManualJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected Isp $manual)
-    {
-    }
+    public function __construct(protected Isp $manual) {}
 
     public function handle(): void
     {

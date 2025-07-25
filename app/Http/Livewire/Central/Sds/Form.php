@@ -43,7 +43,7 @@ class Form extends Component
 
     public function mount()
     {
-        $this->sds = $this->sds ?? new Sds();
+        $this->sds = $this->sds ?? new Sds;
         $this->name = $this->sds->name ?? '';
         $this->productIdentifier = $this->sds->product_identifier ?? '';
         $this->productIdentificationNumbers = $this->sds->product_identification_numbers;

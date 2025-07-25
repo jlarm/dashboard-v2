@@ -20,10 +20,10 @@ class Delete extends Modal
     public function delete(): void
     {
         if ($this->manual->pdf_path) {
-            Storage::disk('do-manuals')->delete(tenant('id').'/osha/' . $this->manual->pdf_path);
+            Storage::disk('do-manuals')->delete(tenant('id').'/osha/'.$this->manual->pdf_path);
         }
 
-        Storage::delete('osha-signatures/' . $this->manual->signature);
+        Storage::delete('osha-signatures/'.$this->manual->signature);
 
         $this->manual->delete();
 

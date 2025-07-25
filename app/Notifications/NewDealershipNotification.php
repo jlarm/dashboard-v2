@@ -7,9 +7,7 @@ use Illuminate\Notifications\Notification;
 
 class NewDealershipNotification extends Notification
 {
-    public function __construct(protected string $name)
-    {
-    }
+    public function __construct(protected string $name) {}
 
     public function via($notifiable): array
     {

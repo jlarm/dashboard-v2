@@ -13,6 +13,7 @@ class Main extends Component
     public $currentStore;
 
     public $phishingIsEnabled;
+
     public $videosActive;
 
     public function mount(Request $request): void

@@ -17,7 +17,7 @@ class StoreAccessMiddleware
 
         $storeSlug = explode('/', $request->path())[1] ?? null;
         $store = Store::where('slug', $storeSlug)->first();
-        
+
         if (! $store || ! $request->user()->stores()->where('id', $store->id)->exists()) {
             return redirect()->route('dealer.dashboard');
         }

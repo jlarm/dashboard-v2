@@ -9,14 +9,16 @@ use Livewire\Component;
 class Index extends Component
 {
     public Store $store;
+
     public string $ipAddress = '';
+
     public bool $active;
 
     public function mount(): void
     {
         $this->store = Store::where('id', app('currentStore'))->firstOrFail();
 
-        if($this->checkIfRidgeBackExists()) {
+        if ($this->checkIfRidgeBackExists()) {
             $this->ipAddress = $this->store->ridgeback()->firstOrFail()->ip_address;
             $this->active = $this->store->ridgeback()->firstOrFail()->active;
         }

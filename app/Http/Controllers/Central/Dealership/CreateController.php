@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Central\Dealership;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealership\CreateRequest;
-use App\Models\Course;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
 use App\Notifications\NewDealershipNotification;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CreateController extends Controller
 {
@@ -152,18 +151,18 @@ class CreateController extends Controller
                     // Force decode/encode to ensure proper JSON serialization
                     $slides = json_decode(json_encode($centralCourse->slides), true);
                     $questions = json_decode(json_encode($centralCourse->questions), true);
-                    
+
                     DB::statement('UPDATE courses SET slides = ?, questions = ? WHERE id = ?', [
                         json_encode($slides),
                         json_encode($questions),
-                        $tenantCourse->id
+                        $tenantCourse->id,
                     ]);
 
                 } catch (\Exception $e) {
-                    \Log::error('Failed to update tenant course: ' . $e->getMessage());
+                    \Log::error('Failed to update tenant course: '.$e->getMessage());
                 }
             } else {
-                \Log::info('No matching tenant course found for slug: ' . $centralCourse->slug);
+                \Log::info('No matching tenant course found for slug: '.$centralCourse->slug);
             }
         }
     }

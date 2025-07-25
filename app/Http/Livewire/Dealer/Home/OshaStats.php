@@ -7,7 +7,6 @@ use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\HasAuditStats;
 use App\Traits\OshaGenerateRating;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class OshaStats extends Component

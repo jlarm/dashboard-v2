@@ -18,8 +18,11 @@ class Edit extends Component implements HasForms
     use InteractsWithForms;
 
     public Course $course;
+
     public $name;
+
     public array $slides;
+
     public $questions;
 
     public function mount(): void
@@ -58,14 +61,14 @@ class Edit extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-          TextInput::make('name')->required(),
+            TextInput::make('name')->required(),
             Repeater::make('slides')
                 ->schema([
                     TextInput::make('title'),
                     RichEditor::make('description'),
                 ])
                 ->disableItemMovement()
-                ->createItemButtonLabel('Add Slide')
+                ->createItemButtonLabel('Add Slide'),
         ];
     }
 

@@ -34,18 +34,18 @@ trait HasCourses
                 ->where(function ($query) use ($courseWithRole) {
                     $query->where(function ($q) use ($courseWithRole) {
                         $q->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
-                          ->whereIn('id', $courseWithRole);
+                            ->whereIn('id', $courseWithRole);
                     })
-                    ->orWhere(function ($q) {
-                        $q->whereDoesntHave('departments')
-                          ->when($this->roles()->where('id', 10)->exists(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-m'))
-                          ->when($this->roles()->where('id', 9)->exists(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-e'))
-                          ->when($this->userHasNoCaliforniaStore(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
-                    });
+                        ->orWhere(function ($q) {
+                            $q->whereDoesntHave('departments')
+                                ->when($this->roles()->where('id', 10)->exists(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-m'))
+                                ->when($this->roles()->where('id', 9)->exists(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-e'))
+                                ->when($this->userHasNoCaliforniaStore(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
+                        });
                 })
                 ->orWhere(function ($query) {
                     $query->whereHas('users', fn ($q) => $q->where('users.id', $this->id))
-                          ->where('optional', false);
+                        ->where('optional', false);
                 })
                 ->pluck('id')
                 ->toArray();

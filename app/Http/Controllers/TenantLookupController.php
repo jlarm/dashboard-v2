@@ -16,7 +16,7 @@ class TenantLookupController extends Controller
     public function lookup(Request $request)
     {
         $request->validate([
-            'email' => 'required|email'
+            'email' => 'required|email',
         ]);
 
         $email = $request->email;
@@ -28,7 +28,7 @@ class TenantLookupController extends Controller
                     ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
                     ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
                     ->whereNull('roles.name')
-                    ->orWhere(function($q) {
+                    ->orWhere(function ($q) {
                         $q->whereNotIn('roles.name', ['super-admin', 'consultant']);
                     })
                     ->where('email', $email)->exists();
@@ -36,7 +36,8 @@ class TenantLookupController extends Controller
 
             if ($found) {
                 $domain = $tenant->domains->first()->domain;
-                return redirect("https://{$domain}/login?email=" . urlencode($email));
+
+                return redirect("https://{$domain}/login?email=".urlencode($email));
             }
         }
 

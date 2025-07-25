@@ -15,7 +15,9 @@ class Create extends Component
     use WithFileUploads;
 
     public $title;
+
     public $file;
+
     public $url;
 
     protected $messages = [
@@ -37,7 +39,7 @@ class Create extends Component
         DB::beginTransaction();
 
         try {
-            if (!$this->url && !$this->file) {
+            if (! $this->url && ! $this->file) {
 
                 Notification::make()
                     ->title('Please provide a URL or upload a file.')
@@ -53,7 +55,7 @@ class Create extends Component
                 $filePath = Storage::disk('central-docs')->putFileAs('/', $this->file, $fileName);
 
                 // Check if the file was successfully uploaded
-                if (!$filePath) {
+                if (! $filePath) {
                     throw new \Exception('File upload failed. Please try again.');
                 }
             }

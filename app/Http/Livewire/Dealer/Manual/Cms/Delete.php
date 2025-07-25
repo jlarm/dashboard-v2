@@ -20,33 +20,32 @@ class Delete extends Modal
     public function delete(): void
     {
         if ($this->manual->pdf_path) {
-            Storage::disk('do-manuals')->delete(tenant('id').'/cms/' . $this->manual->pdf_path);
+            Storage::disk('do-manuals')->delete(tenant('id').'/cms/'.$this->manual->pdf_path);
         }
 
         if ($this->manual->adoption_approval_signature_one) {
-            Storage::delete('cms-signatures/' . $this->manual->adoption_approval_signature_one);
+            Storage::delete('cms-signatures/'.$this->manual->adoption_approval_signature_one);
         }
 
         if ($this->manual->adoption_approval_signature_two) {
-            Storage::delete('cms-signatures/' . $this->manual->adoption_approval_signature_two);
+            Storage::delete('cms-signatures/'.$this->manual->adoption_approval_signature_two);
         }
 
         if ($this->manual->adoption_approval_signature_three) {
-            Storage::delete('cms-signatures/' . $this->manual->adoption_approval_signature_three);
+            Storage::delete('cms-signatures/'.$this->manual->adoption_approval_signature_three);
         }
 
         if ($this->manual->adoption_approval_signature_three) {
-            Storage::delete('cms-signatures/' . $this->manual->adoption_approval_signature_three);
+            Storage::delete('cms-signatures/'.$this->manual->adoption_approval_signature_three);
         }
 
         if ($this->manual->dealer_participation_program_signature) {
-            Storage::delete('cms-signatures/' . $this->manual->dealer_participation_program_signature);
+            Storage::delete('cms-signatures/'.$this->manual->dealer_participation_program_signature);
         }
 
         if ($this->manual->acknowledgement_signature) {
-            Storage::delete('cms-signatures/' . $this->manual->acknowledgement_signature);
+            Storage::delete('cms-signatures/'.$this->manual->acknowledgement_signature);
         }
-
 
         $this->manual->delete();
 

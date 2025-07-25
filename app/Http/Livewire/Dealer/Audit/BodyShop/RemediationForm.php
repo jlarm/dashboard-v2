@@ -12,10 +12,12 @@ use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
 class RemediationForm extends Component
 {
-    use WithFileUploads, WithMedia, InteractsWithConfirmationModal, UpdateRemediations;
+    use InteractsWithConfirmationModal, UpdateRemediations, WithFileUploads, WithMedia;
 
     public ?Store $store = null;
+
     public BodyShopViolationAudit $bodyShopViolationAudit;
+
     public array $violationRemediations = [];
 
     public function mount(): void
@@ -29,7 +31,7 @@ class RemediationForm extends Component
     }
 
     private function loadRemediations(): void
-    {   
+    {
         $this->violationRemediations = $this->violations()->get()->mapWithKeys(function ($violation) {
             return [$violation->id => [
                 'comment' => $violation->remediation?->comment ?? '',

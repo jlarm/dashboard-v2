@@ -15,9 +15,7 @@ class GeneratePdfJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected Contract $contract)
-    {
-    }
+    public function __construct(protected Contract $contract) {}
 
     protected function reviewLabel($service): string
     {

@@ -18,7 +18,7 @@ class ImpersonationMiddleware
         if ($request->is('impersonate/*') && auth()->check()) {
             session(['impersonated_by' => auth()->id()]);
         }
-        
+
         return $next($request);
     }
 }

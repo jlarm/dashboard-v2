@@ -23,21 +23,22 @@ class SetCurrentStoreCommand extends Command
                     }
                 } else {
                     foreach (User::all() as $user) {
-                        if (! $user->hasAnyRole(['super-admin','Consultant'])) {
+                        if (! $user->hasAnyRole(['super-admin', 'Consultant'])) {
                             $firstStore = $user->stores()->first();
-                            if (!$firstStore) {
+                            if (! $firstStore) {
                                 $this->info("User {$user->id} {$user->name} does not belong to any stores in {$tenant->name} - skipping");
+
                                 continue;
                             }
                             $user->update(['current_store_id' => $firstStore->id]);
                         }
                     }
                 }
-                $this->info('Successfully updated users in tenant ' . $tenant->name);
+                $this->info('Successfully updated users in tenant '.$tenant->name);
                 DB::commit();
             } catch (\Exception $e) {
                 DB::rollBack();
-                $this->info('Failed to update users in tenant ' . $tenant->name);
+                $this->info('Failed to update users in tenant '.$tenant->name);
                 $this->error("Failed to update users in tenant {$tenant->name}: {$e->getMessage()}");
             }
         });

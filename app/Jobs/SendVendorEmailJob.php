@@ -15,9 +15,7 @@ class SendVendorEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected VendorForm $vendor)
-    {
-    }
+    public function __construct(protected VendorForm $vendor) {}
 
     public function handle(): void
     {

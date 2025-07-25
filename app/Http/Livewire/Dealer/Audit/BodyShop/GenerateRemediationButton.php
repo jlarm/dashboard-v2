@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
-use App\Jobs\Audit\GenerateBodyShopRemediationPdfJob;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;

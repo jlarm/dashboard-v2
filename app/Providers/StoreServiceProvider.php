@@ -21,7 +21,7 @@ class StoreServiceProvider extends ServiceProvider
                 return $store;
             }
 
-            if (!tenant('locations')) {
+            if (! tenant('locations')) {
                 return Store::first();
             }
 

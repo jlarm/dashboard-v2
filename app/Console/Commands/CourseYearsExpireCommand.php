@@ -25,7 +25,7 @@ class CourseYearsExpireCommand extends Command
 
             foreach (Course::all() as $course) {
                 $course->update([
-                    'years_expires' => array_key_exists($course->slug, $this->custom) ? $this->custom[$course->slug] : 1
+                    'years_expires' => array_key_exists($course->slug, $this->custom) ? $this->custom[$course->slug] : 1,
                 ]);
             }
         });

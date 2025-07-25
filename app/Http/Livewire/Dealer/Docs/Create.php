@@ -9,6 +9,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Log;
+
 use function Sentry\captureException;
 
 class Create extends Component
@@ -16,7 +17,9 @@ class Create extends Component
     use WithFileUploads;
 
     public $title;
+
     public $url;
+
     public $file;
 
     protected $messages = [

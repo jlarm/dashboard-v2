@@ -16,10 +16,15 @@ class OpenInvites extends Component
     use WithPagination;
 
     public Store $store;
+
     public string $search = '';
+
     public string $filterByDepartment = '';
+
     public bool $selectPage = false;
+
     public bool $selectAll = false;
+
     public array $selected = [];
 
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
@@ -149,15 +154,16 @@ class OpenInvites extends Component
     }
 
     private function getInviteIds()
-{
-    return $this->invites->pluck('id')->map(fn($id) => (string) $id)->toArray();
-}
+    {
+        return $this->invites->pluck('id')->map(fn ($id) => (string) $id)->toArray();
+    }
 
     private function applyManagerFilter($query)
     {
         if (auth()->user()->cannot('create-stores')) {
             $query->where('department_id', auth()->user()->department_id);
         }
+
         return $query;
     }
 }

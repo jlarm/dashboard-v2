@@ -10,6 +10,7 @@ use WireElements\Pro\Components\Modal\Modal;
 class Delete extends Modal
 {
     public Store $store;
+
     public $user;
 
     public function mount(User $user)

@@ -17,9 +17,7 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private readonly OshaViolationAudit $oshaViolationAudit)
-    {
-    }
+    public function __construct(private readonly OshaViolationAudit $oshaViolationAudit) {}
 
     public function middleware(): array
     {
@@ -61,7 +59,6 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
         return $path;
     }
-
 
     private function createFileName(): string
     {

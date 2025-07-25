@@ -15,9 +15,13 @@ class Create extends Component
     use WithFileUploads;
 
     public Store $store;
+
     public $search = '';
+
     public $selectedUser = null;
+
     public $date;
+
     public $file;
 
     public function mount(): void
@@ -38,7 +42,7 @@ class Create extends Component
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })
-                ->where('name', 'like', '%' . $this->search . '%')
+                ->where('name', 'like', '%'.$this->search.'%')
                 ->select('id', 'name')
                 ->limit(10)
                 ->get()
@@ -54,7 +58,7 @@ class Create extends Component
     {
         $this->selectedUser = [
             'id' => $userId,
-            'name' => User::where('id', $userId)->value('name')
+            'name' => User::where('id', $userId)->value('name'),
         ];
         $this->search = $this->selectedUser['name'];
 
@@ -69,10 +73,10 @@ class Create extends Component
                 'selectedUser' => [
                     'required',
                     function ($attribute, $value, $fail) {
-                        if (!is_array($value) || !isset($value['id'])) {
+                        if (! is_array($value) || ! isset($value['id'])) {
                             $fail('Please select a valid employee from the dropdown.');
                         }
-                    }
+                    },
                 ],
                 'date' => 'required|date',
                 'file' => 'required|mimes:pdf|max:2048',
@@ -95,7 +99,7 @@ class Create extends Component
             ]);
 
             $this->reset(['search', 'selectedUser', 'date', 'file']);
-            
+
             $this->dispatchBrowserEvent('reset-file-input');
 
             $this->emit('saved');

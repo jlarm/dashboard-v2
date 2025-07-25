@@ -14,11 +14,11 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-'password' => [
-'required',
-'confirmed',
-'min:8',
-],
-];
+            'password' => [
+                'required',
+                'confirmed',
+                'min:8',
+            ],
+        ];
     }
 }

@@ -43,14 +43,15 @@ class UpdateCompletedAtFieldForAudits extends Command
 
         if ($audits->isEmpty()) {
             $this->info("No incomplete {$auditModelClass} audits found.");
+
             return;
         }
 
-        $this->info("Updating " . count($audits) . " incomplete {$auditModelClass} audits.");
+        $this->info('Updating '.count($audits)." incomplete {$auditModelClass} audits.");
 
-        foreach( $audits as $audit) {
+        foreach ($audits as $audit) {
             $audit->update(['completed_date' => $audit->updated_at]);
-            $this->info("Updated audit: " . $audit->id);
+            $this->info('Updated audit: '.$audit->id);
         }
     }
 }

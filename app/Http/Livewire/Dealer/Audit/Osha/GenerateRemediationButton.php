@@ -6,7 +6,7 @@ use App\Models\Dealer\Audit\OshaViolationAudit;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
-class  GenerateRemediationButton extends Component
+class GenerateRemediationButton extends Component
 {
     public OshaViolationAudit $oshaViolationAudit;
 

@@ -15,9 +15,7 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected BodyShopAudit $bodyShopAudit)
-    {
-    }
+    public function __construct(protected BodyShopAudit $bodyShopAudit) {}
 
     private function rating(): float
     {

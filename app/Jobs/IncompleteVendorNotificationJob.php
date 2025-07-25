@@ -18,16 +18,14 @@ class IncompleteVendorNotificationJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(protected VendorForm $vendor)
-    {
-    }
+    public function __construct(protected VendorForm $vendor) {}
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-        if (!filter_var($this->vendor->email, FILTER_VALIDATE_EMAIL)) {
+        if (! filter_var($this->vendor->email, FILTER_VALIDATE_EMAIL)) {
             return;
         }
 

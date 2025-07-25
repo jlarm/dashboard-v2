@@ -54,7 +54,7 @@ class CompletedCoursesStat extends Component
                 ->get();
         }
 
-        if (!tenant('locations')) {
+        if (! tenant('locations')) {
             return User::query()
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->when($this->department, function ($query) {
@@ -65,6 +65,7 @@ class CompletedCoursesStat extends Component
 
         // If the user is not a super-admin or consultant
         $currentUser = auth()->user();
+
         return User::query()
             ->whereHas('stores', function ($query) use ($currentUser) {
                 $query->whereIn('stores.id', $currentUser->stores->pluck('id'));
@@ -74,7 +75,6 @@ class CompletedCoursesStat extends Component
             })
             ->get();
     }
-
 
     protected function incompleteCount(): int
     {

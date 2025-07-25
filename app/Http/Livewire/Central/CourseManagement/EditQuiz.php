@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Central\CourseManagement;
 
 use App\Models\Course;
 use App\Models\Dealership;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
@@ -19,8 +18,11 @@ class EditQuiz extends Component implements HasForms
     use InteractsWithForms;
 
     public Course $course;
+
     public $name;
+
     public $questions;
+
     public $answers = [];
 
     public function mount(): void
@@ -64,7 +66,7 @@ class EditQuiz extends Component implements HasForms
                     TextInput::make('correctAnswer'),
                 ])
                 ->disableItemMovement()
-                ->createItemButtonLabel('Add Question')
+                ->createItemButtonLabel('Add Question'),
         ];
     }
 

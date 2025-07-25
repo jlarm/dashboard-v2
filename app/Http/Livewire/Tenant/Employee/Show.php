@@ -9,7 +9,9 @@ use Livewire\Component;
 class Show extends Component
 {
     public User $user;
+
     public bool $isQi;
+
     public array $roles = [];
 
     public function mount(): void

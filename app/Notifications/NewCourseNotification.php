@@ -10,9 +10,7 @@ class NewCourseNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function via($notifiable)
     {

@@ -4,15 +4,16 @@ namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
-use Filament\Notifications\Notification;
 
 class IndexItem extends Component
 {
     public BodyShopViolationAudit $bodyShopAudit;
 
     public Store $store;
+
     public bool $remediations;
 
     protected $listeners = [

@@ -17,9 +17,7 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private readonly BodyShopViolationAudit $bodyShopViolationAudit)
-    {
-    }
+    public function __construct(private readonly BodyShopViolationAudit $bodyShopViolationAudit) {}
 
     public function middleware(): array
     {

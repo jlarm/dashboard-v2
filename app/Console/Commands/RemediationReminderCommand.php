@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Enums\AuditTypes;
 use App\Models\Dealer\Store;
-use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Notifications\RemediationReminderNotification;
 use App\Queries\GetRemediationReminderUsers;
 use Illuminate\Console\Command;
@@ -14,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class RemediationReminderCommand extends Command
 {
     private const MAX_REMINDERS = 3;
-    
+
     protected $signature = 'remediation:reminder  {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     protected $description = 'Command description';
@@ -36,7 +35,7 @@ class RemediationReminderCommand extends Command
     private function processStores(Collection $stores, bool $tenantSlug): void
     {
         foreach ($stores as $store) {
-            if (!$store->remediationSettings || !$store->remediationSettings->notifications) {
+            if (! $store->remediationSettings || ! $store->remediationSettings->notifications) {
                 continue;
             }
 
@@ -83,8 +82,9 @@ class RemediationReminderCommand extends Command
         $modelBaseName = $this->getModelType($audit);
         $auditType = $this->modelTypeMap[$modelBaseName] ?? null;
 
-        if (!$auditType) {
+        if (! $auditType) {
             $this->warn("Unkown audit type for model: {$modelBaseName}");
+
             return;
         }
 
@@ -111,6 +111,7 @@ class RemediationReminderCommand extends Command
     private function getModelType(Model $model): string
     {
         $modelType = $model->getMorphClass();
+
         return class_basename($modelType);
     }
 }

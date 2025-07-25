@@ -34,11 +34,11 @@ class GenerateBodyShopRemediationPdfJob implements ShouldBeEncrypted, ShouldQueu
             $fileName = $this->createFileName();
             $this->generatePdf($fileName);
 
-            $doPath = tenant('id') . '/body-shop/' . $fileName;
+            $doPath = tenant('id').'/body-shop/'.$fileName;
 
-            $relativePath = 'temp/' . $fileName;
+            $relativePath = 'temp/'.$fileName;
 
-            if (!Storage::disk('local')->exists($relativePath)) {
+            if (! Storage::disk('local')->exists($relativePath)) {
                 throw new \Exception("File not found at path: {$relativePath}");
             }
 
@@ -56,7 +56,7 @@ class GenerateBodyShopRemediationPdfJob implements ShouldBeEncrypted, ShouldQueu
                 'remediation_pdf_path' => $doPath,
             ]);
         } catch (\Exception $e) {
-            Log::error('PDF Generation Failed: ' . $e->getMessage());
+            Log::error('PDF Generation Failed: '.$e->getMessage());
         }
     }
 
@@ -66,18 +66,18 @@ class GenerateBodyShopRemediationPdfJob implements ShouldBeEncrypted, ShouldQueu
             ? str_replace(' ', '-', $this->bodyShopViolationAudit->store->name)
             : str_replace(' ', '-', tenant('name'));
 
-        return strtolower($dealerName) . "-" . now()->format('Ymd') . "-body-shop-violation-audit-remediation.pdf";
+        return strtolower($dealerName).'-'.now()->format('Ymd').'-body-shop-violation-audit-remediation.pdf';
     }
 
     private function generatePdf(string $fileName): string
     {
         $tempDirectory = storage_path('app/temp');
 
-        if (!file_exists($tempDirectory)) {
+        if (! file_exists($tempDirectory)) {
             mkdir($tempDirectory, 0755, true);
         }
 
-        $localPath = $tempDirectory . '/' . $fileName;
+        $localPath = $tempDirectory.'/'.$fileName;
 
         $html = view('dealer.audit.body-shop.pdf-view', [
             'fileName' => $fileName,

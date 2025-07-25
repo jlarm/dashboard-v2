@@ -7,7 +7,6 @@ use App\Services\VimeoService;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class VideoProgress extends Component
 {
@@ -26,11 +25,12 @@ class VideoProgress extends Component
             } else {
                 $video['completed'] = false;
             }
+
             return $video;
         });
 
         return view('livewire.tenant.employee.video-progress', [
-            'videos' => $videos
+            'videos' => $videos,
         ]);
     }
 

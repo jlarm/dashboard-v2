@@ -4,16 +4,17 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
-use Filament\Notifications\Notification;
 
 class IndexItem extends Component
 {
     public OshaViolationAudit $oshaAudit;
 
     public Store $store;
+
     public bool $remediations;
 
     protected $listeners = [

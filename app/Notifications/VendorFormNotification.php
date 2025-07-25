@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\URL;
 
 class VendorFormNotification extends Notification
 {
-    public function __construct(public VendorForm $vendor)
-    {
-    }
+    public function __construct(public VendorForm $vendor) {}
 
     public function via($notifiable): array
     {

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('audit_type');
             $table->boolean('enabled')->default(false);
-            
+
             $table->timestamps();
         });
     }

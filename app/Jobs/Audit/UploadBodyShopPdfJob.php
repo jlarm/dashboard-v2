@@ -15,9 +15,7 @@ class UploadBodyShopPdfJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected BodyShopViolationAudit $bodyShopViolationAudit)
-    {
-    }
+    public function __construct(protected BodyShopViolationAudit $bodyShopViolationAudit) {}
 
     public function middleware(): array
     {

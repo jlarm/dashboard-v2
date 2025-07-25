@@ -14,9 +14,7 @@ class GenerateCmsManualJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected CmsManual $manual)
-    {
-    }
+    public function __construct(protected CmsManual $manual) {}
 
     public function handle(): void
     {

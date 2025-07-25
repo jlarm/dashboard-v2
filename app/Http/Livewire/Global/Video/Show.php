@@ -13,7 +13,7 @@ class Show extends Component
 
     protected $listeners = [
         'completedVideo' => 'completedVideo',
-        'refresh' => 'videoCompleted'
+        'refresh' => 'videoCompleted',
     ];
 
     public function mount($videoId): void

@@ -30,7 +30,7 @@ class SingleStoreScans extends Component
     public function export()
     {
         $token = Cookie::get('sentry');
-        $client = new Client();
+        $client = new Client;
 
         $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/'.$this->type, [
             'Authorization' => $token,

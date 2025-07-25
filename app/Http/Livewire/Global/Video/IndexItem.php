@@ -10,11 +10,17 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public $currentStore;
+
     public string $videoId;
+
     public string $videoTitle;
+
     public string $videoCategory;
+
     public string $videoThumbnail;
+
     public string $selectedCategory;
+
     public ?VideoProgress $videoProgress;
 
     public function mount(): void

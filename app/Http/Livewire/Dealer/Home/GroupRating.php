@@ -2,22 +2,25 @@
 
 namespace App\Http\Livewire\Dealer\Home;
 
-use App\Models\Dealer\Audit\{
-    IndividualAudit,
-    GlbaViolationAudit,
-    OshaViolationAudit,
-    BodyShopViolationAudit
-};
-use Livewire\Component;
+use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\GlbaViolationAudit;
+use App\Models\Dealer\Audit\IndividualAudit;
+use App\Models\Dealer\Audit\OshaViolationAudit;
 use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
 
 class GroupRating extends Component
 {
     public $rating;
+
     public $grades = [];
+
     private $dealJacketGrades;
+
     private $glbaGrades;
+
     private $oshaGrades;
+
     private $bodyShopGrades;
 
     private const array GRADE_VALUES = [
@@ -25,7 +28,7 @@ class GroupRating extends Component
         'B' => 80,
         'C' => 70,
         'D' => 60,
-        'F' => 50
+        'F' => 50,
     ];
 
     private const int CACHE_TTL = 3600; // 1 hour in seconds
@@ -91,10 +94,19 @@ class GroupRating extends Component
 
     private function getLetterGrade(float $grade): string
     {
-        if ($grade >= 90) return 'A';
-        if ($grade >= 80) return 'B';
-        if ($grade >= 70) return 'C';
-        if ($grade >= 60) return 'D';
+        if ($grade >= 90) {
+            return 'A';
+        }
+        if ($grade >= 80) {
+            return 'B';
+        }
+        if ($grade >= 70) {
+            return 'C';
+        }
+        if ($grade >= 60) {
+            return 'D';
+        }
+
         return 'F';
     }
 

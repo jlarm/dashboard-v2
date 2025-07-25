@@ -10,7 +10,9 @@ use Livewire\Component;
 class RidgebackSettingsForm extends Component
 {
     public Store $store;
+
     public string $ipAddress = '';
+
     public bool $active = false;
 
     public function mount(): void
@@ -24,8 +26,8 @@ class RidgebackSettingsForm extends Component
     }
 
     protected array $rules = [
-      'ipAddress' => 'required|ip',
-      'active' => 'nullable|boolean',
+        'ipAddress' => 'required|ip',
+        'active' => 'nullable|boolean',
     ];
 
     public function update(): void

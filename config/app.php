@@ -108,10 +108,10 @@ return [
     | List all locales that your application works with
     |
     */
-        'available_locales' => [
-            'English' => 'en',
-            'Spanish' => 'es',
-        ],
+    'available_locales' => [
+        'English' => 'en',
+        'Spanish' => 'es',
+    ],
 
     /*
     |--------------------------------------------------------------------------

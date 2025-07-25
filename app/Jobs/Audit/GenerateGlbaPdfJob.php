@@ -17,9 +17,7 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private readonly GlbaViolationAudit $glbaViolationAudit)
-    {
-    }
+    public function __construct(private readonly GlbaViolationAudit $glbaViolationAudit) {}
 
     public function middleware(): array
     {

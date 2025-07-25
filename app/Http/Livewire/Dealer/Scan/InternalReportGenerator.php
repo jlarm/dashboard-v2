@@ -43,7 +43,7 @@ class InternalReportGenerator extends Component
     public function export()
     {
         $token = Cookie::get('sentry');
-        $client = new Client();
+        $client = new Client;
 
         if (tenant('locations')) {
             $dealerName = str_replace(' ', '-', $this->store->name);

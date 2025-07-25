@@ -41,7 +41,7 @@ class GlobalSettings extends Component
 
         if ($store) {
             $store->update([
-                'courses_not_taken_notification' => !$store->courses_not_taken_notification
+                'courses_not_taken_notification' => ! $store->courses_not_taken_notification,
             ]);
 
             // Refresh the stores list
@@ -59,9 +59,9 @@ class GlobalSettings extends Component
 
         if ($store) {
             $store->remediationSettings()->updateOrCreate([], [
-                'active' => !($store->remediationSettings->active ?? false),
+                'active' => ! ($store->remediationSettings->active ?? false),
             ]);
-        
+
             // Refresh the stores list
             $this->stores = Store::query()
                 ->with('remediationSettings')

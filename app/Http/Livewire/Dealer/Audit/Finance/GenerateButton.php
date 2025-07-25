@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
+use App\Enums\AuditTypes;
 use App\Jobs\Audit\GenerateGlbaPdfJob;
 use App\Jobs\Audit\UploadGlbaPdfJob;
-use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Jobs\RemediationReminderEmailJob;
-use App\Enums\AuditTypes;
+use App\Models\Dealer\Audit\GlbaViolationAudit;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
@@ -29,16 +29,16 @@ class GenerateButton extends Component
                 auditType: AuditTypes::GLBA
             ),
         ])
-        ->catch(function (Throwable $e) {
-            Notification::make()
-                ->title('Error in PDF generation process')
-                ->body($e->getMessage())
-                ->icon('heroicon-o-exclamation-circle')
-                ->iconColor('danger')
-                ->send();
-            Log::error($e->getMessage());
-        })
-        ->dispatch();
+            ->catch(function (Throwable $e) {
+                Notification::make()
+                    ->title('Error in PDF generation process')
+                    ->body($e->getMessage())
+                    ->icon('heroicon-o-exclamation-circle')
+                    ->iconColor('danger')
+                    ->send();
+                Log::error($e->getMessage());
+            })
+            ->dispatch();
 
         Notification::make()
             ->title('Violation PDF Created Successfully')

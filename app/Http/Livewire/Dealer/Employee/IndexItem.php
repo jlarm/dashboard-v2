@@ -9,7 +9,9 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public User $user;
+
     public bool $videosAreActive;
+
     public int $videoCount;
 
     public function render(): View

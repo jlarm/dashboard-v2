@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 final readonly class CoursesFeed
 {
     private readonly Collection $roles;
+
     private readonly Collection $userStates;
 
     public function __construct(
@@ -34,7 +35,7 @@ final readonly class CoursesFeed
                         ->doesntHave('departments')
                         ->doesntHave('roles');
 
-                    if (!$this->isCaliforniaUser()) {
+                    if (! $this->isCaliforniaUser()) {
                         $q->where('slug', '!=', 'sexual-harassment-training-in-california');
                     }
                 })
@@ -64,11 +65,11 @@ final readonly class CoursesFeed
     public function getCourseCompletionStats(): array
     {
         $courses = $this->builder()->get();
-        
+
         $totalCount = $courses->count();
         $completedCount = $courses->filter(fn ($course) => $course->lastResult !== null)->count();
         $incompleteCount = $totalCount - $completedCount;
-        
+
         return [
             'total' => $totalCount,
             'completed' => $completedCount,
@@ -85,13 +86,13 @@ final readonly class CoursesFeed
     {
         // Get all applicable courses for the user
         $baseQuery = $this->builder();
-        
+
         // Clone the query to avoid modifying the original
         $totalQuery = clone $baseQuery;
         $completedQuery = clone $baseQuery;
-        
+
         $totalCount = $totalQuery->count();
-        
+
         // Correctly query for completed courses by checking course_results table directly
         $completedCount = $completedQuery
             ->whereExists(function ($query) {
@@ -101,13 +102,13 @@ final readonly class CoursesFeed
                     ->where('course_results.user_id', $this->user->id);
             })
             ->count();
-        
+
         $incompleteCount = $totalCount - $completedCount;
-        
+
         return [
             'total' => $totalCount,
             'completed' => $completedCount,
-            'incomplete' => $incompleteCount
+            'incomplete' => $incompleteCount,
         ];
     }
 

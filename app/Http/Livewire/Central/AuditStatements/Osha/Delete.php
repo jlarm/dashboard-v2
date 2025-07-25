@@ -11,6 +11,7 @@ use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 class Delete extends Modal
 {
     use InteractsWithConfirmationModal;
+
     public OshaViolationStatements $oshaViolationStatements;
 
     public function delete(): void

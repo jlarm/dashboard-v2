@@ -24,10 +24,9 @@ class IncompleteCoursesNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('Reminder: You have incomplete courses')
-            ->greeting('Hello ' . $this->userName . ',')
+            ->greeting('Hello '.$this->userName.',')
             ->line('You have courses that have not been started.')
             ->action('View Courses', url('/courses'))
             ->salutation('Please complete these courses at your earliest convenience.');
     }
-
 }

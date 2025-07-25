@@ -8,6 +8,7 @@ use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Log;
+
 use function Sentry\captureException;
 
 class Create extends Component
@@ -17,7 +18,9 @@ class Create extends Component
     public Store $store;
 
     public $title;
+
     public $url;
+
     public $file;
 
     protected $messages = [

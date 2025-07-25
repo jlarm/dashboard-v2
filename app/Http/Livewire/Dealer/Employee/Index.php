@@ -59,7 +59,7 @@ class Index extends Component
         // Apply tenant location filter if needed
         if (tenant('locations')) {
             $query->whereHas('stores', function ($query) {
-                if (!$this->currentUser->hasAnyRole(['super-admin', 'Consultant'])) {
+                if (! $this->currentUser->hasAnyRole(['super-admin', 'Consultant'])) {
                     $query->whereIn('stores.id', $this->currentUser->stores->pluck('id'));
                 }
             });
@@ -81,8 +81,8 @@ class Index extends Component
     {
         if ($this->search) {
             $query->where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%');
+                $query->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%');
             });
         }
 
@@ -153,12 +153,12 @@ class Index extends Component
     private function sendCsvEmail(string $csvContent): void
     {
         $body = 'Attached is an outline of the progress your employees have made regarding completing their compliance training courses. If an employee is not noted, they have completed all courses assigned. If you have further questions regarding this, you can always access your compliance dashboard and review your departments progress as a whole.';
-        $filename = 'incomplete-employee-courses-report-' . date('m-d-Y') . '.csv';
+        $filename = 'incomplete-employee-courses-report-'.date('m-d-Y').'.csv';
 
         Mail::send([], [], function ($message) use ($csvContent, $body, $filename) {
             $message->to($this->email)
                 ->from('noreply@armp.app', tenant('name'))
-                ->subject('Incomplete Employee Courses Report as of ' . date('m/d/Y'))
+                ->subject('Incomplete Employee Courses Report as of '.date('m/d/Y'))
                 ->text($body)
                 ->attachData($csvContent, $filename, [
                     'mime' => 'text/csv',
@@ -170,7 +170,7 @@ class Index extends Component
 
     public function getSelectedDepartmentNameProperty()
     {
-        if (!$this->selectedDepartment) {
+        if (! $this->selectedDepartment) {
             return null;
         }
 
@@ -197,7 +197,7 @@ class Index extends Component
         $query = $this->usersQuery;
 
         $users = $this->showIncompleteCourseUsers
-            ? $query->paginate(500)->filter(fn($user) => $user->user_has_not_completed_courses)
+            ? $query->paginate(500)->filter(fn ($user) => $user->user_has_not_completed_courses)
             : $query->paginate(25);
 
         return view('livewire.dealer.employee.index', [
@@ -209,10 +209,10 @@ class Index extends Component
 
     private function initialUsersQuery()
     {
-//        if ($this->currentUser->cannot('create-stores')) {
-//            return User::query()
-//                ->where('department_id', $this->currentUser->department_id);
-//        }
+        //        if ($this->currentUser->cannot('create-stores')) {
+        //            return User::query()
+        //                ->where('department_id', $this->currentUser->department_id);
+        //        }
 
         return User::query();
     }

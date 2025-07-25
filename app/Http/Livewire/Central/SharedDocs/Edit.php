@@ -13,11 +13,17 @@ use Livewire\WithFileUploads;
 class Edit extends Component
 {
     use WithFileUploads;
+
     public SharedDocument $sharedDocument;
+
     public string $title;
+
     public string $url;
+
     public $file;
+
     public $newFile;
+
     public $removed = false;
 
     protected array $messages = [
@@ -37,11 +43,12 @@ class Edit extends Component
             'title' => 'required|string|min:2|max:255',
         ];
 
-        if (!$this->file && !$this->url) {
+        if (! $this->file && ! $this->url) {
             Notification::make()
                 ->title('Either a URL or file is required')
                 ->warning()
                 ->send();
+
             return;
         }
 

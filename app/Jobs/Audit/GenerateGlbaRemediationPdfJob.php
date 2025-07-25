@@ -33,11 +33,11 @@ class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
             $fileName = $this->createFileName();
             $this->generatePdf($fileName);
 
-            $doPath = tenant('id') . '/glba/' . $fileName;
+            $doPath = tenant('id').'/glba/'.$fileName;
 
-            $relativePath = 'temp/' . $fileName;
+            $relativePath = 'temp/'.$fileName;
 
-            if (!Storage::disk('local')->exists($relativePath)) {
+            if (! Storage::disk('local')->exists($relativePath)) {
                 throw new \Exception("File not found at path: {$relativePath}");
             }
 
@@ -55,7 +55,7 @@ class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
                 'remediation_pdf_path' => $doPath,
             ]);
         } catch (\Exception $e) {
-            Log::error('PDF Generation Failed: ' . $e->getMessage());
+            Log::error('PDF Generation Failed: '.$e->getMessage());
         }
     }
 
@@ -65,18 +65,18 @@ class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
             ? str_replace(' ', '-', $this->glbaViolationAudit->store->name)
             : str_replace(' ', '-', tenant('name'));
 
-        return strtolower($dealerName) . "-" . now()->format('Ymd') . "-glba-violation-audit-remediation.pdf";
+        return strtolower($dealerName).'-'.now()->format('Ymd').'-glba-violation-audit-remediation.pdf';
     }
 
     private function generatePdf(string $fileName): string
     {
         $tempDirectory = storage_path('app/temp');
 
-        if (!file_exists($tempDirectory)) {
+        if (! file_exists($tempDirectory)) {
             mkdir($tempDirectory, 0755, true);
         }
 
-        $localPath = $tempDirectory . '/' . $fileName;
+        $localPath = $tempDirectory.'/'.$fileName;
 
         $html = view('dealer.audit.finance.pdf-view', [
             'fileName' => $fileName,

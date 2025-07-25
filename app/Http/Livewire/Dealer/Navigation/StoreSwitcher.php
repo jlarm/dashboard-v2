@@ -40,6 +40,7 @@ class StoreSwitcher extends Component
         if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
             return Store::orderBy('name')->get();
         }
+
         return auth()->user()->stores;
     }
 }

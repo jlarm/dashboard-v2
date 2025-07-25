@@ -26,7 +26,7 @@ class NewCourseNotificationCommand extends Command
                 ->get();
 
             foreach ($users as $user) {
-                Notification::send($user, new NewCourseNotification());
+                Notification::send($user, new NewCourseNotification);
             }
 
             $this->info('Command completed successfully');

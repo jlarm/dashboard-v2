@@ -33,7 +33,7 @@ class GenerateReport extends Component
     {
         try {
             $token = Cookie::get('sentry');
-            $client = new Client();
+            $client = new Client;
 
             if (tenant('locations')) {
                 $dealerName = str_replace(' ', '-', $this->store->name);

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Service: String
+enum Service: string
 {
     case GLBA = 'glba';
     case OSHA = 'osha';

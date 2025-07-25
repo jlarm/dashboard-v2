@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Invite;
-use App\Models\Department;
 use App\Models\Dealer\Store;
+use App\Models\Department;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -16,9 +16,13 @@ class OpenInvites extends Component
     use WithPagination;
 
     public $search = '';
+
     public string $filterByDepartment = '';
+
     public $selectPage = false;
+
     public $selectAll = false;
+
     public $selected = [];
 
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
@@ -150,7 +154,7 @@ class OpenInvites extends Component
 
     private function getInviteIds()
     {
-        return $this->invites->pluck('id')->map(fn($id) => (string) $id);
+        return $this->invites->pluck('id')->map(fn ($id) => (string) $id);
     }
 
     private function applyManagerFilter($query)
@@ -158,6 +162,7 @@ class OpenInvites extends Component
         if (auth()->user()->cannot('create-stores')) {
             $query->where('department_id', auth()->user()->department_id);
         }
+
         return $query;
     }
 }

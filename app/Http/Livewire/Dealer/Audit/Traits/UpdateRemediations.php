@@ -22,7 +22,7 @@ trait UpdateRemediations
             $completed = $remediationData['completed'] ?? false;
             $newPhoto = $remediationData['photo'] ?? null;
 
-            $hasNewPhoto = !empty($newPhoto);
+            $hasNewPhoto = ! empty($newPhoto);
             $remediation = $violation->remediation ?? new Remediation(['violation_id' => $violationId]);
 
             $isDirty = false;
@@ -41,64 +41,67 @@ trait UpdateRemediations
             if ($hasNewPhoto) {
                 try {
                     // Make sure the file object is valid and has a path
-                    if (!$newPhoto || !method_exists($newPhoto, 'getRealPath')) {
+                    if (! $newPhoto || ! method_exists($newPhoto, 'getRealPath')) {
                         Log::warning('Invalid remediation photo object', [
-                            'violation_id' => $violationId
+                            'violation_id' => $violationId,
                         ]);
+
                         continue; // Skip this photo
                     }
-                    
+
                     $filePath = $newPhoto->getRealPath();
-                    
+
                     // Verify file exists and is readable
-                    if (!$filePath || !file_exists($filePath) || !is_readable($filePath)) {
+                    if (! $filePath || ! file_exists($filePath) || ! is_readable($filePath)) {
                         Log::warning('Remediation photo file does not exist or is not readable', [
                             'violation_id' => $violationId,
                             'file_path' => $filePath,
-                            'original_name' => $newPhoto->getClientOriginalName()
+                            'original_name' => $newPhoto->getClientOriginalName(),
                         ]);
-                        
+
                         // Clean up the reference to prevent further errors
                         unset($this->violationRemediations[$violationId]['photo']);
+
                         continue; // Skip this photo
                     }
-                    
+
                     // Validate file size (prevent 0 byte files)
                     if (filesize($filePath) === 0) {
                         Log::warning('Remediation photo file is empty (0 bytes)', [
                             'violation_id' => $violationId,
-                            'file_path' => $filePath
+                            'file_path' => $filePath,
                         ]);
+
                         continue; // Skip this photo
                     }
-                    
+
                     $remediation->addMedia($filePath)->toMediaCollection('remediations', 'armpaudits');
                     $isDirty = true;
                     $newPhotoSuccessfullyAdded = true; // Mark photo as successfully added
-                    
+
                 } catch (FileDoesNotExist $e) {
                     // Specifically handle Spatie's FileDoesNotExist exception
                     Log::warning('Spatie MediaLibrary could not find the file', [
                         'violation_id' => $violationId,
-                        'error' => $e->getMessage()
+                        'error' => $e->getMessage(),
                     ]);
-                    
+
                     // Clean up the reference to prevent UI errors
                     unset($this->violationRemediations[$violationId]['photo']);
-                    
+
                 } catch (Exception $e) {
                     Log::error('Failed to add remediation photo', [
                         'violation_id' => $violationId,
                         'error' => $e->getMessage(),
-                        'trace' => $e->getTraceAsString()
+                        'trace' => $e->getTraceAsString(),
                     ]);
-                    
+
                     // Clean up the reference to prevent UI errors
                     unset($this->violationRemediations[$violationId]['photo']);
                 }
             }
 
-            $isNewRemediation = !$remediation->exists; // Check if it was new before any potential save
+            $isNewRemediation = ! $remediation->exists; // Check if it was new before any potential save
 
             // Current state of remediation after potential updates to ->comment and ->completed
             $finalComment = $remediation->comment;
@@ -106,14 +109,14 @@ trait UpdateRemediations
 
             // Determine if it will have photos after this operation
             $willHavePhotos = $newPhotoSuccessfullyAdded;
-            if (!$newPhotoSuccessfullyAdded && !$isNewRemediation) {
+            if (! $newPhotoSuccessfullyAdded && ! $isNewRemediation) {
                 // If no new photo was successfully added, and it's an existing remediation,
                 // check if it already has photos. This assumes getMedia reflects current photos
                 // and this code block doesn't handle explicit photo removal.
                 $willHavePhotos = $willHavePhotos || $remediation->getMedia('remediations')->isNotEmpty();
             }
 
-            $hasQualifyingContent = !empty($finalComment) || $finalCompleted || $willHavePhotos;
+            $hasQualifyingContent = ! empty($finalComment) || $finalCompleted || $willHavePhotos;
 
             if ($isNewRemediation) {
                 // For a new remediation instance
@@ -155,14 +158,14 @@ trait UpdateRemediations
     {
         try {
             $this->askForConfirmation(
-                callback: fn() => $this->handlePhotoRemoval($violationId),
+                callback: fn () => $this->handlePhotoRemoval($violationId),
                 prompt: [
                     'title' => 'Remove Photo',
                     'message' => 'Are you sure you want to remove this photo?',
                 ]
             );
         } catch (Exception $e) {
-            Log::error('Failed to remove photo: ' . $e->getMessage());
+            Log::error('Failed to remove photo: '.$e->getMessage());
             Notification::make()
                 ->title('Error Initiating Removal')
                 ->body('There was an issue initiating the photo removal. Please try again.')

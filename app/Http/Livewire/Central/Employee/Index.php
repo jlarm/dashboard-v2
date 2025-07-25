@@ -24,8 +24,8 @@ class Index extends Component
     {
         // Include user count in cache key to ensure it refreshes when users are added
         $userCount = User::count();
-        $cacheKey = 'user_index_' . $this->page . '_search_' . $this->search . '_count_' . $userCount;
-        
+        $cacheKey = 'user_index_'.$this->page.'_search_'.$this->search.'_count_'.$userCount;
+
         try {
             return Cache::store('redis')->tags(['user_index'])->remember($cacheKey, 3600, function () {
                 return User::query()

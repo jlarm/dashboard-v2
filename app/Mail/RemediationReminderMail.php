@@ -15,7 +15,9 @@ class RemediationReminderMail extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public string $modelType;
+
     public bool $locations;
+
     public string $storeSlug;
 
     public function __construct($modelType, $locations, $storeSlug)
@@ -29,7 +31,7 @@ class RemediationReminderMail extends Mailable implements ShouldQueue
     {
         return new Envelope(
             from: new Address('noreply@armp.app'),
-            subject: $this->getLabel() . ' Remediation Reminder',
+            subject: $this->getLabel().' Remediation Reminder',
         );
     }
 
@@ -70,7 +72,7 @@ class RemediationReminderMail extends Mailable implements ShouldQueue
     private function link(): string
     {
         if ($this->locations) {
-            return 'https://'.tenant('domain').'/stores/'. $this->storeSlug . '/audits/'.$this->getLinkSlug();
+            return 'https://'.tenant('domain').'/stores/'.$this->storeSlug.'/audits/'.$this->getLinkSlug();
         }
 
         return 'https://'.tenant('domain').'/audits/'.$this->getLinkSlug();

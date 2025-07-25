@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
-use App\Jobs\Audit\GenerateGlbaRemediationPdfJob;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;

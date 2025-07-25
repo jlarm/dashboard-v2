@@ -13,11 +13,11 @@ class CourseIndexItem extends Component
     use HasCourseStatus;
 
     public User $user;
+
     public Course $course;
 
     public function render(): View
     {
         return view('livewire.tenant.employee.components.course-index-item');
     }
-
 }

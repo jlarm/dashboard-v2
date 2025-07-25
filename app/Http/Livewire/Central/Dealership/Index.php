@@ -14,11 +14,12 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
+
     public int $perPage = 12;
 
     protected $listeners = [
         'refreshDealerships' => '$refresh',
-        'deleteDealership' => 'deleteDealership'
+        'deleteDealership' => 'deleteDealership',
     ];
 
     public function updatedSearch(): void
@@ -30,13 +31,14 @@ class Index extends Component
     {
         if (! App::environment('local')) {
             session()->flash('error', 'Dealership deletion is disabled in production');
+
             return;
         }
 
         try {
             $dealership = Dealership::findOrFail($dealershipId);
             $dealership->delete();
-            
+
             session()->flash('success', 'Dealership deleted successfully');
         } catch (\Exception $e) {
             session()->flash('error', "Failed to delete dealership: {$e->getMessage()}");

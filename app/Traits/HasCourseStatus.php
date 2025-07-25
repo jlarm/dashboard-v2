@@ -8,7 +8,7 @@ trait HasCourseStatus
     {
         $expiryDate = now()->subYears($this->course->years_expires);
 
-        if (!$this->course->lastResult) {
+        if (! $this->course->lastResult) {
             return 'Not Taken';
         }
 
@@ -20,7 +20,7 @@ trait HasCourseStatus
             return 'expired';
         }
 
-        if (!$this->course->lastResult->passed && $this->course->lastResult->created_at > $expiryDate) {
+        if (! $this->course->lastResult->passed && $this->course->lastResult->created_at > $expiryDate) {
             return 'failed';
         }
 

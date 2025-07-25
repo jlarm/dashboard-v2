@@ -7,7 +7,6 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\BodyShopGenerateRating;
 use App\Traits\HasAuditStats;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class BodyShopStats extends Component

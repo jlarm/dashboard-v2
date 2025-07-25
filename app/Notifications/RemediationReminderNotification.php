@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -38,12 +37,12 @@ class RemediationReminderNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line("There " . ($this->audit->outstanding_remediation_count === 1 ? 'is' : 'are') . " {$this->audit->outstanding_remediation_count} outstanding {$this->auditType->label()} violation" . ($this->audit->outstanding_remediation_count === 1 ? '' : 's') . " to remediate for {$this->store->name}.")
-                    ->action('Remediation Form', $this->tenants ? route('dealer.stores.audits.osha.remediation', [$this->store, $this->audit->uuid]) : route('dealer.audit.osha.remediation', $this->audit->uuid));
+            ->line('There '.($this->audit->outstanding_remediation_count === 1 ? 'is' : 'are')." {$this->audit->outstanding_remediation_count} outstanding {$this->auditType->label()} violation".($this->audit->outstanding_remediation_count === 1 ? '' : 's')." to remediate for {$this->store->name}.")
+            ->action('Remediation Form', $this->tenants ? route('dealer.stores.audits.osha.remediation', [$this->store, $this->audit->uuid]) : route('dealer.audit.osha.remediation', $this->audit->uuid));
     }
 
     /**
-     * Get the array representation of the notification.    
+     * Get the array representation of the notification.
      *
      * @return array<string, mixed>
      */

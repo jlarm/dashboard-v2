@@ -12,9 +12,7 @@ class ContractSignedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(private Contract $contract)
-    {
-    }
+    public function __construct(private Contract $contract) {}
 
     public function via($notifiable): array
     {

@@ -31,7 +31,6 @@ class CompleteRemediationModal extends Modal
             ->send();
     }
 
-
     public function render()
     {
         return view('livewire.dealer.audit.finance.complete-remediation-modal');

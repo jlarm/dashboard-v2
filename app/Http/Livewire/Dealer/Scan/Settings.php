@@ -11,10 +11,15 @@ use Livewire\Component;
 class Settings extends Component
 {
     public Store $store;
+
     public $name;
+
     public $internalId;
+
     public $externalId;
+
     public $scan;
+
     public function mount(): void
     {
         $this->store = Store::find(app('currentStore'));

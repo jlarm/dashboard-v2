@@ -37,7 +37,7 @@ class Remediation extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
             ->format(Manipulations::FORMAT_WEBP)

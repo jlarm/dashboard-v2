@@ -14,9 +14,7 @@ class GenerateRedFlagManualJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected RedFlag $manual)
-    {
-    }
+    public function __construct(protected RedFlag $manual) {}
 
     public function handle(): void
     {
