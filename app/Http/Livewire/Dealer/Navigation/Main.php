@@ -30,10 +30,16 @@ class Main extends Component
 
     private function getVideoStatus(): bool
     {
+        $store = Store::first();
+
+        if (! $store) {
+            return false;
+        }
+
         if ($this->currentStore) {
             return $this->currentStore->videos;
         }
 
-        return Store::first()->videos;
+        return $store->videos;
     }
 }

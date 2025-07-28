@@ -23,6 +23,7 @@ class Course extends Model
         'slides',
         'questions',
         'years_expires',
+        'video_id',
     ];
 
     protected $casts = [
