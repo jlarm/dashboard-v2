@@ -34,6 +34,8 @@ class CreateController extends Controller
             'locations' => $validated['locations'],
         ]);
 
+        auth()->user()->dealerships()->attach($dealer->id);
+
         $dealer->createDomain($tenantDomain);
 
         $dealer->run(function () use ($validated) {

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\App;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -58,15 +59,10 @@ class Index extends Component
         ]);
     }
 
-    private function getDealerships(): Builder
+    private function getDealerships()
     {
-        $user = auth()->user();
-
-        if ($user->hasRole('super-admin')) {
-            return Dealership::query();
-        }
-
-        return $user->dealerships()
-            ->orWhere('id', 'e44653a5-c049-4be0-92e3-b8aacea4bf20');
+        return auth()->user()->hasRole('super-admin')
+            ? Dealership::query()
+            : auth()->user()->dealerships()->orWhere('id', 'e44653a5-c049-4be0-92e3-b8aacea4bf20');
     }
 }
