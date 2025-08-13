@@ -189,7 +189,7 @@ class Index extends Component
 
     public function totalVideosCount(): int
     {
-        return VimeoService::totalVideos();
+        return app(VimeoService::class)->totalVideos();
     }
 
     public function render(): View
