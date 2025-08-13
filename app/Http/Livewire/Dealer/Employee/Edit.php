@@ -6,6 +6,7 @@ use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -14,28 +15,41 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public Store $store;
-
     public $user;
-
-    public $name;
-
-    public $assignedStores;
-
-    public $department;
-
-    public $assignedRoles;
-
-    public $qi;
-
-    public $qiCount;
-
-    public bool $remediationRemindersActive;
-
+    public string $name;
+    public array $assignedStores = [];
+    public ?int $department = null;
+    public array $assignedRoles = [];
+    public bool $qi = false;
+    public int $qiCount = 0;
+    public bool $remediationRemindersActive = false;
     public array $selectedAuditTypes = [];
 
     public function mount(User $user): void
     {
         $this->initializeUserData($user);
+    }
+
+    public function updateUser(): void
+    {
+        $this->validate();
+
+        $this->updateUserData();
+        $this->syncUserRoles();
+        $this->assignQiRole();
+        $this->clearPermissionCache();
+        $this->updateCurrentStoreId();
+        $this->emitRefreshEvents();
+        $this->closeWithSuccessNotification();
+    }
+
+    public function render(): View
+    {
+        return view('livewire.dealer.employee.edit', [
+            'stores' => Store::all(),
+            'departments' => Department::all(),
+            'allRoles' => $this->getAvailableRoles(),
+        ]);
     }
 
     protected function rules(): array
@@ -76,22 +90,9 @@ class Edit extends SlideOver
         $this->department = $user->department_id;
         $this->assignedRoles = $user->roles()->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
         $this->qi = $this->user->hasRole('Qualified Individual');
-        $this->qiCount = Role::find(5)->users()->count();
+        $this->qiCount = $this->getQualifiedIndividualRole()->users()->count();
         $this->selectedAuditTypes = $user->remediationReminderPreferences()->pluck('audit_type')->toArray();
         $this->remediationRemindersActive = $this->store->remediationSettings()->first()?->notifications ?? false;
-    }
-
-    public function updateUser(): void
-    {
-        $this->validate();
-
-        $this->updateUserData();
-        $this->syncUserRoles();
-        $this->assignQiRole();
-        $this->clearPermissionCache();
-        $this->updateCurrentStoreId();
-        $this->emitRefreshEvents();
-        $this->closeWithSuccessNotification();
     }
 
     private function updateUserData(): void
@@ -140,24 +141,15 @@ class Edit extends SlideOver
     private function closeWithSuccessNotification(): void
     {
         $this->close();
-        $this->sendNotification($this->user->name.' successfully updated', 'success');
+        $this->sendNotification("{$this->user->name} successfully updated", 'success');
     }
 
-    private function sendNotification($message, $type): void
+    private function sendNotification(string $message, string $type): void
     {
         Notification::make()
             ->title($message)
             ->{$type}()
             ->send();
-    }
-
-    public function render(): View
-    {
-        return view('livewire.dealer.employee.edit', [
-            'stores' => Store::all(),
-            'departments' => Department::all(),
-            'allRoles' => $this->getAvailableRoles(),
-        ]);
     }
 
     private function updateCurrentStoreId(): void
@@ -171,11 +163,16 @@ class Edit extends SlideOver
         }
     }
 
-    private function getAvailableRoles()
+    private function getAvailableRoles(): Collection
     {
         return Role::query()
             ->whereNotIn('name', ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'])
             ->orderBy('name')
             ->get();
+    }
+
+    private function getQualifiedIndividualRole(): Role
+    {
+        return Role::where('name', 'Qualified Individual')->first();
     }
 }
