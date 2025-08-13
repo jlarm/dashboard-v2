@@ -39,6 +39,7 @@
                     :videoTitle="$video['title']"
                     :videoCategory="$video['category']"
                     :videoThumbnail="$video['thumbnail']"
+                    :videoProgress="$videoProgressMap[$video['id']] ?? null"
                 />
             @endforeach
         </div>

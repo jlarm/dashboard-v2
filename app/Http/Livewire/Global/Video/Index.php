@@ -9,7 +9,6 @@ use Livewire\Component;
 class Index extends Component
 {
     public $readyToLoad = false;
-
     public $isLoading = true;
 
     public function mount(): void
@@ -23,20 +22,40 @@ class Index extends Component
         $this->isLoading = false;
     }
 
-    public function render(VimeoService $vimeoService): View
+    public function render(): View
     {
-        return view('livewire.global.video.index', [
-            'videos' => $this->readyToLoad ? collect($vimeoService->getVideos()) : [],
-            'categories' => $this->readyToLoad ? $vimeoService->getCategories() : [],
-        ])->layout($this->layout());
-    }
+        $videos = [];
+        $categories = [];
+        $videoProgressMap = [];
 
-    private function layout(): string
-    {
-        if (tenancy()->initialized) {
-            return 'components.dealer-app';
+        if ($this->readyToLoad) {
+            $vimeoService = app(VimeoService::class);
+            $videos = collect($vimeoService->getVideos());
+            $categories = $vimeoService->getCategories();
+
+            // Load all video progress in one query
+            if (auth()->check() && $videos->isNotEmpty()) {
+                $videoIds = $videos->pluck('id')->toArray();
+                $videoProgressMap = auth()->user()
+                    ->videoProgress()
+                    ->whereIn('video_id', $videoIds)
+                    ->get()
+                    ->keyBy('video_id')
+                    ->toArray();
+            }
         }
 
-        return 'layouts.app';
+        return view('livewire.global.video.index', [
+            'videos' => $videos,
+            'categories' => $categories,
+            'videoProgressMap' => $videoProgressMap,
+        ])->layout($this->getLayout());
+    }
+
+    private function getLayout(): string
+    {
+        return tenancy()->initialized
+            ? 'components.dealer-app'
+            : 'layouts.app';
     }
 }

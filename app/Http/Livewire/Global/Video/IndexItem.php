@@ -3,33 +3,25 @@
 namespace App\Http\Livewire\Global\Video;
 
 use App\Models\Dealer\Store;
-use App\Models\VideoProgress;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class IndexItem extends Component
 {
-    public $currentStore;
+    public $videoId;
+    public $videoTitle;
+    public $videoCategory;
+    public $videoThumbnail;
+    public $selectedCategory;
+    public $videoProgress;
 
-    public string $videoId;
-
-    public string $videoTitle;
-
-    public string $videoCategory;
-
-    public string $videoThumbnail;
-
-    public string $selectedCategory;
-
-    public ?VideoProgress $videoProgress;
-
-    public function mount(): void
+    public function getCurrentStoreProperty(): ?Store
     {
-        if (tenant()) {
-            $this->currentStore = Store::where('id', app('currentStore'))->first();
+        if (! tenant()) {
+            return null;
         }
 
-        $this->videoProgress = auth()->user()->videoProgress()->where('video_id', $this->videoId)->first();
+        return Store::where('id', app('currentStore'))->first();
     }
 
     public function render(): View

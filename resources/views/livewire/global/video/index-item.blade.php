@@ -1,5 +1,5 @@
 <a
-    href="{{ tenant('locations') ? route('dealer.stores.videos.show', [$currentStore, $videoId]) : route('videos.show', $videoId) }}"
+    href="{{ tenant('locations') ? route('dealer.stores.videos.show', [$this->currentStore, $videoId]) : route('videos.show', $videoId) }}"
     class="hover:bg-gray-100 p-2 rounded-xl"
     x-show="selectedCategory === '' || selectedCategory === '{{ $videoCategory }}'"
     x-transition:enter="transition ease-out duration-300"
@@ -8,7 +8,7 @@
 >
     <div class="relative">
         <img src="{{ $videoThumbnail }}" alt="Thumbnail" class="rounded-xl w-full mb-2">
-        @if($videoProgress && $videoProgress->completed)
+        @if($videoProgress && $videoProgress['completed'])
             <div class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
                 Completed
             </div>
