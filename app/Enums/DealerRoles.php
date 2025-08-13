@@ -4,8 +4,6 @@ namespace App\Enums;
 
 enum DealerRoles
 {
-    use HasLabels;
-
     const ADMIN = 'admin';
 
     const MANAGER = 'manager';
