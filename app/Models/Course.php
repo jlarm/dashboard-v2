@@ -21,6 +21,7 @@ class Course extends Model
         'name',
         'slides',
         'questions',
+        'video_id',
     ];
 
     protected $casts = [
