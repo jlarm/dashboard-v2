@@ -12,7 +12,7 @@
                             <span class="text-gray-600 text-sm font-medium">Loading video...</span>
                         </div>
                     </div>
-                    <iframe src="{{ $video['player_embed_url'] }}" encrypted-media class="w-full h-[500px] shadow-xl"></iframe>
+                    <iframe src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] shadow-xl"></iframe>
                 </div>
                 @if ($this->quizLink())
                     <div class="w-full flex items-center justify-between mt-6 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
@@ -52,6 +52,7 @@
         <script>
             const iframe = document.querySelector('iframe');
             const player = new Vimeo.Player(iframe);
+            const isCompleted = {{ $this->videoCompleted() ? 'true' : 'false' }};
             const loadingElement = document.getElementById('video-loading');
 
             player.ready().then(() => {
@@ -60,21 +61,25 @@
 
             player.on('ended', () => {
                 Livewire.emit('markVideoCompleted');
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             });
         </script>
     @else
     <div
         x-data="{
-        activeSlide: 0,
-        percentage: 0,
-        slidesCount: {{ count($slides) }},
-        init() {
-            this.percentage = Math.round(((this.activeSlide + 1) / this.slidesCount) * 100);
-            this.$watch('activeSlide', value => {
-                this.percentage = Math.round(((value + 1) / this.slidesCount) * 100);
-            });
-        }
-    }"
+            activeSlide: 0,
+            percentage: 0,
+            slidesCount: {{ count($slides) }},
+            init() {
+                this.percentage = Math.round(((this.activeSlide + 1) / this.slidesCount) * 100);
+                this.$watch('activeSlide', value => {
+                    this.percentage = Math.round(((value + 1) / this.slidesCount) * 100);
+                });
+            }
+        }"
         x-init="init"
     >
         <div>
