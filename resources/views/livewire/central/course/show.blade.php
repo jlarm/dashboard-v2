@@ -2,20 +2,8 @@
     @if($video)
         <div class="space-y-5">
             <div class="max-w-4xl mx-auto">
-                <div class="relative">
-                    <div id="video-loading" class="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
-                        <div class="flex flex-col items-center gap-3">
-                            <svg class="animate-spin h-8 w-8 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            <span class="text-gray-600 text-sm font-medium">Loading video...</span>
-                        </div>
-                    </div>
-                    <iframe src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] shadow-xl"></iframe>
-                </div>
                 @if ($this->quizLink())
-                    <div class="w-full flex items-center justify-between mt-6 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                    <div class="w-full flex items-center justify-between mb-6 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                         @if ($this->videoCompleted())
                             <div class="flex items-center gap-2">
                                 <div class="flex items-center gap-2 bg-green-50 text-green-700 text-sm font-medium px-3 py-2 rounded-full border border-green-200">
@@ -46,6 +34,18 @@
                         @endif
                     </div>
                 @endif
+                <div class="relative">
+                    <div id="video-loading" class="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
+                        <div class="flex flex-col items-center gap-3">
+                            <svg class="animate-spin h-8 w-8 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span class="text-gray-600 text-sm font-medium">Loading video...</span>
+                        </div>
+                    </div>
+                    <iframe src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] rounded-xl border"></iframe>
+                </div>
             </div>
         </div>
         <script src="https://player.vimeo.com/api/player.js" width="640" height="360"></script>
