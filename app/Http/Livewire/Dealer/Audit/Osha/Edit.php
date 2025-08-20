@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Traits\HasOshaViolationStatements;
 use Filament\Notifications\Notification;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
@@ -26,6 +27,8 @@ class Edit extends Component
 
     public $violationFiles = [];
 
+    public bool $hasInvalidViolations = false;
+
     protected $listeners = [
         'violationSelected',
     ];
@@ -42,6 +45,7 @@ class Edit extends Component
         $oshaAudit = $this->oshaViolationAudit;
         $this->violations = $oshaAudit->violations()->get();
         $this->date = $oshaAudit->date->format('Y-m-d');
+        $this->checkInvalidViolations();
     }
 
     public function edit(): void
@@ -119,8 +123,28 @@ class Edit extends Component
         }
     }
 
-    public function render()
+    public function updated($propertyName): void
+    {
+        if (str_contains($propertyName, 'violations.') && str_contains($propertyName, '.comment')) {
+            $this->checkInvalidViolations();
+        }
+    }
+
+    public function render(): View
     {
         return view('livewire.dealer.audit.osha.edit')->layout('components.dealer-app');
+    }
+
+    private function checkInvalidViolations(): void
+    {
+        $this->hasInvalidViolations = false;
+
+        foreach ($this->violations as $violation) {
+            $comment = $violation['comment'] ?? '';
+            if (mb_trim($comment) === '' || mb_trim($comment) === '0') {
+                $this->hasInvalidViolations = true;
+                break;
+            }
+        }
     }
 }

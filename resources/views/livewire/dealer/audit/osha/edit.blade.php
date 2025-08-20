@@ -197,7 +197,15 @@
             </div>
             <div class="flex space-x-2 items-center justify-between">
                 <div>
+                    @if($hasInvalidViolations)
+                        <x-primary-button
+                            type="button"
+                            class="inline-flex items-center px-4 py-2 bg-gray-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest cursor-not-allowed opacity-75"
+                            disabled
+                        >Update</x-primary-button>
+                    @else
                     <x-primary-button>Update</x-primary-button>
+                    @endif
                     <x-button.secondary href="{{ tenant('locations') ? route('dealer.stores.audits.osha.index', $store) : route('dealer.audit.osha.index') }}">Exit</x-button.secondary>
                 </div>
                 <div>
