@@ -47,161 +47,241 @@ class Edit extends Component
 
     public $individual_q1_comment;
 
+    public $individual_q1_danger;
+
     public $individual_q2_answer;
 
     public $individual_q2_comment;
+
+    public $individual_q2_danger;
 
     public $individual_q3_answer;
 
     public $individual_q3_comment;
 
+    public $individual_q3_danger;
+
     public $individual_q4_answer;
 
     public $individual_q4_comment;
+
+    public $individual_q4_danger;
 
     public $individual_q5_answer;
 
     public $individual_q5_comment;
 
+    public $individual_q5_danger;
+
     public $individual_q6_answer;
 
     public $individual_q6_comment;
+
+    public $individual_q6_danger;
 
     public $individual_q7_answer;
 
     public $individual_q7_comment;
 
+    public $individual_q7_danger;
+
     public $individual_q8_answer;
 
     public $individual_q8_comment;
+
+    public $individual_q8_danger;
 
     public $individual_q9_answer;
 
     public $individual_q9_comment;
 
+    public $individual_q9_danger;
+
     public $individual_q10_answer;
 
     public $individual_q10_comment;
+
+    public $individual_q10_danger;
 
     public $individual_q11_answer;
 
     public $individual_q11_comment;
 
+    public $individual_q11_danger;
+
     public $individual_q12_answer;
 
     public $individual_q12_comment;
+
+    public $individual_q12_danger;
 
     public $individual_q13_answer;
 
     public $individual_q13_comment;
 
+    public $individual_q13_danger;
+
     public $individual_q14_answer;
 
     public $individual_q14_comment;
+
+    public $individual_q14_danger;
 
     public $individual_q15_answer;
 
     public $individual_q15_comment;
 
+    public $individual_q15_danger;
+
     public $individual_q16_answer;
 
     public $individual_q16_comment;
+
+    public $individual_q16_danger;
 
     public $individual_q17_answer;
 
     public $individual_q17_comment;
 
+    public $individual_q17_danger;
+
     public $individual_q18_answer;
 
     public $individual_q18_comment;
+
+    public $individual_q18_danger;
 
     public $individual_q19_answer;
 
     public $individual_q19_comment;
 
+    public $individual_q19_danger;
+
     public $individual_q20_answer;
 
     public $individual_q20_comment;
+
+    public $individual_q20_danger;
 
     public $individual_q21_answer;
 
     public $individual_q21_comment;
 
+    public $individual_q21_danger;
+
     public $individual_q22_answer;
 
     public $individual_q22_comment;
+
+    public $individual_q22_danger;
 
     public $individual_q23_answer;
 
     public $individual_q23_comment;
 
+    public $individual_q23_danger;
+
     public $individual_q24_answer;
 
     public $individual_q24_comment;
+
+    public $individual_q24_danger;
 
     public $individual_q25_answer;
 
     public $individual_q25_comment;
 
+    public $individual_q25_danger;
+
     public $individual_q26_answer;
 
     public $individual_q26_comment;
+
+    public $individual_q26_danger;
 
     public $individual_q27_answer;
 
     public $individual_q27_comment;
 
+    public $individual_q27_danger;
+
     public $individual_q28_answer;
 
     public $individual_q28_comment;
+
+    public $individual_q28_danger;
 
     public $individual_q29_answer;
 
     public $individual_q29_comment;
 
+    public $individual_q29_danger;
+
     public $individual_q30_answer;
 
     public $individual_q30_comment;
+
+    public $individual_q30_danger;
 
     public $individual_q31_answer;
 
     public $individual_q31_comment;
 
+    public $individual_q31_danger;
+
     public $individual_q32_answer;
 
     public $individual_q32_comment;
+
+    public $individual_q32_danger;
 
     public $individual_q33_answer;
 
     public $individual_q33_comment;
 
+    public $individual_q33_danger;
+
     public $individual_q34_answer;
 
     public $individual_q34_comment;
+
+    public $individual_q34_danger;
 
     public $individual_q35_answer;
 
     public $individual_q35_comment;
 
+    public $individual_q35_danger;
+
     public $individual_q36_answer;
 
     public $individual_q36_comment;
+
+    public $individual_q36_danger;
 
     public $individual_q37_answer;
 
     public $individual_q37_comment;
 
+    public $individual_q37_danger;
+
     public $individual_q38_answer;
 
     public $individual_q38_comment;
+
+    public $individual_q38_danger;
 
     public $individual_q39_answer;
 
     public $individual_q39_comment;
 
+    public $individual_q39_danger;
+
     public $individual_q40_answer;
 
     public $individual_q40_comment;
+
+    public $individual_q40_danger;
 
     public $audit_images;
 
