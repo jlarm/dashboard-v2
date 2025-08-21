@@ -87,7 +87,7 @@
                 </div>
             </div>
             @foreach($questions as $index => $question)
-                <div class="text-sm border border-gray-200 shadow-sm rounded-xl p-5" x-data="{ selectedAnswer: '' }">
+                <div class="text-sm border border-gray-200 shadow-sm rounded-xl p-5" x-data="{ selectedAnswer: '{{ $this->{"individual_q{$question->id}_answer"} ?? '' }}' }">
                     <label class="text-gray-900">{{ $index + 1 }}. {{ $question->question }}</label>
                     <div class="space-y-4 mt-4">
                         <div class="flex flex-col md:flex-row justify-between md:items-center">

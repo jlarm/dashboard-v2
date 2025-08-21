@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\Individual;
 
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class IndexItem extends Component
@@ -26,8 +27,9 @@ class IndexItem extends Component
 
     public $test;
 
-    public function mount()
+    public function mount(): void
     {
+        $this->individualAudit->loadMissing('children');
         $combine = collect([$this->individualAudit, $this->individualAudit->children]);
         $this->flat = $combine->flatten();
         $this->tenants = tenant('locations');
@@ -58,7 +60,7 @@ class IndexItem extends Component
         'refreshIndividualAudits' => '$refresh',
     ];
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.audit.individual.index-item');
     }
