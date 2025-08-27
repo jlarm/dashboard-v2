@@ -103,6 +103,17 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div>
+                                <label for="role"
+                                       class="text-sm font-medium leading-6 text-gray-950">Role</label>
+                                <select wire:model="selectedRole" id="role" name="role"
+                                        class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-arm-blue-600 sm:text-sm sm:leading-6">
+                                    <option value="null">All</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -134,7 +145,7 @@
     </div>
     <div class="mt-8 flow-root">
         <div>
-            @if($selectedDepartmentName || $showIncompleteCourseUsers)
+            @if($selectedDepartmentName || $selectedRoleName || $showIncompleteCourseUsers)
                 <div
                     class="flex items-start justify-between gap-x-3 py-1.5 border-b border-gray-200">
                     <div class="flex flex-col gap-x-3 gap-y-1 sm:flex-row">
@@ -171,6 +182,21 @@
                           </button>
                         </span>
                             @endif
+                            @if($selectedRoleName)
+                                <span
+                                    class="inline-flex items-center gap-x-0.5 rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          Role: {{ $selectedRoleName }}
+                          <button wire:click="resetSelectedRole" type="button"
+                                  class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-blue-600/20">
+                            <span class="sr-only">Remove</span>
+                            <svg viewBox="0 0 14 14"
+                                 class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75">
+                              <path d="M4 4l6 6m0-6l-6 6"/>
+                            </svg>
+                            <span class="absolute -inset-1"></span>
+                          </button>
+                        </span>
+                            @endif
                         </div>
                     </div>
                     <button wire:click="resetFilters">
@@ -189,11 +215,77 @@
                     <x-table>
                         <x-slot name="head">
                             <x-table.row>
-                                <x-table.cell>Name</x-table.cell>
+                                <x-table.cell>
+                                    <button
+                                        wire:click="sortBy('name')"
+                                        class="flex items-center space-x-1 text-left font-semibold text-gray-900 hover:text-gray-700"
+                                    >
+                                        <span>Name</span>
+                                        @if($sortField === 'name')
+                                            @if($sortDirection === 'asc')
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                                </svg>
+                                            @else
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            @endif
+                                        @else
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                            </svg>
+                                        @endif
+                                    </button>
+                                </x-table.cell>
                                 <x-table.cell>Contact</x-table.cell>
-                                <x-table.cell>Role</x-table.cell>
+                                <x-table.cell>
+                                    <button
+                                        wire:click="sortBy('role')"
+                                        class="flex items-center space-x-1 text-left font-semibold text-gray-900 hover:text-gray-700"
+                                    >
+                                        <span>Role</span>
+                                        @if($sortField === 'role')
+                                            @if($sortDirection === 'asc')
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                                </svg>
+                                            @else
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            @endif
+                                        @else
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                            </svg>
+                                        @endif
+                                    </button>
+                                </x-table.cell>
                                 <x-table.cell>Store</x-table.cell>
-                                <x-table.cell>Department</x-table.cell>
+                                <x-table.cell>
+                                    <button
+                                        wire:click="sortBy('department')"
+                                        class="flex items-center space-x-1 text-left font-semibold text-gray-900 hover:text-gray-700"
+                                    >
+                                        <span>Department</span>
+                                        @if($sortField === 'department')
+                                            @if($sortDirection === 'asc')
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                                </svg>
+                                            @else
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            @endif
+                                        @else
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                            </svg>
+                                        @endif
+                                    </button>
+                                </x-table.cell>
                                 <x-table.cell>Courses</x-table.cell>
                                 <x-table.cell></x-table.cell>
                             </x-table.row>
