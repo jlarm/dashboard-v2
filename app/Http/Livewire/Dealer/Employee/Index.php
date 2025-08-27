@@ -6,83 +6,63 @@ use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
 use App\Services\VimeoService;
+use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Sentry;
 
 class Index extends Component
 {
     use WithPagination;
 
-    public $search = '';
-
-    public $store;
-
-    public $selectedDepartment = null;
-
-    public $selectedDepartmentName = null;
-
-    public $showIncompleteCourseUsers = false;
-
-    public $email;
-
+    public string $search = '';
+    public ?int $selectedDepartment = null;
+    public ?int $selectedRole = null;
+    public bool $showIncompleteCourseUsers = false;
+    public ?string $email = null;
+    public string $sortField = 'name';
+    public string $sortDirection = 'asc';
     public User $currentUser;
+    public $queryString = [
+        'search' => ['except' => '', 'as' => 's'],
+        'selectedDepartment' => ['except' => null, 'as' => 'd'],
+        'selectedRole' => ['except' => null, 'as' => 'r'],
+        'showIncompleteCourseUsers' => ['except' => false, 'as' => 'i'],
+        'sortField' => ['except' => 'name', 'as' => 'sort'],
+        'sortDirection' => ['except' => 'asc', 'as' => 'dir'],
+    ];
 
     public function mount(): void
     {
         $this->currentUser = auth()->user();
     }
 
-    public $queryString = [
-        'search' => ['except' => '', 'as' => 's'],
-        'selectedDepartment' => ['except' => null, 'as' => 'd'],
-        'showIncompleteCourseUsers' => ['except' => false, 'as' => 'i'],
-    ];
-
-    public function getUsersQueryProperty()
+    public function getUsersQueryProperty(): Builder
     {
         $query = $this->initialUsersQuery()
-            ->whereDoesntHave('roles', function ($query) {
+            ->whereDoesntHave('roles', function ($query): void {
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
             })
-            ->orderBy('name')
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with('roles', 'department', 'stores', 'courses');
 
         // Apply filters
         $this->applyDepartmentFilter($query);
+        $this->applyRoleFilter($query);
         $this->applySearchFilter($query);
+        $this->applySorting($query);
 
         // Apply tenant location filter if needed
         if (tenant('locations')) {
-            $query->whereHas('stores', function ($query) {
+            $query->whereHas('stores', function ($query): void {
                 if (! $this->currentUser->hasAnyRole(['super-admin', 'Consultant'])) {
                     $query->whereIn('stores.id', $this->currentUser->stores->pluck('id'));
                 }
-            });
-        }
-
-        return $query;
-    }
-
-    private function applyDepartmentFilter($query)
-    {
-        if ($this->selectedDepartment) {
-            $query->where('department_id', $this->selectedDepartment);
-        }
-
-        return $query;
-    }
-
-    private function applySearchFilter($query)
-    {
-        if ($this->search) {
-            $query->where(function ($query) {
-                $query->where('name', 'like', '%'.$this->search.'%')
-                    ->orWhere('email', 'like', '%'.$this->search.'%');
             });
         }
 
@@ -105,9 +85,44 @@ class Index extends Component
         $this->resetPage();
     }
 
+    public function updatingSelectedRole(): void
+    {
+        $this->resetPage();
+    }
+
     public function resetFilters(): void
     {
-        $this->reset(['search', 'showIncompleteCourseUsers', 'selectedDepartment']);
+        $this->reset(['search', 'showIncompleteCourseUsers', 'selectedDepartment', 'selectedRole']);
+        $this->resetPage();
+    }
+
+    public function resetShowIncompleteCourseUsers(): void
+    {
+        $this->showIncompleteCourseUsers = false;
+        $this->resetPage();
+    }
+
+    public function resetSelectedDepartment(): void
+    {
+        $this->selectedDepartment = null;
+        $this->resetPage();
+    }
+
+    public function resetSelectedRole(): void
+    {
+        $this->selectedRole = null;
+        $this->resetPage();
+    }
+
+    public function sortBy(string $field): void
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
+        
         $this->resetPage();
     }
 
@@ -127,8 +142,8 @@ class Index extends Component
                 ->success()
                 ->send();
 
-        } catch (\Exception $e) {
-            \Sentry::captureException($e);
+        } catch (Exception $e) {
+            Sentry::captureException($e);
 
             Notification::make()
                 ->title('Error trying to send the User Report')
@@ -138,43 +153,22 @@ class Index extends Component
         }
     }
 
-    private function generateCsvContent($users): string
+    public function getSelectedDepartmentNameProperty(): ?string
     {
-        $csvContent = "Name,Email,Department,Courses\n";
-        foreach ($users as $user) {
-            if ($user->total_completed_courses != $user->total_user_courses) {
-                $csvContent .= "{$user->name},{$user->email},{$user->department->name},$user->total_completed_courses of $user->total_user_courses\n";
-            }
-        }
-
-        return $csvContent;
-    }
-
-    private function sendCsvEmail(string $csvContent): void
-    {
-        $body = 'Attached is an outline of the progress your employees have made regarding completing their compliance training courses. If an employee is not noted, they have completed all courses assigned. If you have further questions regarding this, you can always access your compliance dashboard and review your departments progress as a whole.';
-        $filename = 'incomplete-employee-courses-report-'.date('m-d-Y').'.csv';
-
-        Mail::send([], [], function ($message) use ($csvContent, $body, $filename) {
-            $message->to($this->email)
-                ->from('noreply@armp.app', tenant('name'))
-                ->subject('Incomplete Employee Courses Report as of '.date('m/d/Y'))
-                ->text($body)
-                ->attachData($csvContent, $filename, [
-                    'mime' => 'text/csv',
-                ]);
-        });
-
-        $this->email = '';
-    }
-
-    public function getSelectedDepartmentNameProperty()
-    {
-        if (! $this->selectedDepartment) {
+        if ($this->selectedDepartment === null || $this->selectedDepartment === 0) {
             return null;
         }
 
-        return Department::where('id', $this->selectedDepartment)->first()->name ?? null;
+        return Department::find($this->selectedDepartment)?->name;
+    }
+
+    public function getSelectedRoleNameProperty(): ?string
+    {
+        if ($this->selectedRole === null || $this->selectedRole === 0) {
+            return null;
+        }
+
+        return \Spatie\Permission\Models\Role::find($this->selectedRole)?->name;
     }
 
     public function videosAreActive(): bool
@@ -203,17 +197,103 @@ class Index extends Component
         return view('livewire.dealer.employee.index', [
             'users' => $users,
             'departments' => Department::whereHas('users')->orderBy('name')->get(),
+            'roles' => \Spatie\Permission\Models\Role::whereNotIn('name', ['super-admin', 'Consultant'])
+                ->whereHas('users')
+                ->orderBy('name')
+                ->get(),
             'selectedDepartmentName' => $this->selectedDepartmentName,
+            'selectedRoleName' => $this->selectedRoleName,
         ]);
     }
 
-    private function initialUsersQuery()
+    private function applyDepartmentFilter(Builder $query): void
     {
-        //        if ($this->currentUser->cannot('create-stores')) {
-        //            return User::query()
-        //                ->where('department_id', $this->currentUser->department_id);
-        //        }
+        if ($this->selectedDepartment !== null && $this->selectedDepartment !== 0) {
+            $query->where('department_id', $this->selectedDepartment);
+        }
+    }
 
-        return User::query();
+    private function applyRoleFilter(Builder $query): void
+    {
+        if ($this->selectedRole !== null && $this->selectedRole !== 0) {
+            $query->whereHas('roles', function ($query): void {
+                $query->where('roles.id', $this->selectedRole);
+            });
+        }
+    }
+
+    private function applySearchFilter(Builder $query): void
+    {
+        if ($this->search !== '' && $this->search !== '0') {
+            $query->where(function ($query): void {
+                $query->where('name', 'like', "%{$this->search}%")
+                    ->orWhere('email', 'like', "%{$this->search}%");
+            });
+        }
+    }
+
+    private function applySorting(Builder $query): void
+    {
+        switch ($this->sortField) {
+            case 'name':
+                $query->orderBy('name', $this->sortDirection);
+                break;
+            case 'department':
+                $query->leftJoin('departments', 'users.department_id', '=', 'departments.id')
+                    ->orderBy('departments.name', $this->sortDirection)
+                    ->select('users.*');
+                break;
+            case 'role':
+                $query->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                    ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                    ->where('model_has_roles.model_type', User::class)
+                    ->orderBy('roles.name', $this->sortDirection)
+                    ->select('users.*');
+                break;
+            default:
+                $query->orderBy('name', 'asc');
+        }
+    }
+
+    private function generateCsvContent(\Illuminate\Support\Collection $users): string
+    {
+        $csvContent = "Name,Email,Department,Courses\n";
+        foreach ($users as $user) {
+            if ($user->total_completed_courses !== $user->total_user_courses) {
+                $csvContent .= "{$user->name},{$user->email},{$user->department->name},{$user->total_completed_courses} of {$user->total_user_courses}\n";
+            }
+        }
+
+        return $csvContent;
+    }
+
+    private function sendCsvEmail(string $csvContent): void
+    {
+        $body = 'Attached is an outline of the progress your employees have made regarding completing their compliance training courses. If an employee is not noted, they have completed all courses assigned. If you have further questions regarding this, you can always access your compliance dashboard and review your departments progress as a whole.';
+        $filename = 'incomplete-employee-courses-report-'.date('m-d-Y').'.csv';
+
+        Mail::send([], [], function ($message) use ($csvContent, $body, $filename): void {
+            $message->to($this->email)
+                ->from('noreply@armp.app', tenant('name'))
+                ->subject('Incomplete Employee Courses Report as of '.date('m/d/Y'))
+                ->text($body)
+                ->attachData($csvContent, $filename, [
+                    'mime' => 'text/csv',
+                ]);
+        });
+
+        $this->email = null;
+    }
+
+    private function initialUsersQuery(): Builder
+    {
+        $query = User::query();
+        
+        // Restrict managers to their own department unless they have store creation permissions
+        if ($this->currentUser->cannot('create-stores') && $this->currentUser->department_id) {
+            $query->where('department_id', $this->currentUser->department_id);
+        }
+        
+        return $query;
     }
 }
