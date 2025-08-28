@@ -14,9 +14,7 @@ class Index extends Component
 
     public function download($doc)
     {
-        return tenancy()->central(function () use ($doc) {
-            return Storage::disk('public')->download($doc['file_name']);
-        });
+        return tenancy()->central(fn () => Storage::disk('public')->download($doc['file_name']));
     }
 
     public function render(): View

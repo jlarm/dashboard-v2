@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Sds extends Model
 {
@@ -12,25 +13,20 @@ class Sds extends Model
     protected $fillable = [
         'uuid',
         'name',
-        'product_identifier',
-        'product_identification_numbers',
         'manufacturer',
-        'cas_nos',
-        'common_name',
-        'pdf_path',
+        'keywords',
+        'file_name',
     ];
-
     protected $casts = [
-        'product_identification_numbers' => 'array',
-        'cas_nos' => 'array',
+        'keywords' => 'array',
     ];
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::creating(function ($model) {
-            $model->uuid = (string) \Illuminate\Support\Str::uuid();
+        static::creating(static function ($model) {
+            $model->uuid = (string) Str::uuid();
         });
     }
 }

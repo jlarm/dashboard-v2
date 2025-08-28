@@ -4,16 +4,16 @@ namespace App\Http\Livewire\Central\Sds;
 
 use App\Models\Sds;
 use Livewire\Component;
+use Storage;
 
 class DownloadButton extends Component
 {
     public Sds $sds;
-
     public $file;
 
     public function download()
     {
-        return \Storage::disk('sds-sheets')->download($this->sds->pdf_path);
+        return Storage::disk('sds-sheets')->download($this->sds->file_name, $this->sds->name.'.pdf');
     }
 
     public function render()
