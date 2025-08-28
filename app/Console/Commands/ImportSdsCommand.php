@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -15,6 +14,7 @@ class ImportSdsCommand extends Command
 {
     public int $chunkSize;
     protected $signature = 'import:sds
+        {--file= : Path to JSON file (defaults to database/seeders/data/sds-data.json)}
         {--chunkSize=500 : Number of records per chunk}
         {--skip-duplicates : Skip duplicate records instead of failing}
         {--update-duplicates : Update existing records instead of skipping}
@@ -46,16 +46,24 @@ class ImportSdsCommand extends Command
         }
     }
 
+    private function getFilePath(): string
+    {
+        return $this->option('file') ?: database_path('seeders/data/sds-data.json');
+    }
+
     private function validateFile(): void
     {
-        if (! Storage::disk('local')->exists('data.json')) {
-            throw new InvalidArgumentException('data.json not found in storage/app');
+        $filePath = $this->getFilePath();
+
+        if (! file_exists($filePath)) {
+            throw new InvalidArgumentException("File not found: {$filePath}");
         }
 
-        $size = Storage::disk('local')->size('data.json');
-        if ($size === 0) {
-            throw new InvalidArgumentException('data.json is empty');
+        if (filesize($filePath) === 0) {
+            throw new InvalidArgumentException("File is empty: {$filePath}");
         }
+
+        $this->info("Using file: {$filePath}");
     }
 
     private function validateRecord(array $record, int $index): array
@@ -77,8 +85,14 @@ class ImportSdsCommand extends Command
 
     private function loadJsonData(): array
     {
-        $content = Storage::disk('local')->get('data.json');
-        $data = json_decode((string) $content, true, 512, JSON_THROW_ON_ERROR);
+        $filePath = $this->getFilePath();
+        $content = file_get_contents($filePath);
+
+        if ($content === false) {
+            throw new InvalidArgumentException("Failed to read file: {$filePath}");
+        }
+
+        $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidArgumentException('Invalid JSON: '.json_last_error_msg());

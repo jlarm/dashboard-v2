@@ -6,7 +6,7 @@
 /storage/app
 /storage/tenant*/
 /storage/*.key
-/storage/tenent*.*
+/storage/tenant*.*
 /storage/tenant*-
 /vendor
 .env
@@ -21,5 +21,4 @@ yarn-error.log
 /.idea
 /.vscode
 .DS_Store
-/storage/tenant*/
 /logs
