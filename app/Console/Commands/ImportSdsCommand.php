@@ -48,7 +48,7 @@ class ImportSdsCommand extends Command
 
     private function getFilePath(): string
     {
-        return $this->option('file') ?: database_path('seeders/data/sds-data.json');
+        return $this->option('file') ?: database_path('seeders/data/data.json');
     }
 
     private function validateFile(): void
