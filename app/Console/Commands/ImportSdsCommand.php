@@ -14,7 +14,7 @@ class ImportSdsCommand extends Command
 {
     public int $chunkSize;
     protected $signature = 'import:sds
-        {--file= : Path to JSON file (defaults to database/seeders/data/sds-data.json)}
+        {--file= : Path to JSON file (defaults to database/seeders/data/data.json)}
         {--chunkSize=500 : Number of records per chunk}
         {--skip-duplicates : Skip duplicate records instead of failing}
         {--update-duplicates : Update existing records instead of skipping}
