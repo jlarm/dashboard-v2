@@ -6,7 +6,7 @@ trait Searchable
 {
     public $search = '';
 
-    public function updatedSearchable($property)
+    public function updatedSearchable($property): void
     {
         if ($property === 'search') {
             $this->resetPage();
@@ -20,6 +20,6 @@ trait Searchable
             : $query
                 ->where('name', 'like', '%'.$this->search.'%')
                 ->orWhere('manufacturer', 'like', '%'.$this->search.'%')
-                ->orWhere('common_name', 'like', '%'.$this->search.'%');
+                ->orWhere('file_name', 'like', '%'.$this->search.'%');
     }
 }

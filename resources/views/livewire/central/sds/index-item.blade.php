@@ -27,6 +27,7 @@
             </a>
             @endcan
             <livewire:central.sds.download-button :sds="$sheet"  />
+            <livewire:central.sds.delete :sds="$sheet" />
         </div>
     </x-table.cell>
 </x-table.row>

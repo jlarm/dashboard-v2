@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Central\Sds;
 
 use App\Models\Sds;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,7 +11,9 @@ class Index extends Component
 {
     use Searchable, WithPagination;
 
-    public function render()
+    protected $listeners = ['refresh' => '$refresh'];
+
+    public function render(): View
     {
         $query = Sds::query();
         $query = $this->applySearch($query);

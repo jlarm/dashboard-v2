@@ -20,19 +20,6 @@
                 />
                 <x-input-error :messages="$errors->get('name')" class="mt-2"/>
             </div>
-            <!-- Product Identifier -->
-            <div>
-                <x-input-label for="productIdentifier" :value="__('Product Identifier')"/>
-                <x-text-input
-                    wire:model.defer="productIdentifier"
-                    id="productIdentifier"
-                    class="block mt-1 w-full"
-                    type="text"
-                    name="productIdentifier"
-                    :value="old('productIdentifier')"
-                />
-                <x-input-error :messages="$errors->get('productIdentifier')" class="mt-2"/>
-            </div>
             <!-- Manufacturer -->
             <div>
                 <x-input-label for="manufacturer" :value="__('Manufacturer')"/>
@@ -46,82 +33,49 @@
                 />
                 <x-input-error :messages="$errors->get('manufacturer')" class="mt-2"/>
             </div>
-            <!-- Common Name -->
-            <div>
-                <x-input-label for="commonName" :value="__('Common Name')"/>
-                <x-text-input
-                    wire:model.defer="commonName"
-                    id="commonName"
-                    class="block mt-1 w-full"
-                    type="text"
-                    name="commonName"
-                    :value="old('commonName')"
-                />
-                <x-input-error :messages="$errors->get('commonName')" class="mt-2"/>
-            </div>
-            <!-- Product Identification Number -->
-            <div class="space-y-3">
+            <!-- Keywords -->
+            <div class="space-y-3 col-span-full">
                 <div>
-                    <x-input-label for="pin" class="mb-1" :value="__('Product Identification Number(s)')"/>
+                    <x-input-label for="keywords" :value="__('Keywords')" />
                     <div class="flex rounded-lg">
                         <input
+                            wire:model="newKeyword"
+                            wire:keydown.tab="addKeyword"
+                            wire:keydown.enter="addKeyword"
                             class="border-gray-300 focus:border-arm-blue-500 focus:ring-arm-blue-500 rounded-s-md block w-full"
-                            wire:model="newPin"
-                            wire:keydown.enter="addPin"
                             type="text"
-                            id="pin"
+                            id="keywords"
+                            placeholder="Type keyword and press Tab or Enter"
+                        />
+                        <button
+                            wire:click="addKeyword"
+                            type="button"
+                            class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-e-md border border-gray-300 border-l-0 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
                         >
-                        <button wire:click="addPin" type="button" class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-e-md border border-gray-300 border-l-0 bg-white text-white hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#666" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="currentColor" fill="none">
                                 <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                             </svg>
                         </button>
                     </div>
+                    <x-input-error :messages="$errors->get('keywords')" class="mt-2"/>
                 </div>
+
+                <!-- Keywords Display -->
                 <div class="flex flex-wrap justify-start items-center gap-3">
-                    @foreach ($productIdentificationNumbers as $index => $pin)
-                        <span class="p-1 ps-2 inline-flex items-center gap-1.5 bg-arm-blue-500 text-white text-xs rounded-full">
-                    {{ $pin }}
-                    <button type="button" wire:click="removePin({{ $index }})" class="inline-flex flex-shrink-0 justify-center items-center size-5 ms-1 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-gray-300 text-sm">
-                      <svg class="flex-shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 6 6 18"></path>
-                        <path d="m6 6 12 12"></path>
-                      </svg>
-                    </button>
-                  </span>
-                    @endforeach
-                </div>
-            </div>
-            <!-- CAS Number -->
-            <div class="space-y-3">
-                <div>
-                    <x-input-label for="cas" class="mb-1" :value="__('CAS Number(s)')"/>
-                    <div class="flex rounded-lg">
-                        <input
-                            class="border-gray-300 focus:border-arm-blue-500 focus:ring-arm-blue-500 rounded-s-md block w-full"
-                            wire:model="newCasNo"
-                            wire:keydown.enter="addCas"
-                            type="text"
-                            id="cas"
-                        >
-                        <button wire:click="addCas" type="button" class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-e-md border border-gray-300 border-l-0 bg-white text-white hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#666" fill="none">
-                                <path d="M12 4V20M20 12H4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <div class="flex flex-wrap justify-start items-center gap-3">
-                    @foreach ($casNos as $index => $cas)
-                        <span class="p-1 ps-2 inline-flex items-center gap-1.5 bg-arm-blue-500 text-white text-xs rounded-full">
-                    {{ $cas }}
-                    <button type="button" wire:click="removeCas({{ $index }})" class="inline-flex flex-shrink-0 justify-center items-center size-5 ms-1 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-gray-300 text-sm">
-                      <svg class="flex-shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 6 6 18"></path>
-                        <path d="m6 6 12 12"></path>
-                      </svg>
-                    </button>
-                  </span>
+                    @foreach ($keywords as $index => $keyword)
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            {{ $keyword }}
+                            <button
+                                wire:click="removeKeyword({{ $index }})"
+                                type="button"
+                                class="shrink-0 size-4 inline-flex items-center justify-center rounded-full hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500"
+                            >
+                                <svg class="shrink-0 size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 6 6 18"></path>
+                                    <path d="m6 6 12 12"></path>
+                                </svg>
+                            </button>
+                        </span>
                     @endforeach
                 </div>
             </div>
@@ -146,6 +100,7 @@
             @if($file)
                 <p class="block text-xs text-gray-500 mt-2">{{ $file->getClientOriginalName() }}</p>
             @endif
+            <x-input-error :messages="$errors->get('file')" class="mt-2"/>
         </div>
         <x-primary-button wire:loading.attr="disabled" wire:loading.class="opacity-25" wire:target="create">
             Submit
