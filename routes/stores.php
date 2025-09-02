@@ -17,6 +17,9 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
         Route::get('videos', App\Http\Livewire\Global\Video\Index::class)->middleware('auth')->name('videos.index');
         Route::get('videos/{videoId}', \App\Http\Livewire\Global\Video\Show::class)->name('videos.show');
 
+        Route::view('sds-sheets', 'tenant.sds.index')->middleware('auth')->name('sds.index');
+        Route::get('sds-sheets/{uuid}/view', [App\Http\Controllers\Tenant\SdsController::class, 'view'])->middleware('auth')->name('sds.view');
+
         // **************************************************
         // Roles to Consultant
         // **************************************************

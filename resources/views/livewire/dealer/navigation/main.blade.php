@@ -239,6 +239,20 @@
             </a>
         </div>
     @endcan
+    <div class="px-3 mb-1.5">
+        <a
+            href="{{ $currentStore ? route('dealer.stores.sds.index', $currentStore) : route('dealer.sds.index') }}"
+            class="{{ (request()->routeIs('dealer.sds.index') || request()->routeIs('dealer.stores.sds.index')) ? 'bg-gray-100 text-gray-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }} border-transparent group py-2 px-3 rounded-lg flex items-center text-sm"
+        >
+            <svg  class="mr-3 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
+                <path  class="{{ (request()->routeIs('dealer.sds.index') || request()->routeIs('dealer.stores.sds.index')) ? 'stroke-gray-600' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" d="M22 21V11H2.00019L2 21H22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
+                <path  class="{{ (request()->routeIs('dealer.sds.index') || request()->routeIs('dealer.stores.sds.index')) ? 'stroke-gray-600' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" d="M4 11L4.00016 7H20V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
+                <path  class="{{ (request()->routeIs('dealer.sds.index') || request()->routeIs('dealer.stores.sds.index')) ? 'stroke-gray-600' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" d="M6 7L6.00012 3H18V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
+                <path  class="{{ (request()->routeIs('dealer.sds.index') || request()->routeIs('dealer.stores.sds.index')) ? 'stroke-gray-600' : 'stroke-gray-400 group-hover:stroke-gray-500' }}" d="M16 15L14.5 17H9.5L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
+            </svg>
+            {{ __('SDS Sheets') }}
+        </a>
+    </div>
     <!-- COURSES -->
     @unlessrole('super-admin|Consultant')
     @can('create-users')
