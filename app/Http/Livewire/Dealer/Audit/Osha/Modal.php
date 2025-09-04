@@ -12,11 +12,11 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     public $search = '';
     public $selectedViolation = null;
     public Collection $violations;
-    public int $auditId;
-    public string $auditType;
+    public ?int $auditId = null;
+    public ?string $auditType = null;
     public array $selectedViolations = [];
 
-    public function mount($auditId, $auditType): void
+    public function mount($auditId = null, $auditType = null): void
     {
         $this->auditId = $auditId;
         $this->auditType = $auditType;
