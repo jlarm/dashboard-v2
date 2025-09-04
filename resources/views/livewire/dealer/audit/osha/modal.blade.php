@@ -34,7 +34,9 @@
                 <p class="p-4 text-sm text-gray-500">No results found.</p>
             @endif
 
-            <livewire:dealer.audit.components.audit-comment-form :auditId="$auditId" :auditType="$auditType" />
+            @if($auditId && $auditType)
+                <livewire:dealer.audit.components.audit-comment-form :auditId="$auditId" :auditType="$auditType" />
+            @endif
         </div>
     </div>
 </x-wire-elements-pro::tailwind.modal>
