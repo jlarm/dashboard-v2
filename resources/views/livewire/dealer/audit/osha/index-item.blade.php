@@ -89,6 +89,10 @@
                                         <dd class="font-medium text-gray-800">{{ $oshaAudit->violation_count }}</dd>
                                     </div>
                                     <div>
+                                        <dt class="text-gray-500">Comments:</dt>
+                                        <dd class="font-medium text-gray-800">{{ $this->commentCount() }}</dd>
+                                    </div>
+                                    <div>
                                         <dt class="text-gray-500">Remediations:</dt>
                                         <dd class="font-medium text-gray-800">{{ $oshaAudit->completed_date ? $oshaAudit->remediation_count : '-' }}</dd>
                                     </div>
@@ -150,9 +154,9 @@
                                     <div class="!my-3 border-t border-gray-200"></div>
                                     <div x-data="{ showConfirmation: false }">
                                         <!-- Initial Delete Button -->
-                                        <button 
-                                            x-show="!showConfirmation" 
-                                            x-on:click="showConfirmation = true" 
+                                        <button
+                                            x-show="!showConfirmation"
+                                            x-on:click="showConfirmation = true"
                                             class="group w-full flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="text-red-500 group-hover:text-red-600" fill="none">
@@ -163,19 +167,19 @@
                                             </svg>
                                             <span>Delete Audit</span>
                                         </button>
-                                        
+
                                         <!-- Confirmation UI -->
                                         <div x-show="showConfirmation" class="p-2 bg-red-50 rounded-md">
                                             <p class="text-sm text-red-700 font-medium mb-3">Are you sure you want to delete this audit?</p>
                                             <div class="flex justify-end space-x-2">
-                                                <button 
-                                                    x-on:click="showConfirmation = false" 
+                                                <button
+                                                    x-on:click="showConfirmation = false"
                                                     class="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
                                                 >
                                                     Cancel
                                                 </button>
-                                                <button 
-                                                    wire:click="delete" 
+                                                <button
+                                                    wire:click="delete"
                                                     class="px-3 py-1.5 text-xs font-medium rounded-md bg-red-600 text-white hover:bg-red-700"
                                                 >
                                                     Delete
@@ -225,9 +229,17 @@
             </div>
 
             {{-- Total Violations --}}
+            @if($this->commentCount() > 0)
             <div>
                 <dt class="text-xs font-medium text-slate-500">Total Violations</dt>
                 <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">{{ $oshaAudit->violation_count }}</dd>
+            </div>
+            @endif
+
+            {{-- Total Comments --}}
+            <div>
+                <dt class="text-xs font-medium text-slate-500">Total Comments</dt>
+                <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">{{ $this->commentCount() }}</dd>
             </div>
 
             {{-- Total Remediations --}}

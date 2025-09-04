@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Store;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Index extends Component
@@ -13,12 +14,12 @@ class Index extends Component
         'refreshAudits' => '$refresh',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->store = Store::with('oshaViolationAudits')->where('id', app('currentStore'))->firstOrFail();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.audit.osha.index', [
             'oshaAudits' => $this->store->oshaAudits->sortByDesc('audit_date'),

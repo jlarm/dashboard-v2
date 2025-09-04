@@ -2,6 +2,7 @@
 
 namespace App\Models\Dealer\Audit;
 
+use App\Models\AuditComment;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Violation;
 use App\Models\RemediationReminders;
@@ -53,6 +54,11 @@ class BodyShopViolationAudit extends Model
     public function reminders(): MorphMany
     {
         return $this->morphMany(RemediationReminders::class, 'remindable');
+    }
+
+    public function auditComments(): MorphMany
+    {
+        return $this->morphMany(AuditComment::class, 'auditable');
     }
 
     public function getViolationCountAttribute(): int

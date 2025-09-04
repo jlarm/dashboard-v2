@@ -26,6 +26,7 @@ class Delete extends Modal
 
     public function delete()
     {
+        $this->oshaAudit->auditComments()->delete();
         $this->oshaAudit->delete();
 
         $this->emitTo('dealer.audit.osha.index', 'refreshAudits');

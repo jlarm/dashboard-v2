@@ -9,7 +9,7 @@ class OshaPdfTestController extends Controller
 {
     public function __invoke(): View
     {
-        $audit = OshaViolationAudit::with('user', 'violations')->first();
+        $audit = OshaViolationAudit::with('user', 'violations', 'auditComments')->first();
 
         return view('dealer.osha-audit-pdf', compact('audit'));
     }

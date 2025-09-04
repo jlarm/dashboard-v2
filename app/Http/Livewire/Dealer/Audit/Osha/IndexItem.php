@@ -60,6 +60,11 @@ class IndexItem extends Component
             ->send();
     }
 
+    public function commentCount()
+    {
+        return $this->oshaAudit->auditComments()->count();
+    }
+
     public function render(): View
     {
         return view('livewire.dealer.audit.osha.index-item');

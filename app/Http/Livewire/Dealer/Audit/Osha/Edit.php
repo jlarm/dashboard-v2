@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
+use App\Models\AuditComment;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Traits\HasOshaViolationStatements;
+use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Log;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
@@ -15,24 +20,19 @@ class Edit extends Component
 {
     use HasOshaViolationStatements, InteractsWithConfirmationModal, WithFileUploads, WithMedia;
 
-    public OshaViolationAudit $oshaViolationAudit;
-
-    public $store;
-
-    public $violationStatements = [];
-
-    public $violations;
-
     public $date;
-
+    public $store;
+    public $violations;
     public $violationFiles = [];
-
+    public Collection $comments;
+    public $violationStatements = [];
     public bool $hasInvalidViolations = false;
-
+    public OshaViolationAudit $oshaViolationAudit;
     protected $listeners = [
+        'commentAdded' => 'refreshComments',
+        'commentDeleted' => 'refreshComments',
         'violationSelected',
     ];
-
     protected $rules = [
         'violations.*.comment' => 'required',
         'violations.*.violation_date' => 'nullable|date',
@@ -46,6 +46,8 @@ class Edit extends Component
         $this->violations = $oshaAudit->violations()->get();
         $this->date = $oshaAudit->date->format('Y-m-d');
         $this->checkInvalidViolations();
+        $this->comments = $this->oshaViolationAudit->auditComments()->with('user')->latest()->get();
+
     }
 
     public function edit(): void
@@ -65,10 +67,10 @@ class Edit extends Component
                 ];
 
                 foreach ($this->violationFiles as $index => $files) {
-                    if ($violation->id == $index) {
+                    if ($violation->id === $index) {
                         foreach ($files as $id => $file) {
                             try {
-                                \Log::info('Attempting to upload file', [
+                                Log::info('Attempting to upload file', [
                                     'violation_id' => $violation->id,
                                     'file_id' => $id,
                                     'file_size' => $file->getSize(),
@@ -77,9 +79,9 @@ class Edit extends Component
                                 ]);
 
                                 $violation->addMedia($file->getRealPath())
-                                    ->toMediaCollection('violation_files_'.$id, 'armpaudits');
-                            } catch (\Exception $uploadException) {
-                                \Log::error('Error uploading file', [
+                                    ->toMediaCollection('violation_files_' . $id, 'armpaudits');
+                            } catch (Exception $uploadException) {
+                                Log::error('Error uploading file', [
                                     'violation_id' => $violation->id,
                                     'file_id' => $id,
                                     'error' => $uploadException->getMessage(),
@@ -103,15 +105,15 @@ class Edit extends Component
                 ->title('Audit Updated!')
                 ->success()
                 ->send();
-        } catch (\Exception $e) {
-            \Log::error('Error updating audit', [
+        } catch (Exception $e) {
+            Log::error('Error updating audit', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
 
             $errorMessage = 'All violations must have a comment';
 
-            if (strpos($e->getMessage(), 'validation.max.file') !== false) {
+            if (mb_strpos($e->getMessage(), 'validation.max.file') !== false) {
                 $errorMessage = 'One or more files exceeded the 5MB size limit';
             }
 
@@ -125,9 +127,30 @@ class Edit extends Component
 
     public function updated($propertyName): void
     {
-        if (str_contains($propertyName, 'violations.') && str_contains($propertyName, '.comment')) {
+        if (str_contains((string)$propertyName, 'violations.') && str_contains((string)$propertyName, '.comment')) {
             $this->checkInvalidViolations();
         }
+    }
+
+    public function refreshComments(): void
+    {
+        $this->comments = $this->oshaViolationAudit->auditComments()->with('user')->latest()->get();
+    }
+
+    public function deleteComment($commentId): void
+    {
+        $comment = AuditComment::findOrFail($commentId);
+
+        if ($comment->user_id !== auth()->id()) {
+            Notification::make()
+                ->title('You cannot delete this comment')
+                ->warning()
+                ->send();
+        }
+
+        $comment->delete();
+
+        $this->emit('commentDeleted');
     }
 
     public function render(): View

@@ -48,7 +48,7 @@
 <div class="w-full h-screen p-10">
     <div class="prose prose-img:my-0 min-w-full divide-y divide-gray-200">
         @foreach($audit->violations as $violation)
-            <div>
+            <div wire:key="$violation->id">
                 <div class="flex items-baseline gap-5">
                     <h3>{{ $violation->statement }}</h3>
                     @if($violation->risk)
@@ -57,26 +57,46 @@
                 </div>
                 <p>{{ $violation->comment }}</p>
                 <p>{{ $violation->violation_date?->format('F d, Y') }}</p>
-                <div class="flex gap-5">
+                <div class="flex justify-start gap-5">
                     @if($violation->getMedia('violation_files_0')->first())
-                        <div class="w-1/3 h-56 overflow-hidden">
-                            <img class="h-full w-full object-cover" src="{{ $violation->getMedia('violation_files_0')->first()->getUrl('audit-view') }}" alt="">
+                        <div class="h-56 flex items-center justify-center">
+                            <img class="max-h-full max-w-full object-contain" src="{{ $violation->getMedia('violation_files_0')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addHour(), 'audit-view') }}" alt="">
                         </div>
                     @endif
                     @if($violation->getMedia('violation_files_1')->first())
-                        <div class="w-1/3 h-56 overflow-hidden">
-                            <img class="h-full w-full object-cover" src="{{ $violation->getMedia('violation_files_1')->first()->getUrl('audit-view') }}" alt="">
+                        <div class="h-56 flex items-center justify-center">
+                            <img class="max-h-full max-w-full object-contain" src="{{ $violation->getMedia('violation_files_1')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addHour(), 'audit-view') }}" alt="">
                         </div>
                     @endif
                     @if($violation->getMedia('violation_files_2')->first())
-                        <div class="w-1/3 h-56 overflow-hidden">
-                            <img class="h-full w-full object-cover" src="{{ $violation->getMedia('violation_files_2')->first()->getUrl('audit-view') }}" alt="">
+                        <div class="h-56 flex items-center justify-center">
+                            <img class="max-h-full max-w-full object-contain" src="{{ $violation->getMedia('violation_files_2')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addHour(), 'audit-view') }}" alt="">
                         </div>
                     @endif
                 </div>
                 <p></p>
             </div>
         @endforeach
+
+        @if($audit->auditComments->count() > 0)
+            <div class="mt-8">
+                <h2>Comments</h2>
+                @foreach($audit->auditComments as $comment)
+                    <div class="mb-4 p-4 bg-gray-50 rounded" wire:key="$comment->id">
+                        <div class="flex justify-between">
+                            <div>
+                                <p>{{ $comment->comment }}</p>
+                            </div>
+                            @if($comment->getFirstMedia('comments'))
+                                <div class="mt-2">
+                                    <img class="h-32 w-auto object-cover rounded" src="{{ $comment->getFirstMedia('comments')->getTemporaryUrl(\Carbon\Carbon::now()->addHour(), 'thumb') }}" alt="Comment attachment">
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 </div>
 </body>

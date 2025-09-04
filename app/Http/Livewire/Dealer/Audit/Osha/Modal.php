@@ -2,22 +2,29 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
+use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\OshaViolationStatements;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 class Modal extends \WireElements\Pro\Components\Modal\Modal
 {
     public $search = '';
-
     public $selectedViolation = null;
-
     public Collection $violations;
-
+    public int $auditId;
+    public string $auditType;
     public array $selectedViolations = [];
+
+    public function mount($auditId, $auditType): void
+    {
+        $this->auditId = $auditId;
+        $this->auditType = $auditType;
+    }
 
     public function updatedSearch(): void
     {
-        if (strlen($this->search >= 2)) {
+        if ($this->search >= 2 != '') {
             $this->violations = tenancy()->central(function ($tenant) {
                 return OshaViolationStatements::query()
                     ->where(function ($term) {
@@ -42,7 +49,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
         $this->close();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.audit.osha.modal');
     }
