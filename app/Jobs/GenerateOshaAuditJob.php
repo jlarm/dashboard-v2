@@ -32,7 +32,7 @@ class GenerateOshaAuditJob implements ShouldQueue
         }
 
         $html = view('dealer.audit.osha.download', [
-            'audit' => $this->oshaAudit->load('auditComments'),
+            'audit' => $this->oshaAudit->load(['violations', 'auditComments']),
         ])->render();
 
         $footer = view('pdf.audit-footer')->render();

@@ -81,7 +81,7 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
         $html = view('dealer.audit.osha.pdf-view', [
             'fileName' => $fileName,
-            'audit' => $this->oshaViolationAudit,
+            'audit' => $this->oshaViolationAudit->load(['violations', 'auditComments']),
         ])->render();
 
         $footer = view('pdf.audit-footer')->render();
