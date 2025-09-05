@@ -2,10 +2,12 @@
 
 namespace App\Models\Dealer\Audit;
 
+use App\Models\AuditComment;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -18,7 +20,6 @@ class OshaAudit extends Model implements HasMedia
     use InteractsWithMedia, LogsActivity;
 
     protected $guarded = [];
-
     protected $casts = [
         'draft' => 'boolean',
         'audit_date' => 'date:Y-m-d',
@@ -33,6 +34,11 @@ class OshaAudit extends Model implements HasMedia
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function auditComments(): MorphMany
+    {
+        return $this->morphMany(AuditComment::class, 'auditable');
     }
 
     public function registerMediaConversions(?Media $media = null): void
