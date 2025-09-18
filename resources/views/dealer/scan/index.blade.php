@@ -55,19 +55,19 @@
                     :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                     class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
                 >Internal</button>
-                @can('create-stores')
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                >Settings</button>
-                    @endcan
+                @can('create-dealerships')
+                    <button
+                        :id="$id('tab', whichChild($el, $el.parentElement))"
+                        @click="select($el.id)"
+                        @mousedown.prevent
+                        @focus="select($el.id)"
+                        type="button"
+                        :tabindex="isSelected($el.id) ? 0 : -1"
+                        :aria-selected="isSelected($el.id)"
+                        :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
+                        class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
+                    >Upload Form</button>
+                @endcan
             </div>
         </div>
         <div role="tabpanels">
@@ -91,16 +91,16 @@
             >
                 <livewire:dealer.scan.internal-report-index/>
             </section>
-            @can('create-stores')
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-8"
-                x-cloak
-            >
-                <livewire:dealer.scan.settings/>
-            </section>
+            @can('create-dealerships')
+                <section
+                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                    role="tabpanel"
+                    class="p-8"
+                    x-cloak
+                >
+                    <livewire:dealer.scan.upload-form />
+                </section>
             @endcan
         </div>
     </div>

@@ -65,7 +65,7 @@
                     :aria-selected="isSelected($el.id)"
                     :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                     class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                >Settings</button>
+                >Upload Form</button>
             </div>
         </div>
         <div role="tabpanels">
@@ -97,7 +97,7 @@
                     class="p-8"
                     x-cloak
                 >
-                    <livewire:dealer.scan.settings :store="$store" />
+                    <livewire:dealer.scan.upload-form :store="$store" />
                 </section>
             @endcan
         </div>

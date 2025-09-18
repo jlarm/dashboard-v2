@@ -26,6 +26,8 @@ class ScanReport extends Model
         'last_scan_status',
         'last_scan_progress',
         'last_scan_errors',
+        'created_at',
+        'updated_at',
     ];
 
     public function store(): BelongsTo
