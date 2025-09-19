@@ -36,7 +36,7 @@ class UploadForm extends Component
         try {
             $this->validate();
 
-            $fileUpload = Storage::disk('do-scans')->put(tenant('id').'/'.$this->file->getClientOriginalName(), $this->file);
+            $fileUpload = Storage::disk('do-scans')->putFileAs(tenant('id'), $this->file, $this->file->getClientOriginalName());
 
             $storeId = $this->store->id ?? Store::first()->id;
 
