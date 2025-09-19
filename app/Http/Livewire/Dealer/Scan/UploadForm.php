@@ -44,8 +44,8 @@ class UploadForm extends Component
                 'user_id' => auth()->id(),
                 'store_id' => $storeId,
                 'path' => $fileUpload,
-                'scan_type' => strtolower($this->scanType),
-                'type' => $this->summaryType,
+                'scan_type' => mb_strtolower($this->scanType),
+                'type' => mb_strtolower($this->summaryType),
             ];
 
             if ($this->date) {
