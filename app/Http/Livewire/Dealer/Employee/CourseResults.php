@@ -15,12 +15,9 @@ class CourseResults extends Component
     use WithPagination;
 
     public Store $store;
-
     public User $user;
-
-    private array $courseWithRole = []; // Initialize the property
-
     protected $listeners = ['refreshEmployeeDetails' => '$refresh'];
+    private array $courseWithRole = []; // Initialize the property
 
     public function mount(): void
     {

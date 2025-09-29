@@ -311,6 +311,21 @@
                     </div>
                 </div>
             </div>
+            @can('create-dealerships')
+            <div class="border-t py-6">
+                <div class="grid grid-cols-12 gap-y-1.5 gap-x-6">
+                    <div class="col-span-2">
+                        <label class="sm:mt-2.5 flex items-center text-sm text-gray-500">
+                            Reset Courses
+                            <x-tooltip content="This will reset all courses for all employees." class="size-4 text-gray-400 hover:text-gray-600 ml-1" />
+                        </label>
+                    </div>
+                    <div class="col-span-6">
+                        <livewire:dealer.course.reset :store="$store" />
+                    </div>
+                </div>
+            </div>
+            @endcan
             <div class="py-3 text-right">
                 <x-primary-button wire:loading.attr="disabled">Update</x-primary-button>
             </div>

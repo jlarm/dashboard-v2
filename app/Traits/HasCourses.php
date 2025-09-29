@@ -12,12 +12,67 @@ trait HasCourses
 {
     private $userCourses;
 
+    /**
+     * Clear the cached user courses data.
+     * Call this method after modifying course results to refresh the count.
+     */
+    public function clearCourseCache(): void
+    {
+        $this->userCourses = null;
+
+        // Clear Laravel's attribute cache for computed attributes
+        if (isset($this->attributes['total_completed_courses'])) {
+            unset($this->attributes['total_completed_courses']);
+        }
+        if (isset($this->attributes['total_user_courses'])) {
+            unset($this->attributes['total_user_courses']);
+        }
+    }
+
+    public function getTotalCompletedCoursesAttribute(): int
+    {
+        return CourseResults::query()
+            ->distinct()
+            ->where('user_id', $this->id)
+            ->whereIn('course_id', $this->totalUserCourses())
+            ->where(function ($query) {
+                $query->where('created_at', '>=', now()->subYear())
+                    ->orWhere(function ($query) {
+                        $query->whereIn('course_id', [9, 10, 11, 12])
+                            ->where('created_at', '>=', now()->subYears(3));
+                    });
+            })
+            ->where('passed', 1)
+            ->select('course_id')
+            ->count('course_id');
+    }
+
+    public function getTotalUserCoursesAttribute(): int
+    {
+        return count($this->totalUserCourses());
+    }
+
+    public function getUserHasNotCompletedCoursesAttribute(): bool
+    {
+        return $this->total_completed_courses !== $this->total_user_courses;
+    }
+
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function results(): HasMany
+    {
+        return $this->hasMany(CourseResults::class);
+    }
+
     private function totalUserCourses(): array
     {
         if (is_null($this->userCourses)) {
             $this->load('roles');
 
-            $userRoles = $this->roles->pluck('id')->reject(fn ($id) => $id == 5);
+            $userRoles = $this->roles->pluck('id')->reject(fn ($id) => $id === 5);
 
             if ($userRoles->isEmpty()) {
                 return [];
@@ -52,43 +107,5 @@ trait HasCourses
         }
 
         return $this->userCourses;
-    }
-
-    public function getTotalCompletedCoursesAttribute(): int
-    {
-        return DB::table('course_results')
-            ->distinct()
-            ->select('course_id')
-            ->where('user_id', $this->id)
-            ->whereIn('course_id', $this->totalUserCourses())
-            ->where(function ($query) {
-                $query->where('created_at', '>=', now()->subYear())
-                    ->orWhere(function ($query) {
-                        $query->whereIn('course_id', [9, 10, 11, 12])
-                            ->where('created_at', '>=', now()->subYears(3));
-                    });
-            })
-            ->where('passed', 1)
-            ->count('course_id');
-    }
-
-    public function getTotalUserCoursesAttribute(): int
-    {
-        return count($this->totalUserCourses());
-    }
-
-    public function getUserHasNotCompletedCoursesAttribute(): bool
-    {
-        return $this->total_completed_courses != $this->total_user_courses;
-    }
-
-    public function courses(): BelongsToMany
-    {
-        return $this->belongsToMany(Course::class);
-    }
-
-    public function results(): HasMany
-    {
-        return $this->hasMany(CourseResults::class);
     }
 }

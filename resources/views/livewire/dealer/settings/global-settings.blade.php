@@ -76,7 +76,7 @@
                 class="p-2"
             >
                 <div class="max-w-4xl mx-auto">
-                    <div class="bg-white shadow-sm rounded-lg p-6">
+                    <div class="bg-white p-6">
                         <h2 class="text-lg font-medium text-gray-900 mb-4">Store Course Notifications</h2>
                         <p class="text-sm text-gray-600 mb-6">Enable or disable notifications for courses not taken for each store.</p>
 
@@ -108,7 +108,7 @@
                             @endforelse
                         </div>
                     </div>
-                    <div class="bg-white shadow-sm rounded-lg p-6">
+                    <div class="bg-white p-6">
                         <h2 class="text-lg font-medium text-gray-900 mb-4">Audit Remediations</h2>
                         <p class="text-sm text-gray-600 mb-6">Enable or disable the ability to remediate audits for each store.</p>
 
@@ -140,6 +140,13 @@
                             @endforelse
                         </div>
                     </div>
+                    @can('create-dealerships')
+                    <div class="bg-white p-6">
+                        <h2 class="text-lg font-medium text-gray-900 mb-4">Reset Courses</h2>
+                        <p class="text-sm text-gray-600 mb-6">Doing this will reset courses for all employees throughout all dealerships.</p>
+                        <livewire:dealer.course.reset />
+                    </div>
+                    @endcan
                 </div>
             </section>
             <section
