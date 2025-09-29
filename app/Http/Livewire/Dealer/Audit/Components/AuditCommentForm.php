@@ -10,7 +10,7 @@ use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
 class AuditCommentForm extends Component
 {
-    use WithMedia, WithFileUploads;
+    use WithFileUploads, WithMedia;
 
     public int $auditId;
     public string $auditType;
@@ -18,7 +18,6 @@ class AuditCommentForm extends Component
     public $mediaComponentNames = ['images'];
     public $image;
     public bool $showForm = false;
-
     protected $rules = [
         'comment' => 'required|string|max:1000',
     ];
@@ -31,7 +30,7 @@ class AuditCommentForm extends Component
 
     public function toggleForm(): void
     {
-        $this->showForm = !$this->showForm;
+        $this->showForm = ! $this->showForm;
     }
 
     public function submitComment(): void

@@ -4,19 +4,19 @@
         <button
             wire:click="toggleForm"
             type="button"
-            class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none
+            class="w-full inline-flex items-center justify-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none
   focus:ring-2 focus:ring-offset-2 focus:ring-arm-blue-500"
         >
             @if($showForm)
                 <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
-                Hide Comment Form
+                Hide Recognition Form
             @else
                 <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-                Add Comment
+                Add Recognition
             @endif
         </button>
     </div>
@@ -36,14 +36,14 @@
             <!-- Comment Textarea -->
             <div>
                 <label for="comment" class="block text-sm font-medium text-gray-700 mb-2">
-                    Comment
+                    Comment <span class="text-red-500">*</span>
                 </label>
                 <textarea
                     wire:model.defer="comment"
                     id="comment"
                     rows="3"
                     class="block w-full border-gray-300 rounded-md shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
-                    placeholder="Add your comment..."
+                    placeholder="Add a comment recognizing an improvement..."
                 ></textarea>
                 @error('comment')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -55,10 +55,10 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">
                     Image (Optional)
                 </label>
-                
-                <div 
+
+                <div
                     class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors"
-                    x-data="{ 
+                    x-data="{
                         isDragOver: false,
                         handleDrop(e) {
                             this.isDragOver = false;
@@ -80,10 +80,10 @@
                         <div class="flex text-sm text-gray-600">
                             <label for="image" class="relative cursor-pointer bg-white rounded-md font-medium text-arm-blue-600 hover:text-arm-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-arm-blue-500">
                                 <span>Upload an image</span>
-                                <input 
-                                    id="image" 
-                                    wire:model="image" 
-                                    type="file" 
+                                <input
+                                    id="image"
+                                    wire:model="image"
+                                    type="file"
                                     accept="image/*"
                                     class="sr-only"
                                 >
@@ -95,7 +95,7 @@
                         </p>
                     </div>
                 </div>
-                
+
                 @if ($image)
                     <div class="mt-3">
                         <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-md">
@@ -105,8 +105,8 @@
                             <span class="text-sm text-gray-700 truncate flex-1 min-w-0">
                                 Image selected: {{ $image->getClientOriginalName() ?? 'image.jpg' }}
                             </span>
-                            <button 
-                                type="button" 
+                            <button
+                                type="button"
                                 wire:click="$set('image', null)"
                                 class="flex-shrink-0 text-sm text-red-600 hover:text-red-800 font-medium"
                             >
