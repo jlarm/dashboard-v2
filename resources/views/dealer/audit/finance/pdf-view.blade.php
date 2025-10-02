@@ -96,6 +96,26 @@
             @endif
         </div>
         @endforeach
+
+        @if($audit->auditComments->count() > 0)
+            <div class="mt-8">
+                <h2>Comments</h2>
+                @foreach($audit->auditComments as $comment)
+                    <div class="mb-4 p-4 bg-gray-50 rounded" wire:key="$comment->id">
+                        <div class="flex justify-between">
+                            <div>
+                                <p>{{ $comment->comment }}</p>
+                            </div>
+                            @if($comment->getFirstMedia('comments'))
+                                <div class="mt-2">
+                                    <img class="h-32 w-auto object-cover rounded" src="{{ $comment->getFirstMedia('comments')->getTemporaryUrl(\Carbon\Carbon::now()->addHour(), 'thumb') }}" alt="Comment attachment">
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 </div>
 </body>

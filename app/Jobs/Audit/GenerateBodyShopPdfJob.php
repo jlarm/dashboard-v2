@@ -77,7 +77,7 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
     {
         $html = view('dealer.audit.body-shop.pdf-view', [
             'fileName' => $fileName,
-            'audit' => $this->bodyShopViolationAudit,
+            'audit' => $this->bodyShopViolationAudit->load(['violations', 'auditComments']),
         ])->render();
 
         $footer = view('pdf.audit-footer')->render();

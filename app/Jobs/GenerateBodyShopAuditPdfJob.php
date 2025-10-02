@@ -17,20 +17,6 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
 
     public function __construct(protected BodyShopAudit $bodyShopAudit) {}
 
-    private function rating(): float
-    {
-        $sum = 0;
-        for ($i = 1; $i <= 43; $i++) {
-            if ($this->bodyShopAudit->{'body_shop_q'.$i.'_answer'} == 2) {
-                $sum += 1;
-            }
-        }
-
-        $wrong = $sum;
-
-        return number_format(100 * (43 - $wrong) / 43, 2, '.', '');
-    }
-
     public function handle(): void
     {
         $path = storage_path('app/body-shop-audits');
@@ -46,7 +32,7 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
         }
 
         $html = view('dealer.audit.body-shop.download', [
-            'audit' => $this->bodyShopAudit,
+            'audit' => $this->bodyShopAudit->load(['violations', 'auditComments']),
         ])->render();
 
         $audit = Browsershot::html($html)
@@ -61,5 +47,19 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
             'rating' => $this->rating(),
         ]);
 
+    }
+
+    private function rating(): float
+    {
+        $sum = 0;
+        for ($i = 1; $i <= 43; $i++) {
+            if ($this->bodyShopAudit->{'body_shop_q'.$i.'_answer'} === 2) {
+                ++$sum;
+            }
+        }
+
+        $wrong = $sum;
+
+        return number_format(100 * (43 - $wrong) / 43, 2, '.', '');
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
+use App\Models\AuditComment;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Traits\HasGlbaViolationStatements;
+use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,24 +18,19 @@ class Edit extends Component
 {
     use HasGlbaViolationStatements, InteractsWithConfirmationModal, WithFileUploads, WithMedia;
 
-    public GlbaViolationAudit $glbaViolationAudit;
-
-    public $store;
-
-    public $violationStatements = [];
-
-    public $violations;
-
     public $date;
-
+    public $store;
+    public $violations;
     public $violationFiles = [];
-
+    public Collection $comments;
+    public $violationStatements = [];
     public bool $hasInvalidViolations = false;
-
+    public GlbaViolationAudit $glbaViolationAudit;
     protected $listeners = [
+        'commentAdded' => 'refreshComments',
+        'commentDeleted' => 'refreshComments',
         'violationSelected',
     ];
-
     protected $rules = [
         'violations.*.comment' => 'required',
         'violations.*.violation_date' => 'nullable|date',
@@ -45,6 +43,7 @@ class Edit extends Component
         $this->violations = $glbaAudit->violations()->get();
         $this->date = $glbaAudit->date->format('Y-m-d');
         $this->checkInvalidViolations();
+        $this->comments = $this->glbaViolationAudit->auditComments()->with('user')->latest()->get();
     }
 
     public function edit(): void
@@ -64,7 +63,7 @@ class Edit extends Component
                 ];
 
                 foreach ($this->violationFiles as $index => $files) {
-                    if ($violation->id == $index) {
+                    if ($violation->id === $index) {
                         foreach ($files as $id => $file) {
                             $violation->addMedia($file->getRealPath())
                                 ->toMediaCollection('violation_files_'.$id, 'armpaudits');
@@ -83,7 +82,7 @@ class Edit extends Component
                 ->title('Audit Updated!')
                 ->success()
                 ->send();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->title('Error updating audit')
                 ->body('All violations must have a comment')
@@ -99,9 +98,31 @@ class Edit extends Component
         }
     }
 
+    public function refreshComments(): void
+    {
+        $this->comments = $this->glbaViolationAudit->auditComments()->with('user')->latest()->get();
+    }
+
+    public function deleteComment($commentId): void
+    {
+        $comment = AuditComment::findOrFail($commentId);
+
+        if ($comment->user_id !== auth()->id()) {
+            Notification::make()
+                ->title('You cannot delete this comment')
+                ->warning()
+                ->send();
+        }
+
+        $comment->delete();
+
+        $this->emit('commentDeleted');
+    }
+
     public function render(): View
     {
-        return view('livewire.dealer.audit.finance.edit')->layout('components.dealer-app');
+        return view('livewire.dealer.audit.finance.edit')
+            ->layout('components.dealer-app');
     }
 
     private function checkInvalidViolations(): void

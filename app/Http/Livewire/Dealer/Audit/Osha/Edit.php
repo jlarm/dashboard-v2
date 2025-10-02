@@ -8,7 +8,6 @@ use App\Traits\HasOshaViolationStatements;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -79,7 +78,7 @@ class Edit extends Component
                                 ]);
 
                                 $violation->addMedia($file->getRealPath())
-                                    ->toMediaCollection('violation_files_' . $id, 'armpaudits');
+                                    ->toMediaCollection('violation_files_'.$id, 'armpaudits');
                             } catch (Exception $uploadException) {
                                 Log::error('Error uploading file', [
                                     'violation_id' => $violation->id,
@@ -127,7 +126,7 @@ class Edit extends Component
 
     public function updated($propertyName): void
     {
-        if (str_contains((string)$propertyName, 'violations.') && str_contains((string)$propertyName, '.comment')) {
+        if (str_contains((string) $propertyName, 'violations.') && str_contains((string) $propertyName, '.comment')) {
             $this->checkInvalidViolations();
         }
     }
@@ -155,7 +154,8 @@ class Edit extends Component
 
     public function render(): View
     {
-        return view('livewire.dealer.audit.osha.edit')->layout('components.dealer-app');
+        return view('livewire.dealer.audit.osha.edit')
+            ->layout('components.dealer-app');
     }
 
     private function checkInvalidViolations(): void

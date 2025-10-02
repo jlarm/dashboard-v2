@@ -75,7 +75,7 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
     {
         $html = view('dealer.audit.finance.pdf-view', [
             'fileName' => $fileName,
-            'audit' => $this->glbaViolationAudit,
+            'audit' => $this->glbaViolationAudit->load(['violations', 'auditComments']),
         ])->render();
 
         $footer = view('pdf.audit-footer')->render();

@@ -17,20 +17,6 @@ class GenerateAuditPdfJob implements ShouldQueue
 
     public function __construct(protected FinanceAudit $financeAudit) {}
 
-    private function rating(): float
-    {
-        $sum = 0;
-        for ($i = 1; $i <= 43; $i++) {
-            if ($this->financeAudit->{'finance_q'.$i.'_answer'} == 2) {
-                $sum += 1;
-            }
-        }
-
-        $wrong = $sum;
-
-        return number_format(100 * (43 - $wrong) / 43, 2, '.', '');
-    }
-
     public function handle(): void
     {
         $path = storage_path('app/finance-audits');
@@ -42,7 +28,7 @@ class GenerateAuditPdfJob implements ShouldQueue
         $fileName = $this->financeAudit->audit_date->format('Ymd').'-'.$dealerName.'-finance-audit.pdf';
 
         $html = view('dealer.audit.finance.download', [
-            'audit' => $this->financeAudit,
+            'audit' => $this->financeAudit->load(['violations', 'auditComments']),
         ])->render();
 
         if (! File::isDirectory($path)) {
@@ -61,5 +47,19 @@ class GenerateAuditPdfJob implements ShouldQueue
             'rating' => $this->rating(),
         ]);
 
+    }
+
+    private function rating(): float
+    {
+        $sum = 0;
+        for ($i = 1; $i <= 43; $i++) {
+            if ($this->financeAudit->{'finance_q'.$i.'_answer'} === 2) {
+                $sum += 1;
+            }
+        }
+
+        $wrong = $sum;
+
+        return number_format(100 * (43 - $wrong) / 43, 2, '.', '');
     }
 }
