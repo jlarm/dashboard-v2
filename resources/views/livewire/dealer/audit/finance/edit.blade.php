@@ -183,7 +183,7 @@
                     </div>
                 @empty
                     <button
-                        onclick="Livewire.emit('modal.open', 'dealer.audit.finance.modal')"
+                        onclick="Livewire.emit('modal.open', 'dealer.audit.finance.modal', @js(['auditId' => $glbaViolationAudit->id, 'auditType' => get_class($glbaViolationAudit)]))"
                         type="button"
                         class="relative block w-full rounded-md border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2"
                     >
