@@ -15,32 +15,15 @@ use Spatie\Permission\Models\Role;
 class Create extends Component
 {
     public string $name;
-
     public string $email;
-
     public string $department;
-
     public string $departmentId;
-
     public string $role;
-
     public bool $qi = false;
-
     public array $roles = [];
-
     public array $courses = [];
-
     public array $dealers = [];
-
     public $currentStore;
-
-    public function mount(Request $request): void
-    {
-        $this->departmentId = auth()->user()->department_id ?? '';
-        $this->currentStore = $request->get('store')?->id ?? '';
-        $this->dealers[] = $request->get('store')?->id ? (string) $request->get('store')?->id : [];
-    }
-
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
@@ -49,6 +32,13 @@ class Create extends Component
         'qi' => ['nullable', 'boolean'],
         'courses' => ['nullable', 'array'],
     ];
+
+    public function mount(Request $request): void
+    {
+        $this->departmentId = auth()->user()->department_id ?? '';
+        $this->currentStore = $request->get('store')?->id ?? '';
+        $this->dealers[] = $request->get('store')?->id ? (string) $request->get('store')?->id : [];
+    }
 
     public function updated($propertyName)
     {
@@ -65,13 +55,13 @@ class Create extends Component
 
         $invite = Invite::create([
             'name' => mb_convert_case($this->name, MB_CASE_TITLE, 'UTF-8'),
-            'email' => strtolower($this->email),
+            'email' => mb_strtolower($this->email),
             'stores' => $this->dealers,
             'department_id' => $this->department,
             'user_id' => auth()->user()->id,
             'roles' => $this->roles,
             'courses' => $this->courses,
-            'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+            'invitation_token' => mb_substr(md5(rand(0, 9).$this->email.time()), 0, 32),
         ]);
 
         SendQueueEmailJob::dispatch($invite, 'invite');
@@ -82,11 +72,6 @@ class Create extends Component
 
         return redirect()->route('dealer.employees.index');
 
-    }
-
-    public function qiAvailable(): bool
-    {
-        return User::role('Qualified Individual')->count() < 3;
     }
 
     public function render()

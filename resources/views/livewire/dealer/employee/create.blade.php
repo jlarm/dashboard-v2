@@ -78,17 +78,15 @@
             </fieldset>
         </div>
     @endcan
-
-    @if($qiAvailable)
-        <div class="relative flex items-start border-y py-5">
-            <div class="flex h-6 items-center">
-                <input wire:model.defer="qi" id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
-            </div>
-            <div class="ml-3 text-sm leading-6">
-                <label for="comments" class="font-medium text-gray-900">This employee will be a Qualified Individual</label>
-            </div>
+    
+    <div class="relative flex items-start border-y py-5">
+        <div class="flex h-6 items-center">
+            <input wire:model.defer="qi" id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
         </div>
-    @endif
+        <div class="ml-3 text-sm leading-6">
+            <label for="comments" class="font-medium text-gray-900">This employee will be a Qualified Individual</label>
+        </div>
+    </div>
 
     <div class="space-y-10" x-data="{ open: false }">
         <div class="relative flex gap-x-3 bg-gray-100 p-3 rounded">
