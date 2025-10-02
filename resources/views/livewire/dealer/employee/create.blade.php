@@ -78,7 +78,7 @@
             </fieldset>
         </div>
     @endcan
-    
+
     <div class="relative flex items-start border-y py-5">
         <div class="flex h-6 items-center">
             <input wire:model.defer="qi" id="comments" aria-describedby="comments-description" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">

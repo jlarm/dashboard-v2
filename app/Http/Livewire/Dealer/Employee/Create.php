@@ -85,7 +85,6 @@ class Create extends Component
             'allRoles' => $rolesQuery->get(),
             'allCourses' => Course::select('id', 'name')->get(),
             'stores' => Store::orderBy('name')->get(),
-            'qiAvailable' => $this->qiAvailable(),
         ]);
     }
 }
