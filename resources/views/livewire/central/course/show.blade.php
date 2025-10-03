@@ -80,7 +80,6 @@
             </div>
         </div>
         @if($video && isset($video['player_embed_url']))
-            <script src="https://player.vimeo.com/api/player.js"></script>
             <script>
                 (function() {
                     const iframe = document.querySelector('iframe');
@@ -92,6 +91,7 @@
                     const videoId = '{{ $course->video_id ?? "unknown" }}';
                     let loadingTimeout;
                     let player;
+                    let scriptLoadAttempted = false;
 
                     function reportToSentry(error, context = {}) {
                         if (window.Sentry) {
@@ -172,21 +172,76 @@
                         }
                     }
 
-                    // Wait for Vimeo script to load with timeout
-                    let checkCount = 0;
-                    const maxChecks = 100; // 10 seconds (100 * 100ms)
-                    const checkInterval = setInterval(() => {
-                        checkCount++;
+                    function loadVimeoScript() {
+                        return new Promise((resolve, reject) => {
+                            // Check if already loaded
+                            if (typeof Vimeo !== 'undefined') {
+                                resolve();
+                                return;
+                            }
 
-                        if (typeof Vimeo !== 'undefined') {
-                            clearInterval(checkInterval);
+                            // Create script element
+                            const script = document.createElement('script');
+                            script.src = 'https://player.vimeo.com/api/player.js';
+                            script.async = true;
+
+                            script.onload = () => {
+                                console.log('[Vimeo] Script loaded successfully');
+                                resolve();
+                            };
+
+                            script.onerror = (error) => {
+                                console.error('[Vimeo] Script failed to load', error);
+                                const loadError = new Error('Failed to load Vimeo Player API script from CDN');
+                                reportToSentry(loadError, {
+                                    errorType: 'script_load_error',
+                                    scriptSrc: script.src,
+                                    networkError: error.toString()
+                                });
+                                reject(loadError);
+                            };
+
+                            // Set timeout for script loading
+                            const timeout = setTimeout(() => {
+                                script.onerror = null;
+                                script.onload = null;
+                                const timeoutError = new Error('Vimeo Player API script load timeout');
+                                reportToSentry(timeoutError, {
+                                    errorType: 'script_load_timeout',
+                                    scriptSrc: script.src,
+                                    timeoutDuration: SCRIPT_LOAD_TIMEOUT
+                                });
+                                reject(timeoutError);
+                            }, SCRIPT_LOAD_TIMEOUT);
+
+                            script.addEventListener('load', () => clearTimeout(timeout), { once: true });
+                            script.addEventListener('error', () => clearTimeout(timeout), { once: true });
+
+                            document.head.appendChild(script);
+                            scriptLoadAttempted = true;
+                        });
+                    }
+
+                    // Load and initialize
+                    loadVimeoScript()
+                        .then(() => {
+                            // Double-check Vimeo is available
+                            if (typeof Vimeo === 'undefined') {
+                                throw new Error('Vimeo object not available after script load');
+                            }
                             initializePlayer();
-                        } else if (checkCount >= maxChecks) {
-                            clearInterval(checkInterval);
-                            const scriptError = new Error('Vimeo Player API script load timeout');
-                            showError('Unable to load video player. Please refresh the page or check your internet connection.', scriptError, { errorType: 'script_load_timeout', checksPerformed: checkCount });
-                        }
-                    }, 100);
+                        })
+                        .catch((error) => {
+                            showError(
+                                'Unable to load video player. This may be due to a content blocker, firewall, or network restriction. Please check your browser extensions or try a different network.',
+                                error,
+                                {
+                                    errorType: 'script_load_failed',
+                                    scriptAttempted: scriptLoadAttempted,
+                                    userAgent: navigator.userAgent
+                                }
+                            );
+                        });
                 })();
             </script>
         @endif
