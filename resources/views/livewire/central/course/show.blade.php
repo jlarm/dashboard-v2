@@ -34,41 +34,132 @@
                         @endif
                     </div>
                 @endif
-                <div class="relative">
-                    <div id="video-loading" class="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
-                        <div class="flex flex-col items-center gap-3">
-                            <svg class="animate-spin h-8 w-8 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                @if($video && isset($video['player_embed_url']))
+                    <div class="relative">
+                        <div id="video-loading" class="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
+                            <div class="flex flex-col items-center gap-3">
+                                <svg class="animate-spin h-8 w-8 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <span class="text-gray-600 text-sm font-medium">Loading video...</span>
+                            </div>
+                        </div>
+                        <div id="video-error" class="hidden absolute inset-0 flex items-center justify-center bg-red-50 rounded-lg z-10">
+                            <div class="flex flex-col items-center gap-3 text-center p-6">
+                                <svg class="h-12 w-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-red-900">Unable to Load Video</h3>
+                                    <p class="text-sm text-red-700 mt-2" id="error-message">The video failed to load. Please try refreshing the page.</p>
+                                </div>
+                                <button onclick="window.location.reload()" class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium">
+                                    Refresh Page
+                                </button>
+                            </div>
+                        </div>
+                        <iframe src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] rounded-xl border"></iframe>
+                    </div>
+                @else
+                    <div class="flex items-center justify-center bg-red-50 rounded-lg p-8">
+                        <div class="flex flex-col items-center gap-3 text-center">
+                            <svg class="h-12 w-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <span class="text-gray-600 text-sm font-medium">Loading video...</span>
+                            <div>
+                                <h3 class="text-lg font-semibold text-red-900">Video Not Available</h3>
+                                <p class="text-sm text-red-700 mt-2">Unable to retrieve video information. The video may have been removed or there may be a connection issue.</p>
+                            </div>
+                            <button onclick="window.location.reload()" class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium">
+                                Refresh Page
+                            </button>
                         </div>
                     </div>
-                    <iframe src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] rounded-xl border"></iframe>
-                </div>
+                @endif
             </div>
         </div>
-        <script src="https://player.vimeo.com/api/player.js" width="640" height="360"></script>
-        <script>
-            const iframe = document.querySelector('iframe');
-            const player = new Vimeo.Player(iframe);
-            const isCompleted = {{ $this->videoCompleted() ? 'true' : 'false' }};
-            const loadingElement = document.getElementById('video-loading');
+        @if($video && isset($video['player_embed_url']))
+            <script src="https://player.vimeo.com/api/player.js" width="640" height="360"></script>
+            <script>
+                const iframe = document.querySelector('iframe');
+                const loadingElement = document.getElementById('video-loading');
+                const errorElement = document.getElementById('video-error');
+                const errorMessage = document.getElementById('error-message');
+                const LOADING_TIMEOUT = 15000; // 15 seconds
+                const videoId = '{{ $course->video_id ?? "unknown" }}';
+                let loadingTimeout;
+                let player;
 
-            player.ready().then(() => {
-                loadingElement.style.display = 'none';
+                function reportToSentry(error, context = {}) {
+                    if (window.Sentry) {
+                        Sentry.captureException(error, {
+                            tags: {
+                                video_source: 'vimeo',
+                                video_id: videoId
+                            },
+                            extra: {
+                                ...context,
+                                video_url: iframe ? iframe.src : 'unknown'
+                            }
+                        });
+                    }
+                }
 
-            });
+                function showError(message, error = null, context = {}) {
+                    console.error('[Vimeo Error]', message, error);
+                    if (loadingElement) loadingElement.style.display = 'none';
+                    if (errorElement) errorElement.classList.remove('hidden');
+                    if (errorMessage) errorMessage.textContent = message;
 
-            player.on('ended', () => {
-                Livewire.emit('markVideoCompleted');
+                    if (error) {
+                        reportToSentry(error, { errorMessage: message, ...context });
+                    }
+                }
 
-                // Reload page after completion to show progress bar
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            });
-        </script>
+                function hideLoading() {
+                    clearTimeout(loadingTimeout);
+                    if (loadingElement) loadingElement.style.display = 'none';
+                }
+
+                if (iframe) {
+                    // Set timeout for loading
+                    loadingTimeout = setTimeout(() => {
+                        const timeoutError = new Error('Vimeo video loading timeout');
+                        showError('Video is taking too long to load. This may be due to network issues or the video service being unavailable. Please check your connection and try again.', timeoutError, { errorType: 'timeout' });
+                    }, LOADING_TIMEOUT);
+
+                    try {
+                        player = new Vimeo.Player(iframe);
+
+                        player.ready()
+                            .then(() => {
+                                hideLoading();
+                                console.log('[Vimeo] Player ready');
+                            })
+                            .catch((error) => {
+                                showError('Failed to initialize video player: ' + error.message, error, { errorType: 'player_init' });
+                            });
+
+                        player.on('error', (error) => {
+                            const errorMsg = error.message || 'Unknown error';
+                            showError('Video playback error: ' + errorMsg, new Error(errorMsg), { errorType: 'playback', vimeoError: error });
+                        });
+
+                        player.on('ended', () => {
+                            Livewire.emit('markVideoCompleted');
+
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
+                        });
+
+                    } catch (error) {
+                        showError('Failed to create video player: ' + error.message, error, { errorType: 'player_creation' });
+                    }
+                }
+            </script>
+        @endif
     @else
         <div
             x-data="{

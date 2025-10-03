@@ -12,6 +12,8 @@ class VimeoService
     protected Vimeo $client;
     protected ?string $userId;
     protected int $perPage = 10;
+    protected int $maxRetries = 3;
+    protected int $retryDelayMs = 500;
 
     public function __construct()
     {
@@ -64,6 +66,10 @@ class VimeoService
         } catch (VimeoRequestException|Exception $e) {
             Log::error("Vimeo API Error: {$e->getMessage()}");
 
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($e);
+            }
+
             return null;
         }
     }
@@ -108,6 +114,10 @@ class VimeoService
         } catch (VimeoRequestException|Exception $e) {
             Log::error("Vimeo API Error: {$e->getMessage()}");
 
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($e);
+            }
+
             return [];
         }
     }
@@ -131,7 +141,16 @@ class VimeoService
                 'url' => $video['player_embed_url'],
             ];
         } catch (VimeoRequestException|Exception $e) {
-            Log::error("Vimeo API Error: {$e->getMessage()}");
+            Log::error("Vimeo API Error for video {$videoId}: {$e->getMessage()}");
+
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($e, [
+                    'extra' => [
+                        'video_id' => $videoId,
+                        'endpoint' => "/videos/{$videoId}",
+                    ],
+                ]);
+            }
 
             return null;
         }
@@ -139,12 +158,43 @@ class VimeoService
 
     private function makeRequest(string $endpoint, array $params = []): array
     {
-        try {
-            return $this->client->request($endpoint, $params, 'GET');
-        } catch (VimeoRequestException $e) {
-            Log::error("Vimeo Request Error: {$e->getMessage()}");
-            throw $e;
+        $attempt = 0;
+        $lastException = null;
+
+        while ($attempt < $this->maxRetries) {
+            try {
+                $response = $this->client->request($endpoint, $params, 'GET');
+
+                if ($attempt > 0) {
+                    Log::info('Vimeo request succeeded on attempt '.($attempt + 1)." for endpoint: {$endpoint}");
+                }
+
+                return $response;
+            } catch (VimeoRequestException $e) {
+                $lastException = $e;
+                $attempt++;
+
+                if ($attempt < $this->maxRetries) {
+                    $delay = $this->retryDelayMs * $attempt;
+                    Log::warning("Vimeo request failed (attempt {$attempt}/{$this->maxRetries}), retrying in {$delay}ms: {$e->getMessage()}");
+                    usleep($delay * 1000);
+                } else {
+                    Log::error("Vimeo request failed after {$this->maxRetries} attempts: {$e->getMessage()}");
+
+                    if (app()->bound('sentry')) {
+                        app('sentry')->captureException($e, [
+                            'extra' => [
+                                'endpoint' => $endpoint,
+                                'params' => $params,
+                                'attempts' => $this->maxRetries,
+                            ],
+                        ]);
+                    }
+                }
+            }
         }
+
+        throw $lastException;
     }
 
     private function isValidResponse(array $response): bool
