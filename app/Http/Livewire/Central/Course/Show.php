@@ -8,15 +8,14 @@ use App\Services\VimeoService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 use Livewire\Component;
-use Spatie\MediaLibrary\Conversions\ImageGenerators\Video;
 
 class Show extends Component
 {
     public Course $course;
     public ?array $slides = null;
     public ?array $video = null;
-
-    protected $listeners = ['markVideoCompleted'];
+    public bool $showSlidesFallback = false;
+    protected $listeners = ['markVideoCompleted', 'showSlidesFallback'];
 
     public function mount(): void
     {
@@ -41,6 +40,12 @@ class Show extends Component
         ]);
 
         $this->emit('refresh');
+    }
+
+    public function showSlidesFallback(): void
+    {
+        $this->showSlidesFallback = true;
+        $this->slides = collect($this->course->slides)->toArray();
     }
 
     public function videoCompleted(): bool

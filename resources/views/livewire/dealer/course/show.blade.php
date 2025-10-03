@@ -1,5 +1,5 @@
 <div>
-    @if($video)
+    @if($video && !$showSlidesFallback)
         <div class="space-y-5">
             <div class="max-w-4xl mx-auto">
                 @if ($this->quizLink())
@@ -54,9 +54,16 @@
                                     <h3 class="text-lg font-semibold text-red-900">Unable to Load Video</h3>
                                     <p class="text-sm text-red-700 mt-2" id="error-message">The video failed to load. Please try refreshing the page.</p>
                                 </div>
-                                <button onclick="window.location.reload()" class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium">
-                                    Refresh Page
-                                </button>
+                                <div class="flex gap-3 mt-4">
+                                    <button onclick="window.location.reload()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium">
+                                        Refresh Page
+                                    </button>
+                                    @if($course->slides && count($course->slides) > 0)
+                                        <button onclick="Livewire.emit('showSlidesFallback')" class="px-4 py-2 bg-arm-blue-600 hover:bg-arm-blue-700 text-white rounded-lg text-sm font-medium">
+                                            View Slides Instead
+                                        </button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <iframe src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] rounded-xl border"></iframe>
@@ -176,6 +183,7 @@
                         return new Promise((resolve, reject) => {
                             // Check if already loaded
                             if (typeof Vimeo !== 'undefined') {
+                                console.log('[Vimeo] Script already loaded');
                                 resolve();
                                 return;
                             }
@@ -186,8 +194,26 @@
                             script.async = true;
 
                             script.onload = () => {
-                                console.log('[Vimeo] Script loaded successfully');
-                                resolve();
+                                console.log('[Vimeo] Script onload fired');
+
+                                // Wait a bit for Vimeo to initialize
+                                setTimeout(() => {
+                                    if (typeof Vimeo !== 'undefined') {
+                                        console.log('[Vimeo] Script loaded and Vimeo object available');
+                                        resolve();
+                                    } else {
+                                        console.error('[Vimeo] Script loaded but Vimeo object not available');
+                                        const vimeoUndefinedError = new Error('Vimeo object undefined after script load');
+                                        reportToSentry(vimeoUndefinedError, {
+                                            errorType: 'vimeo_object_undefined',
+                                            scriptSrc: script.src,
+                                            windowVimeo: typeof window.Vimeo,
+                                            globalVimeo: typeof Vimeo,
+                                            windowKeys: Object.keys(window).filter(k => k.toLowerCase().includes('vimeo'))
+                                        });
+                                        reject(vimeoUndefinedError);
+                                    }
+                                }, 100);
                             };
 
                             script.onerror = (error) => {
@@ -196,7 +222,8 @@
                                 reportToSentry(loadError, {
                                     errorType: 'script_load_error',
                                     scriptSrc: script.src,
-                                    networkError: error.toString()
+                                    networkError: error.toString(),
+                                    errorType_detail: error.type || 'unknown'
                                 });
                                 reject(loadError);
                             };
@@ -205,11 +232,14 @@
                             const timeout = setTimeout(() => {
                                 script.onerror = null;
                                 script.onload = null;
+                                console.error('[Vimeo] Script load timeout');
                                 const timeoutError = new Error('Vimeo Player API script load timeout');
                                 reportToSentry(timeoutError, {
                                     errorType: 'script_load_timeout',
                                     scriptSrc: script.src,
-                                    timeoutDuration: SCRIPT_LOAD_TIMEOUT
+                                    timeoutDuration: SCRIPT_LOAD_TIMEOUT,
+                                    scriptInDom: document.head.contains(script),
+                                    scriptReadyState: script.readyState
                                 });
                                 reject(timeoutError);
                             }, SCRIPT_LOAD_TIMEOUT);
@@ -217,28 +247,39 @@
                             script.addEventListener('load', () => clearTimeout(timeout), { once: true });
                             script.addEventListener('error', () => clearTimeout(timeout), { once: true });
 
+                            console.log('[Vimeo] Attempting to load script from:', script.src);
                             document.head.appendChild(script);
                             scriptLoadAttempted = true;
                         });
                     }
 
                     // Load and initialize
+                    console.log('[Vimeo] Starting video player initialization');
                     loadVimeoScript()
                         .then(() => {
+                            console.log('[Vimeo] Script load promise resolved');
                             // Double-check Vimeo is available
                             if (typeof Vimeo === 'undefined') {
-                                throw new Error('Vimeo object not available after script load');
+                                const error = new Error('Vimeo object not available after script load');
+                                reportToSentry(error, {
+                                    errorType: 'vimeo_still_undefined',
+                                    windowVimeo: typeof window.Vimeo
+                                });
+                                throw error;
                             }
                             initializePlayer();
                         })
                         .catch((error) => {
+                            console.error('[Vimeo] Error during initialization:', error);
                             showError(
                                 'Unable to load video player. This may be due to a content blocker, firewall, or network restriction. Please check your browser extensions or try a different network.',
                                 error,
                                 {
                                     errorType: 'script_load_failed',
                                     scriptAttempted: scriptLoadAttempted,
-                                    userAgent: navigator.userAgent
+                                    userAgent: navigator.userAgent,
+                                    errorMessage: error.message,
+                                    errorStack: error.stack
                                 }
                             );
                         });
