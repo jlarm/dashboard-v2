@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Exception;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Vimeo\Exceptions\VimeoRequestException;
 use Vimeo\Vimeo;
@@ -12,13 +11,7 @@ class VimeoService
 {
     protected Vimeo $client;
     protected ?string $userId;
-    protected int $cacheTtl = 3600;
     protected int $perPage = 10;
-
-    private const CACHE_KEY_VIDEOS = 'vimeo_videos';
-    private const CACHE_KEY_CATEGORIES = 'vimeo_categories';
-    private const CACHE_KEY_TOTAL_VIDEOS = 'vimeo_total_videos';
-    private const CACHE_KEY_VIDEO_PREFIX = 'vimeo_video_';
 
     public function __construct()
     {
@@ -37,11 +30,22 @@ class VimeoService
             return $this->makeRequest('/me/videos', ['per_page' => $this->perPage]);
         }
 
-        return Cache::store('redis')->remember(
-            self::CACHE_KEY_VIDEOS,
-            $this->cacheTtl,
-            fn () => $this->fetchAndTransformVideos()
-        );
+        return $this->fetchAndTransformVideos() ?? [];
+    }
+
+    public function getCategories(): array
+    {
+        return $this->fetchCategories();
+    }
+
+    public function getVideo(string $videoId): ?array
+    {
+        return $this->fetchVideo($videoId);
+    }
+
+    public function totalVideos(): int
+    {
+        return count($this->getVideos());
     }
 
     private function fetchAndTransformVideos(): ?array
@@ -59,6 +63,7 @@ class VimeoService
             );
         } catch (VimeoRequestException|Exception $e) {
             Log::error("Vimeo API Error: {$e->getMessage()}");
+
             return null;
         }
     }
@@ -85,15 +90,6 @@ class VimeoService
         return end($video['pictures']['sizes'])['link'];
     }
 
-    public function getCategories(): array
-    {
-        return Cache::store('redis')->remember(
-            self::CACHE_KEY_CATEGORIES,
-            $this->cacheTtl,
-            fn () => $this->fetchCategories()
-        );
-    }
-
     private function fetchCategories(): array
     {
         try {
@@ -111,17 +107,9 @@ class VimeoService
             return array_values(array_unique(array_filter($categories)));
         } catch (VimeoRequestException|Exception $e) {
             Log::error("Vimeo API Error: {$e->getMessage()}");
+
             return [];
         }
-    }
-
-    public function getVideo(string $videoId): ?array
-    {
-        return Cache::store('redis')->remember(
-            self::CACHE_KEY_VIDEO_PREFIX . $videoId,
-            $this->cacheTtl,
-            fn () => $this->fetchVideo($videoId)
-        );
     }
 
     private function fetchVideo(string $videoId): ?array
@@ -144,35 +132,9 @@ class VimeoService
             ];
         } catch (VimeoRequestException|Exception $e) {
             Log::error("Vimeo API Error: {$e->getMessage()}");
+
             return null;
         }
-    }
-
-    public function totalVideos(): int
-    {
-        return Cache::store('redis')->remember(
-            self::CACHE_KEY_TOTAL_VIDEOS,
-            $this->cacheTtl,
-            fn () => count($this->getVideos() ?? [])
-        );
-    }
-
-    public function clearCache(): void
-    {
-        $keys = [
-            self::CACHE_KEY_VIDEOS,
-            self::CACHE_KEY_CATEGORIES,
-            self::CACHE_KEY_TOTAL_VIDEOS,
-        ];
-
-        foreach ($keys as $key) {
-            Cache::store('redis')->forget($key);
-        }
-    }
-
-    public function clearVideoCache(string $videoId): void
-    {
-        Cache::store('redis')->forget(self::CACHE_KEY_VIDEO_PREFIX . $videoId);
     }
 
     private function makeRequest(string $endpoint, array $params = []): array
