@@ -27,6 +27,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
+            ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
             ->patch('/profile', [
                 'name' => 'Test User',
                 'email' => 'test@example.com',
@@ -49,6 +50,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
+            ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
             ->patch('/profile', [
                 'name' => 'Test User',
                 'email' => $user->email,
@@ -67,6 +69,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
+            ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
             ->from('/profile')
             ->delete('/profile', [
                 'password' => 'wrong-password',

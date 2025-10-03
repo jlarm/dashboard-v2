@@ -17,6 +17,7 @@ class PasswordUpdateTest extends TestCase
 
         $response = $this
             ->actingAs($user)
+            ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
             ->from('/profile')
             ->put('/password', [
                 'current_password' => 'password',
@@ -37,6 +38,7 @@ class PasswordUpdateTest extends TestCase
 
         $response = $this
             ->actingAs($user)
+            ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
             ->from('/profile')
             ->put('/password', [
                 'current_password' => 'wrong-password',

@@ -24,7 +24,7 @@ class UserFactory extends Factory
             'email' => 'jdoe@email.com',
             'phone' => '9876543211',
             'email_verified_at' => now(),
-            'password' => 'password',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
 
@@ -33,7 +33,10 @@ class UserFactory extends Factory
     public function configure(): Factory|UserFactory
     {
         return $this->afterCreating(function (User $user) {
-            $user->assignRole('super-admin');
+            // Only assign role if roles exist (not during tenant isolation tests)
+            if (\Spatie\Permission\Models\Role::where('name', 'super-admin')->exists()) {
+                $user->assignRole('super-admin');
+            }
         });
     }
 
