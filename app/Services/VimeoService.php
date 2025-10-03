@@ -50,6 +50,43 @@ class VimeoService
         return count($this->getVideos());
     }
 
+    public function getVideoPrivacySettings(string $videoId): ?array
+    {
+        try {
+            $response = $this->makeRequest("/videos/{$videoId}");
+
+            if (! isset($response['body']) || isset($response['body']['error'])) {
+                return null;
+            }
+
+            $video = $response['body'];
+
+            return [
+                'video_id' => $videoId,
+                'privacy_view' => $video['privacy']['view'] ?? 'unknown',
+                'privacy_embed' => $video['privacy']['embed'] ?? 'unknown',
+                'embed_domains' => $video['privacy']['embed_domains'] ?? [],
+                'privacy_download' => $video['privacy']['download'] ?? false,
+                'password' => isset($video['password']) && ! empty($video['password']),
+                'status' => $video['status'] ?? 'unknown',
+                'is_playable' => ($video['status'] ?? '') === 'available',
+            ];
+        } catch (VimeoRequestException|Exception $e) {
+            Log::error("Vimeo API Error checking privacy for video {$videoId}: {$e->getMessage()}");
+
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($e, [
+                    'extra' => [
+                        'video_id' => $videoId,
+                        'action' => 'privacy_check',
+                    ],
+                ]);
+            }
+
+            return null;
+        }
+    }
+
     private function fetchAndTransformVideos(): ?array
     {
         try {
@@ -139,6 +176,9 @@ class VimeoService
                 'title' => $video['name'] ?? 'Untitled',
                 'duration' => $video['duration'] ?? 0,
                 'url' => $video['player_embed_url'],
+                'status' => $video['status'] ?? 'unknown',
+                'privacy_view' => $video['privacy']['view'] ?? null,
+                'privacy_embed' => $video['privacy']['embed'] ?? null,
             ];
         } catch (VimeoRequestException|Exception $e) {
             Log::error("Vimeo API Error for video {$videoId}: {$e->getMessage()}");

@@ -15,7 +15,8 @@ class Show extends Component
     public ?array $slides = null;
     public ?array $video = null;
     public bool $showSlidesFallback = false;
-    protected $listeners = ['markVideoCompleted', 'showSlidesFallback'];
+    public int $videoRetryCount = 0;
+    protected $listeners = ['markVideoCompleted', 'showSlidesFallback', 'retryVideoLoad'];
 
     public function mount(): void
     {
@@ -46,6 +47,19 @@ class Show extends Component
     {
         $this->showSlidesFallback = true;
         $this->slides = collect($this->course->slides)->toArray();
+    }
+
+    public function retryVideoLoad(): void
+    {
+        $this->videoRetryCount++;
+
+        // Refresh video data from Vimeo (gets fresh privacy hash)
+        $this->video = $this->getVimeoVideo();
+
+        if (! $this->video) {
+            // If still failing, force slides fallback
+            $this->showSlidesFallback();
+        }
     }
 
     public function videoCompleted(): bool
