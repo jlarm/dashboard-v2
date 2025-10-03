@@ -163,7 +163,23 @@
 
                             player.on('error', (error) => {
                                 const errorMsg = error.message || 'Unknown error';
-                                showError('Video playback error: ' + errorMsg, new Error(errorMsg), { errorType: 'playback', vimeoError: error });
+                                const errorName = error.name || 'VimeoError';
+
+                                // Check if slides are available as fallback
+                                const hasSlides = {{ $course->slides && count($course->slides) > 0 ? 'true' : 'false' }};
+
+                                let userMessage = 'Video playback error: ' + errorMsg;
+                                if (hasSlides) {
+                                    userMessage += ' You can view the slides instead by clicking the button below.';
+                                }
+
+                                showError(userMessage, new Error(errorMsg), {
+                                    errorType: 'playback',
+                                    vimeoError: error,
+                                    vimeoErrorName: errorName,
+                                    vimeoErrorMethod: error.method || 'unknown',
+                                    hasSlidesFallback: hasSlides
+                                });
                             });
 
                             player.on('ended', () => {
