@@ -80,84 +80,114 @@
             </div>
         </div>
         @if($video && isset($video['player_embed_url']))
-            <script src="https://player.vimeo.com/api/player.js" width="640" height="360"></script>
+            <script src="https://player.vimeo.com/api/player.js"></script>
             <script>
-                const iframe = document.querySelector('iframe');
-                const loadingElement = document.getElementById('video-loading');
-                const errorElement = document.getElementById('video-error');
-                const errorMessage = document.getElementById('error-message');
-                const LOADING_TIMEOUT = 15000; // 15 seconds
-                const videoId = '{{ $course->video_id ?? "unknown" }}';
-                let loadingTimeout;
-                let player;
+                (function() {
+                    const iframe = document.querySelector('iframe');
+                    const loadingElement = document.getElementById('video-loading');
+                    const errorElement = document.getElementById('video-error');
+                    const errorMessage = document.getElementById('error-message');
+                    const LOADING_TIMEOUT = 15000; // 15 seconds
+                    const SCRIPT_LOAD_TIMEOUT = 10000; // 10 seconds to load Vimeo script
+                    const videoId = '{{ $course->video_id ?? "unknown" }}';
+                    let loadingTimeout;
+                    let player;
 
-                function reportToSentry(error, context = {}) {
-                    if (window.Sentry) {
-                        Sentry.captureException(error, {
-                            tags: {
-                                video_source: 'vimeo',
-                                video_id: videoId
-                            },
-                            extra: {
-                                ...context,
-                                video_url: iframe ? iframe.src : 'unknown'
-                            }
-                        });
+                    function reportToSentry(error, context = {}) {
+                        if (window.Sentry) {
+                            Sentry.captureException(error, {
+                                tags: {
+                                    video_source: 'vimeo',
+                                    video_id: videoId
+                                },
+                                extra: {
+                                    ...context,
+                                    video_url: iframe ? iframe.src : 'unknown'
+                                }
+                            });
+                        }
                     }
-                }
 
-                function showError(message, error = null, context = {}) {
-                    console.error('[Vimeo Error]', message, error);
-                    if (loadingElement) loadingElement.style.display = 'none';
-                    if (errorElement) errorElement.classList.remove('hidden');
-                    if (errorMessage) errorMessage.textContent = message;
+                    function showError(message, error = null, context = {}) {
+                        console.error('[Vimeo Error]', message, error);
+                        if (loadingElement) loadingElement.style.display = 'none';
+                        if (errorElement) errorElement.classList.remove('hidden');
+                        if (errorMessage) errorMessage.textContent = message;
 
-                    if (error) {
-                        reportToSentry(error, { errorMessage: message, ...context });
+                        if (error) {
+                            reportToSentry(error, { errorMessage: message, ...context });
+                        }
                     }
-                }
 
-                function hideLoading() {
-                    clearTimeout(loadingTimeout);
-                    if (loadingElement) loadingElement.style.display = 'none';
-                }
+                    function hideLoading() {
+                        clearTimeout(loadingTimeout);
+                        if (loadingElement) loadingElement.style.display = 'none';
+                    }
 
-                if (iframe) {
-                    // Set timeout for loading
-                    loadingTimeout = setTimeout(() => {
-                        const timeoutError = new Error('Vimeo video loading timeout');
-                        showError('Video is taking too long to load. This may be due to network issues or the video service being unavailable. Please check your connection and try again.', timeoutError, { errorType: 'timeout' });
-                    }, LOADING_TIMEOUT);
+                    function initializePlayer() {
+                        if (!iframe) {
+                            console.error('[Vimeo] No iframe found');
+                            return;
+                        }
 
-                    try {
-                        player = new Vimeo.Player(iframe);
+                        if (typeof Vimeo === 'undefined') {
+                            const scriptError = new Error('Vimeo Player API script failed to load');
+                            showError('Unable to load video player. Please refresh the page or check your internet connection.', scriptError, { errorType: 'script_load_failure' });
+                            return;
+                        }
 
-                        player.ready()
-                            .then(() => {
-                                hideLoading();
-                                console.log('[Vimeo] Player ready');
-                            })
-                            .catch((error) => {
-                                showError('Failed to initialize video player: ' + error.message, error, { errorType: 'player_init' });
+                        // Set timeout for player loading
+                        loadingTimeout = setTimeout(() => {
+                            const timeoutError = new Error('Vimeo video loading timeout');
+                            showError('Video is taking too long to load. This may be due to network issues or the video service being unavailable. Please check your connection and try again.', timeoutError, { errorType: 'timeout' });
+                        }, LOADING_TIMEOUT);
+
+                        try {
+                            player = new Vimeo.Player(iframe);
+
+                            player.ready()
+                                .then(() => {
+                                    hideLoading();
+                                    console.log('[Vimeo] Player ready');
+                                })
+                                .catch((error) => {
+                                    showError('Failed to initialize video player: ' + error.message, error, { errorType: 'player_init' });
+                                });
+
+                            player.on('error', (error) => {
+                                const errorMsg = error.message || 'Unknown error';
+                                showError('Video playback error: ' + errorMsg, new Error(errorMsg), { errorType: 'playback', vimeoError: error });
                             });
 
-                        player.on('error', (error) => {
-                            const errorMsg = error.message || 'Unknown error';
-                            showError('Video playback error: ' + errorMsg, new Error(errorMsg), { errorType: 'playback', vimeoError: error });
-                        });
+                            player.on('ended', () => {
+                                Livewire.emit('markVideoCompleted');
 
-                        player.on('ended', () => {
-                            Livewire.emit('markVideoCompleted');
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1000);
+                            });
 
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 1000);
-                        });
-
-                    } catch (error) {
-                        showError('Failed to create video player: ' + error.message, error, { errorType: 'player_creation' });
+                        } catch (error) {
+                            showError('Failed to create video player: ' + error.message, error, { errorType: 'player_creation' });
+                        }
                     }
-                }
+
+                    // Wait for Vimeo script to load with timeout
+                    let checkCount = 0;
+                    const maxChecks = 100; // 10 seconds (100 * 100ms)
+                    const checkInterval = setInterval(() => {
+                        checkCount++;
+
+                        if (typeof Vimeo !== 'undefined') {
+                            clearInterval(checkInterval);
+                            initializePlayer();
+                        } else if (checkCount >= maxChecks) {
+                            clearInterval(checkInterval);
+                            const scriptError = new Error('Vimeo Player API script load timeout');
+                            showError('Unable to load video player. Please refresh the page or check your internet connection.', scriptError, { errorType: 'script_load_timeout', checksPerformed: checkCount });
+                        }
+                    }, 100);
+                })();
             </script>
         @endif
     @else
