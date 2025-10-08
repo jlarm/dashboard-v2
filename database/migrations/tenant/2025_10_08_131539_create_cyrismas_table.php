@@ -12,10 +12,8 @@ return new class extends Migration {
     {
         Schema::create('cyrismas', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Store::class)->constrained()->cascadeOnDelete();
-            $table->string('short_name');
-            $table->text('instance_id');
-            $table->text('instance_url')->nullable();
+            $table->foreignIdFor(Store::class);
+            $table->string('instance_id');
             $table->timestamps();
         });
     }
