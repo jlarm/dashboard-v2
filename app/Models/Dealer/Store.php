@@ -95,7 +95,6 @@ class Store extends Model implements HasMedia
         'frequency',
         'videos',
     ];
-
     protected $casts = [
         'ip_addresses' => 'array',
         'website_urls' => 'array',
@@ -117,27 +116,6 @@ class Store extends Model implements HasMedia
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
-    }
-
-    private function calculateGrade(array $grades): ?string
-    {
-        if (count($grades) === 0) {
-            return null;
-        }
-
-        $grade = round(array_sum($grades) / count($grades));
-
-        if ($grade >= 90) {
-            return 'A';
-        } elseif ($grade >= 80) {
-            return 'B';
-        } elseif ($grade >= 70) {
-            return 'C';
-        } elseif ($grade >= 60) {
-            return 'D';
-        } else {
-            return 'F';
-        }
     }
 
     public function getPhoneNumberAttribute(): string
@@ -287,8 +265,38 @@ class Store extends Model implements HasMedia
         return $this->hasOne(RemediationSetting::class);
     }
 
+    public function cyrisma(): HasOne
+    {
+        return $this->hasOne(Cyrisma::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    private function calculateGrade(array $grades): ?string
+    {
+        if (count($grades) === 0) {
+            return null;
+        }
+
+        $grade = round(array_sum($grades) / count($grades));
+
+        if ($grade >= 90) {
+            return 'A';
+        }
+        if ($grade >= 80) {
+            return 'B';
+        }
+        if ($grade >= 70) {
+            return 'C';
+        }
+        if ($grade >= 60) {
+            return 'D';
+        }
+
+        return 'F';
+
     }
 }
