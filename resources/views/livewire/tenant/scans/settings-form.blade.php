@@ -30,8 +30,6 @@
                   </span>
             </x-primary-button>
 
-            <x-button.secondary :href="route('dealer.cyrisma.index')">Cancel</x-button.secondary>
-
             {{-- Loading Spinner --}}
             <div wire:loading wire:target="save" class="flex items-center text-gray-600">
                 <svg class="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
