@@ -156,6 +156,9 @@ Route::name('dealer.')->middleware([
 
         Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
 
+        Route::get('cyrisma', [App\Http\Controllers\Tenant\CyrismaController::class, 'index'])->name('cyrisma.index');
+        Route::get('cyrisma/settings', [App\Http\Controllers\Tenant\CyrismaController::class, 'settings'])->name('cyrisma.settings');
+
     });
 
     // **************************************************

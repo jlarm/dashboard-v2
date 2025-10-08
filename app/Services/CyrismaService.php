@@ -57,7 +57,7 @@ class CyrismaService
                 $data = $response->json();
                 $this->accessToken = $data['access_token'];
 
-                Cache::puty($cacheKey, $this->accessToken, now()->addMinutes(9));
+                Cache::put($cacheKey, $this->accessToken, now()->addMinutes(9));
 
                 return $this->accessToken;
             }
@@ -164,6 +164,17 @@ class CyrismaService
 
             return null;
         }
+    }
+
+    public function findInstanceByShortName(string $shortName): ?array
+    {
+        $instances = $this->getAllInstances();
+
+        if (! $instances) {
+            return null;
+        }
+
+        return collect($instances)->firstWhere('short_name', $shortName);
     }
 
     public function getDataScans(): ?array
