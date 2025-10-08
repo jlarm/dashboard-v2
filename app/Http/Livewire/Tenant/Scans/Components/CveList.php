@@ -1,0 +1,67 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Livewire\Tenant\Scans\Components;
+
+use App\Services\CyrismaService;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
+use Livewire\Component;
+
+class CveList extends Component
+{
+    public array $cveItems = [];
+
+    public int $perPage = 10;
+
+    public int $currentPage = 1;
+
+    public function mount(): void
+    {
+        $store = \App\Models\Dealer\Store::find(app('currentStore'));
+
+        if ($store) {
+            $cyrisma = app(CyrismaService::class)->forStore($store);
+            $data = $cyrisma->getCveDetails();
+            $this->cveItems = isset($data['cve_items']) ? array_slice($data['cve_items'], 1) : [];
+        }
+    }
+
+    public function nextPage(): void
+    {
+        $this->currentPage++;
+    }
+
+    public function previousPage(): void
+    {
+        if ($this->currentPage > 1) {
+            $this->currentPage--;
+        }
+    }
+
+    public function gotoPage($page): void
+    {
+        $this->currentPage = max(1, (int) $page);
+    }
+
+    public function resetToFirstPage(): void
+    {
+        $this->currentPage = 1;
+    }
+
+    public function render(): View
+    {
+        $total = count($this->cveItems);
+        $offset = ($this->currentPage - 1) * $this->perPage;
+        $paginatedItems = array_slice($this->cveItems, $offset, $this->perPage);
+        $totalPages = (int) ceil($total / $this->perPage);
+
+        return view('livewire.tenant.scans.components.cve-list', [
+            'cves' => $paginatedItems,
+            'currentPage' => $this->currentPage,
+            'totalPages' => $totalPages,
+            'total' => $total,
+        ]);
+    }
+}

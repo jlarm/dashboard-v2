@@ -84,8 +84,8 @@ class CyrismaService
         }
 
         $url = $instanceId
-            ? "{$this->baseUrl}/partner/instances/login/}{$instanceId}}"
-            : "{$this->baseUrl}/partner/instances/login/}";
+            ? "{$this->baseUrl}/partner/instances/login/{$instanceId}"
+            : "{$this->baseUrl}/partner/instances/login/";
 
         try {
             $response = $this->authorizedRequest()->post($url);
