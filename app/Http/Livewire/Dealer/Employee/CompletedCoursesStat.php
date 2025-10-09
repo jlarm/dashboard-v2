@@ -66,19 +66,27 @@ class CompletedCoursesStat extends Component
 
     protected function getIncompleteCount(): int
     {
-        return $this->users()
-            ->filter(fn ($user) => $user->user_has_not_completed_courses)
-            ->count();
+        $cacheKey = 'incomplete_count_'.$this->formattedName.'_'.($this->store?->id ?? 'all').'_'.($this->department ?? 'all');
+
+        return Cache::remember($cacheKey, now()->addHour(), function () {
+            return $this->users()
+                ->filter(fn ($user) => $user->user_has_not_completed_courses)
+                ->count();
+        });
     }
 
     protected function users()
     {
-        $query = $this->buildBaseQuery();
+        $cacheKey = 'users_list_'.$this->formattedName.'_'.($this->store?->id ?? 'all').'_'.($this->department ?? 'all');
 
-        return $query->with(['results' => function ($query) {
-            $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
-                ->whereNull('deleted_at');
-        }, 'roles:id'])->get();
+        return Cache::remember($cacheKey, now()->addHour(), function () {
+            $query = $this->buildBaseQuery();
+
+            return $query->with(['results' => function ($query) {
+                $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
+                    ->whereNull('deleted_at');
+            }, 'roles:id'])->get();
+        });
     }
 
     protected function buildBaseQuery()
