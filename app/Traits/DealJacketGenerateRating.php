@@ -11,7 +11,8 @@ trait DealJacketGenerateRating
 
     public function rating()
     {
-        $this->audits = cache()->remember('individual_stats', 60 * 60 * 24, fn () => IndividualAudit::all());
+        $this->audits = IndividualAudit::all();
+
         $this->audits->filter(function ($value) {
             for ($i = 1; $i <= 43; $i++) {
                 if ($value->{'individual_q'.$i.'_answer'} === 2) {
