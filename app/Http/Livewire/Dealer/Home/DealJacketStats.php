@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Home;
 
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -20,7 +21,11 @@ class DealJacketStats extends Component
     {
         $this->store = $this->store ?? Store::first();
 
-        $this->rating = IndividualAudit::where('store_id', $this->store->id)->pluck('rating')->average();
+        $this->rating = Cache::remember(
+            'deal_jacket_rating_'.$this->store->id,
+            now()->addHour(),
+            fn () => IndividualAudit::where('store_id', $this->store->id)->avg('rating')
+        );
     }
 
     public function rating(): string

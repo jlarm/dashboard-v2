@@ -7,6 +7,7 @@ use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\GlbaGenerateRating;
 use App\Traits\HasAuditStats;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class GlbaStats extends Component
@@ -69,19 +70,25 @@ class GlbaStats extends Component
             return $this->cachedGrades;
         }
 
-        $grades = GlbaViolationAudit::query()
-            ->where('store_id', $this->store->id)
-            ->whereNotNull('grade')
-            ->where('grade', '!=', 'N/A')
-            ->pluck('grade')
-            ->toArray();
+        $this->cachedGrades = Cache::remember(
+            'glba_grades_'.$this->store->id,
+            now()->addHour(),
+            function () {
+                $grades = GlbaViolationAudit::query()
+                    ->where('store_id', $this->store->id)
+                    ->whereNotNull('grade')
+                    ->where('grade', '!=', 'N/A')
+                    ->pluck('grade')
+                    ->toArray();
 
-        $convertedGrade = $this->convertRatingToGrade();
-        if ($convertedGrade !== null) {
-            $grades[] = $convertedGrade;
-        }
+                $convertedGrade = $this->convertRatingToGrade();
+                if ($convertedGrade !== null) {
+                    $grades[] = $convertedGrade;
+                }
 
-        $this->cachedGrades = $grades;
+                return $grades;
+            }
+        );
 
         return $this->cachedGrades;
     }

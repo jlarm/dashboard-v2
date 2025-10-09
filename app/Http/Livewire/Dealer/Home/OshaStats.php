@@ -7,6 +7,7 @@ use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\HasAuditStats;
 use App\Traits\OshaGenerateRating;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class OshaStats extends Component
@@ -69,19 +70,25 @@ class OshaStats extends Component
             return $this->cachedGrades;
         }
 
-        $grades = OshaViolationAudit::query()
-            ->where('store_id', $this->store->id)
-            ->whereNotNull('grade')
-            ->where('grade', '!=', 'N/A')
-            ->pluck('grade')
-            ->toArray();
+        $this->cachedGrades = Cache::remember(
+            'osha_grades_'.$this->store->id,
+            now()->addHour(),
+            function () {
+                $grades = OshaViolationAudit::query()
+                    ->where('store_id', $this->store->id)
+                    ->whereNotNull('grade')
+                    ->where('grade', '!=', 'N/A')
+                    ->pluck('grade')
+                    ->toArray();
 
-        $convertedGrade = $this->convertRatingToGrade();
-        if ($convertedGrade !== null) {
-            $grades[] = $convertedGrade;
-        }
+                $convertedGrade = $this->convertRatingToGrade();
+                if ($convertedGrade !== null) {
+                    $grades[] = $convertedGrade;
+                }
 
-        $this->cachedGrades = $grades;
+                return $grades;
+            }
+        );
 
         return $this->cachedGrades;
     }

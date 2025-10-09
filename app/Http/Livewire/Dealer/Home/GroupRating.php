@@ -6,6 +6,7 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class GroupRating extends Component
@@ -63,10 +64,29 @@ class GroupRating extends Component
 
     private function loadGrades(): void
     {
-        $this->dealJacketGrades = $this->getGradesFromAudit(IndividualAudit::class, 'rating');
-        $this->glbaGrades = $this->getGradesFromAudit(GlbaViolationAudit::class, 'grade');
-        $this->oshaGrades = $this->getGradesFromAudit(OshaViolationAudit::class, 'grade');
-        $this->bodyShopGrades = $this->getGradesFromAudit(BodyShopViolationAudit::class, 'grade');
+        $this->dealJacketGrades = Cache::remember(
+            'group_deal_jacket_grades',
+            now()->addHour(),
+            fn () => $this->getGradesFromAudit(IndividualAudit::class, 'rating')
+        );
+
+        $this->glbaGrades = Cache::remember(
+            'group_glba_grades',
+            now()->addHour(),
+            fn () => $this->getGradesFromAudit(GlbaViolationAudit::class, 'grade')
+        );
+
+        $this->oshaGrades = Cache::remember(
+            'group_osha_grades',
+            now()->addHour(),
+            fn () => $this->getGradesFromAudit(OshaViolationAudit::class, 'grade')
+        );
+
+        $this->bodyShopGrades = Cache::remember(
+            'group_body_shop_grades',
+            now()->addHour(),
+            fn () => $this->getGradesFromAudit(BodyShopViolationAudit::class, 'grade')
+        );
 
         $this->grades = array_merge(
             $this->dealJacketGrades,
