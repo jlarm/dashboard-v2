@@ -11,7 +11,7 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $this->clearUserCache();
+        //
     }
 
     /**
@@ -19,7 +19,7 @@ class UserObserver
      */
     public function updated(User $user): void
     {
-        $this->clearUserCache();
+        //
     }
 
     /**
@@ -27,7 +27,7 @@ class UserObserver
      */
     public function deleted(User $user): void
     {
-        $this->clearUserCache();
+        //
     }
 
     /**
@@ -35,7 +35,7 @@ class UserObserver
      */
     public function restored(User $user): void
     {
-        $this->clearUserCache();
+        //
     }
 
     /**
@@ -43,14 +43,6 @@ class UserObserver
      */
     public function forceDeleted(User $user): void
     {
-        $this->clearUserCache();
-    }
-
-    /**
-     * Clear user-related cache entries with tenant isolation.
-     */
-    protected function clearUserCache(): void
-    {
-        tenant_cache_forget('user_index');
+        //
     }
 }
