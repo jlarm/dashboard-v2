@@ -20,11 +20,7 @@ class DealJacketStats extends Component
     {
         $this->store = $this->store ?? Store::first();
 
-        $this->rating = tenant_cache_remember(
-            'deal_jacket_rating_'.$this->store->id,
-            now()->addHour(),
-            fn () => IndividualAudit::where('store_id', $this->store->id)->avg('rating')
-        );
+        $this->rating = IndividualAudit::where('store_id', $this->store->id)->avg('rating');
     }
 
     public function rating(): string

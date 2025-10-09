@@ -69,25 +69,19 @@ class OshaStats extends Component
             return $this->cachedGrades;
         }
 
-        $this->cachedGrades = tenant_cache_remember(
-            'osha_grades_'.$this->store->id,
-            now()->addHour(),
-            function () {
-                $grades = OshaViolationAudit::query()
-                    ->where('store_id', $this->store->id)
-                    ->whereNotNull('grade')
-                    ->where('grade', '!=', 'N/A')
-                    ->pluck('grade')
-                    ->toArray();
+        $grades = OshaViolationAudit::query()
+            ->where('store_id', $this->store->id)
+            ->whereNotNull('grade')
+            ->where('grade', '!=', 'N/A')
+            ->pluck('grade')
+            ->toArray();
 
-                $convertedGrade = $this->convertRatingToGrade();
-                if ($convertedGrade !== null) {
-                    $grades[] = $convertedGrade;
-                }
+        $convertedGrade = $this->convertRatingToGrade();
+        if ($convertedGrade !== null) {
+            $grades[] = $convertedGrade;
+        }
 
-                return $grades;
-            }
-        );
+        $this->cachedGrades = $grades;
 
         return $this->cachedGrades;
     }

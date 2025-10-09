@@ -63,29 +63,10 @@ class GroupRating extends Component
 
     private function loadGrades(): void
     {
-        $this->dealJacketGrades = tenant_cache_remember(
-            'group_deal_jacket_grades',
-            now()->addHour(),
-            fn () => $this->getGradesFromAudit(IndividualAudit::class, 'rating')
-        );
-
-        $this->glbaGrades = tenant_cache_remember(
-            'group_glba_grades',
-            now()->addHour(),
-            fn () => $this->getGradesFromAudit(GlbaViolationAudit::class, 'grade')
-        );
-
-        $this->oshaGrades = tenant_cache_remember(
-            'group_osha_grades',
-            now()->addHour(),
-            fn () => $this->getGradesFromAudit(OshaViolationAudit::class, 'grade')
-        );
-
-        $this->bodyShopGrades = tenant_cache_remember(
-            'group_body_shop_grades',
-            now()->addHour(),
-            fn () => $this->getGradesFromAudit(BodyShopViolationAudit::class, 'grade')
-        );
+        $this->dealJacketGrades = $this->getGradesFromAudit(IndividualAudit::class, 'rating');
+        $this->glbaGrades = $this->getGradesFromAudit(GlbaViolationAudit::class, 'grade');
+        $this->oshaGrades = $this->getGradesFromAudit(OshaViolationAudit::class, 'grade');
+        $this->bodyShopGrades = $this->getGradesFromAudit(BodyShopViolationAudit::class, 'grade');
 
         $this->grades = array_merge(
             $this->dealJacketGrades,
