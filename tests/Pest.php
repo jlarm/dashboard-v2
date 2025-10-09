@@ -11,11 +11,13 @@
 |
 */
 
+use App\Models\Dealership;
 use App\Models\User;
+use Database\Seeders\RoleAndPermissionSeeder;
 use Tests\TestCase;
 
 uses(
-    Tests\TestCase::class,
+    TestCase::class,
     Illuminate\Foundation\Testing\RefreshDatabase::class,
 )->in('Feature');
 
@@ -30,9 +32,7 @@ uses(
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
+expect()->extend('toBeOne', fn () => $this->toBe(1));
 
 /*
 |--------------------------------------------------------------------------
@@ -61,4 +61,95 @@ function asConsultant(): TestCase
     $user->assignRole('Consultant');
 
     return test()->actingAs($user);
+}
+
+function setupCentralDatabase(): void
+{
+    config([
+        'tenancy.queue_database_creation' => false,
+        'tenancy.queue_database_deletion' => false,
+        'tenancy.delete_database_after_tenant_deletion' => true,
+        'tenancy.exempt_domains' => ['127.0.0.1', 'localhost'],
+    ]);
+
+    // Drop ALL tenant databases from failed runs
+    $databases = DB::select('SHOW DATABASES LIKE "dealership_%"');
+    foreach ($databases as $db) {
+        $dbName = $db->{'Database (dealership_%)'};
+        DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
+    }
+
+    // Run central migrations
+    Artisan::call('migrate:fresh', [
+        '--path' => 'database/migrations',
+        '--realpath' => false,
+    ]);
+
+    // Run Telescope migrations
+    Artisan::call('migrate', [
+        '--path' => 'vendor/laravel/telescope/database/migrations',
+        '--realpath' => true,
+    ]);
+
+    Dealership::query()->delete();
+
+    Artisan::call('db:seed', ['--class' => RoleAndPermissionSeeder::class]);
+}
+
+function teardownTenants(): void
+{
+    if (tenancy()->initialized) {
+        tenancy()->end();
+    }
+
+    $databases = DB::select('SHOW DATABASES LIKE "dealership_%"');
+    foreach ($databases as $db) {
+        $dbName = $db->{'Database (dealership_%)'};
+        DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
+    }
+
+    Dealership::query()->each(function ($dealership) {
+        $storagePath = storage_path("framework/tenants/{$dealership->id}");
+        if (is_dir($storagePath)) {
+            exec('rm -rf '.escapeshellarg($storagePath));
+        }
+    });
+
+    Dealership::query()->delete();
+
+    DB::purge('tenant');
+}
+
+/**
+ * Create a new dealership tenant and return both dealership + tenant user
+ */
+function createDealershipTenant(?User $owner = null): array
+{
+    $owner ??= User::factory()->create();
+
+    $dealership = Dealership::create([
+        'id' => 'acme',
+        'name' => 'Acme',
+        'user_id' => $owner->id,
+    ]);
+
+    $dealership->domains()->create(['domain' => 'acme.localhost']);
+
+    $dealership->run(function () {
+        Artisan::call('migrate', [
+            '--path' => 'database/migrations/tenant',
+            '--realpath' => false,
+        ]);
+    });
+
+    // Create tenant user
+    $tenantUser = $dealership->run(fn () => User::create([
+        'name' => $owner->name,
+        'email' => $owner->email,
+        'password' => $owner->password,
+    ]));
+
+    $dealership->run(fn () => $tenantUser->assignRole('Consultant'));
+
+    return [$dealership, $tenantUser];
 }
