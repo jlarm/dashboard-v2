@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -48,10 +49,12 @@ class CompletedCoursesStat extends Component
     {
         $cacheKey = 'user_counts_'.$this->formattedName.'_'.($this->store?->id ?? 'all');
 
-        return [
-            'total' => $this->getTotalUserCount(),
-            'incomplete' => $this->getIncompleteCount(),
-        ];
+        return Cache::remember($cacheKey, now()->addHour(), function () {
+            return [
+                'total' => $this->getTotalUserCount(),
+                'incomplete' => $this->getIncompleteCount(),
+            ];
+        });
     }
 
     protected function getTotalUserCount(): int

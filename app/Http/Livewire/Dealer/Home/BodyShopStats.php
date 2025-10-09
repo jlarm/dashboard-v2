@@ -7,6 +7,7 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\BodyShopGenerateRating;
 use App\Traits\HasAuditStats;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class BodyShopStats extends Component
@@ -69,19 +70,25 @@ class BodyShopStats extends Component
             return $this->cachedGrades;
         }
 
-        $grades = BodyShopViolationAudit::query()
-            ->where('store_id', $this->store->id)
-            ->whereNotNull('grade')
-            ->where('grade', '!=', 'N/A')
-            ->pluck('grade')
-            ->toArray();
+        $this->cachedGrades = Cache::remember(
+            'body_shop_grades_'.$this->store->id,
+            now()->addHour(),
+            function () {
+                $grades = BodyShopViolationAudit::query()
+                    ->where('store_id', $this->store->id)
+                    ->whereNotNull('grade')
+                    ->where('grade', '!=', 'N/A')
+                    ->pluck('grade')
+                    ->toArray();
 
-        $convertedGrade = $this->convertRatingToGrade();
-        if ($convertedGrade !== null) {
-            $grades[] = $convertedGrade;
-        }
+                $convertedGrade = $this->convertRatingToGrade();
+                if ($convertedGrade !== null) {
+                    $grades[] = $convertedGrade;
+                }
 
-        $this->cachedGrades = $grades;
+                return $grades;
+            }
+        );
 
         return $this->cachedGrades;
     }
