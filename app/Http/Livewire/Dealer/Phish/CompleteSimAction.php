@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Phish;
 
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\PhishingCampaign;
+use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -12,9 +13,7 @@ use Livewire\Component;
 class CompleteSimAction extends Component
 {
     public PhishingCampaign $phishingCampaign;
-
     public $token;
-
     public $ip;
 
     public function mount()
@@ -47,7 +46,7 @@ class CompleteSimAction extends Component
             }
 
             return redirect()->route('dealer.phishing.index');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }

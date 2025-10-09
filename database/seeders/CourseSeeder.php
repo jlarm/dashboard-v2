@@ -25,10 +25,10 @@ class CourseSeeder extends Seeder
                     'questions' => $value->questions,
                     'optional' => $value->optional ?? false,
                 ]);
-                if ($value->department != null) {
+                if ($value->department !== null) {
                     $course->departments()->attach($value->department);
                 }
-                if ($value->roles != null) {
+                if ($value->roles !== null) {
                     $course->roles()->attach($value->roles);
                 }
             }

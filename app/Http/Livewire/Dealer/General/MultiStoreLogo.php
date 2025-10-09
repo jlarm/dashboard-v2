@@ -8,7 +8,6 @@ use Livewire\Component;
 class MultiStoreLogo extends Component
 {
     public Store $store;
-
     public $logo;
 
     public function mount()

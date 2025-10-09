@@ -9,8 +9,24 @@ use Illuminate\Support\Facades\DB;
 trait EmployeeCourses
 {
     protected $user;
-
     protected $courses;
+
+    public function getUserHasNoCaliforniaStore(): bool
+    {
+        return ! $this->user->stores()->where('state', 'California')->exists();
+    }
+
+    public function loadCoursesForCurrentUser(): void
+    {
+        $this->loadCurrentUser();
+        $filteredRoles = $this->getUserRolesExcluding(5);
+        $courseWithRole = $this->getCoursesForRoles($filteredRoles);
+
+        $departmentCourses = $this->getDepartmentCourses($courseWithRole);
+        $userCourses = $this->getUserCourses();
+
+        $this->courses = $departmentCourses->merge($userCourses)->unique('id')->sortBy('name');
+    }
 
     protected function loadCurrentUser(): void
     {
@@ -20,11 +36,6 @@ trait EmployeeCourses
     protected function getUserRolesExcluding(int $excludeRoleId): array
     {
         return $this->user->roles()->pluck('id')->reject(fn ($roleId) => $roleId === $excludeRoleId)->toArray();
-    }
-
-    public function getUserHasNoCaliforniaStore(): bool
-    {
-        return ! $this->user->stores()->where('state', 'California')->exists();
     }
 
     protected function getCoursesForRoles(array $roles): array
@@ -53,17 +64,5 @@ trait EmployeeCourses
     protected function getUserCourses(): Collection
     {
         return $this->user->courses()->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest('id')])->get();
-    }
-
-    public function loadCoursesForCurrentUser(): void
-    {
-        $this->loadCurrentUser();
-        $filteredRoles = $this->getUserRolesExcluding(5);
-        $courseWithRole = $this->getCoursesForRoles($filteredRoles);
-
-        $departmentCourses = $this->getDepartmentCourses($courseWithRole);
-        $userCourses = $this->getUserCourses();
-
-        $this->courses = $departmentCourses->merge($userCourses)->unique('id')->sortBy('name');
     }
 }

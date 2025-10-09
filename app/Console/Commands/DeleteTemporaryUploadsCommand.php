@@ -7,7 +7,6 @@ use Illuminate\Console\Command;
 class DeleteTemporaryUploadsCommand extends Command
 {
     protected $signature = 'delete:temporary-uploads {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Delete old temporary uploads';
 
     public function handle(): void

@@ -14,9 +14,7 @@ trait HasGlbaViolationStatements
 
     public function violationSelected($violation): void
     {
-        $this->violationStatements = tenancy()->central(function ($tenant) {
-            return GlbaViolationStatements::all();
-        });
+        $this->violationStatements = tenancy()->central(fn ($tenant) => GlbaViolationStatements::all());
 
         $this->glbaViolationAudit->violations()->create([
             'statement_id' => $violation['id'],

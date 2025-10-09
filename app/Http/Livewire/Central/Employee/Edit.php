@@ -7,11 +7,8 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public $name;
-
     public $email;
-
     public $phone;
-
     public $role;
 
     public function render()

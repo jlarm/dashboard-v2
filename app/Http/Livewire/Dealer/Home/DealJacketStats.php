@@ -10,15 +10,10 @@ use Livewire\Component;
 class DealJacketStats extends Component
 {
     public Store $store;
-
     public $dealJackets;
-
     public $sum;
-
     public ?float $rating;
-
     public $audits;
-
     public $dates;
 
     public function mount(): void

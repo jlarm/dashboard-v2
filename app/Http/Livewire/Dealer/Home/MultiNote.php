@@ -9,7 +9,6 @@ use Livewire\Component;
 class MultiNote extends Component
 {
     public Store $store;
-
     public $note;
 
     public function mount()

@@ -9,10 +9,11 @@ use Livewire\Component;
 class SingleStoreScanSettings extends Component
 {
     public $store;
-
     public $dealer;
-
     public $name;
+    protected $rules = [
+        'name' => 'string|max:255',
+    ];
 
     public function mount(Store $store)
     {
@@ -22,10 +23,6 @@ class SingleStoreScanSettings extends Component
             $this->dealer = ScanSetting::where('store_id', $this->store->id)->first();
         }
     }
-
-    protected $rules = [
-        'name' => 'string|max:255',
-    ];
 
     public function update()
     {

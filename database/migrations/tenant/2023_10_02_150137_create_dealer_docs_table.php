@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('dealer_docs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignIdFor(\App\Models\Dealer\Store::class)->constrained();
+            $table->foreignIdFor(App\Models\Dealer\Store::class)->constrained();
             $table->string('file_name');
             $table->string('file_path');
             $table->timestamps();

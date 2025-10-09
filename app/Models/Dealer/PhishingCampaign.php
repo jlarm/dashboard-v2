@@ -24,7 +24,6 @@ class PhishingCampaign extends Model
         'data_submitted',
         'emails_reported',
     ];
-
     protected $casts = [
         'results' => 'array',
         'launched_at' => 'datetime',

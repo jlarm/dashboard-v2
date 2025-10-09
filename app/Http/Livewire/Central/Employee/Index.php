@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Central\Employee;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -34,7 +35,7 @@ class Index extends Component
                     ->with(['roles', 'courses'])
                     ->paginate(20);
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Fallback if Redis tags fail
             return User::query()
                 ->search('name', $this->search)

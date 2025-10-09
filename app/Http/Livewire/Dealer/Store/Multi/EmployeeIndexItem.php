@@ -11,19 +11,15 @@ use Livewire\Component;
 class EmployeeIndexItem extends Component
 {
     public User $user;
-
     public Store $store;
-
     public $completed;
-
     public $totalCourses;
-
     public $courseWithRole;
 
     public function mount()
     {
         $userRole = $this->user->roles()->select('id')->first()->toArray();
-        $this->courseWithRole = \DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
+        $this->courseWithRole = DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
 
         // Get all passed courses within the last year for this user
         $this->completed = DB::table('course_results')
@@ -32,9 +28,7 @@ class EmployeeIndexItem extends Component
             ->latest()
             ->get()
             ->groupBy('course_id')
-            ->map(function ($item) {
-                return $item->first();
-            });
+            ->map(fn ($item) => $item->first());
 
         $this->completed = collect($this->completed->where('passed', 1))->count();
 

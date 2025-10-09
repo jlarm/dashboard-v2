@@ -14,10 +14,11 @@ class StoreSelector extends Component
                 'stores' => Store::orderBy('name')
                     ->skip(1)->get(),
             ]);
-        } else {
-            return view('livewire.dealer.store.store-selector', [
-                'stores' => auth()->user()->stores,
-            ]);
         }
+
+        return view('livewire.dealer.store.store-selector', [
+            'stores' => auth()->user()->stores,
+        ]);
+
     }
 }

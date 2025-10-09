@@ -9,11 +9,11 @@ class MoneyCast implements CastsAttributes
 {
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return round(floatval($value) / 100, 2);
+        return round((float) $value / 100, 2);
     }
 
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return round(floatval($value) * 100, 0);
+        return round((float) $value * 100, 0);
     }
 }

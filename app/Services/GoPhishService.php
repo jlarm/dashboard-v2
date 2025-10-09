@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -43,7 +44,7 @@ class GoPhishService
                 Log::info($store->name.' Group Created');
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }
@@ -69,7 +70,7 @@ class GoPhishService
                 Log::info($store->name.' Group Updated');
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::info('Error updating group');
             Log::error($e->getMessage());
         }

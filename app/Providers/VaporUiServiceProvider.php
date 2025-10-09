@@ -17,6 +17,14 @@ class VaporUiServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
+    }
+
+    /**
      * Register the Vapor UI gate.
      *
      * This gate determines who can access Vapor UI in non-local environments.
@@ -28,13 +36,5 @@ class VaporUiServiceProvider extends ServiceProvider
                 'jlohr@autorisknow.com',
             ]);
         });
-    }
-
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
     }
 }

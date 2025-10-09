@@ -7,23 +7,14 @@ use App\Models\Dealer\Audit\IndividualAudit;
 class DealJacketPdfTestController extends Controller
 {
     public array $array = [];
-
     public $managers;
-
     public $question;
-
     public $dealJackets;
-
     public $audits;
-
     public $count;
-
     public $managerIssueCount = [];
-
     public $results = [];
-
     public $totals = [];
-
     public $grandTotal;
 
     public function __invoke()
@@ -35,24 +26,22 @@ class DealJacketPdfTestController extends Controller
             ->get();
 
         $this->count = $this->dealJackets
-            ->groupBy(function ($item) {
-                return $item->manager->name;
-            })
+            ->groupBy(fn ($item) => $item->manager->name)
             ->map(function ($item) {
                 $this->array = [];
                 $item->each(function ($item, $key) {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (
-                            $key != 'id' &&
-                            $key != 'parent_id' &&
-                            $key != 'user_id' &&
-                            $key != 'store_id' &&
-                            $key != 'manager_id' &&
-                            $key != 'mileage' &&
-                            $key != 'customer_number' &&
-                            $key != 'rating' &&
-                            $key != 'individual_q1_answer' &&
-                            $key != 'individual_q2_answer'
+                            $key !== 'id' &&
+                            $key !== 'parent_id' &&
+                            $key !== 'user_id' &&
+                            $key !== 'store_id' &&
+                            $key !== 'manager_id' &&
+                            $key !== 'mileage' &&
+                            $key !== 'customer_number' &&
+                            $key !== 'rating' &&
+                            $key !== 'individual_q1_answer' &&
+                            $key !== 'individual_q2_answer'
                         ) {
                             if ($value === 2) {
                                 $this->array[] = $value;
@@ -65,27 +54,25 @@ class DealJacketPdfTestController extends Controller
             });
 
         $this->managerIssueCount = $this->dealJackets
-            ->groupBy(function ($item) {
-                return $item->manager->name;
-            })
+            ->groupBy(fn ($item) => $item->manager->name)
             ->map(function ($item) {
                 $this->array = [];
                 $item->each(function ($item, $key) {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (
-                            $key != 'id' &&
-                            $key != 'parent_id' &&
-                            $key != 'user_id' &&
-                            $key != 'store_id' &&
-                            $key != 'manager_id' &&
-                            $key != 'mileage' &&
-                            $key != 'customer_number' &&
-                            $key != 'rating' &&
-                            $key != 'individual_q1_answer' &&
-                            $key != 'individual_q2_answer'
+                            $key !== 'id' &&
+                            $key !== 'parent_id' &&
+                            $key !== 'user_id' &&
+                            $key !== 'store_id' &&
+                            $key !== 'manager_id' &&
+                            $key !== 'mileage' &&
+                            $key !== 'customer_number' &&
+                            $key !== 'rating' &&
+                            $key !== 'individual_q1_answer' &&
+                            $key !== 'individual_q2_answer'
                         ) {
                             if ($value === 2) {
-                                array_push($this->array, $key);
+                                $this->array[] = $key;
                             }
                         }
                     }
@@ -132,24 +119,22 @@ class DealJacketPdfTestController extends Controller
         $this->totals[] = $this->grandTotal;
 
         $this->managers = $this->dealJackets
-            ->groupBy(function ($item) {
-                return $item->manager->name;
-            })
+            ->groupBy(fn ($item) => $item->manager->name)
             ->map(function ($item) {
                 $this->array = [];
                 $item->each(function ($item, $key) {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (
-                            $key != 'id' &&
-                            $key != 'parent_id' &&
-                            $key != 'user_id' &&
-                            $key != 'store_id' &&
-                            $key != 'manager_id' &&
-                            $key != 'mileage' &&
-                            $key != 'customer_number' &&
-                            $key != 'rating' &&
-                            $key != 'individual_q1_answer' &&
-                            $key != 'individual_q2_answer'
+                            $key !== 'id' &&
+                            $key !== 'parent_id' &&
+                            $key !== 'user_id' &&
+                            $key !== 'store_id' &&
+                            $key !== 'manager_id' &&
+                            $key !== 'mileage' &&
+                            $key !== 'customer_number' &&
+                            $key !== 'rating' &&
+                            $key !== 'individual_q1_answer' &&
+                            $key !== 'individual_q2_answer'
                         ) {
                             if ($value === 2) {
                                 preg_match('/^[^_]*_q\K[^_]+/', $key, $matches);
@@ -160,9 +145,7 @@ class DealJacketPdfTestController extends Controller
                     }
                 });
 
-                return collect($this->array)->groupBy(function ($item) {
-                    return $item[0];
-                });
+                return collect($this->array)->groupBy(fn ($item) => $item[0]);
             });
 
         return view('dealer.deal-jacket-audit-pdf', [

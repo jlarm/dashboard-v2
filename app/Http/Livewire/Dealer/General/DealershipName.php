@@ -9,7 +9,6 @@ use Livewire\Component;
 class DealershipName extends Component
 {
     public Store $store;
-
     public string $logo;
 
     public function mount()

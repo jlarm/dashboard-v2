@@ -8,14 +8,16 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class ConsultantEdit extends SlideOver
 {
     public $dealership;
-
     public $name;
-
     public $domain;
-
     public $url;
-
     public $locations;
+    protected $rules = [
+        'name' => 'required',
+        'domain' => 'required',
+        'url' => 'required',
+        'locations' => 'required',
+    ];
 
     public function mount(Dealership $dealership)
     {
@@ -25,13 +27,6 @@ class ConsultantEdit extends SlideOver
         $this->url = $dealership->url;
         $this->locations = $dealership->locations;
     }
-
-    protected $rules = [
-        'name' => 'required',
-        'domain' => 'required',
-        'url' => 'required',
-        'locations' => 'required',
-    ];
 
     public function updateDealership()
     {

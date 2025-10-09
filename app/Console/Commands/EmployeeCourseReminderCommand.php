@@ -11,14 +11,13 @@ use Illuminate\Console\Command;
 class EmployeeCourseReminderCommand extends Command
 {
     protected $signature = 'run:course-reminder  {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Reminder employee that course expires soon or expired.';
 
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
 
-            $this->info("Running command for tenant $tenant->id ($tenant->name)");
+            $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             $this->deleteOutdatedNotifications();
 
@@ -27,7 +26,7 @@ class EmployeeCourseReminderCommand extends Command
                 ->get()
                 ->each(fn ($user) => $this->processUserResults($user));
 
-            $this->info("Command for tenant $tenant->id ($tenant->name) completed");
+            $this->info("Command for tenant {$tenant->id} ({$tenant->name}) completed");
         });
     }
 
@@ -40,9 +39,7 @@ class EmployeeCourseReminderCommand extends Command
             ->orderBy('id', 'desc')
             ->get()
             ->groupBy('course_id')
-            ->map(function ($result) {
-                return $result->first();
-            });
+            ->map(fn ($result) => $result->first());
 
         $results->each(fn ($result) => CourseUserNotificationSent::where('user_id', $user->id)
             ->where('course_id', $result->course_id)

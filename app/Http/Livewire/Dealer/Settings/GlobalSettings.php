@@ -11,13 +11,9 @@ use Livewire\Component;
 class GlobalSettings extends Component
 {
     public $settings;
-
     public $phishing_active;
-
     public $phishing_token;
-
     public $phishing_ip;
-
     public $stores = [];
 
     public function mount(): void

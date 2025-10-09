@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Notification;
 class NewCourseNotificationCommand extends Command
 {
     protected $signature = 'new:course-notification {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Send new course notification to all users.';
 
     public function handle()

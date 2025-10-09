@@ -15,9 +15,7 @@ class RemediationReminderCommand extends Command
     private const MAX_REMINDERS = 3;
 
     protected $signature = 'remediation:reminder  {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Command description';
-
     private array $modelTypeMap = [
         'OshaViolationAudit' => AuditTypes::OSHA,
         'BodyShopViolationAudit' => AuditTypes::BODYSHOP,

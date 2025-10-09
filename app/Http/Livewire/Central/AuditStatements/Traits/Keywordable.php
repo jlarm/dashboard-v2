@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Central\AuditStatements\Traits;
 trait Keywordable
 {
     public $keywords = [];
-
     public $newKeyword = '';
 
     public function addKeyword()

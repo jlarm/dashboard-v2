@@ -16,7 +16,6 @@ class RemediationSetting extends Model
         'frequency',
         'managers',
     ];
-
     protected $casts = [
         'active' => 'boolean',
         'notifications' => 'boolean',

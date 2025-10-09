@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Store\SingleStore\Scan;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
 use Cookie;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,15 +14,10 @@ use Livewire\Component;
 class GenerateReport extends Component
 {
     public string $type = 'technical';
-
     public string $dealer;
-
     public $assets;
-
     public $reports;
-
     public Store $store;
-
     public $generateError;
 
     public function mount()
@@ -58,7 +54,7 @@ class GenerateReport extends Component
             ]);
 
             return redirect()->route('dealer.stores.scans', $this->store);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addError('generateError', $e->getMessage());
         }
     }

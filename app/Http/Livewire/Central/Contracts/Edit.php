@@ -12,62 +12,70 @@ use Str;
 class Edit extends Component
 {
     public Contract $contract;
-
     public $user;
-
     public $contractType;
-
     public $agreementDate;
-
     public $dealerName;
-
     public $services = [];
-
     public $commenceDate;
-
     public $yearlyInspectionTotal;
-
     public $initialFee;
-
     public $monthlyFee;
-
     public $armpSignature;
-
     public $armpPrintedName;
-
     public $dealerPhysicalAddress;
-
     public $dealerPhysicalCity;
-
     public $dealerPhysicalState;
-
     public $dealerPhysicalZip;
-
     public $dealerPhone;
-
     public $dealerQiName;
-
     public $dealerQiEmail;
-
     public $dealerBillingAddress;
-
     public $dealerBillingCity;
-
     public $dealerBillingState;
-
     public $dealerBillingZip;
-
     public $dealerBillingFax;
-
     public $dealerBillingContactName;
-
     public $dealerBillingContactTitle;
-
     public $dealerBillingContactEmail;
-
     public Collection $additionalLocations;
-
     protected $listeners = ['contractUpdated' => '$refresh'];
+    protected $rules = [
+        'user' => 'required|exists:users,id',
+        'contractType' => 'required|string',
+        'agreementDate' => 'required|date',
+        'dealerName' => 'required|string',
+        'services.*' => 'required|string',
+        'commenceDate' => 'required|date',
+        'yearlyInspectionTotal' => 'required|numeric',
+        'initialFee' => 'required|numeric',
+        'monthlyFee' => 'required|numeric',
+        'armpSignature' => 'nullable|string',
+        'armpPrintedName' => 'nullable|string',
+        'dealerPhysicalAddress' => 'nullable|string',
+        'dealerPhysicalCity' => 'nullable|string',
+        'dealerPhysicalState' => 'nullable|string',
+        'dealerPhysicalZip' => 'nullable|string',
+        'dealerPhone' => 'nullable|string',
+        'dealerQiName' => 'nullable|string',
+        'dealerQiEmail' => 'nullable|email',
+        'dealerBillingAddress' => 'nullable|string',
+        'dealerBillingCity' => 'nullable|string',
+        'dealerBillingState' => 'nullable|string',
+        'dealerBillingZip' => 'nullable|string',
+        'dealerBillingFax' => 'nullable|string',
+        'dealerBillingContactName' => 'nullable|string',
+        'dealerBillingContactTitle' => 'nullable|string',
+        'dealerBillingContactEmail' => 'nullable|email',
+        'additionalLocations.*.name' => 'required|string',
+        'additionalLocations.*.address' => 'required|string',
+        'additionalLocations.*.city' => 'required|string',
+        'additionalLocations.*.state' => 'required|string',
+        'additionalLocations.*.zip' => 'required|string',
+        'additionalLocations.*.contact_name' => 'nullable|string',
+        'additionalLocations.*.contact_title' => 'nullable|string',
+        'additionalLocations.*.contact_email' => 'nullable|email',
+    ];
 
     public function addLocation(): void
     {
@@ -128,43 +136,6 @@ class Edit extends Component
         ]);
     }
 
-    protected $rules = [
-        'user' => 'required|exists:users,id',
-        'contractType' => 'required|string',
-        'agreementDate' => 'required|date',
-        'dealerName' => 'required|string',
-        'services.*' => 'required|string',
-        'commenceDate' => 'required|date',
-        'yearlyInspectionTotal' => 'required|numeric',
-        'initialFee' => 'required|numeric',
-        'monthlyFee' => 'required|numeric',
-        'armpSignature' => 'nullable|string',
-        'armpPrintedName' => 'nullable|string',
-        'dealerPhysicalAddress' => 'nullable|string',
-        'dealerPhysicalCity' => 'nullable|string',
-        'dealerPhysicalState' => 'nullable|string',
-        'dealerPhysicalZip' => 'nullable|string',
-        'dealerPhone' => 'nullable|string',
-        'dealerQiName' => 'nullable|string',
-        'dealerQiEmail' => 'nullable|email',
-        'dealerBillingAddress' => 'nullable|string',
-        'dealerBillingCity' => 'nullable|string',
-        'dealerBillingState' => 'nullable|string',
-        'dealerBillingZip' => 'nullable|string',
-        'dealerBillingFax' => 'nullable|string',
-        'dealerBillingContactName' => 'nullable|string',
-        'dealerBillingContactTitle' => 'nullable|string',
-        'dealerBillingContactEmail' => 'nullable|email',
-        'additionalLocations.*.name' => 'required|string',
-        'additionalLocations.*.address' => 'required|string',
-        'additionalLocations.*.city' => 'required|string',
-        'additionalLocations.*.state' => 'required|string',
-        'additionalLocations.*.zip' => 'required|string',
-        'additionalLocations.*.contact_name' => 'nullable|string',
-        'additionalLocations.*.contact_title' => 'nullable|string',
-        'additionalLocations.*.contact_email' => 'nullable|email',
-    ];
-
     public function update()
     {
         $this->validate();
@@ -198,7 +169,7 @@ class Edit extends Component
             'additional_locations' => $this->additionalLocations->toArray(),
         ]);
 
-        if ($this->contract->armp_printed_name != '' && $this->armpSignature) {
+        if ($this->contract->armp_printed_name !== '' && $this->armpSignature) {
             $id = Str::uuid();
             $filename = $this->contract->uuid.'/'.$id.'.png';
             Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->armpSignature)->after(',')));

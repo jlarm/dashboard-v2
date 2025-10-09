@@ -3,53 +3,35 @@
 namespace App\Http\Livewire\Central\Contracts;
 
 use App\Models\Contract;
+use DB;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Notification;
 use Storage;
 use Str;
 
 class Review extends Component
 {
     public Contract $contract;
-
     public $dealerPhysicalAddress;
-
     public $dealerPhysicalCity;
-
     public $dealerPhysicalState;
-
     public $dealerPhysicalZip;
-
     public $dealerPhone;
-
     public $dealerQiName;
-
     public $dealerQiEmail;
-
     public $dealerBillingAddress;
-
     public $dealerBillingCity;
-
     public $dealerBillingState;
-
     public $dealerBillingZip;
-
     public $dealerBillingFax;
-
     public $dealerBillingContactName;
-
     public $dealerBillingContactTitle;
-
     public $dealerBillingContactEmail;
-
     public $dealerPrintedName;
-
     public $dealerDateSigned;
-
     public $dealerSignature;
-
     public Collection $additionalLocations;
-
     protected $rules = [
         'dealerPhysicalAddress' => 'required|string|max:255',
         'dealerPhysicalCity' => 'required|string|max:255',
@@ -113,53 +95,52 @@ class Review extends Component
 
     public function submit()
     {
-        \DB::transaction(function () {
+        DB::transaction(function () {
             $this->validate();
 
             if ($this->contract->dealer_signature) {
                 return redirect()->to('thank-you')->with('error', 'The contract has already been signed.');
-            } else {
-                $id = Str::uuid();
-                $filename = $this->contract->uuid.'/'.$id.'.png';
-                Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->dealerSignature)->after(',')));
-
-                $this->contract->update([
-                    'dealer_physical_address' => $this->dealerPhysicalAddress,
-                    'dealer_physical_city' => $this->dealerPhysicalCity,
-                    'dealer_physical_state' => $this->dealerPhysicalState,
-                    'dealer_physical_zip' => $this->dealerPhysicalZip,
-                    'dealer_phone' => $this->dealerPhone,
-                    'dealer_qi_name' => $this->dealerQiName,
-                    'dealer_qi_email' => $this->dealerQiEmail,
-                    'dealer_billing_address' => $this->dealerBillingAddress,
-                    'dealer_billing_city' => $this->dealerBillingCity,
-                    'dealer_billing_state' => $this->dealerBillingState,
-                    'dealer_billing_zip' => $this->dealerBillingZip,
-                    'dealer_billing_fax' => $this->dealerBillingFax,
-                    'dealer_billing_contact_name' => $this->dealerBillingContactName,
-                    'dealer_billing_contact_title' => $this->dealerBillingContactTitle,
-                    'dealer_billing_contact_email' => $this->dealerBillingContactEmail,
-                    'dealer_printed_name' => $this->dealerPrintedName,
-                    'dealer_date_signed' => now(),
-                    'dealer_signature' => $filename,
-                    'status' => 'pending',
-                    'additional_locations' => $this->additionalLocations->toArray(),
-                ]);
-
-                $this->contract->status()->create([
-                    'name' => $this->contract->dealer_printed_name,
-                    'status' => 'signed the contract',
-                    'step' => 3,
-                ]);
-
-                \Notification::route('mail', 'tdortch@autorisknow.com')
-                    ->notify(new \App\Notifications\ContractSignedNotification($this->contract));
-
-                \Notification::route('mail', $this->contract->user->email)
-                    ->notify(new \App\Notifications\ContractSignedNotification($this->contract));
-
-                return redirect()->to('thank-you');
             }
+            $id = Str::uuid();
+            $filename = $this->contract->uuid.'/'.$id.'.png';
+            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->dealerSignature)->after(',')));
+
+            $this->contract->update([
+                'dealer_physical_address' => $this->dealerPhysicalAddress,
+                'dealer_physical_city' => $this->dealerPhysicalCity,
+                'dealer_physical_state' => $this->dealerPhysicalState,
+                'dealer_physical_zip' => $this->dealerPhysicalZip,
+                'dealer_phone' => $this->dealerPhone,
+                'dealer_qi_name' => $this->dealerQiName,
+                'dealer_qi_email' => $this->dealerQiEmail,
+                'dealer_billing_address' => $this->dealerBillingAddress,
+                'dealer_billing_city' => $this->dealerBillingCity,
+                'dealer_billing_state' => $this->dealerBillingState,
+                'dealer_billing_zip' => $this->dealerBillingZip,
+                'dealer_billing_fax' => $this->dealerBillingFax,
+                'dealer_billing_contact_name' => $this->dealerBillingContactName,
+                'dealer_billing_contact_title' => $this->dealerBillingContactTitle,
+                'dealer_billing_contact_email' => $this->dealerBillingContactEmail,
+                'dealer_printed_name' => $this->dealerPrintedName,
+                'dealer_date_signed' => now(),
+                'dealer_signature' => $filename,
+                'status' => 'pending',
+                'additional_locations' => $this->additionalLocations->toArray(),
+            ]);
+
+            $this->contract->status()->create([
+                'name' => $this->contract->dealer_printed_name,
+                'status' => 'signed the contract',
+                'step' => 3,
+            ]);
+
+            Notification::route('mail', 'tdortch@autorisknow.com')
+                ->notify(new \App\Notifications\ContractSignedNotification($this->contract));
+
+            Notification::route('mail', $this->contract->user->email)
+                ->notify(new \App\Notifications\ContractSignedNotification($this->contract));
+
+            return redirect()->to('thank-you');
 
         });
 

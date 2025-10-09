@@ -3,7 +3,10 @@
 namespace App\Http\Livewire\Central\Docs;
 
 use App\Models\Document;
+use Exception;
 use Filament\Notifications\Notification;
+use Log;
+use Storage;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
@@ -18,7 +21,7 @@ class Delete extends Modal
     public function delete()
     {
         try {
-            \Storage::disk('central-docs')->delete($this->doc->file_name);
+            Storage::disk('central-docs')->delete($this->doc->file_name);
 
             $this->doc->delete();
 
@@ -30,8 +33,8 @@ class Delete extends Modal
                 ->title('Document Deleted Successfully!')
                 ->success()
                 ->send();
-        } catch (\Exception $e) {
-            \Log::error($e);
+        } catch (Exception $e) {
+            Log::error($e);
             $this->addError('file', 'An error occurred while deleting the file.');
         }
     }

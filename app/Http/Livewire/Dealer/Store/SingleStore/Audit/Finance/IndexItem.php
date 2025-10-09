@@ -9,7 +9,6 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public FinanceAudit $financeAudit;
-
     public Store $store;
 
     public function render()

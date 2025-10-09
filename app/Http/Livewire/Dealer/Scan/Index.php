@@ -6,6 +6,7 @@ use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
 use Cookie;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,19 +15,12 @@ use Livewire\Component;
 class Index extends Component
 {
     public $statusCode;
-
     public string $type = 'technical';
-
     public string $dealer;
-
     public $assets;
-
     public $reports;
-
     public Store $store;
-
     public $internal;
-
     public $external;
 
     public function mount()
@@ -69,10 +63,11 @@ class Index extends Component
 
             if (tenant('locations')) {
                 return redirect()->route('dealer.stores.scans', $this->store);
-            } else {
-                return redirect()->route('dealer.scan.index');
             }
-        } catch (\Exception $e) {
+
+            return redirect()->route('dealer.scan.index');
+
+        } catch (Exception $e) {
             $this->addError('connection', 'Error connecting to Sentry. Please check the dealership name in settings.');
         }
 

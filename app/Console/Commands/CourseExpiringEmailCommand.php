@@ -14,7 +14,6 @@ class CourseExpiringEmailCommand extends Command
     use HasCourses;
 
     protected $signature = 'course:check-reminders {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Send notifications for courses expiring soon.';
 
     public function handle(): void

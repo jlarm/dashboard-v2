@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('individual_audits', function (Blueprint $table) {
             $table->date('deal_jacket_date')->nullable()->after('audit_date');
-            $table->foreignIdFor(\App\Models\User::class, 'manager_id')->nullable()->after('deal_jacket_date');
+            $table->foreignIdFor(App\Models\User::class, 'manager_id')->nullable()->after('deal_jacket_date');
             $table->integer('mileage')->nullable()->after('manager_id');
         });
     }

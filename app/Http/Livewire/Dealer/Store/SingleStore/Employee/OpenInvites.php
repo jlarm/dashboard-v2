@@ -16,17 +16,11 @@ class OpenInvites extends Component
     use WithPagination;
 
     public Store $store;
-
     public string $search = '';
-
     public string $filterByDepartment = '';
-
     public bool $selectPage = false;
-
     public bool $selectAll = false;
-
     public array $selected = [];
-
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
 
     public function sendInvite($inviteId)
@@ -129,7 +123,7 @@ class OpenInvites extends Component
     private function notifyInviteSent($inviteName): void
     {
         Notification::make()
-            ->title("Invite to $inviteName sent")
+            ->title("Invite to {$inviteName} sent")
             ->success()
             ->send();
 

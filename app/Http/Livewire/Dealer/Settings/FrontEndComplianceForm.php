@@ -10,104 +10,93 @@ use Livewire\Component;
 class FrontEndComplianceForm extends Component
 {
     public $store;
-
     public $qualified_individual_name;
-
     public $qualified_individual_phone;
-
     public $service_manager_name;
-
     public $service_manager_phone;
-
     public $parts_manager_name;
-
     public $parts_manager_phone;
-
     public $body_shop_manager_name;
-
     public $body_shop_manager_phone;
-
     public $general_manager_name;
-
     public $general_manager_phone;
-
     public $owner_name;
-
     public $owner_phone;
-
     public $pep;
-
     public $pnep;
-
     public $fep;
-
     public $fnep;
-
     public $fireAlarm;
-
     public $burglarAlarm;
-
     public $firewallCompany;
-
     public Collection $ipAddresses;
-
     public $mfa;
-
     public $vulnerability;
-
     public $monitoring;
-
     public $antivirus;
-
     public $antivirusComputers;
-
     public $antivirusMinutes;
-
     public $screensaverMinutes;
-
     public $dmsProvider;
-
     public $backups;
-
     public Collection $websiteUrls;
-
     public $designatedRedFlagCoordinator;
-
     public $documentShredding;
-
     public $serviceProviderAgreements;
-
     public $offsiteStorage;
-
     public $otherBusiness;
-
     public $vendorAccess;
-
     public $personalDevices;
-
     public $complianceIssues;
-
     public $fi_products_sold;
-
     public Collection $service_contracts;
-
     public Collection $tire_wheel;
-
     public Collection $other_fi;
-
     public $fi_system;
-
     public $appearance_protection_sold;
-
     public $reinsurance;
-
     public $admin_name;
-
     public $user_submitted;
-
     public $fi_username;
-
     public $fi_password;
+    protected $rules = [
+        'pep' => 'nullable',
+        'pnep' => 'nullable',
+        'fep' => 'nullable',
+        'fnep' => 'nullable',
+        'fireAlarm' => 'nullable',
+        'burglarAlarm' => 'nullable',
+        'firewallCompany' => 'nullable',
+        'ipAddresses.*.ipAddress' => 'nullable',
+        'mfa' => 'nullable',
+        'vulnerability' => 'nullable',
+        'monitoring' => 'nullable',
+        'antivirus' => 'nullable',
+        'antivirusComputers' => 'nullable',
+        'antivirusMinutes' => 'nullable',
+        'screensaverMinutes' => 'nullable',
+        'dmsProvider' => 'nullable',
+        'backups' => 'nullable',
+        'websiteUrls.*.url' => 'nullable',
+        'designatedRedFlagCoordinator' => 'nullable',
+        'documentShredding' => 'nullable',
+        'serviceProviderAgreements' => 'nullable',
+        'offsiteStorage' => 'nullable',
+        'otherBusiness' => 'nullable',
+        'vendorAccess' => 'nullable',
+        'personalDevices' => 'nullable',
+        'complianceIssues' => 'nullable',
+        'fi_products_sold' => 'nullable',
+        'service_contracts.*.contract' => 'nullable',
+        'tire_wheel.*.tw' => 'nullable',
+        'other_fi.*.fi' => 'nullable',
+        'fi_system' => 'nullable',
+        'appearance_protection_sold' => 'nullable',
+        'reinsurance' => 'nullable',
+        'admin_name' => 'nullable',
+        'fi_username' => 'nullable',
+        'fi_password' => 'nullable',
+    ];
 
     public function addIpAddress(): void
     {
@@ -159,45 +148,6 @@ class FrontEndComplianceForm extends Component
         $this->other_fi->pull($fiKey);
     }
 
-    protected $rules = [
-        'pep' => 'nullable',
-        'pnep' => 'nullable',
-        'fep' => 'nullable',
-        'fnep' => 'nullable',
-        'fireAlarm' => 'nullable',
-        'burglarAlarm' => 'nullable',
-        'firewallCompany' => 'nullable',
-        'ipAddresses.*.ipAddress' => 'nullable',
-        'mfa' => 'nullable',
-        'vulnerability' => 'nullable',
-        'monitoring' => 'nullable',
-        'antivirus' => 'nullable',
-        'antivirusComputers' => 'nullable',
-        'antivirusMinutes' => 'nullable',
-        'screensaverMinutes' => 'nullable',
-        'dmsProvider' => 'nullable',
-        'backups' => 'nullable',
-        'websiteUrls.*.url' => 'nullable',
-        'designatedRedFlagCoordinator' => 'nullable',
-        'documentShredding' => 'nullable',
-        'serviceProviderAgreements' => 'nullable',
-        'offsiteStorage' => 'nullable',
-        'otherBusiness' => 'nullable',
-        'vendorAccess' => 'nullable',
-        'personalDevices' => 'nullable',
-        'complianceIssues' => 'nullable',
-        'fi_products_sold' => 'nullable',
-        'service_contracts.*.contract' => 'nullable',
-        'tire_wheel.*.tw' => 'nullable',
-        'other_fi.*.fi' => 'nullable',
-        'fi_system' => 'nullable',
-        'appearance_protection_sold' => 'nullable',
-        'reinsurance' => 'nullable',
-        'admin_name' => 'nullable',
-        'fi_username' => 'nullable',
-        'fi_password' => 'nullable',
-    ];
-
     public function mount(): void
     {
         $storeId = request('store');
@@ -222,9 +172,7 @@ class FrontEndComplianceForm extends Component
         $this->fireAlarm = $this->store->fire_alarm_type;
         $this->burglarAlarm = $this->store->burglar_alarm_type;
         $this->firewallCompany = $this->store->firewall_company;
-        $this->ipAddresses = collect($this->store->ip_addresses)->map(function ($ip) {
-            return ['ipAddress' => $ip];
-        });
+        $this->ipAddresses = collect($this->store->ip_addresses)->map(fn ($ip) => ['ipAddress' => $ip]);
         $this->mfa = $this->store->mfa;
         $this->vulnerability = $this->store->vulnerability;
         $this->monitoring = $this->store->currently_monitoring;
@@ -234,9 +182,7 @@ class FrontEndComplianceForm extends Component
         $this->screensaverMinutes = $this->store->screensaver_minutes;
         $this->dmsProvider = $this->store->dms_provider;
         $this->backups = $this->store->backups;
-        $this->websiteUrls = collect($this->store->website_urls)->map(function ($url) {
-            return ['websiteUrl' => $url];
-        });
+        $this->websiteUrls = collect($this->store->website_urls)->map(fn ($url) => ['websiteUrl' => $url]);
         $this->designatedRedFlagCoordinator = $this->store->designated_red_flag_coordinator;
         $this->documentShredding = $this->store->document_shredding;
         $this->serviceProviderAgreements = $this->store->service_provider_agreements;
@@ -246,15 +192,9 @@ class FrontEndComplianceForm extends Component
         $this->personalDevices = $this->store->personal_devices;
         $this->complianceIssues = $this->store->compliance_issues;
         $this->fi_products_sold = $this->store->fi_products_sold;
-        $this->service_contracts = collect($this->store->service_contracts)->map(function ($contract) {
-            return ['serviceContract' => $contract];
-        });
-        $this->tire_wheel = collect($this->store->tire_wheel)->map(function ($tw) {
-            return ['tireWheel' => $tw];
-        });
-        $this->other_fi = collect($this->store->other_fi)->map(function ($fi) {
-            return ['otherFi' => $fi];
-        });
+        $this->service_contracts = collect($this->store->service_contracts)->map(fn ($contract) => ['serviceContract' => $contract]);
+        $this->tire_wheel = collect($this->store->tire_wheel)->map(fn ($tw) => ['tireWheel' => $tw]);
+        $this->other_fi = collect($this->store->other_fi)->map(fn ($fi) => ['otherFi' => $fi]);
         $this->fi_system = $this->store->fi_system;
         $this->appearance_protection_sold = $this->store->appearance_protection_sold;
         $this->reinsurance = $this->store->reinsurance;
@@ -266,7 +206,7 @@ class FrontEndComplianceForm extends Component
 
     public function update()
     {
-        if ($this->user_submitted == 1) {
+        if ($this->user_submitted === 1) {
             $this->dispatchBrowserEvent('refresh-page');
 
             return;

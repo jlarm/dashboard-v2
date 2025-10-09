@@ -11,18 +11,6 @@ use Livewire\Component;
 
 class GroupRating extends Component
 {
-    public $rating;
-
-    public $grades = [];
-
-    private $dealJacketGrades;
-
-    private $glbaGrades;
-
-    private $oshaGrades;
-
-    private $bodyShopGrades;
-
     private const array GRADE_VALUES = [
         'A' => 90,
         'B' => 80,
@@ -33,10 +21,47 @@ class GroupRating extends Component
 
     private const int CACHE_TTL = 3600; // 1 hour in seconds
 
+    public $rating;
+    public $grades = [];
+    private $dealJacketGrades;
+    private $glbaGrades;
+    private $oshaGrades;
+    private $bodyShopGrades;
+
     public function mount()
     {
         $this->loadGrades();
         $this->calculateOverallRating();
+    }
+
+    public function getDealJacketRatingProperty(): ?string
+    {
+        return Cache::remember('rating.dealJacket', self::CACHE_TTL, fn () => $this->calculateGrade($this->dealJacketGrades));
+    }
+
+    public function getGlbaRatingProperty(): ?string
+    {
+        return Cache::remember('rating.glba', self::CACHE_TTL, fn () => $this->calculateGrade($this->glbaGrades));
+    }
+
+    public function getOshaRatingProperty(): ?string
+    {
+        return Cache::remember('rating.osha', self::CACHE_TTL, fn () => $this->calculateGrade($this->oshaGrades));
+    }
+
+    public function getBodyShopRatingProperty(): ?string
+    {
+        return Cache::remember('rating.bodyShop', self::CACHE_TTL, fn () => $this->calculateGrade($this->bodyShopGrades));
+    }
+
+    public function getGradeLetterProperty(): string
+    {
+        return $this->rating ?? 'N/A';
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.home.group-rating');
     }
 
     private function loadGrades(): void
@@ -56,9 +81,7 @@ class GroupRating extends Component
 
     private function getCachedGrades(string $key, string $auditClass, string $column): array
     {
-        return Cache::remember("grades.{$key}", self::CACHE_TTL, function () use ($auditClass, $column) {
-            return $this->getGradesFromAudit($auditClass, $column);
-        });
+        return Cache::remember("grades.{$key}", self::CACHE_TTL, fn () => $this->getGradesFromAudit($auditClass, $column));
     }
 
     private function getGradesFromAudit(string $auditClass, string $column): array
@@ -68,9 +91,7 @@ class GroupRating extends Component
 
     private function calculateOverallRating(): void
     {
-        $this->rating = Cache::remember('overall.rating', self::CACHE_TTL, function () {
-            return $this->calculateGrade($this->grades);
-        });
+        $this->rating = Cache::remember('overall.rating', self::CACHE_TTL, fn () => $this->calculateGrade($this->grades));
     }
 
     private function calculateGrade(array $grades): ?string
@@ -87,9 +108,7 @@ class GroupRating extends Component
 
     private function convertToNumericGrades(array $grades): array
     {
-        return array_map(function ($grade) {
-            return is_numeric($grade) ? $grade : (self::GRADE_VALUES[$grade] ?? 0);
-        }, $grades);
+        return array_map(fn ($grade) => is_numeric($grade) ? $grade : (self::GRADE_VALUES[$grade] ?? 0), $grades);
     }
 
     private function getLetterGrade(float $grade): string
@@ -108,43 +127,5 @@ class GroupRating extends Component
         }
 
         return 'F';
-    }
-
-    public function getDealJacketRatingProperty(): ?string
-    {
-        return Cache::remember('rating.dealJacket', self::CACHE_TTL, function () {
-            return $this->calculateGrade($this->dealJacketGrades);
-        });
-    }
-
-    public function getGlbaRatingProperty(): ?string
-    {
-        return Cache::remember('rating.glba', self::CACHE_TTL, function () {
-            return $this->calculateGrade($this->glbaGrades);
-        });
-    }
-
-    public function getOshaRatingProperty(): ?string
-    {
-        return Cache::remember('rating.osha', self::CACHE_TTL, function () {
-            return $this->calculateGrade($this->oshaGrades);
-        });
-    }
-
-    public function getBodyShopRatingProperty(): ?string
-    {
-        return Cache::remember('rating.bodyShop', self::CACHE_TTL, function () {
-            return $this->calculateGrade($this->bodyShopGrades);
-        });
-    }
-
-    public function getGradeLetterProperty(): string
-    {
-        return $this->rating ?? 'N/A';
-    }
-
-    public function render()
-    {
-        return view('livewire.dealer.home.group-rating');
     }
 }

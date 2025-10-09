@@ -9,7 +9,6 @@ use Livewire\Component;
 class Show extends Component
 {
     public Store $store;
-
     public OshaAudit $oshaAudit;
 
     public function render()

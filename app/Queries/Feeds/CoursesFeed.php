@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 final readonly class CoursesFeed
 {
     private readonly Collection $roles;
-
     private readonly Collection $userStates;
 
     public function __construct(

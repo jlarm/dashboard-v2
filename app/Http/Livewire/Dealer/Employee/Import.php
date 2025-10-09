@@ -16,17 +16,8 @@ class Import extends Modal
     use WithFileUploads;
 
     public $spreadsheet;
-
     public $importErrors = [];
-
     public $successCount = 0;
-
-    protected function rules(): array
-    {
-        return [
-            'spreadsheet' => 'required|file|mimes:json',
-        ];
-    }
 
     public function import(): void
     {
@@ -81,7 +72,7 @@ class Import extends Modal
                             'user_id' => auth()->id(),
                             'roles' => [$item['Position']],
                             'courses' => $courses, // Updated to use the transformed courses
-                            'invitation_token' => substr(md5(rand(0, 9).$item['Email'].time()), 0, 32),
+                            'invitation_token' => mb_substr(md5(rand(0, 9).$item['Email'].time()), 0, 32),
                         ]);
                     } catch (Exception $e) {
                         $this->importErrors[] = [
@@ -105,7 +96,7 @@ class Import extends Modal
             }
 
             Notification::make()
-                ->title("$this->successCount Invites Imported Successfully")
+                ->title("{$this->successCount} Invites Imported Successfully")
                 ->success()
                 ->send();
 
@@ -118,5 +109,12 @@ class Import extends Modal
     public function render()
     {
         return view('livewire.dealer.employee.import');
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'spreadsheet' => 'required|file|mimes:json',
+        ];
     }
 }

@@ -6,47 +6,23 @@ use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
+use Exception;
 use Livewire\Component;
 
 class Create extends Component
 {
     public $name;
-
     public $initials;
-
     public $address;
-
     public $city;
-
     public $state;
-
     public $zip_code;
-
     public $phone;
-
     public $fax;
-
     public $domain;
-
     public $url;
-
     public $locations = false;
-
     public $password;
-
-    public function mount()
-    {
-        // get initials of current users name
-        $name = auth()->user()->name;
-        $name = explode(' ', $name);
-        $initials = '';
-        foreach ($name as $n) {
-            $initials .= $n[0];
-        }
-        $this->initials = strtoupper($initials);
-
-    }
-
     protected $rules = [
         'name' => ['required', 'string', 'max:255', 'unique:dealerships'],
         'address' => ['required', 'string', 'max:255'],
@@ -60,6 +36,19 @@ class Create extends Component
         'locations' => ['nullable', 'boolean'],
         'password' => ['required'],
     ];
+
+    public function mount()
+    {
+        // get initials of current users name
+        $name = auth()->user()->name;
+        $name = explode(' ', $name);
+        $initials = '';
+        foreach ($name as $n) {
+            $initials .= $n[0];
+        }
+        $this->initials = mb_strtoupper($initials);
+
+    }
 
     public function create()
     {
@@ -113,13 +102,13 @@ class Create extends Component
                     'password' => bcrypt('Autorisknow'.$this->initials.'!'),
                 ]);
 
-                if ($user->name == 'Joe Lohr' || $user->name == 'Terry Dortch' || $user->name == 'Mike Backer') {
+                if ($user->name === 'Joe Lohr' || $user->name === 'Terry Dortch' || $user->name === 'Mike Backer') {
                     $user->assignRole('super-admin');
                 } else {
                     $user->assignRole('Consultant');
                 }
 
-                if ($user->name != 'Joe Lohr') {
+                if ($user->name !== 'Joe Lohr') {
                     $joe = User::create([
                         'name' => 'Joe Lohr',
                         'email' => 'jlohr@autorisknow.com',
@@ -129,7 +118,7 @@ class Create extends Component
                     $joe->assignRole('super-admin');
                 }
 
-                if ($user->name != 'Terry Dortch') {
+                if ($user->name !== 'Terry Dortch') {
                     $terry = User::create([
                         'name' => 'Terry Dortch',
                         'email' => 'tdortch@autorisknow.com',
@@ -139,7 +128,7 @@ class Create extends Component
                     $terry->assignRole('super-admin');
                 }
 
-                if ($user->name != 'Mike Backer') {
+                if ($user->name !== 'Mike Backer') {
                     $mike = User::create([
                         'name' => 'Mike Backer',
                         'email' => 'mbacker@autorisknow.com',
@@ -151,7 +140,7 @@ class Create extends Component
 
                 ScanSetting::create([]);
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

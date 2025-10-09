@@ -9,9 +9,7 @@ use Livewire\Component;
 class ParentShowSingle extends Component
 {
     public IndividualAudit $individualAudit;
-
     public Store $store;
-
     public $children;
 
     public function mount()

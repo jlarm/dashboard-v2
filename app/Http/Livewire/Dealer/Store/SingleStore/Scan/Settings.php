@@ -9,9 +9,7 @@ use Livewire\Component;
 class Settings extends Component
 {
     public Store $store;
-
     public $name;
-
     protected $rules = [
         'name' => 'string|max:255',
     ];
@@ -36,9 +34,10 @@ class Settings extends Component
 
         if (tenant('locations')) {
             return redirect()->route('dealer.stores.scan.index', $this->store);
-        } else {
-            return redirect()->route('dealer.scan.index');
         }
+
+        return redirect()->route('dealer.scan.index');
+
     }
 
     public function render()

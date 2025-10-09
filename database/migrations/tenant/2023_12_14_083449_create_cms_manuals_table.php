@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('cms_manuals', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class);
-            $table->foreignIdFor(\App\Models\Dealer\Store::class);
+            $table->foreignIdFor(App\Models\User::class);
+            $table->foreignIdFor(App\Models\Dealer\Store::class);
             $table->string('qi_name');
             $table->decimal('standard_dpp_rate', 5, 2);
             $table->string('adoption_approval_name_one')->nullable();

@@ -20,15 +20,6 @@ class UserInviteNotification extends Notification
         return ['mail'];
     }
 
-    protected function generateInvitationUrl(string $email)
-    {
-        return URL::temporarySignedRoute('employees.create', now()->addDay(), [
-            'email' => $email,
-            'name' => $this->validated['name'],
-            'role' => 'Consultant',
-        ]);
-    }
-
     public function toMail($notifiable): MailMessage
     {
         $url = $this->generateInvitationUrl($notifiable->routes['mail']);
@@ -42,5 +33,14 @@ class UserInviteNotification extends Notification
     public function toArray($notifiable): array
     {
         return [];
+    }
+
+    protected function generateInvitationUrl(string $email)
+    {
+        return URL::temporarySignedRoute('employees.create', now()->addDay(), [
+            'email' => $email,
+            'name' => $this->validated['name'],
+            'role' => 'Consultant',
+        ]);
     }
 }

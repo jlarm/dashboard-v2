@@ -12,9 +12,7 @@ class Create extends Component
     use Keywordable;
 
     public $statement;
-
     public $keywords = [];
-
     protected $rules = [
         'statement' => 'required|string|max:255',
         'keywords' => 'nullable|array',

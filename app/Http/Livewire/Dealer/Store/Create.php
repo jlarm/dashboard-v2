@@ -12,19 +12,12 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
-
     public $address;
-
     public $city;
-
     public $state;
-
     public $postal_code;
-
     public $phone;
-
     public $website;
-
     protected $rules = [
         'name' => 'required|max:255|unique:stores,name|regex:/^[a-zA-Z0-9 ]+$/',
         'address' => 'required|max:255',

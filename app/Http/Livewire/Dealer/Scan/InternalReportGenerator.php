@@ -6,6 +6,7 @@ use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
 use Cookie;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,21 +15,13 @@ use Livewire\Component;
 class InternalReportGenerator extends Component
 {
     public $token;
-
     public $status;
-
     public string $type = 'technical';
-
     public string $dealer;
-
     public $assets;
-
     public $reports;
-
     public Store $store;
-
     public $internal;
-
     public $external;
 
     public function mount()
@@ -69,7 +62,7 @@ class InternalReportGenerator extends Component
                 'type' => 'external',
                 'scan_type' => 'internal',
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addError('connection', 'Error connecting to Sentry. Please check the dealership name in settings.');
         }
 

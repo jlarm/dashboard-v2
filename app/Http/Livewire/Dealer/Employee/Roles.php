@@ -9,7 +9,6 @@ use Spatie\Permission\Models\Role;
 class Roles extends Component
 {
     public User $user;
-
     public $assignedRoles;
 
     public function mount()

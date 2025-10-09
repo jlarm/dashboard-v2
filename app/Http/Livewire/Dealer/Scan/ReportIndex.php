@@ -11,6 +11,16 @@ class ReportIndex extends Component
 {
     public Store $store;
 
+    public function render(): View
+    {
+        $reports = $this->fetchReports();
+        $groupedReports = $this->groupAndMapReports($reports);
+
+        return view('livewire.dealer.scan.report-index', [
+            'reports' => $groupedReports,
+        ]);
+    }
+
     protected function formattedLastScanDate($date): string
     {
         return date('F d, Y', strtotime($date));
@@ -29,24 +39,6 @@ class ReportIndex extends Component
 
     protected function groupAndMapReports($reports)
     {
-        return $reports->groupBy(function ($data) {
-            return $this->formattedLastScanDate($data->created_at);
-        })->map(function ($data) {
-            return $data->groupBy('type');
-        })->map(function ($data) {
-            return $data->map(function ($data) {
-                return $data->first();
-            });
-        });
-    }
-
-    public function render(): View
-    {
-        $reports = $this->fetchReports();
-        $groupedReports = $this->groupAndMapReports($reports);
-
-        return view('livewire.dealer.scan.report-index', [
-            'reports' => $groupedReports,
-        ]);
+        return $reports->groupBy(fn ($data) => $this->formattedLastScanDate($data->created_at))->map(fn ($data) => $data->groupBy('type'))->map(fn ($data) => $data->map(fn ($data) => $data->first()));
     }
 }

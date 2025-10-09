@@ -10,7 +10,6 @@ class GlbaViolationStatements extends Model
         'statement',
         'keywords',
     ];
-
     protected $casts = [
         'keywords' => 'array',
     ];

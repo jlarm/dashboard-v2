@@ -12,17 +12,7 @@ class StoreList extends Component
     use WithPagination;
 
     public $search = '';
-
     protected $listeners = ['refreshStores' => '$refresh'];
-
-    protected function query()
-    {
-        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
-            return Store::query();
-        }
-
-        return auth()->user()->stores();
-    }
 
     public function render(): View
     {
@@ -31,5 +21,14 @@ class StoreList extends Component
                 ->select('id', 'name', 'slug')
                 ->paginate(10),
         ]);
+    }
+
+    protected function query()
+    {
+        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+            return Store::query();
+        }
+
+        return auth()->user()->stores();
     }
 }

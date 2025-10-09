@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Central\Docs;
 
 use App\Models\Document;
 use DB;
+use Exception;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,15 +16,11 @@ class Create extends Component
     use WithFileUploads;
 
     public $title;
-
     public $file;
-
     public $url;
-
     protected $messages = [
         'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
     ];
-
     protected $rules = [
         'title' => 'required',
         'url' => 'nullable|url',
@@ -45,7 +42,7 @@ class Create extends Component
                     ->title('Please provide a URL or upload a file.')
                     ->warning()
                     ->send();
-                throw new \Exception('Please provide a URL or upload a file.');
+                throw new Exception('Please provide a URL or upload a file.');
             }
 
             if ($this->file) {
@@ -56,7 +53,7 @@ class Create extends Component
 
                 // Check if the file was successfully uploaded
                 if (! $filePath) {
-                    throw new \Exception('File upload failed. Please try again.');
+                    throw new Exception('File upload failed. Please try again.');
                 }
             }
 
@@ -82,7 +79,7 @@ class Create extends Component
                 ->success()
                 ->send();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Rollback the transaction in case of any failure
             DB::rollBack();
 

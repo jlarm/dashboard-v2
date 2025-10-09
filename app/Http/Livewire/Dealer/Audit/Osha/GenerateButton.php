@@ -18,7 +18,6 @@ use Throwable;
 class GenerateButton extends Component
 {
     public Store $store;
-
     public OshaViolationAudit $oshaViolationAudit;
 
     public function generatePdf(): void

@@ -54,7 +54,7 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
         $sum = 0;
         for ($i = 1; $i <= 43; $i++) {
             if ($this->bodyShopAudit->{'body_shop_q'.$i.'_answer'} === 2) {
-                ++$sum;
+                $sum++;
             }
         }
 

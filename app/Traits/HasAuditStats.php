@@ -20,12 +20,14 @@ trait HasAuditStats
 
         $comparison = $first - $second;
 
-        if ($comparison == 0) {
+        if ($comparison === 0) {
             return null;
-        } elseif ($comparison < 0) {
-            return ['positive', abs($comparison)];
-        } else {
-            return ['negative', $comparison];
         }
+        if ($comparison < 0) {
+            return ['positive', abs($comparison)];
+        }
+
+        return ['negative', $comparison];
+
     }
 }

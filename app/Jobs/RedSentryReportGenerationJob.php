@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use Http;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -30,7 +31,7 @@ class RedSentryReportGenerationJob implements ShouldQueue
 
             $token = null;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
         }
     }

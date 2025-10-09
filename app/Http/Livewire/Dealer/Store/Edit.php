@@ -8,20 +8,22 @@ use Livewire\Component;
 class Edit extends Component
 {
     public Store $store;
-
     public $name;
-
     public $address;
-
     public $city;
-
     public $state;
-
     public $postal_code;
-
     public $phone;
-
     public $website;
+    protected $rules = [
+        'name' => 'required|max:255',
+        'address' => 'required|max:255',
+        'city' => 'required|max:255',
+        'state' => 'required|max:255',
+        'postal_code' => 'required|max:255',
+        'phone' => 'required|max:255',
+        'website' => 'required|max:255',
+    ];
 
     public function mount()
     {
@@ -52,16 +54,6 @@ class Edit extends Component
 
         $this->close();
     }
-
-    protected $rules = [
-        'name' => 'required|max:255',
-        'address' => 'required|max:255',
-        'city' => 'required|max:255',
-        'state' => 'required|max:255',
-        'postal_code' => 'required|max:255',
-        'phone' => 'required|max:255',
-        'website' => 'required|max:255',
-    ];
 
     public function render()
     {

@@ -26,9 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::preventLazyLoading(! $this->app->isProduction());
 
-        Request::macro('store', function () {
-            return $this->user()?->currentStore();
-        });
+        Request::macro('store', fn () => $this->user()?->currentStore());
 
         view()->composer('components.language-switcher', function ($view) {
             $view->with('current_locale', app()->getLocale());
@@ -40,13 +38,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with('available_locales', config('app.available_locales'));
         });
 
-        Builder::macro('search', function ($field, $string) {
-            return $string ? $this->where($field, 'like', '%'.$string.'%') : $this;
-        });
+        Builder::macro('search', fn ($field, $string) => $string ? $this->where($field, 'like', '%'.$string.'%') : $this);
 
-        Collection::macro('incomplete_courses', function () {
-            return $this->map(fn ($user) => $user->incomplete_courses());
-        });
+        Collection::macro('incomplete_courses', fn () => $this->map(fn ($user) => $user->incomplete_courses()));
 
         Builder::macro('toCsv', function () {
             $results = $this->get();
@@ -57,11 +51,7 @@ class AppServiceProvider extends ServiceProvider
 
             $titles = implode(',', array_keys($results->first()->getAttributes()));
 
-            $values = $results->map(function ($result) {
-                return implode(',', collect($result->getAttributes())->map(function ($value) {
-                    return '"'.$value.'"';
-                })->toArray());
-            });
+            $values = $results->map(fn ($result) => implode(',', collect($result->getAttributes())->map(fn ($value) => '"'.$value.'"')->toArray()));
 
             $values->prepend($titles);
 

@@ -10,7 +10,9 @@ use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
 use App\Notifications\NewDealershipNotification;
+use Exception;
 use Illuminate\Support\Facades\DB;
+use Log;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CreateController extends Controller
@@ -106,7 +108,7 @@ class CreateController extends Controller
 
     private function assignRoleToUser($user)
     {
-        if ($user->name == 'Joe Lohr' || $user->name == 'Terry Dortch' || $user->name == 'Mike Backer') {
+        if ($user->name === 'Joe Lohr' || $user->name === 'Terry Dortch' || $user->name === 'Mike Backer') {
             $user->assignRole('super-admin');
         } else {
             $user->assignRole('Consultant');
@@ -122,7 +124,7 @@ class CreateController extends Controller
         ];
 
         foreach ($superAdmins as $name => $details) {
-            if ($user->name != $name) {
+            if ($user->name !== $name) {
                 $superAdmin = User::create([
                     'name' => $name,
                     'email' => $details['email'],
@@ -160,11 +162,11 @@ class CreateController extends Controller
                         $tenantCourse->id,
                     ]);
 
-                } catch (\Exception $e) {
-                    \Log::error('Failed to update tenant course: '.$e->getMessage());
+                } catch (Exception $e) {
+                    Log::error('Failed to update tenant course: '.$e->getMessage());
                 }
             } else {
-                \Log::info('No matching tenant course found for slug: '.$centralCourse->slug);
+                Log::info('No matching tenant course found for slug: '.$centralCourse->slug);
             }
         }
     }

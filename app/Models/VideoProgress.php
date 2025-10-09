@@ -12,7 +12,6 @@ class VideoProgress extends Model
         'video_id',
         'completed',
     ];
-
     protected $casts = [
         'completed' => 'boolean',
     ];

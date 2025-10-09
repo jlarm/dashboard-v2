@@ -12,11 +12,8 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public OshaViolationAudit $oshaAudit;
-
     public Store $store;
-
     public bool $remediations;
-
     protected $listeners = [
         'pdfGenerated' => '$refresh',
     ];

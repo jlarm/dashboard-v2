@@ -11,15 +11,10 @@ class ManagerIndex extends Component
     use WithPagination;
 
     public $search = '';
-
     public $store;
-
     public $selectedDepartment = null;
-
     public $selectedDepartmentName = null;
-
     public $showIncompleteCourseUsers = false;
-
     public $queryString = [
         'search' => ['except' => '', 'as' => 's'],
         'selectedDepartment' => ['except' => null, 'as' => 'd'],
@@ -83,9 +78,7 @@ class ManagerIndex extends Component
         if ($this->showIncompleteCourseUsers) {
             $users = $this->usersQuery
                 ->paginate(500)
-                ->filter(function ($user) {
-                    return $user->user_has_not_completed_courses;
-                });
+                ->filter(fn ($user) => $user->user_has_not_completed_courses);
         }
 
         return view('livewire.dealer.employee.manager-index', [

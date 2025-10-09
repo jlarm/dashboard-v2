@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 class ReportTenantSizeCommand extends Command
 {
     protected $signature = 'tenant:report-sizes';
-
     protected $description = 'Command description';
 
     public function handle(): void

@@ -30,7 +30,7 @@ class UserFactory extends Factory
 
     }
 
-    public function configure(): Factory|UserFactory
+    public function configure(): Factory|self
     {
         return $this->afterCreating(function (User $user) {
             // Only assign role if roles exist (not during tenant isolation tests)

@@ -10,15 +10,10 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public User $user;
-
     public Course $course;
-
     public Store $store;
-
     public $module1;
-
     public $module2;
-
     public $module3;
 
     public function mount()

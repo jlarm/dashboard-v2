@@ -6,15 +6,14 @@ use App\Jobs\Manuals\GenerateRedFlagManualJob;
 use App\Jobs\Manuals\UploadRedFlagToDigitalOceanJob;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Store;
+use Bus;
 use Livewire\Component;
 use Storage;
 
 class RedFlagCard extends Component
 {
     public Store $store;
-
     public $manual;
-
     public $content;
 
     public function mount()
@@ -27,7 +26,7 @@ class RedFlagCard extends Component
 
     public function generate()
     {
-        \Bus::chain([
+        Bus::chain([
             new GenerateRedFlagManualJob($this->manual),
             new UploadRedFlagToDigitalOceanJob($this->manual),
         ])->dispatch();

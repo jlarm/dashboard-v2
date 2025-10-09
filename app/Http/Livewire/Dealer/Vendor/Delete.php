@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\Vendor;
+use Exception;
 use Filament\Notifications\Notification;
+use Log;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
@@ -28,8 +30,8 @@ class Delete extends Modal
                 ->title('Vendor Deleted Successfully')
                 ->success()
                 ->send();
-        } catch (\Exception $e) {
-            \Log::error($e);
+        } catch (Exception $e) {
+            Log::error($e);
 
             $this->addError('vendor', 'An error occurred while deleting the vendor.');
 

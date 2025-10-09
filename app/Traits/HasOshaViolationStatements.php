@@ -16,9 +16,7 @@ trait HasOshaViolationStatements
 
     public function violationSelected($violation): void
     {
-        $this->violationStatements = tenancy()->central(function ($tenant) {
-            return OshaViolationStatements::all();
-        });
+        $this->violationStatements = tenancy()->central(fn ($tenant) => OshaViolationStatements::all());
 
         $this->oshaViolationAudit->violations()->create([
             'statement_id' => $violation['id'],

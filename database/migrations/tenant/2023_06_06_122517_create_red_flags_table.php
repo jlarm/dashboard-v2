@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('red_flags', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Dealer\Store::class)->nullable();
-            $table->foreignIdFor(\App\Models\User::class)->nullable();
+            $table->foreignIdFor(App\Models\Dealer\Store::class)->nullable();
+            $table->foreignIdFor(App\Models\User::class)->nullable();
 
             $table->string('pdf_path')->nullable();
             $table->string('qualified_individual_name')->nullable();

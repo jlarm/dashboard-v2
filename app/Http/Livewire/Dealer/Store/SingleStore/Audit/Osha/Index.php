@@ -9,7 +9,6 @@ use Livewire\Component;
 class Index extends Component
 {
     public Store $store;
-
     protected $listeners = ['refreshAudits' => '$refresh'];
 
     public function render()

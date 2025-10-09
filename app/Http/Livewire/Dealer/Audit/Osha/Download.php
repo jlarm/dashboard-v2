@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class Download extends Component
 {
     public OshaAudit $oshaAudit;
-
     public $content;
 
     public function mount()

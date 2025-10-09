@@ -8,7 +8,6 @@ use Spatie\Permission\Models\Role as SpatieRole;
 class Role extends SpatieRole
 {
     protected $guarded = [];
-
     protected $guard_name = 'web';
 
     public function courses(): BelongsToMany

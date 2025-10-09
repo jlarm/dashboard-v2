@@ -18,11 +18,8 @@ class EditQuiz extends Component implements HasForms
     use InteractsWithForms;
 
     public Course $course;
-
     public $name;
-
     public $questions;
-
     public $answers = [];
 
     public function mount(): void
@@ -52,6 +49,11 @@ class EditQuiz extends Component implements HasForms
             ->send();
     }
 
+    public function render(): View
+    {
+        return view('livewire.central.course-management.edit-quiz');
+    }
+
     protected function getFormSchema(): array
     {
         return [
@@ -68,10 +70,5 @@ class EditQuiz extends Component implements HasForms
                 ->disableItemMovement()
                 ->createItemButtonLabel('Add Question'),
         ];
-    }
-
-    public function render(): View
-    {
-        return view('livewire.central.course-management.edit-quiz');
     }
 }

@@ -14,13 +14,9 @@ class Edit extends SlideOver
     use WithPagination;
 
     public $vendor;
-
     public string $name = '';
-
     public string $email = '';
-
     protected $listeners = ['refreshVendorForms' => '$refresh'];
-
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|email',
@@ -50,19 +46,19 @@ class Edit extends SlideOver
             ->send();
     }
 
-    private function createVendorForm()
-    {
-        return $this->vendor->forms()->create([
-            'name' => $this->name,
-            'email' => $this->email,
-        ]);
-    }
-
     public function render()
     {
         return view('livewire.dealer.vendor.edit', [
             'forms' => $this->vendor->forms()->latest()->paginate(5),
             'stores' => Store::orderBy('name')->get(),
+        ]);
+    }
+
+    private function createVendorForm()
+    {
+        return $this->vendor->forms()->create([
+            'name' => $this->name,
+            'email' => $this->email,
         ]);
     }
 }

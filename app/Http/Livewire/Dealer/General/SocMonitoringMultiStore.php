@@ -8,7 +8,6 @@ use Livewire\Component;
 class SocMonitoringMultiStore extends Component
 {
     public Store $store;
-
     public $active;
 
     public function mount()

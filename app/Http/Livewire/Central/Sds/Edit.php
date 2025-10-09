@@ -10,6 +10,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Log;
 use Storage;
+
 use function Sentry\captureException;
 
 class Edit extends Component
@@ -48,14 +49,14 @@ class Edit extends Component
     {
         // Validate base fields
         $this->validate();
-        
+
         // Validate file only if it's been uploaded (UploadedFile instance)
         if ($this->file && is_object($this->file) && method_exists($this->file, 'getClientOriginalName')) {
             $this->validate([
                 'file' => 'mimes:pdf|max:5120',
             ]);
         }
-        
+
         try {
             // Check if a new file was uploaded
             if ($this->file && is_object($this->file) && method_exists($this->file, 'getClientOriginalName')) {
@@ -63,13 +64,14 @@ class Edit extends Component
                 Storage::disk('sds-sheets')->delete($this->sds->file_name);
 
                 $fileName = str_replace(' ', '-', $this->file->getClientOriginalName());
-                
+
                 // Check if file already exists (but allow current file)
                 if (Sds::where('file_name', $fileName)->where('id', '!=', $this->sds->id)->exists()) {
                     $this->addError('file', 'A file with the same name already exists.');
+
                     return;
                 }
-                
+
                 Storage::disk('sds-sheets')->putFileAs('/', $this->file, $fileName);
             } else {
                 // No new file uploaded, keep existing file name
@@ -100,7 +102,7 @@ class Edit extends Component
 
     public function addKeyword(): void
     {
-        if (trim($this->newKeyword) && !in_array($this->newKeyword, $this->keywords, true)) {
+        if (trim($this->newKeyword) && ! in_array($this->newKeyword, $this->keywords, true)) {
             $this->keywords[] = trim($this->newKeyword);
             $this->newKeyword = '';
         }

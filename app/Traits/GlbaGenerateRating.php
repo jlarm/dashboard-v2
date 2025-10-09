@@ -6,9 +6,8 @@ use App\Models\Dealer\Audit\FinanceAudit;
 
 trait GlbaGenerateRating
 {
-    protected int $sum = 0;
-
     public $audits;
+    protected int $sum = 0;
 
     public function rating()
     {
@@ -18,7 +17,7 @@ trait GlbaGenerateRating
         });
         $this->audits->filter(function ($value) {
             for ($i = 1; $i <= 46; $i++) {
-                if ($value->{'finance_q'.$i.'_answer'} == 2) {
+                if ($value->{'finance_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
                 }
             }

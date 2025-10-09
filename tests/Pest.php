@@ -143,13 +143,13 @@ function createDealershipTenant(?User $owner = null): array
     });
 
     // Create tenant user
-    $tenantUser = $dealership->run(fn () => User::create([
+    $consultant = $dealership->run(fn () => User::create([
         'name' => $owner->name,
         'email' => $owner->email,
         'password' => $owner->password,
     ]));
 
-    $dealership->run(fn () => $tenantUser->assignRole('Consultant'));
+    $dealership->run(fn () => $consultant->assignRole('Consultant'));
 
-    return [$dealership, $tenantUser];
+    return [$dealership, $consultant];
 }

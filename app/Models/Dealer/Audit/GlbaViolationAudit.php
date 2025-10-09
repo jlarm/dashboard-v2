@@ -27,7 +27,6 @@ class GlbaViolationAudit extends Model
         'grade',
         'reminder_logs',
     ];
-
     protected $casts = [
         'uuid' => 'string',
         'date' => 'date',

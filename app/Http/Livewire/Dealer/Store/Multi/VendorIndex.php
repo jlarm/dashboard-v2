@@ -9,7 +9,6 @@ use Livewire\Component;
 class VendorIndex extends Component
 {
     public Store $store;
-
     public $sid = '';
 
     public function mount()

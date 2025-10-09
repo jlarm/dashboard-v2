@@ -10,11 +10,8 @@ use Livewire\Component;
 class StoreSwitcher extends Component
 {
     public Store $store;
-
     public $currentStore;
-
     public $storeSlug;
-
     protected $listeners = ['refreshStores' => 'mount'];
 
     public function mount(Request $request): void

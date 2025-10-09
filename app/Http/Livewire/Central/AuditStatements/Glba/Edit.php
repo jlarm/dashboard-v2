@@ -12,11 +12,8 @@ class Edit extends Component
     use Keywordable;
 
     public GlbaViolationStatements $glbaViolation;
-
     public $statement;
-
     public $keywords = [];
-
     public $newKeyword = '';
 
     public function mount()

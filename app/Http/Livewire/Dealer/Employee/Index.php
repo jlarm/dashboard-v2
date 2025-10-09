@@ -122,7 +122,7 @@ class Index extends Component
             $this->sortField = $field;
             $this->sortDirection = 'asc';
         }
-        
+
         $this->resetPage();
     }
 
@@ -288,12 +288,12 @@ class Index extends Component
     private function initialUsersQuery(): Builder
     {
         $query = User::query();
-        
+
         // Restrict managers to their own department unless they have store creation permissions
         if ($this->currentUser->cannot('create-stores') && $this->currentUser->department_id) {
             $query->where('department_id', $this->currentUser->department_id);
         }
-        
+
         return $query;
     }
 }

@@ -12,13 +12,12 @@ use Mail;
 class RunInvitesCommand extends Command
 {
     protected $signature = 'run:invites {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Daily check to send invites for 10 or 20 days then delete anything older than 30 days.';
 
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            $this->info("Running command for tenant $tenant->id ($tenant->name)");
+            $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             $invites = Invite::all();
 

@@ -10,7 +10,6 @@ use Storage;
 class IndexItem extends Component
 {
     public CmsManual $manual;
-
     public $link;
 
     public function mount(): void

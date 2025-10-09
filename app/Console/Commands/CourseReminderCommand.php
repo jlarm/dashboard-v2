@@ -14,7 +14,6 @@ class CourseReminderCommand extends Command
     protected $signature = 'course:reminder {--tenants=* : The tenant(s) to run the command for. Default all.} 
                                            {--debug : Enable detailed debugging output}
                                            {--test : Run in test mode without sending notifications}';
-
     protected $description = 'Notify user every 30 days until they have attempted all of their courses.';
 
     public function handle(): void

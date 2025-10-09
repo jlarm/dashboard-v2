@@ -11,15 +11,10 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public User $user;
-
     public $completed;
-
     public $totalCourses;
-
     public $departmentCourseCount;
-
     public $unassignedCourseCount;
-
     public $courseWithRole;
 
     public function mount()
@@ -28,6 +23,13 @@ class IndexItem extends Component
         $this->initializeCourseWithRole();
         $this->calculateCompletedCourses();
         $this->calculateTotalCourses();
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.store.single-store.employee.index-item', [
+            'department' => Department::find($this->user->department_id),
+        ]);
     }
 
     private function initializeUser(): void
@@ -71,15 +73,8 @@ class IndexItem extends Component
             ->with(['results' => fn ($query) => $query->where('user_id', $this->user->id)->latest()])
             ->count();
 
-        if ($this->user->stores[0]->state != 'California') {
+        if ($this->user->stores[0]->state !== 'California') {
             $this->totalCourses -= 1;
         }
-    }
-
-    public function render()
-    {
-        return view('livewire.dealer.store.single-store.employee.index-item', [
-            'department' => Department::find($this->user->department_id),
-        ]);
     }
 }

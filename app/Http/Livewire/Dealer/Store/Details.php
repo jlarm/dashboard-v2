@@ -8,7 +8,6 @@ use Livewire\Component;
 class Details extends Component
 {
     public Store $store;
-
     protected $listeners = ['refreshStoreDetails' => '$refresh'];
 
     public function render()

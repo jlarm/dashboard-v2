@@ -10,11 +10,8 @@ use Livewire\Component;
 class Show extends Component
 {
     public PhishingCampaign $phishingCampaign;
-
     public $users;
-
     private $token;
-
     private $ip;
 
     public function mount()

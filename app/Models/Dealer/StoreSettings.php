@@ -49,13 +49,12 @@ class StoreSettings extends Model
         'personal_devices',
         'compliance_issues',
     ];
-
     protected $casts = [
         'ip_addresses' => 'array',
         'website_urls' => 'array',
     ];
 
-    public function store(): belongsTo
+    public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
     }

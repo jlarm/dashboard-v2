@@ -10,7 +10,6 @@ use Illuminate\View\Component;
 class StoreApp extends Component
 {
     public Store $store;
-
     public $name;
 
     public function __construct(Store $store)

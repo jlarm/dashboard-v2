@@ -24,7 +24,6 @@ class Violation extends Model implements HasMedia
         'violation_date',
         'risk',
     ];
-
     protected $casts = [
         'violation_date' => 'date:Y-m-d',
     ];

@@ -9,7 +9,6 @@ use Livewire\Component;
 class Edit extends Component
 {
     public Store $store;
-
     public IndividualAudit $individualAudit;
 
     public function render()

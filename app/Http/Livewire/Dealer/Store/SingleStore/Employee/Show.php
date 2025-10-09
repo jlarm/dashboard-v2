@@ -10,7 +10,6 @@ use Livewire\Component;
 class Show extends Component
 {
     public Store $store;
-
     public User $user;
 
     public function render(): View

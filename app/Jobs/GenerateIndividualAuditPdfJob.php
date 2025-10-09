@@ -16,28 +16,17 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $timeout = 240;
-
     public $audits;
-
     public int $count = 0;
-
-    protected $sum;
-
     public $issueCountByManager;
-
     public $issuesByManager;
-
     public $array = [];
-
-    protected $parent;
-
     public $results = [];
-
     public $totals = [];
-
     public $grandTotal;
-
     public $managerIssueCount = [];
+    protected $sum;
+    protected $parent;
 
     public function __construct(protected IndividualAudit $individualAudit)
     {
@@ -52,24 +41,22 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->issueCountByManager = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(function ($item) {
-                return $item->manager->name;
-            })
+            ->groupBy(fn ($item) => $item->manager->name)
             ->map(function ($item) {
                 $this->array = [];
                 $item->each(function ($item, $key) {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (
-                            $key != 'id' &&
-                            $key != 'parent_id' &&
-                            $key != 'user_id' &&
-                            $key != 'store_id' &&
-                            $key != 'manager_id' &&
-                            $key != 'mileage' &&
-                            $key != 'customer_number' &&
-                            $key != 'rating' &&
-                            $key != 'individual_q1_answer' &&
-                            $key != 'individual_q2_answer'
+                            $key !== 'id' &&
+                            $key !== 'parent_id' &&
+                            $key !== 'user_id' &&
+                            $key !== 'store_id' &&
+                            $key !== 'manager_id' &&
+                            $key !== 'mileage' &&
+                            $key !== 'customer_number' &&
+                            $key !== 'rating' &&
+                            $key !== 'individual_q1_answer' &&
+                            $key !== 'individual_q2_answer'
                         ) {
                             if ($value === 2) {
                                 $this->array[] = $value;
@@ -83,24 +70,22 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->issuesByManager = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(function ($item) {
-                return $item->manager->name;
-            })
+            ->groupBy(fn ($item) => $item->manager->name)
             ->map(function ($item) {
                 $this->array = [];
                 $item->each(function ($item, $key) {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (
-                            $key != 'id' &&
-                            $key != 'parent_id' &&
-                            $key != 'user_id' &&
-                            $key != 'store_id' &&
-                            $key != 'manager_id' &&
-                            $key != 'mileage' &&
-                            $key != 'customer_number' &&
-                            $key != 'rating' &&
-                            $key != 'individual_q1_answer' &&
-                            $key != 'individual_q2_answer'
+                            $key !== 'id' &&
+                            $key !== 'parent_id' &&
+                            $key !== 'user_id' &&
+                            $key !== 'store_id' &&
+                            $key !== 'manager_id' &&
+                            $key !== 'mileage' &&
+                            $key !== 'customer_number' &&
+                            $key !== 'rating' &&
+                            $key !== 'individual_q1_answer' &&
+                            $key !== 'individual_q2_answer'
                         ) {
                             if ($value === 2) {
                                 preg_match('/^[^_]*_q\K[^_]+/', $key, $matches);
@@ -111,34 +96,30 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                     }
                 });
 
-                return collect($this->array)->groupBy(function ($item) {
-                    return $item[0];
-                });
+                return collect($this->array)->groupBy(fn ($item) => $item[0]);
             });
 
         $this->managerIssueCount = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(function ($item) {
-                return $item->manager->name;
-            })
+            ->groupBy(fn ($item) => $item->manager->name)
             ->map(function ($item) {
                 $this->array = [];
                 $item->each(function ($item, $key) {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (
-                            $key != 'id' &&
-                            $key != 'parent_id' &&
-                            $key != 'user_id' &&
-                            $key != 'store_id' &&
-                            $key != 'manager_id' &&
-                            $key != 'mileage' &&
-                            $key != 'customer_number' &&
-                            $key != 'rating' &&
-                            $key != 'individual_q1_answer' &&
-                            $key != 'individual_q2_answer'
+                            $key !== 'id' &&
+                            $key !== 'parent_id' &&
+                            $key !== 'user_id' &&
+                            $key !== 'store_id' &&
+                            $key !== 'manager_id' &&
+                            $key !== 'mileage' &&
+                            $key !== 'customer_number' &&
+                            $key !== 'rating' &&
+                            $key !== 'individual_q1_answer' &&
+                            $key !== 'individual_q2_answer'
                         ) {
                             if ($value === 2) {
-                                array_push($this->array, $key);
+                                $this->array[] = $key;
                             }
                         }
                     }
@@ -193,24 +174,6 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
         $this->totals[] = $this->grandTotal;
     }
 
-    private function rating(): void
-    {
-
-        foreach ($this->audits as $audit) {
-            $sum = 0;
-            for ($i = 3; $i <= 40; $i++) {
-                if ($audit->{'individual_q'.$i.'_answer'} == 2) {
-                    $sum += 1;
-                }
-            }
-            $wrong = $sum;
-
-            $audit->update([
-                'rating' => number_format(100 * (40 - $wrong) / 40, 2, '.', ''),
-            ]);
-        }
-    }
-
     public function handle(): void
     {
         $path = storage_path('app/individual-audits');
@@ -248,5 +211,23 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->rating();
 
+    }
+
+    private function rating(): void
+    {
+
+        foreach ($this->audits as $audit) {
+            $sum = 0;
+            for ($i = 3; $i <= 40; $i++) {
+                if ($audit->{'individual_q'.$i.'_answer'} === 2) {
+                    $sum += 1;
+                }
+            }
+            $wrong = $sum;
+
+            $audit->update([
+                'rating' => number_format(100 * (40 - $wrong) / 40, 2, '.', ''),
+            ]);
+        }
     }
 }

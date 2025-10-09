@@ -12,7 +12,6 @@ class Ridgeback extends Model
         'ip_address',
         'active',
     ];
-
     protected $casts = [
         'active' => 'boolean',
     ];

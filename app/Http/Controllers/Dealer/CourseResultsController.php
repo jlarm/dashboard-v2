@@ -35,7 +35,7 @@ class CourseResultsController extends Controller
         $score = 0;
 
         for ($i = 0; $i < $count; $i++) {
-            if ($correctAnswers[$i] == $submittedAnswers[$i]) {
+            if ($correctAnswers[$i] === $submittedAnswers[$i]) {
                 $score++;
             }
         }

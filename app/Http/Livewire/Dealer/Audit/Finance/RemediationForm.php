@@ -15,14 +15,19 @@ class RemediationForm extends Component
     use InteractsWithConfirmationModal, UpdateRemediations, WithFileUploads, WithMedia;
 
     public ?Store $store = null;
-
     public GlbaViolationAudit $glbaViolationAudit;
-
     public array $violationRemediations = [];
 
     public function mount(): void
     {
         $this->loadRemediations();
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.audit.finance.remediation-form', [
+            'violations' => $this->violations()->get(),
+        ])->layout('components.dealer-app');
     }
 
     protected function violations()
@@ -38,12 +43,5 @@ class RemediationForm extends Component
                 'completed' => $violation->remediation?->completed,
             ]];
         })->toArray();
-    }
-
-    public function render()
-    {
-        return view('livewire.dealer.audit.finance.remediation-form', [
-            'violations' => $this->violations()->get(),
-        ])->layout('components.dealer-app');
     }
 }

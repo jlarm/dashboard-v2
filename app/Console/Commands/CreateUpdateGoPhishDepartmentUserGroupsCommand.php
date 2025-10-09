@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -12,13 +13,9 @@ use Illuminate\Support\Facades\Log;
 class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 {
     protected $signature = 'run:go-phish-user-group-departments {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Command description';
-
     protected $token;
-
     protected $ip;
-
     protected $groups;
 
     public function handle(): void
@@ -112,7 +109,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
                 $this->info('Group Created');
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }
@@ -120,7 +117,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
     private function deleteGroups()
     {
         foreach ($this->groups as $group) {
-            if ($group != null) {
+            if ($group !== null) {
                 $this->info('Deleting group: '.$group);
                 $response = Http::withHeaders([
                     'Authorization' => $this->token,

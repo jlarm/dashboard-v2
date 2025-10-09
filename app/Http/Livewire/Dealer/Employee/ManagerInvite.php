@@ -11,11 +11,8 @@ use WireElements\Pro\Components\Modal\Modal;
 class ManagerInvite extends Modal
 {
     public $name;
-
     public $email;
-
     public $role;
-
     protected $rules = [
         'name' => ['required', 'max:255'],
         'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
@@ -33,7 +30,7 @@ class ManagerInvite extends Modal
             'department_id' => auth()->user()->department_id,
             'roles' => $this->role,
             'user_id' => auth()->user()->id,
-            'invitation_token' => substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+            'invitation_token' => mb_substr(md5(rand(0, 9).$this->email.time()), 0, 32),
         ]);
 
         SendQueueEmailJob::dispatch($invite, 'invite');

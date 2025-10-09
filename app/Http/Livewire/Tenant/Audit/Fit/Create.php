@@ -15,13 +15,9 @@ class Create extends Component
     use WithFileUploads;
 
     public Store $store;
-
     public $search = '';
-
     public $selectedUser = null;
-
     public $date;
-
     public $file;
 
     public function mount(): void
@@ -29,14 +25,9 @@ class Create extends Component
         $this->store = Store::find(app('currentStore'));
     }
 
-    private function baseQuery()
-    {
-        return tenant('locations') ? $this->store->users() : User::query();
-    }
-
     public function searchUsers(): void
     {
-        if (strlen($this->search) >= 2) {
+        if (mb_strlen($this->search) >= 2) {
             $users = $this->baseQuery()
                 ->whereDoesntHave('roles', function ($query) {
                     $query->where('name', 'super-admin')
@@ -119,5 +110,10 @@ class Create extends Component
     public function render(): View
     {
         return view('livewire.tenant.audit.fit.create');
+    }
+
+    private function baseQuery()
+    {
+        return tenant('locations') ? $this->store->users() : User::query();
     }
 }

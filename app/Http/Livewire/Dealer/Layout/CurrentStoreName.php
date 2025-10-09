@@ -8,7 +8,6 @@ use Livewire\Component;
 class CurrentStoreName extends Component
 {
     public $storeName;
-
     public $storeSlug;
 
     public function mount(Request $request): void

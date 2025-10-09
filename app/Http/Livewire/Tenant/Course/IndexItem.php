@@ -12,7 +12,6 @@ class IndexItem extends Component
     use HasCourseStatus;
 
     public Course $course;
-
     private array $dot = [
         'dot-hazardous-materials-transportation',
         'dot-hazardous-materials-transportation-identifying-hazardous-materials',
@@ -25,7 +24,7 @@ class IndexItem extends Component
         $slug = $this->course->slug;
         $position = array_search($slug, $this->dot);
 
-        if ($position != 0) {
+        if ($position !== 0) {
             return true;
         }
 

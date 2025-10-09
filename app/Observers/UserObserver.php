@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Cache;
 
 class UserObserver
@@ -14,7 +15,7 @@ class UserObserver
     {
         try {
             Cache::store('redis')->tags(['user_index'])->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Cache::forget('user_index');
         }
     }
@@ -26,7 +27,7 @@ class UserObserver
     {
         try {
             Cache::store('redis')->tags(['user_index'])->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Cache::forget('user_index');
         }
     }
@@ -38,7 +39,7 @@ class UserObserver
     {
         try {
             Cache::store('redis')->tags(['user_index'])->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Cache::forget('user_index');
         }
     }
@@ -50,7 +51,7 @@ class UserObserver
     {
         try {
             Cache::store('redis')->tags(['user_index'])->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Cache::forget('user_index');
         }
     }
@@ -62,7 +63,7 @@ class UserObserver
     {
         try {
             Cache::store('redis')->tags(['user_index'])->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Cache::forget('user_index');
         }
     }

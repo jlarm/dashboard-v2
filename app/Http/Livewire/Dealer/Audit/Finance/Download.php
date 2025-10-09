@@ -9,7 +9,6 @@ use Storage;
 class Download extends Component
 {
     public FinanceAudit $financeAudit;
-
     public $content;
 
     public function mount()

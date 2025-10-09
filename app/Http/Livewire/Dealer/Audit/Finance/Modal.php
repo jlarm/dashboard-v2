@@ -15,7 +15,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     public ?string $auditType = null;
     public array $selectedViolations = [];
 
-    public function mount(int $auditId = null, string $auditType = null): void
+    public function mount(?int $auditId = null, ?string $auditType = null): void
     {
         $this->auditId = $auditId;
         $this->auditType = $auditType;

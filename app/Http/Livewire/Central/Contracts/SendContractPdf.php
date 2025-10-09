@@ -9,7 +9,6 @@ use Notification;
 class SendContractPdf extends Component
 {
     public Contract $contract;
-
     public $sendPdfEmailAddress;
 
     public function sendContractPdf(): void

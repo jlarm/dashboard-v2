@@ -10,12 +10,18 @@ use Livewire\Component;
 class Index extends Component
 {
     public $store;
-
     protected $listeners = ['$refresh'];
 
     public function mount(Request $request): void
     {
         $this->store = $this->getStoreIdFromRequest($request);
+    }
+
+    public function render(): View
+    {
+        return view('livewire.dealer.manual.cms.index', [
+            'manuals' => $this->store->cmsManuals()->get(),
+        ])->layout('components.dealer-app');
     }
 
     private function getStoreIdFromRequest(Request $request): Store
@@ -27,12 +33,5 @@ class Index extends Component
         }
 
         return Store::first()->select('id')->first();
-    }
-
-    public function render(): View
-    {
-        return view('livewire.dealer.manual.cms.index', [
-            'manuals' => $this->store->cmsManuals()->get(),
-        ])->layout('components.dealer-app');
     }
 }

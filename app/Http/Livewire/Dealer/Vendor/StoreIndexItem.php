@@ -9,9 +9,7 @@ use Livewire\Component;
 class StoreIndexItem extends Component
 {
     public Vendor $vendor;
-
     public $noCount;
-
     public $array = [];
 
     public function mount()

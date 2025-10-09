@@ -17,7 +17,7 @@ class CreateFrameworkDirectoriesForTenantJob
     {
         $this->tenant->run(function ($tenant) {
             $storage_path = storage_path();
-            $cachePath = "$storage_path/framework/cache";
+            $cachePath = "{$storage_path}/framework/cache";
 
             if (! is_dir($cachePath)) {
                 mkdir($cachePath, 0777, true);

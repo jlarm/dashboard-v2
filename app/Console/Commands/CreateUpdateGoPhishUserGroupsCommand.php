@@ -11,13 +11,9 @@ use Illuminate\Console\Command;
 class CreateUpdateGoPhishUserGroupsCommand extends Command
 {
     protected $signature = 'run:go-phish-user-groups {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Create/Update User Groups for GoPhish';
-
     protected $token;
-
     protected $ip;
-
     protected $goPhishService;
 
     public function __construct(GoPhishService $goPhishService)

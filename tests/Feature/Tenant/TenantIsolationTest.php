@@ -51,7 +51,7 @@ afterEach(function () {
     foreach ($dealerships as $dealership) {
         $storagePath = storage_path("framework/tenants/{$dealership->id}");
         if (is_dir($storagePath)) {
-            exec("rm -rf " . escapeshellarg($storagePath));
+            exec('rm -rf '.escapeshellarg($storagePath));
         }
     }
 

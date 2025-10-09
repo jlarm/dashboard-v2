@@ -15,17 +15,11 @@ class Edit extends Component
     use WithFileUploads;
 
     public SharedDocument $sharedDocument;
-
     public string $title;
-
     public string $url;
-
     public $file;
-
     public $newFile;
-
     public $removed = false;
-
     protected array $messages = [
         'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
     ];

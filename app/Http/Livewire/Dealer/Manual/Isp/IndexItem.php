@@ -10,7 +10,6 @@ use Storage;
 class IndexItem extends Component
 {
     public Isp $manual;
-
     public $link;
 
     public function mount(): void

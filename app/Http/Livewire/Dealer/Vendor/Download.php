@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\VendorForm;
+use Exception;
 use Livewire\Component;
+use Log;
 use Spatie\Browsershot\Browsershot;
 
 class Download extends Component
@@ -25,8 +27,8 @@ class Download extends Component
             return response()->streamDownload(function () use ($pdf) {
                 echo $pdf;
             }, 'vendor-form.pdf');
-        } catch (\Exception $e) {
-            \Log::log('error', $e->getMessage());
+        } catch (Exception $e) {
+            Log::log('error', $e->getMessage());
         }
     }
 

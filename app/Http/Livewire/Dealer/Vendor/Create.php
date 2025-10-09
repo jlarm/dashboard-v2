@@ -13,17 +13,11 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
-
     public $user;
-
     public $qi;
-
     public $contact_name;
-
     public $contact_email;
-
     public $store;
-
     protected $rules = [
         'name' => 'required|max:255|unique:vendors,name',
         'contact_name' => 'required|max:255',
@@ -58,6 +52,13 @@ class Create extends Modal
             ->send();
     }
 
+    public function render(): View
+    {
+        return view('livewire.dealer.vendor.create', [
+            'stores' => tenant('locations') ? Store::orderBy('name')->get() : null,
+        ]);
+    }
+
     private function createVendor()
     {
         return Vendor::create([
@@ -73,13 +74,6 @@ class Create extends Modal
         return $vendor->forms()->create([
             'name' => $vendor->contact_name,
             'email' => $vendor->contact_email,
-        ]);
-    }
-
-    public function render(): View
-    {
-        return view('livewire.dealer.vendor.create', [
-            'stores' => tenant('locations') ? Store::orderBy('name')->get() : null,
         ]);
     }
 }

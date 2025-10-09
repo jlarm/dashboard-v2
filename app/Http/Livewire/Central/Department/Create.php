@@ -9,7 +9,6 @@ use Livewire\Component;
 class Create extends Component
 {
     public $name;
-
     protected $rules = [
         'name' => 'required|unique:departments,name',
     ];
