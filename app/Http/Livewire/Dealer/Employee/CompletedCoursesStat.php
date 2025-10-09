@@ -4,8 +4,6 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -30,78 +28,81 @@ class CompletedCoursesStat extends Component
 
     public function percentage(): int
     {
-        $userCount = $this->userCount();
-        if ($userCount === 0) {
+        $counts = $this->getUserCounts();
+
+        if ($counts['total'] === 0) {
             return 0;
         }
 
-        $complete = $userCount - $this->incompleteCount();
-
-        return round(($complete / $userCount) * 100);
+        return round((($counts['total'] - $counts['incomplete']) / $counts['total']) * 100);
     }
 
     public function render(): View
     {
-        $percentage = Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), fn () => $this->readyToLoad ? $this->percentage() : '');
+        $percentage = $this->readyToLoad ? $this->percentage() : '';
 
         return view('livewire.dealer.employee.completed-courses-stat', compact('percentage'));
     }
 
-    protected function users(): Collection
+    protected function getUserCounts(): array
     {
+        $cacheKey = 'user_counts_'.$this->formattedName.'_'.($this->store?->id ?? 'all');
+
+        return [
+            'total' => $this->getTotalUserCount(),
+            'incomplete' => $this->getIncompleteCount(),
+        ];
+    }
+
+    protected function getTotalUserCount(): int
+    {
+        $query = $this->buildBaseQuery();
+
+        return $query->count();
+    }
+
+    protected function getIncompleteCount(): int
+    {
+        return $this->users()
+            ->filter(fn ($user) => $user->user_has_not_completed_courses)
+            ->count();
+    }
+
+    protected function users()
+    {
+        $query = $this->buildBaseQuery();
+
+        return $query->get();
+    }
+
+    protected function buildBaseQuery()
+    {
+        $query = null;
+
         // If a specific store is selected
         if ($this->store !== null) {
-            return $this->store->users()
-                ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
-                ->when($this->department, function ($query) {
-                    $query->where('department_id', $this->department);
-                })
-                ->get();
+            $query = User::query()
+                ->whereHas('stores', function ($q) {
+                    $q->where('stores.id', $this->store->id);
+                });
+        } elseif (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+            // If the user is a super-admin or consultant
+            $query = User::query();
+        } elseif (! tenant('locations')) {
+            $query = User::query();
+        } else {
+            // If the user is not a super-admin or consultant
+            $currentUser = auth()->user();
+            $query = User::query()
+                ->whereHas('stores', function ($q) use ($currentUser) {
+                    $q->whereIn('stores.id', $currentUser->stores->pluck('id'));
+                });
         }
 
-        // If the user is a super-admin or consultant
-        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
-            return User::query()
-                ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
-                ->when($this->department, function ($query) {
-                    $query->where('department_id', $this->department);
-                })
-                ->get();
-        }
-
-        if (! tenant('locations')) {
-            return User::query()
-                ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
-                ->when($this->department, function ($query) {
-                    $query->where('department_id', $this->department);
-                })
-                ->get();
-        }
-
-        // If the user is not a super-admin or consultant
-        $currentUser = auth()->user();
-
-        return User::query()
-            ->whereHas('stores', function ($query) use ($currentUser) {
-                $query->whereIn('stores.id', $currentUser->stores->pluck('id'));
-            })
+        return $query
+            ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
             ->when($this->department, function ($query) {
                 $query->where('department_id', $this->department);
-            })
-            ->get();
-    }
-
-    protected function incompleteCount(): int
-    {
-        return Cache::remember('incomplete_count_'.$this->formattedName, now()->addDay(), function () {
-            return $this->users()
-                ->filter(fn ($user) => $user->user_has_not_completed_courses)
-                ->count();
-        });
-    }
-
-    protected function userCount(): int
-    {
-        return Cache::remember('user_count_'.$this->formattedName, now()->addDay(), fn () => $this->users()->count());
+            });
     }
 }
