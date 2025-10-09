@@ -31,6 +31,23 @@ trait HasCourses
 
     public function getTotalCompletedCoursesAttribute(): int
     {
+        // If results are already loaded, use them to avoid additional query
+        if ($this->relationLoaded('results')) {
+            $oneYearAgo = now()->subYear();
+            $threeYearsAgo = now()->subYears(3);
+            $userCourseIds = $this->totalUserCourses();
+
+            return $this->results
+                ->whereIn('course_id', $userCourseIds)
+                ->where('passed', 1)
+                ->filter(function ($result) use ($oneYearAgo, $threeYearsAgo) {
+                    return $result->created_at >= $oneYearAgo
+                        || (in_array($result->course_id, [9, 10, 11, 12]) && $result->created_at >= $threeYearsAgo);
+                })
+                ->unique('course_id')
+                ->count();
+        }
+
         return CourseResults::query()
             ->distinct()
             ->where('user_id', $this->id)
@@ -70,7 +87,10 @@ trait HasCourses
     private function totalUserCourses(): array
     {
         if (is_null($this->userCourses)) {
-            $this->load('roles');
+            // Ensure roles are loaded
+            if (! $this->relationLoaded('roles')) {
+                $this->load('roles');
+            }
 
             $userRoles = $this->roles->pluck('id')->reject(fn ($id) => $id === 5);
 

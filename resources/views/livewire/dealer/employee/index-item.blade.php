@@ -42,11 +42,6 @@
             {{ $user->total_completed_courses }} of {{ $user->total_user_courses }}
         @endif
     </td>
-    @if($videosAreActive)
-    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-        {{ $completedVideoCount }} of {{ $videoCount }}
-    </td>
-    @endif
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
         @if(auth()->user()->id !== $user->id && !$user->hasRole('Consultant'))
             <a href="{{ route('dealer.employees.show', $user) }}"

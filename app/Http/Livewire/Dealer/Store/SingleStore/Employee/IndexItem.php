@@ -6,6 +6,7 @@ use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class IndexItem extends Component
@@ -17,7 +18,7 @@ class IndexItem extends Component
     public $unassignedCourseCount;
     public $courseWithRole;
 
-    public function mount()
+    public function mount(): void
     {
         $this->initializeUser();
         $this->initializeCourseWithRole();
@@ -25,7 +26,7 @@ class IndexItem extends Component
         $this->calculateTotalCourses();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.store.single-store.employee.index-item', [
             'department' => Department::find($this->user->department_id),
