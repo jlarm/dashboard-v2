@@ -11,10 +11,9 @@ trait GlbaGenerateRating
 
     public function rating()
     {
-        $this->audits = cache()->remember('glba_stats', 60 * 60 * 24, function () {
-            return FinanceAudit::where('pdf_path', '!=', null)
-                ->get();
-        });
+        $this->audits = FinanceAudit::where('pdf_path', '!=', null)
+            ->get();
+
         $this->audits->filter(function ($value) {
             for ($i = 1; $i <= 46; $i++) {
                 if ($value->{'finance_q'.$i.'_answer'} === 2) {
