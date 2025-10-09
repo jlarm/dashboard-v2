@@ -16,28 +16,32 @@ class OshaStats extends Component
     public Store $store;
     public $audits;
     public $dates;
+    private ?array $cachedGrades = null;
 
-    public function mount()
+    public function mount(): void
     {
         $this->store = $this->store ?? Store::first();
     }
 
     public function rating(): string
     {
-        $gradesCount = count($this->grades());
+        $grades = $this->getGrades();
+        $gradesCount = count($grades);
+
+        if ($gradesCount === 0) {
+            return 'N/A';
+        }
+
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
         $total = 0;
 
-        foreach ($this->grades() as $grade) {
+        foreach ($grades as $grade) {
             if (array_key_exists($grade, $gradeValues)) {
                 $total += $gradeValues[$grade];
             }
         }
 
-        if ($gradesCount === 0) {
-            return 'N/A';
-        }
-        $avg = $total / count($this->grades());
+        $avg = $total / $gradesCount;
 
         return match (true) {
             $avg >= 3.5 && $avg <= 4 => 'A',
@@ -59,14 +63,36 @@ class OshaStats extends Component
         return OshaViolationAudit::query()->where('store_id', $this->store->id);
     }
 
-    private function convertRatingToGrade()
+    private function getGrades(): array
+    {
+        if ($this->cachedGrades !== null) {
+            return $this->cachedGrades;
+        }
+
+        $grades = OshaViolationAudit::query()
+            ->where('store_id', $this->store->id)
+            ->whereNotNull('grade')
+            ->where('grade', '!=', 'N/A')
+            ->pluck('grade')
+            ->toArray();
+
+        $convertedGrade = $this->convertRatingToGrade();
+        if ($convertedGrade !== null) {
+            $grades[] = $convertedGrade;
+        }
+
+        $this->cachedGrades = $grades;
+
+        return $this->cachedGrades;
+    }
+
+    private function convertRatingToGrade(): ?string
     {
         $avg = OshaAudit::query()
             ->where('store_id', $this->store->id)
-            ->where('rating', '!=', null)
+            ->whereNotNull('rating')
             ->where('rating', '!=', 'N/A')
-            ->pluck('rating')
-            ->average();
+            ->avg('rating');
 
         if ($avg === null) {
             return null;
@@ -79,20 +105,5 @@ class OshaStats extends Component
             $avg >= 60 && $avg <= 69 => 'D',
             default => 'F',
         };
-    }
-
-    private function grades(): array
-    {
-        $grades = $this->violationAudits()
-            ->whereNotNull('grade')
-            ->where('grade', '!=', 'N/A')
-            ->pluck('grade')
-            ->toArray();
-
-        if ($this->convertRatingToGrade() !== null) {
-            $grades[] = $this->convertRatingToGrade();
-        }
-
-        return $grades;
     }
 }

@@ -7,7 +7,6 @@ use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\GlbaGenerateRating;
 use App\Traits\HasAuditStats;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class GlbaStats extends Component
@@ -17,6 +16,7 @@ class GlbaStats extends Component
     public Store $store;
     public $audits;
     public $dates;
+    private ?array $cachedGrades = null;
 
     public function mount()
     {
@@ -25,20 +25,23 @@ class GlbaStats extends Component
 
     public function rating(): string
     {
-        $gradesCount = count($this->grades());
+        $grades = $this->getGrades();
+        $gradesCount = count($grades);
+
+        if ($gradesCount === 0) {
+            return 'N/A';
+        }
+
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
         $total = 0;
 
-        foreach ($this->grades() as $grade) {
+        foreach ($grades as $grade) {
             if (array_key_exists($grade, $gradeValues)) {
                 $total += $gradeValues[$grade];
             }
         }
 
-        if ($gradesCount === 0) {
-            return 'N/A';
-        }
-        $avg = $total / count($this->grades());
+        $avg = $total / $gradesCount;
 
         return match (true) {
             $avg >= 3.5 && $avg <= 4 => 'A',
@@ -60,42 +63,47 @@ class GlbaStats extends Component
         return GlbaViolationAudit::query()->where('store_id', $this->store->id);
     }
 
-    private function convertRatingToGrade()
+    private function getGrades(): array
     {
-        return Cache::remember('glba_rating_grade_'.$this->store->id, 60, function () {
-            $avg = FinanceAudit::query()
-                ->where('store_id', $this->store->id)
-                ->where('rating', '!=', null)
-                ->where('rating', '!=', 'N/A')
-                ->pluck('rating')
-                ->average();
+        if ($this->cachedGrades !== null) {
+            return $this->cachedGrades;
+        }
 
-            if ($avg === null) {
-                return null;
-            }
-
-            return match (true) {
-                $avg >= 90 && $avg <= 100 => 'A',
-                $avg >= 80 && $avg <= 89 => 'B',
-                $avg >= 70 && $avg <= 79 => 'C',
-                $avg >= 60 && $avg <= 69 => 'D',
-                default => 'F',
-            };
-        });
-    }
-
-    private function grades(): array
-    {
-        $grades = $this->violationAudits()
+        $grades = GlbaViolationAudit::query()
+            ->where('store_id', $this->store->id)
             ->whereNotNull('grade')
             ->where('grade', '!=', 'N/A')
             ->pluck('grade')
             ->toArray();
 
-        if ($this->convertRatingToGrade() !== null) {
-            $grades[] = $this->convertRatingToGrade();
+        $convertedGrade = $this->convertRatingToGrade();
+        if ($convertedGrade !== null) {
+            $grades[] = $convertedGrade;
         }
 
-        return $grades;
+        $this->cachedGrades = $grades;
+
+        return $this->cachedGrades;
+    }
+
+    private function convertRatingToGrade(): ?string
+    {
+        $avg = FinanceAudit::query()
+            ->where('store_id', $this->store->id)
+            ->whereNotNull('rating')
+            ->where('rating', '!=', 'N/A')
+            ->avg('rating');
+
+        if ($avg === null) {
+            return null;
+        }
+
+        return match (true) {
+            $avg >= 90 && $avg <= 100 => 'A',
+            $avg >= 80 && $avg <= 89 => 'B',
+            $avg >= 70 && $avg <= 79 => 'C',
+            $avg >= 60 && $avg <= 69 => 'D',
+            default => 'F',
+        };
     }
 }
