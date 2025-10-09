@@ -118,7 +118,7 @@ return [
         Watchers\BatchWatcher::class => env('TELESCOPE_BATCH_WATCHER', true),
 
         Watchers\CacheWatcher::class => [
-            'enabled' => env('TELESCOPE_CACHE_WATCHER', true),
+            'enabled' => env('TELESCOPE_CACHE_WATCHER', false),
             'hidden' => [],
         ],
 
@@ -167,7 +167,7 @@ return [
             'slow' => 100,
         ],
 
-        Watchers\RedisWatcher::class => env('TELESCOPE_REDIS_WATCHER', true),
+        Watchers\RedisWatcher::class => env('TELESCOPE_REDIS_WATCHER', false),
 
         Watchers\RequestWatcher::class => [
             'enabled' => env('TELESCOPE_REQUEST_WATCHER', true),
