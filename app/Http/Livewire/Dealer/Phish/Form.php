@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dealer\Phish;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\PhishingCampaign;
 use Carbon\Carbon;
+use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -13,29 +14,17 @@ use Livewire\Component;
 class Form extends Component
 {
     public $groups;
-
     public $emails;
-
     public $pages;
-
     public $profiles;
-
     public $name;
-
     public $date;
-
     public $group;
-
     public $template;
-
     public $page;
-
     public $smtp;
-
     public $error;
-
     public $token;
-
     public $ip;
 
     public function mount()
@@ -56,7 +45,7 @@ class Form extends Component
 
             $this->profiles = Http::withoutVerifying()->get('https://'.$this->ip.':3333/api/smtp/?api_key='.$this->token.'');
             $this->profiles = $this->profiles->json();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error = $e->getMessage();
             Log::error($e->getMessage());
             $this->groups = [];
@@ -118,7 +107,7 @@ class Form extends Component
 
             return redirect()->route('dealer.phishing.index');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error = $e->getMessage();
             Log::error($e->getMessage());
         }

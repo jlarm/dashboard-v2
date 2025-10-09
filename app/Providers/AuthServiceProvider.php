@@ -27,9 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('super-admin') ? true : null;
-        });
+        Gate::before(fn ($user, $ability) => $user->hasRole('super-admin') ? true : null);
 
         Password::defaults(fn () => Password::min(8)->uncompromised());
     }

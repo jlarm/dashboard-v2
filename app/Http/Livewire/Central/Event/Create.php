@@ -9,23 +9,14 @@ use WireElements\Pro\Components\Modal\Modal;
 class Create extends Modal
 {
     public $name;
-
     public $startDate;
-
     public $endDate;
-
     public $locationName;
-
     public $address;
-
     public $city;
-
     public $state;
-
     public $zipCode;
-
     public $link;
-
     protected $rules = [
         'name' => 'required|string|max:255',
         'startDate' => 'required|date:Y-m-d',

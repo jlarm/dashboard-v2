@@ -14,9 +14,7 @@ trait HasBodyShopViolationStatements
 
     public function violationSelected($violation): void
     {
-        $this->violationStatements = tenancy()->central(function ($tenant) {
-            return BodyShopViolationStatement::all();
-        });
+        $this->violationStatements = tenancy()->central(fn ($tenant) => BodyShopViolationStatement::all());
 
         $this->bodyShopViolationAudit->violations()->create([
             'statement_id' => $violation['id'],

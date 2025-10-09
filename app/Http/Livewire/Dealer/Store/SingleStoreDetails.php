@@ -23,47 +23,26 @@ class SingleStoreDetails extends Component
     use WithFileUploads, WithMedia;
 
     public ?Store $store;
-
     public $name;
-
     public $address;
-
     public $city;
-
     public $state;
-
     public $postal_code;
-
     public $phone;
-
     public $website;
-
     public $mediaComponentNames = ['logo'];
-
     public $logo = null;
-
     public $active_monitoring = false;
-
     public $phishing_active = false;
-
     public $phishing_token;
-
     public $phishing_ip;
-
     public $monitoring_start_date;
-
     public $settings;
-
     public $notifications;
-
     public bool $remediations;
-
     public bool $remediationNotifications;
-
     public $frequency;
-
     public $selectedRemediationReminderUsers = [];
-
     public bool $videos;
 
     public function mount(): void

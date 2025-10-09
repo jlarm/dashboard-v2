@@ -9,23 +9,18 @@ use App\Models\Dealer\VendorForm;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
+use Storage;
+use Str;
 
 class NewForm extends Component
 {
     public $vid;
-
     public $vendor;
-
     public $data = [];
-
     public $signature;
-
     public $storeName;
-
     public $qis;
-
     protected $queryString = ['vid'];
-
     protected $rules = [
         'data.*.response' => 'required',
     ];
@@ -70,7 +65,7 @@ class NewForm extends Component
     {
         $this->validate();
 
-        $fName = \Str::of($this->vendor->name)->replace(' ', '')->lower();
+        $fName = Str::of($this->vendor->name)->replace(' ', '')->lower();
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
@@ -79,7 +74,7 @@ class NewForm extends Component
             'signature' => $fileName,
         ]);
 
-        \Storage::put('signatures/'.$fileName, base64_decode(explode(',', $this->signature)[1]));
+        Storage::put('signatures/'.$fileName, base64_decode(explode(',', $this->signature)[1]));
 
         foreach ($this->qis as $qi) {
             Notification::send($qi, new \App\Notifications\VendorSignedNotification($this->vendor));

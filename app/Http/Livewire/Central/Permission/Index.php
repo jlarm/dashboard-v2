@@ -8,11 +8,8 @@ use Spatie\Permission\Models\Permission;
 class Index extends Component
 {
     public $permissions;
-
     public $items;
-
     public $permission;
-
     protected $listeners = ['permissionCreated' => 'render'];
 
     public function mount()

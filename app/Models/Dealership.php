@@ -14,12 +14,6 @@ class Dealership extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'dealership_roles', 'tenant_id', 'global_role_id', 'id', 'global_id')
-            ->using(TenantPivot::class);
-    }
-
     public static function getCustomColumns(): array
     {
         return [
@@ -27,6 +21,12 @@ class Dealership extends BaseTenant implements TenantWithDatabase
             'name',
             'user_id',
         ];
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'dealership_roles', 'tenant_id', 'global_role_id', 'id', 'global_id')
+            ->using(TenantPivot::class);
     }
 
     public function getPhoneNumberAttribute(): string

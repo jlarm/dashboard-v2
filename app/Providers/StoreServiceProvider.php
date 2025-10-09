@@ -31,8 +31,6 @@ class StoreServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        App::macro('current_store', function () {
-            return app('currentStore');
-        });
+        App::macro('current_store', fn () => app('currentStore'));
     }
 }

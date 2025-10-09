@@ -10,31 +10,18 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 class Edit extends SlideOver
 {
     public $dealership;
-
     public $address;
-
     public $city;
-
     public $state;
-
     public $zip_code;
-
     public $phone;
-
     public $fax;
-
     public $name;
-
     public $domain;
-
     public $url;
-
     public $locations;
-
     public $users;
-
     public array $selectedUsers = [];
-
     protected $rules = [
         'name' => 'required',
         'address' => 'required',
@@ -68,9 +55,7 @@ class Edit extends SlideOver
 
     public function removeUser($userId): void
     {
-        $this->selectedUsers = array_filter($this->selectedUsers, function ($user) use ($userId) {
-            return $user['id'] !== $userId;
-        });
+        $this->selectedUsers = array_filter($this->selectedUsers, fn ($user) => $user['id'] !== $userId);
     }
 
     public function updateDealership(): void

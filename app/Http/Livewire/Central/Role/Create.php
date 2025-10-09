@@ -10,9 +10,7 @@ use Spatie\Permission\Models\Role;
 class Create extends Component
 {
     public $name;
-
     public $assignedPermissions = [];
-
     protected $rules = [
         'name' => 'required|string|max:255|unique:roles,name',
         'assignedPermissions' => 'nullable|array',

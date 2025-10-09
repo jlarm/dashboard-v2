@@ -13,7 +13,6 @@ class CourseIndexItem extends Component
     use HasCourseStatus;
 
     public User $user;
-
     public Course $course;
 
     public function render(): View

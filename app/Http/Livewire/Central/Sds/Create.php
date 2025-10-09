@@ -41,6 +41,7 @@ class Create extends Component
 
             if (Sds::where('file_name', $fileName)->exists()) {
                 $this->addError('file', 'A file with the same name already exists.');
+
                 return;
             }
 

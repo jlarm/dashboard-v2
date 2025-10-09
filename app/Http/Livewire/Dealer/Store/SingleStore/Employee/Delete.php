@@ -4,13 +4,14 @@ namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Exception;
 use Filament\Notifications\Notification;
+use Log;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
 {
     public $user;
-
     public $store;
 
     public function mount(User $user, Store $store)
@@ -32,8 +33,8 @@ class Delete extends Modal
                 ->send();
 
             return redirect()->route('dealer.stores.employees', $this->store->slug);
-        } catch (\Exception $e) {
-            \Log::error($e);
+        } catch (Exception $e) {
+            Log::error($e);
             $this->addError('file', 'An error occurred while deleting the user.');
         }
     }

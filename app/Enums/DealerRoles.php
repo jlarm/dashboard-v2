@@ -4,13 +4,13 @@ namespace App\Enums;
 
 enum DealerRoles
 {
-    const ADMIN = 'admin';
+    public const ADMIN = 'admin';
 
-    const MANAGER = 'manager';
+    public const MANAGER = 'manager';
 
-    const EMPLOYEE = 'employee';
+    public const EMPLOYEE = 'employee';
 
-    protected static function labels(): array
+    private static function labels(): array
     {
         return [
             self::ADMIN => 'Admin',

@@ -15,15 +15,6 @@ class Delete extends Modal
         $this->oshaAudit = $oshaAudit;
     }
 
-    protected function deleteViolationPhotos(): void
-    {
-        $this->oshaAudit->violations->each(function ($violation) {
-            $violation->clearMediaCollection('violations_files_0');
-            $violation->clearMediaCollection('violations_files_1');
-            $violation->clearMediaCollection('violations_files_2');
-        });
-    }
-
     public function delete()
     {
         $this->oshaAudit->auditComments()->delete();
@@ -42,5 +33,14 @@ class Delete extends Modal
     public function render()
     {
         return view('livewire.dealer.audit.osha.delete');
+    }
+
+    protected function deleteViolationPhotos(): void
+    {
+        $this->oshaAudit->violations->each(function ($violation) {
+            $violation->clearMediaCollection('violations_files_0');
+            $violation->clearMediaCollection('violations_files_1');
+            $violation->clearMediaCollection('violations_files_2');
+        });
     }
 }

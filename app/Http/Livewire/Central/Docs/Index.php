@@ -11,9 +11,8 @@ class Index extends Component
 {
     use WithPagination;
 
-    protected $listeners = ['saved' => '$refresh'];
-
     public $search = '';
+    protected $listeners = ['saved' => '$refresh'];
 
     public function updatingSearch(): void
     {

@@ -12,13 +12,9 @@ use Livewire\Component;
 class CompletedCoursesStat extends Component
 {
     public ?Store $store = null;
-
     public ?int $department = null;
-
     public string $name = '';
-
     public bool $readyToLoad = false;
-
     public string $formattedName;
 
     public function mount(): void
@@ -30,6 +26,25 @@ class CompletedCoursesStat extends Component
     public function loadStat(): void
     {
         $this->readyToLoad = true;
+    }
+
+    public function percentage(): int
+    {
+        $userCount = $this->userCount();
+        if ($userCount === 0) {
+            return 0;
+        }
+
+        $complete = $userCount - $this->incompleteCount();
+
+        return round(($complete / $userCount) * 100);
+    }
+
+    public function render(): View
+    {
+        $percentage = Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), fn () => $this->readyToLoad ? $this->percentage() : '');
+
+        return view('livewire.dealer.employee.completed-courses-stat', compact('percentage'));
     }
 
     protected function users(): Collection
@@ -80,38 +95,13 @@ class CompletedCoursesStat extends Component
     {
         return Cache::remember('incomplete_count_'.$this->formattedName, now()->addDay(), function () {
             return $this->users()
-                ->filter(function ($user) {
-                    return $user->user_has_not_completed_courses;
-                })
+                ->filter(fn ($user) => $user->user_has_not_completed_courses)
                 ->count();
         });
     }
 
     protected function userCount(): int
     {
-        return Cache::remember('user_count_'.$this->formattedName, now()->addDay(), function () {
-            return $this->users()->count();
-        });
-    }
-
-    public function percentage(): int
-    {
-        $userCount = $this->userCount();
-        if ($userCount === 0) {
-            return 0;
-        }
-
-        $complete = $userCount - $this->incompleteCount();
-
-        return round(($complete / $userCount) * 100);
-    }
-
-    public function render(): View
-    {
-        $percentage = Cache::remember('course_stat_'.$this->formattedName, now()->addDay(), function () {
-            return $this->readyToLoad ? $this->percentage() : '';
-        });
-
-        return view('livewire.dealer.employee.completed-courses-stat', compact('percentage'));
+        return Cache::remember('user_count_'.$this->formattedName, now()->addDay(), fn () => $this->users()->count());
     }
 }

@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 class AddVideoToCourseCommand extends Command
 {
     protected $signature = 'video:to-course {slug : The course slug} {video_id : The video ID} {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Add video id to course';
 
     public function handle(): void
@@ -25,6 +24,7 @@ class AddVideoToCourseCommand extends Command
 
             if (! $course) {
                 $this->error("Course with slug '{$slug}' not found");
+
                 return;
             }
 
@@ -33,6 +33,6 @@ class AddVideoToCourseCommand extends Command
             $this->comment("Successfully updated course '{$course->name}'");
         });
 
-        $this->info("Command completed");
+        $this->info('Command completed');
     }
 }

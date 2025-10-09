@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Str;
 
 class Contract extends Model
 {
@@ -47,7 +48,6 @@ class Contract extends Model
         'additional_locations',
         'pdf_path',
     ];
-
     protected $casts = [
         'agreement_date' => 'date',
         'services' => 'array',
@@ -73,7 +73,7 @@ class Contract extends Model
     {
         static::creating(function ($contract) {
             $contract->user_id = auth()->id();
-            $contract->uuid = (string) \Str::uuid();
+            $contract->uuid = (string) Str::uuid();
         });
     }
 }

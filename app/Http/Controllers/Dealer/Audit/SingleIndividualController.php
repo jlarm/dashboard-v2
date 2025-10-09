@@ -10,7 +10,6 @@ use Illuminate\View\View;
 class SingleIndividualController extends Controller
 {
     public IndividualAudit $individualAudit;
-
     public Store $store;
 
     public function __invoke(IndividualAudit $individualAudit): View

@@ -15,7 +15,6 @@ class VendorForm extends Model
         'last_notification_sent_at',
         'data',
     ];
-
     protected $casts = [
         'data' => 'array',
         'last_notification_sent_at' => 'datetime',

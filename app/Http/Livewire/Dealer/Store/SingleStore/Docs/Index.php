@@ -11,14 +11,11 @@ use Livewire\Component;
 class Index extends Component
 {
     public Store $store;
-
     protected $listeners = ['saved' => '$refresh'];
 
     public function download($doc)
     {
-        return tenancy()->central(function () use ($doc) {
-            return Storage::disk('public')->download($doc['file_name']);
-        });
+        return tenancy()->central(fn () => Storage::disk('public')->download($doc['file_name']));
     }
 
     public function render(): View

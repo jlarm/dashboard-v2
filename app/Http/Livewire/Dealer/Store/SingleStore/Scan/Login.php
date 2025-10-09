@@ -3,15 +3,14 @@
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Scan;
 
 use Cookie;
+use Exception;
 use Http;
 use Livewire\Component;
 
 class Login extends Component
 {
     public string $email;
-
     public string $password;
-
     public string $token;
 
     public function login()
@@ -27,7 +26,7 @@ class Login extends Component
             Cookie::queue('sentry', $this->token, 604800);
 
             return redirect()->route('dealer.store.single-store.scan');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addError('email', 'Invalid credentials');
         }
     }

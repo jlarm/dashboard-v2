@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Docs;
 
 use App\Models\Dealer\Store;
 use App\Models\DealerDoc;
+use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -17,15 +18,11 @@ class Create extends Component
     use WithFileUploads;
 
     public $title;
-
     public $url;
-
     public $file;
-
     protected $messages = [
         'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
     ];
-
     protected $rules = [
         'title' => 'required',
         'url' => 'nullable|url',
@@ -59,7 +56,7 @@ class Create extends Component
                 ->title('Document Added Successfully!')
                 ->success()
                 ->send();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e);
             captureException($e);
             if (str_contains($e->getMessage(), 'max.')) {

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('oshas', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\User::class)->nullable()->after('id');
+            $table->foreignIdFor(App\Models\User::class)->nullable()->after('id');
             $table->string('pdf_path')->nullable()->after('user_id');
         });
     }

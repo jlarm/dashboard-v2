@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Central\User;
 
 use App\Models\User;
+use Exception;
 use Filament\Notifications\Notification;
+use Log;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
@@ -28,8 +30,8 @@ class Delete extends Modal
                 ->title('User Deleted Successfully!')
                 ->success()
                 ->send();
-        } catch (\Exception $e) {
-            \Log::error($e);
+        } catch (Exception $e) {
+            Log::error($e);
             $this->addError('file', 'An error occurred while deleting the file.');
         }
     }

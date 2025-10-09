@@ -7,7 +7,6 @@ use App\Models\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;

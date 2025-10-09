@@ -24,17 +24,11 @@ class Invite extends Model
         'registered_at',
         'courses',
     ];
-
     protected $casts = [
         'stores' => 'array',
         'roles' => 'array',
         'courses' => 'array',
     ];
-
-    protected function serializeDate(DateTimeInterface $date): string
-    {
-        return $date->format('F-m-Y');
-    }
 
     public function user(): BelongsTo
     {
@@ -49,5 +43,10 @@ class Invite extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('F-m-Y');
     }
 }

@@ -9,9 +9,7 @@ use Livewire\Component;
 class AssignCustomCoursesForm extends Component
 {
     public User $user;
-
     public $courses;
-
     public $selectedCourses = [];
 
     public function mount(): void

@@ -27,7 +27,6 @@ class OshaViolationAudit extends Model
         'completed_date',
         'reminder_logs',
     ];
-
     protected $casts = [
         'uuid' => 'string',
         'date' => 'date',

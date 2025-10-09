@@ -6,64 +6,42 @@ use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use Livewire\Component;
+use Storage;
+use Str;
 
 class OshaForm extends Component
 {
     public Store $store;
-
     public $employeeList;
-
     public $store_id;
-
     public $qi;
-
     public $qit = 'Qualified Individual';
-
     public $qip;
-
     public $sm;
-
     public $smt = 'Service Manager';
-
     public $smp;
-
     public $pm;
-
     public $pmt = 'Parts Manager';
-
     public $pmp;
-
     public $bsm;
-
     public $bsmt = 'Body Shop Manager';
-
     public $bsmp;
-
     public $gm;
-
     public $gmt = 'General Manager';
-
     public $gmp;
-
     public $owner;
-
     public $ownert = 'Owner';
-
     public $ownerp;
-
     public $pepn;
-
     public $pnepn;
-
     public $fepn;
-
     public $fnepn;
-
     public $alarmSystem;
-
     public $burglarSystem;
-
     public $signature;
+    protected $rules = [
+        'signature' => 'required',
+    ];
 
     public function mount()
     {
@@ -88,15 +66,11 @@ class OshaForm extends Component
         $this->burglarSystem = Store::first()->burglar_alarm_type ?? '';
     }
 
-    protected $rules = [
-        'signature' => 'required',
-    ];
-
     public function submit()
     {
         $this->validate();
 
-        $fName = \Str::of(auth()->user()->name)->replace(' ', '')->lower();
+        $fName = Str::of(auth()->user()->name)->replace(' ', '')->lower();
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
@@ -124,7 +98,7 @@ class OshaForm extends Component
             'signature' => $fileName,
         ]);
 
-        \Storage::put('osha-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
+        Storage::put('osha-signatures/'.$fileName, base64_decode(Str::of($this->signature)->after(',')));
 
         (! tenant('locations')) ? $this->redirect(route('dealer.manual.index', $this->store)) : $this->redirect(route('dealer.stores.manuals', $this->store));
 

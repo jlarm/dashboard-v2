@@ -6,40 +6,30 @@ use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use Livewire\Component;
+use Storage;
+use Str;
 
 class RedFlagForm extends Component
 {
     public Store $store;
-
     public $employeeList;
-
     public $store_id;
-
     public $qi;
-
     public $qip;
-
     public $sm;
-
     public $smp;
-
     public $pm;
-
     public $pmp;
-
     public $bsm;
-
     public $bsmp;
-
     public $gm;
-
     public $gmp;
-
     public $owner;
-
     public $ownerp;
-
     public $signature;
+    protected $rules = [
+        'signature' => 'required',
+    ];
 
     public function mount()
     {
@@ -64,15 +54,11 @@ class RedFlagForm extends Component
         $this->burglarSystem = Store::first()->burglar_alarm_type ?? '';
     }
 
-    protected $rules = [
-        'signature' => 'required',
-    ];
-
     public function submit()
     {
         $this->validate();
 
-        $fName = \Str::of(auth()->user()->name)->replace(' ', '')->lower();
+        $fName = Str::of(auth()->user()->name)->replace(' ', '')->lower();
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
@@ -100,7 +86,7 @@ class RedFlagForm extends Component
             'signature' => $fileName,
         ]);
 
-        \Storage::put('red-flag-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
+        Storage::put('red-flag-signatures/'.$fileName, base64_decode(Str::of($this->signature)->after(',')));
 
         (! tenant('locations')) ? $this->redirect(route('dealer.manual.index', $this->store)) : $this->redirect(route('dealer.stores.manuals', $this->store));
 

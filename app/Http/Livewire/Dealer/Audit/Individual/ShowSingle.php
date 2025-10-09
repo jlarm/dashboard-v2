@@ -10,7 +10,6 @@ use Livewire\Component;
 class ShowSingle extends Component
 {
     public IndividualAudit $audit;
-
     public Store $store;
 
     public function mount(IndividualAudit $audit): void

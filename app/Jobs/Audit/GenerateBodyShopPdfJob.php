@@ -24,31 +24,35 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
         return [new WithoutOverlapping($this->bodyShopViolationAudit)];
     }
 
-    private function rating(): string
-    {
-        $violationCount = $this->bodyShopViolationAudit->violations->count();
-
-        if ($violationCount >= 0 && $violationCount <= 10) {
-            return 'A';
-        } elseif ($violationCount >= 11 && $violationCount <= 20) {
-            return 'B';
-        } elseif ($violationCount >= 21 && $violationCount <= 30) {
-            return 'C';
-        } elseif ($violationCount >= 31 && $violationCount <= 40) {
-            return 'D';
-        } elseif ($violationCount >= 41 && $violationCount <= 50) {
-            return 'F';
-        }
-
-        return '';
-    }
-
     public function handle(): void
     {
         $path = $this->createDirectory();
         $fileName = $this->createFileName();
         $this->createPdf($path, $fileName);
         $this->updateAudit($fileName);
+    }
+
+    private function rating(): string
+    {
+        $violationCount = $this->bodyShopViolationAudit->violations->count();
+
+        if ($violationCount >= 0 && $violationCount <= 10) {
+            return 'A';
+        }
+        if ($violationCount >= 11 && $violationCount <= 20) {
+            return 'B';
+        }
+        if ($violationCount >= 21 && $violationCount <= 30) {
+            return 'C';
+        }
+        if ($violationCount >= 31 && $violationCount <= 40) {
+            return 'D';
+        }
+        if ($violationCount >= 41 && $violationCount <= 50) {
+            return 'F';
+        }
+
+        return '';
     }
 
     private function createDirectory(): string

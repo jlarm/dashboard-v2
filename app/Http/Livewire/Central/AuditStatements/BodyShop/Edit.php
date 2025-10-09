@@ -12,11 +12,8 @@ class Edit extends Component
     use Keywordable;
 
     public BodyShopViolationStatement $bodyShopViolation;
-
     public $statement;
-
     public $keywords = [];
-
     public $newKeyword = '';
 
     public function mount()

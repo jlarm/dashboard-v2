@@ -8,11 +8,8 @@ use App\Models\Dealer\Store;
 trait OshaGenerateRating
 {
     public Store $store;
-
-    protected int $sum = 0;
-
     public $audits;
-
+    protected int $sum = 0;
     protected $exclude = [7, 21, 62];
 
     public function rating()
@@ -22,7 +19,7 @@ trait OshaGenerateRating
 
         $this->audits->filter(function ($value) {
             for ($i = 1; $i <= 65; $i++) {
-                if (! in_array($i, $this->exclude) && $value->{'osha_q'.$i.'_answer'} == 2) {
+                if (! in_array($i, $this->exclude) && $value->{'osha_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
                 }
             }

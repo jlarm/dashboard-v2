@@ -15,14 +15,44 @@ class GlbaStats extends Component
     use GlbaGenerateRating, HasAuditStats;
 
     public Store $store;
-
     public $audits;
-
     public $dates;
 
     public function mount()
     {
         $this->store = $this->store ?? Store::first();
+    }
+
+    public function rating(): string
+    {
+        $gradesCount = count($this->grades());
+        $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
+        $total = 0;
+
+        foreach ($this->grades() as $grade) {
+            if (array_key_exists($grade, $gradeValues)) {
+                $total += $gradeValues[$grade];
+            }
+        }
+
+        if ($gradesCount === 0) {
+            return 'N/A';
+        }
+        $avg = $total / count($this->grades());
+
+        return match (true) {
+            $avg >= 3.5 && $avg <= 4 => 'A',
+            $avg >= 2.5 && $avg <= 3.4 => 'B',
+            $avg >= 1.5 && $avg <= 2.4 => 'C',
+            $avg >= 0.5 && $avg <= 1.4 => 'D',
+            $avg >= 0 && $avg <= 0.4 => 'F',
+            default => 'N/A',
+        };
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.home.glba-stats');
     }
 
     private function violationAudits()
@@ -67,38 +97,5 @@ class GlbaStats extends Component
         }
 
         return $grades;
-    }
-
-    public function rating(): string
-    {
-        $gradesCount = count($this->grades());
-        $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
-        $total = 0;
-
-        foreach ($this->grades() as $grade) {
-            if (array_key_exists($grade, $gradeValues)) {
-                $total += $gradeValues[$grade];
-            }
-        }
-
-        if ($gradesCount == 0) {
-            return 'N/A';
-        } else {
-            $avg = $total / count($this->grades());
-        }
-
-        return match (true) {
-            $avg >= 3.5 && $avg <= 4 => 'A',
-            $avg >= 2.5 && $avg <= 3.4 => 'B',
-            $avg >= 1.5 && $avg <= 2.4 => 'C',
-            $avg >= 0.5 && $avg <= 1.4 => 'D',
-            $avg >= 0 && $avg <= 0.4 => 'F',
-            default => 'N/A',
-        };
-    }
-
-    public function render()
-    {
-        return view('livewire.dealer.home.glba-stats');
     }
 }

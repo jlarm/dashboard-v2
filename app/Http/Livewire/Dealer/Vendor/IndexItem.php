@@ -9,13 +9,9 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public Vendor $vendor;
-
     public $noCount;
-
     public $totalQuestions = 0;
-
     public $array = [];
-
     protected $listeners = ['refreshVendors' => '$refresh'];
 
     public function mount()

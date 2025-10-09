@@ -10,7 +10,6 @@ use Livewire\Component;
 class CertIndexItem extends Component
 {
     public User $user;
-
     public Certificate $cert;
 
     public function render()

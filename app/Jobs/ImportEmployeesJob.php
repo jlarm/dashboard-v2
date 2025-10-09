@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Dealer\Invite;
 use DB;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,7 +17,6 @@ class ImportEmployeesJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $data;
-
     protected $userId;
 
     public function __construct(array $data, int $userId)
@@ -58,11 +58,11 @@ class ImportEmployeesJob implements ShouldQueue
                         'user_id' => $this->userId,
                         'roles' => [$item['Role']],
                         'courses' => $item['Courses'],
-                        'invitation_token' => substr(md5(rand(0, 9).$item['Email'].time()), 0, 32),
+                        'invitation_token' => mb_substr(md5(rand(0, 9).$item['Email'].time()), 0, 32),
                     ]);
 
                     SendQueueEmailJob::dispatch($invite, 'invite');
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $importErrors[] = [
                         'row' => $index + 1,
                         'errors' => [$e->getMessage()],
@@ -72,7 +72,7 @@ class ImportEmployeesJob implements ShouldQueue
             }
 
             if (! empty($importErrors)) {
-                throw new \Exception('Import failed due to errors');
+                throw new Exception('Import failed due to errors');
             }
         });
     }

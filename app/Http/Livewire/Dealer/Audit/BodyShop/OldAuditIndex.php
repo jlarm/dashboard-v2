@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
 use App\Models\Dealer\Audit\BodyShopAudit;
 use Livewire\Component;
+use Storage;
 
 class OldAuditIndex extends Component
 {
@@ -28,7 +29,7 @@ class OldAuditIndex extends Component
 
     public function download()
     {
-        return \Storage::disk('do-audits')->download(tenant('id').'/body-shop/'.$this->bodyShopAudit->pdf_path);
+        return Storage::disk('do-audits')->download(tenant('id').'/body-shop/'.$this->bodyShopAudit->pdf_path);
     }
 
     public function render()

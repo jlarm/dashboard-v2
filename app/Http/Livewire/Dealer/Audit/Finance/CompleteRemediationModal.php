@@ -14,7 +14,7 @@ class CompleteRemediationModal extends Modal
 
     public $glbaViolationAudit;
 
-    public function mount(glbaViolationAudit $glbaViolationAudit): void
+    public function mount(GlbaViolationAudit $glbaViolationAudit): void
     {
         $this->glbaViolationAudit = $glbaViolationAudit;
     }

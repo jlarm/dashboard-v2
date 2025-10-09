@@ -7,15 +7,13 @@ use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
+use Storage;
 
 class IndexItem extends Component
 {
     public GlbaViolationAudit $glbaViolationAudit;
-
     public Store $store;
-
     public bool $remediations;
-
     protected $listeners = [
         'pdfGenerated' => '$refresh',
     ];
@@ -33,7 +31,7 @@ class IndexItem extends Component
 
     public function download()
     {
-        return \Storage::disk('armpaudits')->download($this->glbaViolationAudit->pdf_path);
+        return Storage::disk('armpaudits')->download($this->glbaViolationAudit->pdf_path);
     }
 
     public function remediationsActive(): bool

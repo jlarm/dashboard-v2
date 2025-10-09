@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -39,13 +38,6 @@ class User extends Authenticatable
         Notifiable,
         SoftDeletes;
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
-
     protected $fillable = [
         'name',
         'email',
@@ -56,16 +48,21 @@ class User extends Authenticatable
         'current_store_id',
         'last_sent_course_reminder',
     ];
-
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_sent_course_reminder' => 'datetime',
     ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     public function scopeWithoutSuperAdminsAndConsultants($query)
     {
@@ -85,11 +82,6 @@ class User extends Authenticatable
         preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
 
         return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
-    }
-
-    private function userHasNoCaliforniaStore(): bool
-    {
-        return ! $this->stores()->where('state', 'California')->exists();
     }
 
     public function dealerships(): BelongsToMany
@@ -179,9 +171,14 @@ class User extends Authenticatable
         $initials = '';
 
         foreach ($name as $n) {
-            $initials .= strtoupper($n[0]);
+            $initials .= mb_strtoupper($n[0]);
         }
 
         return $initials;
+    }
+
+    private function userHasNoCaliforniaStore(): bool
+    {
+        return ! $this->stores()->where('state', 'California')->exists();
     }
 }

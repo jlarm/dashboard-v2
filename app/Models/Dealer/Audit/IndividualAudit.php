@@ -17,10 +17,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class IndividualAudit extends Model implements HasMedia
 {
-    use HasUUID, InteractsWithMedia, LogsActivity;
+    use HasUuid, InteractsWithMedia, LogsActivity;
 
     protected $guarded = [];
-
     protected $casts = [
         'draft' => 'boolean',
         'audit_date' => 'date:Y-m-d',
@@ -47,12 +46,12 @@ class IndividualAudit extends Model implements HasMedia
 
     public function children(): HasMany
     {
-        return $this->hasMany(IndividualAudit::class, 'parent_id')->with('children');
+        return $this->hasMany(self::class, 'parent_id')->with('children');
     }
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(IndividualAudit::class, 'parent_id')->with('parent');
+        return $this->belongsTo(self::class, 'parent_id')->with('parent');
     }
 
     public function user(): BelongsTo
@@ -69,11 +68,14 @@ class IndividualAudit extends Model implements HasMedia
     {
         if ($this->audit_date->format('m') >= 1 && $this->audit_date->format('m') <= 3) {
             return 'Q1';
-        } elseif ($this->audit_date->format('m') >= 4 && $this->audit_date->format('m') <= 6) {
+        }
+        if ($this->audit_date->format('m') >= 4 && $this->audit_date->format('m') <= 6) {
             return 'Q2';
-        } elseif ($this->audit_date->format('m') >= 7 && $this->audit_date->format('m') <= 9) {
+        }
+        if ($this->audit_date->format('m') >= 7 && $this->audit_date->format('m') <= 9) {
             return 'Q3';
-        } elseif ($this->audit_date->format('m') >= 10 && $this->audit_date->format('m') <= 12) {
+        }
+        if ($this->audit_date->format('m') >= 10 && $this->audit_date->format('m') <= 12) {
             return 'Q4';
         }
     }

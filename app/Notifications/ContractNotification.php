@@ -14,7 +14,6 @@ class ContractNotification extends Notification implements ShouldQueue
     use Queueable;
 
     protected $name;
-
     protected $email;
 
     public function __construct(protected Contract $contract)
@@ -26,13 +25,6 @@ class ContractNotification extends Notification implements ShouldQueue
     public function via($notifiable): array
     {
         return ['mail'];
-    }
-
-    protected function generateUrl()
-    {
-        return URL::temporarySignedRoute('contracts.show', now()->addDays(7), [
-            'contract' => $this->contract->uuid,
-        ]);
     }
 
     public function toMail($notifiable): MailMessage
@@ -52,5 +44,12 @@ class ContractNotification extends Notification implements ShouldQueue
     public function toArray($notifiable): array
     {
         return [];
+    }
+
+    protected function generateUrl()
+    {
+        return URL::temporarySignedRoute('contracts.show', now()->addDays(7), [
+            'contract' => $this->contract->uuid,
+        ]);
     }
 }

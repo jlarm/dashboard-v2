@@ -11,61 +11,33 @@ use Livewire\Component;
 class Create extends Component
 {
     public $contractType;
-
     public $agreementDate;
-
     public $dealerName;
-
     public $services = [];
-
     public $commenceDate;
-
     public $yearlyInspectionTotal;
-
     public $initialFee;
-
     public $monthlyFee;
-
     public $armpSignature;
-
     public $armpPrintedName;
-
     public $armpDateSigned;
-
     public $dealerPhysicalAddress;
-
     public $dealerPhysicalCity;
-
     public $dealerPhysicalState;
-
     public $dealerPhysicalZip;
-
     public $dealerPhone;
-
     public $dealerQiName;
-
     public $dealerQiPhone;
-
     public $dealerQiEmail;
-
     public $dealerBillingAddress;
-
     public $dealerBillingCity;
-
     public $dealerBillingState;
-
     public $dealerBillingZip;
-
     public $dealerBillingFax;
-
     public $dealerBillingContactName;
-
     public $dealerBillingContactTitle;
-
     public $dealerBillingContactEmail;
-
     public Collection $additionalLocations;
-
     protected $rules = [
         'contractType' => 'required|string',
         'agreementDate' => 'required|date',

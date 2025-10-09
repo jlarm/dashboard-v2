@@ -11,7 +11,6 @@ use Livewire\Component;
 class Generate extends Component
 {
     public IndividualAudit $individualAudit;
-
     public $managerCheck;
 
     public function mount(IndividualAudit $individualAudit)

@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -15,9 +14,7 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
-
     public int $perPage = 12;
-
     protected $listeners = [
         'refreshDealerships' => '$refresh',
         'deleteDealership' => 'deleteDealership',
@@ -41,7 +38,7 @@ class Index extends Component
             $dealership->delete();
 
             session()->flash('success', 'Dealership deleted successfully');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             session()->flash('error', "Failed to delete dealership: {$e->getMessage()}");
         }
     }

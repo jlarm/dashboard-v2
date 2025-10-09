@@ -6,9 +6,8 @@ use App\Models\Dealer\Audit\BodyShopAudit;
 
 trait BodyShopGenerateRating
 {
-    protected int $sum = 0;
-
     public $audits;
+    protected int $sum = 0;
 
     public function rating()
     {
@@ -18,7 +17,7 @@ trait BodyShopGenerateRating
         });
         $this->audits->filter(function ($value) {
             for ($i = 1; $i <= 43; $i++) {
-                if ($value->{'body_shop_q'.$i.'_answer'} == 2) {
+                if ($value->{'body_shop_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
                 }
             }

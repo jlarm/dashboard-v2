@@ -10,13 +10,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CourseUserNotificationSent extends Model
 {
     public $timestamps = false;
-
     protected $fillable = [
         'user_id',
         'course_id',
         'sent',
     ];
-
     protected $casts = [
         'sent' => 'date',
     ];

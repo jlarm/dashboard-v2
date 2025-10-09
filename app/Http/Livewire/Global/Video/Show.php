@@ -10,7 +10,6 @@ use Livewire\Component;
 class Show extends Component
 {
     public string $videoId;
-
     protected $listeners = [
         'completedVideo' => 'completedVideo',
         'refresh' => 'videoCompleted',

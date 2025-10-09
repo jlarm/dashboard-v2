@@ -18,7 +18,6 @@ class FinanceAudit extends Model implements HasMedia
     use InteractsWithMedia, LogsActivity;
 
     protected $guarded = [];
-
     protected $casts = [
         'draft' => 'boolean',
         'audit_date' => 'date:Y-m-d',

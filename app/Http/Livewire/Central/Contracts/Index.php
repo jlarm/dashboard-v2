@@ -9,6 +9,13 @@ class Index extends Component
 {
     protected $listeners = ['contractDeleted' => '$refresh'];
 
+    public function render()
+    {
+        return view('livewire.central.contracts.index', [
+            'contracts' => $this->getContracts(),
+        ]);
+    }
+
     protected function getContracts()
     {
         if (auth()->user()->hasRole('super-admin')) {
@@ -16,12 +23,5 @@ class Index extends Component
         }
 
         return Contract::where('user_id', auth()->id())->get();
-    }
-
-    public function render()
-    {
-        return view('livewire.central.contracts.index', [
-            'contracts' => $this->getContracts(),
-        ]);
     }
 }

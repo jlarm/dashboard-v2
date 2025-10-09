@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('timelines', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Dealer\PhishingCampaign::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\Dealer\PhishingCampaign::class)->constrained()->cascadeOnDelete();
             $table->string('email');
             $table->dateTime('time');
             $table->string('message');

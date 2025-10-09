@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('employee_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Dealer\Store::class)->constrained();
+            $table->foreignIdFor(App\Models\Dealer\Store::class)->constrained();
             $table->string('qualified_individual_name')->nullable();
             $table->string('qualified_individual_phone')->nullable();
             $table->string('service_manager_name')->nullable();

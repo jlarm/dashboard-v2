@@ -12,7 +12,6 @@ class Index extends Component
     use WithPagination;
 
     public ?Store $store = null;
-
     protected $listeners = ['refreshVendors' => '$refresh'];
 
     public function mount()

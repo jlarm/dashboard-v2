@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('oshas', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Dealer\Store::class)->nullable();
+            $table->foreignIdFor(App\Models\Dealer\Store::class)->nullable();
             $table->integer('logged_in_user')->nullable();
             $table->string('qualified_individual_name')->nullable();
             $table->string('qualified_individual_phone')->nullable();

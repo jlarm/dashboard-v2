@@ -6,15 +6,14 @@ use App\Jobs\Manuals\GenerateOshaManualJob;
 use App\Jobs\Manuals\UploadOshaToDigitalOceanJob;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Store;
+use Bus;
 use Livewire\Component;
 use Storage;
 
 class OshaCard extends Component
 {
     public Store $store;
-
     public $manual;
-
     public $content;
 
     public function mount()
@@ -27,7 +26,7 @@ class OshaCard extends Component
 
     public function generate()
     {
-        \Bus::chain([
+        Bus::chain([
             new GenerateOshaManualJob($this->manual),
             new UploadOshaToDigitalOceanJob($this->manual),
         ])->dispatch();

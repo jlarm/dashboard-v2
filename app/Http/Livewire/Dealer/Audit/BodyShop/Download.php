@@ -9,7 +9,6 @@ use Storage;
 class Download extends Component
 {
     public BodyShopAudit $bodyShopAudit;
-
     public $content;
 
     public function mount()

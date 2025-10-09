@@ -10,11 +10,6 @@ class InternalReportIndex extends Component
 {
     public Store $store;
 
-    protected function formattedLastScanDate($date): string
-    {
-        return date('F d, Y', strtotime($date));
-    }
-
     public function render()
     {
         if (tenant('locations')) {
@@ -23,31 +18,20 @@ class InternalReportIndex extends Component
                     ->where('store_id', $this->store->id)
                     ->latest()
                     ->get()
-                    ->groupBy(function ($data) {
-                        return $this->formattedLastScanDate($data->created_at);
-                    })->map(function ($data) {
-                        return $data->groupBy('type');
-                    })->map(function ($data) {
-                        return $data->map(function ($data) {
-                            return $data->first();
-                        });
-                    }),
+                    ->groupBy(fn ($data) => $this->formattedLastScanDate($data->created_at))->map(fn ($data) => $data->groupBy('type'))->map(fn ($data) => $data->map(fn ($data) => $data->first())),
             ]);
         } else {
             return view('livewire.dealer.scan.internal-report-index', [
                 'reports' => ScanReport::where('scan_type', 'internal')
                     ->latest()
                     ->get()
-                    ->groupBy(function ($data) {
-                        return $this->formattedLastScanDate($data->created_at);
-                    })->map(function ($data) {
-                        return $data->groupBy('type');
-                    })->map(function ($data) {
-                        return $data->map(function ($data) {
-                            return $data->first();
-                        });
-                    }),
+                    ->groupBy(fn ($data) => $this->formattedLastScanDate($data->created_at))->map(fn ($data) => $data->groupBy('type'))->map(fn ($data) => $data->map(fn ($data) => $data->first())),
             ]);
         }
+    }
+
+    protected function formattedLastScanDate($date): string
+    {
+        return date('F d, Y', strtotime($date));
     }
 }

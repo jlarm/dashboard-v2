@@ -3,6 +3,7 @@
 namespace App\Jobs\Audit;
 
 use App\Models\Dealer\Audit\GlbaViolationAudit;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -38,13 +39,13 @@ class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
             $relativePath = 'temp/'.$fileName;
 
             if (! Storage::disk('local')->exists($relativePath)) {
-                throw new \Exception("File not found at path: {$relativePath}");
+                throw new Exception("File not found at path: {$relativePath}");
             }
 
             $contents = Storage::disk('local')->get($relativePath);
 
             if ($contents === null) {
-                throw new \Exception("Failed to retrieve contents from: {$relativePath}");
+                throw new Exception("Failed to retrieve contents from: {$relativePath}");
             }
 
             Storage::disk('armpaudits')->put($doPath, $contents);
@@ -54,7 +55,7 @@ class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
             $this->glbaViolationAudit->update([
                 'remediation_pdf_path' => $doPath,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('PDF Generation Failed: '.$e->getMessage());
         }
     }
@@ -65,7 +66,7 @@ class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
             ? str_replace(' ', '-', $this->glbaViolationAudit->store->name)
             : str_replace(' ', '-', tenant('name'));
 
-        return strtolower($dealerName).'-'.now()->format('Ymd').'-glba-violation-audit-remediation.pdf';
+        return mb_strtolower($dealerName).'-'.now()->format('Ymd').'-glba-violation-audit-remediation.pdf';
     }
 
     private function generatePdf(string $fileName): string

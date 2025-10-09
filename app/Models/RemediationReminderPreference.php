@@ -13,7 +13,6 @@ class RemediationReminderPreference extends Model
         'audit_type',
         'enabled',
     ];
-
     protected $casts = [
         'audit_type' => AuditTypes::class,
         'enabled' => 'boolean',

@@ -8,9 +8,7 @@ use Illuminate\Console\Command;
 class CourseYearsExpireCommand extends Command
 {
     protected $signature = 'course:years-expire {--tenants=* : The tenant(s) to run the command for. Default all.}';
-
     protected $description = 'Add the years before course expires';
-
     protected array $custom = [
         'dot-hazardous-materials-transportation' => 3,
         'dot-hazardous-materials-transportation-identifying-hazardous-materials' => 3,

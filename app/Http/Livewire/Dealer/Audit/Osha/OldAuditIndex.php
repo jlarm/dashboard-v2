@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Audit\OshaAudit;
 use Livewire\Component;
+use Storage;
 
 class OldAuditIndex extends Component
 {
@@ -28,7 +29,7 @@ class OldAuditIndex extends Component
 
     public function download()
     {
-        return \Storage::disk('do-audits')
+        return Storage::disk('do-audits')
             ->download(tenant('id').'/osha/'.$this->oshaAudit->pdf_path);
     }
 

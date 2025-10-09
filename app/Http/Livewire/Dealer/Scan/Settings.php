@@ -11,14 +11,15 @@ use Livewire\Component;
 class Settings extends Component
 {
     public Store $store;
-
     public $name;
-
     public $internalId;
-
     public $externalId;
-
     public $scan;
+    protected $rules = [
+        'name' => 'string|max:255',
+        'internalId' => 'nullable|integer',
+        'externalId' => 'nullable|integer',
+    ];
 
     public function mount(): void
     {
@@ -28,12 +29,6 @@ class Settings extends Component
         $this->internalId = $this->scan->internal_id ?? '';
         $this->externalId = $this->scan->external_id ?? '';
     }
-
-    protected $rules = [
-        'name' => 'string|max:255',
-        'internalId' => 'nullable|integer',
-        'externalId' => 'nullable|integer',
-    ];
 
     public function update()
     {

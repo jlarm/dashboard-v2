@@ -12,69 +12,37 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
     use Forms\Concerns\InteractsWithForms;
 
     public Store $store;
-
     public $firewall_company;
-
     public $ip_addresses = [''];
-
     public $ip_address;
-
     public $mfa = '';
-
     public $vulnerability;
-
     public $currently_monitoring;
-
     public $antivirus_software;
-
     public $antivirus_computers;
-
     public $antivirus_minutes;
-
     public $screensaver_minutes;
-
     public $dms_provider;
-
     public $website_urls = [''];
-
     public $backups;
-
     public $designated_red_flag_coordinator;
-
     public $document_shredding;
-
     public $service_provider_agreements;
-
     public $offsite_storage;
-
     public $other_business;
-
     public $vendor_access;
-
     public $personal_devices;
-
     public $compliance_issues;
-
     public $fi_products_sold;
-
     public $service_contracts = [''];
-
     public $tire_wheel = [''];
-
     public $other_fi = [''];
-
     public $fi_system;
-
     public $appearance_protection_sold;
-
     public $reinsurance;
-
     public $admin_name;
-
     public $i = 1;
-
     public $u = 0;
-
     protected $rules = [
         'firewall_company' => 'nullable',
         'ip_addresses' => 'nullable|array',

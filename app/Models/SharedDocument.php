@@ -14,7 +14,6 @@ class SharedDocument extends Model
         'file_name',
         'url',
     ];
-
     protected $casts = [
         'title' => 'string',
         'file_name' => 'string',

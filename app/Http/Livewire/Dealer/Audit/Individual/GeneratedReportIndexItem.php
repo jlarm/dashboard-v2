@@ -8,13 +8,9 @@ use Livewire\Component;
 class GeneratedReportIndexItem extends Component
 {
     public IndividualAudit $individualAudit;
-
     public $rating;
-
     public $audit;
-
     protected $sum;
-
     protected $flat;
 
     public function mount()
@@ -26,7 +22,7 @@ class GeneratedReportIndexItem extends Component
 
         $this->flat->filter(function ($value) {
             for ($i = 3; $i <= 40; $i++) {
-                if ($i != 19 && $value->{'individual_q'.$i.'_answer'} == 2) {
+                if ($i !== 19 && $value->{'individual_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
                 }
             }
@@ -41,11 +37,14 @@ class GeneratedReportIndexItem extends Component
     {
         if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3) {
             return 'Q1';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 4 && $this->individualAudit->audit_date->format('m') <= 6) {
+        }
+        if ($this->individualAudit->audit_date->format('m') >= 4 && $this->individualAudit->audit_date->format('m') <= 6) {
             return 'Q2';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 7 && $this->individualAudit->audit_date->format('m') <= 9) {
+        }
+        if ($this->individualAudit->audit_date->format('m') >= 7 && $this->individualAudit->audit_date->format('m') <= 9) {
             return 'Q3';
-        } elseif ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
+        }
+        if ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
             return 'Q4';
         }
     }

@@ -11,7 +11,6 @@ class ScanSetting extends Model
     use LogsActivity;
 
     public $timestamps = false;
-
     protected $fillable = [
         'store_id',
         'name',

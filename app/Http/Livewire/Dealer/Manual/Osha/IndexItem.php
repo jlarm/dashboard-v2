@@ -10,7 +10,6 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public Osha $manual;
-
     public $link;
 
     public function mount(): void

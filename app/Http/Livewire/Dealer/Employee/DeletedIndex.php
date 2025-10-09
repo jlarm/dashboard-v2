@@ -13,7 +13,6 @@ class DeletedIndex extends Component
     use WithPagination;
 
     public ?Store $store = null;
-
     protected $listeners = ['refresh-deleted' => '$refresh'];
 
     public function render(): View

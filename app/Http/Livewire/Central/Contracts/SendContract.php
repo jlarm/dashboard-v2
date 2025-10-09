@@ -9,9 +9,7 @@ use Notification;
 class SendContract extends Component
 {
     public Contract $contract;
-
     public $emailAddresses = [];
-
     public $emailAddress;
 
     public function addEmailAddress(): void

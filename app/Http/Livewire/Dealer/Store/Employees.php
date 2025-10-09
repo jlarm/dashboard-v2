@@ -8,7 +8,6 @@ use Livewire\Component;
 class Employees extends Component
 {
     public Store $store;
-
     public $sid = '';
 
     public function mount()

@@ -13,9 +13,7 @@ use Response;
 class SingleStoreScans extends Component
 {
     public $store;
-
     public string $type = 'technical';
-
     public string $dealer;
 
     public function mount(Store $store)

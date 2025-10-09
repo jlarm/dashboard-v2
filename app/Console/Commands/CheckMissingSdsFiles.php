@@ -57,7 +57,7 @@ class CheckMissingSdsFiles extends Command
         $content = implode(PHP_EOL, $missingFiles);
         file_put_contents(storage_path("logs/{$outputFile}"), $content);
 
-        $this->comment('Found ' . count($missingFiles) . ' missing files.');
+        $this->comment('Found '.count($missingFiles).' missing files.');
         $this->comment('Missing files logged to: '.storage_path("logs/{$outputFile}"));
     }
 }

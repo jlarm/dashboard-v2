@@ -11,9 +11,7 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public User $user;
-
     public int $totalCourses;
-
     public $completed;
 
     public function mount(): void
@@ -30,9 +28,7 @@ class IndexItem extends Component
 
     private function totalCourses(): int
     {
-        return Cache::store('redis')->remember('total_courses_'.$this->user->id, 3600, function () {
-            return Course::count() - 1;
-        });
+        return Cache::store('redis')->remember('total_courses_'.$this->user->id, 3600, fn () => Course::count() - 1);
     }
 
     private function completedCourseCount(): int

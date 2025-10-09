@@ -15,7 +15,6 @@ class Timeline extends Model
         'message',
         'details',
     ];
-
     protected $casts = [
         'details' => 'array',
         'time' => 'datetime',

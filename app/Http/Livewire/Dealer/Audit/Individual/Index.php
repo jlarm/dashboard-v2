@@ -10,17 +10,15 @@ use Livewire\Component;
 class Index extends Component
 {
     public Store $store;
-
     public $currentStore;
+    protected $listeners = [
+        'refreshIndividualAudits' => '$refresh',
+    ];
 
     public function mount(Request $request): void
     {
         $this->currentStore = Store::where('name', $request->get('store')?->name)->first();
     }
-
-    protected $listeners = [
-        'refreshIndividualAudits' => '$refresh',
-    ];
 
     public function render()
     {

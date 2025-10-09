@@ -17,9 +17,7 @@ class IndexItem extends Component
         $progress = $this->contract->status->pluck('step')->toArray();
         $progress = array_unique($progress);
 
-        $progress = array_filter($progress, function ($value) {
-            return $value !== null;
-        });
+        $progress = array_filter($progress, fn ($value) => $value !== null);
 
         return end($progress);
     }

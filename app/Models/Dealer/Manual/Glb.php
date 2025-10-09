@@ -48,7 +48,6 @@ class Glb extends Model
         'q12a',
         'q12c',
     ];
-
     protected $casts = [
         'assessment_date' => 'date',
         'receptacles' => 'array',

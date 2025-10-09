@@ -14,7 +14,6 @@ class FitTestDoc extends Model
         'date',
         'file_path',
     ];
-
     protected $casts = [
         'store_id' => 'integer',
         'user_id' => 'integer',

@@ -15,15 +15,6 @@ class Delete extends Modal
         $this->glbaAudit = $glbaViolationAudit;
     }
 
-    protected function deleteViolationPhotos(): void
-    {
-        $this->glbaAudit->violations->each(function ($violation) {
-            $violation->clearMediaCollection('violations_files_0');
-            $violation->clearMediaCollection('violations_files_1');
-            $violation->clearMediaCollection('violations_files_2');
-        });
-    }
-
     public function delete()
     {
         $this->deleteViolationPhotos();
@@ -43,5 +34,14 @@ class Delete extends Modal
     public function render()
     {
         return view('livewire.dealer.audit.finance.delete');
+    }
+
+    protected function deleteViolationPhotos(): void
+    {
+        $this->glbaAudit->violations->each(function ($violation) {
+            $violation->clearMediaCollection('violations_files_0');
+            $violation->clearMediaCollection('violations_files_1');
+            $violation->clearMediaCollection('violations_files_2');
+        });
     }
 }

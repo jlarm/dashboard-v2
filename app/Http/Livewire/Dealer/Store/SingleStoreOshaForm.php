@@ -7,48 +7,52 @@ use App\Models\Dealer\Store;
 use App\Models\Dealer\StoreSettings;
 use App\Models\User;
 use Livewire\Component;
+use Storage;
+use Str;
 
 class SingleStoreOshaForm extends Component
 {
     public Store $store;
-
     public $qi;
-
     public $qip;
-
     public $sm;
-
     public $smp;
-
     public $pm;
-
     public $pmp;
-
     public $bsm;
-
     public $bsmp;
-
     public $gm;
-
     public $gmp;
-
     public $owner;
-
     public $ownerp;
-
     public $pepn;
-
     public $pnepn;
-
     public $fepn;
-
     public $fnepn;
-
     public $alarmSystem;
-
     public $burglarSystem;
-
     public $signature;
+    protected $rules = [
+        'qi' => 'required',
+        'qip' => 'required',
+        'sm' => 'required',
+        'smp' => 'required',
+        'pm' => 'required',
+        'pmp' => 'required',
+        'bsm' => 'required',
+        'bsmp' => 'required',
+        'gm' => 'required',
+        'gmp' => 'required',
+        'owner' => 'required',
+        'ownerp' => 'required',
+        'pepn' => 'required',
+        'pnepn' => 'required',
+        'fepn' => 'required',
+        'fnepn' => 'required',
+        'alarmSystem' => 'required',
+        'burglarSystem' => 'required',
+        'signature' => 'required',
+    ];
 
     public function mount()
     {
@@ -164,33 +168,11 @@ class SingleStoreOshaForm extends Component
         $this->burglarSystem = $settings->burglar_alarm_type ?? '';
     }
 
-    protected $rules = [
-        'qi' => 'required',
-        'qip' => 'required',
-        'sm' => 'required',
-        'smp' => 'required',
-        'pm' => 'required',
-        'pmp' => 'required',
-        'bsm' => 'required',
-        'bsmp' => 'required',
-        'gm' => 'required',
-        'gmp' => 'required',
-        'owner' => 'required',
-        'ownerp' => 'required',
-        'pepn' => 'required',
-        'pnepn' => 'required',
-        'fepn' => 'required',
-        'fnepn' => 'required',
-        'alarmSystem' => 'required',
-        'burglarSystem' => 'required',
-        'signature' => 'required',
-    ];
-
     public function submit()
     {
         $this->validate();
 
-        $fName = \Str::of($this->qi)->replace(' ', '')->lower();
+        $fName = Str::of($this->qi)->replace(' ', '')->lower();
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
@@ -217,7 +199,7 @@ class SingleStoreOshaForm extends Component
             'signature' => $fileName,
         ]);
 
-        \Storage::put('osha-signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
+        Storage::put('osha-signatures/'.$fileName, base64_decode(Str::of($this->signature)->after(',')));
 
         $this->redirect(route('dealer.manual.index'));
     }

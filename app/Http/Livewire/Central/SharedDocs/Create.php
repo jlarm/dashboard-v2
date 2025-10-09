@@ -19,17 +19,13 @@ class Create extends Component
     use WithFileUploads;
 
     public string $title = '';
-
     public $file = null;
-
     public string $url = '';
-
     protected array $rules = [
         'title' => 'required|string|min:2|max:255',
         'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar|max:10240',
         'url' => 'nullable|url',
     ];
-
     protected array $messages = [
         'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
     ];

@@ -6,107 +6,61 @@ use App\Models\Dealer\Vendor;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Storage;
+use Str;
 
 class Form extends Component
 {
     use WithFileUploads;
 
     public Vendor $vendor;
-
     public $name;
-
     public $contact_name;
-
     public $signature;
-
     public $q1a;
-
     public $q1c;
-
     public $q2a;
-
     public $q2c;
-
     public $q3a;
-
     public $q3c;
-
     public $q4a;
-
     public $q4c;
-
     public $q5a;
-
     public $q5c;
-
     public $q6a;
-
     public $q6c;
-
     public $q7a;
-
     public $q7c;
-
     public $q8a;
-
     public $q8c;
-
     public $q9a;
-
     public $q9c;
-
     public $q10a;
-
     public $q10c;
-
     public $q11a;
-
     public $q11c;
-
     public $q12a;
-
     public $q12c;
-
     public $q13a;
-
     public $q13c;
-
     public $q14a;
-
     public $q14c;
-
     public $q15a;
-
     public $q15c;
-
     public $q16a;
-
     public $q16c;
-
     public $q17a;
-
     public $q17c;
-
     public $q18a;
-
     public $q18c;
-
     public $q19a;
-
     public $q19c;
-
     public $q20a;
-
     public $q20c;
-
     public $q21a;
-
     public $q21c;
-
     public $q22a;
-
     public $q22c;
-
     protected $rules = [
         'name' => ['required', 'string', 'max:255'],
         'contact_name' => ['required', 'string', 'max:255'],
@@ -167,7 +121,7 @@ class Form extends Component
     public function submit()
     {
         $validated = $this->validate();
-        $fName = \Str::of($this->contact_name)->replace(' ', '')->lower();
+        $fName = Str::of($this->contact_name)->replace(' ', '')->lower();
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
@@ -219,7 +173,7 @@ class Form extends Component
             'signature' => $fileName,
         ]);
 
-        \Storage::put('signatures/'.$fileName, base64_decode(\Str::of($this->signature)->after(',')));
+        Storage::put('signatures/'.$fileName, base64_decode(Str::of($this->signature)->after(',')));
 
         return redirect(route('dealer.vendors.thankyou'));
 

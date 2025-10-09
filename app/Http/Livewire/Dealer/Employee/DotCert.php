@@ -17,12 +17,34 @@ use Spatie\Browsershot\Browsershot;
 class DotCert extends Component
 {
     public User $user;
-
     public $showCertButton;
 
     public function mount()
     {
         $this->showCertButton = $this->shouldShowCertButton();
+    }
+
+    public function download(Request $request)
+    {
+        $fileName = $this->generatePdf($request);
+        $filePath = $this->storePdf($fileName);
+
+        Certificate::create([
+            'user_id' => $this->user->id,
+            'course_name' => 'DOT Hazardous Materials Transportation',
+            'file_name' => $fileName,
+        ]);
+
+        $this->showCertButton = false;
+
+        $url = Storage::disk('armp-certs')->temporaryUrl($filePath, now()->addHour());
+
+        $this->sendNotification($url);
+    }
+
+    public function render()
+    {
+        return view('livewire.dealer.employee.dot-cert');
     }
 
     private function shouldShowCertButton(): bool
@@ -47,24 +69,6 @@ class DotCert extends Component
             ->where('user_id', $this->user->id)
             ->where('course_id', $courseId)
             ->first();
-    }
-
-    public function download(Request $request)
-    {
-        $fileName = $this->generatePdf($request);
-        $filePath = $this->storePdf($fileName);
-
-        Certificate::create([
-            'user_id' => $this->user->id,
-            'course_name' => 'DOT Hazardous Materials Transportation',
-            'file_name' => $fileName,
-        ]);
-
-        $this->showCertButton = false;
-
-        $url = Storage::disk('armp-certs')->temporaryUrl($filePath, now()->addHour());
-
-        $this->sendNotification($url);
     }
 
     private function generatePdf(Request $request): string
@@ -109,10 +113,5 @@ class DotCert extends Component
                     ->url(route('dealer.profile.edit')),
             ])
             ->send();
-    }
-
-    public function render()
-    {
-        return view('livewire.dealer.employee.dot-cert');
     }
 }

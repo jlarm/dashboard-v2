@@ -10,27 +10,13 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Browsershot\Browsershot;
+use View;
 
 class GeneratePdfJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(protected Contract $contract) {}
-
-    protected function reviewLabel($service): string
-    {
-        return match ($service) {
-            'glba' => 'GLBA - Safeguards Rule, Sales & Finance',
-            'osha' => 'OSHA',
-            'it' => 'IT Security',
-            'ces' => 'Cyber Enhanced Security',
-        };
-    }
-
-    private function createFileName(): string
-    {
-        return strtolower(str_replace(' ', '-', $this->contract->dealer_name)).'-'.'armp-contract'.'-'.$this->contract->created_at->format('Y-m-d').'.pdf';
-    }
 
     public function handle(): void
     {
@@ -55,7 +41,7 @@ class GeneratePdfJob implements ShouldQueue
         $contract = Browsershot::html($html)
             ->showBrowserHeaderAndFooter()
             ->headerHtml('.')
-            ->footerHtml(\View::make('pdf.contract.footer'))
+            ->footerHtml(View::make('pdf.contract.footer'))
             ->format('A4')
             ->margins(5, 20, 20, 20)
             ->scale(0.75)
@@ -64,5 +50,20 @@ class GeneratePdfJob implements ShouldQueue
         $this->contract->update([
             'pdf_path' => $this->createFileName(),
         ]);
+    }
+
+    protected function reviewLabel($service): string
+    {
+        return match ($service) {
+            'glba' => 'GLBA - Safeguards Rule, Sales & Finance',
+            'osha' => 'OSHA',
+            'it' => 'IT Security',
+            'ces' => 'Cyber Enhanced Security',
+        };
+    }
+
+    private function createFileName(): string
+    {
+        return mb_strtolower(str_replace(' ', '-', $this->contract->dealer_name)).'-armp-contract-'.$this->contract->created_at->format('Y-m-d').'.pdf';
     }
 }

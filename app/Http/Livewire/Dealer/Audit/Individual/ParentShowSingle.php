@@ -9,11 +9,8 @@ use Livewire\Component;
 class ParentShowSingle extends Component
 {
     public IndividualAudit $individualAudit;
-
     public Store $store;
-
     public $children;
-
     protected $listeners = ['refreshParentComponent' => '$refresh'];
 
     public function mount()

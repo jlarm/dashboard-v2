@@ -13,7 +13,6 @@ class Course extends Model
     use HasFactory, HasRoles;
 
     protected string $guard_name = 'web';
-
     protected $fillable = [
         'model_type',
         'department_id',
@@ -23,7 +22,6 @@ class Course extends Model
         'questions',
         'video_id',
     ];
-
     protected $casts = [
         'slides' => 'array',
         'questions' => 'array',

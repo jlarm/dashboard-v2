@@ -18,23 +18,19 @@ class Edit extends Component implements HasForms
     use InteractsWithForms;
 
     public Course $course;
-
     public $name;
-
     public array $slides;
-
     public $questions;
+    protected $rules = [
+        'name' => 'required',
+        'slides' => 'required',
+    ];
 
     public function mount(): void
     {
         $this->name = $this->course->name;
         $this->slides = $this->course->slides;
     }
-
-    protected $rules = [
-        'name' => 'required',
-        'slides' => 'required',
-    ];
 
     public function update(): void
     {
@@ -58,6 +54,11 @@ class Edit extends Component implements HasForms
             ->send();
     }
 
+    public function render(): View
+    {
+        return view('livewire.central.course-management.edit');
+    }
+
     protected function getFormSchema(): array
     {
         return [
@@ -70,10 +71,5 @@ class Edit extends Component implements HasForms
                 ->disableItemMovement()
                 ->createItemButtonLabel('Add Slide'),
         ];
-    }
-
-    public function render(): View
-    {
-        return view('livewire.central.course-management.edit');
     }
 }

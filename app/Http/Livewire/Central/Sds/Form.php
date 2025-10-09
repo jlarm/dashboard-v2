@@ -3,34 +3,27 @@
 namespace App\Http\Livewire\Central\Sds;
 
 use App\Models\Sds;
+use Exception;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Log;
+use Storage;
 
 class Form extends Component
 {
     use WithFileUploads;
 
     public ?Sds $sds;
-
     public string $name = '';
-
     public string $productIdentifier = '';
-
     public array $productIdentificationNumbers = [];
-
     public string $newPin = '';
-
     public string $manufacturer = '';
-
     public array $casNos = [];
-
     public string $newCasNo = '';
-
     public string $commonName = '';
-
     public $file;
-
     protected $rules = [
         'name' => 'required|string|max:255',
         'productIdentifier' => 'nullable|string|max:255',
@@ -84,7 +77,7 @@ class Form extends Component
     {
         try {
             $fileName = str_replace(' ', '-', $this->file->getClientOriginalName());
-            \Storage::disk('sds-sheets')->putFileAs('/', $this->file, $fileName);
+            Storage::disk('sds-sheets')->putFileAs('/', $this->file, $fileName);
 
             Sds::create([
                 'name' => $this->name,
@@ -114,8 +107,8 @@ class Form extends Component
                 ->title('SDS Sheet Added Successfully!')
                 ->success()
                 ->send();
-        } catch (\Exception $e) {
-            \Log::error($e);
+        } catch (Exception $e) {
+            Log::error($e);
             \Sentry\captureException($e);
             if (str_contains($e->getMessage(), 'max.')) {
                 $this->addError('file', $this->messages['file.max']);

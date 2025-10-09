@@ -6,15 +6,14 @@ use App\Jobs\Manuals\GenerateIspManualJob;
 use App\Jobs\Manuals\UploadIspToDigitaloceanJob;
 use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Store;
+use Bus;
 use Livewire\Component;
 use Storage;
 
 class IspCard extends Component
 {
     public Store $store;
-
     public $manual;
-
     public $content;
 
     public function mount()
@@ -27,7 +26,7 @@ class IspCard extends Component
 
     public function generate()
     {
-        \Bus::chain([
+        Bus::chain([
             new GenerateIspManualJob($this->manual),
             new UploadIspToDigitaloceanJob($this->manual),
         ])->dispatch();
