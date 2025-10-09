@@ -11,8 +11,7 @@ class CourseResultsObserver
      */
     public function created(CourseResults $courseResults): void
     {
-        // Clear the specific user's completed courses cache
-        tenant_cache_forget('completed_courses_'.$courseResults->user_id);
+        //
     }
 
     /**
@@ -20,8 +19,7 @@ class CourseResultsObserver
      */
     public function updated(CourseResults $courseResults): void
     {
-        // Clear the specific user's completed courses cache
-        tenant_cache_forget('completed_courses_'.$courseResults->user_id);
+        //
     }
 
     /**
