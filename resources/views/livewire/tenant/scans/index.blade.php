@@ -19,6 +19,12 @@
         @else
             <!-- Loading Skeleton -->
             @include('livewire.tenant.scans.components.issue-counts-placeholder')
+            <div class="space-y-5">
+                <div class="bg-gray-200 rounded-lg p-8 animate-pulse"></div>
+                <div class="bg-gray-200 rounded-lg p-8 animate-pulse"></div>
+                <div class="bg-gray-200 rounded-lg p-8 animate-pulse"></div>
+                <div class="bg-gray-200 rounded-lg p-8 animate-pulse"></div>
+            </div>
         @endif
     </div>
 </div>
