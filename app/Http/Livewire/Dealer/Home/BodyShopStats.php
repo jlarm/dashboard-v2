@@ -7,7 +7,6 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\BodyShopGenerateRating;
 use App\Traits\HasAuditStats;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class BodyShopStats extends Component
@@ -70,7 +69,7 @@ class BodyShopStats extends Component
             return $this->cachedGrades;
         }
 
-        $this->cachedGrades = Cache::remember(
+        $this->cachedGrades = tenant_cache_remember(
             'body_shop_grades_'.$this->store->id,
             now()->addHour(),
             function () {

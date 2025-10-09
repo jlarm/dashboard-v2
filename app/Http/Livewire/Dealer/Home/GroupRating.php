@@ -6,7 +6,6 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class GroupRating extends Component
@@ -64,25 +63,25 @@ class GroupRating extends Component
 
     private function loadGrades(): void
     {
-        $this->dealJacketGrades = Cache::remember(
+        $this->dealJacketGrades = tenant_cache_remember(
             'group_deal_jacket_grades',
             now()->addHour(),
             fn () => $this->getGradesFromAudit(IndividualAudit::class, 'rating')
         );
 
-        $this->glbaGrades = Cache::remember(
+        $this->glbaGrades = tenant_cache_remember(
             'group_glba_grades',
             now()->addHour(),
             fn () => $this->getGradesFromAudit(GlbaViolationAudit::class, 'grade')
         );
 
-        $this->oshaGrades = Cache::remember(
+        $this->oshaGrades = tenant_cache_remember(
             'group_osha_grades',
             now()->addHour(),
             fn () => $this->getGradesFromAudit(OshaViolationAudit::class, 'grade')
         );
 
-        $this->bodyShopGrades = Cache::remember(
+        $this->bodyShopGrades = tenant_cache_remember(
             'group_body_shop_grades',
             now()->addHour(),
             fn () => $this->getGradesFromAudit(BodyShopViolationAudit::class, 'grade')

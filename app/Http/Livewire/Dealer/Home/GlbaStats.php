@@ -7,7 +7,6 @@ use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\GlbaGenerateRating;
 use App\Traits\HasAuditStats;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class GlbaStats extends Component
@@ -70,7 +69,7 @@ class GlbaStats extends Component
             return $this->cachedGrades;
         }
 
-        $this->cachedGrades = Cache::remember(
+        $this->cachedGrades = tenant_cache_remember(
             'glba_grades_'.$this->store->id,
             now()->addHour(),
             function () {

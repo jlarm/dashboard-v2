@@ -14,9 +14,9 @@ class UserObserver
     public function created(User $user): void
     {
         try {
-            Cache::store('redis')->tags(['user_index'])->flush();
+            Cache::store('redis')->tags([tenant_cache_key('user_index')])->flush();
         } catch (Exception $e) {
-            Cache::forget('user_index');
+            tenant_cache_forget('user_index');
         }
     }
 
@@ -26,9 +26,9 @@ class UserObserver
     public function updated(User $user): void
     {
         try {
-            Cache::store('redis')->tags(['user_index'])->flush();
+            Cache::store('redis')->tags([tenant_cache_key('user_index')])->flush();
         } catch (Exception $e) {
-            Cache::forget('user_index');
+            tenant_cache_forget('user_index');
         }
     }
 
@@ -38,9 +38,9 @@ class UserObserver
     public function deleted(User $user): void
     {
         try {
-            Cache::store('redis')->tags(['user_index'])->flush();
+            Cache::store('redis')->tags([tenant_cache_key('user_index')])->flush();
         } catch (Exception $e) {
-            Cache::forget('user_index');
+            tenant_cache_forget('user_index');
         }
     }
 
@@ -50,9 +50,9 @@ class UserObserver
     public function restored(User $user): void
     {
         try {
-            Cache::store('redis')->tags(['user_index'])->flush();
+            Cache::store('redis')->tags([tenant_cache_key('user_index')])->flush();
         } catch (Exception $e) {
-            Cache::forget('user_index');
+            tenant_cache_forget('user_index');
         }
     }
 
@@ -62,9 +62,9 @@ class UserObserver
     public function forceDeleted(User $user): void
     {
         try {
-            Cache::store('redis')->tags(['user_index'])->flush();
+            Cache::store('redis')->tags([tenant_cache_key('user_index')])->flush();
         } catch (Exception $e) {
-            Cache::forget('user_index');
+            tenant_cache_forget('user_index');
         }
     }
 }
