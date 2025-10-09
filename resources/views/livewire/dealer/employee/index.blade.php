@@ -380,14 +380,6 @@
                                         >
                                             Completed Courses
                                         </th>
-                                        @if($this->videosAreActive())
-                                            <th
-                                                scope="col"
-                                                class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                            >
-                                                Video Training
-                                            </th>
-                                        @endif
                                         <th
                                             scope="col"
                                             class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
@@ -400,8 +392,6 @@
                                     @forelse($users as $user)
                                         <livewire:dealer.employee.index-item
                                             :user="$user"
-                                            :videosAreActive="$this->videosAreActive()"
-                                            :videoCount="$this->totalVideosCount()"
                                             :key="$user->id"
                                         />
                                     @empty

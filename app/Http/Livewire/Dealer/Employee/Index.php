@@ -49,7 +49,19 @@ class Index extends Component
                     ->orWhere('name', 'Consultant');
             })
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
-            ->with('roles', 'department', 'stores', 'courses');
+            ->with([
+                'roles',
+                'department:id,name',
+                'stores:id,name',
+                'courses:id',
+                'results' => function ($query) {
+                    $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
+                        ->where('passed', 1);
+                },
+            ])
+            ->withCount([
+                'videoProgress as completed_videos_count',
+            ]);
 
         // Apply filters
         $this->applyDepartmentFilter($query);
@@ -171,11 +183,6 @@ class Index extends Component
         return \Spatie\Permission\Models\Role::find($this->selectedRole)?->name;
     }
 
-    public function videosAreActive(): bool
-    {
-        return Store::find(app('currentStore'))->videos;
-    }
-
     public function completedVideosCount(): int
     {
         return $this->currentUser->videoProgress()->count();
@@ -184,6 +191,23 @@ class Index extends Component
     public function totalVideosCount(): int
     {
         return app(VimeoService::class)->totalVideos();
+    }
+
+    public function getDepartmentsProperty()
+    {
+        return Department::query()
+            ->whereHas('users')
+            ->orderBy('name')
+            ->get(['id', 'name']);
+    }
+
+    public function getRolesProperty()
+    {
+        return \Spatie\Permission\Models\Role::query()
+            ->whereNotIn('name', ['super-admin', 'Consultant'])
+            ->whereHas('users')
+            ->orderBy('name')
+            ->get(['id', 'name']);
     }
 
     public function render(): View
@@ -196,11 +220,8 @@ class Index extends Component
 
         return view('livewire.dealer.employee.index', [
             'users' => $users,
-            'departments' => Department::whereHas('users')->orderBy('name')->get(),
-            'roles' => \Spatie\Permission\Models\Role::whereNotIn('name', ['super-admin', 'Consultant'])
-                ->whereHas('users')
-                ->orderBy('name')
-                ->get(),
+            'departments' => $this->departments,
+            'roles' => $this->roles,
             'selectedDepartmentName' => $this->selectedDepartmentName,
             'selectedRoleName' => $this->selectedRoleName,
         ]);
