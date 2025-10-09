@@ -7,7 +7,6 @@ use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Traits\HasAuditStats;
 use App\Traits\OshaGenerateRating;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class OshaStats extends Component
@@ -70,7 +69,7 @@ class OshaStats extends Component
             return $this->cachedGrades;
         }
 
-        $this->cachedGrades = Cache::remember(
+        $this->cachedGrades = tenant_cache_remember(
             'osha_grades_'.$this->store->id,
             now()->addHour(),
             function () {

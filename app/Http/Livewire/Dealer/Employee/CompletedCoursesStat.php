@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -49,7 +48,7 @@ class CompletedCoursesStat extends Component
     {
         $cacheKey = 'user_counts_'.$this->formattedName.'_'.($this->store?->id ?? 'all');
 
-        return Cache::remember($cacheKey, now()->addHour(), function () {
+        return tenant_cache_remember($cacheKey, now()->addHour(), function () {
             return [
                 'total' => $this->getTotalUserCount(),
                 'incomplete' => $this->getIncompleteCount(),
@@ -68,7 +67,7 @@ class CompletedCoursesStat extends Component
     {
         $cacheKey = 'incomplete_count_'.$this->formattedName.'_'.($this->store?->id ?? 'all').'_'.($this->department ?? 'all');
 
-        return Cache::remember($cacheKey, now()->addHour(), function () {
+        return tenant_cache_remember($cacheKey, now()->addHour(), function () {
             return $this->users()
                 ->filter(fn ($user) => $user->user_has_not_completed_courses)
                 ->count();
@@ -79,7 +78,7 @@ class CompletedCoursesStat extends Component
     {
         $cacheKey = 'users_list_'.$this->formattedName.'_'.($this->store?->id ?? 'all').'_'.($this->department ?? 'all');
 
-        return Cache::remember($cacheKey, now()->addHour(), function () {
+        return tenant_cache_remember($cacheKey, now()->addHour(), function () {
             $query = $this->buildBaseQuery();
 
             return $query->with(['results' => function ($query) {
