@@ -18,6 +18,12 @@ class StoreList extends Component
     {
         return view('livewire.dealer.home.store-list', [
             'stores' => $this->query()
+                ->with([
+                    'individualAudits' => fn ($q) => $q->select('id', 'store_id', 'rating')->whereNotNull('rating'),
+                    'financeAudits' => fn ($q) => $q->select('id', 'store_id', 'rating')->whereNotNull('rating'),
+                    'oshaAudits' => fn ($q) => $q->select('id', 'store_id', 'rating')->whereNotNull('rating'),
+                    'bodyShopAudits' => fn ($q) => $q->select('id', 'store_id', 'rating')->whereNotNull('rating'),
+                ])
                 ->select('id', 'name', 'slug')
                 ->paginate(10),
         ]);

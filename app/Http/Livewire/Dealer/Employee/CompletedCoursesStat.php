@@ -75,7 +75,10 @@ class CompletedCoursesStat extends Component
     {
         $query = $this->buildBaseQuery();
 
-        return $query->get();
+        return $query->with(['results' => function ($query) {
+            $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
+                ->whereNull('deleted_at');
+        }, 'roles:id'])->get();
     }
 
     protected function buildBaseQuery()
