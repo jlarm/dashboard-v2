@@ -47,6 +47,7 @@ class User extends Authenticatable
         'password',
         'current_store_id',
         'last_sent_course_reminder',
+        'email_verified_at',
     ];
     protected $hidden = [
         'password',

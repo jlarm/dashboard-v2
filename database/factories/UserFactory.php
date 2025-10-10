@@ -20,9 +20,9 @@ class UserFactory extends Factory
     {
         return [
             'department_id' => null,
-            'name' => 'John Doe',
-            'email' => 'jdoe@email.com',
-            'phone' => '9876543211',
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->numerify('##########'),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
@@ -38,14 +38,14 @@ class UserFactory extends Factory
     /**
      * Indicate that the user should have the super-admin role.
      */
-    public function superAdmin(): static
-    {
-        return $this->afterCreating(function (User $user) {
-            if (\Spatie\Permission\Models\Role::where('name', 'super-admin')->exists()) {
-                $user->assignRole('super-admin');
-            }
-        });
-    }
+//    public function superAdmin(): static
+//    {
+//        return $this->afterCreating(function (User $user) {
+//            if (\Spatie\Permission\Models\Role::where('name', 'super-admin')->exists()) {
+//                $user->assignRole('super-admin');
+//            }
+//        });
+//    }
 
     /**
      * Indicate that the model's email address should be unverified.
