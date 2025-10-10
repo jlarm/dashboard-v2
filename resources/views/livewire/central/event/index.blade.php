@@ -7,7 +7,7 @@
                         <p class="text-sm font-semibold leading-6 text-gray-900">{{ $event->name }}</p>
                         <p class="mt-1 truncate text-xs leading-5 text-gray-500">
                             {{ $event->start_date->format('F d, Y') }}
-                            @if($event->start_date->format('Y-m-d') != $event->end_date->format('Y-m-d'))
+                            @if($event->start_date->format('Y-m-d') !== $event->end_date->format('Y-m-d'))
                                 - {{ $event->end_date->format('F d, Y') }}
                             @endif
                         </p>
