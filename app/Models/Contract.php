@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Casts\MoneyCast;
+use Database\Factories\Central\ContractFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +16,7 @@ use Str;
 
 class Contract extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'uuid',
@@ -59,21 +64,40 @@ class Contract extends Model
         'additional_locations' => 'array',
     ];
 
+    /**
+     * @return BelongsTo<User, Contract>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return HasMany<ContractStatus>
+     */
     public function status(): HasMany
     {
         return $this->hasMany(ContractStatus::class);
     }
 
-    protected static function booted()
+    /**
+     * @return Factory<Contract>
+     */
+    protected static function newFactory(): Factory
     {
-        static::creating(function ($contract) {
-            $contract->user_id = auth()->id();
-            $contract->uuid = (string) Str::uuid();
+        return ContractFactory::new();
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(static function ($contract): void {
+            if (! $contract->user_id) {
+                $contract->user_id = auth()->id();
+            }
+
+            if (! $contract->uuid) {
+                $contract->uuid = (string) Str::uuid();
+            }
         });
     }
 }
