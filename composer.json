@@ -62,6 +62,7 @@
         "pestphp/pest": "^1.22",
         "pestphp/pest-plugin-laravel": "^1.4",
         "phpunit/phpunit": "^9.5.10",
+        "rector/rector": "^1.2",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
