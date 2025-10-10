@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Livewire\Central\Event\Create;
-use App\Models\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 
-test('component can render', function () {
+test('component can render', function (): void {
     Livewire::test(Create::class)
         ->assertStatus(200);
 });
 
-test('can create event with required fields only', function () {
+test('can create event with required fields only', function (): void {
     Livewire::test(Create::class)
         ->set('name', 'Laravel Conference 2025')
         ->set('startDate', '2025-06-01')
@@ -27,7 +28,7 @@ test('can create event with required fields only', function () {
     ]);
 });
 
-test('can create event with all fields', function () {
+test('can create event with all fields', function (): void {
     Livewire::test(Create::class)
         ->set('name', 'Laravel Conference 2025')
         ->set('startDate', '2025-06-01')
@@ -54,7 +55,7 @@ test('can create event with all fields', function () {
     ]);
 });
 
-test('name is required', function () {
+test('name is required', function (): void {
     Livewire::test(Create::class)
         ->set('name', '')
         ->set('startDate', '2025-06-01')
@@ -65,7 +66,7 @@ test('name is required', function () {
     $this->assertDatabaseCount('events', 0);
 });
 
-test('start date is required', function () {
+test('start date is required', function (): void {
     Livewire::test(Create::class)
         ->set('name', 'Laravel Conference 2025')
         ->set('startDate', '')
@@ -76,7 +77,7 @@ test('start date is required', function () {
     $this->assertDatabaseCount('events', 0);
 });
 
-test('end date is required', function () {
+test('end date is required', function (): void {
     Livewire::test(Create::class)
         ->set('name', 'Laravel Conference 2025')
         ->set('startDate', '2025-06-01')
@@ -87,7 +88,7 @@ test('end date is required', function () {
     $this->assertDatabaseCount('events', 0);
 });
 
-test('end date must be after or equal to start date', function () {
+test('end date must be after or equal to start date', function (): void {
     Livewire::test(Create::class)
         ->set('name', 'Laravel Conference 2025')
         ->set('startDate', '2025-06-03')
@@ -98,7 +99,7 @@ test('end date must be after or equal to start date', function () {
     $this->assertDatabaseCount('events', 0);
 });
 
-test('end date can be same as start date', function () {
+test('end date can be same as start date', function (): void {
     Livewire::test(Create::class)
         ->set('name', 'One Day Workshop')
         ->set('startDate', '2025-06-01')
@@ -114,7 +115,7 @@ test('end date can be same as start date', function () {
     ]);
 });
 
-test('name cannot exceed 255 characters', function () {
+test('name cannot exceed 255 characters', function (): void {
     $longName = str_repeat('a', 256);
 
     Livewire::test(Create::class)

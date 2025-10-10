@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,6 +13,7 @@ use App\Models\Dealer\Timeline;
 use App\Traits\HasAudits;
 use App\Traits\HasCourses;
 use App\Traits\HasManuals;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -65,13 +68,20 @@ class User extends Authenticatable
             ->saveSlugsTo('slug');
     }
 
-    public function scopeWithoutSuperAdminsAndConsultants($query)
+    /**
+     * @param  Builder<User>  $query
+     * @return Builder<User>
+     */
+    public function scopeWithoutSuperAdminsAndConsultants(Builder $query): Builder
     {
-        return $query->whereDoesntHave('roles', function ($q) {
+        return $query->whereDoesntHave('roles', function ($q): void {
             $q->whereIn('name', ['super-admin', 'Consultant']);
         });
     }
 
+    /**
+     * @return BelongsTo<Store, User>
+     */
     public function currentStore(): BelongsTo
     {
         return $this->belongsTo(Store::class, 'current_store_id');
@@ -79,86 +89,135 @@ class User extends Authenticatable
 
     public function getPhoneNumberAttribute(): string
     {
+        if (! $this->phone) {
+            return '';
+        }
+
         $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-        preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+
+        if (! is_string($cleaned) || ! preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches)) {
+            return '';
+        }
 
         return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
     }
 
+    /**
+     * @return HasMany<Contract>
+     */
+    public function contracts(): HasMany
+    {
+        return $this->hasMany(Contract::class);
+    }
+
+    /**
+     * @return BelongsToMany<Dealership>
+     */
     public function dealerships(): BelongsToMany
     {
         return $this->belongsToMany(Dealership::class, 'tenant_user', 'user_id', 'tenant_id');
     }
 
+    /**
+     * @return BelongsToMany<Store>
+     */
     public function stores(): BelongsToMany
     {
         return $this->belongsToMany(Store::class);
     }
 
+    /**
+     * @return BelongsTo<Department, User>
+     */
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
     }
 
+    /**
+     * @return HasMany<Invite>
+     */
     public function invites(): HasMany
     {
         return $this->hasMany(Invite::class);
     }
 
+    /**
+     * @return HasMany<Certificate>
+     */
     public function certificates(): HasMany
     {
         return $this->hasMany(Certificate::class);
     }
 
+    /**
+     * @return HasMany<PhishingCampaign>
+     */
     public function phishingCampaigns(): HasMany
     {
         return $this->hasMany(PhishingCampaign::class);
     }
 
+    /**
+     * @return HasMany<Timeline>
+     */
     public function timelines(): HasMany
     {
         return $this->hasMany(Timeline::class, 'email', 'email');
     }
 
+    /**
+     * @return HasMany<FitTestDoc>
+     */
     public function fitTests(): HasMany
     {
         return $this->hasMany(FitTestDoc::class);
     }
 
+    /**
+     * @return HasMany<VideoProgress>
+     */
     public function videoProgress(): HasMany
     {
         return $this->hasMany(VideoProgress::class);
     }
 
+    /**
+     * @return HasMany<RemediationReminderPreference>
+     */
     public function remediationReminderPreferences(): HasMany
     {
         return $this->hasMany(RemediationReminderPreference::class);
     }
 
-    public function routeNotificationForVonage($notification)
-    {
-        return $this->phone;
-    }
-
-    public function scopeUserStore($query, $store): void
+    /**
+     * @param  Builder<User>  $query
+     */
+    public function scopeUserStore(Builder $query, ?Store $store): void
     {
         if ($store) {
-            $query->whereHas('stores', function ($q) use ($store) {
+            $query->whereHas('stores', function ($q) use ($store): void {
                 $q->where('store_id', $store->id);
             });
         }
     }
 
-    public function scopeCurrentUserIsManager($query, $currentUser): void
+    /**
+     * @param  Builder<User>  $query
+     */
+    public function scopeCurrentUserIsManager(Builder $query, self $currentUser): void
     {
         if ($currentUser->hasRole('Manager') && ! $currentUser->hasRole('Qualified Individual')) {
             $query->where('department_id', $currentUser->department_id);
         }
     }
 
-    public function scopeUsersNotCompletedCourses($query, $showNotCompleted): void
+    /**
+     * @param  Builder<User>  $query
+     */
+    public function scopeUsersNotCompletedCourses(Builder $query, bool $showNotCompleted): void
     {
-        $query->when($showNotCompleted, fn ($query) => $query->where($this->user_has_not_completed_courses, true));
+        $query->when($showNotCompleted, fn ($query) => $query->where('user_has_not_completed_courses', true));
     }
 
     public function getActivitylogOptions(): LogOptions
@@ -178,6 +237,11 @@ class User extends Authenticatable
         return $initials;
     }
 
+    /**
+     * Used in HasCourses trait
+     *
+     * @phpstan-ignore method.unused
+     */
     private function userHasNoCaliforniaStore(): bool
     {
         return ! $this->stores()->where('state', 'California')->exists();
