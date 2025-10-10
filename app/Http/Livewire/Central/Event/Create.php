@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Central\Event;
 
 use App\Models\Event;
 use Filament\Notifications\Notification;
+use Illuminate\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Create extends Modal
@@ -29,7 +32,7 @@ class Create extends Modal
         'link' => 'nullable|string|max:255',
     ];
 
-    public function create()
+    public function create(): void
     {
         $validated = $this->validate();
 
@@ -55,7 +58,7 @@ class Create extends Modal
             ->send();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.central.event.create');
     }
