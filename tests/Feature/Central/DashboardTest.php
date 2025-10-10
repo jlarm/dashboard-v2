@@ -10,16 +10,6 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     $this->seed(DepartmentSeeder::class);
     $this->seed(RoleAndPermissionSeeder::class);
-
-    $user = User::create([
-        'name' => 'John Doe',
-        'email' => 'jdoe@email.com',
-        'phone' => '9876543211',
-        'email_verified_at' => now(),
-        'password' => bcrypt('password'),
-    ]);
-
-    $user->assignRole('super-admin');
 });
 
 test('guest redirects to login page', function () {
@@ -32,10 +22,25 @@ test('guest redirects to login page', function () {
     $response->assertRedirect('/login');
 });
 
-test('logged in user can see dashboard', function () {
-    $response = $this->actingAs(User::first())->get('/dashboard');
+test('logged in super-admin can see dashboard', function () {
+    $superAdmin = User::factory()->create();
+    $superAdmin->assignRole('super-admin');
+
+    $response = $this->actingAs($superAdmin)->get('/dashboard');
 
     $response
         ->assertOk()
-        ->assertSee('Upcoming Events');
+        ->assertSee('Upcoming Events')
+        ->assertSee('Add Event');
+});
+
+test('logged in consultant can see dashboard', function () {
+    $consultant = User::factory()->create();
+    $consultant->assignRole('Consultant');
+
+    $response = $this->actingAs($consultant)->get('/dashboard');
+
+    $response->assertOk()
+        ->assertSee('Upcoming Events')
+        ->assertDontSee('Add Event');
 });
