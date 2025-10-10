@@ -1,43 +1,55 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Central\Contracts;
 
 use App\Models\Contract;
 use Filament\Notifications\Notification;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class Create extends Component
 {
-    public $contractType;
-    public $agreementDate;
-    public $dealerName;
-    public $services = [];
-    public $commenceDate;
-    public $yearlyInspectionTotal;
-    public $initialFee;
-    public $monthlyFee;
-    public $armpSignature;
-    public $armpPrintedName;
-    public $armpDateSigned;
-    public $dealerPhysicalAddress;
-    public $dealerPhysicalCity;
-    public $dealerPhysicalState;
-    public $dealerPhysicalZip;
-    public $dealerPhone;
-    public $dealerQiName;
-    public $dealerQiPhone;
-    public $dealerQiEmail;
-    public $dealerBillingAddress;
-    public $dealerBillingCity;
-    public $dealerBillingState;
-    public $dealerBillingZip;
-    public $dealerBillingFax;
-    public $dealerBillingContactName;
-    public $dealerBillingContactTitle;
-    public $dealerBillingContactEmail;
+    public string $contractType = '';
+    public string $agreementDate = '';
+    public string $dealerName = '';
+
+    /** @var array<int, string> */
+    public array $services = [];
+
+    public string $commenceDate = '';
+    public int $yearlyInspectionTotal;
+    public int $initialFee;
+    public int $monthlyFee;
+    public ?string $armpSignature = null;
+    public ?string $armpPrintedName = null;
+    public ?string $armpDateSigned = null;
+    public ?string $dealerPhysicalAddress = null;
+    public ?string $dealerPhysicalCity = null;
+    public ?string $dealerPhysicalState = null;
+    public ?string $dealerPhysicalZip = null;
+    public ?string $dealerPhone = null;
+    public ?string $dealerQiName = null;
+    public ?string $dealerQiPhone = null;
+    public ?string $dealerQiEmail = null;
+    public ?string $dealerBillingAddress = null;
+    public ?string $dealerBillingCity = null;
+    public ?string $dealerBillingState = null;
+    public ?string $dealerBillingZip = null;
+    public ?string $dealerBillingFax = null;
+    public ?string $dealerBillingContactName = null;
+    public ?string $dealerBillingContactTitle = null;
+    public ?string $dealerBillingContactEmail = null;
+
+    /** @var Collection<int, array<string, string>> */
     public Collection $additionalLocations;
+
+    /** @var array<string, string> */
     protected $rules = [
         'contractType' => 'required|string',
         'agreementDate' => 'required|date',
@@ -73,7 +85,7 @@ class Create extends Component
         'additionalLocations.*.contact_email' => 'nullable|email',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->additionalLocations = collect();
     }
@@ -92,12 +104,12 @@ class Create extends Component
         ]);
     }
 
-    public function removeLocation($locationKey): void
+    public function removeLocation(int $locationKey): void
     {
         $this->additionalLocations->pull($locationKey);
     }
 
-    public function create()
+    public function create(): Redirector|RedirectResponse
     {
         $this->validate();
 
@@ -105,7 +117,7 @@ class Create extends Component
             'contract_type' => $this->contractType,
             'agreement_date' => $this->agreementDate,
             'dealer_name' => Str::title($this->dealerName),
-            'services' => json_encode($this->services),
+            'services' => json_encode($this->services, JSON_THROW_ON_ERROR),
             'commence_date' => $this->commenceDate,
             'yearly_inspection_total' => $this->yearlyInspectionTotal,
             'initial_fee' => $this->initialFee,
@@ -129,7 +141,7 @@ class Create extends Component
         ]);
 
         $contract->status()->create([
-            'name' => auth()->user()->name,
+            'name' => auth()->user()?->name ?? '',
             'status' => 'created contract',
             'step' => 1,
         ]);
@@ -143,7 +155,7 @@ class Create extends Component
 
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.central.contracts.create');
     }
