@@ -48,18 +48,18 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'delete-audits']);
         Permission::firstOrCreate(['name' => 'view-audits']);
 
-        Role::create(['name' => 'super-admin']);
+        Role::firstOrCreate(['name' => 'super-admin']);
 
-        $adminRole = Role::create(['name' => 'Admin']);
-        $consultantRole = Role::create(['name' => 'Consultant']);
-        $ownerRole = Role::create(['name' => 'Owner']);
-        $qiRole = Role::create(['name' => 'Qualified Individual']);
-        $gmRole = Role::create(['name' => 'GM']);
-        $cfoRole = Role::create(['name' => 'CFO']);
-        $gsmRole = Role::create(['name' => 'GSM']);
-        $managerRole = Role::create(['name' => 'Manager']);
-        $employeeRole = Role::create(['name' => 'Employee']);
-        $porterDriverRole = Role::create(['name' => 'Porter/Driver']);
+        $adminRole = Role::firstOrCreate(['name' => 'Admin']);
+        $consultantRole = Role::firstOrCreate(['name' => 'Consultant']);
+        $ownerRole = Role::firstOrCreate(['name' => 'Owner']);
+        $qiRole = Role::firstOrCreate(['name' => 'Qualified Individual']);
+        $gmRole = Role::firstOrCreate(['name' => 'GM']);
+        $cfoRole = Role::firstOrCreate(['name' => 'CFO']);
+        $gsmRole = Role::firstOrCreate(['name' => 'GSM']);
+        $managerRole = Role::firstOrCreate(['name' => 'Manager']);
+        $employeeRole = Role::firstOrCreate(['name' => 'Employee']);
+        $porterDriverRole = Role::firstOrCreate(['name' => 'Porter/Driver']);
 
         $adminRole->givePermissionTo([
             'create-dealerships',
@@ -88,7 +88,8 @@ class RoleAndPermissionSeeder extends Seeder
             'view-manuals',
         ]);
 
-        $consultantRole->givePermissionTo([
+        // Sync permissions instead of adding to ensure clean state
+        $consultantRole->syncPermissions([
             'create-dealerships',
             'edit-dealerships',
             'view-dealerships',

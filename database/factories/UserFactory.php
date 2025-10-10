@@ -32,8 +32,15 @@ class UserFactory extends Factory
 
     public function configure(): Factory|self
     {
+        return $this;
+    }
+
+    /**
+     * Indicate that the user should have the super-admin role.
+     */
+    public function superAdmin(): static
+    {
         return $this->afterCreating(function (User $user) {
-            // Only assign role if roles exist (not during tenant isolation tests)
             if (\Spatie\Permission\Models\Role::where('name', 'super-admin')->exists()) {
                 $user->assignRole('super-admin');
             }
