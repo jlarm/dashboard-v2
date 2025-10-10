@@ -10,6 +10,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    /** @var array<string, string> */
     protected $listeners = [
         'eventAdded' => '$refresh',
     ];

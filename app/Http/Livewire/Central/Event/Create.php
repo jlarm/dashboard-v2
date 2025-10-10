@@ -11,16 +11,18 @@ use WireElements\Pro\Components\Modal\Modal;
 
 class Create extends Modal
 {
-    public $name;
-    public $startDate;
-    public $endDate;
-    public $locationName;
-    public $address;
-    public $city;
-    public $state;
-    public $zipCode;
-    public $link;
-    protected $rules = [
+    public string $name = '';
+    public ?string $startDate = null;
+    public ?string $endDate = null;
+    public ?string $locationName = '';
+    public ?string $address = '';
+    public ?string $city = '';
+    public ?string $state = '';
+    public ?string $zipCode = '';
+    public ?string $link = '';
+
+    /** @var array<string, string> */
+    protected array $rules = [
         'name' => 'required|string|max:255',
         'startDate' => 'required|date:Y-m-d',
         'endDate' => 'required|date:Y-m-d|after_or_equal:startDate',
