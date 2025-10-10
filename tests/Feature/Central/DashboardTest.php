@@ -30,6 +30,7 @@ test('logged in super-admin can see dashboard', function () {
 
     $response
         ->assertOk()
+        ->assertSeeLivewire('central.event.index')
         ->assertSee('Upcoming Events')
         ->assertSee('Add Event');
 });
@@ -41,6 +42,7 @@ test('logged in consultant can see dashboard', function () {
     $response = $this->actingAs($consultant)->get('/dashboard');
 
     $response->assertOk()
+        ->assertSeeLivewire('central.event.index')
         ->assertSee('Upcoming Events')
         ->assertDontSee('Add Event');
 });
