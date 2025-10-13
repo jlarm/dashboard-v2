@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
@@ -52,7 +54,7 @@ class Index extends Component
             ->with([
                 'roles',
                 'department:id,name',
-                'stores:id,name',
+                'stores:id,name,state',
                 'courses:id',
                 'results' => function ($query) {
                     $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
