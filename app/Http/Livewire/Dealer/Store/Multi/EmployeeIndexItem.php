@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Store\Multi;
 
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Store;
 use App\Models\User;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class EmployeeIndexItem extends Component
 {
     public User $user;
     public Store $store;
-    public $completed;
-    public $totalCourses;
-    public $courseWithRole;
+    public int $completed;
+    public int $totalCourses;
+    public array $courseWithRole;
 
-    public function mount()
+    public function mount(): void
     {
-        $userRole = $this->user->roles()->select('id')->first()->toArray();
-        $this->courseWithRole = DB::table('course_role')->where('role_id', $userRole)->pluck('course_id')->toArray();
+        $userRoleIds = $this->user->roles->pluck('id')->toArray();
+        $this->courseWithRole = DB::table('course_role')->whereIn('role_id', $userRoleIds)->pluck('course_id')->toArray();
 
         // Get all passed courses within the last year for this user
         $this->completed = DB::table('course_results')

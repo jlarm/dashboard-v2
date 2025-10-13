@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
 use App\Models\Dealer\Course;
@@ -12,15 +14,14 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public User $user;
-    public $completed;
-    public $totalCourses;
+    public int $completed;
+    public int $totalCourses;
     public $departmentCourseCount;
     public $unassignedCourseCount;
-    public $courseWithRole;
+    public array $courseWithRole;
 
     public function mount(): void
     {
-        $this->initializeUser();
         $this->initializeCourseWithRole();
         $this->calculateCompletedCourses();
         $this->calculateTotalCourses();
@@ -33,18 +34,13 @@ class IndexItem extends Component
         ]);
     }
 
-    private function initializeUser(): void
-    {
-        $this->user = User::find($this->user->id);
-    }
-
     private function initializeCourseWithRole(): void
     {
-        $userRole = $this->user->roles()->select('id')->first();
+        $userRoleIds = $this->user->roles->pluck('id')->toArray();
 
-        if ($userRole) {
+        if (count($userRoleIds) > 0) {
             $this->courseWithRole = DB::table('course_role')
-                ->where('role_id', $userRole->id)
+                ->whereIn('role_id', $userRoleIds)
                 ->pluck('course_id')
                 ->toArray();
         } else {

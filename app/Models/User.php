@@ -244,6 +244,11 @@ class User extends Authenticatable
      */
     private function userHasNoCaliforniaStore(): bool
     {
+        // Use loaded stores collection if available, otherwise query
+        if ($this->relationLoaded('stores')) {
+            return ! $this->stores->contains('state', 'California');
+        }
+
         return ! $this->stores()->where('state', 'California')->exists();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use App\Models\Dealer\Course;
@@ -103,19 +105,24 @@ trait HasCourses
                 ->pluck('course_id')
                 ->toArray();
 
+            // Check for specific roles using loaded collection
+            $hasManagerRole = $this->roles->contains('id', 10);
+            $hasEmployeeRole = $this->roles->contains('id', 9);
+            $hasNoCaliforniaStore = $this->userHasNoCaliforniaStore();
+
             $this->userCourses = Course::query()
                 ->with('departments')
                 ->where('optional', false)
-                ->where(function ($query) use ($courseWithRole) {
+                ->where(function ($query) use ($courseWithRole, $hasManagerRole, $hasEmployeeRole, $hasNoCaliforniaStore) {
                     $query->where(function ($q) use ($courseWithRole) {
                         $q->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
                             ->whereIn('id', $courseWithRole);
                     })
-                        ->orWhere(function ($q) {
+                        ->orWhere(function ($q) use ($hasManagerRole, $hasEmployeeRole, $hasNoCaliforniaStore) {
                             $q->whereDoesntHave('departments')
-                                ->when($this->roles()->where('id', 10)->exists(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-m'))
-                                ->when($this->roles()->where('id', 9)->exists(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-e'))
-                                ->when($this->userHasNoCaliforniaStore(), fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
+                                ->when($hasManagerRole, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-m'))
+                                ->when($hasEmployeeRole, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-e'))
+                                ->when($hasNoCaliforniaStore, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
                         });
                 })
                 ->orWhere(function ($query) {
