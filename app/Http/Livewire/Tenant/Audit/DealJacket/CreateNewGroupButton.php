@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Tenant\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Redirector;
@@ -24,7 +25,7 @@ class CreateNewGroupButton extends Component
 
     public function create(): Redirector
     {
-        $this->authorize('create', DealJacketGroup::class);
+        Gate::authorize('create', DealJacketGroup::class);
 
         if ($existingGroup = $this->checkAudit()) {
             session()->flash('message', 'Deal Jacket audits have already been started for this quarter.');
