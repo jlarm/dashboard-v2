@@ -220,6 +220,7 @@ Route::name('dealer.')->middleware([
             Route::view('deal-jackets-new', 'tenant.audit.deal-jacket.index')->middleware(['auth', 'single.store'])->name('deal-jackets.index');
             Route::get('deal-jackets-new/{dealJacketGroup:uuid}', [DealJacketGroupController::class, 'show'])->middleware(['auth', 'single.store'])->name('deal-jackets.show');
             Route::get('deal-jackets-new/{dealJacketGroup:uuid}/{dealJacket:uuid}', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'show'])->name('deal-jackets.single');
+            Route::get('deal-jacket-reports/{fileName}/download', [App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController::class, 'download'])->name('deal-jacket-reports.download');
         });
 
         Route::get('vendors', App\Http\Livewire\Dealer\Vendor\Index::class)->middleware('auth')->name('vendor.index');
