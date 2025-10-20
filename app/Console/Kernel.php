@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -77,6 +79,13 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('remediation:reminder')
             ->dailyAt('05:30')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
+        // Clean up old deal jacket reports
+        $schedule->command('deal-jacket-reports:cleanup')
+            ->hourly()
             ->runInBackground()
             ->withoutOverlapping()
             ->emailOutputOnFailure(config('app.admin_email'));

@@ -7,6 +7,8 @@ namespace App\Jobs\Audit;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\DealJacketQuestion;
 use App\Models\User;
+use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,6 +38,7 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         $path = $this->createDirectory();
         $fileName = $this->createFileName();
         $this->createPdf($path, $fileName);
+        $this->sendNotification($fileName);
     }
 
     private function createDirectory(): string
@@ -132,5 +135,21 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
             ->scale(0.75)
             ->waitUntilNetworkIdle()
             ->save("{$path}/{$fileName}");
+    }
+
+    private function sendNotification(string $fileName): void
+    {
+        Notification::make()
+            ->title('Deal Jacket Report Ready')
+            ->body('Your deal jacket report has been generated successfully. Click the button below to download it. This report will expire in 24 hours.')
+            ->success()
+            ->actions([
+                Action::make('download')
+                    ->label('Download Report')
+                    ->url(route('dealer.audit.deal-jacket-reports.download', ['fileName' => $fileName]))
+                    ->openUrlInNewTab()
+                    ->button(),
+            ])
+            ->sendToDatabase($this->user);
     }
 }
