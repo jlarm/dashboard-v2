@@ -9,6 +9,7 @@ use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\DealJacketQuestion;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -96,7 +97,7 @@ class Form extends Component
 
     public function submit(): void
     {
-        $this->authorize('create', DealJacket::class);
+        Gate::authorize('create', DealJacket::class);
 
         $this->validate();
 

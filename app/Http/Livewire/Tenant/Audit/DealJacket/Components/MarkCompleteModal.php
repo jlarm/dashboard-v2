@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Tenant\Audit\DealJacket\Components;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use Filament\Notifications\Notification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -24,7 +25,7 @@ class MarkCompleteModal extends Modal
 
     public function markComplete(): void
     {
-        $this->authorize('update', $this->dealJacketGroup);
+        Gate::authorize('update', $this->dealJacketGroup);
 
         $this->dealJacketGroup->update(['completed' => true]);
 
