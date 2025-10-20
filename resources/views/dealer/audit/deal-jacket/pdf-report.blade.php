@@ -80,7 +80,7 @@
             <x-application-logo class="h-16 w-auto mx-auto mb-8"/>
         </div>
 
-        <div class="bg-white rounded-2xl border border-gray-200 p-12">
+        <div class="bg-white rounded-2xl p-12">
             <div class="space-y-6">
                 <h1 class="text-5xl font-bold text-gray-900 tracking-tight">
                     Deal Jacket Report

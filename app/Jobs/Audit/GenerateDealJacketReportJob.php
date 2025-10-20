@@ -62,6 +62,9 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 
     private function createPdf(string $path, string $fileName): void
     {
+        $this->dealJacketGroup->loadSum('dealJackets as total_passed', 'total_passed');
+        $this->dealJacketGroup->loadSum('dealJackets as total_failed', 'total_failed');
+
         $dealJackets = $this->dealJacketGroup->dealJackets()
             ->with(['user'])
             ->get();
