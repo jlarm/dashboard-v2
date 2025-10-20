@@ -36,8 +36,9 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
     public function handle(): void
     {
         $path = $this->createDirectory();
-        $storeName = str_replace(' ', '-', $this->dealJacketGroup->store->name);
-        $fileName = $this->createFileName($storeName);
+        $storeName = $this->dealJacketGroup->store->name;
+        $fileNameStoreName = str_replace(' ', '-', $storeName);
+        $fileName = $this->createFileName($fileNameStoreName);
         $this->createPdf($path, $fileName, $storeName);
         $this->sendNotification($fileName);
     }
@@ -138,10 +139,25 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
             ->scale(0.75)
             ->waitUntilNetworkIdle()
             ->margins(10, 10, 15, 10)
+            ->showBrowserHeaderAndFooter()
+            ->hideHeader()
             ->footerHtml('
                 <div style="font-size: 10px; color: #6b7280; width: 100%; padding: 0 40px; display: flex; justify-content: space-between; font-family: Inter, sans-serif;">
-                    <div style="flex: 1;">'.$storeName.' | Automotive Risk Management Partners</div>
-                    <div style="text-align: right;">Page <span class="pageNumber"></span> of <span class="totalPages"></span></div>
+                    <div style="flex: 1;">
+                        <script>
+                            if (document.querySelector(".pageNumber").textContent !== "1") {
+                                document.write("'.$storeName.' | Automotive Risk Management Partners");
+                            }
+                        </script>
+                    </div>
+                    <div style="text-align: right;">
+                        <script>
+                            var pageNum = document.querySelector(".pageNumber").textContent;
+                            if (pageNum !== "1") {
+                                document.write("Page <span class=\"pageNumber\"></span> of <span class=\"totalPages\"></span>");
+                            }
+                        </script>
+                    </div>
                 </div>
             ')
             ->save("{$path}/{$fileName}");
