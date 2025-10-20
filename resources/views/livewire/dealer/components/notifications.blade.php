@@ -53,13 +53,31 @@
     >
         <ul class="divide-y divide-gray-200">
             @foreach(auth()->user()->unreadNotifications as $notification)
-                <li class="px-2 py-3 flex justify-between items-center hover:bg-gray-50 group">
-                    <p class="text-xs w-5/6">
-                        {{ $notification->data['message'] }}<br />
-                        <span class="text-xs text-gray-400">{{ $notification->created_at->diffForHumans() }}</span>
-                    </p>
-                    <div>
-                        <button wire:click="markAsRead({{ $notification }})" class="w-1/6 hidden group-hover:block hover:bg-white rounded-full p-1">
+                <li class="px-2 py-3 hover:bg-gray-50 group">
+                    <div class="flex justify-between items-start gap-2">
+                        <div class="flex-1 min-w-0">
+                            @if(isset($notification->data['title']))
+                                <p class="text-xs font-semibold">{{ $notification->data['title'] }}</p>
+                                @if(isset($notification->data['body']))
+                                    <p class="text-xs text-gray-600 mt-1">{{ $notification->data['body'] }}</p>
+                                @endif
+                                @if(isset($notification->data['actions']) && is_array($notification->data['actions']))
+                                    <div class="mt-2 flex gap-2">
+                                        @foreach($notification->data['actions'] as $action)
+                                            <a href="{{ $action['url'] }}"
+                                               target="{{ $action['shouldOpenUrlInNewTab'] ?? false ? '_blank' : '_self' }}"
+                                               class="inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-arm-blue-500 hover:bg-arm-blue-600 rounded">
+                                                {{ $action['label'] }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            @elseif(isset($notification->data['message']))
+                                <p class="text-xs">{{ $notification->data['message'] }}</p>
+                            @endif
+                            <span class="text-xs text-gray-400 block mt-1">{{ $notification->created_at->diffForHumans() }}</span>
+                        </div>
+                        <button wire:click="markAsRead({{ $notification }})" class="hidden group-hover:block hover:bg-white rounded-full p-1 shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
