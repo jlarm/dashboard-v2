@@ -134,15 +134,15 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         ])->render();
 
         $footerHtml = '
-            <div style="font-size: 10px; color: #6b7280; width: 100%; display: flex; justify-content: space-between; font-family: Inter, sans-serif;">
-                <span>'.$storeName.' | Automotive Risk Management Partners</span>
-                <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
-            </div>
-        ';
+             <div style="width: 100%; font-size: 10px; display: flex; justify-content: space-between; padding: 0 20px;">
+                 <span>'.$storeName.' | Automotive Risk Management Partners</span>
+                 <span>Page <span class="pageNumber"></span></span>
+             </div>
+         ';
 
         Browsershot::html($html)
             ->showBackground()
-            ->format('A4')
+            ->margins(10, 10, 10, 10)
             ->scale(0.75)
             ->waitUntilNetworkIdle()
             ->showBrowserHeaderAndFooter()
