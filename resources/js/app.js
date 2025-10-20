@@ -9,6 +9,7 @@ import NotificationsAlpinePlugin from '../../vendor/filament/notifications/dist/
 import collapse from '@alpinejs/collapse'
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Autosize from '@marcreichel/alpine-autosize';
+import './datepicker';
 
 Alpine.plugin(focus);
 Alpine.plugin(mask);

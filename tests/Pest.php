@@ -11,15 +11,19 @@
 |
 */
 
+use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
 use Database\Seeders\RoleAndPermissionSeeder;
+use Tests\TenantTestCase;
 use Tests\TestCase;
 
 uses(
     TestCase::class,
     Illuminate\Foundation\Testing\RefreshDatabase::class,
-)->in('Feature');
+)->in('Feature/Auth', 'Feature/Central');
+
+uses(TenantTestCase::class)->in('Feature/Tenant');
 
 /*
 |--------------------------------------------------------------------------
@@ -136,6 +140,11 @@ function createDealershipTenant(?User $owner = null): array
     $dealership->domains()->create(['domain' => 'acme.localhost']);
 
     $dealership->run(function () {
+        Store::create([
+            'name' => 'Test Store',
+            'slug' => 'test-store',
+        ]);
+
         Artisan::call('migrate', [
             '--path' => 'database/migrations/tenant',
             '--realpath' => false,

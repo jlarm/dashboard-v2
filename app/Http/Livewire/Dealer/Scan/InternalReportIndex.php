@@ -20,14 +20,15 @@ class InternalReportIndex extends Component
                     ->get()
                     ->groupBy(fn ($data) => $this->formattedLastScanDate($data->created_at))->map(fn ($data) => $data->groupBy('type'))->map(fn ($data) => $data->map(fn ($data) => $data->first())),
             ]);
-        } else {
-            return view('livewire.dealer.scan.internal-report-index', [
-                'reports' => ScanReport::where('scan_type', 'internal')
-                    ->latest()
-                    ->get()
-                    ->groupBy(fn ($data) => $this->formattedLastScanDate($data->created_at))->map(fn ($data) => $data->groupBy('type'))->map(fn ($data) => $data->map(fn ($data) => $data->first())),
-            ]);
         }
+
+        return view('livewire.dealer.scan.internal-report-index', [
+            'reports' => ScanReport::where('scan_type', 'internal')
+                ->latest()
+                ->get()
+                ->groupBy(fn ($data) => $this->formattedLastScanDate($data->created_at))->map(fn ($data) => $data->groupBy('type'))->map(fn ($data) => $data->map(fn ($data) => $data->first())),
+        ]);
+
     }
 
     protected function formattedLastScanDate($date): string

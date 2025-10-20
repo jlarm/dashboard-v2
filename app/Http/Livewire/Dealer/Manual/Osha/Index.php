@@ -30,8 +30,8 @@ class Index extends Component
 
         if ($storeName) {
             return Store::where('name', $storeName)->select('id', 'slug')->first();
-            }
-
-            return Store::first()->select('id')->first();
         }
+
+        return Store::first()->select('id')->first();
+    }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Models\Dealership;
 use App\Models\User;
-use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Support\Facades\DB;
 
 beforeEach(function () {
@@ -15,23 +14,24 @@ beforeEach(function () {
         'tenancy.exempt_domains' => ['127.0.0.1', 'localhost'],
     ]);
 
-    // Drop ALL tenant databases that might exist from failed test runs BEFORE migrations
+    // End any existing tenancy from TenantTestCase
+    if (tenancy()->initialized) {
+        tenancy()->end();
+    }
+
+    // Drop ALL tenant databases that might exist
     $databases = DB::select('SHOW DATABASES LIKE "dealership_%"');
     foreach ($databases as $db) {
         $dbName = $db->{'Database (dealership_%)'};
         DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
     }
 
-    // Run only central migrations (excluding tenant directory)
-    $this->artisan('migrate:fresh', [
-        '--path' => 'database/migrations',
-        '--realpath' => false,
-    ]);
-
-    // Clean up any existing dealership records
+    // Clean up dealership records (which were created by TenantTestCase)
     Dealership::query()->delete();
 
-    $this->seed(RoleAndPermissionSeeder::class);
+    // Clean up users from the central database except for any system users
+    // Don't use User::query()->delete() as it might affect tenant database
+    DB::table('users')->delete();
 });
 
 afterEach(function () {

@@ -42,10 +42,42 @@ return [
     'database' => [
         'central_connection' => env('DB_CONNECTION', 'central'),
 
-        /**
-         * Connection used as a "template" for the dynamically created tenant database connection.
-         * Note: don't name your template connection tenant. That name is reserved by package.
-         */
+        /*
+        |--------------------------------------------------------------------------
+        | Automatic Database Creation
+        |--------------------------------------------------------------------------
+        |
+        | If you want tenant databases to be automatically created and deleted
+        | when tenants are created/deleted, enable these options.
+        |
+        */
+
+        'create_database' => true,
+        'delete_database_after_tenant_deletion' => true,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Queue Database Creation / Deletion
+        |--------------------------------------------------------------------------
+        |
+        | For testing and local development, you’ll want to disable queues
+        | so the databases are created immediately (synchronously).
+        |
+        */
+
+        'queue_database_creation' => false,
+        'queue_database_deletion' => false,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Tenant Database Connection Template
+        |--------------------------------------------------------------------------
+        |
+        | This defines how tenant databases are created and configured.
+        | The default connection will be cloned and modified for each tenant.
+        |
+        */
+
         'template_tenant_connection' => null,
 
         /**

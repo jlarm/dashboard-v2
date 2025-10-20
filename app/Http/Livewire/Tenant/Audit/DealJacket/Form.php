@@ -1,0 +1,254 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Livewire\Tenant\Audit\DealJacket;
+
+use App\Models\Dealer\Audit\DealJacket;
+use App\Models\Dealer\Audit\DealJacketGroup;
+use App\Models\DealJacketQuestion;
+use App\Models\User;
+use Filament\Notifications\Notification;
+use Illuminate\View\View;
+use Livewire\Component;
+
+class Form extends Component
+{
+    public DealJacketGroup $dealJacketGroup;
+    public ?DealJacket $dealJacket = null;
+    public array $questions = [];
+    public ?string $auditDate = null;
+    public ?string $dateOfDealJacket = null;
+    public string $customerName = '';
+    public string $customerDealNumber = '';
+    public ?int $financeManager = null;
+    public string $mileage = '';
+    public string $purchaseType = '';
+    public string $vehicleType = '';
+    public array $responses = [];
+
+    public function mount(DealJacketGroup $dealJacketGroup, ?DealJacket $dealJacket = null): void
+    {
+        $this->dealJacketGroup = $dealJacketGroup;
+        $this->dealJacket = $dealJacket;
+
+        if ($dealJacket) {
+            $this->auditDate = $dealJacket->audit_date?->format('Y-m-d');
+            $this->dateOfDealJacket = $dealJacket->date_of_deal_jacket?->format('Y-m-d');
+            $this->customerName = $dealJacket->customer_name ?? '';
+            $this->customerDealNumber = $dealJacket->customer_deal_number ?? '';
+            $this->financeManager = $dealJacket->user_id;
+            $this->mileage = $dealJacket->mileage ?? '';
+            $this->purchaseType = $dealJacket->purchase_type ?? '';
+            $this->vehicleType = $dealJacket->vehicle_type ?? '';
+
+            $this->loadQuestions();
+
+            $this->responses = $dealJacket->responses ?? [];
+        }
+    }
+
+    public function managers(): array
+    {
+        return User::where('department_id', 6)
+            ->role('Manager')
+            ->get()
+            ->toArray();
+    }
+
+    public function updated($property): void
+    {
+        if (in_array($property, ['purchaseType', 'vehicleType'])) {
+            $this->loadQuestions();
+        }
+    }
+
+    public function loadQuestions(): void
+    {
+        if (empty($this->purchaseType) || empty($this->vehicleType)) {
+            $this->questions = [];
+            $this->responses = [];
+
+            return;
+        }
+
+        $questions = tenancy()->central(function () {
+            return DealJacketQuestion::query()
+                ->get()
+                ->filter(fn ($q) => in_array($this->purchaseType, $q->categories, true)
+                    && in_array($this->vehicleType, $q->categories, true)
+                );
+        });
+
+        $this->questions = $questions->map(fn ($q) => [
+            'id' => $q->id,
+            'question' => $q->question,
+            'weight' => $q->weight ?? 1,
+        ])->values()->toArray();
+
+        $this->responses = $questions->map(fn ($question) => [
+            'statement' => $question->statement,
+            'answer' => null,
+            'high_risk' => false,
+            'comment' => null,
+        ])->values()->toArray();
+    }
+
+    public function submit(): void
+    {
+        $this->authorize('create', DealJacket::class);
+
+        $this->validate();
+
+        $data = [
+            'audit_date' => $this->auditDate,
+            'date_of_deal_jacket' => $this->dateOfDealJacket,
+            'customer_name' => $this->customerName,
+            'customer_deal_number' => $this->customerDealNumber,
+            'user_id' => $this->financeManager,
+            'mileage' => $this->mileage,
+            'purchase_type' => $this->purchaseType,
+            'vehicle_type' => $this->vehicleType,
+            'responses' => $this->responses,
+            'total_passed' => $this->totalPassed(),
+            'total_failed' => $this->totalFailed(),
+            'total_high_risk' => $this->totalHighRisk(),
+            'percentage' => $this->calculatePercentage(),
+        ];
+
+        if ($this->dealJacket?->exists) {
+            $this->dealJacket->update($data);
+
+            Notification::make()
+                ->title('Deal Jacket Audit Updated')
+                ->success()
+                ->send();
+
+            return;
+        }
+
+        $this->dealJacketGroup->dealJackets()->create($data);
+
+        Notification::make()
+            ->title('Deal Jacket Audit Created')
+            ->success()
+            ->send();
+
+        $this->reset([
+            'auditDate',
+            'dateOfDealJacket',
+            'customerName',
+            'customerDealNumber',
+            'financeManager',
+            'mileage',
+            'purchaseType',
+            'vehicleType',
+            'responses',
+            'questions',
+        ]);
+    }
+
+    public function render(): View
+    {
+        return view('livewire.tenant.audit.deal-jacket.form');
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'auditDate' => ['required', 'date'],
+            'dateOfDealJacket' => ['required', 'date'],
+            'customerName' => ['required', 'string'],
+            'customerDealNumber' => ['required', 'string'],
+            'financeManager' => ['required', 'integer'],
+            'mileage' => ['required', 'string'],
+            'purchaseType' => ['required', 'string'],
+            'vehicleType' => ['required', 'string'],
+            'responses' => ['required', 'array', 'min:1'],
+            'responses.*.answer' => ['required', 'in:yes,no'],
+        ];
+    }
+
+    protected function validationAttributes(): array
+    {
+        return [
+            'responses.*.answer' => 'question answer',
+        ];
+    }
+
+    private function totalPassed(): int
+    {
+        if (empty($this->responses)) {
+            return 0;
+        }
+
+        $totalPassed = 0;
+
+        foreach ($this->responses as $response) {
+            if ($response['answer'] === 'yes') {
+                $totalPassed++;
+            }
+        }
+
+        return $totalPassed;
+    }
+
+    private function totalFailed(): int
+    {
+        if (empty($this->responses)) {
+            return 0;
+        }
+
+        $totalFailed = 0;
+
+        foreach ($this->responses as $response) {
+            if ($response['answer'] === 'no') {
+                $totalFailed++;
+            }
+        }
+
+        return $totalFailed;
+    }
+
+    private function totalHighRisk(): int
+    {
+        if (empty($this->responses)) {
+            return 0;
+        }
+
+        $totalHighRisk = 0;
+
+        foreach ($this->responses as $response) {
+            if ($response['high_risk'] === true) {
+                $totalHighRisk++;
+            }
+        }
+
+        return $totalHighRisk;
+    }
+
+    private function calculatePercentage(): int
+    {
+        if (empty($this->responses)) {
+            return 0;
+        }
+
+        $totalWeight = 0;
+        $earnedWeight = 0;
+
+        foreach ($this->responses as $index => $response) {
+            $weight = $this->questions[$index]['weight'] ?? 1;
+            $totalWeight += $weight;
+
+            if (($response['answer'] ?? null) === 'yes') {
+                $earnedWeight += $weight;
+            }
+
+            if ($response['high_risk'] === true) {
+                $earnedWeight -= $weight * 0.5;
+            }
+        }
+
+        return $totalWeight > 0 ? (int) round(($earnedWeight / $totalWeight) * 100) : 0;
+    }
+}
