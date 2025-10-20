@@ -6,6 +6,7 @@ use App\Enums\Frequency;
 use App\Models\CmsManual;
 use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
@@ -183,6 +184,11 @@ class Store extends Model implements HasMedia
     public function individualAudits(): HasMany
     {
         return $this->hasMany(IndividualAudit::class);
+    }
+
+    public function dealJacketGroups(): HasMany
+    {
+        return $this->hasMany(DealJacketGroup::class);
     }
 
     public function employeeList(): HasOne

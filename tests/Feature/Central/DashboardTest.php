@@ -10,6 +10,19 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     $this->seed(DepartmentSeeder::class);
     $this->seed(RoleAndPermissionSeeder::class);
+
+    $user = User::create([
+        'name' => 'John Doe',
+        'email' => 'jdoe@email.com',
+        'phone' => '9876543211',
+        'email_verified_at' => now(),
+        'password' => bcrypt('password'),
+    ]);
+
+    $consultant = User::factory()->create();
+
+    $user->assignRole('super-admin');
+    $consultant->assignRole('Consultant');
 });
 
 test('guest redirects to login page', function () {
@@ -46,3 +59,9 @@ test('logged in consultant can see dashboard', function () {
         ->assertSee('Upcoming Events')
         ->assertDontSee('Add Event');
 });
+
+// TODO: Add test for super-admin seeing add event button
+// it('can see add event button if super-admin', function () {
+//    $response = $this->actingAs(User::first())->get('/dashboard');
+//    $response->assertSee('Add Event');
+// });

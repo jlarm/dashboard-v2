@@ -10,7 +10,7 @@ class IndexItem extends Component
 {
     public Dealership $dealership;
 
-    public function deleteDealership()
+    public function deleteDealership(): void
     {
         $this->emit('deleteDealership', $this->dealership->id);
     }

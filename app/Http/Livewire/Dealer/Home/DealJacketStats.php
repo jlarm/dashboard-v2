@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dealer\Home;
 
+use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
 use Illuminate\View\View;
@@ -20,7 +21,16 @@ class DealJacketStats extends Component
     {
         $this->store = $this->store ?? Store::first();
 
-        $this->rating = IndividualAudit::where('store_id', $this->store->id)->avg('rating');
+        $individualAuditRating = IndividualAudit::where('store_id', $this->store->id)->avg('rating');
+
+        $dealJacketPercentage = DealJacket::whereHas('dealJacketGroup', function ($query) {
+            $query->where('store_id', $this->store->id)
+                ->where('completed', true);
+        })->avg('percentage');
+
+        $ratings = collect([$individualAuditRating, $dealJacketPercentage])->filter()->values();
+
+        $this->rating = $ratings->isNotEmpty() ? $ratings->avg() : null;
     }
 
     public function rating(): string
