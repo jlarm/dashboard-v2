@@ -36,8 +36,9 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
     public function handle(): void
     {
         $path = $this->createDirectory();
-        $fileName = $this->createFileName();
-        $this->createPdf($path, $fileName);
+        $storeName = str_replace(' ', '-', $this->dealJacketGroup->store->name);
+        $fileName = $this->createFileName($storeName);
+        $this->createPdf($path, $fileName, $storeName);
         $this->sendNotification($fileName);
     }
 
@@ -52,15 +53,14 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         return $path;
     }
 
-    private function createFileName(): string
+    private function createFileName(string $storeName): string
     {
-        $storeName = str_replace(' ', '-', $this->dealJacketGroup->store->name);
         $date = $this->dealJacketGroup->created_at->format('Ymd-His');
 
         return "{$date}-{$storeName}-deal-jacket-report.pdf";
     }
 
-    private function createPdf(string $path, string $fileName): void
+    private function createPdf(string $path, string $fileName, string $storeName): void
     {
         $this->dealJacketGroup->loadSum('dealJackets as total_passed', 'total_passed');
         $this->dealJacketGroup->loadSum('dealJackets as total_failed', 'total_failed');
@@ -137,6 +137,13 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
             ->format('A4')
             ->scale(0.75)
             ->waitUntilNetworkIdle()
+            ->margins(10, 10, 15, 10)
+            ->footerHtml('
+                <div style="font-size: 10px; color: #6b7280; width: 100%; padding: 0 40px; display: flex; justify-content: space-between; font-family: Inter, sans-serif;">
+                    <div style="flex: 1;">'.$storeName.' | Automotive Risk Management Partners</div>
+                    <div style="text-align: right;">Page <span class="pageNumber"></span> of <span class="totalPages"></span></div>
+                </div>
+            ')
             ->save("{$path}/{$fileName}");
     }
 

@@ -41,7 +41,7 @@ class GenerateReport extends Modal
 
         Notification::make()
             ->title('Deal Jacket Report Generation Started')
-            ->body('The report is being generated in the background and will be saved to your storage.')
+            ->body('The report is being generated in the background and will be ready to download soon.')
             ->success()
             ->send();
     }

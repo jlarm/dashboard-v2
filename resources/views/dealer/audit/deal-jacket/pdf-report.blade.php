@@ -94,13 +94,10 @@
 
                 <div class="space-y-4 pt-6 text-gray-600">
                     <div class="flex items-center justify-center gap-2 text-lg">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
                         <span>Completed: {{ $dealJacketGroup->created_at->format('F d, Y') }}</span>
                     </div>
 
-                    <div class="pt-4 border-t border-gray-200">
+                    <div class="pt-4">
                         <p class="text-sm font-medium text-gray-500 mb-2">Report Created By</p>
                         <p class="text-base font-semibold text-gray-900">{{ $user->name }}</p>
                         <p class="text-sm text-gray-600">{{ $user->phoneNumber }}</p>
