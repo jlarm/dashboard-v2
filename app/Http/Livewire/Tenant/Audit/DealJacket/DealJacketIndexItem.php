@@ -6,13 +6,20 @@ namespace App\Http\Livewire\Tenant\Audit\DealJacket;
 
 use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
+use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class DealJacketIndexItem extends Component
 {
+    public Store $store;
     public DealJacketGroup $dealJacketGroup;
     public DealJacket $dealJacket;
+
+    public function mount(): void
+    {
+        $this->store = Store::find(app('currentStore'));
+    }
 
     public function grade(): string
     {

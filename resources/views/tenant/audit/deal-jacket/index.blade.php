@@ -15,7 +15,11 @@
                     <p class="text-sm text-gray-600">{{ session('message') }}</p>
                     <div class="flex gap-2 mt-6">
                         <x-button class="w-full" @click="show = false">Cancel</x-button>
-                        <x-button href="{{ route('dealer.audit.deal-jackets.show', session('dealJacketGroupUuid')) }}" class="w-full" variant="primary">View</x-button>
+                        <x-button href="{{
+                            session()->has('storeSlug')
+                            ? route('dealer.stores.audits.deal-jackets.show', [session('storeSlug'), session('dealJacketGroupUuid')])
+                            : route('dealer.audit.deal-jackets.show', session('dealJacketGroupUuid'))
+                        }}" class="w-full" variant="primary">View</x-button>
                     </div>
                 </div>
             </x-modal-form>

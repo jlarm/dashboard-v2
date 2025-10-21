@@ -4,9 +4,16 @@
     </x-slot:header>
     <x-slot:actions>
         @hasanyrole('super-admin|Consultant')
-        <x-button href="{{ route('dealer.audit.deal-jackets.create', $dealJacketGroup) }}" variant="primary">Add Deal Jacket</x-button>
+        <x-button href="{{ tenant('locations')
+            ? route('dealer.stores.audits.deal-jackets.create', [$store, $dealJacketGroup])
+            : route('dealer.audit.deal-jackets.create', $dealJacketGroup)
+            }}"
+                  variant="primary">Add Deal Jacket</x-button>
         @endhasanyrole
-        <x-button :href="route('dealer.audit.deal-jackets.index')">Back</x-button>
+        <x-button href="{{
+            tenant('locations')
+            ? route('dealer.stores.audits.deal-jackets.index', [$store])
+            : route('dealer.audit.deal-jackets.index') }}">Back</x-button>
     </x-slot:actions>
     <div>
         <livewire:tenant.audit.deal-jacket.deal-jacket-index :dealJacketGroup="$dealJacketGroup" />
