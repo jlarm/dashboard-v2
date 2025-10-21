@@ -2,6 +2,11 @@
 - Added comments to the audits
 - Next: Add the comments to the PDF's
 
+## 2025-10-21
+- Added top 7 statements when viewing deal jacket group page
+- Generate pdf
+- Add db notification to download pdf
+
 
 
 
@@ -20,13 +25,17 @@
 - When submitting the form, it does nothing
 - Add more weight to some of the questions that get a "no"
 - List out deal jacket groups
+- Include "Flag as high risk" in the grade
+- Include in dashboard stats
+- Generate PDF
 
 ### ⏸ In Progress
+- Fix footer in pdf to show name and page numbers
+- Get working in a store
 
 ### 🎯 Next
-- Include "Flag as high risk" in the grade
-- Generate PDF
-- Include in dashboard stats
+- Add image upload field to form
+- Make sure notification gets removed if left unread when pdf is deleted after 24 hours
 
 ### 📝 Notes
 - https://victor-ford.dashboard.test/audits/deal-jackets-new

@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Tenant\Audit\DealJacket;
 
 use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
+use App\Models\Dealer\Store;
 use App\Models\DealJacketQuestion;
 use App\Models\User;
 use Filament\Notifications\Notification;
@@ -15,6 +16,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
+    public Store $store;
     public DealJacketGroup $dealJacketGroup;
     public ?DealJacket $dealJacket = null;
     public array $questions = [];
@@ -30,6 +32,7 @@ class Form extends Component
 
     public function mount(DealJacketGroup $dealJacketGroup, ?DealJacket $dealJacket = null): void
     {
+        $this->store = Store::find(app('currentStore'));
         $this->dealJacketGroup = $dealJacketGroup;
         $this->dealJacket = $dealJacket;
 
