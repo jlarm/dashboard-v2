@@ -15,8 +15,8 @@ describe('Deal Jacket Group Index Page', function () {
                 ->get(route('dealer.audit.deal-jackets.index'))
                 ->assertStatus(200)
                 ->assertSee('Deal Jacket Audits')
-                ->assertSeeLivewire('tenant.audit.deal-jacket.pass-rate-trend-chart')
-                ->assertSeeLivewire('tenant.audit.deal-jacket.common-issues-chart')
+                ->assertSeeLivewire('tenant.audit.deal-jacket.components.pass-rate-trend-chart')
+                ->assertSeeLivewire('tenant.audit.deal-jacket.components.common-issues-chart')
                 ->assertSeeLivewire('tenant.audit.deal-jacket.create-new-group-button')
                 ->assertSeeLivewire('tenant.audit.deal-jacket.group-index');
         });

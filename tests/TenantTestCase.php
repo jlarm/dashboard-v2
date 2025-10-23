@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use App\Models\Dealer\Store;
@@ -32,11 +34,14 @@ abstract class TenantTestCase extends TestCase
      * The tenant user instance
      */
     protected $consultant;
+
     protected $manager;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Parent TestCase already verifies we're using dashboard_testing and forces the config
 
         // Clean up any leftover test tenant databases from failed test runs
         $this->cleanupTestDatabases();
