@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -69,6 +71,15 @@ function asConsultant(): TestCase
 
 function setupCentralDatabase(): void
 {
+    // Verify we're using the testing database
+    $currentDb = DB::connection()->getDatabaseName();
+    if ($currentDb !== 'dashboard_testing') {
+        throw new RuntimeException(
+            "SAFETY CHECK FAILED: Tests must use 'dashboard_testing' database, currently using: {$currentDb}. ".
+            'Check your phpunit.xml configuration.'
+        );
+    }
+
     config([
         'tenancy.queue_database_creation' => false,
         'tenancy.queue_database_deletion' => false,
@@ -76,14 +87,14 @@ function setupCentralDatabase(): void
         'tenancy.exempt_domains' => ['127.0.0.1', 'localhost'],
     ]);
 
-    // Drop ALL tenant databases from failed runs
-    $databases = DB::select('SHOW DATABASES LIKE "dealership_%"');
+    // Drop ONLY test tenant databases from failed runs
+    $databases = DB::select('SHOW DATABASES LIKE "test_tenant_dealership_%"');
     foreach ($databases as $db) {
-        $dbName = $db->{'Database (dealership_%)'};
+        $dbName = $db->{'Database (test_tenant_dealership_%)'};
         DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
     }
 
-    // Run central migrations
+    // Run central migrations on testing database
     Artisan::call('migrate:fresh', [
         '--path' => 'database/migrations',
         '--realpath' => false,
@@ -106,9 +117,10 @@ function teardownTenants(): void
         tenancy()->end();
     }
 
-    $databases = DB::select('SHOW DATABASES LIKE "dealership_%"');
+    // Drop ONLY test tenant databases
+    $databases = DB::select('SHOW DATABASES LIKE "test_tenant_dealership_%"');
     foreach ($databases as $db) {
-        $dbName = $db->{'Database (dealership_%)'};
+        $dbName = $db->{'Database (test_tenant_dealership_%)'};
         DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
     }
 

@@ -14,6 +14,9 @@ trait CreatesApplication
     {
         $app = require __DIR__.'/../bootstrap/app.php';
 
+        // Load .env.testing if it exists
+        $app->loadEnvironmentFrom('.env.testing');
+
         $app->make(Kernel::class)->bootstrap();
 
         return $app;
