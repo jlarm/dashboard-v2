@@ -18,7 +18,7 @@ class IssueCounts extends Component
     {
         $this->cyrisma = $cyrisma;
         $scanData = $this->cyrisma->getVulnerabilityScans();
-        $this->details = $scanData['vulnerability_scans'][0];
+        $this->details = $scanData['vulnerability_scans'][0] ?? [];
     }
 
     public function render(): View

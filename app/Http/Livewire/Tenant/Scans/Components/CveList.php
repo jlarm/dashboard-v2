@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Tenant\Scans\Components;
 
+use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
@@ -19,7 +20,7 @@ class CveList extends Component
 
     public function mount(): void
     {
-        $store = \App\Models\Dealer\Store::find(app('currentStore'));
+        $store = Store::find(app('currentStore'));
 
         if ($store) {
             $cyrisma = app(CyrismaService::class)->forStore($store);
