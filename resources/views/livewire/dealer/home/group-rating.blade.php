@@ -1,7 +1,26 @@
-<div>
+<div wire:init="loadRatings">
 {{--    <p class="font-bold text-2xl">Overall Audit Ratings</p>--}}
 {{--    <p class="text-sm text-gray-500 mb-5">Based on all stores in your group</p>--}}
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+
+    <!-- Skeleton Loading State -->
+    <div x-show="$wire.isLoading" class="grid grid-cols-1 md:grid-cols-5 gap-6">
+        @for ($i = 0; $i < 5; $i++)
+            <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+                <div class="animate-pulse">
+                    <div class="flex justify-between items-center mb-1">
+                        <div class="h-10 bg-gray-200 rounded w-12 dark:bg-neutral-700"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="h-4 bg-gray-200 rounded w-20 dark:bg-neutral-700"></div>
+                        <div class="size-4 bg-gray-200 rounded dark:bg-neutral-700"></div>
+                    </div>
+                </div>
+            </div>
+        @endfor
+    </div>
+
+    <!-- Actual Content -->
+    <div x-show="!$wire.isLoading" class="grid grid-cols-1 md:grid-cols-5 gap-6">
         <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
             <div class="flex justify-between items-center mb-1">
                 <h2 class="text-4xl font-semibold text-gray-800 dark:text-neutral-200">

@@ -11,6 +11,7 @@ use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use function _PHPStan_eb6a95a92\React\Async\delay;
 
 class GroupRating extends Component
 {
@@ -22,6 +23,7 @@ class GroupRating extends Component
         'F' => 50,
     ];
 
+    public bool $isLoading = true;
     public ?string $rating = null;
 
     /** @var array<int, float|int|string> */
@@ -36,7 +38,7 @@ class GroupRating extends Component
     /** @var array<int, float|int|string> */
     public array $bodyShopGrades = [];
 
-    public function mount(): void
+    public function loadRatings(): void
     {
         if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
             $storeIds = Store::pluck('id');
@@ -76,6 +78,8 @@ class GroupRating extends Component
         );
 
         $this->rating = $this->calculateGrade($allGrades);
+
+        $this->isLoading = false;
     }
 
     public function getDealJacketRatingProperty(): ?string
