@@ -292,7 +292,7 @@
                         </x-slot>
                         <x-slot name="body">
                             @forelse($users as $user)
-                                <livewire:dealer.store.single-store.employee.index-item :user="$user" :key="$user->id"/>
+                                <livewire:dealer.store.single-store.employee.index-item :user="$user" :store="$store" :key="$user->id"/>
                             @empty
                                 <tr>
                                     <td colspan="7"
