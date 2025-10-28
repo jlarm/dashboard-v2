@@ -10,8 +10,8 @@ use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
-use function _PHPStan_eb6a95a92\React\Async\delay;
 
 class GroupRating extends Component
 {
@@ -40,41 +40,57 @@ class GroupRating extends Component
 
     public function loadRatings(): void
     {
+        $user = auth()->user();
+
         if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
-            $storeIds = Store::pluck('id');
+            $storeIds = Cache::remember('all_store_ids', 86400, fn () => Store::pluck('id'));
         } else {
-            $storeIds = auth()->user()->stores()->pluck('id');
+            $cacheKey = "user_{$user->id}_store_ids";
+            $storeIds = Cache::remember($cacheKey, 3600, fn () => auth()->user()->stores()->pluck('id'));
         }
 
-        $this->dealJacketGrades = IndividualAudit::query()
-            ->whereIn('store_id', $storeIds)
-            ->whereNotNull('rating')
-            ->pluck('rating')
-            ->toArray();
+        $cacheTime = 3600;
 
-        $this->glbaGrades = GlbaViolationAudit::query()
-            ->whereIn('store_id', $storeIds)
-            ->whereNotNull('grade')
-            ->pluck('grade')
-            ->toArray();
+        $gradesCacheKey = 'ratings_by_stores_'.md5(implode(',', $storeIds->toArray()));
 
-        $this->oshaGrades = OshaViolationAudit::query()
-            ->whereIn('store_id', $storeIds)
-            ->whereNotNull('grade')
-            ->pluck('grade')
-            ->toArray();
+        $allGradesData = Cache::remember($gradesCacheKey, $cacheTime, function () use ($storeIds) {
+            $this->dealJacketGrades = IndividualAudit::query()
+                ->whereIn('store_id', $storeIds)
+                ->whereNotNull('rating')
+                ->pluck('rating')
+                ->toArray();
 
-        $this->bodyShopGrades = BodyShopViolationAudit::query()
-            ->whereIn('store_id', $storeIds)
-            ->whereNotNull('grade')
-            ->pluck('grade')
-            ->toArray();
+            $this->glbaGrades = GlbaViolationAudit::query()
+                ->whereIn('store_id', $storeIds)
+                ->whereNotNull('grade')
+                ->pluck('grade')
+                ->toArray();
+
+            $this->oshaGrades = OshaViolationAudit::query()
+                ->whereIn('store_id', $storeIds)
+                ->whereNotNull('grade')
+                ->pluck('grade')
+                ->toArray();
+
+            $this->bodyShopGrades = BodyShopViolationAudit::query()
+                ->whereIn('store_id', $storeIds)
+                ->whereNotNull('grade')
+                ->pluck('grade')
+                ->toArray();
+
+            return [
+                'dealJacketGrades' => $this->dealJacketGrades,
+                'glbaGrades' => $this->glbaGrades,
+                'oshaGrades' => $this->oshaGrades,
+                'bodyShopGrades' => $this->bodyShopGrades,
+            ];
+        });
 
         $allGrades = array_merge(
-            $this->dealJacketGrades,
-            $this->glbaGrades,
-            $this->oshaGrades,
-            $this->bodyShopGrades
+            $this->dealJacketGrades = $allGradesData['dealJacketGrades'],
+            $this->glbaGrades = $allGradesData['glbaGrades'],
+            $this->oshaGrades = $allGradesData['oshaGrades'],
+            $this->bodyShopGrades = $allGradesData['bodyShopGrades'],
         );
 
         $this->rating = $this->calculateGrade($allGrades);
