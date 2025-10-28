@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Home;
 
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class GroupRating extends Component
 {
-    private const array GRADE_VALUES = [
+    private const GRADE_VALUES = [
         'A' => 90,
         'B' => 80,
         'C' => 70,
@@ -18,42 +21,76 @@ class GroupRating extends Component
         'F' => 50,
     ];
 
-    public $rating;
-    public $grades = [];
-    private $dealJacketGrades;
-    private $glbaGrades;
-    private $oshaGrades;
-    private $bodyShopGrades;
+    public ?string $rating = null;
 
-    public function mount()
+    /** @var array<int, float|int|string> */
+    public array $dealJacketGrades = [];
+
+    /** @var array<int, float|int|string> */
+    public array $glbaGrades = [];
+
+    /** @var array<int, float|int|string> */
+    public array $oshaGrades = [];
+
+    /** @var array<int, float|int|string> */
+    public array $bodyShopGrades = [];
+
+    public function mount(): void
     {
-        $this->loadGrades();
-        $this->calculateOverallRating();
+        $storeIds = auth()->user()->stores()->pluck('id');
+
+        $this->dealJacketGrades = IndividualAudit::query()
+            ->whereIn('store_id', $storeIds)
+            ->whereNotNull('rating')
+            ->pluck('rating')
+            ->toArray();
+
+        $this->glbaGrades = GlbaViolationAudit::query()
+            ->whereIn('store_id', $storeIds)
+            ->whereNotNull('grade')
+            ->pluck('grade')
+            ->toArray();
+
+        $this->oshaGrades = OshaViolationAudit::query()
+            ->whereIn('store_id', $storeIds)
+            ->whereNotNull('grade')
+            ->pluck('grade')
+            ->toArray();
+
+        $this->bodyShopGrades = BodyShopViolationAudit::query()
+            ->whereIn('store_id', $storeIds)
+            ->whereNotNull('grade')
+            ->pluck('grade')
+            ->toArray();
+
+        $allGrades = array_merge(
+            $this->dealJacketGrades,
+            $this->glbaGrades,
+            $this->oshaGrades,
+            $this->bodyShopGrades
+        );
+
+        $this->rating = $this->calculateGrade($allGrades);
     }
 
     public function getDealJacketRatingProperty(): ?string
     {
-        return $this->calculateGrade($this->dealJacketGrades);
+        return $this->calculateGrade(collect($this->dealJacketGrades));
     }
 
     public function getGlbaRatingProperty(): ?string
     {
-        return $this->calculateGrade($this->glbaGrades);
+        return $this->calculateGrade(collect($this->glbaGrades));
     }
 
     public function getOshaRatingProperty(): ?string
     {
-        return $this->calculateGrade($this->oshaGrades);
+        return $this->calculateGrade(collect($this->oshaGrades));
     }
 
     public function getBodyShopRatingProperty(): ?string
     {
-        return $this->calculateGrade($this->bodyShopGrades);
-    }
-
-    public function getGradeLetterProperty(): string
-    {
-        return $this->rating ?? 'N/A';
+        return $this->calculateGrade(collect($this->bodyShopGrades));
     }
 
     public function render()
@@ -61,49 +98,19 @@ class GroupRating extends Component
         return view('livewire.dealer.home.group-rating');
     }
 
-    private function loadGrades(): void
+    private function calculateGrade(Collection|array $grades): ?string
     {
-        $this->dealJacketGrades = $this->getGradesFromAudit(IndividualAudit::class, 'rating');
-        $this->glbaGrades = $this->getGradesFromAudit(GlbaViolationAudit::class, 'grade');
-        $this->oshaGrades = $this->getGradesFromAudit(OshaViolationAudit::class, 'grade');
-        $this->bodyShopGrades = $this->getGradesFromAudit(BodyShopViolationAudit::class, 'grade');
+        $grades = collect($grades);
 
-        $this->grades = array_merge(
-            $this->dealJacketGrades,
-            $this->glbaGrades,
-            $this->oshaGrades,
-            $this->bodyShopGrades
-        );
-    }
-
-    private function getGradesFromAudit(string $auditClass, string $column): array
-    {
-        return $auditClass::query()
-            ->whereNotNull($column)
-            ->pluck($column)
-            ->toArray();
-    }
-
-    private function calculateOverallRating(): void
-    {
-        $this->rating = $this->calculateGrade($this->grades);
-    }
-
-    private function calculateGrade(array $grades): ?string
-    {
-        if (empty($grades)) {
+        if ($grades->isEmpty()) {
             return null;
         }
 
-        $numericGrades = $this->convertToNumericGrades($grades);
-        $averageGrade = array_sum($numericGrades) / count($numericGrades);
+        $numericGrades = $grades->map(fn ($grade) => is_numeric($grade) ? (float) $grade : (self::GRADE_VALUES[$grade] ?? 0));
+
+        $averageGrade = $numericGrades->avg();
 
         return $this->getLetterGrade($averageGrade);
-    }
-
-    private function convertToNumericGrades(array $grades): array
-    {
-        return array_map(fn ($grade) => is_numeric($grade) ? $grade : (self::GRADE_VALUES[$grade] ?? 0), $grades);
     }
 
     private function getLetterGrade(float $grade): string
@@ -111,12 +118,15 @@ class GroupRating extends Component
         if ($grade >= 90) {
             return 'A';
         }
+
         if ($grade >= 80) {
             return 'B';
         }
+
         if ($grade >= 70) {
             return 'C';
         }
+
         if ($grade >= 60) {
             return 'D';
         }

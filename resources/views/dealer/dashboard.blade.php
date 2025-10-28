@@ -28,13 +28,13 @@
         {{-- Multiple Locations Dealer Group View --}}
         @if(tenant('locations'))
             @can('edit-stores')
+                <livewire:dealer.home.group-rating />
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5">
                     <x-dealer.dashboard.department-completion
                         subtitle="*Based on all stores in your group and the total number of employees who completed required training." />
 
                     <x-dealer.dashboard.stores-list />
                 </div>
-                <livewire:dealer.home.group-rating />
             @endcan
         @endif
 
