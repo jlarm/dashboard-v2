@@ -24,9 +24,9 @@
     </x-table.cell>
     @if(tenant('locations'))
         <x-table.cell>
-            @foreach($user->stores as $store)
+            @foreach($user->stores as $userStore)
                 <div class="flex flex-col">
-                    <span>{{ $store->name }}</span>
+                    <span>{{ $userStore->name }}</span>
                 </div>
             @endforeach
         </x-table.cell>

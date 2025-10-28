@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
+use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -14,6 +15,7 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public User $user;
+    public Store $store;
     public int $completed;
     public int $totalCourses;
     public $departmentCourseCount;
