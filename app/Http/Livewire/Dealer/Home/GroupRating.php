@@ -8,6 +8,7 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use App\Models\Dealer\Store;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -37,7 +38,11 @@ class GroupRating extends Component
 
     public function mount(): void
     {
-        $storeIds = auth()->user()->stores()->pluck('id');
+        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+            $storeIds = Store::pluck('id');
+        } else {
+            $storeIds = auth()->user()->stores()->pluck('id');
+        }
 
         $this->dealJacketGrades = IndividualAudit::query()
             ->whereIn('store_id', $storeIds)
