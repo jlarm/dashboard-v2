@@ -1,43 +1,53 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Navigation;
 
 use App\Models\Dealer\Store;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class StoreSwitcher extends Component
 {
-    public Store $store;
-    public $currentStore;
-    public $storeSlug;
-    protected $listeners = ['refreshStores' => 'mount'];
+    public ?string $currentStoreName = null;
+
+    protected $listeners = ['refreshStores' => '$refresh'];
 
     public function mount(Request $request): void
     {
-        $this->setStoreSlug();
-        $this->currentStore = $request->get('store')?->name;
+        $this->currentStoreName = $request->get('store')?->name;
     }
 
     public function render(): View
     {
-        return view('livewire.dealer.navigation.store-switcher', [
-            'stores' => $this->getStores(),
-        ]);
+        return view('livewire.dealer.navigation.store-switcher');
     }
 
-    private function setStoreSlug(): void
+    public function getStoresProperty(): Collection
     {
-        $this->storeSlug = request()->segment(2);
-    }
+        $user = auth()->user();
 
-    private function getStores()
-    {
-        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
-            return Store::orderBy('name')->get();
+        if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
+            return Store::query()
+                ->orderBy('name')
+                ->get();
         }
 
-        return auth()->user()->stores;
+        return $user->stores()
+            ->orderBy('name')
+            ->get();
+    }
+
+    public function getCurrentStoreDisplayProperty(): string
+    {
+        if (!$this->currentStoreName) {
+            return 'Select a Store';
+        }
+
+        return Str::limit($this->currentStoreName, 30);
     }
 }
