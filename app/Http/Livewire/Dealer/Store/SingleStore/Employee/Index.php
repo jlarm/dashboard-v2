@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
 use App\Models\Dealer\Store;
@@ -47,7 +49,16 @@ class Index extends Component
     {
         $query = $this->store->users()
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
-            ->with('roles', 'department', 'stores', 'courses')
+            ->with([
+                'roles',
+                'department:id,name',
+                'stores:id,name,state',
+                'courses:id',
+                'results' => function ($query) {
+                    $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
+                        ->where('passed', 1);
+                },
+            ])
             ->whereDoesntHave('roles', function ($query): void {
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
