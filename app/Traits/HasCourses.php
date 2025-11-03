@@ -111,12 +111,12 @@ trait HasCourses
             $hasNoCaliforniaStore = $this->userHasNoCaliforniaStore();
 
             $this->userCourses = Course::query()
-                ->with('departments')
+                ->select('courses.id', 'courses.slug', 'courses.optional')
                 ->where('optional', false)
                 ->where(function ($query) use ($courseWithRole, $hasManagerRole, $hasEmployeeRole, $hasNoCaliforniaStore) {
                     $query->where(function ($q) use ($courseWithRole) {
                         $q->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
-                            ->whereIn('id', $courseWithRole);
+                            ->whereIn('courses.id', $courseWithRole);
                     })
                         ->orWhere(function ($q) use ($hasManagerRole, $hasEmployeeRole, $hasNoCaliforniaStore) {
                             $q->whereDoesntHave('departments')
