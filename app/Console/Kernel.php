@@ -43,6 +43,13 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->emailOutputOnFailure(config('app.admin_email'));
 
+        // Clear Livewire temporary files for all tenants
+        $schedule->command('livewire:clear-temp-files')
+            ->dailyAt('01:00')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
         // Create backups
         $schedule->command('backups:go')
             ->dailyAt('01:30')
