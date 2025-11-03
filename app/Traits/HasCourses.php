@@ -89,7 +89,6 @@ trait HasCourses
     private function totalUserCourses(): array
     {
         if (is_null($this->userCourses)) {
-            // Ensure roles are loaded
             if (! $this->relationLoaded('roles')) {
                 $this->load('roles');
             }
@@ -100,10 +99,18 @@ trait HasCourses
                 return [];
             }
 
-            $courseWithRole = DB::table('course_role')
-                ->whereIn('role_id', $userRoles)
-                ->pluck('course_id')
-                ->toArray();
+            if ($this->relationLoaded('roles') && $this->roles->first()?->relationLoaded('courses')) {
+                $courseWithRole = $this->roles
+                    ->flatMap(fn ($role) => $role->courses)
+                    ->pluck('id')
+                    ->unique()
+                    ->toArray();
+            } else {
+                $courseWithRole = DB::table('course_role')
+                    ->whereIn('role_id', $userRoles)
+                    ->pluck('course_id')
+                    ->toArray();
+            }
 
             // Check for specific roles using loaded collection
             $hasManagerRole = $this->roles->contains('id', 10);

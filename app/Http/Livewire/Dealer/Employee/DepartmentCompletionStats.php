@@ -6,9 +6,11 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
+use DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
+use stdClass;
 
 class DepartmentCompletionStats extends Component
 {
@@ -105,9 +107,12 @@ class DepartmentCompletionStats extends Component
 
         $completedCount = 0;
 
+        $roleCoursesMap = $this->preloadRoleCourses();
+
         $completedQuery->select('id', 'department_id')
             ->with([
                 'roles:id',
+                'stores:id,state',
                 'results' => function ($q) {
                     $q->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1)
@@ -121,8 +126,14 @@ class DepartmentCompletionStats extends Component
                         ->whereNull('deleted_at');
                 },
             ])
-            ->chunk(50, function ($users) use (&$completedCount) {
+            ->chunk(50, function ($users) use (&$completedCount, $roleCoursesMap) {
                 foreach ($users as $user) {
+                    foreach ($user->roles as $role) {
+                        if (isset($roleCoursesMap[$role->id])) {
+                            $role->setRelation('courses', $roleCoursesMap[$role->id]);
+                        }
+                    }
+
                     if (! $user->user_has_not_completed_courses) {
                         $completedCount++;
                     }
@@ -130,6 +141,26 @@ class DepartmentCompletionStats extends Component
             });
 
         return $completedCount;
+    }
+
+    protected function preloadRoleCourses(): array
+    {
+        $allRoleCourses = DB::table('course_role')
+            ->join('courses', 'courses.id', '=', 'course_role.course_id')
+            ->select('course_role.role_id', 'courses.id')
+            ->get();
+
+        $roleCoursesMap = [];
+        foreach ($allRoleCourses as $roleCourse) {
+            if (! isset($roleCoursesMap[$roleCourse->role_id])) {
+                $roleCoursesMap[$roleCourse->role_id] = collect();
+            }
+            $course = new stdClass();
+            $course->id = $roleCourse->id;
+            $roleCoursesMap[$roleCourse->role_id]->push($course);
+        }
+
+        return $roleCoursesMap;
     }
 
     protected function buildBaseQuery()
