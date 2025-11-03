@@ -25,6 +25,10 @@ class ClearLivewireTempFiles extends Command
             $disk = Storage::disk(config('livewire.temporary_file_upload.disk') ?? config('filesystems.default'));
             $directory = config('livewire.temporary_file_upload.directory') ?? 'livewire-tmp';
 
+            $this->comment("  Disk root: {$disk->path('')}");
+            $this->comment("  Looking for directory: {$directory}");
+            $this->comment("  Full path: {$disk->path($directory)}");
+
             if ($disk->exists($directory)) {
                 $files = $disk->allFiles($directory);
                 $fileCount = count($files);
