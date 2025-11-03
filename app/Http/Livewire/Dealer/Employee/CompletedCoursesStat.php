@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -26,7 +29,7 @@ class CompletedCoursesStat extends Component
         $this->readyToLoad = true;
     }
 
-    public function percentage(): int
+    public function percentage(): float
     {
         $counts = $this->getUserCounts();
 
@@ -46,10 +49,24 @@ class CompletedCoursesStat extends Component
 
     protected function getUserCounts(): array
     {
-        return [
-            'total' => $this->getTotalUserCount(),
-            'incomplete' => $this->getIncompleteCount(),
-        ];
+        $cacheKey = $this->getCacheKey();
+
+        return Cache::remember($cacheKey, 300, function () {
+            return [
+                'total' => $this->getTotalUserCount(),
+                'incomplete' => $this->getIncompleteCount(),
+            ];
+        });
+    }
+
+    protected function getCacheKey(): string
+    {
+        $userId = auth()->id();
+        $storeId = $this->store?->id ?? 'all';
+        $department = $this->department ?? 'all';
+        $isSuperAdmin = auth()->user()->hasAnyRole(['super-admin', 'Consultant']) ? 'admin' : 'user';
+
+        return "completed_courses_stat_{$userId}_{$storeId}_{$department}_{$isSuperAdmin}";
     }
 
     protected function getTotalUserCount(): int
@@ -61,19 +78,19 @@ class CompletedCoursesStat extends Component
 
     protected function getIncompleteCount(): int
     {
-        return $this->users()
-            ->filter(fn ($user) => $user->user_has_not_completed_courses)
-            ->count();
-    }
-
-    protected function users()
-    {
         $query = $this->buildBaseQuery();
 
-        return $query->with(['results' => function ($query) {
-            $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
-                ->whereNull('deleted_at');
-        }, 'roles:id'])->get();
+        // Only select needed columns to reduce memory usage
+        return $query->whereHas('roles', function ($q) {
+            $q->where('id', '!=', 5);
+        })->get(['id', 'department_id'])
+            ->filter(function ($user) {
+                // Load minimal data for the calculation
+                $user->loadMissing(['roles:id', 'results:id,user_id,course_id,passed,created_at']);
+
+                return $user->user_has_not_completed_courses;
+            })
+            ->count();
     }
 
     protected function buildBaseQuery()

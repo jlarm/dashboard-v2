@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\Store;
@@ -23,11 +25,14 @@ class Index extends Component
     {
         return view('livewire.dealer.vendor.index', [
             'vendors' => $this->store
-                ? Vendor::where('store_id', $this->store->id)
+                ? Vendor::with('store:id,name')
+                    ->where('store_id', $this->store->id)
                     ->orWhere('store_id', null)
                     ->orderBy('name')
                     ->paginate(16)
-                : Vendor::orderBy('name')->paginate(16),
+                : Vendor::with('store:id,name')
+                    ->orderBy('name')
+                    ->paginate(16),
         ])->layout('components.dealer-app');
     }
 }
