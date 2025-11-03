@@ -91,6 +91,10 @@
                                 <input wire:model.defer="responses.{{ $loop->index }}.answer" value="no" name="question_{{ $loop->index }}_answer" id="question_{{ $loop->index }}_no" type="radio" class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600" x-model="answer">
                                 <label for="question_{{ $loop->index }}_no" class="ml-3 block text-sm font-medium leading-6 text-gray-900">No</label>
                             </div>
+                            <div class="flex items-center">
+                                <input wire:model.defer="responses.{{ $loop->index }}.answer" value="na" name="question_{{ $loop->index }}_answer" id="question_{{ $loop->index }}_na" type="radio" class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600" x-model="answer">
+                                <label for="question_{{ $loop->index }}_na" class="ml-3 block text-sm font-medium leading-6 text-gray-900">N/A</label>
+                            </div>
                         </div>
                     </fieldset>
                 </div>

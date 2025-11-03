@@ -169,7 +169,7 @@ class Form extends Component
             'purchaseType' => ['required', 'string'],
             'vehicleType' => ['required', 'string'],
             'responses' => ['required', 'array', 'min:1'],
-            'responses.*.answer' => ['required', 'in:yes,no'],
+            'responses.*.answer' => ['required', 'in:yes,no,na'],
         ];
     }
 
@@ -241,10 +241,17 @@ class Form extends Component
         $earnedWeight = 0;
 
         foreach ($this->responses as $index => $response) {
+            $answer = $response['answer'] ?? null;
+
+            // Exclude N/A responses from percentage calculation
+            if ($answer === 'na') {
+                continue;
+            }
+
             $weight = $this->questions[$index]['weight'] ?? 1;
             $totalWeight += $weight;
 
-            if (($response['answer'] ?? null) === 'yes') {
+            if ($answer === 'yes') {
                 $earnedWeight += $weight;
             }
 
