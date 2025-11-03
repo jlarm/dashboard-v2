@@ -6,7 +6,7 @@ namespace App\Console\Commands;
 
 use App\Models\Dealership;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ClearLivewireTempFiles extends Command
 {
@@ -22,14 +22,17 @@ class ClearLivewireTempFiles extends Command
         tenancy()->runForMultiple(Dealership::all(), function ($tenant) use (&$totalFiles) {
             $this->info("Processing tenant {$tenant->id} ({$tenant->name})...");
 
-            $livewireTmpPath = storage_path('app/livewire-tmp');
+            $disk = Storage::disk(config('livewire.temporary_file_upload.disk') ?? config('filesystems.default'));
+            $directory = config('livewire.temporary_file_upload.directory') ?? 'livewire-tmp';
 
-            if (File::exists($livewireTmpPath)) {
-                $files = File::allFiles($livewireTmpPath);
+            if ($disk->exists($directory)) {
+                $files = $disk->allFiles($directory);
                 $fileCount = count($files);
 
                 if ($fileCount > 0) {
-                    File::cleanDirectory($livewireTmpPath);
+                    foreach ($files as $file) {
+                        $disk->delete($file);
+                    }
                     $totalFiles += $fileCount;
                     $this->comment("  Deleted {$fileCount} file(s) for tenant {$tenant->id}");
                 } else {
