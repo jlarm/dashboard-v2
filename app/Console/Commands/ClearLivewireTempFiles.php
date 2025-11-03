@@ -17,14 +17,10 @@ class ClearLivewireTempFiles extends Command
     {
         $this->info('Starting to clear Livewire temporary files for all tenants...');
 
-        $tenants = Dealership::all();
         $totalFiles = 0;
-        $processedTenants = 0;
 
-        $tenants->each(function (Dealership $tenant) use (&$totalFiles, &$processedTenants) {
-            $this->info("Processing tenant: {$tenant->id}...");
-
-            tenancy()->initialize($tenant);
+        tenancy()->runForMultiple(Dealership::all(), function ($tenant) use (&$totalFiles) {
+            $this->info("Processing tenant {$tenant->id} ({$tenant->name})...");
 
             $livewireTmpPath = storage_path('app/livewire-tmp');
 
@@ -43,10 +39,9 @@ class ClearLivewireTempFiles extends Command
                 $this->comment("  No livewire-tmp directory found for tenant {$tenant->id}");
             }
 
-            $processedTenants++;
+            $this->info("Command for tenant {$tenant->id} ({$tenant->name}) completed");
         });
 
-        $this->info("Processed {$processedTenants} tenant(s).");
         $this->info("Total files deleted: {$totalFiles}");
         $this->comment('All done!');
 
