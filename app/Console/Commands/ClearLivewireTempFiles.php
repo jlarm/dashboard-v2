@@ -24,9 +24,9 @@ class ClearLivewireTempFiles extends Command
         $tenants->each(function (Dealership $tenant) use (&$totalFiles, &$processedTenants) {
             $this->info("Processing tenant: {$tenant->id}...");
 
-            $livewireTmpPath = storage_path('app/livewire-tmp');
-
             tenancy()->initialize($tenant);
+
+            $livewireTmpPath = storage_path('app/livewire-tmp');
 
             if (File::exists($livewireTmpPath)) {
                 $files = File::allFiles($livewireTmpPath);
