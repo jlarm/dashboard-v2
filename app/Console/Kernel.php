@@ -91,8 +91,8 @@ class Kernel extends ConsoleKernel
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Clean up old deal jacket reports
-        $schedule->command('deal-jacket-reports:cleanup')
-            ->hourly()
+        $schedule->command('deal-jacket-reports:clean')
+            ->dailyAt('02:00')
             ->runInBackground()
             ->withoutOverlapping()
             ->emailOutputOnFailure(config('app.admin_email'));
