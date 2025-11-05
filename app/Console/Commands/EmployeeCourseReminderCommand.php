@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\Dealer\CourseUserNotificationSent;
@@ -32,35 +34,80 @@ class EmployeeCourseReminderCommand extends Command
 
     private function processUserResults(User $user): void
     {
+        // Get all passed courses
         $results = $user->results()
             ->select('id', 'created_at', 'course_id')
             ->where('passed', 1)
-            ->whereDate('created_at', '<', Carbon::now()->subYear())
             ->orderBy('id', 'desc')
             ->get()
             ->groupBy('course_id')
             ->map(fn ($result) => $result->first());
 
-        $results->each(fn ($result) => CourseUserNotificationSent::where('user_id', $user->id)
-            ->where('course_id', $result->course_id)
-            ->firstOr(function () use ($user, $result) {
-                $user->notify(new ExpiredCourseNotification($result->course_id));
-                CourseUserNotificationSent::create([
-                    'user_id' => $user->id,
-                    'course_id' => $result->course_id,
-                    'sent' => Carbon::now(),
-                ]);
-            }));
+        // Group courses by their expiration status
+        $coursesToNotify = [
+            'expiring_soon' => [],
+            'expired_today' => [],
+            'expired_30_days' => [],
+        ];
+
+        $results->each(function ($result) use (&$coursesToNotify, $user) {
+            // Course expires 1 year (365 days) after completion
+            $expirationDate = Carbon::parse($result->created_at)->addYear();
+            $now = Carbon::now();
+            $daysUntilExpiration = $now->diffInDays($expirationDate, false);
+
+            // Determine notification type based on days until expiration
+            $notificationType = null;
+
+            // 30 days before expiration (between 29 and 30 days)
+            if ($daysUntilExpiration >= 29 && $daysUntilExpiration <= 30) {
+                $notificationType = 'expiring_soon';
+            }
+            // On expiration day (between -1 and 1 days)
+            elseif ($daysUntilExpiration >= -1 && $daysUntilExpiration <= 1) {
+                $notificationType = 'expired_today';
+            }
+            // 30 days after expiration (between -31 and -29 days)
+            elseif ($daysUntilExpiration >= -31 && $daysUntilExpiration <= -29) {
+                $notificationType = 'expired_30_days';
+            }
+
+            if ($notificationType) {
+                // Check if notification was already sent recently (within last 7 days to avoid duplicates)
+                $recentNotification = CourseUserNotificationSent::where('user_id', $user->id)
+                    ->where('course_id', $result->course_id)
+                    ->where('sent', '>=', Carbon::now()->subDays(7))
+                    ->first();
+
+                if (! $recentNotification) {
+                    $coursesToNotify[$notificationType][] = $result->course_id;
+                }
+            }
+        });
+
+        // If there are courses to notify about, send a single notification with all courses
+        $hasCourses = array_filter($coursesToNotify, fn ($courses) => count($courses) > 0);
+
+        if (! empty($hasCourses)) {
+            $user->notify(new ExpiredCourseNotification($coursesToNotify, $user->name));
+
+            // Record that notifications were sent for these courses
+            foreach ($coursesToNotify as $courses) {
+                foreach ($courses as $courseId) {
+                    CourseUserNotificationSent::create([
+                        'user_id' => $user->id,
+                        'course_id' => $courseId,
+                        'sent' => Carbon::now(),
+                    ]);
+                }
+            }
+        }
     }
 
     private function deleteOutdatedNotifications(): void
     {
-        $notifications = CourseUserNotificationSent::all();
-
-        foreach ($notifications as $notification) {
-            if ($notification->sent->diffInDays(Carbon::now()) > 30) {
-                $notification->delete();
-            }
-        }
+        // Delete notifications older than 60 days to keep the table clean
+        // We keep them for 60 days to ensure we have a record across all three notification periods
+        CourseUserNotificationSent::where('sent', '<', Carbon::now()->subDays(60))->delete();
     }
 }
