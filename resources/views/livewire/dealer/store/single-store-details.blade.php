@@ -197,6 +197,7 @@
                                 <span>Active</span>
                             </label>
                         </div>
+                        <p class="mt-1 text-sm text-gray-600">Notifications will be sent every 30 for every course an employee has not made an attempt to take. For every course taken, a reminder will be sent 30 days prior to the course expiring and an additional reminder the day the course has expired as well as 30 days after.</p>
                     </div>
                 </div>
             </div>
