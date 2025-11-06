@@ -157,17 +157,19 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 
     private function sendNotification(string $fileName): void
     {
-        Notification::make()
+        $notification = Notification::make()
             ->title('Deal Jacket Report Ready')
-            ->body('Your deal jacket report has been generated successfully. Click the button below to download it. This report will expire in 24 hours.')
+            ->body('Your deal jacket report has been generated successfully. Click the button below to view it. This report will expire in 24 hours.')
             ->success()
             ->actions([
                 Action::make('download')
-                    ->label('Download Report')
+                    ->label('View Report')
                     ->url(route('dealer.audit.deal-jacket-reports.download', ['fileName' => $fileName]))
                     ->openUrlInNewTab()
                     ->button(),
-            ])
-            ->sendToDatabase($this->user);
+            ]);
+
+        $notification->sendToDatabase($this->user);
+        $notification->send();
     }
 }
