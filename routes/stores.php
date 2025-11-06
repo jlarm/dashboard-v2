@@ -31,11 +31,11 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('audits/body-shop/{bodyShopViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\BodyShop\Edit::class)->name('audits.body-shop.edit');
             Route::get('audits/finance/create', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Create::class)->name('audits.finance.create');
             Route::get('audits/finance/{glbaViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\Finance\Edit::class)->name('audits.finance.edit');
-            Route::get('audits/deal-jackets/create/{individualAudit:uuid?}', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Create::class)->name('audits.individual.create');
-            Route::get('audits/deal-jackets/{individualAudit:uuid}/edit', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->name('audits.individual.edit');
+            Route::get('audits/deal-jackets-archived/create/{individualAudit:uuid?}', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Create::class)->name('audits.individual.create');
+            Route::get('audits/deal-jackets-archived/{individualAudit:uuid}/edit', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->name('audits.individual.edit');
 
-            Route::get('audits/deal-jackets-new/{dealJacketGroup:uuid}/create', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'create'])->name('audits.deal-jackets.create');
-            Route::get('audits/deal-jackets-new/{dealJacketGroup:uuid}/edit/{dealJacket:uuid}', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'edit'])->name('audits.deal-jackets.edit');
+            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/create', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'create'])->name('audits.deal-jackets.create');
+            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/edit/{dealJacket:uuid}', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'edit'])->name('audits.deal-jackets.edit');
 
             Route::get('settings', App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->name('settings');
 
@@ -61,7 +61,7 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('audits/osha', App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('audits.osha.index');
             Route::get('audits/body-shop', App\Http\Livewire\Dealer\Audit\BodyShop\Index::class)->name('audits.body-shop.index');
             Route::get('audits/finance', App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('audits.finance.index');
-            Route::get('audits/deal-jackets', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->name('audits.individual.index');
+            Route::get('audits/deal-jackets-archived', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->name('audits.individual.index');
 
             Route::get('osha/{oshaViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::class)->name('audits.osha.remediation');
             Route::get('osha/{oshaViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\Osha\Single::class)->name('audits.osha.view');
@@ -69,11 +69,11 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('body-shop/{bodyShopViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('audits.body-shop.view');
             Route::get('/finance/{glbaViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::class)->name('audits.finance.remediation');
             Route::get('finance/{glbaViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\Finance\Single::class)->name('audits.finance.view');
-            Route::get('audits/deal-jackets/{individualAudit:uuid}', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Show::class)->name('audits.individual.show');
+            Route::get('audits/deal-jackets-archived/{individualAudit:uuid}', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Show::class)->name('audits.individual.show');
 
-            Route::view('audits/deal-jackets-new', 'tenant.audit.deal-jacket.index')->name('audits.deal-jackets.index');
-            Route::get('audits/deal-jackets-new/{dealJacketGroup:uuid}', [DealJacketGroupController::class, 'show'])->middleware(['auth'])->name('audits.deal-jackets.show');
-            Route::get('audits/deal-jackets-new/{dealJacketGroup:uuid}/{dealJacket:uuid}', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'show'])->name('audits.deal-jackets.single');
+            Route::view('audits/deal-jackets', 'tenant.audit.deal-jacket.index')->name('audits.deal-jackets.index');
+            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}', [DealJacketGroupController::class, 'show'])->middleware(['auth'])->name('audits.deal-jackets.show');
+            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/{dealJacket:uuid}', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'show'])->name('audits.deal-jackets.single');
             Route::get('audits/deal-jacket-reports/{fileName}/download', [App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController::class, 'download'])->name('audits.deal-jacket-reports.download');
 
             Route::get('vendors', App\Http\Livewire\Dealer\Vendor\Index::class)->name('vendor.index');
