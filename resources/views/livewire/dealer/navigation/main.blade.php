@@ -149,7 +149,7 @@
                             Walkthrough</a>
                     </li>
                     <li>
-                        <a href="{{ $currentStore ? route('dealer.stores.audits.individual.index', $currentStore) : route('dealer.audit.individual.index') }}"
+                        <a href="{{ $currentStore ? route('dealer.stores.audits.deal-jackets.index', $currentStore) : route('dealer.audit.deal-jackets.index') }}"
                            class="{{ (request()->segment(2) == 'deal-jackets' || request()->segment(4) === 'deal-jackets') ? 'bg-gray-100' : '' }} hover:bg-gray-100 block rounded-lg py-2 px-3 ml-3 text-sm leading-6 text-gray-700">Deal
                             Jackets</a>
                     </li>

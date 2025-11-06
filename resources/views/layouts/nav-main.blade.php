@@ -161,8 +161,8 @@
                                             </li>
                                             <li>
                                                 <!-- 44px -->
-                                                <a href="{{ route('dealer.audit.individual.index') }}"
-                                                   class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal
+                                                <a href="{{ route('dealer.audit.deal-jackets.index') }}"
+                                                   class="{{ (request()->segment(2) == 'deal-jackets') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal
                                                     Jackets</a>
                                             </li>
                                         </ul>
@@ -370,8 +370,8 @@
                                             Walkthrough</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('dealer.audit.individual.index') }}"
-                                           class="{{ (request()->segment(2) == 'individual') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal
+                                        <a href="{{ route('dealer.audit.deal-jackets.index') }}"
+                                           class="{{ (request()->segment(2) == 'deal-jackets') ? 'bg-arm-blue-50' : '' }} hover:bg-gray-50 block rounded-md py-2 pr-2 pl-11 text-sm leading-6 text-gray-700">Deal
                                             Jackets</a>
                                     </li>
                                 </ul>
