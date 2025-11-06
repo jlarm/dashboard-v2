@@ -19,6 +19,9 @@ class DealJacketReportDownloadController extends Controller
             abort(404, 'Report not found or has expired.');
         }
 
-        return Storage::download($filePath, $fileName);
+        return Storage::response($filePath, $fileName, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$fileName.'"',
+        ]);
     }
 }
