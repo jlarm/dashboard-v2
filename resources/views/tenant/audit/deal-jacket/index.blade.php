@@ -31,7 +31,7 @@
             </x-modal-form>
         @endif
 
-        <x-modal-form name="welcome-modal" :show="true" max-width="2xl">
+        <x-modal-form name="welcome-modal" :show="false" max-width="2xl">
             <div class="p-6">
                 <div class="flex items-start gap-4 mb-4">
                     <div class="flex-1">
