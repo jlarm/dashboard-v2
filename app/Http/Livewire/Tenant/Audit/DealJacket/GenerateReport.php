@@ -38,12 +38,6 @@ class GenerateReport extends Modal
         GenerateDealJacketReportJob::dispatch($this->dealJacketGroup, auth()->user());
 
         $this->close();
-
-        Notification::make()
-            ->title('Deal Jacket Report Generation Started')
-            ->body('The report is being generated in the background and will be ready to download soon.')
-            ->success()
-            ->send();
     }
 
     public function render(): View
