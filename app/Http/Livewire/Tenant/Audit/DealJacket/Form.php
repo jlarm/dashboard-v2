@@ -50,6 +50,10 @@ class Form extends Component
 
             $this->responses = $dealJacket->responses ?? [];
         }
+
+        if (! $this->auditDate) {
+            $this->auditDate = now()->format('Y-m-d');
+        }
     }
 
     public function managers(): array
