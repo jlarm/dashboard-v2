@@ -73,6 +73,8 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         $issuesByUser = [];
         $dealJacketDetails = [];
         $dealJacketsByUser = [];
+        $issuesByStatementAndUser = [];
+        $allUsers = [];
 
         foreach ($dealJackets as $dealJacket) {
             $userName = $dealJacket->user->name;
@@ -80,6 +82,10 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 
             if (! isset($issuesByUser[$userName])) {
                 $issuesByUser[$userName] = 0;
+            }
+
+            if (! in_array($userName, $allUsers)) {
+                $allUsers[] = $userName;
             }
 
             $dealJacketIssues = [];
@@ -96,6 +102,17 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
                             'statement' => $statement,
                             'comment' => $response['comment'] ?? '',
                         ];
+
+                        // Track issues by statement and user
+                        if (! isset($issuesByStatementAndUser[$statement])) {
+                            $issuesByStatementAndUser[$statement] = [];
+                        }
+
+                        if (! isset($issuesByStatementAndUser[$statement][$userName])) {
+                            $issuesByStatementAndUser[$statement][$userName] = 0;
+                        }
+
+                        $issuesByStatementAndUser[$statement][$userName]++;
                     }
                 }
             }
@@ -131,6 +148,8 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
             'dealJacketDetails' => $dealJacketDetails,
             'dealJacketsByUser' => $dealJacketsByUser,
             'totalIssues' => $this->dealJacketGroup->total_failed,
+            'issuesByStatementAndUser' => $issuesByStatementAndUser,
+            'allUsers' => $allUsers,
         ])->render();
 
         $footerHtml = '
