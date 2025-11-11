@@ -136,6 +136,57 @@
             <p class="text-5xl font-bold">{{ $totalIssues }}</p>
         </div>
     </div>
+
+    @if(count($issuesByStatementAndUser) > 0)
+        <div class="mt-12 max-w-6xl mx-auto">
+            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-gray-50 border-b border-gray-200">
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Issue</th>
+                            @foreach($allUsers as $user)
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-900">{{ $user }}</th>
+                            @endforeach
+                            <th class="px-6 py-4 text-center text-sm font-semibold text-gray-900">Total Issues</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $userTotals = array_fill_keys($allUsers, 0);
+                            $grandTotal = 0;
+                        @endphp
+                        @foreach($issuesByStatementAndUser as $statement => $users)
+                            <tr class="border-b border-gray-100">
+                                <td class="px-6 py-4 text-sm text-gray-900">{{ $statement }}</td>
+                                @php
+                                    $rowTotal = 0;
+                                @endphp
+                                @foreach($allUsers as $user)
+                                    @php
+                                        $count = $users[$user] ?? 0;
+                                        $rowTotal += $count;
+                                        $userTotals[$user] += $count;
+                                    @endphp
+                                    <td class="px-6 py-4 text-center text-sm text-gray-900">{{ $count }}</td>
+                                @endforeach
+                                @php
+                                    $grandTotal += $rowTotal;
+                                @endphp
+                                <td class="px-6 py-4 text-center text-sm font-semibold text-gray-900">{{ $rowTotal }}</td>
+                            </tr>
+                        @endforeach
+                        <tr class="bg-gray-50 border-t-2 border-gray-300">
+                            <td class="px-6 py-4 text-sm font-bold text-gray-900">Total Issues</td>
+                            @foreach($allUsers as $user)
+                                <td class="px-6 py-4 text-center text-sm font-bold text-gray-900">{{ $userTotals[$user] }}</td>
+                            @endforeach
+                            <td class="px-6 py-4 text-center text-sm font-bold text-gray-900">{{ $grandTotal }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
 </div>
 
 {{-- Details by User --}}
