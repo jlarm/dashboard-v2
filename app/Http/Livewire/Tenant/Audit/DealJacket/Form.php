@@ -154,6 +154,8 @@ class Form extends Component
             'responses',
             'questions',
         ]);
+
+        $this->auditDate = now()->format('Y-m-d');
     }
 
     public function render(): View
