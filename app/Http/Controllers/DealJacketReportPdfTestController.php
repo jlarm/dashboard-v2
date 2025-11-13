@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Dealer\Audit\DealJacketGroup;
-use App\Models\DealJacketQuestion;
 use App\Models\User;
 
 class DealJacketReportPdfTestController extends Controller
@@ -42,12 +41,11 @@ class DealJacketReportPdfTestController extends Controller
             $dealJacketIssues = [];
 
             if (is_array($dealJacket->responses)) {
-                foreach ($dealJacket->responses as $questionId => $response) {
+                foreach ($dealJacket->responses as $response) {
                     if (isset($response['answer']) && $response['answer'] === 'no') {
                         $issueCount++;
 
-                        $question = tenancy()->central(fn () => DealJacketQuestion::find($questionId));
-                        $statement = $question?->statement ?? "Question {$questionId}";
+                        $statement = $response['statement'] ?? 'Unknown question';
 
                         $dealJacketIssues[] = [
                             'statement' => $statement,
