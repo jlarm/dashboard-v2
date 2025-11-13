@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Log;
 
 class CyrismaService
 {
-    protected string $baseUrl;
-    protected string $apiKey;
-    protected string $apiSecret;
+    protected ?string $baseUrl;
+    protected ?string $apiKey;
+    protected ?string $apiSecret;
     protected ?string $accessToken = null;
     protected ?Store $store = null;
 
@@ -24,6 +24,13 @@ class CyrismaService
         $this->baseUrl = config('services.cyrisma.base_url');
         $this->apiKey = config('services.cyrisma.api_key');
         $this->apiSecret = config('services.cyrisma.api_secret');
+    }
+
+    public function isConfigured(): bool
+    {
+        return ! empty($this->baseUrl)
+            && ! empty($this->apiKey)
+            && ! empty($this->apiSecret);
     }
 
     public function forStore(Store $store): self
@@ -35,6 +42,12 @@ class CyrismaService
 
     public function authenticate(): ?string
     {
+        if (! $this->isConfigured()) {
+            Log::warning('Cyrisma API credentials are not configured');
+
+            return null;
+        }
+
         $cacheKey = 'cyrisma_access_token';
 
         // Try to get token from cache (expires in 9 minutes, token lasts 10)

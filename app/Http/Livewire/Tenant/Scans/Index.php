@@ -12,15 +12,15 @@ use Livewire\Component;
 class Index extends Component
 {
     public bool $loaded = false;
-
+    public bool $isConfigured = false;
     protected ?Store $store = null;
-
     protected ?CyrismaService $cyrisma = null;
 
     public function loadScanData(): void
     {
         $this->store = Store::find(app('currentStore'));
         $this->cyrisma = app(CyrismaService::class)->forStore($this->store);
+        $this->isConfigured = $this->cyrisma->isConfigured();
         $this->loaded = true;
     }
 
