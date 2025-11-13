@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Store;
@@ -20,9 +22,58 @@ class Index extends Component
 
     public function render(): View
     {
+        $oshaAudits = $this->store->oshaAudits->sortByDesc('audit_date');
+        $audits = $this->store->oshaViolationAudits->sortByDesc('date');
+
+        // Prepare chart data combining both audit types
+        $chartData = collect();
+
+        // Add OshaViolationAudits to chart data
+        foreach ($audits as $audit) {
+            if ($audit->date && $audit->grade) {
+                $chartData->push([
+                    'date' => $audit->date,
+                    'grade' => $audit->grade,
+                    'violations' => $audit->violation_count,
+                    'remediations' => $audit->remediation_count,
+                ]);
+            }
+        }
+
+        // Add OshaAudits to chart data (if they have a grade field)
+        foreach ($oshaAudits as $audit) {
+            if ($audit->audit_date && isset($audit->grade)) {
+                $chartData->push([
+                    'date' => $audit->audit_date,
+                    'grade' => $audit->grade,
+                    'violations' => $audit->violations()->count(),
+                    'remediations' => 0, // OshaAudits may not have remediation tracking
+                ]);
+            }
+        }
+
+        // Sort by date and prepare for chart
+        $chartData = $chartData->take(4);
+        $chartData = $chartData->sortBy('date')->values();
+        $chartLabels = $chartData->map(fn ($item) => $item['date']->format('M \'y'))->toArray();
+
+        // Convert letter grades to numeric values for plotting
+        $gradeMap = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
+        $chartGradesNumeric = $chartData->map(fn ($item) => $gradeMap[mb_strtoupper($item['grade'])] ?? 0)->toArray();
+        $chartGradesLetters = $chartData->map(fn ($item) => mb_strtoupper($item['grade']))->toArray();
+
+        // Prepare violations and remediations data for spline chart
+        $chartViolations = $chartData->map(fn ($item) => $item['violations'])->toArray();
+        $chartRemediations = $chartData->map(fn ($item) => $item['remediations'])->toArray();
+
         return view('livewire.dealer.audit.osha.index', [
-            'oshaAudits' => $this->store->oshaAudits->sortByDesc('audit_date'),
-            'audits' => $this->store->oshaViolationAudits->sortByDesc('date'),
+            'oshaAudits' => $oshaAudits,
+            'audits' => $audits,
+            'chartLabels' => $chartLabels,
+            'chartGradesNumeric' => $chartGradesNumeric,
+            'chartGradesLetters' => $chartGradesLetters,
+            'chartViolations' => $chartViolations,
+            'chartRemediations' => $chartRemediations,
         ])->layout('components.dealer-app');
     }
 }
