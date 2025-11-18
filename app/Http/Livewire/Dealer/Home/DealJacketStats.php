@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Home;
 
-use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -27,10 +26,10 @@ class DealJacketStats extends Component
         }
 
         return match (true) {
-            $avg >= 90 && $avg <= 100 => 'A',
-            $avg >= 80 && $avg <= 89 => 'B',
-            $avg >= 70 && $avg <= 79 => 'C',
-            $avg >= 60 && $avg <= 69 => 'D',
+            $avg >= 90 => 'A',
+            $avg >= 80 => 'B',
+            $avg >= 70 => 'C',
+            $avg >= 60 => 'D',
             default => 'F',
         };
     }
@@ -42,13 +41,19 @@ class DealJacketStats extends Component
 
     private function getAveragePercentage(): ?float
     {
-        $avg = DealJacket::query()
-            ->whereHas('dealJacketGroup', function ($query) {
-                $query->where('store_id', $this->store->id)
-                    ->where('completed', true);
-            })
-            ->avg('percentage');
+        $completedGroups = \App\Models\Dealer\Audit\DealJacketGroup::query()
+            ->where('store_id', $this->store->id)
+            ->where('completed', true)
+            ->withSum('dealJackets as total_passed', 'total_passed')
+            ->withSum('dealJackets as total_failed', 'total_failed')
+            ->get();
 
-        return $avg !== null ? (float) $avg : null;
+        if ($completedGroups->isEmpty()) {
+            return null;
+        }
+
+        $totalPassRate = $completedGroups->sum(fn ($group) => $group->pass_rate);
+
+        return $totalPassRate / $completedGroups->count();
     }
 }
