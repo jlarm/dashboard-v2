@@ -59,21 +59,20 @@
             </div>
             {{-- Role Assignment --}}
             <div class="col-span-3">
-                <x-input-label for="role" :value="__('Select Role(s)')" />
-                
+                <x-input-label for="role" :value="__('Select Role')" />
+
                 <div class="columns-2">
                     @foreach($allRoles as $role)
                         <div class="relative flex items-start">
                             <div class="flex h-6 items-center">
                                 <input
-                                    wire:model="assignedRoles"
-                                    {{ in_array($role->name, $assignedRoles) ? 'checked' : '' }}
+                                    wire:model="assignedRole"
                                     value="{{ $role->name }}"
                                     id="role-{{ $role->id }}"
                                     aria-describedby="role-{{ $role->id }}-description"
-                                    name="assignedRoles[]"
-                                    type="checkbox"
-                                    class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                                    name="assignedRole"
+                                    type="radio"
+                                    class="h-4 w-4 border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
                                 >
                             </div>
                             <div class="ml-3 text-sm leading-6">

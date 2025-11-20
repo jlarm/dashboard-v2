@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Department;
@@ -14,12 +16,22 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class Edit extends SlideOver
 {
+    private const ROLE_PRIORITY = [
+        'Owner' => 1,
+        'GM' => 2,
+        'CFO' => 3,
+        'GSM' => 4,
+        'Manager' => 5,
+        'Employee' => 6,
+        'Porter/Driver' => 7,
+    ];
+
     public Store $store;
     public $user;
     public string $name;
     public array $assignedStores = [];
     public ?int $department = null;
-    public array $assignedRoles = [];
+    public string $assignedRole = '';
     public bool $qi = false;
     public int $qiCount = 0;
     public bool $remediationRemindersActive = false;
@@ -56,7 +68,7 @@ class Edit extends SlideOver
     {
         $rules = [
             'department' => 'required|exists:departments,id',
-            'assignedRoles' => 'required|array',
+            'assignedRole' => 'required|string',
         ];
 
         if (tenant('locations')) {
@@ -71,7 +83,7 @@ class Edit extends SlideOver
         $messages = [
             'department.required' => 'Please select a department.',
             'department.exists' => 'Please select a valid department.',
-            'assignedRoles.required' => 'Please select at least one role.',
+            'assignedRole.required' => 'Please select a role.',
         ];
 
         if (tenant('locations')) {
@@ -88,11 +100,38 @@ class Edit extends SlideOver
         $this->name = $user->name;
         $this->assignedStores = $user->stores()->pluck('name')->toArray();
         $this->department = $user->department_id;
-        $this->assignedRoles = $user->roles()->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
+
+        $userRoles = $user->roles()->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
+
+        if (count($userRoles) > 1) {
+            $this->assignedRole = $this->getHighestPriorityRole($userRoles);
+
+            Notification::make()
+                ->title('Multiple roles detected')
+                ->body('This employee had multiple roles: '.implode(', ', $userRoles).". The highest priority role ({$this->assignedRole}) has been selected. Saving will remove the other roles.")
+                ->warning()
+                ->persistent()
+                ->send();
+        } else {
+            $this->assignedRole = $userRoles[0] ?? '';
+        }
+
         $this->qi = $this->user->hasRole('Qualified Individual');
         $this->qiCount = $this->getQualifiedIndividualRole()->users()->count();
         $this->selectedAuditTypes = $user->remediationReminderPreferences()->pluck('audit_type')->toArray();
         $this->remediationRemindersActive = $this->store->remediationSettings()->first()?->notifications ?? false;
+    }
+
+    private function getHighestPriorityRole(array $roles): string
+    {
+        usort($roles, function ($a, $b) {
+            $priorityA = self::ROLE_PRIORITY[$a] ?? 999;
+            $priorityB = self::ROLE_PRIORITY[$b] ?? 999;
+
+            return $priorityA <=> $priorityB;
+        });
+
+        return $roles[0] ?? '';
     }
 
     private function updateUserData(): void
@@ -124,7 +163,7 @@ class Edit extends SlideOver
 
     private function syncUserRoles(): void
     {
-        $this->user->syncRoles($this->assignedRoles);
+        $this->user->syncRoles([$this->assignedRole]);
     }
 
     private function clearPermissionCache(): void
