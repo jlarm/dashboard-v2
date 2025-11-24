@@ -1,35 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Course;
 
+use App\Jobs\SendCoursesResetNotifications;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use Spatie\Activitylog\Models\Activity;
 use WireElements\Pro\Components\Modal\Modal;
 use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
 class Reset extends Modal
 {
+    use AuthorizesRequests;
     use InteractsWithConfirmationModal;
 
     public ?Store $store = null;
 
     public function resetCourses(): void
     {
+        $this->authorize('reset-courses', CourseResults::class);
+
         $this->askForConfirmation(
             callback: function () {
-                match (true) {
+                $affectedUserIds = match (true) {
                     ! tenant('locations') => $this->deleteAllCourseResults(),
                     tenant('locations') && ! $this->store => $this->deleteAllCourseResults(),
                     tenant('locations') && $this->store => $this->deleteStoreCourseResults(),
-                    default => null
+                    default => collect()
                 };
 
-                // Log the course reset activity
                 $this->logCourseReset();
+
+                if ($affectedUserIds->isNotEmpty()) {
+                    SendCoursesResetNotifications::dispatch(
+                        $affectedUserIds,
+                        tenant()->name
+                    );
+                }
 
                 Notification::make()
                     ->title('Courses Reset Successfully')
@@ -47,7 +60,7 @@ class Reset extends Modal
         return view('livewire.dealer.course.reset');
     }
 
-    private function deleteAllCourseResults(): void
+    private function deleteAllCourseResults(): Collection
     {
         $affectedUserIds = collect();
 
@@ -58,20 +71,22 @@ class Reset extends Modal
             });
         });
 
-        // Clear cache for all affected users
-        $this->clearCacheForUsers($affectedUserIds->unique());
+        $uniqueUserIds = $affectedUserIds->unique();
+        $this->clearCacheForUsers($uniqueUserIds);
+
+        return $uniqueUserIds;
     }
 
-    private function deleteStoreCourseResults(): void
+    private function deleteStoreCourseResults(): Collection
     {
         if (! $this->store) {
-            return;
+            return collect();
         }
 
         $userIds = $this->store->users()->pluck('id');
 
         if ($userIds->isEmpty()) {
-            return;
+            return collect();
         }
 
         $affectedUserIds = collect();
@@ -85,14 +100,13 @@ class Reset extends Modal
                 });
             });
 
-        // Clear cache for all affected users
-        $this->clearCacheForUsers($affectedUserIds->unique());
+        $uniqueUserIds = $affectedUserIds->unique();
+        $this->clearCacheForUsers($uniqueUserIds);
+
+        return $uniqueUserIds;
     }
 
-    /**
-     * Clear the course cache for the specified users.
-     */
-    private function clearCacheForUsers($userIds): void
+    private function clearCacheForUsers(Collection $userIds): void
     {
         User::whereIn('id', $userIds)->chunkById(100, function ($users) {
             $users->each(function ($user) {
@@ -101,9 +115,6 @@ class Reset extends Modal
         });
     }
 
-    /**
-     * Log the course reset activity using Spatie Activity Log.
-     */
     private function logCourseReset(): void
     {
         $user = auth()->user();
