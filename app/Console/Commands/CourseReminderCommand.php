@@ -11,10 +11,10 @@ use Illuminate\Console\Command;
 
 class CourseReminderCommand extends Command
 {
-    protected $signature = 'course:reminder {--tenants=* : The tenant(s) to run the command for. Default all.} 
+    protected $signature = 'course:reminder {--tenants=* : The tenant(s) to run the command for. Default all.}
                                            {--debug : Enable detailed debugging output}
                                            {--test : Run in test mode without sending notifications}';
-    protected $description = 'Notify user every 30 days until they have attempted all of their courses.';
+    protected $description = 'Notify user every 15 days until they have attempted all of their courses.';
 
     public function handle(): void
     {
@@ -25,13 +25,13 @@ class CourseReminderCommand extends Command
         if ($isTestMode) {
             $this->info('===== TEST MODE =====');
             $testDate = now()->subDays(15); // 15 days ago
-            $thirtyDaysAgo = now()->subDays(30);
+            $fifteenDaysAgo = now()->subDays(15);
 
             $this->info('Test date: '.$testDate->format('Y-m-d H:i:s'));
-            $this->info('30 days ago: '.$thirtyDaysAgo->format('Y-m-d H:i:s'));
-            $this->info('Is test date before 30 days ago? '.($testDate->lt($thirtyDaysAgo) ? 'Yes' : 'No'));
-            $this->info('Is test date after 30 days ago? '.($testDate->gt($thirtyDaysAgo) ? 'Yes' : 'No'));
-            $this->info('Days difference: '.$testDate->diffInDays($thirtyDaysAgo));
+            $this->info('15 days ago: '.$fifteenDaysAgo->format('Y-m-d H:i:s'));
+            $this->info('Is test date before 15 days ago? '.($testDate->lt($fifteenDaysAgo) ? 'Yes' : 'No'));
+            $this->info('Is test date after 15 days ago? '.($testDate->gt($fifteenDaysAgo) ? 'Yes' : 'No'));
+            $this->info('Days difference: '.$testDate->diffInDays($fifteenDaysAgo));
             $this->info('=====================');
 
             if (! $this->confirm('Continue with reminder processing?', true)) {
@@ -119,17 +119,17 @@ class CourseReminderCommand extends Command
     {
         // Get current time once to ensure consistency in comparisons
         $now = Carbon::now();
-        $thirtyDaysAgo = $now->copy()->subDays(30);
+        $fifteenDaysAgo = $now->copy()->subDays(15);
 
         if ($debugEnabled) {
             $this->info("User: {$user->name} ({$user->email})");
             $this->info('Last reminder sent: '.($user->last_sent_course_reminder ? $user->last_sent_course_reminder->format('Y-m-d H:i:s') : 'Never'));
-            $this->info('30 days ago: '.$thirtyDaysAgo->format('Y-m-d H:i:s'));
+            $this->info('15 days ago: '.$fifteenDaysAgo->format('Y-m-d H:i:s'));
         }
 
-        // Check if user has never received a reminder or if the last reminder was sent > 30 days ago
+        // Check if user has never received a reminder or if the last reminder was sent > 15 days ago
         $shouldSendReminder = is_null($user->last_sent_course_reminder) ||
-                             $user->last_sent_course_reminder->lt($thirtyDaysAgo);
+                             $user->last_sent_course_reminder->lt($fifteenDaysAgo);
 
         if ($debugEnabled) {
             $this->info('Should send reminder? '.($shouldSendReminder ? 'Yes' : 'No'));
