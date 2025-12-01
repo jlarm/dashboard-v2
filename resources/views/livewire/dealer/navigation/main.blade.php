@@ -212,7 +212,7 @@
     @endcan
     <!-- DOCS -->
     @can('create-users')
-        @if (request()->segment(1) === 'stores' || !tenant('locations'))
+{{--        @if (request()->segment(1) === 'stores' || !tenant('locations'))--}}
         <div class="px-3 mb-1.5">
             <a
                 href="{{ $currentStore ? route('dealer.stores.doc.index', $currentStore) : route('dealer.doc.index') }}"
@@ -224,7 +224,7 @@
                 Documents
             </a>
         </div>
-        @endif
+{{--        @endif--}}
         <div class="px-3 mb-1.5">
             <a
                 href="{{ global_asset('docs/osha-300.pdf') }}"
