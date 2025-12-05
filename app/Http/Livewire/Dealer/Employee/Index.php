@@ -29,7 +29,8 @@ class Index extends Component
     public string $sortField = 'name';
     public string $sortDirection = 'asc';
     public User $currentUser;
-    public $queryString = [
+
+    protected $queryString = [
         'search' => ['except' => '', 'as' => 's'],
         'selectedDepartment' => ['except' => null, 'as' => 'd'],
         'selectedRole' => ['except' => null, 'as' => 'r'],
@@ -55,7 +56,6 @@ class Index extends Component
                 'roles',
                 'department:id,name',
                 'stores:id,name,state',
-                'courses:id',
                 'results' => function ($query) {
                     $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1);

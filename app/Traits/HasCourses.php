@@ -78,7 +78,9 @@ trait HasCourses
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Course::class);
+        return $this->belongsToMany(Course::class)
+            ->withPivot(['type', 'assigned_by'])
+            ->using(\App\Models\CourseUser::class);
     }
 
     public function results(): HasMany
@@ -93,51 +95,8 @@ trait HasCourses
                 $this->load('roles');
             }
 
-            $userRoles = $this->roles->pluck('id')->reject(fn ($id) => $id === 5);
-
-            if ($userRoles->isEmpty()) {
-                return [];
-            }
-
-            if ($this->relationLoaded('roles') && $this->roles->first()?->relationLoaded('courses')) {
-                $courseWithRole = $this->roles
-                    ->flatMap(fn ($role) => $role->courses)
-                    ->pluck('id')
-                    ->unique()
-                    ->toArray();
-            } else {
-                $courseWithRole = DB::table('course_role')
-                    ->whereIn('role_id', $userRoles)
-                    ->pluck('course_id')
-                    ->toArray();
-            }
-
-            // Check for specific roles using loaded collection
-            $hasManagerRole = $this->roles->contains('id', 10);
-            $hasEmployeeRole = $this->roles->contains('id', 9);
-            $hasNoCaliforniaStore = $this->userHasNoCaliforniaStore();
-
-            $this->userCourses = Course::query()
-                ->select('courses.id', 'courses.slug', 'courses.optional')
-                ->where('optional', false)
-                ->where(function ($query) use ($courseWithRole, $hasManagerRole, $hasEmployeeRole, $hasNoCaliforniaStore) {
-                    $query->where(function ($q) use ($courseWithRole) {
-                        $q->whereHas('departments', fn ($q) => $q->where('id', $this->department_id))
-                            ->whereIn('courses.id', $courseWithRole);
-                    })
-                        ->orWhere(function ($q) use ($hasManagerRole, $hasEmployeeRole, $hasNoCaliforniaStore) {
-                            $q->whereDoesntHave('departments')
-                                ->when($hasManagerRole, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-m'))
-                                ->when($hasEmployeeRole, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-e'))
-                                ->when($hasNoCaliforniaStore, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
-                        });
-                })
-                ->orWhere(function ($query) {
-                    $query->whereHas('users', fn ($q) => $q->where('users.id', $this->id))
-                        ->where('optional', false);
-                })
-                ->pluck('id')
-                ->toArray();
+            $service = app(\App\Services\UserCourseService::class);
+            $this->userCourses = $service->getCourseIds($this);
         }
 
         return $this->userCourses;

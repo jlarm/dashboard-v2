@@ -19,16 +19,16 @@
                   <span class="text-sm text-gray-800">
                     Department:
                   </span>
-                        <span class="inline-flex items-center gap-x-2 text-sm text-gray-500">
+                        <span class="inline-flex items-center gap-x-2 text-xs text-gray-500">
                     {{ $user->department->name ?? '' }}
                   </span>
                     </li>
 
                     <li class="relative before:hidden md:before:inline-block first:before:hidden first:before:ms-0 before:content-['•'] before:text-gray-800 before:me-1.5">
-                  <span class="text-sm text-gray-800">
+                  <span class="text-xs text-gray-800">
                     Role:
                   </span>
-                        <span class="inline-flex items-center gap-x-2 text-sm text-gray-500">
+                        <span class="inline-flex items-center gap-x-2 text-xs text-gray-500">
                     @foreach($roles as $role)
                                 {{ $role }}
                             @endforeach
@@ -100,7 +100,7 @@
                             :aria-selected="isSelected($el.id)"
                             :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                             class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                        >Additional Courses</button>
+                        >Manage Courses</button>
                         @endcan
                         <button
                             :id="$id('tab', whichChild($el, $el.parentElement))"
@@ -144,6 +144,7 @@
                     </section>
                     @can('create-dealerships')
                     <section
+                        x-cloak
                         x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
                         :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
                         role="tabpanel"
@@ -157,6 +158,7 @@
                     </section>
                     @endcan
                     <section
+                        x-cloak
                         x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
                         :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
                         role="tabpanel"
@@ -168,6 +170,7 @@
                         </div>
                     </section>
                     <section
+                        x-cloak
                         x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
                         :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
                         role="tabpanel"
