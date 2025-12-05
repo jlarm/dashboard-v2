@@ -17,6 +17,19 @@ class UserCourseService
      */
     public function getCourseIds(User $user): array
     {
+        // Admin roles should never be assigned courses automatically
+        $adminRoles = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
+        $userRoleNames = $user->roles->pluck('name')->toArray();
+        $hasOnlyAdminRoles = ! empty($userRoleNames) && empty(array_diff($userRoleNames, $adminRoles));
+
+        if ($hasOnlyAdminRoles) {
+            // Admin users only get manually added courses
+            return $user->courseOverrides()
+                ->where('type', 'add')
+                ->pluck('course_id')
+                ->toArray();
+        }
+
         // Get courses explicitly excluded for this user
         $excludedCourseIds = $user->courseOverrides()
             ->where('type', 'exclude')
@@ -29,8 +42,10 @@ class UserCourseService
             ->pluck('course_id')
             ->toArray();
 
-        // Get user role IDs (excluding role 5)
-        $userRoleIds = $user->roles->pluck('id')->reject(fn ($id) => $id === 5);
+        // Get user role IDs (excluding role 5 and admin roles)
+        $userRoleIds = $user->roles
+            ->reject(fn ($role) => $role->id === 5 || in_array($role->name, $adminRoles))
+            ->pluck('id');
 
         if ($userRoleIds->isEmpty()) {
             return [];
@@ -42,23 +57,30 @@ class UserCourseService
             ->pluck('course_id')
             ->toArray();
 
-        // Check for specific roles
-        $hasManagerRole = $user->roles->contains('id', 10);
-        $hasEmployeeRole = $user->roles->contains('id', 9);
+        // Check for specific roles by name (not hard-coded IDs)
+        $hasManagerRole = $user->hasRole('Manager');
+        $hasEmployeeRole = $user->hasRole('Employee');
         $hasNoCaliforniaStore = $this->userHasNoCaliforniaStore($user);
 
         // Get base courses from department and role
         $baseCourseIds = Course::query()
             ->where('optional', false)
-            ->where(function ($query) use ($user, $courseWithRole, $hasManagerRole, $hasEmployeeRole, $hasNoCaliforniaStore) {
+            ->where(function ($query) use ($user, $courseWithRole, $hasNoCaliforniaStore) {
+                // Branch 1: Courses with specific departments (must have matching role)
                 $query->where(function ($q) use ($user, $courseWithRole) {
                     $q->whereHas('departments', fn ($q) => $q->where('id', $user->department_id))
                         ->whereIn('id', $courseWithRole);
                 })
-                    ->orWhere(function ($q) use ($hasManagerRole, $hasEmployeeRole, $hasNoCaliforniaStore) {
+                    // Branch 2: Courses without departments
+                    ->orWhere(function ($q) use ($courseWithRole, $hasNoCaliforniaStore) {
                         $q->whereDoesntHave('departments')
-                            ->when($hasManagerRole, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-m'))
-                            ->when($hasEmployeeRole, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-e'))
+                            ->where(function ($subQuery) use ($courseWithRole) {
+                                // Either has a role requirement AND user has that role
+                                $subQuery->whereIn('id', $courseWithRole)
+                                    // OR has no role requirement (universal course for everyone)
+                                    ->orWhereDoesntHave('roles');
+                            })
+                            // Only exclude California-specific course for users without California stores
                             ->when($hasNoCaliforniaStore, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
                     });
             })
