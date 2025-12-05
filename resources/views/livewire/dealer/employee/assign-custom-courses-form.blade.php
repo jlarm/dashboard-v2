@@ -16,9 +16,9 @@
                 </div>
                 <div class="col-span-2">
                     @if(in_array($course->id, $defaultCourseIds))
-                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-500">Optional</span>
-                    @else
                         <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700">Required</span>
+                    @else
+                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-500">Optional</span>
                     @endif
                 </div>
                 <div class="col-span-3 flex justify-end">

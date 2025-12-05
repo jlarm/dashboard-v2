@@ -23,12 +23,14 @@ class Course extends Model
         'name',
         'slides',
         'questions',
+        'optional',
         'years_expires',
         'video_id',
     ];
     protected $casts = [
         'slides' => 'array',
         'questions' => 'array',
+        'optional' => 'boolean',
     ];
 
     public function users(): BelongsToMany
