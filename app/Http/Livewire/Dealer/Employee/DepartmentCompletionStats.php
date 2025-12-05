@@ -6,11 +6,12 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
-use DB;
+use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
-use stdClass;
 
 class DepartmentCompletionStats extends Component
 {
@@ -28,10 +29,20 @@ class DepartmentCompletionStats extends Component
     public ?Store $store = null;
     public bool $readyToLoad = false;
     public array $stats = [];
+    protected $listeners = ['refreshEmployeeDetails' => 'clearCacheAndRefresh'];
 
     public function loadStats(): void
     {
         $this->readyToLoad = true;
+    }
+
+    public function clearCacheAndRefresh(): void
+    {
+        $this->clearAllCachesForTenantAndStore();
+
+        if ($this->readyToLoad) {
+            $this->stats = $this->calculateAllStats();
+        }
     }
 
     public function render(): View
@@ -43,6 +54,39 @@ class DepartmentCompletionStats extends Component
         return view('livewire.dealer.employee.department-completion-stats', [
             'departments' => self::DEPARTMENTS,
         ]);
+    }
+
+    protected function clearAllCachesForTenantAndStore(): void
+    {
+        $tenantId = tenant('id') ?? 'no-tenant';
+        $storeIds = [];
+
+        try {
+            if ($this->store !== null) {
+                $storeIds[] = $this->store->id;
+            } else {
+                $storeIds = Store::pluck('id')->toArray();
+            }
+        } catch (Exception $e) {
+            $storeIds = [];
+        }
+
+        foreach ($storeIds as $storeId) {
+            Cache::forget("department_completion_stats_{$storeId}_{$tenantId}");
+        }
+
+        Cache::forget("department_completion_stats_all_{$tenantId}_admin");
+
+        try {
+            $allUsers = User::with('stores')->get();
+            foreach ($allUsers as $user) {
+                if (! $user->hasAnyRole(['super-admin', 'Consultant'])) {
+                    $userStoreIds = $user->stores->pluck('id')->sort()->implode('_');
+                    Cache::forget("department_completion_stats_all_{$tenantId}_user_{$userStoreIds}");
+                }
+            }
+        } catch (Exception $e) {
+        }
     }
 
     protected function calculateAllStats(): array
@@ -65,18 +109,29 @@ class DepartmentCompletionStats extends Component
     {
         $query = $this->buildBaseQuery();
 
-        // Filter by department if specified
         if ($departmentId !== null) {
             $query->where('department_id', $departmentId);
         }
 
-        // Filter out role ID 5
         $query->whereHas('roles', function ($q) {
             $q->where('id', '!=', 5);
         });
 
-        // Get total user count efficiently
-        $totalUsers = $query->count();
+        $userIds = $query->pluck('id');
+
+        if ($userIds->isEmpty()) {
+            return [
+                'name' => $name,
+                'total' => 0,
+                'incomplete' => 0,
+                'percentage' => 0,
+            ];
+        }
+
+        $statsData = $this->getCompletionStats($userIds);
+
+        $totalUsers = $statsData['total'];
+        $completedUsers = $statsData['completed'];
 
         if ($totalUsers === 0) {
             return [
@@ -87,11 +142,8 @@ class DepartmentCompletionStats extends Component
             ];
         }
 
-        // Calculate completed users using a database subquery
-        $completedUsers = $this->countCompletedUsers($query, $departmentId);
-
         $incompleteUsers = $totalUsers - $completedUsers;
-        $percentage = $totalUsers === 0 ? 0 : round(($completedUsers / $totalUsers) * 100);
+        $percentage = round(($completedUsers / $totalUsers) * 100);
 
         return [
             'name' => $name,
@@ -101,90 +153,66 @@ class DepartmentCompletionStats extends Component
         ];
     }
 
-    protected function countCompletedUsers($query, ?int $departmentId): int
+    protected function getCompletionStats(Collection $userIds): array
     {
-        $completedQuery = clone $query;
+        if ($userIds->isEmpty()) {
+            return ['total' => 0, 'completed' => 0];
+        }
 
-        $completedCount = 0;
+        $oneYearAgo = now()->subYear();
+        $threeYearsAgo = now()->subYears(3);
 
-        $roleCoursesMap = $this->preloadRoleCourses();
-
-        $completedQuery->select('id', 'department_id')
+        $users = User::query()
+            ->whereIn('id', $userIds)
             ->with([
                 'roles:id',
                 'stores:id,state',
-                'results' => function ($q) {
+                'results' => function ($q) use ($oneYearAgo, $threeYearsAgo) {
                     $q->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1)
-                        ->where(function ($query) {
-                            $query->where('created_at', '>=', now()->subYear())
-                                ->orWhere(function ($query) {
+                        ->where(function ($query) use ($oneYearAgo, $threeYearsAgo) {
+                            $query->where('created_at', '>=', $oneYearAgo)
+                                ->orWhere(function ($query) use ($threeYearsAgo) {
                                     $query->whereIn('course_id', [9, 10, 11, 12])
-                                        ->where('created_at', '>=', now()->subYears(3));
+                                        ->where('created_at', '>=', $threeYearsAgo);
                                 });
                         })
                         ->whereNull('deleted_at');
                 },
             ])
-            ->chunk(50, function ($users) use (&$completedCount, $roleCoursesMap) {
-                foreach ($users as $user) {
-                    foreach ($user->roles as $role) {
-                        if (isset($roleCoursesMap[$role->id])) {
-                            $role->setRelation('courses', $roleCoursesMap[$role->id]);
-                        }
-                    }
-
-                    if (! $user->user_has_not_completed_courses) {
-                        $completedCount++;
-                    }
-                }
-            });
-
-        return $completedCount;
-    }
-
-    protected function preloadRoleCourses(): array
-    {
-        $allRoleCourses = DB::table('course_role')
-            ->join('courses', 'courses.id', '=', 'course_role.course_id')
-            ->select('course_role.role_id', 'courses.id')
             ->get();
 
-        $roleCoursesMap = [];
-        foreach ($allRoleCourses as $roleCourse) {
-            if (! isset($roleCoursesMap[$roleCourse->role_id])) {
-                $roleCoursesMap[$roleCourse->role_id] = collect();
+        $totalCount = 0;
+        $completedCount = 0;
+
+        foreach ($users as $user) {
+            if ($user->total_user_courses === 0) {
+                continue;
             }
-            $course = new stdClass();
-            $course->id = $roleCourse->id;
-            $roleCoursesMap[$roleCourse->role_id]->push($course);
+
+            $totalCount++;
+
+            if (! $user->user_has_not_completed_courses) {
+                $completedCount++;
+            }
         }
 
-        return $roleCoursesMap;
+        return ['total' => $totalCount, 'completed' => $completedCount];
     }
 
-    protected function buildBaseQuery()
+    protected function buildBaseQuery(): Builder
     {
-        $query = null;
+        $query = User::query();
 
-        // If a specific store is selected
         if ($this->store !== null) {
-            $query = User::query()
-                ->whereHas('stores', function ($q) {
-                    $q->where('stores.id', $this->store->id);
-                });
-        } elseif (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
-            // If the user is a super-admin or consultant
-            $query = User::query();
-        } elseif (! tenant('locations')) {
-            $query = User::query();
-        } else {
-            // If the user is not a super-admin or consultant
+            $query->whereHas('stores', function ($q) {
+                $q->where('stores.id', $this->store->id);
+            });
+        } elseif (! auth()->user()->hasAnyRole(['super-admin', 'Consultant']) && tenant('locations')) {
             $currentUser = auth()->user();
-            $query = User::query()
-                ->whereHas('stores', function ($q) use ($currentUser) {
-                    $q->whereIn('stores.id', $currentUser->stores->pluck('id'));
-                });
+            $query->whereHas('stores', function ($q) use ($currentUser) {
+                $q->whereIn('stores.id', $currentUser->stores->pluck('id'));
+            });
         }
 
         return $query->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer']);
@@ -192,10 +220,19 @@ class DepartmentCompletionStats extends Component
 
     protected function getCacheKey(): string
     {
-        $userId = auth()->id();
         $storeId = $this->store?->id ?? 'all';
-        $isSuperAdmin = auth()->user()->hasAnyRole(['super-admin', 'Consultant']) ? 'admin' : 'user';
+        $tenantId = tenant('id') ?? 'no-tenant';
 
-        return "department_completion_stats_{$userId}_{$storeId}_{$isSuperAdmin}";
+        if ($storeId !== 'all') {
+            return "department_completion_stats_{$storeId}_{$tenantId}";
+        }
+
+        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+            return "department_completion_stats_all_{$tenantId}_admin";
+        }
+
+        $userStoreIds = auth()->user()->stores->pluck('id')->sort()->implode('_');
+
+        return "department_completion_stats_all_{$tenantId}_user_{$userStoreIds}";
     }
 }

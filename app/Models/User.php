@@ -237,6 +237,42 @@ class User extends Authenticatable
         return $initials;
     }
 
+    public function courseOverrides(): HasMany
+    {
+        return $this->hasMany(CourseUser::class, 'user_id');
+    }
+
+    public function getCurrentCoursesAttribute()
+    {
+        $service = app(\App\Services\UserCourseService::class);
+        $courses = $service->getCoursesSimple($this);
+
+        return $courses->map(function ($course) {
+            return [
+                'id' => $course->id,
+                'name' => $course->name,
+            ];
+        });
+    }
+
+    private function calculateCourseStatus(Dealer\Course $course): string
+    {
+        $lastPass = $course->results->firstWhere('passed', 1);
+
+        if (! $lastPass) {
+            return 'due';
+        }
+
+        if ($course->years_expires) {
+            $expiry = $lastPass->created_at->addYears($course->years_expires);
+            if (now()->greaterThan($expiry)) {
+                return 'expired';
+            }
+        }
+
+        return 'valid';
+    }
+
     /**
      * Used in HasCourses trait
      *

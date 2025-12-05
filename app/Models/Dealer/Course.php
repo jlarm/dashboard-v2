@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Dealer;
 
 use App\Models\User;
@@ -10,11 +12,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Traits\HasRoles;
 
 class Course extends Model
 {
-    use HasRoles, LogsActivity;
+    use LogsActivity;
 
     protected $fillable = [
         'department_id',
@@ -52,7 +53,7 @@ class Course extends Model
 
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'course_role');
     }
 
     public function getActivitylogOptions(): LogOptions
