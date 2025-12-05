@@ -9,6 +9,7 @@ use App\Models\Dealer\Department;
 use App\Models\User;
 use App\Services\UserCourseService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class AuditFinanceManagerCoursesCommand extends Command
@@ -22,11 +23,6 @@ class AuditFinanceManagerCoursesCommand extends Command
         $this->info('Starting Finance Manager course audit...');
         $this->newLine();
 
-        // Get expected courses for Finance Manager role
-        $expectedCourseIds = $this->getExpectedFinanceManagerCourses();
-        $this->info('Expected courses for Finance Manager: ' . count($expectedCourseIds));
-        $this->newLine();
-
         $stats = [
             'tenants_checked' => 0,
             'users_checked' => 0,
@@ -34,7 +30,7 @@ class AuditFinanceManagerCoursesCommand extends Command
             'users_fixed' => 0,
         ];
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseService, $expectedCourseIds, &$stats) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseService, &$stats) {
             $this->info("Checking tenant: {$tenant->name} (ID: {$tenant->id})");
 
             $stats['tenants_checked']++;
@@ -55,6 +51,9 @@ class AuditFinanceManagerCoursesCommand extends Command
 
                 // Get actual assigned courses
                 $actualCourseIds = $courseService->getCourseIds($user);
+
+                // Get expected courses for THIS specific user (considering CA stores)
+                $expectedCourseIds = $this->getExpectedFinanceManagerCourses($user);
 
                 // Check for discrepancies
                 $missing = array_diff($expectedCourseIds, $actualCourseIds);
@@ -119,31 +118,42 @@ class AuditFinanceManagerCoursesCommand extends Command
         }
     }
 
-    private function getExpectedFinanceManagerCourses(): array
+    private function getExpectedFinanceManagerCourses(User $user): array
     {
-        $financeDeptId = Department::where('name', 'Finance')->first()->id;
+        $financeDeptId = $user->department_id;
         $managerRoleId = Role::where('name', 'Manager')->first()->id;
 
+        // Get courses associated with Manager role
+        $courseWithRole = DB::table('course_role')
+            ->where('role_id', $managerRoleId)
+            ->pluck('course_id')
+            ->toArray();
+
+        // Check if user has California stores
+        $hasNoCaliforniaStore = !$user->stores()->where('state', 'California')->exists();
+
+        // Use the EXACT same logic as UserCourseService
         return Course::query()
             ->where('optional', false)
-            ->where(function ($query) use ($financeDeptId, $managerRoleId) {
-                // Courses with Finance dept AND Manager role
-                $query->where(function ($q) use ($financeDeptId, $managerRoleId) {
+            ->where(function ($query) use ($financeDeptId, $courseWithRole, $hasNoCaliforniaStore) {
+                // Branch 1: Courses with specific departments (must have matching role)
+                $query->where(function ($q) use ($financeDeptId, $courseWithRole) {
                     $q->whereHas('departments', fn ($q) => $q->where('id', $financeDeptId))
-                        ->whereHas('roles', fn ($q) => $q->where('id', $managerRoleId));
+                        ->whereIn('id', $courseWithRole);
                 })
-                // OR courses without departments that have Manager role
-                ->orWhere(function ($q) use ($managerRoleId) {
+                // Branch 2: Courses without departments
+                ->orWhere(function ($q) use ($courseWithRole, $hasNoCaliforniaStore) {
                     $q->whereDoesntHave('departments')
-                        ->whereHas('roles', fn ($q) => $q->where('id', $managerRoleId));
-                })
-                // OR universal courses (no dept, no role)
-                ->orWhere(function ($q) {
-                    $q->whereDoesntHave('departments')
-                        ->whereDoesntHave('roles');
+                        ->where(function ($subQuery) use ($courseWithRole) {
+                            // Either has a role requirement AND user has that role
+                            $subQuery->whereIn('id', $courseWithRole)
+                                // OR has no role requirement (universal course for everyone)
+                                ->orWhereDoesntHave('roles');
+                        })
+                        // Only exclude California-specific course for users without California stores
+                        ->when($hasNoCaliforniaStore, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
                 });
             })
-            ->where('slug', '!=', 'sexual-harassment-training-in-california') // Exclude CA-specific
             ->pluck('id')
             ->toArray();
     }
