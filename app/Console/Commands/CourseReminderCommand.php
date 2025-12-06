@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\Dealer\Store;
@@ -77,7 +79,8 @@ class CourseReminderCommand extends Command
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })
-                ->select('users.id', 'users.name', 'users.email', 'users.created_at', 'users.last_sent_course_reminder')
+                ->with('roles', 'stores')
+                ->select('users.id', 'users.name', 'users.email', 'users.created_at', 'users.last_sent_course_reminder', 'users.department_id')
                 ->get();
 
             $this->info('Found '.$users->count()." users for store {$store->name}");
@@ -105,7 +108,8 @@ class CourseReminderCommand extends Command
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
             })
-            ->select('id', 'name', 'email', 'created_at', 'last_sent_course_reminder')
+            ->with('roles', 'stores')
+            ->select('id', 'name', 'email', 'created_at', 'last_sent_course_reminder', 'department_id')
             ->get()
             ->each(function ($user) use ($tenant, $debugEnabled, $isTestMode) {
                 $this->processUser($user, $tenant, $debugEnabled, $isTestMode);
