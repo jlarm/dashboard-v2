@@ -68,6 +68,9 @@ abstract class TenantTestCase extends TestCase
                 '--realpath' => false,
             ]);
 
+            // Seed roles and permissions in tenant database
+            $this->seedRolesAndPermissions();
+
             // Create a test store (required by many tenant routes)
             Store::create([
                 'name' => 'Test Store',

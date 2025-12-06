@@ -156,14 +156,16 @@ Route::name('dealer.')->middleware([
 
         Route::get('phishing/create', App\Http\Livewire\Dealer\Phish\Create::class)->name('phishing.create');
 
-        Route::get('logs', App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
-        Route::get('logs/{activity:id}', App\Http\Livewire\Dealer\Log\Show::class)->name('logs.show');
-
         Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
 
         Route::get('cyrisma', App\Http\Livewire\Tenant\Scans\Index::class)->name('cyrisma.index');
         Route::get('cyrisma/settings', [App\Http\Controllers\Tenant\CyrismaController::class, 'settings'])->name('cyrisma.settings');
 
+    });
+
+    Route::middleware(['auth', 'can:delete-stores'])->group(function () {
+        Route::get('logs', App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
+        Route::get('logs/{activity:id}', App\Http\Livewire\Dealer\Log\Show::class)->name('logs.show');
     });
 
     // **************************************************

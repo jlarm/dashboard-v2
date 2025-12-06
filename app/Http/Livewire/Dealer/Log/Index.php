@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Log;
 
 use Illuminate\View\View;
@@ -11,17 +13,19 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $selectedLog = null;
+    public ?Activity $selectedLog = null;
 
-    public function viewLogDetails($logId): void
+    public function viewLogDetails(int $logId): void
     {
-        $this->selectedLog = Activity::with('causer', 'subject')->find($logId);
+        $this->selectedLog = Activity::with('causer', 'subject')->findOrFail($logId);
+
         $this->dispatchBrowserEvent('open-log-modal');
     }
 
     public function closeModal(): void
     {
         $this->selectedLog = null;
+
         $this->dispatchBrowserEvent('close-log-modal');
     }
 
