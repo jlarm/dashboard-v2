@@ -1,25 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\User;
 use App\Notifications\CourseExpiredNotification;
 use App\Notifications\CourseExpiringSoonNotification;
-use App\Traits\HasCourses;
+use App\Services\UserCourseService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CourseExpiringEmailCommand extends Command
 {
-    use HasCourses;
-
     protected $signature = 'course:check-reminders {--tenants=* : The tenant(s) to run the command for. Default all.}';
     protected $description = 'Send notifications for courses expiring soon.';
+
+    public function __construct(public UserCourseService $userCourseService)
+    {
+        parent::__construct();
+    }
 
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            User::select(['id', 'name', 'email'])
+            User::select(['id', 'name', 'email', 'department_id'])
+                ->with('roles', 'stores')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get()
                 ->each(fn ($user) => $this->processUserResults($tenant, $user));
@@ -49,29 +55,20 @@ class CourseExpiringEmailCommand extends Command
         $fifteenDays = Carbon::now()->subYear()->subDays(15)->format('Y-m-d');
         $thirtyDays = Carbon::now()->subYear()->subDays(30)->format('Y-m-d');
 
-        $courseIds = $user->courses->pluck('id');
+        // Use UserCourseService to get the correct course IDs assigned to this user
+        $courseIds = $this->userCourseService->getCourseIds($user);
 
         $results = $user->results()
-            ->where('passed', 1)
-            ->where(function ($query) use ($lastYear, $fifteenDays, $thirtyDays) {
-                $query->whereDate('created_at', $lastYear)
-                    ->orWhereDate('created_at', $fifteenDays)
-                    ->orWhereDate('created_at', $thirtyDays);
-            })
-            ->get()
-            ->unique('course_id');
-
-        $additionalResults = $user->results()
             ->whereIn('course_id', $courseIds)
+            ->where('passed', 1)
             ->where(function ($query) use ($lastYear, $fifteenDays, $thirtyDays) {
                 $query->whereDate('created_at', $lastYear)
                     ->orWhereDate('created_at', $fifteenDays)
                     ->orWhereDate('created_at', $thirtyDays);
             })
-            ->where('passed', 1)
             ->get()
             ->unique('course_id');
 
-        return $results->merge($additionalResults)->unique('course_id');
+        return $results;
     }
 }

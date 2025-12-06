@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Models\Dealer\CourseUserNotificationSent;
 use App\Models\User;
 use App\Notifications\ExpiredCourseNotification;
+use App\Services\UserCourseService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -14,6 +15,11 @@ class EmployeeCourseReminderCommand extends Command
 {
     protected $signature = 'run:course-reminder  {--tenants=* : The tenant(s) to run the command for. Default all.}';
     protected $description = 'Reminder employee that course expires soon or expired.';
+
+    public function __construct(public UserCourseService $userCourseService)
+    {
+        parent::__construct();
+    }
 
     public function handle(): void
     {
@@ -23,7 +29,8 @@ class EmployeeCourseReminderCommand extends Command
 
             $this->deleteOutdatedNotifications();
 
-            User::select(['id', 'name', 'email'])
+            User::select(['id', 'name', 'email', 'department_id'])
+                ->with('roles', 'stores')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get()
                 ->each(fn ($user) => $this->processUserResults($user));
@@ -34,9 +41,13 @@ class EmployeeCourseReminderCommand extends Command
 
     private function processUserResults(User $user): void
     {
-        // Get all passed courses
+        // Use UserCourseService to get the correct course IDs assigned to this user
+        $assignedCourseIds = $this->userCourseService->getCourseIds($user);
+
+        // Get all passed courses that are still assigned to the user
         $results = $user->results()
             ->select('id', 'created_at', 'course_id')
+            ->whereIn('course_id', $assignedCourseIds)
             ->where('passed', 1)
             ->orderBy('id', 'desc')
             ->get()
