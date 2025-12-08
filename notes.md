@@ -18,3 +18,6 @@ public function mount(): void
 
 # Full import
 ```php artisan import:sds --update-duplicates```
+
+## Tests 
+- [ ] Logs page and livewire component
