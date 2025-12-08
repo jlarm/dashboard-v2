@@ -8,7 +8,6 @@ use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\DB;
 
 trait HasCourses
 {
@@ -79,8 +78,7 @@ trait HasCourses
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class)
-            ->withPivot(['type', 'assigned_by'])
-            ->using(\App\Models\CourseUser::class);
+            ->withPivot(['type', 'assigned_by']);
     }
 
     public function results(): HasMany
