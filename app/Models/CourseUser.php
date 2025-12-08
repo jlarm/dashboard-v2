@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CourseUser extends Pivot
 {
-    public $incrementing = true;
+    public $incrementing = false;
     protected $table = 'course_user';
     protected $fillable = ['user_id', 'course_id', 'type', 'assigned_by'];
 }
