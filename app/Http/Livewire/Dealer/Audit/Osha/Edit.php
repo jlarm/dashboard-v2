@@ -36,7 +36,7 @@ class Edit extends Component
         'violations.*.comment' => 'required',
         'violations.*.violation_date' => 'nullable|date',
         'violations.*.risk' => 'nullable|boolean',
-        'violationFiles.*.*' => 'nullable|mimes:jpg,jpeg|max:5120',
+        'violationFiles.*.*' => 'nullable|mimes:jpg,jpeg,png,heic,heif,webp|max:15360',
     ];
 
     public function mount(): void
@@ -113,7 +113,7 @@ class Edit extends Component
             $errorMessage = 'All violations must have a comment';
 
             if (mb_strpos($e->getMessage(), 'validation.max.file') !== false) {
-                $errorMessage = 'One or more files exceeded the 5MB size limit';
+                $errorMessage = 'One or more files exceeded the 15MB size limit';
             }
 
             Notification::make()
