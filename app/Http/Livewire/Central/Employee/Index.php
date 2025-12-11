@@ -24,7 +24,7 @@ class Index extends Component
         return User::query()
             ->search('name', $this->search)
             ->orderBy('name')
-            ->with(['roles', 'courses'])
+            ->with(['roles'])
             ->paginate(20);
     }
 }
