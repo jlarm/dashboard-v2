@@ -5,12 +5,14 @@ namespace App\Models\Dealer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Vendor extends Model
 {
     use LogsActivity;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -77,5 +79,16 @@ class Vendor extends Model
     public function forms(): HasMany
     {
         return $this->hasMany(VendorForm::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Vendor $vendor) {
+            if ($vendor->isForceDeleting()) {
+                $vendor->forms()->forceDelete();
+            } else {
+                $vendor->forms()->delete();
+            }
+        });
     }
 }

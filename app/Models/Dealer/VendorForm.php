@@ -4,9 +4,12 @@ namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VendorForm extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'vendor_id',
         'name',
