@@ -20,11 +20,13 @@ class Delete extends Modal
     public function delete()
     {
         try {
+            $vendorId = $this->vendor->id;
             $this->vendor->delete();
 
             $this->close();
 
             $this->emit('refreshVendors');
+            $this->emit('vendorDeleted', $vendorId);
 
             Notification::make()
                 ->title('Vendor Deleted Successfully')

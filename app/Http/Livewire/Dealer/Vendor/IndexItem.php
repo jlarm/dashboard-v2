@@ -12,7 +12,6 @@ class IndexItem extends Component
     public $noCount;
     public $totalQuestions = 0;
     public $array = [];
-    protected $listeners = ['refreshVendors' => '$refresh'];
 
     public function mount()
     {

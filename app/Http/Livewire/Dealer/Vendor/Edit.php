@@ -16,7 +16,10 @@ class Edit extends SlideOver
     public $vendor;
     public string $name = '';
     public string $email = '';
-    protected $listeners = ['refreshVendorForms' => '$refresh'];
+    protected $listeners = [
+        'refreshVendorForms' => '$refresh',
+        'vendorDeleted' => 'handleVendorDeleted',
+    ];
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|email',
@@ -44,6 +47,13 @@ class Edit extends SlideOver
             ->title('Email Successfully Sent!')
             ->success()
             ->send();
+    }
+
+    public function handleVendorDeleted($vendorId): void
+    {
+        if ($this->vendor->id === $vendorId) {
+            $this->close();
+        }
     }
 
     public function render()

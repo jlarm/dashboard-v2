@@ -6,7 +6,8 @@
         @endif
     </x-slot>
 
-    <div class="border-t border-gray-200 p-3">
+    <div class="flex flex-col h-full">
+    <div class="border-t border-gray-200 p-3 flex-1 overflow-y-auto">
         <div class="mb-10 bg-gray-100 p-4 rounded-xl">
             <p class="text-sm text-gray-700 mb-2">Send new request</p>
             <form>
@@ -196,7 +197,14 @@
         <!-- End List Group -->
     </div>
 
-    <x-slot name="buttons">
-
-    </x-slot>
+    <div class="border-t border-gray-200 p-3 mt-auto">
+        <button
+            type="button"
+            wire:click="$emit('modal.open', 'dealer.vendor.delete', {{ json_encode(['vendor' => $vendor->id]) }})"
+            class="w-full py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-red-600 text-red-600 hover:bg-red-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-red-300"
+        >
+            Delete
+        </button>
+    </div>
+    </div>
 </x-wire-elements-pro::tailwind.slide-over>
