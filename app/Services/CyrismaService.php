@@ -233,6 +233,15 @@ class CyrismaService
         );
     }
 
+    public function getOpenPorts(?string $cveId = null)
+    {
+        $scanId = $this->getStoreReport('scans/vulnerability');
+        $scanId = $scanId['vulnerability_scans'][0]['scan_id'] ?? null;
+        $scanId = $this->getStoreReport('scans/vulnerability/'.$scanId);
+
+        return $scanId['assets'][0]['openPorts'];
+    }
+
     public function getStoreReport(string $endpoint, array $params = []): ?array
     {
         if (! $this->store || ! $this->store->cyrisma) {
