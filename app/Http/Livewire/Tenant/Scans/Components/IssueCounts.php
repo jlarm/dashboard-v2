@@ -11,7 +11,6 @@ use Livewire\Component;
 class IssueCounts extends Component
 {
     public array $details = [];
-
     protected CyrismaService $cyrisma;
 
     public function mount(CyrismaService $cyrisma): void

@@ -14,7 +14,7 @@ class CveList extends Component
 {
     public array $cveItems = [];
 
-    public int $perPage = 10;
+    public int $perPage = 5;
 
     public int $currentPage = 1;
 

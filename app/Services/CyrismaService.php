@@ -252,11 +252,21 @@ class CyrismaService
         try {
             $request = $this->authorizedRequest();
 
-            $response = empty($params)
-                ? $request->get($url)
-                : $request->asForm()->get($url, $params);
+            $response = $request->asForm()->get($url, $params);
 
-            return $response->successful() ? $response->json() : null;
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            Log::error('Cyrisma API request failed', [
+                'endpoint' => $endpoint,
+                'url' => $url,
+                'status' => $response->status(),
+                'body' => $response->body(),
+                'store_id' => $this->store->id,
+            ]);
+
+            return null;
         } catch (Exception $e) {
             Log::error('Failed to get Cyrisma store report', [
                 'message' => $e->getMessage(),
