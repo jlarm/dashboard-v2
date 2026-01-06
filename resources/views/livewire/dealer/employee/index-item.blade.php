@@ -1,4 +1,13 @@
 <tr class="even:bg-gray-50">
+    <td class="whitespace-nowrap py-2 px-3 text-sm text-gray-500">
+        <input
+            type="checkbox"
+            wire:click.prevent="$emitUp('toggleUserSelection', {{ $user->id }})"
+            value="{{ $user->id }}"
+            {{ in_array($user->id, $selectedUsers) ? 'checked' : '' }}
+            class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600 cursor-pointer"
+        />
+    </td>
     <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500">
         {{ Str::headline($user->name) }}
     </td>

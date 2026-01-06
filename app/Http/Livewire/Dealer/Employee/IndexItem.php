@@ -9,6 +9,8 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public User $user;
+    public bool $showIncompleteCourseUsers = false;
+    public array $selectedUsers = [];
 
     public function render(): View
     {
