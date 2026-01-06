@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use App\Models\Dealer\VendorForm;
@@ -37,7 +39,11 @@ class VendorFormNotification extends Notification
             ->action('Click Here', url($url))
             ->line('If you have any questions, please contact '.$user->name.' at '.$user->email)
             ->line('Thank you for your time!')
-            ->salutation(tenant('name'));
+            ->salutation(tenant('name'))
+            ->withSymfonyMessage(function ($message) {
+                $message->getHeaders()->addTextHeader('X-Vendor-Notification', 'true');
+                $message->getHeaders()->addTextHeader('X-Vendor-ID', (string) $this->vendor->id);
+            });
     }
 
     public function toArray($notifiable): array

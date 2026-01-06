@@ -17,6 +17,8 @@ use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
 use Database\Seeders\RoleAndPermissionSeeder;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Tests\TenantTestCase;
 use Tests\TestCase;
 
