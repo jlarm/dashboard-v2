@@ -30,6 +30,11 @@ class Index extends Component
     public string $sortField = 'name';
     public string $sortDirection = 'asc';
     public User $currentUser;
+    public array $selectedUsers = [];
+    public bool $selectAll = false;
+
+    protected $listeners = ['toggleUserSelection'];
+
     public $queryString = [
         'search' => ['except' => '', 'as' => 's'],
         'selectedDepartment' => ['except' => null, 'as' => 'd'],
@@ -79,6 +84,7 @@ class Index extends Component
     public function updatingSearch(): void
     {
         $this->resetPage();
+        $this->clearSelections();
     }
 
     public function resetShowIncompleteCourseUsers(): void
@@ -89,6 +95,7 @@ class Index extends Component
     public function updatingShowIncompleteCourseUsers(): void
     {
         $this->resetPage();
+        $this->clearSelections();
     }
 
     public function resetSelectedDepartment(): void
@@ -99,23 +106,80 @@ class Index extends Component
     public function updatingSelectedDepartment(): void
     {
         $this->resetPage();
+        $this->clearSelections();
     }
 
     public function updatingSelectedRole(): void
     {
         $this->resetPage();
+        $this->clearSelections();
     }
 
     public function resetFilters(): void
     {
         $this->reset(['search', 'showIncompleteCourseUsers', 'selectedDepartment', 'selectedRole']);
         $this->resetPage();
+        $this->clearSelections();
     }
 
     public function resetSelectedRole(): void
     {
         $this->selectedRole = null;
         $this->resetPage();
+    }
+
+    public function clearSelections(): void
+    {
+        $this->selectedUsers = [];
+        $this->selectAll = false;
+    }
+
+    public function toggleSelectAll(): void
+    {
+        // Toggle the selectAll state first
+        $this->selectAll = !$this->selectAll;
+
+        $query = $this->usersQuery;
+        $users = $this->showIncompleteCourseUsers
+            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
+            : $query->get();
+
+        if ($this->selectAll) {
+            // Select all users
+            $this->selectedUsers = $users->pluck('id')->toArray();
+        } else {
+            // Deselect all users
+            $this->selectedUsers = [];
+        }
+    }
+
+    public function toggleUserSelection(int $userId): void
+    {
+        if (in_array($userId, $this->selectedUsers, true)) {
+            // Remove from array
+            $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn($id) => $id !== $userId));
+        } else {
+            // Add to array
+            $this->selectedUsers[] = $userId;
+        }
+
+        // Update selectAll state
+        $query = $this->usersQuery;
+        $users = $this->showIncompleteCourseUsers
+            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
+            : $query->get();
+
+        $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
+    }
+
+    public function updatedSelectedUsers(): void
+    {
+        $query = $this->usersQuery;
+        $users = $this->showIncompleteCourseUsers
+            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
+            : $query->get();
+
+        $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
     }
 
     public function sortBy(string $field): void
@@ -128,6 +192,38 @@ class Index extends Component
         }
 
         $this->resetPage();
+    }
+
+    public function exportCsv()
+    {
+        if (empty($this->selectedUsers)) {
+            Notification::make()
+                ->title('No Users Selected')
+                ->body('Please select at least one user to export.')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        // Get all users from current query
+        $query = $this->usersQuery;
+        $users = $this->showIncompleteCourseUsers
+            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
+            : $query->get();
+
+        // Filter to only selected users
+        $selectedUsers = $users->filter(fn ($user) => in_array($user->id, $this->selectedUsers));
+
+        $csvContent = $this->generateExportCsvContent($selectedUsers);
+        $filename = 'employee-courses-report-'.date('m-d-Y').'.csv';
+
+        return response()->streamDownload(function () use ($csvContent): void {
+            echo $csvContent;
+        }, $filename, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'"',
+        ]);
     }
 
     public function generateCsv(): void
@@ -245,6 +341,21 @@ class Index extends Component
         }
     }
 
+    private function generateExportCsvContent(Collection $users): string
+    {
+        $csvContent = "Name,Store,Department,Completed Courses\n";
+        foreach ($users as $user) {
+            $name = $this->escapeCsvField($user->name);
+            $stores = $this->escapeCsvField($user->stores->pluck('name')->join(', '));
+            $department = $this->escapeCsvField($user->department?->name ?? 'N/A');
+            $courses = "{$user->total_completed_courses} of {$user->total_user_courses}";
+
+            $csvContent .= "{$name},{$stores},{$department},{$courses}\n";
+        }
+
+        return $csvContent;
+    }
+
     private function generateCsvContent(Collection $users): string
     {
         $csvContent = "Name,Email,Department,Courses\n";
@@ -255,6 +366,20 @@ class Index extends Component
         }
 
         return $csvContent;
+    }
+
+    private function escapeCsvField(?string $field): string
+    {
+        if ($field === null || $field === '') {
+            return '';
+        }
+
+        // If field contains comma, quote, or newline, wrap in quotes and escape quotes
+        if (str_contains($field, ',') || str_contains($field, '"') || str_contains($field, "\n")) {
+            return '"'.str_replace('"', '""', $field).'"';
+        }
+
+        return $field;
     }
 
     private function sendCsvEmail(string $csvContent): void
