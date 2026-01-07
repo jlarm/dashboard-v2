@@ -144,11 +144,23 @@ class MailgunWebhookController extends Controller
 
         // Check if signature data exists
         if (! $token || ! $timestamp || ! $signature) {
+            Log::warning('Mailgun webhook missing signature data', [
+                'has_token' => ! empty($token),
+                'has_timestamp' => ! empty($timestamp),
+                'has_signature' => ! empty($signature),
+            ]);
+
             return false;
         }
 
         // Verify timestamp is recent (within 15 minutes)
         if (abs(time() - $timestamp) > 900) {
+            Log::warning('Mailgun webhook timestamp expired', [
+                'timestamp' => $timestamp,
+                'current_time' => time(),
+                'age_seconds' => abs(time() - $timestamp),
+            ]);
+
             return false;
         }
 
@@ -163,6 +175,16 @@ class MailgunWebhookController extends Controller
 
         $expectedSignature = hash_hmac('sha256', $timestamp.$token, $signingKey);
 
-        return hash_equals($expectedSignature, $signature);
+        if (! hash_equals($expectedSignature, $signature)) {
+            Log::warning('Mailgun webhook signature mismatch', [
+                'expected' => $expectedSignature,
+                'received' => $signature,
+                'signing_key_length' => mb_strlen($signingKey),
+            ]);
+
+            return false;
+        }
+
+        return true;
     }
 }
