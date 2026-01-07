@@ -54,10 +54,13 @@ class LogSentMessage
             $data['mailgun_message'] = isset($event->data['message']) && is_string($event->data['message'])
                 ? $event->data['message']
                 : null;
+
+            // Use Mailgun's ID as the message_id for webhook matching
+            $data['message_id'] = $event->data['id'];
         }
 
-        // Try to get message ID from headers if available
-        if ($headers->has('Message-ID')) {
+        // Fallback: Try to get message ID from headers if Mailgun data not available
+        if (empty($data['message_id']) && $headers->has('Message-ID')) {
             $messageIdHeader = $headers->get('Message-ID');
             if ($messageIdHeader && method_exists($messageIdHeader, 'getBodyAsString')) {
                 $data['message_id'] = (string) $messageIdHeader->getBodyAsString();
