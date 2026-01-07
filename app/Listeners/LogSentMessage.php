@@ -64,6 +64,16 @@ class LogSentMessage
             }
         }
 
+        // Log if message_id is missing for debugging
+        if (empty($data['message_id'])) {
+            \Illuminate\Support\Facades\Log::warning('Vendor notification sent without message_id', [
+                'vendor_form_id' => $data['vendor_form_id'],
+                'to' => $data['to'],
+                'has_message_id_header' => $headers->has('Message-ID'),
+                'mailgun_data_available' => isset($event->data),
+            ]);
+        }
+
         VendorEmailLog::create($data);
     }
 }
