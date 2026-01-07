@@ -14,10 +14,16 @@ class MailgunWebhookController extends Controller
 {
     public function handle(Request $request): \Illuminate\Http\JsonResponse
     {
+        Log::info('Mailgun webhook received', [
+            'ip' => $request->ip(),
+            'event' => $request->input('event-data.event'),
+        ]);
+
         // Verify the webhook is from Mailgun
         if (! $this->verifyWebhook($request)) {
             Log::warning('Mailgun webhook verification failed', [
                 'ip' => $request->ip(),
+                'has_signature' => $request->has('signature'),
             ]);
 
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -27,7 +33,17 @@ class MailgunWebhookController extends Controller
         $event = $eventData['event'] ?? null;
         $messageId = $eventData['message']['headers']['message-id'] ?? null;
 
+        Log::info('Mailgun webhook verified', [
+            'event' => $event,
+            'message_id' => $messageId,
+        ]);
+
         if (! $event || ! $messageId) {
+            Log::warning('Mailgun webhook missing required data', [
+                'event' => $event,
+                'message_id' => $messageId,
+            ]);
+
             return response()->json(['error' => 'Invalid payload'], 400);
         }
 
@@ -48,8 +64,19 @@ class MailgunWebhookController extends Controller
 
         if (! $emailLog || ! $foundTenant) {
             // Log not found - might not be a vendor email
+            Log::info('Mailgun webhook - email log not found', [
+                'message_id' => $messageId,
+                'event' => $event,
+            ]);
+
             return response()->json(['message' => 'Email log not found'], 200);
         }
+
+        Log::info('Mailgun webhook - email log found', [
+            'email_log_id' => $emailLog->id,
+            'tenant_id' => $foundTenant->id,
+            'event' => $event,
+        ]);
 
         // Update the log within the tenant context
         $foundTenant->run(function () use ($emailLog, $event, $eventData) {
