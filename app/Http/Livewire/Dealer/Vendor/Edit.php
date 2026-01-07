@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Dealer\Vendor;
 use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
+use App\Models\Dealer\VendorForm;
 use Filament\Notifications\Notification;
+use Illuminate\View\View;
 use Livewire\WithPagination;
 use WireElements\Pro\Components\SlideOver\SlideOver;
 
@@ -25,7 +27,7 @@ class Edit extends SlideOver
         'email' => 'required|email',
     ];
 
-    public function mount(Vendor $vendor)
+    public function mount(Vendor $vendor): void
     {
         $this->vendor = $vendor;
     }
@@ -49,22 +51,22 @@ class Edit extends SlideOver
             ->send();
     }
 
-    public function handleVendorDeleted($vendorId): void
+    public function handleVendorDeleted(int $vendorId): void
     {
         if ($this->vendor->id === $vendorId) {
             $this->close();
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.vendor.edit', [
-            'forms' => $this->vendor->forms()->latest()->paginate(5),
+            'forms' => $this->vendor->forms()->latest()->with('emailLogs')->paginate(5),
             'stores' => Store::orderBy('name')->get(),
         ]);
     }
 
-    private function createVendorForm()
+    private function createVendorForm(): VendorForm
     {
         return $this->vendor->forms()->create([
             'name' => $this->name,
