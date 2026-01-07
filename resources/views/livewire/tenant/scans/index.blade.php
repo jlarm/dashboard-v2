@@ -2,6 +2,9 @@
     <x-slot:header>
         <x-slot:pageTitle>Scan Details</x-slot:pageTitle>
         <x-slot:actions>
+            @hasanyrole('super-admin|Consultant')
+            <x-button.primary :href="route('dealer.cyrisma.settings')">Settings</x-button.primary>
+            @endhasanyrole
             <button class="inline-flex items-center px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-semibold rounded-lg hover:bg-yellow-500">
                 Download report
                 <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
