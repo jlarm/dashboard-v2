@@ -47,7 +47,7 @@ class VendorFormNotification extends Notification
                 // Ensure Message-ID is set before sending
                 if (! $message->getHeaders()->has('Message-ID')) {
                     $domain = config('mail.from.address') ? explode('@', config('mail.from.address'))[1] : 'localhost';
-                    $messageId = sprintf('<%s.%s@%s>', uniqid('vendor', true), time(), $domain);
+                    $messageId = sprintf('%s.%s@%s', uniqid('vendor', true), time(), $domain);
                     $message->getHeaders()->addIdHeader('Message-ID', $messageId);
                 }
             });
