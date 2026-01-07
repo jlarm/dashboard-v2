@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Jobs\SendVendorEmailJob;
@@ -8,13 +10,10 @@ use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorForm;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
-use Livewire\WithPagination;
 use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class Edit extends SlideOver
 {
-    use WithPagination;
-
     public $vendor;
     public string $name = '';
     public string $email = '';
@@ -61,7 +60,7 @@ class Edit extends SlideOver
     public function render(): View
     {
         return view('livewire.dealer.vendor.edit', [
-            'forms' => $this->vendor->forms()->latest()->with('emailLogs')->paginate(5),
+            'forms' => $this->vendor->forms()->latest()->with('emailLogs')->take(12)->get(),
             'stores' => Store::orderBy('name')->get(),
         ]);
     }
