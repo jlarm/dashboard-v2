@@ -102,7 +102,30 @@
                     </div>
                 @endforeach
             </div>
+
+            @if($vendor->created_at < \Carbon\Carbon::create(2024, 06, 23, 0, 0, 0))
+                <div class="relative p-2 hover:bg-gray-50 rounded-lg transition">
+                    <div class="flex items-start justify-between cursor-pointer group">
+                        <div class="flex items-start gap-3">
+                            <div>
+                                <p class="text-sm font-bold text-gray-900 leading-none">{{ $vendor->contact_name }}</p>
+                                <p class="text-xs text-gray-500 mt-1">{{ $vendor->contact_email }}</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <p class="text-xs font-bold text-gray-900">{{ $vendor->created_at->format('M d, Y') }}</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="inline-block px-2 py-0.5 text-[10px] font-bold rounded uppercase {{ $vendor->signature ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">{{ $vendor->signature ? 'Completed' : 'Pending' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <livewire:dealer.vendor.old-download :vendor="$vendor" />
+                    </div>
+                </div>
+            @endif
         </div>
+        <!-- End List Group -->
 
         <div class="border-t border-gray-200 p-3 mt-auto">
             <button
