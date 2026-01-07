@@ -109,7 +109,7 @@
                         <div class="flex items-start gap-3">
                             <div>
                                 <p class="text-sm font-bold text-gray-900 leading-none">{{ $vendor->contact_name }}</p>
-                                <p class="text-xs text-gray-500 mt-1">{{ $vendor->contact_email }}</p>
+                                <p class="text-xs text-gray-500 mt-1">{{ Str::lower($vendor->contact_email) }}</p>
                             </div>
                         </div>
                         <div class="flex flex-col items-end">
@@ -119,9 +119,11 @@
                             </div>
                         </div>
                     </div>
+                    @if($vendor->signature)
                     <div class="mt-3">
                         <livewire:dealer.vendor.old-download :vendor="$vendor" />
                     </div>
+                    @endif
                 </div>
             @endif
         </div>
