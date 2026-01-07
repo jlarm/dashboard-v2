@@ -49,14 +49,24 @@ class LogSentMessage
 
         // If using Mailgun, the response data is available in $event->data
         // Only process if we have actual Mailgun response data (not the message object)
-        if (isset($event->data) && is_array($event->data) && isset($event->data['id']) && is_string($event->data['id'])) {
-            $data['mailgun_id'] = $event->data['id'];
-            $data['mailgun_message'] = isset($event->data['message']) && is_string($event->data['message'])
-                ? $event->data['message']
-                : null;
+        if (isset($event->data) && is_array($event->data)) {
+            // Debug logging to see what Mailgun returns
+            \Illuminate\Support\Facades\Log::info('Mailgun response data', [
+                'data_keys' => array_keys($event->data),
+                'has_id' => isset($event->data['id']),
+                'id_type' => isset($event->data['id']) ? gettype($event->data['id']) : null,
+                'id_value' => $event->data['id'] ?? null,
+            ]);
 
-            // Use Mailgun's ID as the message_id for webhook matching
-            $data['message_id'] = $event->data['id'];
+            if (isset($event->data['id']) && is_string($event->data['id'])) {
+                $data['mailgun_id'] = $event->data['id'];
+                $data['mailgun_message'] = isset($event->data['message']) && is_string($event->data['message'])
+                    ? $event->data['message']
+                    : null;
+
+                // Use Mailgun's ID as the message_id for webhook matching
+                $data['message_id'] = $event->data['id'];
+            }
         }
 
         // Fallback: Try to get message ID from headers if Mailgun data not available
