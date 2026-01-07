@@ -51,9 +51,15 @@ class MailgunWebhookController extends Controller
         $emailLog = null;
         $foundTenant = null;
 
+        // Normalize message_id - try both with and without angle brackets
+        $messageIdVariants = [
+            $messageId,
+            '<'.$messageId.'>',
+        ];
+
         foreach (Dealership::cursor() as $tenant) {
-            $tenant->run(function () use ($messageId, &$emailLog) {
-                $emailLog = VendorEmailLog::where('message_id', $messageId)->first();
+            $tenant->run(function () use ($messageIdVariants, &$emailLog) {
+                $emailLog = VendorEmailLog::whereIn('message_id', $messageIdVariants)->first();
             });
 
             if ($emailLog) {
