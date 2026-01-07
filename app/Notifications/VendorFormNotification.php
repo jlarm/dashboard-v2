@@ -43,6 +43,13 @@ class VendorFormNotification extends Notification
             ->withSymfonyMessage(function ($message) {
                 $message->getHeaders()->addTextHeader('X-Vendor-Notification', 'true');
                 $message->getHeaders()->addTextHeader('X-Vendor-ID', (string) $this->vendor->id);
+
+                // Ensure Message-ID is set before sending
+                if (! $message->getHeaders()->has('Message-ID')) {
+                    $domain = config('mail.from.address') ? explode('@', config('mail.from.address'))[1] : 'localhost';
+                    $messageId = sprintf('<%s.%s@%s>', uniqid('vendor', true), time(), $domain);
+                    $message->getHeaders()->addIdHeader('Message-ID', $messageId);
+                }
             });
     }
 

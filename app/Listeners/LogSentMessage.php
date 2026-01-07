@@ -47,45 +47,33 @@ class LogSentMessage
             'sent_at' => now()->toDateTimeString(),
         ];
 
-        // If using Mailgun, the response data is available in $event->data
-        // Only process if we have actual Mailgun response data (not the message object)
-        if (isset($event->data) && is_array($event->data)) {
-            // Debug logging to see what Mailgun returns
-            \Illuminate\Support\Facades\Log::info('Mailgun response data', [
-                'data_keys' => array_keys($event->data),
-                'has_id' => isset($event->data['id']),
-                'id_type' => isset($event->data['id']) ? gettype($event->data['id']) : null,
-                'id_value' => $event->data['id'] ?? null,
-            ]);
+        // Try to get the Message-ID from the Symfony message
+        // The Message-ID is set by the mail transport and should be available
+        $messageId = null;
 
-            if (isset($event->data['id']) && is_string($event->data['id'])) {
-                $data['mailgun_id'] = $event->data['id'];
-                $data['mailgun_message'] = isset($event->data['message']) && is_string($event->data['message'])
-                    ? $event->data['message']
-                    : null;
-
-                // Use Mailgun's ID as the message_id for webhook matching
-                $data['message_id'] = $event->data['id'];
-            }
-        }
-
-        // Fallback: Try to get message ID from headers if Mailgun data not available
-        if (empty($data['message_id']) && $headers->has('Message-ID')) {
+        // Method 1: Try to get from headers
+        if ($headers->has('Message-ID')) {
             $messageIdHeader = $headers->get('Message-ID');
             if ($messageIdHeader && method_exists($messageIdHeader, 'getBodyAsString')) {
-                $data['message_id'] = (string) $messageIdHeader->getBodyAsString();
+                $messageId = $messageIdHeader->getBodyAsString();
             }
         }
 
-        // Log if message_id is missing for debugging
-        if (empty($data['message_id'])) {
-            \Illuminate\Support\Facades\Log::warning('Vendor notification sent without message_id', [
-                'vendor_form_id' => $data['vendor_form_id'],
-                'to' => $data['to'],
-                'has_message_id_header' => $headers->has('Message-ID'),
-                'mailgun_data_available' => isset($event->data),
-            ]);
+        // Method 2: Try getId() method on the message
+        if (empty($messageId) && method_exists($message, 'getId')) {
+            $messageId = $message->getId();
         }
+
+        // Method 3: Generate a unique ID if none exists (last resort)
+        if (empty($messageId)) {
+            $messageId = sprintf('<%s@%s>', uniqid('vendor-notification-', true), config('mail.from.address') ? explode('@', config('mail.from.address'))[1] : 'local');
+            // Add it to the message for future reference
+            if (method_exists($message, 'generateId')) {
+                $message->generateId($messageId);
+            }
+        }
+
+        $data['message_id'] = $messageId;
 
         VendorEmailLog::create($data);
     }
