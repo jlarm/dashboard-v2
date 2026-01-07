@@ -16,7 +16,7 @@ class OpenPorts extends Component
         $store = Store::find(app('currentStore'));
 
         if ($store) {
-            $this->openPorts = app(CyrismaService::class)->forStore($store)->getOpenPorts();
+            $this->openPorts = app(CyrismaService::class)->forStore($store)->getOpenPorts() ?? [];
         }
     }
     public function render(): View
