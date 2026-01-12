@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -z "$1" ]; then
+  echo "Error: Branch name is required"
+  echo "Usage: ./bin/worktree <branch-name>"
+  exit 1
+fi
+
+BRANCH_NAME="$1"
+PROJECT_NAME=$(basename "$(pwd)")
+WORKTREE_NAME="${PROJECT_NAME}-${BRANCH_NAME}"
+PARENT_DIR=$(dirname "$(pwd)")
+WORKTREE_PATH="${PARENT_DIR}/${WORKTREE_NAME}"
+
+echo "Creating worktree: ${WORKTREE_PATH}"
+
+git worktree add "../${WORKTREE_NAME}" -b "${BRANCH_NAME}"
+
+echo "Setting up Laravel application..."
+
+cd "${WORKTREE_PATH}"
+
+cp .env.example .env
+composer install
+npm install
+
+echo "Worktree created successfully at: ${WORKTREE_PATH}"
+
+phpstorm "${WORKTREE_PATH}"

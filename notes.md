@@ -1,3 +1,7 @@
+## New Worktree
+```./bin/worktree my-new-feature```
+"my-new-feature" is the branch name
+
 ## Get Current Store
 ```php
 public Store $store;
