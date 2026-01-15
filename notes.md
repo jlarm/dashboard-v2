@@ -25,3 +25,6 @@ public function mount(): void
 
 ## Tests 
 - [ ] Logs page and livewire component
+
+## Delete all local mysql dbs
+```mysql -h 127.0.0.1 -N -B -e "SELECT schema_name FROM information_schema.schemata WHERE schema_name LIKE 'dealership_%';" | while read db; do mysql -h 127.0.0.1 -e "DROP DATABASE \`$db\`;"; done```

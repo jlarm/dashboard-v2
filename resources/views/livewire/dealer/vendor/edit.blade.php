@@ -62,7 +62,7 @@
                             x-cloak
                             class="max-h-[250px] overflow-y-auto mt-4 ml-7 pl-4 border-l-2 border-arm-blue-100 space-y-4 pb-2"
                         >
-                            @if($form->signature)
+                            @if($form->signature || $form->document_path)
                             <div>
                                 <livewire:dealer.vendor.download :vendorForm="$form" :key="$form->id" />
                             </div>

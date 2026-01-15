@@ -36,6 +36,17 @@ class IndexItem extends Component
         }, $this->vendor->name.now()->format('Ymd').'.pdf');
     }
 
+    public function isCompleted(): bool
+    {
+        $form = $this->vendor->forms()->latest()->first();
+
+        if ($form->signature || $form->document_path) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function render()
     {
         return view('livewire.dealer.vendor.index-item', [

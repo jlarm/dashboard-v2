@@ -7,29 +7,32 @@ namespace App\Http\Livewire\Dealer\Vendor;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\VendorForm;
 use App\Models\User;
+use App\Notifications\VendorSignedNotification;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Livewire\Component;
-use Storage;
-use Str;
+use Livewire\WithFileUploads;
 
 class NewForm extends Component
 {
+    use WithFileUploads;
+
     public $vid;
     public $vendor;
     public $data = [];
+    public $document;
     public $signature;
     public $storeName;
     public $qis;
     protected $queryString = ['vid'];
-    protected $rules = [
-        'data.*.response' => 'required',
-    ];
 
     public function mount()
     {
         $this->vendor = VendorForm::findOrFail($this->vid);
 
-        if ($this->vendor->signature) {
+        if ($this->vendor->signature || $this->vendor->document_path) {
             return redirect(route('dealer.vendors.thankyou'));
         }
 
@@ -65,26 +68,48 @@ class NewForm extends Component
     {
         $this->validate();
 
-        $fName = Str::of($this->vendor->name)->replace(' ', '')->lower();
-        $cTime = now()->format('YmdHis');
-        $fileName = $fName.$cTime.'.png';
+        if ($this->document) {
+            $path = $this->document->store(tenant('id').'/vendor-documents', 'do-manuals');
 
-        $this->vendor->update([
-            'data' => $this->data,
-            'signature' => $fileName,
-        ]);
+            $this->vendor->update([
+                'document_path' => $path,
+            ]);
+        } else {
+            $fName = Str::of($this->vendor->name)->replace(' ', '')->lower();
+            $cTime = now()->format('YmdHis');
+            $fileName = $fName.$cTime.'.png';
 
-        Storage::put('signatures/'.$fileName, base64_decode(explode(',', $this->signature)[1]));
+            $this->vendor->update([
+                'data' => $this->data,
+                'signature' => $fileName,
+            ]);
+
+            Storage::put('signatures/'.$fileName, base64_decode(explode(',', $this->signature)[1]));
+        }
 
         foreach ($this->qis as $qi) {
-            Notification::send($qi, new \App\Notifications\VendorSignedNotification($this->vendor));
+            Notification::send($qi, new VendorSignedNotification($this->vendor));
         }
 
         return redirect(route('dealer.vendors.thankyou'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.vendor.new-form')->layout('layouts.guest');
+    }
+
+    protected function rules(): array
+    {
+        if ($this->document) {
+            return [
+                'document' => ['required', 'file', 'mimes:pdf', 'max:10240'],
+            ];
+        }
+
+        return [
+            'data.*.response' => ['required'],
+            'signature' => ['required'],
+        ];
     }
 }
