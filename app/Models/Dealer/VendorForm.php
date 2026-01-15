@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class VendorForm extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
 
     protected $fillable = [
         'vendor_id',
@@ -20,10 +22,20 @@ class VendorForm extends Model
         'signature',
         'last_notification_sent_at',
         'data',
+        'document_path',
     ];
     protected $casts = [
-        'data' => 'array',
+        'id' => 'integer',
+        'vendor_id' => 'integer',
+        'name' => 'string',
+        'email' => 'string',
+        'signature' => 'string',
         'last_notification_sent_at' => 'datetime',
+        'data' => 'array',
+        'document_path' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     public function vendor(): BelongsTo
@@ -34,5 +46,10 @@ class VendorForm extends Model
     public function emailLogs(): HasMany
     {
         return $this->hasMany(VendorEmailLog::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
     }
 }

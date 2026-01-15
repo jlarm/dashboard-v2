@@ -35,11 +35,15 @@
               Status:
             </span>
 
-            @if($status !== '' && $status !== null || $vendor->signature)
-            <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-teal-100 text-teal-800">Current</span>
-            @else
-            <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-red-100 text-red-800">Incomplete</span>
-            @endif
+            <span
+                @class([
+                    'inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium',
+                    'bg-teal-100 text-teal-800' => $this->isCompleted(),
+                    'bg-red-100 text-red-800' => 'default',
+                ])
+            >
+                {{ $this->isCompleted() ? 'Current' : 'Incomplete' }}
+            </span>
         </div>
         <!-- End Item -->
     </div>

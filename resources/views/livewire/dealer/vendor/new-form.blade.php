@@ -3,6 +3,25 @@
     <h1 class="text-center">{{ $storeName }}</h1>
     <p>Hi {{ $vendor->name }}, Please complete the Risk Assessment form attached. We are completing our requirements to further acknowledge that your company ({{ $vendor->vendor->name }}) has installed all GLBA policies, procedures, and IT requirements ensuring you are maintaining adequate procedures to protect customer information and detect and respond to potential security breaches.</p>
     <form wire:submit.prevent="submit" class="space-y-3">
+        <div class="bg-blue-50 border border-blue-200 rounded-md p-6">
+            <label for="document" class="block text-base font-medium text-gray-900 mb-2">
+                Upload Completed Risk Assessment Document (PDF)
+            </label>
+            <p class="text-sm text-gray-600 mb-4">
+                If you have already completed a risk assessment document, you can upload it here instead of filling out the form below.
+            </p>
+            <input
+                wire:model="document"
+                type="file"
+                id="document"
+                accept=".pdf"
+                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-arm-blue-50 file:text-arm-blue-700 hover:file:bg-arm-blue-100"
+            >
+            @error('document') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+            <div wire:loading wire:target="document" class="text-sm text-gray-500 mt-2">Uploading...</div>
+        </div>
+
+        @if(!$document)
         <div class="bg-gray-100 rounded-md">
             <div class="p-10">
                 <label class="text-base font-medium text-gray-900">{{ $data[1]['question'] }}</label>
@@ -997,6 +1016,7 @@
 
         <x-signature-pad wire:model.defer="signature"/>
         @error('signature') <span class="text-red-500">{{ $message }}</span> @enderror
+        @endif
 
         <div>
             <x-primary-button>Submit</x-primary-button>
