@@ -1,14 +1,15 @@
 <div class="w-full max-w-3xl mx-auto py-10 space-y-5">
     <x-application-logo class="h-12 w-auto mx-auto"/>
     <h1 class="text-center">{{ $storeName }}</h1>
-    <p>Hi {{ $vendor->name }}, Please complete the Risk Assessment form attached. We are completing our requirements to further acknowledge that your company ({{ $vendor->vendor->name }}) has installed all GLBA policies, procedures, and IT requirements ensuring you are maintaining adequate procedures to protect customer information and detect and respond to potential security breaches.</p>
+    <p><span class="block">Hi {{ $vendor->name }},</span>
+        Please complete the attached Third Party Vendor Risk Assessment form and provide electronic sign-off. We are finalizing our GLBA / Safeguards Rule requirements and need to confirm that {{ $vendor->vendor->name }} has adequate policies, procedures, and IT/cybersecurity controls in place to detect and respond to potential security incidents involving our customer information to which you may have access, either electronically or physically.</p>
     <form wire:submit.prevent="submit" class="space-y-3">
         <div class="bg-blue-50 border border-blue-200 rounded-md p-6">
             <label for="document" class="block text-base font-medium text-gray-900 mb-2">
                 Upload Completed Risk Assessment Document (PDF)
             </label>
             <p class="text-sm text-gray-600 mb-4">
-                If you have already completed a risk assessment document, you can upload it here instead of filling out the form below.
+                If {{ $vendor->vendor->name }} already has a written policies-and-procedures program that outlines your response to GLBA/Safeguards-related security and IT incidents, you may upload a PDF in the tab below. Your company policy must be signed off by a key upper management person, Owner or a board member.
             </p>
             <input
                 wire:model="document"
