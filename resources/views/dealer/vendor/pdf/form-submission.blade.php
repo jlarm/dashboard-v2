@@ -22,7 +22,9 @@
             <div class="border border-gray-200 rounded-xl p-5 space-y-3 page-break">
                 <h4 class="{{ ($question['response'] === 'no' || $question['response'] === 'na') ? 'text-red-500' : '' }} font-bold text-xl">{{ $question['question'] }}</h4>
                 <p class="capitalize">{{ $question['response'] }}</p>
+                @if(!empty($question['comment']))
                 <p class="text-sm">{{ $question['comment'] }}</p>
+                @endif
             </div>
         @endforeach
     </div>

@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\VendorForm;
 use Exception;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -40,6 +41,11 @@ class Download extends Component
         if (! $disk->exists($path)) {
             Log::error("Vendor form document not found: {$path}");
 
+            Notification::make()
+                ->title('Document not found')
+                ->danger()
+                ->send();
+
             return;
         }
 
@@ -67,6 +73,11 @@ class Download extends Component
             }, $pdfName);
         } catch (Exception $e) {
             Log::error($e->getMessage());
+
+            Notification::make()
+                ->title('Failed to generate PDF')
+                ->danger()
+                ->send();
         }
     }
 }
