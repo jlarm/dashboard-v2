@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\Vendor;
@@ -50,7 +52,7 @@ class IndexItem extends Component
     public function render()
     {
         return view('livewire.dealer.vendor.index-item', [
-            'status' => $this->vendor->forms()->latest()->pluck('signature')->first(),
+            'status' => $this->vendor->forms()->latest()->first()?->signature,
         ]);
     }
 }

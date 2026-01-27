@@ -87,6 +87,11 @@ class User extends Authenticatable
         return $this->belongsTo(Store::class, 'current_store_id');
     }
 
+    public function currentStoreName(): string
+    {
+        return $this->currentStore()->first()->name ?? tenant('name');
+    }
+
     public function getPhoneNumberAttribute(): string
     {
         if (! $this->phone) {

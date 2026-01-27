@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Course;
 
 use App\Models\Dealer\Course;
@@ -91,7 +93,7 @@ class Show extends Component
         }
     }
 
-    private function getVimeoVideo(): array
+    private function getVimeoVideo(): ?array
     {
         return (new VimeoService())->getVideo($this->course->video_id);
     }
