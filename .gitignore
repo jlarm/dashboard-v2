@@ -1,3 +1,5 @@
+/storage/*
+!/storage/.gitignore
 /.phpunit.cache
 /node_modules
 /public/build
