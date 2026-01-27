@@ -90,6 +90,12 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->emailOutputOnFailure(config('app.admin_email'));
 
+        $schedule->command('run:course-reminder')
+            ->dailyAt('06:00')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
         // Clean up old deal jacket reports
         $schedule->command('deal-jacket-reports:clean')
             ->dailyAt('02:00')
