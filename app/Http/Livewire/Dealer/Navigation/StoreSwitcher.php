@@ -14,7 +14,6 @@ use Livewire\Component;
 class StoreSwitcher extends Component
 {
     public ?string $currentStoreName = null;
-
     protected $listeners = ['refreshStores' => '$refresh'];
 
     public function mount(Request $request): void
@@ -44,7 +43,7 @@ class StoreSwitcher extends Component
 
     public function getCurrentStoreDisplayProperty(): string
     {
-        if (!$this->currentStoreName) {
+        if (! $this->currentStoreName) {
             return 'Select a Store';
         }
 

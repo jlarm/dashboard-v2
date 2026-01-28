@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Http\Livewire\Dealer\Audit\Osha\Modal;

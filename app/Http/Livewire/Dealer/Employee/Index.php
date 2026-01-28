@@ -31,9 +31,7 @@ class Index extends Component
     public User $currentUser;
     public array $selectedUsers = [];
     public bool $selectAll = false;
-
     protected $listeners = ['toggleUserSelection'];
-
     protected $queryString = [
         'search' => ['except' => '', 'as' => 's'],
         'selectedDepartment' => ['except' => null, 'as' => 'd'],
@@ -129,7 +127,7 @@ class Index extends Component
     {
         if (in_array($userId, $this->selectedUsers, true)) {
             // Remove from array
-            $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn($id) => $id !== $userId));
+            $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn ($id) => $id !== $userId));
         } else {
             // Add to array
             $this->selectedUsers[] = $userId;
@@ -177,7 +175,7 @@ class Index extends Component
     public function toggleSelectAll(): void
     {
         // Toggle the selectAll state first
-        $this->selectAll = !$this->selectAll;
+        $this->selectAll = ! $this->selectAll;
 
         $query = $this->usersQuery;
         $users = $this->showIncompleteCourseUsers

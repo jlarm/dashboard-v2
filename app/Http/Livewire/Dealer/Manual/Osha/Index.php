@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Manual\Osha;
 
 use App\Models\Dealer\Manual\Osha;

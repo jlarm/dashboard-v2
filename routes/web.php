@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Central\Course\CourseResultsController;
 use App\Http\Controllers\Central\DealerDocs\EditController;
 use App\Http\Controllers\Central\Dealership\CreateController;

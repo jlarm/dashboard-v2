@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Docs;
 
 use App\Models\Dealer\Store;

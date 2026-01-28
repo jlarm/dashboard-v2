@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Manuals;
 
 use App\Models\Dealer\Manual\Osha;
