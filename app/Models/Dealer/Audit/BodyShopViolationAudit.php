@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Dealer\Audit;
 
 use App\Models\AuditComment;
@@ -25,12 +27,15 @@ class BodyShopViolationAudit extends Model
         'completed_date',
         'date',
         'grade',
+        'grade_updated_by',
+        'grade_updated_at',
         'reminder_logs',
     ];
     protected $casts = [
         'uuid' => 'string',
         'date' => 'date',
         'completed_date' => 'date',
+        'grade_updated_at' => 'datetime',
         'data' => 'array',
         'reminder_logs' => 'array',
     ];
@@ -38,6 +43,11 @@ class BodyShopViolationAudit extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function gradeUpdatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'grade_updated_by');
     }
 
     public function store(): BelongsTo

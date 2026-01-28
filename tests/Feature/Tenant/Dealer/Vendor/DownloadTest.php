@@ -83,7 +83,7 @@ describe('Download Generated PDF', function () {
         $this->actingAs($this->user);
 
         // Mock Browsershot to avoid requiring Chrome
-        $this->mock(\Spatie\Browsershot\Browsershot::class, function ($mock) {
+        $this->mock(Spatie\Browsershot\Browsershot::class, function ($mock) {
             $mock->shouldReceive('html')->andReturnSelf();
             $mock->shouldReceive('noSandbox')->andReturnSelf();
             $mock->shouldReceive('showBackground')->andReturnSelf();

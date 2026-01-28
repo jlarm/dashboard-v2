@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Central\AuditStatements\BodyShop;
 
 use App\Http\Livewire\Central\AuditStatements\Traits\Keywordable;

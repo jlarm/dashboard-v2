@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\User;
@@ -38,14 +40,14 @@ class UserFactory extends Factory
     /**
      * Indicate that the user should have the super-admin role.
      */
-//    public function superAdmin(): static
-//    {
-//        return $this->afterCreating(function (User $user) {
-//            if (\Spatie\Permission\Models\Role::where('name', 'super-admin')->exists()) {
-//                $user->assignRole('super-admin');
-//            }
-//        });
-//    }
+    //    public function superAdmin(): static
+    //    {
+    //        return $this->afterCreating(function (User $user) {
+    //            if (\Spatie\Permission\Models\Role::where('name', 'super-admin')->exists()) {
+    //                $user->assignRole('super-admin');
+    //            }
+    //        });
+    //    }
 
     /**
      * Indicate that the model's email address should be unverified.

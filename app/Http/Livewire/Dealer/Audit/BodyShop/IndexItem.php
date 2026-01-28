@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
@@ -14,14 +16,48 @@ class IndexItem extends Component
     public BodyShopViolationAudit $bodyShopAudit;
     public Store $store;
     public bool $remediations;
+    public bool $editingGrade = false;
+    public string $grade = '';
     protected $listeners = [
         'pdfGenerated' => '$refresh',
+    ];
+    protected $rules = [
+        'grade' => 'required|in:A,B,C,D,F',
     ];
 
     public function mount(): void
     {
         $this->store = Store::find(app('currentStore'));
-        $this->remediations = $this->store->remediations;
+        $this->remediations = (bool) $this->store->remediations;
+        $this->grade = $this->bodyShopAudit->grade ?? '';
+    }
+
+    public function toggleGradeEdit(): void
+    {
+        $this->editingGrade = ! $this->editingGrade;
+        $this->grade = $this->bodyShopAudit->grade ?? '';
+    }
+
+    public function saveGrade(): void
+    {
+        if (! auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+            abort(403);
+        }
+
+        $this->validate();
+
+        $this->bodyShopAudit->update([
+            'grade' => $this->grade,
+            'grade_updated_by' => auth()->id(),
+            'grade_updated_at' => now(),
+        ]);
+
+        $this->editingGrade = false;
+
+        Notification::make()
+            ->title('Grade Updated Successfully!')
+            ->success()
+            ->send();
     }
 
     public function quarter(): string

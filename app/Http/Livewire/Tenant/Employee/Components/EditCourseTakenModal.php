@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Tenant\Employee\Components;
 
 use App\Models\Dealer\Course;

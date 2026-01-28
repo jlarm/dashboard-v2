@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Dealer\Audit;
 
 use App\Models\AuditComment;
@@ -24,6 +26,8 @@ class OshaViolationAudit extends Model
         'remediation_pdf_path',
         'date',
         'grade',
+        'grade_updated_by',
+        'grade_updated_at',
         'completed_date',
         'reminder_logs',
     ];
@@ -31,6 +35,7 @@ class OshaViolationAudit extends Model
         'uuid' => 'string',
         'date' => 'date',
         'completed_date' => 'date',
+        'grade_updated_at' => 'datetime',
         'data' => 'array',
         'reminder_logs' => 'array',
     ];
@@ -38,6 +43,11 @@ class OshaViolationAudit extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function gradeUpdatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'grade_updated_by');
     }
 
     public function store(): BelongsTo

@@ -88,7 +88,7 @@ describe('Document Upload', function () {
 
         Notification::assertSentTo(
             $this->qualifiedIndividual,
-            \App\Notifications\VendorSignedNotification::class
+            App\Notifications\VendorSignedNotification::class
         );
     });
 });

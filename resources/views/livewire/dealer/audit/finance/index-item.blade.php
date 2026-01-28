@@ -76,7 +76,48 @@
                                 <div class="grid grid-cols-2 gap-x-4 gap-y-2 pt-2 text-sm">
                                     <div>
                                         <dt class="text-gray-500">Grade:</dt>
-                                        <dd class="font-medium text-gray-800">{{ $glbaViolationAudit->grade ?? '-' }}</dd>
+                                        @if($glbaViolationAudit->grade)
+                                            @if($editingGrade)
+                                                <dd class="flex items-center gap-2">
+                                                    <select
+                                                        wire:model.defer="grade"
+                                                        wire:keydown.escape="toggleGradeEdit"
+                                                        class="w-16 px-2 py-1 text-sm border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                                        autofocus
+                                                    >
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+                                                        <option value="F">F</option>
+                                                    </select>
+                                                    <button wire:click="saveGrade" class="p-1 text-green-600 hover:text-green-700">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    </button>
+                                                    <button wire:click="toggleGradeEdit" class="p-1 text-gray-400 hover:text-gray-600">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </dd>
+                                                @error('grade') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+                                            @else
+                                                <dd class="font-medium text-gray-800 flex items-center gap-1">
+                                                    {{ $glbaViolationAudit->grade }}
+                                                    @hasanyrole('super-admin|Consultant')
+                                                        <button wire:click="toggleGradeEdit" class="p-1 text-gray-400 hover:text-gray-600" title="Edit grade">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                            </svg>
+                                                        </button>
+                                                    @endhasanyrole
+                                                </dd>
+                                            @endif
+                                        @else
+                                            <dd class="font-medium text-gray-800">-</dd>
+                                        @endif
                                     </div>
                                     <div>
                                         <dt class="text-gray-500">Status:</dt>
@@ -207,7 +248,48 @@
             {{-- Grade --}}
             <div>
                 <dt class="text-xs font-medium text-slate-500">Grade</dt>
-                <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">{{ $glbaViolationAudit->grade ?? '-' }}</dd>
+                @if($glbaViolationAudit->grade)
+                    @if($editingGrade)
+                        <dd class="mt-0.5 flex items-center gap-2">
+                            <select
+                                wire:model.defer="grade"
+                                wire:keydown.escape="toggleGradeEdit"
+                                class="w-16 px-2 py-1 text-sm border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                autofocus
+                            >
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="F">F</option>
+                            </select>
+                            <button wire:click="saveGrade" class="p-1 text-green-600 hover:text-green-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </button>
+                            <button wire:click="toggleGradeEdit" class="p-1 text-gray-400 hover:text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </dd>
+                        @error('grade') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+                    @else
+                        <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight flex items-center gap-1">
+                            {{ $glbaViolationAudit->grade }}
+                            @hasanyrole('super-admin|Consultant')
+                                <button wire:click="toggleGradeEdit" class="p-1 text-gray-400 hover:text-gray-600" title="Edit grade">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                </button>
+                            @endhasanyrole
+                        </dd>
+                    @endif
+                @else
+                    <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">-</dd>
+                @endif
             </div>
 
             {{-- Status --}}

@@ -6,6 +6,15 @@
         "/Users/joelohr/Herd/dashboard/artisan",
         "boost:mcp"
       ]
+    },
+    "herd": {
+      "command": "/Users/armp/Library/Application Support/Herd/bin/php83",
+      "args": [
+        "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
+      ],
+      "env": {
+        "SITE_PATH": "/Users/armp/Herd/dashboard"
+      }
     }
   }
 }

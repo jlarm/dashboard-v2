@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Dealer\Ridgeback;
 
 use App\Models\Dealer\Store;

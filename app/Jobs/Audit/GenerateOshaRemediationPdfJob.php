@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Audit;
 
 use App\Models\Dealer\Audit\OshaViolationAudit;

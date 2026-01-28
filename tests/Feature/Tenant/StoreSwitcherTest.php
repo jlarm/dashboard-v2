@@ -305,7 +305,7 @@ describe('Computed Properties', function () {
         $component = Livewire::test(StoreSwitcher::class);
         $stores = $component->get('stores');
 
-        expect($stores)->toBeInstanceOf(\Illuminate\Database\Eloquent\Collection::class);
+        expect($stores)->toBeInstanceOf(Illuminate\Database\Eloquent\Collection::class);
         expect($stores)->toHaveCount(1);
     });
 

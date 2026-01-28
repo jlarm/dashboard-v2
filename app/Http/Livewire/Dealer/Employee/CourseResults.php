@@ -13,7 +13,6 @@ use Livewire\Component;
 class CourseResults extends Component
 {
     public User $user;
-
     protected $listeners = ['refreshEmployeeDetails' => 'refreshDetails'];
 
     public function refreshDetails(): void

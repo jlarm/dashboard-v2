@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Casts\AsCollection;
