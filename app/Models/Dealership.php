@@ -43,4 +43,9 @@ class Dealership extends BaseTenant implements TenantWithDatabase
     {
         return $this->belongsToMany(User::class, 'tenant_user', 'tenant_id', 'user_id');
     }
+
+    public function domain()
+    {
+        return $this->domains()->first()->domain;
+    }
 }
