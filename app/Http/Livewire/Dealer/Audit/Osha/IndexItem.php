@@ -77,7 +77,7 @@ class IndexItem extends Component
 
     public function remediationProgress(): int
     {
-        return $this->oshaAudit->violation_count === 0 ? 0 : round($this->oshaAudit->remediation_count / $this->oshaAudit->violation_count * 100);
+        return $this->oshaAudit->violation_count === 0 ? 0 : (int) round($this->oshaAudit->remediation_count / $this->oshaAudit->violation_count * 100);
     }
 
     public function delete(): void

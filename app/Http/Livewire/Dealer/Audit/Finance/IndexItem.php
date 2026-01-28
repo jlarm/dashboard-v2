@@ -77,7 +77,7 @@ class IndexItem extends Component
 
     public function remediationProgress(): int
     {
-        return $this->glbaViolationAudit->violation_count === 0 ? 0 : round($this->glbaViolationAudit->remediation_count / $this->glbaViolationAudit->violation_count * 100);
+        return $this->glbaViolationAudit->violation_count === 0 ? 0 : (int) round($this->glbaViolationAudit->remediation_count / $this->glbaViolationAudit->violation_count * 100);
     }
 
     public function delete(): void
