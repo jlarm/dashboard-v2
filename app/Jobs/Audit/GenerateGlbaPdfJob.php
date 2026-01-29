@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Audit;
 
 use App\Models\Dealer\Audit\GlbaViolationAudit;
@@ -24,29 +26,32 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
         return [new WithoutOverlapping($this->glbaViolationAudit)];
     }
 
-    private function rating(): string
-    {
-        $violationCount = $this->glbaViolationAudit->violations->count();
-
-        if ($violationCount >= 0 && $violationCount <= 10) {
-            return 'A';
-        } elseif ($violationCount >= 11 && $violationCount <= 20) {
-            return 'B';
-        } elseif ($violationCount >= 21 && $violationCount <= 30) {
-            return 'C';
-        } elseif ($violationCount >= 31 && $violationCount <= 40) {
-            return 'D';
-        } elseif ($violationCount >= 41 && $violationCount <= 50) {
-            return 'F';
-        }
-    }
-
     public function handle(): void
     {
         $path = $this->createDirectory();
         $fileName = $this->createFileName();
         $this->createPdf($path, $fileName);
         $this->updateAudit($fileName);
+    }
+
+    private function rating(): string
+    {
+        $violationCount = $this->glbaViolationAudit->violations->count();
+
+        if ($violationCount >= 0 && $violationCount <= 10) {
+            return 'A';
+        }
+        if ($violationCount >= 11 && $violationCount <= 20) {
+            return 'B';
+        }
+        if ($violationCount >= 21 && $violationCount <= 30) {
+            return 'C';
+        }
+        if ($violationCount >= 31 && $violationCount <= 40) {
+            return 'D';
+        }
+
+        return 'F';
     }
 
     private function createDirectory(): string

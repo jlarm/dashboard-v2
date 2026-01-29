@@ -15,9 +15,11 @@ class Create extends Component
 
     public $statement;
     public $keywords = [];
+    public int $weight = 1;
     protected $rules = [
         'statement' => 'required|string|max:255',
         'keywords' => 'nullable|array',
+        'weight' => 'required|integer|min:1|max:10',
     ];
 
     public function create()
@@ -31,9 +33,10 @@ class Create extends Component
         GlbaViolationStatements::create([
             'statement' => $this->statement,
             'keywords' => json_encode($this->keywords) ?? null,
+            'weight' => $this->weight,
         ]);
 
-        $this->reset(['statement', 'keywords', 'newKeyword']);
+        $this->reset(['statement', 'keywords', 'newKeyword', 'weight']);
 
         Notification::make()
             ->title('Violation Added Successfully!')

@@ -17,11 +17,13 @@ class Edit extends Component
     public $statement;
     public $keywords = [];
     public $newKeyword = '';
+    public int $weight;
 
     public function mount()
     {
         $this->statement = $this->bodyShopViolation->statement;
         $this->keywords = json_decode($this->bodyShopViolation->keywords);
+        $this->weight = $this->bodyShopViolation->weight;
     }
 
     public function update()
@@ -29,11 +31,13 @@ class Edit extends Component
         $this->validate([
             'statement' => 'required',
             'keywords' => 'nullable',
+            'weight' => 'required|integer|min:1|max:10',
         ]);
 
         $this->bodyShopViolation->update([
             'statement' => $this->statement,
             'keywords' => json_encode($this->keywords),
+            'weight' => $this->weight,
         ]);
 
         Notification::make()
