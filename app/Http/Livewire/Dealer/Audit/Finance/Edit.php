@@ -37,6 +37,7 @@ class Edit extends Component
         'violations.*.comment' => 'required',
         'violations.*.violation_date' => 'nullable|date',
         'violations.*.risk' => 'nullable|boolean',
+        'violations.*.severity' => 'nullable|integer|min:0|max:10',
         'violationFiles.*.*' => 'nullable|mimes:jpg,jpeg,png,heic,heif,webp|max:15360',
     ];
 
@@ -63,6 +64,7 @@ class Edit extends Component
                     'comment' => $violation['comment'],
                     'violation_date' => $violation['violation_date'],
                     'risk' => $violation['risk'],
+                    'severity' => $violation['severity'] ?? null,
                 ];
 
                 foreach ($this->violationFiles as $index => $files) {

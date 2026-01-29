@@ -36,25 +36,32 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     private function rating(): string
     {
-        $violationCount = $this->bodyShopViolationAudit->violations->count();
+        $violations = $this->bodyShopViolationAudit->violations()->with('bodyShopStatement')->get();
 
-        if ($violationCount >= 0 && $violationCount <= 10) {
+        if ($violations->isEmpty()) {
             return 'A';
         }
-        if ($violationCount >= 11 && $violationCount <= 20) {
+
+        $totalPotentialWeight = $violations->sum(fn ($v) => $v->bodyShopStatement?->weight ?? 1);
+        $totalPenalty = $violations->sum(fn ($v) => ($v->bodyShopStatement?->weight ?? 1) * (($v->severity ?? 1) / 10));
+
+        $actualScore = $totalPotentialWeight - $totalPenalty;
+        $finalPercentage = ($actualScore / $totalPotentialWeight) * 100;
+
+        if ($finalPercentage >= 90) {
+            return 'A';
+        }
+        if ($finalPercentage >= 80) {
             return 'B';
         }
-        if ($violationCount >= 21 && $violationCount <= 30) {
+        if ($finalPercentage >= 70) {
             return 'C';
         }
-        if ($violationCount >= 31 && $violationCount <= 40) {
+        if ($finalPercentage >= 60) {
             return 'D';
         }
-        if ($violationCount >= 41 && $violationCount <= 50) {
-            return 'F';
-        }
 
-        return '';
+        return 'F';
     }
 
     private function createDirectory(): string

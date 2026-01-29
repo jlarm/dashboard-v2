@@ -130,6 +130,10 @@
                                         <dd class="font-medium text-gray-800">{{ $glbaViolationAudit->violation_count }}</dd>
                                     </div>
                                     <div>
+                                        <dt class="text-gray-500">Comments:</dt>
+                                        <dd class="font-medium text-gray-800">{{ $this->commentCount() }}</dd>
+                                    </div>
+                                    <div>
                                         <dt class="text-gray-500">Remediations:</dt>
                                         <dd class="font-medium text-gray-800">{{ $glbaViolationAudit->completed_date ? $glbaViolationAudit->remediation_count : '-' }}</dd>
                                     </div>
@@ -307,9 +311,17 @@
             </div>
 
             {{-- Total Violations --}}
+            @if($this->commentCount() > 0)
             <div>
                 <dt class="text-xs font-medium text-slate-500">Total Violations</dt>
                 <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">{{ $glbaViolationAudit->violation_count }}</dd>
+            </div>
+            @endif
+
+            {{-- Total Comments --}}
+            <div>
+                <dt class="text-xs font-medium text-slate-500">Total Comments</dt>
+                <dd class="mt-0.5 font-semibold text-slate-700 tracking-tight">{{ $this->commentCount() }}</dd>
             </div>
 
             {{-- Total Remediations --}}

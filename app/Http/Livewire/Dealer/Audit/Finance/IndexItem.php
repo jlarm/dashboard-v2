@@ -80,6 +80,11 @@ class IndexItem extends Component
         return $this->glbaViolationAudit->violation_count === 0 ? 0 : (int) round($this->glbaViolationAudit->remediation_count / $this->glbaViolationAudit->violation_count * 100);
     }
 
+    public function commentCount(): int
+    {
+        return $this->glbaViolationAudit->auditComments()->count();
+    }
+
     public function delete(): void
     {
         $this->deleteViolationPhotos();

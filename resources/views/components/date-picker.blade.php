@@ -21,7 +21,7 @@
     $calendarId = 'calendar-' . $inputId;
 @endphp
 
-<div data-datepicker="{{ $inputId }}" data-format="{{ $format }}" data-min-date="{{ $minDate }}" data-max-date="{{ $maxDate }}" data-value="{{ $value }}">
+<div wire:ignore data-datepicker="{{ $inputId }}" data-format="{{ $format }}" data-min-date="{{ $minDate }}" data-max-date="{{ $maxDate }}" data-value="{{ $value }}">
     @if ($label)
         <label for="{{ $inputId }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             {{ $label }}
