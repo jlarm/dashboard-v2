@@ -22,8 +22,8 @@ class Dashboard extends Component
     {
         if (auth()->user()->hasAnyRole('super-admin|Consultant')) {
             return Dealership::with('domains')->orderBy('name')->get();
-            }
-
-            return auth()->user()->dealerships->orderBy('name')->get();
         }
+
+        return auth()->user()->dealerships->orderBy('name')->get();
+    }
 }

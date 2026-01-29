@@ -18,7 +18,10 @@ class Index extends Component
     public function render(): View
     {
         return view('livewire.central.audit-statements.osha.index', [
-            'violations' => OshaViolationStatements::orderBy('statement')->paginate(20),
+            'violations' => OshaViolationStatements::query()
+                ->select(['id', 'statement', 'weight'])
+                ->orderBy('statement')
+                ->paginate(20),
         ]);
     }
 }

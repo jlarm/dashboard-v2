@@ -21,6 +21,22 @@
                     />
                     <x-input-error :messages="$errors->get('statement')" class="mt-2"/>
                 </div>
+                <div>
+                    <x-input-label for="weight" :value="__('Weight')" />
+                    <x-select wire:model.defer="weight" id="weight" class="mt-1">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </x-select>
+                    <x-input-error :messages="$errors->get('weight')" class="mt-2"/>
+                </div>
                 <div class="space-y-3">
                     <div>
                         <x-input-label for="keyword" :value="__('Add Keywords')"/>

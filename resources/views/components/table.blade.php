@@ -1,5 +1,5 @@
 <div class="flow-root">
-    <table class="min-w-full divide-y divide-gray-300">
+    <table {{ $attributes->merge(['class' => 'min-w-full divide-y divide-gray-300']) }}>
         <thead>
         <tr>
             {{ $head }}
