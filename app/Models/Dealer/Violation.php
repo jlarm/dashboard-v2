@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models\Dealer;
 
+use App\Models\BodyShopViolationStatement;
+use App\Models\GlbaViolationStatements;
+use App\Models\OshaViolationStatements;
 use App\Models\Remediation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\MediaLibrary\HasMedia;
@@ -25,9 +29,18 @@ class Violation extends Model implements HasMedia
         'comment',
         'violation_date',
         'risk',
+        'severity',
     ];
     protected $casts = [
+        'id' => 'integer',
+        'uuid' => 'string',
+        'statement_id' => 'integer',
+        'statement' => 'string',
+        'text' => 'string',
+        'date' => 'date',
         'violation_date' => 'date:Y-m-d',
+        'risk' => 'boolean',
+        'severity' => 'integer',
     ];
 
     public function registerMediaConversions(?Media $media = null): void
@@ -52,5 +65,20 @@ class Violation extends Model implements HasMedia
     public function remediation(): HasOne
     {
         return $this->hasOne(Remediation::class);
+    }
+
+    public function oshaStatement(): BelongsTo
+    {
+        return $this->belongsTo(OshaViolationStatements::class, 'statement_id');
+    }
+
+    public function bodyShopStatement(): BelongsTo
+    {
+        return $this->belongsTo(BodyShopViolationStatement::class, 'statement_id');
+    }
+
+    public function glbaStatement(): BelongsTo
+    {
+        return $this->belongsTo(GlbaViolationStatements::class, 'statement_id');
     }
 }

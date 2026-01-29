@@ -38,6 +38,7 @@ class Edit extends Component
         'violations.*.comment' => 'required',
         'violations.*.violation_date' => 'nullable|date',
         'violations.*.risk' => 'nullable|boolean',
+        'violations.*.severity' => 'nullable|integer|min:0|max:10',
         'violationFiles.*.*' => 'nullable|mimes:jpg,jpeg,png,heic,heif,webp|max:15360',
     ];
 
@@ -65,6 +66,7 @@ class Edit extends Component
                     'comment' => $violation['comment'],
                     'violation_date' => $violation['violation_date'],
                     'risk' => $violation['risk'],
+                    'severity' => $violation['severity'] ?? null,
                 ];
 
                 foreach ($this->violationFiles as $index => $files) {
@@ -106,17 +108,25 @@ class Edit extends Component
                 ->title('Audit Updated!')
                 ->success()
                 ->send();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $errorMessage = collect($e->errors())->flatten()->first() ?? 'Validation failed';
+
+            Notification::make()
+                ->title('Validation Error')
+                ->body($errorMessage)
+                ->danger()
+                ->send();
         } catch (Exception $e) {
             Log::error('Error updating audit', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            $errorMessage = 'All violations must have a comment';
-
-            if (mb_strpos($e->getMessage(), 'validation.max.file') !== false) {
-                $errorMessage = 'One or more files exceeded the 15MB size limit';
-            }
+            $errorMessage = match (true) {
+                str_contains($e->getMessage(), 'validation.max.file') => 'One or more files exceeded the 15MB size limit',
+                str_contains($e->getMessage(), 'severity') => 'Invalid severity value. Please run migrations.',
+                default => $e->getMessage(),
+            };
 
             Notification::make()
                 ->title('Error updating audit')

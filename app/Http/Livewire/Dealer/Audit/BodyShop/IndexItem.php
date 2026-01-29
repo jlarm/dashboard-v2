@@ -80,6 +80,11 @@ class IndexItem extends Component
         return $this->bodyShopAudit->violation_count === 0 ? 0 : (int) round($this->bodyShopAudit->remediation_count / $this->bodyShopAudit->violation_count * 100);
     }
 
+    public function commentCount(): int
+    {
+        return $this->bodyShopAudit->auditComments()->count();
+    }
+
     public function delete(): void
     {
         $this->deleteViolationPhotos();

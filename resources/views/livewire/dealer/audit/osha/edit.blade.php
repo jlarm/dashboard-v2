@@ -1,17 +1,21 @@
-<div x-data="{
-    removeViolation: function(index) {
-        @this.call('deleteViolation', index)
-    },
-    listenForDeletion: function() {
-        @this.on('violationsUpdated', violations => {
-            violations.forEach((violation, index) => {
-                if (!violation) {
-                    this.$refs['violation' + index].remove();
-                }
-            });
-        })
-    }
-}" x-init="listenForDeletion" class="max-w-2xl mx-auto my-6">
+<div
+    x-data="{
+        removeViolation: function(index) {
+            @this.call('deleteViolation', index)
+        },
+        listenForDeletion: function() {
+            @this.on('violationsUpdated', violations => {
+                violations.forEach((violation, index) => {
+                    if (!violation) {
+                        this.$refs['violation' + index].remove();
+                    }
+                });
+            })
+        }
+    }"
+    x-init="listenForDeletion"
+    class="max-w-2xl mx-auto my-6"
+>
     <div>
         <p class="text-sm mb-5 px-5 md:px-0">
             <span class="inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500">
@@ -23,7 +27,7 @@
             {{-- Audit Date --}}
             <div>
                 <label for="date" class="sr-only">Audit Date</label>
-                <input
+                <x-date-picker
                     wire:model.defer="date"
                     type="date"
                     name="date"
@@ -47,13 +51,15 @@
                                 </span>
                             </div>
                         @endif
-                        <h2 class="hover:cursor-pointer">
-                        <span
+                        <div
+                            wire:key="header-{{ $s->id }}"
                             @click="open = !open"
-                            class="flex w-full items-center justify-between px-3 py-4 text-black"
+                            class="bg-slate-50 border-b border-slate-200 px-3 md:px-4 py-5 flex items-center justify-between cursor-pointer"
                         >
-                            <span class="mr-10">{{ $index + 1 }}. {{ $s['statement'] }}</span>
-                            <span x-show="open" aria-hidden="true" class="ml-4">
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                                {{ $s['statement'] }}
+                            </h3>
+                            <span x-cloak x-show="open" aria-hidden="true" class="ml-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
                                   <path d="M3.75 7.25a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z" />
                                 </svg>
@@ -67,45 +73,97 @@
                                   <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
                                 </svg>
                             </span>
-                        </span>
-                        </h2>
+                        </div>
 
                         <div
+                            wire:key="content-{{ $s->id }}"
                             x-show="open"
-                            x-collapse
                             x-cloak
                         >
-                            <div class="mt-2 space-y-3 p-3 pt-0">
+                            <div class="mt-2 space-y-6 p-3">
                                 {{-- Comment --}}
-                                <div>
+                                <div class="space-y-1">
+                                    <label class="text-sm font-bold text-slate-700 uppercase tracking-tight">Comment <span class="text-red-500">*</span></label>
                                 <textarea
                                     wire:model="violations.{{ $index }}.comment"
                                     rows="4"
                                     name="violations.{{ $index }}"
                                     id="violations.{{ $index }}"
                                     placeholder="Add comment"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
+                                    class="w-full h-32 px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none resize-none placeholder:text-slate-400"></textarea>
                                     @error('violations.' . $index . '.comment') <span class="text-sm text-red-500 mt-3">* A comment is required</span> @enderror
                                 </div>
 
                                 {{-- Date of Violation --}}
-                                <input
-                                    type="date"
-                                    wire:model.defer="violations.{{ $index }}.violation_date"
-                                    name="violations.{{ $index }}.violation_date"
-                                    id="violations.{{ $index }}.violation_date"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
-                                />
+                                <div class="space-y-1">
+                                    <label class="text-sm font-bold text-slate-700 uppercase tracking-tight">Date of Violation</label>
+                                    <x-date-picker wire:model.defer="violations.{{ $index }}.violation_date" />
+                                </div>
+
+                                {{-- Impact Severity --}}
+                                <div
+                                    x-data="{ severity: $wire.violations[{{ $index }}]?.severity || null }"
+                                    x-init="$watch('severity', value => $wire.set('violations.{{ $index }}.severity', value))"
+                                    class="space-y-1"
+                                >
+                                    <div class="flex justify-between items-center">
+                                        <label class="text-sm font-bold text-slate-700 uppercase tracking-tight">Impact Severity</label>
+                                        <span
+                                            x-show="severity"
+                                            x-text="'LEVEL ' + severity"
+                                            :class="{
+                                                'bg-emerald-500': severity <= 3,
+                                                'bg-amber-500': severity >= 4 && severity <= 5,
+                                                'bg-orange-500': severity >= 6 && severity <= 7,
+                                                'bg-red-500': severity >= 8
+                                            }"
+                                            class="px-2 py-0.5 rounded text-white text-xs font-black transition-colors"
+                                        ></span>
+                                    </div>
+                                    <div class="grid grid-cols-10 gap-1 md:gap-2">
+                                        @for ($level = 1; $level <= 10; $level++)
+                                            <button
+                                                type="button"
+                                                @click="severity = {{ $level }}"
+                                                :class="severity === {{ $level }}
+                                                    ? '{{ $level <= 3 ? 'bg-emerald-500' : ($level <= 5 ? 'bg-amber-500' : ($level <= 7 ? 'bg-orange-500' : 'bg-red-500')) }} text-white shadow-lg scale-105 ring-2 ring-offset-2 ring-slate-400'
+                                                    : 'bg-slate-100 text-slate-400 hover:bg-slate-200'"
+                                                class="h-10 md:h-12 rounded-lg flex items-center justify-center text-xs md:text-sm font-bold transition-all"
+                                            >{{ $level }}</button>
+                                        @endfor
+                                    </div>
+                                    <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">
+                                        <span>Negligible</span>
+                                        <span>Critical</span>
+                                    </div>
+                                </div>
 
                                 {{-- High Risk --}}
-                                <div class="relative flex items-start">
-                                    <div class="flex h-6 items-center">
-                                        <label>
-                                            <input wire:model.defer="violations.{{ $index }}.risk" id="violations.{{ $index }}.risk" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-600">
-                                        </label>
+                                <div
+                                    x-data="{ isRisk: @entangle('violations.' . $index . '.risk').defer }"
+                                    @click="isRisk = !isRisk"
+                                    :class="isRisk ? 'bg-red-50 border-red-200 shadow-[0_0_15px_-5px_rgba(239,68,68,0.3)]' : 'bg-gray-50 border-gray-200'"
+                                    class="p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between"
+                                >
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            :class="isRisk ? 'bg-red-500 text-white' : 'bg-gray-300 text-gray-500'"
+                                            class="p-2 rounded-xl transition-colors"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+                                        </div>
+                                        <div>
+                                            <p :class="isRisk ? 'text-red-700' : 'text-gray-500'" class="font-bold text-sm transition-colors">Flag as High Risk</p>
+                                        </div>
                                     </div>
-                                    <div class="ml-3 text-sm leading-6">
-                                        <label for="violations.{{ $index }}.risk" class="font-medium text-red-500">Flag as high risk</label>
+                                    <div
+                                        :class="isRisk ? 'bg-red-500' : 'bg-gray-300'"
+                                        class="w-12 h-6 rounded-full relative transition-colors"
+                                    >
+                                        <div
+                                            :class="isRisk ? 'translate-x-6' : 'translate-x-0'"
+                                            class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform"
+                                        ></div>
                                     </div>
                                 </div>
 
