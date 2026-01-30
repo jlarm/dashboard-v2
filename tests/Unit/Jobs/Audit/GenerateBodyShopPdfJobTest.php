@@ -3,20 +3,28 @@
 declare(strict_types=1);
 
 use App\Jobs\Audit\GenerateBodyShopPdfJob;
+use App\Models\BodyShopViolationStatement;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Stancl\Tenancy\Tenancy;
 
-function createBodyShopViolation(int $weight, int $severity): object
+function createBodyShopViolation(int $statementId, int $severity): object
 {
-    $statement = new stdClass();
-    $statement->weight = $weight;
-
     $violation = new stdClass();
-    $violation->bodyShopStatement = $statement;
+    $violation->statement_id = $statementId;
     $violation->severity = $severity;
 
     return $violation;
+}
+
+function createBodyShopStatement(int $id, int $weight): BodyShopViolationStatement
+{
+    $statement = new BodyShopViolationStatement();
+    $statement->id = $id;
+    $statement->weight = $weight;
+
+    return $statement;
 }
 
 function invokeBodyShopRatingMethod(GenerateBodyShopPdfJob $job): string
@@ -31,24 +39,49 @@ function invokeBodyShopRatingMethod(GenerateBodyShopPdfJob $job): string
 function createBodyShopJobWithViolations(array $violationData): GenerateBodyShopPdfJob
 {
     $violations = new Collection();
+    $statements = new Collection();
 
-    foreach ($violationData as $data) {
-        $violations->push(createBodyShopViolation($data['weight'], $data['severity']));
+    foreach ($violationData as $index => $data) {
+        $statementId = $index + 1;
+        $violations->push(createBodyShopViolation($statementId, $data['severity']));
+        $statements->put($statementId, createBodyShopStatement($statementId, $data['weight']));
     }
 
     $morphMany = Mockery::mock(MorphMany::class);
-    $morphMany->shouldReceive('with')->with('bodyShopStatement')->andReturnSelf();
     $morphMany->shouldReceive('get')->andReturn($violations);
 
     $audit = Mockery::mock(BodyShopViolationAudit::class);
     $audit->shouldReceive('violations')->andReturn($morphMany);
 
+    $tenancy = Mockery::mock(Tenancy::class);
+    $tenancy->shouldReceive('central')->andReturnUsing(function ($callback) use ($statements) {
+        return $statements;
+    });
+
+    app()->instance(Tenancy::class, $tenancy);
+
     return new GenerateBodyShopPdfJob($audit);
 }
 
+beforeEach(function () {
+    $tenancy = Mockery::mock(Tenancy::class);
+    $tenancy->shouldReceive('central')->andReturnUsing(function ($callback) {
+        return new Collection();
+    });
+    app()->instance(Tenancy::class, $tenancy);
+});
+
 describe('Body Shop rating calculation', function () {
     it('returns A grade when there are no violations', function () {
-        $job = createBodyShopJobWithViolations([]);
+        $violations = new Collection();
+
+        $morphMany = Mockery::mock(MorphMany::class);
+        $morphMany->shouldReceive('get')->andReturn($violations);
+
+        $audit = Mockery::mock(BodyShopViolationAudit::class);
+        $audit->shouldReceive('violations')->andReturn($morphMany);
+
+        $job = new GenerateBodyShopPdfJob($audit);
 
         expect(invokeBodyShopRatingMethod($job))->toBe('A');
     });
