@@ -33,8 +33,8 @@ class InternalReportIndex extends Component
 
     }
 
-    protected function formattedLastScanDate($date): string
+    protected function formattedLastScanDate(\Illuminate\Support\Carbon $date): string
     {
-        return date('F d, Y', strtotime($date));
+        return $date->format('F d, Y');
     }
 }
