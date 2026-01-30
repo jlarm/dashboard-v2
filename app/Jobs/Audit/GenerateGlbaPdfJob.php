@@ -36,14 +36,17 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     private function rating(): string
     {
-        $violations = $this->glbaViolationAudit->violations()->with('glbaStatement')->get();
+        $violations = $this->glbaViolationAudit->violations()->get();
 
         if ($violations->isEmpty()) {
             return 'A';
         }
 
-        $totalPotentialWeight = $violations->sum(fn ($v) => $v->glbaStatement?->weight ?? 1);
-        $totalPenalty = $violations->sum(fn ($v) => ($v->glbaStatement?->weight ?? 1) * (($v->severity ?? 1) / 10));
+        $statementIds = $violations->pluck('statement_id')->filter()->unique();
+        $statements = tenancy()->central(fn () => \App\Models\GlbaViolationStatements::whereIn('id', $statementIds)->get()->keyBy('id'));
+
+        $totalPotentialWeight = $violations->sum(fn ($v) => $statements->get($v->statement_id)?->weight ?? 1);
+        $totalPenalty = $violations->sum(fn ($v) => ($statements->get($v->statement_id)?->weight ?? 1) * (($v->severity ?? 1) / 10));
 
         $actualScore = $totalPotentialWeight - $totalPenalty;
         $finalPercentage = ($actualScore / $totalPotentialWeight) * 100;

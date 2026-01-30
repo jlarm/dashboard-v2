@@ -36,14 +36,17 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     private function rating(): string
     {
-        $violations = $this->bodyShopViolationAudit->violations()->with('bodyShopStatement')->get();
+        $violations = $this->bodyShopViolationAudit->violations()->get();
 
         if ($violations->isEmpty()) {
             return 'A';
         }
 
-        $totalPotentialWeight = $violations->sum(fn ($v) => $v->bodyShopStatement?->weight ?? 1);
-        $totalPenalty = $violations->sum(fn ($v) => ($v->bodyShopStatement?->weight ?? 1) * (($v->severity ?? 1) / 10));
+        $statementIds = $violations->pluck('statement_id')->filter()->unique();
+        $statements = tenancy()->central(fn () => \App\Models\BodyShopViolationStatement::whereIn('id', $statementIds)->get()->keyBy('id'));
+
+        $totalPotentialWeight = $violations->sum(fn ($v) => $statements->get($v->statement_id)?->weight ?? 1);
+        $totalPenalty = $violations->sum(fn ($v) => ($statements->get($v->statement_id)?->weight ?? 1) * (($v->severity ?? 1) / 10));
 
         $actualScore = $totalPotentialWeight - $totalPenalty;
         $finalPercentage = ($actualScore / $totalPotentialWeight) * 100;

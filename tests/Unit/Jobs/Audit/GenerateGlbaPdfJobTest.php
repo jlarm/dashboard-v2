@@ -4,19 +4,27 @@ declare(strict_types=1);
 
 use App\Jobs\Audit\GenerateGlbaPdfJob;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
+use App\Models\GlbaViolationStatements;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Stancl\Tenancy\Tenancy;
 
-function createGlbaViolation(int $weight, int $severity): object
+function createGlbaViolation(int $statementId, int $severity): object
 {
-    $statement = new stdClass();
-    $statement->weight = $weight;
-
     $violation = new stdClass();
-    $violation->glbaStatement = $statement;
+    $violation->statement_id = $statementId;
     $violation->severity = $severity;
 
     return $violation;
+}
+
+function createGlbaStatement(int $id, int $weight): GlbaViolationStatements
+{
+    $statement = new GlbaViolationStatements();
+    $statement->id = $id;
+    $statement->weight = $weight;
+
+    return $statement;
 }
 
 function invokeGlbaRatingMethod(GenerateGlbaPdfJob $job): string
@@ -31,24 +39,49 @@ function invokeGlbaRatingMethod(GenerateGlbaPdfJob $job): string
 function createGlbaJobWithViolations(array $violationData): GenerateGlbaPdfJob
 {
     $violations = new Collection();
+    $statements = new Collection();
 
-    foreach ($violationData as $data) {
-        $violations->push(createGlbaViolation($data['weight'], $data['severity']));
+    foreach ($violationData as $index => $data) {
+        $statementId = $index + 1;
+        $violations->push(createGlbaViolation($statementId, $data['severity']));
+        $statements->put($statementId, createGlbaStatement($statementId, $data['weight']));
     }
 
     $morphMany = Mockery::mock(MorphMany::class);
-    $morphMany->shouldReceive('with')->with('glbaStatement')->andReturnSelf();
     $morphMany->shouldReceive('get')->andReturn($violations);
 
     $audit = Mockery::mock(GlbaViolationAudit::class);
     $audit->shouldReceive('violations')->andReturn($morphMany);
 
+    $tenancy = Mockery::mock(Tenancy::class);
+    $tenancy->shouldReceive('central')->andReturnUsing(function ($callback) use ($statements) {
+        return $statements;
+    });
+
+    app()->instance(Tenancy::class, $tenancy);
+
     return new GenerateGlbaPdfJob($audit);
 }
 
+beforeEach(function () {
+    $tenancy = Mockery::mock(Tenancy::class);
+    $tenancy->shouldReceive('central')->andReturnUsing(function ($callback) {
+        return new Collection();
+    });
+    app()->instance(Tenancy::class, $tenancy);
+});
+
 describe('GLBA/Finance rating calculation', function () {
     it('returns A grade when there are no violations', function () {
-        $job = createGlbaJobWithViolations([]);
+        $violations = new Collection();
+
+        $morphMany = Mockery::mock(MorphMany::class);
+        $morphMany->shouldReceive('get')->andReturn($violations);
+
+        $audit = Mockery::mock(GlbaViolationAudit::class);
+        $audit->shouldReceive('violations')->andReturn($morphMany);
+
+        $job = new GenerateGlbaPdfJob($audit);
 
         expect(invokeGlbaRatingMethod($job))->toBe('A');
     });
