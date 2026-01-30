@@ -1,17 +1,175 @@
-<div x-data="{
-    removeViolation: function(index) {
-        @this.call('deleteViolation', index)
-    },
-    listenForDeletion: function() {
-        @this.on('violationsUpdated', violations => {
-            violations.forEach((violation, index) => {
-                if (!violation) {
-                    this.$refs['violation' + index].remove();
+<div
+    x-data="{
+        removeViolation: function(index) {
+            @this.call('deleteViolation', index)
+        },
+        listenForDeletion: function() {
+            @this.on('violationsUpdated', violations => {
+                violations.forEach((violation, index) => {
+                    if (!violation) {
+                        this.$refs['violation' + index].remove();
+                    }
+                });
+            })
+        },
+        // Image compression state and methods
+        imageSlots: {},
+        maxWidth: 1920,
+        maxHeight: 1920,
+        quality: 0.80,
+
+        getSlotKey(violationId, slotIndex) {
+            return `${violationId}-${slotIndex}`;
+        },
+
+        getSlotState(violationId, slotIndex) {
+            const key = this.getSlotKey(violationId, slotIndex);
+            if (!this.imageSlots[key]) {
+                this.imageSlots[key] = {
+                    status: 'idle',
+                    localPreview: null,
+                    originalSize: 0,
+                    compressedSize: 0,
+                    uploadProgress: 0,
+                    errorMessage: null,
+                };
+            }
+            return this.imageSlots[key];
+        },
+
+        formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        },
+
+        async handleFileSelect(event, violationId, slotIndex) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const slot = this.getSlotState(violationId, slotIndex);
+            slot.status = 'compressing';
+            slot.originalSize = file.size;
+            slot.errorMessage = null;
+
+            // Immediately show local preview
+            slot.localPreview = URL.createObjectURL(file);
+
+            try {
+                const compressedFile = await this.compressImage(file);
+                slot.compressedSize = compressedFile.size;
+                slot.status = 'uploading';
+
+                await this.uploadToLivewire(compressedFile, violationId, slotIndex, slot);
+            } catch (error) {
+                console.error('Compression/upload error:', error);
+                slot.status = 'error';
+                slot.errorMessage = error.message || 'Failed to process image';
+
+                // Fall back to uploading original file for HEIC on non-Safari browsers
+                if (file.type === 'image/heic' || file.type === 'image/heif' || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) {
+                    slot.status = 'uploading';
+                    slot.compressedSize = file.size;
+                    await this.uploadToLivewire(file, violationId, slotIndex, slot);
                 }
+            }
+        },
+
+        compressImage(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    const img = new Image();
+
+                    img.onload = () => {
+                        // Calculate new dimensions maintaining aspect ratio
+                        let { width, height } = img;
+                        if (width > this.maxWidth || height > this.maxHeight) {
+                            const ratio = Math.min(this.maxWidth / width, this.maxHeight / height);
+                            width = Math.round(width * ratio);
+                            height = Math.round(height * ratio);
+                        }
+
+                        // Create canvas and draw resized image
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Convert to JPEG blob
+                        canvas.toBlob(
+                            (blob) => {
+                                if (!blob) {
+                                    reject(new Error('Failed to create image blob'));
+                                    return;
+                                }
+
+                                // Create a File object from the blob
+                                const compressedFile = new File(
+                                    [blob],
+                                    file.name.replace(/\.[^/.]+$/, '') + '.jpg',
+                                    { type: 'image/jpeg' }
+                                );
+                                resolve(compressedFile);
+                            },
+                            'image/jpeg',
+                            this.quality
+                        );
+                    };
+
+                    img.onerror = () => reject(new Error('Failed to load image'));
+                    img.src = e.target.result;
+                };
+
+                reader.onerror = () => reject(new Error('Failed to read file'));
+                reader.readAsDataURL(file);
             });
-        })
-    }
-}" x-init="listenForDeletion" class="max-w-2xl mx-auto my-6">
+        },
+
+        uploadToLivewire(file, violationId, slotIndex, slot) {
+            return new Promise((resolve, reject) => {
+                @this.upload(
+                    `violationFiles.${violationId}.${slotIndex}`,
+                    file,
+                    (uploadedFilename) => {
+                        slot.status = 'complete';
+                        slot.uploadProgress = 100;
+                        resolve(uploadedFilename);
+                    },
+                    (error) => {
+                        slot.status = 'error';
+                        slot.errorMessage = 'Upload failed';
+                        reject(error);
+                    },
+                    (event) => {
+                        slot.uploadProgress = event.detail.progress;
+                    }
+                );
+            });
+        },
+
+        clearSlot(violationId, slotIndex) {
+            const key = this.getSlotKey(violationId, slotIndex);
+            if (this.imageSlots[key] && this.imageSlots[key].localPreview) {
+                URL.revokeObjectURL(this.imageSlots[key].localPreview);
+            }
+            this.imageSlots[key] = {
+                status: 'idle',
+                localPreview: null,
+                originalSize: 0,
+                compressedSize: 0,
+                uploadProgress: 0,
+                errorMessage: null,
+            };
+        }
+    }"
+    x-init="listenForDeletion"
+    class="max-w-2xl mx-auto my-6"
+>
     <div>
         <p class="text-sm mb-5 px-5 md:px-0">
             <span class="inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500">
@@ -165,63 +323,92 @@
 
                                 {{-- Images --}}
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                                    <div wire:key="violation-{{ $s->id }}-file-0">
-                                        <label for="violationFiles.{{ $s['id'] }}.0" class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center">
-                                            @if(isset($violationFiles[$s['id']][0]))
-                                                <img class="w-full h-[200px] object-cover" src="{{ $violationFiles[$s['id']][0]->temporaryUrl() }}" alt="Violation Image">
-                                            @elseif($s->getMedia('violation_files_0')->first() !== null)
-                                                <img class="w-full h-[200px] object-cover" src="{{ $s->getMedia('violation_files_0')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}" alt="Violation Image">
-                                            @else
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">--}}
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                                                </svg>
-                                            @endif
-                                            <input type="file" accept="image/jpeg,image/jpg" capture="environment" wire:model="violationFiles.{{ $s['id'] }}.0" id="violationFiles.{{ $s['id'] }}.0" class="sr-only">
-                                        </label>
-                                        @if($s->getMedia('violation_files_0')->first() !== null)
-                                            <button wire:click="deletePhoto({{ $s['id'] }}, 0)">Clear</button>
-                                        @endif
-                                        @error("violationFiles.{$s['id']}.0") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 5MB</p> @enderror
-                                    </div>
-                                       <div wire:key="violation-{{ $s->id }}-file-1">
-                                           <label for="violationFiles.{{ $s['id'] }}.1" class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center">
-                                               @if(isset($violationFiles[$s['id']][1]))
-                                                   <img class="w-full h-[200px] object-cover" src="{{ $violationFiles[$s['id']][1]->temporaryUrl() }}" alt="Violation Image">
-                                               @elseif($s->getMedia('violation_files_1')->first() !== null)
-                                                   <img class="w-full h-[200px] object-cover" src="{{ $s->getMedia('violation_files_1')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}" alt="Violation Image">
-                                               @else
-                                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">--}}
-                                                       <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                                                       <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                                                   </svg>
-                                               @endif
-                                               <input type="file" accept="image/jpeg,image/jpg" capture="environment" wire:model="violationFiles.{{ $s['id'] }}.1" id="violationFiles.{{ $s['id'] }}.1" class="sr-only">
-                                           </label>
-                                           @if($s->getMedia('violation_files_1')->first() !== null)
-                                               <button wire:click="deletePhoto({{ $s['id'] }}, 1)">Clear</button>
-                                           @endif
-                                           @error("violationFiles.{$s['id']}.1") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 5MB</p> @enderror
-                                       </div>
-                                        <div wire:key="violation-{{ $s->id }}-file-2">
-                                            <label for="violationFiles.{{ $s['id'] }}.2" class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center">
-                                                @if(isset($violationFiles[$s['id']][2]))
-                                                    <img class="w-full h-[200px] object-cover" src="{{ $violationFiles[$s['id']][2]->temporaryUrl() }}" alt="Violation Image">
-                                                @elseif($s->getMedia('violation_files_2')->first() !== null)
-                                                    <img class="w-full h-[200px] object-cover" src="{{ $s->getMedia('violation_files_2')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}" alt="Violation Image">
-                                                @else
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">--}}
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                                                    </svg>
-                                                @endif
-                                                <input type="file" accept="image/jpeg,image/jpg" capture="environment" wire:model="violationFiles.{{ $s['id'] }}.2" id="violationFiles.{{ $s['id'] }}.2" class="sr-only">
+                                    @foreach([0, 1, 2] as $slotIndex)
+                                        <div wire:key="violation-{{ $s->id }}-file-{{ $slotIndex }}" x-data="{ slot: getSlotState({{ $s->id }}, {{ $slotIndex }}) }">
+                                            <label
+                                                for="violationFiles.{{ $s['id'] }}.{{ $slotIndex }}"
+                                                class="relative bg-white overflow-hidden cursor-pointer w-full h-[150px] text-gray-900/25 hover:text-gray-900/50 rounded-lg border border-dashed border-gray-900/25 flex justify-center items-center"
+                                            >
+                                                {{-- Optimistic local preview (shows immediately) --}}
+                                                <template x-if="slot.localPreview && slot.status !== 'idle'">
+                                                    <img :src="slot.localPreview" class="w-full h-[150px] object-cover" alt="Violation Image Preview">
+                                                </template>
+
+                                                {{-- Server-confirmed upload --}}
+                                                <template x-if="!slot.localPreview || slot.status === 'idle'">
+                                                    <div class="w-full h-full flex justify-center items-center">
+                                                        @if(isset($violationFiles[$s['id']][$slotIndex]))
+                                                            <img class="w-full h-[150px] object-cover" src="{{ $violationFiles[$s['id']][$slotIndex]->temporaryUrl() }}" alt="Violation Image">
+                                                        @elseif($s->getMedia('violation_files_' . $slotIndex)->first() !== null)
+                                                            @php
+                                                                $media = $s->getMedia('violation_files_' . $slotIndex)->first();
+                                                                $conversionName = $media->hasGeneratedConversion('thumb') ? 'thumb' : '';
+                                                            @endphp
+                                                            @if($conversionName)
+                                                                <img class="w-full h-[150px] object-cover" src="{{ $media->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), $conversionName) }}" alt="Violation Image">
+                                                            @else
+                                                                <img class="w-full h-[150px] object-cover" src="{{ $media->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45)) }}" alt="Violation Image">
+                                                            @endif
+                                                        @else
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                                                            </svg>
+                                                        @endif
+                                                    </div>
+                                                </template>
+
+                                                {{-- Progress overlay --}}
+                                                <template x-if="slot.status === 'compressing' || slot.status === 'uploading'">
+                                                    <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white">
+                                                        <svg class="animate-spin h-8 w-8 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                        </svg>
+                                                        <span x-show="slot.status === 'compressing'" class="text-xs font-medium">Compressing...</span>
+                                                        <span x-show="slot.status === 'uploading'" class="text-xs font-medium">Uploading <span x-text="Math.round(slot.uploadProgress)"></span>%</span>
+                                                    </div>
+                                                </template>
+
+                                                {{-- Success checkmark --}}
+                                                <template x-if="slot.status === 'complete'">
+                                                    <div class="absolute top-2 right-2 bg-green-500 rounded-full p-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                </template>
+
+                                                <input
+                                                    type="file"
+                                                    accept="image/jpeg,image/jpg,image/png,image/heic,image/heif,image/webp"
+                                                    capture="environment"
+                                                    @change="handleFileSelect($event, {{ $s->id }}, {{ $slotIndex }})"
+                                                    id="violationFiles.{{ $s['id'] }}.{{ $slotIndex }}"
+                                                    class="sr-only"
+                                                >
                                             </label>
-                                            @if($s->getMedia('violation_files_2')->first() !== null)
-                                                <button wire:click="deletePhoto({{ $s['id'] }}, 2)">Clear</button>
+
+                                            {{-- File size reduction display --}}
+                                            <template x-if="slot.status === 'complete' && slot.originalSize > 0 && slot.compressedSize > 0 && slot.originalSize !== slot.compressedSize">
+                                                <p class="text-xs text-gray-500 mt-1 text-center">
+                                                    <span x-text="formatBytes(slot.originalSize)"></span>
+                                                    <span class="mx-1">→</span>
+                                                    <span x-text="formatBytes(slot.compressedSize)" class="text-green-600 font-medium"></span>
+                                                </p>
+                                            </template>
+
+                                            {{-- Error display --}}
+                                            <template x-if="slot.status === 'error' && slot.errorMessage">
+                                                <p class="text-xs text-red-500 mt-1" x-text="slot.errorMessage"></p>
+                                            </template>
+
+                                            @if($s->getMedia('violation_files_' . $slotIndex)->first() !== null)
+                                                <button wire:click="deletePhoto({{ $s['id'] }}, {{ $slotIndex }})" @click="clearSlot({{ $s->id }}, {{ $slotIndex }})" type="button" class="text-sm text-gray-600 hover:text-red-600 mt-1">Clear</button>
                                             @endif
-                                            @error("violationFiles.{$s['id']}.2") <p class="text-xs text-red-500 mt-1">Image needs to be a JPG and less than 5MB</p> @enderror
+                                            @error("violationFiles.{$s['id']}.{$slotIndex}") <p class="text-xs text-red-500 mt-1">Image upload failed. Please try again.</p> @enderror
                                         </div>
+                                    @endforeach
                                 </div>
 
                                 {{-- Delete --}}
