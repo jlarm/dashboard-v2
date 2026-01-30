@@ -25,7 +25,7 @@ class ReportIndex extends Component
 
     protected function formattedLastScanDate($date): string
     {
-        return date('F d, Y', strtotime($date));
+        return $date->format('F d, Y');
     }
 
     protected function fetchReports()
