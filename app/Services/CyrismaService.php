@@ -58,15 +58,6 @@ class CyrismaService
         Cache::increment($versionKey);
     }
 
-    protected function getCacheVersion(): int
-    {
-        if (! $this->store) {
-            return 1;
-        }
-
-        return (int) Cache::get("cyrisma_cache_version_{$this->store->id}", 1);
-    }
-
     public function authenticate(): ?string
     {
         if (! $this->isConfigured()) {
@@ -281,9 +272,9 @@ class CyrismaService
                 $scanTypeName = mb_strtolower($scan['scan_type_name'] ?? '');
 
                 return match ($assetType) {
-                    'internal' => $scanType == 5 || str_contains($scanTypeName, 'internal authenticated'),
-                    'external_ip' => $scanType == 9 || (str_contains($scanTypeName, 'external') && str_contains($scanTypeName, 'ip') && ! str_contains($scanTypeName, 'web')),
-                    'external_web' => $scanType == 11 || (str_contains($scanTypeName, 'external') && str_contains($scanTypeName, 'web')),
+                    'internal' => $scanType === 5 || str_contains($scanTypeName, 'internal authenticated'),
+                    'external_ip' => $scanType === 9 || (str_contains($scanTypeName, 'external') && str_contains($scanTypeName, 'ip') && ! str_contains($scanTypeName, 'web')),
+                    'external_web' => $scanType === 11 || (str_contains($scanTypeName, 'external') && str_contains($scanTypeName, 'web')),
                     default => true,
                 };
             });
@@ -326,6 +317,7 @@ class CyrismaService
                             'published_date' => isset($latestScan['scan_finished']) ? date('Y-m-d', strtotime($latestScan['scan_finished'])) : '-',
                             'affected_targets' => $flaw['target'] ?? 'Unknown',
                             'num_affected_targets' => $flaw['alertCount'] ?? 1,
+                            'type' => 'flaw',
                         ];
                     }
                 }
@@ -341,38 +333,46 @@ class CyrismaService
                             'published_date' => isset($vuln['firstSeen']) ? date('Y-m-d', strtotime($vuln['firstSeen'])) : '-',
                             'affected_targets' => $asset['name'] ?? $asset['ipAddress'] ?? 'Unknown',
                             'num_affected_targets' => 1,
+                            'type' => 'cve',
                         ];
                     }
                 }
 
                 if (isset($asset['openPorts']) && is_array($asset['openPorts'])) {
                     foreach ($asset['openPorts'] as $port) {
-                        $vulnerabilities[] = [
-                            'id' => 'Open Port '.$port['portNumber'],
-                            'title' => $port['portDescription'] ?? 'Open Port '.$port['portNumber'],
-                            'cve_score' => $this->getPortRiskScore($port['riskLevel'] ?? 'Low'),
-                            'cve_risk' => $port['riskLevel'] ?? 'Low',
-                            'published_date' => isset($latestScan['scan_finished']) ? date('Y-m-d', strtotime($latestScan['scan_finished'])) : '-',
-                            'affected_targets' => $port['targetName'] ?? $port['targetIp'] ?? 'Unknown',
-                            'num_affected_targets' => 1,
-                        ];
+                        $portNumber = $port['portNumber'];
+                        $targetName = $port['targetName'] ?? $port['targetIp'] ?? 'Unknown';
+
+                        // Group by port number - check if we already have this port
+                        $existingKey = array_search($portNumber, array_column($vulnerabilities, 'port_number'));
+
+                        if ($existingKey !== false && ($vulnerabilities[$existingKey]['type'] ?? '') === 'open_port') {
+                            // Add target to existing port entry
+                            $vulnerabilities[$existingKey]['num_affected_targets']++;
+                            $existingTargets = $vulnerabilities[$existingKey]['affected_targets'];
+                            if (! str_contains($existingTargets, $targetName)) {
+                                $vulnerabilities[$existingKey]['affected_targets'] .= ', '.$targetName;
+                            }
+                        } else {
+                            $vulnerabilities[] = [
+                                'id' => 'Open Port '.$portNumber,
+                                'port_number' => $portNumber,
+                                'title' => $port['portDescription'] ?? 'Open Port '.$portNumber,
+                                'cve_score' => $this->getPortRiskScore($port['riskLevel'] ?? 'Low'),
+                                'cve_risk' => $port['riskLevel'] ?? 'Low',
+                                'published_date' => isset($latestScan['scan_finished']) ? date('Y-m-d', strtotime($latestScan['scan_finished'])) : '-',
+                                'affected_targets' => $targetName,
+                                'num_affected_targets' => 1,
+                                'type' => 'open_port',
+                                'message' => 'There are open/listening ports on the target. Port '.$portNumber.'.',
+                            ];
+                        }
                     }
                 }
             }
         }
 
         return ['vulnerabilities' => $vulnerabilities];
-    }
-
-    protected function getPortRiskScore(string $riskLevel): float
-    {
-        return match (mb_strtolower($riskLevel)) {
-            'critical' => 9.5,
-            'high' => 7.5,
-            'medium' => 5.0,
-            'low' => 2.5,
-            default => 0.0,
-        };
     }
 
     public function getOpenPorts(?string $cveId = null): ?array
@@ -498,25 +498,6 @@ class CyrismaService
         ];
     }
 
-    protected function isPublicIp(string $ip): bool
-    {
-        if (empty($ip)) {
-            return false;
-        }
-
-        // Check if it's a valid IP
-        if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            return false;
-        }
-
-        // Check if it's a private IP range
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function getStoreReport(string $endpoint, array $params = []): ?array
     {
         if (! $this->store || ! $this->store->cyrisma) {
@@ -570,6 +551,45 @@ class CyrismaService
                 return null;
             }
         });
+    }
+
+    protected function getCacheVersion(): int
+    {
+        if (! $this->store) {
+            return 1;
+        }
+
+        return (int) Cache::get("cyrisma_cache_version_{$this->store->id}", 1);
+    }
+
+    protected function getPortRiskScore(string $riskLevel): float
+    {
+        return match (mb_strtolower($riskLevel)) {
+            'critical' => 9.5,
+            'high' => 7.5,
+            'medium' => 5.0,
+            'low' => 2.5,
+            default => 0.0,
+        };
+    }
+
+    protected function isPublicIp(string $ip): bool
+    {
+        if (empty($ip)) {
+            return false;
+        }
+
+        // Check if it's a valid IP
+        if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            return false;
+        }
+
+        // Check if it's a private IP range
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            return true;
+        }
+
+        return false;
     }
 
     protected function ensureAuthenticated(): bool
