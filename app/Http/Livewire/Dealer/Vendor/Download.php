@@ -70,7 +70,9 @@ class Download extends Component
 
             return response()->streamDownload(function () use ($pdf) {
                 echo $pdf;
-            }, $pdfName);
+            }, $pdfName, [
+                'Content-Type' => 'application/pdf',
+            ]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
 

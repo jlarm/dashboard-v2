@@ -35,7 +35,9 @@ class IndexItem extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
-        }, $this->vendor->name.now()->format('Ymd').'.pdf');
+        }, $this->vendor->name.now()->format('Ymd').'.pdf', [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 
     public function isCompleted(): bool
