@@ -6,9 +6,9 @@
 
     <div class="grid grid-cols-2 gap-4">
         <!-- Overall Risk -->
-        <div class="bg-white border border-gray-200 rounded-lg p-4">
+        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 border-2 border-indigo-300 rounded-lg p-4">
             <div class="flex items-center justify-between mb-2">
-                <div class="text-sm font-medium text-gray-700">Overall Risk</div>
+                <div class="text-sm font-medium text-indigo-900">Overall Risk</div>
                 @php
                     $trend = $this->getGradeTrend($riskData['current_or_grade'] ?? 'F', $riskData['previous_or_grade'] ?? 'F');
                 @endphp
@@ -26,8 +26,8 @@
                     </svg>
                 @endif
             </div>
-            <div class="text-3xl font-bold text-gray-900">{{ $riskData['current_or_grade'] ?? '-' }}</div>
-            <div class="text-xs text-gray-600 mt-1">Previous: {{ $riskData['previous_or_grade'] ?? '-' }}</div>
+            <div class="text-3xl font-bold text-indigo-900">{{ $riskData['current_or_grade'] ?? '-' }}</div>
+            <div class="text-xs text-indigo-700 mt-1">Previous: {{ $riskData['previous_or_grade'] ?? '-' }}</div>
         </div>
 
         <!-- Vulnerabilities -->

@@ -60,7 +60,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="text-sm font-bold text-gray-900">{{ $asset['name'] ?? $asset['ipAddress'] ?? 'Unknown Asset' }}</div>
+                                    <div class="font-bold text-gray-900">{{ $asset['name'] ?? $asset['ipAddress'] ?? 'Unknown Asset' }}</div>
                                     <div class="flex items-center gap-2 text-sm text-gray-600">
                                         <span>{{ $asset['ipAddress'] ?? '-' }}</span>
                                         @if(!empty($openPorts))
