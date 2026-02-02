@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\VendorForm;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Spatie\Browsershot\Browsershot;
 
 class Download extends Component
 {
@@ -59,17 +59,10 @@ class Download extends Component
     private function downloadGeneratedPdf(string $pdfName)
     {
         try {
-            $view = view('dealer.vendor.pdf.form-submission', ['vendor' => $this->vendorForm])->render();
-
-            $pdf = Browsershot::html($view)
-                ->noSandbox()
-                ->showBackground()
-                ->margins(10, 10, 10, 10)
-                ->format('A4')
-                ->pdf();
+            $pdf = Pdf::loadView('dealer.vendor.pdf.form-submission', ['vendor' => $this->vendorForm]);
 
             return response()->streamDownload(function () use ($pdf) {
-                echo $pdf;
+                echo $pdf->output();
             }, $pdfName, [
                 'Content-Type' => 'application/pdf',
             ]);
