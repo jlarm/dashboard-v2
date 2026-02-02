@@ -42,6 +42,10 @@ class IndexItem extends Component
     {
         $form = $this->vendor->forms()->latest()->first();
 
+        if (! $form) {
+            return false;
+        }
+
         if ($form->signature || $form->document_path) {
             return true;
         }
