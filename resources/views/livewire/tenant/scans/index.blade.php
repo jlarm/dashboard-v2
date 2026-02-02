@@ -16,9 +16,38 @@
 
     <div class="space-y-6" wire:init="loadScanData">
         @if($loaded)
-            @if($isConfigured)
+            @if($isConfigured && $hasShortName)
+                <!-- Overall Risk Dashboard -->
+                <div class="bg-white border border-gray-200 rounded-lg p-6">
+                    @livewire('tenant.scans.components.overall-risk-dashboard', ['cyrisma' => $cyrisma], key('overall-risk-dashboard'))
+                </div>
+
                 <!-- Issue Counts Component -->
                 @livewire('tenant.scans.components.issue-counts', ['cyrisma' => $cyrisma], key('issue-counts'))
+
+                <!-- External IP Attack Surface -->
+                <div class="bg-white border border-red-200 rounded-lg p-6">
+                    @livewire('tenant.scans.components.external-ip-exposure', ['cyrisma' => $cyrisma], key('external-ip-exposure'))
+                </div>
+
+                <!-- Data Exposure & Baseline Compliance -->
+{{--                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">--}}
+{{--                    <div class="bg-white border border-gray-200 rounded-lg p-6">--}}
+{{--                        @livewire('tenant.scans.components.data-exposure', ['cyrisma' => $cyrisma], key('data-exposure'))--}}
+{{--                    </div>--}}
+{{--                    <div class="bg-white border border-gray-200 rounded-lg p-6">--}}
+{{--                        @livewire('tenant.scans.components.baseline-compliance', ['cyrisma' => $cyrisma], key('baseline-compliance'))--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+                <!-- Vulnerable Assets -->
+{{--                <div class="bg-white border border-gray-200 rounded-lg p-6">--}}
+{{--                    <div class="flex items-center gap-2 mb-4">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server w-5 h-5 text-indigo-600" aria-hidden="true"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></svg>--}}
+{{--                        <h2 class="text-sm font-black text-slate-900 uppercase tracking-widest">Top Vulnerable Assets</h2>--}}
+{{--                    </div>--}}
+{{--                    @livewire('tenant.scans.components.vulnerable-assets', ['cyrisma' => $cyrisma], key('vulnerable-assets'))--}}
+{{--                </div>--}}
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="col-span-2 space-y-3">
@@ -34,7 +63,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers w-5 h-5 text-indigo-600" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg>
                                 <h2 class="text-sm font-black text-slate-900 uppercase tracking-widest">Open Port Vulnerabilities</h2>
                             </div>
-                            @livewire('tenant.scans.components.open-ports', ['cyrisma' => $cyrisma], key('cve-list'))
+                            @livewire('tenant.scans.components.open-ports', ['cyrisma' => $cyrisma], key('open-ports'))
                         </div>
                     </div>
                     <div>
@@ -43,8 +72,8 @@
                         </div>
                     </div>
                 </div>
-            @else
-                <!-- Configuration Warning -->
+            @elseif(!$isConfigured)
+                <!-- API Not Configured Warning -->
                 <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
                     <div class="flex items-start gap-4">
                         <svg class="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,6 +84,24 @@
                             <p class="text-yellow-800">
                                 The Cyrisma API credentials have not been configured. Please contact your administrator to set up the API integration to view scan data.
                             </p>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <!-- Short Name Not Configured Warning -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                    <div class="flex items-start gap-4">
+                        <svg class="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-lg font-semibold text-yellow-900 mb-1">Cyrisma Instance Not Configured</h3>
+                            <p class="text-yellow-800 mb-4">
+                                This store has not been linked to a Cyrisma instance. Please configure the short name in settings.
+                            </p>
+                            <x-armp.button variant="primary" :href="route('dealer.cyrisma.settings')">
+                                Configure Settings
+                            </x-armp.button>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,6 @@ namespace App\Http\Livewire\Tenant\Scans\Components;
 
 use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -18,12 +17,35 @@ class CveList extends Component
 
     public int $currentPage = 1;
 
+    public string $assetType = '';
+
     public function mount(): void
+    {
+        $this->loadCveData();
+    }
+
+    public function updatedAssetType(): void
+    {
+        $this->currentPage = 1;
+        $this->loadCveData();
+    }
+
+    protected function loadCveData(): void
     {
         $store = Store::find(app('currentStore'));
 
-        if ($store) {
-            $cyrisma = app(CyrismaService::class)->forStore($store);
+        if (! $store) {
+            return;
+        }
+
+        $cyrisma = app(CyrismaService::class)->forStore($store);
+
+        if ($this->assetType !== '') {
+            // Use the scan-based filtering for specific asset types
+            $data = $cyrisma->getVulnerabilitiesByAssetType($this->assetType);
+            $this->cveItems = $data['vulnerabilities'] ?? [];
+        } else {
+            // Use the CVE dashboard for "all" view
             $data = $cyrisma->getCveDetails();
             $this->cveItems = isset($data['cve_items']) ? array_slice($data['cve_items'], 1) : [];
         }

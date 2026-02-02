@@ -13,6 +13,7 @@ class Index extends Component
 {
     public bool $loaded = false;
     public bool $isConfigured = false;
+    public bool $hasShortName = false;
     protected ?Store $store = null;
     protected ?CyrismaService $cyrisma = null;
 
@@ -21,6 +22,7 @@ class Index extends Component
         $this->store = Store::find(app('currentStore'));
         $this->cyrisma = app(CyrismaService::class)->forStore($this->store);
         $this->isConfigured = $this->cyrisma->isConfigured();
+        $this->hasShortName = $this->cyrisma->hasShortName();
         $this->loaded = true;
     }
 
