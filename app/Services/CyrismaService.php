@@ -47,6 +47,26 @@ class CyrismaService
         return $this->store && $this->store->hasCyrismaShortName();
     }
 
+    public function clearCache(): void
+    {
+        if (! $this->store) {
+            return;
+        }
+
+        // Increment the cache version to invalidate all cached data for this store
+        $versionKey = "cyrisma_cache_version_{$this->store->id}";
+        Cache::increment($versionKey);
+    }
+
+    protected function getCacheVersion(): int
+    {
+        if (! $this->store) {
+            return 1;
+        }
+
+        return (int) Cache::get("cyrisma_cache_version_{$this->store->id}", 1);
+    }
+
     public function authenticate(): ?string
     {
         if (! $this->isConfigured()) {
@@ -505,41 +525,51 @@ class CyrismaService
             return null;
         }
 
-        if (! $this->ensureAuthenticated()) {
-            return null;
-        }
+        $cacheKey = sprintf(
+            'cyrisma_report_%s_v%s_%s_%s',
+            $this->store->id,
+            $this->getCacheVersion(),
+            str_replace('/', '_', $endpoint),
+            md5(serialize($params))
+        );
 
-        $this->authenticateInstance($this->store->cyrisma->instance_id);
-
-        $url = "https://{$this->store->cyrisma->instance_url}/app/partner/{$endpoint}";
-
-        try {
-            $request = $this->authorizedRequest();
-
-            $response = $request->asForm()->get($url, $params);
-
-            if ($response->successful()) {
-                return $response->json();
+        return Cache::remember($cacheKey, now()->addHours(24), function () use ($endpoint, $params) {
+            if (! $this->ensureAuthenticated()) {
+                return null;
             }
 
-            Log::error('Cyrisma API request failed', [
-                'endpoint' => $endpoint,
-                'url' => $url,
-                'status' => $response->status(),
-                'body' => $response->body(),
-                'store_id' => $this->store->id,
-            ]);
+            $this->authenticateInstance($this->store->cyrisma->instance_id);
 
-            return null;
-        } catch (Exception $e) {
-            Log::error('Failed to get Cyrisma store report', [
-                'message' => $e->getMessage(),
-                'endpoint' => $endpoint,
-                'store_id' => $this->store->id,
-            ]);
+            $url = "https://{$this->store->cyrisma->instance_url}/app/partner/{$endpoint}";
 
-            return null;
-        }
+            try {
+                $request = $this->authorizedRequest();
+
+                $response = $request->asForm()->get($url, $params);
+
+                if ($response->successful()) {
+                    return $response->json();
+                }
+
+                Log::error('Cyrisma API request failed', [
+                    'endpoint' => $endpoint,
+                    'url' => $url,
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                    'store_id' => $this->store->id,
+                ]);
+
+                return null;
+            } catch (Exception $e) {
+                Log::error('Failed to get Cyrisma store report', [
+                    'message' => $e->getMessage(),
+                    'endpoint' => $endpoint,
+                    'store_id' => $this->store->id,
+                ]);
+
+                return null;
+            }
+        });
     }
 
     protected function ensureAuthenticated(): bool

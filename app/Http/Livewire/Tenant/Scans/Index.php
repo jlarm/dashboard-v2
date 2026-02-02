@@ -17,6 +17,8 @@ class Index extends Component
     protected ?Store $store = null;
     protected ?CyrismaService $cyrisma = null;
 
+    protected $listeners = ['refreshCache'];
+
     public function loadScanData(): void
     {
         $this->store = Store::find(app('currentStore'));
@@ -24,6 +26,14 @@ class Index extends Component
         $this->isConfigured = $this->cyrisma->isConfigured();
         $this->hasShortName = $this->cyrisma->hasShortName();
         $this->loaded = true;
+    }
+
+    public function refreshCache(): void
+    {
+        $store = Store::find(app('currentStore'));
+        app(CyrismaService::class)->forStore($store)->clearCache();
+
+        $this->dispatchBrowserEvent('refresh-page');
     }
 
     public function render(): View

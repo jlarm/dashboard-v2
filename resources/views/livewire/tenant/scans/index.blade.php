@@ -1,16 +1,24 @@
-<div>
+<div x-data @refresh-page.window="window.location.reload()">
     <x-slot:header>
         <x-slot:pageTitle>Scan Details</x-slot:pageTitle>
         <x-slot:actions>
-            @hasanyrole('super-admin|Consultant')
-            <x-button.primary :href="route('dealer.cyrisma.settings')">Settings</x-button.primary>
-            @endhasanyrole
-            <button class="inline-flex items-center px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-semibold rounded-lg hover:bg-yellow-500">
-                Download report
-                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-            </button>
+            <div class="flex items-center gap-2 justify-end">
+                @hasanyrole('super-admin|Consultant')
+                <x-button.primary :href="route('dealer.cyrisma.settings')">Settings</x-button.primary>
+                @endhasanyrole
+                <button onclick="Livewire.emit('refreshCache')" class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-200 border border-gray-300">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Refresh
+                </button>
+                <button class="inline-flex items-center px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-semibold rounded-lg hover:bg-yellow-500">
+                    Download report
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+            </div>
         </x-slot>
     </x-slot:header>
 
