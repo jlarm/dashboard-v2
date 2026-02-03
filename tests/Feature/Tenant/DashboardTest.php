@@ -11,7 +11,7 @@ it('consultant access dashboard when logged in', function () {
         ->assertSeeLivewire('dealer.home.body-shop-stats')
         ->assertSeeLivewire('dealer.home.glba-stats')
         ->assertSeeLivewire('dealer.home.deal-jacket-stats')
-        ->assertSeeLivewire('dealer.employee.completed-courses-stat')
+        ->assertSeeLivewire('dealer.employee.department-completion-stats')
         ->assertSeeLivewire('dealer.home.note');
 });
 
