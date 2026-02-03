@@ -99,7 +99,7 @@
                                         </div>
                                         <button
                                             class="text-red-500"
-                                            wire:click="$emit('modal.open', 'dealer.employee.delete-invite', @js(['invite' => $invite->id]))"
+                                            wire:click="$emit('modal.open', 'dealer.employee.delete-invite', @js(['inviteId' => $invite->id]))"
                                         >
                                             Delete
                                         </button>

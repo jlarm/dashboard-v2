@@ -9,15 +9,26 @@ use WireElements\Pro\Components\Modal\Modal;
 
 class DeleteInvite extends Modal
 {
-    public $invite;
+    public ?Invite $invite = null;
 
-    public function mount(Invite $invite)
+    public function mount(int $inviteId): void
     {
-        $this->invite = $invite;
+        $this->invite = Invite::find($inviteId);
+
+        if (! $this->invite) {
+            $this->close();
+            $this->skipRender();
+        }
     }
 
-    public function deleteInvite()
+    public function deleteInvite(): void
     {
+        if (! $this->invite) {
+            $this->close();
+
+            return;
+        }
+
         Invite::destroy($this->invite->id);
 
         $this->emitTo('dealer.employee.open-invites', 'refreshOpenInvites');
