@@ -1,5 +1,5 @@
 <div class="flex justify-between flex-row-reverse bg-white border border-gray-200 rounded-xl p-2">
-    <div class="relative group">
+    <div class="relative group flex-shrink-0">
         <div>
             <div class="p-0.5 sm:p-1 inline-flex items-center bg-white border border-gray-200 rounded-lg">
                 <div class="tooltip-container inline-block relative">
@@ -40,8 +40,8 @@
     </div>
 
     <!-- Body -->
-    <div class="flex items-center gap-x-3">
-        <div class="grow truncate">
+    <div class="flex items-center gap-x-3 min-w-0">
+        <div class="grow truncate min-w-0">
             <p class="block truncate text-sm font-semibold text-gray-800">
                 {{ $sharedDocument->title }}
             </p>

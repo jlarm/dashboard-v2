@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-x-5 gap-y-10 xl:gap-5">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-10 xl:gap-5">
     @forelse($docs as $doc)
         <livewire:central.shared-docs.index-item :shared-document="$doc" :key="$doc->id" />
     @empty
