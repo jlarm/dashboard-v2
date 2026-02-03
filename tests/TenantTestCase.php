@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\PermissionRegistrar;
 
 abstract class TenantTestCase extends TestCase
 {
@@ -93,6 +94,9 @@ abstract class TenantTestCase extends TestCase
             ]);
 
             $this->manager->assignRole('Manager');
+
+            // Refresh permissions cache after assigning roles
+            app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
             // Configure URL generation for tenant
             config(['app.url' => 'http://test-tenant.localhost']);

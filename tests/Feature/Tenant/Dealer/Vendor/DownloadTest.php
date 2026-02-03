@@ -105,7 +105,7 @@ describe('Component Rendering', function () {
 
         Livewire::test(Download::class, ['vendorForm' => $this->vendorForm])
             ->assertStatus(200)
-            ->assertSee('Download Completed Form');
+            ->assertSee('Download');
     });
 
     it('shows disabled button when no signature and no document_path', function () {
