@@ -34,7 +34,7 @@
                 @livewire('tenant.scans.components.issue-counts', ['cyrisma' => $cyrisma], key('issue-counts'))
 
                 <!-- External IP Attack Surface -->
-                <div class="bg-white border border-red-200 rounded-lg p-6">
+                <div class="bg-white border border-gray-200 rounded-lg p-6">
                     @livewire('tenant.scans.components.external-ip-exposure', ['cyrisma' => $cyrisma], key('external-ip-exposure'))
                 </div>
 
