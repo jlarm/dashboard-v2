@@ -311,7 +311,7 @@ class Index extends Component
 
         $users = $this->showIncompleteCourseUsers
             ? $query->paginate(500)->filter(fn ($user) => $user->user_has_not_completed_courses)
-            : $query->paginate(25);
+            : $query->paginate(15);
 
         return view('livewire.dealer.employee.index', [
             'users' => $users,
