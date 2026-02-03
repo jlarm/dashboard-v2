@@ -6,24 +6,28 @@ namespace App\Http\Livewire\Dealer\Home;
 
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Note extends Component
 {
-    public $note;
-    public $store;
+    public ?string $note = null;
 
-    public function mount()
+    public Store $store;
+
+    public function mount(): void
     {
         $this->store = Store::where('id', app('currentStore'))->firstOrFail();
         $this->note = $this->store->note;
     }
 
-    public function update()
+    public function update(): void
     {
-        $this->store->update([
-            'note' => $this->note,
+        $validated = $this->validate([
+            'note' => ['nullable', 'string', 'max:65535'],
         ]);
+
+        $this->store->update($validated);
 
         Notification::make()
             ->title('Note Updated Successfully!')
@@ -31,7 +35,7 @@ class Note extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.home.note');
     }
