@@ -9,11 +9,16 @@ use WireElements\Pro\Components\Modal\Modal;
 
 class ResendInvite extends Modal
 {
-    public $invite;
+    public ?Invite $invite = null;
 
-    public function mount(Invite $invite)
+    public function mount(int $inviteId): void
     {
-        $this->invite = $invite;
+        $this->invite = Invite::find($inviteId);
+
+        if (! $this->invite) {
+            $this->close();
+            $this->skipRender();
+        }
     }
 
     public function render()
