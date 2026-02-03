@@ -24,6 +24,7 @@ use App\Models\RemediationSetting;
 use App\Models\User;
 use App\Traits\HasGrade;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -37,6 +38,8 @@ use Spatie\Sluggable\SlugOptions;
 class Store extends Model implements HasMedia
 {
     use HasGrade, HasSlug, InteractsWithMedia, LogsActivity;
+
+    private const GRADE_CACHE_TTL = 300;
 
     protected $fillable = [
         'name',
@@ -131,21 +134,31 @@ class Store extends Model implements HasMedia
 
     public function getDealJacketGradeAttribute(): ?string
     {
-        return $this->calculateGrade($this->individualAudits->where('rating', '!=', null)->pluck('rating')->toArray());
+        return Cache::remember(
+            $this->getGradeCacheKey('deal_jacket'),
+            self::GRADE_CACHE_TTL,
+            fn () => $this->calculateGrade(
+                $this->individualAudits()->whereNotNull('rating')->pluck('rating')->toArray()
+            )
+        );
     }
 
     public function getOverallGradeAttribute(): ?string
     {
-        $this->load(['individualAudits', 'financeAudits', 'oshaAudits', 'bodyShopAudits']);
+        return Cache::remember(
+            $this->getGradeCacheKey('overall'),
+            self::GRADE_CACHE_TTL,
+            function () {
+                $grades = array_merge(
+                    $this->individualAudits()->whereNotNull('rating')->pluck('rating')->toArray(),
+                    $this->financeAudits()->whereNotNull('rating')->pluck('rating')->toArray(),
+                    $this->oshaAudits()->whereNotNull('rating')->pluck('rating')->toArray(),
+                    $this->bodyShopAudits()->whereNotNull('rating')->pluck('rating')->toArray()
+                );
 
-        $grades = array_merge(
-            $this->individualAudits->where('rating', '!=', null)->pluck('rating')->toArray(),
-            $this->financeAudits->where('rating', '!=', null)->pluck('rating')->toArray(),
-            $this->oshaAudits->where('rating', '!=', null)->pluck('rating')->toArray(),
-            $this->bodyShopAudits->where('rating', '!=', null)->pluck('rating')->toArray()
+                return $this->calculateGrade($grades);
+            }
         );
-
-        return $this->calculateGrade($grades);
     }
 
     public function users(): BelongsToMany
