@@ -141,11 +141,9 @@ class CreateController extends Controller
     private function syncCentralCourses(): void
     {
         // Get central courses first
-        $centralCourses = tenancy()->central(function () {
-            return \App\Models\Course::query()
-                ->select(['id', 'slug', 'slides', 'questions'])
-                ->get();
-        });
+        $centralCourses = tenancy()->central(fn () => \App\Models\Course::query()
+            ->select(['id', 'slug', 'slides', 'questions'])
+            ->get());
 
         // Now we're in tenant context since we're inside dealer->run()
         foreach ($centralCourses as $centralCourse) {

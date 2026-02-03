@@ -252,12 +252,10 @@ class User extends Authenticatable
         $service = app(\App\Services\UserCourseService::class);
         $courses = $service->getCoursesSimple($this);
 
-        return $courses->map(function ($course) {
-            return [
-                'id' => $course->id,
-                'name' => $course->name,
-            ];
-        });
+        return $courses->map(fn ($course) => [
+            'id' => $course->id,
+            'name' => $course->name,
+        ]);
     }
 
     private function calculateCourseStatus(Dealer\Course $course): string

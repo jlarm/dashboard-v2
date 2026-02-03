@@ -15,7 +15,6 @@ class Cyrisma extends Model
         'instance_id',
         'instance_url',
     ];
-
     protected $casts = [
         'instance_id' => 'encrypted',
         'instance_url' => 'encrypted',

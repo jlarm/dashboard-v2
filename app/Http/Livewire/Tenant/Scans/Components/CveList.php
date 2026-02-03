@@ -12,11 +12,8 @@ use Livewire\Component;
 class CveList extends Component
 {
     public array $cveItems = [];
-
     public int $perPage = 5;
-
     public int $currentPage = 1;
-
     public string $assetType = '';
 
     public function mount(): void
@@ -28,27 +25,6 @@ class CveList extends Component
     {
         $this->currentPage = 1;
         $this->loadCveData();
-    }
-
-    protected function loadCveData(): void
-    {
-        $store = Store::find(app('currentStore'));
-
-        if (! $store) {
-            return;
-        }
-
-        $cyrisma = app(CyrismaService::class)->forStore($store);
-
-        if ($this->assetType !== '') {
-            // Use the scan-based filtering for specific asset types
-            $data = $cyrisma->getVulnerabilitiesByAssetType($this->assetType);
-            $this->cveItems = $data['vulnerabilities'] ?? [];
-        } else {
-            // Use the CVE dashboard for "all" view
-            $data = $cyrisma->getCveDetails();
-            $this->cveItems = isset($data['cve_items']) ? array_slice($data['cve_items'], 1) : [];
-        }
     }
 
     public function nextPage(): void
@@ -86,5 +62,26 @@ class CveList extends Component
             'totalPages' => $totalPages,
             'total' => $total,
         ]);
+    }
+
+    protected function loadCveData(): void
+    {
+        $store = Store::find(app('currentStore'));
+
+        if (! $store) {
+            return;
+        }
+
+        $cyrisma = app(CyrismaService::class)->forStore($store);
+
+        if ($this->assetType !== '') {
+            // Use the scan-based filtering for specific asset types
+            $data = $cyrisma->getVulnerabilitiesByAssetType($this->assetType);
+            $this->cveItems = $data['vulnerabilities'] ?? [];
+        } else {
+            // Use the CVE dashboard for "all" view
+            $data = $cyrisma->getCveDetails();
+            $this->cveItems = isset($data['cve_items']) ? array_slice($data['cve_items'], 1) : [];
+        }
     }
 }

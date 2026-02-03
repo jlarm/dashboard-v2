@@ -14,9 +14,10 @@ class Index extends Component
     public bool $loaded = false;
     public bool $isConfigured = false;
     public bool $hasShortName = false;
+    public bool $hasExternalScans = false;
+    public bool $hasInternalScans = false;
     protected ?Store $store = null;
     protected ?CyrismaService $cyrisma = null;
-
     protected $listeners = ['refreshCache'];
 
     public function loadScanData(): void
@@ -25,6 +26,12 @@ class Index extends Component
         $this->cyrisma = app(CyrismaService::class)->forStore($this->store);
         $this->isConfigured = $this->cyrisma->isConfigured();
         $this->hasShortName = $this->cyrisma->hasShortName();
+
+        if ($this->isConfigured && $this->hasShortName) {
+            $this->hasExternalScans = $this->cyrisma->getExternalIpScanData() !== null;
+            $this->hasInternalScans = $this->cyrisma->hasInternalScans();
+        }
+
         $this->loaded = true;
     }
 

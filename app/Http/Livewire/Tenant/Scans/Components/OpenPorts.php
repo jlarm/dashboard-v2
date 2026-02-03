@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Livewire\Tenant\Scans\Components;
 
 use App\Models\Dealer\Store;
@@ -19,6 +21,7 @@ class OpenPorts extends Component
             $this->openPorts = app(CyrismaService::class)->forStore($store)->getOpenPorts() ?? [];
         }
     }
+
     public function render(): View
     {
         return view('livewire.tenant.scans.components.open-ports');

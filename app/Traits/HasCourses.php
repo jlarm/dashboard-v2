@@ -41,10 +41,8 @@ trait HasCourses
             return $this->results
                 ->whereIn('course_id', $userCourseIds)
                 ->where('passed', 1)
-                ->filter(function ($result) use ($oneYearAgo, $threeYearsAgo) {
-                    return $result->created_at >= $oneYearAgo
-                        || (in_array($result->course_id, [9, 10, 11, 12]) && $result->created_at >= $threeYearsAgo);
-                })
+                ->filter(fn ($result) => $result->created_at >= $oneYearAgo
+                        || (in_array($result->course_id, [9, 10, 11, 12]) && $result->created_at >= $threeYearsAgo))
                 ->unique('course_id')
                 ->count();
         }

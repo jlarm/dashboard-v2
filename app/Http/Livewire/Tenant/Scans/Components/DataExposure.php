@@ -47,7 +47,8 @@ class DataExposure extends Component
 
         if ($currentScore < $previousScore) {
             return 'improved';
-        } elseif ($currentScore > $previousScore) {
+        }
+        if ($currentScore > $previousScore) {
             return 'declined';
         }
 

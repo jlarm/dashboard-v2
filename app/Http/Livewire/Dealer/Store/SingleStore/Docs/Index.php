@@ -22,12 +22,10 @@ class Index extends Component
 
     public function render(): View
     {
-        $sharedDocs = tenancy()->central(function () {
-            return SharedDocument::query()
-                ->select(['title', 'file_name', 'url'])
-                ->selectRaw('true as shared')
-                ->get();
-        });
+        $sharedDocs = tenancy()->central(fn () => SharedDocument::query()
+            ->select(['title', 'file_name', 'url'])
+            ->selectRaw('true as shared')
+            ->get());
         $docs = $this->store->docs;
 
         return view('livewire.dealer.store.single-store.docs.index', [

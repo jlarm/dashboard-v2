@@ -1,7 +1,14 @@
 <div>
-    <div class="mb-4">
-        <h2 class="text-lg font-semibold text-gray-900">Overall Risk Assessment</h2>
-        <p class="text-sm text-gray-600">Current security posture across all scan types</p>
+    <div class="flex items-center justify-between mb-4">
+        <div>
+            <h2 class="text-lg font-semibold text-gray-900">Overall Risk Assessment</h2>
+            <p class="text-sm text-gray-600">Current security posture across all scan types</p>
+        </div>
+        @if($lastScanDate)
+            <div class="text-sm text-gray-500">
+                Last scan: {{ $lastScanDate }}
+            </div>
+        @endif
     </div>
 
     <div class="grid grid-cols-2 gap-4">

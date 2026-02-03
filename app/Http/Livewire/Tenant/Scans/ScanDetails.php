@@ -12,9 +12,7 @@ use Livewire\Component;
 class ScanDetails extends Component
 {
     public bool $loaded = false;
-
     protected ?Store $store = null;
-
     protected ?CyrismaService $cyrisma = null;
 
     public function loadScanData(): void

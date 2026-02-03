@@ -54,9 +54,7 @@ function createBodyShopJobWithViolations(array $violationData): GenerateBodyShop
     $audit->shouldReceive('violations')->andReturn($morphMany);
 
     $tenancy = Mockery::mock(Tenancy::class);
-    $tenancy->shouldReceive('central')->andReturnUsing(function ($callback) use ($statements) {
-        return $statements;
-    });
+    $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback) => $statements);
 
     app()->instance(Tenancy::class, $tenancy);
 
@@ -65,9 +63,7 @@ function createBodyShopJobWithViolations(array $violationData): GenerateBodyShop
 
 beforeEach(function () {
     $tenancy = Mockery::mock(Tenancy::class);
-    $tenancy->shouldReceive('central')->andReturnUsing(function ($callback) {
-        return new Collection();
-    });
+    $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback) => new Collection());
     app()->instance(Tenancy::class, $tenancy);
 });
 
