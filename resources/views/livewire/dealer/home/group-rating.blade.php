@@ -5,7 +5,7 @@
     <!-- Skeleton Loading State -->
     <div x-show="$wire.isLoading" class="grid grid-cols-1 md:grid-cols-5 gap-6">
         @for ($i = 0; $i < 5; $i++)
-            <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+            <div wire:key="rating-skeleton-{{ $i }}" class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
                 <div class="animate-pulse">
                     <div class="flex justify-between items-center mb-1">
                         <div class="h-10 bg-gray-200 rounded w-12 dark:bg-neutral-700"></div>

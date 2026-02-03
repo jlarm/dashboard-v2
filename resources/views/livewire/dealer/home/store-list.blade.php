@@ -11,7 +11,7 @@
         </x-slot:head>
         <x-slot:body>
             @forelse($stores as $store)
-                <x-table.row class="hover:cursor-pointer" onclick="window.location='{{ route('dealer.stores.home', $store) }}'">
+                <x-table.row wire:key="store-{{ $store->id }}" class="hover:cursor-pointer" onclick="window.location='{{ route('dealer.stores.home', $store) }}'">
                     <x-table.cell>
                         {{ Str::limit($store->name, 20) }}
                     </x-table.cell>

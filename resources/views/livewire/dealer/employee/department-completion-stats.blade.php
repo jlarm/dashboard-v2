@@ -10,7 +10,7 @@
                 @endphp
 
                 @if($stat)
-                    <li class="flex justify-between items-center gap-x-2">
+                    <li wire:key="dept-{{ $key }}" class="flex justify-between items-center gap-x-2">
                         <div class="w-full grid grid-cols-2 items-center gap-x-2">
                             <span class="text-sm text-gray-800">
                                 {{ $formattedName }}
@@ -29,7 +29,7 @@
             @endforeach
         @else
             @foreach(range(1, 8) as $i)
-                <li class="flex justify-between items-center gap-x-2">
+                <li wire:key="skeleton-{{ $i }}" class="flex justify-between items-center gap-x-2">
                     <div class="w-full grid grid-cols-2 items-center gap-x-2">
                         <div class="h-4 bg-gray-200 rounded animate-pulse"></div>
                         <div class="h-1.5 bg-gray-200 rounded animate-pulse"></div>

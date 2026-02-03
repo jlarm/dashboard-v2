@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -68,6 +69,10 @@ class DepartmentCompletionStats extends Component
                 $storeIds = Store::pluck('id')->toArray();
             }
         } catch (Exception $e) {
+            Log::warning('Failed to fetch store IDs for cache clearing', [
+                'error' => $e->getMessage(),
+                'tenant_id' => $tenantId,
+            ]);
             $storeIds = [];
         }
 
@@ -86,6 +91,10 @@ class DepartmentCompletionStats extends Component
                 }
             }
         } catch (Exception $e) {
+            Log::warning('Failed to clear user-specific department completion caches', [
+                'error' => $e->getMessage(),
+                'tenant_id' => $tenantId,
+            ]);
         }
     }
 
