@@ -7,7 +7,6 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
-use App\Services\VimeoService;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,6 +15,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Sentry;
+use Spatie\Permission\Models\Role;
 
 class Index extends Component
 {
@@ -53,7 +53,7 @@ class Index extends Component
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
             })
-            ->select(['id', 'name', 'slug', 'email', 'department_id'])
+            ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id'])
             ->with([
                 'roles',
                 'department:id,name',
@@ -108,6 +108,16 @@ class Index extends Component
     {
         $this->resetPage();
         $this->clearSelections();
+    }
+
+    public function updatedSelectedDepartment($value): void
+    {
+        $this->selectedDepartment = $value === '' ? null : (int) $value;
+    }
+
+    public function updatedSelectedRole($value): void
+    {
+        $this->selectedRole = $value === '' ? null : (int) $value;
     }
 
     public function resetFilters(): void
@@ -275,17 +285,7 @@ class Index extends Component
             return null;
         }
 
-        return \Spatie\Permission\Models\Role::find($this->selectedRole)?->name;
-    }
-
-    public function completedVideosCount(): int
-    {
-        return $this->currentUser->videoProgress()->count();
-    }
-
-    public function totalVideosCount(): int
-    {
-        return app(VimeoService::class)->totalVideos();
+        return Role::find($this->selectedRole)?->name;
     }
 
     public function getDepartmentsProperty()
@@ -298,7 +298,7 @@ class Index extends Component
 
     public function getRolesProperty()
     {
-        return \Spatie\Permission\Models\Role::query()
+        return Role::query()
             ->whereNotIn('name', ['super-admin', 'Consultant'])
             ->whereHas('users')
             ->orderBy('name')
@@ -352,22 +352,24 @@ class Index extends Component
     {
         switch ($this->sortField) {
             case 'name':
-                $query->orderBy('name', $this->sortDirection);
+                $query->orderBy('users.name', $this->sortDirection);
                 break;
             case 'department':
                 $query->leftJoin('departments', 'users.department_id', '=', 'departments.id')
                     ->orderBy('departments.name', $this->sortDirection)
-                    ->select('users.*');
+                    ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id']);
                 break;
             case 'role':
-                $query->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                $query->leftJoin('model_has_roles', function ($join) {
+                    $join->on('users.id', '=', 'model_has_roles.model_id')
+                        ->where('model_has_roles.model_type', User::class);
+                })
                     ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                    ->where('model_has_roles.model_type', User::class)
                     ->orderBy('roles.name', $this->sortDirection)
-                    ->select('users.*');
+                    ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id']);
                 break;
             default:
-                $query->orderBy('name', 'asc');
+                $query->orderBy('users.name', 'asc');
         }
     }
 
