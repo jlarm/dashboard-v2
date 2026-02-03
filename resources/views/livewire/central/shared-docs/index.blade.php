@@ -44,5 +44,7 @@
         </div>
         <!-- End Empty State -->
     @endforelse
-
+    <div class="mt-5">
+        {{ $docs->links() }}
+    </div>
 </div>
