@@ -1,6 +1,3 @@
 <x-dealer-app>
-    <x-slot:header>
-        <x-slot:pageTitle>Scans</x-slot:pageTitle>
-    </x-slot:header>
-
+    @livewire('tenant.scans.index')
 </x-dealer-app>
