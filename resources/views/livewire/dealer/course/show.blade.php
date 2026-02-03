@@ -99,6 +99,35 @@
                     let loadingTimeout;
                     let player;
                     let scriptLoadAttempted = false;
+                    let errorAlreadyHandled = false;
+
+                    // Catch unhandled Vimeo promise rejections that bypass player.on('error')
+                    window.addEventListener('unhandledrejection', function(event) {
+                        const reason = event.reason;
+                        const isVimeoError = reason &&
+                            (reason.message?.includes('playback') ||
+                             reason.message?.includes('Vimeo') ||
+                             reason.name === 'Error' && event.promise?.toString?.().includes('vimeo'));
+
+                        // Also check if the error stack mentions vimeo
+                        const stackMentionsVimeo = reason?.stack?.includes('player.vimeo.com');
+
+                        if (isVimeoError || stackMentionsVimeo) {
+                            event.preventDefault(); // Prevent default browser error logging
+                            if (!errorAlreadyHandled) {
+                                errorAlreadyHandled = true;
+                                const hasSlides = {{ $course->slides && count($course->slides) > 0 ? 'true' : 'false' }};
+                                let userMessage = 'Video playback was interrupted. This may be due to network issues.';
+                                if (hasSlides) {
+                                    userMessage += ' You can view the slides instead by clicking the button below.';
+                                }
+                                showError(userMessage, reason, {
+                                    errorType: 'unhandled_vimeo_rejection',
+                                    originalMessage: reason?.message
+                                });
+                            }
+                        }
+                    });
 
                     function reportToSentry(error, context = {}) {
                         if (window.Sentry) {
