@@ -8,7 +8,7 @@ trait HasAuditStats
 {
     public function progress(): ?array
     {
-        if ($this->violationAudits()->whereNotNull('grade')->get()->count() < 2) {
+        if ($this->violationAudits()->whereNotNull('grade')->count() < 2) {
             return null;
         }
 
