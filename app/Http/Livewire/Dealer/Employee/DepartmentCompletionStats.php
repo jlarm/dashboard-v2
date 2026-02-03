@@ -224,7 +224,13 @@ class DepartmentCompletionStats extends Component
             });
         }
 
-        return $query->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer']);
+        $excludedUsers = config('dashboard.excluded_users', []);
+
+        if (! empty($excludedUsers)) {
+            $query->whereNotIn('name', $excludedUsers);
+        }
+
+        return $query;
     }
 
     protected function getCacheKey(): string

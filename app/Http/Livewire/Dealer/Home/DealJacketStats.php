@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Home;
 
+use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -41,7 +42,7 @@ class DealJacketStats extends Component
 
     private function getAveragePercentage(): ?float
     {
-        $completedGroups = \App\Models\Dealer\Audit\DealJacketGroup::query()
+        $completedGroups = DealJacketGroup::query()
             ->where('store_id', $this->store->id)
             ->where('completed', true)
             ->withSum('dealJackets as total_passed', 'total_passed')
