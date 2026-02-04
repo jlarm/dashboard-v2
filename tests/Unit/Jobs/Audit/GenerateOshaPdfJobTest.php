@@ -72,9 +72,7 @@ function createJobWithViolationsAndStatements(array $violationData): GenerateOsh
     $audit->shouldReceive('violations')->andReturn($morphMany);
 
     $tenancy = Mockery::mock(Tenancy::class);
-    $tenancy->shouldReceive('central')->andReturnUsing(function ($callback) use ($statements) {
-        return $statements;
-    });
+    $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback) => $statements);
 
     app()->instance(Tenancy::class, $tenancy);
 
@@ -83,9 +81,7 @@ function createJobWithViolationsAndStatements(array $violationData): GenerateOsh
 
 beforeEach(function () {
     $tenancy = Mockery::mock(Tenancy::class);
-    $tenancy->shouldReceive('central')->andReturnUsing(function ($callback) {
-        return new Collection();
-    });
+    $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback) => new Collection());
     app()->instance(Tenancy::class, $tenancy);
 });
 

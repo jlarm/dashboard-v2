@@ -15,7 +15,6 @@ class StoreList extends Component
     use WithPagination;
 
     public string $search = '';
-
     protected $listeners = ['refreshStores' => '$refresh'];
 
     public function updatedSearch(): void

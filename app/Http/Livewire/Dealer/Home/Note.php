@@ -12,7 +12,6 @@ use Livewire\Component;
 class Note extends Component
 {
     public ?string $note = null;
-
     public Store $store;
 
     public function mount(): void

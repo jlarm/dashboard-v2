@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Employee;
 
-use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -40,6 +40,7 @@ class Index extends Component
         'sortField' => ['except' => 'name', 'as' => 'sort'],
         'sortDirection' => ['except' => 'asc', 'as' => 'dir'],
     ];
+    private ?Collection $cachedUsers = null;
 
     public function mount(): void
     {
@@ -131,6 +132,7 @@ class Index extends Component
     {
         $this->selectedUsers = [];
         $this->selectAll = false;
+        $this->cachedUsers = null;
     }
 
     public function toggleUserSelection(int $userId): void
@@ -144,11 +146,7 @@ class Index extends Component
         }
 
         // Update selectAll state
-        $query = $this->usersQuery;
-        $users = $this->showIncompleteCourseUsers
-            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
-            : $query->get();
-
+        $users = $this->getCachedUsers();
         $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
     }
 
@@ -187,10 +185,7 @@ class Index extends Component
         // Toggle the selectAll state first
         $this->selectAll = ! $this->selectAll;
 
-        $query = $this->usersQuery;
-        $users = $this->showIncompleteCourseUsers
-            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
-            : $query->get();
+        $users = $this->getCachedUsers();
 
         if ($this->selectAll) {
             // Select all users
@@ -203,11 +198,7 @@ class Index extends Component
 
     public function updatedSelectedUsers(): void
     {
-        $query = $this->usersQuery;
-        $users = $this->showIncompleteCourseUsers
-            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
-            : $query->get();
-
+        $users = $this->getCachedUsers();
         $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
     }
 
@@ -223,11 +214,7 @@ class Index extends Component
             return;
         }
 
-        $query = $this->usersQuery;
-
-        $users = $this->showIncompleteCourseUsers
-            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
-            : $query->get();
+        $users = $this->getCachedUsers();
 
         // Filter to only selected users
         $selectedUsers = $users->filter(fn ($user) => in_array($user->id, $this->selectedUsers));
@@ -322,6 +309,19 @@ class Index extends Component
         ]);
     }
 
+    private function getCachedUsers(): Collection
+    {
+        if ($this->cachedUsers === null) {
+            $users = $this->usersQuery->get();
+
+            $this->cachedUsers = $this->showIncompleteCourseUsers
+                ? $users->filter(fn ($user) => $user->user_has_not_completed_courses)
+                : $users;
+        }
+
+        return $this->cachedUsers;
+    }
+
     private function applyDepartmentFilter(Builder $query): void
     {
         if ($this->selectedDepartment !== null && $this->selectedDepartment !== 0) {
@@ -373,7 +373,7 @@ class Index extends Component
         }
     }
 
-    private function generateExportCsvContent(\Illuminate\Support\Collection $users): string
+    private function generateExportCsvContent(Collection $users): string
     {
         $csvContent = "Name,Store,Department,Completed Courses\n";
         foreach ($users as $user) {
@@ -388,7 +388,7 @@ class Index extends Component
         return $csvContent;
     }
 
-    private function generateCsvContent(\Illuminate\Support\Collection $users): string
+    private function generateCsvContent(Collection $users): string
     {
         $csvContent = "Name,Email,Department,Courses\n";
         foreach ($users as $user) {

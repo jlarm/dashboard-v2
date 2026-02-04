@@ -15,7 +15,6 @@ abstract class AbstractAuditStats extends Component
     use HasAuditStats;
 
     public Store $store;
-
     private ?array $cachedGrades = null;
 
     abstract protected function violationAuditQuery(): Builder;
@@ -24,12 +23,12 @@ abstract class AbstractAuditStats extends Component
 
     abstract protected function viewName(): string;
 
-    public function mount(): void
+    final public function mount(): void
     {
         $this->store = $this->store ?? Store::first();
     }
 
-    public function rating(): string
+    final public function rating(): string
     {
         $grades = $this->getGrades();
         $gradesCount = count($grades);
@@ -59,7 +58,7 @@ abstract class AbstractAuditStats extends Component
         };
     }
 
-    public function render(): View
+    final public function render(): View
     {
         return view($this->viewName());
     }
