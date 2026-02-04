@@ -393,7 +393,12 @@ class Index extends Component
         $csvContent = "Name,Email,Department,Courses\n";
         foreach ($users as $user) {
             if ($user->total_completed_courses !== $user->total_user_courses) {
-                $csvContent .= "{$user->name},{$user->email},{$user->department->name},{$user->total_completed_courses} of {$user->total_user_courses}\n";
+                $name = $this->escapeCsvField($user->name);
+                $email = $this->escapeCsvField($user->email);
+                $department = $this->escapeCsvField($user->department?->name ?? 'N/A');
+                $courses = "{$user->total_completed_courses} of {$user->total_user_courses}";
+
+                $csvContent .= "{$name},{$email},{$department},{$courses}\n";
             }
         }
 
