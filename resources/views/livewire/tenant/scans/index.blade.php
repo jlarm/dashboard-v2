@@ -5,6 +5,23 @@
             <div class="flex items-center gap-2 justify-end">
                 @hasanyrole('super-admin|Consultant')
                 <x-button.primary href="{{ tenant('locations') ? route('dealer.stores.cyrisma.settings', $store) : route('dealer.cyrisma.settings') }}">Settings</x-button.primary>
+
+                <x-armp.select variant="listbox" placeholder="Generate Report">
+                    <x-armp.select.option>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="square">
+                            <path d="M20 13V9L13 2H4V13M13 2.5V9H19.5" />
+                            <path d="M20 16H16.5V19M16.5 19V22M16.5 19H19.5M4.5 22V19.5M4.5 19.5V16H6.25C7.2165 16 8 16.7835 8 17.75C8 18.7165 7.2165 19.5 6.25 19.5H4.5ZM10.5 16H12C13.1046 16 14 16.8954 14 18V20C14 21.1046 13.1046 22 12 22H10.5V16Z" />
+                        </svg>
+                        Executive
+                    </x-armp.select.option>
+                    <x-armp.select.option>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="square">
+                            <path d="M20 13V9L13 2H4V13M13 2.5V9H19.5" />
+                            <path d="M20 16H16.5V19M16.5 19V22M16.5 19H19.5M4.5 22V19.5M4.5 19.5V16H6.25C7.2165 16 8 16.7835 8 17.75C8 18.7165 7.2165 19.5 6.25 19.5H4.5ZM10.5 16H12C13.1046 16 14 16.8954 14 18V20C14 21.1046 13.1046 22 12 22H10.5V16Z" />
+                        </svg>
+                        Technical
+                    </x-armp.select.option>
+                </x-armp.select>
                 @endhasanyrole
                 <button onclick="Livewire.emit('refreshCache')" class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-200 border border-gray-300">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -12,12 +29,6 @@
                     </svg>
                     Refresh
                 </button>
-{{--                <button class="inline-flex items-center px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-semibold rounded-lg hover:bg-yellow-500">--}}
-{{--                    Download report--}}
-{{--                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">--}}
-{{--                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>--}}
-{{--                    </svg>--}}
-{{--                </button>--}}
             </div>
         </x-slot>
     </x-slot:header>
