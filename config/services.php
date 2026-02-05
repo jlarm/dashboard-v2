@@ -47,4 +47,10 @@ return [
         'project_id' => env('VIMEO_PROJECT_ID'),
     ],
 
+    'cyrisma' => [
+        'api_key' => env('CYRISMA_API_KEY'),
+        'api_secret' => env('CYRISMA_API_SECRET'),
+        'base_url' => env('CYRISMA_API_BASE_URL', 'https://api.cyrisma.com/app'),
+    ],
+
 ];
