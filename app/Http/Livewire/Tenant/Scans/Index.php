@@ -19,15 +19,22 @@ class Index extends Component
     public bool $hasExternalScans = false;
     public bool $hasInternalScans = false;
     public ?string $error = null;
+    public int $storeId = 0;
     protected ?Store $store = null;
     protected ?CyrismaService $cyrisma = null;
     protected $listeners = ['refreshCache'];
+
+    public function mount(): void
+    {
+        $current = app('currentStore');
+        $this->storeId = $current instanceof Store ? $current->id : (int) $current;
+    }
 
     public function loadScanData(): void
     {
         $this->error = null;
 
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::find($this->storeId);
 
         if (! $this->store) {
             $this->error = 'Unable to load store information. Please try again later.';
@@ -59,7 +66,7 @@ class Index extends Component
 
     public function refreshCache(): void
     {
-        $store = Store::find(app('currentStore'));
+        $store = Store::find($this->storeId);
 
         if ($store) {
             try {
