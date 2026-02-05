@@ -12,19 +12,41 @@
                     </svg>
                     Refresh
                 </button>
-                <button class="inline-flex items-center px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-semibold rounded-lg hover:bg-yellow-500">
-                    Download report
-                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
+{{--                <button class="inline-flex items-center px-4 py-2 bg-yellow-400 text-gray-900 text-sm font-semibold rounded-lg hover:bg-yellow-500">--}}
+{{--                    Download report--}}
+{{--                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">--}}
+{{--                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>--}}
+{{--                    </svg>--}}
+{{--                </button>--}}
             </div>
         </x-slot>
     </x-slot:header>
 
     <div class="space-y-6" wire:init="loadScanData">
         @if($loaded)
-            @if($isConfigured && $hasShortName)
+            @if($error)
+                <!-- Error State -->
+                <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+                    <div class="flex items-start gap-4">
+                        <svg class="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-lg font-semibold text-red-900 mb-1">Connection Error</h3>
+                            <p class="text-red-800 mb-4">
+                                {{ $error }}
+                            </p>
+                            <button wire:click="loadScanData" class="inline-flex items-center px-4 py-2 bg-red-100 text-red-700 text-sm font-semibold rounded-lg hover:bg-red-200 border border-red-300">
+                                <svg class="w-4 h-4 mr-2" wire:loading.class="animate-spin" wire:target="loadScanData" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                                <span wire:loading.remove wire:target="loadScanData">Try Again</span>
+                                <span wire:loading wire:target="loadScanData">Retrying...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            @elseif($isConfigured && $hasShortName)
                 <!-- Overall Risk Dashboard -->
                 <div class="bg-white border border-gray-200 rounded-lg p-6">
                     @livewire('tenant.scans.components.overall-risk-dashboard', ['cyrisma' => $cyrisma], key('overall-risk-dashboard'))
@@ -84,6 +106,22 @@
                         </div>
                     </div>
                 @endif
+
+                @if(!$hasExternalScans && !$hasInternalScans)
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                        <div class="flex items-start gap-4">
+                            <svg class="w-6 h-6 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-1">No Scan Results Available</h3>
+                                <p class="text-gray-600">
+                                    No completed scans were found for this instance. Scan results will appear here once a scan has been completed.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             @elseif(!$isConfigured)
                 <!-- API Not Configured Warning -->
                 <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
@@ -92,9 +130,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
                         <div>
-                            <h3 class="text-lg font-semibold text-yellow-900 mb-1">Cyrisma API Not Configured</h3>
+                            <h3 class="text-lg font-semibold text-yellow-900 mb-1">API Not Configured</h3>
                             <p class="text-yellow-800">
-                                The Cyrisma API credentials have not been configured. Please contact your administrator to set up the API integration to view scan data.
+                                The API credentials have not been configured. Please contact your administrator to set up the API integration to view scan data.
                             </p>
                         </div>
                     </div>
@@ -107,9 +145,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
                         <div>
-                            <h3 class="text-lg font-semibold text-yellow-900 mb-1">Cyrisma Instance Not Configured</h3>
+                            <h3 class="text-lg font-semibold text-yellow-900 mb-1">Instance Not Configured</h3>
                             <p class="text-yellow-800 mb-4">
-                                This store has not been linked to a Cyrisma instance. Please configure the short name in settings.
+                                This store has not been linked to an instance. Please configure the short name in settings.
                             </p>
                             <x-armp.button variant="primary" :href="route('dealer.cyrisma.settings')">
                                 Configure Settings

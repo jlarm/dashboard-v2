@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Tenant\Scans;
 
 use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -16,20 +18,40 @@ class Index extends Component
     public bool $hasShortName = false;
     public bool $hasExternalScans = false;
     public bool $hasInternalScans = false;
+    public ?string $error = null;
     protected ?Store $store = null;
     protected ?CyrismaService $cyrisma = null;
     protected $listeners = ['refreshCache'];
 
     public function loadScanData(): void
     {
-        $this->store = Store::find(app('currentStore'));
-        $this->cyrisma = app(CyrismaService::class)->forStore($this->store);
-        $this->isConfigured = $this->cyrisma->isConfigured();
-        $this->hasShortName = $this->cyrisma->hasShortName();
+        $this->error = null;
 
-        if ($this->isConfigured && $this->hasShortName) {
-            $this->hasExternalScans = $this->cyrisma->getExternalIpScanData() !== null;
-            $this->hasInternalScans = $this->cyrisma->hasInternalScans();
+        $this->store = Store::find(app('currentStore'));
+
+        if (! $this->store) {
+            $this->error = 'Unable to load store information. Please try again later.';
+            $this->loaded = true;
+
+            return;
+        }
+
+        try {
+            $this->cyrisma = app(CyrismaService::class)->forStore($this->store);
+            $this->isConfigured = $this->cyrisma->isConfigured();
+            $this->hasShortName = $this->cyrisma->hasShortName();
+
+            if ($this->isConfigured && $this->hasShortName) {
+                $this->hasExternalScans = $this->cyrisma->getExternalIpScanData() !== null;
+                $this->hasInternalScans = $this->cyrisma->hasInternalScans();
+            }
+        } catch (Exception $e) {
+            Log::error('Failed to load Cyrisma scan data', [
+                'store_id' => $this->store->id,
+                'message' => $e->getMessage(),
+            ]);
+
+            $this->error = 'Unable to connect to the scanning service. Please try again later.';
         }
 
         $this->loaded = true;
@@ -38,7 +60,17 @@ class Index extends Component
     public function refreshCache(): void
     {
         $store = Store::find(app('currentStore'));
-        app(CyrismaService::class)->forStore($store)->clearCache();
+
+        if ($store) {
+            try {
+                app(CyrismaService::class)->forStore($store)->clearCache();
+            } catch (Exception $e) {
+                Log::error('Failed to clear Cyrisma cache', [
+                    'store_id' => $store->id,
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
 
         $this->dispatchBrowserEvent('refresh-page');
     }

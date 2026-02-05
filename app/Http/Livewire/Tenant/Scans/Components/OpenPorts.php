@@ -13,17 +13,65 @@ class OpenPorts extends Component
 {
     public array $openPorts = [];
 
+    public string $assetType = '';
+
+    public int $perPage = 5;
+
+    public int $currentPage = 1;
+
     public function mount(): void
     {
-        $store = Store::find(app('currentStore'));
+        $this->loadOpenPorts();
+    }
 
-        if ($store) {
-            $this->openPorts = app(CyrismaService::class)->forStore($store)->getOpenPorts() ?? [];
+    public function updatedAssetType(): void
+    {
+        $this->currentPage = 1;
+        $this->loadOpenPorts();
+    }
+
+    public function nextPage(): void
+    {
+        $this->currentPage++;
+    }
+
+    public function previousPage(): void
+    {
+        if ($this->currentPage > 1) {
+            $this->currentPage--;
         }
+    }
+
+    public function gotoPage(int $page): void
+    {
+        $this->currentPage = max(1, $page);
     }
 
     public function render(): View
     {
-        return view('livewire.tenant.scans.components.open-ports');
+        $total = count($this->openPorts);
+        $offset = ($this->currentPage - 1) * $this->perPage;
+        $paginatedItems = array_slice($this->openPorts, $offset, $this->perPage);
+        $totalPages = (int) ceil($total / $this->perPage);
+
+        return view('livewire.tenant.scans.components.open-ports', [
+            'paginatedPorts' => $paginatedItems,
+            'currentPage' => $this->currentPage,
+            'totalPages' => $totalPages,
+            'total' => $total,
+        ]);
+    }
+
+    protected function loadOpenPorts(): void
+    {
+        $store = Store::find(app('currentStore'));
+
+        if (! $store) {
+            return;
+        }
+
+        $this->openPorts = app(CyrismaService::class)
+            ->forStore($store)
+            ->getOpenPortsByAssetType($this->assetType);
     }
 }

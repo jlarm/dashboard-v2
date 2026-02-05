@@ -16,23 +16,24 @@ use Livewire\Component;
 class SettingsForm extends Component
 {
     public ?Store $store = null;
-    public ?string $shortName = '';
+    public ?string $instanceId = '';
     public bool $isLoading = false;
     public ?string $errorMessage = null;
     public ?string $successMessage = null;
     protected array $rules = [
-        'shortName' => ['required', 'string', 'min:3', 'max:255'],
+        'instanceId' => ['required', 'string', 'min:3', 'max:255'],
     ];
 
     public function mount(): void
     {
         $this->store = Store::find(app('currentStore'));
-        $this->shortName = $this->store->cyrisma->short_name ?? null;
+        $instanceUrl = $this->store->cyrisma->instance_url ?? null;
+        $this->instanceId = $instanceUrl ? str($instanceUrl)->before('.')->toString() : null;
     }
 
     public function updated($propertyName): void
     {
-        if ($propertyName === 'shortName') {
+        if ($propertyName === 'instanceId') {
             $this->errorMessage = null;
             $this->successMessage = null;
         }
@@ -49,10 +50,12 @@ class SettingsForm extends Component
         try {
             $cyrisma = app(CyrismaService::class);
 
-            $instance = $cyrisma->findInstanceByShortName($this->shortName);
+            $instances = $cyrisma->getAllInstances();
+            $instanceUrl = $this->instanceId . '.cyrisma.com';
+            $instance = collect($instances)->firstWhere('url', $instanceUrl);
 
             if (! $instance) {
-                $this->errorMessage = 'No instance found with that short name.';
+                $this->errorMessage = 'No instance found with that ID.';
                 $this->isLoading = false;
 
                 return;
@@ -61,7 +64,7 @@ class SettingsForm extends Component
             Cyrisma::updateOrCreate(
                 ['store_id' => $this->store->id],
                 [
-                    'short_name' => $this->shortName,
+                    'short_name' => $instance['short_name'] ?? '',
                     'instance_id' => $instance['instance_id'],
                     'instance_url' => $instance['url'],
                 ]
@@ -75,7 +78,7 @@ class SettingsForm extends Component
                 ->send();
 
         } catch (Exception $e) {
-            Log::error('Failed to save configuraiton', [
+            Log::error('Failed to save configuration', [
                 'message' => $e->getMessage(),
                 'store_id' => $this->store->id,
             ]);

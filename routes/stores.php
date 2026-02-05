@@ -43,6 +43,9 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
 
             Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
 
+            Route::get('cyrisma', App\Http\Livewire\Tenant\Scans\Index::class)->name('cyrisma.index');
+            Route::get('cyrisma/settings', [App\Http\Controllers\Tenant\CyrismaController::class, 'settings'])->name('cyrisma.settings');
+
         });
 
         // **************************************************

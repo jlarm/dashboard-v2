@@ -13,8 +13,8 @@
 
     <form wire:submit.prevent="save" class="space-y-5">
         <div>
-            <x-input-label for="shortName">Short Name</x-input-label>
-            <x-text-input class="block w-full mt-1" id="shortName" wire:model.defer="shortName" type="text" />
+            <x-input-label for="instanceId">Instance ID</x-input-label>
+            <x-text-input class="block w-full mt-1" id="instanceId" wire:model.defer="instanceId" type="text" />
         </div>
         <div class="flex items-center gap-3">
             <x-primary-button
