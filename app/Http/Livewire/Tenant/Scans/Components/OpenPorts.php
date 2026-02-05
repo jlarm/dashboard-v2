@@ -12,11 +12,8 @@ use Livewire\Component;
 class OpenPorts extends Component
 {
     public array $openPorts = [];
-
     public string $assetType = '';
-
     public int $perPage = 5;
-
     public int $currentPage = 1;
 
     public function mount(): void

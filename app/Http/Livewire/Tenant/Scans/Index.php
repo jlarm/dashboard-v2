@@ -65,7 +65,7 @@ class Index extends Component
             try {
                 app(CyrismaService::class)->forStore($store)->clearCache();
             } catch (Exception $e) {
-                Log::error('Failed to clear Cyrisma cache', [
+                Log::error('Failed to clear cache', [
                     'store_id' => $store->id,
                     'message' => $e->getMessage(),
                 ]);

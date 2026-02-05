@@ -465,42 +465,6 @@ class CyrismaService
         return $aggregatedPorts;
     }
 
-    /**
-     * @return array<int, array{portNumber: string, portDescription: string, riskLevel: string}>
-     */
-    protected function getAssetOpenPorts(string $scanType, ?string $assetId, string $assetIp): array
-    {
-        $scanTypeLower = mb_strtolower($scanType);
-
-        if (str_contains($scanTypeLower, 'internal authenticated') && $assetId) {
-            $result = $this->getStoreReport('vulnerability/assets/authenticated', ['assetId' => $assetId]);
-            $data = $result[0] ?? [];
-
-            return collect($data['openPorts'] ?? [])
-                ->map(fn (array $port) => [
-                    'portNumber' => $port['port'],
-                    'portDescription' => $port['portName'] ?? '',
-                    'riskLevel' => ucfirst($port['severity'] ?? 'Low'),
-                ])
-                ->all();
-        }
-
-        if ((str_contains($scanTypeLower, 'external') && str_contains($scanTypeLower, 'ip')) && $assetIp !== '') {
-            $result = $this->getStoreReport('vulnerability/assets/ip', ['assetIp' => $assetIp]);
-            $data = is_array($result) && isset($result[0]) ? $result[0] : ($result ?? []);
-
-            return collect($data['OpenPorts'] ?? $data['openPorts'] ?? [])
-                ->map(fn (array $port) => [
-                    'portNumber' => $port['PortNumber'] ?? $port['portNumber'] ?? '',
-                    'portDescription' => $port['PortDescription'] ?? $port['portDescription'] ?? '',
-                    'riskLevel' => ucfirst($port['RiskLevel'] ?? $port['riskLevel'] ?? 'Low'),
-                ])
-                ->all();
-        }
-
-        return [];
-    }
-
     public function getExternalIpScanData(): ?array
     {
         // Try the vulnerability dashboard first - it might have aggregated external IP data
@@ -659,6 +623,42 @@ class CyrismaService
                 return null;
             }
         });
+    }
+
+    /**
+     * @return array<int, array{portNumber: string, portDescription: string, riskLevel: string}>
+     */
+    protected function getAssetOpenPorts(string $scanType, ?string $assetId, string $assetIp): array
+    {
+        $scanTypeLower = mb_strtolower($scanType);
+
+        if (str_contains($scanTypeLower, 'internal authenticated') && $assetId) {
+            $result = $this->getStoreReport('vulnerability/assets/authenticated', ['assetId' => $assetId]);
+            $data = $result[0] ?? [];
+
+            return collect($data['openPorts'] ?? [])
+                ->map(fn (array $port) => [
+                    'portNumber' => $port['port'],
+                    'portDescription' => $port['portName'] ?? '',
+                    'riskLevel' => ucfirst($port['severity'] ?? 'Low'),
+                ])
+                ->all();
+        }
+
+        if ((str_contains($scanTypeLower, 'external') && str_contains($scanTypeLower, 'ip')) && $assetIp !== '') {
+            $result = $this->getStoreReport('vulnerability/assets/ip', ['assetIp' => $assetIp]);
+            $data = is_array($result) && isset($result[0]) ? $result[0] : ($result ?? []);
+
+            return collect($data['OpenPorts'] ?? $data['openPorts'] ?? [])
+                ->map(fn (array $port) => [
+                    'portNumber' => $port['PortNumber'] ?? $port['portNumber'] ?? '',
+                    'portDescription' => $port['PortDescription'] ?? $port['portDescription'] ?? '',
+                    'riskLevel' => ucfirst($port['RiskLevel'] ?? $port['riskLevel'] ?? 'Low'),
+                ])
+                ->all();
+        }
+
+        return [];
     }
 
     protected function getCacheVersion(): int

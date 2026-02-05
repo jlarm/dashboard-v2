@@ -51,7 +51,7 @@ class SettingsForm extends Component
             $cyrisma = app(CyrismaService::class);
 
             $instances = $cyrisma->getAllInstances();
-            $instanceUrl = $this->instanceId . '.cyrisma.com';
+            $instanceUrl = $this->instanceId.'.cyrisma.com';
             $instance = collect($instances)->firstWhere('url', $instanceUrl);
 
             if (! $instance) {

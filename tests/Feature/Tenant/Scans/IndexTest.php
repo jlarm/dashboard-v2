@@ -140,7 +140,7 @@ describe('view rendering', function () {
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
             ->call('loadScanData')
-            ->assertSee('Cyrisma API Not Configured');
+            ->assertSee('API Not Configured');
     });
 
     it('shows short name warning when instance is not linked', function () {
@@ -153,7 +153,7 @@ describe('view rendering', function () {
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
             ->call('loadScanData')
-            ->assertSee('Cyrisma Instance Not Configured');
+            ->assertSee('Instance Not Configured');
     });
 
     it('shows no scan results message when configured but no scans exist', function () {
