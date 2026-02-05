@@ -20,7 +20,7 @@ class Index extends Component
     public bool $hasInternalScans = false;
     public ?string $error = null;
     public int $storeId = 0;
-    protected ?Store $store = null;
+    public ?Store $store = null;
     protected ?CyrismaService $cyrisma = null;
     protected $listeners = ['refreshCache'];
 
@@ -28,6 +28,7 @@ class Index extends Component
     {
         $current = app('currentStore');
         $this->storeId = $current instanceof Store ? $current->id : (int) $current;
+        $this->store = $current instanceof Store ? $current : Store::find($this->storeId);
     }
 
     public function loadScanData(): void

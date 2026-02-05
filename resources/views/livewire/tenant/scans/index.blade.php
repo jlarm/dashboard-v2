@@ -4,7 +4,7 @@
         <x-slot:actions>
             <div class="flex items-center gap-2 justify-end">
                 @hasanyrole('super-admin|Consultant')
-                <x-button.primary :href="route('dealer.cyrisma.settings')">Settings</x-button.primary>
+                <x-button.primary href="{{ tenant('locations') ? route('dealer.stores.cyrisma.settings', $store) : route('dealer.cyrisma.settings') }}">Settings</x-button.primary>
                 @endhasanyrole
                 <button onclick="Livewire.emit('refreshCache')" class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-200 border border-gray-300">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,7 +149,7 @@
                             <p class="text-yellow-800 mb-4">
                                 This store has not been linked to an instance. Please configure the short name in settings.
                             </p>
-                            <x-armp.button variant="primary" :href="route('dealer.cyrisma.settings')">
+                            <x-armp.button variant="primary" href="{{ tenant('locations') ? route('dealer.stores.cyrisma.settings', $store) : route('dealer.cyrisma.settings') }}">
                                 Configure Settings
                             </x-armp.button>
                         </div>
