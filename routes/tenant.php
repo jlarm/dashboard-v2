@@ -161,6 +161,7 @@ Route::name('dealer.')->middleware([
         Route::middleware(['single.store'])->group(function () {
             Route::get('cyrisma', App\Http\Livewire\Tenant\Scans\Index::class)->name('cyrisma.index');
             Route::get('cyrisma/settings', [App\Http\Controllers\Tenant\CyrismaController::class, 'settings'])->name('cyrisma.settings');
+            Route::get('cyrisma/report/{type}', [App\Http\Controllers\Tenant\CyrismaReportController::class, 'download'])->name('cyrisma.report');
         });
 
     });
