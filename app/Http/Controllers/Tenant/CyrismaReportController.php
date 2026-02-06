@@ -9,8 +9,10 @@ use App\Services\CyrismaService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
 
 class CyrismaReportController
 {
@@ -42,16 +44,27 @@ class CyrismaReportController
             Cache::forget($cacheKey);
         }
 
-        $pdfBinary = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($type, $cyrisma, $store) {
-            $data = $this->buildReportData($cyrisma, $store, $type);
-            $view = $type === 'executive'
-                ? 'tenant.scans.reports.executive'
-                : 'tenant.scans.reports.technical';
+        try {
+            $pdfBinary = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($type, $cyrisma, $store) {
+                $data = $this->buildReportData($cyrisma, $store, $type);
+                $view = $type === 'executive'
+                    ? 'tenant.scans.reports.executive'
+                    : 'tenant.scans.reports.technical';
 
-            return Pdf::loadView($view, $data)
-                ->setPaper('letter')
-                ->output();
-        });
+                return Pdf::loadView($view, $data)
+                    ->setPaper('letter')
+                    ->output();
+            });
+        } catch (Throwable $e) {
+            Log::error('PDF generation failed', [
+                'type' => $type,
+                'store_id' => $store->id,
+                'error' => $e->getMessage(),
+                'file' => $e->getFile().':'.$e->getLine(),
+            ]);
+
+            abort(500, 'PDF generation failed: '.$e->getMessage());
+        }
 
         $fileName = sprintf(
             '%s-%s-%s-report.pdf',
