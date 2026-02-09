@@ -30,66 +30,67 @@
         ],
         "questions": [
             {
-                "question": "What are several types of phishing attacks listed below?",
+                "question": " Which option is an example of \"smishing\"?",
                 "answers": [
                     {
-                        "a": "Smishing",
-                        "b": "Spear phishing",
-                        "c": "Cellular phishing",
-                        "d": "Whaling",
-                        "e": "All the above",
-                        "f": "A,B,D",
-                        "g": "A,C,D"
+                        "a": "A phishing attack that targets a company CEO",
+                        "b": "A phishing email copied from a real message",
+                        "c": "A phishing attempt sent by text/SMS message",
+                        "d": "A phishing attempt over public Wi-Fi"
                     }
                 ],
-                "correctAnswer": "f"
+                "correctAnswer": "c"
             },
             {
-                "question": "What is one of the main phishing techniques used?",
+                "question": "What best describes \"spear phishing\"?",
                 "answers": [
                     {
-                        "a": "Cloning",
-                        "b": "Impersonation",
-                        "c": "Font variable signatures",
-                        "d": "Logo adaptation",
-                        "e": "A & B",
-                        "f": "All of the above"
+                        "a": "A mass email sent to thousands of random recipients",
+                        "b": "A targeted phishing attempt aimed at a specific person or team",
+                        "c": "A phishing attack done only through phone calls",
+                        "d": "A phishing email that always includes malware"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "How to Identifying Phishing Emails?",
+                "question": "Which technique involves copying a legitimate email and replacing links/attachments to trick the recipient?",
                 "answers": [
                     {
-                        "a": "Suspicious sender email addresses",
-                        "b": "Grammatical and spelling errors",
-                        "c": "Requests for sensitive information",
-                        "d": "Urgency or threats",
-                        "e": "A,B",
-                        "f": "A,C,D",
-                        "g": "All of the above"
+                        "a": "Cloning",
+                        "b": "Whaling",
+                        "c": "Spoofing DNS",
+                        "d": "Credential stuffing"
                     }
                 ],
-                "correctAnswer": "g"
+                "correctAnswer": "a"
             },
             {
-                "question": "What are the top 3 Best Practices for Avoiding Phishing Attacks?",
+                "question": "Which of the following is a common red flag of a phishing message?",
                 "answers": [
                     {
-                        "a": "Think before clicking",
-                        "b": "Verify the sender’s identity",
-                        "c": "Report suspicious emails",
-                        "d": "Check URLs before clicking",
-                        "e": "A,B,C",
-                        "f": "A,C,D",
-                        "g": "A,B,D"
+                        "a": "The sender address looks slightly \"off\" from the real organization",
+                        "b": "The message creates urgency or pressure to act quickly",
+                        "c": "The link destination doesn't match what the text claims",
+                        "d": "All of the above"
                     }
                 ],
-                "correctAnswer": "g"
+                "correctAnswer": "d"
             },
             {
-                "question": "Passwords and Credit Cards are two of the most sought after items to steal?",
+                "question": "What is the BEST action if you suspect an email is phishing?",
+                "answers": [
+                    {
+                        "a": "Reply asking the sender if it's real",
+                        "b": "Click the link to \"check\" where it goes",
+                        "c": "Report it using your organization's reporting method and delete/avoid interacting",
+                        "d": "Forward it to coworkers to warn them"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "True or False: Phishing attackers often try to steal sensitive information such as passwords, credit card numbers, or other login details.",
                 "answers": [
                     {
                         "a": "True",
