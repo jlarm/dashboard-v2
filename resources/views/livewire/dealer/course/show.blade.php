@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                         </div>
-                        <iframe src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] rounded-xl border"></iframe>
+                        <iframe oncontextmenu="return false" src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] rounded-xl border"></iframe>
                     </div>
                 @else
                     <div class="flex items-center justify-center bg-red-50 rounded-lg p-8">
