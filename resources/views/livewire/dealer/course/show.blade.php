@@ -35,7 +35,7 @@
                     </div>
                 @endif
                 @if($video && isset($video['player_embed_url']))
-                    <div class="relative">
+                    <div id="video-container" class="relative">
                         <div id="video-loading" class="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
                             <div class="flex flex-col items-center gap-3">
                                 <svg class="animate-spin h-8 w-8 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -93,6 +93,7 @@
                     const loadingElement = document.getElementById('video-loading');
                     const errorElement = document.getElementById('video-error');
                     const errorMessage = document.getElementById('error-message');
+                    const videoContainer = document.getElementById('video-container');
                     const LOADING_TIMEOUT = 15000; // 15 seconds
                     const SCRIPT_LOAD_TIMEOUT = 10000; // 10 seconds to load Vimeo script
                     const videoId = '{{ $course->video_id ?? "unknown" }}';
@@ -165,6 +166,15 @@
                             console.error('[Vimeo] No iframe found');
                             return;
                         }
+                        if (videoContainer) {
+                            videoContainer.addEventListener('contextmenu', (event) => event.preventDefault());
+                        }
+                        iframe.addEventListener('contextmenu', (event) => event.preventDefault());
+                        iframe.addEventListener('mousedown', (event) => {
+                            if (event.button === 2) {
+                                event.preventDefault();
+                            }
+                        });
 
                         if (typeof Vimeo === 'undefined') {
                             const scriptError = new Error('Vimeo Player API script failed to load');
