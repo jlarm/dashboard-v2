@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+/**
+ * @method HasMany violationAudits()
+ */
 trait HasAuditStats
 {
     public function progress(): ?array
@@ -17,8 +22,10 @@ trait HasAuditStats
             ->take(2)
             ->get();
 
-        $first = $latestAudits->first()->violations()->count();
-        $second = $latestAudits->last()->violations()->count();
+        $firstAudit = $latestAudits->first();
+        $secondAudit = $latestAudits->last();
+        $first = method_exists($firstAudit, 'violations') ? $firstAudit->violations()->count() : 0;
+        $second = method_exists($secondAudit, 'violations') ? $secondAudit->violations()->count() : 0;
 
         $comparison = $first - $second;
 

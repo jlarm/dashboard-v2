@@ -43,10 +43,11 @@ class Index extends Component
         // Add BodyShopAudits to chart data (if they have a grade field)
         foreach ($bodyShopAudits as $audit) {
             if ($audit->audit_date && isset($audit->grade)) {
+                $violationsCount = method_exists($audit, 'violations') ? $audit->violations()->count() : 0;
                 $chartData->push([
                     'date' => $audit->audit_date,
                     'grade' => $audit->grade,
-                    'violations' => $audit->violations()->count(),
+                    'violations' => $violationsCount,
                     'remediations' => 0, // BodyShopAudits may not have remediation tracking
                 ]);
             }

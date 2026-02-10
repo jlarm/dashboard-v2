@@ -299,7 +299,7 @@ class Index extends Component
         $query = $this->usersQuery;
 
         $users = $this->showIncompleteCourseUsers
-            ? $query->paginate(500)->filter(fn ($user) => $user->user_has_not_completed_courses)
+            ? $query->paginate(500)->filter(fn (User $user) => $user->user_has_not_completed_courses)
             : $query->paginate(15);
 
         return view('livewire.dealer.employee.index', [
@@ -317,7 +317,7 @@ class Index extends Component
             $users = $this->usersQuery->get();
 
             $this->cachedUsers = $this->showIncompleteCourseUsers
-                ? $users->filter(fn ($user) => $user->user_has_not_completed_courses)
+                ? $users->filter(fn (User $user) => $user->user_has_not_completed_courses)
                 : $users;
         }
 

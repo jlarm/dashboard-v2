@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Dealership;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,9 +23,11 @@ class TenantLookupController extends Controller
         ]);
 
         $email = $request->email;
+        /** @var Collection<int, Dealership> $tenants */
         $tenants = Dealership::with('domains')->get();
 
         foreach ($tenants as $tenant) {
+            /** @var Dealership $tenant */
             $found = $tenant->run(fn () => DB::table('users')
                 ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
                 ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
@@ -35,7 +38,7 @@ class TenantLookupController extends Controller
                 ->where('email', $email)->exists());
 
             if ($found) {
-                $domain = $tenant->domains->first()->domain;
+                $domain = $tenant->domain();
 
                 return redirect("https://{$domain}/login?email=".urlencode($email));
             }

@@ -145,7 +145,7 @@ class Index extends Component
 
         $query = $this->usersQuery;
         $users = $this->showIncompleteCourseUsers
-            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
+            ? $query->get()->filter(fn (User $user) => $user->user_has_not_completed_courses)
             : $query->get();
 
         $this->selectedUsers = $this->selectAll ? $users->pluck('id')->toArray() : [];
@@ -164,7 +164,7 @@ class Index extends Component
         // Update selectAll state
         $query = $this->usersQuery;
         $users = $this->showIncompleteCourseUsers
-            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
+            ? $query->get()->filter(fn (User $user) => $user->user_has_not_completed_courses)
             : $query->get();
 
         $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
@@ -174,7 +174,7 @@ class Index extends Component
     {
         $query = $this->usersQuery;
         $users = $this->showIncompleteCourseUsers
-            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
+            ? $query->get()->filter(fn (User $user) => $user->user_has_not_completed_courses)
             : $query->get();
 
         $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
@@ -207,11 +207,11 @@ class Index extends Component
         // Get all users from current query
         $query = $this->usersQuery;
         $users = $this->showIncompleteCourseUsers
-            ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
+            ? $query->get()->filter(fn (User $user) => $user->user_has_not_completed_courses)
             : $query->get();
 
         // Filter to only selected users
-        $selectedUsers = $users->filter(fn ($user): bool => in_array($user->id, $this->selectedUsers));
+        $selectedUsers = $users->filter(fn (User $user): bool => in_array($user->id, $this->selectedUsers));
 
         $csvContent = $this->generateExportCsvContent($selectedUsers);
         $filename = 'employee-courses-report-'.date('m-d-Y').'.csv';
@@ -256,7 +256,7 @@ class Index extends Component
         $query = $this->usersQuery;
 
         $users = $this->showIncompleteCourseUsers
-            ? $query->paginate(500)->filter(fn ($user) => $user->user_has_not_completed_courses)
+            ? $query->paginate(500)->filter(fn (User $user) => $user->user_has_not_completed_courses)
             : $query->paginate(25);
 
         return view('livewire.dealer.store.single-store.employee.index', [

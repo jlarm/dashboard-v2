@@ -8,6 +8,7 @@ use App\Models\Dealer\Course;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UserCourseService
 {
@@ -59,7 +60,7 @@ class UserCourseService
 
         // Get user role IDs (excluding role 5 and admin roles)
         $userRoleIds = $user->roles
-            ->reject(fn ($role): bool => $role->id === 5 || in_array($role->name, $adminRoles))
+            ->reject(fn (Role $role): bool => $role->id === 5 || in_array($role->name, $adminRoles))
             ->pluck('id');
 
         if ($userRoleIds->isEmpty()) {

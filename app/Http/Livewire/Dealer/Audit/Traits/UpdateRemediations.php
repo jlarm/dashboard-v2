@@ -55,10 +55,13 @@ trait UpdateRemediations
 
                     // Verify file exists and is readable
                     if (! $filePath || ! file_exists($filePath) || ! is_readable($filePath)) {
+                        $originalName = method_exists($newPhoto, 'getClientOriginalName')
+                            ? $newPhoto->getClientOriginalName()
+                            : null;
                         Log::warning('Remediation photo file does not exist or is not readable', [
                             'violation_id' => $violationId,
                             'file_path' => $filePath,
-                            'original_name' => $newPhoto->getClientOriginalName(),
+                            'original_name' => $originalName,
                         ]);
 
                         // Clean up the reference to prevent further errors

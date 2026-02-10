@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -42,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
 
         Builder::macro('search', fn ($field, $string) => $string ? $this->where($field, 'like', '%'.$string.'%') : $this);
 
-        Collection::macro('incomplete_courses', fn () => $this->map(fn ($user) => $user->incomplete_courses()));
+        Collection::macro('incomplete_courses', fn () => $this->map(fn (User $user) => $user->user_has_not_completed_courses));
 
         Builder::macro('toCsv', function () {
             $results = $this->get();

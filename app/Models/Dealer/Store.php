@@ -35,6 +35,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @property-read RemediationSetting|null $remediationSettings
+ */
 class Store extends Model implements HasMedia
 {
     use HasGrade, HasSlug, InteractsWithMedia, LogsActivity;

@@ -6,11 +6,14 @@ namespace App\Traits;
 
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
+use App\Models\User;
 use App\Services\UserCourseService;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * @mixin User
+ *
  * @property int $total_user_courses
  */
 trait HasCourses

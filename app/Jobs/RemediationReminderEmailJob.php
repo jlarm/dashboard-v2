@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Enums\AuditTypes;
+use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\GlbaViolationAudit;
+use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Notifications\InitialRemediationReminderNotification;
 use App\Queries\GetRemediationReminderUsers;
@@ -28,20 +31,27 @@ class RemediationReminderEmailJob implements ShouldQueue
 
     public function handle(): void
     {
-        if ($this->audit->completed_date) {
+        /** @var OshaViolationAudit|BodyShopViolationAudit|GlbaViolationAudit|null $audit */
+        $audit = $this->audit;
+
+        if ($audit === null) {
             return;
         }
 
-        $this->audit->update(['completed_date' => now()]);
+        if ($audit->completed_date) {
+            return;
+        }
+
+        $audit->update(['completed_date' => now()]);
 
         $users = GetRemediationReminderUsers::execute($this->store, $this->auditType);
 
         foreach ($users as $user) {
-            $user->notify(new InitialRemediationReminderNotification($this->tenants, $user, $this->store, $this->auditType, $this->audit));
+            $user->notify(new InitialRemediationReminderNotification($this->tenants, $user, $this->store, $this->auditType, $audit));
         }
 
-        if ($this->audit->reminder_logs === null) {
-            $this->audit->update([
+        if ($audit->reminder_logs === null) {
+            $audit->update([
                 'reminder_logs' => [now()->toDateString()],
             ]);
         }

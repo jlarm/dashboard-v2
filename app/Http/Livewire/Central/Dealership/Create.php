@@ -73,7 +73,7 @@ class Create extends Component
                 'locations' => $validated['locations'],
             ]);
 
-            $dealer->createDomain($tenantDomain, $validated['url']);
+            $dealer->createDomain($tenantDomain);
 
             $name = $validated['name'];
             $address = $validated['address'];

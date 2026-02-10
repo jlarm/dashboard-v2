@@ -24,6 +24,6 @@ class Dashboard extends Component
             return Dealership::with('domains')->orderBy('name')->get();
         }
 
-        return auth()->user()->dealerships->orderBy('name')->get();
+        return auth()->user()->dealerships->sortBy('name')->values();
     }
 }

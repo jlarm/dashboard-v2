@@ -16,6 +16,15 @@ use Stancl\Tenancy\Database\Models\TenantPivot;
 
 /**
  * @property string|null $phone
+ * @property string|null $tenancy_db_name
+ * @property string|null $address
+ * @property string|null $city
+ * @property string|null $state
+ * @property string|null $zip_code
+ * @property string|null $fax
+ * @property string|null $domain
+ * @property string|null $url
+ * @property bool|null $locations
  */
 class Dealership extends BaseTenant implements TenantWithDatabase
 {

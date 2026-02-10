@@ -18,6 +18,7 @@ class ReportTenantSizeCommand extends Command
         $this->info('Tenant Database Size Report');
 
         Dealership::all()->each(function ($tenant): void {
+            /** @var Dealership $tenant */
             $dbName = $tenant->tenancy_db_name;
             $size = DB::connection('mysql')
                 ->selectOne('

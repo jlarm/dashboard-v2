@@ -20,6 +20,7 @@ class ImpersonationController extends Controller
         }
 
         // Generate impersonation token
+        /** @phpstan-ignore-next-line -- macro provided by stancl/tenancy UserImpersonation feature */
         $token = tenancy()->impersonate(
             tenant(), // Current tenant
             $user->id,

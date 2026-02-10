@@ -23,7 +23,10 @@ class Edit extends Component
     public function mount(): void
     {
         $this->statement = $this->oshaViolation->statement;
-        $this->keywords = json_decode((string) $this->oshaViolation->keywords);
+        $keywords = $this->oshaViolation->keywords;
+        $this->keywords = is_array($keywords)
+            ? $keywords
+            : (array) json_decode((string) $keywords, true);
         $this->weight = $this->oshaViolation->weight;
     }
 

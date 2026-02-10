@@ -38,6 +38,7 @@ class BodyShopAudit extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
+        /** @phpstan-ignore-next-line */
         $this
             ->addMediaConversion('preview')
             ->fit(Manipulations::FIT_CROP, 300, 300)

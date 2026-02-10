@@ -44,7 +44,8 @@ class AssignCustomCoursesForm extends Component
             $override = $userCourseOverrides->get($course->id);
 
             if ($override) {
-                $this->courseStates[$course->id] = $override->pivot->type === 'add' ? 'add' : 'exclude';
+                $pivotType = $override->pivot->getAttribute('type');
+                $this->courseStates[$course->id] = $pivotType === 'add' ? 'add' : 'exclude';
             } else {
                 $this->courseStates[$course->id] = 'default';
             }

@@ -30,6 +30,14 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string|null $email
+ * @property-read int $total_user_courses
+ * @property-read int $total_completed_courses
+ * @property-read bool $user_has_not_completed_courses
+ */
 class User extends Authenticatable
 {
     use HasApiTokens,
