@@ -19,8 +19,15 @@ use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Tenant\Audit\DealJacketGroupController;
 use App\Http\Livewire\Dealer\Employee\DeletedIndex;
 use Illuminate\Support\Facades\Route;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-Route::name('dealer.stores.')->middleware('web')->group(function (): void {
+Route::name('dealer.stores.')
+    ->middleware([
+        'web',
+        InitializeTenancyByDomain::class,
+        PreventAccessFromCentralDomains::class,
+    ])->group(function (): void {
 
     Route::prefix('stores/{store:slug}')->middleware(['stores', 'has.stores', 'auth', 'canAccessStore'])->group(function (): void {
 

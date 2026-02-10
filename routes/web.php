@@ -29,7 +29,7 @@ Route::view('/', 'welcome')->name('home');
 // Consultant Access
 // **************************************************
 
-Route::middleware(['auth', 'verified'])->group(function (): void {
+Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(function (): void {
 
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
