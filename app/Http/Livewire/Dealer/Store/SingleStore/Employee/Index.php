@@ -18,6 +18,11 @@ use Livewire\WithPagination;
 use Sentry;
 use Spatie\Permission\Models\Role;
 
+/**
+ * @property-read BelongsToMany $usersQuery
+ * @property-read string|null $selectedDepartmentName
+ * @property-read string|null $selectedRoleName
+ */
 class Index extends Component
 {
     use WithPagination;

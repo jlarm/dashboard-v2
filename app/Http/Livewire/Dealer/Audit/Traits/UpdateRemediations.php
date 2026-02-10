@@ -176,7 +176,7 @@ trait UpdateRemediations
 
     private function handlePhotoRemoval(int $violationId): void
     {
-        $remediation = $this->oshaViolationAudit->violations->find($violationId)?->remediation;
+        $remediation = $this->violations()->find($violationId)?->remediation;
 
         if ($remediation) {
             $remediation->getFirstMedia('remediations')?->delete();

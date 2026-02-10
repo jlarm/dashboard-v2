@@ -12,6 +12,9 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 use Stancl\Tenancy\Database\Models\TenantPivot;
 
+/**
+ * @property string|null $phone
+ */
 class Dealership extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
@@ -34,7 +37,7 @@ class Dealership extends BaseTenant implements TenantWithDatabase
     public function getPhoneNumberAttribute(): string
     {
         $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-        preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+        preg_match('/(\d{3})(\d{3})(\d{4})/', (string) $cleaned, $matches);
 
         return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
     }

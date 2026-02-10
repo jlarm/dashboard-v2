@@ -65,7 +65,7 @@ class Create extends Component
             'invitation_token' => mb_substr(md5(random_int(0, 9).$this->email.time()), 0, 32),
         ]);
 
-        SendQueueEmailJob::dispatch($invite, 'invite');
+        SendQueueEmailJob::dispatch($invite);
 
         session()->flash('flash.type', 'success');
         session()->flash('flash.title', 'Employee Invited');

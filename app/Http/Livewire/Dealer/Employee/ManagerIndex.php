@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+/**
+ * @property-read Builder $usersQuery
+ */
 class ManagerIndex extends Component
 {
     use WithPagination;

@@ -278,11 +278,6 @@ class User extends Authenticatable
         return 'valid';
     }
 
-    /**
-     * Used in HasCourses trait
-     *
-     * @phpstan-ignore method.unused
-     */
     private function userHasNoCaliforniaStore(): bool
     {
         // Use loaded stores collection if available, otherwise query

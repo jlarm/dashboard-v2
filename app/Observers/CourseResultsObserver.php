@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\CourseResults;
+use Illuminate\Cache\RedisStore;
 use Illuminate\Support\Facades\Cache;
 
 class CourseResultsObserver
@@ -80,8 +81,12 @@ class CourseResultsObserver
      */
     private function clearRedisPatternCache(array $patterns): void
     {
+        if (! Cache::getStore() instanceof RedisStore) {
+            return;
+        }
+
         foreach ($patterns as $pattern) {
-            $keys = Cache::getRedis()->keys($pattern);
+            $keys = Cache::getStore()->connection()->keys($pattern);
             if (! empty($keys)) {
                 foreach ($keys as $key) {
                     // Remove the Redis prefix if it exists

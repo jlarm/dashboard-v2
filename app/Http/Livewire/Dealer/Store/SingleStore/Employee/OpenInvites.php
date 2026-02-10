@@ -9,10 +9,14 @@ use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+/**
+ * @property-read Builder $invites
+ */
 class OpenInvites extends Component
 {
     use WithPagination;

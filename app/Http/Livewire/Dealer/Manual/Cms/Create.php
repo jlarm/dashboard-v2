@@ -64,7 +64,7 @@ class Create extends Component
     public function mount(Request $request): void
     {
 
-        $storeName = $request->get('store')->name ?? Store::query()->first()->name;
+        $storeName = $request->get('store')->name ?? Store::query()->value('name');
         $this->store = Store::query()->where('name', $storeName)->first();
 
         $this->qiRole = Role::query()->where('name', 'Qualified Individual')->first();
@@ -82,6 +82,15 @@ class Create extends Component
     {
 
         $this->validate();
+
+        $aanOne = null;
+        $aanTwo = null;
+        $aanThree = null;
+        $dpn = null;
+        $apnOne = null;
+        $apnTwo = null;
+        $apnThree = null;
+        $an = null;
 
         if ($this->adoption_approval_name_one) {
             $aanOne = Str::of($this->adoption_approval_name_one)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
@@ -182,9 +191,9 @@ class Create extends Component
                 $query->where('name', 'Qualified Individual');
             })->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
-            })->pluck('name')->first();
+            })->value('name');
         } else {
-            $this->qi = User::role('Qualified Individual')->pluck('name')->first() ?? null;
+            $this->qi = User::role('Qualified Individual')->value('name');
         }
 
         if (! $this->qi) {

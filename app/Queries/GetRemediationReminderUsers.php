@@ -19,7 +19,6 @@ class GetRemediationReminderUsers
         $userIds = RemediationReminderPreference::query()
             ->where('enabled', true)
             ->where('audit_type', $auditType)
-            ->get()
             ->pluck('user_id')
             ->toArray();
 

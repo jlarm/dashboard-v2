@@ -30,7 +30,7 @@ class SingleStoreScanSettings extends Component
     {
         $this->validate();
 
-        $this->scan->update([
+        $this->dealer->update([
             'name' => $this->name,
         ]);
 

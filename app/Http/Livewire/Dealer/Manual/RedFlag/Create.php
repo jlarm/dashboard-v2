@@ -33,6 +33,12 @@ class Create extends Component
     public $owner;
     public $ownerp;
     public $signature;
+    public $pepn;
+    public $pnepn;
+    public $fepn;
+    public $fnepn;
+    public $alarmSystem;
+    public $burglarSystem;
     protected $rules = [
         'signature' => 'required',
     ];

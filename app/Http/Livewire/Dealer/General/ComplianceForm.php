@@ -15,6 +15,7 @@ class ComplianceForm extends Component implements HasForms
     use InteractsWithForms;
 
     public Store $store;
+    public ?int $store_id = null;
     public $firewall_company;
     public $ip_addresses = [''];
     public $ip_address;

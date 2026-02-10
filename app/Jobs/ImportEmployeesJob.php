@@ -56,7 +56,7 @@ class ImportEmployeesJob implements ShouldQueue
                         'invitation_token' => mb_substr(md5(random_int(0, 9).$item['Email'].time()), 0, 32),
                     ]);
 
-                    SendQueueEmailJob::dispatch($invite, 'invite');
+                    SendQueueEmailJob::dispatch($invite);
                 } catch (Exception $e) {
                     $importErrors[] = [
                         'row' => $index + 1,

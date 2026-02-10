@@ -84,8 +84,7 @@ class DotCert extends Component
         $course = Course::query()
             ->where('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')
             ->latest()
-            ->pluck('id')
-            ->first();
+            ->value('id');
 
         return CourseResults::query()
             ->where('user_id', auth()->user()->id)

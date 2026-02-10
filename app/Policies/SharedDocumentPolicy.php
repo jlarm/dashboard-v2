@@ -22,7 +22,13 @@ class SharedDocumentPolicy
         return $user->hasRole('super-admin');
     }
 
-    public function update(User $user, SharedDocument $sharedDocument): bool {}
+    public function update(User $user, SharedDocument $sharedDocument): bool
+    {
+        return $user->hasRole('super-admin');
+    }
 
-    public function delete(User $user, SharedDocument $sharedDocument): bool {}
+    public function delete(User $user, SharedDocument $sharedDocument): bool
+    {
+        return $user->hasRole('super-admin');
+    }
 }

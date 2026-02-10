@@ -57,6 +57,11 @@ class Edit extends Component
         $this->close();
     }
 
+    public function close(): void
+    {
+        $this->emit('slide-over.close');
+    }
+
     public function render()
     {
         return view('livewire.dealer.store.edit');

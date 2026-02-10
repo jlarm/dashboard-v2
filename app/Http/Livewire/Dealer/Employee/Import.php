@@ -91,7 +91,7 @@ class Import extends Modal
             // If we reach here, it means the transaction was successful
             $invites = Invite::query()->where('user_id', auth()->id())->latest()->take(count($data['employees']))->get();
             foreach ($invites as $invite) {
-                SendQueueEmailJob::dispatch($invite, 'invite');
+                SendQueueEmailJob::dispatch($invite);
                 $this->successCount++;
             }
 

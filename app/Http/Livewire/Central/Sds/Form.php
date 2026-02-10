@@ -28,6 +28,9 @@ class Form extends Component
     public string $newCasNo = '';
     public string $commonName = '';
     public $file;
+    protected $messages = [
+        'file.max' => 'The uploaded file is too large. Please visit https://www.ilovepdf.com/compress_pdf to compress the file.',
+    ];
     protected $rules = [
         'name' => 'required|string|max:255',
         'productIdentifier' => 'nullable|string|max:255',
