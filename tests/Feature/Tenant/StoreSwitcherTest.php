@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Eloquent\Collection;
 use App\Http\Livewire\Dealer\Navigation\StoreSwitcher;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Livewire\Livewire;
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Jobs\Contracts;
 
-use Illuminate\Support\Facades\Storage;
 use App\Models\Contract;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class UploadToDigitalOceanJob implements ShouldQueue
 {

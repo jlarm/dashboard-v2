@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs\Audit;
 
-use App\Models\GlbaViolationStatements;
-use Illuminate\Support\Facades\File;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
+use App\Models\GlbaViolationStatements;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,6 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
 
 class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue

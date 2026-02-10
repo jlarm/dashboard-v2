@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Settings;
 
-use Illuminate\Support\Facades\URL;
 use App\Mail\ComplianceFormMail;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Livewire\Component;
 
 class SendComplianceEmailLink extends Component

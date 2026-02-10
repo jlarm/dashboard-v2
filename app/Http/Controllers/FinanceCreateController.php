@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 class FinanceCreateController extends Controller
 {
     public $store;
+
     public function __invoke(): RedirectResponse
     {
         $audit = FinanceAudit::query()->create([

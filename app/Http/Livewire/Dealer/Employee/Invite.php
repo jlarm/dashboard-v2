@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Employee;
 
-use App\Models\User;
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Filament\Notifications\Notification;
 use Spatie\Permission\Models\Role;
 use WireElements\Pro\Components\Modal\Modal;

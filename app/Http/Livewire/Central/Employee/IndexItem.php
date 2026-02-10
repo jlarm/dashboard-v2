@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Employee;
 
-use Illuminate\View\View;
-use Illuminate\Support\Facades\DB;
 use App\Models\Course;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class IndexItem extends Component

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Str;
 use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
+use Illuminate\Support\Str;
 
 describe('Deal Jacket Show Page', function (): void {
     it('consultants can see the deal jacket page with all details', function (): void {

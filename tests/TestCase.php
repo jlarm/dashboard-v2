@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Dealership;
 use App\Models\User;
 use App\Services\UserCourseService;
 use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
 abstract class TestCase extends BaseTestCase

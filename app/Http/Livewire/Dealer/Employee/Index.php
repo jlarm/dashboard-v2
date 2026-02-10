@@ -306,7 +306,7 @@ class Index extends Component
 
     private function getCachedUsers(): Collection
     {
-        if (!$this->cachedUsers instanceof Collection) {
+        if (! $this->cachedUsers instanceof Collection) {
             $users = $this->usersQuery->get();
 
             $this->cachedUsers = $this->showIncompleteCourseUsers

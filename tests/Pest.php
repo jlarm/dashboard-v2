@@ -12,11 +12,11 @@ declare(strict_types=1);
 | need to change it using the "uses()" function to bind a different classes or traits.
 |
 */
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
 use Database\Seeders\RoleAndPermissionSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Tests\TenantTestCase;

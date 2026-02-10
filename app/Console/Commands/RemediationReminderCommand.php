@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Enums\AuditTypes;
 use App\Models\Dealer\Store;
 use App\Notifications\RemediationReminderNotification;
@@ -12,6 +11,7 @@ use App\Queries\GetRemediationReminderUsers;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RemediationReminderCommand extends Command
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserInviteNotification;
+use Illuminate\Support\Facades\Notification;
 
 class CentralUserInviteRepository
 {

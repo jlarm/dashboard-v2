@@ -28,6 +28,7 @@ trait GlbaGenerateRating
         if ($total > 0) {
             return $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
         }
+
         return null;
     }
 }

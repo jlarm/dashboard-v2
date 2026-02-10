@@ -694,6 +694,7 @@ class Show extends Component
 
             return redirect()->route('dealer.stores.audits.body-shop.index', $store);
         }
+
         return null;
     }
 

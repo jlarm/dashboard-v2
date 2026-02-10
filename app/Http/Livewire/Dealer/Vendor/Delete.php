@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
-use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Vendor;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal

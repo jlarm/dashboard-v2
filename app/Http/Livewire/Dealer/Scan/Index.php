@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Scan;
 
-use Illuminate\Support\Facades\Cookie;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -68,6 +68,7 @@ class Index extends Component
         } catch (Exception) {
             $this->addError('connection', 'Error connecting to Sentry. Please check the dealership name in settings.');
         }
+
         return null;
 
     }

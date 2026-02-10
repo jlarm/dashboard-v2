@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models\Dealer\Audit;
 
-use Database\Factories\Tenant\DealJacketGroupFactory;
 use App\Models\Dealer\Store;
 use App\Observers\DealJacketGroupObserver;
+use Database\Factories\Tenant\DealJacketGroupFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

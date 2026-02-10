@@ -113,6 +113,7 @@ class Form extends Component
             $this->error = $e->getMessage();
             Log::error($e->getMessage());
         }
+
         return null;
     }
 

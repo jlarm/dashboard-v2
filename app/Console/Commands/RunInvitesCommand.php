@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 use App\Mail\TenDayOpenInviteReminderMail;
 use App\Mail\TwentyDayOpenInviteReminderMail;
 use App\Models\Dealer\Invite;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class RunInvitesCommand extends Command
 {

@@ -5,8 +5,9 @@ declare(strict_types=1);
 use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorEmailLog;
 use App\Models\Dealer\VendorForm;
+use Tests\TestCase;
 
-uses(Tests\TestCase::class);
+uses(TestCase::class);
 
 beforeEach(function (): void {
     [$this->tenant, $this->consultant] = createDealershipTenant();

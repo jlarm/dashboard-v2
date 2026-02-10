@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Dealer\Invite;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -12,15 +11,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ImportEmployeesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected array $data, protected int $userId)
-    {
-    }
+    public function __construct(protected array $data, protected int $userId) {}
 
     public function handle(): void
     {

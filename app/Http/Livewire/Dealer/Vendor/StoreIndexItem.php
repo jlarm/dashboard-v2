@@ -17,10 +17,10 @@ class StoreIndexItem extends Component
     public function mount(): void
     {
         foreach ($this->vendor->getAttributes() as $key => $value) {
-            if (!str_starts_with($key, 'q')) {
+            if (! str_starts_with($key, 'q')) {
                 continue;
             }
-            if (!str_ends_with($key, 'a')) {
+            if (! str_ends_with($key, 'a')) {
                 continue;
             }
             if ($value !== 'no') {

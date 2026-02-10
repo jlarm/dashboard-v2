@@ -47,6 +47,7 @@ class IndexItem extends Component
         if (! $form) {
             return false;
         }
+
         return $form->signature || $form->document_path;
     }
 

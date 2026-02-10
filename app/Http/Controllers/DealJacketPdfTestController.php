@@ -33,7 +33,7 @@ class DealJacketPdfTestController extends Controller
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (!($key !== 'id' &&
+                        if (! ($key !== 'id' &&
                         $key !== 'parent_id' &&
                         $key !== 'user_id' &&
                         $key !== 'store_id' &&
@@ -63,7 +63,7 @@ class DealJacketPdfTestController extends Controller
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (!($key !== 'id' &&
+                        if (! ($key !== 'id' &&
                         $key !== 'parent_id' &&
                         $key !== 'user_id' &&
                         $key !== 'store_id' &&
@@ -130,7 +130,7 @@ class DealJacketPdfTestController extends Controller
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (!($key !== 'id' &&
+                        if (! ($key !== 'id' &&
                         $key !== 'parent_id' &&
                         $key !== 'user_id' &&
                         $key !== 'store_id' &&

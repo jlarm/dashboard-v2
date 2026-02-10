@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Jobs\Contracts;
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
 use App\Models\Contract;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 use Spatie\Browsershot\Browsershot;
 
 class GeneratePdfJob implements ShouldQueue

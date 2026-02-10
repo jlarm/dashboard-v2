@@ -17,7 +17,7 @@ class GoPhishService
         return collect($groups->json())->pluck('id', 'name');
     }
 
-    public function createOrUpdateGroup($groups, $userData, $tenant, $store, $token, $ip): void
+    public function createOrUpdateGroup($groups, $userData, $tenant, $store, $token, string $ip): void
     {
         if (! array_key_exists('All '.$store->name.' Employees', $groups->toArray())) {
             $this->createGroup($groups, $userData, $tenant, $store, $token, $ip);

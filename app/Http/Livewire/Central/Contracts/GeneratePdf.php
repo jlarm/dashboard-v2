@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Contracts;
 
-use Illuminate\Support\Facades\Bus;
 use App\Jobs\Contracts\GeneratePdfJob;
 use App\Jobs\Contracts\UploadToDigitalOceanJob;
 use App\Models\Contract;
+use Illuminate\Support\Facades\Bus;
 use Livewire\Component;
 
 class GeneratePdf extends Component

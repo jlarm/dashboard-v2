@@ -41,6 +41,7 @@ class Show extends Component
         if ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
             return 'Q4';
         }
+
         return null;
     }
 

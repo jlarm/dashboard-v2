@@ -86,7 +86,7 @@ class CourseReminderCommand extends Command
             $this->info('Found '.$users->count()." users for store {$store->name}");
 
             // Process each user
-            $users->each(function ($user) use ($tenant, $debugEnabled, $isTestMode, $store): void {
+            $users->each(function ($user) use ($debugEnabled, $isTestMode, $store): void {
                 $this->processUser($user, $debugEnabled, $isTestMode, $store);
             });
         }
@@ -111,7 +111,7 @@ class CourseReminderCommand extends Command
             ->with('roles', 'stores')
             ->select('id', 'name', 'email', 'created_at', 'last_sent_course_reminder', 'department_id')
             ->get()
-            ->each(function ($user) use ($tenant, $debugEnabled, $isTestMode): void {
+            ->each(function ($user) use ($debugEnabled, $isTestMode): void {
                 $this->processUser($user, $debugEnabled, $isTestMode);
             });
     }

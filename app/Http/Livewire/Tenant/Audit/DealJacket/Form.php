@@ -80,7 +80,7 @@ class Form extends Component
             return;
         }
 
-        $questions = tenancy()->central(fn() => DealJacketQuestion::query()
+        $questions = tenancy()->central(fn () => DealJacketQuestion::query()
             ->get()
             ->filter(fn ($q): bool => in_array($this->purchaseType, $q->categories, true)
                 && in_array($this->vehicleType, $q->categories, true)

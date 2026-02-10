@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Employee;
 
-use App\Models\Dealer\Store;
-use Illuminate\Support\Facades\Cache;
 use App\Models\Dealer\Course;
+use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Services\UserCourseService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class AssignCustomCoursesForm extends Component
@@ -102,7 +102,7 @@ class AssignCustomCoursesForm extends Component
 
         try {
             $storeIds = Store::query()->pluck('id')->toArray();
-        } catch (Exception $e) {
+        } catch (Exception) {
             $storeIds = [];
         }
 

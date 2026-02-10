@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Contracts;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\ContractSignedNotification;
 use App\Models\Contract;
+use App\Notifications\ContractSignedNotification;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Review extends Component
@@ -94,6 +94,7 @@ class Review extends Component
             'contact_title' => $location['contact_title'] ?? '',
             'contact_email' => $location['contact_email'] ?? '',
         ]);
+
         return null;
     }
 

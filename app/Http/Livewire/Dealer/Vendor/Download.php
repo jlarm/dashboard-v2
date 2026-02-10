@@ -74,6 +74,7 @@ class Download extends Component
                 ->danger()
                 ->send();
         }
+
         return null;
     }
 }

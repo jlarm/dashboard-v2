@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Scan;
 
-use Illuminate\Support\Carbon;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 class InternalReportIndex extends Component

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Spatie\Browsershot\Browsershot;
 use App\Http\Livewire\Dealer\Vendor\Download;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
@@ -11,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
+use Spatie\Browsershot\Browsershot;
 
 beforeEach(function (): void {
     Storage::fake('do-manuals');

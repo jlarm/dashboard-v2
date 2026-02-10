@@ -218,7 +218,7 @@ class SingleStoreDetails extends Component
             ->where('enabled', true)
             ->get()
             ->groupBy(fn ($preference) => $preference->audit_type->value)
-            ->map(fn($preferencesInGroup) => $preferencesInGroup->map(function ($preference) use ($relevantUsersCollection): ?array {
+            ->map(fn ($preferencesInGroup) => $preferencesInGroup->map(function ($preference) use ($relevantUsersCollection): ?array {
                 $user = $relevantUsersCollection->get($preference->user_id);
                 if ($user) {
                     return [

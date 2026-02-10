@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Employee;
 
-use Illuminate\View\View;
 use App\Models\User;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 

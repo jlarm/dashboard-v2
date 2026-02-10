@@ -62,6 +62,7 @@ class NewForm extends Component
         $this->data[20]['question'] = 'Does your company prohibit shared logins?';
         $this->data[21]['question'] = 'Does your company require multi-factor authentication to log into your company’s systems?';
         $this->data[22]['question'] = 'Do you have an account lockout policy?';
+
         return null;
     }
 

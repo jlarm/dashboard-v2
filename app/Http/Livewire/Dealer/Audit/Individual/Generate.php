@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\Individual;
 
-use Illuminate\Support\Facades\Bus;
 use App\Jobs\GenerateIndividualAuditPdfJob;
 use App\Jobs\UploadIndividualAuditToDigitalOceanJob;
 use App\Models\Dealer\Audit\IndividualAudit;
+use Illuminate\Support\Facades\Bus;
 use Livewire\Component;
 
 class Generate extends Component
@@ -22,7 +22,7 @@ class Generate extends Component
             ->orWhere('parent_id', $individualAudit->id)
             ->pluck('manager_id');
 
-        $this->managerCheck = !in_array(null, $this->managerCheck->toArray());
+        $this->managerCheck = ! in_array(null, $this->managerCheck->toArray());
     }
 
     public function generatePdf(): void

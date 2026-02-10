@@ -26,7 +26,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     public function updatedSearch(): void
     {
         if ($this->search >= 2 !== '') {
-            $this->violations = tenancy()->central(fn($tenant) => BodyShopViolationStatement::query()
+            $this->violations = tenancy()->central(fn ($tenant) => BodyShopViolationStatement::query()
                 ->where(function ($term): void {
                     $term->where('statement', 'like', '%'.$this->search.'%')
                         ->orWhere('keywords', 'like', '%'.$this->search.'%');

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Dealership;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TenantLookupController extends Controller
 {
@@ -25,7 +25,7 @@ class TenantLookupController extends Controller
         $tenants = Dealership::with('domains')->get();
 
         foreach ($tenants as $tenant) {
-            $found = $tenant->run(fn() => DB::table('users')
+            $found = $tenant->run(fn () => DB::table('users')
                 ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
                 ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
                 ->whereNull('roles.name')

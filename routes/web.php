@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Central\Contracts\Create;
-use App\Http\Livewire\Central\Contracts\Edit;
-use App\Http\Livewire\Central\AuditStatements\Osha\PrintView;
-use App\Http\Controllers\Central\Employee\RegisterController;
-use App\Http\Controllers\Central\Employee\StoreRegistrationController;
-use App\Http\Livewire\Central\Contracts\Review;
-use App\Http\Controllers\Central\Employee\ShowController;
-use App\Http\Controllers\Central\DealerDocs\IndexController;
-use App\Http\Livewire\Central\CourseManagement\EditQuiz;
 use App\Http\Controllers\Central\Course\CourseResultsController;
 use App\Http\Controllers\Central\DealerDocs\EditController;
+use App\Http\Controllers\Central\DealerDocs\IndexController;
 use App\Http\Controllers\Central\Dealership\CreateController;
+use App\Http\Controllers\Central\Employee\RegisterController;
+use App\Http\Controllers\Central\Employee\ShowController;
 use App\Http\Controllers\Central\Employee\StoreController;
+use App\Http\Controllers\Central\Employee\StoreRegistrationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TenantLookupController;
+use App\Http\Livewire\Central\AuditStatements\Osha\PrintView;
+use App\Http\Livewire\Central\Contracts\Create;
+use App\Http\Livewire\Central\Contracts\Edit;
+use App\Http\Livewire\Central\Contracts\Review;
 use App\Http\Livewire\Central\Course\Index;
 use App\Http\Livewire\Central\Course\Quiz;
 use App\Http\Livewire\Central\Course\Show;
+use App\Http\Livewire\Central\CourseManagement\EditQuiz;
 use App\Http\Livewire\Central\Dashboard;
 use Illuminate\Support\Facades\Route;
 

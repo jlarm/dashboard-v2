@@ -51,6 +51,7 @@ class CompleteSimAction extends Component
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
+
         return null;
     }
 

@@ -31,6 +31,7 @@ trait OshaGenerateRating
         if ($total > 0) {
             return $rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
         }
+
         return null;
     }
 }

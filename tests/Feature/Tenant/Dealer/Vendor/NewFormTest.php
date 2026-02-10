@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Notifications\VendorSignedNotification;
 use App\Http\Livewire\Dealer\Vendor\NewForm;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorForm;
 use App\Models\User;
+use App\Notifications\VendorSignedNotification;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;

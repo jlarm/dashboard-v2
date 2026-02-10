@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Models\Dealer\Audit\DealJacket;
 use App\Http\Livewire\Tenant\Audit\DealJacket\Components\MarkCompleteModal;
 use App\Http\Livewire\Tenant\Audit\DealJacket\CreateNewGroupButton;
 use App\Http\Livewire\Tenant\Audit\DealJacket\DealJacketGroupDeleteModal;
+use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
 use Livewire\Livewire;

@@ -39,6 +39,7 @@ class Delete extends Modal
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
+
         return null;
     }
 

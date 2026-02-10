@@ -68,7 +68,7 @@ class CyrismaService
 
     public function clearCache(): void
     {
-        if (!$this->store instanceof Store) {
+        if (! $this->store instanceof Store) {
             return;
         }
 
@@ -665,7 +665,7 @@ class CyrismaService
 
     protected function getCacheVersion(): int
     {
-        if (!$this->store instanceof Store) {
+        if (! $this->store instanceof Store) {
             return 1;
         }
 
@@ -693,6 +693,7 @@ class CyrismaService
         if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             return false;
         }
+
         // Check if it's a private IP range
         return (bool) filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
     }

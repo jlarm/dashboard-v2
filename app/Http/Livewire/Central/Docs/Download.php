@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Docs;
 
-use Illuminate\Support\Facades\Storage;
 use App\Models\Document;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Download extends Component

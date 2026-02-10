@@ -16,9 +16,7 @@ class RemediationReminderMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public string $modelType, public bool $locations, public string $storeSlug)
-    {
-    }
+    public function __construct(public string $modelType, public bool $locations, public string $storeSlug) {}
 
     public function envelope(): Envelope
     {

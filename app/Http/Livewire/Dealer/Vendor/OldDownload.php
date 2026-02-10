@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
-use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Vendor;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Spatie\Browsershot\Browsershot;
 
@@ -32,6 +32,7 @@ class OldDownload extends Component
         } catch (Exception $e) {
             Log::log('error', $e->getMessage());
         }
+
         return null;
     }
 

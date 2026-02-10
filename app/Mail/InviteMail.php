@@ -16,9 +16,7 @@ class InviteMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(private Invite $invite)
-    {
-    }
+    public function __construct(private Invite $invite) {}
 
     public function envelope(): Envelope
     {

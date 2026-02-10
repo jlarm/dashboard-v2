@@ -33,6 +33,6 @@ class VaporUiServiceProvider extends ServiceProvider
      */
     protected function gate(): void
     {
-        Gate::define('viewVaporUI', fn(?User $user = null): bool => $user?->email == 'jlohr@autorisknow.com');
+        Gate::define('viewVaporUI', fn (?User $user = null): bool => $user?->email === 'jlohr@autorisknow.com');
     }
 }

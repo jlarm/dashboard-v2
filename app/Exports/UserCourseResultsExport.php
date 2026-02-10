@@ -10,8 +10,9 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 
 class UserCourseResultsExport implements FromQuery
 {
-    public $user;
     use Exportable;
+
+    public $user;
 
     public function __construct()
     {

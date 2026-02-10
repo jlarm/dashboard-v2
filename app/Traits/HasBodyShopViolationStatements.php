@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use Illuminate\Support\Str;
 use App\Models\BodyShopViolationStatement;
+use Illuminate\Support\Str;
 
 trait HasBodyShopViolationStatements
 {

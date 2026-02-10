@@ -789,6 +789,7 @@ class Show extends Component
 
             return redirect()->route('dealer.stores.audits.finance.index', [$store->slug]);
         }
+
         return null;
     }
 

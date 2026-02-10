@@ -11,10 +11,12 @@ use Illuminate\Notifications\Notification;
 class CourseExpiringSoonNotification extends Notification
 {
     public $course;
+
     /**
      * @var string
      */
     public $domain;
+
     public $expireDate;
 
     public function __construct(string $tenantDomain, public $userName, protected int $courseId, $expireDate)

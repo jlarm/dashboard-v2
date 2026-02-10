@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\URL;
 
 class UserInviteNotification extends Notification
 {
-    public function __construct(protected $validated)
-    {
-    }
+    public function __construct(protected $validated) {}
 
     public function via($notifiable): array
     {

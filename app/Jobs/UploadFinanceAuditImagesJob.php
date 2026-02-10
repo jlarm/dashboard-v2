@@ -16,9 +16,7 @@ class UploadFinanceAuditImagesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, WithMedia;
 
-    public function __construct(public FinanceAudit $financeAudit)
-    {
-    }
+    public function __construct(public FinanceAudit $financeAudit) {}
 
     public function handle(): void
     {

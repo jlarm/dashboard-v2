@@ -14,9 +14,7 @@ class ExpiredCourseNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public array $coursesGrouped, public string $userName)
-    {
-    }
+    public function __construct(public array $coursesGrouped, public string $userName) {}
 
     public function via($notifiable): array
     {

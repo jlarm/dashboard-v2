@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\Services\UserCourseService;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
+use App\Services\UserCourseService;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -23,7 +23,7 @@ trait HasCourses
         $this->userCourses = null;
 
         // Clear service-level caches for this user
-        app(\App\Services\UserCourseService::class)::clearCacheForUser($this->id);
+        app(UserCourseService::class)::clearCacheForUser($this->id);
 
         // Clear Laravel's attribute cache for computed attributes
         if (isset($this->attributes['total_completed_courses'])) {
@@ -45,7 +45,7 @@ trait HasCourses
             return $this->results
                 ->whereIn('course_id', $userCourseIds)
                 ->where('passed', 1)
-                ->filter(fn($result): bool => $result->created_at >= $oneYearAgo
+                ->filter(fn ($result): bool => $result->created_at >= $oneYearAgo
                     || (in_array($result->course_id, [9, 10, 11, 12]) && $result->created_at >= $threeYearsAgo))
                 ->unique('course_id')
                 ->count();

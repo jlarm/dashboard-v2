@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Scan;
 
-use Illuminate\Support\Facades\Cookie;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -55,6 +55,7 @@ class GenerateReport extends Component
         } catch (Exception $e) {
             $this->addError('generateError', $e->getMessage());
         }
+
         return null;
     }
 

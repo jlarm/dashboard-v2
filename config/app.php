@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-use WireElements\Pro\WireElementsProServiceProvider;
-use WireElements\Pro\Components\SlideOver\SlideOverServiceProvider;
-use WireElements\Pro\Components\Modal\ModalServiceProvider;
-use Webklex\PDFMerger\Providers\PDFMergerServiceProvider;
 use App\Providers\AppServiceProvider;
 use App\Providers\AuthServiceProvider;
 use App\Providers\EventServiceProvider;
 use App\Providers\HorizonServiceProvider;
 use App\Providers\RouteServiceProvider;
-use App\Providers\VaporUiServiceProvider;
+use App\Providers\StoreServiceProvider;
 use App\Providers\TelescopeServiceProvider;
 use App\Providers\TenancyServiceProvider;
-use Maatwebsite\Excel\ExcelServiceProvider;
-use App\Providers\StoreServiceProvider;
-use Maatwebsite\Excel\Facades\Excel;
-use Webklex\PDFMerger\Facades\PDFMergerFacade;
+use App\Providers\VaporUiServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Maatwebsite\Excel\ExcelServiceProvider;
+use Maatwebsite\Excel\Facades\Excel;
+use Webklex\PDFMerger\Facades\PDFMergerFacade;
+use Webklex\PDFMerger\Providers\PDFMergerServiceProvider;
+use WireElements\Pro\Components\Modal\ModalServiceProvider;
+use WireElements\Pro\Components\SlideOver\SlideOverServiceProvider;
+use WireElements\Pro\WireElementsProServiceProvider;
 
 return [
 

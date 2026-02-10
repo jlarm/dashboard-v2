@@ -80,6 +80,7 @@ class IndividualAudit extends Model implements HasMedia
         if ($this->audit_date->format('m') >= 10 && $this->audit_date->format('m') <= 12) {
             return 'Q4';
         }
+
         return null;
     }
 

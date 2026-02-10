@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Manual\RedFlag;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Bus;
 use App\Jobs\Manuals\GenerateRedFlagManualJob;
 use App\Jobs\Manuals\UploadRedFlagToDigitalOceanJob;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Create extends Component

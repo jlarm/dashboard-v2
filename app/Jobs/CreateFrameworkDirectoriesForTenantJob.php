@@ -8,9 +8,7 @@ use Stancl\Tenancy\Contracts\Tenant;
 
 class CreateFrameworkDirectoriesForTenantJob
 {
-    public function __construct(protected Tenant $tenant)
-    {
-    }
+    public function __construct(protected Tenant $tenant) {}
 
     public function handle(): void
     {

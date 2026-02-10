@@ -79,7 +79,7 @@ class Reset extends Modal
 
     private function deleteStoreCourseResults(): Collection
     {
-        if (!$this->store instanceof Store) {
+        if (! $this->store instanceof Store) {
             return collect();
         }
 

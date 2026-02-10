@@ -23,7 +23,7 @@ class DeleteInvite extends Modal
 
     public function deleteInvite(): void
     {
-        if (!$this->invite instanceof Invite) {
+        if (! $this->invite instanceof Invite) {
             $this->close();
 
             return;

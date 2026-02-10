@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dealer;
 
-use Spatie\Permission\PermissionRegistrar;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealer\StoreUserRequest;
 use App\Models\Certificate;
@@ -22,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\Browsershot\Browsershot;
+use Spatie\Permission\PermissionRegistrar;
 
 class UserController extends Controller
 {

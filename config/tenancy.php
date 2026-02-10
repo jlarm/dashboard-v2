@@ -3,22 +3,22 @@
 declare(strict_types=1);
 
 use App\Models\Dealership;
-use Stancl\Tenancy\UUIDGenerator;
-use Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper;
+use App\Tenancy\Bootstrappers\FixSignedUrls;
+use App\Tenancy\Bootstrappers\SpatiePermissionsBootstrapper;
 use Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper;
+use Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper;
 use Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper;
 use Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper;
 use Stancl\Tenancy\Bootstrappers\RedisTenancyBootstrapper;
-use App\Tenancy\Bootstrappers\FixSignedUrls;
-use App\Tenancy\Bootstrappers\SpatiePermissionsBootstrapper;
-use Stancl\Tenancy\TenantDatabaseManagers\SQLiteDatabaseManager;
-use Stancl\Tenancy\TenantDatabaseManagers\MySQLDatabaseManager;
-use Stancl\Tenancy\TenantDatabaseManagers\PostgreSQLDatabaseManager;
-use Stancl\Tenancy\Features\UserImpersonation;
+use Stancl\Tenancy\Database\Models\Domain;
 use Stancl\Tenancy\Features\TelescopeTags;
 use Stancl\Tenancy\Features\UniversalRoutes;
+use Stancl\Tenancy\Features\UserImpersonation;
 use Stancl\Tenancy\Features\ViteBundler;
-use Stancl\Tenancy\Database\Models\Domain;
+use Stancl\Tenancy\TenantDatabaseManagers\MySQLDatabaseManager;
+use Stancl\Tenancy\TenantDatabaseManagers\PostgreSQLDatabaseManager;
+use Stancl\Tenancy\TenantDatabaseManagers\SQLiteDatabaseManager;
+use Stancl\Tenancy\UUIDGenerator;
 
 return [
     'tenant_model' => Dealership::class,

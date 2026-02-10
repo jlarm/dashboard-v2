@@ -15,6 +15,22 @@ class UserCourseService
     private static array $courseRoleCache = [];
     private static array $baseCourseCache = [];
 
+    public static function clearCacheForUser(?int $userId): void
+    {
+        if ($userId === null) {
+            return;
+        }
+
+        unset(self::$courseIdsCache[$userId]);
+    }
+
+    public static function clearAllCaches(): void
+    {
+        self::$courseIdsCache = [];
+        self::$courseRoleCache = [];
+        self::$baseCourseCache = [];
+    }
+
     /**
      * Get the IDs of courses assigned to a user.
      * This is the core logic that determines which courses a user should have.
@@ -94,22 +110,6 @@ class UserCourseService
             ->diff($excludedCourseIds)
             ->values()
             ->toArray();
-    }
-
-    public static function clearCacheForUser(?int $userId): void
-    {
-        if ($userId === null) {
-            return;
-        }
-
-        unset(self::$courseIdsCache[$userId]);
-    }
-
-    public static function clearAllCaches(): void
-    {
-        self::$courseIdsCache = [];
-        self::$courseRoleCache = [];
-        self::$baseCourseCache = [];
     }
 
     /**

@@ -1099,6 +1099,7 @@ class Show extends Component
 
             return redirect()->route('dealer.stores.audits.osha.index', [$store->slug]);
         }
+
         return null;
     }
 

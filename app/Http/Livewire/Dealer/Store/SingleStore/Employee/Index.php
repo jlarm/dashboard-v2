@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
-use Spatie\Permission\Models\Role;
 use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
@@ -17,6 +16,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Sentry;
+use Spatie\Permission\Models\Role;
 
 class Index extends Component
 {

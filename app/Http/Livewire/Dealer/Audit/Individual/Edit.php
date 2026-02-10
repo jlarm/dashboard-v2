@@ -572,6 +572,7 @@ class Edit extends Component
 
             return redirect()->route('dealer.stores.audits.individual.show', [$store, $parent]);
         }
+
         return null;
     }
 

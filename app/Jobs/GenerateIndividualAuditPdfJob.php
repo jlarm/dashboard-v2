@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use Illuminate\Support\Facades\File;
 use App\Models\Dealer\Audit\IndividualAudit;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
 
 class GenerateIndividualAuditPdfJob implements ShouldQueue
@@ -22,10 +22,12 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     public int $count = 0;
     public $issueCountByManager;
     public $issuesByManager;
+
     /**
      * @var never[]
      */
     public $array = [];
+
     public $results = [];
     public $totals = [];
     public $grandTotal;
@@ -51,7 +53,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (!($key !== 'id' &&
+                        if (! ($key !== 'id' &&
                         $key !== 'parent_id' &&
                         $key !== 'user_id' &&
                         $key !== 'store_id' &&
@@ -82,7 +84,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (!($key !== 'id' &&
+                        if (! ($key !== 'id' &&
                         $key !== 'parent_id' &&
                         $key !== 'user_id' &&
                         $key !== 'store_id' &&
@@ -115,7 +117,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (!($key !== 'id' &&
+                        if (! ($key !== 'id' &&
                         $key !== 'parent_id' &&
                         $key !== 'user_id' &&
                         $key !== 'store_id' &&

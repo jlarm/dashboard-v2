@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Database\Factories\Tenant;
 
-use Illuminate\Support\Str;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class DealJacketGroupFactory extends Factory
 {

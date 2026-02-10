@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Contracts;
 
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\ContractPdfNotification;
 use App\Models\Contract;
+use App\Notifications\ContractPdfNotification;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 
 class SendContractPdf extends Component

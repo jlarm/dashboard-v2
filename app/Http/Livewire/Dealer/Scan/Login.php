@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Scan;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cookie;
 use App\Models\Dealer\Store;
 use Exception;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
 class Login extends Component
@@ -38,6 +38,7 @@ class Login extends Component
         } catch (Exception) {
             $this->addError('email', 'Invalid credentials');
         }
+
         return null;
     }
 

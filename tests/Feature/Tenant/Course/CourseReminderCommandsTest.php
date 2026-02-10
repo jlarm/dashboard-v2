@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\CourseUserNotificationSent;
@@ -12,6 +11,7 @@ use App\Notifications\ExpiredCourseNotification;
 use App\Notifications\IncompleteCoursesNotification;
 use App\Services\UserCourseService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Role;
 

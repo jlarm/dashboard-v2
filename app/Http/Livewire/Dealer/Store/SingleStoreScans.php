@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store;
 
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Response;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Response;
 use Livewire\Component;
 
 class SingleStoreScans extends Component

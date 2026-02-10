@@ -54,7 +54,7 @@ class Search extends Component
 
     public function hasSearchCriteria(): bool
     {
-        return !in_array(mb_trim($this->search), ['', '0'], true);
+        return ! in_array(mb_trim($this->search), ['', '0'], true);
     }
 
     public function render(): View
@@ -65,7 +65,7 @@ class Search extends Component
             } else {
                 $query = DB::table('sds');
 
-                if (!in_array(mb_trim($this->search), ['', '0'], true)) {
+                if (! in_array(mb_trim($this->search), ['', '0'], true)) {
                     $searchTerm = mb_trim($this->search);
                     $query->where(function ($q) use ($searchTerm): void {
                         $q->where('name', 'like', '%'.$searchTerm.'%')

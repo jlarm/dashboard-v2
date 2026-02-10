@@ -145,6 +145,7 @@ class Create extends Component
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+
         return null;
     }
 

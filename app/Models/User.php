@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Services\UserCourseService;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
+use App\Services\UserCourseService;
 use App\Traits\HasAudits;
 use App\Traits\HasCourses;
 use App\Traits\HasManuals;
@@ -254,7 +254,7 @@ class User extends Authenticatable
         $service = app(UserCourseService::class);
         $courses = $service->getCoursesSimple($this);
 
-        return $courses->map(fn($course): array => [
+        return $courses->map(fn ($course): array => [
             'id' => $course->id,
             'name' => $course->name,
         ]);

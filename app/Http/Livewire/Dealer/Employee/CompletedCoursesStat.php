@@ -52,7 +52,7 @@ class CompletedCoursesStat extends Component
     {
         $cacheKey = $this->getCacheKey();
 
-        return Cache::remember($cacheKey, 300, fn(): array => [
+        return Cache::remember($cacheKey, 300, fn (): array => [
             'total' => $this->getTotalUserCount(),
             'incomplete' => $this->getIncompleteCount(),
         ]);

@@ -25,6 +25,7 @@ class IndexItem extends Component
     {
         $slug = $this->course->slug;
         $position = array_search($slug, $this->dot);
+
         return $position !== 0;
     }
 

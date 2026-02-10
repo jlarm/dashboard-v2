@@ -97,7 +97,7 @@ class EmployeeCourseReminderCommand extends Command
         });
 
         // If there are courses to notify about, send a single notification with all courses
-        $hasCourses = array_filter($coursesToNotify, fn ($courses): bool => count($courses) > 0);
+        $hasCourses = array_filter($coursesToNotify, fn ($courses): bool => $courses !== []);
 
         if ($hasCourses !== []) {
             $user->notify(new ExpiredCourseNotification($coursesToNotify, $user->name));

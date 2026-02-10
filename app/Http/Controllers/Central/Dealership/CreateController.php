@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Central\Dealership;
 
-use App\Models\Course;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealership\CreateRequest;
+use App\Models\Course;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
@@ -16,6 +15,7 @@ use App\Models\User;
 use App\Notifications\NewDealershipNotification;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CreateController extends Controller

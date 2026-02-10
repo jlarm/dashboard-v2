@@ -26,7 +26,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     public function updatedSearch(): void
     {
         if (mb_strlen((string) $this->search) >= 2) {
-            $this->violations = tenancy()->central(fn($tenant) => GlbaViolationStatements::query()
+            $this->violations = tenancy()->central(fn ($tenant) => GlbaViolationStatements::query()
                 ->where(function ($term): void {
                     $term->where('statement', 'like', '%'.$this->search.'%')
                         ->orWhere('keywords', 'like', '%'.$this->search.'%');

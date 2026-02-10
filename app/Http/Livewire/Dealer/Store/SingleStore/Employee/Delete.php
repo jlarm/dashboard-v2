@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
-use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
@@ -39,6 +39,7 @@ class Delete extends Modal
             Log::error($e);
             $this->addError('file', 'An error occurred while deleting the user.');
         }
+
         return null;
     }
 

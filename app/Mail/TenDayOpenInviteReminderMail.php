@@ -17,9 +17,7 @@ class TenDayOpenInviteReminderMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(private Invite $invite)
-    {
-    }
+    public function __construct(private Invite $invite) {}
 
     public function envelope(): Envelope
     {
