@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Clean activity logs - removes old activity log records
-        $schedule->command('activitylog:clean')
+        $schedule->command('activitylog:clean --force')
             ->dailyAt('00:15')
             ->runInBackground()
             ->withoutOverlapping()
