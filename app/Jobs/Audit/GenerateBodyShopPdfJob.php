@@ -46,7 +46,12 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
         $statements = tenancy()->central(fn () => \App\Models\BodyShopViolationStatement::whereIn('id', $statementIds)->get()->keyBy('id'));
 
         $totalPotentialWeight = $violations->sum(fn ($v) => $statements->get($v->statement_id)?->weight ?? 1);
-        $totalPenalty = $violations->sum(fn ($v) => ($statements->get($v->statement_id)?->weight ?? 1) * (($v->severity ?? 1) / 10));
+        $totalPenalty = $violations->sum(function ($v) use ($statements) {
+            $weight = $statements->get($v->statement_id)?->weight ?? 1;
+            $effectiveWeight = ($v->risk ?? false) ? ($weight * 3) : $weight;
+
+            return $effectiveWeight * (($v->severity ?? 1) / 10);
+        });
 
         $actualScore = $totalPotentialWeight - $totalPenalty;
         $finalPercentage = ($actualScore / $totalPotentialWeight) * 100;
