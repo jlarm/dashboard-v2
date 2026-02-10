@@ -24,23 +24,14 @@ class UserCourseService
 
         if ($hasOnlyAdminRoles) {
             // Admin users only get manually added courses
-            return $user->courseOverrides()
-                ->where('type', 'add')
-                ->pluck('course_id')
-                ->toArray();
+            return $this->getOverrideCourseIds($user, 'add');
         }
 
         // Get courses explicitly excluded for this user
-        $excludedCourseIds = $user->courseOverrides()
-            ->where('type', 'exclude')
-            ->pluck('course_id')
-            ->toArray();
+        $excludedCourseIds = $this->getOverrideCourseIds($user, 'exclude');
 
         // Get courses explicitly added for this user
-        $addedCourseIds = $user->courseOverrides()
-            ->where('type', 'add')
-            ->pluck('course_id')
-            ->toArray();
+        $addedCourseIds = $this->getOverrideCourseIds($user, 'add');
 
         // Get user role IDs (excluding role 5 and admin roles)
         $userRoleIds = $user->roles
@@ -147,5 +138,21 @@ class UserCourseService
         }
 
         return ! $user->stores()->where('state', 'California')->exists();
+    }
+
+    private function getOverrideCourseIds(User $user, string $type): array
+    {
+        if ($user->relationLoaded('courseOverrides')) {
+            return $user->courseOverrides
+                ->where('type', $type)
+                ->pluck('course_id')
+                ->values()
+                ->all();
+        }
+
+        return $user->courseOverrides()
+            ->where('type', $type)
+            ->pluck('course_id')
+            ->toArray();
     }
 }

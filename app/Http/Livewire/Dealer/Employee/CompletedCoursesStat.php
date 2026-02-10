@@ -81,15 +81,18 @@ class CompletedCoursesStat extends Component
         $query = $this->buildBaseQuery();
 
         // Only select needed columns to reduce memory usage
-        return $query->whereHas('roles', function ($q) {
+        return $query->with([
+            'roles:id',
+            'stores:id,state',
+            'courseOverrides:id,user_id,course_id,type',
+            'results' => function ($query) {
+                $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
+                    ->where('passed', 1);
+            },
+        ])->whereHas('roles', function ($q) {
             $q->where('id', '!=', 5);
         })->get(['id', 'department_id'])
-            ->filter(function ($user) {
-                // Load minimal data for the calculation
-                $user->loadMissing(['roles:id', 'results:id,user_id,course_id,passed,created_at']);
-
-                return $user->user_has_not_completed_courses;
-            })
+            ->filter(fn ($user) => $user->user_has_not_completed_courses)
             ->count();
     }
 

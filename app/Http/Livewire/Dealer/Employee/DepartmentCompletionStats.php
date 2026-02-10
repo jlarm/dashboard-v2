@@ -176,6 +176,7 @@ class DepartmentCompletionStats extends Component
             ->with([
                 'roles:id',
                 'stores:id,state',
+                'courseOverrides:id,user_id,course_id,type',
                 'results' => function ($q) use ($oneYearAgo, $threeYearsAgo) {
                     $q->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1)
