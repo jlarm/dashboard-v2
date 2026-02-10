@@ -11,12 +11,20 @@ use Illuminate\Support\Facades\DB;
 
 class UserCourseService
 {
+    private static array $courseIdsCache = [];
+    private static array $courseRoleCache = [];
+    private static array $baseCourseCache = [];
+
     /**
      * Get the IDs of courses assigned to a user.
      * This is the core logic that determines which courses a user should have.
      */
     public function getCourseIds(User $user): array
     {
+        if (isset(self::$courseIdsCache[$user->id])) {
+            return self::$courseIdsCache[$user->id];
+        }
+
         // Admin roles should never be assigned courses automatically
         $adminRoles = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
         $userRoleNames = $user->roles->pluck('name')->toArray();
@@ -24,7 +32,7 @@ class UserCourseService
 
         if ($hasOnlyAdminRoles) {
             // Admin users only get manually added courses
-            return $this->getOverrideCourseIds($user, 'add');
+            return self::$courseIdsCache[$user->id] = $this->getOverrideCourseIds($user, 'add');
         }
 
         // Get courses explicitly excluded for this user
@@ -39,22 +47,23 @@ class UserCourseService
             ->pluck('id');
 
         if ($userRoleIds->isEmpty()) {
-            return [];
+            return self::$courseIdsCache[$user->id] = [];
         }
 
-        // Get course IDs associated with user's roles
-        $courseWithRole = DB::table('course_role')
+        $roleKey = $userRoleIds->sort()->implode('_');
+
+        // Get course IDs associated with user's roles (cached by role set)
+        $courseWithRole = self::$courseRoleCache[$roleKey] ??= DB::table('course_role')
             ->whereIn('role_id', $userRoleIds)
             ->pluck('course_id')
             ->toArray();
 
-        // Check for specific roles by name (not hard-coded IDs)
-        $hasManagerRole = $user->hasRole('Manager');
-        $hasEmployeeRole = $user->hasRole('Employee');
         $hasNoCaliforniaStore = $this->userHasNoCaliforniaStore($user);
 
-        // Get base courses from department and role
-        $baseCourseIds = Course::query()
+        $baseKey = $user->department_id.'|'.$roleKey.'|'.($hasNoCaliforniaStore ? 'no-ca' : 'ca');
+
+        // Get base courses from department and role (cached by department/role set/location)
+        $baseCourseIds = self::$baseCourseCache[$baseKey] ??= Course::query()
             ->where('optional', false)
             ->where(function ($query) use ($user, $courseWithRole, $hasNoCaliforniaStore) {
                 // Branch 1: Courses with specific departments (must have matching role)
@@ -79,7 +88,7 @@ class UserCourseService
             ->toArray();
 
         // Merge base courses with added courses, then remove excluded courses
-        return collect($baseCourseIds)
+        return self::$courseIdsCache[$user->id] = collect($baseCourseIds)
             ->merge($addedCourseIds)
             ->unique()
             ->diff($excludedCourseIds)

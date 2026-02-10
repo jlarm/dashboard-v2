@@ -42,9 +42,10 @@ class CompletedCoursesStat extends Component
 
     public function render(): View
     {
-        $percentage = $this->readyToLoad ? $this->percentage() : '';
+        $percentage = $this->readyToLoad ? $this->percentage() : 0;
+        $readyToLoad = $this->readyToLoad;
 
-        return view('livewire.dealer.employee.completed-courses-stat', compact('percentage'));
+        return view('livewire.dealer.employee.completed-courses-stat', compact('percentage', 'readyToLoad'));
     }
 
     protected function getUserCounts(): array
@@ -82,7 +83,7 @@ class CompletedCoursesStat extends Component
 
         // Only select needed columns to reduce memory usage
         return $query->with([
-            'roles:id',
+            'roles:id,name',
             'stores:id,state',
             'courseOverrides:user_id,course_id,type',
             'results' => function ($query) {

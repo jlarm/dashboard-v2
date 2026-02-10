@@ -174,7 +174,7 @@ class DepartmentCompletionStats extends Component
         $users = User::query()
             ->whereIn('id', $userIds)
             ->with([
-                'roles:id',
+                'roles:id,name',
                 'stores:id,state',
                 'courseOverrides:user_id,course_id,type',
                 'results' => function ($q) use ($oneYearAgo, $threeYearsAgo) {
