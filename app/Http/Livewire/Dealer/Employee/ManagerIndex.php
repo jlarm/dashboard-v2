@@ -32,7 +32,7 @@ class ManagerIndex extends Component
                 'department:id,name',
                 'stores:id,name,state',
                 'courses:id',
-                'courseOverrides:id,user_id,course_id,type',
+                'courseOverrides:user_id,course_id,type',
                 'results' => function ($query) {
                     $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1);

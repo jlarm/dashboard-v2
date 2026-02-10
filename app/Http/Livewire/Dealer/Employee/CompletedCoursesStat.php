@@ -84,7 +84,7 @@ class CompletedCoursesStat extends Component
         return $query->with([
             'roles:id',
             'stores:id,state',
-            'courseOverrides:id,user_id,course_id,type',
+            'courseOverrides:user_id,course_id,type',
             'results' => function ($query) {
                 $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                     ->where('passed', 1);
