@@ -6,6 +6,8 @@ namespace App\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Stancl\Tenancy\Concerns\HasATenantsOption;
 
 class BackupCommand extends Command
@@ -17,19 +19,55 @@ class BackupCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        $total = 0;
+        $successes = 0;
+        $failures = [];
+
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use (&$total, &$successes, &$failures) {
+            $total++;
             $this->info("Running backup command for tenant {$tenant->id} ({$tenant->name})");
 
             try {
+                $tenantSlug = Str::slug($tenant->name);
+                config(['backup.backup.name' => "tenant-{$tenant->id}-{$tenantSlug}"]);
                 $this->call('backup:run', [
                     '--filename' => 'tenant-'.$tenant->id.date('Y-m-d-H-i-s').'-.zip',
                     '--only-db' => true,
                 ]);
                 $this->info('Command completed successfully for '.$tenant->id.' ('.$tenant->name.')'.PHP_EOL);
+                $successes++;
             } catch (Exception $e) {
                 $this->error('Error running backup for tenant '.$tenant->id.' ('.$tenant->name.'): '.$e->getMessage());
+                $failures[] = [
+                    'id' => $tenant->id,
+                    'name' => $tenant->name,
+                    'error' => $e->getMessage(),
+                ];
             }
 
         });
+
+        $recipient = config('backup.notifications.mail.to') ?? config('app.admin_email');
+
+        if ($recipient) {
+            if (count($failures) > 0) {
+                $subject = 'Tenant backups failed: '.count($failures)." of {$total}";
+                $lines = [
+                    'Tenant backup failures: '.count($failures)." of {$total}",
+                    '',
+                ];
+                foreach ($failures as $failure) {
+                    $lines[] = "Tenant {$failure['id']} ({$failure['name']}): {$failure['error']}";
+                }
+                Mail::raw(implode(PHP_EOL, $lines), function ($message) use ($recipient, $subject) {
+                    $message->to($recipient)->subject($subject);
+                });
+            } else {
+                $subject = "Tenant backups successful: {$successes} of {$total}";
+                Mail::raw("All tenant backups completed successfully. Total: {$successes}", function ($message) use ($recipient, $subject) {
+                    $message->to($recipient)->subject($subject);
+                });
+            }
+        }
     }
 }

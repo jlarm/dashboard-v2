@@ -209,7 +209,7 @@ return [
         'notifiable' => Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'jlohr@autorisknow.com',
+            'to' => env('BACKUP_MAIL_TO', env('ADMIN_EMAIL')),
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'noreply@armp.app'),
@@ -254,7 +254,7 @@ return [
     'monitor_backups' => [
         [
             'name' => env('APP_NAME', 'laravel-backup'),
-            'disks' => ['local'],
+            'disks' => ['armp-backups'],
             'health_checks' => [
                 Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
                 Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
