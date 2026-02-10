@@ -23,13 +23,9 @@ use App\Http\Livewire\Central\CourseManagement\EditQuiz;
 use App\Http\Livewire\Central\Dashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
-
-// **************************************************
-// Consultant Access
-// **************************************************
-
 Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(function (): void {
+
+    Route::view('/', 'welcome')->name('home');
 
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
@@ -73,60 +69,51 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
     Route::get('videos', App\Http\Livewire\Global\Video\Index::class)->name('videos.index');
     Route::get('videos/{videoId}', App\Http\Livewire\Global\Video\Show::class)->name('videos.show');
 
-});
+    Route::get('dealer-login', [TenantLookupController::class, 'index'])->name('dealer-login');
+    Route::post('dealer-login', [TenantLookupController::class, 'lookup'])->middleware(['throttle:6,1'])->name('dealer-login.lookup');
+    Route::get('employees/register', RegisterController::class)->middleware('signed')->name('employees.create');
+    Route::post('employees/store', StoreRegistrationController::class)->name('employees.store');
+    Route::get('contract/view/{contract:uuid}', Review::class)->middleware('signed')->name('contracts.show');
+    Route::view('/thank-you', 'central.contract.review-submitted')->name('thank-you');
 
-// **************************************************
-// Public Access
-// **************************************************
+    Route::middleware(['role:super-admin'])->group(function (): void {
 
-Route::get('dealer-login', [TenantLookupController::class, 'index'])->name('dealer-login');
-Route::post('dealer-login', [TenantLookupController::class, 'lookup'])->middleware(['throttle:6,1'])->name('dealer-login.lookup');
-Route::get('employees/register', RegisterController::class)->middleware('signed')->name('employees.create');
-Route::post('employees/store', StoreRegistrationController::class)->name('employees.store');
-Route::get('contract/view/{contract:uuid}', Review::class)->middleware('signed')->name('contracts.show');
-Route::view('/thank-you', 'central.contract.review-submitted')->name('thank-you');
+        Route::prefix('employees/')->name('employees.')->group(function (): void {
+            Route::get('/', App\Http\Livewire\Central\Employee\Index::class)->name('index');
+            Route::view('deleted', 'central.employee.deleted')->name('deleted');
+            Route::get('invite', App\Http\Controllers\Central\Employee\CreateController::class)->name('invite');
+            Route::post('invite', StoreController::class)->name('send');
+            Route::get('{user:slug}', ShowController::class)->name('view');
+        });
 
-// **************************************************
-// Admin Access
-// **************************************************
+        Route::get('dealer-docs', IndexController::class)->name('dealer-docs.index');
+        Route::get('dealer-docs/create', App\Http\Controllers\Central\DealerDocs\CreateController::class)->name('dealer-docs.create');
+        Route::get('dealer-docs/{sharedDocument}/edit', EditController::class)->name('dealer-docs.edit');
 
-Route::middleware(['role:super-admin', 'auth', 'verified'])->group(function (): void {
+        //    Route::get('roles', \App\Http\Livewire\Central\Role\Index::class)->name('role.index');
+        //    Route::get('roles/{role:id}', \App\Http\Livewire\Central\Role\Edit::class)->name('role.edit');
+        //
+        //    Route::get('permissions', \App\Http\Livewire\Central\Permission\Index::class)->name('permission.index');
+        //    Route::get('permissions/{permission:id}', \App\Http\Livewire\Central\Permission\Edit::class)->name('permission.edit');
 
-    Route::prefix('employees/')->name('employees.')->group(function (): void {
-        Route::get('/', App\Http\Livewire\Central\Employee\Index::class)->name('index');
-        Route::view('deleted', 'central.employee.deleted')->name('deleted');
-        Route::get('invite', App\Http\Controllers\Central\Employee\CreateController::class)->name('invite');
-        Route::post('invite', StoreController::class)->name('send');
-        Route::get('{user:slug}', ShowController::class)->name('view');
+        //    Route::get('departments', \App\Http\Livewire\Central\Department\Index::class)->name('department.index');
+        //    Route::get('departments/{department:id}', \App\Http\Livewire\Central\Department\Edit::class)->name('department.edit');
+
+        Route::get('course-management', App\Http\Livewire\Central\CourseManagement\Index::class)->name('course-management.index');
+        Route::get('course-management/{course:slug}', App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
+        Route::get('course-management/quiz/{course:slug}', EditQuiz::class)->name('course-management.edit-quiz');
+
+        Route::get('osha-violations/create', App\Http\Livewire\Central\AuditStatements\Osha\Create::class)->name('osha-violations.create');
+        Route::get('osha-violations/{oshaViolation}', App\Http\Livewire\Central\AuditStatements\Osha\Edit::class)->name('osha-violations.edit');
+
+        Route::get('body-shop-violations/create', App\Http\Livewire\Central\AuditStatements\BodyShop\Create::class)->name('body-shop-violations.create');
+        Route::get('body-shop-violations/{bodyShopViolation}', App\Http\Livewire\Central\AuditStatements\BodyShop\Edit::class)->name('body-shop-violations.edit');
+
+        Route::get('glba-violations/create', App\Http\Livewire\Central\AuditStatements\Glba\Create::class)->name('glba-violations.create');
+        Route::get('glba-violations/{glbaViolation}', App\Http\Livewire\Central\AuditStatements\Glba\Edit::class)->name('glba-violations.edit');
+
+        Route::get('logs', App\Http\Livewire\Central\Logs\Index::class)->name('logs.index');
     });
-
-    Route::get('dealer-docs', IndexController::class)->name('dealer-docs.index');
-    Route::get('dealer-docs/create', App\Http\Controllers\Central\DealerDocs\CreateController::class)->name('dealer-docs.create');
-    Route::get('dealer-docs/{sharedDocument}/edit', EditController::class)->name('dealer-docs.edit');
-
-    //    Route::get('roles', \App\Http\Livewire\Central\Role\Index::class)->name('role.index');
-    //    Route::get('roles/{role:id}', \App\Http\Livewire\Central\Role\Edit::class)->name('role.edit');
-    //
-    //    Route::get('permissions', \App\Http\Livewire\Central\Permission\Index::class)->name('permission.index');
-    //    Route::get('permissions/{permission:id}', \App\Http\Livewire\Central\Permission\Edit::class)->name('permission.edit');
-
-    //    Route::get('departments', \App\Http\Livewire\Central\Department\Index::class)->name('department.index');
-    //    Route::get('departments/{department:id}', \App\Http\Livewire\Central\Department\Edit::class)->name('department.edit');
-
-    Route::get('course-management', App\Http\Livewire\Central\CourseManagement\Index::class)->name('course-management.index');
-    Route::get('course-management/{course:slug}', App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
-    Route::get('course-management/quiz/{course:slug}', EditQuiz::class)->name('course-management.edit-quiz');
-
-    Route::get('osha-violations/create', App\Http\Livewire\Central\AuditStatements\Osha\Create::class)->name('osha-violations.create');
-    Route::get('osha-violations/{oshaViolation}', App\Http\Livewire\Central\AuditStatements\Osha\Edit::class)->name('osha-violations.edit');
-
-    Route::get('body-shop-violations/create', App\Http\Livewire\Central\AuditStatements\BodyShop\Create::class)->name('body-shop-violations.create');
-    Route::get('body-shop-violations/{bodyShopViolation}', App\Http\Livewire\Central\AuditStatements\BodyShop\Edit::class)->name('body-shop-violations.edit');
-
-    Route::get('glba-violations/create', App\Http\Livewire\Central\AuditStatements\Glba\Create::class)->name('glba-violations.create');
-    Route::get('glba-violations/{glbaViolation}', App\Http\Livewire\Central\AuditStatements\Glba\Edit::class)->name('glba-violations.edit');
-
-    Route::get('logs', App\Http\Livewire\Central\Logs\Index::class)->name('logs.index');
 });
 
 require __DIR__.'/auth.php';
