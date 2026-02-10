@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use Illuminate\Support\Str;
 use App\Models\Dealer\Audit\DealJacketGroup;
-use Str;
 
 class DealJacketGroupObserver
 {

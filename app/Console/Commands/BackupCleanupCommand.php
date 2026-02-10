@@ -17,7 +17,7 @@ class BackupCleanupCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
             $this->info("Running backup cleanup command for tenant {$tenant->id} ({$tenant->name})");
 
             try {

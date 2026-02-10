@@ -33,7 +33,7 @@ class GenerateButton extends Component
                 audit: $this->oshaViolationAudit,
                 auditType: AuditTypes::OSHA
             ),
-        ])->catch(function (Throwable $e) {
+        ])->catch(function (Throwable $e): void {
             Notification::make()
                 ->title('Error in PDF generation process')
                 ->body($e->getMessage())

@@ -16,7 +16,7 @@ class Create extends Component
 
     public function mount()
     {
-        $audit = IndividualAudit::create([
+        $audit = IndividualAudit::query()->create([
             'parent_id' => $this->individualAudit->id ?? null,
             'deal_jacket_date' => now()->format('Y-m-d'),
             'uuid' => (string) Str::uuid(),

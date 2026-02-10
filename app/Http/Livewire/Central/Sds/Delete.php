@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Sds;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Sds;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
-use Storage;
 use WireElements\Pro\Components\Modal\Modal;
 use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
@@ -20,7 +20,7 @@ class Delete extends Modal
     public function delete(): void
     {
         $this->askForConfirmation(
-            callback: function () {
+            callback: function (): void {
                 Storage::disk('sds-sheets')->delete($this->sds->file_name);
 
                 $this->sds->delete();

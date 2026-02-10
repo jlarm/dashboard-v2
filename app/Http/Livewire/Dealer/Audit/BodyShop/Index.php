@@ -59,8 +59,8 @@ class Index extends Component
 
         // Convert letter grades to numeric values for plotting
         $gradeMap = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
-        $chartGradesNumeric = $chartData->map(fn ($item) => $gradeMap[mb_strtoupper($item['grade'])] ?? 0)->toArray();
-        $chartGradesLetters = $chartData->map(fn ($item) => mb_strtoupper($item['grade']))->toArray();
+        $chartGradesNumeric = $chartData->map(fn ($item): int => $gradeMap[mb_strtoupper((string) $item['grade'])] ?? 0)->toArray();
+        $chartGradesLetters = $chartData->map(fn ($item): string => mb_strtoupper((string) $item['grade']))->toArray();
 
         // Prepare violations and remediations data for spline chart
         $chartViolations = $chartData->map(fn ($item) => $item['violations'])->toArray();

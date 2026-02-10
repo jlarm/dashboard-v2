@@ -5,9 +5,9 @@ declare(strict_types=1);
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
 
-describe('Logs Index Page - Authorization', function () {
-    it('allows users with delete-stores permission to access logs page', function () {
-        $user = User::create([
+describe('Logs Index Page - Authorization', function (): void {
+    it('allows users with delete-stores permission to access logs page', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -22,8 +22,8 @@ describe('Logs Index Page - Authorization', function () {
             ->assertOk();
     });
 
-    it('denies consultant role without delete-stores permission from accessing logs page', function () {
-        $user = User::create([
+    it('denies consultant role without delete-stores permission from accessing logs page', function (): void {
+        $user = User::query()->create([
             'name' => 'Consultant User',
             'email' => 'consultant@test.com',
             'password' => bcrypt('password'),
@@ -35,8 +35,8 @@ describe('Logs Index Page - Authorization', function () {
             ->assertForbidden();
     });
 
-    it('allows consultant with delete-stores permission to access logs page', function () {
-        $user = User::create([
+    it('allows consultant with delete-stores permission to access logs page', function (): void {
+        $user = User::query()->create([
             'name' => 'Consultant User',
             'email' => 'consultant-with-perm@test.com',
             'password' => bcrypt('password'),
@@ -49,8 +49,8 @@ describe('Logs Index Page - Authorization', function () {
             ->assertOk();
     });
 
-    it('denies users without delete-stores permission from accessing logs page', function () {
-        $user = User::create([
+    it('denies users without delete-stores permission from accessing logs page', function (): void {
+        $user = User::query()->create([
             'name' => 'Employee User',
             'email' => 'employee@test.com',
             'password' => bcrypt('password'),
@@ -62,8 +62,8 @@ describe('Logs Index Page - Authorization', function () {
             ->assertForbidden();
     });
 
-    it('denies manager role without delete-stores permission from accessing logs page', function () {
-        $user = User::create([
+    it('denies manager role without delete-stores permission from accessing logs page', function (): void {
+        $user = User::query()->create([
             'name' => 'Manager User',
             'email' => 'manager@test.com',
             'password' => bcrypt('password'),
@@ -75,8 +75,8 @@ describe('Logs Index Page - Authorization', function () {
             ->assertForbidden();
     });
 
-    it('denies qualified individual role without delete-stores permission from accessing logs page', function () {
-        $user = User::create([
+    it('denies qualified individual role without delete-stores permission from accessing logs page', function (): void {
+        $user = User::query()->create([
             'name' => 'QI User',
             'email' => 'qi@test.com',
             'password' => bcrypt('password'),
@@ -88,7 +88,7 @@ describe('Logs Index Page - Authorization', function () {
             ->assertForbidden();
     });
 
-    it('denies guest users from accessing logs page', function () {
+    it('denies guest users from accessing logs page', function (): void {
         $this->get(route('dealer.logs.index'))
             ->assertRedirect(route('dealer.login'));
     });

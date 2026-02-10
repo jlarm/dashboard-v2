@@ -14,7 +14,7 @@ class CleanupOldDealJacketReportsCommand extends Command
 
     public function handle(): int
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
             $path = storage_path('app/deal-jacket-reports');
 
             if (! File::isDirectory($path)) {

@@ -15,11 +15,11 @@ class Create extends Component
         'name' => 'required|unique:departments,name',
     ];
 
-    public function create()
+    public function create(): void
     {
         $this->validate();
 
-        Department::create(['name' => $this->name]);
+        Department::query()->create(['name' => $this->name]);
 
         $this->reset();
 

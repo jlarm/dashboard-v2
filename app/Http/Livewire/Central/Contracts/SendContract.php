@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Contracts;
 
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ContractNotification;
 use App\Models\Contract;
 use Livewire\Component;
-use Notification;
 
 class SendContract extends Component
 {
@@ -37,7 +38,7 @@ class SendContract extends Component
         $this->emailAddresses = array_values($this->emailAddresses);
     }
 
-    public function sendContract()
+    public function sendContract(): void
     {
         if ($this->emailAddresses === []) {
             $this->addError('emailAddresses', 'Please add at least one email address.');
@@ -47,7 +48,7 @@ class SendContract extends Component
 
         foreach ($this->emailAddresses as $email) {
             Notification::route('mail', $email)
-                ->notify(new \App\Notifications\ContractNotification($this->contract));
+                ->notify(new ContractNotification($this->contract));
 
             $this->contract->status()->create([
                 'name' => auth()->user()->name,

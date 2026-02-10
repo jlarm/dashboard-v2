@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('ridgebacks', function (Blueprint $table) {
+        Schema::create('ridgebacks', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('store_id');
             $table->string('ip_address');
@@ -19,7 +19,7 @@ return new class extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('ridgebacks');
     }

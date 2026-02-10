@@ -16,7 +16,7 @@ class InternalStats extends Component
     {
         return view('livewire.dealer.scan.internal-stats', [
             'stats' => ScanReport::query()
-                ->where('store_id', $this->store->id ?? Store::first()->id)
+                ->where('store_id', $this->store->id ?? Store::query()->first()->id)
                 ->where('scan_type', '=', 'internal')
                 ->latest()
                 ->select('grade', 'exploits_high', 'exploits_medium', 'exploits_low', 'cves_high', 'cves_medium', 'cves_low')

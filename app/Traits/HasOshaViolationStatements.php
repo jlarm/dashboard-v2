@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use Illuminate\Support\Str;
 use App\Models\OshaViolationStatements;
-use Str;
 
 trait HasOshaViolationStatements
 {
@@ -16,7 +16,7 @@ trait HasOshaViolationStatements
         }
     }
 
-    public function violationSelected($violation): void
+    public function violationSelected(array $violation): void
     {
         $this->violationStatements = tenancy()->central(fn ($tenant) => OshaViolationStatements::all());
 
@@ -33,7 +33,7 @@ trait HasOshaViolationStatements
     public function deletePhoto($id, $position): void
     {
         $this->askForConfirmation(
-            callback: function () use ($id, $position) {
+            callback: function () use ($id, $position): void {
                 $this->oshaViolationAudit->violations()->where('id', $id)->first()->clearMediaCollection('violation_files_'.$position);
 
                 $this->violations = $this->oshaViolationAudit->violations()->get();
@@ -50,7 +50,7 @@ trait HasOshaViolationStatements
     public function deleteViolation($violationId): void
     {
         $this->askForConfirmation(
-            callback: function () use ($violationId) {
+            callback: function () use ($violationId): void {
                 $violation = $this->oshaViolationAudit->violations()->where('id', $violationId)->first();
 
                 $violation->clearMediaCollection('violations_files_0');

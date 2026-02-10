@@ -12,7 +12,7 @@ class Employees extends Component
     public Store $store;
     public $sid = '';
 
-    public function mount()
+    public function mount(): void
     {
         $this->sid = $this->store->id;
     }
@@ -20,7 +20,7 @@ class Employees extends Component
     public function render()
     {
         return view('livewire.dealer.store.employees', [
-            'users' => Store::where('id', $this->sid)->first()->users()
+            'users' => Store::query()->where('id', $this->sid)->first()->users()
                 ->with('roles')
                 ->with('department')
                 ->get(),

@@ -30,7 +30,7 @@ class Import extends Modal
             $jsonContent = file_get_contents($this->spreadsheet->getRealPath());
             $data = json_decode($jsonContent, true);
 
-            DB::transaction(function () use ($data) {
+            DB::transaction(function () use ($data): void {
                 foreach ($data['employees'] as $index => $item) {
                     try {
                         $validator = Validator::make($item, [
@@ -46,7 +46,7 @@ class Import extends Modal
                             $errors = $validator->errors()->all();
 
                             // Skip only if the only error is email already taken
-                            if (count($errors) === 1 && str_contains($errors[0], 'email has already been taken')) {
+                            if (count($errors) === 1 && str_contains((string) $errors[0], 'email has already been taken')) {
                                 continue;
                             }
 
@@ -66,7 +66,7 @@ class Import extends Modal
                             }
                         }
 
-                        Invite::create([
+                        Invite::query()->create([
                             'name' => $item['Name'],
                             'email' => $item['Email'],
                             'stores' => $item['Stores'] === null ? null : array_map('strval', (array) $item['Stores']),
@@ -74,7 +74,7 @@ class Import extends Modal
                             'user_id' => auth()->id(),
                             'roles' => [$item['Position']],
                             'courses' => $courses, // Updated to use the transformed courses
-                            'invitation_token' => mb_substr(md5(rand(0, 9).$item['Email'].time()), 0, 32),
+                            'invitation_token' => mb_substr(md5(random_int(0, 9).$item['Email'].time()), 0, 32),
                         ]);
                     } catch (Exception $e) {
                         $this->importErrors[] = [
@@ -85,13 +85,11 @@ class Import extends Modal
                     }
                 }
 
-                if (! empty($this->importErrors)) {
-                    throw new Exception('Import failed due to errors');
-                }
+                throw_unless(empty($this->importErrors), new Exception('Import failed due to errors'));
             });
 
             // If we reach here, it means the transaction was successful
-            $invites = Invite::where('user_id', auth()->id())->latest()->take(count($data['employees']))->get();
+            $invites = Invite::query()->where('user_id', auth()->id())->latest()->take(count($data['employees']))->get();
             foreach ($invites as $invite) {
                 SendQueueEmailJob::dispatch($invite, 'invite');
                 $this->successCount++;
@@ -103,7 +101,7 @@ class Import extends Modal
                 ->send();
 
             $this->close();
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->emit('importFailed');
         }
     }

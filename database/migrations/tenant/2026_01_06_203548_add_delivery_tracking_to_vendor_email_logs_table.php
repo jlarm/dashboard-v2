@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('vendor_email_logs', function (Blueprint $table) {
+        Schema::table('vendor_email_logs', function (Blueprint $table): void {
             $table->string('status')->default('sent')->after('sent_at');
             $table->timestamp('delivered_at')->nullable()->after('status');
             $table->text('delivery_message')->nullable()->after('delivered_at');
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('vendor_email_logs', function (Blueprint $table) {
+        Schema::table('vendor_email_logs', function (Blueprint $table): void {
             $table->dropColumn(['status', 'delivered_at', 'delivery_message', 'event_type']);
         });
     }

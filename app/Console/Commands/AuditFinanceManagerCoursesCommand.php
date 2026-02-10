@@ -29,7 +29,7 @@ class AuditFinanceManagerCoursesCommand extends Command
             'users_fixed' => 0,
         ];
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseService, &$stats) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseService, &$stats): void {
             $this->info("Checking tenant: {$tenant->name} (ID: {$tenant->id})");
 
             $stats['tenants_checked']++;
@@ -59,18 +59,18 @@ class AuditFinanceManagerCoursesCommand extends Command
                 $missing = array_diff($expectedCourseIds, $actualCourseIds);
                 $extra = array_diff($actualCourseIds, $expectedCourseIds);
 
-                if (! empty($missing) || ! empty($extra)) {
+                if ($missing !== [] || $extra !== []) {
                     $stats['inconsistencies']++;
 
                     $this->warn("  ❌ Inconsistency found for user: {$user->name} ({$user->email})");
 
-                    if (! empty($missing)) {
-                        $missingCourses = Course::whereIn('id', $missing)->pluck('name')->toArray();
+                    if ($missing !== []) {
+                        $missingCourses = Course::query()->whereIn('id', $missing)->pluck('name')->toArray();
                         $this->error('    Missing courses: '.implode(', ', $missingCourses));
                     }
 
-                    if (! empty($extra)) {
-                        $extraCourses = Course::whereIn('id', $extra)->pluck('name')->toArray();
+                    if ($extra !== []) {
+                        $extraCourses = Course::query()->whereIn('id', $extra)->pluck('name')->toArray();
                         $this->comment('    Extra courses: '.implode(', ', $extraCourses));
                     }
 
@@ -121,7 +121,7 @@ class AuditFinanceManagerCoursesCommand extends Command
     private function getExpectedFinanceManagerCourses(User $user): array
     {
         $financeDeptId = $user->department_id;
-        $managerRoleId = Role::where('name', 'Manager')->first()->id;
+        $managerRoleId = Role::query()->where('name', 'Manager')->first()->id;
 
         // Get courses associated with Manager role
         $courseWithRole = DB::table('course_role')
@@ -135,16 +135,16 @@ class AuditFinanceManagerCoursesCommand extends Command
         // Use the EXACT same logic as UserCourseService
         return Course::query()
             ->where('optional', false)
-            ->where(function ($query) use ($financeDeptId, $courseWithRole, $hasNoCaliforniaStore) {
+            ->where(function ($query) use ($financeDeptId, $courseWithRole, $hasNoCaliforniaStore): void {
                 // Branch 1: Courses with specific departments (must have matching role)
-                $query->where(function ($q) use ($financeDeptId, $courseWithRole) {
+                $query->where(function ($q) use ($financeDeptId, $courseWithRole): void {
                     $q->whereHas('departments', fn ($q) => $q->where('id', $financeDeptId))
                         ->whereIn('id', $courseWithRole);
                 })
                 // Branch 2: Courses without departments
-                    ->orWhere(function ($q) use ($courseWithRole, $hasNoCaliforniaStore) {
+                    ->orWhere(function ($q) use ($courseWithRole, $hasNoCaliforniaStore): void {
                         $q->whereDoesntHave('departments')
-                            ->where(function ($subQuery) use ($courseWithRole) {
+                            ->where(function ($subQuery) use ($courseWithRole): void {
                                 // Either has a role requirement AND user has that role
                                 $subQuery->whereIn('id', $courseWithRole)
                                     // OR has no role requirement (universal course for everyone)
@@ -160,8 +160,8 @@ class AuditFinanceManagerCoursesCommand extends Command
 
     private function getFinanceManagerUsers()
     {
-        $financeDept = Department::where('name', 'Finance')->first();
-        $managerRole = Role::where('name', 'Manager')->first();
+        $financeDept = Department::query()->where('name', 'Finance')->first();
+        $managerRole = Role::query()->where('name', 'Manager')->first();
 
         if (! $financeDept || ! $managerRole) {
             return collect();

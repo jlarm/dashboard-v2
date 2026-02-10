@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use Illuminate\Support\Facades\Http;
 use Exception;
-use Http;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,11 +16,7 @@ class RedSentryReportGenerationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(
-
-    ) {}
-
-    public function handle()
+    public function handle(): void
     {
         try {
 
@@ -33,7 +29,7 @@ class RedSentryReportGenerationJob implements ShouldQueue
 
             $token = null;
 
-        } catch (Exception $e) {
+        } catch (Exception) {
 
         }
     }

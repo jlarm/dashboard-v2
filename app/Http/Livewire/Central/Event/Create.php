@@ -38,7 +38,7 @@ class Create extends Modal
     {
         $validated = $this->validate();
 
-        Event::create([
+        Event::query()->create([
             'name' => $validated['name'],
             'start_date' => $validated['startDate'],
             'end_date' => $validated['endDate'],

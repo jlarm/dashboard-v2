@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('violations', function (Blueprint $table) {
+        Schema::create('violations', function (Blueprint $table): void {
             $table->id();
             $table->morphs('violationable');
             $table->uuid()->unique();

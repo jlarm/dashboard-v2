@@ -32,11 +32,11 @@ class Form extends Component
 
     public function mount(DealJacketGroup $dealJacketGroup, ?DealJacket $dealJacket = null): void
     {
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::query()->find(app('currentStore'));
         $this->dealJacketGroup = $dealJacketGroup;
         $this->dealJacket = $dealJacket;
 
-        if ($dealJacket) {
+        if ($dealJacket instanceof DealJacket) {
             $this->auditDate = $dealJacket->audit_date?->format('Y-m-d');
             $this->dateOfDealJacket = $dealJacket->date_of_deal_jacket?->format('Y-m-d');
             $this->customerName = $dealJacket->customer_name ?? '';
@@ -58,7 +58,7 @@ class Form extends Component
 
     public function managers(): array
     {
-        return User::where('department_id', 6)
+        return User::query()->where('department_id', 6)
             ->role('Manager')
             ->get()
             ->toArray();
@@ -73,28 +73,26 @@ class Form extends Component
 
     public function loadQuestions(): void
     {
-        if (empty($this->purchaseType) || empty($this->vehicleType)) {
+        if ($this->purchaseType === '' || $this->purchaseType === '0' || ($this->vehicleType === '' || $this->vehicleType === '0')) {
             $this->questions = [];
             $this->responses = [];
 
             return;
         }
 
-        $questions = tenancy()->central(function () {
-            return DealJacketQuestion::query()
-                ->get()
-                ->filter(fn ($q) => in_array($this->purchaseType, $q->categories, true)
-                    && in_array($this->vehicleType, $q->categories, true)
-                );
-        });
+        $questions = tenancy()->central(fn() => DealJacketQuestion::query()
+            ->get()
+            ->filter(fn ($q): bool => in_array($this->purchaseType, $q->categories, true)
+                && in_array($this->vehicleType, $q->categories, true)
+            ));
 
-        $this->questions = $questions->map(fn ($q) => [
+        $this->questions = $questions->map(fn ($q): array => [
             'id' => $q->id,
             'question' => $q->question,
             'weight' => $q->weight ?? 1,
         ])->values()->toArray();
 
-        $this->responses = $questions->map(fn ($question) => [
+        $this->responses = $questions->map(fn ($question): array => [
             'statement' => $question->statement,
             'answer' => null,
             'high_risk' => false,
@@ -188,7 +186,7 @@ class Form extends Component
 
     private function totalPassed(): int
     {
-        if (empty($this->responses)) {
+        if ($this->responses === []) {
             return 0;
         }
 
@@ -205,7 +203,7 @@ class Form extends Component
 
     private function totalFailed(): int
     {
-        if (empty($this->responses)) {
+        if ($this->responses === []) {
             return 0;
         }
 
@@ -222,7 +220,7 @@ class Form extends Component
 
     private function totalHighRisk(): int
     {
-        if (empty($this->responses)) {
+        if ($this->responses === []) {
             return 0;
         }
 
@@ -239,7 +237,7 @@ class Form extends Component
 
     private function calculatePercentage(): int
     {
-        if (empty($this->responses)) {
+        if ($this->responses === []) {
             return 0;
         }
 

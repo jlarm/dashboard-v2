@@ -12,8 +12,8 @@ class IndividualIndexController extends Controller
 {
     public function __invoke(): View
     {
-        $store = Store::first();
+        $store = Store::query()->first();
 
-        return view('dealer.audit.individual.index', compact('store'));
+        return view('dealer.audit.individual.index', ['store' => $store]);
     }
 }

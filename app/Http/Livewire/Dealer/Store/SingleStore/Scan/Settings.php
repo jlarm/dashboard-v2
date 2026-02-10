@@ -16,7 +16,7 @@ class Settings extends Component
         'name' => 'string|max:255',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->name = $this->store->scanSetting->name;
     }

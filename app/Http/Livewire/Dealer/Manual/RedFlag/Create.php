@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Manual\RedFlag;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Bus;
 use App\Jobs\Manuals\GenerateRedFlagManualJob;
 use App\Jobs\Manuals\UploadRedFlagToDigitalOceanJob;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
-use Bus;
 use Illuminate\Http\Request;
 use Livewire\Component;
-use Storage;
-use Str;
 
 class Create extends Component
 {
@@ -37,11 +37,11 @@ class Create extends Component
         'signature' => 'required',
     ];
 
-    public function mount(Request $request)
+    public function mount(Request $request): void
     {
-        $storeName = $request->get('store')->name ?? Store::first()->name;
-        $this->store = Store::where('name', $storeName)->first();
-        $this->employeeList = EmployeeList::where('store_id', $this->store->id)->first();
+        $storeName = $request->get('store')->name ?? Store::query()->first()->name;
+        $this->store = Store::query()->where('name', $storeName)->first();
+        $this->employeeList = EmployeeList::query()->where('store_id', $this->store->id)->first();
         $this->qi = $this->employeeList->qualified_individual_name ?? '';
         $this->qip = $this->employeeList->qualified_individual_phone ?? '';
         $this->sm = $this->employeeList->service_manager_name ?? '';
@@ -62,7 +62,7 @@ class Create extends Component
         $this->burglarSystem = $this->store->burglar_alarm_type ?? '';
     }
 
-    public function submit()
+    public function submit(): void
     {
         $this->validate();
 
@@ -70,7 +70,7 @@ class Create extends Component
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
-        $manual = RedFlag::create([
+        $manual = RedFlag::query()->create([
             'store_id' => $this->employeeList->store_id,
             'user_id' => auth()->user()->id,
             'qualified_individual_name' => $this->employeeList->qualified_individual_name ?? '',
@@ -94,14 +94,14 @@ class Create extends Component
             'signature' => $fileName,
         ]);
 
-        Storage::put('red-flag-signatures/'.$fileName, base64_decode(Str::of($this->signature)->after(',')));
+        Storage::put('red-flag-signatures/'.$fileName, base64_decode((string) Str::of($this->signature)->after(',')));
 
         Bus::chain([
             new GenerateRedFlagManualJob($manual),
             new UploadRedFlagToDigitalOceanJob($manual),
         ])->dispatch();
 
-        (! tenant('locations')) ? $this->redirect(route('dealer.manual.red-flag.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.red-flag.index', $this->store));
+        (tenant('locations')) ? $this->redirect(route('dealer.stores.manuals.red-flag.index', $this->store)) : $this->redirect(route('dealer.manual.red-flag.index', $this->store));
 
     }
 

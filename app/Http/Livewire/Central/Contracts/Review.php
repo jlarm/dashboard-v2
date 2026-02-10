@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Contracts;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ContractSignedNotification;
 use App\Models\Contract;
-use DB;
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use Notification;
-use Storage;
-use Str;
 
 class Review extends Component
 {
@@ -83,7 +84,7 @@ class Review extends Component
         $this->dealerBillingContactName = $this->contract->dealer_billing_contact_name;
         $this->dealerBillingContactTitle = $this->contract->dealer_billing_contact_title;
         $this->dealerBillingContactEmail = $this->contract->dealer_billing_contact_email;
-        $this->additionalLocations = collect($this->contract->additional_locations)->map(fn ($location) => [
+        $this->additionalLocations = collect($this->contract->additional_locations)->map(fn ($location): array => [
             'name' => $location['name'],
             'address' => $location['address'],
             'city' => $location['city'],
@@ -93,9 +94,10 @@ class Review extends Component
             'contact_title' => $location['contact_title'] ?? '',
             'contact_email' => $location['contact_email'] ?? '',
         ]);
+        return null;
     }
 
-    public function submit()
+    public function submit(): void
     {
         DB::transaction(function () {
             $this->validate();
@@ -105,7 +107,7 @@ class Review extends Component
             }
             $id = Str::uuid();
             $filename = $this->contract->uuid.'/'.$id.'.png';
-            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->dealerSignature)->after(',')));
+            Storage::disk('armpcon')->put($filename, base64_decode((string) Str::of($this->dealerSignature)->after(',')));
 
             $this->contract->update([
                 'dealer_physical_address' => $this->dealerPhysicalAddress,
@@ -137,10 +139,10 @@ class Review extends Component
             ]);
 
             Notification::route('mail', 'tdortch@autorisknow.com')
-                ->notify(new \App\Notifications\ContractSignedNotification($this->contract));
+                ->notify(new ContractSignedNotification($this->contract));
 
             Notification::route('mail', $this->contract->user->email)
-                ->notify(new \App\Notifications\ContractSignedNotification($this->contract));
+                ->notify(new ContractSignedNotification($this->contract));
 
             return redirect()->to('thank-you');
 

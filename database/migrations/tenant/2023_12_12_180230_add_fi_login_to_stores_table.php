@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::table('stores', function (Blueprint $table): void {
             $table->string('fi_username')->after('user_submitted')->nullable();
             $table->string('fi_password')->after('fi_username')->nullable();
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::table('stores', function (Blueprint $table): void {
             if (Schema::hasColumn('stores', 'fi_username')) {
                 $table->dropColumn('fi_username');
             }

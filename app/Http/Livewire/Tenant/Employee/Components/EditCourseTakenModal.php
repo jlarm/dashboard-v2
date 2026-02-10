@@ -30,7 +30,7 @@ class EditCourseTakenModal extends Modal
     {
         $this->validate();
 
-        CourseResults::create([
+        CourseResults::query()->create([
             'percentage' => 100,
             'passed' => 1,
             'course_id' => $this->course->id,

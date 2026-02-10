@@ -28,7 +28,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
 
-        $this->routes(function () {
+        $this->routes(function (): void {
             $this->mapApiRoutes();
             $this->mapWebRoutes();
         });

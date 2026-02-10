@@ -12,12 +12,12 @@ class Delete extends Modal
 {
     public $store;
 
-    public function mount(Store $store)
+    public function mount(Store $store): void
     {
         $this->store = $store;
     }
 
-    public function deleteStore()
+    public function deleteStore(): void
     {
         $this->store->delete();
 

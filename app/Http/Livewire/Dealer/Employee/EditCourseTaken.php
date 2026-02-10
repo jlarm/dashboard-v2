@@ -16,15 +16,15 @@ class EditCourseTaken extends Modal
     public $user;
     public $dateTaken;
 
-    public function mount(Course $course, User $user)
+    public function mount(Course $course, User $user): void
     {
         $this->course = $course;
         $this->user = $user;
     }
 
-    public function create()
+    public function create(): void
     {
-        CourseResults::create([
+        CourseResults::query()->create([
             'percentage' => 100,
             'passed' => 1,
             'course_id' => $this->course->id,

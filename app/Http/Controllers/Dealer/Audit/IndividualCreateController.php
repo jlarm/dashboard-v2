@@ -14,12 +14,12 @@ class IndividualCreateController extends Controller
 {
     public function __invoke(IndividualAudit $individualAudit, ?string $parent = null): RedirectResponse
     {
-        $audit = IndividualAudit::create([
+        $audit = IndividualAudit::query()->create([
             'parent_id' => $parent ?? $individualAudit->id ?? null,
             'deal_jacket_date' => now()->format('Y-m-d'),
             'uuid' => (string) Str::uuid(),
             'user_id' => auth()->id(),
-            'store_id' => request()->store_id ?? Store::first()->id,
+            'store_id' => request()->store_id ?? Store::query()->first()->id,
             'audit_date' => now()->format('Y-m-d'),
         ]);
 

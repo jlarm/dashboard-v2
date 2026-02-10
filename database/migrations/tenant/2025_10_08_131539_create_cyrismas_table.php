@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('cyrismas', function (Blueprint $table) {
+        Schema::create('cyrismas', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(Store::class)->constrained()->cascadeOnDelete();
             $table->string('short_name');

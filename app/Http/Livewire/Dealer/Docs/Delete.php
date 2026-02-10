@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Docs;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use App\Models\DealerDoc;
 use Exception;
 use Filament\Notifications\Notification;
-use Log;
-use Storage;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
 {
     public $doc;
 
-    public function mount(DealerDoc $doc)
+    public function mount(DealerDoc $doc): void
     {
         $this->doc = $doc;
     }
 
-    public function delete()
+    public function delete(): void
     {
         try {
             Storage::disk('dealer-docs')->delete($this->doc->file_path);

@@ -10,13 +10,13 @@ use App\Models\User;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 
-describe('Course Index Component - Course Display', function () {
-    it('displays only assigned courses for sales employee', function () {
-        $salesDept = Department::create(['name' => 'Sales Dept', 'slug' => 'sales-dept']);
-        $employeeRole = Role::where('name', 'Employee')->first();
+describe('Course Index Component - Course Display', function (): void {
+    it('displays only assigned courses for sales employee', function (): void {
+        $salesDept = Department::query()->create(['name' => 'Sales Dept', 'slug' => 'sales-dept']);
+        $employeeRole = Role::query()->where('name', 'Employee')->first();
 
         // Create universal course
-        $universalCourse = Course::create([
+        $universalCourse = Course::query()->create([
             'name' => 'Universal Safety Training',
             'slug' => 'universal-safety-training',
             'slides' => [],
@@ -25,7 +25,7 @@ describe('Course Index Component - Course Display', function () {
         ]);
 
         // Create sales-specific course
-        $salesCourse = Course::create([
+        $salesCourse = Course::query()->create([
             'name' => 'Sales Techniques',
             'slug' => 'sales-techniques',
             'slides' => [],
@@ -36,8 +36,8 @@ describe('Course Index Component - Course Display', function () {
         $salesCourse->roles()->attach($employeeRole->id);
 
         // Create service-specific course
-        $serviceDept = Department::create(['name' => 'Service Dept', 'slug' => 'service-dept']);
-        $serviceCourse = Course::create([
+        $serviceDept = Department::query()->create(['name' => 'Service Dept', 'slug' => 'service-dept']);
+        $serviceCourse = Course::query()->create([
             'name' => 'Service Protocol',
             'slug' => 'service-protocol',
             'slides' => [],
@@ -47,7 +47,7 @@ describe('Course Index Component - Course Display', function () {
         $serviceCourse->departments()->attach($serviceDept->id);
         $serviceCourse->roles()->attach($employeeRole->id);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Sales Employee',
             'email' => 'sales-emp-index@test.com',
             'password' => bcrypt('password'),
@@ -58,7 +58,7 @@ describe('Course Index Component - Course Display', function () {
         $this->actingAs($user);
 
         Livewire::test(Index::class)
-            ->assertViewHas('courses', function ($courses) use ($universalCourse, $salesCourse, $serviceCourse) {
+            ->assertViewHas('courses', function ($courses) use ($universalCourse, $salesCourse, $serviceCourse): bool {
                 $courseIds = $courses->pluck('id')->toArray();
 
                 return in_array($universalCourse->id, $courseIds) &&
@@ -67,10 +67,10 @@ describe('Course Index Component - Course Display', function () {
             });
     });
 
-    it('displays sexual harassment employee course for employees', function () {
-        $employeeRole = Role::where('name', 'Employee')->first();
+    it('displays sexual harassment employee course for employees', function (): void {
+        $employeeRole = Role::query()->where('name', 'Employee')->first();
 
-        $course = Course::create([
+        $course = Course::query()->create([
             'name' => 'Sexual Harassment Employee Training',
             'slug' => 'sexual-harassment-e',
             'slides' => [],
@@ -79,7 +79,7 @@ describe('Course Index Component - Course Display', function () {
         ]);
         $course->roles()->attach($employeeRole->id);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Employee User',
             'email' => 'emp-sh-index@test.com',
             'password' => bcrypt('password'),
@@ -92,10 +92,10 @@ describe('Course Index Component - Course Display', function () {
             ->assertViewHas('courses', fn ($courses) => $courses->pluck('id')->contains($course->id));
     });
 
-    it('displays sexual harassment manager course for managers', function () {
-        $managerRole = Role::where('name', 'Manager')->first();
+    it('displays sexual harassment manager course for managers', function (): void {
+        $managerRole = Role::query()->where('name', 'Manager')->first();
 
-        $course = Course::create([
+        $course = Course::query()->create([
             'name' => 'Sexual Harassment Manager Training',
             'slug' => 'sexual-harassment-m',
             'slides' => [],
@@ -104,7 +104,7 @@ describe('Course Index Component - Course Display', function () {
         ]);
         $course->roles()->attach($managerRole->id);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Manager User',
             'email' => 'mgr-sh-index@test.com',
             'password' => bcrypt('password'),
@@ -117,10 +117,10 @@ describe('Course Index Component - Course Display', function () {
             ->assertViewHas('courses', fn ($courses) => $courses->pluck('id')->contains($course->id));
     });
 
-    it('excludes california course for users without california stores', function () {
-        $employeeRole = Role::where('name', 'Employee')->first();
+    it('excludes california course for users without california stores', function (): void {
+        $employeeRole = Role::query()->where('name', 'Employee')->first();
 
-        $course = Course::create([
+        $course = Course::query()->create([
             'name' => 'CA Sexual Harassment',
             'slug' => 'sexual-harassment-training-in-california',
             'slides' => [],
@@ -129,13 +129,13 @@ describe('Course Index Component - Course Display', function () {
         ]);
         $course->roles()->attach($employeeRole->id);
 
-        $store = Store::create([
+        $store = Store::query()->create([
             'name' => 'Texas Location',
             'slug' => 'texas-location',
             'state' => 'Texas',
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Texas Employee',
             'email' => 'emp-tx-index@test.com',
             'password' => bcrypt('password'),
@@ -146,13 +146,13 @@ describe('Course Index Component - Course Display', function () {
         $this->actingAs($user);
 
         Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses) => ! $courses->pluck('id')->contains($course->id));
+            ->assertViewHas('courses', fn ($courses): bool => ! $courses->pluck('id')->contains($course->id));
     });
 
-    it('includes california course for users with california stores', function () {
-        $employeeRole = Role::where('name', 'Employee')->first();
+    it('includes california course for users with california stores', function (): void {
+        $employeeRole = Role::query()->where('name', 'Employee')->first();
 
-        $course = Course::create([
+        $course = Course::query()->create([
             'name' => 'CA Sexual Harassment',
             'slug' => 'sexual-harassment-training-in-california',
             'slides' => [],
@@ -161,13 +161,13 @@ describe('Course Index Component - Course Display', function () {
         ]);
         $course->roles()->attach($employeeRole->id);
 
-        $store = Store::create([
+        $store = Store::query()->create([
             'name' => 'California Location',
             'slug' => 'california-location',
             'state' => 'California',
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'California Employee',
             'email' => 'emp-ca-index@test.com',
             'password' => bcrypt('password'),
@@ -181,10 +181,10 @@ describe('Course Index Component - Course Display', function () {
             ->assertViewHas('courses', fn ($courses) => $courses->pluck('id')->contains($course->id));
     });
 
-    it('does not display optional courses', function () {
-        $employeeRole = Role::where('name', 'Employee')->first();
+    it('does not display optional courses', function (): void {
+        $employeeRole = Role::query()->where('name', 'Employee')->first();
 
-        $optionalCourse = Course::create([
+        $optionalCourse = Course::query()->create([
             'name' => 'Optional Training Module',
             'slug' => 'optional-training-module',
             'slides' => [],
@@ -193,7 +193,7 @@ describe('Course Index Component - Course Display', function () {
         ]);
         $optionalCourse->roles()->attach($employeeRole->id);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Employee User',
             'email' => 'emp-opt-index@test.com',
             'password' => bcrypt('password'),
@@ -203,11 +203,11 @@ describe('Course Index Component - Course Display', function () {
         $this->actingAs($user);
 
         Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses) => ! $courses->pluck('id')->contains($optionalCourse->id));
+            ->assertViewHas('courses', fn ($courses): bool => ! $courses->pluck('id')->contains($optionalCourse->id));
     });
 
-    it('displays manually added courses for consultants', function () {
-        $course = Course::create([
+    it('displays manually added courses for consultants', function (): void {
+        $course = Course::query()->create([
             'name' => 'Custom Consultant Course',
             'slug' => 'custom-consultant-course',
             'slides' => [],
@@ -215,14 +215,14 @@ describe('Course Index Component - Course Display', function () {
             'optional' => false,
         ]);
 
-        $admin = User::create([
+        $admin = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin-index@test.com',
             'password' => bcrypt('password'),
         ]);
         $admin->assignRole('Admin');
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Consultant User',
             'email' => 'consultant-index@test.com',
             'password' => bcrypt('password'),
@@ -241,10 +241,10 @@ describe('Course Index Component - Course Display', function () {
             ->assertViewHas('courses', fn ($courses) => $courses->pluck('id')->contains($course->id));
     });
 
-    it('does not display courses for admin roles without manual assignment', function () {
-        $employeeRole = Role::where('name', 'Employee')->first();
+    it('does not display courses for admin roles without manual assignment', function (): void {
+        $employeeRole = Role::query()->where('name', 'Employee')->first();
 
-        $course = Course::create([
+        $course = Course::query()->create([
             'name' => 'Regular Employee Course',
             'slug' => 'regular-employee-course',
             'slides' => [],
@@ -253,7 +253,7 @@ describe('Course Index Component - Course Display', function () {
         ]);
         $course->roles()->attach($employeeRole->id);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin-no-courses@test.com',
             'password' => bcrypt('password'),
@@ -263,6 +263,6 @@ describe('Course Index Component - Course Display', function () {
         $this->actingAs($user);
 
         Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses) => ! $courses->pluck('id')->contains($course->id));
+            ->assertViewHas('courses', fn ($courses): bool => ! $courses->pluck('id')->contains($course->id));
     });
 });

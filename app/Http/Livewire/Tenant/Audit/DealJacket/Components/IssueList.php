@@ -31,7 +31,7 @@ class IssueList extends Component
 
         $topIssues = collect($issueCounts)
             ->groupBy('statement')
-            ->map(fn ($group) => [
+            ->map(fn ($group): array => [
                 'statement' => $group->first()['statement'],
                 'count' => $group->count(),
             ])

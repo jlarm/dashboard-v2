@@ -25,7 +25,7 @@ class CourseResults extends Component
     {
         $service = app(UserCourseService::class);
         $courses = $service->getCoursesWithResults($this->user);
-        $store = $this->user->stores->first() ?? Store::first();
+        $store = $this->user->stores->first() ?? Store::query()->first();
 
         return view('livewire.dealer.employee.course-results', [
             'courses' => $courses,

@@ -17,7 +17,7 @@ class Edit extends Component
     public $assignedPermissions = [];
     public $assignedCourses = [];
 
-    public function mount()
+    public function mount(): void
     {
         $this->name = $this->role->name;
         $this->assignedPermissions = $this->role->permissions->pluck('name')->toArray();
@@ -60,7 +60,7 @@ class Edit extends Component
     {
         return view('livewire.central.role.edit', [
             'permissions' => Permission::all(),
-            'courses' => Course::orderBy('name')->select('id', 'name')->get(),
+            'courses' => Course::query()->orderBy('name')->select('id', 'name')->get(),
         ]);
     }
 }

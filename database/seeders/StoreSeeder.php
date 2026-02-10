@@ -11,7 +11,7 @@ class StoreSeeder extends Seeder
 {
     public function run(): void
     {
-        Store::create([
+        Store::query()->create([
             'name' => 'Liberty Kia',
             'slug' => 'liberty-kia',
             'address' => '921 S Milwaukee Ave',
@@ -22,7 +22,7 @@ class StoreSeeder extends Seeder
             'website' => 'https://www.libertykia.com/',
         ]);
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Liberty Nissan',
             'slug' => 'liberty-nissan',
             'address' => '921 S Milwaukee Ave',
@@ -33,7 +33,7 @@ class StoreSeeder extends Seeder
             'website' => 'https://www.libertynissan.com/',
         ]);
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Liberty Volkswagen',
             'slug' => 'liberty-volkswagen',
             'address' => '921 S Milwaukee Ave',

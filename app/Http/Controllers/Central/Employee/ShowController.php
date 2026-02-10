@@ -11,6 +11,6 @@ class ShowController extends Controller
 {
     public function __invoke(User $user)
     {
-        return view('central.employee.view', compact('user'));
+        return view('central.employee.view', ['user' => $user]);
     }
 }

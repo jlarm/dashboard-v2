@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Permission;
 
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
-use Str;
 
 class IndexItem extends Component
 {
     public Permission $permission;
     public bool $enableEditing;
 
-    public function mount()
+    public function mount(): void
     {
         Str::startsWith($this->permission->name, 'create') ? $this->enableEditing = true : $this->enableEditing = false;
     }

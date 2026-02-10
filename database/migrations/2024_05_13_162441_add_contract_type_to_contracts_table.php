@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('contracts', function (Blueprint $table) {
+        Schema::table('contracts', function (Blueprint $table): void {
             $table->string('contract_type')->after('user_id');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('contracts', function (Blueprint $table) {
+        Schema::table('contracts', function (Blueprint $table): void {
             $table->dropColumn('contract_type');
         });
     }

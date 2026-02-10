@@ -13,17 +13,17 @@ class VendorController extends Controller
 {
     public function index(): View
     {
-        $store = Store::first();
+        Store::query()->first();
 
         return view('dealer.vendor.index', [
-            'stores' => Store::count(),
+            'stores' => Store::query()->count(),
         ]);
     }
 
     public function show(): View
     {
         $id = app('request')->input('id');
-        $vendor = Vendor::where('id', $id)->firstOrFail();
+        $vendor = Vendor::query()->where('id', $id)->firstOrFail();
 
         return view('dealer.vendor.form', [
             'vendor' => $vendor,

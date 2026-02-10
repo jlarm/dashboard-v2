@@ -21,7 +21,7 @@ class GroupIndex extends Component
 
         $groups = DealJacketGroup::query()
             ->where('store_id', $storeId)
-            ->when(! auth()->user()->hasAnyRole(['super-admin', 'Consultant']), function ($query) {
+            ->unless(auth()->user()->hasAnyRole(['super-admin', 'Consultant']), function ($query): void {
                 $query->where('completed', true);
             })
             ->withCount('dealJackets')

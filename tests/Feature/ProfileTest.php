@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -29,7 +30,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
+            ->withoutMiddleware(VerifyCsrfToken::class)
             ->patch('/profile', [
                 'name' => 'Test User',
                 'email' => 'test@example.com',
@@ -52,7 +53,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
+            ->withoutMiddleware(VerifyCsrfToken::class)
             ->patch('/profile', [
                 'name' => 'Test User',
                 'email' => $user->email,
@@ -71,7 +72,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
+            ->withoutMiddleware(VerifyCsrfToken::class)
             ->from('/profile')
             ->delete('/profile', [
                 'password' => 'wrong-password',

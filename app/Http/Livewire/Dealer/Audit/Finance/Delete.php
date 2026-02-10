@@ -12,12 +12,12 @@ class Delete extends Modal
 {
     public $glbaAudit;
 
-    public function mount(GlbaViolationAudit $glbaViolationAudit)
+    public function mount(GlbaViolationAudit $glbaViolationAudit): void
     {
         $this->glbaAudit = $glbaViolationAudit;
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->deleteViolationPhotos();
 
@@ -40,7 +40,7 @@ class Delete extends Modal
 
     protected function deleteViolationPhotos(): void
     {
-        $this->glbaAudit->violations->each(function ($violation) {
+        $this->glbaAudit->violations->each(function ($violation): void {
             $violation->clearMediaCollection('violations_files_0');
             $violation->clearMediaCollection('violations_files_1');
             $violation->clearMediaCollection('violations_files_2');

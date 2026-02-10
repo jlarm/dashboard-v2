@@ -16,7 +16,7 @@ class GroupIndexItem extends Component
 
     public function mount(): void
     {
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::query()->find(app('currentStore'));
     }
 
     public function render(): View

@@ -11,13 +11,11 @@ use Illuminate\View\Component;
 
 class StoreApp extends Component
 {
-    public Store $store;
     public $name;
 
-    public function __construct(Store $store)
+    public function __construct(public Store $store)
     {
         $this->name = Route::currentRouteAction();
-        $this->store = $store;
     }
 
     public function render(): View

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Jobs\Audit;
 
+use App\Models\OshaViolationStatements;
+use Illuminate\Support\Facades\File;
 use App\Models\Dealer\Audit\OshaViolationAudit;
-use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -43,10 +44,10 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
         }
 
         $statementIds = $violations->pluck('statement_id')->filter()->unique();
-        $statements = tenancy()->central(fn () => \App\Models\OshaViolationStatements::whereIn('id', $statementIds)->get()->keyBy('id'));
+        $statements = tenancy()->central(fn () => OshaViolationStatements::query()->whereIn('id', $statementIds)->get()->keyBy('id'));
 
         $totalPotentialWeight = $violations->sum(fn ($v) => $statements->get($v->statement_id)?->weight ?? 1);
-        $totalPenalty = $violations->sum(function ($v) use ($statements) {
+        $totalPenalty = $violations->sum(function ($v) use ($statements): int|float {
             $weight = $statements->get($v->statement_id)?->weight ?? 1;
             $effectiveWeight = ($v->risk ?? false) ? ($weight * 3) : $weight;
 

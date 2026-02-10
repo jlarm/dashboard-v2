@@ -23,7 +23,7 @@ class Index extends Component
     public function render(): View
     {
         return view('livewire.dealer.manual.red-flag.index', [
-            'manuals' => RedFlag::where('store_id', $this->store->id)->latest()->get(),
+            'manuals' => RedFlag::query()->where('store_id', $this->store->id)->latest()->get(),
         ])->layout('components.dealer-app');
     }
 
@@ -32,9 +32,9 @@ class Index extends Component
         $storeName = $request->get('store')?->name;
 
         if ($storeName) {
-            return Store::where('name', $storeName)->select('id', 'slug')->first();
+            return Store::query()->where('name', $storeName)->select('id', 'slug')->first();
         }
 
-        return Store::first()->select('id')->first();
+        return Store::query()->first()->select('id')->first();
     }
 }

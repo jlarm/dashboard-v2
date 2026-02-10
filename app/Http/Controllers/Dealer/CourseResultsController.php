@@ -46,9 +46,9 @@ class CourseResultsController extends Controller
         $score = ($score / $count) * 100;
 
         // check if passed
-        $passed = $score >= 70 ? true : false;
+        $passed = $score >= 70;
 
-        $results = CourseResults::create([
+        $results = CourseResults::query()->create([
             'percentage' => $score,
             'passed' => $passed,
             'course_id' => $course->id,
@@ -75,7 +75,7 @@ class CourseResultsController extends Controller
 
             Storage::delete($fileName);
 
-            Certificate::create([
+            Certificate::query()->create([
                 'user_id' => auth()->user()->id,
                 'course_name' => 'DOT Hazardous Materials Transportation',
                 'file_name' => $fileName,

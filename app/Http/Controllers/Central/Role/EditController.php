@@ -12,6 +12,6 @@ class EditController extends Controller
 {
     public function __invoke(Role $role): View
     {
-        return view('central.role.edit', compact('role'));
+        return view('central.role.edit', ['role' => $role]);
     }
 }

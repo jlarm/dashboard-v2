@@ -20,22 +20,16 @@ class CyrismaReportController
 
     public function download(string $type): Response|StreamedResponse
     {
-        if (! in_array($type, self::REPORT_TYPES, true)) {
-            abort(404);
-        }
+        abort_unless(in_array($type, self::REPORT_TYPES, true), 404);
 
         $storeContext = app('currentStore');
-        $store = $storeContext instanceof Store ? $storeContext : Store::find((int) $storeContext);
+        $store = $storeContext instanceof Store ? $storeContext : Store::query()->find((int) $storeContext);
 
-        if (! $store) {
-            abort(404);
-        }
+        abort_unless($store, 404);
 
         $cyrisma = app(CyrismaService::class)->forStore($store);
 
-        if (! $cyrisma->isConfigured() || ! $cyrisma->hasShortName()) {
-            abort(404);
-        }
+        abort_if(! $cyrisma->isConfigured() || ! $cyrisma->hasShortName(), 404);
 
         $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $store->id, $type);
         $refresh = request()->boolean('refresh');
@@ -46,7 +40,7 @@ class CyrismaReportController
 
         try {
             $pdfBinary = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($type, $cyrisma, $store) {
-                $data = $this->buildReportData($cyrisma, $store, $type);
+                $data = $this->buildReportData($cyrisma, $store);
                 $view = $type === 'executive'
                     ? 'tenant.scans.reports.executive'
                     : 'tenant.scans.reports.technical';
@@ -85,12 +79,12 @@ class CyrismaReportController
             $headers['Cache-Control'] = 'private, max-age=1800';
         }
 
-        return response()->stream(function () use ($pdfBinary) {
+        return response()->stream(function () use ($pdfBinary): void {
             echo $pdfBinary;
         }, 200, $headers);
     }
 
-    private function buildReportData(CyrismaService $cyrisma, Store $store, string $type): array
+    private function buildReportData(CyrismaService $cyrisma, Store $store): array
     {
         $overall = $cyrisma->getOverallDashboard() ?? [];
         $vulnerabilityScans = $cyrisma->getVulnerabilityScans() ?? [];
@@ -117,7 +111,7 @@ class CyrismaReportController
         $cveItems = array_slice($cveDetails['cve_items'] ?? [], 1);
         $openPorts = $cyrisma->getOpenPortsByAssetType();
 
-        $data = [
+        return [
             'storeName' => $store->name,
             'generatedAt' => now()->format('M j, Y g:i A'),
             'lastScanDate' => $lastScanDate,
@@ -130,7 +124,5 @@ class CyrismaReportController
             'cveItems' => $cveItems,
             'openPorts' => $openPorts,
         ];
-
-        return $data;
     }
 }

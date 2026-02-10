@@ -77,7 +77,7 @@ class OshaViolationAudit extends Model
 
     public function getRemediationCountAttribute(): int
     {
-        return $this->violations()->whereHas('remediation', function ($query) {
+        return $this->violations()->whereHas('remediation', function ($query): void {
             $query->where('completed', true);
         })->count();
     }

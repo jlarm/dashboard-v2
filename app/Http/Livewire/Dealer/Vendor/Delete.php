@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Vendor;
 use Exception;
 use Filament\Notifications\Notification;
-use Log;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
 {
     public $vendor;
 
-    public function mount(Vendor $vendor)
+    public function mount(Vendor $vendor): void
     {
         $this->vendor = $vendor;
     }
 
-    public function delete()
+    public function delete(): void
     {
         try {
             $vendorId = $this->vendor->id;

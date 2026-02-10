@@ -25,7 +25,7 @@ class Search extends Component
 
     public function mount(): void
     {
-        $this->search = $this->search ?? '';
+        $this->search ??= '';
     }
 
     public function updatedSearch(): void
@@ -54,7 +54,7 @@ class Search extends Component
 
     public function hasSearchCriteria(): bool
     {
-        return ! empty(mb_trim($this->search));
+        return !in_array(mb_trim($this->search), ['', '0'], true);
     }
 
     public function render(): View
@@ -65,9 +65,9 @@ class Search extends Component
             } else {
                 $query = DB::table('sds');
 
-                if (! empty(mb_trim($this->search))) {
+                if (!in_array(mb_trim($this->search), ['', '0'], true)) {
                     $searchTerm = mb_trim($this->search);
-                    $query->where(function ($q) use ($searchTerm) {
+                    $query->where(function ($q) use ($searchTerm): void {
                         $q->where('name', 'like', '%'.$searchTerm.'%')
                             ->orWhere('manufacturer', 'like', '%'.$searchTerm.'%')
                             ->orWhere('keywords', 'like', '%'.$searchTerm.'%')

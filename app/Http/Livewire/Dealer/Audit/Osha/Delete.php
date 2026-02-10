@@ -12,12 +12,12 @@ class Delete extends Modal
 {
     public $oshaAudit;
 
-    public function mount(OshaViolationAudit $oshaAudit)
+    public function mount(OshaViolationAudit $oshaAudit): void
     {
         $this->oshaAudit = $oshaAudit;
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->oshaAudit->auditComments()->delete();
         $this->oshaAudit->delete();
@@ -39,7 +39,7 @@ class Delete extends Modal
 
     protected function deleteViolationPhotos(): void
     {
-        $this->oshaAudit->violations->each(function ($violation) {
+        $this->oshaAudit->violations->each(function ($violation): void {
             $violation->clearMediaCollection('violations_files_0');
             $violation->clearMediaCollection('violations_files_1');
             $violation->clearMediaCollection('violations_files_2');

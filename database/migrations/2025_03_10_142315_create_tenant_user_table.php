@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenant_user', function (Blueprint $table) {
+        Schema::create('tenant_user', function (Blueprint $table): void {
             $table->string('tenant_id');
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->foreignId('user_id');

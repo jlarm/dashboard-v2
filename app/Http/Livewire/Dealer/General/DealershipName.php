@@ -13,9 +13,9 @@ class DealershipName extends Component
     public Store $store;
     public string $logo;
 
-    public function mount()
+    public function mount(): void
     {
-        $this->logo = StoreSettings::first()->logo;
+        $this->logo = StoreSettings::query()->first()->logo;
     }
 
     public function render()

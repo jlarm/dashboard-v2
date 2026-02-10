@@ -11,9 +11,9 @@ class Notifications extends Component
 {
     protected $listeners = ['notification' => '$refresh'];
 
-    public function markAsRead($notification): void
+    public function markAsRead(array $notification): void
     {
-        DatabaseNotification::find($notification['id'])->delete();
+        DatabaseNotification::query()->find($notification['id'])->delete();
 
         $this->emit('notification');
     }

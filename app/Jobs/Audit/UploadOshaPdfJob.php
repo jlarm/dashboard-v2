@@ -33,7 +33,7 @@ class UploadOshaPdfJob implements ShouldQueue
         $path = tenant('id').'/osha/'.$this->oshaViolationAudit->pdf_path;
         $move = Storage::disk('armpaudits')->put(tenant('id').'/osha/'.$this->oshaViolationAudit->pdf_path, $pdf);
         if ($move) {
-            Storage::delete('/osha/', $this->oshaViolationAudit->pdf_path);
+            Storage::delete('/osha/');
             $this->oshaViolationAudit->update(['pdf_path' => $path]);
         }
     }

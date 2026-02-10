@@ -51,13 +51,13 @@ class Edit extends SlideOver
         $this->domain = $dealership->domain;
         $this->url = $dealership->url;
         $this->locations = (bool) $dealership->locations;
-        $this->users = User::orderBy('name')->get();
+        $this->users = User::query()->orderBy('name')->get();
         $this->selectedUsers = $this->dealership->users->toArray();
     }
 
     public function removeUser($userId): void
     {
-        $this->selectedUsers = array_filter($this->selectedUsers, fn ($user) => $user['id'] !== $userId);
+        $this->selectedUsers = array_filter($this->selectedUsers, fn ($user): bool => $user['id'] !== $userId);
     }
 
     public function updateDealership(): void

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('scan_settings', function (Blueprint $table) {
+        Schema::table('scan_settings', function (Blueprint $table): void {
             $table->bigInteger('external_id')->nullable();
             $table->bigInteger('internal_id')->nullable();
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('scan_settings', function (Blueprint $table) {
+        Schema::table('scan_settings', function (Blueprint $table): void {
             $table->dropColumn('external_id');
             $table->dropColumn('internal_id');
         });

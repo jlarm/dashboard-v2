@@ -21,13 +21,13 @@ class Create extends Component
         $this->validate();
 
         // remove "s" at end of name string if exists
-        if (str_ends_with($this->name, 's')) {
-            $this->name = mb_substr($this->name, 0, -1);
+        if (str_ends_with((string) $this->name, 's')) {
+            $this->name = mb_substr((string) $this->name, 0, -1);
         }
 
         foreach ($this->permissionTypes as $permissionType) {
             Permission::create([
-                'name' => $permissionType.'-'.lcfirst($this->name).'s',
+                'name' => $permissionType.'-'.lcfirst((string) $this->name).'s',
                 'guard_name' => 'web',
             ]);
         }

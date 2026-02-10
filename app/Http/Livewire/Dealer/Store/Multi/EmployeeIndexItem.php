@@ -36,13 +36,13 @@ class EmployeeIndexItem extends Component
 
         // Get all courses for this user's department
         $this->totalCourses = Course::query()
-            ->WhereHas('departments', function ($query) {
+            ->WhereHas('departments', function ($query): void {
                 $query->where('id', $this->user->department_id);
             })
             ->whereIn('id', $this->courseWithRole)
             ->orWhereDoesntHave('departments')
             ->with([
-                'results' => function ($query) {
+                'results' => function ($query): void {
                     $query->where('user_id', $this->user->id)->latest();
                 },
             ])->count();

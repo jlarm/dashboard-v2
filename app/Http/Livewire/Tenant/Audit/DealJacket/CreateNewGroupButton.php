@@ -29,7 +29,7 @@ class CreateNewGroupButton extends Component
 
         $existingGroup = $this->findExistingQuarterlyAudit();
 
-        if ($existingGroup) {
+        if ($existingGroup instanceof DealJacketGroup) {
             return $this->redirectToExistingGroup($existingGroup);
         }
 
@@ -57,7 +57,7 @@ class CreateNewGroupButton extends Component
 
     private function createDealJacketGroup(): DealJacketGroup
     {
-        return DealJacketGroup::create([
+        return DealJacketGroup::query()->create([
             'store_id' => $this->storeId,
         ]);
     }
@@ -68,7 +68,7 @@ class CreateNewGroupButton extends Component
         session()->flash('dealJacketGroupUuid', $existingGroup->uuid);
 
         if (tenant('locations')) {
-            $store = Store::find($this->storeId);
+            $store = Store::query()->find($this->storeId);
             session()->flash('storeSlug', $store->slug);
 
             return redirect()->route('dealer.stores.audits.deal-jackets.index', [$store]);
@@ -80,7 +80,7 @@ class CreateNewGroupButton extends Component
     private function redirectToNewGroup(DealJacketGroup $dealJacketGroup): Redirector
     {
         if (tenant('locations')) {
-            $store = Store::find($this->storeId);
+            $store = Store::query()->find($this->storeId);
 
             return redirect()->route('dealer.stores.audits.deal-jackets.show', [$store, $dealJacketGroup]);
         }

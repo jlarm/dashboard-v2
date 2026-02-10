@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('vendor_forms', function (Blueprint $table) {
+        Schema::table('vendor_forms', function (Blueprint $table): void {
             $table->timestamp('last_notification_sent_at')->nullable()->after('signature');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('vendor_forms', function (Blueprint $table) {
+        Schema::table('vendor_forms', function (Blueprint $table): void {
             $table->dropColumn('last_notification_sent_at');
         });
     }

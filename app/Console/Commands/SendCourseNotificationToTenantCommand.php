@@ -26,11 +26,11 @@ class SendCourseNotificationToTenantCommand extends Command
             return;
         }
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseLink) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseLink): void {
             $this->info("Running command for tenant: {$tenant->id} ({$tenant->name})");
 
             $users = User::query()
-                ->whereDoesntHave('roles', function ($query) {
+                ->whereDoesntHave('roles', function ($query): void {
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })

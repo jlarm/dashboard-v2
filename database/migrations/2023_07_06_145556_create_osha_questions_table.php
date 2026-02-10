@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('osha_questions', function (Blueprint $table) {
+        Schema::create('osha_questions', function (Blueprint $table): void {
             $table->id();
             $table->string('question');
             $table->timestamps();

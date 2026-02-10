@@ -11,12 +11,12 @@ class Delete extends Modal
 {
     public $user;
 
-    public function mount(User $user)
+    public function mount(User $user): void
     {
         $this->user = $user;
     }
 
-    public function delete()
+    public function delete(): void
     {
         User::destroy($this->user->id);
 

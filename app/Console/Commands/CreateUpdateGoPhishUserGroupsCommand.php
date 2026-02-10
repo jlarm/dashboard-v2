@@ -16,20 +16,17 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
     protected $description = 'Create/Update User Groups for GoPhish';
     protected $token;
     protected $ip;
-    protected $goPhishService;
 
-    public function __construct(GoPhishService $goPhishService)
+    public function __construct(protected GoPhishService $goPhishService)
     {
         parent::__construct();
-
-        $this->goPhishService = $goPhishService;
     }
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
 
-            $globalSetting = GlobalSetting::first();
+            $globalSetting = GlobalSetting::query()->first();
 
             if ($globalSetting === null || $globalSetting->phishing_active === 0 || $globalSetting->phishing_active === null) {
                 $this->info('Phishing is disabled for tenant: '.$tenant->name);
@@ -39,7 +36,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
             $this->info('Starting run for tenant: '.$tenant->name);
 
-            $settings = GlobalSetting::first();
+            $settings = GlobalSetting::query()->first();
             $this->token = $settings->phishing_token;
             $this->ip = $settings->phishing_ip;
 
@@ -87,12 +84,12 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get();
         } else {
-            $users = User::select('name', 'email')
+            $users = User::query()->select('name', 'email')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get();
         }
 
-        return $users->map(function ($user) {
+        return $users->map(function ($user): array {
             $splitName = explode(' ', $user->name);
             $firstName = $splitName[0];
             $lastName = $splitName[1];

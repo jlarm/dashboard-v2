@@ -19,12 +19,12 @@ class IndividualController extends Controller
             ->where('parent_id', $individualAudit->id)
             ->where('draft', 1)
             ->count();
-        $parent = IndividualAudit::where('id', $individualAudit->id)->where('draft', 1)->count();
+        $parent = IndividualAudit::query()->where('id', $individualAudit->id)->where('draft', 1)->count();
 
         return view('dealer.audit.individual.show', [
             'individualAudit' => $individualAudit->load('children'),
             'drafts' => $children + $parent,
-            'audits' => IndividualAudit::where('parent_id', $individualAudit->id)
+            'audits' => IndividualAudit::query()->where('parent_id', $individualAudit->id)
                 ->with('store')
                 ->get(),
         ]);

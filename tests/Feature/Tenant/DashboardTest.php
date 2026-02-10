@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-it('consultant access dashboard when logged in', function () {
+it('consultant access dashboard when logged in', function (): void {
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
@@ -15,7 +15,7 @@ it('consultant access dashboard when logged in', function () {
         ->assertSeeLivewire('dealer.home.note');
 });
 
-it('manager access dashboard when logged in', function () {
+it('manager access dashboard when logged in', function (): void {
     $this->actingAs($this->manager)
         ->get(route('dealer.dashboard'))
         ->assertOk()

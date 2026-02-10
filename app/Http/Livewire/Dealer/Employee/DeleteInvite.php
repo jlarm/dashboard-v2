@@ -13,7 +13,7 @@ class DeleteInvite extends Modal
 
     public function mount(int $inviteId): void
     {
-        $this->invite = Invite::find($inviteId);
+        $this->invite = Invite::query()->find($inviteId);
 
         if (! $this->invite) {
             $this->close();
@@ -23,7 +23,7 @@ class DeleteInvite extends Modal
 
     public function deleteInvite(): void
     {
-        if (! $this->invite) {
+        if (!$this->invite instanceof Invite) {
             $this->close();
 
             return;

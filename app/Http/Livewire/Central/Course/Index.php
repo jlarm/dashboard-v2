@@ -12,7 +12,7 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $selectedStatus = null;
+    public $selectedStatus;
 
     public function render()
     {
@@ -20,7 +20,7 @@ class Index extends Component
             'courses' => Course::query()
                 ->select(['id', 'name', 'slug', 'questions'])
                 ->whereNot('slug', 'patriot-act-ofac')
-                ->with(['results' => function ($query) {
+                ->with(['results' => function ($query): void {
                     $query->where('user_id', auth()->user()->id)
                         ->latest();
                 },

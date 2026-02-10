@@ -11,12 +11,12 @@ class Delete extends Modal
 {
     public $role;
 
-    public function mount(Role $role)
+    public function mount(Role $role): void
     {
         $this->role = $role;
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->role->delete();
         $this->emit('roleDeleted');

@@ -12,7 +12,7 @@ class DealerListController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        $dealers = Dealership::orderBy('name')->get();
+        $dealers = Dealership::query()->orderBy('name')->get();
 
         return response()->json([
             'dealers' => $dealers,

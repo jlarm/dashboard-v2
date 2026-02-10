@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Auth;
 use Illuminate\Auth\Events\Registered;
 
 class CentralUserInviteRegisterRepository
 {
-    public function create($userData): void
+    public function create(array $userData): void
     {
-        $user = User::create([
+        $user = User::query()->create([
             'name' => $userData['name'],
             'email' => $userData['email'],
             'phone' => $userData['phone'],

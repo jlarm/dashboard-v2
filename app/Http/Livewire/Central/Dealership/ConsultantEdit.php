@@ -21,7 +21,7 @@ class ConsultantEdit extends SlideOver
         'locations' => 'required',
     ];
 
-    public function mount(Dealership $dealership)
+    public function mount(Dealership $dealership): void
     {
         $this->dealership = $dealership;
         $this->name = $dealership->name;
@@ -30,7 +30,7 @@ class ConsultantEdit extends SlideOver
         $this->locations = $dealership->locations;
     }
 
-    public function updateDealership()
+    public function updateDealership(): void
     {
         $this->dealership->update([
             'name' => $this->name,

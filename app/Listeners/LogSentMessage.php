@@ -27,7 +27,7 @@ class LogSentMessage
         // Extract 'to' addresses - handle both array format and Symfony Address objects
         $toAddresses = $message->getTo();
         $toEmails = '';
-        if (is_array($toAddresses) && count($toAddresses) > 0) {
+        if (is_array($toAddresses) && $toAddresses !== []) {
             $emails = [];
             foreach ($toAddresses as $address) {
                 if (is_object($address) && method_exists($address, 'getAddress')) {
@@ -73,22 +73,19 @@ class LogSentMessage
         }
 
         if (empty($messageId)) {
-            $domain = config('mail.from.address') ? explode('@', config('mail.from.address'))[1] : 'local';
+            $domain = config('mail.from.address') ? explode('@', (string) config('mail.from.address'))[1] : 'local';
             $messageId = sprintf('<%s@%s>', Str::uuid(), $domain);
         }
 
         $data['message_id'] = $messageId;
 
-        VendorEmailLog::create($data);
+        VendorEmailLog::query()->create($data);
 
         $tenantId = tenant('id');
         if ($tenantId) {
-            $normalizedMessageId = trim($messageId, '<>');
+            $normalizedMessageId = trim((string) $messageId, '<>');
             tenancy()->central(function () use ($tenantId, $normalizedMessageId): void {
-                VendorEmailLogIndex::updateOrCreate(
-                    ['message_id' => $normalizedMessageId],
-                    ['tenant_id' => $tenantId]
-                );
+                VendorEmailLogIndex::query()->updateOrCreate(['message_id' => $normalizedMessageId], ['tenant_id' => $tenantId]);
             });
         }
     }

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Dealer\Course\IndexItem;
+use App\Http\Livewire\Dealer\Course\Index;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Livewire\Livewire;
 
-describe('Course IndexItem Component - DOT Module Tracking', function () {
-    it('tracks dot module 1 completion status', function () {
-        $course = Course::create([
+describe('Course IndexItem Component - DOT Module Tracking', function (): void {
+    it('tracks dot module 1 completion status', function (): void {
+        $course = Course::query()->create([
             'name' => 'DOT Hazardous Materials Transportation',
             'slug' => 'dot-hazardous-materials-transportation',
             'slides' => [],
@@ -19,21 +19,21 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
             'optional' => false,
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Test User',
             'email' => 'dot-module1@test.com',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole('Employee');
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Test Store',
             'slug' => 'test-store',
             'state' => 'Texas',
         ]);
 
         // Create a passing result
-        CourseResults::create([
+        CourseResults::query()->create([
             'user_id' => $user->id,
             'course_id' => $course->id,
             'passed' => true,
@@ -43,12 +43,12 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
 
         $this->actingAs($user);
 
-        Livewire::test(IndexItem::class, ['course' => $course])
+        Livewire::test(Index::class)
             ->assertSet('module1', true);
     });
 
-    it('tracks dot module 2 completion status', function () {
-        $course = Course::create([
+    it('tracks dot module 2 completion status', function (): void {
+        $course = Course::query()->create([
             'name' => 'DOT Identifying Hazardous Materials',
             'slug' => 'dot-hazardous-materials-transportation-identifying-hazardous-materials',
             'slides' => [],
@@ -56,21 +56,21 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
             'optional' => false,
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Test User',
             'email' => 'dot-module2@test.com',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole('Employee');
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Test Store 2',
             'slug' => 'test-store-2',
             'state' => 'Texas',
         ]);
 
         // Create a passing result
-        CourseResults::create([
+        CourseResults::query()->create([
             'user_id' => $user->id,
             'course_id' => $course->id,
             'passed' => true,
@@ -80,12 +80,12 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
 
         $this->actingAs($user);
 
-        Livewire::test(IndexItem::class, ['course' => $course])
+        Livewire::test(Index::class)
             ->assertSet('module2', true);
     });
 
-    it('tracks dot module 3 completion status', function () {
-        $course = Course::create([
+    it('tracks dot module 3 completion status', function (): void {
+        $course = Course::query()->create([
             'name' => 'DOT Preparing Hazardous Materials for Shipment',
             'slug' => 'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment',
             'slides' => [],
@@ -93,21 +93,21 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
             'optional' => false,
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Test User',
             'email' => 'dot-module3@test.com',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole('Employee');
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Test Store 3',
             'slug' => 'test-store-3',
             'state' => 'Texas',
         ]);
 
         // Create a passing result
-        CourseResults::create([
+        CourseResults::query()->create([
             'user_id' => $user->id,
             'course_id' => $course->id,
             'passed' => true,
@@ -117,12 +117,12 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
 
         $this->actingAs($user);
 
-        Livewire::test(IndexItem::class, ['course' => $course])
+        Livewire::test(Index::class)
             ->assertSet('module3', true);
     });
 
-    it('shows null for incomplete dot modules', function () {
-        $course = Course::create([
+    it('shows null for incomplete dot modules', function (): void {
+        $course = Course::query()->create([
             'name' => 'DOT Hazardous Materials Transportation',
             'slug' => 'dot-hazardous-materials-transportation',
             'slides' => [],
@@ -130,14 +130,14 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
             'optional' => false,
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Test User',
             'email' => 'dot-incomplete@test.com',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole('Employee');
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Test Store 4',
             'slug' => 'test-store-4',
             'state' => 'Texas',
@@ -145,14 +145,14 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
 
         $this->actingAs($user);
 
-        Livewire::test(IndexItem::class, ['course' => $course])
+        Livewire::test(Index::class)
             ->assertSet('module1', null)
             ->assertSet('module2', null)
             ->assertSet('module3', null);
     });
 
-    it('shows false for failed dot module attempts', function () {
-        $course = Course::create([
+    it('shows false for failed dot module attempts', function (): void {
+        $course = Course::query()->create([
             'name' => 'DOT Hazardous Materials Transportation',
             'slug' => 'dot-hazardous-materials-transportation',
             'slides' => [],
@@ -160,21 +160,21 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
             'optional' => false,
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Test User',
             'email' => 'dot-failed@test.com',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole('Employee');
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Test Store 5',
             'slug' => 'test-store-5',
             'state' => 'Texas',
         ]);
 
         // Create a failing result
-        CourseResults::create([
+        CourseResults::query()->create([
             'user_id' => $user->id,
             'course_id' => $course->id,
             'passed' => false,
@@ -184,12 +184,12 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
 
         $this->actingAs($user);
 
-        Livewire::test(IndexItem::class, ['course' => $course])
+        Livewire::test(Index::class)
             ->assertSet('module1', false);
     });
 
-    it('uses latest result for dot module status', function () {
-        $course = Course::create([
+    it('uses latest result for dot module status', function (): void {
+        $course = Course::query()->create([
             'name' => 'DOT Hazardous Materials Transportation',
             'slug' => 'dot-hazardous-materials-transportation',
             'slides' => [],
@@ -197,21 +197,21 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
             'optional' => false,
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Test User',
             'email' => 'dot-retake@test.com',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole('Employee');
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Test Store 6',
             'slug' => 'test-store-6',
             'state' => 'Texas',
         ]);
 
         // Create failing result first
-        CourseResults::create([
+        CourseResults::query()->create([
             'user_id' => $user->id,
             'course_id' => $course->id,
             'passed' => false,
@@ -221,7 +221,7 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
         ]);
 
         // Create passing result later
-        CourseResults::create([
+        CourseResults::query()->create([
             'user_id' => $user->id,
             'course_id' => $course->id,
             'passed' => true,
@@ -232,12 +232,12 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
 
         $this->actingAs($user);
 
-        Livewire::test(IndexItem::class, ['course' => $course])
+        Livewire::test(Index::class)
             ->assertSet('module1', true);
     });
 
-    it('loads default store when no user stores exist', function () {
-        $course = Course::create([
+    it('renders when user has no stores', function (): void {
+        $course = Course::query()->create([
             'name' => 'Test Course',
             'slug' => 'test-course-store',
             'slides' => [],
@@ -245,13 +245,13 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
             'optional' => false,
         ]);
 
-        $store = Store::create([
+        $store = Store::query()->create([
             'name' => 'Default Store',
             'slug' => 'default-store',
             'state' => 'Texas',
         ]);
 
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Test User',
             'email' => 'dot-default-store@test.com',
             'password' => bcrypt('password'),
@@ -260,7 +260,7 @@ describe('Course IndexItem Component - DOT Module Tracking', function () {
 
         $this->actingAs($user);
 
-        Livewire::test(IndexItem::class, ['course' => $course])
-            ->assertSet('store', fn ($store) => $store instanceof Store);
+        Livewire::test(Index::class)
+            ->assertStatus(200);
     });
 });

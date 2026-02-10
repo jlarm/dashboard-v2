@@ -6,7 +6,6 @@ namespace Tests;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\PermissionRegistrar;
@@ -73,13 +72,13 @@ abstract class TenantTestCase extends TestCase
             $this->seedRolesAndPermissions();
 
             // Create a test store (required by many tenant routes)
-            Store::create([
+            Store::query()->create([
                 'name' => 'Test Store',
                 'slug' => 'test-store',
             ]);
 
             // Create tenant user
-            $this->consultant = User::create([
+            $this->consultant = User::query()->create([
                 'name' => 'Test User',
                 'email' => 'test@test-tenant.localhost',
                 'password' => bcrypt('password'),
@@ -87,7 +86,7 @@ abstract class TenantTestCase extends TestCase
 
             $this->consultant->assignRole('Consultant');
 
-            $this->manager = User::create([
+            $this->manager = User::query()->create([
                 'name' => 'Test Manager',
                 'email' => 'tm@email.com',
                 'password' => bcrypt('password'),
@@ -120,7 +119,7 @@ abstract class TenantTestCase extends TestCase
 
         // Delete the tenant, which will trigger the TenantDeleted event
         // and automatically drop the MySQL database
-        if (isset($this->tenant)) {
+        if ($this->tenant !== null) {
             $this->tenant->delete();
         }
 

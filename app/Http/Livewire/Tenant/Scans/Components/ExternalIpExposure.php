@@ -60,7 +60,7 @@ class ExternalIpExposure extends Component
             }
         }
 
-        return compact('critical', 'high', 'medium', 'low');
+        return ['critical' => $critical, 'high' => $high, 'medium' => $medium, 'low' => $low];
     }
 
     public function getRiskColor(int $critical, int $high): string

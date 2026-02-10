@@ -19,7 +19,7 @@ class VideoProgress extends Component
         $videos = $this->getVimeoVideos($vimeoService);
         $progress = $this->getUserVideoProgress();
 
-        $videos = $videos->map(function ($video) use ($progress) {
+        $videos = $videos->map(function (array $video) use ($progress) {
             $progressItem = $progress->where('video_id', $video['id'])->first();
             if ($progressItem && $progressItem['completed']) {
                 $video['completed'] = true;

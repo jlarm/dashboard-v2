@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('vendor_email_log_indices', function (Blueprint $table) {
+        Schema::create('vendor_email_log_indices', function (Blueprint $table): void {
             $table->id();
             $table->string('tenant_id');
             $table->string('message_id');

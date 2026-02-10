@@ -61,7 +61,7 @@ class OpenPorts extends Component
 
     protected function loadOpenPorts(): void
     {
-        $store = Store::find(app('currentStore'));
+        $store = Store::query()->find(app('currentStore'));
 
         if (! $store) {
             return;

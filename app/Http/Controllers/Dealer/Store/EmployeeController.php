@@ -13,11 +13,11 @@ class EmployeeController extends Controller
 {
     public function index(Store $store): View
     {
-        return view('dealer.store.multi.employee-index', compact('store'));
+        return view('dealer.store.multi.employee-index', ['store' => $store]);
     }
 
     public function show(Store $store, User $user): View
     {
-        return view('dealer.store.multi.employee-show', compact('store', 'user'));
+        return view('dealer.store.multi.employee-show', ['store' => $store, 'user' => $user]);
     }
 }

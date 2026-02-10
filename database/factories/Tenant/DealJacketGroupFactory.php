@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Database\Factories\Tenant;
 
+use Illuminate\Support\Str;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
 
 class DealJacketGroupFactory extends Factory
 {
@@ -17,7 +17,7 @@ class DealJacketGroupFactory extends Factory
     {
         $store = Store::query()->inRandomOrder()->first();
         if (! $store) {
-            $store = Store::create([
+            $store = Store::query()->create([
                 'name' => $this->faker->company(),
                 'slug' => Str::slug($this->faker->company()),
             ]);

@@ -11,37 +11,37 @@ class DepartmentSeeder extends Seeder
 {
     public function run(): void
     {
-        Department::create([
+        Department::query()->create([
             'name' => 'Sales',
             'slug' => 'sales',
         ]);
 
-        Department::create([
+        Department::query()->create([
             'name' => 'Accounting',
             'slug' => 'accounting',
         ]);
 
-        Department::create([
+        Department::query()->create([
             'name' => 'Service',
             'slug' => 'service',
         ]);
 
-        Department::create([
+        Department::query()->create([
             'name' => 'Parts',
             'slug' => 'parts',
         ]);
 
-        Department::create([
+        Department::query()->create([
             'name' => 'Body Shop',
             'slug' => 'body-shop',
         ]);
 
-        Department::create([
+        Department::query()->create([
             'name' => 'Finance',
             'slug' => 'finance',
         ]);
 
-        Department::create([
+        Department::query()->create([
             'name' => 'Porter/Driver',
             'slug' => 'porter-driver',
         ]);

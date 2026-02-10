@@ -13,12 +13,12 @@ class MultiNote extends Component
     public Store $store;
     public $note;
 
-    public function mount()
+    public function mount(): void
     {
         $this->note = $this->store->note;
     }
 
-    public function update()
+    public function update(): void
     {
         $this->store->update([
             'note' => $this->note,

@@ -30,7 +30,7 @@ class UploadGlbaPdfJob implements ShouldQueue
         $path = tenant('id').'/glba/'.$this->glbaViolationAudit->pdf_path;
         $move = Storage::disk('armpaudits')->put(tenant('id').'/glba/'.$this->glbaViolationAudit->pdf_path, $pdf);
         if ($move) {
-            Storage::delete('/glba/', $this->glbaViolationAudit->pdf_path);
+            Storage::delete('/glba/');
             $this->glbaViolationAudit->update(['pdf_path' => $path]);
         }
     }

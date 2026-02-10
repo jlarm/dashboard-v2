@@ -22,9 +22,9 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
 
-            $globalSetting = GlobalSetting::first();
+            $globalSetting = GlobalSetting::query()->first();
 
             if ($globalSetting === null || $globalSetting->phishing_active === 0 || $globalSetting->phishing_active === null) {
                 $this->info('Phishing is disabled for tenant: '.$tenant->name);
@@ -34,7 +34,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 
             $this->info('Starting run for tenant: '.$tenant->name);
 
-            $settings = GlobalSetting::first();
+            $settings = GlobalSetting::query()->first();
             $this->token = $settings->phishing_token;
             $this->ip = $settings->phishing_ip;
             $stores = Store::all();
@@ -63,18 +63,18 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 
         return collect($groups->json())
             ->pluck('id', 'name')
-            ->reject(fn ($value, $name) => str_contains($name, 'All'));
+            ->reject(fn ($value, $name): bool => str_contains((string) $name, 'All'));
     }
 
-    private function getUsers($store)
+    private function getUsers($store): array
     {
         if (tenant('locations')) {
             $users = $store->users()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])->get();
         } else {
-            $users = User::whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])->get();
+            $users = User::query()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])->get();
         }
 
-        $usersByDepartment = $users->groupBy('department.name')->map(fn ($departmentUsers) => $departmentUsers->map(function ($user) {
+        $usersByDepartment = $users->groupBy('department.name')->map(fn ($departmentUsers) => $departmentUsers->map(function ($user): array {
             $splitName = explode(' ', $user->name);
             $firstName = $splitName[0];
             $lastName = $splitName[1] ?? null;
@@ -91,7 +91,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
         return [$store->name => $usersByDepartment];
     }
 
-    private function createGroup($department, $userData)
+    private function createGroup(string $department, $userData): void
     {
         try {
             $requestBody = [
@@ -116,7 +116,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
         }
     }
 
-    private function deleteGroups()
+    private function deleteGroups(): void
     {
         foreach ($this->groups as $group) {
             if ($group !== null) {

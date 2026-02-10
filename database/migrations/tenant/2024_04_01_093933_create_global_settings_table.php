@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('global_settings', function (Blueprint $table) {
+        Schema::create('global_settings', function (Blueprint $table): void {
             $table->id();
             $table->boolean('phishing_active')->nullable();
             $table->string('phishing_token')->nullable();

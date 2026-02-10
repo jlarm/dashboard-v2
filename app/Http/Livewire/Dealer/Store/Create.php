@@ -30,16 +30,16 @@ class Create extends Modal
         'website' => 'required|max:255',
     ];
 
-    public function updated($propertyName)
+    public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
     }
 
-    public function createStore()
+    public function createStore(): void
     {
         $this->validate();
 
-        $store = Store::create([
+        $store = Store::query()->create([
             'name' => $this->name,
             'address' => $this->address,
             'city' => $this->city,
@@ -49,7 +49,7 @@ class Create extends Modal
             'website' => $this->website,
         ]);
 
-        StoreSettings::create([
+        StoreSettings::query()->create([
             'store_id' => $store->id,
             'name' => $store->name,
             'address' => $store->address,
@@ -60,8 +60,8 @@ class Create extends Modal
             'website' => $store->website,
         ]);
 
-        EmployeeList::create(['store_id' => $store->id]);
-        ScanSetting::create(['store_id' => $store->id]);
+        EmployeeList::query()->create(['store_id' => $store->id]);
+        ScanSetting::query()->create(['store_id' => $store->id]);
 
         $this->reset();
 

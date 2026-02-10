@@ -27,7 +27,7 @@ class IndexItem extends Component
 
     public function mount(): void
     {
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::query()->find(app('currentStore'));
         $this->remediations = (bool) $this->store->remediations;
         $this->grade = $this->oshaAudit->grade ?? '';
     }
@@ -40,9 +40,7 @@ class IndexItem extends Component
 
     public function saveGrade(): void
     {
-        if (! auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
-            abort(403);
-        }
+        abort_unless(auth()->user()->hasAnyRole(['super-admin', 'Consultant']), 403);
 
         $this->validate();
 
@@ -105,7 +103,7 @@ class IndexItem extends Component
 
     private function deleteViolationPhotos(): void
     {
-        $this->oshaAudit->violations->each(function ($violation) {
+        $this->oshaAudit->violations->each(function ($violation): void {
             $violation->clearMediaCollection('violations_files_0');
             $violation->clearMediaCollection('violations_files_1');
             $violation->clearMediaCollection('violations_files_2');

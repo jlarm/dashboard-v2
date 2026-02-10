@@ -18,7 +18,7 @@ class Delete extends Modal
     public function delete(): void
     {
         $this->askForConfirmation(
-            callback: function () {
+            callback: function (): void {
                 $this->contract->delete();
                 $this->emit('contractDeleted');
 

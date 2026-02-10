@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store;
 
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Response;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
-use Cookie;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Livewire\Component;
-use Response;
 
 class SingleStoreScans extends Component
 {
@@ -18,12 +18,12 @@ class SingleStoreScans extends Component
     public string $type = 'technical';
     public string $dealer;
 
-    public function mount(Store $store)
+    public function mount(Store $store): void
     {
         if ($store->id === null) {
-            $this->dealer = ScanSetting::first()->name ?? '';
+            $this->dealer = ScanSetting::query()->first()->name ?? '';
         } else {
-            $this->dealer = ScanSetting::where('store_id', $this->store->id)->first()->name ?? '';
+            $this->dealer = ScanSetting::query()->where('store_id', $this->store->id)->first()->name ?? '';
         }
     }
 
@@ -36,9 +36,9 @@ class SingleStoreScans extends Component
             'Authorization' => $token,
         ]);
 
-        $status = $client->send($request)->getBody()->getContents();
+        $client->send($request)->getBody()->getContents();
 
-        return Response::stream(function () use ($client, $request) {
+        return Response::stream(function () use ($client, $request): void {
             echo $client->send($request)->getBody()->getContents();
 
         }, 200, [

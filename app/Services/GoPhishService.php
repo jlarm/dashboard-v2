@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Log;
 
 class GoPhishService
 {
-    public function getGroups($token, $ip)
+    public function getGroups(string $token, string $ip)
     {
         $groups = Http::withoutVerifying()->get('https://'.$ip.':3333/api/groups/?api_key='.$token.'');
 
         return collect($groups->json())->pluck('id', 'name');
     }
 
-    public function createOrUpdateGroup($groups, $userData, $tenant, $store, $token, $ip)
+    public function createOrUpdateGroup($groups, $userData, $tenant, $store, $token, $ip): void
     {
         if (! array_key_exists('All '.$store->name.' Employees', $groups->toArray())) {
             $this->createGroup($groups, $userData, $tenant, $store, $token, $ip);
@@ -26,7 +26,7 @@ class GoPhishService
         }
     }
 
-    public function createGroup($groups, $userData, $tenant, $store, $token, $ip)
+    public function createGroup($groups, $userData, $tenant, $store, $token, string $ip): void
     {
         try {
             $requestBody = [
@@ -51,7 +51,7 @@ class GoPhishService
         }
     }
 
-    public function updateGroup($groupId, $userData, $ip, $token, $store = null)
+    public function updateGroup(string $groupId, $userData, string $ip, $token, $store = null): void
     {
         try {
             $requestBody = [

@@ -15,13 +15,13 @@ class Edit extends Component
     public $name;
     public $assignedCourses = [];
 
-    public function mount()
+    public function mount(): void
     {
         $this->name = $this->department->name;
         $this->assignedCourses = $this->department->courses?->pluck('id')->toArray();
     }
 
-    public function updateName()
+    public function updateName(): void
     {
         $this->department->update([
             'name' => $this->name,
@@ -46,7 +46,7 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.central.department.edit', [
-            'courses' => Course::orderBy('name')->select('id', 'name')->get(),
+            'courses' => Course::query()->orderBy('name')->select('id', 'name')->get(),
         ]);
     }
 }

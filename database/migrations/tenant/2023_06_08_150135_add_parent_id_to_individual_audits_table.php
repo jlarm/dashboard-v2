@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('individual_audits', function (Blueprint $table) {
+        Schema::table('individual_audits', function (Blueprint $table): void {
             $table->uuid('uuid')->nullable()->after('id');
             $table->unsignedBigInteger('parent_id')->nullable()->after('id');
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('individual_audits', function (Blueprint $table) {
+        Schema::table('individual_audits', function (Blueprint $table): void {
             $table->dropColumn('parent_id');
         });
     }

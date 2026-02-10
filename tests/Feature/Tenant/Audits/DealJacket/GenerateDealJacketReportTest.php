@@ -12,19 +12,19 @@ use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->user = User::factory()->create();
     actingAs($this->user);
 });
 
-it('can mount the generate report modal with a deal jacket group', function () {
+it('can mount the generate report modal with a deal jacket group', function (): void {
     $dealJacketGroup = DealJacketGroup::factory()->create(['completed' => true]);
 
     Livewire::test(GenerateReport::class, ['dealJacketGroupId' => $dealJacketGroup->id])
         ->assertSet('dealJacketGroup.id', $dealJacketGroup->id);
 });
 
-it('dispatches job when generating report for completed deal jacket group', function () {
+it('dispatches job when generating report for completed deal jacket group', function (): void {
     Queue::fake();
 
     $dealJacketGroup = DealJacketGroup::factory()->create(['completed' => true]);
@@ -36,7 +36,7 @@ it('dispatches job when generating report for completed deal jacket group', func
     Queue::assertPushed(GenerateDealJacketReportJob::class);
 });
 
-it('shows error when trying to generate report for incomplete deal jacket group', function () {
+it('shows error when trying to generate report for incomplete deal jacket group', function (): void {
     $dealJacketGroup = DealJacketGroup::factory()->create(['completed' => false]);
 
     Livewire::test(GenerateReport::class, ['dealJacketGroupId' => $dealJacketGroup->id])
@@ -44,7 +44,7 @@ it('shows error when trying to generate report for incomplete deal jacket group'
         ->assertHasErrors(['generation']);
 });
 
-it('can instantiate job with deal jacket group', function () {
+it('can instantiate job with deal jacket group', function (): void {
     $dealJacketGroup = DealJacketGroup::factory()
         ->has(DealJacket::factory()->count(3), 'dealJackets')
         ->create(['completed' => true]);

@@ -30,7 +30,7 @@ class UploadBodyShopPdfJob implements ShouldQueue
         $path = tenant('id').'/bodyshop/'.$this->bodyShopViolationAudit->pdf_path;
         $move = Storage::disk('armpaudits')->put(tenant('id').'/bodyshop/'.$this->bodyShopViolationAudit->pdf_path, $pdf);
         if ($move) {
-            Storage::delete('/bodyshop/', $this->bodyShopViolationAudit->pdf_path);
+            Storage::delete('/bodyshop/');
             $this->bodyShopViolationAudit->update(['pdf_path' => $path]);
         }
     }

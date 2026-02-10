@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('deal_jackets', static function (Blueprint $table) {
+        Schema::create('deal_jackets', static function (Blueprint $table): void {
             $table->id();
             $table->uuid('uuid');
             $table->foreignId('deal_jacket_group_id')->constrained('deal_jacket_groups')->cascadeOnDelete();

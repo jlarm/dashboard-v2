@@ -13,9 +13,9 @@ class WebhookController extends Controller
 {
     public function gophish(Request $request): JsonResponse
     {
-        $campaign = PhishingCampaign::where('campaign_id', $request->input('campaign_id'))->first();
+        $campaign = PhishingCampaign::query()->where('campaign_id', $request->input('campaign_id'))->first();
 
-        Timeline::create([
+        Timeline::query()->create([
             'phishing_campaign_id' => $campaign->id,
             'email' => $request->input('email'),
             'time' => $request->input('time'),

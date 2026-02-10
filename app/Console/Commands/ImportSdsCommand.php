@@ -57,13 +57,9 @@ class ImportSdsCommand extends Command
     {
         $filePath = $this->getFilePath();
 
-        if (! file_exists($filePath)) {
-            throw new InvalidArgumentException("File not found: {$filePath}");
-        }
+        throw_unless(file_exists($filePath), new InvalidArgumentException("File not found: {$filePath}"));
 
-        if (filesize($filePath) === 0) {
-            throw new InvalidArgumentException("File is empty: {$filePath}");
-        }
+        throw_if(filesize($filePath) === 0, new InvalidArgumentException("File is empty: {$filePath}"));
 
         $this->info("Using file: {$filePath}");
     }
@@ -78,9 +74,7 @@ class ImportSdsCommand extends Command
             'filename' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            throw new InvalidArgumentException("Record {$index}: ".$validator->errors()->first());
-        }
+        throw_if($validator->fails(), new InvalidArgumentException("Record {$index}: ".$validator->errors()->first()));
 
         return $validator->validated();
     }
@@ -90,19 +84,13 @@ class ImportSdsCommand extends Command
         $filePath = $this->getFilePath();
         $content = file_get_contents($filePath);
 
-        if ($content === false) {
-            throw new InvalidArgumentException("Failed to read file: {$filePath}");
-        }
+        throw_if($content === false, new InvalidArgumentException("Failed to read file: {$filePath}"));
 
         $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new InvalidArgumentException('Invalid JSON: '.json_last_error_msg());
-        }
+        throw_if(json_last_error() !== JSON_ERROR_NONE, new InvalidArgumentException('Invalid JSON: '.json_last_error_msg()));
 
-        if (! is_array($data)) {
-            throw new InvalidArgumentException('JSON must contain an array');
-        }
+        throw_unless(is_array($data), new InvalidArgumentException('JSON must contain an array'));
 
         if (isset($data['pdfs']) && is_array($data['pdfs'])) {
             $records = $data['pdfs'];

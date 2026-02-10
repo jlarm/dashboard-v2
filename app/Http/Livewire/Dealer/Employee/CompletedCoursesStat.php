@@ -45,19 +45,17 @@ class CompletedCoursesStat extends Component
         $percentage = $this->readyToLoad ? $this->percentage() : 0;
         $readyToLoad = $this->readyToLoad;
 
-        return view('livewire.dealer.employee.completed-courses-stat', compact('percentage', 'readyToLoad'));
+        return view('livewire.dealer.employee.completed-courses-stat', ['percentage' => $percentage, 'readyToLoad' => $readyToLoad]);
     }
 
     protected function getUserCounts(): array
     {
         $cacheKey = $this->getCacheKey();
 
-        return Cache::remember($cacheKey, 300, function () {
-            return [
-                'total' => $this->getTotalUserCount(),
-                'incomplete' => $this->getIncompleteCount(),
-            ];
-        });
+        return Cache::remember($cacheKey, 300, fn(): array => [
+            'total' => $this->getTotalUserCount(),
+            'incomplete' => $this->getIncompleteCount(),
+        ]);
     }
 
     protected function getCacheKey(): string
@@ -86,11 +84,11 @@ class CompletedCoursesStat extends Component
             'roles:id,name',
             'stores:id,state',
             'courseOverrides:user_id,course_id,type',
-            'results' => function ($query) {
+            'results' => function ($query): void {
                 $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                     ->where('passed', 1);
             },
-        ])->whereHas('roles', function ($q) {
+        ])->whereHas('roles', function ($q): void {
             $q->where('id', '!=', 5);
         })->get(['id', 'department_id'])
             ->filter(fn ($user) => $user->user_has_not_completed_courses)
@@ -102,9 +100,9 @@ class CompletedCoursesStat extends Component
         $query = null;
 
         // If a specific store is selected
-        if ($this->store !== null) {
+        if ($this->store instanceof Store) {
             $query = User::query()
-                ->whereHas('stores', function ($q) {
+                ->whereHas('stores', function ($q): void {
                     $q->where('stores.id', $this->store->id);
                 });
         } elseif (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
@@ -116,14 +114,14 @@ class CompletedCoursesStat extends Component
             // If the user is not a super-admin or consultant
             $currentUser = auth()->user();
             $query = User::query()
-                ->whereHas('stores', function ($q) use ($currentUser) {
+                ->whereHas('stores', function ($q) use ($currentUser): void {
                     $q->whereIn('stores.id', $currentUser->stores->pluck('id'));
                 });
         }
 
         return $query
             ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
-            ->when($this->department, function ($query) {
+            ->when($this->department, function ($query): void {
                 $query->where('department_id', $this->department);
             });
     }

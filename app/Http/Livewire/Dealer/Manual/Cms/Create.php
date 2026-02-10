@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Manual\Cms;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Bus;
 use App\Jobs\Manuals\GenerateCmsManualJob;
 use App\Jobs\Manuals\UploadCmsToDigitalOceanJob;
 use App\Models\CmsManual;
 use App\Models\Dealer\Store;
 use App\Models\Role;
 use App\Models\User;
-use Bus;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Livewire\Component;
-use Storage;
-use Str;
 
 class Create extends Component
 {
@@ -61,13 +61,13 @@ class Create extends Component
         'acknowledgement_signature' => 'required',
     ];
 
-    public function mount(Request $request)
+    public function mount(Request $request): void
     {
 
-        $storeName = $request->get('store')->name ?? Store::first()->name;
-        $this->store = Store::where('name', $storeName)->first();
+        $storeName = $request->get('store')->name ?? Store::query()->first()->name;
+        $this->store = Store::query()->where('name', $storeName)->first();
 
-        $this->qiRole = Role::where('name', 'Qualified Individual')->first();
+        $this->qiRole = Role::query()->where('name', 'Qualified Individual')->first();
 
         $this->loadQi();
 
@@ -78,7 +78,7 @@ class Create extends Component
         }
     }
 
-    public function create()
+    public function create(): void
     {
 
         $this->validate();
@@ -111,7 +111,7 @@ class Create extends Component
             $an = Str::of($this->acknowledgement_name)->replace(' ', '_')->lower().'_'.now()->format('YmdHis').'.png';
         }
 
-        $manual = CmsManual::create([
+        $manual = CmsManual::query()->create([
             'user_id' => auth()->user()->id,
             'store_id' => $this->store->id,
             'qi_name' => $this->qi,
@@ -135,31 +135,31 @@ class Create extends Component
         ]);
 
         if ($this->adoption_approval_signature_one) {
-            Storage::put('cms-signatures/'.$aanOne, base64_decode(Str::of($this->adoption_approval_signature_one)->after(',')));
+            Storage::put('cms-signatures/'.$aanOne, base64_decode((string) Str::of($this->adoption_approval_signature_one)->after(',')));
         }
         if ($this->adoption_approval_signature_two) {
-            Storage::put('cms-signatures/'.$aanTwo, base64_decode(Str::of($this->adoption_approval_signature_two)->after(',')));
+            Storage::put('cms-signatures/'.$aanTwo, base64_decode((string) Str::of($this->adoption_approval_signature_two)->after(',')));
         }
         if ($this->adoption_approval_signature_three) {
-            Storage::put('cms-signatures/'.$aanThree, base64_decode(Str::of($this->adoption_approval_signature_three)->after(',')));
+            Storage::put('cms-signatures/'.$aanThree, base64_decode((string) Str::of($this->adoption_approval_signature_three)->after(',')));
         }
 
         if ($this->dealer_participation_signature) {
-            Storage::put('cms-signatures/'.$dpn, base64_decode(Str::of($this->dealer_participation_signature)->after(',')));
+            Storage::put('cms-signatures/'.$dpn, base64_decode((string) Str::of($this->dealer_participation_signature)->after(',')));
         }
 
         if ($this->appointment_program_signature_one) {
-            Storage::put('cms-signatures/'.$apnOne, base64_decode(Str::of($this->appointment_program_signature_one)->after(',')));
+            Storage::put('cms-signatures/'.$apnOne, base64_decode((string) Str::of($this->appointment_program_signature_one)->after(',')));
         }
         if ($this->appointment_program_signature_two) {
-            Storage::put('cms-signatures/'.$apnTwo, base64_decode(Str::of($this->appointment_program_signature_two)->after(',')));
+            Storage::put('cms-signatures/'.$apnTwo, base64_decode((string) Str::of($this->appointment_program_signature_two)->after(',')));
         }
         if ($this->appointment_program_signature_three) {
-            Storage::put('cms-signatures/'.$apnThree, base64_decode(Str::of($this->appointment_program_signature_three)->after(',')));
+            Storage::put('cms-signatures/'.$apnThree, base64_decode((string) Str::of($this->appointment_program_signature_three)->after(',')));
         }
 
         if ($this->acknowledgement_signature) {
-            Storage::put('cms-signatures/'.$an, base64_decode(Str::of($this->acknowledgement_signature)->after(',')));
+            Storage::put('cms-signatures/'.$an, base64_decode((string) Str::of($this->acknowledgement_signature)->after(',')));
         }
 
         Bus::chain([
@@ -167,7 +167,7 @@ class Create extends Component
             new UploadCmsToDigitalOceanJob($manual),
         ])->dispatch();
 
-        (! tenant('locations')) ? $this->redirect(route('dealer.manual.cms.index', $this->store)) : $this->redirect(route('dealer.stores.manuals.cms.index', $this->store));
+        (tenant('locations')) ? $this->redirect(route('dealer.stores.manuals.cms.index', $this->store)) : $this->redirect(route('dealer.manual.cms.index', $this->store));
     }
 
     public function render()
@@ -175,12 +175,12 @@ class Create extends Component
         return view('livewire.dealer.manual.cms.create')->layout('components.dealer-app');
     }
 
-    private function loadQi()
+    private function loadQi(): void
     {
         if (tenant('locations')) {
-            $this->qi = User::whereHas('roles', function ($query) {
+            $this->qi = User::query()->whereHas('roles', function ($query): void {
                 $query->where('name', 'Qualified Individual');
-            })->whereHas('stores', function ($query) {
+            })->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })->pluck('name')->first();
         } else {
@@ -192,9 +192,9 @@ class Create extends Component
         }
     }
 
-    private function sendQiMissingNotification()
+    private function sendQiMissingNotification(): void
     {
-        $route = (! tenant('locations')) ? route('dealer.employees.index') : route('dealer.stores.employees', $this->store);
+        $route = (tenant('locations')) ? route('dealer.stores.employees', $this->store) : route('dealer.employees.index');
         Notification::make()
             ->title('Qualified Individual Missing')
             ->body('Please assign an employee the Qualified Individual role.')
@@ -208,9 +208,9 @@ class Create extends Component
             ->send();
     }
 
-    private function sendStandardDppRateMissingNotification()
+    private function sendStandardDppRateMissingNotification(): void
     {
-        $route = (! tenant('locations')) ? route('dealer.dealer.settings') : route('dealer.stores.settings', $this->store);
+        $route = (tenant('locations')) ? route('dealer.stores.settings', $this->store) : route('dealer.dealer.settings');
         Notification::make()
             ->title('Standard DPP Rate Missing')
             ->body('Please set the standard DPP rate in the Dealer Settings.')

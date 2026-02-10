@@ -19,20 +19,18 @@ class DotCert extends Component
 {
     public $showCertButton;
 
-    public function mount()
+    public function mount(): void
     {
         if (! $this->passingGrades() || auth()->user()->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
             $this->showCertButton = false;
+        } elseif ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 1095) {
+            $this->showCertButton = true;
         } else {
-            if ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 1095) {
-                $this->showCertButton = true;
-            } else {
-                $this->showCertButton = false;
-            }
+            $this->showCertButton = false;
         }
     }
 
-    public function download(Request $request)
+    public function download(Request $request): void
     {
         $html = view('dealer.course.CertDownloadView', [
             'user' => auth()->user(),
@@ -52,7 +50,7 @@ class DotCert extends Component
 
         Storage::delete($fileName);
 
-        Certificate::create([
+        Certificate::query()->create([
             'user_id' => auth()->user()->id,
             'course_name' => 'DOT Hazardous Materials Transportation',
             'file_name' => $fileName,

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserInviteNotification;
-use Notification;
 
 class CentralUserInviteRepository
 {
-    public function create($userData)
+    public function create(array $userData)
     {
         Notification::route('mail', $userData['email'])
             ->notify(new UserInviteNotification($userData));

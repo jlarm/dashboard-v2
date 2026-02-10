@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Dealer\Audit\OshaAudit;
 use Livewire\Component;
-use Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Download extends Component
@@ -14,7 +14,7 @@ class Download extends Component
     public OshaAudit $oshaAudit;
     public $content;
 
-    public function mount()
+    public function mount(): void
     {
 
         $this->content = Storage::disk('do-audits')->url(tenant('id').'/osha/'.$this->oshaAudit->pdf_path);

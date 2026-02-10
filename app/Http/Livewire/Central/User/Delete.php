@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\User;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Exception;
 use Filament\Notifications\Notification;
-use Log;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
 {
     public $user;
 
-    public function mount(User $user)
+    public function mount(User $user): void
     {
         $this->user = $user;
     }
 
-    public function delete()
+    public function delete(): void
     {
         try {
             $this->user->delete();

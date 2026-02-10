@@ -15,7 +15,7 @@ class StoreMiddleware
     {
         $storeSlug = $request->segment(2);
 
-        $store = Store::where('slug', $storeSlug)->firstOrFail();
+        $store = Store::query()->where('slug', $storeSlug)->firstOrFail();
 
         $request->attributes->add(['store' => $store]);
 

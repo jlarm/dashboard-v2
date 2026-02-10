@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dealer;
 
+use Spatie\Permission\PermissionRegistrar;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealer\StoreUserRequest;
 use App\Models\Certificate;
@@ -32,7 +33,7 @@ class UserController extends Controller
 
         $roles = $user->roles->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
 
-        $store = Store::find(app('currentStore'));
+        $store = Store::query()->find(app('currentStore'));
 
         return view('dealer.employee.show', [
             'user' => $user,
@@ -51,20 +52,20 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        $invite = Invite::where('id', $request['id'])->first();
+        $invite = Invite::query()->where('id', $request['id'])->first();
 
         // Create user
-        $user = User::create([
+        $user = User::query()->create([
             'name' => $invite['name'],
             'email' => $invite['email'],
             'department_id' => $invite['department_id'],
             'password' => bcrypt($request->input('password')),
-            'current_store_id' => (! empty($invite->stores)) ? (int) $invite->stores[0] : 1,
+            'current_store_id' => (empty($invite->stores)) ? 1 : (int) $invite->stores[0],
         ]);
 
         if ($invite['courses']) {
             foreach ($invite['courses'] as $key => $course) {
-                CourseResults::create([
+                CourseResults::query()->create([
                     'user_id' => $user->id,
                     'course_id' => $key,
                     'percentage' => 100,
@@ -73,11 +74,11 @@ class UserController extends Controller
                     'updated_at' => $course.' '.now()->format('H:i:s'),
                 ]);
 
-                $dotCompletion = Course::where('id', $key)->where('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')->first() ?? null;
+                $dotCompletion = Course::query()->where('id', $key)->where('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')->first() ?? null;
 
                 if ($dotCompletion) {
                     $html = view('dealer.course.CertDownloadView', [
-                        'user' => User::where('id', $user->id)->first(),
+                        'user' => User::query()->where('id', $user->id)->first(),
                         'store' => $request->get('store')?->name ?? tenant('name'),
                         'passed_on' => Carbon::parse($course)->format('F d, Y'),
                     ])->render();
@@ -94,7 +95,7 @@ class UserController extends Controller
 
                     Storage::delete($fileName);
 
-                    Certificate::create([
+                    Certificate::query()->create([
                         'user_id' => $user->id,
                         'course_name' => 'DOT Hazardous Materials Transportation',
                         'file_name' => $fileName,
@@ -109,7 +110,7 @@ class UserController extends Controller
 
         $user->assignRole($invite['roles']);
 
-        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $invite->delete();
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
+use Spatie\Permission\Models\Role;
 use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
@@ -58,7 +59,7 @@ class Index extends Component
                 'stores:id,name,state',
                 'courses:id',
                 'courseOverrides:user_id,course_id,type',
-                'results' => function ($query) {
+                'results' => function ($query): void {
                     $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1);
                 },
@@ -142,20 +143,14 @@ class Index extends Component
             ? $query->get()->filter(fn ($user) => $user->user_has_not_completed_courses)
             : $query->get();
 
-        if ($this->selectAll) {
-            // Select all users
-            $this->selectedUsers = $users->pluck('id')->toArray();
-        } else {
-            // Deselect all users
-            $this->selectedUsers = [];
-        }
+        $this->selectedUsers = $this->selectAll ? $users->pluck('id')->toArray() : [];
     }
 
     public function toggleUserSelection(int $userId): void
     {
         if (in_array($userId, $this->selectedUsers, true)) {
             // Remove from array
-            $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn ($id) => $id !== $userId));
+            $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn ($id): bool => $id !== $userId));
         } else {
             // Add to array
             $this->selectedUsers[] = $userId;
@@ -194,14 +189,14 @@ class Index extends Component
 
     public function exportCsv()
     {
-        if (empty($this->selectedUsers)) {
+        if ($this->selectedUsers === []) {
             Notification::make()
                 ->title('No Users Selected')
                 ->body('Please select at least one user to export.')
                 ->warning()
                 ->send();
 
-            return;
+            return null;
         }
 
         // Get all users from current query
@@ -211,7 +206,7 @@ class Index extends Component
             : $query->get();
 
         // Filter to only selected users
-        $selectedUsers = $users->filter(fn ($user) => in_array($user->id, $this->selectedUsers));
+        $selectedUsers = $users->filter(fn ($user): bool => in_array($user->id, $this->selectedUsers));
 
         $csvContent = $this->generateExportCsvContent($selectedUsers);
         $filename = 'employee-courses-report-'.date('m-d-Y').'.csv';
@@ -261,8 +256,8 @@ class Index extends Component
 
         return view('livewire.dealer.store.single-store.employee.index', [
             'users' => $users,
-            'departments' => Department::whereHas('users')->orderBy('name')->get(),
-            'roles' => \Spatie\Permission\Models\Role::whereNotIn('name', ['super-admin', 'Consultant'])
+            'departments' => Department::query()->whereHas('users')->orderBy('name')->get(),
+            'roles' => Role::query()->whereNotIn('name', ['super-admin', 'Consultant'])
                 ->whereHas('users')
                 ->orderBy('name')
                 ->get(),
@@ -277,7 +272,7 @@ class Index extends Component
             return null;
         }
 
-        return Department::find($this->selectedDepartment)?->name;
+        return Department::query()->find($this->selectedDepartment)?->name;
     }
 
     public function getSelectedRoleNameProperty(): ?string
@@ -286,7 +281,7 @@ class Index extends Component
             return null;
         }
 
-        return \Spatie\Permission\Models\Role::find($this->selectedRole)?->name;
+        return Role::query()->find($this->selectedRole)?->name;
     }
 
     private function applyDepartmentFilter(BelongsToMany $query): void

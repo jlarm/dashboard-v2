@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('finance_audits', function (Blueprint $table) {
+        Schema::table('finance_audits', function (Blueprint $table): void {
             $table->integer('rating')->after('pdf_path')->nullable();
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('finance_audits', function (Blueprint $table) {
+        Schema::table('finance_audits', function (Blueprint $table): void {
             $table->dropColumn('rating');
         });
     }

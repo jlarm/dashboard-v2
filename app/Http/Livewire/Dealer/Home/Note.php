@@ -16,7 +16,7 @@ class Note extends Component
 
     public function mount(): void
     {
-        $this->store = Store::where('id', app('currentStore'))->firstOrFail();
+        $this->store = Store::query()->where('id', app('currentStore'))->firstOrFail();
         $this->note = $this->store->note;
     }
 

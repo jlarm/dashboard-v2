@@ -12,8 +12,8 @@ class IspController extends Controller
 {
     public function __invoke(): View
     {
-        $store = Store::first();
+        $store = Store::query()->first();
 
-        return view('dealer.manual.isp', compact('store'));
+        return view('dealer.manual.isp', ['store' => $store]);
     }
 }

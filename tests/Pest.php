@@ -12,7 +12,7 @@ declare(strict_types=1);
 | need to change it using the "uses()" function to bind a different classes or traits.
 |
 */
-
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
@@ -24,7 +24,7 @@ use Tests\TestCase;
 
 uses(
     TestCase::class,
-    Illuminate\Foundation\Testing\RefreshDatabase::class,
+    RefreshDatabase::class,
 )->in('Feature/Auth', 'Feature/Central');
 
 uses(TenantTestCase::class)->in('Feature/Tenant');
@@ -75,12 +75,10 @@ function setupCentralDatabase(): void
 {
     // Verify we're using the testing database
     $currentDb = DB::connection()->getDatabaseName();
-    if ($currentDb !== 'dashboard_testing') {
-        throw new RuntimeException(
-            "SAFETY CHECK FAILED: Tests must use 'dashboard_testing' database, currently using: {$currentDb}. ".
-            'Check your phpunit.xml configuration.'
-        );
-    }
+    throw_if($currentDb !== 'dashboard_testing', new RuntimeException(
+        "SAFETY CHECK FAILED: Tests must use 'dashboard_testing' database, currently using: {$currentDb}. ".
+        'Check your phpunit.xml configuration.'
+    ));
 
     config([
         'tenancy.queue_database_creation' => false,
@@ -90,9 +88,9 @@ function setupCentralDatabase(): void
     ]);
 
     // Drop ONLY test tenant databases from failed runs
-    $databases = DB::select('SHOW DATABASES LIKE "test_tenant_dealership_%"');
+    $databases = DB::select('SHOW DATABASES LIKE "test_tenant_%"');
     foreach ($databases as $db) {
-        $dbName = $db->{'Database (test_tenant_dealership_%)'};
+        $dbName = $db->{'Database (test_tenant_%)'};
         DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
     }
 
@@ -120,13 +118,13 @@ function teardownTenants(): void
     }
 
     // Drop ONLY test tenant databases
-    $databases = DB::select('SHOW DATABASES LIKE "test_tenant_dealership_%"');
+    $databases = DB::select('SHOW DATABASES LIKE "test_tenant_%"');
     foreach ($databases as $db) {
-        $dbName = $db->{'Database (test_tenant_dealership_%)'};
+        $dbName = $db->{'Database (test_tenant_%)'};
         DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
     }
 
-    Dealership::query()->each(function ($dealership) {
+    Dealership::query()->each(function ($dealership): void {
         $storagePath = storage_path("framework/tenants/{$dealership->id}");
         if (is_dir($storagePath)) {
             exec('rm -rf '.escapeshellarg($storagePath));
@@ -145,7 +143,7 @@ function createDealershipTenant(?User $owner = null): array
 {
     $owner ??= User::factory()->create();
 
-    $dealership = Dealership::create([
+    $dealership = Dealership::query()->create([
         'id' => 'acme',
         'name' => 'Acme',
         'user_id' => $owner->id,
@@ -153,8 +151,8 @@ function createDealershipTenant(?User $owner = null): array
 
     $dealership->domains()->create(['domain' => 'acme.localhost']);
 
-    $dealership->run(function () {
-        Store::create([
+    $dealership->run(function (): void {
+        Store::query()->create([
             'name' => 'Test Store',
             'slug' => 'test-store',
         ]);
@@ -166,7 +164,7 @@ function createDealershipTenant(?User $owner = null): array
     });
 
     // Create tenant user
-    $consultant = $dealership->run(fn () => User::create([
+    $consultant = $dealership->run(fn () => User::query()->create([
         'name' => $owner->name,
         'email' => $owner->email,
         'password' => $owner->password,

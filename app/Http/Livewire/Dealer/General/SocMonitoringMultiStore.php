@@ -12,7 +12,7 @@ class SocMonitoringMultiStore extends Component
     public Store $store;
     public $active;
 
-    public function mount()
+    public function mount(): void
     {
         $this->active = Store::query()
             ->where('id', $this->store->id)

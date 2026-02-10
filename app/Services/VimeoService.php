@@ -99,7 +99,7 @@ class VimeoService
             }
 
             return array_map(
-                fn (array $video) => $this->transformVideoData($video),
+                fn (array $video): array => $this->transformVideoData($video),
                 $response['body']['data']
             );
         } catch (VimeoRequestException|Exception $e) {
@@ -115,7 +115,7 @@ class VimeoService
 
     private function transformVideoData(array $video): array
     {
-        $parts = explode('/', $video['uri']);
+        $parts = explode('/', (string) $video['uri']);
         $videoId = end($parts);
 
         return [

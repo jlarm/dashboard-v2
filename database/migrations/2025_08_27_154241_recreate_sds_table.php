@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('sds');
 
-        Schema::create('sds', static function (Blueprint $table) {
+        Schema::create('sds', static function (Blueprint $table): void {
             $table->id();
             $table->uuid();
             $table->string('name');

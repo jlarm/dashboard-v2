@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Employee;
 
+use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 use App\Models\Course;
 use App\Models\User;
-use DB;
 use Livewire\Component;
 
 class IndexItem extends Component
@@ -22,14 +23,14 @@ class IndexItem extends Component
         $this->completed = $this->completedCourseCount();
     }
 
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
         return view('livewire.central.employee.index-item');
     }
 
     private function totalCourses(): int
     {
-        return Course::count() - 1;
+        return Course::query()->count() - 1;
     }
 
     private function completedCourseCount(): int

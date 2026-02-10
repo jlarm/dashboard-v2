@@ -13,7 +13,7 @@ class Edit extends Component
     public Course $course;
     public $assignedDepartments;
 
-    public function mount()
+    public function mount(): void
     {
         $this->assignedDepartments = $this->course->departments()->pluck('name')->toArray();
     }

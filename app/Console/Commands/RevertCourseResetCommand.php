@@ -17,7 +17,7 @@ class RevertCourseResetCommand extends Command
     {
         $tenantId = $this->argument('tenant');
 
-        $tenant = Dealership::find($tenantId);
+        $tenant = Dealership::query()->find($tenantId);
 
         if (! $tenant) {
             $this->error("Tenant with UUID {$tenantId} not found");
@@ -27,7 +27,7 @@ class RevertCourseResetCommand extends Command
 
         $this->info("Restoring course results for tenant {$tenant->name}");
 
-        $tenant->run(function () {
+        $tenant->run(function (): void {
             $restoredCount = CourseResults::onlyTrashed()->count();
 
             if ($restoredCount === 0) {

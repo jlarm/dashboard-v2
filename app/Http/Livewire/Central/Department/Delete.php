@@ -12,7 +12,7 @@ class Delete extends Modal
 {
     public $department;
 
-    public function mount(Department $department)
+    public function mount(Department $department): void
     {
         $this->department = $department;
     }

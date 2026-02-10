@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Http\Livewire\Central\Contracts\Create;
+use App\Http\Livewire\Central\Contracts\Edit;
+use App\Http\Livewire\Central\AuditStatements\Osha\PrintView;
+use App\Http\Controllers\Central\Employee\RegisterController;
+use App\Http\Controllers\Central\Employee\StoreRegistrationController;
+use App\Http\Livewire\Central\Contracts\Review;
+use App\Http\Controllers\Central\Employee\ShowController;
+use App\Http\Controllers\Central\DealerDocs\IndexController;
+use App\Http\Livewire\Central\CourseManagement\EditQuiz;
 use App\Http\Controllers\Central\Course\CourseResultsController;
 use App\Http\Controllers\Central\DealerDocs\EditController;
 use App\Http\Controllers\Central\Dealership\CreateController;
@@ -20,27 +29,27 @@ Route::view('/', 'welcome')->name('home');
 // Consultant Access
 // **************************************************
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function (): void {
 
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
-    Route::prefix('dealerships/')->name('dealerships.')->group(function () {
+    Route::prefix('dealerships/')->name('dealerships.')->group(function (): void {
         Route::view('/', 'central.dealership.index')->name('index');
         Route::view('create', 'central.dealership.create')->name('create');
         Route::post('create', CreateController::class)->name('store');
     });
 
-    Route::prefix('contracts/')->name('contracts.')->group(function () {
+    Route::prefix('contracts/')->name('contracts.')->group(function (): void {
         Route::get('/', App\Http\Livewire\Central\Contracts\Index::class)->name('index');
-        Route::get('create', App\Http\Livewire\Central\Contracts\Create::class)->name('create');
-        Route::get('{contract:uuid}', App\Http\Livewire\Central\Contracts\Edit::class)->name('edit');
+        Route::get('create', Create::class)->name('create');
+        Route::get('{contract:uuid}', Edit::class)->name('edit');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('courses/')->name('courses.')->group(function () {
+    Route::prefix('courses/')->name('courses.')->group(function (): void {
         Route::get('/', Index::class)->name('index');
         Route::get('{course:slug}', Show::class)->name('show');
         Route::get('{course:slug}/quiz', Quiz::class)->name('quiz');
@@ -48,7 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::get('osha-violations', App\Http\Livewire\Central\AuditStatements\Osha\Index::class)->name('osha-violations.index');
-    Route::get('osha-violations/print', App\Http\Livewire\Central\AuditStatements\Osha\PrintView::class)->name('osha-violations.print');
+    Route::get('osha-violations/print', PrintView::class)->name('osha-violations.print');
     Route::get('body-shop-violations', App\Http\Livewire\Central\AuditStatements\BodyShop\Index::class)->name('body-shop-violations.index');
     Route::get('body-shop-violations/print', App\Http\Livewire\Central\AuditStatements\BodyShop\PrintView::class)->name('body-shop-violations.print');
     Route::get('glba-violations', App\Http\Livewire\Central\AuditStatements\Glba\Index::class)->name('glba-violations.index');
@@ -72,26 +81,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::get('dealer-login', [TenantLookupController::class, 'index'])->name('dealer-login');
 Route::post('dealer-login', [TenantLookupController::class, 'lookup'])->middleware(['throttle:6,1'])->name('dealer-login.lookup');
-Route::get('employees/register', App\Http\Controllers\Central\Employee\RegisterController::class)->middleware('signed')->name('employees.create');
-Route::post('employees/store', App\Http\Controllers\Central\Employee\StoreRegistrationController::class)->name('employees.store');
-Route::get('contract/view/{contract:uuid}', App\Http\Livewire\Central\Contracts\Review::class)->middleware('signed')->name('contracts.show');
+Route::get('employees/register', RegisterController::class)->middleware('signed')->name('employees.create');
+Route::post('employees/store', StoreRegistrationController::class)->name('employees.store');
+Route::get('contract/view/{contract:uuid}', Review::class)->middleware('signed')->name('contracts.show');
 Route::view('/thank-you', 'central.contract.review-submitted')->name('thank-you');
 
 // **************************************************
 // Admin Access
 // **************************************************
 
-Route::middleware(['role:super-admin', 'auth', 'verified'])->group(function () {
+Route::middleware(['role:super-admin', 'auth', 'verified'])->group(function (): void {
 
-    Route::prefix('employees/')->name('employees.')->group(function () {
+    Route::prefix('employees/')->name('employees.')->group(function (): void {
         Route::get('/', App\Http\Livewire\Central\Employee\Index::class)->name('index');
         Route::view('deleted', 'central.employee.deleted')->name('deleted');
         Route::get('invite', App\Http\Controllers\Central\Employee\CreateController::class)->name('invite');
         Route::post('invite', StoreController::class)->name('send');
-        Route::get('{user:slug}', App\Http\Controllers\Central\Employee\ShowController::class)->name('view');
+        Route::get('{user:slug}', ShowController::class)->name('view');
     });
 
-    Route::get('dealer-docs', App\Http\Controllers\Central\DealerDocs\IndexController::class)->name('dealer-docs.index');
+    Route::get('dealer-docs', IndexController::class)->name('dealer-docs.index');
     Route::get('dealer-docs/create', App\Http\Controllers\Central\DealerDocs\CreateController::class)->name('dealer-docs.create');
     Route::get('dealer-docs/{sharedDocument}/edit', EditController::class)->name('dealer-docs.edit');
 
@@ -106,7 +115,7 @@ Route::middleware(['role:super-admin', 'auth', 'verified'])->group(function () {
 
     Route::get('course-management', App\Http\Livewire\Central\CourseManagement\Index::class)->name('course-management.index');
     Route::get('course-management/{course:slug}', App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
-    Route::get('course-management/quiz/{course:slug}', App\Http\Livewire\Central\CourseManagement\EditQuiz::class)->name('course-management.edit-quiz');
+    Route::get('course-management/quiz/{course:slug}', EditQuiz::class)->name('course-management.edit-quiz');
 
     Route::get('osha-violations/create', App\Http\Livewire\Central\AuditStatements\Osha\Create::class)->name('osha-violations.create');
     Route::get('osha-violations/{oshaViolation}', App\Http\Livewire\Central\AuditStatements\Osha\Edit::class)->name('osha-violations.edit');

@@ -18,7 +18,7 @@ class Index extends Component
     public function render(): View
     {
         return view('livewire.central.event.index', [
-            'events' => Event::where('end_date', '>=', now())
+            'events' => Event::query()->where('end_date', '>=', now())
                 ->orderBy('start_date', 'asc')
                 ->get(),
         ]);

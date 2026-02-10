@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Contracts;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Filament\Notifications\Notification;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use Storage;
-use Str;
 
 class Edit extends Component
 {
@@ -98,7 +99,7 @@ class Edit extends Component
         $this->additionalLocations->pull($locationKey);
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->user = $this->contract->user_id;
         $this->contractType = $this->contract->contract_type;
@@ -126,7 +127,7 @@ class Edit extends Component
         $this->dealerBillingContactName = $this->contract->dealer_billing_contact_name;
         $this->dealerBillingContactTitle = $this->contract->dealer_billing_contact_title;
         $this->dealerBillingContactEmail = $this->contract->dealer_billing_contact_email;
-        $this->additionalLocations = collect($this->contract->additional_locations)->map(fn ($location) => [
+        $this->additionalLocations = collect($this->contract->additional_locations)->map(fn ($location): array => [
             'name' => $location['name'],
             'address' => $location['address'],
             'city' => $location['city'],
@@ -138,7 +139,7 @@ class Edit extends Component
         ]);
     }
 
-    public function update()
+    public function update(): void
     {
         $this->validate();
 
@@ -174,7 +175,7 @@ class Edit extends Component
         if ($this->contract->armp_printed_name !== '' && $this->armpSignature) {
             $id = Str::uuid();
             $filename = $this->contract->uuid.'/'.$id.'.png';
-            Storage::disk('armpcon')->put($filename, base64_decode(Str::of($this->armpSignature)->after(',')));
+            Storage::disk('armpcon')->put($filename, base64_decode((string) Str::of($this->armpSignature)->after(',')));
 
             $this->contract->update([
                 'armp_signature' => $filename,
@@ -193,7 +194,7 @@ class Edit extends Component
             'status' => 'updated contract',
         ]);
 
-        \Filament\Notifications\Notification::make()
+        Notification::make()
             ->title('Contract Updated')
             ->success()
             ->send();
@@ -204,7 +205,7 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.central.contracts.edit', [
-            'consultants' => User::whereNot('name', 'Joe Lohr')->get(),
+            'consultants' => User::query()->whereNot('name', 'Joe Lohr')->get(),
         ]);
     }
 }

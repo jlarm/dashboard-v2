@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::table('stores', function (Blueprint $table): void {
             $table->boolean('active_monitoring')->default(false)->after('logo');
             $table->date('monitoring_start_date')->nullable()->after('active_monitoring');
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::table('stores', function (Blueprint $table): void {
             $table->dropColumn('active_monitoring');
             $table->dropColumn('monitoring_start_date');
         });

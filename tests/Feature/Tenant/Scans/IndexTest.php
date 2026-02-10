@@ -8,20 +8,20 @@ use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
 use Livewire\Livewire;
 
-beforeEach(function () {
-    $this->store = Store::first();
+beforeEach(function (): void {
+    $this->store = Store::query()->first();
     app()->instance('currentStore', $this->store->id);
 });
 
-describe('loadScanData', function () {
-    it('sets loaded to true after loading', function () {
+describe('loadScanData', function (): void {
+    it('sets loaded to true after loading', function (): void {
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
             ->call('loadScanData')
             ->assertSet('loaded', true);
     });
 
-    it('shows error when store cannot be found', function () {
+    it('shows error when store cannot be found', function (): void {
         app()->instance('currentStore', 99999);
 
         Livewire::actingAs($this->consultant)
@@ -31,7 +31,7 @@ describe('loadScanData', function () {
             ->assertSet('error', 'Unable to load store information. Please try again later.');
     });
 
-    it('detects when cyrisma is not configured', function () {
+    it('detects when cyrisma is not configured', function (): void {
         config(['services.cyrisma.base_url' => null]);
         config(['services.cyrisma.api_key' => null]);
         config(['services.cyrisma.api_secret' => null]);
@@ -44,7 +44,7 @@ describe('loadScanData', function () {
             ->assertSet('error', null);
     });
 
-    it('detects when store has no short name configured', function () {
+    it('detects when store has no short name configured', function (): void {
         config([
             'services.cyrisma.base_url' => 'https://cyrisma.test',
             'services.cyrisma.api_key' => 'test-key',
@@ -60,7 +60,7 @@ describe('loadScanData', function () {
             ->assertSet('error', null);
     });
 
-    it('catches exceptions from the cyrisma service and sets error', function () {
+    it('catches exceptions from the cyrisma service and sets error', function (): void {
         $mock = $this->mock(CyrismaService::class);
         $mock->shouldReceive('forStore')->andThrow(new RuntimeException('Connection refused'));
 
@@ -71,7 +71,7 @@ describe('loadScanData', function () {
             ->assertSet('error', 'Unable to connect to the scanning service. Please try again later.');
     });
 
-    it('resets error state at the start of each load', function () {
+    it('resets error state at the start of each load', function (): void {
         app()->instance('currentStore', 99999);
 
         $component = Livewire::actingAs($this->consultant)
@@ -86,15 +86,15 @@ describe('loadScanData', function () {
     });
 });
 
-describe('refreshCache', function () {
-    it('dispatches refresh-page browser event', function () {
+describe('refreshCache', function (): void {
+    it('dispatches refresh-page browser event', function (): void {
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
             ->call('refreshCache')
             ->assertDispatchedBrowserEvent('refresh-page');
     });
 
-    it('handles missing store gracefully', function () {
+    it('handles missing store gracefully', function (): void {
         app()->instance('currentStore', 99999);
 
         Livewire::actingAs($this->consultant)
@@ -103,7 +103,7 @@ describe('refreshCache', function () {
             ->assertDispatchedBrowserEvent('refresh-page');
     });
 
-    it('handles service exceptions gracefully', function () {
+    it('handles service exceptions gracefully', function (): void {
         $mock = $this->mock(CyrismaService::class);
         $mock->shouldReceive('forStore')->andThrow(new RuntimeException('Connection refused'));
 
@@ -114,15 +114,15 @@ describe('refreshCache', function () {
     });
 });
 
-describe('view rendering', function () {
-    it('shows loading skeleton when not loaded', function () {
+describe('view rendering', function (): void {
+    it('shows loading skeleton when not loaded', function (): void {
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
             ->assertSet('loaded', false)
             ->assertSee('animate-pulse');
     });
 
-    it('shows error state with retry button when error occurs', function () {
+    it('shows error state with retry button when error occurs', function (): void {
         app()->instance('currentStore', 99999);
 
         Livewire::actingAs($this->consultant)
@@ -132,7 +132,7 @@ describe('view rendering', function () {
             ->assertSee('Try Again');
     });
 
-    it('shows not configured warning when api credentials are missing', function () {
+    it('shows not configured warning when api credentials are missing', function (): void {
         config(['services.cyrisma.base_url' => null]);
         config(['services.cyrisma.api_key' => null]);
         config(['services.cyrisma.api_secret' => null]);
@@ -143,7 +143,7 @@ describe('view rendering', function () {
             ->assertSee('API Not Configured');
     });
 
-    it('shows short name warning when instance is not linked', function () {
+    it('shows short name warning when instance is not linked', function (): void {
         config([
             'services.cyrisma.base_url' => 'https://cyrisma.test',
             'services.cyrisma.api_key' => 'test-key',
@@ -156,8 +156,8 @@ describe('view rendering', function () {
             ->assertSee('Instance Not Configured');
     });
 
-    it('shows no scan results message when configured but no scans exist', function () {
-        Cyrisma::create([
+    it('shows no scan results message when configured but no scans exist', function (): void {
+        Cyrisma::query()->create([
             'store_id' => $this->store->id,
             'short_name' => 'test-instance',
             'instance_id' => 'inst-123',

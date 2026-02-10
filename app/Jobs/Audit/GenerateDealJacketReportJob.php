@@ -130,7 +130,7 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 
             $dealJacketDetails[] = $detail;
 
-            if (count($dealJacketIssues) > 0) {
+            if ($dealJacketIssues !== []) {
                 if (! isset($dealJacketsByUser[$userName])) {
                     $dealJacketsByUser[$userName] = [];
                 }

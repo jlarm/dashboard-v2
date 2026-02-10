@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Dealer\Audit;
 
+use Database\Factories\Tenant\DealJacketGroupFactory;
 use App\Models\Dealer\Store;
 use App\Observers\DealJacketGroupObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -51,8 +52,8 @@ class DealJacketGroup extends Model
             : null;
     }
 
-    protected static function newFactory(): \Database\Factories\Tenant\DealJacketGroupFactory
+    protected static function newFactory(): DealJacketGroupFactory
     {
-        return \Database\Factories\Tenant\DealJacketGroupFactory::new();
+        return DealJacketGroupFactory::new();
     }
 }

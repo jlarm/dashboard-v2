@@ -17,14 +17,14 @@ class Show extends Component
         'refresh' => 'videoCompleted',
     ];
 
-    public function mount($videoId): void
+    public function mount(string $videoId): void
     {
         $this->videoId = $videoId;
     }
 
     public function completedVideo(): void
     {
-        VideoProgress::updateOrCreate([
+        VideoProgress::query()->updateOrCreate([
             'user_id' => auth()->id(),
             'video_id' => $this->videoId,
         ], [

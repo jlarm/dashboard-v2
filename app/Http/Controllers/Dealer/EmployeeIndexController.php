@@ -13,7 +13,7 @@ class EmployeeIndexController extends Controller
     public function __invoke(): View
     {
         return view('dealer.employee.index', [
-            'stores' => Store::count(),
+            'stores' => Store::query()->count(),
         ]);
     }
 }

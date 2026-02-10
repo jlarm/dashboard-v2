@@ -9,7 +9,7 @@ use Livewire\Livewire;
 
 function createInvite(array $attributes = []): Invite
 {
-    return Invite::create(array_merge([
+    return Invite::query()->create(array_merge([
         'name' => 'Test User',
         'email' => 'test@example.com',
         'roles' => ['Employee'],
@@ -17,8 +17,8 @@ function createInvite(array $attributes = []): Invite
     ], $attributes));
 }
 
-describe('ResendInvite Modal', function () {
-    it('renders when invite exists', function () {
+describe('ResendInvite Modal', function (): void {
+    it('renders when invite exists', function (): void {
         $invite = createInvite(['name' => 'John Doe', 'email' => 'john@example.com']);
 
         Livewire::actingAs($this->consultant)
@@ -27,7 +27,7 @@ describe('ResendInvite Modal', function () {
             ->assertSet('invite.id', $invite->id);
     });
 
-    it('does not throw exception when invite does not exist', function () {
+    it('does not throw exception when invite does not exist', function (): void {
         $nonExistentId = 99999;
 
         $component = Livewire::actingAs($this->consultant)
@@ -37,8 +37,8 @@ describe('ResendInvite Modal', function () {
     });
 });
 
-describe('DeleteInvite Modal', function () {
-    it('renders when invite exists', function () {
+describe('DeleteInvite Modal', function (): void {
+    it('renders when invite exists', function (): void {
         $invite = createInvite(['name' => 'Jane Doe', 'email' => 'jane@example.com']);
 
         Livewire::actingAs($this->consultant)
@@ -47,7 +47,7 @@ describe('DeleteInvite Modal', function () {
             ->assertSet('invite.id', $invite->id);
     });
 
-    it('does not throw exception when invite does not exist', function () {
+    it('does not throw exception when invite does not exist', function (): void {
         $nonExistentId = 99999;
 
         $component = Livewire::actingAs($this->consultant)
@@ -56,7 +56,7 @@ describe('DeleteInvite Modal', function () {
         expect($component->get('invite'))->toBeNull();
     });
 
-    it('deletes invite and emits refresh event', function () {
+    it('deletes invite and emits refresh event', function (): void {
         $invite = createInvite(['name' => 'Delete Me', 'email' => 'delete@example.com']);
 
         Livewire::actingAs($this->consultant)
@@ -64,10 +64,10 @@ describe('DeleteInvite Modal', function () {
             ->call('deleteInvite')
             ->assertEmitted('refreshOpenInvites');
 
-        expect(Invite::find($invite->id))->toBeNull();
+        expect(Invite::query()->find($invite->id))->toBeNull();
     });
 
-    it('handles delete gracefully when invite was already deleted', function () {
+    it('handles delete gracefully when invite was already deleted', function (): void {
         $invite = createInvite(['name' => 'Already Gone', 'email' => 'gone@example.com']);
         $inviteId = $invite->id;
 

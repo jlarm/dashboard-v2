@@ -16,12 +16,12 @@ class Show extends Component
     protected $sum;
     protected $listeners = ['refreshComponent' => '$refresh'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->audits = collect([$this->individualAudit, ...$this->individualAudit->children]);
     }
 
-    public function getQuarterNameAttribute()
+    public function getQuarterNameAttribute(): ?string
     {
         if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3) {
             return 'Q1';
@@ -35,6 +35,7 @@ class Show extends Component
         if ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
             return 'Q4';
         }
+        return null;
     }
 
     public function delete()

@@ -24,7 +24,7 @@ class SingleStoreDetails extends Component
 {
     use WithFileUploads, WithMedia;
 
-    public ?Store $store;
+    public ?Store $store = null;
     public $name;
     public $address;
     public $city;
@@ -33,7 +33,7 @@ class SingleStoreDetails extends Component
     public $phone;
     public $website;
     public $mediaComponentNames = ['logo'];
-    public $logo = null;
+    public $logo;
     public $active_monitoring = false;
     public $phishing_active = false;
     public $phishing_token;
@@ -49,9 +49,9 @@ class SingleStoreDetails extends Component
 
     public function mount(): void
     {
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::query()->find(app('currentStore'));
 
-        $this->settings = GlobalSetting::first();
+        $this->settings = GlobalSetting::query()->first();
 
         $this->name = $this->store->name;
         $this->address = $this->store->address;
@@ -184,7 +184,7 @@ class SingleStoreDetails extends Component
     private function updateGlobalSettings(): void
     {
         if (is_null($this->settings)) {
-            GlobalSetting::create([
+            GlobalSetting::query()->create([
                 'phishing_active' => $this->phishing_active,
                 'phishing_token' => $this->phishing_token,
                 'phishing_ip' => $this->phishing_ip,
@@ -214,24 +214,22 @@ class SingleStoreDetails extends Component
 
         $userIdsForQuery = $relevantUsersCollection->keys()->all();
 
-        return RemediationReminderPreference::whereIn('user_id', $userIdsForQuery)
+        return RemediationReminderPreference::query()->whereIn('user_id', $userIdsForQuery)
             ->where('enabled', true)
             ->get()
             ->groupBy(fn ($preference) => $preference->audit_type->value)
-            ->map(function ($preferencesInGroup) use ($relevantUsersCollection) {
-                return $preferencesInGroup->map(function ($preference) use ($relevantUsersCollection) {
-                    $user = $relevantUsersCollection->get($preference->user_id);
-                    if ($user) {
-                        return [
-                            'id' => $user->id,
-                            'name' => $user->name,
-                            'slug' => $user->slug,
-                        ];
-                    }
+            ->map(fn($preferencesInGroup) => $preferencesInGroup->map(function ($preference) use ($relevantUsersCollection): ?array {
+                $user = $relevantUsersCollection->get($preference->user_id);
+                if ($user) {
+                    return [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'slug' => $user->slug,
+                    ];
+                }
 
-                    return null;
-                })->filter()->values()->toArray();
-            })
+                return null;
+            })->filter()->values()->toArray())
             ->toArray();
     }
 }

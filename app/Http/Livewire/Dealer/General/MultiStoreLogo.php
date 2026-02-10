@@ -12,7 +12,7 @@ class MultiStoreLogo extends Component
     public Store $store;
     public $logo;
 
-    public function mount()
+    public function mount(): void
     {
         $this->logo = $this->store->getFirstMediaUrl('logo');
     }

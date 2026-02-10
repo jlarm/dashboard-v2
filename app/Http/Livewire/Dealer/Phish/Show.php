@@ -13,15 +13,10 @@ class Show extends Component
 {
     public PhishingCampaign $phishingCampaign;
     public $users;
-    private $token;
-    private $ip;
 
-    public function mount()
+    public function mount(): void
     {
-        $store = GlobalSetting::first();
-        $this->token = $store->phishing_token;
-        $this->ip = $store->phishing_ip;
-
+        GlobalSetting::query()->first();
         $timelines = Timeline::query()
             ->where('phishing_campaign_id', $this->phishingCampaign->id)
             ->with('user')
@@ -46,7 +41,7 @@ class Show extends Component
         }
     }
 
-    public function color()
+    public function color(): string
     {
         return match ($this->phishingCampaign->status) {
             'In progress' => 'blue',

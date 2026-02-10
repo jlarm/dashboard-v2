@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Dealer\Audit\BodyShopAudit;
 use Livewire\Component;
-use Storage;
 
 class OldAuditIndex extends Component
 {

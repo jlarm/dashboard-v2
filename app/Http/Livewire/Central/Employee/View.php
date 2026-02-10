@@ -11,7 +11,7 @@ class View extends Component
 {
     public $user;
 
-    public function mount(User $user)
+    public function mount(User $user): void
     {
         $this->user = $user;
     }

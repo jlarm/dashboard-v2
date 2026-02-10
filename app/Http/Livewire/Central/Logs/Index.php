@@ -15,7 +15,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.central.logs.index', [
-            'logs' => Activity::latest()->paginate(25),
+            'logs' => Activity::query()->latest()->paginate(25),
         ]);
     }
 }

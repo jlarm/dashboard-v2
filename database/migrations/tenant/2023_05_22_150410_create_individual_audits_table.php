@@ -12,7 +12,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('individual_audits', function (Blueprint $table) {
+        Schema::create('individual_audits', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignIdFor(User::class)->nullable();

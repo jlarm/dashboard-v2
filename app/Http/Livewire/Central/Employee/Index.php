@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Employee;
 
+use Illuminate\View\View;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,7 +15,7 @@ class Index extends Component
 
     public $search = '';
 
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
         return view('livewire.central.employee.index', [
             'users' => $this->getUsers(),

@@ -12,11 +12,11 @@ class StoreServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton('currentStore', function ($app) {
+        $this->app->singleton('currentStore', function (array $app) {
             $request = $app['request'];
 
             if ($storeSlug = $request->segment(2)) {
-                return Store::where('slug', $storeSlug)->first();
+                return Store::query()->where('slug', $storeSlug)->first();
             }
 
             if ($store = $request->get('store')) {
@@ -24,7 +24,7 @@ class StoreServiceProvider extends ServiceProvider
             }
 
             if (! tenant('locations')) {
-                return Store::first();
+                return Store::query()->first();
             }
 
             return null;

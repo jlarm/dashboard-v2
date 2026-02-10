@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('deal_jacket_groups', static function (Blueprint $table) {
+        Schema::create('deal_jacket_groups', static function (Blueprint $table): void {
             $table->id();
             $table->uuid();
             $table->foreignId('store_id')->constrained('stores');

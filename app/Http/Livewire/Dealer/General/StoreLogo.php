@@ -11,9 +11,9 @@ class StoreLogo extends Component
 {
     public $logo;
 
-    public function mount()
+    public function mount(): void
     {
-        $this->logo = Store::first()->getFirstMediaUrl('logo');
+        $this->logo = Store::query()->first()->getFirstMediaUrl('logo');
     }
 
     public function render()

@@ -12,12 +12,12 @@ class Checklist extends Component
     public Contract $contract;
     protected $listeners = ['contractUpdated' => '$refresh'];
 
-    public function progress()
+    public function progress(): array
     {
         $progress = $this->contract->status->pluck('step')->toArray();
         $progress = array_unique($progress);
 
-        return array_filter($progress, fn ($value) => $value !== null);
+        return array_filter($progress, fn ($value): bool => $value !== null);
     }
 
     public function render()

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('body_shop_violation_audits', function (Blueprint $table) {
+        Schema::table('body_shop_violation_audits', function (Blueprint $table): void {
             $table->date('completed_date')->after('pdf_path')->nullable();
             $table->json('reminder_logs')->nullable();
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('body_shop_violation_audits', function (Blueprint $table) {
+        Schema::table('body_shop_violation_audits', function (Blueprint $table): void {
             $table->dropColumn('completed_date');
             $table->dropColumn('reminder_logs');
         });

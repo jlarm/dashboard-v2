@@ -72,21 +72,21 @@ function createJobWithViolationsAndStatements(array $violationData): GenerateOsh
     $audit->shouldReceive('violations')->andReturn($morphMany);
 
     $tenancy = Mockery::mock(Tenancy::class);
-    $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback) => $statements);
+    $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback): Collection => $statements);
 
     app()->instance(Tenancy::class, $tenancy);
 
     return new GenerateOshaPdfJob($audit);
 }
 
-beforeEach(function () {
+beforeEach(function (): void {
     $tenancy = Mockery::mock(Tenancy::class);
-    $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback) => new Collection());
+    $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback): Collection => new Collection());
     app()->instance(Tenancy::class, $tenancy);
 });
 
-describe('rating calculation', function () {
-    it('returns A grade when there are no violations', function () {
+describe('rating calculation', function (): void {
+    it('returns A grade when there are no violations', function (): void {
         $violations = new Collection();
 
         $morphMany = Mockery::mock(MorphMany::class);
@@ -100,7 +100,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('A');
     });
 
-    it('calculates grade A for minor violations (90%+)', function () {
+    it('calculates grade A for minor violations (90%+)', function (): void {
         // Single minor violation: weight=1, severity=1
         // Penalty = 1 * 0.1 = 0.1
         // Score = (1 - 0.1) / 1 = 90%
@@ -111,7 +111,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('A');
     });
 
-    it('calculates grade B for low severity violations (80-89%)', function () {
+    it('calculates grade B for low severity violations (80-89%)', function (): void {
         // Two violations with higher severity
         // weight=1, severity=2 -> penalty=0.2
         // weight=1, severity=1 -> penalty=0.1
@@ -125,7 +125,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('B');
     });
 
-    it('calculates grade C for moderate violations (70-79%)', function () {
+    it('calculates grade C for moderate violations (70-79%)', function (): void {
         // weight=2, severity=3 -> penalty=0.6
         // weight=1, severity=2 -> penalty=0.2
         // weight=1, severity=3 -> penalty=0.3
@@ -140,7 +140,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('C');
     });
 
-    it('calculates grade D for higher severity violations (60-69%)', function () {
+    it('calculates grade D for higher severity violations (60-69%)', function (): void {
         // weight=2, severity=4 -> penalty=0.8
         // weight=2, severity=4 -> penalty=0.8
         // weight=1, severity=4 -> penalty=0.4
@@ -155,7 +155,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('D');
     });
 
-    it('calculates grade F for critical violations (<60%)', function () {
+    it('calculates grade F for critical violations (<60%)', function (): void {
         // Single critical violation: weight=5, severity=10
         // Penalty = 5 * 1.0 = 5.0
         // Score = (5 - 5) / 5 = 0%
@@ -166,7 +166,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('F');
     });
 
-    it('matches Shop A example: 2 violations with one critical (13.3% = F)', function () {
+    it('matches Shop A example: 2 violations with one critical (13.3% = F)', function (): void {
         // Violation 1: Missing Signage. Weight: 1. Severity: 2
         // Penalty: 1 * 0.2 = 0.2
         // Violation 2: Blocked Fire Exit. Weight: 5. Severity: 10
@@ -181,7 +181,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('F');
     });
 
-    it('matches Shop B example: 5 minor violations (88.3% = B)', function () {
+    it('matches Shop B example: 5 minor violations (88.3% = B)', function (): void {
         // Violation 1: Dusty floor. Weight: 1. Severity: 1. Penalty: 0.1
         // Violation 2: Lightbulb out. Weight: 1. Severity: 1. Penalty: 0.1
         // Violation 3: Old poster. Weight: 1. Severity: 2. Penalty: 0.2
@@ -200,7 +200,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('B');
     });
 
-    it('defaults weight to 1 when statement is missing', function () {
+    it('defaults weight to 1 when statement is missing', function (): void {
         $violations = new Collection([createViolationWithMissingStatementId(1)]);
 
         $morphMany = Mockery::mock(MorphMany::class);
@@ -220,7 +220,7 @@ describe('rating calculation', function () {
         expect(invokeRatingMethod($job))->toBe('A');
     });
 
-    it('defaults severity to 1 when missing', function () {
+    it('defaults severity to 1 when missing', function (): void {
         $violations = new Collection([createViolationWithMissingSeverity(1)]);
         $statements = new Collection([1 => createStatement(1, 1)]);
 
@@ -242,8 +242,8 @@ describe('rating calculation', function () {
     });
 });
 
-describe('grade boundaries', function () {
-    it('returns A at exactly 90%', function () {
+describe('grade boundaries', function (): void {
+    it('returns A at exactly 90%', function (): void {
         // Need exactly 90%: (weight - penalty) / weight = 0.9
         // With weight=10, severity=1: penalty = 10 * 0.1 = 1
         // Score = (10 - 1) / 10 = 90%
@@ -254,7 +254,7 @@ describe('grade boundaries', function () {
         expect(invokeRatingMethod($job))->toBe('A');
     });
 
-    it('returns B at 89.9%', function () {
+    it('returns B at 89.9%', function (): void {
         $job = createJobWithViolationsAndStatements([
             ['weight' => 1000, 'severity' => 1],
             ['weight' => 10, 'severity' => 2],
@@ -263,7 +263,7 @@ describe('grade boundaries', function () {
         expect(invokeRatingMethod($job))->toBe('B');
     });
 
-    it('returns B at exactly 80%', function () {
+    it('returns B at exactly 80%', function (): void {
         // 80% score: (weight - penalty) / weight = 0.8
         // With weight=10, severity=2: penalty = 10 * 0.2 = 2
         // Score = (10 - 2) / 10 = 80%
@@ -274,7 +274,7 @@ describe('grade boundaries', function () {
         expect(invokeRatingMethod($job))->toBe('B');
     });
 
-    it('returns C at 79.9%', function () {
+    it('returns C at 79.9%', function (): void {
         $job = createJobWithViolationsAndStatements([
             ['weight' => 1000, 'severity' => 2],
             ['weight' => 100, 'severity' => 3],
@@ -283,7 +283,7 @@ describe('grade boundaries', function () {
         expect(invokeRatingMethod($job))->toBe('C');
     });
 
-    it('returns C at exactly 70%', function () {
+    it('returns C at exactly 70%', function (): void {
         // 70% score: (weight - penalty) / weight = 0.7
         // With weight=10, severity=3: penalty = 10 * 0.3 = 3
         // Score = (10 - 3) / 10 = 70%
@@ -294,7 +294,7 @@ describe('grade boundaries', function () {
         expect(invokeRatingMethod($job))->toBe('C');
     });
 
-    it('returns D at 69.9%', function () {
+    it('returns D at 69.9%', function (): void {
         $job = createJobWithViolationsAndStatements([
             ['weight' => 1000, 'severity' => 3],
             ['weight' => 100, 'severity' => 4],
@@ -303,7 +303,7 @@ describe('grade boundaries', function () {
         expect(invokeRatingMethod($job))->toBe('D');
     });
 
-    it('returns D at exactly 60%', function () {
+    it('returns D at exactly 60%', function (): void {
         // 60% score: (weight - penalty) / weight = 0.6
         // With weight=10, severity=4: penalty = 10 * 0.4 = 4
         // Score = (10 - 4) / 10 = 60%
@@ -314,7 +314,7 @@ describe('grade boundaries', function () {
         expect(invokeRatingMethod($job))->toBe('D');
     });
 
-    it('returns F at 59.9%', function () {
+    it('returns F at 59.9%', function (): void {
         $job = createJobWithViolationsAndStatements([
             ['weight' => 1000, 'severity' => 4],
             ['weight' => 100, 'severity' => 5],

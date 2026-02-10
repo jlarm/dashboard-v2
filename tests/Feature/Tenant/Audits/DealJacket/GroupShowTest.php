@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Http\Livewire\Tenant\Audit\DealJacket\DealJacketDeleteModal;
 use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
 
-describe('Deal Jacket Group Show Page', function () {
-    it('displays the page with empty state and all UI elements for consultants', function () {
+describe('Deal Jacket Group Show Page', function (): void {
+    it('displays the page with empty state and all UI elements for consultants', function (): void {
         $dealJacketGroup = DealJacketGroup::factory()->create();
 
         $response = $this->actingAs($this->consultant)
@@ -21,8 +22,8 @@ describe('Deal Jacket Group Show Page', function () {
             ->assertSee("Deal Jackets for Quarter {$dealJacketGroup->created_at->quarter} of {$dealJacketGroup->created_at->year}");
     });
 
-    describe('Consultant Permissions', function () {
-        it('can view deal jackets', function () {
+    describe('Consultant Permissions', function (): void {
+        it('can view deal jackets', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
             $dealJackets = DealJacket::factory(5)->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -33,7 +34,7 @@ describe('Deal Jacket Group Show Page', function () {
 
             $response->assertOk();
 
-            $dealJackets->each(function ($dealJacket) use ($response) {
+            $dealJackets->each(function ($dealJacket) use ($response): void {
                 $response
                     ->assertSee($dealJacket->customer_name)
                     ->assertSee($dealJacket->customer_deal_number)
@@ -43,7 +44,7 @@ describe('Deal Jacket Group Show Page', function () {
             });
         });
 
-        it('can see View action', function () {
+        it('can see View action', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
             DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -55,7 +56,7 @@ describe('Deal Jacket Group Show Page', function () {
                 ->assertSee('View');
         });
 
-        it('can see Edit action', function () {
+        it('can see Edit action', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
             DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -67,7 +68,7 @@ describe('Deal Jacket Group Show Page', function () {
                 ->assertSee('Edit');
         });
 
-        it('can see Delete action', function () {
+        it('can see Delete action', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
             DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -79,20 +80,20 @@ describe('Deal Jacket Group Show Page', function () {
                 ->assertSee('Delete');
         });
 
-        it('can delete a deal jacket', function () {
+        it('can delete a deal jacket', function (): void {
             $this->actingAs($this->consultant);
             $dealJacketGroup = DealJacketGroup::factory()->create();
             $dealJacket = DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
-            expect(DealJacket::count())->toBe(1);
+            expect(DealJacket::query()->count())->toBe(1);
 
-            Livewire::test(App\Http\Livewire\Tenant\Audit\DealJacket\DealJacketDeleteModal::class, ['dealJacket' => $dealJacket->id])
+            Livewire::test(DealJacketDeleteModal::class, ['dealJacket' => $dealJacket->id])
                 ->call('delete');
 
-            expect(DealJacket::count())->toBe(0);
+            expect(DealJacket::query()->count())->toBe(0);
         });
 
-        it('can see Add Deal Jacket button', function () {
+        it('can see Add Deal Jacket button', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
 
             $response = $this->actingAs($this->consultant)
@@ -104,8 +105,8 @@ describe('Deal Jacket Group Show Page', function () {
         });
     });
 
-    describe('Manager Permissions', function () {
-        it('can view deal jackets', function () {
+    describe('Manager Permissions', function (): void {
+        it('can view deal jackets', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
             $dealJacket = DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -117,7 +118,7 @@ describe('Deal Jacket Group Show Page', function () {
                 ->assertSee($dealJacket->customer_name);
         });
 
-        it('can see View action', function () {
+        it('can see View action', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
             DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -129,7 +130,7 @@ describe('Deal Jacket Group Show Page', function () {
                 ->assertSee('View');
         });
 
-        it('cannot see Edit action', function () {
+        it('cannot see Edit action', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
             DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -141,7 +142,7 @@ describe('Deal Jacket Group Show Page', function () {
                 ->assertDontSee('Edit');
         });
 
-        it('cannot see Delete action', function () {
+        it('cannot see Delete action', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
             DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -153,20 +154,20 @@ describe('Deal Jacket Group Show Page', function () {
                 ->assertDontSee('Delete');
         });
 
-        it('cannot delete a deal jacket', function () {
+        it('cannot delete a deal jacket', function (): void {
             $this->actingAs($this->manager);
             $dealJacketGroup = DealJacketGroup::factory()->create();
             $dealJacket = DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
-            expect(DealJacket::count())->toBe(1);
+            expect(DealJacket::query()->count())->toBe(1);
 
-            Livewire::test(App\Http\Livewire\Tenant\Audit\DealJacket\DealJacketDeleteModal::class, ['dealJacket' => $dealJacket->id])
+            Livewire::test(DealJacketDeleteModal::class, ['dealJacket' => $dealJacket->id])
                 ->call('delete');
 
-            expect(DealJacket::count())->toBe(1);
+            expect(DealJacket::query()->count())->toBe(1);
         });
 
-        it('cannot see Add Deal Jacket button', function () {
+        it('cannot see Add Deal Jacket button', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
 
             $response = $this->actingAs($this->manager)
@@ -177,7 +178,7 @@ describe('Deal Jacket Group Show Page', function () {
                 ->assertDontSee('Add Deal Jacket');
         });
 
-        it('can see Back button', function () {
+        it('can see Back button', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
 
             $response = $this->actingAs($this->manager)
@@ -189,8 +190,8 @@ describe('Deal Jacket Group Show Page', function () {
         });
     });
 
-    describe('Unauthorized Access', function () {
-        it('prevents access for guests', function () {
+    describe('Unauthorized Access', function (): void {
+        it('prevents access for guests', function (): void {
             $dealJacketGroup = DealJacketGroup::factory()->create();
 
             $response = $this->get(route('dealer.audit.deal-jackets.show', $dealJacketGroup));

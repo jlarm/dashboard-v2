@@ -18,8 +18,8 @@ class Main extends Component
 
     public function mount(Request $request): void
     {
-        $this->currentStore = Store::where('name', $request->get('store')?->name)->first();
-        $this->phishingIsEnabled = GlobalSetting::first()->phishing_active ?? null;
+        $this->currentStore = Store::query()->where('name', $request->get('store')?->name)->first();
+        $this->phishingIsEnabled = GlobalSetting::query()->first()->phishing_active ?? null;
         $this->videosActive = $this->getVideoStatus();
     }
 
@@ -30,7 +30,7 @@ class Main extends Component
 
     private function getVideoStatus(): bool
     {
-        $store = Store::first();
+        $store = Store::query()->first();
 
         if (! $store) {
             return false;

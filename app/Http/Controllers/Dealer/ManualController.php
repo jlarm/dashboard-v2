@@ -12,8 +12,8 @@ class ManualController extends Controller
 {
     public function __invoke(): View
     {
-        $store = Store::first();
+        $store = Store::query()->first();
 
-        return view('dealer.manual.index', compact('store'));
+        return view('dealer.manual.index', ['store' => $store]);
     }
 }

@@ -13,7 +13,7 @@ class DeleteTemporaryUploadsCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
             $this->info('Start removing old temporary uploads...');
 
             $temporaryUploadModelClass = config('media-library.temporary_upload_model');

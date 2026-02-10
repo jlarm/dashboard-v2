@@ -63,7 +63,7 @@ class CveRiskChart extends Component
             $scanDate = $scan['scan_finished'] ?? $scan['scan_started'] ?? null;
 
             if ($scanDate) {
-                $timestamp = strtotime($scanDate);
+                $timestamp = strtotime((string) $scanDate);
                 $categories[] = date('M Y', $timestamp);
             } else {
                 // Use scan name or index if no date

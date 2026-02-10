@@ -14,7 +14,7 @@ class Index extends Component
     public $store;
     protected $listeners = ['$refresh'];
 
-    public function mount(Request $request)
+    public function mount(Request $request): void
     {
         $this->store = $this->getStoreIdFromRequest($request);
     }
@@ -22,7 +22,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.dealer.manual.isp.index', [
-            'manuals' => Isp::where('store_id', $this->store->id)->latest()->get(),
+            'manuals' => Isp::query()->where('store_id', $this->store->id)->latest()->get(),
         ])->layout('components.dealer-app');
     }
 
@@ -31,9 +31,9 @@ class Index extends Component
         $storeName = $request->get('store')?->name;
 
         if ($storeName) {
-            return Store::where('name', $storeName)->select('id', 'slug')->first();
+            return Store::query()->where('name', $storeName)->select('id', 'slug')->first();
         }
 
-        return Store::first()->select('id')->first();
+        return Store::query()->first()->select('id')->first();
     }
 }

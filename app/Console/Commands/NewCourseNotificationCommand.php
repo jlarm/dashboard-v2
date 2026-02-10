@@ -14,9 +14,9 @@ class NewCourseNotificationCommand extends Command
     protected $signature = 'new:course-notification {--tenants=* : The tenant(s) to run the command for. Default all.}';
     protected $description = 'Send new course notification to all users.';
 
-    public function handle()
+    public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             $users = User::query()

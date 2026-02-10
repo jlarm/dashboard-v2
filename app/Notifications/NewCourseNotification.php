@@ -14,12 +14,12 @@ class NewCourseNotification extends Notification implements ShouldQueue
 
     public function __construct() {}
 
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['database'];
     }
 
-    public function toDatabase($notifiable)
+    public function toDatabase($notifiable): array
     {
         return [
             'message' => 'New Title VII course added.',

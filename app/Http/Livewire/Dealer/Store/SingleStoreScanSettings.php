@@ -17,12 +17,12 @@ class SingleStoreScanSettings extends Component
         'name' => 'string|max:255',
     ];
 
-    public function mount(Store $store)
+    public function mount(Store $store): void
     {
         if ($store->id === null) {
-            $this->dealer = ScanSetting::first();
+            $this->dealer = ScanSetting::query()->first();
         } else {
-            $this->dealer = ScanSetting::where('store_id', $this->store->id)->first();
+            $this->dealer = ScanSetting::query()->where('store_id', $this->store->id)->first();
         }
     }
 

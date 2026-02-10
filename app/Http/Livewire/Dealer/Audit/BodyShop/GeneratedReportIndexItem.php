@@ -16,10 +16,10 @@ class GeneratedReportIndexItem extends Component
     public $audits;
     protected $sum;
 
-    public function mount()
+    public function mount(): void
     {
-        $this->audits = BodyShopAudit::where('id', $this->bodyShopAudit->id)->get();
-        $this->audits->filter(function ($value) {
+        $this->audits = BodyShopAudit::query()->where('id', $this->bodyShopAudit->id)->get();
+        $this->audits->filter(function ($value): void {
             for ($i = 1; $i <= 43; $i++) {
                 if ($value->{'body_shop_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;

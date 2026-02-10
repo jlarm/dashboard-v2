@@ -87,7 +87,7 @@ class Edit extends Component
                 ->title('Audit Updated!')
                 ->success()
                 ->send();
-        } catch (Exception $e) {
+        } catch (Exception) {
             Notification::make()
                 ->title('Error updating audit')
                 ->body('All violations must have a comment')
@@ -98,7 +98,7 @@ class Edit extends Component
 
     public function updated($propertyName): void
     {
-        if (str_contains($propertyName, 'violations.') && str_contains($propertyName, '.comment')) {
+        if (str_contains((string) $propertyName, 'violations.') && str_contains((string) $propertyName, '.comment')) {
             $this->checkInvalidViolations();
         }
     }
@@ -110,7 +110,7 @@ class Edit extends Component
 
     public function deleteComment($commentId): void
     {
-        $comment = AuditComment::findOrFail($commentId);
+        $comment = AuditComment::query()->findOrFail($commentId);
 
         if ($comment->user_id !== auth()->id()) {
             Notification::make()

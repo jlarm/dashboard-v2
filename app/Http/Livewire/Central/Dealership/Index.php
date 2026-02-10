@@ -36,7 +36,7 @@ class Index extends Component
         }
 
         try {
-            $dealership = Dealership::findOrFail($dealershipId);
+            $dealership = Dealership::query()->findOrFail($dealershipId);
             $dealership->delete();
 
             session()->flash('success', 'Dealership deleted successfully');

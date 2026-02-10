@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Contract;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Storage;
 
 class ContractPdfNotification extends Notification implements ShouldQueue
 {

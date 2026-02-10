@@ -13,7 +13,7 @@ class Index extends Component
     public function render(): View
     {
         return view('livewire.central.audit-statements.body-shop.index', [
-            'violations' => BodyShopViolationStatement::orderBy('statement')->paginate(20),
+            'violations' => BodyShopViolationStatement::query()->orderBy('statement')->paginate(20),
         ]);
     }
 }

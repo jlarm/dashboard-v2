@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Spatie\Browsershot\Browsershot;
 use App\Http\Livewire\Dealer\Vendor\Download;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
@@ -11,16 +12,16 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
-beforeEach(function () {
+beforeEach(function (): void {
     Storage::fake('do-manuals');
 
-    $this->user = User::create([
+    $this->user = User::query()->create([
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => bcrypt('password'),
     ]);
 
-    $this->store = Store::create([
+    $this->store = Store::query()->create([
         'name' => 'Test Store',
         'address' => '123 Main St',
         'city' => 'Springfield',
@@ -28,22 +29,22 @@ beforeEach(function () {
         'postal_code' => '62701',
     ]);
 
-    $this->vendor = Vendor::create([
+    $this->vendor = Vendor::query()->create([
         'name' => 'Test Vendor',
         'contact_name' => 'John Doe',
         'contact_email' => 'john@vendor.com',
         'store_id' => $this->store->id,
     ]);
 
-    $this->vendorForm = VendorForm::create([
+    $this->vendorForm = VendorForm::query()->create([
         'vendor_id' => $this->vendor->id,
         'name' => 'John Doe',
         'email' => 'john@vendor.com',
     ]);
 });
 
-describe('Download Uploaded Document', function () {
-    it('downloads the uploaded document when document_path exists', function () {
+describe('Download Uploaded Document', function (): void {
+    it('downloads the uploaded document when document_path exists', function (): void {
         $documentPath = 'tenant-uuid/vendor-documents/test-document.pdf';
         Storage::disk('do-manuals')->put($documentPath, 'PDF content here');
 
@@ -59,10 +60,10 @@ describe('Download Uploaded Document', function () {
         expect($payload['effects']['download']['name'])->toBe('TestVendor.pdf');
     });
 
-    it('logs error when document file does not exist in storage', function () {
+    it('logs error when document file does not exist in storage', function (): void {
         Log::shouldReceive('error')
             ->once()
-            ->withArgs(fn ($message) => str_contains($message, 'Vendor form document not found'));
+            ->withArgs(fn ($message): bool => str_contains($message, 'Vendor form document not found'));
 
         $this->vendorForm->update(['document_path' => 'non-existent/path.pdf']);
 
@@ -73,8 +74,8 @@ describe('Download Uploaded Document', function () {
     });
 });
 
-describe('Download Generated PDF', function () {
-    it('generates PDF when no document_path exists and signature is present', function () {
+describe('Download Generated PDF', function (): void {
+    it('generates PDF when no document_path exists and signature is present', function (): void {
         $this->vendorForm->update([
             'signature' => 'signature.png',
             'document_path' => null,
@@ -83,7 +84,7 @@ describe('Download Generated PDF', function () {
         $this->actingAs($this->user);
 
         // Mock Browsershot to avoid requiring Chrome
-        $this->mock(Spatie\Browsershot\Browsershot::class, function ($mock) {
+        $this->mock(Browsershot::class, function ($mock): void {
             $mock->shouldReceive('html')->andReturnSelf();
             $mock->shouldReceive('noSandbox')->andReturnSelf();
             $mock->shouldReceive('showBackground')->andReturnSelf();
@@ -99,8 +100,8 @@ describe('Download Generated PDF', function () {
     })->skip('Browsershot mocking requires additional setup');
 });
 
-describe('Component Rendering', function () {
-    it('renders the download component', function () {
+describe('Component Rendering', function (): void {
+    it('renders the download component', function (): void {
         $this->actingAs($this->user);
 
         Livewire::test(Download::class, ['vendorForm' => $this->vendorForm])
@@ -108,7 +109,7 @@ describe('Component Rendering', function () {
             ->assertSee('Download');
     });
 
-    it('shows disabled button when no signature and no document_path', function () {
+    it('shows disabled button when no signature and no document_path', function (): void {
         $this->vendorForm->update([
             'signature' => null,
             'document_path' => null,
@@ -121,7 +122,7 @@ describe('Component Rendering', function () {
             ->assertSeeHtml('disabled');
     });
 
-    it('shows enabled button when signature exists', function () {
+    it('shows enabled button when signature exists', function (): void {
         $this->vendorForm->update(['signature' => 'signature.png']);
 
         $this->actingAs($this->user);
@@ -131,7 +132,7 @@ describe('Component Rendering', function () {
             ->assertDontSeeHtml('disabled wire:click');
     });
 
-    it('shows enabled button when document_path exists', function () {
+    it('shows enabled button when document_path exists', function (): void {
         $this->vendorForm->update(['document_path' => 'path/to/document.pdf']);
 
         $this->actingAs($this->user);
@@ -142,8 +143,8 @@ describe('Component Rendering', function () {
     });
 });
 
-describe('PDF Filename', function () {
-    it('uses vendor name for the PDF filename', function () {
+describe('PDF Filename', function (): void {
+    it('uses vendor name for the PDF filename', function (): void {
         $documentPath = 'tenant-uuid/vendor-documents/uploaded.pdf';
         Storage::disk('do-manuals')->put($documentPath, 'PDF content');
 
@@ -159,7 +160,7 @@ describe('PDF Filename', function () {
         expect($payload['effects']['download']['name'])->toBe('AcmeCorporation.pdf');
     });
 
-    it('removes spaces from vendor name in filename', function () {
+    it('removes spaces from vendor name in filename', function (): void {
         $documentPath = 'tenant-uuid/vendor-documents/uploaded.pdf';
         Storage::disk('do-manuals')->put($documentPath, 'PDF content');
 

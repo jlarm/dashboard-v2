@@ -33,14 +33,10 @@ class IndexItem extends Component
 
         $this->test = $this->flat->pluck('rating');
 
-        if ($this->test->contains(null)) {
-            $this->rating = 0;
-        } else {
-            $this->rating = $this->test->avg();
-        }
+        $this->rating = $this->test->contains(null) ? 0 : $this->test->avg();
     }
 
-    public function getQuarterNameAttribute()
+    public function getQuarterNameAttribute(): ?string
     {
         if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3) {
             return 'Q1';
@@ -54,6 +50,7 @@ class IndexItem extends Component
         if ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
             return 'Q4';
         }
+        return null;
     }
 
     public function render(): View

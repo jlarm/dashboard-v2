@@ -46,10 +46,10 @@ class Download extends Component
                 ->danger()
                 ->send();
 
-            return;
+            return null;
         }
 
-        return response()->streamDownload(function () use ($disk, $path) {
+        return response()->streamDownload(function () use ($disk, $path): void {
             echo $disk->get($path);
         }, $pdfName, [
             'Content-Type' => 'application/pdf',
@@ -61,7 +61,7 @@ class Download extends Component
         try {
             $pdf = Pdf::loadView('dealer.vendor.pdf.form-submission', ['vendor' => $this->vendorForm]);
 
-            return response()->streamDownload(function () use ($pdf) {
+            return response()->streamDownload(function () use ($pdf): void {
                 echo $pdf->output();
             }, $pdfName, [
                 'Content-Type' => 'application/pdf',
@@ -74,5 +74,6 @@ class Download extends Component
                 ->danger()
                 ->send();
         }
+        return null;
     }
 }

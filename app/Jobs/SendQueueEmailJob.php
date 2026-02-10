@@ -16,11 +16,8 @@ class SendQueueEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $invite;
-
-    public function __construct($invite)
+    public function __construct(protected $invite)
     {
-        $this->invite = $invite;
     }
 
     public function handle(): void

@@ -39,7 +39,7 @@ class Create extends Component
         'password' => ['required'],
     ];
 
-    public function mount()
+    public function mount(): void
     {
         // get initials of current users name
         $name = auth()->user()->name;
@@ -59,7 +59,7 @@ class Create extends Component
         $tenantDomain = $validated['domain'].'.'.config('tenancy.central_domains')[0];
 
         try {
-            $dealer = Dealership::create([
+            $dealer = Dealership::query()->create([
                 'user_id' => auth()->user()->id,
                 'name' => $validated['name'],
                 'address' => $validated['address'],
@@ -84,9 +84,9 @@ class Create extends Component
             $fax = $validated['fax'];
             $url = $validated['url'];
 
-            $dealer->run(function () use ($name, $address, $city, $state, $zip_code, $phone, $fax, $url) {
+            $dealer->run(function () use ($name, $address, $city, $state, $zip_code, $phone, $fax, $url): void {
 
-                Store::create([
+                Store::query()->create([
                     'name' => $name,
                     'address' => $address,
                     'city' => $city,
@@ -97,7 +97,7 @@ class Create extends Component
                     'website' => $url,
                 ]);
 
-                $user = User::create([
+                $user = User::query()->create([
                     'name' => auth()->user()->name,
                     'email' => auth()->user()->email,
                     'phone' => auth()->user()->phone,
@@ -111,7 +111,7 @@ class Create extends Component
                 }
 
                 if ($user->name !== 'Joe Lohr') {
-                    $joe = User::create([
+                    $joe = User::query()->create([
                         'name' => 'Joe Lohr',
                         'email' => 'jlohr@autorisknow.com',
                         'phone' => '2243586930',
@@ -121,7 +121,7 @@ class Create extends Component
                 }
 
                 if ($user->name !== 'Terry Dortch') {
-                    $terry = User::create([
+                    $terry = User::query()->create([
                         'name' => 'Terry Dortch',
                         'email' => 'tdortch@autorisknow.com',
                         'phone' => '8156704651',
@@ -131,7 +131,7 @@ class Create extends Component
                 }
 
                 if ($user->name !== 'Mike Backer') {
-                    $mike = User::create([
+                    $mike = User::query()->create([
                         'name' => 'Mike Backer',
                         'email' => 'mbacker@autorisknow.com',
                         'phone' => '8043823021',
@@ -140,17 +140,18 @@ class Create extends Component
                     $mike->assignRole('super-admin');
                 }
 
-                ScanSetting::create([]);
+                ScanSetting::query()->create([]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+        return null;
     }
 
     public function render()
     {
         return view('livewire.central.dealership.create', [
-            'users' => User::whereNot('id', auth()->user()->id)
+            'users' => User::query()->whereNot('id', auth()->user()->id)
                 ->get(),
         ]);
     }

@@ -11,12 +11,12 @@ trait GlbaGenerateRating
     public $audits;
     protected int $sum = 0;
 
-    public function rating()
+    public function rating(): ?string
     {
-        $this->audits = FinanceAudit::where('pdf_path', '!=', null)
+        $this->audits = FinanceAudit::query()->where('pdf_path', '!=', null)
             ->get();
 
-        $this->audits->filter(function ($value) {
+        $this->audits->filter(function ($value): void {
             for ($i = 1; $i <= 46; $i++) {
                 if ($value->{'finance_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
@@ -28,5 +28,6 @@ trait GlbaGenerateRating
         if ($total > 0) {
             return $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
         }
+        return null;
     }
 }

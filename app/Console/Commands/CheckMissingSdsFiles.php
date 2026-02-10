@@ -34,10 +34,10 @@ class CheckMissingSdsFiles extends Command
 
         $this->info('Checking SDS files...');
 
-        $progressBar = $this->output->createProgressBar(Sds::count());
+        $progressBar = $this->output->createProgressBar(Sds::query()->count());
         $progressBar->start();
 
-        Sds::chunk(100, function ($sdsRecord) use (&$missingFiles, &$progressBar) {
+        Sds::query()->chunk(100, function ($sdsRecord) use (&$missingFiles, &$progressBar): void {
             foreach ($sdsRecord as $sds) {
                 if ($sds->file_name && ! Storage::disk('sds-sheets')->exists($sds->file_name)) {
                     $missingFiles[] = $sds->file_name;
@@ -50,7 +50,7 @@ class CheckMissingSdsFiles extends Command
         $progressBar->finish();
         $this->newLine();
 
-        if (empty($missingFiles)) {
+        if ($missingFiles === []) {
             $this->info('All SDS files are present in storage');
 
             return;

@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class SubNav extends Component
 {
-    public ?Store $store;
+    public ?Store $store = null;
 
     public function render(): View
     {

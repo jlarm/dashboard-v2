@@ -32,7 +32,7 @@ class IndexItem extends Component
     public function render(): View
     {
         return view('livewire.dealer.store.single-store.employee.index-item', [
-            'department' => Department::find($this->user->department_id),
+            'department' => Department::query()->find($this->user->department_id),
         ]);
     }
 

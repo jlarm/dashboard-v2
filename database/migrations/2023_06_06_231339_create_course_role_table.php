@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_role', function (Blueprint $table) {
+        Schema::create('course_role', function (Blueprint $table): void {
             $table->unsignedBigInteger('role_id')->index();
             $table->string('model_type');
             $table->unsignedBigInteger('model_id')->index();

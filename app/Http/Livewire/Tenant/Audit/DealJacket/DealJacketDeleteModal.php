@@ -16,7 +16,7 @@ class DealJacketDeleteModal extends Modal
 
     public function mount($dealJacket): void
     {
-        $this->dealJacket = DealJacket::findOrFail($dealJacket);
+        $this->dealJacket = DealJacket::query()->findOrFail($dealJacket);
     }
 
     public function delete(): void

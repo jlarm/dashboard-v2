@@ -12,8 +12,8 @@ class SettingsController extends Controller
 {
     public function __invoke(): View
     {
-        $store = Store::first();
+        $store = Store::query()->first();
 
-        return view('dealer.store.settings', compact('store'));
+        return view('dealer.store.settings', ['store' => $store]);
     }
 }

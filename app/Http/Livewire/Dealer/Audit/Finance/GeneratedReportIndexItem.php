@@ -19,10 +19,10 @@ class GeneratedReportIndexItem extends Component
         'refreshFinanceAudits' => '$refresh',
     ];
 
-    public function mount()
+    public function mount(): void
     {
-        $this->audit = FinanceAudit::where('id', $this->financeAudit->id)->get();
-        $this->audit->filter(function ($value) {
+        $this->audit = FinanceAudit::query()->where('id', $this->financeAudit->id)->get();
+        $this->audit->filter(function ($value): void {
             for ($i = 1; $i <= 46; $i++) {
                 if ($value->{'finance_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;

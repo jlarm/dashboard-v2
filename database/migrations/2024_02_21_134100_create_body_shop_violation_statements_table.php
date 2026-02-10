@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('body_shop_violation_statements', function (Blueprint $table) {
+        Schema::create('body_shop_violation_statements', function (Blueprint $table): void {
             $table->id();
             $table->string('statement');
             $table->json('keywords')->nullable();

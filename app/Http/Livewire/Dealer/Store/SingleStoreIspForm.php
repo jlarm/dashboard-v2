@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\StoreSettings;
 use App\Models\User;
 use Livewire\Component;
-use Storage;
-use Str;
 
 class SingleStoreIspForm extends Component
 {
@@ -56,108 +56,108 @@ class SingleStoreIspForm extends Component
         'signature' => 'required',
     ];
 
-    public function mount()
+    public function mount(): void
     {
-        $settings = StoreSettings::where('store_id', $this->store->id)->first();
+        $settings = StoreSettings::query()->where('store_id', $this->store->id)->first();
 
         $this->qi = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Qualified Individual');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->name ?? '';
         $this->qip = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Qualified Individual');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->phone ?? '';
 
         $this->sm = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Service Manager');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->name ?? '';
         $this->smp = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Service Manager');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->phone ?? '';
 
         $this->pm = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Parts Manager');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->name ?? '';
         $this->pmp = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Parts Manager');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->phone ?? '';
 
         $this->bsm = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Body Shop Manager');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->name ?? '';
         $this->bsmp = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Body Shop Manager');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->phone ?? '';
 
         $this->gm = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'General Manager');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->name ?? '';
         $this->gmp = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'General Manager');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->phone ?? '';
 
         $this->owner = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Owner');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->name ?? '';
         $this->ownerp = User::query()
-            ->whereHas('roles', function ($query) {
+            ->whereHas('roles', function ($query): void {
                 $query->where('name', 'Owner');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })
             ->first()->phone ?? '';
@@ -170,7 +170,7 @@ class SingleStoreIspForm extends Component
         $this->burglarSystem = $settings->burglar_alarm_type ?? '';
     }
 
-    public function submit()
+    public function submit(): void
     {
         $this->validate();
 
@@ -178,7 +178,7 @@ class SingleStoreIspForm extends Component
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
-        Isp::create([
+        Isp::query()->create([
             'store_id' => $this->store->id,
             'logged_in_user' => auth()->user()->id,
             'qualified_individual_name' => $this->qi,
@@ -202,7 +202,7 @@ class SingleStoreIspForm extends Component
             'signature' => $fileName,
         ]);
 
-        Storage::put('osha-signatures/'.$fileName, base64_decode(Str::of($this->signature)->after(',')));
+        Storage::put('osha-signatures/'.$fileName, base64_decode((string) Str::of($this->signature)->after(',')));
 
         $this->redirect(route('dealer.manual.index'));
     }

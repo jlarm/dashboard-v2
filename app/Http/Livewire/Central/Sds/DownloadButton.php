@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Sds;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Sds;
 use Livewire\Component;
-use Storage;
 
 class DownloadButton extends Component
 {

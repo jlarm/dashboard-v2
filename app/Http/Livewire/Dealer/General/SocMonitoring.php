@@ -12,7 +12,7 @@ class SocMonitoring extends Component
 {
     public $monitoring;
 
-    public function mount(Request $request)
+    public function mount(Request $request): void
     {
         $this->monitoring = Store::query()
             ->where('name', $request->get('store')?->name)

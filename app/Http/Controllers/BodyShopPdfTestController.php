@@ -13,6 +13,6 @@ class BodyShopPdfTestController extends Controller
     {
         $audit = BodyShopAudit::with('user')->first();
 
-        return view('dealer.body-shop-audit-pdf', compact('audit'));
+        return view('dealer.body-shop-audit-pdf', ['audit' => $audit]);
     }
 }

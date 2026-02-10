@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\General;
 
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Concerns\InteractsWithForms;
 use App\Models\Dealer\Store;
-use Filament\Forms;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
-class ComplianceForm extends Component implements Forms\Contracts\HasForms
+class ComplianceForm extends Component implements HasForms
 {
-    use Forms\Concerns\InteractsWithForms;
+    use InteractsWithForms;
 
     public Store $store;
     public $firewall_company;
@@ -76,7 +77,7 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
         'admin_name' => 'nullable',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->store_id = $this->store->id;
         $this->firewall_company = $this->store->firewall_company;
@@ -109,29 +110,29 @@ class ComplianceForm extends Component implements Forms\Contracts\HasForms
         $this->admin_name = $this->store->admin_name;
     }
 
-    public function addIp()
+    public function addIp(): void
     {
         $this->ip_addresses[] = '';
     }
 
-    public function addUrl($u)
+    public function addUrl($u): void
     {
         $this->website_urls[] = '';
     }
 
-    public function removeIp($index)
+    public function removeIp($index): void
     {
         unset($this->ip_addresses[$index]);
         $this->ip_addresses = array_values($this->ip_addresses);
     }
 
-    public function removeUrl($index)
+    public function removeUrl($index): void
     {
         unset($this->website_urls[$index]);
         $this->website_urls = array_values($this->website_urls);
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
 

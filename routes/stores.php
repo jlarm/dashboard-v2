@@ -2,40 +2,51 @@
 
 declare(strict_types=1);
 
+use App\Http\Livewire\Dealer\Store\SingleStore\Home\Index;
+use App\Http\Livewire\Global\Video\Show;
+use App\Http\Controllers\Tenant\SdsController;
+use App\Http\Controllers\Dealer\Audit\OshaCreateController;
+use App\Http\Livewire\Dealer\Audit\Osha\Edit;
+use App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Create;
+use App\Http\Controllers\Tenant\Audit\DealJacketController;
+use App\Http\Controllers\Tenant\CyrismaController;
+use App\Http\Controllers\Tenant\CyrismaReportController;
+use App\Http\Livewire\Dealer\Store\SingleStore\Employee\OpenInvites;
+use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
+use App\Http\Livewire\Dealer\Audit\Osha\Single;
+use App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController;
 use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Tenant\Audit\DealJacketGroupController;
 use App\Http\Livewire\Dealer\Employee\DeletedIndex;
 use Illuminate\Support\Facades\Route;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class)->group(function () {
+Route::name('dealer.stores.')->middleware('web')->group(function (): void {
 
-    Route::prefix('stores/{store:slug}')->middleware(['stores', 'has.stores', 'auth', 'canAccessStore'])->group(function () {
+    Route::prefix('stores/{store:slug}')->middleware(['stores', 'has.stores', 'auth', 'canAccessStore'])->group(function (): void {
 
-        Route::get('/', App\Http\Livewire\Dealer\Store\SingleStore\Home\Index::class)->name('home');
+        Route::get('/', Index::class)->name('home');
 
         Route::get('videos', App\Http\Livewire\Global\Video\Index::class)->middleware('auth')->name('videos.index');
-        Route::get('videos/{videoId}', App\Http\Livewire\Global\Video\Show::class)->name('videos.show');
+        Route::get('videos/{videoId}', Show::class)->name('videos.show');
 
         Route::view('sds-sheets', 'tenant.sds.index')->middleware('auth')->name('sds.index');
-        Route::get('sds-sheets/{uuid}/view', [App\Http\Controllers\Tenant\SdsController::class, 'view'])->middleware('auth')->name('sds.view');
+        Route::get('sds-sheets/{uuid}/view', [SdsController::class, 'view'])->middleware('auth')->name('sds.view');
 
         // **************************************************
         // Roles to Consultant
         // **************************************************
-        Route::middleware('role:super-admin|Consultant')->group(function () {
-            Route::get('audits/osha/create', App\Http\Controllers\Dealer\Audit\OshaCreateController::class)->name('audits.osha.create');
-            Route::get('audits/osha/{oshaViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\Osha\Edit::class)->name('audits.osha.edit');
-            Route::get('audits/body-shop/create', App\Http\Livewire\Dealer\Store\SingleStore\Audit\BodyShop\Create::class)->name('audits.body-shop.create');
+        Route::middleware('role:super-admin|Consultant')->group(function (): void {
+            Route::get('audits/osha/create', OshaCreateController::class)->name('audits.osha.create');
+            Route::get('audits/osha/{oshaViolationAudit:uuid}/edit', Edit::class)->name('audits.osha.edit');
+            Route::get('audits/body-shop/create', Create::class)->name('audits.body-shop.create');
             Route::get('audits/body-shop/{bodyShopViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\BodyShop\Edit::class)->name('audits.body-shop.edit');
             Route::get('audits/finance/create', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Finance\Create::class)->name('audits.finance.create');
             Route::get('audits/finance/{glbaViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\Finance\Edit::class)->name('audits.finance.edit');
             Route::get('audits/deal-jackets-archived/create/{individualAudit:uuid?}', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Create::class)->name('audits.individual.create');
             Route::get('audits/deal-jackets-archived/{individualAudit:uuid}/edit', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Edit::class)->name('audits.individual.edit');
 
-            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/create', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'create'])->name('audits.deal-jackets.create');
-            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/edit/{dealJacket:uuid}', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'edit'])->name('audits.deal-jackets.edit');
+            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/create', [DealJacketController::class, 'create'])->name('audits.deal-jackets.create');
+            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/edit/{dealJacket:uuid}', [DealJacketController::class, 'edit'])->name('audits.deal-jackets.edit');
 
             Route::get('settings', App\Http\Livewire\Dealer\Store\SingleStore\Settings\Index::class)->name('settings');
 
@@ -44,19 +55,19 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
 
             Route::get('cyrisma', App\Http\Livewire\Tenant\Scans\Index::class)->name('cyrisma.index');
-            Route::get('cyrisma/settings', [App\Http\Controllers\Tenant\CyrismaController::class, 'settings'])->name('cyrisma.settings');
-            Route::get('cyrisma/report/{type}', [App\Http\Controllers\Tenant\CyrismaReportController::class, 'download'])->name('cyrisma.report');
+            Route::get('cyrisma/settings', [CyrismaController::class, 'settings'])->name('cyrisma.settings');
+            Route::get('cyrisma/report/{type}', [CyrismaReportController::class, 'download'])->name('cyrisma.report');
 
         });
 
         // **************************************************
         // Roles to Manager
         // **************************************************
-        Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual|Manager')->group(function () {
+        Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual|Manager')->group(function (): void {
 
             Route::get('employees', App\Http\Livewire\Dealer\Store\SingleStore\Employee\Index::class)->name('employees');
             Route::get('employees/create', App\Http\Livewire\Dealer\Store\SingleStore\Employee\Create::class)->name('employee.create');
-            Route::get('/employees/open-invites', App\Http\Livewire\Dealer\Store\SingleStore\Employee\OpenInvites::class)->name('employees.open-invites');
+            Route::get('/employees/open-invites', OpenInvites::class)->name('employees.open-invites');
             Route::get('employees/{user:slug}', App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->name('employees.show');
 
             Route::get('scans', App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scan.index');
@@ -67,8 +78,8 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
             Route::get('audits/finance', App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('audits.finance.index');
             Route::get('audits/deal-jackets-archived', App\Http\Livewire\Dealer\Store\SingleStore\Audit\Individual\Index::class)->name('audits.individual.index');
 
-            Route::get('osha/{oshaViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::class)->name('audits.osha.remediation');
-            Route::get('osha/{oshaViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\Osha\Single::class)->name('audits.osha.view');
+            Route::get('osha/{oshaViolationAudit:uuid}/remediation', RemediationForm::class)->name('audits.osha.remediation');
+            Route::get('osha/{oshaViolationAudit:uuid}', Single::class)->name('audits.osha.view');
             Route::get('body-shop/{bodyShopViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::class)->name('audits.body-shop.remediation');
             Route::get('body-shop/{bodyShopViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('audits.body-shop.view');
             Route::get('/finance/{glbaViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::class)->name('audits.finance.remediation');
@@ -77,8 +88,8 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
 
             Route::view('audits/deal-jackets', 'tenant.audit.deal-jacket.index')->name('audits.deal-jackets.index');
             Route::get('audits/deal-jackets/{dealJacketGroup:uuid}', [DealJacketGroupController::class, 'show'])->middleware(['auth'])->name('audits.deal-jackets.show');
-            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/{dealJacket:uuid}', [App\Http\Controllers\Tenant\Audit\DealJacketController::class, 'show'])->name('audits.deal-jackets.single');
-            Route::get('audits/deal-jacket-reports/{fileName}/download', [App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController::class, 'download'])->name('audits.deal-jacket-reports.download');
+            Route::get('audits/deal-jackets/{dealJacketGroup:uuid}/{dealJacket:uuid}', [DealJacketController::class, 'show'])->name('audits.deal-jackets.single');
+            Route::get('audits/deal-jacket-reports/{fileName}/download', [DealJacketReportDownloadController::class, 'download'])->name('audits.deal-jacket-reports.download');
 
             Route::get('vendors', App\Http\Livewire\Dealer\Vendor\Index::class)->name('vendor.index');
 
@@ -91,7 +102,7 @@ Route::name('dealer.stores.')->middleware('web', InitializeTenancyByDomain::clas
         // **************************************************
         // Roles to QA
         // **************************************************
-        Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function () {
+        Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function (): void {
 
             Route::get('deleted-employees', DeletedIndex::class)->name('employee.deleted');
 

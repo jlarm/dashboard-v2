@@ -2,42 +2,43 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Http\Livewire\Dealer\Navigation\StoreSwitcher;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Livewire\Livewire;
 
-describe('StoreSwitcher Component', function () {
-    it('renders successfully', function () {
+describe('StoreSwitcher Component', function (): void {
+    it('renders successfully', function (): void {
         $this->actingAs($this->consultant);
 
         Livewire::test(StoreSwitcher::class)
             ->assertStatus(200);
     });
 
-    it('displays "Select a Store" when no store is selected', function () {
+    it('displays "Select a Store" when no store is selected', function (): void {
         $this->actingAs($this->consultant);
 
         Livewire::test(StoreSwitcher::class)
             ->assertSee('Select a Store');
     });
 
-    it('displays the current store name when a store is passed', function () {
-        $store = Store::first();
+    it('displays the current store name when a store is passed', function (): void {
+        $store = Store::query()->first();
 
         $this->actingAs($this->consultant);
 
         $request = Request::create('/test');
         $request->attributes->set('store', $store);
 
-        Livewire::test(StoreSwitcher::class, compact('request'))
+        Livewire::test(StoreSwitcher::class, ['request' => $request])
             ->assertSee($store->name);
     });
 
-    it('displays truncated store name if too long', function () {
+    it('displays truncated store name if too long', function (): void {
         $longStoreName = 'This is a very long store name that should be truncated';
-        $store = Store::create([
+        $store = Store::query()->create([
             'name' => $longStoreName,
             'address' => '123 Main St',
             'city' => 'Springfield',
@@ -50,20 +51,20 @@ describe('StoreSwitcher Component', function () {
         $request = Request::create('/test');
         $request->attributes->set('store', $store);
 
-        Livewire::test(StoreSwitcher::class, compact('request'))
+        Livewire::test(StoreSwitcher::class, ['request' => $request])
             ->assertSee('This is a very long store name...');
     });
 });
 
-describe('Store Listing', function () {
-    it('shows only user stores for regular users', function () {
-        $user = User::create([
+describe('Store Listing', function (): void {
+    it('shows only user stores for regular users', function (): void {
+        $user = User::query()->create([
             'name' => 'Regular User',
             'email' => 'regular@test.com',
             'password' => bcrypt('password'),
         ]);
 
-        $userStore1 = Store::create([
+        $userStore1 = Store::query()->create([
             'name' => 'User Store 1',
             'address' => '123 Main St',
             'city' => 'Springfield',
@@ -71,7 +72,7 @@ describe('Store Listing', function () {
             'postal_code' => '62701',
         ]);
 
-        $userStore2 = Store::create([
+        $userStore2 = Store::query()->create([
             'name' => 'User Store 2',
             'address' => '456 Oak Ave',
             'city' => 'Springfield',
@@ -79,7 +80,7 @@ describe('Store Listing', function () {
             'postal_code' => '62701',
         ]);
 
-        $otherStore = Store::create([
+        $otherStore = Store::query()->create([
             'name' => 'Other Store',
             'address' => '789 Elm St',
             'city' => 'Springfield',
@@ -97,8 +98,8 @@ describe('Store Listing', function () {
             ->assertDontSee('Other Store');
     });
 
-    it('shows all stores for consultant users', function () {
-        $store1 = Store::create([
+    it('shows all stores for consultant users', function (): void {
+        $store1 = Store::query()->create([
             'name' => 'Store A',
             'address' => '123 Main St',
             'city' => 'Springfield',
@@ -106,7 +107,7 @@ describe('Store Listing', function () {
             'postal_code' => '62701',
         ]);
 
-        $store2 = Store::create([
+        $store2 = Store::query()->create([
             'name' => 'Store B',
             'address' => '456 Oak Ave',
             'city' => 'Springfield',
@@ -121,8 +122,8 @@ describe('Store Listing', function () {
             ->assertSee('Store B');
     });
 
-    it('orders stores alphabetically by name', function () {
-        Store::create([
+    it('orders stores alphabetically by name', function (): void {
+        Store::query()->create([
             'name' => 'Zebra Store',
             'address' => '123 Main St',
             'city' => 'Springfield',
@@ -130,7 +131,7 @@ describe('Store Listing', function () {
             'postal_code' => '62701',
         ]);
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Alpha Store',
             'address' => '456 Oak Ave',
             'city' => 'Springfield',
@@ -138,7 +139,7 @@ describe('Store Listing', function () {
             'postal_code' => '62701',
         ]);
 
-        Store::create([
+        Store::query()->create([
             'name' => 'Beta Store',
             'address' => '789 Elm St',
             'city' => 'Springfield',
@@ -160,15 +161,15 @@ describe('Store Listing', function () {
     });
 });
 
-describe('All Stores Link', function () {
-    it('shows "All Stores" link when user has multiple stores and is in a store context', function () {
-        $user = User::create([
+describe('All Stores Link', function (): void {
+    it('shows "All Stores" link when user has multiple stores and is in a store context', function (): void {
+        $user = User::query()->create([
             'name' => 'Multi Store User',
             'email' => 'multi@test.com',
             'password' => bcrypt('password'),
         ]);
 
-        $store1 = Store::create([
+        $store1 = Store::query()->create([
             'name' => 'Store 1',
             'address' => '123 Main St',
             'city' => 'Springfield',
@@ -176,7 +177,7 @@ describe('All Stores Link', function () {
             'postal_code' => '62701',
         ]);
 
-        $store2 = Store::create([
+        $store2 = Store::query()->create([
             'name' => 'Store 2',
             'address' => '456 Oak Ave',
             'city' => 'Springfield',
@@ -191,18 +192,18 @@ describe('All Stores Link', function () {
         $request = Request::create('/test');
         $request->attributes->set('store', $store1);
 
-        Livewire::test(StoreSwitcher::class, compact('request'))
+        Livewire::test(StoreSwitcher::class, ['request' => $request])
             ->assertSee('All Stores');
     });
 
-    it('does not show "All Stores" link when user has only one store', function () {
-        $user = User::create([
+    it('does not show "All Stores" link when user has only one store', function (): void {
+        $user = User::query()->create([
             'name' => 'Single Store User',
             'email' => 'single@test.com',
             'password' => bcrypt('password'),
         ]);
 
-        $store = Store::create([
+        $store = Store::query()->create([
             'name' => 'Single Store',
             'address' => '123 Main St',
             'city' => 'Springfield',
@@ -217,18 +218,18 @@ describe('All Stores Link', function () {
         $request = Request::create('/test');
         $request->attributes->set('store', $store);
 
-        Livewire::test(StoreSwitcher::class, compact('request'))
+        Livewire::test(StoreSwitcher::class, ['request' => $request])
             ->assertDontSee('All Stores');
     });
 
-    it('does not show "All Stores" link when not in a store context', function () {
-        $user = User::create([
+    it('does not show "All Stores" link when not in a store context', function (): void {
+        $user = User::query()->create([
             'name' => 'Dashboard User',
             'email' => 'dashboard@test.com',
             'password' => bcrypt('password'),
         ]);
 
-        $store1 = Store::create([
+        $store1 = Store::query()->create([
             'name' => 'Store 1',
             'address' => '123 Main St',
             'city' => 'Springfield',
@@ -236,7 +237,7 @@ describe('All Stores Link', function () {
             'postal_code' => '62701',
         ]);
 
-        $store2 = Store::create([
+        $store2 = Store::query()->create([
             'name' => 'Store 2',
             'address' => '456 Oak Ave',
             'city' => 'Springfield',
@@ -253,9 +254,9 @@ describe('All Stores Link', function () {
     });
 });
 
-describe('Component Refresh', function () {
-    it('refreshes when "refreshStores" event is emitted', function () {
-        $user = User::create([
+describe('Component Refresh', function (): void {
+    it('refreshes when "refreshStores" event is emitted', function (): void {
+        $user = User::query()->create([
             'name' => 'Refresh Test User',
             'email' => 'refresh@test.com',
             'password' => bcrypt('password'),
@@ -266,7 +267,7 @@ describe('Component Refresh', function () {
         $component = Livewire::test(StoreSwitcher::class);
 
         // Create a new store after component is loaded
-        $newStore = Store::create([
+        $newStore = Store::query()->create([
             'name' => 'New Store',
             'address' => '999 New St',
             'city' => 'Springfield',
@@ -282,15 +283,15 @@ describe('Component Refresh', function () {
     });
 });
 
-describe('Computed Properties', function () {
-    it('has stores computed property', function () {
-        $user = User::create([
+describe('Computed Properties', function (): void {
+    it('has stores computed property', function (): void {
+        $user = User::query()->create([
             'name' => 'Props Test User',
             'email' => 'props@test.com',
             'password' => bcrypt('password'),
         ]);
 
-        $store = Store::create([
+        $store = Store::query()->create([
             'name' => 'Test Store Props',
             'address' => '123 Main St',
             'city' => 'Springfield',
@@ -305,11 +306,11 @@ describe('Computed Properties', function () {
         $component = Livewire::test(StoreSwitcher::class);
         $stores = $component->get('stores');
 
-        expect($stores)->toBeInstanceOf(Illuminate\Database\Eloquent\Collection::class);
+        expect($stores)->toBeInstanceOf(Collection::class);
         expect($stores)->toHaveCount(1);
     });
 
-    it('has currentStoreDisplay computed property', function () {
+    it('has currentStoreDisplay computed property', function (): void {
         $this->actingAs($this->consultant);
 
         $component = Livewire::test(StoreSwitcher::class);

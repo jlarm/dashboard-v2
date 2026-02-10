@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Sds;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use App\Models\Sds;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Log;
-use Storage;
 
 use function Sentry\captureException;
 
@@ -68,7 +68,7 @@ class Edit extends Component
                 $fileName = str_replace(' ', '-', $this->file->getClientOriginalName());
 
                 // Check if file already exists (but allow current file)
-                if (Sds::where('file_name', $fileName)->where('id', '!=', $this->sds->id)->exists()) {
+                if (Sds::query()->where('file_name', $fileName)->where('id', '!=', $this->sds->id)->exists()) {
                     $this->addError('file', 'A file with the same name already exists.');
 
                     return;

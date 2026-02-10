@@ -25,8 +25,8 @@ class Settings extends Component
 
     public function mount(): void
     {
-        $this->store = Store::find(app('currentStore'));
-        $this->scan = ScanSetting::find($this->store->id);
+        $this->store = Store::query()->find(app('currentStore'));
+        $this->scan = ScanSetting::query()->find($this->store->id);
         $this->name = $this->scan->name ?? '';
         $this->internalId = $this->scan->internal_id ?? '';
         $this->externalId = $this->scan->external_id ?? '';

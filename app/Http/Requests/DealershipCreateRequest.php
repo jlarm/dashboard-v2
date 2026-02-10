@@ -18,7 +18,7 @@ class DealershipCreateRequest extends FormRequest
         ];
     }
 
-    public function prepareForValidation()
+    public function prepareForValidation(): void
     {
         $this->merge([
             'domain' => $this->domain.'.'.config('tenancy.central_domains')[0],

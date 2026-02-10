@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('glba_violation_audits', function (Blueprint $table) {
+        Schema::create('glba_violation_audits', function (Blueprint $table): void {
             $table->id();
             $table->uuid();
             $table->foreignId('user_id');

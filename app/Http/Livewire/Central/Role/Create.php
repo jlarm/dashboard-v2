@@ -18,9 +18,9 @@ class Create extends Component
         'assignedPermissions' => 'nullable|array',
     ];
 
-    public function create()
+    public function create(): void
     {
-        $validated = $this->validate();
+        $this->validate();
 
         $role = Role::create(['name' => $this->name]);
         $role->syncPermissions($this->assignedPermissions);

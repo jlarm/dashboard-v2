@@ -18,9 +18,9 @@ class CompleteSimAction extends Component
     public $token;
     public $ip;
 
-    public function mount()
+    public function mount(): void
     {
-        $store = GlobalSetting::first();
+        $store = GlobalSetting::query()->first();
         $this->token = $store->phishing_token;
         $this->ip = $store->phishing_ip;
     }
@@ -51,6 +51,7 @@ class CompleteSimAction extends Component
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
+        return null;
     }
 
     public function render()

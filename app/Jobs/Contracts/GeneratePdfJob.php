@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Jobs\Contracts;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 use App\Models\Contract;
-use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Browsershot\Browsershot;
-use View;
 
 class GeneratePdfJob implements ShouldQueue
 {
@@ -40,7 +40,7 @@ class GeneratePdfJob implements ShouldQueue
             'services' => $reviewedServices,
         ])->render();
 
-        $contract = Browsershot::html($html)
+        Browsershot::html($html)
             ->showBrowserHeaderAndFooter()
             ->headerHtml('.')
             ->footerHtml(View::make('pdf.contract.footer'))

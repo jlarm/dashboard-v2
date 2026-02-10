@@ -13,7 +13,7 @@ class StoreSelector extends Component
     {
         if (auth()->user()->can('create-stores')) {
             return view('livewire.dealer.store.store-selector', [
-                'stores' => Store::orderBy('name')
+                'stores' => Store::query()->orderBy('name')
                     ->skip(1)->get(),
             ]);
         }

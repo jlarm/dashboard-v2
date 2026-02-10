@@ -41,7 +41,7 @@ class CourseReminderCommand extends Command
             }
         }
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($debugEnabled, $isTestMode) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($debugEnabled, $isTestMode): void {
             $this->info("Running command for tenant: {$tenant->id}");
 
             // Check if tenant has locations feature enabled
@@ -59,7 +59,7 @@ class CourseReminderCommand extends Command
     private function processTenantsWithLocations($tenant, bool $debugEnabled, bool $isTestMode): void
     {
         // Get all stores where courses_not_taken_notification is enabled
-        $stores = Store::where('courses_not_taken_notification', true)->get();
+        $stores = Store::query()->where('courses_not_taken_notification', true)->get();
 
         if ($stores->isEmpty()) {
             $this->info("No stores with course notifications enabled for tenant: {$tenant->id}");
@@ -75,7 +75,7 @@ class CourseReminderCommand extends Command
 
             // Get all users associated with this store
             $users = $store->users()
-                ->whereDoesntHave('roles', function ($query) {
+                ->whereDoesntHave('roles', function ($query): void {
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })
@@ -86,8 +86,8 @@ class CourseReminderCommand extends Command
             $this->info('Found '.$users->count()." users for store {$store->name}");
 
             // Process each user
-            $users->each(function ($user) use ($tenant, $debugEnabled, $isTestMode, $store) {
-                $this->processUser($user, $tenant, $debugEnabled, $isTestMode, $store);
+            $users->each(function ($user) use ($tenant, $debugEnabled, $isTestMode, $store): void {
+                $this->processUser($user, $debugEnabled, $isTestMode, $store);
             });
         }
     }
@@ -99,27 +99,27 @@ class CourseReminderCommand extends Command
     {
         $this->info("Tenant {$tenant->id} doesn't have locations enabled, processing all users");
 
-        if (! Store::first()->courses_not_taken_notification) {
+        if (! Store::query()->first()->courses_not_taken_notification) {
             return;
         }
 
         User::query()
-            ->whereDoesntHave('roles', function ($query) {
+            ->whereDoesntHave('roles', function ($query): void {
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
             })
             ->with('roles', 'stores')
             ->select('id', 'name', 'email', 'created_at', 'last_sent_course_reminder', 'department_id')
             ->get()
-            ->each(function ($user) use ($tenant, $debugEnabled, $isTestMode) {
-                $this->processUser($user, $tenant, $debugEnabled, $isTestMode);
+            ->each(function ($user) use ($tenant, $debugEnabled, $isTestMode): void {
+                $this->processUser($user, $debugEnabled, $isTestMode);
             });
     }
 
     /**
      * Process an individual user for course reminders
      */
-    private function processUser(User $user, $tenant, bool $debugEnabled, bool $isTestMode, ?Store $store = null): void
+    private function processUser(User $user, bool $debugEnabled, bool $isTestMode, ?Store $store = null): void
     {
         // Get current time once to ensure consistency in comparisons
         $now = Carbon::now();
@@ -149,7 +149,7 @@ class CourseReminderCommand extends Command
             $courseCounts = $courseFeed->getCourseCounts();
 
             if ($courseCounts['incomplete'] > 0) {
-                $storeInfo = $store ? " for store {$store->name}" : '';
+                $storeInfo = $store instanceof Store ? " for store {$store->name}" : '';
                 $this->info("User {$user->name} has {$courseCounts['incomplete']} incomplete courses{$storeInfo}");
 
                 if (! $isTestMode) {

@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('remediation_settings', function (Blueprint $table) {
+        Schema::create('remediation_settings', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('store_id')->constrained('stores');
             $table->boolean('active')->default(false);

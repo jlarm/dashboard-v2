@@ -13,7 +13,7 @@ class StoreMiddlewareTest extends TestCase
      */
     public function it_sets_the_current_store_in_session(): void
     {
-        $response = $this->get('/stores/liberty-kia');
+        $this->get('/stores/liberty-kia');
 
         $this->assertEquals('liberty-kia', session('current_store'));
     }

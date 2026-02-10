@@ -8,15 +8,15 @@ use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Livewire;
 
-describe('DepartmentCompletionStats Component', function () {
-    it('renders successfully', function () {
+describe('DepartmentCompletionStats Component', function (): void {
+    it('renders successfully', function (): void {
         $this->actingAs($this->consultant);
 
         Livewire::test(DepartmentCompletionStats::class)
             ->assertStatus(200);
     });
 
-    it('loads stats when wire:init is triggered', function () {
+    it('loads stats when wire:init is triggered', function (): void {
         $this->actingAs($this->consultant);
 
         Livewire::test(DepartmentCompletionStats::class)
@@ -26,17 +26,17 @@ describe('DepartmentCompletionStats Component', function () {
     });
 });
 
-describe('Role-Based Store Access on tenant.dashboard (no store parameter)', function () {
-    it('shows all stores departments for super-admin', function () {
-        $superAdmin = User::create([
+describe('Role-Based Store Access on tenant.dashboard (no store parameter)', function (): void {
+    it('shows all stores departments for super-admin', function (): void {
+        $superAdmin = User::query()->create([
             'name' => 'Super Admin',
             'email' => 'superadmin@test.com',
             'password' => bcrypt('password'),
         ]);
         $superAdmin->assignRole('super-admin');
 
-        $store1 = Store::create(['name' => 'Store 1', 'slug' => 'store-1']);
-        $store2 = Store::create(['name' => 'Store 2', 'slug' => 'store-2']);
+        $store1 = Store::query()->create(['name' => 'Store 1', 'slug' => 'store-1']);
+        $store2 = Store::query()->create(['name' => 'Store 2', 'slug' => 'store-2']);
 
         // Create users in both stores
         $user1 = User::factory()->create(['department_id' => 1]);
@@ -55,9 +55,9 @@ describe('Role-Based Store Access on tenant.dashboard (no store parameter)', fun
         expect($stats)->toBeArray();
     });
 
-    it('shows all stores departments for Consultant', function () {
-        $store1 = Store::create(['name' => 'Store 1', 'slug' => 'store-1']);
-        $store2 = Store::create(['name' => 'Store 2', 'slug' => 'store-2']);
+    it('shows all stores departments for Consultant', function (): void {
+        $store1 = Store::query()->create(['name' => 'Store 1', 'slug' => 'store-1']);
+        $store2 = Store::query()->create(['name' => 'Store 2', 'slug' => 'store-2']);
 
         // Create users in both stores
         $user1 = User::factory()->create(['department_id' => 1]);
@@ -75,19 +75,19 @@ describe('Role-Based Store Access on tenant.dashboard (no store parameter)', fun
         expect($stats)->toBeArray();
     });
 
-    it('shows only assigned stores departments for regular users with multiple locations', function () {
+    it('shows only assigned stores departments for regular users with multiple locations', function (): void {
         // Set locations to true to simulate multi-location tenant
         tenant()->update(['locations' => true]);
 
-        $manager = User::create([
+        $manager = User::query()->create([
             'name' => 'Manager',
             'email' => 'manager@test.com',
             'password' => bcrypt('password'),
         ]);
         $manager->assignRole('Manager');
 
-        $assignedStore = Store::create(['name' => 'Assigned Store', 'slug' => 'assigned-store']);
-        $otherStore = Store::create(['name' => 'Other Store', 'slug' => 'other-store']);
+        $assignedStore = Store::query()->create(['name' => 'Assigned Store', 'slug' => 'assigned-store']);
+        $otherStore = Store::query()->create(['name' => 'Other Store', 'slug' => 'other-store']);
 
         // Assign only one store to manager
         $manager->stores()->attach($assignedStore->id);
@@ -109,12 +109,12 @@ describe('Role-Based Store Access on tenant.dashboard (no store parameter)', fun
         expect($stats)->toBeArray();
     });
 
-    it('shows all users in single location tenant for regular users', function () {
+    it('shows all users in single location tenant for regular users', function (): void {
         // Set locations to false to simulate single-location tenant
         tenant()->update(['locations' => false]);
 
         $manager = $this->manager;
-        $store = Store::first();
+        $store = Store::query()->first();
 
         $user1 = User::factory()->create(['department_id' => 1]);
         $user1->stores()->attach($store->id);
@@ -133,10 +133,10 @@ describe('Role-Based Store Access on tenant.dashboard (no store parameter)', fun
     });
 });
 
-describe('Specific Store View (with store parameter)', function () {
-    it('shows only specific store departments when store parameter is passed', function () {
-        $store1 = Store::create(['name' => 'Store 1', 'slug' => 'store-1']);
-        $store2 = Store::create(['name' => 'Store 2', 'slug' => 'store-2']);
+describe('Specific Store View (with store parameter)', function (): void {
+    it('shows only specific store departments when store parameter is passed', function (): void {
+        $store1 = Store::query()->create(['name' => 'Store 1', 'slug' => 'store-1']);
+        $store2 = Store::query()->create(['name' => 'Store 2', 'slug' => 'store-2']);
 
         // Create users in both stores
         $user1 = User::factory()->create(['department_id' => 1]);
@@ -155,11 +155,11 @@ describe('Specific Store View (with store parameter)', function () {
         expect($stats)->toBeArray();
     });
 
-    it('shows only specific store departments for regular users', function () {
+    it('shows only specific store departments for regular users', function (): void {
         $manager = $this->manager;
 
-        $store1 = Store::create(['name' => 'Store 1', 'slug' => 'store-1']);
-        $store2 = Store::create(['name' => 'Store 2', 'slug' => 'store-2']);
+        $store1 = Store::query()->create(['name' => 'Store 1', 'slug' => 'store-1']);
+        $store2 = Store::query()->create(['name' => 'Store 2', 'slug' => 'store-2']);
 
         $manager->stores()->attach([$store1->id, $store2->id]);
 
@@ -181,9 +181,9 @@ describe('Specific Store View (with store parameter)', function () {
     });
 });
 
-describe('Cache Key Generation', function () {
-    it('uses different cache keys for specific store vs all stores', function () {
-        $store = Store::first();
+describe('Cache Key Generation', function (): void {
+    it('uses different cache keys for specific store vs all stores', function (): void {
+        $store = Store::query()->first();
 
         $this->actingAs($this->consultant);
 
@@ -200,10 +200,10 @@ describe('Cache Key Generation', function () {
         expect($componentWithStore)->not->toBe($componentWithoutStore);
     });
 
-    it('uses different cache keys for super-admin vs regular users', function () {
+    it('uses different cache keys for super-admin vs regular users', function (): void {
         tenant()->update(['locations' => true]);
 
-        $superAdmin = User::create([
+        $superAdmin = User::query()->create([
             'name' => 'Super Admin',
             'email' => 'superadmin@test.com',
             'password' => bcrypt('password'),
@@ -211,7 +211,7 @@ describe('Cache Key Generation', function () {
         $superAdmin->assignRole('super-admin');
 
         $manager = $this->manager;
-        $store = Store::first();
+        $store = Store::query()->first();
         $manager->stores()->attach($store->id);
 
         // Test as super-admin
@@ -228,7 +228,7 @@ describe('Cache Key Generation', function () {
         expect($componentAdmin)->not->toBe($componentManager);
     });
 
-    it('caches stats for 5 minutes', function () {
+    it('caches stats for 5 minutes', function (): void {
         $this->actingAs($this->consultant);
 
         Cache::flush();
@@ -246,8 +246,8 @@ describe('Cache Key Generation', function () {
     });
 });
 
-describe('Cache Clearing and Refresh', function () {
-    it('clears and refreshes cache when refreshEmployeeDetails event is emitted', function () {
+describe('Cache Clearing and Refresh', function (): void {
+    it('clears and refreshes cache when refreshEmployeeDetails event is emitted', function (): void {
         $this->actingAs($this->consultant);
 
         Cache::flush();
@@ -274,8 +274,8 @@ describe('Cache Clearing and Refresh', function () {
         expect(Cache::has($cacheKey))->toBeTrue();
     });
 
-    it('clears and refreshes cache for specific store', function () {
-        $store = Store::first();
+    it('clears and refreshes cache for specific store', function (): void {
+        $store = Store::query()->first();
 
         $this->actingAs($this->consultant);
 
@@ -300,11 +300,11 @@ describe('Cache Clearing and Refresh', function () {
         expect(Cache::has($cacheKey))->toBeTrue();
     });
 
-    it('clears all related caches when no store is specified', function () {
+    it('clears all related caches when no store is specified', function (): void {
         $this->actingAs($this->consultant);
 
-        $store1 = Store::create(['name' => 'Test Store 1', 'slug' => 'test-store-1']);
-        $store2 = Store::create(['name' => 'Test Store 2', 'slug' => 'test-store-2']);
+        $store1 = Store::query()->create(['name' => 'Test Store 1', 'slug' => 'test-store-1']);
+        $store2 = Store::query()->create(['name' => 'Test Store 2', 'slug' => 'test-store-2']);
 
         // Populate caches for individual stores
         Livewire::test(DepartmentCompletionStats::class, ['store' => $store1])
@@ -330,12 +330,12 @@ describe('Cache Clearing and Refresh', function () {
     });
 });
 
-describe('Department Stats Calculation', function () {
-    it('filters out excluded users', function () {
-        $store = Store::first();
+describe('Department Stats Calculation', function (): void {
+    it('filters out excluded users', function (): void {
+        $store = Store::query()->first();
 
         // Create excluded users
-        $excluded1 = User::create([
+        $excluded1 = User::query()->create([
             'name' => 'Joe Lohr',
             'email' => 'joe@test.com',
             'password' => bcrypt('password'),
@@ -343,7 +343,7 @@ describe('Department Stats Calculation', function () {
         ]);
         $excluded1->stores()->attach($store->id);
 
-        $excluded2 = User::create([
+        $excluded2 = User::query()->create([
             'name' => 'Terry Dortch',
             'email' => 'terry@test.com',
             'password' => bcrypt('password'),
@@ -351,7 +351,7 @@ describe('Department Stats Calculation', function () {
         ]);
         $excluded2->stores()->attach($store->id);
 
-        $excluded3 = User::create([
+        $excluded3 = User::query()->create([
             'name' => 'Mike Backer',
             'email' => 'mike@test.com',
             'password' => bcrypt('password'),
@@ -373,8 +373,8 @@ describe('Department Stats Calculation', function () {
         // The excluded users should not be counted
     });
 
-    it('excludes users with role id 5', function () {
-        $store = Store::first();
+    it('excludes users with role id 5', function (): void {
+        $store = Store::query()->first();
 
         // Assuming role id 5 should be excluded (based on line 117 in the component)
         $user = User::factory()->create(['department_id' => 1]);

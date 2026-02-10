@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Contracts;
 
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ContractPdfNotification;
 use App\Models\Contract;
 use Livewire\Component;
-use Notification;
 
 class SendContractPdf extends Component
 {
@@ -16,7 +17,7 @@ class SendContractPdf extends Component
     public function sendContractPdf(): void
     {
         Notification::route('mail', $this->sendPdfEmailAddress)
-            ->notify(new \App\Notifications\ContractPdfNotification($this->contract));
+            ->notify(new ContractPdfNotification($this->contract));
 
         $this->contract->status()->create([
             'name' => auth()->user()->name,

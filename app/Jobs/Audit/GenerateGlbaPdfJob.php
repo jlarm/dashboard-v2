@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Jobs\Audit;
 
+use App\Models\GlbaViolationStatements;
+use Illuminate\Support\Facades\File;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
-use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -28,9 +29,9 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     public function handle(): void
     {
-        $path = $this->createDirectory();
+        $this->createDirectory();
         $fileName = $this->createFileName();
-        $this->createPdf($path, $fileName);
+        $this->createPdf($fileName);
         $this->updateAudit($fileName);
     }
 
@@ -43,10 +44,10 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
         }
 
         $statementIds = $violations->pluck('statement_id')->filter()->unique();
-        $statements = tenancy()->central(fn () => \App\Models\GlbaViolationStatements::whereIn('id', $statementIds)->get()->keyBy('id'));
+        $statements = tenancy()->central(fn () => GlbaViolationStatements::query()->whereIn('id', $statementIds)->get()->keyBy('id'));
 
         $totalPotentialWeight = $violations->sum(fn ($v) => $statements->get($v->statement_id)?->weight ?? 1);
-        $totalPenalty = $violations->sum(function ($v) use ($statements) {
+        $totalPenalty = $violations->sum(function ($v) use ($statements): int|float {
             $weight = $statements->get($v->statement_id)?->weight ?? 1;
             $effectiveWeight = ($v->risk ?? false) ? ($weight * 3) : $weight;
 
@@ -94,7 +95,7 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
         return $this->glbaViolationAudit->uuid.'-'.$dealerName.'-'.now()->format('Ymd').'-glba-violation-audit.pdf';
     }
 
-    private function createPdf(string $path, string $fileName): void
+    private function createPdf(string $fileName): void
     {
         $html = view('dealer.audit.finance.pdf-view', [
             'fileName' => $fileName,

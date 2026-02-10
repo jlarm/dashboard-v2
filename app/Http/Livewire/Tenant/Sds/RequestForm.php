@@ -29,7 +29,7 @@ class RequestForm extends Modal
         $superAdmins = User::role('super-admin')->pluck('email')->toArray();
 
         foreach ($superAdmins as $superAdmin) {
-            Mail::raw($this->buildEmailContent($user, $tenantName), static function ($message) use ($superAdmin) {
+            Mail::raw($this->buildEmailContent($user, $tenantName), static function ($message) use ($superAdmin): void {
                 $message->to($superAdmin)
                     ->subject('New SDS Sheet Request - '.tenant('name'))
                     ->from('noreply@armp.app');

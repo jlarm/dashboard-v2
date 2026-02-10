@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Manual\Cms;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\CmsManual;
 use Illuminate\View\View;
 use Livewire\Component;
-use Storage;
 
 class IndexItem extends Component
 {

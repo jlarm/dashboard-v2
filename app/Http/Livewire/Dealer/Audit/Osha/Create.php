@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Store;
-use Auth;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
@@ -510,9 +510,9 @@ class Create extends Component
     {
         $this->validate();
 
-        $submission = OshaAudit::create([
+        $submission = OshaAudit::query()->create([
             'user_id' => Auth::user()->id,
-            'store_id' => $this->store->id ?? Store::first()->id,
+            'store_id' => $this->store->id ?? Store::query()->first()->id,
             'osha_q1_answer' => $this->osha_q1_answer,
             'osha_q1_comment' => $this->osha_q1_comment,
             'osha_q2_answer' => $this->osha_q2_answer,

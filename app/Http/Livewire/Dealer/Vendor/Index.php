@@ -16,15 +16,15 @@ class Index extends Component
     public ?Store $store = null;
     protected $listeners = ['refreshVendors' => '$refresh'];
 
-    public function mount()
+    public function mount(): void
     {
-        $this->store = $this->store ?? null;
+        $this->store ??= null;
     }
 
     public function render()
     {
         return view('livewire.dealer.vendor.index', [
-            'vendors' => $this->store
+            'vendors' => $this->store instanceof Store
                 ? Vendor::with('store:id,name')
                     ->where('store_id', $this->store->id)
                     ->orWhere('store_id', null)

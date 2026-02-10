@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('scan_reports', function (Blueprint $table) {
+        Schema::table('scan_reports', function (Blueprint $table): void {
             $table->string('grade')->nullable();
             $table->integer('exploits_high')->nullable();
             $table->integer('exploits_medium')->nullable();
@@ -35,7 +35,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('scan_reports', function (Blueprint $table) {
+        Schema::table('scan_reports', function (Blueprint $table): void {
             $table->dropColumn('grade');
             $table->dropColumn('exploits_high');
             $table->dropColumn('exploits_medium');

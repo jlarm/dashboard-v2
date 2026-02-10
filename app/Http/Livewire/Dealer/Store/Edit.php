@@ -27,7 +27,7 @@ class Edit extends Component
         'website' => 'required|max:255',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->name = $this->store->name;
         $this->address = $this->store->address;
@@ -38,7 +38,7 @@ class Edit extends Component
         $this->website = $this->store->website;
     }
 
-    public function updateStore()
+    public function updateStore(): void
     {
         $this->validate();
 

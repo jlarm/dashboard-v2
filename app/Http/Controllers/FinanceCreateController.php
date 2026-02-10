@@ -10,11 +10,12 @@ use Illuminate\Http\RedirectResponse;
 
 class FinanceCreateController extends Controller
 {
+    public $store;
     public function __invoke(): RedirectResponse
     {
-        $audit = FinanceAudit::create([
+        $audit = FinanceAudit::query()->create([
             'user_id' => auth()->id(),
-            'store_id' => $this->store->id ?? Store::first()->id,
+            'store_id' => $this->store->id ?? Store::query()->first()->id,
             'audit_date' => now()->format('Y-m-d'),
         ]);
 

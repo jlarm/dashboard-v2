@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Scan;
 
+use Illuminate\Support\Facades\Cookie;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
-use Cookie;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -26,25 +26,21 @@ class InternalReportGenerator extends Component
     public $internal;
     public $external;
 
-    public function mount()
+    public function mount(): void
     {
         if (tenant('locations')) {
-            $this->store = Store::where('id', $this->store->id)->first() ?? '';
+            $this->store = Store::query()->where('id', $this->store->id)->first() ?? '';
         } else {
-            $this->dealer = ScanSetting::first()->name ?? '';
+            $this->dealer = ScanSetting::query()->first()->name ?? '';
         }
     }
 
-    public function export()
+    public function export(): void
     {
         $token = Cookie::get('sentry');
         $client = new Client;
 
-        if (tenant('locations')) {
-            $dealerName = str_replace(' ', '-', $this->store->name);
-        } else {
-            $dealerName = str_replace(' ', '-', tenant('name'));
-        }
+        $dealerName = tenant('locations') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
 
         $fileName = $dealerName.'-'.now()->format('Ymdhis').'-internal-scan.pdf';
 
@@ -57,14 +53,14 @@ class InternalReportGenerator extends Component
 
             Storage::disk('do-scans')->put(tenant('id').'/internal/'.$fileName, $status);
 
-            ScanReport::create([
+            ScanReport::query()->create([
                 'user_id' => auth()->id(),
-                'store_id' => $this->store->id ?? Store::first()->id,
+                'store_id' => $this->store->id ?? Store::query()->first()->id,
                 'path' => tenant('id').'/internal/'.$fileName,
                 'type' => 'external',
                 'scan_type' => 'internal',
             ]);
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->addError('connection', 'Error connecting to Sentry. Please check the dealership name in settings.');
         }
 

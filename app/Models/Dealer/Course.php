@@ -70,7 +70,7 @@ class Course extends Model
 
     public function scopeWithLastResult($query, $userId): void
     {
-        $query->addSelect(['last_result_id' => CourseResults::select('id')
+        $query->addSelect(['last_result_id' => CourseResults::query()->select('id')
             ->whereColumn('course_id', 'courses.id')
             ->where('user_id', $userId)
             ->latest()

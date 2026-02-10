@@ -16,7 +16,7 @@ class SetCurrentStoreCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
             DB::beginTransaction();
             try {
                 if (! $tenant->locations) {

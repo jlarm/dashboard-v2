@@ -30,7 +30,7 @@ class ReportIndex extends Component
 
     protected function fetchReports()
     {
-        $query = ScanReport::where('scan_type', 'external')->latest();
+        $query = ScanReport::query()->where('scan_type', 'external')->latest();
 
         if (tenant('locations')) {
             $query->where('store_id', $this->store->id);
@@ -41,6 +41,6 @@ class ReportIndex extends Component
 
     protected function groupAndMapReports($reports)
     {
-        return $reports->groupBy(fn ($data) => $this->formattedLastScanDate($data->created_at))->map(fn ($data) => $data->groupBy('type'))->map(fn ($data) => $data->map(fn ($data) => $data->first()));
+        return $reports->groupBy(fn ($data): string => $this->formattedLastScanDate($data->created_at))->map(fn ($data) => $data->groupBy('type'))->map(fn ($data) => $data->map(fn ($data) => $data->first()));
     }
 }

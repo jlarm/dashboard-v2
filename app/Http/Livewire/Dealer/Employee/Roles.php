@@ -13,7 +13,7 @@ class Roles extends Component
     public User $user;
     public $assignedRoles;
 
-    public function mount()
+    public function mount(): void
     {
         $this->assignedRoles = $this->user->roles->pluck('name')->toArray();
     }
@@ -21,7 +21,7 @@ class Roles extends Component
     public function render()
     {
         return view('livewire.dealer.employee.roles', [
-            'roles' => Role::whereNot('name', 'super-admin')
+            'roles' => Role::query()->whereNot('name', 'super-admin')
                 ->whereNot('name', 'Admin')
                 ->whereNot('name', 'Consultant')
                 ->orderBy('name', 'asc')

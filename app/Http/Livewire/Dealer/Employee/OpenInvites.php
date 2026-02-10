@@ -50,7 +50,7 @@ class OpenInvites extends Component
     public function getInvitesProperty()
     {
         return $this->getInvitesQuery()
-            ->when($this->filterByDepartment, function ($query) {
+            ->when($this->filterByDepartment, function ($query): void {
                 $query->where('department_id', $this->filterByDepartment);
             })
             ->search('name', $this->search);
@@ -77,12 +77,12 @@ class OpenInvites extends Component
 
     public function getDepartmentName(int $id): string
     {
-        return Department::where('id', $id)->first()->name;
+        return Department::query()->where('id', $id)->first()->name;
     }
 
     public function getStoreNames(array $stores): string
     {
-        return Store::whereIn('id', $stores)->pluck('name')->implode(', ');
+        return Store::query()->whereIn('id', $stores)->pluck('name')->implode(', ');
     }
 
     public function clearFilters(): void
@@ -114,7 +114,7 @@ class OpenInvites extends Component
 
     private function findInvite($inviteId)
     {
-        return Invite::findOrFail($inviteId);
+        return Invite::query()->findOrFail($inviteId);
     }
 
     private function dispatchInvite($invite): void
@@ -151,7 +151,7 @@ class OpenInvites extends Component
 
     private function getInviteIds()
     {
-        return $this->invites->pluck('id')->map(fn ($id) => (string) $id);
+        return $this->invites->pluck('id')->map(fn ($id): string => (string) $id);
     }
 
     private function applyManagerFilter($query)

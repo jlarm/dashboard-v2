@@ -43,7 +43,7 @@ class GroupRating extends Component
         $user = auth()->user();
 
         if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
-            $storeIds = Cache::remember('all_store_ids', 86400, fn () => Store::pluck('id'));
+            $storeIds = Cache::remember('all_store_ids', 86400, fn () => Store::query()->pluck('id'));
         } else {
             $cacheKey = "user_{$user->id}_store_ids";
             $storeIds = Cache::remember($cacheKey, 3600, fn () => auth()->user()->stores()->pluck('id'));
@@ -53,7 +53,7 @@ class GroupRating extends Component
 
         $gradesCacheKey = 'ratings_by_stores_'.md5(implode(',', $storeIds->toArray()));
 
-        $allGradesData = Cache::remember($gradesCacheKey, $cacheTime, function () use ($storeIds) {
+        $allGradesData = Cache::remember($gradesCacheKey, $cacheTime, function () use ($storeIds): array {
             $this->dealJacketGrades = IndividualAudit::query()
                 ->whereIn('store_id', $storeIds)
                 ->whereNotNull('rating')
@@ -131,7 +131,7 @@ class GroupRating extends Component
             return null;
         }
 
-        $numericGrades = $grades->map(fn ($grade) => is_numeric($grade) ? (float) $grade : (self::GRADE_VALUES[$grade] ?? 0));
+        $numericGrades = $grades->map(fn ($grade): float|int => is_numeric($grade) ? (float) $grade : (self::GRADE_VALUES[$grade] ?? 0));
 
         $averageGrade = $numericGrades->avg();
 

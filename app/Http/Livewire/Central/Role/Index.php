@@ -16,7 +16,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.central.role.index', [
-            'roles' => Role::orderBy('name', 'asc')
+            'roles' => Role::query()->orderBy('name', 'asc')
                 ->with('permissions')
                 ->whereNotIn('name', ['super-admin'])
                 ->get(),

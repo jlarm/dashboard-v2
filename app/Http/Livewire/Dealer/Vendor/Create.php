@@ -57,13 +57,13 @@ class Create extends Modal
     public function render(): View
     {
         return view('livewire.dealer.vendor.create', [
-            'stores' => tenant('locations') ? Store::orderBy('name')->get() : null,
+            'stores' => tenant('locations') ? Store::query()->orderBy('name')->get() : null,
         ]);
     }
 
     private function createVendor()
     {
-        return Vendor::create([
+        return Vendor::query()->create([
             'name' => $this->name,
             'contact_name' => $this->contact_name,
             'contact_email' => $this->contact_email,

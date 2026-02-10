@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('course_user_notification_sents', function (Blueprint $table) {
+        Schema::create('course_user_notification_sents', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('course_id');

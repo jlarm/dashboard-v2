@@ -11,7 +11,7 @@ class Create extends Component
 {
     public $store;
 
-    public function mount(Request $request)
+    public function mount(Request $request): void
     {
         $this->store = $request->get('store') ?? '';
     }

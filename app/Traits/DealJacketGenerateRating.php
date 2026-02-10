@@ -11,11 +11,11 @@ trait DealJacketGenerateRating
     public $audits;
     protected int $sum = 0;
 
-    public function rating()
+    public function rating(): ?string
     {
         $this->audits = IndividualAudit::all();
 
-        $this->audits->filter(function ($value) {
+        $this->audits->filter(function ($value): void {
             for ($i = 1; $i <= 43; $i++) {
                 if ($value->{'individual_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
@@ -27,5 +27,6 @@ trait DealJacketGenerateRating
         if ($total > 0) {
             return $rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
         }
+        return null;
     }
 }

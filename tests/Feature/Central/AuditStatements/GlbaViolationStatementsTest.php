@@ -9,13 +9,13 @@ use App\Models\GlbaViolationStatements;
 use Database\Seeders\RoleAndPermissionSeeder;
 use Livewire\Livewire;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->seed(RoleAndPermissionSeeder::class);
 });
 
-describe('GLBA Violation Statements Index', function () {
-    it('displays violations with weight column', function () {
-        $violation = GlbaViolationStatements::create([
+describe('GLBA Violation Statements Index', function (): void {
+    it('displays violations with weight column', function (): void {
+        $violation = GlbaViolationStatements::query()->create([
             'statement' => 'Test GLBA violation',
             'keywords' => json_encode(['privacy', 'data']),
             'weight' => 6,
@@ -28,9 +28,9 @@ describe('GLBA Violation Statements Index', function () {
             ->assertSee('6');
     });
 
-    it('truncates long violation statements', function () {
+    it('truncates long violation statements', function (): void {
         $longStatement = str_repeat('C', 150);
-        $violation = GlbaViolationStatements::create([
+        $violation = GlbaViolationStatements::query()->create([
             'statement' => $longStatement,
             'keywords' => json_encode([]),
             'weight' => 1,
@@ -44,8 +44,8 @@ describe('GLBA Violation Statements Index', function () {
     });
 });
 
-describe('GLBA Violation Statements Create', function () {
-    it('can create a violation statement with weight', function () {
+describe('GLBA Violation Statements Create', function (): void {
+    it('can create a violation statement with weight', function (): void {
         asSuperAdmin();
 
         Livewire::test(Create::class)
@@ -61,7 +61,7 @@ describe('GLBA Violation Statements Create', function () {
         ]);
     });
 
-    it('validates weight is between 1 and 10', function () {
+    it('validates weight is between 1 and 10', function (): void {
         asSuperAdmin();
 
         Livewire::test(Create::class)
@@ -77,7 +77,7 @@ describe('GLBA Violation Statements Create', function () {
             ->assertHasErrors(['weight']);
     });
 
-    it('defaults weight to 1', function () {
+    it('defaults weight to 1', function (): void {
         asSuperAdmin();
 
         Livewire::test(Create::class)
@@ -85,9 +85,9 @@ describe('GLBA Violation Statements Create', function () {
     });
 });
 
-describe('GLBA Violation Statements Edit', function () {
-    it('loads existing violation data including weight', function () {
-        $violation = GlbaViolationStatements::create([
+describe('GLBA Violation Statements Edit', function (): void {
+    it('loads existing violation data including weight', function (): void {
+        $violation = GlbaViolationStatements::query()->create([
             'statement' => 'Existing GLBA violation',
             'keywords' => json_encode(['existing']),
             'weight' => 9,
@@ -100,8 +100,8 @@ describe('GLBA Violation Statements Edit', function () {
             ->assertSet('weight', 9);
     });
 
-    it('can update violation statement with weight', function () {
-        $violation = GlbaViolationStatements::create([
+    it('can update violation statement with weight', function (): void {
+        $violation = GlbaViolationStatements::query()->create([
             'statement' => 'Original statement',
             'keywords' => json_encode([]),
             'weight' => 2,
@@ -122,8 +122,8 @@ describe('GLBA Violation Statements Edit', function () {
         ]);
     });
 
-    it('validates weight on update', function () {
-        $violation = GlbaViolationStatements::create([
+    it('validates weight on update', function (): void {
+        $violation = GlbaViolationStatements::query()->create([
             'statement' => 'Test statement',
             'keywords' => json_encode([]),
             'weight' => 5,

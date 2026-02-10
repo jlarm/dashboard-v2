@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Contracts;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Contract;
 use Livewire\Component;
-use Storage;
 
 class DownloadPdf extends Component
 {

@@ -12,6 +12,6 @@ class StoreVendorController extends Controller
 {
     public function index(Store $store): View
     {
-        return view('dealer.store.multi.vendor-index', compact('store'));
+        return view('dealer.store.multi.vendor-index', ['store' => $store]);
     }
 }

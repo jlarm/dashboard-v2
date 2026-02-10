@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_user', function (Blueprint $table) {
+        Schema::create('course_user', function (Blueprint $table): void {
             $table->foreignId('course_id')->constrained('users');
             $table->foreignId('user_id')->constrained();
             $table->boolean('pass')->default(0);

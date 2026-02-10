@@ -8,16 +8,13 @@ use Stancl\Tenancy\Contracts\Tenant;
 
 class CreateFrameworkDirectoriesForTenantJob
 {
-    protected $tenant;
-
-    public function __construct(Tenant $tenant)
+    public function __construct(protected Tenant $tenant)
     {
-        $this->tenant = $tenant;
     }
 
     public function handle(): void
     {
-        $this->tenant->run(function ($tenant) {
+        $this->tenant->run(function ($tenant): void {
             $storage_path = storage_path();
             $cachePath = "{$storage_path}/framework/cache";
 

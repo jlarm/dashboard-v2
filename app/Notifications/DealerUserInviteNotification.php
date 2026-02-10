@@ -10,11 +10,8 @@ use Illuminate\Support\Facades\URL;
 
 class DealerUserInviteNotification extends Notification
 {
-    protected $validated;
-
-    public function __construct($validated)
+    public function __construct(protected $validated)
     {
-        $this->validated = $validated;
     }
 
     public function via($notifiable): array

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Dealer\Settings;
 
+use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
@@ -31,7 +32,7 @@ class EmployeeList extends Model
 
     public function store(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Dealer\Store::class);
+        return $this->belongsTo(Store::class);
     }
 
     public function getActivitylogOptions(): LogOptions

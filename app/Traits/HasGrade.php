@@ -71,7 +71,7 @@ trait HasGrade
         $grades = $this->grades($old, $new);
         $gradesCount = count($grades);
         $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
-        $total = array_reduce(Arr::flatten($grades), fn ($carry, $rating) => $carry + $gradeValues[$rating], 0);
+        $total = array_reduce(Arr::flatten($grades), fn ($carry, $rating): float|int => $carry + $gradeValues[$rating], 0);
 
         if ($gradesCount === 0) {
             return 'N/A';
@@ -96,7 +96,7 @@ trait HasGrade
         return "store_{$this->id}_{$type}_grade_{$tenantId}";
     }
 
-    private function convertRatingToGrade($avg)
+    private function convertRatingToGrade($avg): ?string
     {
         if ($avg === null) {
             return null;

@@ -469,7 +469,7 @@ class Show extends Component
         'finance_q49_images' => 'nullable',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->draft = $this->financeAudit->draft;
         $this->audit_date = Carbon::make($this->financeAudit->audit_date)->format('Y-m-d');
@@ -789,6 +789,7 @@ class Show extends Component
 
             return redirect()->route('dealer.stores.audits.finance.index', [$store->slug]);
         }
+        return null;
     }
 
     public function render()

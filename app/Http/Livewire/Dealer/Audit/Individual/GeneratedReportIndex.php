@@ -11,9 +11,9 @@ class GeneratedReportIndex extends Component
 {
     public $store;
 
-    public function mount()
+    public function mount(): void
     {
-        $this->store = Store::where('id', app('currentStore'))->firstOrFail();
+        $this->store = Store::query()->where('id', app('currentStore'))->firstOrFail();
     }
 
     public function render()

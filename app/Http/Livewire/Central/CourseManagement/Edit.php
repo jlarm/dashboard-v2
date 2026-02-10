@@ -40,11 +40,11 @@ class Edit extends Component implements HasForms
         $this->course->update($this->form->getState());
 
         // Update matching courses across all tenants
-        tenancy()->central(function () {
+        tenancy()->central(function (): void {
             foreach (Dealership::all() as $tenant) {
                 tenancy()->initialize($tenant);
 
-                if ($tenantCourse = Course::where('slug', $this->course->slug)->first()) {
+                if ($tenantCourse = Course::query()->where('slug', $this->course->slug)->first()) {
                     $tenantCourse->update($this->form->getState());
                 }
             }

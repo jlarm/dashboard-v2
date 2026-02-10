@@ -29,9 +29,9 @@ class Form extends Component
     public $token;
     public $ip;
 
-    public function mount()
+    public function mount(): void
     {
-        $store = GlobalSetting::first();
+        $store = GlobalSetting::query()->first();
         $this->token = $store->phishing_token;
         $this->ip = $store->phishing_ip;
 
@@ -91,7 +91,7 @@ class Form extends Component
                 $launched_at = Carbon::parse($campaign['launch_date']);
                 $campaign_created_at = Carbon::parse($campaign['created_date']);
 
-                PhishingCampaign::create([
+                PhishingCampaign::query()->create([
                     'campaign_id' => $campaign['id'],
                     'user_id' => auth()->id(),
                     'name' => $campaign['name'],
@@ -113,6 +113,7 @@ class Form extends Component
             $this->error = $e->getMessage();
             Log::error($e->getMessage());
         }
+        return null;
     }
 
     public function render()

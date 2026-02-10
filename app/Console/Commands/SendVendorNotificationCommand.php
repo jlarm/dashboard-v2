@@ -27,12 +27,12 @@ class SendVendorNotificationCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
             $incompleteVendors = VendorForm::query()
                 ->whereNull('signature')
-                ->where(function ($query) {
+                ->where(function ($query): void {
                     $query->whereNull('last_notification_sent_at')
                         ->orWhere('last_notification_sent_at', '<', now()->subMonth());
                 })

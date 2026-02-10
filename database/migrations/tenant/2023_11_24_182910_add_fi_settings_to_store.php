@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::table('stores', function (Blueprint $table): void {
             $table->longText('fi_products_sold')->nullable()->after('compliance_issues');
             $table->json('service_contracts')->nullable()->after('fi_products_sold');
             $table->json('tire_wheel')->nullable()->after('service_contracts');
@@ -30,7 +30,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::table('stores', function (Blueprint $table): void {
             $table->dropColumn([
                 'fi_products_sold',
                 'service_contracts',

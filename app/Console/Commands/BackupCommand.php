@@ -23,7 +23,7 @@ class BackupCommand extends Command
         $successes = 0;
         $failures = [];
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use (&$total, &$successes, &$failures) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use (&$total, &$successes, &$failures): void {
             $total++;
             $this->info("Running backup command for tenant {$tenant->id} ({$tenant->name})");
 
@@ -47,10 +47,10 @@ class BackupCommand extends Command
 
         });
 
-        $recipient = config('backup.notifications.mail.to') ?? config('app.admin_email');
+        $recipient = config('backup.notifications.mail.to', config('app.admin_email'));
 
         if ($recipient) {
-            if (count($failures) > 0) {
+            if ($failures !== []) {
                 $subject = 'Tenant backups failed: '.count($failures)." of {$total}";
                 $lines = [
                     'Tenant backup failures: '.count($failures)." of {$total}",
@@ -59,12 +59,12 @@ class BackupCommand extends Command
                 foreach ($failures as $failure) {
                     $lines[] = "Tenant {$failure['id']} ({$failure['name']}): {$failure['error']}";
                 }
-                Mail::raw(implode(PHP_EOL, $lines), function ($message) use ($recipient, $subject) {
+                Mail::raw(implode(PHP_EOL, $lines), function ($message) use ($recipient, $subject): void {
                     $message->to($recipient)->subject($subject);
                 });
             } else {
                 $subject = "Tenant backups successful: {$successes} of {$total}";
-                Mail::raw("All tenant backups completed successfully. Total: {$successes}", function ($message) use ($recipient, $subject) {
+                Mail::raw("All tenant backups completed successfully. Total: {$successes}", function ($message) use ($recipient, $subject): void {
                     $message->to($recipient)->subject($subject);
                 });
             }

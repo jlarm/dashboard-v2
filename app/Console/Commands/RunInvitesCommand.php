@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Mail\TenDayOpenInviteReminderMail;
 use App\Mail\TwentyDayOpenInviteReminderMail;
 use App\Models\Dealer\Invite;
 use Illuminate\Console\Command;
-use Log;
-use Mail;
 
 class RunInvitesCommand extends Command
 {
@@ -18,7 +18,7 @@ class RunInvitesCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             $invites = Invite::all();

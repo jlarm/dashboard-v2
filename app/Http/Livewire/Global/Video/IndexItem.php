@@ -23,7 +23,7 @@ class IndexItem extends Component
             return null;
         }
 
-        return Store::where('id', app('currentStore'))->first();
+        return Store::query()->where('id', app('currentStore'))->first();
     }
 
     public function render(): View

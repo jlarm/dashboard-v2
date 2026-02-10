@@ -15,14 +15,14 @@ class GeneratedReportIndexItem extends Component
     protected $sum;
     protected $flat;
 
-    public function mount()
+    public function mount(): void
     {
-        $current = IndividualAudit::where('id', $this->individualAudit->id)->get();
+        $current = IndividualAudit::query()->where('id', $this->individualAudit->id)->get();
         $combine = collect([$current, $this->individualAudit->children]);
         $this->flat = $combine->flatten();
         //        dd($this->individualAudit->children);
 
-        $this->flat->filter(function ($value) {
+        $this->flat->filter(function ($value): void {
             for ($i = 3; $i <= 40; $i++) {
                 if ($i !== 19 && $value->{'individual_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
@@ -35,7 +35,7 @@ class GeneratedReportIndexItem extends Component
         $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
     }
 
-    public function getQuarterNameAttribute()
+    public function getQuarterNameAttribute(): ?string
     {
         if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3) {
             return 'Q1';
@@ -49,6 +49,7 @@ class GeneratedReportIndexItem extends Component
         if ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
             return 'Q4';
         }
+        return null;
     }
 
     public function render()

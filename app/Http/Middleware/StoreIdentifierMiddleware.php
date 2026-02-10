@@ -16,7 +16,7 @@ class StoreIdentifierMiddleware
             return $next($request);
         }
 
-        if (! Store::exists($request->store)) {
+        if (! Store::query()->exists()) {
             return $next($request);
         }
 
@@ -25,9 +25,9 @@ class StoreIdentifierMiddleware
 
         if (count($segments) > 1 && $segments[0] === 'stores') {
             $storeSlug = $segments[1];
-            $store = Store::where('slug', $storeSlug)->firstOrFail()->id;
+            $store = Store::query()->where('slug', $storeSlug)->firstOrFail()->id;
         } else {
-            $store = Store::first()->id;
+            $store = Store::query()->first()->id;
         }
 
         app()->instance('currentStore', $store);

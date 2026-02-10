@@ -13,7 +13,7 @@ class Single extends Component
     public $store;
     public $rating;
 
-    public function mount()
+    public function mount(): void
     {
         $count = $this->oshaViolationAudit->violations->count();
 

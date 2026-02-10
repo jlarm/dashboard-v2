@@ -95,7 +95,7 @@ class Edit extends SlideOver
 
     private function initializeUserData(User $user): void
     {
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::query()->find(app('currentStore'));
         $this->user = $user;
         $this->name = $user->name;
         $this->assignedStores = $user->stores()->pluck('name')->toArray();
@@ -124,7 +124,7 @@ class Edit extends SlideOver
 
     private function getHighestPriorityRole(array $roles): string
     {
-        usort($roles, function ($a, $b) {
+        usort($roles, function ($a, $b): int {
             $priorityA = self::ROLE_PRIORITY[$a] ?? 999;
             $priorityB = self::ROLE_PRIORITY[$b] ?? 999;
 
@@ -140,7 +140,7 @@ class Edit extends SlideOver
             'department_id' => $this->department,
         ]);
 
-        $this->user->stores()->sync(Store::whereIn('name', $this->assignedStores)->pluck('id')->toArray());
+        $this->user->stores()->sync(Store::query()->whereIn('name', $this->assignedStores)->pluck('id')->toArray());
 
         $this->user->remediationReminderPreferences()->delete();
 
@@ -194,7 +194,7 @@ class Edit extends SlideOver
     private function updateCurrentStoreId(): void
     {
         if (tenant('locations') && ! in_array($this->user->current_store_id, $this->assignedStores)) {
-            $storeId = Store::where('name', $this->assignedStores[0])->first()->id;
+            $storeId = Store::query()->where('name', $this->assignedStores[0])->first()->id;
 
             $this->user->update([
                 'current_store_id' => $storeId,
@@ -212,6 +212,6 @@ class Edit extends SlideOver
 
     private function getQualifiedIndividualRole(): Role
     {
-        return Role::where('name', 'Qualified Individual')->first();
+        return Role::query()->where('name', 'Qualified Individual')->first();
     }
 }

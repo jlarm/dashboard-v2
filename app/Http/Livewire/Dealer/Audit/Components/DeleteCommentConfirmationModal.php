@@ -18,7 +18,7 @@ class DeleteCommentConfirmationModal extends Modal
     public function delete(): void
     {
         $this->askForConfirmation(
-            callback: function () {
+            callback: function (): void {
                 $this->comment->delete();
                 $this->emit('commentDeleted');
             },

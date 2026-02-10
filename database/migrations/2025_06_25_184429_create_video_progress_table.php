@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('video_progress', function (Blueprint $table) {
+        Schema::create('video_progress', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(User::class)->constrained('users');
             $table->string('video_id');

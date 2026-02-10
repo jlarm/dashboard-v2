@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Employee;
 
+use App\Models\Dealer\Store;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Dealer\Course;
 use App\Models\User;
 use App\Services\UserCourseService;
@@ -99,26 +101,26 @@ class AssignCustomCoursesForm extends Component
         $storeIds = [];
 
         try {
-            $storeIds = \App\Models\Dealer\Store::pluck('id')->toArray();
+            $storeIds = Store::query()->pluck('id')->toArray();
         } catch (Exception $e) {
             $storeIds = [];
         }
 
         foreach ($storeIds as $storeId) {
-            \Illuminate\Support\Facades\Cache::forget("department_completion_stats_{$storeId}_{$tenantId}");
+            Cache::forget("department_completion_stats_{$storeId}_{$tenantId}");
         }
 
-        \Illuminate\Support\Facades\Cache::forget("department_completion_stats_all_{$tenantId}_admin");
+        Cache::forget("department_completion_stats_all_{$tenantId}_admin");
 
         try {
             $allUsers = User::with('stores')->get();
             foreach ($allUsers as $user) {
                 if (! $user->hasAnyRole(['super-admin', 'Consultant'])) {
                     $userStoreIds = $user->stores->pluck('id')->sort()->implode('_');
-                    \Illuminate\Support\Facades\Cache::forget("department_completion_stats_all_{$tenantId}_user_{$userStoreIds}");
+                    Cache::forget("department_completion_stats_all_{$tenantId}_user_{$userStoreIds}");
                 }
             }
-        } catch (Exception $e) {
+        } catch (Exception) {
         }
     }
 }

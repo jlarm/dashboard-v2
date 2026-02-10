@@ -12,10 +12,7 @@ class ImpersonationController extends Controller
 {
     public function impersonate(User $user): RedirectResponse
     {
-        // Check if the current user has permission to impersonate
-        if (! auth()->user()->can('impersonate-users')) {
-            abort(403, 'You do not have permission to impersonate users.');
-        }
+        abort_unless(auth()->user()->can('impersonate-users'), 403, 'You do not have permission to impersonate users.');
 
         // Don't allow impersonating yourself
         if (auth()->id() === $user->id) {

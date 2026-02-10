@@ -21,18 +21,18 @@ class ManagerInvite extends Modal
         'role' => ['required'],
     ];
 
-    public function create()
+    public function create(): void
     {
         $this->validate();
 
-        $invite = Invite::create([
+        $invite = Invite::query()->create([
             'name' => $this->name,
             'email' => $this->email,
-            'stores' => [auth()->user()->stores->first()->id ?? Store::first()->id],
+            'stores' => [auth()->user()->stores->first()->id ?? Store::query()->first()->id],
             'department_id' => auth()->user()->department_id,
             'roles' => $this->role,
             'user_id' => auth()->user()->id,
-            'invitation_token' => mb_substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+            'invitation_token' => mb_substr(md5(random_int(0, 9).$this->email.time()), 0, 32),
         ]);
 
         SendQueueEmailJob::dispatch($invite, 'invite');

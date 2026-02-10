@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenant_user_impersonation_tokens', function (Blueprint $table) {
+        Schema::create('tenant_user_impersonation_tokens', function (Blueprint $table): void {
             $table->string('token', 128)->primary();
             $table->string('tenant_id');
             $table->string('user_id');

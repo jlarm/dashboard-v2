@@ -36,7 +36,7 @@ class Show extends Component
 
     public function markVideoCompleted(): void
     {
-        VideoProgress::create([
+        VideoProgress::query()->create([
             'user_id' => auth()->id(),
             'video_id' => $this->course->video_id,
             'completed' => true,
@@ -81,7 +81,7 @@ class Show extends Component
     {
         $quizLink = $this->quizLink();
 
-        return view('livewire.dealer.course.show', compact('quizLink'));
+        return view('livewire.dealer.course.show', ['quizLink' => $quizLink]);
     }
 
     private function initializeContent(): void

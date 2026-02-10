@@ -13,7 +13,7 @@ class ResendInvite extends Modal
 
     public function mount(int $inviteId): void
     {
-        $this->invite = Invite::find($inviteId);
+        $this->invite = Invite::query()->find($inviteId);
 
         if (! $this->invite) {
             $this->close();

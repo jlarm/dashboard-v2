@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs\Audit;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -14,7 +15,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Log;
 use Spatie\Browsershot\Browsershot;
 
 class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
@@ -40,15 +40,11 @@ class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
 
             $relativePath = 'temp/'.$fileName;
 
-            if (! Storage::disk('local')->exists($relativePath)) {
-                throw new Exception("File not found at path: {$relativePath}");
-            }
+            throw_unless(Storage::disk('local')->exists($relativePath), new Exception("File not found at path: {$relativePath}"));
 
             $contents = Storage::disk('local')->get($relativePath);
 
-            if ($contents === null) {
-                throw new Exception("Failed to retrieve contents from: {$relativePath}");
-            }
+            throw_if($contents === null, new Exception("Failed to retrieve contents from: {$relativePath}"));
 
             Storage::disk('armpaudits')->put($doPath, $contents);
 

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Manual\old;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Bus;
 use App\Jobs\Manuals\GenerateOshaManualJob;
 use App\Jobs\Manuals\UploadOshaToDigitalOceanJob;
 use App\Models\Dealer\Manual\Osha;
 use App\Models\Dealer\Store;
-use Bus;
 use Livewire\Component;
-use Storage;
 
 class OshaCard extends Component
 {
@@ -18,15 +18,15 @@ class OshaCard extends Component
     public $manual;
     public $content;
 
-    public function mount()
+    public function mount(): void
     {
-        $this->manual = Osha::where('store_id', $this->store->id)->latest()->first();
+        $this->manual = Osha::query()->where('store_id', $this->store->id)->latest()->first();
         if ($this->manual && $this->manual->pdf_path) {
             $this->content = Storage::disk('do-manuals')->url(tenant('id').'/osha/'.$this->manual->pdf_path) ?? null;
         }
     }
 
-    public function generate()
+    public function generate(): void
     {
         Bus::chain([
             new GenerateOshaManualJob($this->manual),

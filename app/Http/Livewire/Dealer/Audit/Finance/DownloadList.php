@@ -12,7 +12,7 @@ class DownloadList extends Component
     public function render()
     {
         return view('livewire.dealer.audit.finance.download-list', [
-            'audits' => FinanceAudit::where('pdf_path', '!=', null)->latest()->get(),
+            'audits' => FinanceAudit::query()->where('pdf_path', '!=', null)->latest()->get(),
         ])->layout('components.dealer-app');
     }
 }

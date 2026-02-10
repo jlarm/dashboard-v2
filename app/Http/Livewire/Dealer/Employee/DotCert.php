@@ -21,17 +21,17 @@ class DotCert extends Component
     public User $user;
     public $showCertButton;
 
-    public function mount()
+    public function mount(): void
     {
         $this->showCertButton = $this->shouldShowCertButton();
     }
 
-    public function download(Request $request)
+    public function download(Request $request): void
     {
         $fileName = $this->generatePdf($request);
         $filePath = $this->storePdf($fileName);
 
-        Certificate::create([
+        Certificate::query()->create([
             'user_id' => $this->user->id,
             'course_name' => 'DOT Hazardous Materials Transportation',
             'file_name' => $fileName,
@@ -100,7 +100,7 @@ class DotCert extends Component
         return $filePath;
     }
 
-    private function sendNotification(string $url)
+    private function sendNotification(string $url): void
     {
         Notification::make()
             ->title('Certificate Generated Successfully!')

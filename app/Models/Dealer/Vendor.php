@@ -85,7 +85,7 @@ class Vendor extends Model
 
     protected static function booted(): void
     {
-        static::deleting(function (Vendor $vendor) {
+        static::deleting(function (Vendor $vendor): void {
             if ($vendor->isForceDeleting()) {
                 $vendor->forms()->forceDelete();
             } else {

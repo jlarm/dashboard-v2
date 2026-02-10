@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('remediation_reminders', function (Blueprint $table) {
+        Schema::create('remediation_reminders', function (Blueprint $table): void {
             $table->id();
             $table->morphs('remindable');
             $table->date('send_date');
@@ -19,7 +19,7 @@ return new class extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('remediation_reminders');
     }

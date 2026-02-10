@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Sds;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use function Sentry\captureException;
 use App\Models\Sds;
 use Exception;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Log;
-use Storage;
 
 class Form extends Component
 {
     use WithFileUploads;
 
-    public ?Sds $sds;
+    public ?Sds $sds = null;
     public string $name = '';
     public string $productIdentifier = '';
     public array $productIdentificationNumbers = [];
@@ -36,9 +37,9 @@ class Form extends Component
         'file' => 'nullable|mimes:pdf|max:5120',
     ];
 
-    public function mount()
+    public function mount(): void
     {
-        $this->sds = $this->sds ?? new Sds;
+        $this->sds ??= new Sds;
         $this->name = $this->sds->name ?? '';
         $this->productIdentifier = $this->sds->product_identifier ?? '';
         $this->productIdentificationNumbers = $this->sds->product_identification_numbers;
@@ -75,13 +76,13 @@ class Form extends Component
         $this->casNos = array_values($this->casNos);
     }
 
-    public function create()
+    public function create(): void
     {
         try {
             $fileName = str_replace(' ', '-', $this->file->getClientOriginalName());
             Storage::disk('sds-sheets')->putFileAs('/', $this->file, $fileName);
 
-            Sds::create([
+            Sds::query()->create([
                 'name' => $this->name,
                 'product_identifier' => $this->productIdentifier,
                 'product_identification_numbers' => json_encode($this->productIdentificationNumbers),
@@ -111,7 +112,7 @@ class Form extends Component
                 ->send();
         } catch (Exception $e) {
             Log::error($e);
-            \Sentry\captureException($e);
+            captureException($e);
             if (str_contains($e->getMessage(), 'max.')) {
                 $this->addError('file', $this->messages['file.max']);
             } else {

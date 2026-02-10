@@ -23,13 +23,13 @@ class EmployeeCourseReminderCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
 
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             $this->deleteOutdatedNotifications();
 
-            User::select(['id', 'name', 'email', 'department_id'])
+            User::query()->select(['id', 'name', 'email', 'department_id'])
                 ->with('roles', 'stores')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get()
@@ -61,7 +61,7 @@ class EmployeeCourseReminderCommand extends Command
             'expired_30_days' => [],
         ];
 
-        $results->each(function ($result) use (&$coursesToNotify, $user) {
+        $results->each(function ($result) use (&$coursesToNotify, $user): void {
             // Course expires 1 year (365 days) after completion
             $expirationDate = Carbon::parse($result->created_at)->addYear();
             $now = Carbon::now();
@@ -85,7 +85,7 @@ class EmployeeCourseReminderCommand extends Command
 
             if ($notificationType) {
                 // Check if notification was already sent recently (within last 7 days to avoid duplicates)
-                $recentNotification = CourseUserNotificationSent::where('user_id', $user->id)
+                $recentNotification = CourseUserNotificationSent::query()->where('user_id', $user->id)
                     ->where('course_id', $result->course_id)
                     ->where('sent', '>=', Carbon::now()->subDays(7))
                     ->first();
@@ -97,15 +97,15 @@ class EmployeeCourseReminderCommand extends Command
         });
 
         // If there are courses to notify about, send a single notification with all courses
-        $hasCourses = array_filter($coursesToNotify, fn ($courses) => count($courses) > 0);
+        $hasCourses = array_filter($coursesToNotify, fn ($courses): bool => count($courses) > 0);
 
-        if (! empty($hasCourses)) {
+        if ($hasCourses !== []) {
             $user->notify(new ExpiredCourseNotification($coursesToNotify, $user->name));
 
             // Record that notifications were sent for these courses
             foreach ($coursesToNotify as $courses) {
                 foreach ($courses as $courseId) {
-                    CourseUserNotificationSent::create([
+                    CourseUserNotificationSent::query()->create([
                         'user_id' => $user->id,
                         'course_id' => $courseId,
                         'sent' => Carbon::now(),
@@ -119,6 +119,6 @@ class EmployeeCourseReminderCommand extends Command
     {
         // Delete notifications older than 60 days to keep the table clean
         // We keep them for 60 days to ensure we have a record across all three notification periods
-        CourseUserNotificationSent::where('sent', '<', Carbon::now()->subDays(60))->delete();
+        CourseUserNotificationSent::query()->where('sent', '<', Carbon::now()->subDays(60))->delete();
     }
 }

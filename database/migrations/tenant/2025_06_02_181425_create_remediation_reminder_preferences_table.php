@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('remediation_reminder_preferences', function (Blueprint $table) {
+        Schema::create('remediation_reminder_preferences', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();

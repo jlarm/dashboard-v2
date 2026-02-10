@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Sds;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use App\Models\Sds;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Log;
-use Storage;
 
 use function Sentry\captureException;
 
@@ -41,7 +41,7 @@ class Create extends Component
         try {
             $fileName = str_replace(' ', '-', $this->file->getClientOriginalName());
 
-            if (Sds::where('file_name', $fileName)->exists()) {
+            if (Sds::query()->where('file_name', $fileName)->exists()) {
                 $this->addError('file', 'A file with the same name already exists.');
 
                 return;
@@ -49,7 +49,7 @@ class Create extends Component
 
             Storage::disk('sds-sheets')->putFileAs('/', $this->file, $fileName);
 
-            Sds::create([
+            Sds::query()->create([
                 'name' => $this->name,
                 'manufacturer' => $this->manufacturer,
                 'keywords' => $this->keywords,

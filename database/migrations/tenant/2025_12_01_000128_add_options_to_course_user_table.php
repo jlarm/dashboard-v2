@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('course_user', function (Blueprint $table) {
+        Schema::table('course_user', function (Blueprint $table): void {
             $table->string('type')->default('add')->after('user_id');
             $table->foreignId('assigned_by')->nullable()->constrained('users')->after('type');
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('course_user', function (Blueprint $table) {
+        Schema::table('course_user', function (Blueprint $table): void {
             $table->dropColumn('type');
             $table->dropForeign(['assigned_by']);
         });

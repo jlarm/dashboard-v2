@@ -15,53 +15,53 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::firstOrCreate(['name' => 'create-dealerships']);
-        Permission::firstOrCreate(['name' => 'edit-dealerships']);
-        Permission::firstOrCreate(['name' => 'delete-dealerships']);
-        Permission::firstOrCreate(['name' => 'view-dealerships']);
+        Permission::query()->firstOrCreate(['name' => 'create-dealerships']);
+        Permission::query()->firstOrCreate(['name' => 'edit-dealerships']);
+        Permission::query()->firstOrCreate(['name' => 'delete-dealerships']);
+        Permission::query()->firstOrCreate(['name' => 'view-dealerships']);
 
-        Permission::firstOrCreate(['name' => 'create-stores']);
-        Permission::firstOrCreate(['name' => 'edit-stores']);
-        Permission::firstOrCreate(['name' => 'delete-stores']);
-        Permission::firstOrCreate(['name' => 'view-stores']);
+        Permission::query()->firstOrCreate(['name' => 'create-stores']);
+        Permission::query()->firstOrCreate(['name' => 'edit-stores']);
+        Permission::query()->firstOrCreate(['name' => 'delete-stores']);
+        Permission::query()->firstOrCreate(['name' => 'view-stores']);
 
-        Permission::firstOrCreate(['name' => 'create-users']);
-        Permission::firstOrCreate(['name' => 'edit-users']);
-        Permission::firstOrCreate(['name' => 'delete-users']);
-        Permission::firstOrCreate(['name' => 'view-users']);
+        Permission::query()->firstOrCreate(['name' => 'create-users']);
+        Permission::query()->firstOrCreate(['name' => 'edit-users']);
+        Permission::query()->firstOrCreate(['name' => 'delete-users']);
+        Permission::query()->firstOrCreate(['name' => 'view-users']);
 
-        Permission::firstOrCreate(['name' => 'create-vendors']);
-        Permission::firstOrCreate(['name' => 'edit-vendors']);
-        Permission::firstOrCreate(['name' => 'delete-vendors']);
-        Permission::firstOrCreate(['name' => 'view-vendors']);
+        Permission::query()->firstOrCreate(['name' => 'create-vendors']);
+        Permission::query()->firstOrCreate(['name' => 'edit-vendors']);
+        Permission::query()->firstOrCreate(['name' => 'delete-vendors']);
+        Permission::query()->firstOrCreate(['name' => 'view-vendors']);
 
-        Permission::firstOrCreate(['name' => 'create-scans']);
-        Permission::firstOrCreate(['name' => 'edit-scans']);
-        Permission::firstOrCreate(['name' => 'delete-scans']);
-        Permission::firstOrCreate(['name' => 'view-scans']);
+        Permission::query()->firstOrCreate(['name' => 'create-scans']);
+        Permission::query()->firstOrCreate(['name' => 'edit-scans']);
+        Permission::query()->firstOrCreate(['name' => 'delete-scans']);
+        Permission::query()->firstOrCreate(['name' => 'view-scans']);
 
-        Permission::firstOrCreate(['name' => 'create-manuals']);
-        Permission::firstOrCreate(['name' => 'edit-manuals']);
-        Permission::firstOrCreate(['name' => 'delete-manuals']);
-        Permission::firstOrCreate(['name' => 'view-manuals']);
+        Permission::query()->firstOrCreate(['name' => 'create-manuals']);
+        Permission::query()->firstOrCreate(['name' => 'edit-manuals']);
+        Permission::query()->firstOrCreate(['name' => 'delete-manuals']);
+        Permission::query()->firstOrCreate(['name' => 'view-manuals']);
 
-        Permission::firstOrCreate(['name' => 'create-audits']);
-        Permission::firstOrCreate(['name' => 'edit-audits']);
-        Permission::firstOrCreate(['name' => 'delete-audits']);
-        Permission::firstOrCreate(['name' => 'view-audits']);
+        Permission::query()->firstOrCreate(['name' => 'create-audits']);
+        Permission::query()->firstOrCreate(['name' => 'edit-audits']);
+        Permission::query()->firstOrCreate(['name' => 'delete-audits']);
+        Permission::query()->firstOrCreate(['name' => 'view-audits']);
 
-        Role::firstOrCreate(['name' => 'super-admin']);
+        Role::query()->firstOrCreate(['name' => 'super-admin']);
 
-        $adminRole = Role::firstOrCreate(['name' => 'Admin']);
-        $consultantRole = Role::firstOrCreate(['name' => 'Consultant']);
-        $ownerRole = Role::firstOrCreate(['name' => 'Owner']);
-        $qiRole = Role::firstOrCreate(['name' => 'Qualified Individual']);
-        $gmRole = Role::firstOrCreate(['name' => 'GM']);
-        $cfoRole = Role::firstOrCreate(['name' => 'CFO']);
-        $gsmRole = Role::firstOrCreate(['name' => 'GSM']);
-        $managerRole = Role::firstOrCreate(['name' => 'Manager']);
-        $employeeRole = Role::firstOrCreate(['name' => 'Employee']);
-        $porterDriverRole = Role::firstOrCreate(['name' => 'Porter/Driver']);
+        $adminRole = Role::query()->firstOrCreate(['name' => 'Admin']);
+        $consultantRole = Role::query()->firstOrCreate(['name' => 'Consultant']);
+        $ownerRole = Role::query()->firstOrCreate(['name' => 'Owner']);
+        $qiRole = Role::query()->firstOrCreate(['name' => 'Qualified Individual']);
+        $gmRole = Role::query()->firstOrCreate(['name' => 'GM']);
+        $cfoRole = Role::query()->firstOrCreate(['name' => 'CFO']);
+        $gsmRole = Role::query()->firstOrCreate(['name' => 'GSM']);
+        $managerRole = Role::query()->firstOrCreate(['name' => 'Manager']);
+        $employeeRole = Role::query()->firstOrCreate(['name' => 'Employee']);
+        $porterDriverRole = Role::query()->firstOrCreate(['name' => 'Porter/Driver']);
 
         $adminRole->givePermissionTo([
             'create-dealerships',

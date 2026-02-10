@@ -12,8 +12,8 @@ class RedFlagController extends Controller
 {
     public function __invoke(): View
     {
-        $store = Store::first();
+        $store = Store::query()->first();
 
-        return view('dealer.manual.red-flag', compact('store'));
+        return view('dealer.manual.red-flag', ['store' => $store]);
     }
 }

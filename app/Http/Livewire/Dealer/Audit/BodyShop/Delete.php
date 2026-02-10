@@ -12,12 +12,12 @@ class Delete extends Modal
 {
     public $bodyShopAudit;
 
-    public function mount(BodyShopViolationAudit $bodyShopAudit)
+    public function mount(BodyShopViolationAudit $bodyShopAudit): void
     {
         $this->bodyShopAudit = $bodyShopAudit;
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->bodyShopAudit->delete();
 
@@ -38,7 +38,7 @@ class Delete extends Modal
 
     protected function deleteViolationPhotos(): void
     {
-        $this->bodyShopAudit->violations->each(function ($violation) {
+        $this->bodyShopAudit->violations->each(function ($violation): void {
             $violation->clearMediaCollection('violations_files_0');
             $violation->clearMediaCollection('violations_files_1');
             $violation->clearMediaCollection('violations_files_2');

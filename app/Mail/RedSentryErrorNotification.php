@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Mail;
 
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -14,14 +15,11 @@ class RedSentryErrorNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public array $errors;
-
     /**
      * Create a new message instance.
      */
-    public function __construct(array $errors)
+    public function __construct(public array $errors)
     {
-        $this->errors = $errors;
     }
 
     /**
@@ -47,7 +45,7 @@ class RedSentryErrorNotification extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

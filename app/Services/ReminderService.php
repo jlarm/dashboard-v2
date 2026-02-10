@@ -12,15 +12,11 @@ class ReminderService
 {
     public static function createRemediationReminders(Model $model): void
     {
-        if (! method_exists($model, 'reminders')) {
-            throw new RuntimeException(get_class($model).' must have a reminders() relationship');
-        }
+        throw_unless(method_exists($model, 'reminders'), new RuntimeException($model::class.' must have a reminders() relationship'));
 
-        if (! isset($model->store_id)) {
-            throw new RuntimeException(get_class($model).' must have a store_id');
-        }
+        throw_unless(isset($model->store_id), new RuntimeException($model::class.' must have a store_id'));
 
-        $setting = RemediationSetting::where('store_id', $model->store_id)->first();
+        $setting = RemediationSetting::query()->where('store_id', $model->store_id)->first();
 
         if (! $setting) {
             return;

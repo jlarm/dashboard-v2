@@ -12,7 +12,7 @@ class Restore extends Component
 {
     public User $user;
 
-    public function restoreEmployee()
+    public function restoreEmployee(): void
     {
         $this->user->restore();
 

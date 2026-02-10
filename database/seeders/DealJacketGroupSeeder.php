@@ -86,23 +86,23 @@ class DealJacketGroupSeeder extends Seeder
             $quarterStart = $now->copy()->subQuarters($i)->startOfQuarter();
 
             // Create a DealJacketGroup for this quarter
-            $group = DealJacketGroup::create([
+            $group = DealJacketGroup::query()->create([
                 'store_id' => $storeId,
                 'completed' => true,
             ]);
 
             // Set created_at to be within this quarter
-            $group->created_at = $quarterStart->copy()->addDays(rand(0, 90));
+            $group->created_at = $quarterStart->copy()->addDays(random_int(0, 90));
             $group->save();
 
             // Create 10-20 deal jackets for this group
-            $dealJacketCount = rand(10, 20);
+            $dealJacketCount = random_int(10, 20);
 
             for ($j = 0; $j < $dealJacketCount; $j++) {
                 DealJacket::factory()
                     ->create([
                         'deal_jacket_group_id' => $group->id,
-                        'audit_date' => $group->created_at->copy()->addDays(rand(0, 7)),
+                        'audit_date' => $group->created_at->copy()->addDays(random_int(0, 7)),
                         'user_id' => $this->financeManagers->random()->id,
                     ]);
             }

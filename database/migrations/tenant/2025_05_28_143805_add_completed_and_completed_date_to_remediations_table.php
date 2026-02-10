@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('remediations', function (Blueprint $table) {
+        Schema::table('remediations', function (Blueprint $table): void {
             $table->boolean('completed')->default(false);
             $table->date('completed_date')->nullable();
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('remediations', function (Blueprint $table) {
+        Schema::table('remediations', function (Blueprint $table): void {
             $table->dropColumn('completed');
             $table->dropColumn('completed_date');
         });

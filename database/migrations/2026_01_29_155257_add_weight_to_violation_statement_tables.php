@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('osha_violation_statements', function (Blueprint $table) {
+        Schema::table('osha_violation_statements', function (Blueprint $table): void {
             $table->unsignedTinyInteger('weight')->default(1)->after('keywords');
         });
 
-        Schema::table('body_shop_violation_statements', function (Blueprint $table) {
+        Schema::table('body_shop_violation_statements', function (Blueprint $table): void {
             $table->unsignedTinyInteger('weight')->default(1)->after('keywords');
         });
 
-        Schema::table('glba_violation_statements', function (Blueprint $table) {
+        Schema::table('glba_violation_statements', function (Blueprint $table): void {
             $table->unsignedTinyInteger('weight')->default(1)->after('keywords');
         });
     }
@@ -31,15 +31,15 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('osha_violation_statements', function (Blueprint $table) {
+        Schema::table('osha_violation_statements', function (Blueprint $table): void {
             $table->dropColumn('weight');
         });
 
-        Schema::table('body_shop_violation_statements', function (Blueprint $table) {
+        Schema::table('body_shop_violation_statements', function (Blueprint $table): void {
             $table->dropColumn('weight');
         });
 
-        Schema::table('glba_violation_statements', function (Blueprint $table) {
+        Schema::table('glba_violation_statements', function (Blueprint $table): void {
             $table->dropColumn('weight');
         });
     }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use Illuminate\Support\Str;
 use App\Models\GlbaViolationStatements;
-use Str;
 
 trait HasGlbaViolationStatements
 {
@@ -14,7 +14,7 @@ trait HasGlbaViolationStatements
         $this->validateOnly($propertyName);
     }
 
-    public function violationSelected($violation): void
+    public function violationSelected(array $violation): void
     {
         $this->violationStatements = tenancy()->central(fn ($tenant) => GlbaViolationStatements::all());
 
@@ -31,7 +31,7 @@ trait HasGlbaViolationStatements
     public function deletePhoto($id, $position): void
     {
         $this->askForConfirmation(
-            callback: function () use ($id, $position) {
+            callback: function () use ($id, $position): void {
                 $this->glbaViolationAudit->violations()->where('id', $id)->first()->clearMediaCollection('violation_files_'.$position);
 
                 $this->violations = $this->glbaViolationAudit->violations()->get();
@@ -48,7 +48,7 @@ trait HasGlbaViolationStatements
     public function deleteViolation($violationId): void
     {
         $this->askForConfirmation(
-            callback: function () use ($violationId) {
+            callback: function () use ($violationId): void {
                 $violation = $this->glbaViolationAudit->violations()->where('id', $violationId)->first();
 
                 $violation->clearMediaCollection('violations_files_0');

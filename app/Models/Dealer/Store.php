@@ -137,7 +137,7 @@ class Store extends Model implements HasMedia
         return Cache::remember(
             $this->getGradeCacheKey('deal_jacket'),
             self::GRADE_CACHE_TTL,
-            fn () => $this->calculateGrade(
+            fn (): ?string => $this->calculateGrade(
                 $this->individualAudits()->whereNotNull('rating')->pluck('rating')->toArray()
             )
         );
@@ -148,7 +148,7 @@ class Store extends Model implements HasMedia
         return Cache::remember(
             $this->getGradeCacheKey('overall'),
             self::GRADE_CACHE_TTL,
-            function () {
+            function (): ?string {
                 $grades = array_merge(
                     $this->individualAudits()->whereNotNull('rating')->pluck('rating')->toArray(),
                     $this->financeAudits()->whereNotNull('rating')->pluck('rating')->toArray(),
@@ -303,7 +303,7 @@ class Store extends Model implements HasMedia
 
     private function calculateGrade(array $grades): ?string
     {
-        if (count($grades) === 0) {
+        if ($grades === []) {
             return null;
         }
 

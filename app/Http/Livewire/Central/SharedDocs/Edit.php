@@ -52,7 +52,7 @@ class Edit extends Component
             $rules['file'] = 'mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,zip,rar|max:10240';
         }
 
-        if ($this->url) {
+        if ($this->url !== '' && $this->url !== '0') {
             $rules['url'] = 'url';
         }
 

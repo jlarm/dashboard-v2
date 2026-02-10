@@ -20,7 +20,7 @@ class GlobalSettings extends Component
 
     public function mount(): void
     {
-        $this->settings = GlobalSetting::first();
+        $this->settings = GlobalSetting::query()->first();
 
         $this->phishing_active = $this->settings->phishing_active ?? false;
         $this->phishing_token = $this->settings->phishing_token ?? null;
@@ -72,7 +72,7 @@ class GlobalSettings extends Component
     public function update(): void
     {
         if (is_null($this->settings)) {
-            GlobalSetting::create([
+            GlobalSetting::query()->create([
                 'phishing_active' => $this->phishing_active,
                 'phishing_token' => $this->phishing_token,
                 'phishing_ip' => $this->phishing_ip,

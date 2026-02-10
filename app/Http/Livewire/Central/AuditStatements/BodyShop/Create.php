@@ -22,7 +22,7 @@ class Create extends Component
         'weight' => 'required|integer|min:1|max:10',
     ];
 
-    public function create()
+    public function create(): void
     {
         $this->validate();
 
@@ -30,7 +30,7 @@ class Create extends Component
             $this->keywords = [];
         }
 
-        BodyShopViolationStatement::create([
+        BodyShopViolationStatement::query()->create([
             'statement' => $this->statement,
             'keywords' => json_encode($this->keywords) ?? null,
             'weight' => $this->weight,

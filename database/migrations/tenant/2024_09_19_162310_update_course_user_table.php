@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('course_user', function (Blueprint $table) {
+        Schema::table('course_user', function (Blueprint $table): void {
             // Remove the 'pass' column
             $table->dropColumn('pass');
             $table->dropColumn('created_at');
@@ -43,7 +43,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('course_user', function (Blueprint $table) {
+        Schema::table('course_user', function (Blueprint $table): void {
             // Add the 'pass' column back
             $table->boolean('pass')->default(0);
 

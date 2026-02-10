@@ -15,7 +15,7 @@ class IndexItem extends Component
     public $totalQuestions = 0;
     public $array = [];
 
-    public function mount()
+    public function mount(): void
     {
         foreach ($this->vendor->getAttributes() as $key => $value) {
             if (str_starts_with($key, 'q') && str_ends_with($key, 'a')) {
@@ -30,10 +30,10 @@ class IndexItem extends Component
 
     public function download()
     {
-        $vendor = Vendor::where('id', $this->vendor->id)->first();
-        $pdf = PDF::loadView('dealer.vendor.pdf.form-submission', compact('vendor'));
+        $vendor = Vendor::query()->where('id', $this->vendor->id)->first();
+        $pdf = PDF::loadView('dealer.vendor.pdf.form-submission', ['vendor' => $vendor]);
 
-        return response()->streamDownload(function () use ($pdf) {
+        return response()->streamDownload(function () use ($pdf): void {
             echo $pdf->output();
         }, $this->vendor->name.now()->format('Ymd').'.pdf', [
             'Content-Type' => 'application/pdf',
@@ -47,12 +47,7 @@ class IndexItem extends Component
         if (! $form) {
             return false;
         }
-
-        if ($form->signature || $form->document_path) {
-            return true;
-        }
-
-        return false;
+        return $form->signature || $form->document_path;
     }
 
     public function render()

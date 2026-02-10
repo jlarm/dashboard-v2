@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Dealer\VendorEmailLog;
 use App\Models\Dealership;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class MailgunWebhookController extends Controller
 {
-    public function handle(Request $request): \Illuminate\Http\JsonResponse
+    public function handle(Request $request): JsonResponse
     {
         Log::info('Mailgun webhook received', [
             'ip' => $request->ip(),
@@ -60,20 +61,20 @@ class MailgunWebhookController extends Controller
             '<'.$normalizedMessageId.'>',
         ];
 
-        $index = tenancy()->central(fn () => VendorEmailLogIndex::where('message_id', $normalizedMessageId)->first());
+        $index = tenancy()->central(fn () => VendorEmailLogIndex::query()->where('message_id', $normalizedMessageId)->first());
         if ($index) {
-            $foundTenant = Dealership::find($index->tenant_id);
+            $foundTenant = Dealership::query()->find($index->tenant_id);
             if ($foundTenant) {
-                $foundTenant->run(function () use ($messageIdVariants, &$emailLog) {
-                    $emailLog = VendorEmailLog::whereIn('message_id', $messageIdVariants)->first();
+                $foundTenant->run(function () use ($messageIdVariants, &$emailLog): void {
+                    $emailLog = VendorEmailLog::query()->whereIn('message_id', $messageIdVariants)->first();
                 });
             }
         }
 
         if (! $emailLog) {
-            foreach (Dealership::cursor() as $tenant) {
-                $tenant->run(function () use ($messageIdVariants, &$emailLog) {
-                    $emailLog = VendorEmailLog::whereIn('message_id', $messageIdVariants)->first();
+            foreach (Dealership::query()->cursor() as $tenant) {
+                $tenant->run(function () use ($messageIdVariants, &$emailLog): void {
+                    $emailLog = VendorEmailLog::query()->whereIn('message_id', $messageIdVariants)->first();
                 });
 
                 if ($emailLog) {
@@ -84,10 +85,7 @@ class MailgunWebhookController extends Controller
 
             if ($emailLog && $foundTenant) {
                 tenancy()->central(function () use ($normalizedMessageId, $foundTenant): void {
-                    VendorEmailLogIndex::updateOrCreate(
-                        ['message_id' => $normalizedMessageId],
-                        ['tenant_id' => $foundTenant->id]
-                    );
+                    VendorEmailLogIndex::query()->updateOrCreate(['message_id' => $normalizedMessageId], ['tenant_id' => $foundTenant->id]);
                 });
             }
         }
@@ -109,7 +107,7 @@ class MailgunWebhookController extends Controller
         ]);
 
         // Update the log within the tenant context
-        $foundTenant->run(function () use ($emailLog, $event, $eventData) {
+        $foundTenant->run(function () use ($emailLog, $event, $eventData): void {
             $this->updateEmailLog($emailLog, $event, $eventData);
         });
 
@@ -203,7 +201,7 @@ class MailgunWebhookController extends Controller
             return false;
         }
 
-        $expectedSignature = hash_hmac('sha256', $timestamp.$token, $signingKey);
+        $expectedSignature = hash_hmac('sha256', $timestamp.$token, (string) $signingKey);
 
         if (! hash_equals($expectedSignature, $signature)) {
             Log::warning('Mailgun webhook signature mismatch');

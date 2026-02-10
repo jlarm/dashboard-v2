@@ -15,7 +15,7 @@ class Index extends Component
 
     public function render()
     {
-        $query = OshaAudit::where('store_id', $this->store->id)->orderBy('created_at', 'desc');
+        $query = OshaAudit::query()->where('store_id', $this->store->id)->orderBy('created_at', 'desc');
 
         if (auth()->user()->hasRole('Manager')) {
             $query->whereNot('pdf_path', null);

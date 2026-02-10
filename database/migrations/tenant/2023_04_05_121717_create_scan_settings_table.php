@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('scan_settings', function (Blueprint $table) {
+        Schema::create('scan_settings', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('store_id')->nullable()->constrained('stores')->cascadeOnDelete();
             $table->string('name')->nullable();

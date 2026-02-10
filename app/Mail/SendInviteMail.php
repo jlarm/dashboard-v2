@@ -14,6 +14,10 @@ use Illuminate\Queue\SerializesModels;
 
 class SendInviteMail extends Mailable
 {
+    /**
+     * @var Invite
+     */
+    public $invite;
     use Queueable, SerializesModels;
 
     public function __construct(Invite $invite)

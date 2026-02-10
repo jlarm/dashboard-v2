@@ -31,7 +31,7 @@ class Create extends Component
             $this->keywords = [];
         }
 
-        OshaViolationStatements::create([
+        OshaViolationStatements::query()->create([
             'statement' => $this->statement,
             'keywords' => json_encode($this->keywords, JSON_THROW_ON_ERROR) ?? null,
             'weight' => $this->weight,

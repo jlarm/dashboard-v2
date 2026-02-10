@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('fit_test_docs', function (Blueprint $table) {
+        Schema::create('fit_test_docs', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('store_id');
             $table->foreignId('user_id');

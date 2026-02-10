@@ -33,7 +33,7 @@ class CourseResultsController extends Controller
         // check if passed
         $passed = $score >= 70;
 
-        CourseResults::create([
+        CourseResults::query()->create([
             'percentage' => $score,
             'passed' => $passed,
             'course_id' => $course->id,

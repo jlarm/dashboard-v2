@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -40,6 +41,6 @@ class CmsManual extends Model
 
     public function store(): BelongsTo
     {
-        return $this->belongsTo(Dealer\Store::class);
+        return $this->belongsTo(Store::class);
     }
 }

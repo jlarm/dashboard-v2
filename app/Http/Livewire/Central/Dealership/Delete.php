@@ -21,7 +21,7 @@ class Delete extends Modal
     public function delete(): void
     {
         $this->askForConfirmation(
-            callback: function () {
+            callback: function (): void {
                 try {
                     DB::beginTransaction();
 

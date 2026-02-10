@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('remediations', function (Blueprint $table) {
+        Schema::create('remediations', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('violation_id');
             $table->foreignId('user_id')->nullable();

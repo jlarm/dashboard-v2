@@ -42,7 +42,7 @@ class StoreList extends Component
     {
         $query = $this->query();
 
-        if ($this->search) {
+        if ($this->search !== '' && $this->search !== '0') {
             $query->where('name', 'LIKE', "%{$this->search}%");
         }
 

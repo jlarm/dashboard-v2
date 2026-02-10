@@ -20,7 +20,7 @@ class MarkCompleteModal extends Modal
 
     public function mount(): void
     {
-        $this->dealJacketGroup = DealJacketGroup::findOrFail($this->dealJacketGroupId);
+        $this->dealJacketGroup = DealJacketGroup::query()->findOrFail($this->dealJacketGroupId);
     }
 
     public function markComplete(): void

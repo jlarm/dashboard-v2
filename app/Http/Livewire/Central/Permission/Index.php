@@ -14,7 +14,7 @@ class Index extends Component
     public $permission;
     protected $listeners = ['permissionCreated' => 'render'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->permissions = Permission::query()
             ->selectRaw("SUBSTRING_INDEX(name, '-', -1) AS name")

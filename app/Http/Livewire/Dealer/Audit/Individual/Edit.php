@@ -284,7 +284,7 @@ class Edit extends Component
         'audit_images' => 'nullable',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->managers = User::role('manager')->whereDepartmentId(6)->select('id', 'name')->get();
         $this->parent = $this->individualAudit->parent ?? $this->individualAudit;
@@ -562,7 +562,7 @@ class Edit extends Component
         if (! $this->individualAudit->parent_id) {
             $parent = $this->individualAudit;
         } else {
-            $parent = IndividualAudit::where('id', $this->individualAudit->parent_id)->first();
+            $parent = IndividualAudit::query()->where('id', $this->individualAudit->parent_id)->first();
         }
 
         if ($exit) {
@@ -572,6 +572,7 @@ class Edit extends Component
 
             return redirect()->route('dealer.stores.audits.individual.show', [$store, $parent]);
         }
+        return null;
     }
 
     public function render()

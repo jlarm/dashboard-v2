@@ -30,12 +30,12 @@ class AppServiceProvider extends ServiceProvider
 
         Request::macro('store', fn () => $this->user()?->currentStore());
 
-        view()->composer('components.language-switcher', function ($view) {
+        view()->composer('components.language-switcher', function ($view): void {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
         });
 
-        view()->composer('layouts.top-bar', function ($view) {
+        view()->composer('layouts.top-bar', function ($view): void {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
         });
@@ -53,14 +53,14 @@ class AppServiceProvider extends ServiceProvider
 
             $titles = implode(',', array_keys($results->first()->getAttributes()));
 
-            $values = $results->map(fn ($result) => implode(',', collect($result->getAttributes())->map(fn ($value) => '"'.$value.'"')->toArray()));
+            $values = $results->map(fn ($result): string => implode(',', collect($result->getAttributes())->map(fn ($value): string => '"'.$value.'"')->toArray()));
 
             $values->prepend($titles);
 
             return $values->implode("\n");
         });
 
-        Collection::macro('toCSV', function () {
+        Collection::macro('toCSV', function (): string|false {
             $output = fopen('php://temp', 'r+');
 
             // Write the header
@@ -70,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
 
             // Write the data
             foreach ($this as $row) {
-                if (is_array($row) && count(array_filter($row, 'is_array')) > 0) {
+                if (is_array($row) && array_filter($row, 'is_array') !== []) {
                     // Log the problematic row for inspection
                     Log::error('Problematic row:', $row);
                 }

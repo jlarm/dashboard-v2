@@ -14,7 +14,7 @@ class Create extends Component
 
     public function mount()
     {
-        $financeAudit = FinanceAudit::create([
+        $financeAudit = FinanceAudit::query()->create([
             'store_id' => $this->store->id,
             'user_id' => auth()->user()->id,
             'audit_date' => now()->format('Y-m-d'),

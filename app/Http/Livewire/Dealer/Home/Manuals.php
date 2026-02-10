@@ -14,11 +14,11 @@ use Livewire\Component;
 
 class Manuals extends Component
 {
-    public ?Store $store;
+    public ?Store $store = null;
 
     public function mount(): void
     {
-        $this->store = $this->store ?? Store::first();
+        $this->store ??= Store::query()->first();
     }
 
     public function render(): View
@@ -33,7 +33,7 @@ class Manuals extends Component
 
     private function hasManual(string $relation, string $modelClass): bool
     {
-        return $this->store
+        return $this->store instanceof Store
             ? $this->store->{$relation}->count() > 0
             : $modelClass::exists();
     }

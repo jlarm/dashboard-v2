@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Enums\AuditTypes;
 use App\Models\Dealer\Store;
 use App\Notifications\RemediationReminderNotification;
@@ -26,8 +27,8 @@ class RemediationReminderCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            $tenantSlug = tenant('locations') ? true : false;
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+            $tenantSlug = (bool) tenant('locations');
             $this->processStores(Store::all(), $tenantSlug);
         });
     }
@@ -35,10 +36,12 @@ class RemediationReminderCommand extends Command
     private function processStores(Collection $stores, bool $tenantSlug): void
     {
         foreach ($stores as $store) {
-            if (! $store->remediationSettings || ! $store->remediationSettings->notifications) {
+            if (! $store->remediationSettings) {
                 continue;
             }
-
+            if (! $store->remediationSettings->notifications) {
+                continue;
+            }
             $frequency = $store->remediationSettings->frequency->value();
             $this->processAudits($store, $frequency, $tenantSlug);
         }
@@ -60,7 +63,7 @@ class RemediationReminderCommand extends Command
         }
     }
 
-    private function getAuditsDueForReminder($auditQuery, int $frequency)
+    private function getAuditsDueForReminder(HasMany $auditQuery, int $frequency)
     {
         return $auditQuery
             ->whereNotNull('completed_date')

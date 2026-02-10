@@ -13,7 +13,7 @@ class OpenInvitesItem extends Component
 {
     public Invite $invite;
 
-    public function sendInvite()
+    public function sendInvite(): void
     {
         SendQueueEmailJob::dispatch($this->invite);
 

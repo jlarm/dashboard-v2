@@ -60,7 +60,7 @@ class Index extends Component
                 'department:id,name',
                 'stores:id,name,state',
                 'courseOverrides:user_id,course_id,type',
-                'results' => function ($query) {
+                'results' => function ($query): void {
                     $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1);
                 },
@@ -140,7 +140,7 @@ class Index extends Component
     {
         if (in_array($userId, $this->selectedUsers, true)) {
             // Remove from array
-            $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn ($id) => $id !== $userId));
+            $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn ($id): bool => $id !== $userId));
         } else {
             // Add to array
             $this->selectedUsers[] = $userId;
@@ -188,13 +188,7 @@ class Index extends Component
 
         $users = $this->getCachedUsers();
 
-        if ($this->selectAll) {
-            // Select all users
-            $this->selectedUsers = $users->pluck('id')->toArray();
-        } else {
-            // Deselect all users
-            $this->selectedUsers = [];
-        }
+        $this->selectedUsers = $this->selectAll ? $users->pluck('id')->toArray() : [];
     }
 
     public function updatedSelectedUsers(): void
@@ -205,20 +199,20 @@ class Index extends Component
 
     public function exportCsv()
     {
-        if (empty($this->selectedUsers)) {
+        if ($this->selectedUsers === []) {
             Notification::make()
                 ->title('No Users Selected')
                 ->body('Please select at least one user to export.')
                 ->warning()
                 ->send();
 
-            return;
+            return null;
         }
 
         $users = $this->getCachedUsers();
 
         // Filter to only selected users
-        $selectedUsers = $users->filter(fn ($user) => in_array($user->id, $this->selectedUsers));
+        $selectedUsers = $users->filter(fn ($user): bool => in_array($user->id, $this->selectedUsers));
 
         $csvContent = $this->generateExportCsvContent($selectedUsers);
         $filename = 'incomplete-employee-courses-report-'.date('m-d-Y').'.csv';
@@ -264,7 +258,7 @@ class Index extends Component
             return null;
         }
 
-        return Department::find($this->selectedDepartment)?->name;
+        return Department::query()->find($this->selectedDepartment)?->name;
     }
 
     public function getSelectedRoleNameProperty(): ?string
@@ -273,7 +267,7 @@ class Index extends Component
             return null;
         }
 
-        return Role::find($this->selectedRole)?->name;
+        return Role::query()->find($this->selectedRole)?->name;
     }
 
     public function getDepartmentsProperty()
@@ -312,7 +306,7 @@ class Index extends Component
 
     private function getCachedUsers(): Collection
     {
-        if ($this->cachedUsers === null) {
+        if (!$this->cachedUsers instanceof Collection) {
             $users = $this->usersQuery->get();
 
             $this->cachedUsers = $this->showIncompleteCourseUsers
@@ -351,27 +345,20 @@ class Index extends Component
 
     private function applySorting(Builder $query): void
     {
-        switch ($this->sortField) {
-            case 'name':
-                $query->orderBy('users.name', $this->sortDirection);
-                break;
-            case 'department':
-                $query->leftJoin('departments', 'users.department_id', '=', 'departments.id')
-                    ->orderBy('departments.name', $this->sortDirection)
-                    ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id']);
-                break;
-            case 'role':
-                $query->leftJoin('model_has_roles', function ($join) {
-                    $join->on('users.id', '=', 'model_has_roles.model_id')
-                        ->where('model_has_roles.model_type', User::class);
-                })
-                    ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                    ->orderBy('roles.name', $this->sortDirection)
-                    ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id']);
-                break;
-            default:
-                $query->orderBy('users.name', 'asc');
-        }
+        match ($this->sortField) {
+            'name' => $query->orderBy('users.name', $this->sortDirection),
+            'department' => $query->leftJoin('departments', 'users.department_id', '=', 'departments.id')
+                ->orderBy('departments.name', $this->sortDirection)
+                ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id']),
+            'role' => $query->leftJoin('model_has_roles', function ($join): void {
+                $join->on('users.id', '=', 'model_has_roles.model_id')
+                    ->where('model_has_roles.model_type', User::class);
+            })
+                ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                ->orderBy('roles.name', $this->sortDirection)
+                ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id']),
+            default => $query->orderBy('users.name', 'asc'),
+        };
     }
 
     private function generateExportCsvContent(Collection $users): string

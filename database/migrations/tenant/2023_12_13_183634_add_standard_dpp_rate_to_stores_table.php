@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::table('stores', function (Blueprint $table): void {
             $table->decimal('standard_dpp_rate', 5, 2)->nullable()->after('fi_password');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::table('stores', function (Blueprint $table): void {
             if (Schema::hasColumn('stores', 'standard_dpp_rate')) {
                 $table->dropColumn('standard_dpp_rate');
             }

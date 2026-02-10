@@ -6,9 +6,19 @@ use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorEmailLog;
 use App\Models\Dealer\VendorForm;
 
+uses(Tests\TestCase::class);
+
+beforeEach(function (): void {
+    [$this->tenant, $this->consultant] = createDealershipTenant();
+});
+
+afterEach(function (): void {
+    teardownTenants();
+});
+
 function createMailgunWebhookPayload(string $event, string $messageId, ?int $timestamp = null): array
 {
-    $timestamp = $timestamp ?? time();
+    $timestamp ??= time();
     $token = bin2hex(random_bytes(25));
 
     return [
@@ -31,27 +41,23 @@ function createMailgunWebhookPayload(string $event, string $messageId, ?int $tim
     ];
 }
 
-it('updates email log when delivery event is received', function () {
-    config(['services.mailgun.webhook_signing_key' => 'test-signing-key']);
-
-    // Create a test tenant
-    $tenant = createDealershipTenant()[0];
+it('updates email log when delivery event is received', function (): void {
     $emailLog = null;
 
-    $tenant->run(function () use (&$emailLog) {
-        $vendor = Vendor::create([
+    $this->tenant->run(function () use (&$emailLog): void {
+        $vendor = Vendor::query()->create([
             'name' => 'Test Vendor',
             'contact_name' => 'John Doe',
             'contact_email' => 'john@vendor.com',
         ]);
 
-        $vendorForm = VendorForm::create([
+        $vendorForm = VendorForm::query()->create([
             'vendor_id' => $vendor->id,
             'name' => 'Test Vendor',
             'email' => 'vendor@example.com',
         ]);
 
-        $emailLog = VendorEmailLog::create([
+        $emailLog = VendorEmailLog::query()->create([
             'vendor_form_id' => $vendorForm->id,
             'to' => 'vendor@example.com',
             'subject' => 'Test Email',
@@ -67,7 +73,7 @@ it('updates email log when delivery event is received', function () {
 
     $response->assertStatus(200);
 
-    $tenant->run(function () use ($emailLog) {
+    $this->tenant->run(function () use ($emailLog): void {
         $emailLog->refresh();
 
         expect($emailLog->status)->toBe('delivered');
@@ -75,28 +81,25 @@ it('updates email log when delivery event is received', function () {
         expect($emailLog->delivery_message)->toBe('Successfully delivered');
         expect($emailLog->event_type)->toBe('delivered');
     });
-
-    // Cleanup
-    teardownTenants();
 });
 
-it('updates email log when failure event is received', function () {
+it('updates email log when failure event is received', function (): void {
     $emailLog = null;
 
-    $this->tenant->run(function () use (&$emailLog) {
-        $vendor = Vendor::create([
+    $this->tenant->run(function () use (&$emailLog): void {
+        $vendor = Vendor::query()->create([
             'name' => 'Test Vendor',
             'contact_name' => 'Jane Doe',
             'contact_email' => 'jane@vendor.com',
         ]);
 
-        $vendorForm = VendorForm::create([
+        $vendorForm = VendorForm::query()->create([
             'vendor_id' => $vendor->id,
             'name' => 'Test Vendor',
             'email' => 'vendor@example.com',
         ]);
 
-        $emailLog = VendorEmailLog::create([
+        $emailLog = VendorEmailLog::query()->create([
             'vendor_form_id' => $vendorForm->id,
             'to' => 'bounced@example.com',
             'subject' => 'Test Email',
@@ -112,7 +115,7 @@ it('updates email log when failure event is received', function () {
 
     $response->assertStatus(200);
 
-    $this->tenant->run(function () use ($emailLog) {
+    $this->tenant->run(function () use ($emailLog): void {
         $emailLog->refresh();
 
         expect($emailLog->status)->toBe('failed');
@@ -122,23 +125,23 @@ it('updates email log when failure event is received', function () {
     });
 });
 
-it('rejects webhook with invalid signature', function () {
+it('rejects webhook with invalid signature', function (): void {
     $emailLog = null;
 
-    $this->tenant->run(function () use (&$emailLog) {
-        $vendor = Vendor::create([
+    $this->tenant->run(function () use (&$emailLog): void {
+        $vendor = Vendor::query()->create([
             'name' => 'Test Vendor',
             'contact_name' => 'Alice Cooper',
             'contact_email' => 'alice@vendor.com',
         ]);
 
-        $vendorForm = VendorForm::create([
+        $vendorForm = VendorForm::query()->create([
             'vendor_id' => $vendor->id,
             'name' => 'Test Vendor',
             'email' => 'vendor@example.com',
         ]);
 
-        $emailLog = VendorEmailLog::create([
+        $emailLog = VendorEmailLog::query()->create([
             'vendor_form_id' => $vendorForm->id,
             'to' => 'vendor@example.com',
             'subject' => 'Test Email',
@@ -173,7 +176,7 @@ it('rejects webhook with invalid signature', function () {
     $response->assertStatus(401);
     $response->assertJson(['error' => 'Unauthorized']);
 
-    $this->tenant->run(function () use ($emailLog) {
+    $this->tenant->run(function () use ($emailLog): void {
         $emailLog->refresh();
 
         // Status should remain unchanged
@@ -181,23 +184,23 @@ it('rejects webhook with invalid signature', function () {
     });
 });
 
-it('rejects webhook with expired timestamp', function () {
+it('rejects webhook with expired timestamp', function (): void {
     $emailLog = null;
 
-    $this->tenant->run(function () use (&$emailLog) {
-        $vendor = Vendor::create([
+    $this->tenant->run(function () use (&$emailLog): void {
+        $vendor = Vendor::query()->create([
             'name' => 'Test Vendor',
             'contact_name' => 'Charlie Brown',
             'contact_email' => 'charlie@vendor.com',
         ]);
 
-        $vendorForm = VendorForm::create([
+        $vendorForm = VendorForm::query()->create([
             'vendor_id' => $vendor->id,
             'name' => 'Test Vendor',
             'email' => 'vendor@example.com',
         ]);
 
-        $emailLog = VendorEmailLog::create([
+        $emailLog = VendorEmailLog::query()->create([
             'vendor_form_id' => $vendorForm->id,
             'to' => 'vendor@example.com',
             'subject' => 'Test Email',
@@ -216,7 +219,7 @@ it('rejects webhook with expired timestamp', function () {
 
     $response->assertStatus(401);
 
-    $this->tenant->run(function () use ($emailLog) {
+    $this->tenant->run(function () use ($emailLog): void {
         $emailLog->refresh();
 
         // Status should remain unchanged
@@ -224,7 +227,7 @@ it('rejects webhook with expired timestamp', function () {
     });
 });
 
-it('returns 200 when email log is not found', function () {
+it('returns 200 when email log is not found', function (): void {
     $payload = createMailgunWebhookPayload('delivered', '<non-existent-message-id@mailgun.net>');
 
     $response = $this->postJson('/api/webhooks/mailgun', $payload);
@@ -233,23 +236,23 @@ it('returns 200 when email log is not found', function () {
     $response->assertJson(['message' => 'Email log not found']);
 });
 
-it('handles opened and clicked events without changing status', function () {
+it('handles opened and clicked events without changing status', function (): void {
     $emailLog = null;
 
-    $this->tenant->run(function () use (&$emailLog) {
-        $vendor = Vendor::create([
+    $this->tenant->run(function () use (&$emailLog): void {
+        $vendor = Vendor::query()->create([
             'name' => 'Test Vendor',
             'contact_name' => 'David Lee',
             'contact_email' => 'david@vendor.com',
         ]);
 
-        $vendorForm = VendorForm::create([
+        $vendorForm = VendorForm::query()->create([
             'vendor_id' => $vendor->id,
             'name' => 'Test Vendor',
             'email' => 'vendor@example.com',
         ]);
 
-        $emailLog = VendorEmailLog::create([
+        $emailLog = VendorEmailLog::query()->create([
             'vendor_form_id' => $vendorForm->id,
             'to' => 'vendor@example.com',
             'subject' => 'Test Email',
@@ -264,7 +267,7 @@ it('handles opened and clicked events without changing status', function () {
     $response = $this->postJson('/api/webhooks/mailgun', $payload);
     $response->assertStatus(200);
 
-    $this->tenant->run(function () use ($emailLog) {
+    $this->tenant->run(function () use ($emailLog): void {
         $emailLog->refresh();
 
         // Status should remain delivered, but event_type should be updated
@@ -277,7 +280,7 @@ it('handles opened and clicked events without changing status', function () {
     $response = $this->postJson('/api/webhooks/mailgun', $payload);
     $response->assertStatus(200);
 
-    $this->tenant->run(function () use ($emailLog) {
+    $this->tenant->run(function () use ($emailLog): void {
         $emailLog->refresh();
 
         expect($emailLog->status)->toBe('delivered');

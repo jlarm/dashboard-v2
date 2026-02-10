@@ -23,7 +23,7 @@ class VerifyCourseVideos extends Command
         $this->newLine();
 
         // Get all courses with video IDs
-        $centralCourses = Course::whereNotNull('video_id')->get();
+        $centralCourses = Course::query()->whereNotNull('video_id')->get();
         $dealerCourses = DealerCourse::whereNotNull('video_id')->get();
 
         $allCourses = $centralCourses->merge($dealerCourses);
@@ -64,11 +64,11 @@ class VerifyCourseVideos extends Command
         $this->displaySummary($allCourses->count(), count($issues), $fixed);
 
         // Display issues
-        if (! empty($issues)) {
+        if ($issues !== []) {
             $this->displayIssues($issues);
         }
 
-        return empty($issues) ? self::SUCCESS : self::FAILURE;
+        return $issues === [] ? self::SUCCESS : self::FAILURE;
     }
 
     protected function verifyCourse($course): array
@@ -128,7 +128,7 @@ class VerifyCourseVideos extends Command
             if (! empty($embedDomains)) {
                 $hasAllowedDomain = false;
                 foreach ($embedDomains as $domain) {
-                    if (str_contains($domain, 'armp.app') || str_contains($domain, '*')) {
+                    if (str_contains((string) $domain, 'armp.app') || str_contains((string) $domain, '*')) {
                         $hasAllowedDomain = true;
                         break;
                     }

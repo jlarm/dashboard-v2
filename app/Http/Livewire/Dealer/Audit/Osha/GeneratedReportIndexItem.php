@@ -15,10 +15,10 @@ class GeneratedReportIndexItem extends Component
     protected $sum;
     protected $exclude = [7, 21, 62];
 
-    public function mount()
+    public function mount(): void
     {
-        $this->audit = OshaAudit::where('id', $this->oshaAudit->id)->get();
-        $this->audit->filter(function ($value) {
+        $this->audit = OshaAudit::query()->where('id', $this->oshaAudit->id)->get();
+        $this->audit->filter(function ($value): void {
             for ($i = 1; $i <= 65; $i++) {
                 if (! in_array($i, $this->exclude) && $value->{'osha_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use Illuminate\Support\Facades\File;
 use App\Models\Dealer\Audit\FinanceAudit;
-use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -37,14 +37,14 @@ class GenerateAuditPdfJob implements ShouldQueue
             File::makeDirectory($path, $mode = 0777, true, true);
         }
 
-        $audit = Browsershot::html($html)
+        Browsershot::html($html)
             ->showBackground()
             ->format('A4')
             ->scale(0.75)
             ->waitUntilNetworkIdle()
             ->save(storage_path('app/finance-audits/'.$fileName));
 
-        $updatePath = $this->financeAudit->update([
+        $this->financeAudit->update([
             'pdf_path' => $fileName,
             'rating' => $this->rating(),
         ]);

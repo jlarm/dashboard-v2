@@ -23,8 +23,8 @@ class CourseExpiringEmailCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
-            User::select(['id', 'name', 'email', 'department_id'])
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+            User::query()->select(['id', 'name', 'email', 'department_id'])
                 ->with('roles', 'stores')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get()
@@ -58,17 +58,15 @@ class CourseExpiringEmailCommand extends Command
         // Use UserCourseService to get the correct course IDs assigned to this user
         $courseIds = $this->userCourseService->getCourseIds($user);
 
-        $results = $user->results()
+        return $user->results()
             ->whereIn('course_id', $courseIds)
             ->where('passed', 1)
-            ->where(function ($query) use ($lastYear, $fifteenDays, $thirtyDays) {
+            ->where(function ($query) use ($lastYear, $fifteenDays, $thirtyDays): void {
                 $query->whereDate('created_at', $lastYear)
                     ->orWhereDate('created_at', $fifteenDays)
                     ->orWhereDate('created_at', $thirtyDays);
             })
             ->get()
             ->unique('course_id');
-
-        return $results;
     }
 }

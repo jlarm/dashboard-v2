@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Scan;
 
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cookie;
 use App\Models\Dealer\Store;
-use Cookie;
 use Exception;
-use Http;
 use Livewire\Component;
 
 class Login extends Component
@@ -35,9 +35,10 @@ class Login extends Component
 
             return redirect()->route('dealer.scan.index');
 
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->addError('email', 'Invalid credentials');
         }
+        return null;
     }
 
     public function render()

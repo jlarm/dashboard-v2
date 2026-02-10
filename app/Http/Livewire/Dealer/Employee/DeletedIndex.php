@@ -19,7 +19,7 @@ class DeletedIndex extends Component
 
     public function render(): View
     {
-        if ($this->store) {
+        if ($this->store instanceof Store) {
             $users = $this->store->users()->with('department')->onlyTrashed();
         } else {
             $users = User::with('department')->onlyTrashed();

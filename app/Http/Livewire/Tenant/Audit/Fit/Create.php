@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Tenant\Audit\Fit;
 
+use Illuminate\Validation\ValidationException;
 use App\Models\Dealer\Store;
 use App\Models\FitTestDoc;
 use App\Models\User;
@@ -18,20 +19,20 @@ class Create extends Component
 
     public Store $store;
     public $search = '';
-    public $selectedUser = null;
+    public $selectedUser;
     public $date;
     public $file;
 
     public function mount(): void
     {
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::query()->find(app('currentStore'));
     }
 
     public function searchUsers(): void
     {
-        if (mb_strlen($this->search) >= 2) {
+        if (mb_strlen((string) $this->search) >= 2) {
             $users = $this->baseQuery()
-                ->whereDoesntHave('roles', function ($query) {
+                ->whereDoesntHave('roles', function ($query): void {
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })
@@ -51,7 +52,7 @@ class Create extends Component
     {
         $this->selectedUser = [
             'id' => $userId,
-            'name' => User::where('id', $userId)->value('name'),
+            'name' => User::query()->where('id', $userId)->value('name'),
         ];
         $this->search = $this->selectedUser['name'];
 
@@ -65,7 +66,7 @@ class Create extends Component
             $this->validate([
                 'selectedUser' => [
                     'required',
-                    function ($attribute, $value, $fail) {
+                    function ($attribute, $value, $fail): void {
                         if (! is_array($value) || ! isset($value['id'])) {
                             $fail('Please select a valid employee from the dropdown.');
                         }
@@ -83,7 +84,7 @@ class Create extends Component
 
             $filePath = $this->file->store(tenant()->id.'/fits', 'dealer-docs');
 
-            FitTestDoc::create([
+            FitTestDoc::query()->create([
                 'store_id' => $this->store->id,
                 'user_id' => $this->selectedUser['id'],
                 'employee_name' => $this->selectedUser['name'],
@@ -102,7 +103,7 @@ class Create extends Component
                 ->success()
                 ->send();
 
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             $this->dispatchBrowserEvent('search-updated', ['users' => []]); // Clear the dropdown
             throw $e; // Re-throw to let Livewire handle the validation error
         }

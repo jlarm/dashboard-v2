@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('violations', function (Blueprint $table) {
+        Schema::table('violations', function (Blueprint $table): void {
             $table->unsignedTinyInteger('severity')->default(0)->after('risk');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('violations', function (Blueprint $table) {
+        Schema::table('violations', function (Blueprint $table): void {
             $table->dropColumn('severity');
         });
     }

@@ -19,7 +19,7 @@ class ImageModal extends Modal
         ];
     }
 
-    public function mount(Violation $violation)
+    public function mount(Violation $violation): void
     {
         $this->violation = $violation;
     }

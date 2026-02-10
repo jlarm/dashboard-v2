@@ -19,11 +19,11 @@ class ClearLivewireTempFiles extends Command
 
         $totalFiles = 0;
 
-        tenancy()->runForMultiple(Dealership::all(), function ($tenant) use (&$totalFiles) {
+        tenancy()->runForMultiple(Dealership::all(), function ($tenant) use (&$totalFiles): void {
             $this->info("Processing tenant {$tenant->id} ({$tenant->name})...");
 
-            $disk = Storage::disk(config('livewire.temporary_file_upload.disk') ?? config('filesystems.default'));
-            $directory = config('livewire.temporary_file_upload.directory') ?? 'livewire-tmp';
+            $disk = Storage::disk(config('livewire.temporary_file_upload.disk', config('filesystems.default')));
+            $directory = config('livewire.temporary_file_upload.directory', 'livewire-tmp');
 
             if ($disk->exists($directory)) {
                 $files = $disk->allFiles($directory);

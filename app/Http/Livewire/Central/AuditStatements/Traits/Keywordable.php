@@ -9,7 +9,7 @@ trait Keywordable
     public $keywords = [];
     public $newKeyword = '';
 
-    public function addKeyword()
+    public function addKeyword(): void
     {
         if (trim($this->newKeyword) !== '' && ! in_array($this->newKeyword, $this->keywords)) {
             $this->keywords[] = $this->newKeyword;
@@ -17,7 +17,7 @@ trait Keywordable
         }
     }
 
-    public function removeKeyword($index)
+    public function removeKeyword($index): void
     {
         unset($this->keywords[$index]);
         $this->keywords = array_values($this->keywords);

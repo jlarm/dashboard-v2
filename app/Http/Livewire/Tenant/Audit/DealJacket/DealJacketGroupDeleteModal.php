@@ -17,7 +17,7 @@ class DealJacketGroupDeleteModal extends Modal
 
     public function mount(): void
     {
-        $this->group = DealJacketGroup::findOrFail($this->dealJacketGroup);
+        $this->group = DealJacketGroup::query()->findOrFail($this->dealJacketGroup);
     }
 
     public function delete(): void

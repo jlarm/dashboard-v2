@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
+use Illuminate\Support\Facades\Bus;
 use App\Jobs\GenerateAuditPdfJob;
 use App\Jobs\UploadAuditToDigitalOceanJob;
 use App\Models\Dealer\Audit\FinanceAudit;
-use Bus;
 use Livewire\Component;
 
 class Generate extends Component

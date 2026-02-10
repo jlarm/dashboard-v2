@@ -19,13 +19,13 @@ class Index extends Component
 
     public function mount(Request $request): void
     {
-        $this->currentStore = Store::where('name', $request->get('store')?->name)->first();
+        $this->currentStore = Store::query()->where('name', $request->get('store')?->name)->first();
     }
 
     public function render()
     {
         return view('livewire.dealer.audit.individual.index', [
-            'audits' => IndividualAudit::orderBy('audit_date', 'desc')
+            'audits' => IndividualAudit::query()->orderBy('audit_date', 'desc')
                 ->latest()->where('parent_id', null)
                 ->with('store')
                 ->where('store_id', $this->store->id)

@@ -28,7 +28,7 @@ class OptionalCoursesForm extends Component
     public function updatedSelectedCourses($value, $key): void
     {
         // toggle optional course
-        $course = Course::find($key);
+        $course = Course::query()->find($key);
         $course->optional = $value;
         $course->save();
     }

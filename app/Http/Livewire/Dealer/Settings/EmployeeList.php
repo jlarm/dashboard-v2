@@ -39,7 +39,7 @@ class EmployeeList extends Component
         'owner_phone' => ['nullable', 'string', 'max:255'],
     ];
 
-    public function mount(\App\Models\Dealer\Settings\EmployeeList $employeeList)
+    public function mount(\App\Models\Dealer\Settings\EmployeeList $employeeList): void
     {
         $this->dealer = $employeeList->where('store_id', $this->store->id)->first();
 
@@ -57,7 +57,7 @@ class EmployeeList extends Component
         $this->owner_phone = $this->dealer->owner_phone ?? '';
     }
 
-    public function update()
+    public function update(): void
     {
         $this->validate();
 

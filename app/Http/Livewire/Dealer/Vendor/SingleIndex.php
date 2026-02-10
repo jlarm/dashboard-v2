@@ -14,7 +14,7 @@ class SingleIndex extends Component
     public function render()
     {
         return view('livewire.dealer.vendor.single-index', [
-            'vendors' => Vendor::orderBy('name')->get(),
+            'vendors' => Vendor::query()->orderBy('name')->get(),
         ]);
     }
 }

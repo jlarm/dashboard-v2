@@ -41,7 +41,7 @@ class Create extends Component
         $this->dealers[] = $request->get('store')?->id ? (string) $request->get('store')?->id : [];
     }
 
-    public function updated($propertyName)
+    public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
     }
@@ -54,7 +54,7 @@ class Create extends Component
             $this->roles[] = 'Qualified Individual';
         }
 
-        $invite = Invite::create([
+        $invite = Invite::query()->create([
             'name' => mb_convert_case($this->name, MB_CASE_TITLE, 'UTF-8'),
             'email' => mb_strtolower($this->email),
             'stores' => $this->dealers,
@@ -62,7 +62,7 @@ class Create extends Component
             'user_id' => auth()->user()->id,
             'roles' => $this->roles,
             'courses' => $this->courses,
-            'invitation_token' => mb_substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+            'invitation_token' => mb_substr(md5(random_int(0, 9).$this->email.time()), 0, 32),
         ]);
 
         SendQueueEmailJob::dispatch($invite, 'invite');
@@ -84,8 +84,8 @@ class Create extends Component
         return view('livewire.dealer.employee.create', [
             'departments' => Department::all(),
             'allRoles' => $rolesQuery->get(),
-            'allCourses' => Course::select('id', 'name')->get(),
-            'stores' => Store::orderBy('name')->get(),
+            'allCourses' => Course::query()->select('id', 'name')->get(),
+            'stores' => Store::query()->orderBy('name')->get(),
         ]);
     }
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\Traits;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Remediation;
 use Exception;
 use Filament\Notifications\Notification;
-use Log;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 
 trait UpdateRemediations
@@ -24,7 +24,7 @@ trait UpdateRemediations
             $completed = $remediationData['completed'] ?? false;
             $newPhoto = $remediationData['photo'] ?? null;
 
-            $hasNewPhoto = ! empty($newPhoto);
+            $hasNewPhoto = $newPhoto !== null;
             $remediation = $violation->remediation ?? new Remediation(['violation_id' => $violationId]);
 
             $isDirty = false;
@@ -111,14 +111,14 @@ trait UpdateRemediations
 
             // Determine if it will have photos after this operation
             $willHavePhotos = $newPhotoSuccessfullyAdded;
-            if (! $newPhotoSuccessfullyAdded && ! $isNewRemediation) {
+            if (! $isNewRemediation) {
                 // If no new photo was successfully added, and it's an existing remediation,
                 // check if it already has photos. This assumes getMedia reflects current photos
                 // and this code block doesn't handle explicit photo removal.
                 $willHavePhotos = $willHavePhotos || $remediation->getMedia('remediations')->isNotEmpty();
             }
 
-            $hasQualifyingContent = ! empty($finalComment) || $finalCompleted || $willHavePhotos;
+            $hasQualifyingContent = $finalComment !== '' && $finalComment !== '0' || $finalCompleted || $willHavePhotos;
 
             if ($isNewRemediation) {
                 // For a new remediation instance
@@ -128,20 +128,18 @@ trait UpdateRemediations
                     $remediation->save();
                 }
                 // Else: new instance, but no qualifying content. Do not save.
-            } else {
+            } elseif ($hasQualifyingContent) {
                 // For an existing remediation instance
-                if ($hasQualifyingContent) {
-                    // It has qualifying content. If any attributes were changed ($isDirty), save the updates.
-                    if ($isDirty) {
-                        $remediation->user_id = auth()->id();
-                        $remediation->save();
-                    }
-                    // Else: existing, has content, but not dirty. No changes to save.
-                } else {
-                    // It's an existing remediation, but it no longer has qualifying content.
-                    // So, delete it from the DB.
-                    $remediation->delete();
+                // It has qualifying content. If any attributes were changed ($isDirty), save the updates.
+                if ($isDirty) {
+                    $remediation->user_id = auth()->id();
+                    $remediation->save();
                 }
+                // Else: existing, has content, but not dirty. No changes to save.
+            } else {
+                // It's an existing remediation, but it no longer has qualifying content.
+                // So, delete it from the DB.
+                $remediation->delete();
             }
         }
 

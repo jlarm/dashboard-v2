@@ -113,7 +113,7 @@ class Create extends Component
     {
         $this->validate();
 
-        $contract = Contract::create([
+        $contract = Contract::query()->create([
             'contract_type' => $this->contractType,
             'agreement_date' => $this->agreementDate,
             'dealer_name' => Str::title($this->dealerName),

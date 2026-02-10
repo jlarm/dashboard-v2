@@ -16,7 +16,7 @@ class Index extends Component
 
     public function mount(): void
     {
-        $this->store = Store::where('id', app('currentStore'))->firstOrFail();
+        $this->store = Store::query()->where('id', app('currentStore'))->firstOrFail();
 
         if ($this->checkIfRidgeBackExists()) {
             $this->ipAddress = $this->store->ridgeback()->firstOrFail()->ip_address;
@@ -26,29 +26,17 @@ class Index extends Component
 
     public function checkIfRidgeBackExists(): bool
     {
-        if ($this->store->ridgeback()->first()) {
-            return true;
-        }
-
-        return false;
+        return (bool) $this->store->ridgeback()->first();
     }
 
     public function checkIfActive(): bool
     {
-        if ($this->active) {
-            return true;
-        }
-
-        return false;
+        return $this->active;
     }
 
     public function checkHasIpAddress(): bool
     {
-        if ($this->ipAddress) {
-            return true;
-        }
-
-        return false;
+        return (bool) $this->ipAddress;
     }
 
     public function render(): View

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\Services\UserCourseService;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,6 +21,9 @@ trait HasCourses
     public function clearCourseCache(): void
     {
         $this->userCourses = null;
+
+        // Clear service-level caches for this user
+        app(\App\Services\UserCourseService::class)::clearCacheForUser($this->id);
 
         // Clear Laravel's attribute cache for computed attributes
         if (isset($this->attributes['total_completed_courses'])) {
@@ -41,10 +45,8 @@ trait HasCourses
             return $this->results
                 ->whereIn('course_id', $userCourseIds)
                 ->where('passed', 1)
-                ->filter(function ($result) use ($oneYearAgo, $threeYearsAgo) {
-                    return $result->created_at >= $oneYearAgo
-                        || (in_array($result->course_id, [9, 10, 11, 12]) && $result->created_at >= $threeYearsAgo);
-                })
+                ->filter(fn($result): bool => $result->created_at >= $oneYearAgo
+                    || (in_array($result->course_id, [9, 10, 11, 12]) && $result->created_at >= $threeYearsAgo))
                 ->unique('course_id')
                 ->count();
         }
@@ -53,9 +55,9 @@ trait HasCourses
             ->distinct()
             ->where('user_id', $this->id)
             ->whereIn('course_id', $this->totalUserCourses())
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query->where('created_at', '>=', now()->subYear())
-                    ->orWhere(function ($query) {
+                    ->orWhere(function ($query): void {
                         $query->whereIn('course_id', [9, 10, 11, 12])
                             ->where('created_at', '>=', now()->subYears(3));
                     });
@@ -93,7 +95,7 @@ trait HasCourses
                 $this->load('roles');
             }
 
-            $service = app(\App\Services\UserCourseService::class);
+            $service = app(UserCourseService::class);
             $this->userCourses = $service->getCourseIds($this);
         }
 

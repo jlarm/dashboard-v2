@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Central\Dealership;
 
+use App\Models\Course;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealership\CreateRequest;
 use App\Models\Dealer\ScanSetting;
@@ -14,7 +16,6 @@ use App\Models\User;
 use App\Notifications\NewDealershipNotification;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Log;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CreateController extends Controller
@@ -25,7 +26,7 @@ class CreateController extends Controller
 
         $tenantDomain = $validated['domain'].'.'.config('tenancy.central_domains')[0];
 
-        $dealer = Dealership::create([
+        $dealer = Dealership::query()->create([
             'user_id' => auth()->user()->id,
             'name' => $validated['name'],
             'address' => $validated['address'],
@@ -42,9 +43,9 @@ class CreateController extends Controller
 
         $dealer->createDomain($tenantDomain);
 
-        $dealer->run(function () use ($validated) {
+        $dealer->run(function () use ($validated): void {
             $this->createStoreAndSettings($validated);
-            $this->createUserAndAssignRole($validated);
+            $this->createUserAndAssignRole();
             $this->syncCentralCourses();
         });
 
@@ -57,16 +58,16 @@ class CreateController extends Controller
         return redirect()->route('dealerships.index');
     }
 
-    private function sendNotification($dealerName)
+    private function sendNotification($dealerName): void
     {
-        $user = User::where('email', 'jlohr@autorisknow.com')->firstOrFail();
+        $user = User::query()->where('email', 'jlohr@autorisknow.com')->firstOrFail();
         $user->notify(new NewDealershipNotification($dealerName));
     }
 
-    private function createStoreAndSettings($validated)
+    private function createStoreAndSettings(array $validated): void
     {
         if (! $validated['locations']) {
-            $store = Store::create([
+            $store = Store::query()->create([
                 'name' => $validated['name'],
                 'address' => $validated['address'],
                 'city' => $validated['city'],
@@ -76,28 +77,25 @@ class CreateController extends Controller
                 'fax' => $validated['fax'],
             ]);
 
-            ScanSetting::create(['store_id' => $store->id]);
-            EmployeeList::create(['store_id' => $store->id]);
+            ScanSetting::query()->create(['store_id' => $store->id]);
+            EmployeeList::query()->create(['store_id' => $store->id]);
         }
     }
 
-    private function createUserAndAssignRole($validated)
+    private function createUserAndAssignRole(): void
     {
         $initials = $this->getInitialsFromName();
-
-        $user = User::create([
+        $user = User::query()->create([
             'name' => auth()->user()->name,
             'email' => auth()->user()->email,
             'phone' => auth()->user()->phone,
             'password' => bcrypt('Autorisknow'.$initials.'!'),
         ]);
-
         $this->assignRoleToUser($user);
-
         $this->createSuperAdmins($user);
     }
 
-    private function getInitialsFromName()
+    private function getInitialsFromName(): string
     {
         $words = explode(' ', auth()->user()->name);
         $initials = null;
@@ -108,7 +106,7 @@ class CreateController extends Controller
         return $initials;
     }
 
-    private function assignRoleToUser($user)
+    private function assignRoleToUser($user): void
     {
         if ($user->name === 'Joe Lohr' || $user->name === 'Terry Dortch' || $user->name === 'Mike Backer') {
             $user->assignRole('super-admin');
@@ -117,7 +115,7 @@ class CreateController extends Controller
         }
     }
 
-    private function createSuperAdmins($user)
+    private function createSuperAdmins($user): void
     {
         $superAdmins = [
             'Joe Lohr' => ['email' => 'jlohr@autorisknow.com', 'phone' => '2243586930', 'password' => 'AutorisknowJL!'],
@@ -127,7 +125,7 @@ class CreateController extends Controller
 
         foreach ($superAdmins as $name => $details) {
             if ($user->name !== $name) {
-                $superAdmin = User::create([
+                $superAdmin = User::query()->create([
                     'name' => $name,
                     'email' => $details['email'],
                     'phone' => $details['phone'],
@@ -141,14 +139,14 @@ class CreateController extends Controller
     private function syncCentralCourses(): void
     {
         // Get central courses first
-        $centralCourses = tenancy()->central(fn () => \App\Models\Course::query()
+        $centralCourses = tenancy()->central(fn () => Course::query()
             ->select(['id', 'slug', 'slides', 'questions'])
             ->get());
 
         // Now we're in tenant context since we're inside dealer->run()
         foreach ($centralCourses as $centralCourse) {
 
-            $tenantCourse = \App\Models\Dealer\Course::where('slug', $centralCourse->slug)->first();
+            $tenantCourse = \App\Models\Dealer\Course::query()->where('slug', $centralCourse->slug)->first();
 
             if ($tenantCourse) {
                 try {

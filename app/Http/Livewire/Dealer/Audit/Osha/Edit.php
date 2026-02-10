@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use App\Models\AuditComment;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Traits\HasOshaViolationStatements;
@@ -13,7 +15,6 @@ use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Log;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
@@ -108,7 +109,7 @@ class Edit extends Component
                 ->title('Audit Updated!')
                 ->success()
                 ->send();
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             $errorMessage = collect($e->errors())->flatten()->first() ?? 'Validation failed';
 
             Notification::make()
@@ -150,7 +151,7 @@ class Edit extends Component
 
     public function deleteComment($commentId): void
     {
-        $comment = AuditComment::findOrFail($commentId);
+        $comment = AuditComment::query()->findOrFail($commentId);
 
         if ($comment->user_id !== auth()->id()) {
             Notification::make()

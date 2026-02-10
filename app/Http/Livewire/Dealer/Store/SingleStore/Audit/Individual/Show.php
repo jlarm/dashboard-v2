@@ -16,18 +16,18 @@ class Show extends Component
     public $children;
     public $draftCount;
 
-    public function mount()
+    public function mount(): void
     {
         $this->children = IndividualAudit::query()
             ->where('store_id', $this->store->id)
             ->where('parent_id', $this->individualAudit->id)
             ->where('draft', 1)
             ->count();
-        $this->parent = IndividualAudit::where('id', $this->individualAudit->id)->where('draft', 1)->count();
+        $this->parent = IndividualAudit::query()->where('id', $this->individualAudit->id)->where('draft', 1)->count();
         $this->draftCount = $this->children + $this->parent;
     }
 
-    public function getQuarterNameAttribute()
+    public function getQuarterNameAttribute(): ?string
     {
         if ($this->individualAudit->audit_date->format('m') >= 1 && $this->individualAudit->audit_date->format('m') <= 3) {
             return 'Q1';
@@ -41,6 +41,7 @@ class Show extends Component
         if ($this->individualAudit->audit_date->format('m') >= 10 && $this->individualAudit->audit_date->format('m') <= 12) {
             return 'Q4';
         }
+        return null;
     }
 
     public function render()

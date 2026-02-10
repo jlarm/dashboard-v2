@@ -15,7 +15,7 @@ class GeneratedReportIndex extends Component
     public function render()
     {
         return view('livewire.dealer.audit.osha.generated-report-index', [
-            'oshaAudits' => OshaAudit::whereNot('pdf_path', '')->orderBy('audit_date', 'desc')->select('id', 'audit_date', 'pdf_path')->get(),
+            'oshaAudits' => OshaAudit::query()->whereNot('pdf_path', '')->orderBy('audit_date', 'desc')->select('id', 'audit_date', 'pdf_path')->get(),
         ]);
     }
 }

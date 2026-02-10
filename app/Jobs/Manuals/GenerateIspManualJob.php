@@ -34,7 +34,7 @@ class GenerateIspManualJob implements ShouldQueue
              </div>
          ';
 
-        $manual = Browsershot::html($html)
+        Browsershot::html($html)
             ->showBackground()
             ->margins(10, 10, 10, 10)
             ->scale(0.75)
@@ -44,7 +44,7 @@ class GenerateIspManualJob implements ShouldQueue
             ->footerHtml($footerHtml)
             ->save($storagePath);
 
-        $updatePath = $this->manual->update([
+        $this->manual->update([
             'pdf_path' => $fileName,
         ]);
     }

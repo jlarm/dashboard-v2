@@ -25,8 +25,8 @@ class SendCoursesResetNotifications implements ShouldQueue
 
     public function handle(): void
     {
-        User::whereIn('id', $this->userIds)
-            ->chunkById(100, function ($users) {
+        User::query()->whereIn('id', $this->userIds)
+            ->chunkById(100, function ($users): void {
                 foreach ($users as $user) {
                     Mail::to($user->email)->send(
                         new CourseResetNotificationMail(

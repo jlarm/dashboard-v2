@@ -11,19 +11,20 @@ use Illuminate\Notifications\Notification;
 class CourseExpiringSoonNotification extends Notification
 {
     public $course;
+    /**
+     * @var string
+     */
     public $domain;
-    public $userName;
     public $expireDate;
 
-    public function __construct($tenantDomain, $userName, protected int $courseId, $expireDate)
+    public function __construct(string $tenantDomain, public $userName, protected int $courseId, $expireDate)
     {
-        $this->course = Course::where('id', $this->courseId)->first();
+        $this->course = Course::query()->where('id', $this->courseId)->first();
         $this->domain = 'https://'.$tenantDomain.'/courses/'.$this->course->slug;
-        $this->userName = $userName;
         $this->expireDate = $expireDate->format('F d, Y');
     }
 
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail'];
     }

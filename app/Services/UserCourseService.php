@@ -28,7 +28,7 @@ class UserCourseService
         // Admin roles should never be assigned courses automatically
         $adminRoles = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
         $userRoleNames = $user->roles->pluck('name')->toArray();
-        $hasOnlyAdminRoles = ! empty($userRoleNames) && empty(array_diff($userRoleNames, $adminRoles));
+        $hasOnlyAdminRoles = ! empty($userRoleNames) && array_diff($userRoleNames, $adminRoles) === [];
 
         if ($hasOnlyAdminRoles) {
             // Admin users only get manually added courses
@@ -43,7 +43,7 @@ class UserCourseService
 
         // Get user role IDs (excluding role 5 and admin roles)
         $userRoleIds = $user->roles
-            ->reject(fn ($role) => $role->id === 5 || in_array($role->name, $adminRoles))
+            ->reject(fn ($role): bool => $role->id === 5 || in_array($role->name, $adminRoles))
             ->pluck('id');
 
         if ($userRoleIds->isEmpty()) {
@@ -65,16 +65,16 @@ class UserCourseService
         // Get base courses from department and role (cached by department/role set/location)
         $baseCourseIds = self::$baseCourseCache[$baseKey] ??= Course::query()
             ->where('optional', false)
-            ->where(function ($query) use ($user, $courseWithRole, $hasNoCaliforniaStore) {
+            ->where(function ($query) use ($user, $courseWithRole, $hasNoCaliforniaStore): void {
                 // Branch 1: Courses with specific departments (must have matching role)
-                $query->where(function ($q) use ($user, $courseWithRole) {
+                $query->where(function ($q) use ($user, $courseWithRole): void {
                     $q->whereHas('departments', fn ($q) => $q->where('id', $user->department_id))
                         ->whereIn('id', $courseWithRole);
                 })
                     // Branch 2: Courses without departments
-                    ->orWhere(function ($q) use ($courseWithRole, $hasNoCaliforniaStore) {
+                    ->orWhere(function ($q) use ($courseWithRole, $hasNoCaliforniaStore): void {
                         $q->whereDoesntHave('departments')
-                            ->where(function ($subQuery) use ($courseWithRole) {
+                            ->where(function ($subQuery) use ($courseWithRole): void {
                                 // Either has a role requirement AND user has that role
                                 $subQuery->whereIn('id', $courseWithRole)
                                     // OR has no role requirement (universal course for everyone)
@@ -94,6 +94,22 @@ class UserCourseService
             ->diff($excludedCourseIds)
             ->values()
             ->toArray();
+    }
+
+    public static function clearCacheForUser(?int $userId): void
+    {
+        if ($userId === null) {
+            return;
+        }
+
+        unset(self::$courseIdsCache[$userId]);
+    }
+
+    public static function clearAllCaches(): void
+    {
+        self::$courseIdsCache = [];
+        self::$courseRoleCache = [];
+        self::$baseCourseCache = [];
     }
 
     /**
@@ -134,7 +150,7 @@ class UserCourseService
 
         return Course::query()
             ->whereIn('id', $courseIds)
-            ->when(! empty($with), fn ($query) => $query->with($with))
+            ->unless($with === [], fn ($query) => $query->with($with))
             ->select($select)
             ->orderBy('name')
             ->get();

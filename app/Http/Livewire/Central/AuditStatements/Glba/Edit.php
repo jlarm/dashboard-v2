@@ -19,14 +19,14 @@ class Edit extends Component
     public $newKeyword = '';
     public int $weight;
 
-    public function mount()
+    public function mount(): void
     {
         $this->statement = $this->glbaViolation->statement;
         $this->keywords = json_decode($this->glbaViolation->keywords);
         $this->weight = $this->glbaViolation->weight;
     }
 
-    public function update()
+    public function update(): void
     {
         $this->validate([
             'statement' => 'required',

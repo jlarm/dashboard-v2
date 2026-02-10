@@ -19,14 +19,14 @@ class Edit extends Component
     public $newKeyword = '';
     public int $weight;
 
-    public function mount()
+    public function mount(): void
     {
         $this->statement = $this->bodyShopViolation->statement;
         $this->keywords = json_decode($this->bodyShopViolation->keywords);
         $this->weight = $this->bodyShopViolation->weight;
     }
 
-    public function update()
+    public function update(): void
     {
         $this->validate([
             'statement' => 'required',

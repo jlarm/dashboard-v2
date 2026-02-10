@@ -24,7 +24,7 @@ class AuditCommentForm extends Component
         'comment' => 'required|string|max:1000',
     ];
 
-    public function mount($auditId, $auditType): void
+    public function mount(int $auditId, string $auditType): void
     {
         $this->auditId = $auditId;
         $this->auditType = $auditType;
@@ -39,7 +39,7 @@ class AuditCommentForm extends Component
     {
         $this->validate();
 
-        $auditComment = AuditComment::create([
+        $auditComment = AuditComment::query()->create([
             'user_id' => auth()->id(),
             'auditable_id' => $this->auditId,
             'auditable_type' => $this->auditType,

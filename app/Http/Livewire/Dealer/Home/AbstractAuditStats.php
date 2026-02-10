@@ -25,7 +25,7 @@ abstract class AbstractAuditStats extends Component
 
     final public function mount(): void
     {
-        $this->store = $this->store ?? Store::first();
+        $this->store ??= Store::query()->first();
     }
 
     final public function rating(): string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Employee;
 
+use App\Models\User;
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
@@ -26,18 +27,18 @@ class Invite extends Modal
         'role' => ['required'],
     ];
 
-    public function sendInvite()
+    public function sendInvite(): void
     {
         $this->validate();
 
-        $invite = \App\Models\Dealer\Invite::create([
+        $invite = \App\Models\Dealer\Invite::query()->create([
             'name' => $this->name,
             'email' => $this->email,
             'stores' => $this->stores ?? [],
             'department_id' => $this->department,
             'roles' => [$this->role],
             'user_id' => auth()->user()->id,
-            'invitation_token' => mb_substr(md5(rand(0, 9).$this->email.time()), 0, 32),
+            'invitation_token' => mb_substr(md5(random_int(0, 9).$this->email.time()), 0, 32),
         ]);
 
         SendQueueEmailJob::dispatch($invite, 'invite');
@@ -52,9 +53,9 @@ class Invite extends Modal
 
     public function render()
     {
-        $qualifiedIndividualCount = \App\Models\User::role('Qualified Individual')->count();
+        $qualifiedIndividualCount = User::role('Qualified Individual')->count();
 
-        $rolesQuery = Role::whereNot('name', 'super-admin')
+        $rolesQuery = Role::query()->whereNot('name', 'super-admin')
             ->whereNot('name', 'Admin')
             ->whereNot('name', 'Consultant')
             ->orderBy('name');
@@ -64,8 +65,8 @@ class Invite extends Modal
         }
 
         return view('livewire.dealer.employee.invite', [
-            'allStore' => Store::orderBy('name')->get(),
-            'departments' => Department::orderBy('name')->get(),
+            'allStore' => Store::query()->orderBy('name')->get(),
+            'departments' => Department::query()->orderBy('name')->get(),
             'allRoles' => $rolesQuery->get(),
         ]);
     }

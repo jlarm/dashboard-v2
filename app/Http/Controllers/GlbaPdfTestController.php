@@ -13,6 +13,6 @@ class GlbaPdfTestController extends Controller
     {
         $audit = FinanceAudit::with('user')->first();
 
-        return view('dealer.glba-audit-pdf', compact('audit'));
+        return view('dealer.glba-audit-pdf', ['audit' => $audit]);
     }
 }

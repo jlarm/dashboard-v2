@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Scan;
 
+use Illuminate\Support\Facades\Cookie;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
-use Cookie;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -25,22 +25,18 @@ class Index extends Component
     public $internal;
     public $external;
 
-    public function mount()
+    public function mount(): void
     {
         if (tenant('locations')) {
-            $this->dealer = ScanSetting::where('store_id', $this->store->id)->first()->name ?? '';
+            $this->dealer = ScanSetting::query()->where('store_id', $this->store->id)->first()->name ?? '';
         } else {
-            $this->dealer = ScanSetting::first()->name ?? '';
+            $this->dealer = ScanSetting::query()->first()->name ?? '';
         }
     }
 
     public function export()
     {
-        if (tenant('locations')) {
-            $dealerName = str_replace(' ', '-', $this->store->name);
-        } else {
-            $dealerName = str_replace(' ', '-', tenant('name'));
-        }
+        $dealerName = tenant('locations') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
         $fileName = $dealerName.'-'.now()->format('Ymdhis').'-'.$this->type.'.pdf';
 
         try {
@@ -55,9 +51,9 @@ class Index extends Component
 
             Storage::disk('do-scans')->put(tenant('id').'/'.$this->type.'/'.$fileName, $status);
 
-            ScanReport::create([
+            ScanReport::query()->create([
                 'user_id' => auth()->id(),
-                'store_id' => $this->store->id ?? Store::first()->id,
+                'store_id' => $this->store->id ?? Store::query()->first()->id,
                 'path' => tenant('id').'/'.$this->type.'/'.$fileName,
                 'type' => $this->type,
                 'scan_type' => 'external',
@@ -69,9 +65,10 @@ class Index extends Component
 
             return redirect()->route('dealer.scan.index');
 
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->addError('connection', 'Error connecting to Sentry. Please check the dealership name in settings.');
         }
+        return null;
 
     }
 }

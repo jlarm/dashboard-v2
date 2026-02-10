@@ -21,7 +21,7 @@ class Create extends Component
     use WithFileUploads;
 
     public string $title = '';
-    public $file = null;
+    public $file;
     public string $url = '';
     protected array $rules = [
         'title' => 'required|string|min:2|max:255',
@@ -55,12 +55,10 @@ class Create extends Component
 
                 $filePath = Storage::disk('public')->putFileAs('/shared-documents', $this->file, $fileName);
 
-                if (! $filePath) {
-                    throw new Exception('Error uploading the file');
-                }
+                throw_unless($filePath, new Exception('Error uploading the file'));
             }
 
-            SharedDocument::create([
+            SharedDocument::query()->create([
                 'title' => $this->title,
                 'file_name' => $filePath ?? null,
                 'url' => $this->url,

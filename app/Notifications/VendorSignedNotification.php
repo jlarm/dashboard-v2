@@ -13,11 +13,8 @@ class VendorSignedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public VendorForm $vendor;
-
-    public function __construct(VendorForm $vendor)
+    public function __construct(public VendorForm $vendor)
     {
-        $this->vendor = $vendor;
     }
 
     public function via($notifiable): array

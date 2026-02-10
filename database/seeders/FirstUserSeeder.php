@@ -11,7 +11,7 @@ class FirstUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::create([
+        $user = User::query()->create([
             'name' => 'Joe Lohr',
             'email' => 'jlohr@autorisknow.com',
             'phone' => '2243586930',
@@ -19,7 +19,7 @@ class FirstUserSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $terry = User::create([
+        $terry = User::query()->create([
             'name' => 'Terry Dortch',
             'slug' => 'terry-dortch',
             'email' => 'tdortch@autorisknow.com',
@@ -28,7 +28,7 @@ class FirstUserSeeder extends Seeder
             'password' => bcrypt('AutorisknowTD!'),
         ]);
 
-        $mike = User::create([
+        $mike = User::query()->create([
             'name' => 'Mike Backer',
             'slug' => 'mike-backer',
             'email' => 'mbacker@autorisknow.com',

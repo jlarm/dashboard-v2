@@ -2,6 +2,22 @@
 
 declare(strict_types=1);
 
+use WireElements\Pro\WireElementsProServiceProvider;
+use WireElements\Pro\Components\SlideOver\SlideOverServiceProvider;
+use WireElements\Pro\Components\Modal\ModalServiceProvider;
+use Webklex\PDFMerger\Providers\PDFMergerServiceProvider;
+use App\Providers\AppServiceProvider;
+use App\Providers\AuthServiceProvider;
+use App\Providers\EventServiceProvider;
+use App\Providers\HorizonServiceProvider;
+use App\Providers\RouteServiceProvider;
+use App\Providers\VaporUiServiceProvider;
+use App\Providers\TelescopeServiceProvider;
+use App\Providers\TenancyServiceProvider;
+use Maatwebsite\Excel\ExcelServiceProvider;
+use App\Providers\StoreServiceProvider;
+use Maatwebsite\Excel\Facades\Excel;
+use Webklex\PDFMerger\Facades\PDFMergerFacade;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -176,25 +192,25 @@ return [
         /*
          * Package Service Providers...
          */
-        WireElements\Pro\WireElementsProServiceProvider::class,
-        WireElements\Pro\Components\SlideOver\SlideOverServiceProvider::class,
-        WireElements\Pro\Components\Modal\ModalServiceProvider::class,
-        Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
+        WireElementsProServiceProvider::class,
+        SlideOverServiceProvider::class,
+        ModalServiceProvider::class,
+        PDFMergerServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
+        AppServiceProvider::class,
+        AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\HorizonServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\VaporUiServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
-        App\Providers\TenancyServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
-        App\Providers\StoreServiceProvider::class,
+        EventServiceProvider::class,
+        HorizonServiceProvider::class,
+        RouteServiceProvider::class,
+        VaporUiServiceProvider::class,
+        TelescopeServiceProvider::class,
+        TenancyServiceProvider::class,
+        ExcelServiceProvider::class,
+        StoreServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -210,8 +226,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'PDFMerger' => Webklex\PDFMerger\Facades\PDFMergerFacade::class,
+        'Excel' => Excel::class,
+        'PDFMerger' => PDFMergerFacade::class,
     ])->toArray(),
 
 ];

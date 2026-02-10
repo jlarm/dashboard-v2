@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Dealership;
 use App\Models\User;
+use App\Services\UserCourseService;
 use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use RuntimeException;
@@ -22,20 +24,21 @@ abstract class TestCase extends BaseTestCase
         config([
             'database.connections.mysql.database' => 'dashboard_testing',
             'tenancy.database.prefix' => 'test_tenant_',
+            'services.mailgun.webhook_signing_key' => 'test-signing-key',
         ]);
 
         // Reconnect to apply new config
-        \Illuminate\Support\Facades\DB::purge('mysql');
-        \Illuminate\Support\Facades\DB::reconnect('mysql');
+        DB::purge('mysql');
+        DB::reconnect('mysql');
 
         // Verify we're using the testing database
-        $currentDb = \Illuminate\Support\Facades\DB::connection()->getDatabaseName();
-        if ($currentDb !== 'dashboard_testing') {
-            throw new RuntimeException(
-                "SAFETY CHECK FAILED: Tests must use 'dashboard_testing' database, currently using: {$currentDb}. ".
-                'Environment: '.env('DB_DATABASE').' | Config: '.config('database.connections.mysql.database')
-            );
-        }
+        $currentDb = DB::connection()->getDatabaseName();
+        throw_if($currentDb !== 'dashboard_testing', new RuntimeException(
+            "SAFETY CHECK FAILED: Tests must use 'dashboard_testing' database, currently using: {$currentDb}. ".
+            'Environment: '.env('DB_DATABASE').' | Config: '.config('database.connections.mysql.database')
+        ));
+
+        UserCourseService::clearAllCaches();
     }
 
     protected function createTenant(array $data = []): Dealership
@@ -45,7 +48,7 @@ abstract class TestCase extends BaseTestCase
 
         $owner = $data['owner'] ?? User::factory()->create();
 
-        $dealership = Dealership::create([
+        $dealership = Dealership::query()->create([
             'id' => $id,
             'name' => $data['name'] ?? 'Test Dealership',
             'user_id' => $owner->id,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Auth;
 
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -27,7 +28,7 @@ class PasswordResetTest extends TestCase
 
         $user = User::factory()->create();
 
-        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
+        $this->withoutMiddleware(VerifyCsrfToken::class)
             ->post('/forgot-password', ['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPassword::class);
@@ -39,10 +40,10 @@ class PasswordResetTest extends TestCase
 
         $user = User::factory()->create();
 
-        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
+        $this->withoutMiddleware(VerifyCsrfToken::class)
             ->post('/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
+        Notification::assertSentTo($user, ResetPassword::class, function ($notification): true {
             $response = $this->get('/reset-password/'.$notification->token);
 
             $response->assertStatus(200);
@@ -57,11 +58,11 @@ class PasswordResetTest extends TestCase
 
         $user = User::factory()->create();
 
-        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
+        $this->withoutMiddleware(VerifyCsrfToken::class)
             ->post('/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
-            $response = $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)
+        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user): true {
+            $response = $this->withoutMiddleware(VerifyCsrfToken::class)
                 ->post('/reset-password', [
                     'token' => $notification->token,
                     'email' => $user->email,

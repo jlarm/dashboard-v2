@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('body_shop_violation_audits', function (Blueprint $table) {
+        Schema::table('body_shop_violation_audits', function (Blueprint $table): void {
             $table->foreignId('grade_updated_by')->nullable()->constrained('users');
             $table->timestamp('grade_updated_at')->nullable();
         });
@@ -18,7 +18,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('body_shop_violation_audits', function (Blueprint $table) {
+        Schema::table('body_shop_violation_audits', function (Blueprint $table): void {
             $table->dropConstrainedForeignId('grade_updated_by');
             $table->dropColumn('grade_updated_at');
         });

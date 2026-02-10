@@ -12,7 +12,7 @@ class Deleted extends Component
     public function render()
     {
         return view('livewire.central.employee.deleted', [
-            'users' => User::latest()->onlyTrashed()->get(),
+            'users' => User::query()->latest()->onlyTrashed()->get(),
         ]);
     }
 }

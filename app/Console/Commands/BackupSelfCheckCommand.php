@@ -24,7 +24,7 @@ class BackupSelfCheckCommand extends Command
         $failures = [];
         $checked = 0;
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($disk, $cutoff, &$failures, &$checked) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($disk, $cutoff, &$failures, &$checked): void {
             $checked++;
             $tenantSlug = Str::slug($tenant->name) ?: 'tenant';
             $directory = "tenant-{$tenant->id}-{$tenantSlug}";

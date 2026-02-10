@@ -61,7 +61,7 @@ class Edit extends SlideOver
     {
         return view('livewire.dealer.vendor.edit', [
             'forms' => $this->vendor->forms()->latest()->with('emailLogs')->take(12)->get(),
-            'stores' => Store::orderBy('name')->get(),
+            'stores' => Store::query()->orderBy('name')->get(),
         ]);
     }
 

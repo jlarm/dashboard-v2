@@ -19,10 +19,10 @@ class AddVideoToCourseCommand extends Command
 
         $this->info("Adding video ID '{$videoId}' to course with slug '{$slug}'");
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($slug, $videoId) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($slug, $videoId): void {
             $this->info("Processing tenant: {$tenant->id}");
 
-            $course = Course::where('slug', $slug)->first();
+            $course = Course::query()->where('slug', $slug)->first();
 
             if (! $course) {
                 $this->error("Course with slug '{$slug}' not found");

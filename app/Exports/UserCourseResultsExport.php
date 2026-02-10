@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 
 class UserCourseResultsExport implements FromQuery
 {
+    public $user;
     use Exportable;
 
     public function __construct()
@@ -23,7 +24,7 @@ class UserCourseResultsExport implements FromQuery
         return Course::query()
             ->where('department_id', $this->user->department_id)
             ->select('id', 'name')
-            ->with('results', function ($query) {
+            ->with('results', function ($query): void {
                 $query->where('user_id', $this->user->id)->select('id')->latest();
             });
     }

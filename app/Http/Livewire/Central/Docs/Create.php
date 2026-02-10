@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Docs;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use function Sentry\captureException;
 use App\Models\Document;
-use DB;
 use Exception;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Log;
-use Storage;
 
 class Create extends Component
 {
@@ -53,14 +54,11 @@ class Create extends Component
                 // Attempt to upload the file
                 $filePath = Storage::disk('central-docs')->putFileAs('/', $this->file, $fileName);
 
-                // Check if the file was successfully uploaded
-                if (! $filePath) {
-                    throw new Exception('File upload failed. Please try again.');
-                }
+                throw_unless($filePath, new Exception('File upload failed. Please try again.'));
             }
 
             // Create the Document record in the database
-            Document::create([
+            Document::query()->create([
                 'title' => $this->title,
                 'url' => $this->url,
                 'file_name' => $fileName ?? '',
@@ -92,7 +90,7 @@ class Create extends Component
 
             // Log the error for debugging
             Log::error($e);
-            \Sentry\captureException($e);
+            captureException($e);
 
             // Handle specific error messages
             if (str_contains($e->getMessage(), 'max.')) {

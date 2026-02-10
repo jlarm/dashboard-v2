@@ -15,7 +15,7 @@ class DealershipList extends Component
     public function render()
     {
         return view('livewire.central.employee.dealership-list', [
-            'dealerships' => Dealership::where('user_id', $this->user->id)->get(),
+            'dealerships' => Dealership::query()->where('user_id', $this->user->id)->get(),
         ]);
     }
 }

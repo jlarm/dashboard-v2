@@ -66,7 +66,7 @@ class CveList extends Component
 
     protected function loadCveData(): void
     {
-        $store = Store::find(app('currentStore'));
+        $store = Store::query()->find(app('currentStore'));
 
         if (! $store) {
             return;

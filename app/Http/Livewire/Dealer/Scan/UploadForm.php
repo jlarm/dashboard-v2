@@ -40,7 +40,7 @@ class UploadForm extends Component
 
             $fileUpload = Storage::disk('do-scans')->putFileAs(tenant('id'), $this->file, $this->file->getClientOriginalName());
 
-            $storeId = $this->store->id ?? Store::first()->id;
+            $storeId = $this->store->id ?? Store::query()->first()->id;
 
             $data = [
                 'user_id' => auth()->id(),
@@ -56,7 +56,7 @@ class UploadForm extends Component
                 $data['updated_at'] = $customDate;
             }
 
-            ScanReport::create($data);
+            ScanReport::query()->create($data);
 
             $this->reset();
 

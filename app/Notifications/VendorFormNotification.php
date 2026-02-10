@@ -40,13 +40,13 @@ class VendorFormNotification extends Notification
             ->line('If you have any questions, please contact '.$user->name.' at '.$user->email)
             ->line('Thank you for your time!')
             ->salutation(tenant('name'))
-            ->withSymfonyMessage(function ($message) {
+            ->withSymfonyMessage(function ($message): void {
                 $message->getHeaders()->addTextHeader('X-Vendor-Notification', 'true');
                 $message->getHeaders()->addTextHeader('X-Vendor-ID', (string) $this->vendor->id);
 
                 // Ensure Message-ID is set before sending
                 if (! $message->getHeaders()->has('Message-ID')) {
-                    $domain = config('mail.from.address') ? explode('@', config('mail.from.address'))[1] : 'localhost';
+                    $domain = config('mail.from.address') ? explode('@', (string) config('mail.from.address'))[1] : 'localhost';
                     $messageId = sprintf('%s.%s@%s', uniqid('vendor', true), time(), $domain);
                     $message->getHeaders()->addIdHeader('Message-ID', $messageId);
                 }

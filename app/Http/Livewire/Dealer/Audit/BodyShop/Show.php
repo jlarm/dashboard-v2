@@ -390,7 +390,7 @@ class Show extends Component
         'body_shop_q45_images' => 'nullable',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->draft = $this->bodyShopAudit->draft;
         $this->audit_date = Carbon::make($this->bodyShopAudit->audit_date)->format('Y-m-d');
@@ -694,6 +694,7 @@ class Show extends Component
 
             return redirect()->route('dealer.stores.audits.body-shop.index', $store);
         }
+        return null;
     }
 
     public function render()

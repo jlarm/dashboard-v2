@@ -40,7 +40,7 @@ class Isp extends Model
         'signature',
     ];
 
-    public function getPhoneNumberAttribute()
+    public function getPhoneNumberAttribute(): string
     {
         $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
         preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);

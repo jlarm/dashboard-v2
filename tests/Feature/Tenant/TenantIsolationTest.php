@@ -6,7 +6,7 @@ use App\Models\Dealership;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-beforeEach(function () {
+beforeEach(function (): void {
     config([
         'tenancy.queue_database_creation' => false,
         'tenancy.queue_database_deletion' => false,
@@ -34,7 +34,7 @@ beforeEach(function () {
     DB::table('users')->delete();
 });
 
-afterEach(function () {
+afterEach(function (): void {
     if (tenancy()->initialized) {
         tenancy()->end();
     }
@@ -61,13 +61,13 @@ afterEach(function () {
     DB::purge('tenant');
 });
 
-it('prevents users from different tenants from accessing each others data', function () {
+it('prevents users from different tenants from accessing each others data', function (): void {
     // Create central users who own the dealerships
     $owner1 = User::factory()->create(['email' => 'owner1@central.com']);
     $owner2 = User::factory()->create(['email' => 'owner2@central.com']);
 
     // Create dealership 1 in central database
-    $dealership1 = Dealership::create([
+    $dealership1 = Dealership::query()->create([
         'id' => 'acme',
         'name' => 'Acme',
         'user_id' => $owner1->id,
@@ -75,7 +75,7 @@ it('prevents users from different tenants from accessing each others data', func
     $dealership1->domains()->create(['domain' => 'acme.localhost']);
 
     // Create dealership 2 in central database
-    $dealership2 = Dealership::create([
+    $dealership2 = Dealership::query()->create([
         'id' => 'widgets',
         'name' => 'Widgets',
         'user_id' => $owner2->id,
@@ -83,8 +83,8 @@ it('prevents users from different tenants from accessing each others data', func
     $dealership2->domains()->create(['domain' => 'widgets.localhost']);
 
     // Create tenant users in dealership 1's database
-    $dealership1->run(function () {
-        User::create([
+    $dealership1->run(function (): void {
+        User::query()->create([
             'name' => 'John Doe',
             'email' => 'john@acme.com',
             'password' => bcrypt('password'),
@@ -92,16 +92,16 @@ it('prevents users from different tenants from accessing each others data', func
     });
 
     // Create tenant users in dealership 2's database
-    $dealership2->run(function () {
-        User::create([
+    $dealership2->run(function (): void {
+        User::query()->create([
             'name' => 'Jane Smith',
             'email' => 'jane@widgets.com',
             'password' => bcrypt('password'),
         ])->assignRole('super-admin');
     });
 
-    $dealership1->run(function () {
-        expect(User::count())->toBe(1, 'Dealership 1 should only have 1 user');
+    $dealership1->run(function (): void {
+        expect(User::query()->count())->toBe(1, 'Dealership 1 should only have 1 user');
 
         $this->assertDatabaseHas('users', [
             'name' => 'John Doe',
@@ -113,8 +113,8 @@ it('prevents users from different tenants from accessing each others data', func
         ]);
     });
 
-    $dealership2->run(function () {
-        expect(User::count())->toBe(1, 'Dealership 2 should only have 1 user');
+    $dealership2->run(function (): void {
+        expect(User::query()->count())->toBe(1, 'Dealership 2 should only have 1 user');
 
         $this->assertDatabaseHas('users', [
             'name' => 'Jane Smith',
@@ -126,8 +126,8 @@ it('prevents users from different tenants from accessing each others data', func
         ]);
     });
 
-    $usersInDealership1 = $dealership1->run(fn () => User::pluck('email')->toArray());
-    $usersInDealership2 = $dealership2->run(fn () => User::pluck('email')->toArray());
+    $usersInDealership1 = $dealership1->run(fn () => User::query()->pluck('email')->toArray());
+    $usersInDealership2 = $dealership2->run(fn () => User::query()->pluck('email')->toArray());
 
     expect($usersInDealership1)
         ->not->toContain('jane@widgets.com', 'Dealership 1 should not see Dealership 2 users');

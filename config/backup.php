@@ -2,6 +2,17 @@
 
 declare(strict_types=1);
 
+use Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification;
+use Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification;
+use Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification;
+use Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification;
+use Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification;
+use Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification;
+use Spatie\Backup\Notifications\Notifiable;
+use Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays;
+use Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes;
+use Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy;
+
 return [
 
     'backup' => [
@@ -194,19 +205,19 @@ return [
     'notifications' => [
 
         'notifications' => [
-            Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class => ['slack'],
-            Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => ['slack'],
-            Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class => ['slack'],
-            Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class => ['slack'],
-            Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => ['slack'],
-            Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class => ['slack'],
+            BackupHasFailedNotification::class => ['slack'],
+            UnhealthyBackupWasFoundNotification::class => ['slack'],
+            CleanupHasFailedNotification::class => ['slack'],
+            BackupWasSuccessfulNotification::class => ['slack'],
+            HealthyBackupWasFoundNotification::class => ['slack'],
+            CleanupWasSuccessfulNotification::class => ['slack'],
         ],
 
         /*
          * Here you can specify the notifiable to which the notifications should be sent. The default
          * notifiable will use the variables specified in this config file.
          */
-        'notifiable' => Spatie\Backup\Notifications\Notifiable::class,
+        'notifiable' => Notifiable::class,
 
         'mail' => [
             'to' => env('BACKUP_MAIL_TO', env('ADMIN_EMAIL')),
@@ -256,8 +267,8 @@ return [
             'name' => env('APP_NAME', 'laravel-backup'),
             'disks' => ['armp-backups'],
             'health_checks' => [
-                Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+                MaximumAgeInDays::class => 1,
+                MaximumStorageInMegabytes::class => 5000,
             ],
         ],
 
@@ -283,7 +294,7 @@ return [
          * No matter how you configure it the default strategy will never
          * delete the newest backup.
          */
-        'strategy' => Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
+        'strategy' => DefaultStrategy::class,
 
         'default_strategy' => [
 

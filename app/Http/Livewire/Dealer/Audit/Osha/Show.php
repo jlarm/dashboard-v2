@@ -651,7 +651,7 @@ class Show extends Component
         'osha_q69_images' => 'nullable',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->draft = $this->oshaAudit->draft;
         $this->audit_date = Carbon::make($this->oshaAudit->audit_date)->format('Y-m-d');
@@ -1099,6 +1099,7 @@ class Show extends Component
 
             return redirect()->route('dealer.stores.audits.osha.index', [$store->slug]);
         }
+        return null;
     }
 
     public function render()

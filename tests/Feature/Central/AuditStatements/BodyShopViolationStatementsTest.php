@@ -9,13 +9,13 @@ use App\Models\BodyShopViolationStatement;
 use Database\Seeders\RoleAndPermissionSeeder;
 use Livewire\Livewire;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->seed(RoleAndPermissionSeeder::class);
 });
 
-describe('Body Shop Violation Statements Index', function () {
-    it('displays violations with weight column', function () {
-        $violation = BodyShopViolationStatement::create([
+describe('Body Shop Violation Statements Index', function (): void {
+    it('displays violations with weight column', function (): void {
+        $violation = BodyShopViolationStatement::query()->create([
             'statement' => 'Test body shop violation',
             'keywords' => json_encode(['paint', 'safety']),
             'weight' => 4,
@@ -28,9 +28,9 @@ describe('Body Shop Violation Statements Index', function () {
             ->assertSee('4');
     });
 
-    it('truncates long violation statements', function () {
+    it('truncates long violation statements', function (): void {
         $longStatement = str_repeat('B', 150);
-        $violation = BodyShopViolationStatement::create([
+        $violation = BodyShopViolationStatement::query()->create([
             'statement' => $longStatement,
             'keywords' => json_encode([]),
             'weight' => 2,
@@ -44,8 +44,8 @@ describe('Body Shop Violation Statements Index', function () {
     });
 });
 
-describe('Body Shop Violation Statements Create', function () {
-    it('can create a violation statement with weight', function () {
+describe('Body Shop Violation Statements Create', function (): void {
+    it('can create a violation statement with weight', function (): void {
         asSuperAdmin();
 
         Livewire::test(Create::class)
@@ -61,7 +61,7 @@ describe('Body Shop Violation Statements Create', function () {
         ]);
     });
 
-    it('validates weight is between 1 and 10', function () {
+    it('validates weight is between 1 and 10', function (): void {
         asSuperAdmin();
 
         Livewire::test(Create::class)
@@ -77,7 +77,7 @@ describe('Body Shop Violation Statements Create', function () {
             ->assertHasErrors(['weight']);
     });
 
-    it('defaults weight to 1', function () {
+    it('defaults weight to 1', function (): void {
         asSuperAdmin();
 
         Livewire::test(Create::class)
@@ -85,9 +85,9 @@ describe('Body Shop Violation Statements Create', function () {
     });
 });
 
-describe('Body Shop Violation Statements Edit', function () {
-    it('loads existing violation data including weight', function () {
-        $violation = BodyShopViolationStatement::create([
+describe('Body Shop Violation Statements Edit', function (): void {
+    it('loads existing violation data including weight', function (): void {
+        $violation = BodyShopViolationStatement::query()->create([
             'statement' => 'Existing body shop violation',
             'keywords' => json_encode(['existing']),
             'weight' => 7,
@@ -100,8 +100,8 @@ describe('Body Shop Violation Statements Edit', function () {
             ->assertSet('weight', 7);
     });
 
-    it('can update violation statement with weight', function () {
-        $violation = BodyShopViolationStatement::create([
+    it('can update violation statement with weight', function (): void {
+        $violation = BodyShopViolationStatement::query()->create([
             'statement' => 'Original statement',
             'keywords' => json_encode([]),
             'weight' => 4,
@@ -122,8 +122,8 @@ describe('Body Shop Violation Statements Edit', function () {
         ]);
     });
 
-    it('validates weight on update', function () {
-        $violation = BodyShopViolationStatement::create([
+    it('validates weight on update', function (): void {
+        $violation = BodyShopViolationStatement::query()->create([
             'statement' => 'Test statement',
             'keywords' => json_encode([]),
             'weight' => 5,

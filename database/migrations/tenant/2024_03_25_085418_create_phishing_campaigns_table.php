@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('phishing_campaigns', function (Blueprint $table) {
+        Schema::create('phishing_campaigns', function (Blueprint $table): void {
             $table->id();
             $table->string('campaign_id')->nullable();
             $table->foreignId('store_id')->nullable();

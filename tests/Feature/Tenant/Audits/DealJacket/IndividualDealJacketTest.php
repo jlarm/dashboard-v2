@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Str;
 use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
 
-describe('Deal Jacket Show Page', function () {
-    it('consultants can see the deal jacket page with all details', function () {
+describe('Deal Jacket Show Page', function (): void {
+    it('consultants can see the deal jacket page with all details', function (): void {
         $dealJacketGroup = DealJacketGroup::factory()->create();
         $dealJacket = DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 
@@ -32,7 +33,7 @@ describe('Deal Jacket Show Page', function () {
             ->assertSee(Str::title($dealJacket->user->name));
     });
 
-    it('consultants can see violations with comments', function () {
+    it('consultants can see violations with comments', function (): void {
         $dealJacketGroup = DealJacketGroup::factory()->create();
 
         // Create a deal jacket with specific responses
@@ -85,7 +86,7 @@ describe('Deal Jacket Show Page', function () {
         $response->assertDontSee('Was the odometer reading documented?');
     });
 
-    it('managers can see the deal jacket page with all details', function () {
+    it('managers can see the deal jacket page with all details', function (): void {
         $dealJacketGroup = DealJacketGroup::factory()->create();
         $dealJacket = DealJacket::factory()->create(['deal_jacket_group_id' => $dealJacketGroup->id]);
 

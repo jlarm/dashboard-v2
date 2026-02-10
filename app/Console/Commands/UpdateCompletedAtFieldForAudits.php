@@ -28,9 +28,9 @@ class UpdateCompletedAtFieldForAudits extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
+        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             $this->updateAudits(OshaViolationAudit::class);

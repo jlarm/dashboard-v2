@@ -14,7 +14,7 @@ class ParentShowSingle extends Component
     public Store $store;
     public $children;
 
-    public function mount()
+    public function mount(): void
     {
         $this->children = $this->individualAudit
             ->where('store_id', $this->store->id)

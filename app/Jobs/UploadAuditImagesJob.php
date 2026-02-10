@@ -16,13 +16,8 @@ class UploadAuditImagesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected Violation $violation;
-    protected array $files;
-
-    public function __construct(Violation $violation, array $files)
+    public function __construct(protected Violation $violation, protected array $files)
     {
-        $this->violation = $violation;
-        $this->files = $files;
     }
 
     public function handle(): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Docs;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Store;
 use App\Models\DealerDoc;
 use Exception;
@@ -11,7 +12,6 @@ use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Log;
 
 use function Sentry\captureException;
 
@@ -40,8 +40,8 @@ class Create extends Component
                 $fileUpload = $this->file->store(tenant()->id, 'dealer-docs');
             }
 
-            DealerDoc::create([
-                'store_id' => Store::first()->id,
+            DealerDoc::query()->create([
+                'store_id' => Store::query()->first()->id,
                 'title' => $this->title,
                 'url' => $this->url,
                 'file_name' => $this->file?->getClientOriginalName() ?? '',

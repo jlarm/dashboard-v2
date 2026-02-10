@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Scan;
 
+use Illuminate\Support\Facades\Cookie;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
-use Cookie;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -22,7 +22,7 @@ class GenerateReport extends Component
     public Store $store;
     public $generateError;
 
-    public function mount()
+    public function mount(): void
     {
         $this->dealer = $this->store->scanSetting()->first()->name;
     }
@@ -33,11 +33,7 @@ class GenerateReport extends Component
             $token = Cookie::get('sentry');
             $client = new Client;
 
-            if (tenant('locations')) {
-                $dealerName = str_replace(' ', '-', $this->store->name);
-            } else {
-                $dealerName = str_replace(' ', '-', tenant('name'));
-            }
+            $dealerName = tenant('locations') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
             $fileName = $dealerName.'-'.now()->format('Ymdhis').'-'.$this->type.'.pdf';
 
             $request = new Request('GET', 'https://blue-api.redsentry.com/v2/external/'.$this->dealer.'/report/'.$this->type, [
@@ -48,9 +44,9 @@ class GenerateReport extends Component
 
             Storage::disk('do-scans')->put(tenant('id').'/'.$this->type.'/'.$fileName, $status);
 
-            ScanReport::create([
+            ScanReport::query()->create([
                 'user_id' => auth()->id(),
-                'store_id' => $this->store->id ?? Store::first()->id,
+                'store_id' => $this->store->id ?? Store::query()->first()->id,
                 'path' => tenant('id').'/'.$this->type.'/'.$fileName,
                 'type' => $this->type,
             ]);
@@ -59,6 +55,7 @@ class GenerateReport extends Component
         } catch (Exception $e) {
             $this->addError('generateError', $e->getMessage());
         }
+        return null;
     }
 
     public function render()

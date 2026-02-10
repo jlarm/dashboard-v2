@@ -63,10 +63,10 @@ class DepartmentCompletionStats extends Component
         $storeIds = [];
 
         try {
-            if ($this->store !== null) {
+            if ($this->store instanceof Store) {
                 $storeIds[] = $this->store->id;
             } else {
-                $storeIds = Store::pluck('id')->toArray();
+                $storeIds = Store::query()->pluck('id')->toArray();
             }
         } catch (Exception $e) {
             Log::warning('Failed to fetch store IDs for cache clearing', [
@@ -122,7 +122,7 @@ class DepartmentCompletionStats extends Component
             $query->where('department_id', $departmentId);
         }
 
-        $query->whereHas('roles', function ($q) {
+        $query->whereHas('roles', function ($q): void {
             $q->where('id', '!=', 5);
         });
 
@@ -177,12 +177,12 @@ class DepartmentCompletionStats extends Component
                 'roles:id,name',
                 'stores:id,state',
                 'courseOverrides:user_id,course_id,type',
-                'results' => function ($q) use ($oneYearAgo, $threeYearsAgo) {
+                'results' => function ($q) use ($oneYearAgo, $threeYearsAgo): void {
                     $q->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1)
-                        ->where(function ($query) use ($oneYearAgo, $threeYearsAgo) {
+                        ->where(function ($query) use ($oneYearAgo, $threeYearsAgo): void {
                             $query->where('created_at', '>=', $oneYearAgo)
-                                ->orWhere(function ($query) use ($threeYearsAgo) {
+                                ->orWhere(function ($query) use ($threeYearsAgo): void {
                                     $query->whereIn('course_id', [9, 10, 11, 12])
                                         ->where('created_at', '>=', $threeYearsAgo);
                                 });
@@ -214,13 +214,13 @@ class DepartmentCompletionStats extends Component
     {
         $query = User::query();
 
-        if ($this->store !== null) {
-            $query->whereHas('stores', function ($q) {
+        if ($this->store instanceof Store) {
+            $query->whereHas('stores', function ($q): void {
                 $q->where('stores.id', $this->store->id);
             });
         } elseif (! auth()->user()->hasAnyRole(['super-admin', 'Consultant']) && tenant('locations')) {
             $currentUser = auth()->user();
-            $query->whereHas('stores', function ($q) use ($currentUser) {
+            $query->whereHas('stores', function ($q) use ($currentUser): void {
                 $q->whereIn('stores.id', $currentUser->stores->pluck('id'));
             });
         }

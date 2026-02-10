@@ -27,14 +27,14 @@ class GenerateRedFlagManualJob implements ShouldQueue
             'redFlag' => $this->manual,
         ])->render();
 
-        $manual = Browsershot::html($html)
+        Browsershot::html($html)
             ->showBackground()
             ->margins(10, 10, 10, 10)
             ->scale(0.75)
             ->waitUntilNetworkIdle()
             ->save($storagePath);
 
-        $updatePath = $this->manual->update([
+        $this->manual->update([
             'pdf_path' => $fileName,
         ]);
     }

@@ -14,9 +14,9 @@ class SingleStoreSubNav extends Component
     public function render()
     {
         return view('livewire.dealer.store.single-store-sub-nav', [
-            'stores' => Store::orderBy('name')
+            'stores' => Store::query()->orderBy('name')
                 ->whereNot('id', $this->store->id)->get(),
-            'storeCount' => Store::count(),
+            'storeCount' => Store::query()->count(),
         ]);
     }
 }

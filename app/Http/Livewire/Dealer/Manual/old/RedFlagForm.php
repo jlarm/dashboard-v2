@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Manual\old;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Dealer\Manual\RedFlag;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use Livewire\Component;
-use Storage;
-use Str;
 
 class RedFlagForm extends Component
 {
@@ -33,9 +33,9 @@ class RedFlagForm extends Component
         'signature' => 'required',
     ];
 
-    public function mount()
+    public function mount(): void
     {
-        $this->employeeList = EmployeeList::where('store_id', $this->store->id)->first();
+        $this->employeeList = EmployeeList::query()->where('store_id', $this->store->id)->first();
         $this->qi = $this->employeeList->qualified_individual_name ?? '';
         $this->qip = $this->employeeList->qualified_individual_phone ?? '';
         $this->sm = $this->employeeList->service_manager_name ?? '';
@@ -48,15 +48,15 @@ class RedFlagForm extends Component
         $this->gmp = $this->employeeList->general_manager_phone ?? '';
         $this->owner = $this->employeeList->owner_name ?? '';
         $this->ownerp = $this->employeeList->owner_phone ?? '';
-        $this->pepn = Store::first()->police_emergency_phone ?? '';
-        $this->pnepn = Store::first()->police_non_emergency_phone ?? '';
-        $this->fepn = Store::first()->fire_emergency_phone ?? '';
-        $this->fnepn = Store::first()->fire_non_emergency_phone ?? '';
-        $this->alarmSystem = Store::first()->fire_alarm_type ?? '';
-        $this->burglarSystem = Store::first()->burglar_alarm_type ?? '';
+        $this->pepn = Store::query()->first()->police_emergency_phone ?? '';
+        $this->pnepn = Store::query()->first()->police_non_emergency_phone ?? '';
+        $this->fepn = Store::query()->first()->fire_emergency_phone ?? '';
+        $this->fnepn = Store::query()->first()->fire_non_emergency_phone ?? '';
+        $this->alarmSystem = Store::query()->first()->fire_alarm_type ?? '';
+        $this->burglarSystem = Store::query()->first()->burglar_alarm_type ?? '';
     }
 
-    public function submit()
+    public function submit(): void
     {
         $this->validate();
 
@@ -64,7 +64,7 @@ class RedFlagForm extends Component
         $cTime = now()->format('YmdHis');
         $fileName = $fName.$cTime.'.png';
 
-        RedFlag::create([
+        RedFlag::query()->create([
             'store_id' => $this->employeeList->store_id,
             'user_id' => auth()->user()->id,
             'qualified_individual_name' => $this->employeeList->qualified_individual_name ?? '',
@@ -88,9 +88,9 @@ class RedFlagForm extends Component
             'signature' => $fileName,
         ]);
 
-        Storage::put('red-flag-signatures/'.$fileName, base64_decode(Str::of($this->signature)->after(',')));
+        Storage::put('red-flag-signatures/'.$fileName, base64_decode((string) Str::of($this->signature)->after(',')));
 
-        (! tenant('locations')) ? $this->redirect(route('dealer.manual.index', $this->store)) : $this->redirect(route('dealer.stores.manuals', $this->store));
+        (tenant('locations')) ? $this->redirect(route('dealer.stores.manuals', $this->store)) : $this->redirect(route('dealer.manual.index', $this->store));
 
     }
 

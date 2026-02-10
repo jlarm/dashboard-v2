@@ -19,7 +19,7 @@ class SdsController extends Controller
     public function view(string $uuid): Response
     {
         return tenancy()->central(function () use ($uuid) {
-            $sds = Sds::where('uuid', $uuid)->firstOrFail();
+            $sds = Sds::query()->where('uuid', $uuid)->firstOrFail();
 
             $fileContents = Storage::disk('sds-sheets')->get($sds->file_name);
 

@@ -26,7 +26,7 @@ class SettingsForm extends Component
 
     public function mount(): void
     {
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::query()->find(app('currentStore'));
         $instanceUrl = $this->store->cyrisma->instance_url ?? null;
         $this->instanceId = $instanceUrl ? str($instanceUrl)->before('.')->toString() : null;
     }
@@ -61,14 +61,11 @@ class SettingsForm extends Component
                 return;
             }
 
-            Cyrisma::updateOrCreate(
-                ['store_id' => $this->store->id],
-                [
-                    'short_name' => $instance['short_name'] ?? '',
-                    'instance_id' => $instance['instance_id'],
-                    'instance_url' => $instance['url'],
-                ]
-            );
+            Cyrisma::query()->updateOrCreate(['store_id' => $this->store->id], [
+                'short_name' => $instance['short_name'] ?? '',
+                'instance_id' => $instance['instance_id'],
+                'instance_url' => $instance['url'],
+            ]);
 
             $this->store->refresh()->load('cyrisma');
 

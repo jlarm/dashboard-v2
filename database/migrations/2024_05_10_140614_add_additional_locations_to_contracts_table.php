@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('contracts', function (Blueprint $table) {
+        Schema::table('contracts', function (Blueprint $table): void {
             $table->json('additional_locations')->nullable()->after('dealer_billing_contact_email');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('contracts', function (Blueprint $table) {
+        Schema::table('contracts', function (Blueprint $table): void {
             $table->dropColumn('additional_locations');
         });
     }

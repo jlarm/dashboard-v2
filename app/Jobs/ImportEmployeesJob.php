@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Dealer\Invite;
-use DB;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,20 +18,15 @@ class ImportEmployeesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $data;
-    protected $userId;
-
-    public function __construct(array $data, int $userId)
+    public function __construct(protected array $data, protected int $userId)
     {
-        $this->data = $data;
-        $this->userId = $userId;
     }
 
     public function handle(): void
     {
         $importErrors = [];
 
-        DB::transaction(function () use (&$importErrors) {
+        DB::transaction(function () use (&$importErrors): void {
             foreach ($this->data as $index => $item) {
                 try {
                     $validator = Validator::make($item, [
@@ -52,7 +47,7 @@ class ImportEmployeesJob implements ShouldQueue
                         continue;
                     }
 
-                    $invite = Invite::create([
+                    $invite = Invite::query()->create([
                         'name' => $item['Name'],
                         'email' => $item['Email'],
                         'stores' => $item['Stores'] === null ? null : [$item['Stores']],
@@ -60,7 +55,7 @@ class ImportEmployeesJob implements ShouldQueue
                         'user_id' => $this->userId,
                         'roles' => [$item['Role']],
                         'courses' => $item['Courses'],
-                        'invitation_token' => mb_substr(md5(rand(0, 9).$item['Email'].time()), 0, 32),
+                        'invitation_token' => mb_substr(md5(random_int(0, 9).$item['Email'].time()), 0, 32),
                     ]);
 
                     SendQueueEmailJob::dispatch($invite, 'invite');
@@ -73,9 +68,7 @@ class ImportEmployeesJob implements ShouldQueue
                 }
             }
 
-            if (! empty($importErrors)) {
-                throw new Exception('Import failed due to errors');
-            }
+            throw_unless($importErrors === [], new Exception('Import failed due to errors'));
         });
     }
 }

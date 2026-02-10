@@ -28,14 +28,16 @@ class Index extends Component
     {
         $current = app('currentStore');
         $this->storeId = $current instanceof Store ? $current->id : (int) $current;
-        $this->store = $current instanceof Store ? $current : Store::find($this->storeId);
+        $this->store = $current instanceof Store ? $current : Store::query()->find($this->storeId);
     }
 
     public function loadScanData(): void
     {
         $this->error = null;
 
-        $this->store = Store::find($this->storeId);
+        $current = app('currentStore');
+        $this->storeId = $current instanceof Store ? $current->id : (int) $current;
+        $this->store = $current instanceof Store ? $current : Store::query()->find($this->storeId);
 
         if (! $this->store) {
             $this->error = 'Unable to load store information. Please try again later.';
@@ -67,7 +69,7 @@ class Index extends Component
 
     public function refreshCache(): void
     {
-        $store = Store::find($this->storeId);
+        $store = Store::query()->find($this->storeId);
 
         if ($store) {
             try {

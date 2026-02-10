@@ -15,9 +15,7 @@ class DealJacketReportDownloadController extends Controller
     {
         $filePath = "deal-jacket-reports/{$fileName}";
 
-        if (! Storage::exists($filePath)) {
-            abort(404, 'Report not found or has expired.');
-        }
+        abort_unless(Storage::exists($filePath), 404, 'Report not found or has expired.');
 
         return Storage::response($filePath, $fileName, [
             'Content-Type' => 'application/pdf',

@@ -15,7 +15,7 @@ class ParentShowSingle extends Component
     public $children;
     protected $listeners = ['refreshParentComponent' => '$refresh'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->children = $this->individualAudit->where('parent_id', $this->individualAudit->id)->count();
     }

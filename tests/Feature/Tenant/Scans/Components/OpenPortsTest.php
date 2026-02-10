@@ -7,8 +7,8 @@ use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
 use Livewire\Livewire;
 
-beforeEach(function () {
-    $this->store = Store::first();
+beforeEach(function (): void {
+    $this->store = Store::query()->first();
     app()->instance('currentStore', $this->store->id);
 });
 
@@ -35,8 +35,8 @@ function mockCyrismaOpenPorts(int $count = 4, string $expectedAssetType = ''): v
         ->andReturn($ports);
 }
 
-describe('mount', function () {
-    it('loads open ports on mount', function () {
+describe('mount', function (): void {
+    it('loads open ports on mount', function (): void {
         mockCyrismaOpenPorts(4);
 
         Livewire::actingAs($this->consultant)
@@ -46,7 +46,7 @@ describe('mount', function () {
             ->assertCount('openPorts', 4);
     });
 
-    it('shows empty state when no open ports exist', function () {
+    it('shows empty state when no open ports exist', function (): void {
         mockCyrismaOpenPorts(0);
 
         Livewire::actingAs($this->consultant)
@@ -55,7 +55,7 @@ describe('mount', function () {
             ->assertSee('No open ports found.');
     });
 
-    it('handles missing store gracefully', function () {
+    it('handles missing store gracefully', function (): void {
         app()->instance('currentStore', 99999);
 
         $mock = test()->mock(CyrismaService::class);
@@ -67,8 +67,8 @@ describe('mount', function () {
     });
 });
 
-describe('asset type filtering', function () {
-    it('reloads data when asset type changes', function () {
+describe('asset type filtering', function (): void {
+    it('reloads data when asset type changes', function (): void {
         $mock = test()->mock(CyrismaService::class);
         $mock->shouldReceive('forStore')->andReturn($mock);
         $mock->shouldReceive('getOpenPortsByAssetType')
@@ -93,7 +93,7 @@ describe('asset type filtering', function () {
             ->assertCount('openPorts', 2);
     });
 
-    it('resets to first page when asset type changes', function () {
+    it('resets to first page when asset type changes', function (): void {
         $mock = test()->mock(CyrismaService::class);
         $mock->shouldReceive('forStore')->andReturn($mock);
         $mock->shouldReceive('getOpenPortsByAssetType')->andReturn([
@@ -116,8 +116,8 @@ describe('asset type filtering', function () {
     });
 });
 
-describe('pagination', function () {
-    it('paginates results with 5 per page', function () {
+describe('pagination', function (): void {
+    it('paginates results with 5 per page', function (): void {
         mockCyrismaOpenPorts(8);
 
         Livewire::actingAs($this->consultant)
@@ -129,7 +129,7 @@ describe('pagination', function () {
             ->assertDontSee('RDP');
     });
 
-    it('navigates to next page', function () {
+    it('navigates to next page', function (): void {
         mockCyrismaOpenPorts(8);
 
         Livewire::actingAs($this->consultant)
@@ -140,7 +140,7 @@ describe('pagination', function () {
             ->assertDontSee('135');
     });
 
-    it('navigates to previous page', function () {
+    it('navigates to previous page', function (): void {
         mockCyrismaOpenPorts(8);
 
         Livewire::actingAs($this->consultant)
@@ -151,7 +151,7 @@ describe('pagination', function () {
             ->assertSet('currentPage', 1);
     });
 
-    it('does not go below page 1', function () {
+    it('does not go below page 1', function (): void {
         mockCyrismaOpenPorts(4);
 
         Livewire::actingAs($this->consultant)
@@ -160,7 +160,7 @@ describe('pagination', function () {
             ->assertSet('currentPage', 1);
     });
 
-    it('goes to a specific page', function () {
+    it('goes to a specific page', function (): void {
         mockCyrismaOpenPorts(8);
 
         Livewire::actingAs($this->consultant)
@@ -169,7 +169,7 @@ describe('pagination', function () {
             ->assertSet('currentPage', 2);
     });
 
-    it('does not show pagination when results fit on one page', function () {
+    it('does not show pagination when results fit on one page', function (): void {
         mockCyrismaOpenPorts(4);
 
         Livewire::actingAs($this->consultant)
@@ -178,7 +178,7 @@ describe('pagination', function () {
             ->assertDontSee('Next');
     });
 
-    it('shows pagination when results exceed one page', function () {
+    it('shows pagination when results exceed one page', function (): void {
         mockCyrismaOpenPorts(8);
 
         Livewire::actingAs($this->consultant)
@@ -188,8 +188,8 @@ describe('pagination', function () {
     });
 });
 
-describe('view rendering', function () {
-    it('displays port details in the table', function () {
+describe('view rendering', function (): void {
+    it('displays port details in the table', function (): void {
         mockCyrismaOpenPorts(4);
 
         Livewire::actingAs($this->consultant)
@@ -200,7 +200,7 @@ describe('view rendering', function () {
             ->assertSee('Microsoft-DS');
     });
 
-    it('displays machine count', function () {
+    it('displays machine count', function (): void {
         mockCyrismaOpenPorts(1);
 
         Livewire::actingAs($this->consultant)
@@ -208,7 +208,7 @@ describe('view rendering', function () {
             ->assertSee('2');
     });
 
-    it('renders the asset type dropdown', function () {
+    it('renders the asset type dropdown', function (): void {
         mockCyrismaOpenPorts(0);
 
         Livewire::actingAs($this->consultant)

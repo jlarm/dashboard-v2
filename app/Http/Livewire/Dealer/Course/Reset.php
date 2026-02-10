@@ -27,7 +27,7 @@ class Reset extends Modal
         $this->authorize('reset-courses', CourseResults::class);
 
         $this->askForConfirmation(
-            callback: function () {
+            callback: function (): void {
                 $affectedUserIds = match (true) {
                     ! tenant('locations') => $this->deleteAllCourseResults(),
                     tenant('locations') && ! $this->store => $this->deleteAllCourseResults(),
@@ -64,8 +64,8 @@ class Reset extends Modal
     {
         $affectedUserIds = collect();
 
-        CourseResults::query()->chunkById(100, function ($results) use ($affectedUserIds) {
-            $results->each(function ($result) use ($affectedUserIds) {
+        CourseResults::query()->chunkById(100, function ($results) use ($affectedUserIds): void {
+            $results->each(function ($result) use ($affectedUserIds): void {
                 $affectedUserIds->push($result->user_id);
                 $result->delete();
             });
@@ -79,7 +79,7 @@ class Reset extends Modal
 
     private function deleteStoreCourseResults(): Collection
     {
-        if (! $this->store) {
+        if (!$this->store instanceof Store) {
             return collect();
         }
 
@@ -93,8 +93,8 @@ class Reset extends Modal
 
         CourseResults::query()
             ->whereIn('user_id', $userIds)
-            ->chunkById(100, function ($results) use ($affectedUserIds) {
-                $results->each(function ($result) use ($affectedUserIds) {
+            ->chunkById(100, function ($results) use ($affectedUserIds): void {
+                $results->each(function ($result) use ($affectedUserIds): void {
                     $affectedUserIds->push($result->user_id);
                     $result->delete();
                 });
@@ -108,8 +108,8 @@ class Reset extends Modal
 
     private function clearCacheForUsers(Collection $userIds): void
     {
-        User::whereIn('id', $userIds)->chunkById(100, function ($users) {
-            $users->each(function ($user) {
+        User::query()->whereIn('id', $userIds)->chunkById(100, function ($users): void {
+            $users->each(function ($user): void {
                 $user->clearCourseCache();
             });
         });
@@ -118,14 +118,14 @@ class Reset extends Modal
     private function logCourseReset(): void
     {
         $user = auth()->user();
-        $description = $this->store
+        $description = $this->store instanceof Store
             ? "Course results reset for store: {$this->store->name}"
             : 'All course results reset';
 
         $properties = [
             'store_id' => $this->store?->id,
             'store_name' => $this->store?->name,
-            'reset_scope' => $this->store ? 'store' : 'all',
+            'reset_scope' => $this->store instanceof Store ? 'store' : 'all',
             'tenant_id' => tenant()?->id,
         ];
 

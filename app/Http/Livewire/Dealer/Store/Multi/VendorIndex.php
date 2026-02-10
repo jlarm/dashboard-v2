@@ -13,7 +13,7 @@ class VendorIndex extends Component
     public Store $store;
     public $sid = '';
 
-    public function mount()
+    public function mount(): void
     {
         $this->sid = $this->store->id;
     }
@@ -21,7 +21,7 @@ class VendorIndex extends Component
     public function render()
     {
         return view('livewire.dealer.store.multi.vendor-index', [
-            'vendors' => Vendor::latest()->get(),
+            'vendors' => Vendor::query()->latest()->get(),
         ]);
     }
 }

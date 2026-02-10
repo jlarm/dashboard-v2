@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store;
 
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
@@ -92,59 +93,59 @@ class SingleOnboardingDetails extends Component
         'standard_dpp_rate' => 'nullable|numeric|min:0|max:100',
     ];
 
-    public function addIpAddress()
+    public function addIpAddress(): void
     {
         $this->ipAddresses->push(['phone_number' => '']);
     }
 
-    public function addWebsiteUrl()
+    public function addWebsiteUrl(): void
     {
         $this->websiteUrls->push(['url' => '']);
     }
 
-    public function removeIpAddress($key)
+    public function removeIpAddress($key): void
     {
         $this->ipAddresses->pull($key);
     }
 
-    public function removeWebsiteUrl($urlKey)
+    public function removeWebsiteUrl($urlKey): void
     {
         $this->websiteUrls->pull($urlKey);
     }
 
-    public function addServiceContract()
+    public function addServiceContract(): void
     {
         $this->service_contracts->push(['contract' => '']);
     }
 
-    public function removeServiceContract($contractKey)
+    public function removeServiceContract($contractKey): void
     {
         $this->service_contracts->pull($contractKey);
     }
 
-    public function addTireWheel()
+    public function addTireWheel(): void
     {
         $this->tire_wheel->push(['tireWheel' => '']);
     }
 
-    public function removeTireWheel($tireKey)
+    public function removeTireWheel($tireKey): void
     {
         $this->tire_wheel->pull($tireKey);
     }
 
-    public function addOtherFi()
+    public function addOtherFi(): void
     {
         $this->other_fi->push(['otherFi' => '']);
     }
 
-    public function removeOtherFi($fiKey)
+    public function removeOtherFi($fiKey): void
     {
         $this->other_fi->pull($fiKey);
     }
 
-    public function mount()
+    public function mount(): void
     {
-        $this->store = Store::where('id', $this->store->id)->first();
+        $this->store = Store::query()->where('id', $this->store->id)->first();
         $this->pep = $this->store->police_emergency_phone;
         $this->pnep = $this->store->police_non_emergency_phone;
         $this->fep = $this->store->fire_emergency_phone;
@@ -152,7 +153,7 @@ class SingleOnboardingDetails extends Component
         $this->fireAlarm = $this->store->fire_alarm_type;
         $this->burglarAlarm = $this->store->burglar_alarm_type;
         $this->firewallCompany = $this->store->firewall_company;
-        $this->ipAddresses = collect($this->store->ip_addresses)->map(fn ($ip) => ['ipAddress' => $ip]);
+        $this->ipAddresses = collect($this->store->ip_addresses)->map(fn ($ip): array => ['ipAddress' => $ip]);
         $this->mfa = $this->store->mfa;
         $this->vulnerability = $this->store->vulnerability;
         $this->monitoring = $this->store->currently_monitoring;
@@ -162,7 +163,7 @@ class SingleOnboardingDetails extends Component
         $this->screensaverMinutes = $this->store->screensaver_minutes;
         $this->dmsProvider = $this->store->dms_provider;
         $this->backups = $this->store->backups;
-        $this->websiteUrls = collect($this->store->website_urls)->map(fn ($url) => ['websiteUrl' => $url]);
+        $this->websiteUrls = collect($this->store->website_urls)->map(fn ($url): array => ['websiteUrl' => $url]);
         $this->designatedRedFlagCoordinator = $this->store->designated_red_flag_coordinator;
         $this->documentShredding = $this->store->document_shredding;
         $this->serviceProviderAgreements = $this->store->service_provider_agreements;
@@ -172,9 +173,9 @@ class SingleOnboardingDetails extends Component
         $this->personalDevices = $this->store->personal_devices;
         $this->complianceIssues = $this->store->compliance_issues;
         $this->fi_products_sold = $this->store->fi_products_sold;
-        $this->service_contracts = collect($this->store->service_contracts)->map(fn ($contract) => ['serviceContract' => $contract]);
-        $this->tire_wheel = collect($this->store->tire_wheel)->map(fn ($tw) => ['tireWheel' => $tw]);
-        $this->other_fi = collect($this->store->other_fi)->map(fn ($fi) => ['otherFi' => $fi]);
+        $this->service_contracts = collect($this->store->service_contracts)->map(fn ($contract): array => ['serviceContract' => $contract]);
+        $this->tire_wheel = collect($this->store->tire_wheel)->map(fn ($tw): array => ['tireWheel' => $tw]);
+        $this->other_fi = collect($this->store->other_fi)->map(fn ($fi): array => ['otherFi' => $fi]);
         $this->fi_system = $this->store->fi_system;
         $this->appearance_protection_sold = $this->store->appearance_protection_sold;
         $this->reinsurance = $this->store->reinsurance;
@@ -234,7 +235,7 @@ class SingleOnboardingDetails extends Component
             ->send();
     }
 
-    public function download(): \Symfony\Component\HttpFoundation\StreamedResponse
+    public function download(): StreamedResponse
     {
         $html = view('dealer.settings.ComplianceInfoDownloadView', [
             'store' => $this->store,
@@ -245,7 +246,7 @@ class SingleOnboardingDetails extends Component
             ->margins(20, 10, 20, 10)
             ->pdf();
 
-        return response()->streamDownload(function () use ($pdf) {
+        return response()->streamDownload(function () use ($pdf): void {
             echo $pdf;
         }, str_replace(' ', '-', mb_strtolower($this->store->name)).'-compliance-info-'.now()->format('m-d-y').'.pdf');
     }

@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::create([
+        $admin = User::query()->create([
             'name' => 'Joe Lohr',
             'email' => 'jlohr@autorisknow.com',
             'phone' => '2243586930',
@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $terry = User::create([
+        $terry = User::query()->create([
             'name' => 'Terry Dortch',
             'slug' => 'terry-dortch',
             'email' => 'tdortch@autorisknow.com',
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $cole = User::create([
+        $cole = User::query()->create([
             'name' => 'Cole Dach',
             'slug' => 'cole-dach',
             'email' => 'cdach@example.org',
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $shannon = User::create([
+        $shannon = User::query()->create([
             'name' => 'Shannon Weimann',
             'slug' => 'shannon-weimann',
             'email' => 'weimann.shannon@example.net',

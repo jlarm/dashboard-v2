@@ -14,9 +14,9 @@ class Create extends Component
 
     public function mount()
     {
-        $audit = OshaAudit::create([
+        $audit = OshaAudit::query()->create([
             'user_id' => auth()->id(),
-            'store_id' => $this->store->id ?? Store::first()->id,
+            'store_id' => $this->store->id ?? Store::query()->first()->id,
             'audit_date' => now()->format('Y-m-d'),
         ]);
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Vendor;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Dealer\Vendor;
 use Exception;
 use Livewire\Component;
-use Log;
 use Spatie\Browsershot\Browsershot;
 
 class OldDownload extends Component
@@ -26,12 +26,13 @@ class OldDownload extends Component
                 ->format('A4')
                 ->pdf();
 
-            return response()->streamDownload(function () use ($pdf) {
+            return response()->streamDownload(function () use ($pdf): void {
                 echo $pdf;
             }, $this->vendor->name.'-vendor-form.pdf');
         } catch (Exception $e) {
             Log::log('error', $e->getMessage());
         }
+        return null;
     }
 
     public function render()

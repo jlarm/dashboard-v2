@@ -30,7 +30,7 @@ class NewForm extends Component
 
     public function mount()
     {
-        $this->vendor = VendorForm::findOrFail($this->vid);
+        $this->vendor = VendorForm::query()->findOrFail($this->vid);
 
         if ($this->vendor->signature || $this->vendor->document_path) {
             return redirect(route('dealer.vendors.thankyou'));
@@ -38,7 +38,7 @@ class NewForm extends Component
 
         $this->qis = User::role('Qualified Individual')->get();
 
-        $this->storeName = $this->vendor->vendor->store->name ?? Store::first()->name;
+        $this->storeName = $this->vendor->vendor->store->name ?? Store::query()->first()->name;
 
         $this->data[1]['question'] = 'Are you an employee or authorized representative of this vendor/company? Indicate the Person’s Name in the comments.';
         $this->data[2]['question'] = 'Does your company offer software applications as part of its services?';
@@ -62,6 +62,7 @@ class NewForm extends Component
         $this->data[20]['question'] = 'Does your company prohibit shared logins?';
         $this->data[21]['question'] = 'Does your company require multi-factor authentication to log into your company’s systems?';
         $this->data[22]['question'] = 'Do you have an account lockout policy?';
+        return null;
     }
 
     public function submit()
@@ -84,7 +85,7 @@ class NewForm extends Component
                 'signature' => $fileName,
             ]);
 
-            Storage::put('signatures/'.$fileName, base64_decode(explode(',', $this->signature)[1]));
+            Storage::put('signatures/'.$fileName, base64_decode(explode(',', (string) $this->signature)[1]));
         }
 
         foreach ($this->qis as $qi) {

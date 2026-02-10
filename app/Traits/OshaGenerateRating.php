@@ -14,12 +14,12 @@ trait OshaGenerateRating
     protected int $sum = 0;
     protected $exclude = [7, 21, 62];
 
-    public function rating()
+    public function rating(): ?string
     {
-        $this->audits = OshaAudit::where('pdf_path', '!=', null)
+        $this->audits = OshaAudit::query()->where('pdf_path', '!=', null)
             ->get();
 
-        $this->audits->filter(function ($value) {
+        $this->audits->filter(function ($value): void {
             for ($i = 1; $i <= 65; $i++) {
                 if (! in_array($i, $this->exclude) && $value->{'osha_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
@@ -31,5 +31,6 @@ trait OshaGenerateRating
         if ($total > 0) {
             return $rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
         }
+        return null;
     }
 }

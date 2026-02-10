@@ -13,7 +13,7 @@ class Permissions extends Component
     public User $user;
     public $assignedPermissions;
 
-    public function mount()
+    public function mount(): void
     {
         $this->assignedPermissions = $this->user->permissions->pluck('name')->toArray();
     }

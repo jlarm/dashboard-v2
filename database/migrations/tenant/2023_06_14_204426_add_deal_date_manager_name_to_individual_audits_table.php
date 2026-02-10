@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +14,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('individual_audits', function (Blueprint $table) {
+        Schema::table('individual_audits', function (Blueprint $table): void {
             $table->date('deal_jacket_date')->nullable()->after('audit_date');
-            $table->foreignIdFor(App\Models\User::class, 'manager_id')->nullable()->after('deal_jacket_date');
+            $table->foreignIdFor(User::class, 'manager_id')->nullable()->after('deal_jacket_date');
             $table->integer('mileage')->nullable()->after('manager_id');
         });
     }
@@ -25,7 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('individual_audits', function (Blueprint $table) {
+        Schema::table('individual_audits', function (Blueprint $table): void {
             $table->dropColumn('deal_jacket_date');
             $table->dropColumn('manager_id');
             $table->dropColumn('mileage');

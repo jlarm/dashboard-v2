@@ -25,14 +25,14 @@ class OpenInvites extends Component
     public array $selected = [];
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
 
-    public function sendInvite($inviteId)
+    public function sendInvite($inviteId): void
     {
         $invite = $this->findInvite($inviteId);
         $this->dispatchInvite($invite);
         $this->notifyInviteSent($invite->name);
     }
 
-    public function sendSelectedInvites()
+    public function sendSelectedInvites(): void
     {
         foreach ($this->selected as $inviteId) {
             $invite = $this->findInvite($inviteId);
@@ -53,7 +53,7 @@ class OpenInvites extends Component
     {
         return $this->getInvitesQuery()
             ->orderByDesc('created_at')
-            ->when($this->filterByDepartment, function ($query) {
+            ->when($this->filterByDepartment, function ($query): void {
                 $query->where('department_id', $this->filterByDepartment);
             })
             ->search('name', $this->search);
@@ -80,7 +80,7 @@ class OpenInvites extends Component
 
     public function getDepartmentName(int $id): string
     {
-        return Department::where('id', $id)->first()->name;
+        return Department::query()->where('id', $id)->first()->name;
     }
 
     public function clearFilters(): void
@@ -113,7 +113,7 @@ class OpenInvites extends Component
 
     private function findInvite($inviteId)
     {
-        return Invite::findOrFail($inviteId);
+        return Invite::query()->findOrFail($inviteId);
     }
 
     private function dispatchInvite($invite): void
@@ -151,7 +151,7 @@ class OpenInvites extends Component
 
     private function getInviteIds()
     {
-        return $this->invites->pluck('id')->map(fn ($id) => (string) $id)->toArray();
+        return $this->invites->pluck('id')->map(fn ($id): string => (string) $id)->toArray();
     }
 
     private function applyManagerFilter($query)

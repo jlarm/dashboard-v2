@@ -15,7 +15,7 @@ class IndexItem extends Component
 
     public function download()
     {
-        return response()->streamDownload(function () {
+        return response()->streamDownload(function (): void {
             echo Storage::disk('dealer-docs')->get($this->fitTestDoc->file_path);
         }, basename('fit-test.pdf'));
     }

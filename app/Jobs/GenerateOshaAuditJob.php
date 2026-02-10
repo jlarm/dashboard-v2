@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use Illuminate\Support\Facades\File;
 use App\Models\Dealer\Audit\OshaAudit;
-use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -39,7 +39,7 @@ class GenerateOshaAuditJob implements ShouldQueue
 
         $footer = view('pdf.audit-footer')->render();
 
-        $audit = Browsershot::html($html)
+        Browsershot::html($html)
             ->showBackground()
             ->format('A4')
             ->scale(0.75)
@@ -49,7 +49,7 @@ class GenerateOshaAuditJob implements ShouldQueue
             ->footerHtml($footer)
             ->save(storage_path('app/'.$fileName));
 
-        $updatePath = $this->oshaAudit->update([
+        $this->oshaAudit->update([
             'pdf_path' => $fileName,
             'rating' => $this->rating(),
         ]);

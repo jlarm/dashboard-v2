@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('dealer_docs', function (Blueprint $table) {
+        Schema::table('dealer_docs', function (Blueprint $table): void {
             $table->string('url')->nullable()->after('title');
             $table->string('file_name')->nullable()->change();
             $table->string('file_path')->nullable()->change();
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('dealer_docs', function (Blueprint $table) {
+        Schema::table('dealer_docs', function (Blueprint $table): void {
             $table->dropColumn('url');
         });
     }

@@ -17,7 +17,7 @@ class ScanDetails extends Component
 
     public function loadScanData(): void
     {
-        $this->store = Store::find(app('currentStore'));
+        $this->store = Store::query()->find(app('currentStore'));
         $this->cyrisma = app(CyrismaService::class)->forStore($this->store);
         $this->loaded = true;
     }

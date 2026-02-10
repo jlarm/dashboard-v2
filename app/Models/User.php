@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Services\UserCourseService;
+use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\PhishingCampaign;
@@ -200,7 +202,7 @@ class User extends Authenticatable
      */
     public function scopeUserStore(Builder $query, ?Store $store): void
     {
-        if ($store) {
+        if ($store instanceof Store) {
             $query->whereHas('stores', function ($q) use ($store): void {
                 $q->where('store_id', $store->id);
             });
@@ -249,18 +251,16 @@ class User extends Authenticatable
 
     public function getCurrentCoursesAttribute()
     {
-        $service = app(\App\Services\UserCourseService::class);
+        $service = app(UserCourseService::class);
         $courses = $service->getCoursesSimple($this);
 
-        return $courses->map(function ($course) {
-            return [
-                'id' => $course->id,
-                'name' => $course->name,
-            ];
-        });
+        return $courses->map(fn($course): array => [
+            'id' => $course->id,
+            'name' => $course->name,
+        ]);
     }
 
-    private function calculateCourseStatus(Dealer\Course $course): string
+    private function calculateCourseStatus(Course $course): string
     {
         $lastPass = $course->results->firstWhere('passed', 1);
 

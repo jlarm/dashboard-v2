@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_department', function (Blueprint $table) {
+        Schema::create('course_department', function (Blueprint $table): void {
             $table->foreignId('course_id')->references('id')->on('courses')->cascadeOnDelete();
             $table->foreignId('department_id')->references('id')->on('departments')->cascadeOnDelete();
         });

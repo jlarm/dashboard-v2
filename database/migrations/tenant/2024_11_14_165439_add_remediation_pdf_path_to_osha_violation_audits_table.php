@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('osha_violation_audits', function (Blueprint $table) {
+        Schema::table('osha_violation_audits', function (Blueprint $table): void {
             $table->string('remediation_pdf_path')->nullable()->after('pdf_path');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('osha_violation_audits', function (Blueprint $table) {
+        Schema::table('osha_violation_audits', function (Blueprint $table): void {
             $table->dropColumn('remediation_pdf_path');
         });
     }

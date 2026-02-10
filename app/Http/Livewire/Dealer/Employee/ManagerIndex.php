@@ -14,8 +14,8 @@ class ManagerIndex extends Component
 
     public $search = '';
     public $store;
-    public $selectedDepartment = null;
-    public $selectedDepartmentName = null;
+    public $selectedDepartment;
+    public $selectedDepartmentName;
     public $showIncompleteCourseUsers = false;
     public $queryString = [
         'search' => ['except' => '', 'as' => 's'],
@@ -33,52 +33,52 @@ class ManagerIndex extends Component
                 'stores:id,name,state',
                 'courses:id',
                 'courseOverrides:user_id,course_id,type',
-                'results' => function ($query) {
+                'results' => function ($query): void {
                     $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1);
                 },
             ])
-            ->whereDoesntHave('roles', function ($query) {
+            ->whereDoesntHave('roles', function ($query): void {
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
             })
-            ->whereHas('stores', function ($query) {
+            ->whereHas('stores', function ($query): void {
                 $query->whereIn('id', auth()->user()->stores->pluck('id'));
             })
             ->where('department_id', auth()->user()->department_id)
-            ->when($this->search, function ($query) {
-                $query->where(function ($subQuery) {
+            ->when($this->search, function ($query): void {
+                $query->where(function ($subQuery): void {
                     $subQuery->where('name', 'like', '%'.$this->search.'%')
                         ->orWhere('email', 'like', '%'.$this->search.'%');
                 })
-                    ->whereHas('stores', function ($storeQuery) {
+                    ->whereHas('stores', function ($storeQuery): void {
                         $storeQuery->whereIn('id', auth()->user()->stores->pluck('id'));
                     })
                     ->where('department_id', auth()->user()->department_id);
             });
     }
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function resetShowIncompleteCourseUsers()
+    public function resetShowIncompleteCourseUsers(): void
     {
         $this->reset(['showIncompleteCourseUsers']);
     }
 
-    public function updatingShowIncompleteCourseUsers()
+    public function updatingShowIncompleteCourseUsers(): void
     {
         $this->resetPage();
     }
 
-    public function updatingSelectedDepartment()
+    public function updatingSelectedDepartment(): void
     {
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function resetFilters(): void
     {
         $this->reset(['showIncompleteCourseUsers']);
     }

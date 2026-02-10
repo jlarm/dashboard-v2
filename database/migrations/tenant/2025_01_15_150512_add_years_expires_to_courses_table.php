@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
+        Schema::table('courses', function (Blueprint $table): void {
             $table->integer('years_expires')->nullable()->after('optional');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
+        Schema::table('courses', function (Blueprint $table): void {
             $table->dropColumn('years_expires');
         });
     }

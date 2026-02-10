@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Livewire\Dealer\Log\Index;
 use App\Models\User;
 use Livewire\Livewire;
 use Spatie\Activitylog\Models\Activity;
 
-describe('Log Index Component - Rendering', function () {
-    it('renders successfully for authorized users', function () {
-        $user = User::create([
+describe('Log Index Component - Rendering', function (): void {
+    it('renders successfully for authorized users', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -23,8 +25,8 @@ describe('Log Index Component - Rendering', function () {
             ->assertViewIs('livewire.dealer.log.index');
     });
 
-    it('displays activity logs with pagination', function () {
-        $user = User::create([
+    it('displays activity logs with pagination', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -44,13 +46,13 @@ describe('Log Index Component - Rendering', function () {
         $this->actingAs($user);
 
         Livewire::test(Index::class)
-            ->assertViewHas('logs', fn ($logs) => $logs->count() === 25) // Default pagination is 25
+            ->assertViewHas('logs', fn ($logs): bool => $logs->count() === 25) // Default pagination is 25
             ->assertSee('Test activity 0') // Latest activity (created last)
             ->assertDontSee('Test activity 29'); // Should be on page 2 (created first)
     });
 
-    it('displays empty state when no logs exist', function () {
-        $user = User::create([
+    it('displays empty state when no logs exist', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -67,8 +69,8 @@ describe('Log Index Component - Rendering', function () {
             ->assertSee(__('No activity has been recorded yet.'));
     });
 
-    it('eager loads causer relationship to prevent N+1 queries', function () {
-        $user = User::create([
+    it('eager loads causer relationship to prevent N+1 queries', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -77,7 +79,7 @@ describe('Log Index Component - Rendering', function () {
 
         // Create activities with different causers
         for ($i = 0; $i < 5; $i++) {
-            $causer = User::create([
+            $causer = User::query()->create([
                 'name' => "User {$i}",
                 'email' => "user{$i}@test.com",
                 'password' => bcrypt('password'),
@@ -99,16 +101,16 @@ describe('Log Index Component - Rendering', function () {
 
         // Should have minimal queries due to eager loading
         // 1 for activities + 1 for count (pagination) + any auth queries
-        $activityQueries = collect($queries)->filter(fn ($query) => str_contains($query['query'], 'activity_log'));
+        $activityQueries = collect($queries)->filter(fn ($query): bool => str_contains((string) $query['query'], 'activity_log'));
 
         // Should not have separate queries for each causer
         expect($activityQueries->count())->toBeLessThanOrEqual(3);
     });
 });
 
-describe('Log Index Component - View Log Details', function () {
-    it('opens modal with log details when viewing a log', function () {
-        $user = User::create([
+describe('Log Index Component - View Log Details', function (): void {
+    it('opens modal with log details when viewing a log', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -128,14 +130,14 @@ describe('Log Index Component - View Log Details', function () {
             ->assertDispatchedBrowserEvent('open-log-modal');
     });
 
-    it('loads causer and subject relationships when viewing log details', function () {
-        $causer = User::create([
+    it('loads causer and subject relationships when viewing log details', function (): void {
+        $causer = User::query()->create([
             'name' => 'Causer User',
             'email' => 'causer@test.com',
             'password' => bcrypt('password'),
         ]);
 
-        $subject = User::create([
+        $subject = User::query()->create([
             'name' => 'Subject User',
             'email' => 'subject@test.com',
             'password' => bcrypt('password'),
@@ -155,8 +157,8 @@ describe('Log Index Component - View Log Details', function () {
             ->assertSet('selectedLog.subject.name', 'Subject User');
     });
 
-    it('throws exception when viewing non-existent log', function () {
-        $user = User::create([
+    it('throws exception when viewing non-existent log', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -167,12 +169,12 @@ describe('Log Index Component - View Log Details', function () {
 
         Livewire::test(Index::class)
             ->call('viewLogDetails', 99999);
-    })->throws(Illuminate\Database\Eloquent\ModelNotFoundException::class);
+    })->throws(ModelNotFoundException::class);
 });
 
-describe('Log Index Component - Close Modal', function () {
-    it('closes modal and clears selected log', function () {
-        $user = User::create([
+describe('Log Index Component - Close Modal', function (): void {
+    it('closes modal and clears selected log', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -194,9 +196,9 @@ describe('Log Index Component - Close Modal', function () {
     });
 });
 
-describe('Log Index Component - Pagination', function () {
-    it('displays pagination links when more than 25 logs exist', function () {
-        $user = User::create([
+describe('Log Index Component - Pagination', function (): void {
+    it('displays pagination links when more than 25 logs exist', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -216,8 +218,8 @@ describe('Log Index Component - Pagination', function () {
             ->assertViewHas('logs', fn ($logs) => $logs->hasPages());
     });
 
-    it('navigates to second page correctly', function () {
-        $user = User::create([
+    it('navigates to second page correctly', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -238,11 +240,11 @@ describe('Log Index Component - Pagination', function () {
 
         Livewire::test(Index::class)
             ->call('gotoPage', 2)
-            ->assertViewHas('logs', fn ($logs) => $logs->currentPage() === 2 && $logs->count() === 5);
+            ->assertViewHas('logs', fn ($logs): bool => $logs->currentPage() === 2 && $logs->count() === 5);
     });
 
-    it('does not break when navigating to invalid page', function () {
-        $user = User::create([
+    it('does not break when navigating to invalid page', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -268,9 +270,11 @@ describe('Log Index Component - Pagination', function () {
     });
 });
 
-describe('Log Index Component - Activity Display', function () {
-    it('displays activity with causer information', function () {
-        $causer = User::create([
+describe('Log Index Component - Activity Display', function (): void {
+    it('displays activity with causer information', function (): void {
+        Activity::query()->delete();
+
+        $causer = User::query()->create([
             'name' => 'John Doe',
             'email' => 'john@test.com',
             'password' => bcrypt('password'),
@@ -288,8 +292,8 @@ describe('Log Index Component - Activity Display', function () {
             ->assertSee('Created new resource');
     });
 
-    it('displays system when no causer exists', function () {
-        $user = User::create([
+    it('displays system when no causer exists', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
@@ -304,15 +308,15 @@ describe('Log Index Component - Activity Display', function () {
             ->assertSee(__('System'));
     });
 
-    it('displays subject type correctly', function () {
-        $user = User::create([
+    it('displays subject type correctly', function (): void {
+        $user = User::query()->create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole('Admin');
 
-        $subject = User::create([
+        $subject = User::query()->create([
             'name' => 'Subject User',
             'email' => 'subject@test.com',
             'password' => bcrypt('password'),

@@ -70,7 +70,7 @@ class DealJacketReportPdfTestController extends Controller
 
             $dealJacketDetails[] = $detail;
 
-            if (count($dealJacketIssues) > 0) {
+            if ($dealJacketIssues !== []) {
                 if (! isset($dealJacketsByUser[$userName])) {
                     $dealJacketsByUser[$userName] = [];
                 }
@@ -81,7 +81,7 @@ class DealJacketReportPdfTestController extends Controller
 
         return view('dealer.audit.deal-jacket.pdf-report', [
             'dealJacketGroup' => $dealJacketGroup,
-            'user' => User::first(),
+            'user' => User::query()->first(),
             'issuesByUser' => $issuesByUser,
             'dealJacketDetails' => $dealJacketDetails,
             'dealJacketsByUser' => $dealJacketsByUser,
