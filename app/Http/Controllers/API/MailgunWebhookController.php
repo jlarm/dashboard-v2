@@ -7,6 +7,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Dealer\VendorEmailLog;
 use App\Models\Dealership;
+use App\Models\VendorEmailLogIndex;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -51,20 +52,43 @@ class MailgunWebhookController extends Controller
         $emailLog = null;
         $foundTenant = null;
 
+        $normalizedMessageId = $this->normalizeMessageId($messageId);
+
         // Normalize message_id - try both with and without angle brackets
         $messageIdVariants = [
-            $messageId,
-            '<'.$messageId.'>',
+            $normalizedMessageId,
+            '<'.$normalizedMessageId.'>',
         ];
 
-        foreach (Dealership::cursor() as $tenant) {
-            $tenant->run(function () use ($messageIdVariants, &$emailLog) {
-                $emailLog = VendorEmailLog::whereIn('message_id', $messageIdVariants)->first();
-            });
+        $index = tenancy()->central(fn () => VendorEmailLogIndex::where('message_id', $normalizedMessageId)->first());
+        if ($index) {
+            $foundTenant = Dealership::find($index->tenant_id);
+            if ($foundTenant) {
+                $foundTenant->run(function () use ($messageIdVariants, &$emailLog) {
+                    $emailLog = VendorEmailLog::whereIn('message_id', $messageIdVariants)->first();
+                });
+            }
+        }
 
-            if ($emailLog) {
-                $foundTenant = $tenant;
-                break;
+        if (! $emailLog) {
+            foreach (Dealership::cursor() as $tenant) {
+                $tenant->run(function () use ($messageIdVariants, &$emailLog) {
+                    $emailLog = VendorEmailLog::whereIn('message_id', $messageIdVariants)->first();
+                });
+
+                if ($emailLog) {
+                    $foundTenant = $tenant;
+                    break;
+                }
+            }
+
+            if ($emailLog && $foundTenant) {
+                tenancy()->central(function () use ($normalizedMessageId, $foundTenant): void {
+                    VendorEmailLogIndex::updateOrCreate(
+                        ['message_id' => $normalizedMessageId],
+                        ['tenant_id' => $foundTenant->id]
+                    );
+                });
             }
         }
 
@@ -182,15 +206,16 @@ class MailgunWebhookController extends Controller
         $expectedSignature = hash_hmac('sha256', $timestamp.$token, $signingKey);
 
         if (! hash_equals($expectedSignature, $signature)) {
-            Log::warning('Mailgun webhook signature mismatch', [
-                'expected' => $expectedSignature,
-                'received' => $signature,
-                'signing_key_length' => mb_strlen($signingKey),
-            ]);
+            Log::warning('Mailgun webhook signature mismatch');
 
             return false;
         }
 
         return true;
+    }
+
+    private function normalizeMessageId(string $messageId): string
+    {
+        return trim($messageId, '<>');
     }
 }

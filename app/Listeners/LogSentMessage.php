@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use App\Models\Dealer\VendorEmailLog;
+use App\Models\VendorEmailLogIndex;
 use Illuminate\Mail\Events\MessageSent;
+use Illuminate\Support\Str;
 
 class LogSentMessage
 {
@@ -40,8 +42,14 @@ class LogSentMessage
             $toEmails = implode(', ', array_keys((array) $toAddresses));
         }
 
+        $vendorFormId = $headers->get('X-Vendor-ID')?->getBodyAsString();
+
+        if (empty($vendorFormId)) {
+            return;
+        }
+
         $data = [
-            'vendor_form_id' => (int) $headers->get('X-Vendor-ID')?->getBodyAsString(),
+            'vendor_form_id' => (int) $vendorFormId,
             'to' => $toEmails ?: 'unknown',
             'subject' => (string) ($message->getSubject() ?? ''),
             'sent_at' => now()->toDateTimeString(),
@@ -64,17 +72,24 @@ class LogSentMessage
             $messageId = $message->getId();
         }
 
-        // Method 3: Generate a unique ID if none exists (last resort)
         if (empty($messageId)) {
-            $messageId = sprintf('<%s@%s>', uniqid('vendor-notification-', true), config('mail.from.address') ? explode('@', config('mail.from.address'))[1] : 'local');
-            // Add it to the message for future reference
-            if (method_exists($message, 'generateId')) {
-                $message->generateId($messageId);
-            }
+            $domain = config('mail.from.address') ? explode('@', config('mail.from.address'))[1] : 'local';
+            $messageId = sprintf('<%s@%s>', Str::uuid(), $domain);
         }
 
         $data['message_id'] = $messageId;
 
         VendorEmailLog::create($data);
+
+        $tenantId = tenant('id');
+        if ($tenantId) {
+            $normalizedMessageId = trim($messageId, '<>');
+            tenancy()->central(function () use ($tenantId, $normalizedMessageId): void {
+                VendorEmailLogIndex::updateOrCreate(
+                    ['message_id' => $normalizedMessageId],
+                    ['tenant_id' => $tenantId]
+                );
+            });
+        }
     }
 }
