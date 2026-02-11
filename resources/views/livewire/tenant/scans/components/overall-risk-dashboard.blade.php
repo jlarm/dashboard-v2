@@ -5,17 +5,25 @@
             <p class="text-sm text-gray-600">Current security posture across all scan types</p>
         </div>
         @if($lastScanDate)
-            <div class="text-sm text-gray-500">
-                Last scan: {{ $lastScanDate }}
+            <div class="text-right text-sm text-gray-500">
+                <x-armp.button onclick="Livewire.emit('refreshCache')" variant="filled" size="sm">
+                    <span class="flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Refresh
+                    </span>
+                </x-armp.button>
+                <span class="block">Last scan: {{ $lastScanDate }}</span>
             </div>
         @endif
     </div>
 
     <div class="grid grid-cols-2 gap-4">
         <!-- Overall Risk -->
-        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 border-2 border-indigo-300 rounded-lg p-4">
+        <div class="bg-white border border-gray-200 rounded-lg p-4">
             <div class="flex items-center justify-between mb-2">
-                <div class="text-sm font-medium text-indigo-900">Overall Risk</div>
+                <div class="text-sm font-medium text-gray-700">Overall Risk</div>
                 @php
                     $trend = $this->getGradeTrend($riskData['current_or_grade'] ?? 'F', $riskData['previous_or_grade'] ?? 'F');
                 @endphp
@@ -33,8 +41,8 @@
                     </svg>
                 @endif
             </div>
-            <div class="text-3xl font-bold text-indigo-900">{{ $riskData['current_or_grade'] ?? '-' }}</div>
-            <div class="text-xs text-indigo-700 mt-1">Previous: {{ $riskData['previous_or_grade'] ?? '-' }}</div>
+            <div class="text-3xl font-bold text-gray-900">{{ $riskData['current_or_grade'] ?? '-' }}</div>
+            <div class="text-xs text-gray-700 mt-1">Previous: {{ $riskData['previous_or_grade'] ?? '-' }}</div>
         </div>
 
         <!-- Vulnerabilities -->

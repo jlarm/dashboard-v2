@@ -10,7 +10,7 @@ use App\Services\UserCourseService;
 use Spatie\Permission\Models\Role;
 
 beforeEach(function (): void {
-    UserCourseService::clearAllCaches();
+    app(UserCourseService::class)->clearAllCaches();
 });
 
 describe('Course Assignment - Role Based', function (): void {

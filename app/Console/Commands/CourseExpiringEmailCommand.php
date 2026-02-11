@@ -24,6 +24,8 @@ class CourseExpiringEmailCommand extends Command
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+            app(UserCourseService::class)->clearAllCaches();
+
             User::query()->select(['id', 'name', 'email', 'department_id'])
                 ->with('roles', 'stores')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])

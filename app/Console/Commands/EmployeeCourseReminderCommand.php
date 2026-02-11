@@ -24,6 +24,7 @@ class EmployeeCourseReminderCommand extends Command
     public function handle(): void
     {
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+            app(UserCourseService::class)->clearAllCaches();
 
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 

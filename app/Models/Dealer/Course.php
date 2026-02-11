@@ -22,6 +22,8 @@ class Course extends Model
 {
     use LogsActivity;
 
+    public const CALIFORNIA_TRAINING_SLUG = 'sexual-harassment-training-in-california';
+
     protected $fillable = [
         'department_id',
         'slug',

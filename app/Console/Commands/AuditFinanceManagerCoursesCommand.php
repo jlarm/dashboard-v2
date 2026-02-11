@@ -30,6 +30,8 @@ class AuditFinanceManagerCoursesCommand extends Command
         ];
 
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseService, &$stats): void {
+            app(UserCourseService::class)->clearAllCaches();
+
             $this->info("Checking tenant: {$tenant->name} (ID: {$tenant->id})");
 
             $stats['tenants_checked']++;

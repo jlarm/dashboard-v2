@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Dealer\Course;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Notifications\IncompleteCoursesNotification;
-use App\Queries\Feeds\CoursesFeed;
+use App\Services\UserCourseService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -42,9 +43,9 @@ class CourseReminderCommand extends Command
         }
 
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($debugEnabled, $isTestMode): void {
-            $this->info("Running command for tenant: {$tenant->id}");
+            app(UserCourseService::class)->clearAllCaches();
 
-            // Check if tenant has locations feature enabled
+            $this->info("Running command for tenant: {$tenant->id}");
             if (tenant('locations')) {
                 $this->processTenantsWithLocations($tenant, $debugEnabled, $isTestMode);
             } else {
@@ -145,12 +146,11 @@ class CourseReminderCommand extends Command
         }
 
         if ($shouldSendReminder) {
-            $courseFeed = new CoursesFeed($user);
-            $courseCounts = $courseFeed->getCourseCounts();
+            $unattemptedCoursesCount = $this->getUnattemptedCoursesCount($user);
 
-            if ($courseCounts['incomplete'] > 0) {
+            if ($unattemptedCoursesCount > 0) {
                 $storeInfo = $store instanceof Store ? " for store {$store->name}" : '';
-                $this->info("User {$user->name} has {$courseCounts['incomplete']} incomplete courses{$storeInfo}");
+                $this->info("User {$user->name} has {$unattemptedCoursesCount} unattempted courses{$storeInfo}");
 
                 if (! $isTestMode) {
                     $user->update(['last_sent_course_reminder' => $now]);
@@ -162,8 +162,25 @@ class CourseReminderCommand extends Command
                     $this->info("[TEST MODE] Would send notification to {$user->email}{$storeInfo}");
                 }
             } elseif ($debugEnabled) {
-                $this->info("User {$user->name} has no incomplete courses");
+                $this->info("User {$user->name} has no unattempted courses");
             }
         }
+    }
+
+    /**
+     * Count assigned courses for the user that have not been attempted at least once.
+     */
+    private function getUnattemptedCoursesCount(User $user): int
+    {
+        $assignedCourseIds = app(UserCourseService::class)->getCourseIds($user);
+
+        if ($assignedCourseIds === []) {
+            return 0;
+        }
+
+        return Course::query()
+            ->whereIn('id', $assignedCourseIds)
+            ->whereDoesntHave('results', fn ($query) => $query->where('user_id', $user->id))
+            ->count();
     }
 }

@@ -174,13 +174,6 @@ Route::name('dealer.')->middleware([
         Route::get('phishing/create', Create::class)->name('phishing.create');
 
         Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
-
-        Route::middleware(['single.store'])->group(function (): void {
-            Route::get('cyrisma', App\Http\Livewire\Tenant\Scans\Index::class)->name('cyrisma.index');
-            Route::get('cyrisma/settings', [CyrismaController::class, 'settings'])->name('cyrisma.settings');
-            Route::get('cyrisma/report/{type}', [CyrismaReportController::class, 'download'])->name('cyrisma.report');
-        });
-
     });
 
     Route::middleware(['auth', 'can:delete-stores'])->group(function (): void {
@@ -231,7 +224,13 @@ Route::name('dealer.')->middleware([
             Route::get('{user:slug}', [UserController::class, 'show'])->name('show');
         });
 
-        Route::view('scans', 'dealer.scan.index')->middleware(['auth', 'single.store'])->name('scan.index');
+        Route::middleware(['single.store'])->group(function (): void {
+            Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->name('scan.index');
+            Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');
+            Route::get('scans/report/{type}', [CyrismaReportController::class, 'download'])->name('scan.report');
+        });
+
+        Route::view('scans-archive', 'dealer.scan.index')->middleware(['auth', 'single.store'])->name('scan.archive');
 
         Route::prefix('audits/')->name('audit.')->middleware(['auth'])->group(function (): void {
             Route::get('osha', App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('osha.index');

@@ -16,6 +16,7 @@ class Index extends Component
     public bool $loaded = false;
     public bool $isConfigured = false;
     public bool $hasShortName = false;
+    public bool $hasScanData = false;
     public bool $hasExternalScans = false;
     public bool $hasInternalScans = false;
     public ?string $error = null;
@@ -34,6 +35,9 @@ class Index extends Component
     public function loadScanData(): void
     {
         $this->error = null;
+        $this->hasScanData = false;
+        $this->hasExternalScans = false;
+        $this->hasInternalScans = false;
 
         $current = app('currentStore');
         $this->storeId = $current instanceof Store ? $current->id : (int) $current;
@@ -52,6 +56,8 @@ class Index extends Component
             $this->hasShortName = $this->cyrisma->hasShortName();
 
             if ($this->isConfigured && $this->hasShortName) {
+                $vulnerabilityScans = $this->cyrisma->getVulnerabilityScans();
+                $this->hasScanData = ! empty($vulnerabilityScans['vulnerability_scans'] ?? []);
                 $this->hasExternalScans = $this->cyrisma->getExternalIpScanData() !== null;
                 $this->hasInternalScans = $this->cyrisma->hasInternalScans();
             }

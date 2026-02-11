@@ -61,9 +61,9 @@ Route::name('dealer.stores.')
 
                 Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
 
-                Route::get('cyrisma', App\Http\Livewire\Tenant\Scans\Index::class)->name('cyrisma.index');
-                Route::get('cyrisma/settings', [CyrismaController::class, 'settings'])->name('cyrisma.settings');
-                Route::get('cyrisma/report/{type}', [CyrismaReportController::class, 'download'])->name('cyrisma.report');
+                Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->name('scan.index');
+                Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');
+                Route::get('scans/report/{type}', [CyrismaReportController::class, 'download'])->name('scan.report');
 
             });
 

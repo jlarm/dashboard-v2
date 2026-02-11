@@ -9,6 +9,7 @@ use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -27,6 +28,7 @@ class SettingsForm extends Component
     public function mount(): void
     {
         $this->store = Store::query()->find(app('currentStore'));
+        Gate::authorize('viewAny', Cyrisma::class);
         $instanceUrl = $this->store->cyrisma->instance_url ?? null;
         $this->instanceId = $instanceUrl ? str($instanceUrl)->before('.')->toString() : null;
     }
@@ -41,6 +43,12 @@ class SettingsForm extends Component
 
     public function save(): void
     {
+        if ($this->store?->cyrisma instanceof Cyrisma) {
+            Gate::authorize('update', $this->store->cyrisma);
+        } else {
+            Gate::authorize('create', Cyrisma::class);
+        }
+
         $this->validate();
 
         $this->isLoading = true;

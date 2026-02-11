@@ -18,7 +18,7 @@ use Spatie\Permission\Models\Role;
 use function Pest\Laravel\artisan;
 
 beforeEach(function (): void {
-    UserCourseService::clearAllCaches();
+    app(UserCourseService::class)->clearAllCaches();
 
     // Ensure we have the basic roles
     Role::query()->firstOrCreate(['name' => 'Employee']);

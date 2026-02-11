@@ -38,7 +38,7 @@ abstract class TestCase extends BaseTestCase
             'Environment: '.env('DB_DATABASE').' | Config: '.config('database.connections.mysql.database')
         ));
 
-        UserCourseService::clearAllCaches();
+        app(UserCourseService::class)->clearAllCaches();
     }
 
     protected function createTenant(array $data = []): Dealership

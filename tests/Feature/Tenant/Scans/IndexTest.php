@@ -153,7 +153,7 @@ describe('view rendering', function (): void {
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
             ->call('loadScanData')
-            ->assertSee('Instance Not Configured');
+            ->assertSee('Contact your consultant today to get started.');
     });
 
     it('shows no scan results message when configured but no scans exist', function (): void {

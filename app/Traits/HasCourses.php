@@ -29,7 +29,7 @@ trait HasCourses
         $this->userCourses = null;
 
         // Clear service-level caches for this user
-        app(UserCourseService::class)::clearCacheForUser($this->id);
+        app(UserCourseService::class)->clearCacheForUser($this->id);
 
         // Clear Laravel's attribute cache for computed attributes
         if (isset($this->attributes['total_completed_courses'])) {

@@ -4,31 +4,25 @@
         <x-slot:actions>
             <div class="flex items-center gap-2 justify-end">
                 @hasanyrole('super-admin|Consultant')
-                <x-button.primary href="{{ tenant('locations') ? route('dealer.stores.cyrisma.settings', $store) : route('dealer.cyrisma.settings') }}">Settings</x-button.primary>
+                <x-button.primary href="{{ tenant('locations') ? route('dealer.stores.scan.settings', $store) : route('dealer.scan.settings') }}">Settings</x-button.primary>
 
-                <x-button.secondary
-                    href="{{ tenant('locations') ? route('dealer.stores.cyrisma.report', [$store, 'executive']) : route('dealer.cyrisma.report', 'executive') }}?refresh=1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onclick="window.open(this.href, '_blank', 'noopener'); return false;"
-                >
-                    Executive PDF
-                </x-button.secondary>
-                <x-button.secondary
-                    href="{{ tenant('locations') ? route('dealer.stores.cyrisma.report', [$store, 'technical']) : route('dealer.cyrisma.report', 'technical') }}?refresh=1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onclick="window.open(this.href, '_blank', 'noopener'); return false;"
-                >
-                    Technical PDF
-                </x-button.secondary>
+{{--                <x-button.secondary--}}
+{{--                    href="{{ tenant('locations') ? route('dealer.stores.scan.report', [$store, 'executive']) : route('dealer.scan.report', 'executive') }}?refresh=1"--}}
+{{--                    target="_blank"--}}
+{{--                    rel="noopener noreferrer"--}}
+{{--                    onclick="window.open(this.href, '_blank', 'noopener'); return false;"--}}
+{{--                >--}}
+{{--                    Executive PDF--}}
+{{--                </x-button.secondary>--}}
+{{--                <x-button.secondary--}}
+{{--                    href="{{ tenant('locations') ? route('dealer.stores.scan.report', [$store, 'technical']) : route('dealer.scan.report', 'technical') }}?refresh=1"--}}
+{{--                    target="_blank"--}}
+{{--                    rel="noopener noreferrer"--}}
+{{--                    onclick="window.open(this.href, '_blank', 'noopener'); return false;"--}}
+{{--                >--}}
+{{--                    Technical PDF--}}
+{{--                </x-button.secondary>--}}
                 @endhasanyrole
-                <button onclick="Livewire.emit('refreshCache')" class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-200 border border-gray-300">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                    </svg>
-                    Refresh
-                </button>
             </div>
         </x-slot>
     </x-slot:header>
@@ -58,6 +52,7 @@
                     </div>
                 </div>
             @elseif($isConfigured && $hasShortName)
+
                 <!-- Overall Risk Dashboard -->
                 <div class="bg-white border border-gray-200 rounded-lg p-6">
                     @livewire('tenant.scans.components.overall-risk-dashboard', ['cyrisma' => $cyrisma], key('overall-risk-dashboard'))
@@ -149,26 +144,17 @@
                     </div>
                 </div>
             @else
-                <!-- Short Name Not Configured Warning -->
-                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                    <div class="flex items-start gap-4">
-                        <svg class="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                        </svg>
-                        <div>
-                            <h3 class="text-lg font-semibold text-yellow-900 mb-1">Instance Not Configured</h3>
-                            <p class="text-yellow-800 mb-4">
-                                This store has not been linked to an instance. Please configure the short name in settings.
-                            </p>
-                            <x-armp.button variant="primary" href="{{ tenant('locations') ? route('dealer.stores.cyrisma.settings', $store) : route('dealer.cyrisma.settings') }}">
-                                Configure Settings
-                            </x-armp.button>
-                        </div>
+                <div class="text-center space-y-5 text-sm">
+                    <div class="relative">
+                        <p class="absolute inset-0 z-10 flex items-center justify-center px-6 text-center leading-[60px] text-5xl font-bold italic">Contact your consultant <br />today to get started.</p>
+                        <img class="opacity-75" src="{{ global_asset('scans.webp') }}" alt="Scans">
+                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-white to-transparent"></div>
                     </div>
                 </div>
             @endif
         @else
             <!-- Loading Skeleton -->
+            <div class="bg-gray-200 rounded-lg p-8 animate-pulse"></div>
             @include('livewire.tenant.scans.components.issue-counts-placeholder')
             <div class="space-y-5">
                 <div class="bg-gray-200 rounded-lg p-8 animate-pulse"></div>

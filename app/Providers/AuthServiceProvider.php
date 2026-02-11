@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Dealer\Cyrisma;
 use App\Models\SharedDocument;
+use App\Policies\CyrismaPolicy;
 use App\Policies\SharedDocumentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -19,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+        Cyrisma::class => CyrismaPolicy::class,
         SharedDocument::class => SharedDocumentPolicy::class,
     ];
 
