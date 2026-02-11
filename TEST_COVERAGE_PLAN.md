@@ -18,11 +18,11 @@
 
 ## 2. Authentication (Tenant / Dealer)
 
-- `tests/Feature/Tenant/Auth/AuthenticationTest.php` - Dealer login/logout via tenant domain
-- `tests/Feature/Tenant/Auth/PasswordResetTest.php` - Dealer password reset
-- `tests/Feature/Tenant/Auth/PasswordConfirmationTest.php` - Dealer password confirmation
-- `tests/Feature/Tenant/Auth/EmailVerificationTest.php` - Dealer email verification
-- `tests/Feature/Tenant/Auth/PasswordUpdateTest.php` - Dealer password update
+- ~~`tests/Feature/Tenant/Auth/AuthenticationTest.php` - Dealer login/logout via tenant domain~~
+- ~~`tests/Feature/Tenant/Auth/PasswordResetTest.php` - Dealer password reset~~
+- ~~`tests/Feature/Tenant/Auth/PasswordConfirmationTest.php` - Dealer password confirmation~~
+- ~~`tests/Feature/Tenant/Auth/EmailVerificationTest.php` - Dealer email verification~~
+- ~~`tests/Feature/Tenant/Auth/PasswordUpdateTest.php` - Dealer password update~~
 
 ## 3. Profile
 
@@ -645,7 +645,7 @@
 | Category | Existing | Needed | Total |
 |---|---|---|---|
 | Auth (Central) | 6 | 0 | 6 |
-| Auth (Tenant) | 0 | 5 | 5 |
+| Auth (Tenant) | 5 | 0 | 5 |
 | Profile | 1 | 1 | 2 |
 | Multi-Tenancy | 1 | 6 | 7 |
 | Models (Unit) | 0 | 56 | 56 |
@@ -670,12 +670,12 @@
 | Multi-Store | 2 | 2 | 4 |
 | Vendor Email Log | 1 | 0 | 1 |
 | Factories | 0 | 8 | 8 |
-| **TOTAL** | **43** | **337** | **380** |
+| **TOTAL** | **48** | **332** | **380** |
 
 ### Priority Order for Implementation
 
-1. **RBAC / Authorization** - Critical for a multi-tenant app; ensures users cannot access other tenants' or stores' data
-2. **Tenant Auth** - Dealer-side authentication flows
+1. ~~**RBAC / Authorization** - Critical for a multi-tenant app; ensures users cannot access other tenants' or stores' data~~
+2. ~~**Tenant Auth** - Dealer-side authentication flows~~
 3. **Policies** - Authorization gates for domain objects
 4. **Middleware** - Security headers, store access, impersonation
 5. **Form Requests** - Input validation at system boundaries
