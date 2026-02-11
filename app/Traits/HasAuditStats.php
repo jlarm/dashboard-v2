@@ -13,12 +13,17 @@ trait HasAuditStats
 {
     public function progress(): ?array
     {
-        if ($this->violationAudits()->whereNotNull('grade')->count() < 2) {
+        $gradedAudits = $this->violationAudits()
+            ->whereNotNull('grade')
+            ->where('grade', '!=', 'N/A');
+
+        if ((clone $gradedAudits)->count() < 2) {
             return null;
         }
 
-        $latestAudits = $this->violationAudits()
-            ->orderBy('date', 'desc')
+        $latestAudits = (clone $gradedAudits)
+            ->orderByDesc('date')
+            ->orderByDesc('id')
             ->take(2)
             ->get();
 
