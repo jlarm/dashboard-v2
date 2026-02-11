@@ -60,11 +60,6 @@ Route::name('dealer.stores.')
                 Route::get('edit', [StoreController::class, 'edit'])->name('edit');
 
                 Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
-
-                Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->name('scan.index');
-                Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');
-                Route::get('scans/report/{type}', [CyrismaReportController::class, 'download'])->name('scan.report');
-
             });
 
             // **************************************************
@@ -77,7 +72,11 @@ Route::name('dealer.stores.')
                 Route::get('/employees/open-invites', OpenInvites::class)->name('employees.open-invites');
                 Route::get('employees/{user:slug}', App\Http\Livewire\Dealer\Store\SingleStore\Employee\Show::class)->name('employees.show');
 
-                Route::get('scans', App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scan.index');
+                Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->name('scan.index');
+                Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');
+                Route::get('scans/report/{type}', [CyrismaReportController::class, 'download'])->name('scan.report');
+
+                Route::get('scan-archives', App\Http\Livewire\Dealer\Store\SingleStore\Scan\Index::class)->middleware(['auth', 'has.stores'])->name('scan.archive');
 
                 Route::get('manuals', App\Http\Livewire\Dealer\Store\SingleStore\Manual\Index::class)->name('manuals');
                 Route::get('audits/osha', App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('audits.osha.index');

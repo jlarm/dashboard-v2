@@ -39,9 +39,7 @@ class Index extends Component
         $this->hasExternalScans = false;
         $this->hasInternalScans = false;
 
-        $current = app('currentStore');
-        $this->storeId = $current instanceof Store ? $current->id : (int) $current;
-        $this->store = $current instanceof Store ? $current : Store::query()->find($this->storeId);
+        $this->store = Store::query()->find($this->storeId);
 
         if (! $this->store) {
             $this->error = 'Unable to load store information. Please try again later.';
