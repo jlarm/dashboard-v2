@@ -18,9 +18,11 @@ trait HasGrade
             self::GRADE_CACHE_TTL,
             fn () => $this->oshaViolationAudits()
                 ->whereNotNull('grade')
-                ->latest()
+                ->where('grade', '!=', 'N/A')
+                ->orderByDesc('date')
+                ->orderByDesc('id')
                 ->first()
-                ->grade ?? '-'
+                ?->grade
         );
     }
 
@@ -31,9 +33,11 @@ trait HasGrade
             self::GRADE_CACHE_TTL,
             fn () => $this->GlbaViolationAudits()
                 ->whereNotNull('grade')
-                ->latest()
+                ->where('grade', '!=', 'N/A')
+                ->orderByDesc('date')
+                ->orderByDesc('id')
                 ->first()
-                ->grade ?? '-'
+                ?->grade
         );
     }
 
@@ -44,9 +48,11 @@ trait HasGrade
             self::GRADE_CACHE_TTL,
             fn () => $this->BodyShopViolationAudits()
                 ->whereNotNull('grade')
-                ->latest()
+                ->where('grade', '!=', 'N/A')
+                ->orderByDesc('date')
+                ->orderByDesc('id')
                 ->first()
-                ->grade ?? null
+                ?->grade
         );
     }
 

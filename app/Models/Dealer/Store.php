@@ -140,9 +140,19 @@ class Store extends Model implements HasMedia
         return Cache::remember(
             $this->getGradeCacheKey('deal_jacket'),
             self::GRADE_CACHE_TTL,
-            fn (): ?string => $this->calculateGrade(
-                $this->individualAudits()->whereNotNull('rating')->pluck('rating')->toArray()
-            )
+            function (): ?string {
+                $latestRating = $this->individualAudits()
+                    ->whereNotNull('rating')
+                    ->orderByDesc('audit_date')
+                    ->orderByDesc('id')
+                    ->value('rating');
+
+                if ($latestRating === null) {
+                    return null;
+                }
+
+                return $this->calculateGrade([(float) $latestRating]);
+            }
         );
     }
 
@@ -152,14 +162,32 @@ class Store extends Model implements HasMedia
             $this->getGradeCacheKey('overall'),
             self::GRADE_CACHE_TTL,
             function (): ?string {
-                $grades = array_merge(
-                    $this->individualAudits()->whereNotNull('rating')->pluck('rating')->toArray(),
-                    $this->financeAudits()->whereNotNull('rating')->pluck('rating')->toArray(),
-                    $this->oshaAudits()->whereNotNull('rating')->pluck('rating')->toArray(),
-                    $this->bodyShopAudits()->whereNotNull('rating')->pluck('rating')->toArray()
-                );
+                $latestGrades = array_values(array_filter([
+                    $this->deal_jacket_grade,
+                    $this->osha_grade,
+                    $this->glba_grade,
+                    $this->body_shop_grade,
+                ], fn (?string $grade): bool => in_array($grade, ['A', 'B', 'C', 'D', 'F'], true)));
 
-                return $this->calculateGrade($grades);
+                if ($latestGrades === []) {
+                    return null;
+                }
+
+                $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
+                $total = array_reduce(
+                    $latestGrades,
+                    fn (int $carry, string $grade): int => $carry + $gradeValues[$grade],
+                    0
+                );
+                $avg = $total / count($latestGrades);
+
+                return match (true) {
+                    $avg >= 3.5 => 'A',
+                    $avg >= 2.5 => 'B',
+                    $avg >= 1.5 => 'C',
+                    $avg >= 0.5 => 'D',
+                    default => 'F',
+                };
             }
         );
     }
