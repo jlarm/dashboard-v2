@@ -51,9 +51,11 @@ class GoPhishService
         }
     }
 
-    public function updateGroup(string $groupId, $userData, string $ip, $token, $store = null): void
+    public function updateGroup(int|string $groupId, $userData, string $ip, $token, $store = null): void
     {
         try {
+            $groupId = (string) $groupId;
+
             $requestBody = [
                 'id' => $groupId,
                 'name' => 'All '.$store->name.' Employees',

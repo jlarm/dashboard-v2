@@ -36,9 +36,8 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
             $this->info('Starting run for tenant: '.$tenant->name);
 
-            $settings = GlobalSetting::query()->first();
-            $this->token = $settings->phishing_token;
-            $this->ip = $settings->phishing_ip;
+            $this->token = $globalSetting->phishing_token;
+            $this->ip = $globalSetting->phishing_ip;
 
             $stores = Store::all();
 
@@ -53,7 +52,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
                     return;
                 }
 
-                if ($this->token === null || ! $this->ip === null) {
+                if ($this->token === null || $this->ip === null) {
                     $this->info('No token or IP found for tenant: '.$tenant->name);
 
                     return;
@@ -76,7 +75,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
         });
     }
 
-    public function getUsers($store)
+    public function getUsers(Store $store): array
     {
         if (tenant('locations')) {
             $users = $store->users()
@@ -90,9 +89,9 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
         }
 
         return $users->map(function ($user): array {
-            $splitName = explode(' ', $user->name);
-            $firstName = $splitName[0];
-            $lastName = $splitName[1];
+            $splitName = preg_split('/\s+/', trim((string) $user->name), 2) ?: [];
+            $firstName = $splitName[0] ?? '';
+            $lastName = $splitName[1] ?? '';
 
             return [
                 'email' => $user->email,
