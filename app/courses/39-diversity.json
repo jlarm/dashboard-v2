@@ -4,6 +4,7 @@
         "uuid": "6438feb9-18d9-4256-ae91-d805857e7562",
         "name": "Diversity, Equality and Inclusion Training",
         "slug": "diversity-equality-and-inclusion-training",
+        "video_id": "1164383303",
         "department": [],
         "roles": [],
         "slides": [
@@ -30,19 +31,41 @@
         ],
         "questions": [
             {
-                "question": "Which of the following is a consequence of gender bias?",
+                "question": "Which option best describes Diversity?",
                 "answers": [
                     {
-                        "a": "Increased access to education",
-                        "b": "Gender Pay Gap",
-                        "c": "Improved social mobility",
-                        "d": "Language Barriers"
+                        "a": "Treating everyone exactly the same",
+                        "b": "A mix of different identities, backgrounds, and perspectives in a group",
+                        "c": "Giving extra support only to top performers",
+                        "d": "Avoiding disagreements at work"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Microaggressions are subtle, everyday expressions of bias that can negatively impact an individual’s mental well-being.",
+                "question": "Equity means giving everyone the exact same resources and support.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which statement best describes Inclusion?",
+                "answers": [
+                    {
+                        "a": "People are invited but expected to fit in without change",
+                        "b": "People feel welcomed, respected, and able to fully participate",
+                        "c": "People are only included in social events",
+                        "d": "People are evaluated the same way regardless of barriers"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Unconscious bias can influence decisions even when someone intends to be fair.",
                 "answers": [
                     {
                         "a": "True",
@@ -52,35 +75,35 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Which type of bias includes discrimination or harassment based on sexual orientation or gender identity?",
+                "question": "What is a strong first step to reducing the impact of bias?",
                 "answers": [
                     {
-                        "a": "Age Bias",
-                        "b": "Socioeconomic Bias",
-                        "c": "LGBTQ+ Bias",
-                        "d": "Religious Bias"
+                        "a": "Ignoring it so it doesn't grow",
+                        "b": "Recognizing it and reflecting on how it may affect decisions",
+                        "c": "Only discussing it during annual training",
+                        "d": "Delegating all decisions to one person"
                     }
                 ],
-                "correctAnswer": "c"
+                "correctAnswer": "b"
             },
             {
-                "question": "People from lower socioeconomic backgrounds often have equal access to quality education, healthcare, and job opportunities.",
+                "question": " Inclusive leadership includes inviting different viewpoints and ensuring everyone has a chance to contribute.",
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "b"
+                "correctAnswer": "a"
             },
             {
-                "question": "Which of the following best describes a healthcare disparity?",
+                "question": "If you notice a workplace behavior that conflicts with DEI expectations, what is the best next step?",
                 "answers": [
                     {
-                        "a": "Equal treatment in healthcare settings",
-                        "b": "Disparities in access to healthcare and quality of care for marginalized groups",
-                        "c": "Improved health outcomes for all communities",
-                        "d": "Unbiased medical practices across all populations"
+                        "a": "Keep it to yourself to avoid conflict",
+                        "b": "Address it respectfully or use the appropriate reporting/support channels",
+                        "c": "Share it widely with coworkers first",
+                        "d": "Assume it will fix itself over time"
                     }
                 ],
                 "correctAnswer": "b"
