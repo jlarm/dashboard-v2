@@ -15,11 +15,12 @@ class Main extends Component
     public $currentStore;
     public $phishingIsEnabled;
     public $videosActive;
+    private static ?bool $cachedPhishingIsEnabled = null;
 
     public function mount(Request $request): void
     {
         $this->currentStore = $request->get('store');
-        $this->phishingIsEnabled = GlobalSetting::query()->first()?->phishing_active;
+        $this->phishingIsEnabled = static::$cachedPhishingIsEnabled ??= (bool) GlobalSetting::query()->first()?->phishing_active;
 
         $store = $this->currentStore ?? app('currentStoreModel') ?? Store::query()->first();
         $this->videosActive = $store?->videos ?? false;
