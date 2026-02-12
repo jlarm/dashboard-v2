@@ -21,6 +21,7 @@ class Edit extends Component implements HasForms
 
     public Course $course;
     public $name;
+    public $video_id;
     public array $slides;
     public $questions;
     protected $rules = [
@@ -31,6 +32,7 @@ class Edit extends Component implements HasForms
     public function mount(): void
     {
         $this->name = $this->course->name;
+        $this->video_id = $this->course->video_id;
         $this->slides = $this->course->slides;
     }
 
@@ -65,6 +67,7 @@ class Edit extends Component implements HasForms
     {
         return [
             TextInput::make('name')->required(),
+            TextInput::make('video_id'),
             Repeater::make('slides')
                 ->schema([
                     TextInput::make('title'),
