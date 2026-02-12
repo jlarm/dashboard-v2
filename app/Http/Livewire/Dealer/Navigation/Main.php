@@ -18,28 +18,15 @@ class Main extends Component
 
     public function mount(Request $request): void
     {
-        $this->currentStore = Store::query()->where('name', $request->get('store')?->name)->first();
-        $this->phishingIsEnabled = GlobalSetting::query()->first()->phishing_active ?? null;
-        $this->videosActive = $this->getVideoStatus();
+        $this->currentStore = $request->get('store');
+        $this->phishingIsEnabled = GlobalSetting::query()->first()?->phishing_active;
+
+        $store = $this->currentStore ?? app('currentStoreModel') ?? Store::query()->first();
+        $this->videosActive = $store?->videos ?? false;
     }
 
     public function render(): View
     {
         return view('livewire.dealer.navigation.main');
-    }
-
-    private function getVideoStatus(): bool
-    {
-        $store = Store::query()->first();
-
-        if (! $store) {
-            return false;
-        }
-
-        if ($this->currentStore) {
-            return $this->currentStore->videos;
-        }
-
-        return $store->videos;
     }
 }

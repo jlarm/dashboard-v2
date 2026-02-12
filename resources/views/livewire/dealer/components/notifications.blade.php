@@ -1,5 +1,5 @@
 <div
-    wire:poll
+    wire:poll.30s
     x-data="{
         open: false,
             toggle() {

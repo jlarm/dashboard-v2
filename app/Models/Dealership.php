@@ -30,6 +30,8 @@ class Dealership extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
 
+    protected ?string $cachedDomain = null;
+
     public static function getCustomColumns(): array
     {
         return [
@@ -63,8 +65,8 @@ class Dealership extends BaseTenant implements TenantWithDatabase
         return $this->belongsToMany(User::class, 'tenant_user', 'tenant_id', 'user_id');
     }
 
-    public function domain()
+    public function domain(): ?string
     {
-        return $this->domains()->first()->domain;
+        return $this->cachedDomain ??= $this->domains()->first()?->domain;
     }
 }

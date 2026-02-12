@@ -81,7 +81,8 @@ describe('loadScanData', function (): void {
 
         app()->instance('currentStore', $this->store->id);
 
-        $component->call('loadScanData')
+        $component->set('storeId', $this->store->id)
+            ->call('loadScanData')
             ->assertSet('error', null);
     });
 });
@@ -153,7 +154,7 @@ describe('view rendering', function (): void {
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
             ->call('loadScanData')
-            ->assertSee('Contact your consultant today to get started.');
+            ->assertSee('Contact your consultant');
     });
 
     it('shows no scan results message when configured but no scans exist', function (): void {

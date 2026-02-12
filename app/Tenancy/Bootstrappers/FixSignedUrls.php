@@ -14,7 +14,8 @@ class FixSignedUrls implements TenancyBootstrapper
     public function bootstrap(Tenant $tenant): void
     {
         /** @var Dealership $tenant */
-        URL::formatHostUsing(fn (): string => 'https://'.$tenant->domain());
+        $domain = $tenant->domain();
+        URL::formatHostUsing(fn (): string => 'https://'.$domain);
     }
 
     public function revert(): void

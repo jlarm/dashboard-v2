@@ -15,7 +15,7 @@ class DealJacketStats extends Component
 
     public function mount(): void
     {
-        $this->store ??= Store::query()->first();
+        $this->store ??= app('currentStoreModel') ?? Store::query()->first();
     }
 
     public function rating(): string

@@ -16,21 +16,21 @@ class StoreIdentifierMiddleware
             return $next($request);
         }
 
-        if (! Store::query()->exists()) {
-            return $next($request);
-        }
-
         $path = $request->path();
         $segments = explode('/', $path);
 
         if (count($segments) > 1 && $segments[0] === 'stores') {
-            $storeSlug = $segments[1];
-            $store = Store::query()->where('slug', $storeSlug)->firstOrFail()->id;
+            $storeModel = Store::query()->where('slug', $segments[1])->firstOrFail();
         } else {
-            $store = Store::query()->first()->id;
+            $storeModel = Store::query()->first();
         }
 
-        app()->instance('currentStore', $store);
+        if (! $storeModel) {
+            return $next($request);
+        }
+
+        app()->instance('currentStore', $storeModel->id);
+        app()->instance('currentStoreModel', $storeModel);
 
         return $next($request);
     }
