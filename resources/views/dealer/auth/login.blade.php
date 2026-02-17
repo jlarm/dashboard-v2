@@ -11,7 +11,7 @@
 
                 <div class="mt-10">
                     <div>
-                        <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                        <form method="POST" action="{{ route('dealer.login') }}" class="space-y-6">
                             @csrf
                             <div>
                                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
@@ -60,9 +60,9 @@
                                 </div>
 
                                 <div class="text-sm leading-6">
-                                    @if (Route::has('password.request'))
+                                    @if (Route::has('dealer.password.request'))
                                         <a
-                                            href="{{ route('password.request') }}"
+                                            href="{{ route('dealer.password.request') }}"
                                             class="font-semibold text-arm-blue-600 hover:text-arm-blue-500"
                                         >
                                             Forgot password?

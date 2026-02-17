@@ -11,7 +11,7 @@
 
                 <div class="mt-10">
                     <div>
-                        <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
+                        <form method="POST" action="{{ route('dealer.password.store') }}" class="space-y-6">
                             @csrf
                             <!-- Password Reset Token -->
                             <input type="hidden" name="token" value="{{ $request->route('token') }}">

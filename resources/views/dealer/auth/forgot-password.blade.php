@@ -14,7 +14,7 @@
                     <!-- Session Status -->
                     <x-auth-session-status class="mb-4" :status="session('status')"/>
                     <div>
-                        <form method="POST" action="{{ route('password.email') }}" class="space-y-6">
+                        <form method="POST" action="{{ route('dealer.password.email') }}" class="space-y-6">
                             @csrf
                             <div>
                                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
