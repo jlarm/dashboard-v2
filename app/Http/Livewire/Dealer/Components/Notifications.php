@@ -13,7 +13,7 @@ class Notifications extends Component
 
     public function markAsRead(array $notification): void
     {
-        DatabaseNotification::query()->find($notification['id'])->delete();
+        DatabaseNotification::query()->find($notification['id'])?->delete();
 
         $this->emit('notification');
     }
