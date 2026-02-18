@@ -3,6 +3,9 @@ import laravel, {refreshPaths} from 'laravel-vite-plugin';
 
 export default defineConfig({
     server: {
+        cors: {
+            origin: /^https:\/\/([a-z0-9-]+\.)?dashboard\.test$/,
+        },
         host: '0.0.0.0',
         port: 5173,
         strictPort: true,

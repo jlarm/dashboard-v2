@@ -161,7 +161,12 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
              </div>
          ';
 
-        Browsershot::html($html)
+        $browsershot = Browsershot::html($html)
+            // Avoid relying on `npm root -g` in daemonized queue workers.
+            ->setNodeModulePath(base_path('node_modules'))
+            ->setNodeBinary($this->resolveNodeBinary());
+
+        $browsershot
             ->showBackground()
             ->margins(10, 10, 10, 10)
             ->scale(0.75)
@@ -170,6 +175,28 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
             ->hideHeader()
             ->footerHtml($footerHtml)
             ->save("{$path}/{$fileName}");
+    }
+
+    private function resolveNodeBinary(): string
+    {
+        $configured = env('BROWSERSHOT_NODE_BINARY');
+
+        if (is_string($configured) && $configured !== '' && File::exists($configured)) {
+            return $configured;
+        }
+
+        $candidates = [
+            '/opt/homebrew/bin/node',
+            '/usr/local/bin/node',
+        ];
+
+        foreach ($candidates as $candidate) {
+            if (File::exists($candidate)) {
+                return $candidate;
+            }
+        }
+
+        return 'node';
     }
 
     private function sendNotification(string $fileName): void
