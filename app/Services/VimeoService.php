@@ -64,6 +64,44 @@ class VimeoService
         }
     }
 
+    public function getPresetIdByName(string $name): ?string
+    {
+        try {
+            $response = $this->makeRequest('/me/presets');
+
+            if (! isset($response['body']['data'])) {
+                return null;
+            }
+
+            foreach ($response['body']['data'] as $preset) {
+                if (($preset['name'] ?? '') === $name) {
+                    $parts = explode('/', (string) $preset['uri']);
+
+                    return end($parts);
+                }
+            }
+
+            return null;
+        } catch (VimeoRequestException|Exception $e) {
+            Log::error("Vimeo API Error fetching presets: {$e->getMessage()}");
+
+            return null;
+        }
+    }
+
+    public function assignPreset(string $videoId, string $presetId): bool
+    {
+        try {
+            $response = $this->client->request("/videos/{$videoId}/presets/{$presetId}", [], 'PUT');
+
+            return $response['status'] === 204;
+        } catch (VimeoRequestException|Exception $e) {
+            Log::error("Vimeo API Error assigning preset {$presetId} to video {$videoId}: {$e->getMessage()}");
+
+            return false;
+        }
+    }
+
     public function totalVideos(): int
     {
         return count($this->getVideos());

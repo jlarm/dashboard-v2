@@ -12,26 +12,37 @@ use Illuminate\Support\Collection;
 class EnableVimeoSeek extends Command
 {
     protected $signature = 'vimeo:enable-seek {video_id? : A specific Vimeo video ID} {--all : Enable seek on all course videos} {--tenants=* : Specific tenant(s) to scan. Defaults to all.}';
-    protected $description = 'Enable the seek/scrub button on Vimeo videos via the API';
+
+    protected $description = 'Enable the seek/scrub button and assign the Default embed preset on Vimeo videos';
 
     public function handle(VimeoService $vimeoService): int
     {
+        $presetId = $vimeoService->getPresetIdByName('Default');
+
+        if (! $presetId) {
+            $this->warn('Could not find a "Default" embed preset on Vimeo. Preset assignment will be skipped.');
+        } else {
+            $this->line("Found \"Default\" preset ID: {$presetId}");
+        }
+
+        $this->newLine();
+
         if ($this->option('all')) {
-            return $this->enableForAllCourses($vimeoService);
+            return $this->enableForAllCourses($vimeoService, $presetId);
         }
 
         $videoId = $this->argument('video_id');
 
         if (! $videoId) {
-            $this->error('Please provide a video ID or use --all to enable seek on all course videos.');
+            $this->error('Please provide a video ID or use --all to process all course videos.');
 
             return self::FAILURE;
         }
 
-        return $this->enableSeek($vimeoService, (string) $videoId) ? self::SUCCESS : self::FAILURE;
+        return $this->processVideo($vimeoService, (string) $videoId, $presetId) ? self::SUCCESS : self::FAILURE;
     }
 
-    private function enableForAllCourses(VimeoService $vimeoService): int
+    private function enableForAllCourses(VimeoService $vimeoService, ?string $presetId): int
     {
         $videoIds = new Collection();
 
@@ -50,14 +61,14 @@ class EnableVimeoSeek extends Command
         }
 
         $this->newLine();
-        $this->info("Enabling seek on {$uniqueVideoIds->count()} unique video(s)...");
+        $this->info("Processing {$uniqueVideoIds->count()} unique video(s)...");
         $this->newLine();
 
         $passed = 0;
         $failed = 0;
 
         foreach ($uniqueVideoIds as $videoId) {
-            if ($this->enableSeek($vimeoService, (string) $videoId)) {
+            if ($this->processVideo($vimeoService, (string) $videoId, $presetId)) {
                 $passed++;
             } else {
                 $failed++;
@@ -73,18 +84,30 @@ class EnableVimeoSeek extends Command
         return $failed === 0 ? self::SUCCESS : self::FAILURE;
     }
 
-    private function enableSeek(VimeoService $vimeoService, string $videoId): bool
+    private function processVideo(VimeoService $vimeoService, string $videoId, ?string $presetId): bool
     {
-        $this->line("Enabling seek for video ID: {$videoId}");
+        $this->line("Video ID: {$videoId}");
 
-        $success = $vimeoService->enableSeekButton($videoId);
+        $seekSuccess = $vimeoService->enableSeekButton($videoId);
 
-        if ($success) {
-            $this->info("  ✓ Seek enabled for video {$videoId}");
+        if ($seekSuccess) {
+            $this->info('  ✓ Seek enabled');
         } else {
-            $this->error("  ✗ Failed to enable seek for video {$videoId}");
+            $this->error('  ✗ Failed to enable seek');
         }
 
-        return $success;
+        if ($presetId) {
+            $presetSuccess = $vimeoService->assignPreset($videoId, $presetId);
+
+            if ($presetSuccess) {
+                $this->info('  ✓ Default preset assigned');
+            } else {
+                $this->error('  ✗ Failed to assign Default preset');
+            }
+
+            return $seekSuccess && $presetSuccess;
+        }
+
+        return $seekSuccess;
     }
 }
