@@ -89,7 +89,7 @@
                             :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                             class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
                             aria-current="page">Courses</button>
-                        @can('create-dealerships')
+                        @hasanyrole('super-admin|Consultant|Qualified Individual')
                         <button
                             :id="$id('tab', whichChild($el, $el.parentElement))"
                             @click="select($el.id)"
@@ -101,7 +101,7 @@
                             :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                             class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
                         >Manage Courses</button>
-                        @endcan
+                        @endhasanyrole
                         <button
                             :id="$id('tab', whichChild($el, $el.parentElement))"
                             @click="select($el.id)"
@@ -142,7 +142,7 @@
                             <livewire:dealer.employee.course-results :user="$user"/>
                         @endif
                     </section>
-                    @can('create-dealerships')
+                    @hasanyrole('super-admin|Consultant|Qualified Individual')
                     <section
                         x-cloak
                         x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
@@ -151,12 +151,10 @@
                         class="p-4"
                     >
                         @if($user->department)
-                            @can('create-dealerships')
-                                <livewire:dealer.employee.assign-custom-courses-form :user="$user" />
-                            @endcan
+                            <livewire:dealer.employee.assign-custom-courses-form :user="$user" />
                         @endif
                     </section>
-                    @endcan
+                    @endhasanyrole
                     <section
                         x-cloak
                         x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
