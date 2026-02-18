@@ -119,15 +119,13 @@
         </div>
 
         @can('delete-dealership')
-            @if(app()->environment('local'))
-                <button
-                    type="button"
-                    x-on:click="if (confirm('Are you sure you want to delete this dealership and its database? This action cannot be undone.')) { $wire.deleteDealership() }"
-                    class="mt-2 inline-flex w-full items-center justify-center rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                >
-                    Delete
-                </button>
-            @endif
+            <button
+                type="button"
+                x-on:click="if (confirm('Are you sure you want to delete {{ $dealership->name }}? The dealership database will be preserved and this can be reversed.')) { $wire.deleteDealership() }"
+                class="mt-2 inline-flex w-full items-center justify-center rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            >
+                Delete
+            </button>
         @endcan
     </div>
 </div>

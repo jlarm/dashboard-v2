@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Jobs\CreateFrameworkDirectoriesForTenantJob;
+use App\Listeners\DeleteTenantDatabaseOnForceDelete;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,6 @@ use Stancl\Tenancy\Events\TenantUpdated;
 use Stancl\Tenancy\Events\UpdatingDomain;
 use Stancl\Tenancy\Events\UpdatingTenant;
 use Stancl\Tenancy\Jobs\CreateDatabase;
-use Stancl\Tenancy\Jobs\DeleteDatabase;
 use Stancl\Tenancy\Jobs\MigrateDatabase;
 use Stancl\Tenancy\Jobs\SeedDatabase;
 use Stancl\Tenancy\Listeners\BootstrapTenancy;
@@ -83,9 +83,7 @@ class TenancyServiceProvider extends ServiceProvider
             TenantUpdated::class => [],
             DeletingTenant::class => [],
             TenantDeleted::class => [
-                JobPipeline::make([
-                    DeleteDatabase::class,
-                ])->send(fn (TenantDeleted $event) => $event->tenant)->shouldBeQueued(false), // `false` by default, but you probably want to make this `true` for production.
+                DeleteTenantDatabaseOnForceDelete::class,
             ],
 
             // Domain events

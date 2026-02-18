@@ -6,7 +6,7 @@ namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
 use Exception;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,11 +29,7 @@ class Index extends Component
 
     public function deleteDealership(string $dealershipId): void
     {
-        if (! App::environment('local')) {
-            session()->flash('error', 'Dealership deletion is disabled in production');
-
-            return;
-        }
+        Gate::authorize('delete-dealership');
 
         try {
             $dealership = Dealership::query()->findOrFail($dealershipId);

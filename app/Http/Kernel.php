@@ -7,6 +7,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckStoreStatusMiddleware;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\EnsureTenantIsNotSuspended;
 use App\Http\Middleware\ImpersonationMiddleware;
 use App\Http\Middleware\Localization;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -113,5 +114,6 @@ class Kernel extends HttpKernel
         'role_or_permission' => RoleOrPermissionMiddleware::class,
         'stores' => StoreMiddleware::class,
         'canAccessStore' => StoreAccessMiddleware::class,
+        'tenant.not-suspended' => EnsureTenantIsNotSuspended::class,
     ];
 }

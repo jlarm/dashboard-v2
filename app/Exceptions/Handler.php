@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -29,6 +30,10 @@ class Handler extends ExceptionHandler
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($e);
             }
+        });
+
+        $this->renderable(function (TenantCouldNotBeIdentifiedException $e): never {
+            abort(404);
         });
     }
 }

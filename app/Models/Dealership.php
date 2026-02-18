@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -25,10 +27,11 @@ use Stancl\Tenancy\Database\Models\TenantPivot;
  * @property string|null $domain
  * @property string|null $url
  * @property bool|null $locations
+ * @property Carbon|null $suspended_at
  */
 class Dealership extends BaseTenant implements TenantWithDatabase
 {
-    use HasDatabase, HasDomains;
+    use HasDatabase, HasDomains, SoftDeletes;
 
     protected ?string $cachedDomain = null;
 
@@ -38,7 +41,13 @@ class Dealership extends BaseTenant implements TenantWithDatabase
             'id',
             'name',
             'user_id',
+            'suspended_at',
         ];
+    }
+
+    public function isSuspended(): bool
+    {
+        return $this->suspended_at !== null;
     }
 
     public function domains(): HasMany

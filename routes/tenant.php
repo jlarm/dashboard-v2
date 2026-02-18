@@ -56,6 +56,7 @@ Route::name('dealer.')->middleware([
     'web',
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
+    'tenant.not-suspended',
 ])->group(function (): void {
 
     // **************************************************

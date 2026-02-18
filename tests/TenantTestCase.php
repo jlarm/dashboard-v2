@@ -117,10 +117,10 @@ abstract class TenantTestCase extends TestCase
             tenancy()->end();
         }
 
-        // Delete the tenant, which will trigger the TenantDeleted event
+        // Force-delete the tenant, which will trigger the TenantDeleted event
         // and automatically drop the MySQL database
         if ($this->tenant !== null) {
-            $this->tenant->delete();
+            $this->tenant->forceDelete();
         }
 
         parent::tearDown();
