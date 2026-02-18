@@ -47,6 +47,23 @@ class VimeoService
         return $this->fetchVideo($videoId);
     }
 
+    public function enableSeekButton(string $videoId): bool
+    {
+        try {
+            $response = $this->client->request("/videos/{$videoId}", [
+                'embed' => [
+                    'skipping_forward' => true,
+                ],
+            ], 'PATCH');
+
+            return $response['status'] === 200;
+        } catch (VimeoRequestException|Exception $e) {
+            Log::error("Vimeo API Error enabling seek for video {$videoId}: {$e->getMessage()}");
+
+            return false;
+        }
+    }
+
     public function totalVideos(): int
     {
         return count($this->getVideos());

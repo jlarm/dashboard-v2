@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Course;
 
 use App\Models\Dealer\Course;
+use App\Models\Dealer\CourseResults;
 use App\Models\VideoProgress;
 use App\Services\VimeoService;
 use Illuminate\Support\Facades\URL;
@@ -62,6 +63,14 @@ class Show extends Component
             // If still failing, force slides fallback
             $this->showSlidesFallback();
         }
+    }
+
+    public function hasCourseResults(): bool
+    {
+        return CourseResults::query()
+            ->where('user_id', auth()->id())
+            ->where('course_id', $this->course->id)
+            ->exists();
     }
 
     public function videoCompleted(): bool
