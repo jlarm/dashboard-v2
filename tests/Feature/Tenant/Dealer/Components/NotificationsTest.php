@@ -17,10 +17,10 @@ describe('Notifications Component', function (): void {
     it('can mark a notification as read', function (): void {
         $this->actingAs($this->consultant);
 
-        $notification = DatabaseNotification::create([
+        $notification = DatabaseNotification::query()->create([
             'id' => fake()->uuid(),
             'type' => 'App\Notifications\TestNotification',
-            'notifiable_type' => get_class($this->consultant),
+            'notifiable_type' => $this->consultant::class,
             'notifiable_id' => $this->consultant->id,
             'data' => ['message' => 'Test notification'],
         ]);
@@ -43,18 +43,18 @@ describe('Notifications Component', function (): void {
     it('can mark all notifications as read', function (): void {
         $this->actingAs($this->consultant);
 
-        DatabaseNotification::create([
+        DatabaseNotification::query()->create([
             'id' => fake()->uuid(),
             'type' => 'App\Notifications\TestNotification',
-            'notifiable_type' => get_class($this->consultant),
+            'notifiable_type' => $this->consultant::class,
             'notifiable_id' => $this->consultant->id,
             'data' => ['message' => 'Notification 1'],
         ]);
 
-        DatabaseNotification::create([
+        DatabaseNotification::query()->create([
             'id' => fake()->uuid(),
             'type' => 'App\Notifications\TestNotification',
-            'notifiable_type' => get_class($this->consultant),
+            'notifiable_type' => $this->consultant::class,
             'notifiable_id' => $this->consultant->id,
             'data' => ['message' => 'Notification 2'],
         ]);

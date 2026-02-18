@@ -22,7 +22,7 @@ class Main extends Component
         $this->currentStore = $request->get('store');
         $this->phishingIsEnabled = static::$cachedPhishingIsEnabled ??= (bool) GlobalSetting::query()->first()?->phishing_active;
 
-        $store = $this->currentStore ?? app('currentStoreModel') ?? Store::query()->first();
+        $store = $this->currentStore ?? (app()->bound('currentStoreModel') ? app('currentStoreModel') : null) ?? Store::query()->first();
         $this->videosActive = $store?->videos ?? false;
     }
 
