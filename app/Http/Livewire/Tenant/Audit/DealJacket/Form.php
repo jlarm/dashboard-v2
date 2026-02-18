@@ -24,7 +24,7 @@ class Form extends Component
     public ?string $dateOfDealJacket = null;
     public string $customerName = '';
     public string $customerDealNumber = '';
-    public ?int $financeManager = null;
+    public ?string $financeManager = null;
     public string $mileage = '';
     public string $purchaseType = '';
     public string $vehicleType = '';
@@ -36,12 +36,12 @@ class Form extends Component
         $this->dealJacketGroup = $dealJacketGroup;
         $this->dealJacket = $dealJacket;
 
-        if ($dealJacket instanceof DealJacket) {
+        if ($dealJacket?->exists) {
             $this->auditDate = $dealJacket->audit_date?->format('Y-m-d');
             $this->dateOfDealJacket = $dealJacket->date_of_deal_jacket?->format('Y-m-d');
             $this->customerName = $dealJacket->customer_name ?? '';
             $this->customerDealNumber = $dealJacket->customer_deal_number ?? '';
-            $this->financeManager = $dealJacket->user_id;
+            $this->financeManager = $dealJacket->user_id === null ? 'house' : (string) $dealJacket->user_id;
             $this->mileage = $dealJacket->mileage ?? '';
             $this->purchaseType = $dealJacket->purchase_type ?? '';
             $this->vehicleType = $dealJacket->vehicle_type ?? '';
@@ -111,7 +111,9 @@ class Form extends Component
             'date_of_deal_jacket' => $this->dateOfDealJacket,
             'customer_name' => $this->customerName,
             'customer_deal_number' => $this->customerDealNumber,
-            'user_id' => $this->financeManager,
+            'user_id' => $this->financeManager === 'house'
+                ? null
+                : ($this->financeManager !== null && $this->financeManager !== '' ? (int) $this->financeManager : null),
             'mileage' => $this->mileage,
             'purchase_type' => $this->purchaseType,
             'vehicle_type' => $this->vehicleType,
@@ -168,7 +170,7 @@ class Form extends Component
             'dateOfDealJacket' => ['required', 'date'],
             'customerName' => ['required', 'string'],
             'customerDealNumber' => ['required', 'string'],
-            'financeManager' => ['required', 'integer'],
+            'financeManager' => ['required', 'string'],
             'mileage' => ['required', 'string'],
             'purchaseType' => ['required', 'string'],
             'vehicleType' => ['required', 'string'],

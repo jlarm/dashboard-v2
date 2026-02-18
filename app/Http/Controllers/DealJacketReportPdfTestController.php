@@ -31,7 +31,7 @@ class DealJacketReportPdfTestController extends Controller
         $dealJacketsByUser = [];
 
         foreach ($dealJackets as $dealJacket) {
-            $userName = $dealJacket->user->name;
+            $userName = $dealJacket->user?->name ?? 'House';
             $issueCount = 0;
 
             if (! isset($issuesByUser[$userName])) {

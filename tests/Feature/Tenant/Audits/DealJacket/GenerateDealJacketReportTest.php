@@ -53,3 +53,47 @@ it('can instantiate job with deal jacket group', function (): void {
 
     expect($job)->toBeInstanceOf(GenerateDealJacketReportJob::class);
 });
+
+it('renders House in report manager summary and manager detail sections', function (): void {
+    $dealJacketGroup = DealJacketGroup::factory()->create(['completed' => true]);
+
+    $html = view('dealer.audit.deal-jacket.pdf-report', [
+        'dealJacketGroup' => $dealJacketGroup,
+        'user' => $this->user,
+        'issuesByUser' => ['House' => 2],
+        'dealJacketDetails' => [[
+            'customer_name' => 'Jane Doe',
+            'customer_deal_number' => 'D-1001',
+            'user_name' => 'House',
+            'purchase_type' => 'finance',
+            'vehicle_type' => 'used',
+            'mileage' => '12000',
+            'date_of_deal_jacket' => now(),
+            'issues' => [[
+                'statement' => 'Menu is not present.',
+                'comment' => 'Missing',
+            ]],
+        ]],
+        'dealJacketsByUser' => [
+            'House' => [[
+                'customer_name' => 'Jane Doe',
+                'customer_deal_number' => 'D-1001',
+                'user_name' => 'House',
+                'issues' => [[
+                    'statement' => 'Menu is not present.',
+                    'comment' => 'Missing',
+                ]],
+            ]],
+        ],
+        'totalIssues' => 2,
+        'issuesByStatementAndUser' => [
+            'Menu is not present.' => ['House' => 2],
+        ],
+        'allUsers' => ['House'],
+    ])->render();
+
+    expect($html)
+        ->toContain('Finance Manager')
+        ->toContain('House')
+        ->toContain('2 Issues Found');
+});

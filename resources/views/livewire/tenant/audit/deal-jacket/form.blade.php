@@ -29,10 +29,12 @@
             @enderror
         </div>
         <div>
-            <x-select label="Finance Manager" wire:model.defer="financeManager" placeholder="Choose manager..." required>
+            <x-select label="Finance Manager" wire:model.defer="financeManager" required>
+                <option value="">Choose manager...</option>
                 @foreach($this->managers() as $manager)
                     <option value="{{ $manager['id'] }}">{{ $manager['name'] }}</option>
                 @endforeach
+                <option value="house">House</option>
             </x-select>
             @error('financeManager')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

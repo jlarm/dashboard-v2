@@ -119,7 +119,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
                         <p class="text-sm font-medium text-gray-500 mb-1">Finance Manager</p>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ $userName }}</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ $userName ?: 'House' }}</h3>
                     </div>
                     <div class="text-right">
                         <div class="text-4xl font-bold text-gray-900">{{ $count }}</div>
@@ -145,7 +145,7 @@
                         <tr class="bg-gray-50 border-b border-gray-200">
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Issue</th>
                             @foreach($allUsers as $user)
-                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-900">{{ $user }}</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-900">{{ $user ?: 'House' }}</th>
                             @endforeach
                             <th class="px-6 py-4 text-center text-sm font-semibold text-gray-900">Total Issues</th>
                         </tr>
@@ -194,7 +194,7 @@
     <div class="w-full min-h-screen px-12 py-16 page-break">
         <div class="max-w-5xl mx-auto">
             <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-t-xl px-8 py-6">
-                <h2 class="text-3xl font-bold text-white">{{ $userName }}</h2>
+                <h2 class="text-3xl font-bold text-white">{{ $userName ?: 'House' }}</h2>
                 <p class="text-gray-300 mt-1">{{ $issuesByUser[$userName] ?? 0 }} {{ Str::plural('Issue', $issuesByUser[$userName] ?? 0) }} Found</p>
             </div>
 
@@ -242,7 +242,7 @@
 
                         <div class="detail-row py-3">
                             <dt class="text-sm font-medium text-gray-500">Finance Manager</dt>
-                            <dd class="text-sm text-gray-900 mt-1">{{ $dealJacket['user_name'] }}</dd>
+                            <dd class="text-sm text-gray-900 mt-1">{{ $dealJacket['user_name'] ?: 'House' }}</dd>
                         </div>
 
                         <div class="detail-row py-3">

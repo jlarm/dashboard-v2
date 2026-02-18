@@ -103,4 +103,23 @@ describe('Deal Jacket Show Page', function (): void {
             ->assertSee($dealJacket->customer_name)
             ->assertSee($dealJacket->customer_deal_number);
     });
+
+    it('shows House when finance manager is null', function (): void {
+        $dealJacketGroup = DealJacketGroup::factory()->create();
+        $dealJacket = DealJacket::factory()->create([
+            'deal_jacket_group_id' => $dealJacketGroup->id,
+            'user_id' => null,
+        ]);
+
+        $response = $this->actingAs($this->consultant)
+            ->get(route('dealer.audit.deal-jackets.single', [
+                'dealJacketGroup' => $dealJacketGroup,
+                'dealJacket' => $dealJacket,
+            ]));
+
+        $response
+            ->assertOk()
+            ->assertSee('Finance manager:')
+            ->assertSee('House');
+    });
 });

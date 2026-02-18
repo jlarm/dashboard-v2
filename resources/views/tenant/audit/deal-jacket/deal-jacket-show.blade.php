@@ -110,7 +110,7 @@
                     </span>
 
                     <div class="flex justify-end gap-2">
-                        <span class="text-sm text-gray-800">{{ Str::title($dealJacket->user->name) }}</span>
+                        <span class="text-sm text-gray-800">{{ Str::title($dealJacket->user?->name ?? 'House') }}</span>
                     </div>
                 </div>
             </div>
