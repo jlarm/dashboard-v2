@@ -39,8 +39,9 @@ class UpdateOptionalCourses extends Command
                         ->orWhere('slug', 'dot-hazardous-materials-transportation')
                         ->orWhere('slug', 'dot-hazardous-materials-transportation-identifying-hazardous-materials')
                         ->orWhere('slug', 'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment')
-                        ->OrWhere('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')
-                        ->OrWhere('slug', 'powered-industrial-trucks');
+                        ->orWhere('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')
+                        ->orWhere('slug', 'diversity-equality-and-inclusion-training')
+                        ->orWhere('slug', 'powered-industrial-trucks');
                 })
                 ->update(['optional' => true]);
 
