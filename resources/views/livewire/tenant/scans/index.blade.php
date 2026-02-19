@@ -18,6 +18,7 @@
                 >
                     Settings
                 </x-armp.button>
+                @endhasanyrole
                 <div x-show="showDownloads" class="flex gap-2" style="display:none">
                     <x-armp.button
                         size="sm"
@@ -50,7 +51,6 @@
                         </span>
                     </x-armp.button>
                 </div>
-                @endhasanyrole
             </div>
         </x-slot>
     </x-slot:header>

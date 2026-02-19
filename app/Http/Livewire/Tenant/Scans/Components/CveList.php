@@ -11,6 +11,8 @@ use Livewire\Component;
 
 class CveList extends Component
 {
+    private const ALL_ASSET_TYPES = ['internal', 'external_ip', 'external_web'];
+
     public array $cveItems = [];
     public int $perPage = 5;
     public int $currentPage = 1;
@@ -79,9 +81,32 @@ class CveList extends Component
             $data = $cyrisma->getVulnerabilitiesByAssetType($this->assetType);
             $this->cveItems = $data['vulnerabilities'] ?? [];
         } else {
-            // Use the CVE dashboard for "all" view
-            $data = $cyrisma->getCveDetails();
-            $this->cveItems = isset($data['cve_items']) ? array_slice($data['cve_items'], 1) : [];
+            // Aggregate all scan types so "All Asset Types" matches filtered behavior.
+            $this->cveItems = collect(self::ALL_ASSET_TYPES)
+                ->flatMap(function (string $assetType) use ($cyrisma): array {
+                    $data = $cyrisma->getVulnerabilitiesByAssetType($assetType);
+
+                    return $data['vulnerabilities'] ?? [];
+                })
+                ->sortByDesc(function (array $item): array {
+                    return [
+                        $this->riskRank((string) ($item['cve_risk'] ?? '')),
+                        (float) ($item['cve_score'] ?? 0),
+                    ];
+                })
+                ->values()
+                ->all();
         }
+    }
+
+    private function riskRank(string $risk): int
+    {
+        return match (mb_strtolower($risk)) {
+            'critical' => 5,
+            'high' => 4,
+            'medium' => 3,
+            'low' => 2,
+            default => 1,
+        };
     }
 }
