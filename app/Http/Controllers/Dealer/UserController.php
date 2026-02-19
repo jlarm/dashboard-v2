@@ -27,19 +27,21 @@ class UserController extends Controller
 {
     public function show(User $user): View
     {
-        $user->load('department', 'stores', 'roles');
+        $user->load('department', 'roles');
 
         $isQi = $user->roles->contains('name', 'Qualified Individual');
 
         $roles = $user->roles->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
 
-        $store = Store::query()->find(app('currentStore'));
+        $store = Store::query()
+            ->select(['id', 'videos'])
+            ->find((int) app('currentStore'));
 
         return view('dealer.employee.show', [
             'user' => $user,
             'isQi' => $isQi,
             'roles' => $roles,
-            'videosActive' => $store->videos,
+            'videosActive' => (bool) ($store?->videos ?? false),
         ]);
     }
 

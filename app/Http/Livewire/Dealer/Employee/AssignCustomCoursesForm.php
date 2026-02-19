@@ -19,8 +19,26 @@ class AssignCustomCoursesForm extends Component
     public $courses;
     public $courseStates = [];
     public $defaultCourseIds = [];
+    public bool $isLoaded = false;
+
+    protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
 
     public function mount(): void
+    {
+        $this->courses = collect();
+    }
+
+    public function handleTabChanged(string $tab): void
+    {
+        if ($tab !== 'manage-courses' || $this->isLoaded) {
+            return;
+        }
+
+        $this->loadData();
+        $this->isLoaded = true;
+    }
+
+    private function loadData(): void
     {
         // Get all courses ordered by name
         $this->courses = Course::query()

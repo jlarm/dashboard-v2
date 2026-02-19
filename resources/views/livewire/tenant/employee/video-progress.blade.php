@@ -1,4 +1,9 @@
 <div class="max-w-2xl mx-auto mt-5">
+    @if(! $isLoaded)
+        <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+            Select the "Video Training Progress" tab to load video completion data.
+        </div>
+    @else
     <div class="flex flex-col">
         @foreach($videos as $video)
         <div class="flex justify-between gap-5 py-2.5 first:pt-0 last:pb-0 first:border-t-0 border-t border-dashed border-gray-200">
@@ -28,4 +33,5 @@
         </div>
         @endforeach
     </div>
+    @endif
 </div>

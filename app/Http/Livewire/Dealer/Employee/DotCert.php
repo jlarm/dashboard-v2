@@ -19,15 +19,33 @@ use Spatie\Browsershot\Browsershot;
 class DotCert extends Component
 {
     public User $user;
-    public $showCertButton;
+    public bool $showCertButton = false;
+    public bool $isLoaded = false;
+
+    protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
 
     public function mount(): void
     {
+        $this->showCertButton = false;
+    }
+
+    public function handleTabChanged(string $tab): void
+    {
+        if ($tab !== 'certificates' || $this->isLoaded) {
+            return;
+        }
+
+        $this->isLoaded = true;
         $this->showCertButton = $this->shouldShowCertButton();
     }
 
     public function download(Request $request): void
     {
+        if (! $this->isLoaded) {
+            $this->isLoaded = true;
+            $this->showCertButton = $this->shouldShowCertButton();
+        }
+
         $fileName = $this->generatePdf($request);
         $filePath = $this->storePdf($fileName);
 
@@ -38,6 +56,7 @@ class DotCert extends Component
         ]);
 
         $this->showCertButton = false;
+        $this->emit('certificateGenerated');
 
         $url = Storage::disk('armp-certs')->temporaryUrl($filePath, now()->addHour());
 
@@ -75,10 +94,12 @@ class DotCert extends Component
 
     private function generatePdf(Request $request): string
     {
+        $passingGrade = $this->passingGrades();
+
         $html = view('dealer.course.CertDownloadView', [
             'user' => $this->user,
             'store' => $request->get('store')?->name ?? tenant('name'),
-            'passed_on' => $this->passingGrades()->created_at->format('F d, Y'),
+            'passed_on' => $passingGrade?->created_at?->format('F d, Y') ?? now()->format('F d, Y'),
         ])->render();
 
         $pdf = Browsershot::html($html)->landscape()->pdf();

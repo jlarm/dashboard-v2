@@ -50,7 +50,10 @@
                     selectedId: null,
                     init() {
                         // Set the first available tab on the page on page load.
-                        this.$nextTick(() => this.select(this.$id('tab', 1)))
+                        this.$nextTick(() => {
+                            this.select(this.$id('tab', 1))
+                            Livewire.emit('employeeTabChanged', 'courses')
+                        })
                     },
                     select(id) {
                         this.selectedId = id
@@ -88,6 +91,7 @@
                             :aria-selected="isSelected($el.id)"
                             :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                             class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
+                            x-on:click="Livewire.emit('employeeTabChanged', 'courses')"
                             aria-current="page">Courses</button>
                         @hasanyrole('super-admin|Consultant|Qualified Individual')
                         <button
@@ -100,6 +104,7 @@
                             :aria-selected="isSelected($el.id)"
                             :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                             class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
+                            x-on:click="Livewire.emit('employeeTabChanged', 'manage-courses')"
                         >Manage Courses</button>
                         @endhasanyrole
                         <button
@@ -112,6 +117,7 @@
                             :aria-selected="isSelected($el.id)"
                             :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                             class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
+                            x-on:click="Livewire.emit('employeeTabChanged', 'certificates')"
                         >DOT Certificates</button>
                         @if($videosActive)
                         <button
@@ -124,6 +130,7 @@
                             :aria-selected="isSelected($el.id)"
                             :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
                             class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
+                            x-on:click="Livewire.emit('employeeTabChanged', 'video-progress')"
                         >Video Training Progress</button>
                         @endif
                     </div>
@@ -167,17 +174,19 @@
                             <livewire:dealer.employee.cert-index :user="$user"/>
                         </div>
                     </section>
-                    <section
-                        x-cloak
-                        x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                        :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                        role="tabpanel"
-                        class="p-4"
-                    >
-                        <div class="col-span-1">
-                            <livewire:tenant.employee.video-progress :user="$user" />
-                        </div>
-                    </section>
+                    @if($videosActive)
+                        <section
+                            x-cloak
+                            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+                            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+                            role="tabpanel"
+                            class="p-4"
+                        >
+                            <div class="col-span-1">
+                                <livewire:tenant.employee.video-progress :user="$user" />
+                            </div>
+                        </section>
+                    @endif
                 </div>
             </div>
         </div>

@@ -1,4 +1,9 @@
 <div class="mt-5 rounded-md">
+    @if(! $isLoaded)
+        <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+            Select the "Manage Courses" tab to load course assignments.
+        </div>
+    @else
     <div class="w-full border-b pb-3.5 mb-5">
         <p class="w-full text-sm font-semibold text-gray-900">Manage course assignments</p>
         <p class="mt-1 text-xs text-gray-600">Control which courses are assigned to this employee. Default courses follow department and role rules.</p>
@@ -58,4 +63,5 @@
             </div>
         @endforeach
     </div>
+    @endif
 </div>

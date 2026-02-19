@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Tenant\Employee;
 
 use App\Models\User;
 use App\Services\VimeoService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -13,27 +14,47 @@ use Livewire\Component;
 class VideoProgress extends Component
 {
     public User $user;
+    public bool $isLoaded = false;
+    public array $videos = [];
+
+    protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
+
+    public function handleTabChanged(string $tab): void
+    {
+        if ($tab !== 'video-progress' || $this->isLoaded) {
+            return;
+        }
+
+        $this->loadVideos();
+    }
 
     public function render(VimeoService $vimeoService): View
     {
-        $videos = $this->getVimeoVideos($vimeoService);
-        $progress = $this->getUserVideoProgress();
+        return view('livewire.tenant.employee.video-progress', [
+            'videos' => collect($this->videos),
+        ]);
+    }
 
-        $videos = $videos->map(function (array $video) use ($progress) {
-            $progressItem = $progress->where('video_id', $video['id'])->first();
-            if ($progressItem && $progressItem['completed']) {
-                $video['completed'] = true;
-                $video['date'] = $progressItem['created_at'];
-            } else {
-                $video['completed'] = false;
-            }
+    private function loadVideos(): void
+    {
+        $cacheKey = sprintf('employee_video_progress_%s_%d', tenant('id') ?? 'no-tenant', $this->user->id);
 
-            return $video;
+        $this->videos = Cache::remember($cacheKey, now()->addMinutes(5), function (): array {
+            $vimeoService = app(VimeoService::class);
+            $videos = $this->getVimeoVideos($vimeoService);
+            $progress = $this->getUserVideoProgress();
+
+            return $videos->map(function (array $video) use ($progress): array {
+                $progressItem = $progress->firstWhere('video_id', $video['id']);
+
+                $video['completed'] = (bool) ($progressItem['completed'] ?? false);
+                $video['date'] = $progressItem['created_at'] ?? null;
+
+                return $video;
+            })->values()->all();
         });
 
-        return view('livewire.tenant.employee.video-progress', [
-            'videos' => $videos,
-        ]);
+        $this->isLoaded = true;
     }
 
     private function getVimeoVideos(VimeoService $vimeoService): Collection
@@ -43,6 +64,8 @@ class VideoProgress extends Component
 
     private function getUserVideoProgress(): Collection
     {
-        return $this->user->videoProgress->select('video_id', 'completed', 'created_at');
+        return $this->user->videoProgress()
+            ->select('video_id', 'completed', 'created_at')
+            ->get();
     }
 }
