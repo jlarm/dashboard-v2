@@ -18,12 +18,20 @@ class CyrismaReportController
 {
     private const REPORT_TYPES = ['executive', 'technical'];
 
-    public function download(string $type): Response|StreamedResponse
+    public function download(): Response|StreamedResponse
     {
+        $type = (string) request()->route('type');
+
         abort_unless(in_array($type, self::REPORT_TYPES, true), 404);
 
-        $storeContext = app('currentStore');
-        $store = $storeContext instanceof Store ? $storeContext : Store::query()->find((int) $storeContext);
+        // Multi-store: StoreMiddleware resolves the store into request attributes.
+        // Single-store: falls back to app('currentStore').
+        $store = request()->attributes->get('store');
+
+        if (! $store instanceof Store) {
+            $storeContext = app('currentStore');
+            $store = $storeContext instanceof Store ? $storeContext : Store::query()->find((int) $storeContext);
+        }
 
         abort_unless($store, 404);
 

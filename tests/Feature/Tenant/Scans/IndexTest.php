@@ -181,4 +181,39 @@ describe('view rendering', function (): void {
             ->assertSet('hasInternalScans', false)
             ->assertSee('No Scan Results Available');
     });
+
+    it('does not dispatch scan-loaded event before loadScanData is called', function (): void {
+        Livewire::actingAs($this->consultant)
+            ->test(Index::class)
+            ->assertSet('loaded', false)
+            ->assertNotDispatchedBrowserEvent('scan-loaded');
+    });
+
+    it('dispatches scan-loaded with showDownloads false when not configured', function (): void {
+        $mock = $this->mock(CyrismaService::class);
+        $mock->shouldReceive('forStore')->andReturn($mock);
+        $mock->shouldReceive('isConfigured')->andReturn(false);
+        $mock->shouldReceive('hasShortName')->andReturn(false);
+
+        Livewire::actingAs($this->consultant)
+            ->test(Index::class)
+            ->call('loadScanData')
+            ->assertDispatchedBrowserEvent('scan-loaded', ['showDownloads' => false]);
+    });
+
+    it('dispatches scan-loaded with showDownloads true when configured with a short name', function (): void {
+        $mock = $this->mock(CyrismaService::class);
+        $mock->shouldReceive('forStore')->andReturn($mock);
+        $mock->shouldReceive('isConfigured')->andReturn(true);
+        $mock->shouldReceive('hasShortName')->andReturn(true);
+        $mock->shouldReceive('getVulnerabilityScans')->andReturn(['vulnerability_scans' => []]);
+        $mock->shouldReceive('getExternalIpScanData')->andReturn(['assets' => []]);
+        $mock->shouldReceive('hasInternalScans')->andReturn(false);
+        $mock->shouldReceive('getOverallDashboard')->andReturn([]);
+
+        Livewire::actingAs($this->consultant)
+            ->test(Index::class)
+            ->call('loadScanData')
+            ->assertDispatchedBrowserEvent('scan-loaded', ['showDownloads' => true]);
+    });
 });

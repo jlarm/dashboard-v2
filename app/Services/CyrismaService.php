@@ -472,12 +472,6 @@ class CyrismaService
         // Try the vulnerability dashboard first - it might have aggregated external IP data
         $vulnDashboard = $this->getStoreReport('dashboards/vulnerability');
 
-        Log::info('Vulnerability Dashboard response:', [
-            'has_response' => ! is_null($vulnDashboard),
-            'response_keys' => $vulnDashboard ? array_keys($vulnDashboard) : [],
-            'full_response' => $vulnDashboard,
-        ]);
-
         // Get list of all vulnerability scans
         $vulnerabilityScans = $this->getStoreReport('scans/vulnerability');
 
@@ -501,11 +495,6 @@ class CyrismaService
             })
             ->sortByDesc('scan_finished');
 
-        Log::info('Found external scans:', [
-            'count' => $externalScans->count(),
-            'scans' => $externalScans->values()->toArray(),
-        ]);
-
         if ($externalScans->isEmpty()) {
             return null;
         }
@@ -518,26 +507,8 @@ class CyrismaService
             // Get detailed scan results from the instance-specific endpoint
             $scanDetails = $this->getStoreReport('scans/vulnerability/'.$scan['scan_id']);
 
-            Log::info('External scan API response:', [
-                'scan_id' => $scan['scan_id'],
-                'scan_name' => $scan['scan_name'] ?? 'unknown',
-                'has_response' => ! is_null($scanDetails),
-                'response_keys' => $scanDetails ? array_keys($scanDetails) : [],
-                'has_assets_key' => isset($scanDetails['assets']),
-                'asset_count' => isset($scanDetails['assets']) ? count($scanDetails['assets']) : 0,
-                'full_response' => $scanDetails,
-            ]);
-
             if ($scanDetails && isset($scanDetails['assets']) && is_array($scanDetails['assets'])) {
                 foreach ($scanDetails['assets'] as $asset) {
-                    Log::info('Processing asset:', [
-                        'asset_id' => $asset['id'] ?? 'unknown',
-                        'asset_name' => $asset['name'] ?? 'unknown',
-                        'ip_address' => $asset['ipAddress'] ?? 'missing',
-                        'has_vulnerabilities' => isset($asset['vulnerabilities']),
-                        'vuln_count' => isset($asset['vulnerabilities']) ? count($asset['vulnerabilities']) : 0,
-                    ]);
-
                     // Only include assets that have an IP address, deduplicate by IP
                     if (! empty($asset['ipAddress'])) {
                         $ip = $asset['ipAddress'];
@@ -556,11 +527,6 @@ class CyrismaService
         }
 
         $allAssets = array_values($assetsByIp);
-
-        Log::info('Final external IP results:', [
-            'total_assets_found' => count($allAssets),
-            'latest_scan' => $latestScan,
-        ]);
 
         if ($allAssets === []) {
             return null;

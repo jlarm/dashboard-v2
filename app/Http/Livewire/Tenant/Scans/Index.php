@@ -69,6 +69,10 @@ class Index extends Component
         }
 
         $this->loaded = true;
+
+        $this->dispatchBrowserEvent('scan-loaded', [
+            'showDownloads' => $this->isConfigured && $this->hasShortName,
+        ]);
     }
 
     public function refreshCache(): void

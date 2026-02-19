@@ -1,28 +1,56 @@
 <div x-data @refresh-page.window="window.location.reload()">
+    @php
+        $storeRouteParam = data_get(request()->route('store'), 'slug', request()->route('store')) ?? $store?->slug;
+    @endphp
     <x-slot:header>
         <x-slot:pageTitle>Scan Details</x-slot:pageTitle>
         <x-slot:actions>
-            <div class="flex items-center gap-2 justify-end">
+            <div
+                class="flex items-center gap-2 justify-end"
+                x-data="{ showDownloads: false }"
+                @scan-loaded.window="showDownloads = $event.detail.showDownloads"
+            >
                 @hasanyrole('super-admin|Consultant')
-                <x-button.primary href="{{ tenant('locations') ? route('dealer.stores.scan.settings', $store) : route('dealer.scan.settings') }}">Settings</x-button.primary>
-
-{{--                <x-button.secondary--}}
-{{--                    href="{{ tenant('locations') ? route('dealer.stores.scan.report', [$store, 'executive']) : route('dealer.scan.report', 'executive') }}?refresh=1"--}}
-{{--                    target="_blank"--}}
-{{--                    rel="noopener noreferrer"--}}
-{{--                    onclick="window.open(this.href, '_blank', 'noopener'); return false;"--}}
-{{--                >--}}
-{{--                    Executive PDF--}}
-{{--                </x-button.secondary>--}}
-{{--                <x-button.secondary--}}
-{{--                    href="{{ tenant('locations') ? route('dealer.stores.scan.report', [$store, 'technical']) : route('dealer.scan.report', 'technical') }}?refresh=1"--}}
-{{--                    target="_blank"--}}
-{{--                    rel="noopener noreferrer"--}}
-{{--                    onclick="window.open(this.href, '_blank', 'noopener'); return false;"--}}
-{{--                >--}}
-{{--                    Technical PDF--}}
-{{--                </x-button.secondary>--}}
+                <x-armp.button
+                    size="sm"
+                    variant="primary"
+                    href="{{ tenant('locations') ? route('dealer.stores.scan.settings', ['store' => $storeRouteParam]) : route('dealer.scan.settings') }}"
+                >
+                    Settings
+                </x-armp.button>
                 @endhasanyrole
+                <div x-show="showDownloads" class="flex gap-2" style="display:none">
+                    <x-armp.button
+                        size="sm"
+                        href="{{ tenant('locations') ? route('dealer.stores.scan.report', ['store' => $storeRouteParam, 'type' => 'executive']) : route('dealer.scan.report', ['type' => 'executive']) }}?refresh=1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onclick="window.open(this.href, '_blank', 'noopener'); return false;"
+                    >
+                        <span class="flex items-center gap-2">
+                            <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="#141B34" stroke-width="1.5" stroke-linecap="square">
+                                <path d="M20.9997 17.0002V19.0002C20.9997 20.1048 20.1043 21.0002 18.9997 21.0002L4.99969 21.0002C3.89513 21.0002 2.99969 20.1048 2.99969 19.0002V17.0002" />
+                                <path d="M7.49976 11.5002L11.9998 16.0002L16.4998 11.5002M11.9998 15.0002L11.9998 3.0002" />
+                            </svg>
+                            Download Executive Report
+                        </span>
+                    </x-armp.button>
+                    <x-armp.button
+                        size="sm"
+                        href="{{ tenant('locations') ? route('dealer.stores.scan.report', ['store' => $storeRouteParam, 'type' => 'technical']) : route('dealer.scan.report', ['type' => 'technical']) }}?refresh=1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onclick="window.open(this.href, '_blank', 'noopener'); return false;"
+                    >
+                        <span class="flex items-center gap-2">
+                            <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="#141B34" stroke-width="1.5" stroke-linecap="square">
+                                <path d="M20.9997 17.0002V19.0002C20.9997 20.1048 20.1043 21.0002 18.9997 21.0002L4.99969 21.0002C3.89513 21.0002 2.99969 20.1048 2.99969 19.0002V17.0002" />
+                                <path d="M7.49976 11.5002L11.9998 16.0002L16.4998 11.5002M11.9998 15.0002L11.9998 3.0002" />
+                            </svg>
+                            Download Technical Report
+                        </span>
+                    </x-armp.button>
+                </div>
             </div>
         </x-slot>
     </x-slot:header>
