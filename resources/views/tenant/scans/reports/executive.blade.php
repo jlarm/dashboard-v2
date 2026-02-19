@@ -4,28 +4,10 @@
     <meta charset="utf-8">
     <title>Executive Scan Report</title>
     <style>
-        @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 400;
-            src: url('https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 600;
-            src: url('https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 700;
-            src: url('https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf') format('truetype');
-        }
         @page { margin: 48px 56px; }
         * { box-sizing: border-box; }
         body {
-            font-family: 'Inter', DejaVu Sans, Arial, sans-serif;
+            font-family: DejaVu Sans, Arial, sans-serif;
             color: #1f2937;
             font-size: 12px;
             margin: 0;
