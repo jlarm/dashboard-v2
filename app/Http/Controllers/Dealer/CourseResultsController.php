@@ -13,7 +13,6 @@ use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,20 +29,32 @@ class CourseResultsController extends Controller
 
     public function store(Request $request, Course $course): RedirectResponse
     {
-        $count = count($course['questions']);
-        $questions = collect($course['questions']);
-        $correctAnswers = $questions->pluck('correctAnswer')->toArray();
-        $submittedAnswers = Arr::flatten($request->only('question'));
+        $questions = collect($course['questions'])->values();
+        $count = $questions->count();
+        $submittedAnswers = $request->input('question', []);
         $score = 0;
+        $incorrectQuestions = [];
 
         for ($i = 0; $i < $count; $i++) {
-            if ($correctAnswers[$i] === $submittedAnswers[$i]) {
+            $question = $questions[$i];
+            $answers = $question['answers'][0] ?? [];
+            $correctAnswerKey = (string) ($question['correctAnswer'] ?? '');
+            $submittedAnswerKey = (string) ($submittedAnswers[$i + 1] ?? '');
+
+            if ($correctAnswerKey === $submittedAnswerKey) {
                 $score++;
+                continue;
             }
+
+            $incorrectQuestions[] = [
+                'question' => __($question['question'] ?? ''),
+                'incorrect_answer_key' => $submittedAnswerKey,
+                'incorrect_answer' => __($answers[$submittedAnswerKey] ?? ''),
+            ];
         }
 
         // generate score
-        $score = ($score / $count) * 100;
+        $score = $count > 0 ? ($score / $count) * 100 : 0;
 
         // check if passed
         $passed = $score >= 70;
@@ -100,6 +111,8 @@ class CourseResultsController extends Controller
         session()->flash('flash.quizPercentage', round($score));
         session()->flash('flash.quizPassed', $passed);
         session()->flash('flash.courseName', $course->name);
+        session()->flash('flash.courseUrl', route('dealer.courses.show', $course));
+        session()->flash('flash.quizIncorrectQuestions', $incorrectQuestions);
 
         return redirect()->route('dealer.courses.index');
     }
