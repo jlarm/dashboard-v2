@@ -20,7 +20,6 @@ class AssignCustomCoursesForm extends Component
     public $courseStates = [];
     public $defaultCourseIds = [];
     public bool $isLoaded = false;
-
     protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
 
     public function mount(): void
@@ -36,38 +35,6 @@ class AssignCustomCoursesForm extends Component
 
         $this->loadData();
         $this->isLoaded = true;
-    }
-
-    private function loadData(): void
-    {
-        // Get all courses ordered by name
-        $this->courses = Course::query()
-            ->orderBy('name')
-            ->select(['id', 'name'])
-            ->get();
-
-        // Get courses that would be assigned by default using the service
-        $service = app(UserCourseService::class);
-        $this->defaultCourseIds = $service->getCourseIds($this->user);
-
-        // Get user's custom course overrides
-        $userCourseOverrides = $this->user->courses()
-            ->wherePivot('type', 'add')
-            ->orWherePivot('type', 'exclude')
-            ->get()
-            ->keyBy('id');
-
-        // Initialize courseStates array
-        foreach ($this->courses as $course) {
-            $override = $userCourseOverrides->get($course->id);
-
-            if ($override) {
-                $pivotType = $override->pivot->getAttribute('type');
-                $this->courseStates[$course->id] = $pivotType === 'add' ? 'add' : 'exclude';
-            } else {
-                $this->courseStates[$course->id] = 'default';
-            }
-        }
     }
 
     public function setCourseState($courseId, $state): void
@@ -140,6 +107,38 @@ class AssignCustomCoursesForm extends Component
                 }
             }
         } catch (Exception) {
+        }
+    }
+
+    private function loadData(): void
+    {
+        // Get all courses ordered by name
+        $this->courses = Course::query()
+            ->orderBy('name')
+            ->select(['id', 'name'])
+            ->get();
+
+        // Get courses that would be assigned by default using the service
+        $service = app(UserCourseService::class);
+        $this->defaultCourseIds = $service->getCourseIds($this->user);
+
+        // Get user's custom course overrides
+        $userCourseOverrides = $this->user->courses()
+            ->wherePivot('type', 'add')
+            ->orWherePivot('type', 'exclude')
+            ->get()
+            ->keyBy('id');
+
+        // Initialize courseStates array
+        foreach ($this->courses as $course) {
+            $override = $userCourseOverrides->get($course->id);
+
+            if ($override) {
+                $pivotType = $override->pivot->getAttribute('type');
+                $this->courseStates[$course->id] = $pivotType === 'add' ? 'add' : 'exclude';
+            } else {
+                $this->courseStates[$course->id] = 'default';
+            }
         }
     }
 }

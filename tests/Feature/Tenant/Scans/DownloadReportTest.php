@@ -29,7 +29,7 @@ function mockCyrismaReportService(): void
 
 function mockPdfFacade(): void
 {
-    $pdfInstance = Mockery::mock(\Barryvdh\DomPDF\PDF::class);
+    $pdfInstance = Mockery::mock(Barryvdh\DomPDF\PDF::class);
     $pdfInstance->shouldReceive('setPaper')->with('letter')->andReturnSelf();
     $pdfInstance->shouldReceive('output')->andReturn('%PDF-1.4 fake content');
 
@@ -111,7 +111,7 @@ describe('download', function (): void {
     it('uses the executive blade view when generating the executive report', function (): void {
         mockCyrismaReportService();
 
-        $pdfInstance = Mockery::mock(\Barryvdh\DomPDF\PDF::class);
+        $pdfInstance = Mockery::mock(Barryvdh\DomPDF\PDF::class);
         $pdfInstance->shouldReceive('setPaper')->andReturnSelf();
         $pdfInstance->shouldReceive('output')->andReturn('%PDF-1.4');
 
@@ -128,7 +128,7 @@ describe('download', function (): void {
     it('uses the technical blade view when generating the technical report', function (): void {
         mockCyrismaReportService();
 
-        $pdfInstance = Mockery::mock(\Barryvdh\DomPDF\PDF::class);
+        $pdfInstance = Mockery::mock(Barryvdh\DomPDF\PDF::class);
         $pdfInstance->shouldReceive('setPaper')->andReturnSelf();
         $pdfInstance->shouldReceive('output')->andReturn('%PDF-1.4');
 

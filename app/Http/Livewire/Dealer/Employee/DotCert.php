@@ -21,7 +21,6 @@ class DotCert extends Component
     public User $user;
     public bool $showCertButton = false;
     public bool $isLoaded = false;
-
     protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
 
     public function mount(): void

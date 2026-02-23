@@ -5,4 +5,4 @@
     <livewire:dealer.home.body-shop-stats/>
     <livewire:dealer.home.glba-stats/>
     <livewire:dealer.home.deal-jacket-stats/>
-</div> 
+</div>

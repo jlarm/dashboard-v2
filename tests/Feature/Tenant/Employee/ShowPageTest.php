@@ -114,7 +114,7 @@ describe('employee show page deferred components', function (): void {
 
         Livewire::test(VideoProgress::class, ['user' => $user])
             ->assertSet('isLoaded', false)
-            ->assertViewHas('videos', fn ($videos) => count($videos) === 0)
+            ->assertViewHas('videos', fn ($videos): bool => count($videos) === 0)
             ->call('handleTabChanged', 'courses')
             ->assertSet('isLoaded', false)
             ->call('handleTabChanged', 'video-progress')

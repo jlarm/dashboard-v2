@@ -88,12 +88,10 @@ class CveList extends Component
 
                     return $data['vulnerabilities'] ?? [];
                 })
-                ->sortByDesc(function (array $item): array {
-                    return [
-                        $this->riskRank((string) ($item['cve_risk'] ?? '')),
-                        (float) ($item['cve_score'] ?? 0),
-                    ];
-                })
+                ->sortByDesc(fn (array $item): array => [
+                    $this->riskRank((string) ($item['cve_risk'] ?? '')),
+                    (float) ($item['cve_score'] ?? 0),
+                ])
                 ->values()
                 ->all();
         }

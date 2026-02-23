@@ -6,8 +6,8 @@ namespace App\Http\Livewire\Tenant\Employee;
 
 use App\Models\User;
 use App\Services\VimeoService;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -16,7 +16,6 @@ class VideoProgress extends Component
     public User $user;
     public bool $isLoaded = false;
     public array $videos = [];
-
     protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
 
     public function handleTabChanged(string $tab): void

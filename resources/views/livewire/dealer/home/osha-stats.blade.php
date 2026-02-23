@@ -1,17 +1,20 @@
 <div>
-    <div class="relative overflow-hidden p-4 sm:p-5 bg-white border border-gray-200 rounded-xl shadow-sm before:absolute before:top-0 before:end-0 before:size-full before:bg-gradient-to-br before:from-blue-100 before:via-transparent before:blur-xl">
-        <a href="{{ !tenant('locations') ? route('dealer.audit.osha.index') : route('dealer.stores.audits.osha.index', $store) }}" class="relative z-0">
-            <!-- Header -->
-            <div class="flex justify-between items-center gap-x-3">
-                <!-- Icon -->
-                <span class="mb-3 inline-flex justify-center items-center size-8 md:size-10 rounded-lg bg-white text-gray-700 shadow">
-                    <svg class="flex-shrink-0 size-4 md:size-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+    <div class="relative overflow-hidden p-3 bg-white border border-gray-200 rounded-xl shadow-sm before:absolute before:top-0 before:end-0 before:size-full before:bg-gradient-to-br before:from-blue-100 before:via-transparent before:blur-xl">
+        <a
+            href="{{ !tenant('locations') ? route('dealer.audit.osha.index') : route('dealer.stores.audits.osha.index', $store) }}"
+            class="absolute inset-0 z-0"
+            aria-label="View OSHA audits"
+        ></a>
+
+        <div class="relative z-10 pointer-events-none">
+            <div class="flex justify-between items-center gap-x-3 mb-3">
+                <span class="inline-flex justify-center items-center size-6 rounded-lg bg-white text-gray-700 shadow">
+                    <svg class="flex-shrink-0 size-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
                         <path d="M22 21L12 3L2 21H22Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                         <path d="M12 15L12 10M12 16.5L12 18" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                     </svg>
                 </span>
-                <!-- End Icon -->
-                @if($this->progress() != null)
+                @if($this->progress() !== null)
                     @if($this->progress()[0] === 'positive')
                         <span class="flex-shrink-0 py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full">
                           <svg class="w-3 h-3" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -31,14 +34,28 @@
             </div>
             <!-- End Header -->
 
-            <div class="grid sm:flex sm:justify-between sm:items-center gap-1 sm:gap-3">
-                <h2 class="text-sm md:text-base text-gray-800">
-                    OSHA Rating
-                </h2>
-                <h3 class="text-lg md:text-2xl font-semibold text-gray-800">
+            <h2 class="text-sm text-gray-800">
+                OSHA Rating
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-2">
+                <h3 class="text-base font-semibold text-gray-800">
                     {{ $this->rating() }}
                 </h3>
+                @if($this->pdfPath())
+                    <div class="pointer-events-auto">
+                        <x-armp.button wire:click.stop="downloadPdf" type="button" size="xs" class="w-full">
+                            <span wire:loading.remove wire:target="downloadPdf">Download Report</span>
+                            <span wire:loading.inline-flex wire:target="downloadPdf" class="flex-row items-center justify-center gap-1 whitespace-nowrap leading-none">
+                                <x-loading-icon class="!-ml-0 !mr-0 !size-2 shrink-0" />
+                                <span class="inline-block">Loading...</span>
+                            </span>
+                        </x-armp.button>
+                    </div>
+                @else
+                    <div class="hidden md:block h-7"></div>
+                @endif
             </div>
-        </a>
+        </div>
     </div>
 </div>

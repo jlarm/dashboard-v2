@@ -470,7 +470,7 @@ class CyrismaService
     public function getExternalIpScanData(): ?array
     {
         // Try the vulnerability dashboard first - it might have aggregated external IP data
-        $vulnDashboard = $this->getStoreReport('dashboards/vulnerability');
+        $this->getStoreReport('dashboards/vulnerability');
 
         // Get list of all vulnerability scans
         $vulnerabilityScans = $this->getStoreReport('scans/vulnerability');

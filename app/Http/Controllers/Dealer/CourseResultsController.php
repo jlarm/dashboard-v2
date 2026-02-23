@@ -43,6 +43,7 @@ class CourseResultsController extends Controller
 
             if ($correctAnswerKey === $submittedAnswerKey) {
                 $score++;
+
                 continue;
             }
 
