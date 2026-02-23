@@ -96,13 +96,6 @@
                     <div class="flex items-center justify-center gap-2 text-lg">
                         <span>Completed: {{ $dealJacketGroup->created_at->format('F d, Y') }}</span>
                     </div>
-
-                    <div class="pt-4">
-                        <p class="text-sm font-medium text-gray-500 mb-2">Report Created By</p>
-                        <p class="text-base font-semibold text-gray-900">{{ $user->name }}</p>
-                        <p class="text-sm text-gray-600">{{ $user->phoneNumber }}</p>
-                        <p class="text-sm text-gray-600">{{ $user->email }}</p>
-                    </div>
                 </div>
             </div>
         </div>
