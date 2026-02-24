@@ -9,60 +9,70 @@ use App\Models\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Redirector;
 use Spatie\Permission\Models\Role;
 
 class Create extends Component
 {
-    public string $name;
-    public string $email;
-    public string $department;
-    public string $departmentId;
-    public string $role;
+    private const EXCLUDED_ROLES = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
+
+    public string $name = '';
+    public string $email = '';
+    public ?int $department = null;
+    public string $role = '';
     public bool $qi = false;
-    public array $roles = [];
     public array $courses = [];
     public array $dealers = [];
-    public $currentStore;
-    protected $rules = [
-        'name' => ['required', 'max:255'],
-        'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
-        //        'department' => ['required', 'integer'],
-        'roles' => ['min:1', 'array'],
-        'qi' => ['nullable', 'boolean'],
-        'courses' => ['nullable', 'array'],
-    ];
+    public ?Store $store = null;
 
-    public function mount(Request $request): void
+    public function mount(?Store $store = null): void
     {
-        $this->departmentId = auth()->user()->department_id ?? '';
-        $this->currentStore = $request->get('store')?->id ?? '';
-        $this->dealers[] = $request->get('store')?->id ? (string) $request->get('store')?->id : [];
+        $this->department = auth()->user()->department_id;
+        $routeStore = request()->route('store');
+
+        if ($store instanceof Store) {
+            $this->store = $store;
+        } elseif ($routeStore instanceof Store) {
+            $this->store = $routeStore;
+        }
+
+        if ($this->store instanceof Store) {
+            $this->dealers = [(string) $this->store->id];
+        }
+
+        if (auth()->user()->cannot('create-stores') && $this->role === '') {
+            $this->role = 'Employee';
+        }
     }
 
-    public function updated($propertyName): void
+    public function updated(string $propertyName): void
     {
         $this->validateOnly($propertyName);
     }
 
-    public function submit()
+    public function submit(): \Illuminate\Http\RedirectResponse|Redirector
     {
-        $this->validate();
+        $validated = $this->validate();
+        $roles = [$validated['role']];
 
         if ($this->qi) {
-            $this->roles[] = 'Qualified Individual';
+            $roles[] = 'Qualified Individual';
         }
 
         $invite = Invite::query()->create([
             'name' => mb_convert_case($this->name, MB_CASE_TITLE, 'UTF-8'),
             'email' => mb_strtolower($this->email),
-            'stores' => $this->dealers,
-            'department_id' => $this->department,
+            'stores' => $this->normalizeStoreIds($validated['dealers'] ?? []),
+            'department_id' => $validated['department'],
             'user_id' => auth()->user()->id,
-            'roles' => $this->roles,
+            'roles' => array_values(array_unique($roles)),
             'courses' => $this->courses,
-            'invitation_token' => mb_substr(md5(random_int(0, 9).$this->email.time()), 0, 32),
+            'invitation_token' => Str::random(32),
         ]);
 
         SendQueueEmailJob::dispatch($invite);
@@ -72,20 +82,59 @@ class Create extends Component
         session()->flash('flash.message', $this->name.' has been successfully invited.');
 
         return redirect()->route('dealer.employees.index');
-
     }
 
-    public function render()
+    public function render(): View
     {
-        $rolesQuery = Role::query()
-            ->whereNotIn('name', ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'])
-            ->orderBy('name');
-
         return view('livewire.dealer.employee.create', [
-            'departments' => Department::all(),
-            'allRoles' => $rolesQuery->get(),
-            'allCourses' => Course::query()->select('id', 'name')->get(),
-            'stores' => Store::query()->orderBy('name')->get(),
+            'departments' => Department::query()->orderBy('name')->get(['id', 'name']),
+            'allRoles' => $this->availableRoles(),
+            'allCourses' => Course::query()->orderBy('name')->get(['id', 'name']),
+            'stores' => Store::query()->orderBy('name')->get(['id', 'name']),
         ]);
+    }
+
+    protected function rules(): array
+    {
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
+            'department' => ['required', 'integer', Rule::exists('departments', 'id')],
+            'role' => [
+                'required',
+                Rule::exists('roles', 'name')->where(fn ($query) => $query->whereNotIn('name', self::EXCLUDED_ROLES)),
+            ],
+            'qi' => ['nullable', 'boolean'],
+            'courses' => ['nullable', 'array'],
+            'courses.*' => ['nullable', 'date'],
+        ];
+
+        if (tenant('locations') && auth()->user()->can('create-stores')) {
+            $rules['dealers'] = ['required', 'array', 'min:1'];
+            $rules['dealers.*'] = ['integer', Rule::exists('stores', 'id')];
+        }
+
+        return $rules;
+    }
+
+    private function normalizeStoreIds(array $stores): array
+    {
+        return collect($stores)
+            ->map(fn ($storeId): int => (int) $storeId)
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    private function availableRoles(): Collection
+    {
+        return Role::query()
+            ->whereNotIn('name', self::EXCLUDED_ROLES)
+            ->orderBy('name')
+            ->get();
     }
 }

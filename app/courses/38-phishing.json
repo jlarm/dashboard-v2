@@ -30,67 +30,77 @@
         ],
         "questions": [
             {
-                "question": " Which option is an example of \"smishing\"?",
+                "question": "In the script, a phishing campaign is best described as:",
                 "answers": [
                     {
-                        "a": "A phishing attack that targets a company CEO",
-                        "b": "A phishing email copied from a real message",
-                        "c": "A phishing attempt sent by text/SMS message",
-                        "d": "A phishing attempt over public Wi-Fi"
-                    }
-                ],
-                "correctAnswer": "c"
-            },
-            {
-                "question": "What best describes \"spear phishing\"?",
-                "answers": [
-                    {
-                        "a": "A mass email sent to thousands of random recipients",
-                        "b": "A targeted phishing attempt aimed at a specific person or team",
-                        "c": "A phishing attack done only through phone calls",
-                        "d": "A phishing email that always includes malware"
+                        "a": "A one-time password reset request from IT",
+                        "b": "A large-scale, coordinated effort to trick people into revealing sensitive info or taking harmful actions",
+                        "c": "A software update that improves security",
+                        "d": "A firewall configuration process"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Which technique involves copying a legitimate email and replacing links/attachments to trick the recipient?",
+                "question": "What does \"Smishing\" mean?",
                 "answers": [
                     {
-                        "a": "Cloning",
-                        "b": "Whaling",
-                        "c": "Spoofing DNS",
-                        "d": "Credential stuffing"
+                        "a": "A phishing attempt sent through a text/SMS message",
+                        "b": "A phone call pretending to be customer support",
+                        "c": "A fake website that copies a real login page",
+                        "d": "A malware program that encrypts files"
                     }
                 ],
                 "correctAnswer": "a"
             },
             {
-                "question": "Which of the following is a common red flag of a phishing message?",
+                "question": "Phishing campaigns mainly rely on technical hacking tools, not human behavior.",
                 "answers": [
                     {
-                        "a": "The sender address looks slightly \"off\" from the real organization",
-                        "b": "The message creates urgency or pressure to act quickly",
-                        "c": "The link destination doesn't match what the text claims",
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which of the following is Personally Identifiable Information (P.I.I.) mentioned in the script?",
+                "answers": [
+                    {
+                        "a": "Social Security numbers",
+                        "b": "Credit card numbers",
+                        "c": "Login credentials",
                         "d": "All of the above"
                     }
                 ],
                 "correctAnswer": "d"
             },
             {
-                "question": "What is the BEST action if you suspect an email is phishing?",
+                "question": "What is \"Cloning\" in phishing?",
                 "answers": [
                     {
-                        "a": "Reply asking the sender if it's real",
-                        "b": "Click the link to \"check\" where it goes",
-                        "c": "Report it using your organization's reporting method and delete/avoid interacting",
-                        "d": "Forward it to coworkers to warn them"
+                        "a": "Copying legitimate emails and swapping links/attachments to trick recipients",
+                        "b": "Copying a computer hard drive for backups",
+                        "c": "Duplicating user accounts for testing",
+                        "d": "Copying files into cloud storage"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Whaling specifically targets:",
+                "answers": [
+                    {
+                        "a": "New employees",
+                        "b": "Customers only",
+                        "c": "High-level executives like CEOs and CFOs",
+                        "d": "Social media influencers"
                     }
                 ],
                 "correctAnswer": "c"
             },
             {
-                "question": "True or False: Phishing attackers often try to steal sensitive information such as passwords, credit card numbers, or other login details.",
+                "question": "Phishing messages often create urgency, pressure, or fear to push quick action without verification.",
                 "answers": [
                     {
                         "a": "True",
@@ -98,6 +108,18 @@
                     }
                 ],
                 "correctAnswer": "a"
+            },
+            {
+                "question": "Which example involves sending fraudulent invoices to push victims into paying for goods/services never received?",
+                "answers": [
+                    {
+                        "a": "Brand Spoofing",
+                        "b": "Fake Invoice Scams",
+                        "c": "Nigerian Prince Scams",
+                        "d": "Fake Google Docs/Dropbox links"
+                    }
+                ],
+                "correctAnswer": "b"
             }
         ]
     }

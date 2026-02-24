@@ -14,6 +14,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
+use Throwable;
 
 class EditQuiz extends Component implements HasForms
 {
@@ -32,23 +33,45 @@ class EditQuiz extends Component implements HasForms
 
     public function update(): void
     {
-        $this->course->update($this->form->getState());
+        $state = $this->form->getState();
 
-        // Update matching courses across all tenants
-        tenancy()->central(function (): void {
-            foreach (Dealership::all() as $tenant) {
-                tenancy()->initialize($tenant);
+        try {
+            $this->course->update($state);
 
-                if ($tenantCourse = Course::query()->where('slug', $this->course->slug)->first()) {
-                    $tenantCourse->update($this->form->getState());
+            tenancy()->central(function () use ($state): void {
+                foreach (Dealership::query()->get(['id']) as $tenant) {
+                    tenancy()->initialize($tenant);
+
+                    if ($tenantCourse = Course::query()->where('slug', $this->course->slug)->first()) {
+                        $tenantCourse->update($state);
+                    }
                 }
-            }
-        });
 
-        Notification::make()
-            ->title('Course quiz updated')
-            ->success()
-            ->send();
+                tenancy()->end();
+            });
+
+            Notification::make()
+                ->title('Course quiz updated')
+                ->success()
+                ->send();
+
+            $this->dispatchBrowserEvent('course-quiz-updated', [
+                'status' => 'success',
+                'message' => 'Course quiz updated.',
+            ]);
+        } catch (Throwable $exception) {
+            report($exception);
+
+            Notification::make()
+                ->title('Unable to update course quiz')
+                ->danger()
+                ->send();
+
+            $this->dispatchBrowserEvent('course-quiz-updated', [
+                'status' => 'error',
+                'message' => 'Unable to update course quiz.',
+            ]);
+        }
     }
 
     public function render(): View

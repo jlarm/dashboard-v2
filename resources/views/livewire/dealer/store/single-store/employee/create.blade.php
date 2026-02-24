@@ -6,6 +6,6 @@
         </x-slot>
     </x-slot>
     <div>
-        <livewire:dealer.employee.create />
+        <livewire:dealer.employee.create :store="$store" />
     </div>
 </div>

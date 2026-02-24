@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store\SingleStore\Employee;
 
-use Illuminate\Http\Request;
+use App\Models\Dealer\Store;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Create extends Component
 {
-    public $store;
+    public Store $store;
 
-    public function mount(Request $request): void
+    public function mount(Store $store): void
     {
-        $this->store = $request->get('store') ?? '';
+        $this->store = $store;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.store.single-store.employee.create')->layout('components.dealer-app');
     }
