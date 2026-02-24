@@ -56,6 +56,10 @@ class Index extends Component
 
     public function getUsersQueryProperty(): Builder
     {
+        $generalCourseCutoffDate = now()->subYear();
+        $specialCourseCutoffDate = now()->subYears(3);
+        $specialCourseIds = [9, 10, 11, 12];
+
         $query = $this->initialUsersQuery()
             ->whereDoesntHave('roles', function ($query): void {
                 $query->where('name', 'super-admin')
@@ -63,26 +67,30 @@ class Index extends Component
             })
             ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id'])
             ->with([
-                'roles',
+                'roles:id,name',
                 'department:id,name',
                 'stores:id,name,state',
                 'courseOverrides:user_id,course_id,type',
-                'results' => function ($query): void {
+                'results' => function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
                     $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
-                        ->where('passed', 1);
+                        ->where('passed', 1)
+                        ->where(function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
+                            $query->where(function ($query) use ($generalCourseCutoffDate, $specialCourseIds): void {
+                                $query->whereNotIn('course_id', $specialCourseIds)
+                                    ->where('created_at', '>=', $generalCourseCutoffDate);
+                            })->orWhere(function ($query) use ($specialCourseCutoffDate, $specialCourseIds): void {
+                                $query->whereIn('course_id', $specialCourseIds)
+                                    ->where('created_at', '>=', $specialCourseCutoffDate);
+                            });
+                        });
                 },
-            ])
-            ->withCount([
-                'videoProgress as completed_videos_count',
             ]);
 
-        // Apply filters
         $this->applyDepartmentFilter($query);
         $this->applyRoleFilter($query);
         $this->applySearchFilter($query);
         $this->applySorting($query);
 
-        // Apply tenant location filter if needed
         if (tenant('locations')) {
             $query->whereHas('stores', function ($query): void {
                 if (! $this->currentUser->hasAnyRole(['super-admin', 'Consultant'])) {
@@ -94,7 +102,6 @@ class Index extends Component
         return $query;
     }
 
-    // Reset filter methods
     public function updatingSearch(): void
     {
         $this->resetPage();
@@ -119,12 +126,12 @@ class Index extends Component
         $this->clearSelections();
     }
 
-    public function updatedSelectedDepartment($value): void
+    public function updatedSelectedDepartment(string $value): void
     {
         $this->selectedDepartment = $value === '' ? null : (int) $value;
     }
 
-    public function updatedSelectedRole($value): void
+    public function updatedSelectedRole(string $value): void
     {
         $this->selectedRole = $value === '' ? null : (int) $value;
     }
@@ -146,14 +153,11 @@ class Index extends Component
     public function toggleUserSelection(int $userId): void
     {
         if (in_array($userId, $this->selectedUsers, true)) {
-            // Remove from array
             $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn ($id): bool => $id !== $userId));
         } else {
-            // Add to array
             $this->selectedUsers[] = $userId;
         }
 
-        // Update selectAll state
         $users = $this->getCachedUsers();
         $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
     }
@@ -190,7 +194,6 @@ class Index extends Component
 
     public function toggleSelectAll(): void
     {
-        // Toggle the selectAll state first
         $this->selectAll = ! $this->selectAll;
 
         $users = $this->getCachedUsers();
@@ -204,7 +207,7 @@ class Index extends Component
         $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
     }
 
-    public function exportCsv()
+    public function exportCsv(): mixed
     {
         if ($this->selectedUsers === []) {
             Notification::make()
@@ -218,7 +221,6 @@ class Index extends Component
 
         $users = $this->getCachedUsers();
 
-        // Filter to only selected users
         $selectedUsers = $users->filter(fn ($user): bool => in_array($user->id, $this->selectedUsers));
 
         $csvContent = $this->generateExportCsvContent($selectedUsers);
@@ -277,7 +279,7 @@ class Index extends Component
         return Role::query()->find($this->selectedRole)?->name;
     }
 
-    public function getDepartmentsProperty()
+    public function getDepartmentsProperty(): Collection
     {
         return Department::query()
             ->whereHas('users')
@@ -285,7 +287,7 @@ class Index extends Component
             ->get(['id', 'name']);
     }
 
-    public function getRolesProperty()
+    public function getRolesProperty(): Collection
     {
         return Role::query()
             ->whereNotIn('name', ['super-admin', 'Consultant'])
@@ -436,7 +438,6 @@ class Index extends Component
     {
         $query = User::query();
 
-        // Restrict managers to their own department unless they have store creation permissions
         if ($this->currentUser->cannot('create-stores') && $this->currentUser->department_id) {
             $query->where('department_id', $this->currentUser->department_id);
         }

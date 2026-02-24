@@ -38,7 +38,7 @@ class Index extends Component
     public User $currentUser;
     public array $selectedUsers = [];
     public bool $selectAll = false;
-    public $queryString = [
+    protected $queryString = [
         'search' => ['except' => '', 'as' => 's'],
         'selectedDepartment' => ['except' => null, 'as' => 'd'],
         'selectedRole' => ['except' => null, 'as' => 'r'],
@@ -56,17 +56,29 @@ class Index extends Component
 
     public function getUsersQueryProperty(): BelongsToMany
     {
+        $generalCourseCutoffDate = now()->subYear();
+        $specialCourseCutoffDate = now()->subYears(3);
+        $specialCourseIds = [9, 10, 11, 12];
+
         $query = $this->store->users()
             ->select(['id', 'name', 'slug', 'email', 'department_id'])
             ->with([
-                'roles',
+                'roles:id,name',
                 'department:id,name',
                 'stores:id,name,state',
-                'courses:id',
                 'courseOverrides:user_id,course_id,type',
-                'results' => function ($query): void {
+                'results' => function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
                     $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
-                        ->where('passed', 1);
+                        ->where('passed', 1)
+                        ->where(function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
+                            $query->where(function ($query) use ($generalCourseCutoffDate, $specialCourseIds): void {
+                                $query->whereNotIn('course_id', $specialCourseIds)
+                                    ->where('created_at', '>=', $generalCourseCutoffDate);
+                            })->orWhere(function ($query) use ($specialCourseCutoffDate, $specialCourseIds): void {
+                                $query->whereIn('course_id', $specialCourseIds)
+                                    ->where('created_at', '>=', $specialCourseCutoffDate);
+                            });
+                        });
                 },
             ])
             ->whereDoesntHave('roles', function ($query): void {
@@ -75,7 +87,6 @@ class Index extends Component
             })
             ->currentUserIsManager($this->currentUser);
 
-        // Apply filters
         $this->applyDepartmentFilter($query);
         $this->applyRoleFilter($query);
         $this->applySearchFilter($query);
@@ -94,6 +105,7 @@ class Index extends Component
     public function resetShowIncompleteCourseUsers(): void
     {
         $this->reset(['showIncompleteCourseUsers']);
+        $this->resetPage();
     }
 
     public function updatingShowIncompleteCourseUsers(): void
@@ -105,6 +117,7 @@ class Index extends Component
     public function resetSelectedDepartment(): void
     {
         $this->selectedDepartment = null;
+        $this->resetPage();
     }
 
     public function updatingSelectedDepartment(): void
@@ -117,6 +130,16 @@ class Index extends Component
     {
         $this->resetPage();
         $this->clearSelections();
+    }
+
+    public function updatedSelectedDepartment(string $value): void
+    {
+        $this->selectedDepartment = $value === '' ? null : (int) $value;
+    }
+
+    public function updatedSelectedRole(string $value): void
+    {
+        $this->selectedRole = $value === '' ? null : (int) $value;
     }
 
     public function resetFilters(): void
@@ -140,7 +163,6 @@ class Index extends Component
 
     public function toggleSelectAll(): void
     {
-        // Toggle the selectAll state first
         $this->selectAll = ! $this->selectAll;
 
         $query = $this->usersQuery;
@@ -154,14 +176,11 @@ class Index extends Component
     public function toggleUserSelection(int $userId): void
     {
         if (in_array($userId, $this->selectedUsers, true)) {
-            // Remove from array
             $this->selectedUsers = array_values(array_filter($this->selectedUsers, fn ($id): bool => $id !== $userId));
         } else {
-            // Add to array
             $this->selectedUsers[] = $userId;
         }
 
-        // Update selectAll state
         $query = $this->usersQuery;
         $users = $this->showIncompleteCourseUsers
             ? $query->get()->filter(fn (User $user) => $user->user_has_not_completed_courses)
@@ -192,7 +211,7 @@ class Index extends Component
         $this->resetPage();
     }
 
-    public function exportCsv()
+    public function exportCsv(): mixed
     {
         if ($this->selectedUsers === []) {
             Notification::make()
@@ -204,13 +223,11 @@ class Index extends Component
             return null;
         }
 
-        // Get all users from current query
         $query = $this->usersQuery;
         $users = $this->showIncompleteCourseUsers
             ? $query->get()->filter(fn (User $user) => $user->user_has_not_completed_courses)
             : $query->get();
 
-        // Filter to only selected users
         $selectedUsers = $users->filter(fn (User $user): bool => in_array($user->id, $this->selectedUsers));
 
         $csvContent = $this->generateExportCsvContent($selectedUsers);
@@ -257,7 +274,7 @@ class Index extends Component
 
         $users = $this->showIncompleteCourseUsers
             ? $query->paginate(500)->filter(fn (User $user) => $user->user_has_not_completed_courses)
-            : $query->paginate(25);
+            : $query->paginate(15);
 
         return view('livewire.dealer.store.single-store.employee.index', [
             'users' => $users,
@@ -333,7 +350,6 @@ class Index extends Component
 
     private function applyManagerDepartmentFilter(BelongsToMany $query): void
     {
-        // Restrict managers to their own department unless they have store creation permissions
         if ($this->currentUser->cannot('create-stores') && $this->currentUser->department_id) {
             $query->where('department_id', $this->currentUser->department_id);
         }
@@ -359,7 +375,12 @@ class Index extends Component
         $csvContent = "Name,Email,Department,Courses\n";
         foreach ($users as $user) {
             if ($user->total_completed_courses !== $user->total_user_courses) {
-                $csvContent .= "{$user->name},{$user->email},{$user->department->name},{$user->total_completed_courses} of {$user->total_user_courses}\n";
+                $name = $this->escapeCsvField($user->name);
+                $email = $this->escapeCsvField($user->email);
+                $department = $this->escapeCsvField($user->department?->name ?? 'N/A');
+                $courses = "{$user->total_completed_courses} of {$user->total_user_courses}";
+
+                $csvContent .= "{$name},{$email},{$department},{$courses}\n";
             }
         }
 

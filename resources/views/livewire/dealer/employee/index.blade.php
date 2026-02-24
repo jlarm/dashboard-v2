@@ -258,10 +258,7 @@
                                                 class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-blue-600/20"
                                             >
                                                 <span class="sr-only">Remove</span>
-                                                <svg
-                                                    viewBox="0 0 14 14"
-                                                    class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75"
-                                                >
+                                                <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75">
                                                     <path d="M4 4l6 6m0-6l-6 6" />
                                                 </svg>
                                                 <span class="absolute -inset-1"></span>
@@ -277,10 +274,7 @@
                                                 class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-blue-600/20"
                                             >
                                                 <span class="sr-only">Remove</span>
-                                                <svg
-                                                    viewBox="0 0 14 14"
-                                                    class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75"
-                                                >
+                                                <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75">
                                                     <path d="M4 4l6 6m0-6l-6 6" />
                                                 </svg>
                                                 <span class="absolute -inset-1"></span>
@@ -296,10 +290,7 @@
                                                 class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-blue-600/20"
                                             >
                                                 <span class="sr-only">Remove</span>
-                                                <svg
-                                                    viewBox="0 0 14 14"
-                                                    class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75"
-                                                >
+                                                <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-blue-700/50 group-hover:stroke-blue-700/75">
                                                     <path d="M4 4l6 6m0-6l-6 6" />
                                                 </svg>
                                                 <span class="absolute -inset-1"></span>
@@ -325,21 +316,18 @@
                     @endif
                     <div class="-mx-4 md:-mx-0 -my-2 md:-my-0 overflow-x-auto">
                         <div class="inline-block min-w-full align-middle">
-                            <table class="min-w-full divide-y divide-gray-300">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
+                            <x-table>
+                                <x-slot name="head">
+                                    <x-table.row>
+                                        <x-table.cell class="pl-4">
                                             <input
                                                 type="checkbox"
                                                 wire:click.prevent="toggleSelectAll"
                                                 {{ $selectAll ? 'checked' : '' }}
                                                 class="h-4 w-4 ml-1 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600 cursor-pointer"
                                             />
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"
-                                        >
+                                        </x-table.cell>
+                                        <x-table.cell>
                                             <button
                                                 wire:click="sortBy('name')"
                                                 class="flex items-center space-x-1 text-left font-semibold text-gray-900 hover:text-gray-700"
@@ -361,51 +349,9 @@
                                                     </svg>
                                                 @endif
                                             </button>
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                        >
-                                            Contact
-                                        </th>
-                                        @if(tenant('locations'))
-                                            <th
-                                                scope="col"
-                                                class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                            >
-                                                Store(s)
-                                            </th>
-                                        @endif
-                                        <th
-                                            scope="col"
-                                            class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                        >
-                                            <button
-                                                wire:click="sortBy('department')"
-                                                class="flex items-center space-x-1 text-left font-semibold text-gray-900 hover:text-gray-700"
-                                            >
-                                                <span>Department</span>
-                                                @if($sortField === 'department')
-                                                    @if($sortDirection === 'asc')
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-                                                        </svg>
-                                                    @else
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                                        </svg>
-                                                    @endif
-                                                @else
-                                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                                    </svg>
-                                                @endif
-                                            </button>
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                        >
+                                        </x-table.cell>
+                                        <x-table.cell>Contact</x-table.cell>
+                                        <x-table.cell>
                                             <button
                                                 wire:click="sortBy('role')"
                                                 class="flex items-center space-x-1 text-left font-semibold text-gray-900 hover:text-gray-700"
@@ -427,112 +373,101 @@
                                                     </svg>
                                                 @endif
                                             </button>
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                        >
-                                            Courses
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
-                                        >
-                                            <span class="sr-only">View</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200 bg-white">
+                                        </x-table.cell>
+                                        @if(tenant('locations'))
+                                            <x-table.cell>Store(s)</x-table.cell>
+                                        @endif
+                                        <x-table.cell>
+                                            <button
+                                                wire:click="sortBy('department')"
+                                                class="flex items-center space-x-1 text-left font-semibold text-gray-900 hover:text-gray-700"
+                                            >
+                                                <span>Department</span>
+                                                @if($sortField === 'department')
+                                                    @if($sortDirection === 'asc')
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                                        </svg>
+                                                    @else
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                        </svg>
+                                                    @endif
+                                                @else
+                                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                                    </svg>
+                                                @endif
+                                            </button>
+                                        </x-table.cell>
+                                        <x-table.cell>Courses</x-table.cell>
+                                        <x-table.cell></x-table.cell>
+                                    </x-table.row>
+                                </x-slot>
+                                <x-slot name="body">
                                     @forelse($users as $user)
-                                        <tr class="even:bg-gray-50" wire:key="user-{{ $user->id }}">
-                                            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500">
+                                        <x-table.row wire:key="user-{{ $user->id }}">
+                                            <x-table.cell class="pl-4">
                                                 <input
                                                     type="checkbox"
                                                     wire:click="toggleUserSelection({{ $user->id }})"
                                                     @if(in_array($user->id, $selectedUsers)) checked @endif
                                                     class="h-4 w-4 ml-1 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600 cursor-pointer"
                                                 />
-                                            </td>
-                                            <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500">
-                                                {{ Str::headline($user->name) }}
-                                            </td>
-                                            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                                                <div><a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a></div>
-                                            </td>
+                                            </x-table.cell>
+                                            <x-table.cell>{{ Str::headline($user->name) }}</x-table.cell>
+                                            <x-table.cell>
+                                                <a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a>
+                                            </x-table.cell>
+                                            <x-table.cell>
+                                                @if($user->roles->isEmpty())
+                                                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">!! No Role Assigned !!</span>
+                                                @else
+                                                    @foreach($user->roles as $role)
+                                                        @if($role->name === 'Manager')
+                                                            <span class="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">{{ $role->name }}</span>
+                                                        @elseif($role->name === 'Employee')
+                                                            <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">{{ $role->name }}</span>
+                                                        @elseif($role->name === 'Consultant')
+                                                            <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">{{ $role->name }}</span>
+                                                        @else
+                                                            <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">{{ $role->name }}</span>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </x-table.cell>
                                             @if(tenant('locations'))
-                                                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                                                <x-table.cell>
                                                     @foreach($user->stores as $store)
                                                         <div class="flex flex-col">
                                                             <span>{{ $store->name }}</span>
                                                         </div>
                                                     @endforeach
-                                                </td>
+                                                </x-table.cell>
                                             @endif
-                                            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                                                {{ $user->department->name ?? '' }}
-                                            </td>
-                                            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                                                @foreach($user->roles as $role)
-                                                    @if($role->name === 'Manager')
-                                                        <span class="inline-flex items-center rounded-md bg-arm-blue-50 px-2 py-1 text-xs font-medium text-arm-blue-700 ring-1 ring-inset ring-arm-blue-700/10">{{ $role->name }}</span>
-                                                    @elseif($role->name === 'Employee')
-                                                        <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">{{ $role->name }}</span>
-                                                    @elseif($role->name === 'Consultant')
-                                                        <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">{{ $role->name }}</span>
-                                                    @else
-                                                        <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">{{ $role->name }}</span>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                                            <x-table.cell>{{ $user->department->name ?? '-' }}</x-table.cell>
+                                            <x-table.cell>
                                                 @if($user->total_completed_courses === $user->total_user_courses)
                                                     <span class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700">Completed</span>
                                                 @else
                                                     {{ $user->total_completed_courses }} of {{ $user->total_user_courses }}
                                                 @endif
-                                            </td>
-                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end text-sm font-medium sm:pr-6 lg:pr-8">
+                                            </x-table.cell>
+                                            <x-table.cell>
                                                 @if(auth()->user()->id !== $user->id && !$user->hasRole('Consultant'))
-                                                    <a href="{{ route('dealer.employees.show', $user) }}" class="text-sm text-arm-blue-500 hover:text-arm-blue-700">View</a>
+                                                    <a href="{{ route('dealer.employees.show', $user) }}" class="text-sm">View</a>
                                                 @endif
-                                            </td>
-                                        </tr>
+                                            </x-table.cell>
+                                        </x-table.row>
                                     @empty
                                         <tr>
-                                            <td
-                                                colspan="7"
-                                                class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3"
-                                            >
-                                                <div class="text-center">
-                                                    <h3 class="mt-2 text-sm font-semibold text-gray-900">
-                                                        No employees
-                                                    </h3>
-                                                    <p class="mt-1 text-sm text-gray-500">
-                                                        Get started by creating a new employee.
-                                                    </p>
-                                                    <div class="mt-6">
-                                                        <a
-                                                            href="{{ route('dealer.employees.new') }}"
-                                                            type="button"
-                                                            class="inline-flex items-center rounded-md bg-arm-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600"
-                                                        >
-                                                            <svg
-                                                                class="-ml-0.5 mr-1.5 h-5 w-5"
-                                                                viewBox="0 0 20 20"
-                                                                fill="currentColor"
-                                                                aria-hidden="true"
-                                                            >
-                                                                <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                                                            </svg>
-                                                            Add Employee
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                            <td colspan="8" class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
+                                                No Employees
                                             </td>
                                         </tr>
                                     @endforelse
-                                </tbody>
-                            </table>
+                                </x-slot>
+                            </x-table>
                         </div>
                     </div>
                 </div>
