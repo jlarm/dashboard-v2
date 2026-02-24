@@ -438,11 +438,45 @@
                                             </x-table.cell>
                                             @if(tenant('locations'))
                                                 <x-table.cell>
-                                                    @foreach($user->stores as $store)
-                                                        <div class="flex flex-col">
-                                                            <span>{{ $store->name }}</span>
-                                                        </div>
-                                                    @endforeach
+                                                    @php
+                                                        $employeeStores = $user->stores->sortBy('name')->values();
+                                                        $primaryStore = $employeeStores->first();
+                                                        $additionalStoreCount = $employeeStores->count() - 1;
+                                                    @endphp
+                                                    <div
+                                                        x-data="{ open: false }"
+                                                        x-on:keydown.escape.window="open = false"
+                                                        class="relative inline-flex max-w-xs items-center gap-2"
+                                                    >
+                                                        <span class="truncate text-sm text-gray-900" title="{{ $primaryStore?->name ?? '-' }}">
+                                                            {{ $primaryStore?->name ?? '-' }}
+                                                        </span>
+                                                        @if($additionalStoreCount > 0)
+                                                            <button
+                                                                type="button"
+                                                                x-on:click.prevent="open = !open"
+                                                                class="inline-flex items-center rounded-md bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300"
+                                                            >
+                                                                +{{ $additionalStoreCount }}
+                                                            </button>
+                                                            <div
+                                                                x-cloak
+                                                                x-show="open"
+                                                                x-transition.origin.top.left
+                                                                x-on:click.outside="open = false"
+                                                                class="absolute left-0 top-full z-20 mt-2 w-64 rounded-md border border-gray-200 bg-white p-3 shadow-lg"
+                                                            >
+                                                                <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">All Stores</p>
+                                                                <div class="mt-2 space-y-1">
+                                                                    @foreach($employeeStores as $employeeStore)
+                                                                        <p class="text-sm text-gray-700">
+                                                                            {{ $employeeStore->name }}
+                                                                        </p>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
                                                 </x-table.cell>
                                             @endif
                                             <x-table.cell>{{ $user->department->name ?? '-' }}</x-table.cell>

@@ -75,4 +75,39 @@ describe('single store employee index query optimization', function (): void {
                     && ! $indexedEmployee->relationLoaded('courses');
             });
     });
+
+    it('renders additional assigned stores in a compact +count popover', function (): void {
+        $this->tenant->locations = true;
+        $this->tenant->save();
+
+        $department = Department::query()->create([
+            'name' => 'Accounting '.uniqid(),
+            'slug' => 'accounting-'.uniqid(),
+        ]);
+
+        $primaryStore = Store::query()->firstOrFail();
+        $secondaryStore = Store::query()->create([
+            'name' => 'Satellite Store '.uniqid(),
+            'slug' => 'satellite-store-'.uniqid(),
+            'state' => 'Illinois',
+        ]);
+
+        $employee = User::query()->create([
+            'name' => 'Single Store Multi Assignment',
+            'email' => 'single-store-multi@test.com',
+            'password' => bcrypt('password'),
+            'department_id' => $department->id,
+        ]);
+        $employee->assignRole('Employee');
+        $employee->stores()->attach([$primaryStore->id, $secondaryStore->id]);
+
+        $this->actingAs($this->consultant);
+
+        Livewire::test(Index::class, ['store' => $primaryStore])
+            ->assertOk()
+            ->assertSee($primaryStore->name)
+            ->assertSee('+1')
+            ->assertSee('All Stores')
+            ->assertSee($secondaryStore->name);
+    });
 });

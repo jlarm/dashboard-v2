@@ -74,4 +74,39 @@ describe('employee index component query optimization', function (): void {
                     && ! in_array($oldResult->id, $resultIds, true);
             });
     });
+
+    it('renders multiple stores as primary store with a compact additional count', function (): void {
+        $this->tenant->locations = true;
+        $this->tenant->save();
+
+        $department = Department::query()->create([
+            'name' => 'Sales '.uniqid(),
+            'slug' => 'sales-'.uniqid(),
+        ]);
+
+        $primaryStore = Store::query()->firstOrFail();
+        $secondaryStore = Store::query()->create([
+            'name' => 'Secondary Store '.uniqid(),
+            'slug' => 'secondary-store-'.uniqid(),
+            'state' => 'Indiana',
+        ]);
+
+        $employee = User::query()->create([
+            'name' => 'Multi Store Employee',
+            'email' => 'multi-store-employee@test.com',
+            'password' => bcrypt('password'),
+            'department_id' => $department->id,
+        ]);
+        $employee->assignRole('Employee');
+        $employee->stores()->attach([$primaryStore->id, $secondaryStore->id]);
+
+        $this->actingAs($this->consultant);
+
+        Livewire::test(Index::class)
+            ->assertOk()
+            ->assertSee($primaryStore->name)
+            ->assertSee('+1')
+            ->assertSee('All Stores')
+            ->assertSee($secondaryStore->name);
+    });
 });
