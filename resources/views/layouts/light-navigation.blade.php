@@ -83,12 +83,6 @@
                 @endif
             </div>
             <livewire:dealer.navigation.main />
-            <!-- SOC Monitoring -->
-            @if (request()->segment(1) === 'stores' || !tenant('locations'))
-                @can('view-audits')
-                    <livewire:dealer.general.soc-monitoring/>
-                @endcan
-            @endif
         </nav>
     </div>
 </div>

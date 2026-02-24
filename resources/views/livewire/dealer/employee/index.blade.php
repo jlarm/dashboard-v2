@@ -464,7 +464,7 @@
                                                                 x-show="open"
                                                                 x-transition.origin.top.left
                                                                 x-on:click.outside="open = false"
-                                                                class="absolute left-0 top-full z-20 mt-2 w-64 rounded-md border border-gray-200 bg-white p-3 shadow-lg"
+                                                                class="absolute bottom-full left-0 z-20 mb-2 w-64 rounded-md border border-gray-200 bg-white p-3 shadow-lg"
                                                             >
                                                                 <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">All Stores</p>
                                                                 <div class="mt-2 space-y-1">
