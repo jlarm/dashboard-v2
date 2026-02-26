@@ -31,7 +31,65 @@
         ],
         "questions": [
             {
-                "question": "Ventilation is not important in the battery area.",
+                "question": "What is required when using battery chargers indoors?",
+                "answers": [
+                    {
+                        "a": "Dim lighting",
+                        "b": "Good ventilation",
+                        "c": "A space heater nearby",
+                        "d": "An open flame to check levels"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "When disconnecting battery cables before charging, what is the correct order?",
+                "answers": [
+                    {
+                        "a": "Positive first, then negative",
+                        "b": "Negative first, then positive",
+                        "c": "Remove both at the same time",
+                        "d": "Leave cables connected"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "What is the correct rule when mixing acid and water for non-sealed (wet-cell) batteries?",
+                "answers": [
+                    {
+                        "a": "Pour water into acid",
+                        "b": "Pour acid into water",
+                        "c": "Mix them in any order",
+                        "d": "Use only tap water"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "During a jump start, where should the final black cable connection be made?",
+                "answers": [
+                    {
+                        "a": "The positive terminal of the dead battery",
+                        "b": "The negative terminal of the dead battery",
+                        "c": "A clean metal part of the disabled car",
+                        "d": "The alternator housing"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Keeping a battery on high charge too long can damage it and may cause an explosion.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Spent batteries can be thrown into the dumpster if they are sealed.",
                 "answers": [
                     {
                         "a": "True",
@@ -39,46 +97,6 @@
                     }
                 ],
                 "correctAnswer": "b"
-            },
-            {
-                "question": "Batteries should be stored in a cool, dry place.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "It is acceptable to make live connections directly to the battery.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "The eyes, face, and body should be protected from battery acid.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Batteries should be inspected in natural light.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
             }
         ]
     }

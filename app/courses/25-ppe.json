@@ -37,32 +37,19 @@
         ],
         "questions": [
             {
-                "question": "What types of PPE are considered normal precautions?",
+                "question": "What is the main purpose of a Personal Protective Equipment (PPE) Program?",
                 "answers": [
                     {
-                        "a": "Safety Glasses, Head Protection",
-                        "b": "Foot Protection, Hearing Protection",
-                        "c": "Loose fitting clothes, Long sleeve shirts",
-                        "d": "All of the above",
-                        "e": "A and B only"
+                        "a": "To reduce tool costs",
+                        "b": "To protect employees from hazards by ensuring proper PPE use",
+                        "c": "To eliminate all workplace hazards automatically",
+                        "d": "To replace safety inspections"
                     }
                 ],
-                "correctAnswer": "e"
+                "correctAnswer": "b"
             },
             {
-                "question": "The first line of defense in wearing the proper PPE is the responsibility of:",
-                "answers": [
-                    {
-                        "a": "Supervisor",
-                        "b": "Service Director",
-                        "c": "Employee",
-                        "d": "Owner"
-                    }
-                ],
-                "correctAnswer": "c"
-            },
-            {
-                "question": "NIOSH-approved dust respirators may also need to be used when sanding or burnishing for paint preparation or vehicle body work, if engineered dust control is not provided.",
+                "question": "A PPE program helps reduce injuries by creating a barrier between workers and potential dangers.",
                 "answers": [
                     {
                         "a": "True",
@@ -72,16 +59,72 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Decibel Levels are important to monitor and wear proper PPE for the following reasons.",
+                "question": "What is the first step mentioned for starting a PPE program?",
                 "answers": [
                     {
-                        "a": "To prevent your fingers from being cut off",
-                        "b": "To insure your toes are not broken",
-                        "c": "Insuring your hearing is not impaired",
-                        "d": "None of the above"
+                        "a": "Buy PPE in bulk",
+                        "b": "Conduct a Hazard Assessment review",
+                        "c": "Create a uniform policy",
+                        "d": "Install new ventilation systems"
                     }
                 ],
-                "correctAnswer": "c"
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Wearing PPE in the shop can cut injury risks by half.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which PPE should always be worn in service bays?",
+                "answers": [
+                    {
+                        "a": "Welding helmet",
+                        "b": "Safety glasses",
+                        "c": "Rubber apron",
+                        "d": "Full-body suit"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "What does it usually indicate if you cannot have a normal conversation a few feet apart?",
+                "answers": [
+                    {
+                        "a": "The shop is too cold",
+                        "b": "You probably need hearing protection",
+                        "c": "You should remove your PPE",
+                        "d": "The noise is under 80 dB"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "During an 8-hour shift, prolonged exposure to noise over 90 dB should be avoided.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "OSHA requires respirator training when performing which tasks?",
+                "answers": [
+                    {
+                        "a": "Painting, sanding, and grinding",
+                        "b": "Sweeping floors",
+                        "c": "Changing brake pads only",
+                        "d": "Working under vehicles"
+                    }
+                ],
+                "correctAnswer": "a"
             }
         ]
     }

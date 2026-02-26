@@ -29,66 +29,84 @@
         ],
         "questions": [
             {
-                "question": "Only qualified personnel are allowed to install or perform work on electrical equipment and installation.",
+                "question": "According to the training, most electrical incidents involve what voltage level?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Over 5,000 volts",
+                        "b": "1,200 volts or more",
+                        "c": "600 volts or less",
+                        "d": "Only household 120 volts"
                     }
                 ],
-                "correctAnswer": "a"
+                "correctAnswer": "c"
             },
             {
-                "question": "Provide signs and barricades where hazards are present and maintenance is in progress.",
+                "question": "Which statement best describes what electricity can do?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Never use a water-type extinguisher on an electrical fire.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Only grounded extension cords can be used. When changing parts or working with an extension cord, first disconnect the power to prevent accidental activation.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "How would you protect yourself if you saw someone who was electrocuted?",
-                "answers": [
-                    {
-                        "a": "Don't touch the person. That person might be energized, so take time to protect yourself.",
-                        "b": "Don't try to use a conductive tool to free the person.",
-                        "c": "Don't touch anyone who has become grounded.",
-                        "d": "All of the above"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "Roughly 300 disabling electrical contact injuries occur every year in the United States, along with another 400 non-disabling injuries.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
+                        "a": "It only causes mild tingling",
+                        "b": "It can kill, cause painful shocks, damage equipment, and ignite fires",
+                        "c": "It is only dangerous in wet conditions",
+                        "d": "It only affects tools, not people"
                     }
                 ],
                 "correctAnswer": "b"
+            },
+            {
+                "question": "When disconnecting electrical equipment, what is the correct order?",
+                "answers": [
+                    {
+                        "a": "Disconnect from the load to the source, and disconnect at the source first",
+                        "b": "Disconnect at the load first, then the source",
+                        "c": "Disconnect whichever side is easiest",
+                        "d": "Never disconnect - only turn off at the panel"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "What extinguisher should be used on an electrical fire?",
+                "answers": [
+                    {
+                        "a": "Water extinguisher",
+                        "b": "Foam extinguisher",
+                        "c": "CO2 extinguisher",
+                        "d": "Any extinguisher is fine"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "If someone is shocked, what should you do before touching or moving them?",
+                "answers": [
+                    {
+                        "a": "Pull them away immediately",
+                        "b": "Throw water on them to cool burns",
+                        "c": "Turn off the power using a fuse/circuit breaker or unplug the device",
+                        "d": "Use a metal tool to separate them from the source"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Temporary wiring (like extension cords) should not be used for more than 90 days.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Even if a shock seems minor, it should still be reported and the person should get a medical evaluation.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
             }
         ]
     }

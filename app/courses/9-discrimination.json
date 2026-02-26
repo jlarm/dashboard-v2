@@ -50,49 +50,81 @@
         ],
         "questions": [
             {
-                "question": "What are the various types of discrimination?",
+                "question": "Race and color discrimination protections apply to which employment actions?",
                 "answers": [
                     {
-                        "a": "Age, Immigration or citizenship status, Color, Disability, Gender (including sexual harassment), Gender Identity, Marital status and partnership status, National origin",
-                        "b": "Sexual, mental and lack of knowledge",
-                        "c": "Race/color, national origin, sex, religious discrimination, age discrimination and LGBTQ",
-                        "d": "Age, Sex, Transsexual and Marital status"
+                        "a": "Only hiring and firing",
+                        "b": "Only promotions and training",
+                        "c": "Recruiting, hiring, promotions, transfers, assignments, reviews, training, discipline, discharge, wages, benefits, and other employment terms",
+                        "d": "Only workplace conduct, not pay or benefits"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "A hostile work environment based on race/color may include:",
+                "answers": [
+                    {
+                        "a": "Racial slurs, ethnic jokes, derogatory remarks, or unwelcome verbal/physical behavior",
+                        "b": "Only physical violence",
+                        "c": "Only written complaints filed with HR",
+                        "d": "Performance reviews and coaching"
                     }
                 ],
                 "correctAnswer": "a"
             },
             {
-                "question": "Race related or hostile work environment acts require that employers take steps to prevent and correct unlawful behavior based on certain conduct. What behavior is prohibited?",
+                "question": "National origin discrimination can involve unfavorable treatment because of a person's:",
                 "answers": [
                     {
-                        "a": "Taking time off unnecessarily, calling in sick and being lazy on the job",
-                        "b": "Offensive behavior such as racial slurs, racial jokes, derogatory comments and other physical or verbal abuse",
-                        "c": "Not being able to perform job duties, not being able to get along with co-workers and not being able to work with others",
-                        "d": "All of the above"
+                        "a": "Favorite sports team",
+                        "b": "Accent, ethnicity, or perceived ethnic background",
+                        "c": "Work schedule preference",
+                        "d": "Education level"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "What is required so as not to discriminate against an employee based on religion?",
+                "question": "Under the ADEA, who is protected from age discrimination?",
                 "answers": [
                     {
-                        "a": "Employers must let everyone do what they want and not monitor any behavior if related to employee's religion.",
-                        "b": "Employers must “reasonably” accommodate employees religious practices, unless doing so would impose undue hardship on such employer.",
-                        "c": "Employers must let employees take time off whenever they want to practice their religion.",
-                        "d": "A and C"
+                        "a": "Anyone under 25",
+                        "b": "Anyone 30 and above",
+                        "c": "People age 40 and over",
+                        "d": "Only employees age 65 and over"
                     }
                 ],
-                "correctAnswer": "b"
+                "correctAnswer": "c"
             },
             {
-                "question": "At what age are employees protected from age discrimination?",
+                "question": "Under Title I of the ADA, employers must provide reasonable accommodations, which may include:",
                 "answers": [
                     {
-                        "a": "40 years of age or older",
-                        "b": "Over 50 years old",
-                        "c": "Any age that does not conform with the company's profile age",
-                        "d": "None of the above"
+                        "a": "Lowering performance standards for all employees",
+                        "b": "Providing personal items like hearing aids or wheelchairs",
+                        "c": "Making facilities accessible, restructuring jobs, or adjusting schedules",
+                        "d": "Removing essential job duties permanently"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Employers must accommodate religious practices unless doing so causes significant difficulty for the business.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "The Equal Pay Act requires equal pay for men and women doing the same work in the same location, even if the jobs are not identical but are very similar.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
                 "correctAnswer": "a"

@@ -26,27 +26,55 @@
         ],
         "questions": [
             {
-                "question": "The ADA forces employers to hire unqualified individuals with disabilities.",
+                "question": "What is the ADA?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "A workplace safety law focused on injury prevention",
+                        "b": "A civil rights law that prohibits discrimination against individuals with disabilities in public life",
+                        "c": "A law that only applies to public schools",
+                        "d": "A law that only applies to transportation"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "When there are several qualified applicants for a job and one has a\ndisability, the ADA requires the employer to hire that person.",
+                "question": "When was the ADA enacted, and when was it updated by the ADA Amendments Act (ADAA)?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Enacted 1978; updated 1991",
+                        "b": "Enacted 1990; updated 2008",
+                        "c": "Enacted 2000; updated 2010",
+                        "d": "Enacted 1964; updated 2020"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "The ADA doesn't give job applicants with disabilities advantages over those without disabilities.",
+                "question": "Which ADA title covers employment and requires reasonable accommodations?",
+                "answers": [
+                    {
+                        "a": "Title I",
+                        "b": "Title II",
+                        "c": "Title III",
+                        "d": "Title V"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which federal agency enforces ADA employment-related issues?",
+                "answers": [
+                    {
+                        "a": "OSHA",
+                        "b": "U.S. Department of Education",
+                        "c": "U.S. Equal Employment Opportunity Commission (EEOC)",
+                        "d": "Federal Trade Commission (FTC)"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Title III covers public accommodations like privately owned hotels, restaurants, and retail stores and sets accessibility standards for new construction and alterations.",
                 "answers": [
                     {
                         "a": "True",
@@ -56,54 +84,14 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Under the ADA, employers must give people with disabilities special privileges, known as accommodations.",
+                "question": "The ADA requires telephone and Internet companies to provide relay services for individuals with hearing or speech disabilities.",
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "Providing accommodations for people with disabilities is expensive.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "The ADA places a financial burden on small businesses that can't afford to make accommodations for individuals with disabilities.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "The ADA protects employees who have difficult or rude personalities or are troublemakers.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "Under the ADA, an employer can't fire an employee who has a disability.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
+                "correctAnswer": "a"
             }
         ]
     }

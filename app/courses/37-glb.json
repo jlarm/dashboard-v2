@@ -102,127 +102,94 @@
         ],
         "questions": [
             {
-                "question": "What was the purpose of the Gramm-Leach-Bliley Act (GLB)?",
+                "question": "What is the primary purpose of the Gramm-Leach-Bliley Act (GLBA)?",
                 "answers": [
                     {
-                        "a": "To protect consumer financial privacy",
-                        "b": "To make extra work for dealership staff",
-                        "c": "To safeguard customer information",
-                        "d": "A and C",
-                        "e": "All of the above"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "A dealership is considered a financial institution by the FTC?",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Privacy is a central element of the FTC's consumer protection mission?",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "The Financial Privacy Rule requires dealerships to give consumers the opportunity to opt-out of having their information shared and limits the disclosure of nonpublic personal information (NPI).",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "We restrict access to nonpublic personal information about you to ____________ that information to provide products or services to you.",
-                "answers": [
-                    {
-                        "a": "Sales staff and managers only",
-                        "b": "Office staff and department managers",
-                        "c": "Cleaning and maintenance staff"
+                        "a": "To regulate vehicle warranties",
+                        "b": "To protect consumer financial privacy",
+                        "c": "To set interest rates for auto loans",
+                        "d": "To eliminate identity theft entirely"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Nonpublic Personal Information (NPI) is;",
+                "question": "Under GLBA, financial institutions must appoint a Single Qualified Individual (S.Q.I.) to:",
                 "answers": [
                     {
-                        "a": "Any information an individual gives you to get a financial product or service",
-                        "b": "Any information you get about an individual from a transaction involving your product or service",
-                        "c": "Any information you get about an individual in connection with providing a financial product or service",
-                        "d": "Any list of customers derived even partially from NPI sources that provided a financial product or service.",
-                        "e": "All of the above"
+                        "a": "Approve all customer loans",
+                        "b": "Oversee the information security program",
+                        "c": "Run all employee hiring decisions",
+                        "d": "Manage advertising and marketing"
                     }
                 ],
-                "correctAnswer": "e"
+                "correctAnswer": "b"
             },
             {
-                "question": "The FTC requires a dealership to:",
+                "question": "Which statement best describes who can serve as the S.Q.I.?",
                 "answers": [
                     {
-                        "a": "Develop and implement an information security program",
-                        "b": "Designate a employee to oversee and manage the program",
-                        "c": "Conduct a risk assessment",
-                        "d": "Implement safeguards based on the risk assessment",
-                        "e": "Monitor the program",
-                        "f": "All of the above"
-                    }
-                ],
-                "correctAnswer": "f"
-            },
-            {
-                "question": "What rule prohibits the use of false, fictitious, or fraudulent statements or documents to get information about that customer from your dealership?",
-                "answers": [
-                    {
-                        "a": "The Privacy Rule",
-                        "b": "The Safeguards Rule",
-                        "c": "The Pretexting Rule",
-                        "d": "None of the above"
+                        "a": "Only an attorney with a finance degree",
+                        "b": "Only an internal employee of the dealership",
+                        "c": "An employee, affiliate, or service provider (with the organization still responsible)",
+                        "d": "Only a federal employee assigned by the FTC"
                     }
                 ],
                 "correctAnswer": "c"
             },
             {
-                "question": "Which of the following would be part of your job to protect customer nonpublic personal information?",
+                "question": "Which type of information is protected as nonpublic personal information (NPI) under the Privacy Rule?",
                 "answers": [
                     {
-                        "a": "Assume a phone number is unlisted and protect it",
-                        "b": "Treating all documents and files as containing NPI",
-                        "c": "Maintain control of customer deal files in your possession at all times",
-                        "d": "Never remove customer files containing NPI from the dealership",
-                        "e": "Never disclose or share NPI to any source unless part of your job",
-                        "f": "Share customer NPI with another salesperson",
-                        "g": "A,B,C,D,E"
+                        "a": "Publicly posted business addresses",
+                        "b": "Private financial data collected by an institution that is not publicly available",
+                        "c": "A company's publicly filed tax documents",
+                        "d": "Generic marketing brochures"
                     }
                 ],
-                "correctAnswer": "g"
+                "correctAnswer": "b"
             },
             {
-                "question": "What are the ramifications of being found non-compliant as the result of an FTC audit?",
+                "question": "Which action is an example of pretexting that GLBA prohibits?",
                 "answers": [
                     {
-                        "a": "Fines up to $11,000 per violation",
-                        "b": "Fines up to $16,000 per violation",
-                        "c": "Warnings",
-                        "d": "Civil actions",
-                        "e": "Small claims",
-                        "f": "A and D",
-                        "g": "A, B and D"
+                        "a": "Sending annual privacy notices to customers",
+                        "b": "Using impersonation or false statements to obtain someone's financial details",
+                        "c": "Shredding documents in a secure shredding bin",
+                        "d": "Verifying whether a customer is on the SDN list"
                     }
                 ],
-                "correctAnswer": "g"
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Customers receive privacy notices yearly, while consumers generally receive privacy notices only if their data is shared with non-affiliated companies (with some exceptions).",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "If your software flags a possible SDN match, you should immediately block the transaction without reviewing the details.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The USA PATRIOT Act requires auto dealers to create an anti-money laundering program, appoint a Single Qualified Individual/compliance officer, and train employees.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
             }
         ]
     }
