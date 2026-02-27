@@ -65,7 +65,7 @@ class Index extends Component
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
             })
-            ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id'])
+            ->select(['users.id', 'users.name', 'users.slug', 'users.department_id'])
             ->with([
                 'roles:id,name',
                 'department:id,name',

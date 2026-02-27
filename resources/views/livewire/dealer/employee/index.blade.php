@@ -350,7 +350,6 @@
                                                 @endif
                                             </button>
                                         </x-table.cell>
-                                        <x-table.cell>Contact</x-table.cell>
                                         <x-table.cell>
                                             <button
                                                 wire:click="sortBy('role')"
@@ -416,9 +415,6 @@
                                                 />
                                             </x-table.cell>
                                             <x-table.cell>{{ Str::headline($user->name) }}</x-table.cell>
-                                            <x-table.cell>
-                                                <a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a>
-                                            </x-table.cell>
                                             <x-table.cell>
                                                 @if($user->roles->isEmpty())
                                                     <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">!! No Role Assigned !!</span>

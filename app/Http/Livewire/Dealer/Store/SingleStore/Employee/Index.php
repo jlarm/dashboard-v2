@@ -61,7 +61,7 @@ class Index extends Component
         $specialCourseIds = [9, 10, 11, 12];
 
         $query = $this->store->users()
-            ->select(['id', 'name', 'slug', 'email', 'department_id'])
+            ->select(['id', 'name', 'slug', 'department_id'])
             ->with([
                 'roles:id,name',
                 'department:id,name',

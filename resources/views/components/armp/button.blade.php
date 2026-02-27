@@ -28,7 +28,7 @@
 
     $sizeClasses = match($size) {
         'base' => 'px-4 py-2 text-sm',
-        'sm' => 'px-3 py-1.5 text-xs',
+        'sm' => 'h-8 px-3 text-xs',
         'xs' => 'px-2 py-1 text-xs',
         default => 'px-4 py-2 text-sm',
     };

@@ -16,23 +16,31 @@
                 </div>
                 <ul class="flex flex-wrap items-center gap-x-3 font-normal">
                     <li class="relative before:hidden md:before:inline-block first:before:hidden first:before:ms-0 before:content-['•'] before:text-gray-800 before:me-1.5">
-                  <span class="text-sm text-gray-800">
-                    Department:
-                  </span>
+                      <span class="text-xs text-gray-800">
+                        Department:
+                      </span>
                         <span class="inline-flex items-center gap-x-2 text-xs text-gray-500">
-                    {{ $user->department->name ?? '' }}
-                  </span>
+                        {{ $user->department->name ?? '' }}
+                      </span>
                     </li>
 
                     <li class="relative before:hidden md:before:inline-block first:before:hidden first:before:ms-0 before:content-['•'] before:text-gray-800 before:me-1.5">
-                  <span class="text-xs text-gray-800">
-                    Role:
-                  </span>
+                      <span class="text-xs text-gray-800">
+                        Role:
+                      </span>
                         <span class="inline-flex items-center gap-x-2 text-xs text-gray-500">
                     @foreach($roles as $role)
                                 {{ $role }}
                             @endforeach
                   </span>
+                    </li>
+                    <li class="relative before:hidden md:before:inline-block first:before:hidden first:before:ms-0 before:content-['•'] before:text-gray-800 before:me-1.5">
+                      <span class="text-xs text-gray-800">
+                        Email:
+                      </span>
+                        <span class="inline-flex items-center gap-x-2 text-xs text-gray-500">
+                        {{ Str::lower($user->email) }}
+                      </span>
                     </li>
                 </ul>
             </div>

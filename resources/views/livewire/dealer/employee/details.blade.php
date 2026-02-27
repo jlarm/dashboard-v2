@@ -1,11 +1,11 @@
 <div class="flex gap-3">
     @if(auth()->user()->id !== $user->id)
-        <button onclick="Livewire.emit('slide-over.open', 'dealer.employee.edit', @js(['user' => $user->id]))" class="w-full whitespace-nowrap rounded bg-arm-blue-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">Edit</button>
+        <x-armp.button wire:click="$emit('slide-over.open', 'dealer.employee.edit', { user: {{ $user->id }} })" variant="primary" size="sm">Edit</x-armp.button>
         @can('create-stores')
-        <button onclick="Livewire.emit('modal.open', 'dealer.employee.delete', @js(['user' => $user->id]))" class="w-full whitespace-nowrap rounded bg-red-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Delete</button>
+            <x-armp.button wire:click="$emit('modal.open', 'dealer.employee.delete', { user: {{ $user->id }} })" variant="danger" size="sm">Delete</x-armp.button>
         @endcan
         @role('super-admin')
-        <a href="{{ route('dealer.employee.impersonate', $user) }}" class="w-full whitespace-nowrap rounded bg-amber-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 text-center">Login as {{ $user->name }}</a>
+            <x-armp.button href="{{ route('dealer.employee.impersonate', $user) }}" size="sm">Login as {{ Str::title($user->name) }}</x-armp.button>
         @endrole
     @endif
 </div>
