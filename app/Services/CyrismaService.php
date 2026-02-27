@@ -538,6 +538,62 @@ class CyrismaService
         ];
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getWebApplicationScanFindingsForAsset(array $asset, ?string $findingName = null): array
+    {
+        $endpointCandidates = [
+            'vulnerability/assets/webapp',
+            'vulnerability/assets/web',
+            'vulnerability/asset/web',
+            'vulnerability/assets/web-app',
+            'vulnerability/assets/webapplication',
+            'vulnerability/assets/web_application',
+            'vulnerability/assets/web/findings',
+            'vulnerability/assets/webapp/findings',
+            'vulnerability/assets/web-application',
+            'vulnerability/assets/web-application/findings',
+            'vulnerability/assets/web-application-scan-findings',
+            'vulnerability/assets/web-application-scan-findings-for-an-asset',
+            'vulnerability/assets/web/application',
+        ];
+
+        $paramSets = $this->buildWebAssetParamSets($asset);
+        foreach ($endpointCandidates as $endpoint) {
+            foreach ($paramSets as $params) {
+                $response = $this->getStoreReport($endpoint, $params);
+                if (! is_array($response)) {
+                    continue;
+                }
+
+                $findings = $this->extractWebFindingsFromPayload($response);
+                if ($findings === []) {
+                    continue;
+                }
+
+                if ($findingName === null || $findingName === '') {
+                    return $findings;
+                }
+
+                $matchingFindings = collect($findings)
+                    ->filter(function (array $finding) use ($findingName): bool {
+                        $name = mb_strtolower(trim((string) ($finding['alertName'] ?? $finding['title'] ?? $finding['name'] ?? $finding['alertRef'] ?? '')));
+
+                        return $name === mb_strtolower(trim($findingName));
+                    })
+                    ->values()
+                    ->all();
+
+                if ($matchingFindings !== []) {
+                    return $matchingFindings;
+                }
+            }
+        }
+
+        return [];
+    }
+
     public function getStoreReport(string $endpoint, array $params = []): ?array
     {
         if (! $this->store || ! $this->store->cyrisma) {
@@ -627,6 +683,95 @@ class CyrismaService
         }
 
         return [];
+    }
+
+    /**
+     * @return array<int, array<string, string>>
+     */
+    protected function buildWebAssetParamSets(array $asset): array
+    {
+        $assetId = trim((string) ($asset['assetId'] ?? $asset['id'] ?? ''));
+        $assetName = trim((string) ($asset['name'] ?? ''));
+        $assetUrl = trim((string) ($asset['assetUrl'] ?? $asset['url'] ?? ''));
+        $assetIp = trim((string) ($asset['ipAddress'] ?? $asset['assetIp'] ?? $asset['ip'] ?? ''));
+
+        $paramSets = [];
+
+        if ($assetId !== '') {
+            $paramSets[] = ['assetId' => $assetId];
+            $paramSets[] = ['assetID' => $assetId];
+            $paramSets[] = ['asset_id' => $assetId];
+        }
+
+        foreach (array_filter([$assetUrl, $assetName, $assetIp], fn (string $value): bool => $value !== '') as $value) {
+            $paramSets[] = ['assetUrl' => $value];
+            $paramSets[] = ['assetURL' => $value];
+            $paramSets[] = ['assetName' => $value];
+            $paramSets[] = ['asset' => $value];
+            $paramSets[] = ['assetIp' => $value];
+            $paramSets[] = ['url' => $value];
+            $paramSets[] = ['target' => $value];
+            $paramSets[] = ['website' => $value];
+        }
+
+        if ($paramSets === []) {
+            return [];
+        }
+
+        $uniqueParamSets = [];
+        foreach ($paramSets as $paramSet) {
+            $paramKey = array_key_first($paramSet);
+            $paramValue = $paramKey !== null ? (string) ($paramSet[$paramKey] ?? '') : '';
+            $uniqueParamSets["{$paramKey}:{$paramValue}"] = $paramSet;
+        }
+
+        return array_values($uniqueParamSets);
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    protected function extractWebFindingsFromPayload(array $payload): array
+    {
+        $findingCollections = [];
+
+        if (array_is_list($payload)) {
+            $findingCollections[] = $payload;
+        }
+
+        foreach (['flaws', 'findings', 'alerts', 'results', 'data'] as $key) {
+            if (isset($payload[$key]) && is_array($payload[$key])) {
+                $findingCollections[] = $payload[$key];
+            }
+        }
+
+        foreach ($payload as $item) {
+            if (! is_array($item)) {
+                continue;
+            }
+
+            foreach (['flaws', 'findings', 'alerts', 'results'] as $key) {
+                if (isset($item[$key]) && is_array($item[$key])) {
+                    $findingCollections[] = $item[$key];
+                }
+            }
+        }
+
+        return collect($findingCollections)
+            ->flatten(1)
+            ->filter(fn (mixed $item): bool => is_array($item))
+            ->map(fn (mixed $item): array => $item)
+            ->filter(function (array $finding): bool {
+                foreach (['alertName', 'alertRef', 'title', 'name', 'riskLevel', 'severity', 'description', 'alertDesc', 'solution', 'alertSolution', 'instances', 'alertInstances', 'details', 'urls', 'targets', 'referenceURLs'] as $key) {
+                    if (array_key_exists($key, $finding)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            })
+            ->values()
+            ->all();
     }
 
     protected function getCacheVersion(): int

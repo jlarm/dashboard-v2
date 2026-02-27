@@ -18,7 +18,7 @@
         .page-break { page-break-after: always; }
 
         .section {
-            page-break-inside: avoid;
+            page-break-inside: auto;
             margin-bottom: 28px;
         }
 
@@ -27,7 +27,7 @@
             border-radius: 12px;
             padding: 20px 24px;
             margin-bottom: 16px;
-            page-break-inside: avoid;
+            page-break-inside: auto;
         }
 
         .section-heading {
@@ -71,6 +71,132 @@
             color: #374151;
         }
         .data-table tr:last-child td { border-bottom: none; }
+
+        .finding-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            page-break-inside: auto;
+        }
+        .finding-card-header {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f9fafb;
+            page-break-after: avoid;
+        }
+        .finding-card-header td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        .finding-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111827;
+        }
+        .finding-meta {
+            font-size: 10px;
+            color: #6b7280;
+            margin-top: 3px;
+        }
+        .finding-body {
+            padding: 14px;
+            page-break-inside: auto;
+        }
+        .finding-block {
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+        .finding-block-breakable {
+            page-break-inside: auto;
+        }
+        .finding-block:last-child {
+            margin-bottom: 0;
+        }
+        .finding-block-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        .finding-block-value {
+            font-size: 11px;
+            color: #374151;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        .reference-item {
+            font-size: 10px;
+            color: #374151;
+            margin-bottom: 3px;
+            word-break: break-word;
+        }
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .compact-table th {
+            padding: 8px 10px;
+            text-align: left;
+            font-size: 10px;
+            font-weight: 700;
+            color: #6b7280;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+        .compact-table td {
+            padding: 9px 10px;
+            font-size: 10px;
+            color: #374151;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+            word-break: break-word;
+        }
+        .compact-table tr:last-child td {
+            border-bottom: none;
+        }
+        .evidence-sample {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            page-break-inside: avoid;
+        }
+        .evidence-sample:first-child {
+            margin-top: 0;
+        }
+        .evidence-sample td {
+            border: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        .evidence-sample-title {
+            width: 130px;
+            padding: 14px 12px;
+            background: #f9fafb;
+            color: #374151;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .evidence-sample-label {
+            width: 110px;
+            padding: 9px 12px;
+            background: #fcfcfd;
+            color: #4b5563;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .evidence-sample-value {
+            padding: 9px 12px;
+            color: #374151;
+            font-size: 10px;
+            line-height: 1.55;
+            word-break: break-word;
+            white-space: pre-line;
+        }
 
         .badge-colors-critical { color: #92400e; background: #fffbeb; }
         .badge-colors-high { color: #991b1b; background: #fef2f2; }
@@ -185,10 +311,10 @@
             @forelse($externalAssets ?? [] as $asset)
                 @php
                     $assetOpenPorts = $asset['openPorts'] ?? [];
-                    $vulnerabilities = $asset['vulnerabilities'] ?? [];
+                    $reportFindings = $asset['report_findings'] ?? [];
                     $critical = 0; $high = 0; $medium = 0; $low = 0;
-                    foreach ($vulnerabilities as $vuln) {
-                        $r = strtolower($vuln['riskLevel'] ?? '');
+                    foreach ($reportFindings as $finding) {
+                        $r = strtolower($finding['riskLevel'] ?? '');
                         if ($r === 'critical') { $critical++; }
                         elseif ($r === 'high') { $high++; }
                         elseif ($r === 'medium') { $medium++; }
@@ -211,7 +337,7 @@
                                     <span style="color: #d1d5db; margin: 0 4px;">|</span>
                                     {{ count($assetOpenPorts) }} open ports
                                     <span style="color: #d1d5db; margin: 0 4px;">|</span>
-                                    {{ $total }} vulnerabilities
+                                    {{ $total }} findings
                                 </div>
                             </td>
                             <td style="text-align: right; vertical-align: middle;">
@@ -247,32 +373,109 @@
                         </div>
                     @endif
 
-                    @if(!empty($vulnerabilities))
+                    @if(!empty($reportFindings))
                         <div>
-                            <div style="font-size: 11px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">Vulnerabilities</div>
-                            @foreach($vulnerabilities as $vuln)
-                                @php $vulnRisk = strtolower($vuln['riskLevel'] ?? 'low'); @endphp
-                                <div style="border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; page-break-inside: avoid;">
-                                    <table style="width: 100%; border-collapse: collapse;">
+                            <div style="font-size: 11px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">Vulnerability Findings</div>
+                            <table class="data-table" style="margin-bottom: 12px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 56%;">Flaw</th>
+                                        <th style="width: 20%;">Risk Level</th>
+                                        <th style="width: 24%; text-align: right;">Affected URLs</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($reportFindings as $finding)
+                                        @php $findingRisk = strtolower($finding['riskLevel'] ?? 'low'); @endphp
+                                        <tr style="page-break-inside: avoid;">
+                                            <td>{{ $finding['name'] ?? '-' }}</td>
+                                            <td>
+                                                <table style="border-collapse: collapse;"><tr><td class="badge-colors-{{ $findingRisk }}" style="border-radius: 4px; font-size: 9px; font-weight: 700; padding: 2px 10px; text-transform: uppercase;">{{ ucfirst($finding['riskLevel'] ?? '-') }}</td></tr></table>
+                                            </td>
+                                            <td style="text-align: right;">{{ $finding['affectedUrls'] ?? 0 }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            @foreach($reportFindings as $finding)
+                                @php $findingRisk = strtolower($finding['riskLevel'] ?? 'low'); @endphp
+                                <div class="finding-card">
+                                    <table class="finding-card-header">
                                         <tr>
-                                            <td style="padding: 10px 14px; border-bottom: 1px solid #f3f4f6; color: #374151; font-weight: 600; width: 160px; font-size: 11px;">Severity</td>
-                                            <td style="padding: 10px 14px; border-bottom: 1px solid #f3f4f6;">
-                                                <table style="border-collapse: collapse;"><tr><td class="badge-colors-{{ $vulnRisk }}" style="border-radius: 4px; font-size: 9px; font-weight: 700; padding: 2px 10px; text-transform: uppercase;">{{ ucfirst($vuln['riskLevel'] ?? '-') }}</td></tr></table>
+                                            <td>
+                                                <div class="finding-title">{{ $finding['name'] ?? '-' }}</div>
+                                                <div class="finding-meta">Affected URLs: {{ $finding['affectedUrls'] ?? 0 }}</div>
+                                            </td>
+                                            <td style="width: 110px; text-align: right;">
+                                                <table style="border-collapse: collapse;"><tr><td class="badge-colors-{{ $findingRisk }}" style="border-radius: 4px; font-size: 9px; font-weight: 700; padding: 2px 10px; text-transform: uppercase;">{{ ucfirst($finding['riskLevel'] ?? '-') }}</td></tr></table>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td style="padding: 10px 14px; border-bottom: 1px solid #f3f4f6; color: #374151; font-weight: 600; font-size: 11px;">CVE</td>
-                                            <td style="padding: 10px 14px; border-bottom: 1px solid #f3f4f6; color: #374151; font-size: 11px;">{{ $vuln['cve'] ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding: 10px 14px; border-bottom: 1px solid #f3f4f6; color: #374151; font-weight: 600; font-size: 11px;">Title</td>
-                                            <td style="padding: 10px 14px; border-bottom: 1px solid #f3f4f6; color: #374151; font-size: 11px;">{{ $vuln['title'] ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding: 10px 14px; color: #374151; font-weight: 600; font-size: 11px;">Score</td>
-                                            <td style="padding: 10px 14px; color: #374151; font-size: 11px;">{{ $vuln['score'] ?? '-' }}</td>
-                                        </tr>
                                     </table>
+
+                                    <div class="finding-body">
+                                        @if(!empty($finding['description']))
+                                            <div class="finding-block">
+                                                <div class="finding-block-label">Description</div>
+                                                <div class="finding-block-value">{{ $finding['description'] }}</div>
+                                            </div>
+                                        @endif
+
+                                        @if(!empty($finding['solution']))
+                                            <div class="finding-block">
+                                                <div class="finding-block-label">Solution</div>
+                                                <div class="finding-block-value">{{ $finding['solution'] }}</div>
+                                            </div>
+                                        @endif
+
+                                        @if(!empty($finding['references']))
+                                            <div class="finding-block">
+                                                <div class="finding-block-label">References</div>
+                                                <div class="finding-block-value">
+                                                    @foreach($finding['references'] as $reference)
+                                                        <div class="reference-item">{{ $reference }}</div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if(!empty($finding['instances']))
+                                            <div class="finding-block finding-block-breakable">
+                                                <div class="finding-block-label">Evidence Samples</div>
+                                                @foreach($finding['instances'] as $instance)
+                                                    <table class="evidence-sample">
+                                                        <tr>
+                                                            <td class="evidence-sample-title">Evidence Sample</td>
+                                                            <td style="padding: 0;">
+                                                                <table style="width: 100%; border-collapse: collapse;">
+                                                                    <tr>
+                                                                        <td class="evidence-sample-label">URL</td>
+                                                                        <td class="evidence-sample-value">{{ $instance['url'] ?? '-' }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="evidence-sample-label">Method</td>
+                                                                        <td class="evidence-sample-value">{{ $instance['method'] ?? '-' }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="evidence-sample-label">Attack</td>
+                                                                        <td class="evidence-sample-value">{{ $instance['attack'] ?? '-' }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="evidence-sample-label">Parameters</td>
+                                                                        <td class="evidence-sample-value">{{ $instance['parameters'] ?? '-' }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="evidence-sample-label">Evidence</td>
+                                                                        <td class="evidence-sample-value">{{ $instance['evidence'] ?? '-' }}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -367,5 +570,6 @@
         </div>
 
     </div>{{-- end single .page wrapper --}}
+
 </body>
 </html>
