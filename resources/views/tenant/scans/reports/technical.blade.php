@@ -5,7 +5,10 @@
     <title>Technical Scan Report</title>
     <style>
         @page { margin: 48px 56px; }
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            font-family: DejaVu Sans, Arial, sans-serif;
+        }
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
             color: #1f2937;
@@ -159,19 +162,19 @@
             border-bottom: none;
         }
         .evidence-sample {
-            width: 100%;
-            border-collapse: collapse;
             margin-top: 10px;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
+            border: 1px solid #dbe1e8;
+            border-radius: 8px;
+            overflow: hidden;
             page-break-inside: avoid;
+            background: #ffffff;
         }
         .evidence-sample:first-child {
             margin-top: 0;
         }
-        .evidence-sample td {
-            border: 1px solid #e5e7eb;
-            vertical-align: top;
+        .evidence-sample-table {
+            width: 100%;
+            border-collapse: collapse;
         }
         .evidence-sample-title {
             width: 130px;
@@ -180,6 +183,16 @@
             color: #374151;
             font-size: 11px;
             font-weight: 700;
+            border-right: 1px solid #e8edf3;
+            vertical-align: top;
+        }
+        .evidence-sample-content {
+            padding: 0;
+            vertical-align: top;
+        }
+        .evidence-sample-details {
+            width: 100%;
+            border-collapse: collapse;
         }
         .evidence-sample-label {
             width: 110px;
@@ -188,6 +201,8 @@
             color: #4b5563;
             font-size: 10px;
             font-weight: 700;
+            border-right: 1px solid #eef2f7;
+            border-bottom: 1px solid #eef2f7;
         }
         .evidence-sample-value {
             padding: 9px 12px;
@@ -196,6 +211,11 @@
             line-height: 1.55;
             word-break: break-word;
             white-space: pre-line;
+            border-bottom: 1px solid #eef2f7;
+        }
+        .evidence-sample-details tr:last-child .evidence-sample-label,
+        .evidence-sample-details tr:last-child .evidence-sample-value {
+            border-bottom: none;
         }
 
         .badge-colors-critical { color: #92400e; background: #fffbeb; }
@@ -443,35 +463,37 @@
                                             <div class="finding-block finding-block-breakable">
                                                 <div class="finding-block-label">Evidence Samples</div>
                                                 @foreach($finding['instances'] as $instance)
-                                                    <table class="evidence-sample">
-                                                        <tr>
-                                                            <td class="evidence-sample-title">Evidence Sample</td>
-                                                            <td style="padding: 0;">
-                                                                <table style="width: 100%; border-collapse: collapse;">
-                                                                    <tr>
-                                                                        <td class="evidence-sample-label">URL</td>
-                                                                        <td class="evidence-sample-value">{{ $instance['url'] ?? '-' }}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="evidence-sample-label">Method</td>
-                                                                        <td class="evidence-sample-value">{{ $instance['method'] ?? '-' }}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="evidence-sample-label">Attack</td>
-                                                                        <td class="evidence-sample-value">{{ $instance['attack'] ?? '-' }}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="evidence-sample-label">Parameters</td>
-                                                                        <td class="evidence-sample-value">{{ $instance['parameters'] ?? '-' }}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="evidence-sample-label">Evidence</td>
-                                                                        <td class="evidence-sample-value">{{ $instance['evidence'] ?? '-' }}</td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                    <div class="evidence-sample">
+                                                        <table class="evidence-sample-table">
+                                                            <tr>
+                                                                <td class="evidence-sample-title">Evidence Sample</td>
+                                                                <td class="evidence-sample-content">
+                                                                    <table class="evidence-sample-details">
+                                                                        <tr>
+                                                                            <td class="evidence-sample-label">URL</td>
+                                                                            <td class="evidence-sample-value">{{ $instance['url'] ?? '-' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="evidence-sample-label">Method</td>
+                                                                            <td class="evidence-sample-value">{{ $instance['method'] ?? '-' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="evidence-sample-label">Attack</td>
+                                                                            <td class="evidence-sample-value">{{ $instance['attack'] ?? '-' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="evidence-sample-label">Parameters</td>
+                                                                            <td class="evidence-sample-value">{{ $instance['parameters'] ?? '-' }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="evidence-sample-label">Evidence</td>
+                                                                            <td class="evidence-sample-value">{{ $instance['evidence'] ?? '-' }}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         @endif

@@ -5,7 +5,10 @@
     <title>Executive Scan Report</title>
     <style>
         @page { margin: 48px 56px; }
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            font-family: DejaVu Sans, Arial, sans-serif;
+        }
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
             color: #1f2937;
