@@ -66,7 +66,7 @@ class ExternalIpExposure extends Component
 
     public function getFindingsBySeverity(array $asset): array
     {
-        $findings = collect($asset['vulnerabilities'] ?? [])
+        return collect($asset['vulnerabilities'] ?? [])
             ->map(fn (array $vulnerability): array => $this->normalizeFinding($vulnerability, 'vulnerability'))
             ->merge(
                 collect($asset['flaws'] ?? [])->map(fn (array $flaw): array => $this->normalizeFinding($flaw, 'flaw'))
@@ -86,8 +86,6 @@ class ExternalIpExposure extends Component
             })
             ->values()
             ->all();
-
-        return $findings;
     }
 
     public function openFindingModal(int $assetIndex, int $findingIndex): void
@@ -256,10 +254,12 @@ class ExternalIpExposure extends Component
         $instanceSources = [];
 
         foreach (['instances', 'alertInstances', 'details', 'urls', 'targets', 'other'] as $key) {
-            if (! array_key_exists($key, $finding) || $finding[$key] === null) {
+            if (! array_key_exists($key, $finding)) {
                 continue;
             }
-
+            if ($finding[$key] === null) {
+                continue;
+            }
             $instanceSources[] = $finding[$key];
         }
 
@@ -431,10 +431,12 @@ class ExternalIpExposure extends Component
     protected function firstStringValue(array $payload, array $keys, string $default = ''): string
     {
         foreach ($keys as $key) {
-            if (! isset($payload[$key]) || ! is_scalar($payload[$key])) {
+            if (! isset($payload[$key])) {
                 continue;
             }
-
+            if (! is_scalar($payload[$key])) {
+                continue;
+            }
             $value = $this->sanitizeText((string) $payload[$key]);
             if ($value !== '') {
                 return $value;

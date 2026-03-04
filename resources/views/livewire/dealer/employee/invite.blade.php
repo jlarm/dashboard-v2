@@ -20,7 +20,7 @@
         </div>
 
         <!-- Stores -->
-        @if(tenant('locations'))
+        @if($allStore->count() > 1)
             <div class="col-span-3">
                 <div class="col-span-3">
                     <x-input-label for="stores" :value="__('Select a Store, Cmd/Ctrl click to select multiple')"/>
@@ -33,7 +33,13 @@
                             @endforeach
                         </select>
                     </label>
+                    @error('stores') <p class="text-red-500 mt-1">{{ $message }}</p> @enderror
                 </div>
+            </div>
+        @elseif($allStore->count() === 1)
+            <div class="col-span-3">
+                <x-input-label :value="__('Store')"/>
+                <p class="mt-1 text-sm text-gray-600">This invite will be assigned to {{ $allStore->first()->name }}.</p>
             </div>
         @endif
 

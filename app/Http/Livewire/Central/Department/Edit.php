@@ -18,7 +18,7 @@ class Edit extends Component
     public function mount(): void
     {
         $this->name = $this->department->name;
-        $this->assignedCourses = $this->department->courses?->pluck('id')->toArray();
+        $this->assignedCourses = $this->department->courses->pluck('id')->toArray();
     }
 
     public function updateName(): void

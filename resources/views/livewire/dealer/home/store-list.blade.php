@@ -11,7 +11,7 @@
         </x-slot:head>
         <x-slot:body>
             @forelse($stores as $store)
-                <x-table.row wire:key="store-{{ $store->id }}" class="hover:cursor-pointer" onclick="window.location='{{ route('dealer.stores.home', $store) }}'">
+                <x-table.row wire:key="store-{{ $store->id }}" class="hover:cursor-pointer" wire:click="selectStore({{ $store->id }})">
                     <x-table.cell>
                         {{ Str::limit($store->name, 20) }}
                     </x-table.cell>
@@ -41,7 +41,7 @@
                         </x-grade-badge>
                     </x-table.cell>
                     <x-table.cell>
-                        <a href="{{ route('dealer.stores.home', $store) }}" class="text-arm-blue-600 hover:text-arm-blue-900">View<span class="sr-only">, {{ $store->name }}</span></a>
+                        <button type="button" wire:click.stop="selectStore({{ $store->id }})" class="text-arm-blue-600 hover:text-arm-blue-900">View<span class="sr-only">, {{ $store->name }}</span></button>
                     </x-table.cell>
                 </x-table.row>
             @empty

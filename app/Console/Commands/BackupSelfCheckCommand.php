@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Stancl\Tenancy\Concerns\HasATenantsOption;
@@ -24,7 +25,12 @@ class BackupSelfCheckCommand extends Command
         $failures = [];
         $checked = 0;
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($disk, $cutoff, &$failures, &$checked): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($disk, $cutoff, &$failures, &$checked): void {
             $checked++;
             $tenantSlug = Str::slug($tenant->name) ?: 'tenant';
             $directory = "tenant-{$tenant->id}-{$tenantSlug}";

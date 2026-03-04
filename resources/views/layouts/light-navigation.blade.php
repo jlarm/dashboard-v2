@@ -51,13 +51,6 @@
                     <x-application-logo class="h-auto w-full"/>
                 </div>
                 <div class="mt-5 h-0 flex-1 overflow-y-auto">
-                    <div class="my-5 px-4">
-                        @if (tenant('locations'))
-                            @can('create-users')
-                                <livewire:dealer.navigation.store-switcher />
-                            @endcan
-                        @endif
-                    </div>
                     <livewire:dealer.navigation.main />
                 </div>
             </div>
@@ -75,14 +68,9 @@
             <div class="flex flex-shrink-0 items-center px-4">
                 <x-application-logo class="h-auto w-full"/>
             </div>
-            <div class="my-5 px-4">
-                @if (tenant('locations'))
-                    @can('create-users')
-                        <livewire:dealer.navigation.store-switcher />
-                    @endcan
-                @endif
+            <div class="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pb-4">
+                <livewire:dealer.navigation.main />
             </div>
-            <livewire:dealer.navigation.main />
         </nav>
     </div>
 </div>

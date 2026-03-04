@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs\Audit;
 
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use App\Models\Dealer\Store;
 use App\Models\OshaViolationStatements;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
@@ -24,7 +25,7 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->oshaViolationAudit)];
+        return [new WithoutOverlapping(static::class.'-'.$this->oshaViolationAudit->getKey())];
     }
 
     public function handle(): void
@@ -86,7 +87,7 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     private function createFileName(): string
     {
-        if (tenant('locations')) {
+        if (Store::query()->count() > 1) {
             $dealerName = str_replace(' ', '-', $this->oshaViolationAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));

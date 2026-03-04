@@ -5,12 +5,14 @@
         </x-slot>
         <x-slot name="actions">
             @can('create-audits')
+                @if($store)
                 <a
                     class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     href="{{ route('dealer.audit.finance.create', $store) }}"
                 >
                     Create Audit
                 </a>
+                @endif
             @endcan
         </x-slot>
     </x-slot>
@@ -45,7 +47,7 @@
         <div class="w-full bg-white">
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
                 @foreach($audits as $glbaViolationAudit)
-                    <livewire:dealer.audit.finance.index-item :store="$store" :glbaViolationAudit="$glbaViolationAudit" :key="$glbaViolationAudit->id"/>
+                    <livewire:dealer.audit.finance.index-item :glbaViolationAudit="$glbaViolationAudit" :key="$glbaViolationAudit->id"/>
                 @endforeach
                 @foreach($financeAudits as $audit)
                     <livewire:dealer.audit.finance.old-audit-index :financeAudit="$audit" :key="$audit->id"/>

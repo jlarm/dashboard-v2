@@ -25,7 +25,8 @@ class Create extends Component
 
     public function mount(): void
     {
-        $this->store = Store::query()->find(app('currentStore'));
+        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
+            ?? Store::query()->find(app('currentStore'));
     }
 
     public function searchUsers(): void
@@ -117,6 +118,6 @@ class Create extends Component
 
     private function baseQuery()
     {
-        return tenant('locations') ? $this->store->users() : User::query();
+        return app('multipleStoresExist') ? $this->store->users() : User::query();
     }
 }

@@ -37,8 +37,8 @@ class Form extends Component
         $this->dealJacket = $dealJacket;
 
         if ($dealJacket?->exists) {
-            $this->auditDate = $dealJacket->audit_date?->format('Y-m-d');
-            $this->dateOfDealJacket = $dealJacket->date_of_deal_jacket?->format('Y-m-d');
+            $this->auditDate = $dealJacket->audit_date->format('Y-m-d');
+            $this->dateOfDealJacket = $dealJacket->date_of_deal_jacket->format('Y-m-d');
             $this->customerName = $dealJacket->customer_name ?? '';
             $this->customerDealNumber = $dealJacket->customer_deal_number ?? '';
             $this->financeManager = $dealJacket->user_id === null ? 'house' : (string) $dealJacket->user_id;

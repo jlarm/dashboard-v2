@@ -4,32 +4,68 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
+use App\Models\Dealer\Audit\FinanceAudit;
+use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class Index extends Component
 {
-    public $store;
+    public ?Store $store = null;
     protected $listeners = [
         'refreshAudits' => '$refresh',
     ];
 
     public function mount(): void
     {
-        $this->store = Store::with('glbaViolationAudits')->where('id', app('currentStore'))->firstOrFail();
+        /** @var Store|null $currentStore */
+        $currentStore = app()->bound('currentStoreModel') ? app('currentStoreModel') : null;
+        $this->store = $currentStore;
     }
 
     public function render(): View
     {
-        $financeAudits = $this->store->financeAudits->sortByDesc('audit_date');
-        $audits = $this->store->glbaViolationAudits->sortByDesc('date');
+        $storeIds = $this->resolveScopedStoreIds();
+        $financeAudits = $storeIds->isEmpty()
+            ? collect()
+            : FinanceAudit::query()->whereIn('store_id', $storeIds)->latest('audit_date')->get();
+        $audits = $storeIds->isEmpty()
+            ? collect()
+            : GlbaViolationAudit::query()
+                ->whereIn('store_id', $storeIds)
+                ->withCount([
+                    'violations as violation_count',
+                    'violations as remediation_count' => fn ($q) => $q->whereHas('remediation', fn ($q) => $q->where('completed', true)),
+                ])
+                ->latest('date')
+                ->get();
 
-        // Prepare chart data combining both audit types
+        $chartData = $this->prepareChartData($audits, $financeAudits);
+
+        return view('livewire.dealer.audit.finance.index', [
+            'store' => $this->store,
+            'financeAudits' => $financeAudits,
+            'audits' => $audits,
+            'chartLabels' => $chartData['labels'],
+            'chartGradesNumeric' => $chartData['gradesNumeric'],
+            'chartGradesLetters' => $chartData['gradesLetters'],
+            'chartViolations' => $chartData['violations'],
+            'chartRemediations' => $chartData['remediations'],
+        ])->layout('components.dealer-app');
+    }
+
+    /**
+     * @return array{labels: array<string>, gradesNumeric: array<int>, gradesLetters: array<string>, violations: array<int>, remediations: array<int>}
+     */
+    private function prepareChartData(Collection $violationAudits, Collection $legacyAudits): array
+    {
+        $gradeMap = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
+
         $chartData = collect();
 
-        // Add GlbaViolationAudits to chart data
-        foreach ($audits as $audit) {
+        foreach ($violationAudits as $audit) {
             if ($audit->date && $audit->grade) {
                 $chartData->push([
                     'date' => $audit->date,
@@ -40,41 +76,33 @@ class Index extends Component
             }
         }
 
-        // Add FinanceAudits to chart data (if they have a grade field)
-        foreach ($financeAudits as $audit) {
-            if ($audit->audit_date && isset($audit->grade)) {
-                $violationsCount = method_exists($audit, 'violations') ? $audit->violations()->count() : 0;
+        foreach ($legacyAudits as $audit) {
+            if ($audit->audit_date && $audit->grade !== null) {
                 $chartData->push([
                     'date' => $audit->audit_date,
                     'grade' => $audit->grade,
-                    'violations' => $violationsCount,
-                    'remediations' => 0, // FinanceAudits may not have remediation tracking
+                    'violations' => 0,
+                    'remediations' => 0,
                 ]);
             }
         }
 
-        // Sort by date and prepare for chart
-        $chartData = $chartData->take(4);
-        $chartData = $chartData->sortBy('date')->values();
-        $chartLabels = $chartData->map(fn ($item) => $item['date']->format('M \'y'))->toArray();
+        $sorted = $chartData->sortByDesc('date')->take(4)->sortBy('date')->values();
 
-        // Convert letter grades to numeric values for plotting
-        $gradeMap = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
-        $chartGradesNumeric = $chartData->map(fn ($item): int => $gradeMap[mb_strtoupper((string) $item['grade'])] ?? 0)->toArray();
-        $chartGradesLetters = $chartData->map(fn ($item): string => mb_strtoupper((string) $item['grade']))->toArray();
+        return [
+            'labels' => $sorted->map(fn ($item) => $item['date']->format('M \'y'))->toArray(),
+            'gradesNumeric' => $sorted->map(fn ($item): int => $gradeMap[mb_strtoupper((string) $item['grade'])] ?? 0)->toArray(),
+            'gradesLetters' => $sorted->map(fn ($item): string => mb_strtoupper((string) $item['grade']))->toArray(),
+            'violations' => $sorted->map(fn ($item) => $item['violations'])->toArray(),
+            'remediations' => $sorted->map(fn ($item) => $item['remediations'])->toArray(),
+        ];
+    }
 
-        // Prepare violations and remediations data for spline chart
-        $chartViolations = $chartData->map(fn ($item) => $item['violations'])->toArray();
-        $chartRemediations = $chartData->map(fn ($item) => $item['remediations'])->toArray();
+    private function resolveScopedStoreIds(): Collection
+    {
+        /** @var Collection $storeIds */
+        $storeIds = app('scopedStoreIds');
 
-        return view('livewire.dealer.audit.finance.index', [
-            'financeAudits' => $financeAudits,
-            'audits' => $audits,
-            'chartLabels' => $chartLabels,
-            'chartGradesNumeric' => $chartGradesNumeric,
-            'chartGradesLetters' => $chartGradesLetters,
-            'chartViolations' => $chartViolations,
-            'chartRemediations' => $chartRemediations,
-        ])->layout('components.dealer-app');
+        return $storeIds;
     }
 }

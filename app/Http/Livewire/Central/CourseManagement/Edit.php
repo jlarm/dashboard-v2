@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Central\CourseManagement;
 
 use App\Models\Course;
 use App\Models\Dealership;
+use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
@@ -15,6 +16,9 @@ use Filament\Notifications\Notification;
 use Illuminate\View\View;
 use Livewire\Component;
 
+/**
+ * @property-read ComponentContainer $form
+ */
 class Edit extends Component implements HasForms
 {
     use InteractsWithForms;
@@ -44,6 +48,7 @@ class Edit extends Component implements HasForms
         // Update matching courses across all tenants
         tenancy()->central(function (): void {
             foreach (Dealership::all() as $tenant) {
+                /** @var Dealership $tenant */
                 tenancy()->initialize($tenant);
 
                 if ($tenantCourse = Course::query()->where('slug', $this->course->slug)->first()) {

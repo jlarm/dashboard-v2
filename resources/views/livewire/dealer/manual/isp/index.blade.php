@@ -4,7 +4,9 @@
             {{ __('ISP Manuals') }}
         </x-slot>
         <x-slot name="actions">
-            <a href="{{ request()->segment(1) != 'stores' ? route('dealer.manual.isp.create') : route('dealer.stores.manuals.isp.create', $store) }}" class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">Sign Manual</a>
+            @if($canCreateManual)
+                <a href="{{ request()->segment(1) != 'stores' ? route('dealer.manual.isp.create') : route('dealer.manual.isp.create', $store) }}" class="inline-flex items-center px-4 py-2 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">Sign Manual</a>
+            @endif
         </x-slot>
     </x-slot>
     <div>
@@ -24,11 +26,16 @@
                         class="px-4 py-4 text-center text-xl text-arm-blue-500 font-medium sm:pr-6 space-x-3">
                         <div class="text-center">
                             <h3 class="mt-2 text-sm font-semibold text-gray-900">No signed manuals</h3>
+                            @if(! $canCreateManual)
+                                <p class="mt-1 text-sm text-gray-500">Select a store to sign a manual.</p>
+                            @endif
+                            @if($canCreateManual)
                             <div class="mt-6">
-                                <a href="{{ request()->segment(1) != 'stores' ? route('dealer.manual.isp.create') : route('dealer.stores.manuals.isp.create', $store) }}" class="inline-flex items-center rounded-md bg-arm-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">
+                                <a href="{{ request()->segment(1) != 'stores' ? route('dealer.manual.isp.create') : route('dealer.manual.isp.create', $store) }}" class="inline-flex items-center rounded-md bg-arm-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-arm-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-arm-blue-600">
                                     Sign Manual
                                 </a>
                             </div>
+                            @endif
                         </div>
                     </td>
                 </tr>

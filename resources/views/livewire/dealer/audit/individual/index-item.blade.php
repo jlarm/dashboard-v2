@@ -25,7 +25,7 @@
     <x-table.cell>
         <div class="flex justify-end">
             <a
-                href="{{ (!$tenants) ? route('dealer.audit.individual.show', $individualAudit) : route('dealer.stores.audits.individual.show', [$store, $individualAudit]) }}"
+                href="{{ route('dealer.audit.individual.show', $individualAudit) }}"
                 class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
                 View

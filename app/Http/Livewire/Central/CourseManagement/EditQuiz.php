@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Central\CourseManagement;
 
 use App\Models\Course;
 use App\Models\Dealership;
+use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
@@ -16,6 +17,9 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Throwable;
 
+/**
+ * @property-read ComponentContainer $form
+ */
 class EditQuiz extends Component implements HasForms
 {
     use InteractsWithForms;
@@ -39,7 +43,8 @@ class EditQuiz extends Component implements HasForms
             $this->course->update($state);
 
             tenancy()->central(function () use ($state): void {
-                foreach (Dealership::query()->get(['id']) as $tenant) {
+                foreach (Dealership::all(['id']) as $tenant) {
+                    /** @var Dealership $tenant */
                     tenancy()->initialize($tenant);
 
                     if ($tenantCourse = Course::query()->where('slug', $this->course->slug)->first()) {

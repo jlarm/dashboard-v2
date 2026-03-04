@@ -8,6 +8,7 @@ use App\Models\Dealer\VendorEmailLog;
 use App\Models\VendorEmailLogIndex;
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Str;
+use Symfony\Component\Mime\Address;
 
 class LogSentMessage
 {
@@ -24,23 +25,16 @@ class LogSentMessage
             return;
         }
 
-        // Extract 'to' addresses - handle both array format and Symfony Address objects
+        // Extract "to" addresses from Symfony Address objects.
         $toAddresses = $message->getTo();
-        $toEmails = '';
-        if (is_array($toAddresses) && $toAddresses !== []) {
-            $emails = [];
-            foreach ($toAddresses as $address) {
-                if (is_object($address) && method_exists($address, 'getAddress')) {
-                    $emails[] = $address->getAddress();
-                } elseif (is_string($address)) {
-                    $emails[] = $address;
-                }
+        $emails = [];
+
+        foreach ($toAddresses as $address) {
+            if ($address instanceof Address) {
+                $emails[] = $address->getAddress();
             }
-            $toEmails = implode(', ', $emails);
-        } elseif (! is_array($toAddresses) && $toAddresses) {
-            // Fallback for other formats
-            $toEmails = implode(', ', array_keys((array) $toAddresses));
         }
+        $toEmails = implode(', ', $emails);
 
         $vendorFormId = $headers->get('X-Vendor-ID')?->getBodyAsString();
 

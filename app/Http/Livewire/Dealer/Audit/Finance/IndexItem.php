@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
+use App\Models\RemediationSetting;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -24,10 +25,13 @@ class IndexItem extends Component
     protected $rules = [
         'grade' => 'required|in:A,B,C,D,F',
     ];
+    private ?bool $memoizedRemediationsActive = null;
+    private ?int $memoizedCommentCount = null;
 
     public function mount(): void
     {
-        $this->store = Store::query()->find(app('currentStore'));
+        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
+            ?? $this->glbaViolationAudit->store()->firstOrFail();
         $this->remediations = (bool) $this->store->remediations;
         $this->grade = $this->glbaViolationAudit->grade ?? '';
     }
@@ -70,7 +74,13 @@ class IndexItem extends Component
 
     public function remediationsActive(): bool
     {
-        return $this->store->remediationSettings !== null && $this->store->remediationSettings->exists() && $this->store->remediationSettings->first()->active;
+        if ($this->memoizedRemediationsActive !== null) {
+            return $this->memoizedRemediationsActive;
+        }
+
+        $setting = $this->store->remediationSettings;
+
+        return $this->memoizedRemediationsActive = $setting instanceof RemediationSetting && (bool) $setting->active;
     }
 
     public function remediationProgress(): int
@@ -80,7 +90,7 @@ class IndexItem extends Component
 
     public function commentCount(): int
     {
-        return $this->glbaViolationAudit->auditComments()->count();
+        return $this->memoizedCommentCount ??= $this->glbaViolationAudit->auditComments()->count();
     }
 
     public function delete(): void

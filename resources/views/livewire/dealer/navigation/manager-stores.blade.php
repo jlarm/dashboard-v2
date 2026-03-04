@@ -5,7 +5,6 @@
                  class="{{ (request()->is('store/'.$store->slug.'/*')) ? 'bg-gray-200' : '' }}">
                 <button
                     x-on:click="open = ! open"
-                    {{--            href="{{ route('dealer.stores.show', $store) }}"--}}
                     aria-controls="dropdown"
                     data-collapse-toggle="dropdown"
                     class="{{ (request()->is('stores/'.$store->slug)) ? 'bg-arm-blue-50 text-arm-blue-600 border-arm-blue-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }} border-transparent border-l-4 py-2 px-3 w-full text-left flex items-center text-sm font-medium"

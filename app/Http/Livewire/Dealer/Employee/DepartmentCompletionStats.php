@@ -218,7 +218,7 @@ class DepartmentCompletionStats extends Component
             $query->whereHas('stores', function ($q): void {
                 $q->where('stores.id', $this->store->id);
             });
-        } elseif (! auth()->user()->hasAnyRole(['super-admin', 'Consultant']) && tenant('locations')) {
+        } elseif (! auth()->user()->hasAnyRole(['super-admin', 'Consultant']) && (bool) app('multipleStoresExist')) {
             $currentUser = auth()->user();
             $query->whereHas('stores', function ($q) use ($currentUser): void {
                 $q->whereIn('stores.id', $currentUser->stores->pluck('id'));

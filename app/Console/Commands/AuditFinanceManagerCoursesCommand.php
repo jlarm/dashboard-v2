@@ -9,6 +9,7 @@ use App\Models\Dealer\Department;
 use App\Models\User;
 use App\Services\UserCourseService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
@@ -29,7 +30,12 @@ class AuditFinanceManagerCoursesCommand extends Command
             'users_fixed' => 0,
         ];
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseService, &$stats): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($courseService, &$stats): void {
             app(UserCourseService::class)->clearAllCaches();
 
             $this->info("Checking tenant: {$tenant->name} (ID: {$tenant->id})");

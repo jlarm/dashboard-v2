@@ -21,7 +21,7 @@ class UploadIndividualAuditToDigitalOceanJob implements ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->individualAudit)];
+        return [new WithoutOverlapping(static::class.'-'.$this->individualAudit->getKey())];
     }
 
     public function handle(): void

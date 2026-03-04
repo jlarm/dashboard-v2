@@ -12,12 +12,4 @@ enum DealerRoles
 
     public const EMPLOYEE = 'employee';
 
-    private static function labels(): array
-    {
-        return [
-            self::ADMIN => 'Admin',
-            self::MANAGER => 'Manager',
-            self::EMPLOYEE => 'Employee',
-        ];
-    }
 }

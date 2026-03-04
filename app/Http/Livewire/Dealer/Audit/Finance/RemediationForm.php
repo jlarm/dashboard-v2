@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 use App\Http\Livewire\Dealer\Audit\Traits\UpdateRemediations;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
@@ -19,6 +20,7 @@ class RemediationForm extends Component
     public ?Store $store = null;
     public GlbaViolationAudit $glbaViolationAudit;
     public array $violationRemediations = [];
+    private ?Collection $memoizedViolations = null;
 
     public function mount(): void
     {
@@ -28,7 +30,7 @@ class RemediationForm extends Component
     public function render()
     {
         return view('livewire.dealer.audit.finance.remediation-form', [
-            'violations' => $this->violations()->get(),
+            'violations' => $this->memoizedViolations ??= $this->violations()->get(),
         ])->layout('components.dealer-app');
     }
 
@@ -39,7 +41,7 @@ class RemediationForm extends Component
 
     private function loadRemediations(): void
     {
-        $this->violationRemediations = $this->violations()->get()->mapWithKeys(fn ($violation) => [$violation->id => [
+        $this->violationRemediations = ($this->memoizedViolations ??= $this->violations()->get())->mapWithKeys(fn ($violation) => [$violation->id => [
             'comment' => $violation->remediation?->comment ?? '',
             'completed' => $violation->remediation?->completed,
         ]])->toArray();

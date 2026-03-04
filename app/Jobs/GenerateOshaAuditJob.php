@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\Dealer\Audit\OshaAudit;
+use App\Models\Dealer\Store;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -22,7 +23,7 @@ class GenerateOshaAuditJob implements ShouldQueue
     public function handle(): void
     {
         $path = storage_path('app/osha');
-        if (tenant('locations')) {
+        if ($this->oshaAudit->store !== null && Store::query()->count() > 1) {
             $dealerName = str_replace(' ', '-', $this->oshaAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
@@ -67,6 +68,6 @@ class GenerateOshaAuditJob implements ShouldQueue
 
         $wrong = $sum;
 
-        return number_format(100 * (62 - $wrong) / 62, 2, '.', '');
+        return (float) number_format(100 * (62 - $wrong) / 62, 2, '.', '');
     }
 }

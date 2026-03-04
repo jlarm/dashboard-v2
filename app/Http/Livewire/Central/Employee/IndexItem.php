@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Central\Employee;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -35,6 +36,10 @@ class IndexItem extends Component
 
     private function completedCourseCount(): int
     {
+        if (! Schema::hasTable('course_results')) {
+            return 0;
+        }
+
         return DB::table('course_results')
             ->where('user_id', $this->user->id)
             ->whereBetween('created_at', [now()->subYear(), now()])

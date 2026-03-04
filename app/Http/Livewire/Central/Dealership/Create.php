@@ -4,156 +4,46 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Dealership;
 
-use App\Models\Dealer\ScanSetting;
-use App\Models\Dealer\Store;
-use App\Models\Dealership;
 use App\Models\User;
-use Exception;
-use Livewire\Component;
+use App\Services\DealershipCreator;
+use Filament\Notifications\Notification;
+use Illuminate\View\View;
+use WireElements\Pro\Components\Modal\Modal;
 
-class Create extends Component
+class Create extends Modal
 {
-    public $name;
-    public $initials;
-    public $address;
-    public $city;
-    public $state;
-    public $zip_code;
-    public $phone;
-    public $fax;
-    public $domain;
-    public $url;
-    public $locations = false;
-    public $password;
-    protected $rules = [
-        'name' => ['required', 'string', 'max:255', 'unique:dealerships'],
-        'address' => ['required', 'string', 'max:255'],
-        'city' => ['required', 'string', 'max:255'],
-        'state' => ['required', 'string', 'max:255'],
-        'zip_code' => ['required', 'string', 'max:255'],
-        'phone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
-        'fax' => ['nullable', 'string', 'max:255'],
-        'domain' => ['required', 'string', 'max:255', 'unique:domains'],
-        'url' => ['required', 'string', 'max:255', 'url'],
-        'locations' => ['nullable', 'boolean'],
-        'password' => ['required'],
+    public string $name = '';
+
+    /** @var array<string, string> */
+    protected array $rules = [
+        'name' => 'required|string|max:255|unique:tenants,name|regex:/^[a-zA-Z0-9 ]+$/',
     ];
 
     public function mount(): void
     {
-        // get initials of current users name
-        $name = auth()->user()->name;
-        $name = explode(' ', $name);
-        $initials = '';
-        foreach ($name as $n) {
-            $initials .= $n[0];
-        }
-        $this->initials = mb_strtoupper($initials);
-
+        abort_unless(auth()->user()?->hasAnyRole('super-admin|Consultant') ?? false, 403);
     }
 
-    public function create()
+    public function createDealership(DealershipCreator $dealershipCreator): void
     {
         $validated = $this->validate();
+        $user = auth()->user();
 
-        $tenantDomain = $validated['domain'].'.'.config('tenancy.central_domains')[0];
+        abort_unless($user instanceof User, 403);
 
-        try {
-            $dealer = Dealership::query()->create([
-                'user_id' => auth()->user()->id,
-                'name' => $validated['name'],
-                'address' => $validated['address'],
-                'city' => $validated['city'],
-                'state' => $validated['state'],
-                'zip_code' => $validated['zip_code'],
-                'phone' => $validated['phone'],
-                'fax' => $validated['fax'],
-                'domain' => $tenantDomain,
-                'url' => $validated['url'],
-                'locations' => $validated['locations'],
-            ]);
+        $dealershipCreator->create($user, $validated['name']);
 
-            $dealer->createDomain($tenantDomain);
+        $this->emit('refreshDealerships');
+        $this->close();
 
-            $name = $validated['name'];
-            $address = $validated['address'];
-            $city = $validated['city'];
-            $state = $validated['state'];
-            $zip_code = $validated['zip_code'];
-            $phone = $validated['phone'];
-            $fax = $validated['fax'];
-            $url = $validated['url'];
-
-            $dealer->run(function () use ($name, $address, $city, $state, $zip_code, $phone, $fax, $url): void {
-
-                Store::query()->create([
-                    'name' => $name,
-                    'address' => $address,
-                    'city' => $city,
-                    'state' => $state,
-                    'postal_code' => $zip_code,
-                    'phone' => $phone,
-                    'fax' => $fax,
-                    'website' => $url,
-                ]);
-
-                $user = User::query()->create([
-                    'name' => auth()->user()->name,
-                    'email' => auth()->user()->email,
-                    'phone' => auth()->user()->phone,
-                    'password' => bcrypt('Autorisknow'.$this->initials.'!'),
-                ]);
-
-                if ($user->name === 'Joe Lohr' || $user->name === 'Terry Dortch' || $user->name === 'Mike Backer') {
-                    $user->assignRole('super-admin');
-                } else {
-                    $user->assignRole('Consultant');
-                }
-
-                if ($user->name !== 'Joe Lohr') {
-                    $joe = User::query()->create([
-                        'name' => 'Joe Lohr',
-                        'email' => 'jlohr@autorisknow.com',
-                        'phone' => '2243586930',
-                        'password' => bcrypt('AutorisknowJL!'),
-                    ]);
-                    $joe->assignRole('super-admin');
-                }
-
-                if ($user->name !== 'Terry Dortch') {
-                    $terry = User::query()->create([
-                        'name' => 'Terry Dortch',
-                        'email' => 'tdortch@autorisknow.com',
-                        'phone' => '8156704651',
-                        'password' => bcrypt('AutorisknowTD!'),
-                    ]);
-                    $terry->assignRole('super-admin');
-                }
-
-                if ($user->name !== 'Mike Backer') {
-                    $mike = User::query()->create([
-                        'name' => 'Mike Backer',
-                        'email' => 'mbacker@autorisknow.com',
-                        'phone' => '8043823021',
-                        'password' => bcrypt('AutorisknowMB!'),
-                    ]);
-                    $mike->assignRole('super-admin');
-                }
-
-                ScanSetting::query()->create([]);
-            });
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
-        }
-
-        return null;
+        Notification::make()
+            ->title('Dealership Created')
+            ->success()
+            ->send();
     }
 
-    public function render()
+    public function render(): View
     {
-        return view('livewire.central.dealership.create', [
-            'users' => User::query()->whereNot('id', auth()->user()->id)
-                ->get(),
-        ]);
+        return view('livewire.central.dealership.create');
     }
 }

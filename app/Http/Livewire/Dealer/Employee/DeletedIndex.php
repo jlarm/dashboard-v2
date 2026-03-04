@@ -14,8 +14,23 @@ class DeletedIndex extends Component
 {
     use WithPagination;
 
+    public string $search = '';
     public ?Store $store = null;
     protected $listeners = ['refresh-deleted' => '$refresh'];
+    protected $queryString = [
+        'search' => ['except' => '', 'as' => 's'],
+    ];
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function clearSearch(): void
+    {
+        $this->search = '';
+        $this->resetPage();
+    }
 
     public function render(): View
     {
@@ -25,8 +40,20 @@ class DeletedIndex extends Component
             $users = User::with('department')->onlyTrashed();
         }
 
+        if ($this->search !== '' && $this->search !== '0') {
+            $search = $this->search;
+
+            $users->where(function ($query) use ($search): void {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
         return view('livewire.dealer.employee.deleted-index', [
-            'users' => $users->get(),
+            'users' => $users
+                ->orderByDesc('deleted_at')
+                ->orderByDesc('id')
+                ->paginate(15),
         ])->layout('components.dealer-app');
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Store;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -22,7 +23,7 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
     public function handle(): void
     {
         $path = storage_path('app/body-shop-audits');
-        if (tenant('locations')) {
+        if ($this->bodyShopAudit->store !== null && Store::query()->count() > 1) {
             $dealerName = str_replace(' ', '-', $this->bodyShopAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));
@@ -62,6 +63,6 @@ class GenerateBodyShopAuditPdfJob implements ShouldQueue
 
         $wrong = $sum;
 
-        return number_format(100 * (43 - $wrong) / 43, 2, '.', '');
+        return (float) number_format(100 * (43 - $wrong) / 43, 2, '.', '');
     }
 }

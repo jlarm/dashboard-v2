@@ -13,6 +13,6 @@ class Create extends Component
 
     public function mount()
     {
-        return redirect()->to(route('dealer.stores.audits.finance.index'));
+        return redirect()->to(route('dealer.audit.finance.index'));
     }
 }

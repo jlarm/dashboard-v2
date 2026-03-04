@@ -3,7 +3,7 @@
         <x-slot:pageTitle>Deal Jacket Audit for {{ $dealJacket->customer_name }}</x-slot:pageTitle>
     </x-slot:header>
     <x-slot:actions>
-        <x-button :href="tenant('locations') ? route('dealer.stores.audits.deal-jackets.show', [$store, $dealJacketGroup]) : route('dealer.audit.deal-jackets.show', $dealJacketGroup)">Back</x-button>
+        <x-button :href="route('dealer.audit.deal-jackets.show', $dealJacketGroup)">Back</x-button>
     </x-slot:actions>
     <div class="grid grid-cols-3 gap-5">
         <div class="col-span-2 border shadow-sm p-6 rounded-lg space-y-3">

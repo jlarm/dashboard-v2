@@ -18,6 +18,30 @@
             @error('email') <p class="text-red-500">{{ $message }}</p> @enderror
         </div>
 
+        @if($allStore->count() > 1)
+            <div class="col-span-3">
+                <x-input-label for="stores" :value="__('Select Store(s)')"/>
+                <label>
+                    <select
+                        wire:model.defer="stores"
+                        class="w-full border-gray-300 rounded-md mt-1 focus:border-arm-blue-500 focus:ring-arm-blue-500"
+                        multiple
+                        required
+                    >
+                        @foreach($allStore as $store)
+                            <option value="{{ $store->id }}">{{ $store->name }}</option>
+                        @endforeach
+                    </select>
+                </label>
+                @error('stores') <p class="text-red-500 mt-1">{{ $message }}</p> @enderror
+            </div>
+        @elseif($allStore->count() === 1)
+            <div class="col-span-3">
+                <x-input-label :value="__('Store')"/>
+                <p class="mt-1 text-sm text-gray-600">This invite will be assigned to {{ $allStore->first()->name }}.</p>
+            </div>
+        @endif
+
         {{--Role--}}
         <div class="col-span-3">
             <x-input-label for="role" :value="__('Select a Role')"/>

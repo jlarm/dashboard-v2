@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 
 class CleanupOldDealJacketReportsCommand extends Command
@@ -14,7 +15,12 @@ class CleanupOldDealJacketReportsCommand extends Command
 
     public function handle(): int
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
             $path = storage_path('app/deal-jacket-reports');
 
             if (! File::isDirectory($path)) {

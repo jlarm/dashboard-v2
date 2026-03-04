@@ -14,9 +14,17 @@ use Livewire\Component;
 class VideoProgress extends Component
 {
     public User $user;
+    public bool $autoload = false;
     public bool $isLoaded = false;
     public array $videos = [];
     protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
+
+    public function mount(): void
+    {
+        if ($this->autoload) {
+            $this->loadVideos();
+        }
+    }
 
     public function handleTabChanged(string $tab): void
     {

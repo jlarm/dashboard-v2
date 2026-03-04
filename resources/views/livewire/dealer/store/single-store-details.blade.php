@@ -289,32 +289,6 @@
                     </div>
                 </div>
             </div>
-            @can('create-dealerships')
-            <div class="border-t py-6">
-                <div class="grid grid-cols-12 gap-y-1.5 gap-x-6">
-                    <div class="col-span-2">
-                        <label class="sm:mt-2.5 flex items-center text-sm text-gray-500 gap-x-2">
-                            Reset Courses
-                            <x-tooltip
-                                placement="right"
-                                trigger="hover"
-                                content="This will reset all courses for all employees."
-                                :delay="100"
-                            >
-                                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
-                                    <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12 8V12.5" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12 15.9883V15.9983" stroke="#141B34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </x-tooltip>
-                        </label>
-                    </div>
-                    <div class="col-span-6">
-                        <livewire:dealer.course.reset :store="$store" />
-                    </div>
-                </div>
-            </div>
-            @endcan
             <div class="py-3 text-right">
                 <x-primary-button wire:loading.attr="disabled">Update</x-primary-button>
             </div>

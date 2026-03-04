@@ -25,7 +25,7 @@ class GenerateButton extends Component
             new GenerateGlbaPdfJob($this->glbaViolationAudit),
             new UploadGlbaPdfJob($this->glbaViolationAudit),
             new RemediationReminderEmailJob(
-                tenants: (bool) tenant('locations'),
+                tenants: (bool) app('multipleStoresExist'),
                 store: $this->glbaViolationAudit->store,
                 audit: $this->glbaViolationAudit,
                 auditType: AuditTypes::GLBA

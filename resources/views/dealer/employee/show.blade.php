@@ -1,4 +1,36 @@
 <x-dealer-app>
+    @php
+        $employeeSections = [
+            [
+                'label' => 'Courses',
+                'route' => route('dealer.employees.show', $user),
+                'key' => 'courses',
+            ],
+        ];
+
+        if ($canManageCourses) {
+            $employeeSections[] = [
+                'label' => 'Manage Courses',
+                'route' => route('dealer.employees.show.manage-courses', $user),
+                'key' => 'manage-courses',
+            ];
+        }
+
+        $employeeSections[] = [
+            'label' => 'DOT Certificates',
+            'route' => route('dealer.employees.show.certificates', $user),
+            'key' => 'certificates',
+        ];
+
+        if ($videosActive) {
+            $employeeSections[] = [
+                'label' => 'Video Training Progress',
+                'route' => route('dealer.employees.show.video-progress', $user),
+                'key' => 'video-progress',
+            ];
+        }
+    @endphp
+
     <x-slot name="header">
         <x-slot name="pageTitle">
             <div class="flex flex-col">
@@ -34,6 +66,7 @@
                             @endforeach
                   </span>
                     </li>
+
                     <li class="relative before:hidden md:before:inline-block first:before:hidden first:before:ms-0 before:content-['•'] before:text-gray-800 before:me-1.5">
                       <span class="text-xs text-gray-800">
                         Email:
@@ -51,147 +84,45 @@
     </x-slot>
     <div class="">
         <div class="col-span-3">
-
-            <!-- Tabs -->
-            <div
-                x-data="{
-                    selectedId: null,
-                    init() {
-                        // Set the first available tab on the page on page load.
-                        this.$nextTick(() => {
-                            this.select(this.$id('tab', 1))
-                            Livewire.emit('employeeTabChanged', 'courses')
-                        })
-                    },
-                    select(id) {
-                        this.selectedId = id
-                    },
-                    isSelected(id) {
-                        return this.selectedId === id
-                    },
-                    whichChild(el, parent) {
-                        return Array.from(parent.children).indexOf(el) + 1
-                    }
-                }"
-                x-id="['tab']"
-                class="w-full"
-            >
-                <!-- Tab List -->
+            <div class="w-full">
                 <div class="flex justify-center">
-                    <div
-                        class="inline-flex h-10 rounded-lg bg-gray-800/5 p-1 max-w-[900px]"
-                        x-ref="tablist"
-                        @keydown.right.prevent.stop="$focus.wrap().next()"
-                        @keydown.home.prevent.stop="$focus.first()"
-                        @keydown.page-up.prevent.stop="$focus.first()"
-                        @keydown.left.prevent.stop="$focus.wrap().prev()"
-                        @keydown.end.prevent.stop="$focus.last()"
-                        @keydown.page-down.prevent.stop="$focus.last()"
-                        role="tablist"
-                    >
-                        <button
-                            :id="$id('tab', whichChild($el, $el.parentElement))"
-                            @click="select($el.id)"
-                            @mousedown.prevent
-                            @focus="select($el.id)"
-                            type="button"
-                            :tabindex="isSelected($el.id) ? 0 : -1"
-                            :aria-selected="isSelected($el.id)"
-                            :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                            class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                            x-on:click="Livewire.emit('employeeTabChanged', 'courses')"
-                            aria-current="page">Courses</button>
-                        @hasanyrole('super-admin|Consultant|Qualified Individual')
-                        <button
-                            :id="$id('tab', whichChild($el, $el.parentElement))"
-                            @click="select($el.id)"
-                            @mousedown.prevent
-                            @focus="select($el.id)"
-                            type="button"
-                            :tabindex="isSelected($el.id) ? 0 : -1"
-                            :aria-selected="isSelected($el.id)"
-                            :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                            class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                            x-on:click="Livewire.emit('employeeTabChanged', 'manage-courses')"
-                        >Manage Courses</button>
-                        @endhasanyrole
-                        <button
-                            :id="$id('tab', whichChild($el, $el.parentElement))"
-                            @click="select($el.id)"
-                            @mousedown.prevent
-                            @focus="select($el.id)"
-                            type="button"
-                            :tabindex="isSelected($el.id) ? 0 : -1"
-                            :aria-selected="isSelected($el.id)"
-                            :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                            class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                            x-on:click="Livewire.emit('employeeTabChanged', 'certificates')"
-                        >DOT Certificates</button>
-                        @if($videosActive)
-                        <button
-                            :id="$id('tab', whichChild($el, $el.parentElement))"
-                            @click="select($el.id)"
-                            @mousedown.prevent
-                            @focus="select($el.id)"
-                            type="button"
-                            :tabindex="isSelected($el.id) ? 0 : -1"
-                            :aria-selected="isSelected($el.id)"
-                            :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                            class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                            x-on:click="Livewire.emit('employeeTabChanged', 'video-progress')"
-                        >Video Training Progress</button>
-                        @endif
+                    <div class="inline-flex h-10 max-w-[900px] rounded-lg bg-gray-800/5 p-1">
+                        @foreach($employeeSections as $employeeSection)
+                            <a
+                                href="{{ $employeeSection['route'] }}"
+                                class="{{ $section === $employeeSection['key'] ? 'shadow-sm bg-white text-gray-600' : 'border-transparent text-gray-600 hover:text-gray-800' }} flex flex-1 items-center justify-center whitespace-nowrap rounded-md px-4 text-sm"
+                                @if($section === $employeeSection['key']) aria-current="page" @endif
+                            >
+                                {{ $employeeSection['label'] }}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
 
-                <!-- Panels -->
-                <div role="tabpanels" class=" bg-white">
-                    <!-- Panel -->
-                    <section
-                        x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                        :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                        role="tabpanel"
-                        class="p-4"
-                    >
-                        @if($user->department)
-                            <livewire:dealer.employee.course-results :user="$user"/>
-                        @endif
-                    </section>
-                    @hasanyrole('super-admin|Consultant|Qualified Individual')
-                    <section
-                        x-cloak
-                        x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                        :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                        role="tabpanel"
-                        class="p-4"
-                    >
-                        @if($user->department)
-                            <livewire:dealer.employee.assign-custom-courses-form :user="$user" />
-                        @endif
-                    </section>
-                    @endhasanyrole
-                    <section
-                        x-cloak
-                        x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                        :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                        role="tabpanel"
-                        class="p-4"
-                    >
-                        <div class="col-span-1">
-                            <livewire:dealer.employee.dot-cert :user="$user" />
-                            <livewire:dealer.employee.cert-index :user="$user"/>
-                        </div>
-                    </section>
-                    @if($videosActive)
-                        <section
-                            x-cloak
-                            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                            role="tabpanel"
-                            class="p-4"
-                        >
+                <div class="bg-white">
+                    @if($section === 'courses')
+                        <section class="p-4">
+                            @if($user->department)
+                                <livewire:dealer.employee.course-results :user="$user"/>
+                            @endif
+                        </section>
+                    @elseif($section === 'manage-courses')
+                        <section class="p-4">
+                            @if($user->department)
+                                <livewire:dealer.employee.assign-custom-courses-form :user="$user" :autoload="true" />
+                            @endif
+                        </section>
+                    @elseif($section === 'certificates')
+                        <section class="p-4">
                             <div class="col-span-1">
-                                <livewire:tenant.employee.video-progress :user="$user" />
+                                <livewire:dealer.employee.dot-cert :user="$user" :autoload="true" />
+                                <livewire:dealer.employee.cert-index :user="$user" :autoload="true" />
+                            </div>
+                        </section>
+                    @elseif($section === 'video-progress')
+                        <section class="p-4">
+                            <div class="col-span-1">
+                                <livewire:tenant.employee.video-progress :user="$user" :autoload="true" />
                             </div>
                         </section>
                     @endif

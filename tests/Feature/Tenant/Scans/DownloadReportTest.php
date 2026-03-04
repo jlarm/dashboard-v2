@@ -6,6 +6,7 @@ use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as DomPdfWrapper;
+use Dompdf\Canvas;
 use Dompdf\Dompdf;
 use Dompdf\FontMetrics;
 use Illuminate\Support\Facades\Cache;
@@ -45,7 +46,7 @@ function buildPdfMock(bool $withPageNumbers = false): DomPdfWrapper
     $pdfInstance->shouldReceive('output')->andReturn('%PDF-1.4 fake content');
 
     if ($withPageNumbers) {
-        $canvas = Mockery::mock(\Dompdf\Canvas::class);
+        $canvas = Mockery::mock(Canvas::class);
         $canvas->shouldReceive('page_script')->once()->andReturnNull();
 
         $fontMetrics = Mockery::mock(FontMetrics::class);

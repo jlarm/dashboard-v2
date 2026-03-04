@@ -1,3 +1,4 @@
+@if($this->shouldDisplay)
 <div class="relative mt-2"
      x-data="{
          open: false,
@@ -20,82 +21,64 @@
      x-on:focusin.window="$refs.panel && !$refs.panel.contains($event.target) && close()"
      x-id="['dropdown-button']"
 >
-    <input
-        id="combobox"
-        value="{{ $this->currentStoreDisplay }}"
-        type="text"
-        readonly
-        class="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-8 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"
-        role="combobox"
-        aria-controls="options"
-        aria-expanded="false"
-    >
-
     <button
+        id="combobox"
         x-ref="button"
         x-on:click="toggle()"
         :aria-expanded="open"
         :aria-controls="$id('dropdown-button')"
         type="button"
-        class="absolute inset-y-0 right-0 flex w-full items-center justify-end rounded-r-md px-2 focus:outline-none"
+        class="group flex w-full items-center rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-left transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-arm-blue-600"
+        role="combobox"
+        aria-controls="options"
+        aria-expanded="false"
     >
-        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path
-                fill-rule="evenodd"
-                d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
-                clip-rule="evenodd"
-            />
-        </svg>
+        <span class="min-w-0 flex-1 truncate text-base font-semibold text-gray-900">{{ $this->currentStoreDisplay }}</span>
     </button>
 
-    <ul
+    <div
         x-ref="panel"
         x-show="open"
-        x-transition.origin.top.left
+        x-transition.origin.top
         x-on:click.outside="close($refs.button)"
         :id="$id('dropdown-button')"
         style="display: none;"
-        class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-        role="listbox"
+        class="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl focus:outline-none"
     >
-        @if($this->stores->count() > 1 && $currentStoreName)
-            <li
-                class="relative cursor-default select-none p-2 text-gray-900 hover:bg-gray-50"
-                role="option"
-                tabindex="-1"
-            >
-                <a href="{{ route('dealer.dashboard') }}" class="block">
-                    <div class="flex items-center">
-                        <span>All Stores</span>
-                    </div>
-                </a>
-            </li>
-        @endif
+        <div class="px-4 pt-3 pb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">stores</div>
+        <ul class="max-h-64 space-y-1 overflow-auto px-2 pb-2" role="listbox">
+            @if($this->canUseOverview)
+                <li class="relative">
+                    <button
+                        type="button"
+                        @if($currentStoreId !== null)
+                            wire:click="switchToOverview"
+                        @endif
+                        @disabled($currentStoreId === null)
+                        aria-disabled="{{ $currentStoreId === null ? 'true' : 'false' }}"
+                        class="flex w-full items-center rounded-xl px-2.5 py-2 text-left text-sm transition {{ $currentStoreId === null ? 'cursor-default bg-gray-100 font-medium text-gray-900' : 'text-gray-800 hover:bg-gray-50' }}"
+                    >
+                        <span class="min-w-0 flex-1 truncate">Overview</span>
+                    </button>
+                </li>
+            @endif
 
-        @foreach($this->stores as $store)
-            <li
-                class="relative cursor-default select-none p-2 text-gray-900 hover:bg-gray-50"
-                role="option"
-                tabindex="-1"
-            >
-                <a href="{{ route('dealer.stores.home', $store) }}" class="block">
-                    <div class="flex items-center">
-                        <span>{{ Str::limit($store->name, 30) }}</span>
-                    </div>
-
-                    @if($currentStoreName === $store->name)
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-arm-blue-600">
-                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                        </span>
-                    @endif
-                </a>
-            </li>
-        @endforeach
-    </ul>
+            @foreach($this->stores as $store)
+                <li class="relative">
+                    <button
+                        type="button"
+                        @if($currentStoreId !== $store->id)
+                            wire:click="switchStore({{ $store->id }})"
+                        @endif
+                        @disabled($currentStoreId === $store->id)
+                        aria-disabled="{{ $currentStoreId === $store->id ? 'true' : 'false' }}"
+                        class="flex w-full items-center rounded-xl px-2.5 py-2 text-left text-sm transition {{ $currentStoreId === $store->id ? 'cursor-default bg-gray-100 font-medium text-gray-900' : 'text-gray-800 hover:bg-gray-50' }}"
+                    >
+                        <span class="min-w-0 flex-1 truncate">{{ Str::limit($store->name, 30) }}</span>
+                    </button>
+                </li>
+            @endforeach
+        </ul>
+    </div>
 </div>
+@endif

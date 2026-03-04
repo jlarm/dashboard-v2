@@ -26,7 +26,9 @@ class VerifyCourseVideos extends Command
         $centralCourses = Course::query()->whereNotNull('video_id')->get();
         $dealerCourses = DealerCourse::whereNotNull('video_id')->get();
 
-        $allCourses = $centralCourses->merge($dealerCourses);
+        $allCourses = collect()
+            ->concat($centralCourses)
+            ->concat($dealerCourses);
 
         if ($allCourses->isEmpty()) {
             $this->warn('No courses with videos found.');

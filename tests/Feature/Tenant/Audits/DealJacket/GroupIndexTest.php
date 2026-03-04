@@ -41,8 +41,7 @@ describe('Deal Jacket Group Index Page', function (): void {
             // Create groups for Store B
             DealJacketGroup::factory()->count(3)->create(['store_id' => $storeB->id]);
 
-            // Bind Store A as the current store
-            app()->instance('currentStore', $storeA->id);
+            $this->consultant->update(['current_store_id' => $storeA->id]);
 
             // Verify Store A only sees their 2 groups
             expect(DealJacketGroup::query()->where('store_id', $storeA->id)->count())->toBe(2);
@@ -78,8 +77,8 @@ describe('Deal Jacket Group Index Page', function (): void {
                 'completed' => true,
             ]);
 
-            // Bind Store A as the current store
-            app()->instance('currentStore', $storeA->id);
+            $this->manager->stores()->sync([$storeA->id, $storeB->id]);
+            $this->manager->update(['current_store_id' => $storeA->id]);
 
             // Verify data is correctly scoped
             expect(DealJacketGroup::query()->where('store_id', $storeA->id)->where('completed', true)->count())->toBe(2);
@@ -104,7 +103,7 @@ describe('Deal Jacket Group Index Page', function (): void {
             DealJacketGroup::factory()->count(3)->create(['store_id' => $storeB->id]);
 
             // Test as Store A
-            app()->instance('currentStore', $storeA->id);
+            $this->consultant->update(['current_store_id' => $storeA->id]);
 
             expect(DealJacketGroup::query()->where('store_id', $storeA->id)->count())->toBe(2);
 
@@ -114,7 +113,7 @@ describe('Deal Jacket Group Index Page', function (): void {
             $responseA->assertOk();
 
             // Switch to Store B
-            app()->instance('currentStore', $storeB->id);
+            $this->consultant->update(['current_store_id' => $storeB->id]);
 
             expect(DealJacketGroup::query()->where('store_id', $storeB->id)->count())->toBe(3);
 

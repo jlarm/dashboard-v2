@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,16 +25,61 @@ class Index extends Component
 
     public function render()
     {
+        $scopedStoreIds = $this->resolveScopedStoreIds();
+
         return view('livewire.dealer.vendor.index', [
-            'vendors' => $this->store instanceof Store
-                ? Vendor::with('store:id,name')
-                    ->where('store_id', $this->store->id)
-                    ->orWhere('store_id', null)
-                    ->orderBy('name')
-                    ->paginate(16)
-                : Vendor::with('store:id,name')
-                    ->orderBy('name')
-                    ->paginate(16),
+            'vendors' => Vendor::with('store:id,name')
+                ->where(function (Builder $query) use ($scopedStoreIds): void {
+                    if ($scopedStoreIds->isNotEmpty()) {
+                        $query->whereIn('store_id', $scopedStoreIds);
+                    }
+
+                    $query->orWhereNull('store_id');
+                })
+                ->orderBy('name')
+                ->paginate(16),
         ])->layout('components.dealer-app');
+    }
+
+    private function resolveScopedStoreIds(): Collection
+    {
+        if (app()->bound('scopedStoreIds')) {
+            /** @var Collection $storeIds */
+            $storeIds = app('scopedStoreIds');
+
+            $normalizedStoreIds = $storeIds->map(static fn ($id): int => (int) $id)->values();
+
+            if ($normalizedStoreIds->isNotEmpty()) {
+                return $normalizedStoreIds;
+            }
+        }
+
+        if ($this->store instanceof Store) {
+            return collect([$this->store->id]);
+        }
+
+        $user = auth()->user();
+
+        if (! $user) {
+            return collect();
+        }
+
+        if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
+            return $user->current_store_id !== null
+                ? collect([(int) $user->current_store_id])
+                : Store::query()->pluck('id');
+        }
+
+        $assignedStoreIds = $user->stores()->pluck('stores.id')->map(static fn ($id): int => (int) $id);
+
+        if ($user->current_store_id === null) {
+            return $assignedStoreIds;
+        }
+
+        if ($assignedStoreIds->contains($user->current_store_id)) {
+            return collect([(int) $user->current_store_id]);
+        }
+
+        return collect();
     }
 }

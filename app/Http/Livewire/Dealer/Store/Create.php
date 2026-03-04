@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Store;
 
-use App\Models\Dealer\ScanSetting;
-use App\Models\Dealer\Settings\EmployeeList;
-use App\Models\Dealer\Store;
-use App\Models\Dealer\StoreSettings;
+use App\Services\StoreCreator;
 use Filament\Notifications\Notification;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -35,33 +32,10 @@ class Create extends Modal
         $this->validateOnly($propertyName);
     }
 
-    public function createStore(): void
+    public function createStore(StoreCreator $storeCreator): void
     {
-        $this->validate();
-
-        $store = Store::query()->create([
-            'name' => $this->name,
-            'address' => $this->address,
-            'city' => $this->city,
-            'state' => $this->state,
-            'postal_code' => $this->postal_code,
-            'phone' => $this->phone,
-            'website' => $this->website,
-        ]);
-
-        StoreSettings::query()->create([
-            'store_id' => $store->id,
-            'name' => $store->name,
-            'address' => $store->address,
-            'city' => $store->city,
-            'state' => $store->state,
-            'postal_code' => $store->postal_code,
-            'phone' => $store->phone,
-            'website' => $store->website,
-        ]);
-
-        EmployeeList::query()->create(['store_id' => $store->id]);
-        ScanSetting::query()->create(['store_id' => $store->id]);
+        $validated = $this->validate();
+        $storeCreator->create($validated);
 
         $this->reset();
 

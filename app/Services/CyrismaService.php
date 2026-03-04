@@ -721,7 +721,7 @@ class CyrismaService
         $uniqueParamSets = [];
         foreach ($paramSets as $paramSet) {
             $paramKey = array_key_first($paramSet);
-            $paramValue = $paramKey !== null ? (string) ($paramSet[$paramKey] ?? '') : '';
+            $paramValue = $paramSet[$paramKey];
             $uniqueParamSets["{$paramKey}:{$paramValue}"] = $paramSet;
         }
 

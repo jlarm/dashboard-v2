@@ -8,6 +8,7 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class UpdateCompletedAtFieldForAudits extends Command
 {
@@ -30,7 +31,12 @@ class UpdateCompletedAtFieldForAudits extends Command
      */
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             $this->updateAudits(OshaViolationAudit::class);

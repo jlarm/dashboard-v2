@@ -33,7 +33,7 @@ class Delete extends Modal
                 ->success()
                 ->send();
         } catch (Exception $e) {
-            Log::error($e);
+            Log::error($e->getMessage(), ['exception' => $e]);
             $this->addError('file', 'An error occurred while deleting the file.');
         }
     }

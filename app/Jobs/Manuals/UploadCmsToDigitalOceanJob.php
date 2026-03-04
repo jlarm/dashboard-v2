@@ -21,7 +21,7 @@ class UploadCmsToDigitalOceanJob implements ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->manual)];
+        return [new WithoutOverlapping(static::class.'-'.$this->manual->getKey())];
     }
 
     public function handle(): void

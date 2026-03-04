@@ -1,5 +1,5 @@
 <div x-data="{ open: false }">
-    <button @click="open = true" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-arm-blue-600 hover:bg-arm-blue-100 hover:text-arm-blue-800 focus:outline-none focus:bg-arm-blue-100 focus:text-arm-blue-800 active:bg-arm-blue-100 active:text-arm-blue-800 disabled:opacity-50 disabled:pointer-events-none">
+    <button @click="open = true" type="button" class="p-0 m-0 border-0 bg-transparent leading-none text-sm text-arm-blue-600 hover:text-arm-blue-900 focus:outline-none">
         Restore
     </button>
 

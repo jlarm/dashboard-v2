@@ -14,7 +14,7 @@
                 <button
                     onclick="Livewire.emit('modal.open', 'dealer.employee.import')"
                     type="button"
-                    class="text-sm focus:outline-none">Import</button>
+                    class="text-sm text-gray-600 focus:outline-none">Import</button>
                 <a
                     href="{{ route('dealer.employees.new') }}"
                     @class([
@@ -40,11 +40,11 @@
                     ])>Open Invites</a>
                 @can('create-stores')
                     <a
-                        href="{{ route('dealer.employee.deleted') }}"
+                        href="{{ route('dealer.employees.deleted') }}"
                         @class([
                             'text-sm focus:outline-none',
-                            'text-arm-orange-500' => request()->routeIs('dealer.employee.deleted'),
-                            'text-gray-600' => !request()->routeIs('dealer.employee.deleted')
+                            'text-arm-orange-500' => request()->routeIs('dealer.employees.deleted'),
+                            'text-gray-600' => !request()->routeIs('dealer.employees.deleted')
                         ])>Deleted</a>
                 @endcan
             </div>

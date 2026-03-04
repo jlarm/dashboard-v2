@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
@@ -9,6 +10,7 @@ use Spatie\Permission\PermissionRegistrar;
 beforeEach(function (): void {
     $this->store = Store::query()->first();
     $this->manager->stores()->attach($this->store->id);
+    $this->manager->update(['current_store_id' => $this->store->id]);
 
     app()[PermissionRegistrar::class]->forgetCachedPermissions();
 });
@@ -29,12 +31,6 @@ describe('Manager - General Access', function (): void {
     it('can access SDS sheets', function (): void {
         $this->actingAs($this->manager)
             ->get(route('dealer.sds.index'))
-            ->assertOk();
-    });
-
-    it('can access videos index', function (): void {
-        $this->actingAs($this->manager)
-            ->get(route('dealer.videos.index'))
             ->assertOk();
     });
 
@@ -70,11 +66,46 @@ describe('Manager - Employee Management', function (): void {
             'email' => 'emp-mgr@test.com',
             'password' => bcrypt('password'),
         ]);
+        $employee->stores()->attach($this->store->id);
 
         $response = $this->actingAs($this->manager)
             ->get(route('dealer.employees.show', $employee));
 
         expect($response->status())->not->toBeIn([401, 403, 302]);
+    });
+
+    it('cannot view an employee from a different store', function (): void {
+        $otherStore = Store::query()->create([
+            'name' => 'Other Manager Store',
+            'address' => '987 Main St',
+            'city' => 'Springfield',
+            'state' => 'IL',
+            'postal_code' => '62701',
+        ]);
+
+        $employee = User::query()->create([
+            'name' => 'Hidden Employee',
+            'email' => 'hidden-mgr@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $employee->stores()->attach($otherStore->id);
+
+        $this->actingAs($this->manager)
+            ->get(route('dealer.employees.show', $employee))
+            ->assertForbidden();
+    });
+
+    it('cannot access the manage courses employee page', function (): void {
+        $employee = User::query()->create([
+            'name' => 'Manager Locked Employee',
+            'email' => 'manager-locked@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $employee->stores()->attach($this->store->id);
+
+        $this->actingAs($this->manager)
+            ->get(route('dealer.employees.show.manage-courses', $employee))
+            ->assertForbidden();
     });
 });
 
@@ -102,6 +133,24 @@ describe('Manager - Audit Access (View Only)', function (): void {
             ->get(route('dealer.audit.individual.index'))
             ->assertOk();
     });
+
+    it('can access fit tests', function (): void {
+        $this->actingAs($this->manager)
+            ->get(route('dealer.fit-tests.index'))
+            ->assertOk();
+    });
+});
+
+describe('Manager - Scan Access', function (): void {
+    it('can access scan routes', function (string $routeName): void {
+        $this->actingAs($this->manager)
+            ->get(route($routeName))
+            ->assertOk();
+    })->with([
+        'scan index' => 'dealer.scan.index',
+        'scan settings' => 'dealer.scan.settings',
+        'scan archive' => 'dealer.scan.archive',
+    ]);
 });
 
 describe('Manager - Vendor Access', function (): void {
@@ -153,13 +202,52 @@ describe('Manager - Routes It Should NOT Access', function (): void {
 
     it('cannot access deleted employees (QI+ only)', function (): void {
         $this->actingAs($this->manager)
-            ->get(route('dealer.employee.deleted'))
+            ->get(route('dealer.employees.deleted'))
             ->assertForbidden();
     });
 
     it('cannot access phishing index (QI+ only)', function (): void {
         $this->actingAs($this->manager)
             ->get(route('dealer.phishing.index'))
+            ->assertForbidden();
+    });
+
+    it('cannot access phishing campaign details (QI+ only)', function (): void {
+        $campaign = PhishingCampaign::query()->create([
+            'campaign_id' => 'manager-campaign-1',
+            'user_id' => $this->manager->id,
+            'store_id' => $this->store->id,
+            'name' => 'Manager Forbidden Campaign',
+            'status' => 'In progress',
+            'campaign_created_at' => now(),
+        ]);
+
+        $this->actingAs($this->manager)
+            ->get(route('dealer.phishing.show', $campaign))
+            ->assertForbidden();
+    });
+
+    it('cannot access store settings overview (QI+ only)', function (): void {
+        $this->actingAs($this->manager)
+            ->get(route('dealer.dealer.settings'))
+            ->assertForbidden();
+    });
+
+    it('cannot access store edit (QI+ only)', function (): void {
+        $this->actingAs($this->manager)
+            ->get(route('dealer.store.edit'))
+            ->assertForbidden();
+    });
+
+    it('cannot access consultant-only location management', function (): void {
+        $this->actingAs($this->manager)
+            ->get(route('dealer.locations.index'))
+            ->assertForbidden();
+    });
+
+    it('cannot access consultant-only ridgeback', function (): void {
+        $this->actingAs($this->manager)
+            ->get(route('dealer.ridgeback.index'))
             ->assertForbidden();
     });
 

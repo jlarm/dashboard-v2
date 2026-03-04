@@ -19,10 +19,13 @@ beforeEach(function (): void {
         tenancy()->end();
     }
 
-    // Drop ALL tenant databases that might exist
-    $databases = DB::select('SHOW DATABASES LIKE "dealership_%"');
+    $tenantDatabasePrefix = (string) config('tenancy.database.prefix', 'test_tenant_');
+    $databasePattern = "{$tenantDatabasePrefix}test-isolation-%";
+
+    // Drop only test isolation tenant databases from prior failed runs
+    $databases = DB::select("SHOW DATABASES LIKE '{$databasePattern}'");
     foreach ($databases as $db) {
-        $dbName = $db->{'Database (dealership_%)'};
+        $dbName = $db->{"Database ({$databasePattern})"};
         DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
     }
 
@@ -39,10 +42,13 @@ afterEach(function (): void {
         tenancy()->end();
     }
 
-    // Drop ALL tenant databases
-    $databases = DB::select('SHOW DATABASES LIKE "dealership_%"');
+    $tenantDatabasePrefix = (string) config('tenancy.database.prefix', 'test_tenant_');
+    $databasePattern = "{$tenantDatabasePrefix}test-isolation-%";
+
+    // Drop only test isolation tenant databases
+    $databases = DB::select("SHOW DATABASES LIKE '{$databasePattern}'");
     foreach ($databases as $db) {
-        $dbName = $db->{'Database (dealership_%)'};
+        $dbName = $db->{"Database ({$databasePattern})"};
         DB::statement("DROP DATABASE IF EXISTS `{$dbName}`");
     }
 
@@ -66,21 +72,24 @@ it('prevents users from different tenants from accessing each others data', func
     $owner1 = User::factory()->create(['email' => 'owner1@central.com']);
     $owner2 = User::factory()->create(['email' => 'owner2@central.com']);
 
+    $tenantIdOne = 'test-isolation-acme-'.str()->lower(str()->random(8));
+    $tenantIdTwo = 'test-isolation-widgets-'.str()->lower(str()->random(8));
+
     // Create dealership 1 in central database
     $dealership1 = Dealership::query()->create([
-        'id' => 'acme',
+        'id' => $tenantIdOne,
         'name' => 'Acme',
         'user_id' => $owner1->id,
     ]);
-    $dealership1->domains()->create(['domain' => 'acme.localhost']);
+    $dealership1->domains()->create(['domain' => "{$tenantIdOne}.localhost"]);
 
     // Create dealership 2 in central database
     $dealership2 = Dealership::query()->create([
-        'id' => 'widgets',
+        'id' => $tenantIdTwo,
         'name' => 'Widgets',
         'user_id' => $owner2->id,
     ]);
-    $dealership2->domains()->create(['domain' => 'widgets.localhost']);
+    $dealership2->domains()->create(['domain' => "{$tenantIdTwo}.localhost"]);
 
     // Create tenant users in dealership 1's database
     $dealership1->run(function (): void {

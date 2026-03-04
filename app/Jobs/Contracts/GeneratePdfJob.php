@@ -28,7 +28,8 @@ class GeneratePdfJob implements ShouldQueue
             File::makeDirectory($path, $mode = 0777, true, true);
         }
 
-        $services = json_decode($this->contract->services);
+        $servicesData = $this->contract->services;
+        $services = (array) $servicesData;
         $reviewedServices = [];
 
         foreach ($services as $service) {
@@ -43,7 +44,7 @@ class GeneratePdfJob implements ShouldQueue
         Browsershot::html($html)
             ->showBrowserHeaderAndFooter()
             ->headerHtml('.')
-            ->footerHtml(View::make('pdf.contract.footer'))
+            ->footerHtml(View::make('pdf.contract.footer')->render())
             ->format('A4')
             ->margins(5, 20, 20, 20)
             ->scale(0.75)
@@ -61,6 +62,7 @@ class GeneratePdfJob implements ShouldQueue
             'osha' => 'OSHA',
             'it' => 'IT Security',
             'ces' => 'Cyber Enhanced Security',
+            default => 'Unknown Service',
         };
     }
 

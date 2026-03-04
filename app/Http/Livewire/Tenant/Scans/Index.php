@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Tenant\Scans;
 use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -14,6 +15,7 @@ use Livewire\Component;
 class Index extends Component
 {
     public bool $loaded = false;
+    public bool $showOverview = false;
     public bool $isConfigured = false;
     public bool $hasShortName = false;
     public bool $hasScanData = false;
@@ -22,18 +24,42 @@ class Index extends Component
     public ?string $error = null;
     public int $storeId = 0;
     public ?Store $store = null;
+    public Collection $overviewStores;
     protected ?CyrismaService $cyrisma = null;
     protected $listeners = ['refreshCache'];
 
     public function mount(): void
     {
-        $current = app('currentStore');
-        $this->storeId = $current instanceof Store ? $current->id : (int) $current;
-        $this->store = $current instanceof Store ? $current : Store::query()->find($this->storeId);
+        $this->overviewStores = collect();
+
+        $this->store = app()->bound('currentStoreModel') ? app('currentStoreModel') : null;
+        $this->storeId = $this->store instanceof Store ? $this->store->id : (int) app('currentStore');
+
+        $scopedStoreIds = $this->resolveScopedStoreIds();
+
+        if ((! $this->store instanceof Store || $this->storeId === 0) && $scopedStoreIds->count() === 1) {
+            $this->storeId = (int) $scopedStoreIds->first();
+            $this->store = Store::query()->find($this->storeId);
+        }
+
+        if ((! $this->store instanceof Store || $this->storeId === 0) && $scopedStoreIds->count() !== 1) {
+            $this->showOverview = true;
+            $this->overviewStores = Store::query()
+                ->whereIn('id', $scopedStoreIds)
+                ->withCount('scanReports')
+                ->with('latestScanReportDate')
+                ->orderBy('name')
+                ->get();
+            $this->loaded = true;
+        }
     }
 
     public function loadScanData(): void
     {
+        if ($this->showOverview) {
+            return;
+        }
+
         $this->error = null;
         $this->hasScanData = false;
         $this->hasExternalScans = false;
@@ -98,5 +124,43 @@ class Index extends Component
         return view('livewire.tenant.scans.index', [
             'cyrisma' => $this->cyrisma,
         ])->layout('components.dealer-app');
+    }
+
+    private function resolveScopedStoreIds(): Collection
+    {
+        if (app()->bound('scopedStoreIds')) {
+            /** @var Collection $storeIds */
+            $storeIds = app('scopedStoreIds');
+
+            $normalizedStoreIds = $storeIds->map(static fn ($id): int => (int) $id)->values();
+
+            if ($normalizedStoreIds->isNotEmpty()) {
+                return $normalizedStoreIds;
+            }
+        }
+
+        $user = auth()->user();
+
+        if (! $user) {
+            return collect();
+        }
+
+        if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
+            return $user->current_store_id !== null
+                ? collect([(int) $user->current_store_id])
+                : Store::query()->pluck('id');
+        }
+
+        $assignedStoreIds = $user->stores()->pluck('stores.id')->map(static fn ($id): int => (int) $id);
+
+        if ($user->current_store_id === null) {
+            return $assignedStoreIds;
+        }
+
+        if ($assignedStoreIds->contains($user->current_store_id)) {
+            return collect([(int) $user->current_store_id]);
+        }
+
+        return collect();
     }
 }

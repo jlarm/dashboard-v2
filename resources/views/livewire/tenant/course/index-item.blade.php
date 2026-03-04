@@ -37,7 +37,7 @@
     'text-yellow-700 bg-yellow-100' => $this->status() === 'expired',
     'bg-gray-100 text-gray-600' => !$course->lastResult || $this->status() === null,
 ])
->{{ Str::title($this->status() ?? 'Not Taken') }}</span>
+                >{{ $this->status() === 'expired' ? 'Retake Required' : Str::title($this->status() ?? 'Not Taken') }}</span>
             </div>
             <!-- End Item -->
             @if(!$this->dotProgress())

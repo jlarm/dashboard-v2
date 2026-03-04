@@ -6,7 +6,7 @@
             </h4>
         </div>
 
-        @if(tenant('locations'))
+        @if(app('multipleStoresExist'))
         <!-- Item -->
         <div class="flex justify-between items-center gap-x-2">
             <span class="text-xs text-gray-600">

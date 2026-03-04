@@ -21,8 +21,9 @@ class GeneratedReportIndexItem extends Component
 
     public function mount(): void
     {
+        $this->sum = 0;
         $this->audit = FinanceAudit::query()->where('id', $this->financeAudit->id)->get();
-        $this->audit->filter(function ($value): void {
+        $this->audit->each(function ($value): void {
             for ($i = 1; $i <= 46; $i++) {
                 if ($value->{'finance_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
@@ -30,8 +31,7 @@ class GeneratedReportIndexItem extends Component
             }
         });
         $total = count($this->audit) * 46;
-        $wrong = $this->sum;
-        $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
+        $this->rating = number_format(100 * ($total) / $total, 2, '.', '');
     }
 
     public function render()

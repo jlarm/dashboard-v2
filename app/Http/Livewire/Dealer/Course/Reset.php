@@ -7,10 +7,9 @@ namespace App\Http\Livewire\Dealer\Course;
 use App\Jobs\SendCoursesResetNotifications;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Store;
-use App\Models\User;
+use App\Services\CourseResetService;
 use Filament\Notifications\Notification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
@@ -28,12 +27,7 @@ class Reset extends Modal
 
         $this->askForConfirmation(
             callback: function (): void {
-                $affectedUserIds = match (true) {
-                    ! tenant('locations') => $this->deleteAllCourseResults(),
-                    tenant('locations') && ! $this->store => $this->deleteAllCourseResults(),
-                    tenant('locations') && $this->store => $this->deleteStoreCourseResults(),
-                    default => collect()
-                };
+                $affectedUserIds = app(CourseResetService::class)->reset(store: $this->store);
 
                 $this->logCourseReset();
 
@@ -58,61 +52,6 @@ class Reset extends Modal
     public function render(): View
     {
         return view('livewire.dealer.course.reset');
-    }
-
-    private function deleteAllCourseResults(): Collection
-    {
-        $affectedUserIds = collect();
-
-        CourseResults::query()->chunkById(100, function ($results) use ($affectedUserIds): void {
-            $results->each(function ($result) use ($affectedUserIds): void {
-                $affectedUserIds->push($result->user_id);
-                $result->delete();
-            });
-        });
-
-        $uniqueUserIds = $affectedUserIds->unique();
-        $this->clearCacheForUsers($uniqueUserIds);
-
-        return $uniqueUserIds;
-    }
-
-    private function deleteStoreCourseResults(): Collection
-    {
-        if (! $this->store instanceof Store) {
-            return collect();
-        }
-
-        $userIds = $this->store->users()->pluck('id');
-
-        if ($userIds->isEmpty()) {
-            return collect();
-        }
-
-        $affectedUserIds = collect();
-
-        CourseResults::query()
-            ->whereIn('user_id', $userIds)
-            ->chunkById(100, function ($results) use ($affectedUserIds): void {
-                $results->each(function ($result) use ($affectedUserIds): void {
-                    $affectedUserIds->push($result->user_id);
-                    $result->delete();
-                });
-            });
-
-        $uniqueUserIds = $affectedUserIds->unique();
-        $this->clearCacheForUsers($uniqueUserIds);
-
-        return $uniqueUserIds;
-    }
-
-    private function clearCacheForUsers(Collection $userIds): void
-    {
-        User::query()->whereIn('id', $userIds)->chunkById(100, function ($users): void {
-            $users->each(function ($user): void {
-                $user->clearCourseCache();
-            });
-        });
     }
 
     private function logCourseReset(): void

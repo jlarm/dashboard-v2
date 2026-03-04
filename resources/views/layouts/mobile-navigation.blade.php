@@ -74,8 +74,8 @@
                             Dashboard
                         </a>
 
-                        <a href="#"
-                           class="{{ (request()->is('stores')) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white hover:bg-gray-700' }} group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        <a href="{{ route('dealer.locations.index') }}"
+                           class="{{ (request()->is('locations')) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white hover:bg-gray-700' }} group flex items-center px-2 py-2 text-base font-medium rounded-md">
                             <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor">

@@ -566,11 +566,7 @@ class Edit extends Component
         }
 
         if ($exit) {
-            if (! tenant('locations')) {
-                return redirect()->route('dealer.audit.individual.show', $parent);
-            }
-
-            return redirect()->route('dealer.stores.audits.individual.show', [$store, $parent]);
+            return redirect()->route('dealer.audit.individual.show', $parent);
         }
 
         return null;

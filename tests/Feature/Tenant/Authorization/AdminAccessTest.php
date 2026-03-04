@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
@@ -16,6 +17,7 @@ beforeEach(function (): void {
 
     $this->store = Store::query()->first();
     $this->admin->stores()->attach($this->store->id);
+    $this->admin->update(['current_store_id' => $this->store->id]);
 
     app()[PermissionRegistrar::class]->forgetCachedPermissions();
 });
@@ -36,12 +38,6 @@ describe('Admin - General Access', function (): void {
     it('can access SDS sheets', function (): void {
         $this->actingAs($this->admin)
             ->get(route('dealer.sds.index'))
-            ->assertOk();
-    });
-
-    it('can access videos index', function (): void {
-        $this->actingAs($this->admin)
-            ->get(route('dealer.videos.index'))
             ->assertOk();
     });
 
@@ -106,6 +102,73 @@ describe('Admin - Routes It Should NOT Access', function (): void {
     it('cannot access vendor index (not in manager+ role group)', function (): void {
         $this->actingAs($this->admin)
             ->get(route('dealer.vendor.index'))
+            ->assertForbidden();
+    });
+
+    it('cannot access scan routes (not in manager+ role group)', function (string $routeName): void {
+        $this->actingAs($this->admin)
+            ->get(route($routeName))
+            ->assertForbidden();
+    })->with([
+        'scan index' => 'dealer.scan.index',
+        'scan settings' => 'dealer.scan.settings',
+        'scan archive' => 'dealer.scan.archive',
+    ]);
+
+    it('cannot access fit tests (not in manager+ role group)', function (): void {
+        $this->actingAs($this->admin)
+            ->get(route('dealer.fit-tests.index'))
+            ->assertForbidden();
+    });
+
+    it('cannot access deleted employees (QI+ only)', function (): void {
+        $this->actingAs($this->admin)
+            ->get(route('dealer.employees.deleted'))
+            ->assertForbidden();
+    });
+
+    it('cannot access phishing index (QI+ only)', function (): void {
+        $this->actingAs($this->admin)
+            ->get(route('dealer.phishing.index'))
+            ->assertForbidden();
+    });
+
+    it('cannot access phishing campaign details (QI+ only)', function (): void {
+        $campaign = PhishingCampaign::query()->create([
+            'campaign_id' => 'admin-campaign-1',
+            'user_id' => $this->admin->id,
+            'store_id' => $this->store->id,
+            'name' => 'Admin Forbidden Campaign',
+            'status' => 'In progress',
+            'campaign_created_at' => now(),
+        ]);
+
+        $this->actingAs($this->admin)
+            ->get(route('dealer.phishing.show', $campaign))
+            ->assertForbidden();
+    });
+
+    it('cannot access store settings (QI+ only)', function (): void {
+        $this->actingAs($this->admin)
+            ->get(route('dealer.dealer.settings'))
+            ->assertForbidden();
+    });
+
+    it('cannot access store edit (QI+ only)', function (): void {
+        $this->actingAs($this->admin)
+            ->get(route('dealer.store.edit'))
+            ->assertForbidden();
+    });
+
+    it('cannot access consultant-only location management', function (): void {
+        $this->actingAs($this->admin)
+            ->get(route('dealer.locations.index'))
+            ->assertForbidden();
+    });
+
+    it('cannot access consultant-only ridgeback', function (): void {
+        $this->actingAs($this->admin)
+            ->get(route('dealer.ridgeback.index'))
             ->assertForbidden();
     });
 });

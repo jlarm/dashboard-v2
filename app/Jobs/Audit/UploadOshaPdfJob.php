@@ -21,7 +21,7 @@ class UploadOshaPdfJob implements ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->oshaViolationAudit)];
+        return [new WithoutOverlapping(static::class.'-'.$this->oshaViolationAudit->getKey())];
     }
 
     public function handle(): void

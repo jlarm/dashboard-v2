@@ -51,7 +51,7 @@
             </div>
         </div>
         <div>
-            @if(tenant('locations'))
+            @if($stores)
                 <div class="col-span-3">
                     <x-input-label for="store"
                                    :value="__('Select a Store if the vendor is only used at a specific store')"/>

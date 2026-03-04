@@ -6,7 +6,7 @@ namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class InternalReportIndex extends Component
@@ -15,7 +15,7 @@ class InternalReportIndex extends Component
 
     public function render()
     {
-        if (tenant('locations')) {
+        if ((bool) app('multipleStoresExist')) {
             return view('livewire.dealer.scan.internal-report-index', [
                 'reports' => ScanReport::query()->where('scan_type', 'internal')
                     ->where('store_id', $this->store->id)
@@ -34,8 +34,8 @@ class InternalReportIndex extends Component
 
     }
 
-    protected function formattedLastScanDate(Carbon $date): string
+    protected function formattedLastScanDate(?Carbon $date): string
     {
-        return $date->format('F d, Y');
+        return $date?->format('F d, Y') ?? 'Unknown';
     }
 }

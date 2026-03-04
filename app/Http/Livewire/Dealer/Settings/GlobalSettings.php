@@ -12,14 +12,26 @@ use Livewire\Component;
 
 class GlobalSettings extends Component
 {
+    private const SECTION_GENERAL = 'general';
+
+    private const SECTION_COURSE_MANAGEMENT = 'course-management';
+
+    private const SECTION_RESET_COURSES = 'reset-courses';
+
+    private const SECTION_PHISHING = 'phishing';
+
     public $settings;
     public $phishing_active;
     public $phishing_token;
     public $phishing_ip;
     public $stores = [];
+    public string $section = self::SECTION_GENERAL;
 
-    public function mount(): void
+    public function mount(string $section = self::SECTION_GENERAL): void
     {
+        abort_unless(in_array($section, $this->sections(), true), 404);
+
+        $this->section = $section;
         $this->settings = GlobalSetting::query()->first();
 
         $this->phishing_active = $this->settings->phishing_active ?? false;
@@ -95,5 +107,15 @@ class GlobalSettings extends Component
     {
         return view('livewire.dealer.settings.global-settings')
             ->layout('components.dealer-app');
+    }
+
+    private function sections(): array
+    {
+        return [
+            self::SECTION_GENERAL,
+            self::SECTION_COURSE_MANAGEMENT,
+            self::SECTION_RESET_COURSES,
+            self::SECTION_PHISHING,
+        ];
     }
 }

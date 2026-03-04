@@ -27,7 +27,7 @@ class Index extends Component
 
     public function mount(): void
     {
-        if (tenant('locations')) {
+        if ((bool) app('multipleStoresExist')) {
             $this->dealer = ScanSetting::query()->where('store_id', $this->store->id)->first()->name ?? '';
         } else {
             $this->dealer = ScanSetting::query()->first()->name ?? '';
@@ -36,7 +36,7 @@ class Index extends Component
 
     public function export()
     {
-        $dealerName = tenant('locations') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
+        $dealerName = app('multipleStoresExist') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
         $fileName = $dealerName.'-'.now()->format('Ymdhis').'-'.$this->type.'.pdf';
 
         try {
@@ -59,11 +59,7 @@ class Index extends Component
                 'scan_type' => 'external',
             ]);
 
-            if (tenant('locations')) {
-                return redirect()->route('dealer.stores.scans', $this->store);
-            }
-
-            return redirect()->route('dealer.scan.index');
+            return redirect()->route('dealer.scan.archive');
 
         } catch (Exception) {
             $this->addError('connection', 'Error connecting to Sentry. Please check the dealership name in settings.');

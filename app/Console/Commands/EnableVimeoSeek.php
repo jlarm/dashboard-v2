@@ -45,7 +45,12 @@ class EnableVimeoSeek extends Command
     {
         $videoIds = new Collection();
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($videoIds): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($videoIds): void {
             $tenantVideoIds = DealerCourse::query()->whereNotNull('video_id')->pluck('video_id');
             $this->line("Tenant {$tenant->id}: found {$tenantVideoIds->count()} video(s)");
             $videoIds->push(...$tenantVideoIds);

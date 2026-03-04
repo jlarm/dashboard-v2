@@ -90,7 +90,7 @@ class Create extends Component
                 ->send();
 
             // Log the error for debugging
-            Log::error($e);
+            Log::error($e->getMessage(), ['exception' => $e]);
             captureException($e);
 
             // Handle specific error messages

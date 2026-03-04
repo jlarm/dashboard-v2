@@ -3,7 +3,7 @@
         <x-slot name="pageTitle">Fit Tests</x-slot>
     </x-slot>
     <x-slot name="actions">
-        <x-button.primary href="{{ global_asset('docs/fit-test-form.pdf') }}" target="_blank">Download Form</x-button.primary>
+        <x-armp.button variant="primary" size="sm" href="{{ global_asset('docs/fit-test-form.pdf') }}" target="_blank">Download Form</x-armp.button>
     </x-slot>
     <div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">

@@ -29,7 +29,7 @@ class Show extends Component
     public function quizLink(): string
     {
         return URL::temporarySignedRoute(
-            'courses.quiz',
+            'dealer.courses.quiz',
             now()->addMinutes(30),
             ['course' => $this->course->slug]
         );

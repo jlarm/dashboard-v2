@@ -110,7 +110,7 @@
         @endforeach
     </div>
     <x-button type="submit" variant="primary">{{ $dealJacket?->exists ? 'Update' : 'Create' }}</x-button>
-    <x-button :href="tenant('locations') ? route('dealer.stores.audits.deal-jackets.show', [$store, $dealJacketGroup]) : route('dealer.audit.deal-jackets.show', $dealJacketGroup)">
+    <x-button :href="route('dealer.audit.deal-jackets.show', $dealJacketGroup)">
         Cancel
     </x-button>
 </form>

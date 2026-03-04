@@ -11,11 +11,17 @@ use Livewire\Component;
 class CertIndex extends Component
 {
     public User $user;
+    public bool $autoload = false;
     public bool $isLoaded = false;
     protected $listeners = [
         'employeeTabChanged' => 'handleTabChanged',
         'certificateGenerated' => 'reloadCertificates',
     ];
+
+    public function mount(): void
+    {
+        $this->isLoaded = $this->autoload;
+    }
 
     public function handleTabChanged(string $tab): void
     {

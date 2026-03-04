@@ -9,6 +9,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -22,11 +23,16 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
 
             $globalSetting = GlobalSetting::query()->first();
 
-            if ($globalSetting === null || $globalSetting->phishing_active === 0 || $globalSetting->phishing_active === null) {
+            if ($globalSetting === null || ! $globalSetting->phishing_active) {
                 $this->info('Phishing is disabled for tenant: '.$tenant->name);
 
                 return;
@@ -68,7 +74,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 
     private function getUsers($store): array
     {
-        if (tenant('locations')) {
+        if (Store::query()->count() > 1) {
             $users = $store->users()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])->get();
         } else {
             $users = User::query()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])->get();

@@ -21,7 +21,7 @@ class UploadBodyShopPdfJob implements ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->bodyShopViolationAudit)];
+        return [new WithoutOverlapping(static::class.'-'.$this->bodyShopViolationAudit->getKey())];
     }
 
     public function handle(): void

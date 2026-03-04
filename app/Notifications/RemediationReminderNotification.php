@@ -40,7 +40,7 @@ class RemediationReminderNotification extends Notification
     {
         return (new MailMessage)
             ->line('There '.($this->audit->outstanding_remediation_count === 1 ? 'is' : 'are')." {$this->audit->outstanding_remediation_count} outstanding {$this->auditType->label()} violation".($this->audit->outstanding_remediation_count === 1 ? '' : 's')." to remediate for {$this->store->name}.")
-            ->action('Remediation Form', $this->tenants ? route('dealer.stores.audits.osha.remediation', [$this->store, $this->audit->uuid]) : route('dealer.audit.osha.remediation', $this->audit->uuid));
+            ->action('Remediation Form', route('dealer.audit.osha.remediation', $this->audit->uuid));
     }
 
     /**

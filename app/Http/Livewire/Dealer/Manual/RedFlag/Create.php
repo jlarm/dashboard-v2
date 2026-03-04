@@ -107,7 +107,7 @@ class Create extends Component
             new UploadRedFlagToDigitalOceanJob($manual),
         ])->dispatch();
 
-        (tenant('locations')) ? $this->redirect(route('dealer.stores.manuals.red-flag.index', $this->store)) : $this->redirect(route('dealer.manual.red-flag.index', $this->store));
+        $this->redirect(route('dealer.manual.red-flag.index'));
 
     }
 

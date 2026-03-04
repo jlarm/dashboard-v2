@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\Dealer\Audit\IndividualAudit;
+use App\Models\Dealer\Store;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -24,9 +25,9 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     public $issuesByManager;
 
     /**
-     * @var never[]
+     * @var array<int, mixed>
      */
-    public $array = [];
+    public array $array = [];
 
     public $results = [];
     public $totals = [];
@@ -194,7 +195,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             File::makeDirectory($path, $mode = 0777, true, true);
         }
 
-        if (tenant('locations')) {
+        if ($this->individualAudit->store !== null && Store::query()->count() > 1) {
             $dealerName = str_replace(' ', '-', $this->individualAudit->store->name);
         } else {
             $dealerName = str_replace(' ', '-', tenant('name'));

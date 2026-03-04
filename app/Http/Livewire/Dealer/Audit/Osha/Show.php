@@ -1093,11 +1093,7 @@ class Show extends Component
             ->send();
 
         if ($exit) {
-            if (! tenant('locations')) {
-                return redirect()->route('dealer.audit.osha.index');
-            }
-
-            return redirect()->route('dealer.stores.audits.osha.index', [$store->slug]);
+            return redirect()->route('dealer.audit.osha.index');
         }
 
         return null;

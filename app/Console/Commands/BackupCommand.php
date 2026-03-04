@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Stancl\Tenancy\Concerns\HasATenantsOption;
@@ -23,7 +24,12 @@ class BackupCommand extends Command
         $successes = 0;
         $failures = [];
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use (&$total, &$successes, &$failures): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use (&$total, &$successes, &$failures): void {
             $total++;
             $this->info("Running backup command for tenant {$tenant->id} ({$tenant->name})");
 

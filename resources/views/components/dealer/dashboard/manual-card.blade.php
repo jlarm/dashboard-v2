@@ -1,6 +1,6 @@
 <a
     class="group p-4 bg-white border border-gray-200 rounded-xl hover:shadow-lg hover:-translate-y-0.5 focus:outline-hidden focus:shadow-lg focus:-translate-y-0.5 transition"
-    href="{{ tenant('locations') ? route('dealer.stores.manuals.' . $link . '.index', $store) : route('dealer.manual.' . $link . '.index') }}"
+    href="{{ route('dealer.manual.' . $link . '.index') }}"
 >
     <div class="flex gap-x-3">
         <div class="grow">

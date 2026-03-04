@@ -9,8 +9,6 @@ use App\Models\CourseResults;
 use App\Models\User;
 use App\Observers\CourseResultsObserver;
 use App\Observers\UserObserver;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Mail\Events\MessageSent;
 
@@ -22,9 +20,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
-        ],
         MessageSent::class => [
             LogSentMessage::class,
         ],

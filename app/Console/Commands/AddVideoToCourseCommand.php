@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Models\Dealer\Course;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class AddVideoToCourseCommand extends Command
 {
@@ -19,7 +20,12 @@ class AddVideoToCourseCommand extends Command
 
         $this->info("Adding video ID '{$videoId}' to course with slug '{$slug}'");
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($slug, $videoId): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($slug, $videoId): void {
             $this->info("Processing tenant: {$tenant->id}");
 
             $course = Course::query()->where('slug', $slug)->first();

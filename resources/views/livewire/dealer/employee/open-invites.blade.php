@@ -10,12 +10,12 @@
                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-arm-blue-500 focus:ring-arm-blue-500 sm:text-sm"
                                placeholder="Search by Name...">
                     </div>
-                    @if(count($this->getDepartmentIds()) > 1)
+                    @if(count($departmentIds) > 1)
                     <div>
                         <select wire:model="filterByDepartment" id="department" name="department" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-arm-blue-600 sm:text-sm/6">
                             <option value="">Filter by Department</option>
-                            @foreach($this->getDepartmentIds() as $id)
-                                <option value="{{ $id }}">{{ $this->getDepartmentName($id) }}</option>
+                            @foreach($departmentIds as $id)
+                                <option value="{{ $id }}">{{ $departmentNames[$id] ?? '' }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -49,7 +49,7 @@
                                 <input wire:model="selectPage" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                             </x-table.heading>
                             <x-table.heading>Name</x-table.heading>
-                            @if(tenant('locations'))
+                            @if(app('multipleStoresExist'))
                                 <x-table.heading>Store</x-table.heading>
                             @endif
                             <x-table.heading>Department</x-table.heading>
@@ -62,7 +62,7 @@
                             @if($selectPage)
                             <x-table.row class="bg-gray-50" wire:key="row-message">
                                 <x-table.cell></x-table.cell>
-                                <x-table.cell class="pl-4" colspan="6">
+                                <x-table.cell class="pl-4" colspan="7">
                                     @if(!$selectAll && $invites->lastPage() > 1)
                                         <div>
                                             <span>You selected <strong>{{ $invites->count() }}</strong> invites. Do you want to select all <strong>{{ $invites->total() }}</strong>?</span>
@@ -80,12 +80,12 @@
                                         <input wire:model="selected" value="{{ $invite->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600">
                                     </x-table.cell>
                                     <x-table.cell class="pl-4 pr-3">{{ Str::title($invite->name) }}</x-table.cell>
-                                    @if(tenant('locations'))
+                                    @if(app('multipleStoresExist'))
                                         <x-table.cell class="pl-4 pr-3">
-                                            {{ $this->getStoreNames($invite->stores) }}
+                                            {{ collect($invite->stores ?? [])->map(fn($id) => $storeNameMap[$id] ?? '')->filter()->implode(', ') }}
                                         </x-table.cell>
                                     @endif
-                                    <x-table.cell class="pl-4 pr-3">{{ $this->getDepartmentName($invite->department_id) }}</x-table.cell>
+                                    <x-table.cell class="pl-4 pr-3">{{ $departmentNames[$invite->department_id] ?? '' }}</x-table.cell>
                                     <x-table.cell>{{ Str::lower($invite->email) }}</x-table.cell>
                                     <x-table.cell>{{ $invite->updated_at->format('F d, Y') }}</x-table.cell>
                                     <x-table.cell>{{ $invite->user->name }}</x-table.cell>

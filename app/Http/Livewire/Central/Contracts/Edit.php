@@ -105,7 +105,8 @@ class Edit extends Component
         $this->contractType = $this->contract->contract_type;
         $this->agreementDate = $this->contract->agreement_date->format('Y-m-d');
         $this->dealerName = $this->contract->dealer_name;
-        $this->services = json_decode($this->contract->services);
+        $services = $this->contract->services;
+        $this->services = (array) $services;
         $this->commenceDate = $this->contract->commence_date->format('Y-m-d');
         $this->yearlyInspectionTotal = $this->contract->yearly_inspection_total;
         $this->initialFee = number_format($this->contract->initial_fee, 2);

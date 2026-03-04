@@ -13,7 +13,7 @@ class GeneratedReportIndex extends Component
 
     public function mount(): void
     {
-        $this->store = Store::query()->where('id', app('currentStore'))->firstOrFail();
+        $this->store = $this->resolveStore();
     }
 
     public function render()
@@ -25,5 +25,31 @@ class GeneratedReportIndex extends Component
                 ->select(['id', 'audit_date', 'pdf_path'])
                 ->get(),
         ]);
+    }
+
+    private function resolveStore(): Store
+    {
+        $currentStore = app()->bound('currentStore') ? app('currentStore') : null;
+
+        if (is_numeric($currentStore)) {
+            $store = Store::query()->find((int) $currentStore);
+
+            if ($store instanceof Store) {
+                return $store;
+            }
+        }
+
+        $scopedStoreIds = app()->bound('scopedStoreIds') ? app('scopedStoreIds') : collect();
+        $firstScopedStoreId = $scopedStoreIds->first();
+
+        if (is_numeric($firstScopedStoreId)) {
+            $store = Store::query()->find((int) $firstScopedStoreId);
+
+            if ($store instanceof Store) {
+                return $store;
+            }
+        }
+
+        return Store::query()->orderBy('id')->firstOrFail();
     }
 }

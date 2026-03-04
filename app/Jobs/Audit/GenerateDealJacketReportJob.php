@@ -29,7 +29,7 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->dealJacketGroup)];
+        return [new WithoutOverlapping(static::class.'-'.$this->dealJacketGroup->getKey())];
     }
 
     public function handle(): void

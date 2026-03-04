@@ -113,7 +113,7 @@ class Create extends Component
             new UploadIspToDigitaloceanJob($manual),
         ])->dispatch();
 
-        (tenant('locations')) ? $this->redirect(route('dealer.stores.manuals.isp.index', $this->store)) : $this->redirect(route('dealer.manual.isp.index', $this->store));
+        $this->redirect(route('dealer.manual.isp.index'));
     }
 
     public function render()

@@ -12,18 +12,17 @@ use App\Http\Controllers\Dealer\Audit\OshaCreateController;
 use App\Http\Controllers\Dealer\Audit\SingleIndividualController;
 use App\Http\Controllers\Dealer\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Dealer\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Dealer\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Dealer\Auth\NewPasswordController;
 use App\Http\Controllers\Dealer\Auth\PasswordController;
 use App\Http\Controllers\Dealer\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Dealer\Auth\VerifyEmailController;
 use App\Http\Controllers\Dealer\CourseController;
 use App\Http\Controllers\Dealer\CourseResultsController;
 use App\Http\Controllers\Dealer\EmployeeIndexController;
 use App\Http\Controllers\Dealer\ImpersonationController;
 use App\Http\Controllers\Dealer\ProfileController;
+use App\Http\Controllers\Dealer\Store\CreateFirstStoreController;
 use App\Http\Controllers\Dealer\Store\SettingsController;
+use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Controllers\DealJacketPdfTestController;
@@ -41,11 +40,11 @@ use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Docs\Index;
 use App\Http\Livewire\Dealer\Employee\DeletedIndex;
+use App\Http\Livewire\Dealer\Log\Show;
 use App\Http\Livewire\Dealer\Phish\Create;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use App\Http\Livewire\Dealer\Settings\GlobalSettings;
 use App\Http\Livewire\Dealer\Vendor\NewForm;
-use App\Http\Livewire\Global\Video\Show;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Features\UserImpersonation;
@@ -57,18 +56,12 @@ Route::name('dealer.')->middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
     'tenant.not-suspended',
+    'tenant.requires-store',
 ])->group(function (): void {
 
     // **************************************************
     // All Access
     // **************************************************
-
-    //    Route::get('/language/{locale}', function ($locale) {
-    //        app()->setLocale($locale);
-    //        session()->put('locale', $locale);
-    //
-    //        return redirect()->back();
-    //    });
 
     Route::view('/', 'dealer.welcome');
 
@@ -96,6 +89,11 @@ Route::name('dealer.')->middleware([
     })->middleware('auth');
 
     Route::view('/dashboard', 'dealer.dashboard')->middleware('auth')->name('dashboard');
+    Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
+
+    Route::any('stores/{path?}', static fn () => redirect()->route('dealer.dashboard'))
+        ->where('path', '.*')
+        ->name('legacy-stores.redirect');
 
     Route::get('invite_registration/{invite:invitation_token}', [UserController::class, 'create'])
         ->missing(fn () => response()->view('errors.link-expired'))
@@ -110,18 +108,13 @@ Route::name('dealer.')->middleware([
         Route::view('all', 'dealer.course.all')->middleware(['auth', 'role:super-admin|Consultant'])->name('all');
         Route::get('{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('show');
         Route::post('{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('results.store');
-        Route::get('{course:slug}/edit', [CourseController::class, 'edit'])->middleware('auth')->name('edit');
+        //        Route::get('{course:slug}/edit', [CourseController::class, 'edit'])->middleware('auth')->name('edit');
         Route::get('{course:slug}/quiz', [CourseController::class, 'quiz'])->middleware('auth')->name('quiz');
     });
-
-    Route::get('videos', App\Http\Livewire\Global\Video\Index::class)->middleware('auth')->name('videos.index');
-    Route::get('videos/{videoId}', Show::class)->name('videos.show');
 
     Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
     Route::get('form', NewForm::class)->middleware('signed')->name('vendor.form');
     Route::view('/vendors/thankyou', 'dealer.vendor.thankyou')->middleware('web')->name('vendors.thankyou');
-
-    //    Route::view('disclosures', 'dealer.disclosure.index')->middleware(['auth', 'web'])->name('disclosure.index');
 
     Route::get('email/settings', FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
@@ -129,9 +122,6 @@ Route::name('dealer.')->middleware([
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
 
-    Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])->middleware('auth')->name('verification.notice');
-    Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->middleware('auth')->name('password.confirm');
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store'])->middleware('auth');
@@ -145,6 +135,17 @@ Route::name('dealer.')->middleware([
 
     Route::middleware('role:super-admin')->group(function (): void {
         Route::get('global-settings', GlobalSettings::class)->name('settings.global');
+        Route::prefix('global-settings')->name('settings.global.')->group(function (): void {
+            Route::get('course-management', GlobalSettings::class)
+                ->defaults('section', 'course-management')
+                ->name('course-management');
+            Route::get('reset-courses', GlobalSettings::class)
+                ->defaults('section', 'reset-courses')
+                ->name('reset-courses');
+            Route::get('phishing', GlobalSettings::class)
+                ->defaults('section', 'phishing')
+                ->name('phishing');
+        });
     });
 
     // **************************************************
@@ -157,7 +158,7 @@ Route::name('dealer.')->middleware([
             Route::view('create', 'dealer.employee.create')->name('new');
         });
 
-        Route::prefix('audits/')->name('audit.')->middleware(['auth'])->group(function (): void {
+        Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
             Route::get('osha/create/{store}', OshaCreateController::class)->name('osha.create');
             Route::get('osha/{oshaViolationAudit:uuid}/edit', Edit::class)->name('osha.edit');
             Route::get('body-shop/create/{store}', BodyShopCreateController::class)->name('body-shop.create');
@@ -174,17 +175,17 @@ Route::name('dealer.')->middleware([
 
         Route::get('phishing/create', Create::class)->name('phishing.create');
 
-        Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)->name('ridgeback.index');
+        Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)
+            ->middleware(['auth', 'single.store'])
+            ->name('ridgeback.index');
+
+        Route::view('locations', 'tenant.store.index')->name('locations.index');
+
     });
 
-    Route::middleware(['auth', 'can:delete-stores'])->group(function (): void {
+    Route::middleware(['auth', 'permission:delete-stores'])->group(function (): void {
         Route::get('logs', App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
-        Route::get('logs/{activity:id}', App\Http\Livewire\Dealer\Log\Show::class)->name('logs.show');
-    });
-
-    Route::middleware(['auth', 'can:delete-stores'])->group(function (): void {
-        Route::get('logs', App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
-        Route::get('logs/{activity:id}', App\Http\Livewire\Dealer\Log\Show::class)->name('logs.show');
+        Route::get('logs/{activity:id}', Show::class)->name('logs.show');
     });
 
     // **************************************************
@@ -193,20 +194,37 @@ Route::name('dealer.')->middleware([
 
     Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function (): void {
 
-        Route::get('employees/deleted', DeletedIndex::class)->name('employee.deleted');
+        Route::get('employees/deleted', DeletedIndex::class)->name('employees.deleted');
 
         Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function (): void {
             Route::get('/isp', App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
-            Route::get('/isp/create', App\Http\Livewire\Dealer\Manual\Isp\Create::class)->name('isp.create');
+            Route::get('/isp/create', App\Http\Livewire\Dealer\Manual\Isp\Create::class)->middleware(['single.store'])->name('isp.create');
             Route::get('/osha', App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('osha.index');
-            Route::get('/osha/create', App\Http\Livewire\Dealer\Manual\Osha\Create::class)->name('osha.create');
+            Route::get('/osha/create', App\Http\Livewire\Dealer\Manual\Osha\Create::class)->middleware(['single.store'])->name('osha.create');
             Route::get('/red-flag', App\Http\Livewire\Dealer\Manual\RedFlag\Index::class)->name('red-flag.index');
-            Route::get('/red-flag/create', App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->name('red-flag.create');
+            Route::get('/red-flag/create', App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->middleware(['single.store'])->name('red-flag.create');
             Route::get('cms', App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('cms.index');
-            Route::get('cms/create', App\Http\Livewire\Dealer\Manual\Cms\Create::class)->name('cms.create');
+            Route::get('cms/create', App\Http\Livewire\Dealer\Manual\Cms\Create::class)->middleware(['single.store'])->name('cms.create');
         });
 
-        Route::get('settings', SettingsController::class)->middleware(['auth', 'single.store'])->name('dealer.settings');
+        Route::get('settings', SettingsController::class)->middleware(['auth'])->name('dealer.settings');
+        Route::prefix('settings')->middleware(['auth'])->name('dealer.settings.')->group(function (): void {
+            Route::get('managers', [SettingsController::class, 'show'])
+                ->defaults('section', 'managers')
+                ->name('managers');
+            Route::get('compliance', [SettingsController::class, 'show'])
+                ->defaults('section', 'compliance')
+                ->name('compliance');
+            Route::get('reset-courses', [SettingsController::class, 'show'])
+                ->defaults('section', 'reset-courses')
+                ->middleware('can:create-dealerships')
+                ->name('reset-courses');
+            Route::get('ridgeback', [SettingsController::class, 'show'])
+                ->defaults('section', 'ridgeback')
+                ->middleware('can:create-dealerships')
+                ->name('ridgeback');
+        });
+        Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth'])->name('store.edit');
 
         Route::get('phishing', App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
         Route::get('phishing/{phishingCampaign}', App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
@@ -222,18 +240,26 @@ Route::name('dealer.')->middleware([
             Route::get('/', EmployeeIndexController::class)->name('index');
             Route::view('create', 'dealer.employee.create')->name('new');
             Route::view('open-invites', 'dealer.employee.open-invites')->name('open-invites');
-            Route::get('{user:slug}', [UserController::class, 'show'])->name('show');
+            Route::prefix('{user:slug}')->group(function (): void {
+                Route::get('/', [UserController::class, 'show'])->name('show');
+                Route::get('manage-courses', [UserController::class, 'showManageCourses'])
+                    ->middleware('role:super-admin|Consultant|Qualified Individual')
+                    ->name('show.manage-courses');
+                Route::get('certificates', [UserController::class, 'showCertificates'])->name('show.certificates');
+                Route::get('video-progress', [UserController::class, 'showVideoProgress'])->name('show.video-progress');
+            });
         });
 
+        Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->middleware(['single.store'])->name('scan.index');
+
         Route::middleware(['single.store'])->group(function (): void {
-            Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->name('scan.index');
             Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');
             Route::get('scans/report/{type}', [CyrismaReportController::class, 'download'])->name('scan.report');
         });
 
         Route::view('scans-archive', 'dealer.scan.index')->middleware(['auth', 'single.store'])->name('scan.archive');
 
-        Route::prefix('audits/')->name('audit.')->middleware(['auth'])->group(function (): void {
+        Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
             Route::get('osha', App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('osha.index');
             Route::get('osha/{oshaViolationAudit:uuid}/remediation', RemediationForm::class)->name('osha.remediation');
             Route::get('osha/{oshaViolationAudit:uuid}', Single::class)->name('osha.show');
@@ -260,8 +286,6 @@ Route::name('dealer.')->middleware([
 
     });
 
-    Route::get('email/settings', FrontEndComplianceForm::class)->middleware('signed')->name('dealer.settings.form');
-
     // Impersonation routes
     Route::get('/impersonate/{token}', fn ($token): RedirectResponse => UserImpersonation::makeResponse($token))->name('impersonate.token');
 
@@ -282,5 +306,3 @@ Route::middleware([
 ])->group(function (): void {
     Route::post('/webhooks/gophish/', 'App\Http\Controllers\WebhookController@gophish')->name('webhooks.gophish');
 });
-
-require __DIR__.'/stores.php';

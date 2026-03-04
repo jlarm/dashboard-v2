@@ -32,7 +32,7 @@ class ReportIndex extends Component
     {
         $query = ScanReport::query()->where('scan_type', 'external')->latest();
 
-        if (tenant('locations')) {
+        if ((bool) app('multipleStoresExist')) {
             $query->where('store_id', $this->store->id);
         }
 

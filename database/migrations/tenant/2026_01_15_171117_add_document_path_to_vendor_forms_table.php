@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (! Schema::hasTable('vendor_forms') || Schema::hasColumn('vendor_forms', 'document_path')) {
+            return;
+        }
+
         Schema::table('vendor_forms', function (Blueprint $table): void {
             $table->string('document_path')->nullable()->after('data');
         });
@@ -23,6 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (! Schema::hasTable('vendor_forms') || ! Schema::hasColumn('vendor_forms', 'document_path')) {
+            return;
+        }
+
         Schema::table('vendor_forms', function (Blueprint $table): void {
             $table->dropColumn('document_path');
         });

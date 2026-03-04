@@ -53,7 +53,8 @@ class UserCourseService
         $excludedCourseIds = $this->getOverrideCourseIds($user, 'exclude');
         $addedCourseIds = $this->getOverrideCourseIds($user, 'add');
         $userRoleIds = $user->roles
-            ->reject(fn (Role $role): bool => $role->id === self::QUALIFIED_INDIVIDUAL_ROLE_ID || in_array($role->name, self::ADMIN_ROLES))
+            ->reject(fn ($role): bool => $role instanceof Role
+                && ($role->id === self::QUALIFIED_INDIVIDUAL_ROLE_ID || in_array($role->name, self::ADMIN_ROLES, true)))
             ->pluck('id');
 
         if ($userRoleIds->isEmpty()) {

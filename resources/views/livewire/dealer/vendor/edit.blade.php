@@ -1,7 +1,7 @@
 <x-wire-elements-pro::tailwind.slide-over on-submit="send" :content-padding="false">
     <x-slot name="title">
         {{ ucwords(strtolower($vendor->name)) }}
-        @if(tenant('locations'))
+        @if(app('multipleStoresExist'))
             <p class="text-sm text-gray-500 font-normal"> {{ $vendor->store->name ?? 'All Stores' }}</p>
         @endif
     </x-slot>

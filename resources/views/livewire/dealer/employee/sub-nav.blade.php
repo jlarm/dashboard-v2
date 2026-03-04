@@ -1,16 +1,16 @@
 <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5 text-gray-600">
     <a
-        href="{{ $store ? route('dealer.stores.employees', $store) : route('dealer.employees.index') }}"
+        href="{{ $store ? route('dealer.employees.index', $store) : route('dealer.employees.index') }}"
         @class([
             'text-sm focus:outline-none',
-            'text-arm-orange-500' => request()->routeIs('dealer.stores.employees'),
+            'text-arm-orange-500' => request()->routeIs('dealer.employees.index'),
         ])>Employees</a>
     @can('create-dealerships')
         <a
-            href="{{ $store ? route('dealer.stores.employee.create', $store) : route('dealer.employees.new') }}"
+            href="{{ $store ? route('dealer.employees.new', $store) : route('dealer.employees.new') }}"
             @class([
                 'text-sm focus:outline-none',
-                'text-arm-orange-500' => request()->routeIs('dealer.stores.employee.create'),
+                'text-arm-orange-500' => request()->routeIs('dealer.employees.new'),
             ])>Invite Employee</a>
     @endcan
     @role('Manager')
@@ -30,12 +30,12 @@
         class="text-sm focus:outline-none">Invite Employee
     </button>
     @endrole
-    @if (request()->segment(1) === 'stores' || !tenant('locations'))
+    @if (request()->segment(1) === 'stores' || !app('multipleStoresExist'))
         <a
-            href="{{ $store ? route('dealer.stores.employees.open-invites', $store) : route('dealer.employees.open-invites') }}"
+            href="{{ $store ? route('dealer.employees.open-invites', $store) : route('dealer.employees.open-invites') }}"
             @class([
                 'text-sm focus:outline-none',
-                'text-arm-orange-500' => request()->routeIs('dealer.stores.employees.open-invites'),
+                'text-arm-orange-500' => request()->routeIs('dealer.employees.open-invites'),
             ])>Open Invites</a>
     @else
 
@@ -48,10 +48,10 @@
     @endif
     @can('create-stores')
         <a
-            href="{{ $store ? route('dealer.stores.employee.deleted', $store) : route('dealer.employee.deleted') }}"
+            href="{{ $store ? route('dealer.employees.deleted', $store) : route('dealer.employees.deleted') }}"
             @class([
                 'text-sm focus:outline-none',
-                'text-arm-orange-500' => request()->routeIs('dealer.employee.deleted') || request()->routeIs('dealer.stores.employee.deleted'),
+                'text-arm-orange-500' => request()->routeIs('dealer.employees.deleted'),
             ])>Deleted</a>
     @endcan
 </div>

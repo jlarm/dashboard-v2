@@ -17,7 +17,7 @@ class IndexItem extends Component
     public function mount(): void
     {
         $this->link = Storage::disk('do-manuals')
-            ->url(tenant('id').'/red-flags/'.$this->manual->pdf_path) ?? null;
+            ->url(tenant('id').'/red-flags/'.$this->manual->pdf_path);
     }
 
     public function render(): View

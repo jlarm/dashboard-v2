@@ -144,7 +144,7 @@
                             <div class="space-y-1 pt-2">
                                 <h3 class="px-1 pt-2.5 pb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</h3>
                                 @can('create-audits')
-                                    <a href="{{ tenant('locations') ? route('dealer.stores.audits.finance.edit', [$store, $glbaViolationAudit->uuid]) : route('dealer.audit.finance.edit', $glbaViolationAudit->uuid) }}" class="group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                                    <a href="{{ route('dealer.audit.finance.edit', $glbaViolationAudit->uuid) }}" class="group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="text-gray-400 group-hover:text-gray-500" fill="none">
                                             <path d="M15.5 5.5L18 3L21 6L18.5 8.5M15.5 5.5L9 12L8 16L12 15L18.5 8.5M15.5 5.5L18.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                                             <path d="M11 5H3V21H19V13" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
@@ -155,7 +155,7 @@
                                 @endcan
                                 @if($this->remediationsActive() && $glbaViolationAudit->completed_date)
                                     @can('view-audits')
-                                        <a href="{{ tenant('locations') ? route('dealer.stores.audits.finance.remediation', [$store, $glbaViolationAudit->uuid]) : route('dealer.audit.finance.remediation', $glbaViolationAudit->uuid) }}" class="group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                                        <a href="{{ route('dealer.audit.finance.remediation', $glbaViolationAudit->uuid) }}" class="group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="text-gray-400 group-hover:text-gray-500" fill="none">
                                                 <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="currentColor" stroke-width="1.5" />
                                                 <path d="M13.7647 15.2353L16.5 12.5M16.5 12.5L13.7647 9.76471M16.5 12.5H7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

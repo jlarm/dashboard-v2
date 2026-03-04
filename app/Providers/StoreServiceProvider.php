@@ -12,27 +12,14 @@ class StoreServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton('currentStore', function (array $app) {
-            $request = $app['request'];
-
-            if ($storeSlug = $request->segment(2)) {
-                return Store::query()->where('slug', $storeSlug)->first();
-            }
-
-            if ($store = $request->get('store')) {
-                return $store;
-            }
-
-            if (! tenant('locations')) {
-                return Store::query()->first();
-            }
-
-            return null;
-        });
+        $this->app->singleton('currentStore', fn (): ?int => null);
+        $this->app->bind('multipleStoresExist', fn (): bool => Store::query()->count() > 1);
+        $this->app->singleton('accessibleStoreIds', fn () => collect());
+        $this->app->singleton('scopedStoreIds', fn () => collect());
     }
 
     public function boot(): void
     {
-        App::macro('current_store', fn () => app('currentStore'));
+        App::macro('currentStore', fn () => app('currentStore'));
     }
 }

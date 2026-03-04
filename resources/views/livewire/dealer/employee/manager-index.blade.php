@@ -136,7 +136,7 @@
                                 <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Contact
                                 </th>
-                                @if(tenant('locations'))
+                                @if(app('multipleStoresExist'))
                                     <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Store(s)
                                     </th>

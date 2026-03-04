@@ -11,7 +11,7 @@
 
     @if($latestResult->passed === 1)
         @if($isExpired)
-            @include('components.course-table.status-badge', ['type' => 'expired', 'text' => 'Expired ' . $expirationDate->format('F d, Y')])
+            @include('components.course-table.status-badge', ['type' => 'expired', 'text' => 'Retake Required (' . $expirationDate->format('F d, Y') . ')'])
         @else
             @include('components.course-table.status-badge', ['type' => 'passed', 'text' => "Passed: {$latestResult->percentage}%"])
         @endif

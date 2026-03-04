@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Dealer\Home;
 use App\Jobs\Audit\GenerateDealJacketReportJob;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -56,7 +57,7 @@ class DealJacketStats extends Component
 
         $user = auth()->user();
 
-        abort_unless($user, 403);
+        abort_unless($user instanceof User, 403);
 
         GenerateDealJacketReportJob::dispatchSync($dealJacketGroup, $user);
 

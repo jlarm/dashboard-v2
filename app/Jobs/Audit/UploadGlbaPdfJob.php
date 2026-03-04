@@ -21,7 +21,7 @@ class UploadGlbaPdfJob implements ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->glbaViolationAudit)];
+        return [new WithoutOverlapping(static::class.'-'.$this->glbaViolationAudit->getKey())];
     }
 
     public function handle(): void

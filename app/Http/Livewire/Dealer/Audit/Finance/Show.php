@@ -783,11 +783,7 @@ class Show extends Component
             ->send();
 
         if ($exit) {
-            if (! tenant('locations')) {
-                return redirect()->route('dealer.audit.finance.index');
-            }
-
-            return redirect()->route('dealer.stores.audits.finance.index', [$store->slug]);
+            return redirect()->route('dealer.audit.finance.index');
         }
 
         return null;

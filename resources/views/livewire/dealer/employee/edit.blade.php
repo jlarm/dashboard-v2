@@ -9,23 +9,22 @@
         </div>
         <div class="space-y-10">
             {{-- Store Assignment --}}
-            @if(tenant('locations'))
+            @if($showStoreAssignment)
                 <div class="col-span-3">
                     <x-input-label for="dealers" :value="__('Select Store(s)')" />
                     
-                    <div class="max-h-32 overflow-y-auto space-y-2 mt-2">
+                    <div class="mt-2 max-h-32 space-y-2 overflow-y-auto p-1">
                         @foreach($stores as $store)
                             <div class="relative flex items-start">
                                 <div class="flex h-6 items-center">
                                     <input
                                         wire:model="assignedStores"
-                                        {{ in_array($store->name, $assignedStores) ? 'checked' : '' }}
-                                        value="{{ $store->name }}"
+                                        value="{{ $store->id }}"
                                         id="store-{{ $store->id }}"
                                         aria-describedby="store-{{ $store->id }}-description"
                                         name="assignedStores[]"
                                         type="checkbox"
-                                        class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:ring-arm-blue-600"
+                                        class="h-4 w-4 rounded border-gray-300 text-arm-blue-600 focus:outline-none focus:ring-2 focus:ring-arm-blue-600 focus:ring-offset-0"
                                     >
                                 </div>
                                 <div class="ml-3 text-sm leading-6">

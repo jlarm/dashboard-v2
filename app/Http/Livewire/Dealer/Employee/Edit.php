@@ -26,7 +26,7 @@ class Edit extends SlideOver
         'Porter/Driver' => 7,
     ];
 
-    public Store $store;
+    public ?Store $store = null;
     public $user;
     public string $name;
     public array $assignedStores = [];
@@ -36,6 +36,7 @@ class Edit extends SlideOver
     public int $qiCount = 0;
     public bool $remediationRemindersActive = false;
     public array $selectedAuditTypes = [];
+    public bool $showStoreAssignment = false;
 
     public function mount(User $user): void
     {
@@ -57,9 +58,11 @@ class Edit extends SlideOver
 
     public function render(): View
     {
+        $stores = Store::query()->orderBy('name')->get();
+
         return view('livewire.dealer.employee.edit', [
-            'stores' => Store::all(),
-            'departments' => Department::all(),
+            'stores' => $stores,
+            'departments' => Department::query()->orderBy('name')->get(),
             'allRoles' => $this->getAvailableRoles(),
         ]);
     }
@@ -71,8 +74,9 @@ class Edit extends SlideOver
             'assignedRole' => 'required|string',
         ];
 
-        if (tenant('locations')) {
+        if ($this->shouldShowStoreAssignment()) {
             $rules['assignedStores'] = 'required|array';
+            $rules['assignedStores.*'] = 'integer|exists:stores,id';
         }
 
         return $rules;
@@ -86,7 +90,7 @@ class Edit extends SlideOver
             'assignedRole.required' => 'Please select a role.',
         ];
 
-        if (tenant('locations')) {
+        if ($this->shouldShowStoreAssignment()) {
             $messages['assignedStores.required'] = 'Please select at least one store.';
         }
 
@@ -95,11 +99,13 @@ class Edit extends SlideOver
 
     private function initializeUserData(User $user): void
     {
-        $this->store = Store::query()->find(app('currentStore'));
+        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
+            ?? Store::query()->find(app('currentStore'));
         $this->user = $user;
         $this->name = $user->name;
-        $this->assignedStores = $user->stores()->pluck('name')->toArray();
+        $this->assignedStores = $user->stores()->pluck('stores.id')->map(static fn ($id): int => (int) $id)->toArray();
         $this->department = $user->department_id;
+        $this->showStoreAssignment = $this->shouldShowStoreAssignment();
 
         $userRoles = $user->roles()->whereNotIn('name', ['Qualified Individual'])->pluck('name')->toArray();
 
@@ -119,7 +125,7 @@ class Edit extends SlideOver
         $this->qi = $this->user->hasRole('Qualified Individual');
         $this->qiCount = $this->getQualifiedIndividualRole()->users()->count();
         $this->selectedAuditTypes = $user->remediationReminderPreferences()->pluck('audit_type')->toArray();
-        $this->remediationRemindersActive = $this->store->remediationSettings()->first()?->notifications ?? false;
+        $this->remediationRemindersActive = $this->store?->remediationSettings()?->first()?->notifications ?? false;
     }
 
     private function getHighestPriorityRole(array $roles): string
@@ -140,7 +146,9 @@ class Edit extends SlideOver
             'department_id' => $this->department,
         ]);
 
-        $this->user->stores()->sync(Store::query()->whereIn('name', $this->assignedStores)->pluck('id')->toArray());
+        if ($this->showStoreAssignment) {
+            $this->user->stores()->sync($this->normalizedAssignedStoreIds());
+        }
 
         $this->user->remediationReminderPreferences()->delete();
 
@@ -193,13 +201,39 @@ class Edit extends SlideOver
 
     private function updateCurrentStoreId(): void
     {
-        if (tenant('locations') && ! in_array($this->user->current_store_id, $this->assignedStores)) {
-            $storeId = Store::query()->where('name', $this->assignedStores[0])->first()->id;
+        if (! $this->showStoreAssignment) {
+            return;
+        }
 
+        $assignedStoreIds = $this->normalizedAssignedStoreIds();
+
+        if ($assignedStoreIds === []) {
+            return;
+        }
+
+        if (! in_array((int) $this->user->current_store_id, $assignedStoreIds, true)) {
             $this->user->update([
-                'current_store_id' => $storeId,
+                'current_store_id' => count($assignedStoreIds) === 1 ? $assignedStoreIds[0] : null,
             ]);
         }
+    }
+
+    private function shouldShowStoreAssignment(): bool
+    {
+        return Store::query()->count() > 1;
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    private function normalizedAssignedStoreIds(): array
+    {
+        return collect($this->assignedStores)
+            ->map(static fn ($storeId): int => (int) $storeId)
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
     }
 
     private function getAvailableRoles(): Collection

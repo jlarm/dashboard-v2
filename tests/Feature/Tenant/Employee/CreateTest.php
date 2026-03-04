@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Livewire\Dealer\Employee\Create as EmployeeCreate;
-use App\Http\Livewire\Dealer\Store\SingleStore\Employee\Create as SingleStoreEmployeeCreate;
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
@@ -13,9 +12,6 @@ use Livewire\Livewire;
 
 describe('employee create component', function (): void {
     it('requires exactly one role selection via role dropdown', function (): void {
-        $this->tenant->locations = true;
-        $this->tenant->save();
-
         $department = Department::query()->create([
             'name' => 'Finance '.uniqid(),
             'slug' => 'finance-'.uniqid(),
@@ -32,11 +28,8 @@ describe('employee create component', function (): void {
             ->assertHasErrors(['role']);
     });
 
-    it('creates invite with one selected role and optional qualified individual role', function (): void {
+    it('auto assigns the single available store when inviting an employee', function (): void {
         Queue::fake();
-
-        $this->tenant->locations = true;
-        $this->tenant->save();
 
         $department = Department::query()->create([
             'name' => 'Sales '.uniqid(),
@@ -49,7 +42,6 @@ describe('employee create component', function (): void {
             ->set('name', 'Invited Employee')
             ->set('email', 'invited-employee@test.com')
             ->set('department', $department->id)
-            ->set('dealers', [(string) $store->id])
             ->set('role', 'Employee')
             ->set('qi', true)
             ->call('submit')
@@ -65,13 +57,39 @@ describe('employee create component', function (): void {
         Queue::assertPushed(SendQueueEmailJob::class);
     });
 
-    it('prefills selected store when mounted from single-store create page', function (): void {
-        $store = Store::query()->firstOrFail();
+    it('requires store selection when multiple stores are available', function (): void {
+        Queue::fake();
+
+        $department = Department::query()->create([
+            'name' => 'Multi Store Department '.uniqid(),
+            'slug' => 'multi-store-department-'.uniqid(),
+        ]);
+
+        Store::query()->create([
+            'name' => 'Second Store '.uniqid(),
+            'address' => '2 Main St',
+            'city' => 'Nashville',
+            'state' => 'TN',
+            'postal_code' => '37202',
+            'phone' => '615-555-0102',
+            'website' => 'https://second-store.test',
+        ]);
 
         Livewire::actingAs($this->consultant)
-            ->test(SingleStoreEmployeeCreate::class, ['store' => $store])
-            ->assertStatus(200)
-            ->assertSet('store.id', $store->id);
+            ->test(EmployeeCreate::class)
+            ->set('name', 'Multi Store Invite')
+            ->set('email', 'multi-store-invite@test.com')
+            ->set('department', $department->id)
+            ->set('role', 'Employee')
+            ->set('dealers', [])
+            ->call('submit')
+            ->assertHasErrors(['dealers']);
+
+        expect(Invite::query()->where('email', 'multi-store-invite@test.com')->exists())->toBeFalse();
+    });
+
+    it('prefills selected store when mounted from single-store create page', function (): void {
+        $store = Store::query()->firstOrFail();
 
         Livewire::actingAs($this->consultant)
             ->test(EmployeeCreate::class, ['store' => $store])

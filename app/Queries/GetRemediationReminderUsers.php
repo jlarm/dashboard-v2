@@ -22,7 +22,7 @@ class GetRemediationReminderUsers
             ->pluck('user_id')
             ->toArray();
 
-        $users = tenant('locations') ? $store->users() : User::query();
+        $users = Store::query()->count() > 1 ? $store->users() : User::query();
 
         return $users->permission('create-users')->whereIn('id', $userIds)->select(['id', 'name', 'email'])->get();
     }

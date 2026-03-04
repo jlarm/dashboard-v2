@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Jobs\IncompleteVendorNotificationJob;
 use App\Models\Dealer\VendorForm;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class SendVendorNotificationCommand extends Command
 {
@@ -29,7 +30,12 @@ class SendVendorNotificationCommand extends Command
      */
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
             $incompleteVendors = VendorForm::query()
                 ->whereNull('signature')
                 ->where(function ($query): void {

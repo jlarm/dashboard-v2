@@ -32,7 +32,7 @@ class Create extends Component
 
         GlbaViolationStatements::query()->create([
             'statement' => $this->statement,
-            'keywords' => json_encode($this->keywords) ?? null,
+            'keywords' => json_encode($this->keywords) ?: null,
             'weight' => $this->weight,
         ]);
 

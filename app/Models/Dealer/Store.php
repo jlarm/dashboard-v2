@@ -27,7 +27,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
@@ -137,9 +136,8 @@ class Store extends Model implements HasMedia
 
     public function getDealJacketGradeAttribute(): ?string
     {
-        return Cache::remember(
-            $this->getGradeCacheKey('deal_jacket'),
-            self::GRADE_CACHE_TTL,
+        return $this->rememberGradeValue(
+            'deal_jacket',
             function (): ?string {
                 $latestRating = $this->individualAudits()
                     ->whereNotNull('rating')
@@ -158,9 +156,8 @@ class Store extends Model implements HasMedia
 
     public function getOverallGradeAttribute(): ?string
     {
-        return Cache::remember(
-            $this->getGradeCacheKey('overall'),
-            self::GRADE_CACHE_TTL,
+        return $this->rememberGradeValue(
+            'overall',
             function (): ?string {
                 $latestGrades = array_values(array_filter([
                     $this->deal_jacket_grade,

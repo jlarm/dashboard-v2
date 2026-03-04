@@ -19,6 +19,7 @@ use Spatie\Browsershot\Browsershot;
 class DotCert extends Component
 {
     public User $user;
+    public bool $autoload = false;
     public bool $showCertButton = false;
     public bool $isLoaded = false;
     protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
@@ -26,6 +27,11 @@ class DotCert extends Component
     public function mount(): void
     {
         $this->showCertButton = false;
+
+        if ($this->autoload) {
+            $this->isLoaded = true;
+            $this->showCertButton = $this->shouldShowCertButton();
+        }
     }
 
     public function handleTabChanged(string $tab): void

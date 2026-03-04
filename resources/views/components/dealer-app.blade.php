@@ -1,4 +1,7 @@
 @props(['title'])
+@php
+    $browserTitle = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)?->name ?? tenant('name');
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -7,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ global_asset('favicon.svg') }}" type="image/x-icon">
 
-    <title>{{ tenant('name') }}</title>
+    <title>{{ $browserTitle }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -22,6 +25,16 @@
 <body class="font-sans antialiased bg-gray-50">
 <x-notification />
 <x-course-completion-modal />
+@if(session()->has('impersonated_by'))
+    <div class="w-full bg-red-600 text-white">
+        <div class="lg:pl-64">
+            <div class="px-4 py-2 text-center text-sm">
+                You are currently impersonating {{ auth()->user()->name }}
+                <a href="{{ route('dealer.stop.impersonation') }}" class="font-semibold underline">Return to your account</a>
+            </div>
+        </div>
+    </div>
+@endif
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
     @include('layouts.light-navigation')
 
@@ -43,7 +56,7 @@
             </div>
             @endif
             <div class="mx-auto">
-                <div class="{{ (Route::currentRouteName() === 'dealer.dashboard' || Route::currentRouteName() === 'dealer.stores.home') ? '' : 'p-5 bg-white border border-gray-200 shadow-sm rounded-xl' }}">
+                <div class="{{ Route::currentRouteName() === 'dealer.dashboard' ? '' : 'p-5 bg-white border border-gray-200 shadow-sm rounded-xl' }}">
                     {{ $slot }}
                 </div>
             </div>

@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Models\Course;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class UpdateOptionalCourses extends Command
 {
@@ -28,7 +29,12 @@ class UpdateOptionalCourses extends Command
      */
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             Course::query()

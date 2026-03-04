@@ -7,7 +7,6 @@ namespace App\Http\Livewire\Dealer\Vendor;
 use App\Models\Dealer\Vendor;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -76,7 +75,7 @@ class Form extends Component
         $this->contact_name = $vendor->contact_name;
     }
 
-    public function submit(): Redirector|RedirectResponse
+    public function submit(): RedirectResponse
     {
         $this->validate();
 
@@ -143,8 +142,8 @@ class Form extends Component
         Storage::put("signatures/{$filename}", base64_decode($signatureData));
     }
 
-    private function redirectToThankYou(): Redirector|RedirectResponse
+    private function redirectToThankYou(): RedirectResponse
     {
-        return redirect(route('dealer.vendors.thankyou'));
+        return to_route('dealer.vendors.thankyou');
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\User;
+use App\Services\StoreScopeService;
 use App\Services\UserCourseService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Blaze\Blaze;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(UserCourseService::class);
+        $this->app->singleton(StoreScopeService::class);
     }
 
     /**
@@ -28,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('blaze.debug', false) && class_exists(Blaze::class)) {
+            Blaze::debug();
+        }
+
         Model::preventLazyLoading(! $this->app->isProduction());
 
         Request::macro('store', fn () => $this->user()?->currentStore());
@@ -44,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
 
         Builder::macro('search', fn ($field, $string) => $string ? $this->where($field, 'like', '%'.$string.'%') : $this);
 
-        Collection::macro('incomplete_courses', fn () => $this->map(fn (User $user) => $user->user_has_not_completed_courses));
+        Collection::macro('incomplete_courses', fn () => $this->map(fn ($user): bool => $user instanceof User && $user->user_has_not_completed_courses));
 
         Builder::macro('toCsv', function () {
             $results = $this->get();
@@ -53,9 +60,21 @@ class AppServiceProvider extends ServiceProvider
                 return;
             }
 
-            $titles = implode(',', array_keys($results->first()->getAttributes()));
+            $firstResult = $results->first();
 
-            $values = $results->map(fn ($result): string => implode(',', collect($result->getAttributes())->map(fn ($value): string => '"'.$value.'"')->toArray()));
+            if ($firstResult === null) {
+                return;
+            }
+
+            $firstAttributes = (array) $firstResult;
+
+            $titles = implode(',', array_keys($firstAttributes));
+
+            $values = $results->map(function ($result): string {
+                $attributes = (array) $result;
+
+                return implode(',', collect($attributes)->map(fn ($value): string => '"'.$value.'"')->toArray());
+            });
 
             $values->prepend($titles);
 
@@ -67,17 +86,27 @@ class AppServiceProvider extends ServiceProvider
 
             // Write the header
             if ($this->count() > 0) {
-                fputcsv($output, array_keys($this->first()));
+                $first = $this->first();
+
+                if ($first === null) {
+                    return false;
+                }
+
+                $firstRow = $first->toArray();
+
+                fputcsv($output, array_keys($firstRow));
             }
 
             // Write the data
             foreach ($this as $row) {
-                if (is_array($row) && array_filter($row, 'is_array') !== []) {
+                $rowData = $row->toArray();
+
+                if (array_filter($rowData, 'is_array') !== []) {
                     // Log the problematic row for inspection
-                    Log::error('Problematic row:', $row);
+                    Log::error('Problematic row:', ['row' => $rowData]);
                 }
 
-                fputcsv($output, $row->toArray());
+                fputcsv($output, $rowData);
             }
 
             rewind($output);

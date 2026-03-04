@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Mail\CourseNotificationMail;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 
 class SendCourseNotificationToTenantCommand extends Command
@@ -26,7 +27,12 @@ class SendCourseNotificationToTenantCommand extends Command
             return;
         }
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($courseLink): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($courseLink): void {
             $this->info("Running command for tenant: {$tenant->id} ({$tenant->name})");
 
             $users = User::query()

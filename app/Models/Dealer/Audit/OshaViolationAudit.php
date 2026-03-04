@@ -72,11 +72,19 @@ class OshaViolationAudit extends Model
 
     public function getViolationCountAttribute(): int
     {
+        if (array_key_exists('violation_count', $this->attributes)) {
+            return (int) $this->attributes['violation_count'];
+        }
+
         return $this->violations()->count();
     }
 
     public function getRemediationCountAttribute(): int
     {
+        if (array_key_exists('remediation_count', $this->attributes)) {
+            return (int) $this->attributes['remediation_count'];
+        }
+
         return $this->violations()->whereHas('remediation', function ($query): void {
             $query->where('completed', true);
         })->count();

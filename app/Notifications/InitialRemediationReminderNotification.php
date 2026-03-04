@@ -33,7 +33,7 @@ class InitialRemediationReminderNotification extends Notification implements Sho
             ->greeting('Hello '.$this->user->name.',')
             ->line('An '.$this->auditType->label().' audit has been completed for '.$this->store->name.'.')
             ->line('Please remediate any violations as soon as possible.')
-            ->action('Remediation Form', $this->tenants ? route('dealer.stores.audits.osha.remediation', [$this->store, $this->audit->uuid]) : route('dealer.audit.osha.remediation', $this->audit->uuid))
+            ->action('Remediation Form', route('dealer.audit.osha.remediation', $this->audit->uuid))
             ->line('');
     }
 

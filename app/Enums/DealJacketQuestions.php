@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use ValueError;
+
 enum DealJacketQuestions: string
 {
     case individual_q3_answer = 'There is no Odometer Statement in deal.';
@@ -86,6 +88,7 @@ enum DealJacketQuestions: string
             'individual_q38_answer' => self::individual_q38_answer,
             'individual_q39_answer' => self::individual_q39_answer,
             'individual_q40_answer' => self::individual_q40_answer,
+            default => throw new ValueError("Unknown deal jacket question key: {$key}"),
         };
     }
 }

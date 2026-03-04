@@ -22,7 +22,8 @@ class Edit extends Component
     public function mount(): void
     {
         $this->statement = $this->glbaViolation->statement;
-        $this->keywords = json_decode($this->glbaViolation->keywords);
+        $keywords = $this->glbaViolation->keywords;
+        $this->keywords = (array) $keywords;
         $this->weight = $this->glbaViolation->weight;
     }
 

@@ -9,7 +9,6 @@ use App\Services\CyrismaService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as DomPdfWrapper;
 use Carbon\Carbon;
-use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,14 +27,9 @@ class CyrismaReportController
 
         // Multi-store: StoreMiddleware resolves the store into request attributes.
         // Single-store: falls back to app('currentStore').
-        $store = request()->attributes->get('store');
+        $store = $this->resolveStore();
 
-        if (! $store instanceof Store) {
-            $storeContext = app('currentStore');
-            $store = $storeContext instanceof Store ? $storeContext : Store::query()->find((int) $storeContext);
-        }
-
-        abort_unless($store, 404);
+        abort_unless($store instanceof Store, 404);
 
         $cyrisma = app(CyrismaService::class)->forStore($store);
 
@@ -142,15 +136,43 @@ class CyrismaReportController
         ];
     }
 
+    private function resolveStore(): ?Store
+    {
+        $requestStore = request()->attributes->get('store');
+
+        if ($requestStore instanceof Store) {
+            return $requestStore;
+        }
+
+        $currentStore = app()->bound('currentStore') ? app('currentStore') : null;
+
+        if ($currentStore instanceof Store) {
+            return $currentStore;
+        }
+
+        if (is_numeric($currentStore)) {
+            $store = Store::query()->find((int) $currentStore);
+
+            if ($store instanceof Store) {
+                return $store;
+            }
+        }
+
+        $scopedStoreIds = app()->bound('scopedStoreIds') ? app('scopedStoreIds') : collect();
+        $firstScopedStoreId = $scopedStoreIds->first();
+
+        if (is_numeric($firstScopedStoreId)) {
+            return Store::query()->find((int) $firstScopedStoreId);
+        }
+
+        return Store::query()->orderBy('id')->first();
+    }
+
     private function addTechnicalPageNumbers(DomPdfWrapper $pdf): void
     {
         $pdf->render();
 
         $dompdf = $pdf->getDomPDF();
-
-        if (! $dompdf instanceof Dompdf) {
-            return;
-        }
 
         $canvas = $dompdf->getCanvas();
         $fontMetrics = $dompdf->getFontMetrics();
@@ -342,10 +364,12 @@ class CyrismaReportController
         $instanceSources = [];
 
         foreach (['instances', 'alertInstances', 'details', 'urls', 'targets', 'other'] as $key) {
-            if (! array_key_exists($key, $finding) || $finding[$key] === null) {
+            if (! array_key_exists($key, $finding)) {
                 continue;
             }
-
+            if ($finding[$key] === null) {
+                continue;
+            }
             $instanceSources[] = $finding[$key];
         }
 
@@ -523,10 +547,12 @@ class CyrismaReportController
     private function firstStringValue(array $payload, array $keys, string $default = ''): string
     {
         foreach ($keys as $key) {
-            if (! isset($payload[$key]) || ! is_scalar($payload[$key])) {
+            if (! isset($payload[$key])) {
                 continue;
             }
-
+            if (! is_scalar($payload[$key])) {
+                continue;
+            }
             $value = $this->sanitizeReportText((string) $payload[$key]);
             if ($value !== '') {
                 return $value;

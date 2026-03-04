@@ -94,7 +94,7 @@ class ManagerIndex extends Component
         if ($this->showIncompleteCourseUsers) {
             $users = $this->usersQuery
                 ->paginate(500)
-                ->filter(fn (User $user) => $user->user_has_not_completed_courses);
+                ->filter(fn ($user): bool => $user instanceof User && $user->user_has_not_completed_courses);
         }
 
         return view('livewire.dealer.employee.manager-index', [

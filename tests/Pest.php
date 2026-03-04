@@ -142,14 +142,15 @@ function teardownTenants(): void
 function createDealershipTenant(?User $owner = null): array
 {
     $owner ??= User::factory()->create();
+    $tenantId = 'acme-'.str()->lower(str()->random(8));
 
     $dealership = Dealership::query()->create([
-        'id' => 'acme',
-        'name' => 'Acme',
+        'id' => $tenantId,
+        'name' => 'Acme '.$tenantId,
         'user_id' => $owner->id,
     ]);
 
-    $dealership->domains()->create(['domain' => 'acme.localhost']);
+    $dealership->domains()->create(['domain' => $tenantId.'.localhost']);
 
     $dealership->run(function (): void {
         Store::query()->create([

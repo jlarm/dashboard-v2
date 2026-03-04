@@ -663,12 +663,7 @@ class Create extends Component
             ->success()
             ->send();
 
-        if (tenant('locations')) {
-            return redirect(route('dealer.stores.audits.osha.index', $this->store));
-        }
-
         return redirect(route('dealer.audit.osha.index'));
-
     }
 
     public function render()

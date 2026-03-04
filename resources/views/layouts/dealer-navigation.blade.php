@@ -23,8 +23,8 @@
                     @endcan
 
                     @can('edit-stores')
-                        @if(tenant('locations'))
-                            <x-nav-link :href="route('dealer.stores.index')" :active="request()->routeIs('dealer.stores.index')">
+                        @if(app('multipleStoresExist'))
+                            <x-nav-link :href="route('dealer.dashboard')" :active="request()->routeIs('dealer.dashboard')">
                                 {{ __('Stores') }}
                             </x-nav-link>
                         @endif

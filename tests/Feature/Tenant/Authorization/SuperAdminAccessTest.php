@@ -55,7 +55,7 @@ describe('Super Admin - Employee Management', function (): void {
 
     it('can access deleted employees page', function (): void {
         $this->actingAs($this->superAdmin)
-            ->get(route('dealer.employee.deleted'))
+            ->get(route('dealer.employees.deleted'))
             ->assertOk();
     });
 
@@ -70,6 +70,19 @@ describe('Super Admin - Employee Management', function (): void {
             ->get(route('dealer.employees.show', $employee));
 
         // Not forbidden/redirect — authorization passed (may 500 from missing external services in test env)
+        expect($response->status())->not->toBeIn([401, 403, 302]);
+    });
+
+    it('can access the manage courses employee page', function (): void {
+        $employee = User::query()->create([
+            'name' => 'Managed Employee',
+            'email' => 'managed.employee@test.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->actingAs($this->superAdmin)
+            ->get(route('dealer.employees.show.manage-courses', $employee));
+
         expect($response->status())->not->toBeIn([401, 403, 302]);
     });
 });
@@ -166,14 +179,6 @@ describe('Super Admin - Profile Access', function (): void {
     it('can access profile page', function (): void {
         $this->actingAs($this->superAdmin)
             ->get(route('dealer.profile.edit'))
-            ->assertOk();
-    });
-});
-
-describe('Super Admin - Video Access', function (): void {
-    it('can access videos index', function (): void {
-        $this->actingAs($this->superAdmin)
-            ->get(route('dealer.videos.index'))
             ->assertOk();
     });
 });

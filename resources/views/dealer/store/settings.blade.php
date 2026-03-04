@@ -1,143 +1,127 @@
 <x-dealer-app>
-    <div
-        x-data="{
-            selectedId: null,
-            init() {
-                // Set the first available tab on the page on page load.
-                this.$nextTick(() => this.select(this.$id('tab', 1)))
-            },
-            select(id) {
-                this.selectedId = id
-            },
-            isSelected(id) {
-                return this.selectedId === id
-            },
-            whichChild(el, parent) {
-                return Array.from(parent.children).indexOf(el) + 1
-            }
-        }"
-        x-id="['tab']"
-    >
+    @php
+        $settingsSections = [
+            [
+                'label' => 'General',
+                'route' => route('dealer.dealer.settings'),
+                'key' => 'general',
+            ],
+            [
+                'label' => 'Managers',
+                'route' => route('dealer.dealer.settings.managers'),
+                'key' => 'managers',
+            ],
+            [
+                'label' => 'Compliance',
+                'route' => route('dealer.dealer.settings.compliance'),
+                'key' => 'compliance',
+            ],
+        ];
+
+        if (auth()->user()?->can('create-dealerships')) {
+            $settingsSections[] = [
+                'label' => 'Reset Courses',
+                'route' => route('dealer.dealer.settings.reset-courses'),
+                'key' => 'reset-courses',
+            ];
+            $settingsSections[] = [
+                'label' => 'Ridgeback',
+                'route' => route('dealer.dealer.settings.ridgeback'),
+                'key' => 'ridgeback',
+            ];
+        }
+    @endphp
+
+    @if($store)
+    <div>
         <x-slot name="header">
             <x-slot name="pageTitle">Settings</x-slot>
         </x-slot>
         <div class="flex justify-center">
-            <div
-                class="inline-flex h-10 rounded-lg bg-gray-800/5 p-1"
-                x-ref="tablist"
-                @keydown.right.prevent.stop="$focus.wrap().next()"
-                @keydown.home.prevent.stop="$focus.first()"
-                @keydown.page-up.prevent.stop="$focus.first()"
-                @keydown.left.prevent.stop="$focus.wrap().prev()"
-                @keydown.end.prevent.stop="$focus.last()"
-                @keydown.page-down.prevent.stop="$focus.last()"
-                role="tablist"
-            >
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                    aria-current="page">General</button>
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                >Managers</button>
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                >Compliance</button>
-                @can('create-dealerships')
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                >Course Management</button>
-                @endcan
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                >Ridgeback</button>
+            <div class="inline-flex h-10 rounded-lg bg-gray-800/5 p-1">
+                @foreach($settingsSections as $settingsSection)
+                    <a
+                        href="{{ $settingsSection['route'] }}"
+                        class="{{ $section === $settingsSection['key'] ? 'shadow-sm bg-white text-gray-600' : 'border-transparent text-gray-600 hover:text-gray-800' }} flex whitespace-nowrap flex-1 items-center justify-center rounded-md px-4 text-sm"
+                        @if($section === $settingsSection['key']) aria-current="page" @endif
+                    >
+                        {{ $settingsSection['label'] }}
+                    </a>
+                @endforeach
             </div>
         </div>
-        <div role="tabpanels" class="mt-5">
-            <!-- Panel -->
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-2"
-            >
+        <div class="mt-5">
+            @if($section === 'general')
+                <section class="p-2">
                 <livewire:dealer.store.single-store-details :store="$store"/>
-            </section>
-
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-2"
-            >
-                <livewire:dealer.settings.employee-list :store="$store"/>
-            </section>
-
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-2"
-            >
-                <livewire:dealer.store.single-onboarding-details :store="$store"/>
-            </section>
-            @can('create-dealerships')
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-2"
-            >
-                <livewire:dealer.settings.optional-courses-form />
-            </section>
-                <section
-                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                    role="tabpanel"
-                    class="p-2"
-                >
+                </section>
+            @elseif($section === 'managers')
+                <section class="p-2">
+                    <livewire:dealer.settings.employee-list :store="$store"/>
+                </section>
+            @elseif($section === 'compliance')
+                <section class="p-2">
+                    <livewire:dealer.store.single-onboarding-details :store="$store"/>
+                </section>
+            @elseif($section === 'reset-courses')
+                <section class="p-2">
+                    <div class="max-w-6xl mx-auto">
+                        <livewire:dealer.settings.course-reset-manager :store="$store" />
+                    </div>
+                </section>
+            @elseif($section === 'ridgeback')
+                <section class="p-2">
                     <livewire:dealer.settings.ridgeback-settings-form :store="$store" />
                 </section>
-            @endcan
+            @endif
         </div>
     </div>
+    @else
+    <x-slot name="header">
+        <x-slot name="pageTitle">Settings Overview</x-slot>
+    </x-slot>
+
+    <div class="space-y-4">
+        <div class="flex justify-center">
+            <div class="inline-flex h-10 rounded-lg bg-gray-800/5 p-1">
+                @foreach($settingsSections as $settingsSection)
+                    <a
+                        href="{{ $settingsSection['route'] }}"
+                        class="{{ $section === $settingsSection['key'] ? 'shadow-sm bg-white text-gray-600' : 'border-transparent text-gray-600 hover:text-gray-800' }} flex whitespace-nowrap flex-1 items-center justify-center rounded-md px-4 text-sm"
+                        @if($section === $settingsSection['key']) aria-current="page" @endif
+                    >
+                        {{ $settingsSection['label'] }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 text-sm text-gray-700">
+            Overview mode is active. Select a store from the store switcher to edit detailed settings.
+        </div>
+
+        <div class="overflow-hidden rounded-lg border border-gray-200 bg-white">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600">Store</th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600">Location</th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600">Users</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                @foreach($stores as $overviewStore)
+                    <tr>
+                        <td class="px-4 py-3 text-sm font-medium text-gray-900">{{ $overviewStore->name }}</td>
+                        <td class="px-4 py-3 text-sm text-gray-600">
+                            {{ trim(($overviewStore->city ?? '').', '.($overviewStore->state ?? ''), ', ') ?: '-' }}
+                        </td>
+                        <td class="px-4 py-3 text-sm text-gray-600">{{ $overviewStore->users_count }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @endif
 </x-dealer-app>

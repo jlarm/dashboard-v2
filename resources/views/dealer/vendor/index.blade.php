@@ -16,7 +16,7 @@
 
     <div class="px-6">
         <div class="mx-auto">
-            @if(tenant('locations'))
+            @if(app('multipleStoresExist'))
             <livewire:dealer.vendor.index/>
             @else
             <livewire:dealer.vendor.single-index/>

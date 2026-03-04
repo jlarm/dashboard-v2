@@ -6,35 +6,32 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Department;
+use App\Models\Dealer\Invite as DealerInvite;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Invite extends Modal
 {
-    public string $name;
-    public string $email;
-    public string $department;
-    public string $role;
+    public string $name = '';
+    public string $email = '';
+    public string $department = '';
+    public string $role = '';
     public array $stores = [];
-    protected $rules = [
-        'name' => ['required', 'max:255'],
-        'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
-        'stores' => ['nullable', 'array'],
-        'department' => ['required', 'integer'],
-        'role' => ['required'],
-    ];
 
     public function sendInvite(): void
     {
-        $this->validate();
+        $validated = $this->validate();
+        $assignedStoreIds = $this->resolveAssignedStoreIds($validated['stores'] ?? []);
 
-        $invite = \App\Models\Dealer\Invite::query()->create([
+        $invite = DealerInvite::query()->create([
             'name' => $this->name,
             'email' => $this->email,
-            'stores' => $this->stores ?? [],
+            'stores' => $assignedStoreIds,
             'department_id' => $this->department,
             'roles' => [$this->role],
             'user_id' => auth()->user()->id,
@@ -64,10 +61,68 @@ class Invite extends Modal
             $rolesQuery->whereNot('name', 'Qualified Individual');
         }
 
+        $availableStores = $this->availableStores();
+
         return view('livewire.dealer.employee.invite', [
-            'allStore' => Store::query()->orderBy('name')->get(),
+            'allStore' => $availableStores,
             'departments' => Department::query()->orderBy('name')->get(),
             'allRoles' => $rolesQuery->get(),
         ]);
+    }
+
+    protected function rules(): array
+    {
+        $rules = [
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
+            'stores' => ['nullable', 'array'],
+            'department' => ['required', 'integer', Rule::exists('departments', 'id')],
+            'role' => ['required'],
+        ];
+
+        if ($this->availableStores()->count() > 1) {
+            $rules['stores'] = ['required', 'array', 'min:1'];
+            $rules['stores.*'] = ['integer', Rule::exists('stores', 'id')];
+        }
+
+        return $rules;
+    }
+
+    private function resolveAssignedStoreIds(array $selectedStores): array
+    {
+        $availableStoreIds = $this->availableStores()
+            ->pluck('id')
+            ->map(static fn ($id): int => (int) $id)
+            ->values();
+
+        if ($availableStoreIds->count() === 1) {
+            $singleStoreId = $availableStoreIds->first();
+
+            return $singleStoreId === null ? [] : [(int) $singleStoreId];
+        }
+
+        return collect($selectedStores)
+            ->map(static fn ($storeId): int => (int) $storeId)
+            ->filter(fn (int $storeId): bool => $availableStoreIds->contains($storeId))
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return Collection<int, Store>
+     */
+    private function availableStores(): Collection
+    {
+        $user = auth()->user();
+
+        if (! $user instanceof User) {
+            return Store::query()->orderBy('name')->get(['id', 'name']);
+        }
+
+        if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
+            return Store::query()->orderBy('name')->get(['id', 'name']);
+        }
+
+        return $user->stores()->orderBy('stores.name')->get(['stores.id', 'stores.name']);
     }
 }

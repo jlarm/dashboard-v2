@@ -21,9 +21,11 @@ class DotCert extends Component
 
     public function mount(): void
     {
-        if (! $this->passingGrades() || auth()->user()->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
+        $passingGrades = $this->passingGrades();
+
+        if (! $passingGrades || auth()->user()->certificates()->where('course_name', 'DOT Hazardous Materials Transportation')->exists()) {
             $this->showCertButton = false;
-        } elseif ($this->passingGrades()->passed && $this->passingGrades()?->created_at->diffInDays(now()) <= 1095) {
+        } elseif ($passingGrades->passed && $passingGrades->created_at->diffInDays(now()) <= 1095) {
             $this->showCertButton = true;
         } else {
             $this->showCertButton = false;
@@ -32,10 +34,16 @@ class DotCert extends Component
 
     public function download(Request $request): void
     {
+        $passingGrades = $this->passingGrades();
+
+        if (! $passingGrades instanceof CourseResults) {
+            return;
+        }
+
         $html = view('dealer.course.CertDownloadView', [
             'user' => auth()->user(),
             'store' => $request->get('store')?->name ?? tenant('name'),
-            'passed_on' => $this->passingGrades()->created_at->format('F d, Y'),
+            'passed_on' => $passingGrades->created_at->format('F d, Y'),
         ])->render();
 
         $pdf = Browsershot::html($html)->landscape()->pdf();
@@ -79,7 +87,7 @@ class DotCert extends Component
         return view('livewire.dealer.course.dot-cert');
     }
 
-    private function passingGrades()
+    private function passingGrades(): ?CourseResults
     {
         $course = Course::query()
             ->where('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')

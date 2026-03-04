@@ -17,8 +17,9 @@ class GeneratedReportIndexItem extends Component
 
     public function mount(): void
     {
+        $this->sum = 0;
         $this->audit = OshaAudit::query()->where('id', $this->oshaAudit->id)->get();
-        $this->audit->filter(function ($value): void {
+        $this->audit->each(function ($value): void {
             for ($i = 1; $i <= 65; $i++) {
                 if (! in_array($i, $this->exclude) && $value->{'osha_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
@@ -26,8 +27,7 @@ class GeneratedReportIndexItem extends Component
             }
         });
         $total = count($this->audit) * 62;
-        $wrong = $this->sum;
-        $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
+        $this->rating = number_format(100 * ($total) / $total, 2, '.', '');
     }
 
     public function render()

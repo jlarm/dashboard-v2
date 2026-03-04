@@ -35,7 +35,7 @@ class Delete extends Modal
                 ->success()
                 ->send();
         } catch (Exception $e) {
-            Log::error($e);
+            Log::error($e->getMessage(), ['exception' => $e]);
 
             $this->addError('vendor', 'An error occurred while deleting the vendor.');
 

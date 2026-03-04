@@ -45,7 +45,7 @@
                         @else
                             @if(Carbon\Carbon::parse($course->results->first()->created_at)->diffInDays() > 365)
                                 <span class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-md text-xs font-medium bg-red-100 text-red-800">
-                                    {{ __('Expired: Need To Retake') }}
+                                    {{ __('Retake Required') }}
                                 </span>
                             @else
                                 @if($course->results->first()->passed === 1)

@@ -36,12 +36,6 @@ describe('Consultant - Dashboard & General Access', function (): void {
             ->assertOk();
     });
 
-    it('can access videos index', function (): void {
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.videos.index'))
-            ->assertOk();
-    });
-
     it('can access profile page', function (): void {
         $this->actingAs($this->consultant)
             ->get(route('dealer.profile.edit'))
@@ -70,7 +64,7 @@ describe('Consultant - Employee Management', function (): void {
 
     it('can access deleted employees page', function (): void {
         $this->actingAs($this->consultant)
-            ->get(route('dealer.employee.deleted'))
+            ->get(route('dealer.employees.deleted'))
             ->assertOk();
     });
 
@@ -83,6 +77,19 @@ describe('Consultant - Employee Management', function (): void {
 
         $response = $this->actingAs($this->consultant)
             ->get(route('dealer.employees.show', $employee));
+
+        expect($response->status())->not->toBeIn([401, 403, 302]);
+    });
+
+    it('can access the manage courses employee page', function (): void {
+        $employee = User::query()->create([
+            'name' => 'Consultant Managed Employee',
+            'email' => 'consultant-manage@test.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->actingAs($this->consultant)
+            ->get(route('dealer.employees.show.manage-courses', $employee));
 
         expect($response->status())->not->toBeIn([401, 403, 302]);
     });

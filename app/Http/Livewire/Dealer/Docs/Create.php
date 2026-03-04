@@ -59,7 +59,7 @@ class Create extends Component
                 ->success()
                 ->send();
         } catch (Exception $e) {
-            Log::error($e);
+            Log::error($e->getMessage(), ['exception' => $e]);
             captureException($e);
             if (str_contains($e->getMessage(), 'max.')) {
                 $this->addError('file', $this->messages['file.max']);

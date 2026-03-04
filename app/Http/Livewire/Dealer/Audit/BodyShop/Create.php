@@ -20,6 +20,6 @@ class Create extends Component
             'audit_date' => now()->format('Y-m-d'),
         ]);
 
-        return redirect()->to(route('dealer.stores.audits.body-shop.show', [$this->store, $audit->id]));
+        return redirect()->to(route('dealer.audit.body-shop.show', $audit));
     }
 }

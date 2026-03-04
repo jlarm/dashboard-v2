@@ -13,7 +13,7 @@
     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         <div><a href="mailto:{{ $user->email }}">{{ Str::lower($user->email) }}</a></div>
     </td>
-    @if(tenant('locations'))
+    @if(app('multipleStoresExist'))
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             @foreach($user->stores as $store)
                 <div class="flex flex-col">

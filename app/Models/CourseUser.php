@@ -11,29 +11,19 @@ class CourseUser extends Pivot
 {
     public $incrementing = false;
     protected $table = 'course_user';
-    protected $primaryKey = ['user_id', 'course_id'];
     protected $fillable = ['user_id', 'course_id', 'type', 'assigned_by'];
 
     protected function setKeysForSaveQuery($query): Builder
     {
-        $keys = $this->getKeyName();
-        if (! is_array($keys)) {
-            return parent::setKeysForSaveQuery($query);
-        }
-
-        foreach ($keys as $keyName) {
-            $query->where($keyName, '=', $this->getKeyForSaveQuery($keyName));
+        foreach (['user_id', 'course_id'] as $keyName) {
+            $query->where($keyName, '=', $this->resolveCompositeKeyForSaveQuery($keyName));
         }
 
         return $query;
     }
 
-    protected function getKeyForSaveQuery(?string $keyName = null): mixed
+    private function resolveCompositeKeyForSaveQuery(string $keyName): mixed
     {
-        if (is_null($keyName)) {
-            $keyName = $this->getKeyName();
-        }
-
         return $this->original[$keyName] ?? $this->getAttribute($keyName);
     }
 }

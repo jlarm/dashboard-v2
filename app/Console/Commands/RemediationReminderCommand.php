@@ -27,13 +27,18 @@ class RemediationReminderCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
-            $tenantSlug = (bool) tenant('locations');
-            $this->processStores(Store::all(), $tenantSlug);
+        /** @var \Illuminate\Support\Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+            $hasMultipleStores = Store::query()->count() > 1;
+            $this->processStores(Store::all(), $hasMultipleStores);
         });
     }
 
-    private function processStores(Collection $stores, bool $tenantSlug): void
+    private function processStores(Collection $stores, bool $hasMultipleStores): void
     {
         foreach ($stores as $store) {
             /** @var Store $store */
@@ -44,11 +49,11 @@ class RemediationReminderCommand extends Command
                 continue;
             }
             $frequency = $store->remediationSettings->frequency->value();
-            $this->processAudits($store, $frequency, $tenantSlug);
+            $this->processAudits($store, $frequency, $hasMultipleStores);
         }
     }
 
-    private function processAudits(Store $store, int $frequency, bool $tenantSlug): void
+    private function processAudits(Store $store, int $frequency, bool $hasMultipleStores): void
     {
         $oshaAudits = $this->getAuditsDueForReminder($store->oshaViolationAudits(), $frequency);
         $bodyShopAudits = $this->getAuditsDueForReminder($store->bodyShopViolationAudits(), $frequency);
@@ -60,7 +65,7 @@ class RemediationReminderCommand extends Command
             if ($audit->outstanding_remediation_count === 0) {
                 continue;
             }
-            $this->processAudit($store, $audit, $tenantSlug);
+            $this->processAudit($store, $audit, $hasMultipleStores);
         }
     }
 
@@ -81,7 +86,7 @@ class RemediationReminderCommand extends Command
             ->get();
     }
 
-    private function processAudit(Store $store, Model $audit, bool $tenantSlug): void
+    private function processAudit(Store $store, Model $audit, bool $hasMultipleStores): void
     {
         $modelBaseName = $this->getModelType($audit);
         $auditType = $this->modelTypeMap[$modelBaseName] ?? null;
@@ -92,16 +97,16 @@ class RemediationReminderCommand extends Command
             return;
         }
 
-        $this->sendNotifications($store, $auditType, $audit, $tenantSlug);
+        $this->sendNotifications($store, $auditType, $audit, $hasMultipleStores);
         $this->updateReminderLogs($audit);
     }
 
-    private function sendNotifications(Store $store, AuditTypes $auditType, Model $audit, bool $tenantSlug): void
+    private function sendNotifications(Store $store, AuditTypes $auditType, Model $audit, bool $hasMultipleStores): void
     {
         $users = GetRemediationReminderUsers::execute($store, $auditType);
 
         foreach ($users as $user) {
-            $user->notify(new RemediationReminderNotification($tenantSlug, $user, $store, $auditType, $audit));
+            $user->notify(new RemediationReminderNotification($hasMultipleStores, $user, $store, $auditType, $audit));
         }
     }
 

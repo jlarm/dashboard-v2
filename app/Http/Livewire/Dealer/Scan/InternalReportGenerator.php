@@ -28,7 +28,7 @@ class InternalReportGenerator extends Component
 
     public function mount(): void
     {
-        if (tenant('locations')) {
+        if ((bool) app('multipleStoresExist')) {
             $this->store = Store::query()->where('id', $this->store->id)->first() ?? '';
         } else {
             $this->dealer = ScanSetting::query()->first()->name ?? '';
@@ -40,7 +40,7 @@ class InternalReportGenerator extends Component
         $token = Cookie::get('sentry');
         $client = new Client;
 
-        $dealerName = tenant('locations') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
+        $dealerName = app('multipleStoresExist') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
 
         $fileName = $dealerName.'-'.now()->format('Ymdhis').'-internal-scan.pdf';
 

@@ -176,7 +176,7 @@ class Create extends Component
             new UploadCmsToDigitalOceanJob($manual),
         ])->dispatch();
 
-        (tenant('locations')) ? $this->redirect(route('dealer.stores.manuals.cms.index', $this->store)) : $this->redirect(route('dealer.manual.cms.index', $this->store));
+        $this->redirect(route('dealer.manual.cms.index'));
     }
 
     public function render()
@@ -186,7 +186,7 @@ class Create extends Component
 
     private function loadQi(): void
     {
-        if (tenant('locations')) {
+        if ((bool) app('multipleStoresExist')) {
             $this->qi = User::query()->whereHas('roles', function ($query): void {
                 $query->where('name', 'Qualified Individual');
             })->whereHas('stores', function ($query): void {
@@ -203,7 +203,7 @@ class Create extends Component
 
     private function sendQiMissingNotification(): void
     {
-        $route = (tenant('locations')) ? route('dealer.stores.employees', $this->store) : route('dealer.employees.index');
+        $route = route('dealer.employees.index');
         Notification::make()
             ->title('Qualified Individual Missing')
             ->body('Please assign an employee the Qualified Individual role.')
@@ -219,7 +219,7 @@ class Create extends Component
 
     private function sendStandardDppRateMissingNotification(): void
     {
-        $route = (tenant('locations')) ? route('dealer.stores.settings', $this->store) : route('dealer.dealer.settings');
+        $route = route('dealer.dealer.settings');
         Notification::make()
             ->title('Standard DPP Rate Missing')
             ->body('Please set the standard DPP rate in the Dealer Settings.')

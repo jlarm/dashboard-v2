@@ -6,9 +6,11 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Department;
 use App\Models\User;
+use App\Services\TrainingComplianceService;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -32,6 +34,8 @@ class Index extends Component
     public ?int $selectedDepartment = null;
     public ?int $selectedRole = null;
     public bool $showIncompleteCourseUsers = false;
+    public bool $showExpiredCourseUsers = false;
+    public bool $showExpiringSoonCourseUsers = false;
     public ?string $email = null;
     public string $sortField = 'name';
     public string $sortDirection = 'asc';
@@ -44,6 +48,8 @@ class Index extends Component
         'selectedDepartment' => ['except' => null, 'as' => 'd'],
         'selectedRole' => ['except' => null, 'as' => 'r'],
         'showIncompleteCourseUsers' => ['except' => false, 'as' => 'i'],
+        'showExpiredCourseUsers' => ['except' => false, 'as' => 'e'],
+        'showExpiringSoonCourseUsers' => ['except' => false, 'as' => 'x'],
         'sortField' => ['except' => 'name', 'as' => 'sort'],
         'sortDirection' => ['except' => 'asc', 'as' => 'dir'],
     ];
@@ -56,10 +62,6 @@ class Index extends Component
 
     public function getUsersQueryProperty(): Builder
     {
-        $generalCourseCutoffDate = now()->subYear();
-        $specialCourseCutoffDate = now()->subYears(3);
-        $specialCourseIds = [9, 10, 11, 12];
-
         $query = $this->initialUsersQuery()
             ->whereDoesntHave('roles', function ($query): void {
                 $query->where('name', 'super-admin')
@@ -71,33 +73,13 @@ class Index extends Component
                 'department:id,name',
                 'stores:id,name,state',
                 'courseOverrides:user_id,course_id,type',
-                'results' => function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
-                    $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
-                        ->where('passed', 1)
-                        ->where(function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
-                            $query->where(function ($query) use ($generalCourseCutoffDate, $specialCourseIds): void {
-                                $query->whereNotIn('course_id', $specialCourseIds)
-                                    ->where('created_at', '>=', $generalCourseCutoffDate);
-                            })->orWhere(function ($query) use ($specialCourseCutoffDate, $specialCourseIds): void {
-                                $query->whereIn('course_id', $specialCourseIds)
-                                    ->where('created_at', '>=', $specialCourseCutoffDate);
-                            });
-                        });
-                },
             ]);
 
         $this->applyDepartmentFilter($query);
         $this->applyRoleFilter($query);
         $this->applySearchFilter($query);
         $this->applySorting($query);
-
-        if (tenant('locations')) {
-            $query->whereHas('stores', function ($query): void {
-                if (! $this->currentUser->hasAnyRole(['super-admin', 'Consultant'])) {
-                    $query->whereIn('stores.id', $this->currentUser->stores->pluck('id'));
-                }
-            });
-        }
+        $this->applyStoreFilter($query);
 
         return $query;
     }
@@ -109,6 +91,18 @@ class Index extends Component
     }
 
     public function updatingShowIncompleteCourseUsers(): void
+    {
+        $this->resetPage();
+        $this->clearSelections();
+    }
+
+    public function updatingShowExpiredCourseUsers(): void
+    {
+        $this->resetPage();
+        $this->clearSelections();
+    }
+
+    public function updatingShowExpiringSoonCourseUsers(): void
     {
         $this->resetPage();
         $this->clearSelections();
@@ -138,7 +132,14 @@ class Index extends Component
 
     public function resetFilters(): void
     {
-        $this->reset(['search', 'showIncompleteCourseUsers', 'selectedDepartment', 'selectedRole']);
+        $this->reset([
+            'search',
+            'showIncompleteCourseUsers',
+            'showExpiredCourseUsers',
+            'showExpiringSoonCourseUsers',
+            'selectedDepartment',
+            'selectedRole',
+        ]);
         $this->resetPage();
         $this->clearSelections();
     }
@@ -165,6 +166,18 @@ class Index extends Component
     public function resetShowIncompleteCourseUsers(): void
     {
         $this->showIncompleteCourseUsers = false;
+        $this->resetPage();
+    }
+
+    public function resetShowExpiredCourseUsers(): void
+    {
+        $this->showExpiredCourseUsers = false;
+        $this->resetPage();
+    }
+
+    public function resetShowExpiringSoonCourseUsers(): void
+    {
+        $this->showExpiringSoonCourseUsers = false;
         $this->resetPage();
     }
 
@@ -299,10 +312,22 @@ class Index extends Component
     public function render(): View
     {
         $query = $this->usersQuery;
+        $scopedUsers = (clone $query)->without(['department'])->get();
+        $scopedTrainingSummaries = $this->resolveTrainingSummaries($scopedUsers);
+        $trainingCounts = $this->summarizeTrainingCounts($scopedTrainingSummaries);
+        $showComplianceFilters = $this->showIncompleteCourseUsers || $this->showExpiredCourseUsers || $this->showExpiringSoonCourseUsers;
+        $perPage = $showComplianceFilters ? 500 : 15;
+        $paginatedUsers = (clone $query)
+            ->with(['results' => fn ($q) => $this->constrainResultsQuery($q)])
+            ->paginate($perPage);
+        $paginatedCollection = collect($paginatedUsers->items());
+        $trainingSummaries = $scopedTrainingSummaries->only($paginatedCollection->pluck('id')->all());
 
-        $users = $this->showIncompleteCourseUsers
-            ? $query->paginate(500)->filter(fn (User $user) => $user->user_has_not_completed_courses)
-            : $query->paginate(15);
+        $users = $showComplianceFilters
+            ? $paginatedCollection
+                ->filter(fn ($user): bool => $user instanceof User && $this->passesComplianceFilters($trainingSummaries->get($user->id)))
+                ->values()
+            : $paginatedUsers;
 
         return view('livewire.dealer.employee.index', [
             'users' => $users,
@@ -310,6 +335,8 @@ class Index extends Component
             'roles' => $this->roles,
             'selectedDepartmentName' => $this->selectedDepartmentName,
             'selectedRoleName' => $this->selectedRoleName,
+            'trainingSummaries' => $trainingSummaries,
+            'trainingCounts' => $trainingCounts,
         ]);
     }
 
@@ -317,9 +344,10 @@ class Index extends Component
     {
         if (! $this->cachedUsers instanceof Collection) {
             $users = $this->usersQuery->get();
+            $trainingSummaries = $this->resolveTrainingSummaries($users);
 
-            $this->cachedUsers = $this->showIncompleteCourseUsers
-                ? $users->filter(fn (User $user) => $user->user_has_not_completed_courses)
+            $this->cachedUsers = ($this->showIncompleteCourseUsers || $this->showExpiredCourseUsers || $this->showExpiringSoonCourseUsers)
+                ? $users->filter(fn ($user): bool => $user instanceof User && $this->passesComplianceFilters($trainingSummaries->get($user->id)))->values()
                 : $users;
         }
 
@@ -352,6 +380,33 @@ class Index extends Component
         }
     }
 
+    private function applyStoreFilter(Builder $query): void
+    {
+        if (! app('multipleStoresExist')) {
+            return;
+        }
+
+        $storeIds = $this->resolveScopedStoreIds();
+
+        if ($storeIds->isEmpty()) {
+            $query->whereRaw('1 = 0');
+
+            return;
+        }
+
+        $query->whereHas('stores', function ($query) use ($storeIds): void {
+            $query->whereIn('stores.id', $storeIds);
+        });
+    }
+
+    private function resolveScopedStoreIds(): Collection
+    {
+        /** @var Collection $storeIds */
+        $storeIds = app('scopedStoreIds');
+
+        return $storeIds;
+    }
+
     private function applySorting(Builder $query): void
     {
         match ($this->sortField) {
@@ -372,14 +427,24 @@ class Index extends Component
 
     private function generateExportCsvContent(Collection $users): string
     {
-        $csvContent = "Name,Store,Department,Completed Courses\n";
+        $trainingSummaries = $this->resolveTrainingSummaries($users);
+        $csvContent = "Name,Store,Department,Training Status,Valid Completed,Required Courses,Not Completed,Expired,Expiring Soon\n";
+
         foreach ($users as $user) {
+            $summary = $trainingSummaries->get($user->id);
+            $status = is_array($summary) ? $this->trainingStatusLabel($summary['status']) : 'Unknown';
+            $validCompleted = is_array($summary) ? (string) $summary['valid_completed'] : '0';
+            $requiredCourses = is_array($summary) ? (string) $summary['total_required'] : (string) $user->total_user_courses;
+            $notCompleted = is_array($summary) ? (string) $summary['not_completed'] : '0';
+            $expired = is_array($summary) ? (string) $summary['expired'] : '0';
+            $expiringSoon = is_array($summary) ? (string) $summary['expiring_soon'] : '0';
+
             $name = $this->escapeCsvField($user->name);
             $stores = $this->escapeCsvField($user->stores->pluck('name')->join(', '));
             $department = $this->escapeCsvField($user->department?->name ?? 'N/A');
-            $courses = "{$user->total_completed_courses} of {$user->total_user_courses}";
+            $status = $this->escapeCsvField($status);
 
-            $csvContent .= "{$name},{$stores},{$department},{$courses}\n";
+            $csvContent .= "{$name},{$stores},{$department},{$status},{$validCompleted},{$requiredCourses},{$notCompleted},{$expired},{$expiringSoon}\n";
         }
 
         return $csvContent;
@@ -387,16 +452,32 @@ class Index extends Component
 
     private function generateCsvContent(Collection $users): string
     {
-        $csvContent = "Name,Email,Department,Courses\n";
-        foreach ($users as $user) {
-            if ($user->total_completed_courses !== $user->total_user_courses) {
-                $name = $this->escapeCsvField($user->name);
-                $email = $this->escapeCsvField($user->email);
-                $department = $this->escapeCsvField($user->department?->name ?? 'N/A');
-                $courses = "{$user->total_completed_courses} of {$user->total_user_courses}";
+        $trainingSummaries = $this->resolveTrainingSummaries($users);
+        $csvContent = "Name,Email,Department,Training Status,Valid Completed,Required Courses,Not Completed,Expired,Expiring Soon\n";
 
-                $csvContent .= "{$name},{$email},{$department},{$courses}\n";
+        foreach ($users as $user) {
+            $summary = $trainingSummaries->get($user->id);
+            $shouldInclude = is_array($summary)
+                ? $summary['not_completed'] > 0 || $summary['expired'] > 0 || $summary['expiring_soon'] > 0
+                : $user->total_completed_courses !== $user->total_user_courses;
+
+            if (! $shouldInclude) {
+                continue;
             }
+
+            $status = is_array($summary) ? $this->trainingStatusLabel($summary['status']) : 'Unknown';
+            $validCompleted = is_array($summary) ? (string) $summary['valid_completed'] : '0';
+            $requiredCourses = is_array($summary) ? (string) $summary['total_required'] : (string) $user->total_user_courses;
+            $notCompleted = is_array($summary) ? (string) $summary['not_completed'] : '0';
+            $expired = is_array($summary) ? (string) $summary['expired'] : '0';
+            $expiringSoon = is_array($summary) ? (string) $summary['expiring_soon'] : '0';
+
+            $name = $this->escapeCsvField($user->name);
+            $email = $this->escapeCsvField($user->email);
+            $department = $this->escapeCsvField($user->department?->name ?? 'N/A');
+            $status = $this->escapeCsvField($status);
+
+            $csvContent .= "{$name},{$email},{$department},{$status},{$validCompleted},{$requiredCourses},{$notCompleted},{$expired},{$expiringSoon}\n";
         }
 
         return $csvContent;
@@ -434,6 +515,25 @@ class Index extends Component
         $this->email = null;
     }
 
+    private function constrainResultsQuery(HasMany $query): void
+    {
+        $generalCourseCutoffDate = now()->subYear();
+        $specialCourseCutoffDate = now()->subYears(3);
+        $specialCourseIds = [9, 10, 11, 12];
+
+        $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
+            ->where('passed', 1)
+            ->where(function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
+                $query->where(function ($query) use ($generalCourseCutoffDate, $specialCourseIds): void {
+                    $query->whereNotIn('course_id', $specialCourseIds)
+                        ->where('created_at', '>=', $generalCourseCutoffDate);
+                })->orWhere(function ($query) use ($specialCourseCutoffDate, $specialCourseIds): void {
+                    $query->whereIn('course_id', $specialCourseIds)
+                        ->where('created_at', '>=', $specialCourseCutoffDate);
+                });
+            });
+    }
+
     private function initialUsersQuery(): Builder
     {
         $query = User::query();
@@ -443,5 +543,108 @@ class Index extends Component
         }
 
         return $query;
+    }
+
+    /**
+     * @param  Collection<int, mixed>  $users
+     * @return Collection<int, array{
+     *     total_required: int,
+     *     valid_completed: int,
+     *     not_completed: int,
+     *     expired: int,
+     *     expiring_soon: int,
+     *     status: 'compliant'|'at_risk'|'overdue'|'unassigned'
+     * }>
+     */
+    private function resolveTrainingSummaries(Collection $users): Collection
+    {
+        return app(TrainingComplianceService::class)->summarizeUsers(
+            $users
+                ->filter(static fn ($user): bool => $user instanceof User)
+                ->values()
+        );
+    }
+
+    /**
+     * @param  array{
+     *     total_required: int,
+     *     valid_completed: int,
+     *     not_completed: int,
+     *     expired: int,
+     *     expiring_soon: int,
+     *     status: 'compliant'|'at_risk'|'overdue'|'unassigned'
+     * }|null  $summary
+     */
+    private function passesComplianceFilters(?array $summary): bool
+    {
+        if (! is_array($summary)) {
+            return ! $this->showIncompleteCourseUsers && ! $this->showExpiredCourseUsers && ! $this->showExpiringSoonCourseUsers;
+        }
+
+        if ($this->showIncompleteCourseUsers && $summary['not_completed'] <= 0) {
+            return false;
+        }
+
+        if ($this->showExpiredCourseUsers && $summary['expired'] <= 0) {
+            return false;
+        }
+
+        return ! ($this->showExpiringSoonCourseUsers && $summary['expiring_soon'] <= 0);
+    }
+
+    private function trainingStatusLabel(string $status): string
+    {
+        return match ($status) {
+            'compliant' => 'Compliant',
+            'overdue' => 'Overdue',
+            'at_risk' => 'At Risk',
+            'unassigned' => 'Unassigned',
+            default => 'Unknown',
+        };
+    }
+
+    /**
+     * @param  Collection<int, array{
+     *     total_required: int,
+     *     valid_completed: int,
+     *     not_completed: int,
+     *     expired: int,
+     *     expiring_soon: int,
+     *     status: 'compliant'|'at_risk'|'overdue'|'unassigned'
+     * }>  $summaries
+     * @return array{
+     *     employees: int,
+     *     compliant: int,
+     *     at_risk: int,
+     *     overdue: int,
+     *     unassigned: int,
+     *     incomplete_courses: int,
+     *     expired_courses: int,
+     *     expiring_soon_courses: int
+     * }
+     */
+    private function summarizeTrainingCounts(Collection $summaries): array
+    {
+        return $summaries->reduce(
+            function (array $carry, array $summary): array {
+                $carry['employees']++;
+                $carry[$summary['status']]++;
+                $carry['incomplete_courses'] += $summary['not_completed'];
+                $carry['expired_courses'] += $summary['expired'];
+                $carry['expiring_soon_courses'] += $summary['expiring_soon'];
+
+                return $carry;
+            },
+            [
+                'employees' => 0,
+                'compliant' => 0,
+                'at_risk' => 0,
+                'overdue' => 0,
+                'unassigned' => 0,
+                'incomplete_courses' => 0,
+                'expired_courses' => 0,
+                'expiring_soon_courses' => 0,
+            ],
+        );
     }
 }

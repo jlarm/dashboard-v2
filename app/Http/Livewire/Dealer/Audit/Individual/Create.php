@@ -25,6 +25,6 @@ class Create extends Component
             'audit_date' => now()->format('Y-m-d'),
         ]);
 
-        return redirect()->to(route('dealer.audit.individual.edit', [$this->store, $audit->uuid]));
+        return redirect()->to(route('dealer.audit.individual.edit', $audit->uuid));
     }
 }

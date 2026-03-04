@@ -6,8 +6,12 @@ namespace App\Http\Livewire\Dealer\Home;
 
 use App\Models\Dealer\Store;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Redirector as LivewireRedirector;
 use Livewire\WithPagination;
 
 class StoreList extends Component
@@ -22,6 +26,22 @@ class StoreList extends Component
         $this->resetPage();
     }
 
+    public function selectStore(int $storeId): RedirectResponse|LivewireRedirector
+    {
+        /** @var Store|null $store */
+        $store = $this->query()
+            ->whereKey($storeId)
+            ->first();
+
+        abort_unless($store instanceof Store, 403);
+
+        auth()->user()->update([
+            'current_store_id' => $store->id,
+        ]);
+
+        return redirect()->route('dealer.dashboard');
+    }
+
     public function render(): View
     {
         return view('livewire.dealer.home.store-list', [
@@ -29,7 +49,7 @@ class StoreList extends Component
         ]);
     }
 
-    protected function query()
+    protected function query(): Builder|BelongsToMany
     {
         if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
             return Store::query();
@@ -47,7 +67,7 @@ class StoreList extends Component
         }
 
         return $query
-            ->select('id', 'name', 'slug')
+            ->select(['id', 'name', 'slug'])
             ->paginate(10);
     }
 }

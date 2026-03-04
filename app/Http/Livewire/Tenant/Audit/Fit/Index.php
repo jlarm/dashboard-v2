@@ -15,7 +15,8 @@ class Index extends Component
 
     public function mount(): void
     {
-        $this->store = Store::query()->find(app('currentStore'));
+        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
+            ?? Store::query()->find(app('currentStore'));
     }
 
     public function render(): View

@@ -21,7 +21,7 @@ class Delete extends Modal
     {
         $this->store->delete();
 
-        $this->redirect(route('dealer.stores.index'));
+        $this->redirect(route('dealer.dashboard'));
 
         Notification::make()
             ->title('Store Deleted Successfully!')

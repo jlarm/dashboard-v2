@@ -11,6 +11,7 @@ use App\Notifications\IncompleteCoursesNotification;
 use App\Services\UserCourseService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class CourseReminderCommand extends Command
 {
@@ -42,11 +43,16 @@ class CourseReminderCommand extends Command
             }
         }
 
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant) use ($debugEnabled, $isTestMode): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($debugEnabled, $isTestMode): void {
             app(UserCourseService::class)->clearAllCaches();
 
             $this->info("Running command for tenant: {$tenant->id}");
-            if (tenant('locations')) {
+            if (Store::query()->count() > 1) {
                 $this->processTenantsWithLocations($tenant, $debugEnabled, $isTestMode);
             } else {
                 $this->processTenantsWithoutLocations($tenant, $debugEnabled, $isTestMode);

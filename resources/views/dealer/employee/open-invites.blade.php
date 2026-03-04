@@ -40,11 +40,11 @@
                     ])>Open Invites</a>
                 @can('create-stores')
                     <a
-                        href="{{ route('dealer.employee.deleted') }}"
+                        href="{{ route('dealer.employees.deleted') }}"
                         @class([
                             'text-sm focus:outline-none',
-                            'text-arm-orange-500' => request()->routeIs('dealer.employee.deleted'),
-                            'text-gray-600' => !request()->routeIs('dealer.employee.deleted')
+                            'text-arm-orange-500' => request()->routeIs('dealer.employees.deleted'),
+                            'text-gray-600' => !request()->routeIs('dealer.employees.deleted')
                         ])>Deleted</a>
                 @endcan
             </div>

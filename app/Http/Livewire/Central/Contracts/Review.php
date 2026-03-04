@@ -158,13 +158,16 @@ class Review extends Component
             'osha' => 'OSHA',
             'it' => 'IT Security',
             'ces' => 'Cyber Enhanced Security',
+            default => 'Unknown Service',
         };
     }
 
     public function render()
     {
+        $services = $this->contract->services;
+
         return view('livewire.central.contracts.review', [
-            'services' => json_decode($this->contract->services),
+            'services' => (array) $services,
         ])->layout('layouts.guest');
     }
 }

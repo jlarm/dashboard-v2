@@ -13,11 +13,26 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (! Schema::hasTable('vendor_email_logs')) {
+            return;
+        }
+
         Schema::table('vendor_email_logs', function (Blueprint $table): void {
-            $table->string('status')->default('sent')->after('sent_at');
-            $table->timestamp('delivered_at')->nullable()->after('status');
-            $table->text('delivery_message')->nullable()->after('delivered_at');
-            $table->string('event_type')->nullable()->after('delivery_message');
+            if (! Schema::hasColumn('vendor_email_logs', 'status')) {
+                $table->string('status')->default('sent')->after('sent_at');
+            }
+
+            if (! Schema::hasColumn('vendor_email_logs', 'delivered_at')) {
+                $table->timestamp('delivered_at')->nullable()->after('status');
+            }
+
+            if (! Schema::hasColumn('vendor_email_logs', 'delivery_message')) {
+                $table->text('delivery_message')->nullable()->after('delivered_at');
+            }
+
+            if (! Schema::hasColumn('vendor_email_logs', 'event_type')) {
+                $table->string('event_type')->nullable()->after('delivery_message');
+            }
         });
     }
 
@@ -26,8 +41,21 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (! Schema::hasTable('vendor_email_logs')) {
+            return;
+        }
+
         Schema::table('vendor_email_logs', function (Blueprint $table): void {
-            $table->dropColumn(['status', 'delivered_at', 'delivery_message', 'event_type']);
+            $columnsToDrop = array_values(array_filter([
+                Schema::hasColumn('vendor_email_logs', 'status') ? 'status' : null,
+                Schema::hasColumn('vendor_email_logs', 'delivered_at') ? 'delivered_at' : null,
+                Schema::hasColumn('vendor_email_logs', 'delivery_message') ? 'delivery_message' : null,
+                Schema::hasColumn('vendor_email_logs', 'event_type') ? 'event_type' : null,
+            ]));
+
+            if ($columnsToDrop !== []) {
+                $table->dropColumn($columnsToDrop);
+            }
         });
     }
 };

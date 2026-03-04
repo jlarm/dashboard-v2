@@ -10,6 +10,7 @@ use App\Models\Dealer\Store;
 use App\Models\Department;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -103,17 +104,62 @@ class OpenInvites extends Component
 
         $invites = $this->applyManagerFilter($this->invites)->paginate(25);
 
+        $departmentIds = $this->getDepartmentIds();
+
+        $allDeptIds = array_unique(array_merge(
+            $departmentIds,
+            $invites->pluck('department_id')->filter()->all()
+        ));
+
+        $departmentNames = Department::query()
+            ->whereIn('id', $allDeptIds)
+            ->pluck('name', 'id');
+
+        $allStoreIds = $invites
+            ->flatMap(fn ($invite): array => (array) ($invite->stores ?? []))
+            ->unique()
+            ->values()
+            ->all();
+
+        $storeNameMap = $allStoreIds
+            ? Store::query()->whereIn('id', $allStoreIds)->pluck('name', 'id')
+            : collect();
+
         return view('livewire.dealer.employee.open-invites', [
             'invites' => $invites,
+            'departmentIds' => $departmentIds,
+            'departmentNames' => $departmentNames,
+            'storeNameMap' => $storeNameMap,
         ]);
     }
 
     private function getInvitesQuery()
     {
-        return Invite::query()
+        $query = Invite::query()
             ->whereNull('registered_at')
             ->with(['user', 'store'])
             ->orderByDesc('created_at');
+
+        if (! app('multipleStoresExist')) {
+            return $query;
+        }
+
+        $storeIds = $this->resolveScopedStoreIds();
+
+        if ($storeIds->isEmpty()) {
+            $query->whereRaw('1 = 0');
+
+            return $query;
+        }
+
+        $query->where(function (Builder $query) use ($storeIds): void {
+            foreach ($storeIds as $storeId) {
+                $query->orWhereJsonContains('stores', (string) $storeId)
+                    ->orWhereJsonContains('stores', (int) $storeId);
+            }
+        });
+
+        return $query;
     }
 
     private function findInvite($inviteId)
@@ -165,5 +211,43 @@ class OpenInvites extends Component
         }
 
         return $query;
+    }
+
+    private function resolveScopedStoreIds(): Collection
+    {
+        if (app()->bound('scopedStoreIds')) {
+            /** @var Collection $scopedStoreIds */
+            $scopedStoreIds = app('scopedStoreIds');
+
+            $normalizedScopedStoreIds = $scopedStoreIds->map(static fn ($id): int => (int) $id)->values();
+
+            if ($normalizedScopedStoreIds->isNotEmpty()) {
+                return $normalizedScopedStoreIds;
+            }
+        }
+
+        $user = auth()->user();
+
+        if (! $user) {
+            return collect();
+        }
+
+        if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
+            return $user->current_store_id !== null
+                ? collect([(int) $user->current_store_id])
+                : Store::query()->pluck('id');
+        }
+
+        $assignedStoreIds = $user->stores()->pluck('stores.id')->map(static fn ($id): int => (int) $id);
+
+        if ($user->current_store_id === null) {
+            return $assignedStoreIds;
+        }
+
+        if ($assignedStoreIds->contains($user->current_store_id)) {
+            return collect([(int) $user->current_store_id]);
+        }
+
+        return collect();
     }
 }

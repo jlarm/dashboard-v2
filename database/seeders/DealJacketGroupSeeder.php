@@ -67,7 +67,7 @@ class DealJacketGroupSeeder extends Seeder
             }
 
             // Associate user with all stores if tenant has locations feature
-            if (tenant('locations') && $stores->isNotEmpty()) {
+            if ($stores->count() > 1) {
                 $user->stores()->attach($stores->pluck('id'));
             }
 

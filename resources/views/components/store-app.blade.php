@@ -1,4 +1,7 @@
 @props(['title'])
+@php
+    $browserTitle = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)?->name ?? tenant('name');
+@endphp
     <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -7,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('favicon.svg') }}" type="image/x-icon">
 
-    <title>{{ tenant('name') }}</title>
+    <title>{{ $browserTitle }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -18,11 +18,6 @@ describe('Guest - Unauthenticated Access Redirects to Login', function (): void 
             ->assertRedirect(route('dealer.login'));
     });
 
-    it('redirects to login from videos', function (): void {
-        $this->get(route('dealer.videos.index'))
-            ->assertRedirect(route('dealer.login'));
-    });
-
     it('redirects to login from profile', function (): void {
         $this->get(route('dealer.profile.edit'))
             ->assertRedirect(route('dealer.login'));

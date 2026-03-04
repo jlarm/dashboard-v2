@@ -12,9 +12,9 @@ use App\Http\Middleware\ImpersonationMiddleware;
 use App\Http\Middleware\Localization;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\RequireTenantStoreMiddleware;
 use App\Http\Middleware\SecurityHeadersMiddleware;
 use App\Http\Middleware\SingleStoreMiddleware;
-use App\Http\Middleware\StoreAccessMiddleware;
 use App\Http\Middleware\StoreIdentifierMiddleware;
 use App\Http\Middleware\StoreMiddleware;
 use App\Http\Middleware\TrimStrings;
@@ -113,7 +113,7 @@ class Kernel extends HttpKernel
         'permission' => PermissionMiddleware::class,
         'role_or_permission' => RoleOrPermissionMiddleware::class,
         'stores' => StoreMiddleware::class,
-        'canAccessStore' => StoreAccessMiddleware::class,
         'tenant.not-suspended' => EnsureTenantIsNotSuspended::class,
+        'tenant.requires-store' => RequireTenantStoreMiddleware::class,
     ];
 }

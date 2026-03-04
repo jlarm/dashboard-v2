@@ -29,11 +29,7 @@ class Login extends Component
 
             Cookie::queue('sentry', $this->token, 604800);
 
-            if (tenant('locations')) {
-                return redirect()->route('dealer.stores.scans', $this->store);
-            }
-
-            return redirect()->route('dealer.scan.index');
+            return redirect()->route('dealer.scan.archive');
 
         } catch (Exception) {
             $this->addError('email', 'Invalid credentials');

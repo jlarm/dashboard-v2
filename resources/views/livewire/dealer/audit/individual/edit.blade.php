@@ -254,7 +254,7 @@
                         Exit
                     </a>
                     <a class="inline-flex items-center px-4 py-2 ml-5 bg-arm-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-arm-blue-700 focus:bg-arm-blue-700 active:bg-arm-blue-900 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                       href="{{ $store ? route('dealer.stores.audits.individual.create', [$store, $parent]) : route('dealer.audit.individual.create', $parent) }}"
+                       href="{{ route('dealer.audit.individual.create', $parent) }}"
                     >
                         Next Audit
                     </a>
@@ -336,7 +336,7 @@
                                 style="display: none;"
                                 class="absolute -top-24 left-0 mt-2 w-40 rounded-md bg-white shadow-md"
                             >
-                                <a href="{{ $store ? route('dealer.stores.audits.individual.create', [$store, $parent]) : route('dealer.audit.individual.create', $parent) }}" class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500">
+                                <a href="{{ route('dealer.audit.individual.create', $parent) }}" class="flex items-center gap-2 w-full first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:bg-gray-50 disabled:text-gray-500">
                                     Next Audit
                                 </a>
 

@@ -123,6 +123,10 @@ abstract class TenantTestCase extends TestCase
             $this->tenant->forceDelete();
         }
 
+        DB::disconnect('tenant');
+        DB::purge('tenant');
+        DB::disconnect('mysql');
+
         parent::tearDown();
     }
 

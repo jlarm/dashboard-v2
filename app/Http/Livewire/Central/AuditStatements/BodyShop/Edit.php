@@ -22,7 +22,8 @@ class Edit extends Component
     public function mount(): void
     {
         $this->statement = $this->bodyShopViolation->statement;
-        $this->keywords = json_decode($this->bodyShopViolation->keywords);
+        $keywords = $this->bodyShopViolation->keywords;
+        $this->keywords = (array) $keywords;
         $this->weight = $this->bodyShopViolation->weight;
     }
 

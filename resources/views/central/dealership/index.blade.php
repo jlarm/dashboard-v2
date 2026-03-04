@@ -3,7 +3,9 @@
         <div>
             <div class="flex justify-between items-center mb-5">
                 <h1 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Dealerships</h1>
-                <x-primary-link-button href="{{ route('dealerships.create') }}">Add Dealership</x-primary-link-button>
+                <x-primary-button onclick="Livewire.emit('modal.open', 'central.dealership.create')">
+                    Add Dealership
+                </x-primary-button>
             </div>
             <livewire:central.dealership.index/>
         </div>

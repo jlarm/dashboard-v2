@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('vendor_email_logs')) {
+            return;
+        }
+
         Schema::create('vendor_email_logs', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('vendor_form_id')->constrained()->cascadeOnDelete();

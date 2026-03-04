@@ -506,7 +506,7 @@
                     @else
                     <x-primary-button>Update</x-primary-button>
                     @endif
-                    <x-button.secondary href="{{ tenant('locations') ? route('dealer.stores.audits.osha.index', $store) : route('dealer.audit.osha.index') }}">Exit</x-button.secondary>
+                    <x-button.secondary href="{{ route('dealer.audit.osha.index') }}">Exit</x-button.secondary>
                 </div>
                 <div>
                     <svg wire:loading.delay class="animate-spin -ml-1 mr-3 h-5 w-5 text-arm-blue-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

@@ -27,7 +27,7 @@
     <x-table.cell class="relative whitespace-nowrap py-4 pl-3 flex justify-end text-sm font-medium">
         <div class="space-x-5">
             <a
-                href="{{ (!tenant('locations') ? route('dealer.audit.individual.edit', $audit) : route('dealer.stores.audits.individual.edit', [$store, $audit])) }}"
+                href="{{ route('dealer.audit.individual.edit', $audit) }}"
                 class="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
                 Edit

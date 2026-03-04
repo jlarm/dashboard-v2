@@ -21,7 +21,7 @@ class UploadToDigitalOceanJob implements ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->contract)];
+        return [new WithoutOverlapping(static::class.'-'.$this->contract->getKey())];
     }
 
     public function handle(): void

@@ -28,7 +28,7 @@ class GenerateButton extends Component
             new GenerateOshaPdfJob($this->oshaViolationAudit),
             new UploadOshaPdfJob($this->oshaViolationAudit),
             new RemediationReminderEmailJob(
-                tenants: (bool) tenant('locations'),
+                tenants: (bool) app('multipleStoresExist'),
                 store: $this->store,
                 audit: $this->oshaViolationAudit,
                 auditType: AuditTypes::OSHA

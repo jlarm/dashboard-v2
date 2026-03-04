@@ -16,6 +16,7 @@ use Livewire\Component;
 class AssignCustomCoursesForm extends Component
 {
     public User $user;
+    public bool $autoload = false;
     public $courses;
     public $courseStates = [];
     public $defaultCourseIds = [];
@@ -25,6 +26,11 @@ class AssignCustomCoursesForm extends Component
     public function mount(): void
     {
         $this->courses = collect();
+
+        if ($this->autoload) {
+            $this->loadData();
+            $this->isLoaded = true;
+        }
     }
 
     public function handleTabChanged(string $tab): void

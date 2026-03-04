@@ -1,7 +1,7 @@
 <div>
     <div class="relative overflow-hidden p-3 bg-white border border-gray-200 rounded-xl shadow-sm before:absolute before:top-0 before:end-0 before:size-full before:bg-gradient-to-br before:from-green-100 before:via-transparent before:blur-xl">
         <a
-            href="{{ !tenant('locations') ? route('dealer.audit.deal-jackets.index') : route('dealer.stores.audits.deal-jackets.index', $store) }}"
+            href="{{ route('dealer.audit.deal-jackets.index') }}"
             class="absolute inset-0 z-0"
             aria-label="View deal jacket audits"
         ></a>

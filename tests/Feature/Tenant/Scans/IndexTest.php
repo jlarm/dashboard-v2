@@ -13,6 +13,33 @@ beforeEach(function (): void {
     app()->instance('currentStore', $this->store->id);
 });
 
+describe('route access', function (): void {
+    it('redirects to dashboard when current_store_id is null', function (): void {
+        tenant()->update(['locations' => true]);
+
+        Store::query()->create([
+            'name' => 'Second Route Store',
+            'slug' => 'second-route-store',
+        ]);
+
+        $this->consultant->update(['current_store_id' => null]);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.scan.index'))
+            ->assertRedirect(route('dealer.dashboard'));
+    });
+
+    it('allows scans when current_store_id is set', function (): void {
+        tenant()->update(['locations' => true]);
+
+        $this->consultant->update(['current_store_id' => $this->store->id]);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.scan.index'))
+            ->assertOk();
+    });
+});
+
 describe('loadScanData', function (): void {
     it('sets loaded to true after loading', function (): void {
         Livewire::actingAs($this->consultant)
@@ -23,6 +50,7 @@ describe('loadScanData', function (): void {
 
     it('shows error when store cannot be found', function (): void {
         app()->instance('currentStore', 99999);
+        app()->instance('scopedStoreIds', collect([99999]));
 
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
@@ -73,6 +101,7 @@ describe('loadScanData', function (): void {
 
     it('resets error state at the start of each load', function (): void {
         app()->instance('currentStore', 99999);
+        app()->instance('scopedStoreIds', collect([99999]));
 
         $component = Livewire::actingAs($this->consultant)
             ->test(Index::class)
@@ -116,6 +145,23 @@ describe('refreshCache', function (): void {
 });
 
 describe('view rendering', function (): void {
+    it('shows overview cards when no single store is selected and multiple stores are in scope', function (): void {
+        $storeB = Store::query()->create([
+            'name' => 'Overview Scan Store B',
+            'slug' => 'overview-scan-store-b',
+        ]);
+
+        app()->instance('currentStore', null);
+        app()->instance('scopedStoreIds', collect([$this->store->id, $storeB->id]));
+
+        Livewire::actingAs($this->consultant)
+            ->test(Index::class)
+            ->assertSet('showOverview', true)
+            ->assertSee('IT Scans Overview')
+            ->assertSee($this->store->name)
+            ->assertSee($storeB->name);
+    });
+
     it('shows loading skeleton when not loaded', function (): void {
         Livewire::actingAs($this->consultant)
             ->test(Index::class)
@@ -125,6 +171,7 @@ describe('view rendering', function (): void {
 
     it('shows error state with retry button when error occurs', function (): void {
         app()->instance('currentStore', 99999);
+        app()->instance('scopedStoreIds', collect([99999]));
 
         Livewire::actingAs($this->consultant)
             ->test(Index::class)

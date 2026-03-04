@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Redirector as LivewireRedirector;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
@@ -49,9 +50,10 @@ class SingleStoreDetails extends Component
 
     public function mount(): void
     {
-        $this->store = Store::query()->find(app('currentStore'));
+        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
+            ?? Store::query()->find(app('currentStore'));
 
-        $this->settings = GlobalSetting::query()->first();
+        $this->settings = app()->bound('globalSetting') ? app('globalSetting') : GlobalSetting::query()->first();
 
         $this->name = $this->store->name;
         $this->address = $this->store->address;
@@ -100,7 +102,7 @@ class SingleStoreDetails extends Component
         }
     }
 
-    public function deleteLogo(): RedirectResponse
+    public function deleteLogo(): RedirectResponse|LivewireRedirector
     {
         if ($this->store->logo) {
             Storage::delete($this->store->logo);
@@ -206,7 +208,7 @@ class SingleStoreDetails extends Component
 
     private function getRemediationReminderUsers(): array
     {
-        if (tenant('locations')) {
+        if ((bool) app('multipleStoresExist')) {
             $relevantUsersCollection = $this->store->users()->permission('create-users')->get(['id', 'name', 'slug'])->keyBy('id');
         } else {
             $relevantUsersCollection = User::permission('create-users')->get(['id', 'name', 'slug'])->keyBy('id');

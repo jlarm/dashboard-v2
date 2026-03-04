@@ -40,7 +40,7 @@ final readonly class CoursesFeed
         $courses = $this->builder()->get();
 
         $totalCount = $courses->count();
-        $completedCount = $courses->filter(fn (Course $course): bool => $course->lastResult !== null)->count();
+        $completedCount = $courses->filter(fn ($course): bool => $course instanceof Course && $course->lastResult !== null)->count();
         $incompleteCount = $totalCount - $completedCount;
 
         return [

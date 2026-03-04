@@ -9,6 +9,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Services\GoPhishService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class CreateUpdateGoPhishUserGroupsCommand extends Command
 {
@@ -24,11 +25,16 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
     public function handle(): void
     {
-        tenancy()->runForMultiple($this->option('tenants'), function ($tenant): void {
+        /** @var Collection<int, string> $tenants */
+        $tenants = collect($this->option('tenants'))
+            ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
+            ->values();
+
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
 
             $globalSetting = GlobalSetting::query()->first();
 
-            if ($globalSetting === null || $globalSetting->phishing_active === 0 || $globalSetting->phishing_active === null) {
+            if ($globalSetting === null || ! $globalSetting->phishing_active) {
                 $this->info('Phishing is disabled for tenant: '.$tenant->name);
 
                 return;
@@ -45,12 +51,6 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
             $groups = $this->goPhishService->getGroups($this->token, $this->ip);
 
             foreach ($stores as $store) {
-
-                if ($store === null) {
-                    $this->info('No store found for tenant: '.$tenant->name);
-
-                    return;
-                }
 
                 if ($this->token === null || $this->ip === null) {
                     $this->info('No token or IP found for tenant: '.$tenant->name);
@@ -77,7 +77,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
 
     public function getUsers(Store $store): array
     {
-        if (tenant('locations')) {
+        if (Store::query()->count() > 1) {
             $users = $store->users()
                 ->select('name', 'email')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])

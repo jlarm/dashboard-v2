@@ -62,7 +62,7 @@
     </div>
     <p class="text-gray-400">If any information above is outdated, please make adjustments in <a
             class="text-gray-500 underline"
-            href="{{ (!tenant('locations') ? route('dealer.dealer.settings') : route('dealer.stores.settings', $store)) }}">settings</a>.
+            href="{{ route('dealer.dealer.settings') }}">settings</a>.
     </p>
 </div>
 <div class="prose min-w-full">

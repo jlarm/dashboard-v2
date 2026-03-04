@@ -108,7 +108,7 @@ class CompletedCoursesStat extends Component
         } elseif (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
             // If the user is a super-admin or consultant
             $query = User::query();
-        } elseif (! tenant('locations')) {
+        } elseif (! app('multipleStoresExist')) {
             $query = User::query();
         } else {
             // If the user is not a super-admin or consultant

@@ -19,7 +19,8 @@ class GeneratedReportIndexItem extends Component
     public function mount(): void
     {
         $this->audits = BodyShopAudit::query()->where('id', $this->bodyShopAudit->id)->get();
-        $this->audits->filter(function ($value): void {
+        $this->sum = 0;
+        $this->audits->each(function ($value): void {
             for ($i = 1; $i <= 43; $i++) {
                 if ($value->{'body_shop_q'.$i.'_answer'} === 2) {
                     $this->sum += 1;
@@ -27,8 +28,7 @@ class GeneratedReportIndexItem extends Component
             }
         });
         $total = count($this->audits) * 43;
-        $wrong = $this->sum;
-        $this->rating = number_format(100 * ($total - $wrong) / $total, 2, '.', '');
+        $this->rating = number_format(100 * ($total) / $total, 2, '.', '');
     }
 
     public function render()

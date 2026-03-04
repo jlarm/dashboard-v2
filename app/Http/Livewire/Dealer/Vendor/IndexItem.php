@@ -14,6 +14,8 @@ class IndexItem extends Component
     public $noCount;
     public $totalQuestions = 0;
     public $array = [];
+    private ?object $latestForm = null;
+    private bool $latestFormLoaded = false;
 
     public function mount(): void
     {
@@ -42,7 +44,7 @@ class IndexItem extends Component
 
     public function isCompleted(): bool
     {
-        $form = $this->vendor->forms()->latest()->first();
+        $form = $this->getLatestForm();
 
         if (! $form) {
             return false;
@@ -53,8 +55,16 @@ class IndexItem extends Component
 
     public function render()
     {
-        return view('livewire.dealer.vendor.index-item', [
-            'status' => $this->vendor->forms()->latest()->first()?->signature,
-        ]);
+        return view('livewire.dealer.vendor.index-item');
+    }
+
+    private function getLatestForm(): ?object
+    {
+        if (! $this->latestFormLoaded) {
+            $this->latestForm = $this->vendor->forms()->latest()->first();
+            $this->latestFormLoaded = true;
+        }
+
+        return $this->latestForm;
     }
 }

@@ -48,6 +48,7 @@ class RemediationReminderMail extends Mailable implements ShouldQueue
             'Osha' => 'OSHA',
             'BodyShop' => 'Body Shop',
             'Glba' => 'GLBA',
+            default => 'Audit',
         };
     }
 
@@ -57,6 +58,7 @@ class RemediationReminderMail extends Mailable implements ShouldQueue
             'Osha' => 'osha',
             'BodyShop' => 'body-shop',
             'Glba' => 'finance',
+            default => 'audits',
         };
     }
 

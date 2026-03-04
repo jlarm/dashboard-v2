@@ -1,80 +1,49 @@
 <div>
+    @php
+        $settingsSections = [
+            [
+                'label' => 'General',
+                'route' => route('dealer.settings.global'),
+                'key' => 'general',
+            ],
+            [
+                'label' => 'Course Management',
+                'route' => route('dealer.settings.global.course-management'),
+                'key' => 'course-management',
+            ],
+            [
+                'label' => 'Reset Courses',
+                'route' => route('dealer.settings.global.reset-courses'),
+                'key' => 'reset-courses',
+            ],
+            [
+                'label' => 'Phishing',
+                'route' => route('dealer.settings.global.phishing'),
+                'key' => 'phishing',
+            ],
+        ];
+    @endphp
+
     <x-slot name="header">
         <x-slot name="pageTitle">Settings</x-slot>
     </x-slot>
-    <div
-        x-data="{
-            selectedId: null,
-            init() {
-                // Set the first available tab on the page on page load.
-                this.$nextTick(() => this.select(this.$id('tab', 1)))
-            },
-            select(id) {
-                this.selectedId = id
-            },
-            isSelected(id) {
-                return this.selectedId === id
-            },
-            whichChild(el, parent) {
-                return Array.from(parent.children).indexOf(el) + 1
-            }
-        }"
-        x-id="['tab']"
-    >
+    <div>
         <div class="flex justify-center">
-            <div
-                class="inline-flex h-10 rounded-lg bg-gray-800/5 p-1"
-                x-ref="tablist"
-                @keydown.right.prevent.stop="$focus.wrap().next()"
-                @keydown.home.prevent.stop="$focus.first()"
-                @keydown.page-up.prevent.stop="$focus.first()"
-                @keydown.left.prevent.stop="$focus.wrap().prev()"
-                @keydown.end.prevent.stop="$focus.last()"
-                @keydown.page-down.prevent.stop="$focus.last()"
-                role="tablist"
-            >
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                >General</button>
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                >Course Management</button>
-                <button
-                    :id="$id('tab', whichChild($el, $el.parentElement))"
-                    @click="select($el.id)"
-                    @mousedown.prevent
-                    @focus="select($el.id)"
-                    type="button"
-                    :tabindex="isSelected($el.id) ? 0 : -1"
-                    :aria-selected="isSelected($el.id)"
-                    :class="isSelected($el.id) ? 'shadow-sm bg-white text-gray-600' : 'border-transparent'"
-                    class="flex whitespace-nowrap flex-1 justify-center items-center rounded-md text-sm text-gray-600 hover:text-gray-800 px-4 border-transparent"
-                    aria-current="page">Phishing</button>
+            <div class="inline-flex h-10 rounded-lg bg-gray-800/5 p-1">
+                @foreach($settingsSections as $settingsSection)
+                    <a
+                        href="{{ $settingsSection['route'] }}"
+                        class="{{ $section === $settingsSection['key'] ? 'shadow-sm bg-white text-gray-600' : 'border-transparent text-gray-600 hover:text-gray-800' }} flex whitespace-nowrap flex-1 items-center justify-center rounded-md px-4 text-sm"
+                        @if($section === $settingsSection['key']) aria-current="page" @endif
+                    >
+                        {{ $settingsSection['label'] }}
+                    </a>
+                @endforeach
             </div>
         </div>
-        <div role="tabpanels" class="mt-5">
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-2"
-            >
+        <div class="mt-5">
+            @if($section === 'general')
+                <section class="p-2">
                 <div class="max-w-4xl mx-auto">
                     <div class="bg-white p-6">
                         <h2 class="text-lg font-medium text-gray-900 mb-4">Store Course Notifications</h2>
@@ -140,29 +109,20 @@
                             @endforelse
                         </div>
                     </div>
-                    @can('create-dealerships')
-                    <div class="bg-white p-6">
-                        <h2 class="text-lg font-medium text-gray-900 mb-4">Reset Courses</h2>
-                        <p class="text-sm text-gray-600 mb-6">Doing this will reset courses for all employees throughout all dealerships.</p>
-                        <livewire:dealer.course.reset />
-                    </div>
-                    @endcan
                 </div>
-            </section>
-            <section
-                x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                role="tabpanel"
-                class="p-2"
-            >
+                </section>
+            @elseif($section === 'course-management')
+                <section class="p-2">
                 <livewire:dealer.settings.optional-courses-form />
-            </section>
-                <section
-                    x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-                    :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-                    role="tabpanel"
-                    class="p-2"
-                >
+                </section>
+            @elseif($section === 'reset-courses')
+                <section class="p-2">
+                    <div class="max-w-6xl mx-auto">
+                        <livewire:dealer.settings.course-reset-manager />
+                    </div>
+                </section>
+            @elseif($section === 'phishing')
+                <section class="p-2">
                     <div class="max-w-4xl mx-auto">
                         <form wire:submit.prevent="update"><div>
                                 <div class="pt-5">
@@ -209,6 +169,7 @@
                         </form>
                     </div>
                 </section>
+            @endif
         </div>
     </div>
 </div>

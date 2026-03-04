@@ -113,7 +113,7 @@ class Create extends Component
             new UploadOshaToDigitalOceanJob($manual),
         ])->dispatch();
 
-        (tenant('locations')) ? $this->redirect(route('dealer.stores.manuals.osha.index', $this->store)) : $this->redirect(route('dealer.manual.osha.index', $this->store));
+        $this->redirect(route('dealer.manual.osha.index'));
 
     }
 

@@ -1,7 +1,4 @@
 <div x-data @refresh-page.window="window.location.reload()">
-    @php
-        $storeRouteParam = data_get(request()->route('store'), 'slug', request()->route('store')) ?? $store?->slug;
-    @endphp
     <x-slot:header>
         <x-slot:pageTitle>Scan Details</x-slot:pageTitle>
         <x-slot:actions>
@@ -11,18 +8,20 @@
                 @scan-loaded.window="showDownloads = $event.detail.showDownloads"
             >
                 @hasanyrole('super-admin|Consultant')
+                @if(! $showOverview)
                 <x-armp.button
                     size="sm"
                     variant="primary"
-                    href="{{ tenant('locations') ? route('dealer.stores.scan.settings', ['store' => $storeRouteParam]) : route('dealer.scan.settings') }}"
+                    href="{{ route('dealer.scan.settings') }}"
                 >
                     Settings
                 </x-armp.button>
+                @endif
                 @endhasanyrole
                 <div x-show="showDownloads" class="flex gap-2" style="display:none">
                     <x-armp.button
                         size="sm"
-                        href="{{ tenant('locations') ? route('dealer.stores.scan.report', ['store' => $storeRouteParam, 'type' => 'executive']) : route('dealer.scan.report', ['type' => 'executive']) }}?refresh=1"
+                        href="{{ route('dealer.scan.report', ['type' => 'executive']) }}?refresh=1"
                         target="_blank"
                         rel="noopener noreferrer"
                         onclick="window.open(this.href, '_blank', 'noopener'); return false;"
@@ -37,7 +36,7 @@
                     </x-armp.button>
                     <x-armp.button
                         size="sm"
-                        href="{{ tenant('locations') ? route('dealer.stores.scan.report', ['store' => $storeRouteParam, 'type' => 'technical']) : route('dealer.scan.report', ['type' => 'technical']) }}?refresh=1"
+                        href="{{ route('dealer.scan.report', ['type' => 'technical']) }}?refresh=1"
                         target="_blank"
                         rel="noopener noreferrer"
                         onclick="window.open(this.href, '_blank', 'noopener'); return false;"
@@ -57,7 +56,35 @@
 
     <div class="space-y-6" wire:init="loadScanData">
         @if($loaded)
-            @if($error)
+            @if($showOverview)
+                <div class="rounded-lg border border-gray-200 bg-white p-5">
+                    <h3 class="text-lg font-semibold text-gray-900">IT Scans Overview</h3>
+                    <p class="mt-1 text-sm text-gray-600">
+                        Showing all stores in scope. Select a store from the switcher for detailed scan insights and report downloads.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    @foreach($overviewStores as $overviewStore)
+                        <div class="rounded-lg border border-gray-200 bg-white p-5">
+                            <div class="flex items-start justify-between gap-3">
+                                <h4 class="text-base font-semibold text-gray-900">{{ $overviewStore->name }}</h4>
+                                <span class="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700">
+                                    {{ $overviewStore->scan_reports_count }} reports
+                                </span>
+                            </div>
+                            <div class="mt-4 space-y-1 text-sm text-gray-600">
+                                <p>Last archived scan:
+                                    <span class="font-medium text-gray-900">
+                                        {{ $overviewStore->latestScanReportDate?->created_at?->format('M j, Y') ?? 'No archived scans' }}
+                                    </span>
+                                </p>
+                                <p>Store ID: <span class="font-medium text-gray-900">{{ $overviewStore->id }}</span></p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @elseif($error)
                 <!-- Error State -->
                 <div class="bg-red-50 border border-red-200 rounded-lg p-6">
                     <div class="flex items-start gap-4">

@@ -9,7 +9,9 @@ use App\Models\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -29,6 +31,7 @@ class Create extends Component
     public array $courses = [];
     public array $dealers = [];
     public ?Store $store = null;
+    private ?Collection $memoizedAvailableStores = null;
 
     public function mount(?Store $store = null): void
     {
@@ -55,10 +58,11 @@ class Create extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function submit(): \Illuminate\Http\RedirectResponse|Redirector
+    public function submit(): RedirectResponse|Redirector
     {
         $validated = $this->validate();
         $roles = [$validated['role']];
+        $assignedStoreIds = $this->resolveAssignedStoreIds($validated['dealers'] ?? []);
 
         if ($this->qi) {
             $roles[] = 'Qualified Individual';
@@ -67,7 +71,7 @@ class Create extends Component
         $invite = Invite::query()->create([
             'name' => mb_convert_case($this->name, MB_CASE_TITLE, 'UTF-8'),
             'email' => mb_strtolower($this->email),
-            'stores' => $this->normalizeStoreIds($validated['dealers'] ?? []),
+            'stores' => $assignedStoreIds,
             'department_id' => $validated['department'],
             'user_id' => auth()->user()->id,
             'roles' => array_values(array_unique($roles)),
@@ -86,11 +90,13 @@ class Create extends Component
 
     public function render(): View
     {
+        $availableStores = $this->availableStores();
+
         return view('livewire.dealer.employee.create', [
             'departments' => Department::query()->orderBy('name')->get(['id', 'name']),
             'allRoles' => $this->availableRoles(),
             'allCourses' => Course::query()->orderBy('name')->get(['id', 'name']),
-            'stores' => Store::query()->orderBy('name')->get(['id', 'name']),
+            'stores' => $availableStores,
         ]);
     }
 
@@ -109,7 +115,7 @@ class Create extends Component
             'courses.*' => ['nullable', 'date'],
         ];
 
-        if (tenant('locations') && auth()->user()->can('create-stores')) {
+        if ($this->availableStores()->count() > 1) {
             $rules['dealers'] = ['required', 'array', 'min:1'];
             $rules['dealers.*'] = ['integer', Rule::exists('stores', 'id')];
         }
@@ -125,6 +131,49 @@ class Create extends Component
             ->unique()
             ->values()
             ->all();
+    }
+
+    private function resolveAssignedStoreIds(array $selectedStores): array
+    {
+        $availableStoreIds = $this->availableStores()
+            ->pluck('id')
+            ->map(static fn ($id): int => (int) $id)
+            ->values();
+
+        if ($availableStoreIds->count() === 1) {
+            $singleStoreId = $availableStoreIds->first();
+
+            return $singleStoreId === null ? [] : [(int) $singleStoreId];
+        }
+
+        $normalizedSelectedStores = collect($this->normalizeStoreIds($selectedStores));
+
+        return $normalizedSelectedStores
+            ->filter(fn (int $storeId): bool => $availableStoreIds->contains($storeId))
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return Collection<int, Store>
+     */
+    private function availableStores(): Collection
+    {
+        if ($this->memoizedAvailableStores instanceof Collection) {
+            return $this->memoizedAvailableStores;
+        }
+
+        $user = auth()->user();
+
+        if (! $user instanceof User) {
+            return $this->memoizedAvailableStores = Store::query()->orderBy('name')->get(['id', 'name']);
+        }
+
+        if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
+            return $this->memoizedAvailableStores = Store::query()->orderBy('name')->get(['id', 'name']);
+        }
+
+        return $this->memoizedAvailableStores = $user->stores()->orderBy('stores.name')->get(['stores.id', 'stores.name']);
     }
 
     /**

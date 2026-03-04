@@ -12,7 +12,13 @@ class ImpersonationController extends Controller
 {
     public function impersonate(User $user): RedirectResponse
     {
-        abort_unless(auth()->user()->can('impersonate-users'), 403, 'You do not have permission to impersonate users.');
+        $impersonator = auth()->user();
+
+        abort_unless(
+            $impersonator instanceof User && $impersonator->hasAnyRole(['super-admin', 'Consultant']),
+            403,
+            'Only super-admin and Consultant users can impersonate.'
+        );
 
         // Don't allow impersonating yourself
         if (auth()->id() === $user->id) {

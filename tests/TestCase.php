@@ -20,6 +20,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        $this->withoutVite();
+
         // Force testing database configuration
         config([
             'database.connections.mysql.database' => 'dashboard_testing',

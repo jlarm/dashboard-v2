@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
@@ -16,6 +17,7 @@ beforeEach(function (): void {
 
     $this->store = Store::query()->first();
     $this->employee->stores()->attach($this->store->id);
+    $this->employee->update(['current_store_id' => $this->store->id]);
 
     app()[PermissionRegistrar::class]->forgetCachedPermissions();
 });
@@ -36,12 +38,6 @@ describe('Employee - Allowed Access', function (): void {
     it('can access SDS sheets', function (): void {
         $this->actingAs($this->employee)
             ->get(route('dealer.sds.index'))
-            ->assertOk();
-    });
-
-    it('can access videos index', function (): void {
-        $this->actingAs($this->employee)
-            ->get(route('dealer.videos.index'))
             ->assertOk();
     });
 
@@ -89,7 +85,7 @@ describe('Employee - Forbidden Routes (Super-Admin|Consultant Only)', function (
 describe('Employee - Forbidden Routes (QI+ Only)', function (): void {
     it('cannot access deleted employees page', function (): void {
         $this->actingAs($this->employee)
-            ->get(route('dealer.employee.deleted'))
+            ->get(route('dealer.employees.deleted'))
             ->assertForbidden();
     });
 
@@ -102,6 +98,27 @@ describe('Employee - Forbidden Routes (QI+ Only)', function (): void {
     it('cannot access dealer settings', function (): void {
         $this->actingAs($this->employee)
             ->get(route('dealer.dealer.settings'))
+            ->assertForbidden();
+    });
+
+    it('cannot access store edit', function (): void {
+        $this->actingAs($this->employee)
+            ->get(route('dealer.store.edit'))
+            ->assertForbidden();
+    });
+
+    it('cannot access phishing campaign details', function (): void {
+        $campaign = PhishingCampaign::query()->create([
+            'campaign_id' => 'employee-campaign-1',
+            'user_id' => $this->employee->id,
+            'store_id' => $this->store->id,
+            'name' => 'Employee Forbidden Campaign',
+            'status' => 'In progress',
+            'campaign_created_at' => now(),
+        ]);
+
+        $this->actingAs($this->employee)
+            ->get(route('dealer.phishing.show', $campaign))
             ->assertForbidden();
     });
 });
@@ -164,6 +181,30 @@ describe('Employee - Forbidden Routes (Manager+ Only)', function (): void {
     it('cannot access fit tests page', function (): void {
         $this->actingAs($this->employee)
             ->get(route('dealer.fit-tests.index'))
+            ->assertForbidden();
+    });
+
+    it('cannot access scan routes', function (string $routeName): void {
+        $this->actingAs($this->employee)
+            ->get(route($routeName))
+            ->assertForbidden();
+    })->with([
+        'scan index' => 'dealer.scan.index',
+        'scan settings' => 'dealer.scan.settings',
+        'scan archive' => 'dealer.scan.archive',
+    ]);
+});
+
+describe('Employee - Forbidden Routes (Consultant Only)', function (): void {
+    it('cannot access locations index', function (): void {
+        $this->actingAs($this->employee)
+            ->get(route('dealer.locations.index'))
+            ->assertForbidden();
+    });
+
+    it('cannot access ridgeback index', function (): void {
+        $this->actingAs($this->employee)
+            ->get(route('dealer.ridgeback.index'))
             ->assertForbidden();
     });
 });

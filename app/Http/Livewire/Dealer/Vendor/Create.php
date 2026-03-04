@@ -57,7 +57,7 @@ class Create extends Modal
     public function render(): View
     {
         return view('livewire.dealer.vendor.create', [
-            'stores' => tenant('locations') ? Store::query()->orderBy('name')->get() : null,
+            'stores' => app('multipleStoresExist') ? Store::query()->orderBy('name')->get() : null,
         ]);
     }
 

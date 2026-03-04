@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Cache;
 trait HasGrade
 {
     private const GRADE_CACHE_TTL = 300;
+    private const NULL_GRADE_CACHE_VALUE = '__null_grade__';
+
+    private array $resolvedGradeValues = [];
 
     public function getOshaGradeAttribute(): ?string
     {
-        return Cache::remember(
-            $this->getGradeCacheKey('osha'),
-            self::GRADE_CACHE_TTL,
+        return $this->rememberGradeValue(
+            'osha',
             fn () => $this->oshaViolationAudits()
                 ->whereNotNull('grade')
                 ->where('grade', '!=', 'N/A')
@@ -28,9 +30,8 @@ trait HasGrade
 
     public function getGlbaGradeAttribute(): ?string
     {
-        return Cache::remember(
-            $this->getGradeCacheKey('glba'),
-            self::GRADE_CACHE_TTL,
+        return $this->rememberGradeValue(
+            'glba',
             fn () => $this->GlbaViolationAudits()
                 ->whereNotNull('grade')
                 ->where('grade', '!=', 'N/A')
@@ -43,9 +44,8 @@ trait HasGrade
 
     public function getBodyShopGradeAttribute(): ?string
     {
-        return Cache::remember(
-            $this->getGradeCacheKey('body_shop'),
-            self::GRADE_CACHE_TTL,
+        return $this->rememberGradeValue(
+            'body_shop',
             fn () => $this->BodyShopViolationAudits()
                 ->whereNotNull('grade')
                 ->where('grade', '!=', 'N/A')
@@ -62,6 +62,7 @@ trait HasGrade
 
         foreach ($types as $gradeType) {
             Cache::forget($this->getGradeCacheKey($gradeType));
+            unset($this->resolvedGradeValues[$gradeType]);
         }
     }
 
@@ -100,6 +101,21 @@ trait HasGrade
         $tenantId = tenant('id') ?? 'no-tenant';
 
         return "store_{$this->id}_{$type}_grade_{$tenantId}";
+    }
+
+    private function rememberGradeValue(string $type, callable $resolver): ?string
+    {
+        if (array_key_exists($type, $this->resolvedGradeValues)) {
+            return $this->resolvedGradeValues[$type];
+        }
+
+        $value = Cache::remember(
+            $this->getGradeCacheKey($type),
+            self::GRADE_CACHE_TTL,
+            fn (): string => $resolver() ?? self::NULL_GRADE_CACHE_VALUE
+        );
+
+        return $this->resolvedGradeValues[$type] = $value === self::NULL_GRADE_CACHE_VALUE ? null : $value;
     }
 
     private function convertRatingToGrade($avg): ?string

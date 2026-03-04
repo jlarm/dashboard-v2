@@ -11,7 +11,7 @@
                 'bg-gray-100 text-gray-600' => !$course->lastResult || $this->status() === null,
             ])
             >
-                {{ Str::title($this->status() ?? 'Not Taken') }}
+                {{ $this->status() === 'expired' ? 'Retake Required' : Str::title($this->status() ?? 'Not Taken') }}
         </span>
     </x-table.cell>
     <x-table.cell class="flex justify-end">

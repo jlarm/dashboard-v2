@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\PhishingCampaign;
@@ -15,6 +13,7 @@ use App\Services\UserCourseService;
 use App\Traits\HasAudits;
 use App\Traits\HasCourses;
 use App\Traits\HasManuals;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,7 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int $total_completed_courses
  * @property-read bool $user_has_not_completed_courses
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens,
         HasAudits,
@@ -244,11 +243,19 @@ class User extends Authenticatable
 
     public function getInitialsAttribute(): string
     {
-        $name = explode(' ', $this->name);
+        $segments = preg_split('/\s+/', trim((string) $this->name)) ?: [];
+        $segments = array_values(array_filter($segments, static fn (string $segment): bool => $segment !== ''));
+
+        if ($segments === []) {
+            $email = trim((string) $this->email);
+
+            return $email === '' ? '' : mb_strtoupper(mb_substr($email, 0, 1));
+        }
+
         $initials = '';
 
-        foreach ($name as $n) {
-            $initials .= mb_strtoupper($n[0]);
+        foreach ($segments as $segment) {
+            $initials .= mb_strtoupper(mb_substr($segment, 0, 1));
         }
 
         return $initials;
@@ -268,33 +275,5 @@ class User extends Authenticatable
             'id' => $course->id,
             'name' => $course->name,
         ]);
-    }
-
-    private function calculateCourseStatus(Course $course): string
-    {
-        $lastPass = $course->results->firstWhere('passed', 1);
-
-        if (! $lastPass) {
-            return 'due';
-        }
-
-        if ($course->years_expires) {
-            $expiry = $lastPass->created_at->addYears($course->years_expires);
-            if (now()->greaterThan($expiry)) {
-                return 'expired';
-            }
-        }
-
-        return 'valid';
-    }
-
-    private function userHasNoCaliforniaStore(): bool
-    {
-        // Use loaded stores collection if available, otherwise query
-        if ($this->relationLoaded('stores')) {
-            return ! $this->stores->contains('state', 'California');
-        }
-
-        return ! $this->stores()->where('state', 'California')->exists();
     }
 }

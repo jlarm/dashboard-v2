@@ -47,10 +47,6 @@ class Settings extends Component
             ->success()
             ->send();
 
-        if (tenant('locations')) {
-            return redirect(route('dealer.stores.scan.index', $this->store->slug));
-        }
-
         return redirect(route('dealer.scan.index'));
     }
 

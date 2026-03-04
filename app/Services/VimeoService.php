@@ -132,12 +132,7 @@ class VimeoService
             Log::error("Vimeo API Error checking privacy for video {$videoId}: {$e->getMessage()}");
 
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($e, [
-                    'extra' => [
-                        'video_id' => $videoId,
-                        'action' => 'privacy_check',
-                    ],
-                ]);
+                app('sentry')->captureException($e);
             }
 
             return null;
@@ -241,12 +236,7 @@ class VimeoService
             Log::error("Vimeo API Error for video {$videoId}: {$e->getMessage()}");
 
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($e, [
-                    'extra' => [
-                        'video_id' => $videoId,
-                        'endpoint' => "/videos/{$videoId}",
-                    ],
-                ]);
+                app('sentry')->captureException($e);
             }
 
             return null;
@@ -279,13 +269,7 @@ class VimeoService
                     Log::error("Vimeo request failed after {$this->maxRetries} attempts: {$e->getMessage()}");
 
                     if (app()->bound('sentry')) {
-                        app('sentry')->captureException($e, [
-                            'extra' => [
-                                'endpoint' => $endpoint,
-                                'params' => $params,
-                                'attempts' => $this->maxRetries,
-                            ],
-                        ]);
+                        app('sentry')->captureException($e);
                     }
                 }
             }
