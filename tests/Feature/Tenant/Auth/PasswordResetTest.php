@@ -6,6 +6,7 @@ use App\Http\Middleware\VerifyCsrfToken;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 describe('Tenant Password Reset - Forgot Password Screen', function (): void {
@@ -43,6 +44,35 @@ describe('Tenant Password Reset - Request Reset Link', function (): void {
             ]);
 
         Notification::assertNothingSent();
+    });
+
+    it('logs a warning with email and url when user is not found', function (): void {
+        Log::spy();
+
+        $this->withoutMiddleware(VerifyCsrfToken::class)
+            ->post(route('dealer.password.email'), [
+                'email' => 'nonexistent@test.com',
+            ]);
+
+        Log::shouldHaveReceived('warning')
+            ->once()
+            ->withArgs(function (string $message, array $context): bool {
+                return $message === 'Failed password reset request'
+                    && $context['email'] === 'nonexistent@test.com'
+                    && str_contains($context['url'], 'forgot-password');
+            });
+    });
+
+    it('does not log a warning when reset link is sent successfully', function (): void {
+        Notification::fake();
+        Log::spy();
+
+        $this->withoutMiddleware(VerifyCsrfToken::class)
+            ->post(route('dealer.password.email'), [
+                'email' => $this->consultant->email,
+            ]);
+
+        Log::shouldNotHaveReceived('warning');
     });
 
     it('validates that email is required', function (): void {
