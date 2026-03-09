@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Home;
 
+use App\Http\Livewire\Concerns\ResolvesDashboardStore;
 use App\Models\CmsManual;
 use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Manual\Osha;
@@ -14,11 +15,13 @@ use Livewire\Component;
 
 class Manuals extends Component
 {
+    use ResolvesDashboardStore;
+
     public ?Store $store = null;
 
     public function mount(): void
     {
-        $this->store ??= Store::query()->first();
+        $this->store ??= $this->resolveDashboardStore();
     }
 
     public function render(): View

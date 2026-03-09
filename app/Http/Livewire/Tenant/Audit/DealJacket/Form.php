@@ -32,9 +32,9 @@ class Form extends Component
 
     public function mount(DealJacketGroup $dealJacketGroup, ?DealJacket $dealJacket = null): void
     {
-        $this->store = Store::query()->find(app('currentStore'));
         $this->dealJacketGroup = $dealJacketGroup;
         $this->dealJacket = $dealJacket;
+        $this->store = $this->resolveStore();
 
         if ($dealJacket?->exists) {
             $this->auditDate = $dealJacket->audit_date->format('Y-m-d');
@@ -58,9 +58,15 @@ class Form extends Component
 
     public function managers(): array
     {
-        return User::query()->where('department_id', 6)
+        return User::query()
+            ->where('department_id', 6)
             ->role('Manager')
-            ->get()
+            ->whereHas('stores', function ($query): void {
+                $query->where('stores.id', $this->store->id);
+            })
+            ->orderBy('name')
+            ->get(['users.id', 'users.name'])
+            ->values()
             ->toArray();
     }
 
@@ -267,5 +273,24 @@ class Form extends Component
         }
 
         return $totalWeight > 0 ? (int) round(($earnedWeight / $totalWeight) * 100) : 0;
+    }
+
+    private function resolveStore(): Store
+    {
+        if (app()->bound('currentStoreModel') && app('currentStoreModel') instanceof Store) {
+            return app('currentStoreModel');
+        }
+
+        $currentStoreId = app()->bound('currentStore') ? app('currentStore') : null;
+
+        if (is_numeric($currentStoreId)) {
+            $store = Store::query()->find((int) $currentStoreId);
+
+            if ($store instanceof Store) {
+                return $store;
+            }
+        }
+
+        return Store::query()->findOrFail($this->dealJacketGroup->store_id);
     }
 }

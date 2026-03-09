@@ -213,16 +213,14 @@ class DepartmentCompletionStats extends Component
     protected function buildBaseQuery(): Builder
     {
         $query = User::query();
+        $scopedStoreIds = $this->resolveScopedStoreIds();
 
-        if ($this->store instanceof Store) {
-            $query->whereHas('stores', function ($q): void {
-                $q->where('stores.id', $this->store->id);
+        if ($scopedStoreIds->isNotEmpty()) {
+            $query->whereHas('stores', function ($q) use ($scopedStoreIds): void {
+                $q->whereIn('stores.id', $scopedStoreIds);
             });
-        } elseif (! auth()->user()->hasAnyRole(['super-admin', 'Consultant']) && (bool) app('multipleStoresExist')) {
-            $currentUser = auth()->user();
-            $query->whereHas('stores', function ($q) use ($currentUser): void {
-                $q->whereIn('stores.id', $currentUser->stores->pluck('id'));
-            });
+        } elseif (auth()->user() instanceof User) {
+            $query->whereRaw('1 = 0');
         }
 
         $excludedUsers = config('dashboard.excluded_users', []);
@@ -236,19 +234,97 @@ class DepartmentCompletionStats extends Component
 
     protected function getCacheKey(): string
     {
-        $storeId = $this->store?->id ?? 'all';
         $tenantId = tenant('id') ?? 'no-tenant';
+        $scopedStoreIds = $this->resolveScopedStoreIds();
+        $user = auth()->user();
 
-        if ($storeId !== 'all') {
-            return "department_completion_stats_{$storeId}_{$tenantId}";
+        if ($this->store instanceof Store) {
+            return "department_completion_stats_{$this->store->id}_{$tenantId}";
         }
 
-        if (auth()->user()->hasAnyRole(['super-admin', 'Consultant'])) {
+        if (
+            $scopedStoreIds->count() === 1
+            && ($this->boundScopedStoreIds()->isNotEmpty() || ($user instanceof User && $user->current_store_id !== null))
+        ) {
+            return 'department_completion_stats_'.$scopedStoreIds->first().'_'.$tenantId;
+        }
+
+        if ($user instanceof User && $user->hasAnyRole(['super-admin', 'Consultant'])) {
             return "department_completion_stats_all_{$tenantId}_admin";
         }
 
-        $userStoreIds = auth()->user()->stores->pluck('id')->sort()->implode('_');
+        $userStoreIds = $scopedStoreIds->sort()->implode('_');
 
         return "department_completion_stats_all_{$tenantId}_user_{$userStoreIds}";
+    }
+
+    /**
+     * @return Collection<int, int>
+     */
+    protected function resolveScopedStoreIds(): Collection
+    {
+        if ($this->store instanceof Store) {
+            return collect([$this->store->id]);
+        }
+
+        $normalizedBoundStoreIds = $this->boundScopedStoreIds();
+
+        if ($normalizedBoundStoreIds->isNotEmpty()) {
+            return $normalizedBoundStoreIds;
+        }
+
+        $user = auth()->user();
+
+        if (! $user instanceof User) {
+            return collect();
+        }
+
+        if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
+            if ($user->current_store_id !== null) {
+                return collect([(int) $user->current_store_id]);
+            }
+
+            return Store::query()->pluck('id')
+                ->map(static fn ($id): int => (int) $id)
+                ->values();
+        }
+
+        $assignedStoreIds = $user->stores()
+            ->pluck('stores.id')
+            ->map(static fn ($id): int => (int) $id)
+            ->values();
+
+        if ($user->current_store_id !== null) {
+            return $assignedStoreIds->contains($user->current_store_id)
+                ? collect([(int) $user->current_store_id])
+                : collect();
+        }
+
+        if ((bool) app('multipleStoresExist')) {
+            return $assignedStoreIds;
+        }
+
+        return Store::query()->pluck('id')
+            ->map(static fn ($id): int => (int) $id)
+            ->values();
+    }
+
+    /**
+     * @return Collection<int, int>
+     */
+    protected function boundScopedStoreIds(): Collection
+    {
+        if (! app()->bound('scopedStoreIds')) {
+            return collect();
+        }
+
+        /** @var Collection<int, int|string> $boundStoreIds */
+        $boundStoreIds = app('scopedStoreIds');
+
+        return $boundStoreIds
+            ->map(static fn ($id): int => (int) $id)
+            ->filter(static fn (int $id): bool => $id > 0)
+            ->unique()
+            ->values();
     }
 }

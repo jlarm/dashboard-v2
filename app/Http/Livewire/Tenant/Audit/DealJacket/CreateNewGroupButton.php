@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Tenant\Audit\DealJacket;
 
+use App\Http\Livewire\Concerns\ResolvesDashboardStore;
 use App\Models\Dealer\Audit\DealJacketGroup;
-use App\Models\Dealer\Store;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
@@ -16,58 +16,50 @@ use Livewire\Redirector;
 class CreateNewGroupButton extends Component
 {
     use AuthorizesRequests;
-
-    public ?int $storeId = null;
-
-    public function mount(): void
-    {
-        $this->storeId = $this->resolveStoreId();
-    }
+    use ResolvesDashboardStore;
 
     public function create(): RedirectResponse|Redirector
     {
-        if (! is_int($this->storeId)) {
-            return $this->redirectRoute('dealer.dashboard');
+        $storeId = $this->resolveDashboardStoreId();
+
+        if (! is_int($storeId)) {
+            return redirect()->route('dealer.dashboard');
         }
 
         $this->authorize('create', DealJacketGroup::class);
 
-        $existingGroup = $this->findExistingQuarterlyAudit();
+        $existingGroup = $this->findExistingQuarterlyAudit($storeId);
 
         if ($existingGroup instanceof DealJacketGroup) {
             return $this->redirectToExistingGroup($existingGroup);
         }
 
-        $dealJacketGroup = $this->createDealJacketGroup();
+        $dealJacketGroup = $this->createDealJacketGroup($storeId);
 
         return $this->redirectToNewGroup($dealJacketGroup);
     }
 
     public function render(): View
     {
-        return view('livewire.tenant.audit.deal-jacket.create-new-group-button');
+        return view('livewire.tenant.audit.deal-jacket.create-new-group-button', [
+            'hasStore' => is_int($this->resolveDashboardStoreId()),
+        ]);
     }
 
-    private function findExistingQuarterlyAudit(): ?DealJacketGroup
+    private function findExistingQuarterlyAudit(int $storeId): ?DealJacketGroup
     {
-        if (! is_int($this->storeId)) {
-            return null;
-        }
-
         $now = Carbon::now();
-        $quarterStart = $now->copy()->startOfQuarter();
-        $quarterEnd = $now->copy()->endOfQuarter();
 
         return DealJacketGroup::query()
-            ->where('store_id', $this->storeId)
-            ->whereBetween('created_at', [$quarterStart, $quarterEnd])
+            ->where('store_id', $storeId)
+            ->whereBetween('created_at', [$now->copy()->startOfQuarter(), $now->copy()->endOfQuarter()])
             ->first();
     }
 
-    private function createDealJacketGroup(): DealJacketGroup
+    private function createDealJacketGroup(int $storeId): DealJacketGroup
     {
         return DealJacketGroup::query()->create([
-            'store_id' => $this->storeId,
+            'store_id' => $storeId,
         ]);
     }
 
@@ -76,31 +68,11 @@ class CreateNewGroupButton extends Component
         session()->flash('message', 'Deal Jacket audits have already been started for this quarter.');
         session()->flash('dealJacketGroupUuid', $existingGroup->uuid);
 
-        return $this->redirectRoute('dealer.audit.deal-jackets.index');
+        return redirect()->route('dealer.audit.deal-jackets.index');
     }
 
     private function redirectToNewGroup(DealJacketGroup $dealJacketGroup): RedirectResponse|Redirector
     {
-        return $this->redirectRoute('dealer.audit.deal-jackets.show', $dealJacketGroup);
-    }
-
-    private function resolveStoreId(): ?int
-    {
-        $currentStore = app()->bound('currentStore') ? app('currentStore') : null;
-
-        if (is_numeric($currentStore)) {
-            return (int) $currentStore;
-        }
-
-        $scopedStoreIds = app()->bound('scopedStoreIds') ? app('scopedStoreIds') : collect();
-        $firstScopedStoreId = $scopedStoreIds->first();
-
-        if (is_numeric($firstScopedStoreId)) {
-            return (int) $firstScopedStoreId;
-        }
-
-        $fallbackStoreId = Store::query()->orderBy('id')->value('id');
-
-        return is_numeric($fallbackStoreId) ? (int) $fallbackStoreId : null;
+        return redirect()->route('dealer.audit.deal-jackets.show', $dealJacketGroup);
     }
 }

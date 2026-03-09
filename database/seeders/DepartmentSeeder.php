@@ -11,39 +11,18 @@ class DepartmentSeeder extends Seeder
 {
     public function run(): void
     {
-        Department::query()->create([
-            'name' => 'Sales',
-            'slug' => 'sales',
-        ]);
+        $departments = [
+            ['name' => 'Sales', 'slug' => 'sales'],
+            ['name' => 'Accounting', 'slug' => 'accounting'],
+            ['name' => 'Service', 'slug' => 'service'],
+            ['name' => 'Parts', 'slug' => 'parts'],
+            ['name' => 'Body Shop', 'slug' => 'body-shop'],
+            ['name' => 'Finance', 'slug' => 'finance'],
+            ['name' => 'Porter/Driver', 'slug' => 'porter-driver'],
+        ];
 
-        Department::query()->create([
-            'name' => 'Accounting',
-            'slug' => 'accounting',
-        ]);
-
-        Department::query()->create([
-            'name' => 'Service',
-            'slug' => 'service',
-        ]);
-
-        Department::query()->create([
-            'name' => 'Parts',
-            'slug' => 'parts',
-        ]);
-
-        Department::query()->create([
-            'name' => 'Body Shop',
-            'slug' => 'body-shop',
-        ]);
-
-        Department::query()->create([
-            'name' => 'Finance',
-            'slug' => 'finance',
-        ]);
-
-        Department::query()->create([
-            'name' => 'Porter/Driver',
-            'slug' => 'porter-driver',
-        ]);
+        foreach ($departments as $department) {
+            Department::query()->firstOrCreate(['name' => $department['name']], $department);
+        }
     }
 }

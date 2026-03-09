@@ -156,6 +156,51 @@ describe('Deal Jacket Group Index Page', function (): void {
                 expect($dealJacketGroup->store_id)->toBe($storeId);
                 expect($dealJacketGroup->completed)->toBeFalse();
             });
+
+            it('consultants redirect to the existing quarterly group without a type error', function (): void {
+                $this->actingAs($this->consultant);
+                $store = Store::query()->firstOrFail();
+
+                app()->instance('currentStore', $store->id);
+
+                $existingGroup = DealJacketGroup::query()->create([
+                    'store_id' => $store->id,
+                    'created_at' => now()->startOfQuarter()->addDay(),
+                    'updated_at' => now()->startOfQuarter()->addDay(),
+                ]);
+
+                Livewire::test(CreateNewGroupButton::class)
+                    ->call('create')
+                    ->assertRedirect(route('dealer.audit.deal-jackets.index'));
+
+                expect(session('dealJacketGroupUuid'))->toBe($existingGroup->uuid)
+                    ->and(DealJacketGroup::query()->count())->toBe(1);
+            });
+
+            it('consultants create a group for the scoped store when currentStore is null', function (): void {
+                $this->tenant->update(['locations' => true]);
+
+                $storeA = Store::query()->firstOrFail();
+                $storeB = Store::query()->create([
+                    'name' => 'Scoped Deal Jacket Store',
+                    'slug' => 'scoped-deal-jacket-store',
+                ]);
+
+                $this->consultant->update(['current_store_id' => null]);
+                $this->actingAs($this->consultant);
+
+                app()->instance('currentStore', null);
+                app()->forgetInstance('currentStoreModel');
+                app()->instance('accessibleStoreIds', collect([$storeA->id, $storeB->id]));
+                app()->instance('scopedStoreIds', collect([$storeB->id]));
+
+                Livewire::test(CreateNewGroupButton::class)
+                    ->call('create')
+                    ->assertRedirect();
+
+                expect(DealJacketGroup::query()->count())->toBe(1)
+                    ->and(DealJacketGroup::query()->first()?->store_id)->toBe($storeB->id);
+            });
         });
 
         describe('Marking as Complete', function (): void {

@@ -3,10 +3,12 @@
 declare(strict_types=1);
 
 use App\Http\Livewire\Dealer\Employee\DepartmentCompletionStats;
+use App\Models\Dealer\Course;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Livewire;
+use Spatie\Permission\Models\Role;
 
 describe('DepartmentCompletionStats Component', function (): void {
     it('renders successfully', function (): void {
@@ -73,6 +75,65 @@ describe('Role-Based Store Access on tenant.dashboard (no store parameter)', fun
 
         $stats = $component->get('stats');
         expect($stats)->toBeArray();
+    });
+
+    it('scopes overview stats to the selected current store and uses a store-specific cache key', function (): void {
+        tenant()->update(['locations' => true]);
+
+        $storeA = Store::query()->firstOrFail();
+        $storeB = Store::query()->create(['name' => 'Store B', 'slug' => 'store-b']);
+
+        $employeeRole = Role::query()->where('name', 'Employee')->firstOrFail();
+        $course = Course::query()->create([
+            'name' => 'Department Completion Scope '.uniqid(),
+            'slug' => 'department-completion-scope-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+            'years_expires' => 1,
+        ]);
+        $course->roles()->attach($employeeRole->id);
+
+        $storeAEmployee = User::factory()->create(['department_id' => 1]);
+        $storeAEmployee->assignRole('Employee');
+        $storeAEmployee->stores()->attach($storeA->id);
+
+        $storeBEmployeeOne = User::factory()->create(['department_id' => 1]);
+        $storeBEmployeeOne->assignRole('Employee');
+        $storeBEmployeeOne->stores()->attach($storeB->id);
+
+        $storeBEmployeeTwo = User::factory()->create(['department_id' => 1]);
+        $storeBEmployeeTwo->assignRole('Employee');
+        $storeBEmployeeTwo->stores()->attach($storeB->id);
+
+        $this->consultant->update(['current_store_id' => $storeA->id]);
+        $this->actingAs($this->consultant);
+
+        Cache::flush();
+        app()->instance('scopedStoreIds', collect([$storeA->id]));
+
+        $storeAStats = Livewire::test(DepartmentCompletionStats::class)
+            ->call('loadStats')
+            ->get('stats');
+
+        $tenantId = tenant('id');
+        expect($storeAStats['all']['total'])->toBe(1)
+            ->and($storeAStats['all']['incomplete'])->toBe(1)
+            ->and(Cache::has("department_completion_stats_{$storeA->id}_{$tenantId}"))->toBeTrue();
+
+        $this->consultant->update(['current_store_id' => $storeB->id]);
+
+        Cache::flush();
+        app()->instance('scopedStoreIds', collect([$storeB->id]));
+
+        $storeBStats = Livewire::test(DepartmentCompletionStats::class)
+            ->call('loadStats')
+            ->get('stats');
+
+        expect($storeBStats['all']['total'])->toBe(2)
+            ->and($storeBStats['all']['incomplete'])->toBe(2)
+            ->and($storeBStats['all']['percentage'])->toEqual(0.0)
+            ->and(Cache::has("department_completion_stats_{$storeB->id}_{$tenantId}"))->toBeTrue();
     });
 
     it('shows only assigned stores departments for regular users with multiple locations', function (): void {

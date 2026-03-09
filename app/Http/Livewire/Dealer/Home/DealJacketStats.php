@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Home;
 
+use App\Http\Livewire\Concerns\ResolvesDashboardStore;
 use App\Jobs\Audit\GenerateDealJacketReportJob;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
@@ -16,11 +17,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DealJacketStats extends Component
 {
-    public Store $store;
+    use ResolvesDashboardStore;
+
+    public ?Store $store = null;
 
     public function mount(): void
     {
-        $this->store ??= (app()->bound('currentStoreModel') ? app('currentStoreModel') : null) ?? Store::query()->first();
+        $this->store ??= $this->resolveDashboardStore();
     }
 
     public function rating(): string
@@ -78,6 +81,10 @@ class DealJacketStats extends Component
 
     private function getAveragePercentage(): ?float
     {
+        if (! $this->store instanceof Store) {
+            return null;
+        }
+
         $completedGroups = DealJacketGroup::query()
             ->where('store_id', $this->store->id)
             ->where('completed', true)
@@ -96,6 +103,10 @@ class DealJacketStats extends Component
 
     private function latestCompletedGroup(): ?DealJacketGroup
     {
+        if (! $this->store instanceof Store) {
+            return null;
+        }
+
         return DealJacketGroup::query()
             ->where('store_id', $this->store->id)
             ->where('completed', true)

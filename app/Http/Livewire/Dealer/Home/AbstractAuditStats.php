@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Home;
 
+use App\Http\Livewire\Concerns\ResolvesDashboardStore;
 use App\Models\Dealer\Store;
 use App\Traits\HasAuditStats;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,8 +15,9 @@ use Livewire\Component;
 abstract class AbstractAuditStats extends Component
 {
     use HasAuditStats;
+    use ResolvesDashboardStore;
 
-    public Store $store;
+    public ?Store $store = null;
     protected ?object $memoizedLatestAudit = null;
 
     abstract protected function violationAuditQuery(): Builder;
@@ -26,7 +28,7 @@ abstract class AbstractAuditStats extends Component
 
     final public function mount(): void
     {
-        $this->store ??= (app()->bound('currentStoreModel') ? app('currentStoreModel') : null) ?? Store::query()->first();
+        $this->store ??= $this->resolveDashboardStore();
     }
 
     final public function rating(): string
@@ -55,6 +57,10 @@ abstract class AbstractAuditStats extends Component
 
     protected function violationAudits(): Builder
     {
+        if (! $this->store instanceof Store) {
+            return $this->violationAuditQuery()->whereRaw('1 = 0');
+        }
+
         return $this->violationAuditQuery()->where('store_id', $this->store->id);
     }
 
