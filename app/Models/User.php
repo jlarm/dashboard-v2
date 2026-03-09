@@ -9,6 +9,7 @@ use App\Models\Dealer\Invite;
 use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
+use App\Notifications\ResetPassword;
 use App\Services\UserCourseService;
 use App\Traits\HasAudits;
 use App\Traits\HasCourses;
@@ -232,6 +233,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeUsersNotCompletedCourses(Builder $query, bool $showNotCompleted): void
     {
         $query->when($showNotCompleted, fn ($query) => $query->where('user_has_not_completed_courses', true));
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPassword($token));
     }
 
     public function getActivitylogOptions(): LogOptions

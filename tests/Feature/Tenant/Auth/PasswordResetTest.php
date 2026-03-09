@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Notifications\ResetPassword;
+use App\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
