@@ -66,7 +66,17 @@
                                 </div>
                             </div>
                         </div>
-                        <iframe oncontextmenu="return false" src="{{ $video['player_embed_url'] }}{{ ($this->videoCompleted() || $this->hasCourseResults()) ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] rounded-xl border"></iframe>
+                        <iframe
+                            id="course-vimeo-player"
+                            oncontextmenu="return false"
+                            src="{{ $this->playerEmbedUrl() }}"
+                            title="{{ $video['title'] ?? $course->name }}"
+                            allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen
+                            class="w-full h-[500px] rounded-xl border"
+                        ></iframe>
                     </div>
                 @else
                     <div class="flex items-center justify-center bg-red-50 rounded-lg p-8">
@@ -89,7 +99,7 @@
         @if($video && isset($video['player_embed_url']))
             <script>
                 (function() {
-                    const iframe = document.querySelector('iframe');
+                    const iframe = document.getElementById('course-vimeo-player');
                     const loadingElement = document.getElementById('video-loading');
                     const errorElement = document.getElementById('video-error');
                     const errorMessage = document.getElementById('error-message');
@@ -342,59 +352,59 @@
             </script>
         @endif
     @else
-    <div
-        x-data="{
-            activeSlide: 0,
-            percentage: 0,
-            slidesCount: {{ count($slides) }},
-            init() {
-                this.percentage = Math.round(((this.activeSlide + 1) / this.slidesCount) * 100);
-                this.$watch('activeSlide', value => {
-                    this.percentage = Math.round(((value + 1) / this.slidesCount) * 100);
-                });
-            }
-        }"
-        x-init="init"
-    >
-        <div>
-            @foreach($slides as $index => $slide)
-                <article x-show="activeSlide === {{ $index }}" class="space-y-5" x-cloak>
-                    <h1 class="font-bold">{{ isset($slide['title']) ? __($slide['title']) : __($course->name) }}</h1>
-                    <div class="prose min-w-full">
-                        {!! Blade::render(__($slide['description'])) !!}
+        <div
+            x-data="{
+                activeSlide: 0,
+                percentage: 0,
+                slidesCount: {{ count($slides) }},
+                init() {
+                    this.percentage = Math.round(((this.activeSlide + 1) / this.slidesCount) * 100);
+                    this.$watch('activeSlide', value => {
+                        this.percentage = Math.round(((value + 1) / this.slidesCount) * 100);
+                    });
+                }
+            }"
+            x-init="init"
+        >
+            <div>
+                @foreach($slides as $index => $slide)
+                    <article x-show="activeSlide === {{ $index }}" class="space-y-5" x-cloak>
+                        <h1 class="font-bold">{{ isset($slide['title']) ? __($slide['title']) : __($course->name) }}</h1>
+                        <div class="prose min-w-full">
+                            {!! Blade::render(__($slide['description'])) !!}
+                        </div>
+                    </article>
+                @endforeach
+                <div class="mt-5">
+                    <div class="flex justify-between items-center gap-10">
+                        <button
+                            :disabled="activeSlide === 0"
+                            @click="activeSlide--"
+                            class="px-4 py-2 text-sm font-semibold text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-lg"
+                        >
+                            {{ __('Previous') }}
+                        </button>
+                        <!-- Progress -->
+                        <div class="flex w-full h-1.5 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="flex flex-col justify-center rounded-full overflow-hidden bg-arm-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500" x-bind:style="'width: ' + percentage + '%;'"></div>
+                        </div>
+                        <button
+                            x-show="activeSlide < slidesCount - 1"
+                            @click="activeSlide++"
+                            class="px-4 py-2 text-sm font-semibold text-white bg-arm-orange-500 hover:bg-orange-600 rounded-lg"
+                        >
+                            {{ __('Next') }}
+                        </button>
+                        <a
+                            :href="'{{ $quizLink }}'"
+                            x-show="activeSlide === slidesCount - 1"
+                            class="px-4 py-2 text-sm font-semibold text-white bg-arm-blue-500 hover:bg-arm-blue-600 rounded-lg"
+                        >
+                            {{ __('Quiz') }}
+                        </a>
                     </div>
-                </article>
-            @endforeach
-            <div class="mt-5">
-                <div class="flex justify-between items-center gap-10">
-                    <button
-                        :disabled="activeSlide === 0"
-                        @click="activeSlide--"
-                        class="px-4 py-2 text-sm font-semibold text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-lg"
-                    >
-                        {{ __('Previous') }}
-                    </button>
-                    <!-- Progress -->
-                    <div class="flex w-full h-1.5 bg-gray-200 rounded-full overflow-hidden" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        <div class="flex flex-col justify-center rounded-full overflow-hidden bg-arm-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500" x-bind:style="'width: ' + percentage + '%;'"></div>
-                    </div>
-                    <button
-                        x-show="activeSlide < slidesCount - 1"
-                        @click="activeSlide++"
-                        class="px-4 py-2 text-sm font-semibold text-white bg-arm-orange-500 hover:bg-orange-600 rounded-lg"
-                    >
-                        {{ __('Next') }}
-                    </button>
-                    <a
-                        :href="'{{ $quizLink }}'"
-                        x-show="activeSlide === slidesCount - 1"
-                        class="px-4 py-2 text-sm font-semibold text-white bg-arm-blue-500 hover:bg-arm-blue-600 rounded-lg"
-                    >
-                        {{ __('Quiz') }}
-                    </a>
                 </div>
             </div>
         </div>
-    </div>
     @endif
 </div>

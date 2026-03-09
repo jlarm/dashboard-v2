@@ -66,7 +66,16 @@
                                 </div>
                             </div>
                         </div>
-                        <iframe src="{{ $video['player_embed_url'] }}{{ $this->videoCompleted() ? '' : (str_contains($video['player_embed_url'], '?') ? '&' : '?') . 'progress_bar=0' }}" encrypted-media class="w-full h-[500px] rounded-xl border"></iframe>
+                        <iframe
+                            id="course-vimeo-player"
+                            src="{{ $this->playerEmbedUrl() }}"
+                            title="{{ $video['title'] ?? $course->name }}"
+                            allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen
+                            class="w-full h-[500px] rounded-xl border"
+                        ></iframe>
                     </div>
                 @else
                     <div class="flex items-center justify-center bg-red-50 rounded-lg p-8">
@@ -89,7 +98,7 @@
         @if($video && isset($video['player_embed_url']))
             <script>
                 (function() {
-                    const iframe = document.querySelector('iframe');
+                    const iframe = document.getElementById('course-vimeo-player');
                     const loadingElement = document.getElementById('video-loading');
                     const errorElement = document.getElementById('video-error');
                     const errorMessage = document.getElementById('error-message');

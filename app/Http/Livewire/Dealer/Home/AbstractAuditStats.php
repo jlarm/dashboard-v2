@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractAuditStats extends Component
 {
@@ -45,9 +46,13 @@ abstract class AbstractAuditStats extends Component
         return empty($path) ? null : $path;
     }
 
-    final public function downloadPdf()
+    final public function downloadPdf(): StreamedResponse
     {
-        return Storage::disk('armpaudits')->download($this->pdfPath());
+        $path = $this->pdfPath();
+
+        abort_if($path === null, 404);
+
+        return Storage::disk('armpaudits')->download($path);
     }
 
     final public function render(): View
@@ -64,7 +69,7 @@ abstract class AbstractAuditStats extends Component
         return $this->violationAuditQuery()->where('store_id', $this->store->id);
     }
 
-    protected function getLatestAuditRecord()
+    protected function getLatestAuditRecord(): object
     {
         if ($this->memoizedLatestAudit !== null) {
             return $this->memoizedLatestAudit;
