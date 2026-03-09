@@ -2,7 +2,7 @@
     @if($video && !$showSlidesFallback)
         <div class="space-y-5">
             <div class="max-w-4xl mx-auto">
-                @if ($this->quizLink())
+                @if ($quizLink)
                     <div class="w-full flex items-center justify-between mb-6 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                         @if ($this->videoCompleted())
                             <div class="flex items-center gap-2">

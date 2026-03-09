@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Vimeo\Exceptions\VimeoRequestException;
 use Vimeo\Vimeo;
@@ -42,9 +43,15 @@ class VimeoService
         return $this->fetchCategories();
     }
 
-    public function getVideo(string $videoId): ?array
+    public function getVideo(string $videoId, bool $fresh = false): ?array
     {
-        return $this->fetchVideo($videoId);
+        $cacheKey = "vimeo_video_{$videoId}";
+
+        if ($fresh) {
+            Cache::forget($cacheKey);
+        }
+
+        return Cache::remember($cacheKey, now()->addHour(), fn () => $this->fetchVideo($videoId));
     }
 
     public function enableSeekButton(string $videoId): bool

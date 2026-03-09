@@ -59,8 +59,8 @@ class Show extends Component
     {
         $this->videoRetryCount++;
 
-        // Refresh video data from Vimeo (gets fresh privacy hash)
-        $this->video = $this->getVimeoVideo();
+        // Refresh video data from Vimeo (gets fresh privacy hash, busts cache)
+        $this->video = $this->getVimeoVideo(fresh: true);
 
         if (! $this->video) {
             $this->showSlidesFallback();
@@ -118,8 +118,8 @@ class Show extends Component
         }
     }
 
-    private function getVimeoVideo(): ?array
+    private function getVimeoVideo(bool $fresh = false): ?array
     {
-        return app(VimeoService::class)->getVideo($this->course->video_id);
+        return app(VimeoService::class)->getVideo($this->course->video_id, $fresh);
     }
 }
