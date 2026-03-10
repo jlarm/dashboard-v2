@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorEmailLog;
 use App\Models\Dealer\VendorForm;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 uses(TestCase::class);
@@ -229,12 +230,25 @@ it('rejects webhook with expired timestamp', function (): void {
 });
 
 it('returns 200 when email log is not found', function (): void {
+    Log::spy();
+
     $payload = createMailgunWebhookPayload('delivered', '<non-existent-message-id@mailgun.net>');
 
     $response = $this->postJson('/api/webhooks/mailgun', $payload);
 
     $response->assertStatus(200);
     $response->assertJson(['message' => 'Email log not found']);
+
+    Log::shouldHaveReceived('debug')
+        ->once()
+        ->withArgs(fn (string $message, array $context): bool => $message === 'Mailgun webhook - email log not found'
+                && $context['message_id'] === '<non-existent-message-id@mailgun.net>'
+                && $context['event'] === 'delivered');
+
+    Log::shouldNotHaveReceived('info', [
+        'Mailgun webhook - email log not found',
+        Mockery::type('array'),
+    ]);
 });
 
 it('handles opened and clicked events without changing status', function (): void {

@@ -91,8 +91,7 @@ class MailgunWebhookController extends Controller
         }
 
         if (! $emailLog || ! $foundTenant) {
-            // Log not found - might not be a vendor email
-            Log::info('Mailgun webhook - email log not found', [
+            Log::debug('Mailgun webhook - email log not found', [
                 'message_id' => $messageId,
                 'event' => $event,
             ]);
