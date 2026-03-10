@@ -1,5 +1,5 @@
 @php use Carbon\Carbon; @endphp
-<div x-data="{ loading: true }" class="mb-10">
+<div class="mb-10">
     <div class="w-full max-w-3xl mx-auto px-6">
         <div class="space-y-3 flex flex-col bg-white my-10">
 
@@ -17,7 +17,7 @@
         </div>
         <form class="space-y-2">
             @forelse($violations as $violation)
-                <div class="space-y-5 border rounded-xl p-5 relative">
+                <div wire:key="violation-{{ $violation->id }}" class="space-y-5 border rounded-xl p-5 relative">
                     <div>
                         <p class="col-span-3 text-sm text-gray-600">{{ $violation->statement }}</p>
                         <div class="flex gap-2 mt-1">
@@ -38,57 +38,63 @@
                     <p class="italic text-sm">{{ $violation->comment }}</p>
                     <div class="flex gap-5">
                         @if($violation->getMedia('violation_files_0')->first())
-                            <div x-show="loading" class="w-20 h-20 rounded-md bg-gray-400 animate-pulse"></div>
-                            <img
-                                wire:click="$emit('modal.open', 'dealer.audit.image-modal', @js(['filesId' => 0, 'violation' => $violation]))"
-                                class="h-20 w-20 rounded-md hover:cursor-pointer"
-                                src="{{ $violation->getMedia('violation_files_0')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}"
-                                alt=""
-                                x-on:load="loading = false"
-                                x-show="!loading"
-                            />
+                            <div x-data="{ imgLoading: true }">
+                                <div x-show="imgLoading" class="w-20 h-20 rounded-md bg-gray-400 animate-pulse"></div>
+                                <img
+                                    wire:click="$emit('modal.open', 'dealer.audit.image-modal', @js(['filesId' => 0, 'violation' => $violation]))"
+                                    class="h-20 w-20 rounded-md hover:cursor-pointer"
+                                    src="{{ $violation->getMedia('violation_files_0')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}"
+                                    alt=""
+                                    x-on:load="imgLoading = false"
+                                    x-show="!imgLoading"
+                                />
+                            </div>
                         @endif
                         @if($violation->getMedia('violation_files_1')->first())
-                            <div x-show="loading" class="w-20 h-20 rounded-md bg-gray-400 animate-pulse"></div>
-                            <img
-                                wire:click="$emit('modal.open', 'dealer.audit.image-modal', @js(['filesId' => 1, 'violation' => $violation]))"
-                                class="h-20 w-20 rounded-md hover:cursor-pointer"
-                                src="{{ $violation->getMedia('violation_files_1')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}"
-                                alt=""
-                                x-on:load="loading = false"
-                                x-show="!loading"
-                            />
+                            <div x-data="{ imgLoading: true }">
+                                <div x-show="imgLoading" class="w-20 h-20 rounded-md bg-gray-400 animate-pulse"></div>
+                                <img
+                                    wire:click="$emit('modal.open', 'dealer.audit.image-modal', @js(['filesId' => 1, 'violation' => $violation]))"
+                                    class="h-20 w-20 rounded-md hover:cursor-pointer"
+                                    src="{{ $violation->getMedia('violation_files_1')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}"
+                                    alt=""
+                                    x-on:load="imgLoading = false"
+                                    x-show="!imgLoading"
+                                />
+                            </div>
                         @endif
                         @if($violation->getMedia('violation_files_2')->first())
-                            <div x-show="loading" class="w-20 h-20 rounded-md bg-gray-400 animate-pulse"></div>
-                            <img
-                                wire:click="$emit('modal.open', 'dealer.audit.image-modal', @js(['filesId' => 2, 'violation' => $violation]))"
-                                class="h-20 w-20 rounded-md hover:cursor-pointer"
-                                src="{{ $violation->getMedia('violation_files_2')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}"
-                                alt=""
-                                x-on:load="loading = false"
-                                x-show="!loading"
-                            />
+                            <div x-data="{ imgLoading: true }">
+                                <div x-show="imgLoading" class="w-20 h-20 rounded-md bg-gray-400 animate-pulse"></div>
+                                <img
+                                    wire:click="$emit('modal.open', 'dealer.audit.image-modal', @js(['filesId' => 2, 'violation' => $violation]))"
+                                    class="h-20 w-20 rounded-md hover:cursor-pointer"
+                                    src="{{ $violation->getMedia('violation_files_2')->first()->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}"
+                                    alt=""
+                                    x-on:load="imgLoading = false"
+                                    x-show="!imgLoading"
+                                />
+                            </div>
                         @endif
                     </div>
                     <div class="bg-gray-100 p-5 rounded-xl space-y-3">
                         <div>
                             <label for="violationRemediations.{{ $violation->id }}.comment" class="block text-sm leading-6 text-gray-500">Describe how the violation has been remediated</label>
-                            <textarea wire:model.defer="violationRemediations.{{ $violation->id }}.comment" rows="4" name="violations.0" id="violations.0" class="block w-full rounded-lg border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
+                            <textarea wire:model.defer="violationRemediations.{{ $violation->id }}.comment" rows="4" name="violationRemediations[{{ $violation->id }}][comment]" id="violationRemediations.{{ $violation->id }}.comment" class="block w-full rounded-lg border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-arm-blue-600 sm:text-sm sm:leading-6"></textarea>
                         </div>
                         <div>
                             @if($violation->remediation && !$violation->remediation->getMedia('remediations')->isEmpty())
-                                <div class="relative w-24 h-24">
+                                <div x-data="{ imgLoading: true }" class="relative w-24 h-24">
                                     <div>
-                                        <div x-show="loading" class="w-24 h-24 rounded-md bg-gray-400 animate-pulse"></div>
+                                        <div x-show="imgLoading" class="w-24 h-24 rounded-md bg-gray-400 animate-pulse"></div>
                                         <img
                                             src="{{ $violation->remediation->getFirstMedia('remediations')->getTemporaryUrl(\Carbon\Carbon::now()->addMinutes(45), 'thumb') }}"
                                             class="w-full h-24 object-cover rounded-md"
                                             alt=""
-                                            x-on:load="loading = false"
-                                            x-show="!loading"
+                                            x-on:load="imgLoading = false"
+                                            x-show="!imgLoading"
                                         >
-                                        <button x-show="!loading" wire:click="removeUploadedPhoto({{ $violation->id }})" type="button" class="absolute top-0.5 right-0.5 p-1 rounded-md bg-slate-200 bg-opacity-75 text-slate-600 hover:text-red-500">
+                                        <button x-show="!imgLoading" wire:click="removeUploadedPhoto({{ $violation->id }})" type="button" class="absolute top-0.5 right-0.5 p-1 rounded-md bg-slate-200 bg-opacity-75 text-slate-600 hover:text-red-500">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                             </svg>
@@ -96,9 +102,17 @@
                                     </div>
                                 </div>
                             @else
-                                @if(isset($violationRemediations[$violation->id]['photo']) && $violationRemediations[$violation->id]['photo'])
+                                @php($temporaryPhoto = $violationRemediations[$violation->id]['photo'] ?? null)
+                                @php($temporaryPhotoPreviewUrl = $this->temporaryPhotoPreviewUrl($temporaryPhoto))
+                                @if($temporaryPhoto)
                                     <div class="relative w-24 h-24">
-                                        <img src="{{ $violationRemediations[$violation->id]['photo']->temporaryUrl() }}" alt="Temporary Image" class="w-full h-full object-cover rounded-md">
+                                        @if($temporaryPhotoPreviewUrl)
+                                            <img src="{{ $temporaryPhotoPreviewUrl }}" alt="Temporary Image" class="w-full h-full object-cover rounded-md">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center bg-gray-100 rounded-md">
+                                                <span class="text-xs text-gray-500">Image preview unavailable</span>
+                                            </div>
+                                        @endif
                                         <button wire:click="removeTemporaryPhoto({{ $violation->id }})" type="button" class="absolute top-0.5 right-0.5 p-1 rounded-md bg-slate-200 bg-opacity-75 text-slate-600 hover:text-red-500">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

@@ -8,6 +8,7 @@ use App\Models\Remediation;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
+use Livewire\TemporaryUploadedFile;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 
 trait UpdateRemediations
@@ -23,12 +24,14 @@ trait UpdateRemediations
             $comment = $remediationData['comment'] ?? '';
             $completed = $remediationData['completed'] ?? false;
             $newPhoto = $remediationData['photo'] ?? null;
+            $hasQualifyingAttributes = ($comment !== '' && $comment !== '0') || $completed;
 
             $hasNewPhoto = $newPhoto !== null;
             $remediation = $violation->remediation ?? new Remediation(['violation_id' => $violationId]);
+            $isNewRemediation = ! $remediation->exists;
 
             $isDirty = false;
-            $newPhotoSuccessfullyAdded = false; // Initialize flag for successful photo addition
+            $newPhotoSuccessfullyAdded = false;
 
             if ($remediation->comment !== $comment) {
                 $remediation->comment = $comment;
@@ -42,18 +45,16 @@ trait UpdateRemediations
 
             if ($hasNewPhoto) {
                 try {
-                    // Make sure the file object is valid and has a path
                     if (! $newPhoto || ! method_exists($newPhoto, 'getRealPath')) {
                         Log::warning('Invalid remediation photo object', [
                             'violation_id' => $violationId,
                         ]);
 
-                        continue; // Skip this photo
+                        continue;
                     }
 
                     $filePath = $newPhoto->getRealPath();
 
-                    // Verify file exists and is readable
                     if (! $filePath || ! file_exists($filePath) || ! is_readable($filePath)) {
                         $originalName = method_exists($newPhoto, 'getClientOriginalName')
                             ? $newPhoto->getClientOriginalName()
@@ -64,36 +65,36 @@ trait UpdateRemediations
                             'original_name' => $originalName,
                         ]);
 
-                        // Clean up the reference to prevent further errors
                         unset($this->violationRemediations[$violationId]['photo']);
 
-                        continue; // Skip this photo
+                        continue;
                     }
 
-                    // Validate file size (prevent 0 byte files)
                     if (filesize($filePath) === 0) {
                         Log::warning('Remediation photo file is empty (0 bytes)', [
                             'violation_id' => $violationId,
                             'file_path' => $filePath,
                         ]);
 
-                        continue; // Skip this photo
+                        continue;
+                    }
+
+                    if ($isNewRemediation) {
+                        $remediation->user_id = auth()->id();
+                        $remediation->save();
+                        $isNewRemediation = false;
                     }
 
                     $remediation->addMedia($filePath)->toMediaCollection('remediations', 'armpaudits');
                     $isDirty = true;
-                    $newPhotoSuccessfullyAdded = true; // Mark photo as successfully added
-
+                    $newPhotoSuccessfullyAdded = true;
                 } catch (FileDoesNotExist $e) {
-                    // Specifically handle Spatie's FileDoesNotExist exception
                     Log::warning('Spatie MediaLibrary could not find the file', [
                         'violation_id' => $violationId,
                         'error' => $e->getMessage(),
                     ]);
 
-                    // Clean up the reference to prevent UI errors
                     unset($this->violationRemediations[$violationId]['photo']);
-
                 } catch (Exception $e) {
                     Log::error('Failed to add remediation photo', [
                         'violation_id' => $violationId,
@@ -101,47 +102,31 @@ trait UpdateRemediations
                         'trace' => $e->getTraceAsString(),
                     ]);
 
-                    // Clean up the reference to prevent UI errors
                     unset($this->violationRemediations[$violationId]['photo']);
                 }
             }
 
-            $isNewRemediation = ! $remediation->exists; // Check if it was new before any potential save
-
-            // Current state of remediation after potential updates to ->comment and ->completed
             $finalComment = $remediation->comment;
             $finalCompleted = $remediation->completed;
-
-            // Determine if it will have photos after this operation
             $willHavePhotos = $newPhotoSuccessfullyAdded;
+
             if (! $isNewRemediation) {
-                // If no new photo was successfully added, and it's an existing remediation,
-                // check if it already has photos. This assumes getMedia reflects current photos
-                // and this code block doesn't handle explicit photo removal.
                 $willHavePhotos = $willHavePhotos || $remediation->getMedia('remediations')->isNotEmpty();
             }
 
-            $hasQualifyingContent = $finalComment !== '' && $finalComment !== '0' || $finalCompleted || $willHavePhotos;
+            $hasQualifyingContent = ($finalComment !== '' && $finalComment !== '0') || $finalCompleted || $willHavePhotos;
 
             if ($isNewRemediation) {
-                // For a new remediation instance
                 if ($hasQualifyingContent) {
-                    // If it has qualifying content, save it (create it in DB)
                     $remediation->user_id = auth()->id();
                     $remediation->save();
                 }
-                // Else: new instance, but no qualifying content. Do not save.
             } elseif ($hasQualifyingContent) {
-                // For an existing remediation instance
-                // It has qualifying content. If any attributes were changed ($isDirty), save the updates.
                 if ($isDirty) {
                     $remediation->user_id = auth()->id();
                     $remediation->save();
                 }
-                // Else: existing, has content, but not dirty. No changes to save.
             } else {
-                // It's an existing remediation, but it no longer has qualifying content.
-                // So, delete it from the DB.
                 $remediation->delete();
             }
         }
@@ -152,9 +137,22 @@ trait UpdateRemediations
             ->send();
     }
 
-    public function removeTemporaryPhoto(int $validationId): void
+    public function removeTemporaryPhoto(int $violationId): void
     {
-        $this->violationRemediations[$validationId]['photo'] = null;
+        $this->violationRemediations[$violationId]['photo'] = null;
+    }
+
+    public function temporaryPhotoPreviewUrl(mixed $photo): ?string
+    {
+        if (! $photo instanceof TemporaryUploadedFile && (! is_object($photo) || ! method_exists($photo, 'temporaryUrl'))) {
+            return null;
+        }
+
+        try {
+            return $photo->temporaryUrl();
+        } catch (Exception) {
+            return null;
+        }
     }
 
     public function removeUploadedPhoto(int $violationId): void
