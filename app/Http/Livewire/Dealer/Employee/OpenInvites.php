@@ -10,6 +10,7 @@ use App\Models\Dealer\Store;
 use App\Models\Department;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -87,7 +88,13 @@ class OpenInvites extends Component
 
     public function getStoreNames(array $stores): string
     {
-        return Store::query()->whereIn('id', $stores)->pluck('name')->implode(', ');
+        $storeIds = $this->normalizeInviteStoreIds($stores);
+
+        if ($storeIds === []) {
+            return '';
+        }
+
+        return Store::query()->whereIn('id', $storeIds)->pluck('name')->implode(', ');
     }
 
     public function clearFilters(): void
@@ -116,7 +123,7 @@ class OpenInvites extends Component
             ->pluck('name', 'id');
 
         $allStoreIds = $invites
-            ->flatMap(fn ($invite): array => (array) ($invite->stores ?? []))
+            ->flatMap(fn ($invite): array => $this->normalizeInviteStoreIds($invite->stores ?? []))
             ->unique()
             ->values()
             ->all();
@@ -249,5 +256,15 @@ class OpenInvites extends Component
         }
 
         return collect();
+    }
+
+    private function normalizeInviteStoreIds(array $stores): array
+    {
+        return collect(Arr::flatten($stores))
+            ->map(static fn (mixed $storeId): int => (int) $storeId)
+            ->filter(static fn (int $storeId): bool => $storeId > 0)
+            ->unique()
+            ->values()
+            ->all();
     }
 }

@@ -125,4 +125,39 @@ describe('employee open invites store scope', function (): void {
                     && in_array($inviteInStoreB->id, $inviteIds, true);
             });
     });
+
+    it('renders invites with nested store arrays without crashing', function (): void {
+        $this->tenant->locations = true;
+        $this->tenant->save();
+
+        $department = Department::query()->create([
+            'name' => 'Nested Invite Department '.uniqid(),
+            'slug' => 'nested-invite-department-'.uniqid(),
+        ]);
+
+        $storeA = Store::query()->firstOrFail();
+        $storeB = Store::query()->create([
+            'name' => 'Nested Invite Store B '.uniqid(),
+            'slug' => 'nested-invite-store-b-'.uniqid(),
+            'state' => 'IN',
+        ]);
+
+        Invite::query()->create([
+            'name' => 'Nested Invite',
+            'email' => 'nested-invite@test.com',
+            'stores' => [[$storeA->id, $storeB->id]],
+            'department_id' => $department->id,
+            'user_id' => $this->consultant->id,
+            'roles' => ['Employee'],
+            'invitation_token' => 'nested-invite-token-123456',
+        ]);
+
+        $this->actingAs($this->consultant);
+
+        Livewire::test(OpenInvites::class)
+            ->assertOk()
+            ->assertSee('Nested Invite')
+            ->assertSee($storeA->name)
+            ->assertSee($storeB->name);
+    });
 });

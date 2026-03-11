@@ -1,20 +1,12 @@
 {
   "mcpServers": {
     "laravel-boost": {
-      "command": "/Users/armp/Library/Application Support/Herd/bin/php83",
+      "command": "/Users/armp/Library/Application",
       "args": [
+        "Support/Herd/bin/php83",
         "/Users/armp/Herd/dashboard/artisan",
         "boost:mcp"
       ]
-    },
-    "herd": {
-      "command": "/Users/armp/Library/Application Support/Herd/bin/php83",
-      "args": [
-        "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
-      ],
-      "env": {
-        "SITE_PATH": "/Users/armp/Herd/dashboard"
-      }
     }
   }
 }

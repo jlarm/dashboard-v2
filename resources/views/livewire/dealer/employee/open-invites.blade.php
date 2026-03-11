@@ -82,7 +82,7 @@
                                     <x-table.cell class="pl-4 pr-3">{{ Str::title($invite->name) }}</x-table.cell>
                                     @if(app('multipleStoresExist'))
                                         <x-table.cell class="pl-4 pr-3">
-                                            {{ collect($invite->stores ?? [])->map(fn($id) => $storeNameMap[$id] ?? '')->filter()->implode(', ') }}
+                                            {{ collect(\Illuminate\Support\Arr::flatten($invite->stores ?? []))->map(fn($id) => $storeNameMap[(int) $id] ?? '')->filter()->implode(', ') }}
                                         </x-table.cell>
                                     @endif
                                     <x-table.cell class="pl-4 pr-3">{{ $departmentNames[$invite->department_id] ?? '' }}</x-table.cell>
