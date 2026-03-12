@@ -23,6 +23,8 @@ class DeleteCommentConfirmationModal extends Modal
 
     public function delete(): void
     {
+        abort_if($this->comment->user_id !== auth()->id(), 403);
+
         $this->askForConfirmation(
             callback: function (): void {
                 $this->comment->delete();

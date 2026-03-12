@@ -45,3 +45,16 @@ it('deletes the comment and emits commentDeleted after confirmation', function (
 
     expect(AuditComment::query()->find($commentId))->toBeNull();
 });
+
+it('prevents a different user from deleting the comment', function (): void {
+    $otherUser = \App\Models\User::factory()->create();
+    $this->actingAs($otherUser);
+
+    Livewire::test(DeleteCommentConfirmationModal::class, ['comment' => $this->comment])
+        ->set('actionConfirmed', true)
+        ->set('confirmationCaller', 'delete')
+        ->call('delete')
+        ->assertForbidden();
+
+    expect(AuditComment::query()->find($this->comment->id))->not->toBeNull();
+});

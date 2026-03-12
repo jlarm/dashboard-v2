@@ -31,6 +31,7 @@ class Edit extends Component
     protected $listeners = [
         'commentAdded' => 'refreshComments',
         'commentDeleted' => 'refreshComments',
+        'commentUpdated' => 'refreshComments',
         'violationSelected',
     ];
     protected $rules = [
