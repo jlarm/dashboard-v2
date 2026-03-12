@@ -15,6 +15,12 @@ class DeleteCommentConfirmationModal extends Modal
 
     public AuditComment $comment;
 
+    public function mount(AuditComment $comment): void
+    {
+        $this->comment = $comment;
+        $this->confirmationCaller = '';
+    }
+
     public function delete(): void
     {
         $this->askForConfirmation(
