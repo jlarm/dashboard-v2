@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Home;
 
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\DealJacket;
+use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
-use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use Illuminate\Support\Collection;
@@ -54,10 +55,19 @@ class GroupRating extends Component
         $gradesCacheKey = 'ratings_by_stores_'.md5(implode(',', $storeIds->toArray()));
 
         $allGradesData = Cache::remember($gradesCacheKey, $cacheTime, function () use ($storeIds): array {
-            $this->dealJacketGrades = IndividualAudit::query()
+            $latestGroupIds = DealJacketGroup::query()
                 ->whereIn('store_id', $storeIds)
-                ->whereNotNull('rating')
-                ->pluck('rating')
+                ->where('completed', true)
+                ->orderByDesc('id')
+                ->get()
+                ->unique('store_id')
+                ->pluck('id');
+
+            $this->dealJacketGrades = DealJacket::query()
+                ->whereIn('deal_jacket_group_id', $latestGroupIds)
+                ->selectRaw('deal_jacket_group_id, AVG(percentage) as avg_percentage')
+                ->groupBy('deal_jacket_group_id')
+                ->pluck('avg_percentage')
                 ->toArray();
 
             $this->glbaGrades = GlbaViolationAudit::query()
