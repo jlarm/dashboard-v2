@@ -8,6 +8,7 @@ use App\Http\Livewire\Dealer\Home\GlbaStats;
 use App\Http\Livewire\Dealer\Home\OshaStats;
 use App\Jobs\Audit\GenerateDealJacketReportJob;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
@@ -116,6 +117,36 @@ it('uses the latest glba audit and downloads its report', function (): void {
 
     $response = $component->call('downloadPdf');
     expect($response->payload['effects']['download']['name'])->toBe('latest.pdf');
+});
+
+it('deal jacket rating uses the average of individual deal jacket percentages', function (): void {
+    $group = DealJacketGroup::factory()->create([
+        'store_id' => $this->store->id,
+        'completed' => true,
+    ]);
+
+    // Percentages of 88, 88, 88 → avg 88 → B
+    DealJacket::factory()->count(3)->create([
+        'deal_jacket_group_id' => $group->id,
+        'total_passed' => 21,
+        'total_failed' => 1,
+        'percentage' => 88,
+    ]);
+
+    $component = Livewire::test(DealJacketStats::class, ['store' => $this->store]);
+
+    expect($component->instance()->rating())->toBe('B');
+});
+
+it('deal jacket rating returns N/A when there are no completed groups', function (): void {
+    DealJacketGroup::factory()->create([
+        'store_id' => $this->store->id,
+        'completed' => false,
+    ]);
+
+    $component = Livewire::test(DealJacketStats::class, ['store' => $this->store]);
+
+    expect($component->instance()->rating())->toBe('N/A');
 });
 
 it('generates the latest completed deal jacket report and downloads it', function (): void {

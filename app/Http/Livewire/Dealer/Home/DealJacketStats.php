@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Dealer\Home;
 
 use App\Http\Livewire\Concerns\ResolvesDashboardStore;
 use App\Jobs\Audit\GenerateDealJacketReportJob;
+use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
 use App\Models\User;
@@ -85,20 +86,14 @@ class DealJacketStats extends Component
             return null;
         }
 
-        $completedGroups = DealJacketGroup::query()
-            ->where('store_id', $this->store->id)
-            ->where('completed', true)
-            ->withSum('dealJackets as total_passed', 'total_passed')
-            ->withSum('dealJackets as total_failed', 'total_failed')
-            ->get();
+        $avg = DealJacket::query()
+            ->whereHas('dealJacketGroup', fn ($q) => $q
+                ->where('store_id', $this->store->id)
+                ->where('completed', true)
+            )
+            ->avg('percentage');
 
-        if ($completedGroups->isEmpty()) {
-            return null;
-        }
-
-        $totalPassRate = $completedGroups->sum(fn ($group) => $group->pass_rate);
-
-        return $totalPassRate / $completedGroups->count();
+        return $avg !== null ? (float) $avg : null;
     }
 
     private function latestCompletedGroup(): ?DealJacketGroup
