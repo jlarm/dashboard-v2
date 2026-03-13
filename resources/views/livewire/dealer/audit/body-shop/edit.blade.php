@@ -66,13 +66,19 @@
             } catch (error) {
                 console.error('Compression/upload error:', error);
                 slot.status = 'error';
-                slot.errorMessage = error.message || 'Failed to process image';
+                slot.errorMessage = error?.message || 'Failed to process image';
 
                 // Fall back to uploading original file for HEIC on non-Safari browsers
                 if (file.type === 'image/heic' || file.type === 'image/heif' || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) {
-                    slot.status = 'uploading';
-                    slot.compressedSize = file.size;
-                    await this.uploadToLivewire(file, violationId, slotIndex, slot);
+                    try {
+                        slot.status = 'uploading';
+                        slot.compressedSize = file.size;
+                        await this.uploadToLivewire(file, violationId, slotIndex, slot);
+                    } catch (fallbackError) {
+                        console.error('HEIC fallback upload error:', fallbackError);
+                        slot.status = 'error';
+                        slot.errorMessage = fallbackError?.message || 'Failed to upload image';
+                    }
                 }
             }
         },
@@ -143,7 +149,7 @@
                     (error) => {
                         slot.status = 'error';
                         slot.errorMessage = 'Upload failed';
-                        reject(error);
+                        reject(error ?? new Error('Upload failed'));
                     },
                     (event) => {
                         slot.uploadProgress = event.detail.progress;

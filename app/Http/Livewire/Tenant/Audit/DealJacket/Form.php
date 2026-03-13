@@ -30,11 +30,25 @@ class Form extends Component
     public string $vehicleType = '';
     public array $responses = [];
 
+    /** @var array<int, array{id: int, question: string, statement: string, categories: array<int, string>, weight: int}> */
+    protected array $allQuestions = [];
+
     public function mount(DealJacketGroup $dealJacketGroup, ?DealJacket $dealJacket = null): void
     {
         $this->dealJacketGroup = $dealJacketGroup;
         $this->dealJacket = $dealJacket;
         $this->store = $this->resolveStore();
+
+        $this->allQuestions = tenancy()->central(fn () => DealJacketQuestion::query()->get())
+            ->map(fn ($q): array => [
+                'id' => $q->id,
+                'question' => $q->question,
+                'statement' => $q->statement,
+                'categories' => $q->categories ?? [],
+                'weight' => $q->weight ?? 1,
+            ])
+            ->values()
+            ->toArray();
 
         if ($dealJacket?->exists) {
             $this->auditDate = $dealJacket->audit_date->format('Y-m-d');
@@ -79,27 +93,26 @@ class Form extends Component
 
     public function loadQuestions(): void
     {
-        if ($this->purchaseType === '' || $this->purchaseType === '0' || ($this->vehicleType === '' || $this->vehicleType === '0')) {
+        if ($this->purchaseType === '' || $this->purchaseType === '0' || $this->vehicleType === '' || $this->vehicleType === '0') {
             $this->questions = [];
             $this->responses = [];
 
             return;
         }
 
-        $questions = tenancy()->central(fn () => DealJacketQuestion::query()
-            ->get()
-            ->filter(fn ($q): bool => in_array($this->purchaseType, $q->categories, true)
-                && in_array($this->vehicleType, $q->categories, true)
-            ));
+        $filtered = collect($this->allQuestions)->filter(
+            fn (array $q): bool => in_array($this->purchaseType, $q['categories'], true)
+                && in_array($this->vehicleType, $q['categories'], true)
+        )->values();
 
-        $this->questions = $questions->map(fn ($q): array => [
-            'id' => $q->id,
-            'question' => $q->question,
-            'weight' => $q->weight ?? 1,
+        $this->questions = $filtered->map(fn (array $q): array => [
+            'id' => $q['id'],
+            'question' => $q['question'],
+            'weight' => $q['weight'],
         ])->values()->toArray();
 
-        $this->responses = $questions->map(fn ($question): array => [
-            'statement' => $question->statement,
+        $this->responses = $filtered->map(fn (array $q): array => [
+            'statement' => $q['statement'],
             'answer' => null,
             'high_risk' => false,
             'comment' => null,

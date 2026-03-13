@@ -32,7 +32,7 @@
             <x-select label="Finance Manager" wire:model.defer="financeManager" required>
                 <option value="">Choose manager...</option>
                 @foreach($this->managers() as $manager)
-                    <option value="{{ $manager['id'] }}">{{ $manager['name'] }}</option>
+                    <option value="{{ $manager['id'] }}">{{ Str::title($manager['name']) }}</option>
                 @endforeach
                 <option value="house">House</option>
             </x-select>
