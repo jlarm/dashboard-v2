@@ -76,6 +76,8 @@ abstract class AbstractAuditStats extends Component
         }
 
         return $this->memoizedLatestAudit = $this->violationAudits()
+            ->whereNotNull('grade')
+            ->where('grade', '!=', 'N/A')
             ->orderByDesc('date')
             ->orderByDesc('id')
             ->first(['grade', 'pdf_path']) ?? (object) ['grade' => 'N/A', 'pdf_path' => null];
