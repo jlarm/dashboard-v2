@@ -31,7 +31,7 @@ class Form extends Component
     public array $responses = [];
 
     /** @var array<int, array{id: int, question: string, statement: string, categories: array<int, string>, weight: int}> */
-    protected array $allQuestions = [];
+    public array $allQuestions = [];
 
     public function mount(DealJacketGroup $dealJacketGroup, ?DealJacket $dealJacket = null): void
     {
