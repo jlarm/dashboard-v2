@@ -119,17 +119,26 @@ it('uses the latest glba audit and downloads its report', function (): void {
     expect($response->payload['effects']['download']['name'])->toBe('latest.pdf');
 });
 
-it('deal jacket rating uses the average of individual deal jacket percentages', function (): void {
-    $group = DealJacketGroup::factory()->create([
+it('deal jacket rating uses the average percentage of the latest completed group', function (): void {
+    $olderGroup = DealJacketGroup::factory()->create([
+        'store_id' => $this->store->id,
+        'completed' => true,
+    ]);
+    $olderGroup->update(['created_at' => now()->subMonth()]);
+
+    DealJacket::factory()->count(3)->create([
+        'deal_jacket_group_id' => $olderGroup->id,
+        'percentage' => 95,
+    ]);
+
+    $latestGroup = DealJacketGroup::factory()->create([
         'store_id' => $this->store->id,
         'completed' => true,
     ]);
 
-    // Percentages of 88, 88, 88 → avg 88 → B
+    // Latest group averages 88 → B, older group was 95 → A
     DealJacket::factory()->count(3)->create([
-        'deal_jacket_group_id' => $group->id,
-        'total_passed' => 21,
-        'total_failed' => 1,
+        'deal_jacket_group_id' => $latestGroup->id,
         'percentage' => 88,
     ]);
 

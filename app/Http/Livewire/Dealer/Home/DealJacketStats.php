@@ -86,11 +86,14 @@ class DealJacketStats extends Component
             return null;
         }
 
+        $latestGroup = $this->latestCompletedGroup();
+
+        if (! $latestGroup instanceof DealJacketGroup) {
+            return null;
+        }
+
         $avg = DealJacket::query()
-            ->whereHas('dealJacketGroup', fn ($q) => $q
-                ->where('store_id', $this->store->id)
-                ->where('completed', true)
-            )
+            ->where('deal_jacket_group_id', $latestGroup->id)
             ->avg('percentage');
 
         return $avg !== null ? (float) $avg : null;
