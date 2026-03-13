@@ -19,6 +19,23 @@ class GroupIndexItem extends Component
         $this->store = Store::query()->findOrFail($this->dealJacketGroup->store_id);
     }
 
+    public function grade(): string
+    {
+        $avg = $this->dealJacketGroup->average_percentage;
+
+        if ($avg === null) {
+            return 'N/A';
+        }
+
+        return match (true) {
+            $avg >= 90 => 'A',
+            $avg >= 80 => 'B',
+            $avg >= 70 => 'C',
+            $avg >= 60 => 'D',
+            default => 'F',
+        };
+    }
+
     public function render(): View
     {
         return view('livewire.tenant.audit.deal-jacket.group-index-item');

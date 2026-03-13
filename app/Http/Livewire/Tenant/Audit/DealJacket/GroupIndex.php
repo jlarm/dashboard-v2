@@ -29,6 +29,7 @@ class GroupIndex extends Component
             ->withSum('dealJackets as total_high_risk', 'total_high_risk')
             ->withSum('dealJackets as total_passed', 'total_passed')
             ->withSum('dealJackets as total_failed', 'total_failed')
+            ->withAvg('dealJackets as average_percentage', 'percentage')
             ->latest()
             ->paginate(20);
 

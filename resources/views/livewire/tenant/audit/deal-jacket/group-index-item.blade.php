@@ -16,12 +16,20 @@
     <x-table.cell class="w-24">{{ $dealJacketGroup->total_failed ?? '-' }}</x-table.cell>
     <x-table.cell class="w-24">{{ $dealJacketGroup->total_high_risk ?? '-' }}</x-table.cell>
     <x-table.cell class="w-48">
-        @if($dealJacketGroup->completed)
+        @if($dealJacketGroup->completed && $dealJacketGroup->average_percentage !== null)
             <div class="flex items-center gap-2">
-                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2 max-w-[100px]">
-                    <div class="bg-green-600 h-2 rounded-full" style="width: {{ $dealJacketGroup->pass_rate }}%"></div>
-                </div>
-                {{ $dealJacketGroup->pass_rate }}%
+                <span
+                    @class([
+                        "inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium",
+                        "bg-green-100 text-green-800" => $this->grade() === 'A',
+                        "bg-blue-100 text-blue-800" => $this->grade() === 'B',
+                        "bg-gray-100 text-gray-800" => $this->grade() === 'C',
+                        "bg-yellow-100 text-yellow-800" => $this->grade() === 'D',
+                        "bg-red-100 text-red-800" => $this->grade() === 'F',
+                    ])
+                >
+                    {{ $this->grade() }}
+                </span>
             </div>
         @else
             -

@@ -7,7 +7,7 @@
                 <x-table.heading class="w-24">Pass</x-table.heading>
                 <x-table.heading class="w-24">Fail</x-table.heading>
                 <x-table.heading class="w-24">High Risk</x-table.heading>
-                <x-table.heading class="w-48">Pass Rate</x-table.heading>
+                <x-table.heading class="w-48">Grade</x-table.heading>
                 <x-table.heading class="w-16"></x-table.heading>
             </x-table.row>
         </x-slot:head>
