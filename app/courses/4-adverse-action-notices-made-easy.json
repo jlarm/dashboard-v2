@@ -73,7 +73,17 @@
         ],
         "questions": [
             {
-                "question": "If the credit statement is taken over the phone just to see if there is a chance that the applicant could get credit, we do not have to issue an adverse action notice because there was no real expectation that the credit would be accepted.",
+                "question": "Which federal laws are identified as governing adverse action requirements?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "(True/False) Under Regulation B, adverse action notices must include either the specific reasons for the action or a disclosure of the applicant’s right to obtain those reasons.",
                 "answers": [
                     {
                         "a": "True",
@@ -83,31 +93,37 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "We do not have to send an adverse action notice if:",
+                "question": "Which item is required in an adverse action notice under the FCRA?",
                 "answers": [
                     {
-                        "a": "The terms that were acceptable to the lender were different than the original terms requested and you spotted the car but the customer would not accept the new terms and the deal was unwound.",
-                        "b": "The customer submitted the statement through the 800 credit help line and it was sent around but was not acceptable to any lender but because it was through the bad credit 800 phone line there is no need to issue an adverse action notice.",
-                        "c": "The customer submitted the statement and we ran the bureau and found a credit score of 350 and knowing there was no way we could get financing we informed the applicant that there was nothing we could do for them and they left but because we did not submit it to any lender there is no need to issue an adverse action notice.",
-                        "d": "None of the above"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "b"
             },
             {
-                "question": "It is appropriate to send out adverse action letters:",
+                "question": "(True/False) The FCRA applies only to individuals, while Regulation B defines an applicant more broadly (including businesses).",
                 "answers": [
                     {
-                        "a": "No later than 30 days after receiving the statement.",
-                        "b": "Within 90 days of any counter offer given to an applicant where the new terms were not acceptable.",
-                        "c": "Immediately upon the decision being made.",
-                        "d": "All of the above"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "a"
             },
             {
-                "question": "The rule that governs the issuance of adverse action notices is the Truth In Lending Act or TILA.",
+                "question": "For multiple applicants, which statement best reflects the difference between Regulation B and the FCRA?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Which timing requirement is specified for Regulation B adverse action notices?",
                 "answers": [
                     {
                         "a": "True",

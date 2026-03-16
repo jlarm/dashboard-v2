@@ -126,27 +126,7 @@
         ],
         "questions": [
             {
-                "question": "The most common injuries from STFs are sprains, strains, bruises, fractures, abrasions, and cuts.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Inadequate lighting is one of the top ten causes of Slip's, Trip’s and fall’s.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Most places of business don’t have to worry about STFs only plants and construction sites.",
+                "question": "What is the main goal of slips, trips, and falls training in service and body shop areas?",
                 "answers": [
                     {
                         "a": "True",
@@ -156,7 +136,17 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "Ladders are simple tools and do not need to be inspected regularly they either are working or not.",
+                "question": "(True/False) Slips, trips, and falls are a significant cause of workplace injuries in automotive service and body shops.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which of the following is a common hazard found in service bays and body shops?",
                 "answers": [
                     {
                         "a": "True",
@@ -166,7 +156,17 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "There is a human element to STFs that all employees need to be aware of.",
+                "question": "Which item is included in NIOSH’s Top 10 hazards list?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "(True/False) Tools, equipment, and parts left on the floor can create tripping hazards and should be kept out of walkways.",
                 "answers": [
                     {
                         "a": "True",
@@ -174,6 +174,36 @@
                     }
                 ],
                 "correctAnswer": "a"
+            },
+            {
+                "question": "Which practice is recommended for ladder safety?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Slip-resistant footwear is recommended to help prevent slips and falls.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which behavior helps prevent slips, trips, and falls while moving items?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "c"
             }
         ]
     }

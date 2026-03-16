@@ -150,50 +150,19 @@
         ],
         "questions": [
             {
-                "question": "Anyone can operate a forklift as long as they have been trained!",
+                "question": "What is the main purpose of a Powered Industrial Truck (PIT) safety program?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "To increase forklift speed and efficiency",
+                        "b": "To prevent accidents and injuries related to PIT operation",
+                        "c": "To eliminate the need for operator evaluations",
+                        "d": "To allow anyone to operate PITs without certification"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "How often should an operator inspect their forklift?",
-                "answers": [
-                    {
-                        "a": "Weekly",
-                        "b": "Every Shift",
-                        "c": "Monthly",
-                        "d": "Annually"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "The maximum number of people on a forklift at any time is two.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "When traveling with a load you should raise the load:",
-                "answers": [
-                    {
-                        "a": "About mid height so that you can see and the load cant catch on anything",
-                        "b": "Just slightly off the floor so that you can travel",
-                        "c": "As high as it can go so that you can see clearly and it doesn't get caught on anything and fall"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Do not tilt the mast when traveling it could cause the load to be unstable.",
+                "question": "A PIT safety program includes training, certification, and ongoing evaluation of operators.",
                 "answers": [
                     {
                         "a": "True",
@@ -201,6 +170,74 @@
                     }
                 ],
                 "correctAnswer": "a"
+            },
+            {
+                "question": "Which OSHA standard is referenced for detailed PIT air quality and safety guidelines?",
+                "answers": [
+                    {
+                        "a": "OSHA 1926.451",
+                        "b": "OSHA 1910.120",
+                        "c": "OSHA 1910.178",
+                        "d": "OSHA 1904.29"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Forklifts may be used in areas with harmful levels of airborne chemicals as long as the operator wears PPE.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Powered Industrial Trucks can emit which hazardous gas, especially concerning in enclosed areas?",
+                "answers": [
+                    {
+                        "a": "Oxygen",
+                        "b": "Carbon monoxide",
+                        "c": "Nitrogen",
+                        "d": "Helium"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Carbon monoxide levels may not exceed:",
+                "answers": [
+                    {
+                        "a": "5 milligrams per cubic meter",
+                        "b": "25 milligrams per cubic meter",
+                        "c": "55 milligrams per cubic meter",
+                        "d": "155 milligrams per cubic meter"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Refresher training is required at least every three years or when workplace/equipment/operator performance changes.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which of the following is part of safe load handling reminders?",
+                "answers": [
+                    {
+                        "a": "Allow passengers if seated securely",
+                        "b": "Drive fast to reduce time in operation zones",
+                        "c": "Buckle up, keep it slow, and maintain a clear view",
+                        "d": "Tilt the forks forward while traveling to improve visibility"
+                    }
+                ],
+                "correctAnswer": "c"
             }
         ]
     }

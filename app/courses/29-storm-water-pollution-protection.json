@@ -61,66 +61,43 @@
         ],
         "questions": [
             {
-                "question": "What does improper storm water pollution affect if not handled properly?",
+                "question": "Why is stormwater pollution a concern at dealerships?",
                 "answers": [
                     {
-                        "a": "The Cleanliness of your service bay area and parking lot",
-                        "b": "Affects water quality, resulting in closed beaches and hurts aquatic life",
-                        "c": "Hazardous work environment",
-                        "d": "All of the above"
+                        "a": "Stormwater is treated before entering waterways",
+                        "b": "Stormwater can carry chemicals/materials from pavement into streams, lakes, and the ocean",
+                        "c": "Stormwater only affects indoor areas",
+                        "d": "Stormwater improves water quality"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Why do we need to be aware of Storm Water Pollution?",
+                "question": "Which of the following is listed as dealership waste that can contribute to stormwater pollution?",
                 "answers": [
                     {
-                        "a": "Used Oil from one single oil change can pollute up to 1,000 gallons of fresh water",
-                        "b": "Used Oil from one single oil change can pollute up to 100,000 gallons of fresh water",
-                        "c": "Used Oil from one single oil change can pollute up to 1,000,000 gallons of fresh water",
-                        "d": "The equivalent of 7 Exxon Valdez oil spills is improperly dumped each year in the US"
-                    }
-                ],
-                "correctAnswer": "c"
-            },
-            {
-                "question": "What type of wastewater is generated at Dealerships?",
-                "answers": [
-                    {
-                        "a": "Solvent s (paint and thinners) and antifreeze",
-                        "b": "Motor oils, fuels (gasoline, kerosene, diesel), Brake fluids and linings",
-                        "c": "Batteries and lubricating greases",
-                        "d": "All the above"
+                        "a": "Antifreeze and brake fluid",
+                        "b": "Paint and thinners (solvents)",
+                        "c": "Fuels and motor oil",
+                        "d": "All of the above"
                     }
                 ],
                 "correctAnswer": "d"
             },
             {
-                "question": "Wastewater is generated where?",
+                "question": "Which practice helps prevent stormwater pollution during cleanup?",
                 "answers": [
                     {
-                        "a": "Spilled materials, waste from floor washing",
-                        "b": "Spent coolant discharge, vehicle washing, engine cleaning, parts cleaning tanks",
-                        "c": "From drains at dealership in service bays",
-                        "d": "A & C only",
-                        "e": "All of the above"
-                    }
-                ],
-                "correctAnswer": "e"
-            },
-            {
-                "question": "In some cases is it OK to drain or replace oil, coolants or other vehicle fluids on the ground or outside pavements.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Steam clean engines outdoors",
+                        "b": "Dry-sweep before wet cleaning and clean spills right away",
+                        "c": "Rinse spills into floor drains",
+                        "d": "Leave dirt outside to wash away"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Dry sweep floors before wet cleaning and never sweep to the outside pavement.",
+                "question": "Collection drums must be covered, secured, and labeled (e.g., “Used Oil”), and “No Smoking” signs should be posted in used oil storage areas.",
                 "answers": [
                     {
                         "a": "True",
@@ -130,16 +107,14 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "If an oily sheen appears on your wet floors, what should you do?",
+                "question": "It is acceptable to pour used fluids down floor drains or sinks if you add water afterwards.",
                 "answers": [
                     {
-                        "a": "Mop up and dump down the nearest drain",
-                        "b": "High pressure spray the area to insure oil dissipates properly",
-                        "c": "Use absorbents materials to soak up the oil and dispose in proper containers",
-                        "d": "Use rags and or any other cloth materials to soak up the water/oil area and throw away in any trash receptacle"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "c"
+                "correctAnswer": "b"
             }
         ]
     }

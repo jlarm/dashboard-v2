@@ -4,8 +4,7 @@
         "uuid": "8d9896be-d7fb-4e89-a241-e5fc6f71fb62",
         "name": "Fire Prevention/Fire Extinguisher Safety",
         "slug": "fire-prevention-fire-extinguisher-safety",
-        "department": [
-        ],
+        "department": [],
         "roles": [],
         "slides": [
             {
@@ -31,58 +30,84 @@
         ],
         "questions": [
             {
-                "question": "Keep flammable liquids and paints in closed, properly marked lockers and storage cabinets, where available.",
+                "question": "How should flammable liquids be stored to reduce fire risk?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Properly dispose of paper cartons. Cardboard and paper could catch fire or smolder, if exposed to sparks, gasoline, etc.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "There are four different types of fires: Class A, B, C and D.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "What is the most common type of fire extinguisher used?",
-                "answers": [
-                    {
-                        "a": "CO2",
-                        "b": "Water H2O",
-                        "c": "ABC",
-                        "d": "None of the above"
+                        "a": "In open containers for easy access",
+                        "b": "In glass bottles on open shelves",
+                        "c": "In containers with lids, stored in closed, clearly labeled lockers/cabinets",
+                        "d": "Next to heat sources so they stay warm"
                     }
                 ],
                 "correctAnswer": "c"
             },
             {
-                "question": "What does the P.A.S.S. system stand for concerning fire extinguishers?",
+                "question": "Which statement is correct about compressed oxygen and cylinder tanks?",
                 "answers": [
                     {
-                        "a": "Pull, Assist, Sanitize, Stop",
-                        "b": "Put, Aim, Sweep, Stationary",
-                        "c": "Pull, Aim, Squeeze, Sweep",
-                        "d": "None of the above"
+                        "a": "They should be left uncapped for ventilation",
+                        "b": "They should be secured and capped, kept away from heat and flames",
+                        "c": "Oxygen can be used to blow dirt and trash off surfaces",
+                        "d": "Oxygen should be referred to as “air”"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "What type of extinguisher is recommended for a Class B fire (flammable liquids like gasoline, oils, paint)?",
+                "answers": [
+                    {
+                        "a": "Water extinguisher only",
+                        "b": "Dry chemical (B-type/BC/ABC) or CO₂ extinguisher",
+                        "c": "Class A only extinguisher",
+                        "d": "Class D extinguisher"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Why should you avoid using water on Class B fires?",
+                "answers": [
+                    {
+                        "a": "Water is too expensive",
+                        "b": "Water can spread or worsen flammable liquid fires",
+                        "c": "Water makes smoke thicker",
+                        "d": "Water damages the extinguisher"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "In the PASS system, what does the first “S” stand for?",
+                "answers": [
+                    {
+                        "a": "Stop",
+                        "b": "Spray",
+                        "c": "Squeeze",
+                        "d": "Stand back"
                     }
                 ],
                 "correctAnswer": "c"
+            },
+            {
+                "question": "Fire extinguishers should be kept charged and clean, inspected annually, and tagged with inspection dates.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "CO₂ extinguishers are harmless to touch because CO₂ is not hot.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
             }
         ]
     }

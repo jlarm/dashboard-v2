@@ -56,7 +56,19 @@
         ],
         "questions": [
             {
-                "question": "The purpose of the OSHA’s Hazard Communication Standard (HCS) (also called the employee right-to-know) is to provide employees with information pertaining to potential exposures to the dangers of hazardous materials in the workplace.",
+                "question": "What is the purpose of the OSHA Hazard Communication Standard (HCS), also known as “Right-to-Know”?",
+                "answers": [
+                    {
+                        "a": "To teach employees how to repair vehicles safely",
+                        "b": "To provide employees information about hazardous materials and potential exposures at work",
+                        "c": "To eliminate all hazardous materials from the workplace",
+                        "d": "To require only supervisors to read SDS sheets"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The Employer Substances Requirement under the Haz-Com revision is due on November 20, 2026\\.",
                 "answers": [
                     {
                         "a": "True",
@@ -66,31 +78,53 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Which of the following must the management of your facility provide:",
+                "question": "Which of the following is one of the four employer key points for the Substances Requirement?",
                 "answers": [
                     {
-                        "a": "Ensure all shop employees are properly trained",
-                        "b": "Prepare an inventory of all hazardous products and materials used at the dealership that requires MSDS.",
-                        "c": "Ensure all containers, tanks, boxes, bottles, cans, etc., are properly labeled.",
-                        "d": "All of the above"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "How many different types of OSHA approved labeling systems are provided in the industry.",
-                "answers": [
-                    {
-                        "a": "1 standardized labeling form",
-                        "b": "2 standard labeling formsf",
-                        "c": "No standardized labeling system is provided.",
-                        "d": "None of the above"
+                        "a": "Remove all chemicals from the shop by 2026",
+                        "b": "Update workplace labels to match revised hazard information",
+                        "c": "Only train new employees, not current employees",
+                        "d": "Replace all PPE annually"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "MSDS Right-To-Know booklets are to be stored in visible and 24 hour accessible locations at all times.",
+                "question": "All staff must complete HCS training before handling hazardous materials, and training sessions should be recorded.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which item is management responsible for at the facility?",
+                "answers": [
+                    {
+                        "a": "Ensuring each hazardous material has a current SDS available",
+                        "b": "Allowing unlabeled containers if they are in a safe area",
+                        "c": "Keeping SDS sheets off-limits to employees",
+                        "d": "Only labeling chemicals that are flammable"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which hazardous material is commonly found in body shops and may be present in sanding/grinding dust or airborne as a gas?",
+                "answers": [
+                    {
+                        "a": "Isocyanates",
+                        "b": "Table salt",
+                        "c": "Water-based soap",
+                        "d": "Baking soda"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Temporary containers do not need to be labeled if the contents are emptied by the end of the work shift.",
                 "answers": [
                     {
                         "a": "True",

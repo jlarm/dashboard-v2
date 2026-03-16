@@ -40,17 +40,7 @@
         ],
         "questions": [
             {
-                "question": "A company that has an established business relationship may call up to 18 months after the customer’s last purchase or last delivery.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "If a consumer makes an inquiry or submits an application to a company, the company can call for up to 120 days.",
+                "question": "Which federal agency enforces the Telemarketing Sales Rule (TSR) to protect consumers from misleading telemarketing practices?",
                 "answers": [
                     {
                         "a": "True",
@@ -60,17 +50,7 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "A consumer always has the right to ask to be taken off the calling list and when they do, the company must take them off immediately.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Businesses can be fined for TSR (Do Not Call) violations up to $10,000 per occurrence.",
+                "question": "(True/False) Under the TSR/TCPA rules described, telemarketers may call homes anytime as long as the consumer is not on the Do Not Call Registry.",
                 "answers": [
                     {
                         "a": "True",
@@ -80,7 +60,27 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "Telemarketers are required to scrub their customer data banks against the Do Not Call list every 31 days.",
+                "question": "Which of the following is a TSR/TCPA rule?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "When making outbound calls, what information must telemarketers promptly disclose?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "(True/False) Most businesses need a consumer’s prior express written consent before making robocalls using prerecorded messages.",
                 "answers": [
                     {
                         "a": "True",
@@ -88,6 +88,26 @@
                     }
                 ],
                 "correctAnswer": "a"
+            },
+            {
+                "question": "How long must telemarketers keep certain business records related to telemarketing activities?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "For a consumer on the National Do Not Call Registry, a company may call for up to how long after the consumer’s last purchase, delivery, or payment if there is an established business relationship (unless the consumer asks not to be called)?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "d"
             }
         ]
     }

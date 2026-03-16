@@ -78,17 +78,67 @@
         ],
         "questions": [
             {
-                "question": "Heat exhaustion and Heat Stroke have the same level of seriousness.",
+                "question": "Which of the following are early signs that your body is getting too hot?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Headache, dizziness, or fainting",
+                        "b": "Weakness and wet skin",
+                        "c": "Irritability or confusion with thirst, nausea, or vomiting",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "Heat illness can become more serious if early symptoms are ignored and may lead to:",
+                "answers": [
+                    {
+                        "a": "A sprained ankle",
+                        "b": "Heat exhaustion or heat stroke",
+                        "c": "Eye strain",
+                        "d": "Motion sickness"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "To avoid Heat exhaustion you should drink small amounts of water frequently throughout the day.",
+                "question": "Which situation increases the risk of heat illness the most?",
+                "answers": [
+                    {
+                        "a": "Working outdoors in hot/humid conditions while doing hard physical work",
+                        "b": "Working indoors with air conditioning",
+                        "c": "Sitting at a desk with good lighting",
+                        "d": "Wearing a light jacket on a cool day"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "For heat illness prevention, what are three essentials:",
+                "answers": [
+                    {
+                        "a": "Sunscreen, gloves, and boots",
+                        "b": "Water, rest, and shade",
+                        "c": "Coffee, sports drinks, and energy drinks",
+                        "d": "Speed, strength, and stamina"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "A co-worker shows signs of heat exhaustion (heavy sweating, weakness, headache). What should you do first?",
+                "answers": [
+                    {
+                        "a": "Tell them to “push through it” and finish the task",
+                        "b": "Move them to a cooler/shaded area to rest and stay with them",
+                        "c": "Give them an energy drink",
+                        "d": "Ignore it unless they faint"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "You should drink water regularly even if you are not thirsty.",
                 "answers": [
                     {
                         "a": "True",
@@ -98,77 +148,7 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "If a coworker appears to be disoriented and you are working outside in extremely hot humid weather it may be a sign of heat exhaustion.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "You are not more likely to get heat exhaustion when the work is more strenuous.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "Nausea and vomiting are signs of heat stroke not heat exhaustion.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "Seizures and/or passing out are symptoms of the more serious Heat Stroke.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Loose clothing is worse than tight clothing because it does not soak up the sweat and act as a cooler for the body.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "Most of the fatalities over the last few years were when a worker was only on the job a few days and not used to working in heat or they were in a heat wave.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "If you notice a coworker is showing signs of possible Heat exhaustion as soon as possible get that person a sport drink because the electrolytes will help faster than just water.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "It is important to only take 2 breaks a day because more than that would jeopardize your job and cost money.",
+                "question": "Dark-colored, heavier clothing helps protect you from heat illness.",
                 "answers": [
                     {
                         "a": "True",

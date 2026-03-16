@@ -53,17 +53,7 @@
         ],
         "questions": [
             {
-                "question": "Do we disclose the negative equity in the total sale price downpayment section?",
-                "answers": [
-                    {
-                        "a": "Yes",
-                        "b": "No"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "In the itemization of amount financed section the negative equity must read 0",
+                "question": "What is the main purpose of the Truth in Lending Act (TILA)?",
                 "answers": [
                     {
                         "a": "True",
@@ -73,7 +63,27 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "The TILA disclosures must be mailed to the customer after he/she signs the retail installment contract",
+                "question": "(True/False) TILA disclosures must be provided in writing and in a form the consumer can keep before the credit sale is completed.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which disclosure is defined as “the dollar amount that the credit will cost you”?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "How should negative equity be shown in the down payment section of the credit agreement?",
                 "answers": [
                     {
                         "a": "True",
@@ -83,24 +93,34 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "The disclosure of the credit terms may be delivered orally as long as it is prior to consummation of the transaction",
+                "question": "(True/False) If an advertisement mentions credit terms such as down payment or APR, it must also disclose the down payment amount or percentage, the terms of repayment, and the APR.",
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "b"
+                "correctAnswer": "a"
             },
             {
-                "question": "When advertising any credit terms as long as we have a disclaimer stating that the terms stated were not available we can use any terms we wish",
+                "question": "Which of the following is considered an advertisement?",
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "b"
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Whose responsibility is it to ensure correct TILA disclosures on the retail installment contract?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "c"
             }
         ]
     }

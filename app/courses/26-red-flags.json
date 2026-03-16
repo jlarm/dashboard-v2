@@ -49,31 +49,17 @@
         ],
         "questions": [
             {
-                "question": "In 2022 there were approximately how many identity theft occurring in the US.",
+                "question": "The Red Flags Rule is part of which federal law?",
                 "answers": [
                     {
-                        "a": "Over 5 million",
-                        "b": "Over 8 million",
-                        "c": "Over 10 million",
-                        "d": "Over 13 million"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "b"
             },
             {
-                "question": "Average time spent on recovery from an identity theft crime is:",
-                "answers": [
-                    {
-                        "a": "40-50 hours",
-                        "b": "50-75 hours",
-                        "c": "230-300 hours",
-                        "d": "330-600 Hours"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "The Red Flag Rule was finalized in October 2007 and went into effect on January 1st, 2008.",
+                "question": "(True/False) The Red Flags Rule requires financial institutions and creditors to have a written identity theft prevention program.",
                 "answers": [
                     {
                         "a": "True",
@@ -83,68 +69,54 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "What is a “Red Flag”?",
+                "question": "Which of the following is an example of a “red flag” from a consumer report?",
                 "answers": [
                     {
-                        "a": "Notification of false identity being used",
-                        "b": "A pattern, practice or specific activity that indicates the possibility exists of identity theft",
-                        "c": "A symbol used to show an area of concern regarding the customer’s financial situation",
-                        "d": "None of the above"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Your Identity Theft program included reasonable policies and procedures to:",
+                "question": "Which entity is listed as an example of a covered entity under the Red Flags Rule?",
                 "answers": [
                     {
-                        "a": "Identify and detect Red Flags",
-                        "b": "Up-dating Red Flag program periodically",
-                        "c": "Responding appropriately to Red Flags that are detected",
-                        "d": "A & C only",
-                        "e": "A,B, & C"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "e"
+                "correctAnswer": "b"
             },
             {
-                "question": "Examples of Red Flags are:",
+                "question": "(True/False) Appropriate responses to detected red flags may include verifying customer identities, contacting law enforcement, or modifying account access.",
                 "answers": [
                     {
-                        "a": "Notice of credit freeze or address discrepancies",
-                        "b": "Information provided is known, and associated with fraudulent activity",
-                        "c": "Fraud or active-duty alerts on consumer reports",
-                        "d": "Social Security number is listed on Death Master List",
-                        "e": "A & C",
-                        "f": "A & B",
-                        "g": "All of the above"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "f"
+                "correctAnswer": "a"
             },
             {
-                "question": "What should be your “Main Guide” in detecting Red Flag discrepancies?",
+                "question": "Where should dealership staff refer for specific red flags relevant to their operations?",
                 "answers": [
                     {
-                        "a": "Red Flag Check software",
-                        "b": "Credit Reports",
-                        "c": "Common Sense",
-                        "d": "Customer appearance"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "c"
+                "correctAnswer": "b"
             },
             {
-                "question": "Overall annual cost of Identity theft is?",
+                "question": "Which of the following is listed as a program requirement?",
                 "answers": [
                     {
-                        "a": "1 billion per year",
-                        "b": "5 billion per year",
-                        "c": "25 billion per year",
-                        "d": "60 billion per year"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "a"
             }
         ]
     }

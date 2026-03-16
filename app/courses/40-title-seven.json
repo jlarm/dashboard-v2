@@ -38,64 +38,84 @@
         ],
         "questions": [
             {
-                "question": "When was Title VII enacted?",
+                "question": "Title VII prohibits employment discrimination based on which protected categories?",
                 "answers": [
                     {
-                        "a": "1962",
-                        "b": "1964",
-                        "c": "1968",
-                        "d": "1970"
+                        "a": "Education level and marital status",
+                        "b": "Race, color, religion, sex, and national origin",
+                        "c": "Income and credit score",
+                        "d": "Job title and seniority"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Title VII applies to employers with 50 or more employees.",
+                "question": "Which update was included by the Supreme Court in June 2020?",
+                "answers": [
+                    {
+                        "a": "Disability status",
+                        "b": "Hair texture and protective styles",
+                        "c": "Sexual orientation and gender identity",
+                        "d": "Military status"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "What did the Civil Rights Act of 1991 add?",
+                "answers": [
+                    {
+                        "a": "Required yearly harassment training for all employees",
+                        "b": "Damages and jury trials",
+                        "c": "The creation of OSHA",
+                        "d": "A mandatory 180-day cooling-off period"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which of the following best describes “retaliation”?",
+                "answers": [
+                    {
+                        "a": "Not paying overtime correctly",
+                        "b": "Punishing an employee for reporting discrimination or participating in an investigation",
+                        "c": "Offering mediation to settle disputes",
+                        "d": "Providing job training opportunities"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "What is the EEOC’s role?",
+                "answers": [
+                    {
+                        "a": "Approving company payroll systems",
+                        "b": "Investigating complaints, mediating/settling disputes, and enforcing compliance",
+                        "c": "Writing OSHA regulations",
+                        "d": "Issuing building permits"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "“Failure to accommodate” can involve not providing necessary adjustments for religious needs or employees with disabilities.",
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "b"
+                "correctAnswer": "a"
             },
             {
-                "question": "Which one of the following is covered under Title VII",
+                "question": "A complaint is typically filed with the EEOC within 180 days of the alleged discrimination.",
                 "answers": [
                     {
-                        "a": "Race",
-                        "b": "Color",
-                        "c": "National Origin",
-                        "d": "Sexual Orientation",
-                        "e": "A, B and D Only",
-                        "f": "All of the above"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "f"
-            },
-            {
-                "question": "What is the typical time frame that a discrimination charge can be filed?",
-                "answers": [
-                    {
-                        "a": "90 Days",
-                        "b": "30 Days",
-                        "c": "120 Days",
-                        "d": "180 Days"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "What does “Quid Pro Quo” harassment mean?",
-                "answers": [
-                    {
-                        "a": "Filing a complaint under false pretense",
-                        "b": "When management staff constantly berates a fellow employee in front of other employees",
-                        "c": "A form of harassment where employment benefits are conditional on sexual favors",
-                        "d": "A mutual exchange of services"
-                    }
-                ],
-                "correctAnswer": "c"
+                "correctAnswer": "a"
             }
         ]
     }

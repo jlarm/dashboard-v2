@@ -4,10 +4,8 @@
         "uuid": "eeb08fd6-65d6-4383-81d2-87944d433736",
         "name": "Back Injuries",
         "slug": "back-injuries",
-        "department": [
-        ],
-        "roles": [
-        ],
+        "department": [],
+        "roles": [],
         "slides": [
             {
                 "title": "Ergonomics/Back Injuries",
@@ -44,43 +42,57 @@
         ],
         "questions": [
             {
-                "question": "Ergonomics is",
+                "question": "What is ergonomics mainly about?",
                 "answers": [
                     {
-                        "a": "Ergonomics is the science of designing the workplace and the job to fit the worker.",
-                        "b": "Ergonomics is the science of designing the employees work habits around the workplace environment.",
-                        "c": "Ergonomics is the science of adapting the employees work experiences to the shops lay out regarding their job function.",
-                        "d": "All of the above."
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "a"
+                "correctAnswer": "b"
             },
             {
-                "question": "What are some of the work-related symptoms related to improper ergonomics?",
+                "question": "Which of the following is listed as an ergonomic risk factor in the workspace?",
                 "answers": [
                     {
-                        "a": "Sore wrists",
-                        "b": "Back pain",
-                        "c": "Eyestrain and headaches",
-                        "d": "All of the above."
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "b"
             },
             {
-                "question": "Below are some items to be aware of in your shops to minimize ergonomics stresses:",
+                "question": "When selecting tools to reduce injury risk, which guideline is emphasized?",
                 "answers": [
                     {
-                        "a": "Heavy lifting, Poor illumination, Vibrations, PPE selection",
-                        "b": "Lifting with forceful movements, Poor design of workstations, Workbench height",
-                        "c": "Both A and B",
-                        "d": "B only"
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "What are the three main components of a back injury prevention program?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
                 "correctAnswer": "c"
             },
             {
-                "question": "Ideally you should have a chance to try out new tools before they are purchased",
+                "question": "What is the recommended approach for safe lifting?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Back pain affects up to 80% of Americans at some point.   True / False",
                 "answers": [
                     {
                         "a": "True",
@@ -90,17 +102,7 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Selection of the proper tool for the job makes the job easier and less stressful to the body.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "There are special tools designed for left- handed and right-handed workers.",
+                "question": "Back belts are guaranteed to prevent back injuries.   True / False",
                 "answers": [
                     {
                         "a": "True",

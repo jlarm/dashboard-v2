@@ -37,7 +37,55 @@
         ],
         "questions": [
             {
-                "question": "OSHA requires the use of locks, tags and other devices wherever maintenance or service is performed on equipment or machinery; e.g., lifts, bench grinders and air compressors.",
+                "question": "What does OSHA require when maintenance or service is performed on equipment or machinery?",
+                "answers": [
+                    {
+                        "a": "Only safety glasses and gloves",
+                        "b": "Locks, tags, and other lockout devices",
+                        "c": "A daily checklist only",
+                        "d": "A warning sign posted nearby"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which of the following is an example of equipment that may require Lock-Out Tag-Out?",
+                "answers": [
+                    {
+                        "a": "Lifts",
+                        "b": "Bench grinders",
+                        "c": "Air compressors",
+                        "d": "All of the above"
+                    }
+                ],
+                "correctAnswer": "d"
+            },
+            {
+                "question": "If a ballast in an overhead light needs to be replaced, what is the correct first step?",
+                "answers": [
+                    {
+                        "a": "Remove the light fixture immediately",
+                        "b": "Throw the appropriate switch to the “OFF” position in the circuit breaker box",
+                        "c": "Tape over the light switch",
+                        "d": "Leave the power on so you can test it"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which energy forms are covered by Lock-Out Tag-Out?",
+                "answers": [
+                    {
+                        "a": "Electrical, pneumatic, hydraulic, fluids/gases, mechanical",
+                        "b": "Only electrical",
+                        "c": "Only hydraulic and pneumatic",
+                        "d": "Only mechanical"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "A written L.O.T.O plan is required and should be documented in the OSHA manual in the dealership compliance dashboard for review.",
                 "answers": [
                     {
                         "a": "True",
@@ -47,32 +95,7 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Which of the following are Hazardous energy forms covered by LOTO?",
-                "answers": [
-                    {
-                        "a": "Electrical",
-                        "b": "Pneumatic, Hydraulic",
-                        "c": "Fluids and gasses, Mechanical",
-                        "d": "All of the above"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "Which of the following items are required for an effective LOTO program?",
-                "answers": [
-                    {
-                        "a": "A written LOTO plan should be prepared",
-                        "b": "Must have an adequate supply of locks, tags, keys, hasps and chains",
-                        "c": "Electrical lines must be locked out or disconnected from power source during repair, servicing, adjusting, cleaning or set up/tear down",
-                        "d": "A and C only",
-                        "e": "All of the above"
-                    }
-                ],
-                "correctAnswer": "e"
-            },
-            {
-                "question": "Any employee, shop manager or authorized personnel may have control of the keys",
+                "question": "T During vehicle service, it is acceptable to leave keys in the ignition as long as a tag is placed on the steering wheel.",
                 "answers": [
                     {
                         "a": "True",
@@ -80,16 +103,6 @@
                     }
                 ],
                 "correctAnswer": "b"
-            },
-            {
-                "question": "Lock Out/Tag-Out ensures all containers, tanks, boxes, bottles, cans, are properly labeled.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
             }
         ]
     }

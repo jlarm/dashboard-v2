@@ -35,59 +35,82 @@
         ],
         "questions": [
             {
-                "question": "How often does an automobile crash happen?",
+                "question": "An automobile accident happens about:",
                 "answers": [
                     {
-                        "a": "Every 5 seconds .",
-                        "b": "Every 10 seconds.",
-                        "c": "Every 12 minutes"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "The most dangerous time to drive is?",
-                "answers": [
-                    {
-                        "a": "Dawn.",
-                        "b": "Dusk",
-                        "c": "Both"
+                        "a": "Every 30 seconds",
+                        "b": "Every 10 seconds",
+                        "c": "Every 5 seconds",
+                        "d": "Every 1 minute"
                     }
                 ],
                 "correctAnswer": "c"
             },
             {
-                "question": "What percentage of accidents are related to cell phone usage or texting?",
+                "question": "(True/False) An injury in an automobile happens every 10 seconds.",
                 "answers": [
                     {
-                        "a": "35%",
-                        "b": "28%",
-                        "c": "10%"
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "A death occurs due to an automobile accident about every:",
+                "answers": [
+                    {
+                        "a": "2 minutes",
+                        "b": "12 minutes",
+                        "c": "30 minutes",
+                        "d": "1 hour"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "What percentage of drivers said they ate or drank while driving?",
+                "question": "(True/False) If using a cell phone while driving, it must be in “hands-free” mode; otherwise, pull over to talk.",
                 "answers": [
                     {
-                        "a": "86%",
-                        "b": "50%",
-                        "c": "78%"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
                 "correctAnswer": "a"
             },
             {
-                "question": "What percent of deaths occur due to drivers being impaired causing an accident",
+                "question": "Which is listed as a key tip for safe driving in dealership lots?",
                 "answers": [
                     {
-                        "a": "40%",
-                        "b": "26%",
-                        "c": "30%"
+                        "a": "Speed through the lot to reduce exposure time",
+                        "b": "Watch for pedestrians and stay focused at all times",
+                        "c": "Complete paperwork while driving to save time",
+                        "d": "Follow closely behind other vehicles"
                     }
                 ],
-                "correctAnswer": "c"
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Hydroplaning occurs when:",
+                "answers": [
+                    {
+                        "a": "Tires overheat on dry pavement",
+                        "b": "A film of water gets between the road and tires, causing the vehicle to “float”",
+                        "c": "The vehicle is driven too slowly",
+                        "d": "The brakes are applied on a hill"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Cruise control should not be used on wet pavements.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
             }
         ]
     }

@@ -33,7 +33,19 @@
         ],
         "questions": [
             {
-                "question": "Used oil storage areas should always be labeled on their drums, tanks and fill pipes.",
+                "question": "Which of the following is required when storing used oil?",
+                "answers": [
+                    {
+                        "a": "Open containers for ventilation",
+                        "b": "Containers/tanks must be leak-proof, closed when not in use, and labeled “Used Oil”",
+                        "c": "Store used oil in any available bins",
+                        "d": "Label containers only if they are outdoors"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Used oil storage areas should display “No Smoking” signs.",
                 "answers": [
                     {
                         "a": "True",
@@ -43,7 +55,19 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "No smoking signs are not required in the used oil storage areas.",
+                "question": "How often should weekly checks be performed for leaks, corrosion, or spills in used oil storage areas?",
+                "answers": [
+                    {
+                        "a": "Daily",
+                        "b": "Weekly",
+                        "c": "Monthly",
+                        "d": "Annually"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Used oil may be stored in units other than tanks or containers if they are strong enough.",
                 "answers": [
                     {
                         "a": "True",
@@ -53,27 +77,31 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "All spills must be cleaned up immediately with proper absorbents and disposed of properly.",
+                "question": "Which materials are acceptable to mix with used oil?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Gasoline and wastewater",
+                        "b": "Antifreeze and halogenated solvents",
+                        "c": "Transmission fluids, hydraulic fluids, and petroleum-based lubricants",
+                        "d": "Unknown wastes and hazardous waste"
                     }
                 ],
-                "correctAnswer": "a"
+                "correctAnswer": "c"
             },
             {
-                "question": "Used oil, filters and rags can be removed off site by a regular trash hauler.",
+                "question": "Used oil must be transported by:",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Any employee with a pickup truck",
+                        "b": "EPA State-certified transporters (and records must be maintained)",
+                        "c": "Local trash collection services",
+                        "d": "Anyone as long as the containers are sealed"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Off site shipments of used oil must always be recorded on a log sheet.",
+                "question": "A facility may fall under SPCC rules if it has more than 1,320 gallons of aboveground oil storage and there is a chance oil could reach U.S. waters or drainage systems.",
                 "answers": [
                     {
                         "a": "True",
@@ -81,39 +109,6 @@
                     }
                 ],
                 "correctAnswer": "a"
-            },
-            {
-                "question": "Used Oil can be mixed with other petroleum-based non-hazardous lubricating fluids.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Other petroleum-based products would be:",
-                "answers": [
-                    {
-                        "a": "Transmission and Hydraulic fluids",
-                        "b": "Hydraulic, Cutting, Gear and Cooling Oils.",
-                        "c": "Synthetic Oils",
-                        "d": "A & B only",
-                        "e": "All of the above"
-                    }
-                ],
-                "correctAnswer": "e"
-            },
-            {
-                "question": "Antifreeze can also be mixed with oil if needed.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "b"
             }
         ]
     }

@@ -58,67 +58,84 @@
         ],
         "questions": [
             {
-                "question": "Appropriate Preventative Actions",
+                "question": "Harassment is a form of employment discrimination that violates which laws mentioned in the training?",
                 "answers": [
                     {
-                        "a": "Know employer’s anti-harassment Policy",
-                        "b": "Don't make assumptions about jokes",
-                        "c": "Never go along with the crowd if behavior is offensive",
-                        "d": "A & C",
-                        "e": "All of the above"
-                    }
-                ],
-                "correctAnswer": "e"
-            },
-            {
-                "question": "What are employees' duties to eliminate harassment?",
-                "answers": [
-                    {
-                        "a": "Don’t delay filing complaints",
-                        "b": "Report harassment before it becomes severe or pervasive",
-                        "c": "Discuss with your fellow employees as you see fit.",
-                        "d": "A & B",
-                        "e": "B & C",
-                        "f": "All of the above"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "How long does an employee have to file a harassment report in most states?",
-                "answers": [
-                    {
-                        "a": "90 days",
-                        "b": "180 days",
-                        "c": "6 months",
-                        "d": "1 year"
+                        "a": "OSHA only",
+                        "b": "Title VII, ADEA, and ADA",
+                        "c": "EPA regulations only",
+                        "d": "FMLA only"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "How does harassment affect the workplace?",
+                "question": "Which of the following is listed as a protected basis in the training?",
                 "answers": [
                     {
-                        "a": "Personal and financial problems",
-                        "b": "Poor public image",
-                        "c": "Less effective job performance",
-                        "d": "All of the above",
-                        "e": "B & C"
+                        "a": "Favorite sports team",
+                        "b": "Race, color, religion",
+                        "c": "Job title",
+                        "d": "Work schedule preference"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "b"
             },
             {
-                "question": "What is retaliation?",
+                "question": "Harassment becomes unlawful when the behavior:",
                 "answers": [
                     {
-                        "a": "When employees are discriminated against due to reporting a harassment case.",
-                        "b": "When an employer does not report harassment",
-                        "c": "When the employee does not report harassment until the workplace has become hostile"
+                        "a": "Is a single comment that no one hears",
+                        "b": "Leads to a significant employment decision or is severe/widespread enough to create a hostile workplace",
+                        "c": "Happens only outside of work",
+                        "d": "Is never reported to anyone"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "“Reasonable person” standard asks whether:",
+                "answers": [
+                    {
+                        "a": "The manager intended the behavior as a joke",
+                        "b": "The behavior is serious/frequent enough that a reasonable person would find it hostile, intimidating, or abusive, and the victim sees it that way",
+                        "c": "The employee has worked there longer than 1 year",
+                        "d": "The behavior happened in writing only"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which is an employee responsibility for preventing/correcting harassment (per the training)?",
+                "answers": [
+                    {
+                        "a": "Wait to report until the employee resigns",
+                        "b": "File complaints promptly and report harassment early before it escalates",
+                        "c": "Share the complaint publicly to force action",
+                        "d": "Avoid cooperating with investigations"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Submission to unwanted conduct does not automatically mean consent.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
                 "correctAnswer": "a"
+            },
+            {
+                "question": "Only managers can commit hostile environment harassment.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
             }
         ]
     }

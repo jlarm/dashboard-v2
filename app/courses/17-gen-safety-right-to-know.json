@@ -34,19 +34,7 @@
         ],
         "questions": [
             {
-                "question": "Accidents can be caused by which of the following?",
-                "answers": [
-                    {
-                        "a": "By unsafe conditions and/or unsafe behaviors.",
-                        "b": "Reporting to work late.",
-                        "c": "Putting proper signage out for wet/greasy floors",
-                        "d": "None of the above"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "All employees including managers and owners are responsible for preventing occupational injuries and illnesses.",
+                "question": "All injuries can be prevented or greatly reduced, and all employees (including managers and owners) are responsible for preventing occupational injuries and illnesses.",
                 "answers": [
                     {
                         "a": "True",
@@ -56,38 +44,81 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "What are the types of conditions and unsafe behaviors in the workshop?",
+                "question": "Which statement best matches the training’s safety philosophy?",
                 "answers": [
                     {
-                        "a": "Defective tools, machines, and working surfaces",
-                        "b": "Operating equipment without authority and or operating at unsafe speeds",
-                        "c": "Distractions and or Horseplay",
-                        "d": "All of the above"
+                        "a": "Safety is optional if you are experienced",
+                        "b": "Working safely is the only right way to operate a shop and is more cost-effective long term",
+                        "c": "Accidents are unavoidable in shop work",
+                        "d": "Only supervisors are responsible for safety"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "b"
             },
             {
-                "question": "Which statements are true concerning Basic Shop Safety Rules",
+                "question": "Which is an example of an unsafe condition or behavior in the shop?",
                 "answers": [
                     {
-                        "a": "Reporting  unsafe conditions",
-                        "b": "Keep your work area clean",
-                        "c": "Observe all caution and danger signs",
-                        "d": "Do not use electrical equipment while standing in damp",
-                        "e": "A and C",
-                        "f": "B and D",
-                        "g": "All of the above"
+                        "a": "Proper machine guarding",
+                        "b": "Improper lighting and ventilation",
+                        "c": "Wearing required PPE",
+                        "d": "Keeping work areas clean"
                     }
                 ],
-                "correctAnswer": "g"
+                "correctAnswer": "b"
             },
             {
-                "question": "You are allowed to use an air hose to blow dust from brake drums, brake shoes or other brake parts. Using an approved high-efficiency particle air (HEPA) vacuum device or wet-wash method is only in special occasions.",
+                "question": "Horseplay is forbidden, and you should not interfere with co-workers while they are working.",
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "What must be done before any repairs or maintenance on equipment?",
+                "answers": [
+                    {
+                        "a": "Oil the machine while it is running",
+                        "b": "Lock out the equipment; lockouts removed only by authorized personnel/management",
+                        "c": "Test-run the machine at a low speed",
+                        "d": "Remove safety guards for easier access"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Only electricians or authorized personnel are permitted to perform electrical work.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Which clothing or accessory creates a hazard and should not be worn in the shop?",
+                "answers": [
+                    {
+                        "a": "Cotton work pants",
+                        "b": "Long-sleeve shirt when welding/grinding",
+                        "c": "Neckties, rings, watches, or loose/ragged clothing",
+                        "d": "Cuffless trousers that cover shoes"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "What is the safest way to lift heavy objects?",
+                "answers": [
+                    {
+                        "a": "Bend at the waist and lift with your back",
+                        "b": "Lift with your legs and keep your back straight",
+                        "c": "Twist while lifting to reposition quickly",
+                        "d": "Lift alone to save time"
                     }
                 ],
                 "correctAnswer": "b"

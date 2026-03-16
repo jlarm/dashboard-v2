@@ -33,19 +33,53 @@
         ],
         "questions": [
             {
-                "question": "Hennessy Industries (La Vergne, TN) has summed up tire safety in one word-RIM, what does RIM stand for?",
+                "question": "According to the guidelines, tire repairs are limited to which area of the tire?",
                 "answers": [
                     {
-                        "a": "Roll, Incinerate, Mold",
+                        "a": "Sidewall only",
+                        "b": "Shoulder only",
+                        "c": "Tread area only",
+                        "d": "Any area as long as the puncture is small"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "(True/False) Punctures in the sidewall or shoulder are generally irreparable and usually require tire replacement.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "When should tire pressure be checked for the most accurate reading?",
+                "answers": [
+                    {
+                        "a": "Immediately after driving at highway speed",
+                        "b": "When the tires are cold (not driven for at least 3 hours or less than 1 mile)",
+                        "c": "Only after the tires have warmed up",
+                        "d": "Only after adding air"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "The “RIM” tire safety reminder stands for:",
+                "answers": [
+                    {
+                        "a": "Rotate, Inflate, Maintain",
                         "b": "Read, Inspect, Mount",
-                        "c": "Repair, Inflation, Mount",
-                        "d": "None of the above"
+                        "c": "Replace, Inflate, Measure",
+                        "d": "Remove, Install, Monitor"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "Look at the tire and wheel to make sure they are the same size. A 16-inch tire and a 16.5-inch wheel (or vice versa) can cause an explosion.",
+                "question": "(True/False) A proper tire repair requires both a plug (stem) and an internal patch; a plug alone is not sufficient.",
                 "answers": [
                     {
                         "a": "True",
@@ -55,34 +89,16 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "You can stand over the tire while you are inflating it and inflating a tire beyond its rated pressure to seat the bead will be safe.",
+                "question": "If bulges or unusual noises occur during tire inflation, what should you do?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Keep inflating to seat the bead",
+                        "b": "Stop immediately and deflate the tire remotely",
+                        "c": "Stand over the tire to check for the issue",
+                        "d": "Lower the pressure slightly and continue inflating"
                     }
                 ],
                 "correctAnswer": "b"
-            },
-            {
-                "question": "If a tire is suspect of having a defect, deflate the tire before dismounting from the vehicle.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Always inspect the wheel for rust, bent flanges or cracks that could cause problems and inspect the tire for damage.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
             }
         ]
     }

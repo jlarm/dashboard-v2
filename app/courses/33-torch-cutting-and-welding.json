@@ -49,63 +49,65 @@
         ],
         "questions": [
             {
-                "question": "Which answer follows Safe use of Torches?",
+                "question": "Which list includes common risks of torch cutting and welding mentioned in the training?",
                 "answers": [
                     {
-                        "a": "You must not use torches unless you are trained and authorized to do so.",
-                        "b": "Torches must be designed for the gas that is going to be used.",
-                        "c": "Before changing torches, shut off the gas at the pressure-reducing regulators. Do not crimp the hose to shut off the torch.",
-                        "d": "All of the above"
+                        "a": "Sunburn, motion sickness, dehydration",
+                        "b": "Fumes, electric shock, burns, eye damage, fire/explosions, compressed gas hazards",
+                        "c": "Noise exposure only",
+                        "d": "Slips and trips only"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "b"
             },
             {
-                "question": "Which answer follows Safe use of Regulators?",
+                "question": "What should be used to ignite a torch?",
                 "answers": [
                     {
-                        "a": "Never drop or pound on regulators.",
-                        "b": "Leaking regulators should be removed from service.",
-                        "c": "As long as the cylinders are secure they may be laid on their side.",
-                        "d": "A and B only"
+                        "a": "Matches",
+                        "b": "A cigarette lighter",
+                        "c": "A friction lighter",
+                        "d": "Any open flame"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "c"
             },
             {
-                "question": "Hoses and Hose Connections, which ones are applicable?",
+                "question": "When operating cylinder valves, where should you stand?",
                 "answers": [
                     {
-                        "a": "The length of hoses should only be as long as necessary. Keep hoses from being linked or tangled.",
-                        "b": "Keep hoses and lines away from walkways, steps, etc., so tripping hazards are not created.",
-                        "c": "Keep hoses away from sparks and flames. Do not operate.",
-                        "d": "All of the above"
+                        "a": "Directly in front of the regulator gauge",
+                        "b": "To one side, away from the regulator gauge",
+                        "c": "Behind the cylinder",
+                        "d": "Sitting on the cylinder rack"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "b"
             },
             {
-                "question": "Cylinders should be secured at all times while being transported.",
+                "question": "How should you check an oxygen connection for leaks?",
+                "answers": [
+                    {
+                        "a": "Use a match to see if it flares",
+                        "b": "Use soapy water",
+                        "c": "Smell near the fitting",
+                        "d": "Tape the connection and listen"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "If a hose is leaking, it is acceptable to tape it temporarily and keep working.",
                 "answers": [
                     {
                         "a": "True",
                         "b": "False"
                     }
                 ],
-                "correctAnswer": "a"
+                "correctAnswer": "b"
             },
             {
-                "question": "Never drag a cylinder; instead, roll it on its edge. Transport cylinders in carts or cages.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Observe \"No Smoking\" signs posted in the cylinder-storage area.",
+                "question": "Oxygen and acetylene cylinders must be stored at least 20 feet apart, or separated by a partition that is 5 feet high with a ½-hour fire rating.",
                 "answers": [
                     {
                         "a": "True",

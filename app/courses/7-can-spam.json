@@ -19,19 +19,7 @@
         ],
         "questions": [
             {
-                "question": "What does “Can SPAM” Act stand for?",
-                "answers": [
-                    {
-                        "a": "Controlling the Annual Number of Solicitations Programs being Administered and Monitored Act of 2003",
-                        "b": "Controlling the Assault of Non-Solicited Pornography And Marketing Act of 2003",
-                        "c": "Controlling the Assault of Non-Specific Program Act of Marketing of 2003",
-                        "d": "Controlling the Assault of Non-Specific Pornography And Marketing Act of 2003"
-                    }
-                ],
-                "correctAnswer": "b"
-            },
-            {
-                "question": "The law requires that each email must include a way to unsubscribe over the internet and must honor this unsubscribe within 24 hours.",
+                "question": "What does CAN-SPAM stand for?",
                 "answers": [
                     {
                         "a": "True",
@@ -41,7 +29,7 @@
                 "correctAnswer": "b"
             },
             {
-                "question": "You must always describe the content of the email in the subject line.",
+                "question": "(True/False) The CAN-SPAM Act establishes national standards for commercial email messages and aims to curb spam regardless of the number of emails sent.",
                 "answers": [
                     {
                         "a": "True",
@@ -51,7 +39,27 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Once you Unsubscribe the mechanism must work for at least 30 days after the message is sent.",
+                "question": "Which of the following is part of the CAN-SPAM requirement for an accurate header?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "What is required for the opt-out mechanism?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "(True/False) The unsubscribe mechanism must work for at least 30 days after the message is sent.",
                 "answers": [
                     {
                         "a": "True",
@@ -59,6 +67,16 @@
                     }
                 ],
                 "correctAnswer": "a"
+            },
+            {
+                "question": "Businesses can face penalties of up to how much per CAN-SPAM violation?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "d"
             }
         ]
     }

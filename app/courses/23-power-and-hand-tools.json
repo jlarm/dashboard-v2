@@ -33,55 +33,67 @@
         ],
         "questions": [
             {
-                "question": "Hand-and power-tool accidents are usually the result of three direct causes.",
+                "question": "Which option lists the four main direct causes of hand/power tool injuries mentioned in the training?",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Poor lighting, bad weather, fatigue, and loud noise",
+                        "b": "Wrong tool, faulty tool, incorrect use, unsafe storage/carrying",
+                        "c": "Lack of training, lack of PPE, rushing, and clutter",
+                        "d": "Electrical shock, cuts, burns, and strains"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "The Direct Causes of Injuries are as followed",
+                "question": "What should you do before changing a drill bit or saw blade?",
                 "answers": [
                     {
-                        "a": "Using the wrong tool for the job at hand",
-                        "b": "Using a defective tool",
-                        "c": "Using the tool in the wrong way",
-                        "d": "Storing or carrying tools in an unsafe way",
-                        "e": "Only A and B and D",
-                        "f": "All of the above"
-                    }
-                ],
-                "correctAnswer": "f"
-            },
-            {
-                "question": "While using Handheld Power Grinders you should:",
-                "answers": [
-                    {
-                        "a": "Avoid throwing sparks toward other employees.",
-                        "b": "Watch out for cracked or damaged stones or discs.",
-                        "c": "Both A and B",
-                        "d": "Only A"
+                        "a": "Turn the switch to “off” only",
+                        "b": "Hold the tool firmly and change it quickly",
+                        "c": "Unplug the tool first",
+                        "d": "Ask a co-worker to hold the tool"
                     }
                 ],
                 "correctAnswer": "c"
             },
             {
-                "question": "While using Screwdrivers you should:",
+                "question": "For electric saw safety, which action helps prevent injury and kickback?",
                 "answers": [
                     {
-                        "a": "Never hold the part being worked in your hand",
-                        "b": "Allow the screwdriver tip to fit the screw.",
-                        "c": "Wear gloves",
-                        "d": "A and B only"
+                        "a": "Remove the guard so you can see better",
+                        "b": "Let the blade cut at its own pace and don’t rush",
+                        "c": "Allow the cord to hang near the blade",
+                        "d": "Remove the grounding prong to fit outlets"
                     }
                 ],
-                "correctAnswer": "d"
+                "correctAnswer": "b"
             },
             {
-                "question": "Open-end or box wrenches should be inspected to ensure they fit the nut properly.",
+                "question": "When is a guard required on handheld power grinders?",
+                "answers": [
+                    {
+                        "a": "Only when grinding metal",
+                        "b": "Only when using discs under 2 inches",
+                        "c": "On all hand grinders with stones or discs over 2 inches in diameter",
+                        "d": "Only when sparks are visible"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Which is the safest practice when using knives?",
+                "answers": [
+                    {
+                        "a": "Cut toward your body for control",
+                        "b": "Leave open knives on the bench for quick access",
+                        "c": "Cut away from your body and keep knives closed or sheathed",
+                        "d": "Use knives as pry tools when needed"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "A dull drill bit can increase the chance of twisting injuries.",
                 "answers": [
                     {
                         "a": "True",
@@ -89,6 +101,16 @@
                     }
                 ],
                 "correctAnswer": "a"
+            },
+            {
+                "question": "It’s acceptable to use a file as a hammer if you’re careful.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
             }
         ]
     }

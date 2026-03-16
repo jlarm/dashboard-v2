@@ -40,67 +40,64 @@
         ],
         "questions": [
             {
-                "question": "What is the total amount of cash given that dealerships must file an 8300 report?",
+                "question": "Which IRS form is used to report cash payments over $10,000 received in a trade or business?",
                 "answers": [
                     {
-                        "a": "More than $5,000",
-                        "b": "More than $10,000",
-                        "c": "More than $12,000",
-                        "d": "None of the above"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "What is considered a \"Cash\" transaction?",
+                "question": "When must Form 8300 be filed after receiving the cash payment?",
                 "answers": [
                     {
-                        "a": "Money Orders, Cashier’s Checks and Traveler Checks",
-                        "b": "Personal Check",
-                        "c": "Coins and Currency payments",
-                        "d": "A & C only",
-                        "e": "All of the above"
-                    }
-                ],
-                "correctAnswer": "d"
-            },
-            {
-                "question": "When is an 8300 report need to be reported?",
-                "answers": [
-                    {
-                        "a": "More than $10,000 cash",
-                        "b": "A related cash transaction",
-                        "c": "Suspicious Activity",
-                        "d": "Only A & B",
-                        "e": "All of the above"
-                    }
-                ],
-                "correctAnswer": "e"
-            },
-            {
-                "question": "What is considered a Suspicious Transaction?",
-                "answers": [
-                    {
-                        "a": "If receiving $10,000 or less but may appear suspicious",
-                        "b": "A customer asked about how much cash down is needed to avoid 8300 filing",
-                        "c": "Customer trying to cause you to file a false or incomplete 8300",
-                        "d": "Both A & C",
-                        "e": "All of the above"
-                    }
-                ],
-                "correctAnswer": "e"
-            },
-            {
-                "question": "Generally, you must file an 8300 report within?",
-                "answers": [
-                    {
-                        "a": "24 hours",
-                        "b": "10 days",
-                        "c": "15 days",
-                        "d": "30 days"
+                        "a": "True",
+                        "b": "False"
                     }
                 ],
                 "correctAnswer": "c"
+            },
+            {
+                "question": "(True/False) Starting January 1, 2024, businesses must electronically file Forms 8300 instead of filing a paper return.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "According to the IRS definition, “cash” includes which of the following (when received in a designated transaction)?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "(True/False) Transactions are considered related if they occur within a 24-hour period, or if the recipient knows (or has reason to know) they are connected as a series.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "When must the dealership provide a written statement to each person named on Form 8300?",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
             }
         ]
     }

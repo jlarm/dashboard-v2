@@ -149,84 +149,43 @@
         ],
         "questions": [
             {
-                "question": "NESHAP is the EPA’s attempt to reduce Hazardous Air Pollutants (HAPs) emitted by the collision industry.",
+                "question": "Under the 6H Rule (NESHAP), allowable emissions are limited to:",
                 "answers": [
                     {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "The distance between the spray gun and the coating surface will not affect transfer efficiency.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Less than 100 tons/year of any one HAP and less than 250 tons/year combined",
+                        "b": "Less than 10 tons/year of any one HAP and less than 25 tons/year combined",
+                        "c": "Less than 25 tons/year of any one HAP and less than 10 tons/year combined",
+                        "d": "No emissions are allowed"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "What is the HVLP spray guns transfer efficiency percentage.",
+                "question": "Which of the following is one of the three affected source categories under the 6H Rule?",
                 "answers": [
                     {
-                        "a": "30%",
-                        "b": "50%",
-                        "c": "65%",
-                        "d": "85%"
-                    }
-                ],
-                "correctAnswer": "c"
-            },
-            {
-                "question": "Spray coating can be done outdoors if an HVLP spray gun is used.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
+                        "a": "Tire mounting operations",
+                        "b": "Paint stripping operations using methylene chloride",
+                        "c": "Vehicle detailing and waxing",
+                        "d": "Oil change and lubrication service"
                     }
                 ],
                 "correctAnswer": "b"
             },
             {
-                "question": "What are the main spray gun adjustments that can be made?",
+                "question": "Which spray-applied activity is specifically listed as NOT included?",
                 "answers": [
                     {
-                        "a": "Air input",
-                        "b": "Fluid flow",
-                        "c": "Fan adjustmrnt",
-                        "d": "A & B",
-                        "e": "All of the above"
+                        "a": "Spray guns with large refillable cups",
+                        "b": "Powder coating",
+                        "c": "Spraying coatings containing target HAP metals (Cr, Pb, Mn, Ni, Cd)",
+                        "d": "Motor vehicle surface coating operations"
                     }
                 ],
-                "correctAnswer": "e"
+                "correctAnswer": "b"
             },
             {
-                "question": "A spray gun should never be cleaned by spraying solvent.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "Maximum hose length recommended when attached to air gun is?",
-                "answers": [
-                    {
-                        "a": "25ft",
-                        "b": "40ft",
-                        "c": "50ft",
-                        "d": "75ft"
-                    }
-                ],
-                "correctAnswer": "c"
-            },
-            {
-                "question": "Following 6H NESHAP regulations will result in better health and safety for employees in the shop.",
+                "question": "Records related to 6H requirements must be maintained for at least five years.",
                 "answers": [
                     {
                         "a": "True",
@@ -236,17 +195,7 @@
                 "correctAnswer": "a"
             },
             {
-                "question": "Mixing only the amounts of material needed will reduce paint cost and minimize air pollutants.",
-                "answers": [
-                    {
-                        "a": "True",
-                        "b": "False"
-                    }
-                ],
-                "correctAnswer": "a"
-            },
-            {
-                "question": "6H NESHAP training requirements and practices apply to any employee who sprays material in the\nshop.",
+                "question": "The Notification of Compliance Status must be submitted within 30 days after the initial compliance period ends.",
                 "answers": [
                     {
                         "a": "True",
