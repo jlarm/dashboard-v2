@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
+use Exception;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,11 +22,40 @@ class Index extends Component
     public int $perPage = 25;
     protected $listeners = [
         'refreshDealerships' => '$refresh',
+        'deleteDealership' => 'deleteDealership',
     ];
 
     public function updatedSearch(): void
     {
         $this->resetPage();
+    }
+
+    public function deleteDealership(string $dealershipId): void
+    {
+        Gate::authorize('delete-dealership');
+
+        try {
+            DB::beginTransaction();
+
+            $dealership = Dealership::query()->findOrFail($dealershipId);
+            $dealership->users()->detach();
+            $dealership->delete();
+
+            DB::commit();
+
+            Notification::make()
+                ->title('Dealership Deleted')
+                ->success()
+                ->send();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            Notification::make()
+                ->title('Error Deleting Dealership')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
     }
 
     public function updatedPerPage(): void
