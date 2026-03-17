@@ -18,11 +18,37 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        @foreach($dealerships as $dealership)
-        <livewire:central.dealership.index-item :dealership="$dealership" :key="$dealership->id"/>
-        @endforeach
-    </div>
+    <x-table>
+        <x-slot:head>
+            <x-table.row>
+                <x-table.heading>Name</x-table.heading>
+                <x-table.heading>ID</x-table.heading>
+                <x-table.heading>Consultants</x-table.heading>
+                <x-table.heading></x-table.heading>
+            </x-table.row>
+        </x-slot:head>
+        <x-slot:body>
+            @foreach($dealerships as $dealership)
+                <x-table.row :key="$dealership->id">
+                    <x-table.cell>{{ $dealership->name }}</x-table.cell>
+                    <x-table.cell>
+                        <livewire:central.dealership.id-copy-field :dealership="$dealership" wire:key="id-copy-{{ $dealership->id }}" />
+                    </x-table.cell>
+                    <x-table.cell>
+                        <livewire:central.dealership.consultant-avatars :dealership="$dealership" wire:key="avatars-{{ $dealership->id }}" />
+                    </x-table.cell>
+                    <x-table.cell align="end">
+                        <x-armp.button
+                            size="sm"
+                            href="https://{{ $dealership->domain }}/dashboard"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >View</x-armp.button>
+                    </x-table.cell>
+                </x-table.row>
+            @endforeach
+        </x-slot:body>
+    </x-table>
 
     <div>
         {{ $dealerships->links() }}

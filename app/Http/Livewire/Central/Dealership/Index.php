@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
-use Exception;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,10 +15,9 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
-    public int $perPage = 12;
+    public int $perPage = 25;
     protected $listeners = [
         'refreshDealerships' => '$refresh',
-        'deleteDealership' => 'deleteDealership',
     ];
 
     public function updatedSearch(): void
@@ -27,18 +25,10 @@ class Index extends Component
         $this->resetPage();
     }
 
-    public function deleteDealership(string $dealershipId): void
+    public function updatedPerPage(): void
     {
-        Gate::authorize('delete-dealership');
-
-        try {
-            $dealership = Dealership::query()->findOrFail($dealershipId);
-            $dealership->delete();
-
-            session()->flash('success', 'Dealership deleted successfully');
-        } catch (Exception $e) {
-            session()->flash('error', "Failed to delete dealership: {$e->getMessage()}");
-        }
+        abort_unless(in_array($this->perPage, [10, 25, 50], true), 422);
+        $this->resetPage();
     }
 
     public function render(): View
@@ -54,10 +44,16 @@ class Index extends Component
         ]);
     }
 
-    private function getDealerships()
+    private function getDealerships(): Builder
     {
-        return auth()->user()->hasRole('super-admin')
-            ? Dealership::query()
-            : auth()->user()->dealerships()->orWhere('id', 'e44653a5-c049-4be0-92e3-b8aacea4bf20');
+        if (auth()->user()->hasRole('super-admin')) {
+            return Dealership::query();
+        }
+
+        return Dealership::query()
+            ->whereHas('users', function (Builder $query): void {
+                $query->where('user_id', auth()->id());
+            })
+            ->orWhere('id', config('dashboard.default_dealership_id'));
     }
 }
