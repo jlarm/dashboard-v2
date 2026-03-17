@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4 lg:flex-row lg:gap-6 lg:items-start">
-    <div class="lg:w-64 lg:shrink-0 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+    <div class="w-full  lg:shrink-0 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
         <h1 class="mb-1 text-base font-semibold text-gray-900">Quick Links</h1>
         <ul class="mt-2 divide-y divide-gray-100">
             @foreach($dealerships as $dealership)
@@ -17,7 +17,7 @@
         </ul>
     </div>
 
-    <div class="min-w-0 flex-1 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-        <livewire:central.upcoming-audits />
-    </div>
+{{--    <div class="min-w-0 flex-1 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">--}}
+{{--        <livewire:central.upcoming-audits />--}}
+{{--    </div>--}}
 </div>
