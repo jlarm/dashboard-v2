@@ -88,7 +88,7 @@
                                     <x-table.cell class="pl-4 pr-3">{{ $departmentNames[$invite->department_id] ?? '' }}</x-table.cell>
                                     <x-table.cell>{{ Str::lower($invite->email) }}</x-table.cell>
                                     <x-table.cell>{{ $invite->updated_at->format('F d, Y') }}</x-table.cell>
-                                    <x-table.cell>{{ $invite->user->name }}</x-table.cell>
+                                    <x-table.cell>{{ $invite->user?->name }}</x-table.cell>
                                     <x-table.cell class="flex justify-end gap-3">
                                         <div class="relative">
                                             <svg wire:loading wire:target="sendInvite({{ $invite->id }})" class="absolute top-1 -left-3 animate-spin -ml-1 mr-3 h-3 w-3 text-arm-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
