@@ -13,7 +13,6 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Blaze\Blaze;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,10 +30,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (config('blaze.debug', false) && class_exists(Blaze::class)) {
-            Blaze::debug();
-        }
-
         Model::preventLazyLoading(! $this->app->isProduction());
 
         Request::macro('store', fn () => $this->user()?->currentStore());

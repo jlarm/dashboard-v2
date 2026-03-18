@@ -3,10 +3,9 @@
 declare(strict_types=1);
 
 use App\Http\Middleware\VerifyCsrfToken;
-use App\Providers\RouteServiceProvider;
 use App\Notifications\ResetPassword;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 describe('Tenant Password Reset - Forgot Password Screen', function (): void {
@@ -35,44 +34,15 @@ describe('Tenant Password Reset - Request Reset Link', function (): void {
         Notification::assertSentTo($this->consultant, ResetPassword::class);
     });
 
-    it('does not send reset link for non-existent email', function (): void {
-        Notification::fake();
+    it('always returns success status regardless of whether the email exists', function (): void {
+        $knownResponse = $this->withoutMiddleware(VerifyCsrfToken::class)
+            ->post(route('dealer.password.email'), ['email' => $this->consultant->email]);
 
-        $this->withoutMiddleware(VerifyCsrfToken::class)
-            ->post(route('dealer.password.email'), [
-                'email' => 'nonexistent@test.com',
-            ]);
+        $unknownResponse = $this->withoutMiddleware(VerifyCsrfToken::class)
+            ->post(route('dealer.password.email'), ['email' => 'nonexistent@test.com']);
 
-        Notification::assertNothingSent();
-    });
-
-    it('logs a warning with email and url when user is not found', function (): void {
-        Log::spy();
-
-        $this->withoutMiddleware(VerifyCsrfToken::class)
-            ->post(route('dealer.password.email'), [
-                'email' => 'nonexistent@test.com',
-            ]);
-
-        Log::shouldHaveReceived('warning')
-            ->once()
-            ->withArgs(function (string $message, array $context): bool {
-                return $message === 'Failed password reset request'
-                    && $context['email'] === 'nonexistent@test.com'
-                    && str_contains($context['url'], 'forgot-password');
-            });
-    });
-
-    it('does not log a warning when reset link is sent successfully', function (): void {
-        Notification::fake();
-        Log::spy();
-
-        $this->withoutMiddleware(VerifyCsrfToken::class)
-            ->post(route('dealer.password.email'), [
-                'email' => $this->consultant->email,
-            ]);
-
-        Log::shouldNotHaveReceived('warning');
+        expect($knownResponse->getSession()->get('status'))
+            ->toBe($unknownResponse->getSession()->get('status'));
     });
 
     it('validates that email is required', function (): void {

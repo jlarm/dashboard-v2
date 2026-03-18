@@ -16,8 +16,4 @@
             @endforeach
         </ul>
     </div>
-
-{{--    <div class="min-w-0 flex-1 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">--}}
-{{--        <livewire:central.upcoming-audits />--}}
-{{--    </div>--}}
 </div>
