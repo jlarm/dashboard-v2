@@ -67,7 +67,7 @@ class Index extends Component
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
             })
-            ->select(['users.id', 'users.name', 'users.slug', 'users.department_id'])
+            ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id'])
             ->with([
                 'roles:id,name',
                 'department:id,name',
@@ -428,7 +428,7 @@ class Index extends Component
     private function generateExportCsvContent(Collection $users): string
     {
         $trainingSummaries = $this->resolveTrainingSummaries($users);
-        $csvContent = "Name,Store,Department,Training Status,Valid Completed,Required Courses,Not Completed,Expired,Expiring Soon\n";
+        $csvContent = "Name,Email,Store,Department,Training Status,Valid Completed,Required Courses,Not Completed,Expired,Expiring Soon\n";
 
         foreach ($users as $user) {
             $summary = $trainingSummaries->get($user->id);
@@ -440,11 +440,12 @@ class Index extends Component
             $expiringSoon = is_array($summary) ? (string) $summary['expiring_soon'] : '0';
 
             $name = $this->escapeCsvField($user->name);
+            $email = $this->escapeCsvField($user->email);
             $stores = $this->escapeCsvField($user->stores->pluck('name')->join(', '));
             $department = $this->escapeCsvField($user->department?->name ?? 'N/A');
             $status = $this->escapeCsvField($status);
 
-            $csvContent .= "{$name},{$stores},{$department},{$status},{$validCompleted},{$requiredCourses},{$notCompleted},{$expired},{$expiringSoon}\n";
+            $csvContent .= "{$name},{$email},{$stores},{$department},{$status},{$validCompleted},{$requiredCourses},{$notCompleted},{$expired},{$expiringSoon}\n";
         }
 
         return $csvContent;
