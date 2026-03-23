@@ -237,7 +237,11 @@ class Index extends Component
         $selectedUsers = $users->filter(fn ($user): bool => in_array($user->id, $this->selectedUsers));
 
         $csvContent = $this->generateExportCsvContent($selectedUsers);
-        $filename = 'incomplete-employee-courses-report-'.date('m-d-Y').'.csv';
+        $contextName = app()->bound('currentStoreModel')
+            ? app('currentStoreModel')->name
+            : tenant('name');
+        $slug = str($contextName)->slug()->value();
+        $filename = "incomplete-employee-courses-report-{$slug}-".date('m-d-Y').'.csv';
 
         return response()->streamDownload(function () use ($csvContent): void {
             echo $csvContent;
