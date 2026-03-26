@@ -32,7 +32,7 @@ class RequestForm extends Modal
             Mail::raw($this->buildEmailContent($user, $tenantName), static function ($message) use ($superAdmin): void {
                 $message->to($superAdmin)
                     ->subject('New SDS Sheet Request - '.tenant('name'))
-                    ->from('noreply@armp.app');
+                    ->from((string) config('mail.from.address'), (string) config('mail.from.name'));
             });
         }
 

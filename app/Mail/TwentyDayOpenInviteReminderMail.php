@@ -22,7 +22,7 @@ class TwentyDayOpenInviteReminderMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('no-reply@armp.app'),
+            from: new Address((string) config('mail.from.address'), (string) config('mail.from.name')),
             subject: 'Final Registration Reminder for '.tenant('name'),
         );
     }

@@ -511,7 +511,7 @@ class Index extends Component
 
         Mail::send([], [], function ($message) use ($csvContent, $body, $filename): void {
             $message->to($this->email)
-                ->from('noreply@armp.app', tenant('name'))
+                ->from((string) config('mail.from.address'), (string) config('mail.from.name'))
                 ->subject('Incomplete Employee Courses Report as of '.date('m/d/Y'))
                 ->text($body)
                 ->attachData($csvContent, $filename, [
