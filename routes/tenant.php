@@ -65,7 +65,7 @@ Route::name('dealer.')->middleware([
 
     Route::view('/', 'dealer.welcome');
 
-    if (config('app.env') === 'local') {
+    if (app()->environment('local')) {
         Route::get('osha-audit-pdf', OshaPdfTestController::class);
         Route::get('deal-jacket-audit-pdf', DealJacketPdfTestController::class);
         Route::get('deal-jacket-report-pdf', DealJacketReportPdfTestController::class);

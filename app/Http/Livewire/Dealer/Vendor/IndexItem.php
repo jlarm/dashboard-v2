@@ -12,21 +12,21 @@ use Livewire\Component;
 class IndexItem extends Component
 {
     public Vendor $vendor;
-    public $noCount;
-    public $totalQuestions = 0;
-    public $array = [];
+    public int $noCount = 0;
+    public int $totalQuestions = 0;
+    public array $vendorAnswers = [];
 
     public function mount(): void
     {
         foreach ($this->vendor->getAttributes() as $key => $value) {
             if (str_starts_with($key, 'q') && str_ends_with($key, 'a')) {
                 if ($value === 'no') {
-                    $this->array[] = $value;
+                    $this->vendorAnswers[] = $value;
                 }
                 $this->totalQuestions++;
             }
         }
-        $this->noCount = count($this->array);
+        $this->noCount = count($this->vendorAnswers);
     }
 
     public function download()

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Tenant\Sds;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Sds;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -63,7 +63,7 @@ class Search extends Component
             if (! $this->hasSearchCriteria()) {
                 $sdsRecords = collect([]);
             } else {
-                $query = DB::table('sds');
+                $query = Sds::query();
 
                 if (! in_array(mb_trim($this->search), ['', '0'], true)) {
                     $searchTerm = mb_trim($this->search);

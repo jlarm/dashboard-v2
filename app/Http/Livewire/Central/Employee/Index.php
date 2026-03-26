@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Employee;
 
 use App\Models\Course;
+use App\Models\CourseResults;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -51,7 +51,7 @@ class Index extends Component
             return collect();
         }
 
-        return DB::table('course_results')
+        return CourseResults::query()
             ->whereIn('user_id', $userIds)
             ->whereBetween('created_at', [now()->subYear(), now()])
             ->where('passed', 1)
