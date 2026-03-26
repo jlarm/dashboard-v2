@@ -17,6 +17,7 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
+use Throwable;
 
 class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 {
@@ -40,6 +41,13 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         $fileName = $this->createFileName($fileNameStoreName);
         $this->createPdf($path, $fileName, $storeName);
         $this->sendNotification($fileName);
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 
     private function createDirectory(): string

@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class ImportEmployeesJob implements ShouldQueue
 {
@@ -68,5 +69,12 @@ class ImportEmployeesJob implements ShouldQueue
 
             throw_unless($importErrors === [], new Exception('Import failed due to errors'));
         });
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 }

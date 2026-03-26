@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
+use Throwable;
 
 class GenerateIndividualAuditPdfJob implements ShouldQueue
 {
@@ -225,6 +226,13 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->rating();
 
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 
     private function rating(): void

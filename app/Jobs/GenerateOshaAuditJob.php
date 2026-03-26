@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
+use Throwable;
 
 class GenerateOshaAuditJob implements ShouldQueue
 {
@@ -54,6 +55,13 @@ class GenerateOshaAuditJob implements ShouldQueue
             'pdf_path' => $fileName,
             'rating' => $this->rating(),
         ]);
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 
     private function rating(): float

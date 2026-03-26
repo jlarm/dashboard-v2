@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class UploadRedFlagToDigitalOceanJob implements ShouldQueue
 {
@@ -30,6 +31,13 @@ class UploadRedFlagToDigitalOceanJob implements ShouldQueue
         $moved = Storage::disk('do-manuals')->put(tenant('id').'/red-flags/'.$this->manual->pdf_path, $pdf);
         if ($moved) {
             Storage::delete('/'.$this->manual->pdf_path);
+        }
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
         }
     }
 }

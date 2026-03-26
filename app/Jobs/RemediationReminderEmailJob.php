@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Throwable;
 
 class RemediationReminderEmailJob implements ShouldQueue
 {
@@ -54,6 +55,13 @@ class RemediationReminderEmailJob implements ShouldQueue
             $audit->update([
                 'reminder_logs' => [now()->toDateString()],
             ]);
+        }
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
         }
     }
 }

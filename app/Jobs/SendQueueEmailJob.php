@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 class SendQueueEmailJob implements ShouldQueue
 {
@@ -21,5 +22,12 @@ class SendQueueEmailJob implements ShouldQueue
     public function handle(): void
     {
         Mail::to($this->invite->email)->send(new InviteMail($this->invite));
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 }

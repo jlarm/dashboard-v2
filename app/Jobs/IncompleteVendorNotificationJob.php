@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
+use Throwable;
 
 class IncompleteVendorNotificationJob implements ShouldQueue
 {
@@ -33,5 +34,12 @@ class IncompleteVendorNotificationJob implements ShouldQueue
 
         Notification::route('mail', $this->vendor->email)
             ->notify(new VendorFormNotification($this->vendor));
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 }

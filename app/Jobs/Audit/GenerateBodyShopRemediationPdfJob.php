@@ -17,6 +17,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
+use Throwable;
 
 class GenerateBodyShopRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
 {
@@ -57,6 +58,13 @@ class GenerateBodyShopRemediationPdfJob implements ShouldBeEncrypted, ShouldQueu
             ]);
         } catch (Exception $e) {
             Log::error('PDF Generation Failed: '.$e->getMessage());
+        }
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
         }
     }
 

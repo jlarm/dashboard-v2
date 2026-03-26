@@ -16,6 +16,7 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
+use Throwable;
 
 class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
 {
@@ -34,6 +35,13 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
         $fileName = $this->createFileName();
         $this->createPdf($fileName);
         $this->updateAudit($fileName);
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 
     private function rating(): string

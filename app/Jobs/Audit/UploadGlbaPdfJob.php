@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class UploadGlbaPdfJob implements ShouldQueue
 {
@@ -32,6 +33,13 @@ class UploadGlbaPdfJob implements ShouldQueue
         if ($move) {
             Storage::delete('/glba/');
             $this->glbaViolationAudit->update(['pdf_path' => $path]);
+        }
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
         }
     }
 }

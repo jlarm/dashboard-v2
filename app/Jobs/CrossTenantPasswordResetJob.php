@@ -15,6 +15,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Throwable;
 
 class CrossTenantPasswordResetJob implements ShouldQueue
 {
@@ -70,5 +71,12 @@ class CrossTenantPasswordResetJob implements ShouldQueue
                 tenancy()->end();
             }
         });
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 }

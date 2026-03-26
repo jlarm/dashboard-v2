@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class UploadAuditToDigitalOceanJob implements ShouldQueue
 {
@@ -30,6 +31,13 @@ class UploadAuditToDigitalOceanJob implements ShouldQueue
         $moved = Storage::disk('do-audits')->put(tenant('id').'/finance/'.$this->financeAudit->pdf_path, $pdf);
         if ($moved) {
             Storage::delete('/finance-audits/'.$this->financeAudit->pdf_path);
+        }
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
         }
     }
 }

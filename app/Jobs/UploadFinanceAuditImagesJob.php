@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
+use Throwable;
 
 class UploadFinanceAuditImagesJob implements ShouldQueue
 {
@@ -23,6 +24,13 @@ class UploadFinanceAuditImagesJob implements ShouldQueue
         for ($i = 1; $i <= 49; $i++) {
             $this->financeAudit->syncFromMediaLibraryRequest($this->{'finance_q'.$i.'_images'})
                 ->toMediaCollection('finance_q'.$i.'_images', 'digitalocean');
+        }
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
         }
     }
 }

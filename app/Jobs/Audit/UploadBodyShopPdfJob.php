@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class UploadBodyShopPdfJob implements ShouldQueue
 {
@@ -32,6 +33,13 @@ class UploadBodyShopPdfJob implements ShouldQueue
         if ($move) {
             Storage::delete('/bodyshop/');
             $this->bodyShopViolationAudit->update(['pdf_path' => $path]);
+        }
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
         }
     }
 }

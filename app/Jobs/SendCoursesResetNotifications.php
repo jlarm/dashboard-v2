@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 class SendCoursesResetNotifications implements ShouldQueue
 {
@@ -36,5 +37,12 @@ class SendCoursesResetNotifications implements ShouldQueue
                     );
                 }
             });
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 }

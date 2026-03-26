@@ -13,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Spatie\Browsershot\Browsershot;
+use Throwable;
 
 class GeneratePdfJob implements ShouldQueue
 {
@@ -53,6 +54,13 @@ class GeneratePdfJob implements ShouldQueue
         $this->contract->update([
             'pdf_path' => $this->createFileName(),
         ]);
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 
     protected function reviewLabel($service): string

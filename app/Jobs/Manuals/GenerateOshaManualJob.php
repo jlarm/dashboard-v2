@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Browsershot\Browsershot;
+use Throwable;
 
 class GenerateOshaManualJob implements ShouldQueue
 {
@@ -37,5 +38,12 @@ class GenerateOshaManualJob implements ShouldQueue
         $this->manual->update([
             'pdf_path' => $fileName,
         ]);
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 }

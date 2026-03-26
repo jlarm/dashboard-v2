@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use Stancl\Tenancy\Contracts\Tenant;
+use Throwable;
 
 class CreateFrameworkDirectoriesForTenantJob
 {
@@ -20,5 +21,12 @@ class CreateFrameworkDirectoriesForTenantJob
                 mkdir($cachePath, 0777, true);
             }
         });
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 }

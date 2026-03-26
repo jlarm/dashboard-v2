@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class UploadAuditImagesJob implements ShouldQueue
 {
@@ -30,6 +31,13 @@ class UploadAuditImagesJob implements ShouldQueue
                 // Delete the temporary file
                 Storage::disk('public')->delete($path);
             }
+        }
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
         }
     }
 }

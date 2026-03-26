@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class TestRedisJob implements ShouldQueue
 {
@@ -30,5 +31,12 @@ class TestRedisJob implements ShouldQueue
     {
         // This is the core action: writing a distinct message to the log.
         Log::info('*** REDIS QUEUE TEST SUCCESSFUL: TestRedisJob was processed! ***');
+    }
+
+    public function failed(?Throwable $exception): void
+    {
+        if ($exception !== null) {
+            report($exception);
+        }
     }
 }
