@@ -42,7 +42,7 @@ class Index extends Component
 
     private function totalCourses(): int
     {
-        return Course::query()->count() - 1;
+        return Course::query()->count();
     }
 
     private function completedCounts(Collection $userIds): Collection

@@ -40,7 +40,8 @@ it('passes totalCourses and completed counts to each index-item', function (): v
 
     Livewire::test(Index::class)
         ->assertStatus(200)
-        ->assertSee($user->name);
+        ->assertSee($user->name)
+        ->assertSee('1 of 1 passed');
 });
 
 it('shows zero completed for users with no course results', function (): void {
