@@ -10,7 +10,6 @@ use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
 use App\Notifications\ResetPassword;
-use App\Services\UserCourseService;
 use App\Traits\HasAudits;
 use App\Traits\HasCourses;
 use App\Traits\HasManuals;
@@ -99,7 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function currentStoreName(): string
     {
-        return $this->currentStore()->first()->name ?? tenant('name');
+        return $this->currentStore()->name ?? tenant('name');
     }
 
     public function getPhoneNumberAttribute(): string
@@ -270,16 +269,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function courseOverrides(): HasMany
     {
         return $this->hasMany(CourseUser::class, 'user_id');
-    }
-
-    public function getCurrentCoursesAttribute()
-    {
-        $service = app(UserCourseService::class);
-        $courses = $service->getCoursesSimple($this);
-
-        return $courses->map(fn ($course): array => [
-            'id' => $course->id,
-            'name' => $course->name,
-        ]);
     }
 }
