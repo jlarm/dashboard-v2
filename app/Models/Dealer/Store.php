@@ -103,6 +103,9 @@ class Store extends Model implements HasMedia
         'frequency',
         'videos',
     ];
+    protected $hidden = [
+        'fi_password',
+    ];
     protected $casts = [
         'ip_addresses' => 'array',
         'website_urls' => 'array',
@@ -117,6 +120,7 @@ class Store extends Model implements HasMedia
         'frequency' => Frequency::class,
         'remediation_notifications_last_sent' => 'datetime',
         'videos' => 'boolean',
+        'fi_password' => 'encrypted',
     ];
 
     public function getSlugOptions(): SlugOptions

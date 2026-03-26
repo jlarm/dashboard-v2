@@ -7,7 +7,6 @@ namespace App\Http\Livewire\Dealer\Store;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -181,7 +180,7 @@ class SingleOnboardingDetails extends Component
         $this->reinsurance = $this->store->reinsurance;
         $this->admin_name = $this->store->admin_name;
         $this->fi_username = $this->store->fi_username;
-        $this->fi_password = $this->store->fi_password ? Crypt::decryptString($this->store->fi_password) : null;
+        $this->fi_password = $this->store->fi_password;
         $this->standard_dpp_rate = $this->store->standard_dpp_rate;
     }
 
@@ -225,7 +224,7 @@ class SingleOnboardingDetails extends Component
             'reinsurance' => $this->reinsurance,
             'admin_name' => $this->admin_name,
             'fi_username' => $this->fi_username,
-            'fi_password' => Crypt::encryptString($this->fi_password),
+            'fi_password' => $this->fi_password,
             'standard_dpp_rate' => $this->standard_dpp_rate,
         ]);
 
