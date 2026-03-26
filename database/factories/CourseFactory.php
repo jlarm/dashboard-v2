@@ -12,6 +12,9 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
+            'slug' => fake()->unique()->slug(),
+            'name' => fake()->sentence(3),
+            'slides' => json_encode([]),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

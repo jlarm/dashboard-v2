@@ -30,7 +30,11 @@
                     </x-slot>
                     <x-slot name="body">
                         @foreach($users as $user)
-                            <livewire:central.employee.index-item :user="$user" :key="$user->id"/>
+                            <livewire:central.employee.index-item
+                                :user="$user"
+                                :totalCourses="$totalCourses"
+                                :completed="$completedCounts->get($user->id, 0)"
+                                :key="$user->id"/>
                         @endforeach
                     </x-slot>
                 </x-table>
