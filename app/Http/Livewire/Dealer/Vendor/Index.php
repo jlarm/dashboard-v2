@@ -28,7 +28,7 @@ class Index extends Component
         $scopedStoreIds = $this->resolveScopedStoreIds();
 
         return view('livewire.dealer.vendor.index', [
-            'vendors' => Vendor::with('store:id,name')
+            'vendors' => Vendor::with(['store:id,name', 'latestForm'])
                 ->where(function (Builder $query) use ($scopedStoreIds): void {
                     if ($scopedStoreIds->isNotEmpty()) {
                         $query->whereIn('store_id', $scopedStoreIds);

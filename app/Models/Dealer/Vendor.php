@@ -7,6 +7,7 @@ namespace App\Models\Dealer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -81,6 +82,11 @@ class Vendor extends Model
     public function forms(): HasMany
     {
         return $this->hasMany(VendorForm::class);
+    }
+
+    public function latestForm(): HasOne
+    {
+        return $this->hasOne(VendorForm::class)->latestOfMany();
     }
 
     protected static function booted(): void

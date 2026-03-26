@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\Vendor;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class IndexItem extends Component
@@ -14,8 +15,6 @@ class IndexItem extends Component
     public $noCount;
     public $totalQuestions = 0;
     public $array = [];
-    private ?object $latestForm = null;
-    private bool $latestFormLoaded = false;
 
     public function mount(): void
     {
@@ -53,18 +52,13 @@ class IndexItem extends Component
         return $form->signature || $form->document_path;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.vendor.index-item');
     }
 
     private function getLatestForm(): ?object
     {
-        if (! $this->latestFormLoaded) {
-            $this->latestForm = $this->vendor->forms()->latest()->first();
-            $this->latestFormLoaded = true;
-        }
-
-        return $this->latestForm;
+        return $this->vendor->latestForm;
     }
 }
