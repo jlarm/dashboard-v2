@@ -195,7 +195,7 @@ class Store extends Model implements HasMedia
 
     public function users(): BelongsToMany
     {
-        return $this->BelongsToMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function dealerInfo(): HasOne
@@ -258,12 +258,12 @@ class Store extends Model implements HasMedia
         return $this->hasMany(OshaViolationAudit::class);
     }
 
-    public function BodyShopViolationAudits(): HasMany
+    public function bodyShopViolationAudits(): HasMany
     {
         return $this->hasMany(BodyShopViolationAudit::class);
     }
 
-    public function GlbaViolationAudits(): HasMany
+    public function glbaViolationAudits(): HasMany
     {
         return $this->hasMany(GlbaViolationAudit::class);
     }

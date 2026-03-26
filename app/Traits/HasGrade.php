@@ -32,7 +32,7 @@ trait HasGrade
     {
         return $this->rememberGradeValue(
             'glba',
-            fn () => $this->GlbaViolationAudits()
+            fn () => $this->glbaViolationAudits()
                 ->whereNotNull('grade')
                 ->where('grade', '!=', 'N/A')
                 ->orderByDesc('date')
@@ -46,7 +46,7 @@ trait HasGrade
     {
         return $this->rememberGradeValue(
             'body_shop',
-            fn () => $this->BodyShopViolationAudits()
+            fn () => $this->bodyShopViolationAudits()
                 ->whereNotNull('grade')
                 ->where('grade', '!=', 'N/A')
                 ->orderByDesc('date')
