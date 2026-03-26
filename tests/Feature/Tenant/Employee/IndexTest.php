@@ -80,6 +80,82 @@ describe('employee index component query optimization', function (): void {
             });
     });
 
+    it('uses course expiry years instead of hardcoded course ids when eager loading results', function (): void {
+        $department = Department::query()->create([
+            'name' => 'Accounting '.uniqid(),
+            'slug' => 'accounting-'.uniqid(),
+        ]);
+
+        $store = Store::query()->firstOrFail();
+
+        $employee = User::query()->create([
+            'name' => 'Expiry Window Employee',
+            'email' => 'expiry-window-employee@test.com',
+            'password' => bcrypt('password'),
+            'department_id' => $department->id,
+        ]);
+        $employee->assignRole('Employee');
+        $employee->stores()->attach($store->id);
+
+        $threeYearCourse = Course::query()->create([
+            'name' => 'Three Year Course '.uniqid(),
+            'slug' => 'three-year-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+            'years_expires' => 3,
+        ]);
+
+        $oneYearCourse = Course::query()->create([
+            'name' => 'One Year Course '.uniqid(),
+            'slug' => 'one-year-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+            'years_expires' => 1,
+        ]);
+
+        $threeYearValidResult = CourseResults::query()->create([
+            'user_id' => $employee->id,
+            'course_id' => $threeYearCourse->id,
+            'passed' => 1,
+            'percentage' => 100,
+            'created_at' => now()->subYears(2),
+            'updated_at' => now()->subYears(2),
+        ]);
+
+        $oneYearExpiredResult = CourseResults::query()->create([
+            'user_id' => $employee->id,
+            'course_id' => $oneYearCourse->id,
+            'passed' => 1,
+            'percentage' => 100,
+            'created_at' => now()->subYears(2),
+            'updated_at' => now()->subYears(2),
+        ]);
+
+        $this->actingAs($this->consultant);
+        app()->instance('currentStore', null);
+        app()->instance('scopedStoreIds', collect([$store->id]));
+
+        Livewire::test(Index::class)
+            ->assertOk()
+            ->assertViewHas('users', function ($users) use ($employee, $threeYearValidResult, $oneYearExpiredResult): bool {
+                $indexedEmployee = collect($users->items())->firstWhere('id', $employee->id);
+                if (! $indexedEmployee instanceof User) {
+                    return false;
+                }
+
+                if (! $indexedEmployee->relationLoaded('results')) {
+                    return false;
+                }
+
+                $resultIds = $indexedEmployee->results->pluck('id')->all();
+
+                return in_array($threeYearValidResult->id, $resultIds, true)
+                    && ! in_array($oneYearExpiredResult->id, $resultIds, true);
+            });
+    });
+
     it('renders multiple stores as primary store with a compact additional count', function (): void {
         $this->tenant->locations = true;
         $this->tenant->save();

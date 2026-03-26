@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Employee;
 
+use App\Models\Dealer\Course;
 use App\Models\Department;
 use App\Models\User;
 use App\Services\TrainingComplianceService;
+use Closure;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
@@ -522,20 +524,44 @@ class Index extends Component
 
     private function constrainResultsQuery(HasMany $query): void
     {
-        $generalCourseCutoffDate = now()->subYear();
-        $specialCourseCutoffDate = now()->subYears(3);
-        $specialCourseIds = [9, 10, 11, 12];
+        $courseIdsByExpiryYears = Course::query()
+            ->select(['id', 'years_expires'])
+            ->get()
+            ->groupBy(fn (Course $course): int => (int) ($course->years_expires ?? 1))
+            ->map(fn (Collection $courses): array => $courses->pluck('id')->all())
+            ->all();
 
         $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
             ->where('passed', 1)
-            ->where(function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
-                $query->where(function ($query) use ($generalCourseCutoffDate, $specialCourseIds): void {
-                    $query->whereNotIn('course_id', $specialCourseIds)
-                        ->where('created_at', '>=', $generalCourseCutoffDate);
-                })->orWhere(function ($query) use ($specialCourseCutoffDate, $specialCourseIds): void {
-                    $query->whereIn('course_id', $specialCourseIds)
-                        ->where('created_at', '>=', $specialCourseCutoffDate);
-                });
+            ->where(function ($query) use ($courseIdsByExpiryYears): void {
+                $hasCourseWindow = false;
+
+                foreach ($courseIdsByExpiryYears as $yearsExpires => $courseIds) {
+                    if ($courseIds === []) {
+                        continue;
+                    }
+
+                    $windowStartsAt = now()->subYears((int) $yearsExpires);
+
+                    if (! $hasCourseWindow) {
+                        $query->where(function ($query) use ($courseIds, $windowStartsAt): void {
+                            $query->whereIn('course_id', $courseIds)
+                                ->where('created_at', '>=', $windowStartsAt);
+                        });
+                        $hasCourseWindow = true;
+
+                        continue;
+                    }
+
+                    $query->orWhere(function ($query) use ($courseIds, $windowStartsAt): void {
+                        $query->whereIn('course_id', $courseIds)
+                            ->where('created_at', '>=', $windowStartsAt);
+                    });
+                }
+
+                if (! $hasCourseWindow) {
+                    $query->whereRaw('1 = 0');
+                }
             });
     }
 
@@ -617,18 +643,9 @@ class Index extends Component
      *     expiring_soon: int,
      *     status: 'compliant'|'at_risk'|'overdue'|'unassigned'
      * }>  $summaries
-     * @return array{
-     *     employees: int,
-     *     compliant: int,
-     *     at_risk: int,
-     *     overdue: int,
-     *     unassigned: int,
-     *     incomplete_courses: int,
-     *     expired_courses: int,
-     *     expiring_soon_courses: int
-     * }
+     * @return Closure
      */
-    private function summarizeTrainingCounts(Collection $summaries): array
+    private function summarizeTrainingCounts(Collection $summaries)
     {
         return $summaries->reduce(
             function (array $carry, array $summary): array {
