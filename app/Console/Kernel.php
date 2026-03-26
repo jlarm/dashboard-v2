@@ -16,12 +16,14 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('telescope:prune')
             ->daily()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         $schedule->command('vendor:send-notification')
             ->daily()
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Clean activity logs - removes old activity log records
@@ -29,6 +31,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('00:15')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Process user invitations
@@ -36,6 +39,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('00:30')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Clean temporary uploads
@@ -43,6 +47,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('00:45')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Clear Livewire temporary files for all tenants
@@ -50,6 +55,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('01:00')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Create backups
@@ -57,6 +63,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('01:30')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Clean old backups
@@ -64,6 +71,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('03:01')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Synchronize GoPhish user groups
@@ -71,6 +79,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('04:00')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Synchronize GoPhish user group departments
@@ -78,24 +87,28 @@ class Kernel extends ConsoleKernel
             ->dailyAt('04:30')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         $schedule->command('course:reminder')
             ->dailyAt('05:00')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         $schedule->command('remediation:reminder')
             ->dailyAt('05:30')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         $schedule->command('run:course-reminder')
             ->dailyAt('06:00')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Clean up old deal jacket reports
@@ -103,6 +116,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('02:00')
             ->runInBackground()
             ->withoutOverlapping()
+            ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
         // Commented out commands - preserved for reference or future use
