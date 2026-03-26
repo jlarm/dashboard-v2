@@ -16,7 +16,7 @@ use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
 use Database\Seeders\RoleAndPermissionSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Tests\TenantTestCase;
@@ -24,7 +24,7 @@ use Tests\TestCase;
 
 uses(
     TestCase::class,
-    RefreshDatabase::class,
+    LazilyRefreshDatabase::class,
 )->in('Feature/Auth', 'Feature/Central');
 
 uses(TenantTestCase::class)->in('Feature/Tenant');
