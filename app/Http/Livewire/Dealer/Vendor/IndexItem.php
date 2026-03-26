@@ -31,8 +31,7 @@ class IndexItem extends Component
 
     public function download()
     {
-        $vendor = Vendor::query()->where('id', $this->vendor->id)->first();
-        $pdf = PDF::loadView('dealer.vendor.pdf.form-submission', ['vendor' => $vendor]);
+        $pdf = PDF::loadView('dealer.vendor.pdf.form-submission', ['vendor' => $this->vendor]);
 
         return response()->streamDownload(function () use ($pdf): void {
             echo $pdf->output();
