@@ -7,6 +7,7 @@ namespace App\Listeners;
 use App\Models\Dealer\VendorEmailLog;
 use App\Models\VendorEmailLogIndex;
 use Illuminate\Mail\Events\MessageSent;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\Mime\Address;
 
@@ -81,6 +82,11 @@ class LogSentMessage
             tenancy()->central(function () use ($tenantId, $normalizedMessageId): void {
                 VendorEmailLogIndex::query()->updateOrCreate(['message_id' => $normalizedMessageId], ['tenant_id' => $tenantId]);
             });
+        } else {
+            Log::warning('VendorEmailLog created outside tenant context — index entry skipped', [
+                'message_id' => $messageId,
+                'vendor_form_id' => $vendorFormId,
+            ]);
         }
     }
 }
