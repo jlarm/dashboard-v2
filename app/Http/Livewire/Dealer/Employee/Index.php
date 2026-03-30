@@ -33,8 +33,8 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
-    public ?int $selectedDepartment = null;
-    public ?int $selectedRole = null;
+    public int|string|null $selectedDepartment = null;
+    public int|string|null $selectedRole = null;
     public bool $showIncompleteCourseUsers = false;
     public bool $showExpiredCourseUsers = false;
     public bool $showExpiringSoonCourseUsers = false;
