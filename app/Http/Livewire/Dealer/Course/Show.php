@@ -113,7 +113,9 @@ class Show extends Component
     {
         if ($this->course->video_id) {
             $this->video = $this->getVimeoVideo();
-        } else {
+        }
+
+        if (! $this->video) {
             $this->slides = collect($this->course->slides)->toArray();
         }
     }
