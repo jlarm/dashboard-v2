@@ -372,6 +372,83 @@ it('skips users whose stores are not in illinois', function (): void {
     });
 });
 
+it('includes users whose store state is IL abbreviation', function (): void {
+    $this->tenant->run(function (): void {
+        $sourceCourse = Course::query()->create([
+            'name' => 'Sexual Harassment Explained',
+            'slug' => 'sexual-harassment-e',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $targetEmployeeCourse = Course::query()->create([
+            'name' => 'Illinois Sexual Harassment',
+            'slug' => 'sexual-harassment-illinois',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        Course::query()->create([
+            'name' => 'Illinois Sexual Harassment Manager',
+            'slug' => 'sexual-harassment-illinois-m',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $ilStore = Store::query()->create([
+            'name' => 'IL Store',
+            'slug' => 'il-store',
+            'state' => 'IL',
+        ]);
+
+        Role::query()->firstOrCreate(['name' => 'Employee']);
+
+        $user = User::query()->create([
+            'name' => 'IL Employee',
+            'email' => 'il-employee@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->stores()->attach($ilStore->id);
+        $user->assignRole('Employee');
+
+        CourseResults::query()->create([
+            'percentage' => 100,
+            'passed' => true,
+            'course_id' => $sourceCourse->id,
+            'user_id' => $user->id,
+        ]);
+
+        expect(
+            CourseResults::query()->where('course_id', $targetEmployeeCourse->id)->count()
+        )->toBe(0);
+    });
+
+    $exitCode = Artisan::call('courses:backfill-illinois-harassment-results', [
+        '--tenant' => $this->tenant->id,
+    ]);
+    $output = Artisan::output();
+
+    expect($exitCode)->toBe(0)
+        ->and($output)->toContain('candidate=1')
+        ->and($output)->toContain('created=1');
+
+    $this->tenant->run(function (): void {
+        $user = User::query()->where('email', 'il-employee@example.com')->firstOrFail();
+
+        expect(
+            CourseResults::query()
+                ->where('user_id', $user->id)
+                ->whereHas('course', function ($query): void {
+                    $query->where('slug', 'sexual-harassment-illinois');
+                })
+                ->count()
+        )->toBe(1);
+    });
+});
+
 it('does not write records during dry-run', function (): void {
     $this->tenant->run(function (): void {
         $sourceCourse = Course::query()->create([

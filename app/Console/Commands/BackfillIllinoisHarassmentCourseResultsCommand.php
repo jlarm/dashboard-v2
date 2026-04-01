@@ -16,7 +16,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
     private const SOURCE_COURSE_SLUG = 'sexual-harassment-e';
     private const TARGET_EMPLOYEE_COURSE_SLUG = 'sexual-harassment-illinois';
     private const TARGET_MANAGER_COURSE_SLUG = 'sexual-harassment-illinois-m';
-    private const TARGET_STATE = 'Illinois';
+    private const TARGET_STATES = ['illinois', 'il'];
     private const MANAGER_ROLE_NAMES = ['Owner', 'GM', 'CFO', 'GSM', 'Manager'];
     private const EMPLOYEE_ROLE_NAMES = ['Employee', 'Porter/Driver'];
 
@@ -137,7 +137,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
         $candidateUsers = User::query()
             ->whereHas('stores', function (Builder $query): void {
-                $query->whereRaw('LOWER(state) = ?', [mb_strtolower(self::TARGET_STATE)]);
+                $query->whereRaw('LOWER(TRIM(state)) IN (?, ?)', self::TARGET_STATES);
             })
             ->whereHas('roles', function (Builder $query): void {
                 $query->whereIn('name', [...self::MANAGER_ROLE_NAMES, ...self::EMPLOYEE_ROLE_NAMES]);
