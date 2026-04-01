@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 {
-    private const SOURCE_COURSE_SLUG = 'sexual-harassment-e';
+    private const SOURCE_COURSE_SLUGS = ['sexual-harassment-e', 'sexual-harassment-m'];
     private const TARGET_EMPLOYEE_COURSE_SLUG = 'sexual-harassment-illinois';
     private const TARGET_MANAGER_COURSE_SLUG = 'sexual-harassment-illinois-m';
     private const TARGET_STATES = ['illinois', 'il'];
@@ -26,7 +26,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
         {--tenant= : Tenant ID to run against}
         {--email= : Limit run to a specific user email}
         {--dry-run : Preview without writing course results}';
-    protected $description = 'Backfill Illinois harassment course results from passed sexual-harassment-e results';
+    protected $description = 'Backfill Illinois harassment course results from passed sexual harassment course results';
 
     public function handle(): int
     {
@@ -146,15 +146,19 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
             ->whereIn('slug', [self::TARGET_EMPLOYEE_COURSE_SLUG, self::TARGET_MANAGER_COURSE_SLUG])
             ->get()
             ->keyBy('slug');
-        $sourceCourseExists = Course::query()->where('slug', self::SOURCE_COURSE_SLUG)->exists();
+        $sourceCourseIds = Course::query()
+            ->whereIn('slug', self::SOURCE_COURSE_SLUGS)
+            ->pluck('id');
 
-        if (! $sourceCourseExists
+        if ($sourceCourseIds->isEmpty()
             || ! $targetCourses->has(self::TARGET_EMPLOYEE_COURSE_SLUG)
             || ! $targetCourses->has(self::TARGET_MANAGER_COURSE_SLUG)) {
             return [
                 'error' => 'Missing source or target course slug in tenant.',
             ];
         }
+
+        $targetCourseIds = $targetCourses->pluck('id');
 
         $candidateUsers = User::query()
             ->whereHas('stores', function (Builder $query): void {
@@ -184,10 +188,8 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
             $sourceResult = CourseResults::query()
                 ->where('user_id', $user->id)
+                ->whereIn('course_id', $sourceCourseIds)
                 ->where('passed', true)
-                ->whereHas('course', function (Builder $query): void {
-                    $query->where('slug', self::SOURCE_COURSE_SLUG);
-                })
                 ->orderByDesc('updated_at')
                 ->orderByDesc('id')
                 ->first();
@@ -198,7 +200,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
                     $skippedDetails[] = [
                         'user_id' => $user->id,
                         'email' => (string) $user->email,
-                        'reason' => 'no_passed_source_result_for_sexual-harassment-e',
+                        'reason' => 'no_passed_source_result_for_sexual-harassment-e-or-sexual-harassment-m',
                     ];
                 }
 
@@ -207,9 +209,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
             $targetResultExists = CourseResults::query()
                 ->where('user_id', $user->id)
-                ->whereHas('course', function (Builder $query): void {
-                    $query->whereIn('slug', [self::TARGET_EMPLOYEE_COURSE_SLUG, self::TARGET_MANAGER_COURSE_SLUG]);
-                })
+                ->whereIn('course_id', $targetCourseIds)
                 ->exists();
 
             if ($targetResultExists) {

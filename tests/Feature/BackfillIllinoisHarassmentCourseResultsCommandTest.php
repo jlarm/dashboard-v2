@@ -659,7 +659,7 @@ it('shows skip reason for a specific filtered email in dry-run', function (): vo
         ->and($output)->toContain('created=0')
         ->and($output)->toContain('skipped_no_source=1')
         ->and($output)->toContain('missing-source-employee@example.com')
-        ->and($output)->toContain('reason=no_passed_source_result_for_sexual-harassment-e');
+        ->and($output)->toContain('reason=no_passed_source_result_for_sexual-harassment-e-or-sexual-harassment-m');
 });
 
 it('is idempotent when run multiple times and does not create duplicate target results', function (): void {
@@ -816,6 +816,93 @@ it('backfills illinois users without mapped roles to sexual-harassment-illinois'
                 ->where('user_id', $user->id)
                 ->whereHas('course', function ($query): void {
                     $query->where('slug', 'sexual-harassment-illinois');
+                })
+                ->count()
+        )->toBe(1);
+    });
+});
+
+it('backfills manager users from passed sexual-harassment-m when sexual-harassment-e is not passed', function (): void {
+    $this->tenant->run(function (): void {
+        Course::query()->create([
+            'name' => 'Sexual Harassment Explained',
+            'slug' => 'sexual-harassment-e',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $managerSourceCourse = Course::query()->create([
+            'name' => 'Sexual Harassment Manager',
+            'slug' => 'sexual-harassment-m',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        Course::query()->create([
+            'name' => 'Illinois Sexual Harassment',
+            'slug' => 'sexual-harassment-illinois',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $targetManagerCourse = Course::query()->create([
+            'name' => 'Illinois Sexual Harassment Manager',
+            'slug' => 'sexual-harassment-illinois-m',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $illinoisStore = Store::query()->create([
+            'name' => 'Illinois Manager Source M Store',
+            'slug' => 'illinois-manager-source-m-store',
+            'state' => 'Illinois',
+        ]);
+        Role::query()->firstOrCreate(['name' => 'Manager']);
+
+        $user = User::query()->create([
+            'name' => 'Illinois Manager Source M',
+            'email' => 'illinois-manager-source-m@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->stores()->attach($illinoisStore->id);
+        $user->assignRole('Manager');
+
+        CourseResults::query()->create([
+            'percentage' => 88,
+            'passed' => true,
+            'course_id' => $managerSourceCourse->id,
+            'user_id' => $user->id,
+        ]);
+
+        expect(
+            CourseResults::query()
+                ->where('course_id', $targetManagerCourse->id)
+                ->where('user_id', $user->id)
+                ->count()
+        )->toBe(0);
+    });
+
+    $exitCode = Artisan::call('courses:backfill-illinois-harassment-results', [
+        '--tenant' => $this->tenant->id,
+    ]);
+    $output = Artisan::output();
+
+    expect($exitCode)->toBe(0)
+        ->and($output)->toContain('candidate=1')
+        ->and($output)->toContain('created=1');
+
+    $this->tenant->run(function (): void {
+        $user = User::query()->where('email', 'illinois-manager-source-m@example.com')->firstOrFail();
+
+        expect(
+            CourseResults::query()
+                ->where('user_id', $user->id)
+                ->whereHas('course', function ($query): void {
+                    $query->where('slug', 'sexual-harassment-illinois-m');
                 })
                 ->count()
         )->toBe(1);
