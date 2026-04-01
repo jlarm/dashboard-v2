@@ -19,16 +19,21 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
     private const TARGET_STATES = ['illinois', 'il'];
     private const MANAGER_ROLE_NAMES = ['Owner', 'GM', 'CFO', 'GSM', 'Manager'];
     private const EMPLOYEE_ROLE_NAMES = ['Employee', 'Porter/Driver'];
+    private const NORMALIZED_MANAGER_ROLE_NAMES = ['owner', 'gm', 'cfo', 'gsm', 'manager'];
+    private const NORMALIZED_EMPLOYEE_ROLE_NAMES = ['employee', 'porterdriver'];
 
     protected $signature = 'courses:backfill-illinois-harassment-results
         {--tenant= : Tenant ID to run against}
+        {--email= : Limit run to a specific user email}
         {--dry-run : Preview without writing course results}';
     protected $description = 'Backfill Illinois harassment course results from passed sexual-harassment-e results';
 
     public function handle(): int
     {
         $tenantId = $this->option('tenant');
+        $email = $this->option('email');
         $dryRun = (bool) $this->option('dry-run');
+        $emailFilter = is_string($email) && trim($email) !== '' ? mb_strtolower(trim($email)) : null;
 
         $tenants = Dealership::query()
             ->when(
@@ -52,13 +57,14 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
         tenancy()->runForMultiple($tenantIds->isEmpty() ? null : $tenantIds, function ($tenant) use (
             $dryRun,
+            $emailFilter,
             &$overallCreated,
             &$overallSkippedNoSource,
             &$overallSkippedExisting,
             &$overallCandidateUsers
         ): void {
             /** @var Dealership $tenant */
-            $stats = $this->processTenant($dryRun);
+            $stats = $this->processTenant($dryRun, $emailFilter);
 
             if (isset($stats['error'])) {
                 $this->warn("{$tenant->id}: {$stats['error']}");
@@ -90,6 +96,16 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
                     );
                 }
             }
+
+            if ($dryRun && $stats['skipped_details'] !== []) {
+                foreach ($stats['skipped_details'] as $row) {
+                    $this->line(
+                        "  skipped: user_id={$row['user_id']}, ".
+                        "email={$row['email']}, ".
+                        "reason={$row['reason']}"
+                    );
+                }
+            }
         });
 
         $prefix = $dryRun ? '[dry-run] ' : '';
@@ -116,10 +132,15 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
      *      target_course_slug:string,
      *      percentage:int,
      *      passed:int|bool
+     *   }>,
+     *   skipped_details: array<int, array{
+     *      user_id:int,
+     *      email:string,
+     *      reason:string
      *   }>
      * }|array{error:string}
      */
-    private function processTenant(bool $dryRun): array
+    private function processTenant(bool $dryRun, ?string $emailFilter = null): array
     {
         $targetCourses = Course::query()
             ->whereIn('slug', [self::TARGET_EMPLOYEE_COURSE_SLUG, self::TARGET_MANAGER_COURSE_SLUG])
@@ -140,7 +161,14 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
                 $query->whereRaw('LOWER(TRIM(state)) IN (?, ?)', self::TARGET_STATES);
             })
             ->whereHas('roles', function (Builder $query): void {
-                $query->whereIn('name', [...self::MANAGER_ROLE_NAMES, ...self::EMPLOYEE_ROLE_NAMES]);
+                $query->whereIn('name', [...self::MANAGER_ROLE_NAMES, ...self::EMPLOYEE_ROLE_NAMES])
+                    ->orWhereRaw(
+                        "REPLACE(REPLACE(LOWER(TRIM(name)), ' ', ''), '/', '') IN (?, ?, ?, ?, ?, ?, ?)",
+                        [...self::NORMALIZED_MANAGER_ROLE_NAMES, ...self::NORMALIZED_EMPLOYEE_ROLE_NAMES]
+                    );
+            })
+            ->when($emailFilter !== null, function (Builder $query) use ($emailFilter): void {
+                $query->whereRaw('LOWER(email) = ?', [$emailFilter]);
             })
             ->with('roles:id,name')
             ->get(['id', 'email']);
@@ -149,6 +177,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
         $skippedNoSourceResult = 0;
         $skippedExistingTargetResult = 0;
         $wouldCreate = [];
+        $skippedDetails = [];
 
         foreach ($candidateUsers as $user) {
             $targetCourseSlug = $this->resolveTargetCourseSlugForUser($user);
@@ -172,6 +201,13 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
             if (! $sourceResult) {
                 $skippedNoSourceResult++;
+                if ($dryRun && $emailFilter !== null) {
+                    $skippedDetails[] = [
+                        'user_id' => $user->id,
+                        'email' => (string) $user->email,
+                        'reason' => 'no_passed_source_result_for_sexual-harassment-e',
+                    ];
+                }
 
                 continue;
             }
@@ -185,6 +221,13 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
             if ($targetResultExists) {
                 $skippedExistingTargetResult++;
+                if ($dryRun && $emailFilter !== null) {
+                    $skippedDetails[] = [
+                        'user_id' => $user->id,
+                        'email' => (string) $user->email,
+                        'reason' => 'existing_target_result',
+                    ];
+                }
 
                 continue;
             }
@@ -220,21 +263,30 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
             'skipped_no_source_result' => $skippedNoSourceResult,
             'skipped_existing_target_result' => $skippedExistingTargetResult,
             'would_create' => $wouldCreate,
+            'skipped_details' => $skippedDetails,
         ];
     }
 
     private function resolveTargetCourseSlugForUser(User $user): ?string
     {
-        $roleNames = $user->roles->pluck('name')->all();
+        $normalizedRoleNames = $user->roles
+            ->pluck('name')
+            ->map(fn (string $name): string => $this->normalizeRoleName($name))
+            ->all();
 
-        if (array_intersect(self::MANAGER_ROLE_NAMES, $roleNames) !== []) {
+        if (array_intersect(self::NORMALIZED_MANAGER_ROLE_NAMES, $normalizedRoleNames) !== []) {
             return self::TARGET_MANAGER_COURSE_SLUG;
         }
 
-        if (array_intersect(self::EMPLOYEE_ROLE_NAMES, $roleNames) !== []) {
+        if (array_intersect(self::NORMALIZED_EMPLOYEE_ROLE_NAMES, $normalizedRoleNames) !== []) {
             return self::TARGET_EMPLOYEE_COURSE_SLUG;
         }
 
         return null;
+    }
+
+    private function normalizeRoleName(string $name): string
+    {
+        return str_replace([' ', '/'], '', mb_strtolower(trim($name)));
     }
 }

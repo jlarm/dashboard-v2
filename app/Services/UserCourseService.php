@@ -14,6 +14,10 @@ class UserCourseService
     private const ADMIN_ROLES = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
 
     private const QUALIFIED_INDIVIDUAL_ROLE_ID = 5;
+    private const STATE_ALIASES = [
+        'il' => 'illinois',
+        'ca' => 'california',
+    ];
 
     private array $courseIdsCache = [];
     private array $courseRoleCache = [];
@@ -143,8 +147,7 @@ class UserCourseService
 
         // State-specific courses that match at least one of the user's states
         $applicableStateCourses = $candidates->filter(
-            fn ($course): bool => $course->states_required !== null
-                && count(array_intersect($userStates, $course->states_required)) > 0
+            fn ($course): bool => $this->statesOverlap($userStates, $course->states_required)
         );
 
         // Slugs of general courses that applicable state courses replace
@@ -156,8 +159,7 @@ class UserCourseService
         return $candidates
             ->filter(function ($course) use ($userStates, $replacedSlugs): bool {
                 // Exclude state-specific courses that don't apply to this user's states
-                if ($course->states_required !== null
-                    && count(array_intersect($userStates, $course->states_required)) === 0) {
+                if ($course->states_required !== null && ! $this->statesOverlap($userStates, $course->states_required)) {
                     return false;
                 }
 
@@ -178,11 +180,47 @@ class UserCourseService
      */
     private function getUserStates(User $user): array
     {
-        if ($user->relationLoaded('stores')) {
-            return $user->stores->pluck('state')->filter()->sort()->unique()->values()->toArray();
+        $states = $user->relationLoaded('stores')
+            ? $user->stores->pluck('state')->filter()->all()
+            : $user->stores()->distinct()->orderBy('state')->pluck('state')->filter()->toArray();
+
+        return collect($states)
+            ->map(fn (mixed $state): string => $this->normalizeState((string) $state))
+            ->filter()
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @param  array<string>  $userStates
+     * @param  array<string>|null  $requiredStates
+     */
+    private function statesOverlap(array $userStates, ?array $requiredStates): bool
+    {
+        if ($requiredStates === null || $requiredStates === []) {
+            return false;
         }
 
-        return $user->stores()->distinct()->orderBy('state')->pluck('state')->filter()->toArray();
+        $normalizedRequiredStates = collect($requiredStates)
+            ->map(fn (mixed $state): string => $this->normalizeState((string) $state))
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
+
+        return count(array_intersect($userStates, $normalizedRequiredStates)) > 0;
+    }
+
+    private function normalizeState(string $state): string
+    {
+        $normalized = mb_strtolower(trim($state));
+        if ($normalized === '') {
+            return '';
+        }
+
+        return self::STATE_ALIASES[$normalized] ?? $normalized;
     }
 
     private function getOverrideCourseIds(User $user, string $type): array

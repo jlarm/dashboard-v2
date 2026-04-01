@@ -527,3 +527,227 @@ it('does not write records during dry-run', function (): void {
         )->toBe(0);
     });
 });
+
+it('includes users with role name variants for porter driver', function (): void {
+    $this->tenant->run(function (): void {
+        $sourceCourse = Course::query()->create([
+            'name' => 'Sexual Harassment Explained',
+            'slug' => 'sexual-harassment-e',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $targetEmployeeCourse = Course::query()->create([
+            'name' => 'Illinois Sexual Harassment',
+            'slug' => 'sexual-harassment-illinois',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        Course::query()->create([
+            'name' => 'Illinois Sexual Harassment Manager',
+            'slug' => 'sexual-harassment-illinois-m',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $illinoisStore = Store::query()->create([
+            'name' => 'Illinois Role Variant Store',
+            'slug' => 'illinois-role-variant-store',
+            'state' => 'Illinois',
+        ]);
+
+        $role = Role::query()->create(['name' => ' porter / driver ']);
+
+        $user = User::query()->create([
+            'name' => 'Role Variant Employee',
+            'email' => 'role-variant-employee@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->stores()->attach($illinoisStore->id);
+        $user->assignRole($role);
+
+        CourseResults::query()->create([
+            'percentage' => 100,
+            'passed' => true,
+            'course_id' => $sourceCourse->id,
+            'user_id' => $user->id,
+        ]);
+
+        expect(
+            CourseResults::query()->where('course_id', $targetEmployeeCourse->id)->count()
+        )->toBe(0);
+    });
+
+    $exitCode = Artisan::call('courses:backfill-illinois-harassment-results', [
+        '--tenant' => $this->tenant->id,
+    ]);
+    $output = Artisan::output();
+
+    expect($exitCode)->toBe(0)
+        ->and($output)->toContain('candidate=1')
+        ->and($output)->toContain('created=1');
+
+    $this->tenant->run(function (): void {
+        $user = User::query()->where('email', 'role-variant-employee@example.com')->firstOrFail();
+
+        expect(
+            CourseResults::query()
+                ->where('user_id', $user->id)
+                ->whereHas('course', function ($query): void {
+                    $query->where('slug', 'sexual-harassment-illinois');
+                })
+                ->count()
+        )->toBe(1);
+    });
+});
+
+it('shows skip reason for a specific filtered email in dry-run', function (): void {
+    $this->tenant->run(function (): void {
+        Course::query()->create([
+            'name' => 'Sexual Harassment Explained',
+            'slug' => 'sexual-harassment-e',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        Course::query()->create([
+            'name' => 'Illinois Sexual Harassment',
+            'slug' => 'sexual-harassment-illinois',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        Course::query()->create([
+            'name' => 'Illinois Sexual Harassment Manager',
+            'slug' => 'sexual-harassment-illinois-m',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $illinoisStore = Store::query()->create([
+            'name' => 'Illinois Missing Source Store',
+            'slug' => 'illinois-missing-source-store',
+            'state' => 'Illinois',
+        ]);
+        Role::query()->firstOrCreate(['name' => 'Employee']);
+
+        $user = User::query()->create([
+            'name' => 'Missing Source Employee',
+            'email' => 'missing-source-employee@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->stores()->attach($illinoisStore->id);
+        $user->assignRole('Employee');
+    });
+
+    $exitCode = Artisan::call('courses:backfill-illinois-harassment-results', [
+        '--tenant' => $this->tenant->id,
+        '--dry-run' => true,
+        '--email' => 'missing-source-employee@example.com',
+    ]);
+    $output = Artisan::output();
+
+    expect($exitCode)->toBe(0)
+        ->and($output)->toContain('candidate=1')
+        ->and($output)->toContain('created=0')
+        ->and($output)->toContain('skipped_no_source=1')
+        ->and($output)->toContain('missing-source-employee@example.com')
+        ->and($output)->toContain('reason=no_passed_source_result_for_sexual-harassment-e');
+});
+
+it('is idempotent when run multiple times and does not create duplicate target results', function (): void {
+    $this->tenant->run(function (): void {
+        $sourceCourse = Course::query()->create([
+            'name' => 'Sexual Harassment Explained',
+            'slug' => 'sexual-harassment-e',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $targetCourse = Course::query()->create([
+            'name' => 'Illinois Sexual Harassment',
+            'slug' => 'sexual-harassment-illinois',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        Course::query()->create([
+            'name' => 'Illinois Sexual Harassment Manager',
+            'slug' => 'sexual-harassment-illinois-m',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $illinoisStore = Store::query()->create([
+            'name' => 'Illinois Idempotent Store',
+            'slug' => 'illinois-idempotent-store',
+            'state' => 'Illinois',
+        ]);
+        Role::query()->firstOrCreate(['name' => 'Employee']);
+
+        $user = User::query()->create([
+            'name' => 'Illinois Idempotent Employee',
+            'email' => 'illinois-idempotent-employee@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->stores()->attach($illinoisStore->id);
+        $user->assignRole('Employee');
+
+        CourseResults::query()->create([
+            'percentage' => 100,
+            'passed' => true,
+            'course_id' => $sourceCourse->id,
+            'user_id' => $user->id,
+        ]);
+
+        expect(
+            CourseResults::query()
+                ->where('course_id', $targetCourse->id)
+                ->where('user_id', $user->id)
+                ->count()
+        )->toBe(0);
+    });
+
+    $firstExitCode = Artisan::call('courses:backfill-illinois-harassment-results', [
+        '--tenant' => $this->tenant->id,
+    ]);
+    $firstOutput = Artisan::output();
+
+    expect($firstExitCode)->toBe(0)
+        ->and($firstOutput)->toContain('candidate=1')
+        ->and($firstOutput)->toContain('created=1')
+        ->and($firstOutput)->toContain('skipped_existing=0');
+
+    $secondExitCode = Artisan::call('courses:backfill-illinois-harassment-results', [
+        '--tenant' => $this->tenant->id,
+    ]);
+    $secondOutput = Artisan::output();
+
+    expect($secondExitCode)->toBe(0)
+        ->and($secondOutput)->toContain('candidate=1')
+        ->and($secondOutput)->toContain('created=0')
+        ->and($secondOutput)->toContain('skipped_existing=1');
+
+    $this->tenant->run(function (): void {
+        $user = User::query()->where('email', 'illinois-idempotent-employee@example.com')->firstOrFail();
+
+        expect(
+            CourseResults::query()
+                ->where('user_id', $user->id)
+                ->whereHas('course', function ($query): void {
+                    $query->where('slug', 'sexual-harassment-illinois');
+                })
+                ->count()
+        )->toBe(1);
+    });
+});
