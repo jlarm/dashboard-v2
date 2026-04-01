@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Livewire\WithFileUploads;
+use Spatie\Permission\Models\Role;
 use Throwable;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -32,6 +33,7 @@ class Import extends Modal
 
         try {
             $courses = $this->parseCourseImportPayload();
+            $courses = $this->resolveRoleNames($courses);
             $importStats = $this->upsertCentralCourses($courses);
 
             tenancy()->central(function () use ($courses): void {
@@ -195,7 +197,45 @@ class Import extends Modal
             );
 
             $tenantCourse->departments()->sync($course['department']);
-            $tenantCourse->roles()->sync($course['roles']);
+
+            $tenantRoleIds = Role::query()
+                ->whereIn('name', $course['role_names'])
+                ->pluck('id')
+                ->toArray();
+            $tenantCourse->roles()->sync($tenantRoleIds);
         }
+    }
+
+    /**
+     * Resolves role IDs in each course to role names using the central roles table,
+     * so they can be safely re-resolved per tenant without ID mismatches.
+     *
+     * @param  array<int, array<string, mixed>>  $courses
+     * @return array<int, array<string, mixed>>
+     */
+    private function resolveRoleNames(array $courses): array
+    {
+        $allRoleIds = collect($courses)
+            ->pluck('roles')
+            ->flatten()
+            ->unique()
+            ->filter()
+            ->values()
+            ->toArray();
+
+        $roleNamesById = Role::query()
+            ->whereIn('id', $allRoleIds)
+            ->pluck('name', 'id');
+
+        foreach ($courses as &$course) {
+            $course['role_names'] = collect($course['roles'])
+                ->map(fn (int $id): ?string => $roleNamesById->get($id))
+                ->filter()
+                ->values()
+                ->toArray();
+        }
+        unset($course);
+
+        return $courses;
     }
 }

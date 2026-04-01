@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 use App\Http\Livewire\Central\CourseManagement\Import;
 use App\Models\Course;
+use App\Models\Dealer\Course as TenantCourse;
 use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
+use Spatie\Permission\Models\Role;
 
 beforeEach(function (): void {
     $this->seed(RoleAndPermissionSeeder::class);
@@ -68,6 +70,40 @@ describe('central course management import', function (): void {
 
         expect($course->states_required)->toBe(['California'])
             ->and($course->replaces_course_slugs)->toBe(['sexual-harassment-e', 'sexual-harassment-m']);
+    });
+
+    it('syncs roles to tenants by name rather than raw ID', function (): void {
+        asSuperAdmin();
+
+        [$tenant] = createDealershipTenant();
+
+        // Get the central 'Employee' role ID to use in the JSON payload
+        $centralEmployeeRoleId = Role::query()->where('name', 'Employee')->value('id');
+
+        $json = json_encode([
+            [
+                'name' => 'Role Sync Test Course',
+                'slug' => 'role-sync-test-course',
+                'department' => [],
+                'roles' => [$centralEmployeeRoleId],
+                'slides' => [],
+                'questions' => [],
+            ],
+        ], JSON_THROW_ON_ERROR);
+
+        Livewire::test(Import::class)
+            ->set('courseImportFile', UploadedFile::fake()->createWithContent('role-sync.json', $json))
+            ->call('importCourses')
+            ->assertHasNoErrors();
+
+        $tenant->run(function (): void {
+            $course = TenantCourse::query()->where('slug', 'role-sync-test-course')->firstOrFail();
+            $tenantEmployeeRoleId = Role::query()->where('name', 'Employee')->value('id');
+
+            expect($course->roles()->pluck('id')->toArray())->toContain($tenantEmployeeRoleId);
+        });
+
+        teardownTenants();
     });
 
     it('updates an existing course when the imported slug already exists', function (): void {
