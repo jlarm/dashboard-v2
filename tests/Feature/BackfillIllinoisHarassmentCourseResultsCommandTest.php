@@ -751,3 +751,73 @@ it('is idempotent when run multiple times and does not create duplicate target r
         )->toBe(1);
     });
 });
+
+it('backfills illinois users without mapped roles to sexual-harassment-illinois', function (): void {
+    $this->tenant->run(function (): void {
+        $sourceCourse = Course::query()->create([
+            'name' => 'Sexual Harassment Explained',
+            'slug' => 'sexual-harassment-e',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        Course::query()->create([
+            'name' => 'Illinois Sexual Harassment',
+            'slug' => 'sexual-harassment-illinois',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        Course::query()->create([
+            'name' => 'Illinois Sexual Harassment Manager',
+            'slug' => 'sexual-harassment-illinois-m',
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $illinoisStore = Store::query()->create([
+            'name' => 'Illinois No Role Store',
+            'slug' => 'illinois-no-role-store',
+            'state' => 'Illinois',
+        ]);
+
+        $user = User::query()->create([
+            'name' => 'Illinois No Role User',
+            'email' => 'illinois-no-role@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->stores()->attach($illinoisStore->id);
+
+        CourseResults::query()->create([
+            'percentage' => 90,
+            'passed' => true,
+            'course_id' => $sourceCourse->id,
+            'user_id' => $user->id,
+        ]);
+    });
+
+    $exitCode = Artisan::call('courses:backfill-illinois-harassment-results', [
+        '--tenant' => $this->tenant->id,
+    ]);
+    $output = Artisan::output();
+
+    expect($exitCode)->toBe(0)
+        ->and($output)->toContain('candidate=1')
+        ->and($output)->toContain('created=1');
+
+    $this->tenant->run(function (): void {
+        $user = User::query()->where('email', 'illinois-no-role@example.com')->firstOrFail();
+
+        expect(
+            CourseResults::query()
+                ->where('user_id', $user->id)
+                ->whereHas('course', function ($query): void {
+                    $query->where('slug', 'sexual-harassment-illinois');
+                })
+                ->count()
+        )->toBe(1);
+    });
+});

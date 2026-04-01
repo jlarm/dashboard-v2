@@ -160,13 +160,6 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
             ->whereHas('stores', function (Builder $query): void {
                 $query->whereRaw('LOWER(TRIM(state)) IN (?, ?)', self::TARGET_STATES);
             })
-            ->whereHas('roles', function (Builder $query): void {
-                $query->whereIn('name', [...self::MANAGER_ROLE_NAMES, ...self::EMPLOYEE_ROLE_NAMES])
-                    ->orWhereRaw(
-                        "REPLACE(REPLACE(LOWER(TRIM(name)), ' ', ''), '/', '') IN (?, ?, ?, ?, ?, ?, ?)",
-                        [...self::NORMALIZED_MANAGER_ROLE_NAMES, ...self::NORMALIZED_EMPLOYEE_ROLE_NAMES]
-                    );
-            })
             ->when($emailFilter !== null, function (Builder $query) use ($emailFilter): void {
                 $query->whereRaw('LOWER(email) = ?', [$emailFilter]);
             })
@@ -282,7 +275,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
             return self::TARGET_EMPLOYEE_COURSE_SLUG;
         }
 
-        return null;
+        return self::TARGET_EMPLOYEE_COURSE_SLUG;
     }
 
     private function normalizeRoleName(string $name): string
