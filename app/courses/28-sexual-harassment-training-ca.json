@@ -6,6 +6,8 @@
         "slug": "sexual-harassment-training-in-california",
         "department": [],
         "roles": [],
+        "states_required": ["California"],
+        "replaces_course_slugs": ["sexual-harassment-e", "sexual-harassment-m"],
         "slides": [
             {
                 "title": "What is AB 1825?",

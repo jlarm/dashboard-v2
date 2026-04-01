@@ -118,6 +118,7 @@ describe('CourseResults Component - Course Display', function (): void {
             'slides' => [],
             'questions' => [],
             'optional' => false,
+            'states_required' => ['California'],
         ]);
         $course->roles()->attach($employeeRole->id);
 
@@ -148,6 +149,7 @@ describe('CourseResults Component - Course Display', function (): void {
             'slides' => [],
             'questions' => [],
             'optional' => false,
+            'states_required' => ['California'],
         ]);
         $course->roles()->attach($employeeRole->id);
 

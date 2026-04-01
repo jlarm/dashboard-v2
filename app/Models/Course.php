@@ -24,21 +24,20 @@ class Course extends Model
         'questions',
         'video_id',
         'years_expires',
+        'states_required',
+        'replaces_course_slugs',
     ];
     protected $casts = [
         'slides' => 'array',
         'questions' => 'array',
         'answers' => 'array',
+        'states_required' => 'array',
+        'replaces_course_slugs' => 'array',
     ];
 
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
-    }
-
-    public function roles(): BelongsToMany
-    {
-        return $this->morphToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
     }
 
     public function results(): HasMany

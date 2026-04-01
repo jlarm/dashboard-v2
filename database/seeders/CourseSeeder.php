@@ -26,6 +26,8 @@ class CourseSeeder extends Seeder
                     'slides' => $value->slides,
                     'questions' => $value->questions,
                     'optional' => $value->optional ?? false,
+                    'states_required' => $value->states_required ?? null,
+                    'replaces_course_slugs' => $value->replaces_course_slugs ?? null,
                 ]);
                 if ($value->department !== null) {
                     $course->departments()->attach($value->department);

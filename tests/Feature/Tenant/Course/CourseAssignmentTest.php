@@ -378,20 +378,21 @@ describe('Course Assignment - Special Cases', function (): void {
         expect($courseIds)->toContain($course->id);
     });
 
-    it('excludes california sexual harassment course for users without california stores', function (): void {
+    it('excludes state-specific course for users not in that state', function (): void {
         $role = Role::query()->where('name', 'Employee')->first();
 
-        $course = Course::query()->create([
+        $caCourse = Course::query()->create([
             'name' => 'California Sexual Harassment Training',
             'slug' => 'sexual-harassment-training-in-california',
             'slides' => [],
             'optional' => false,
+            'states_required' => ['California'],
         ]);
-        $course->roles()->attach($role->id);
+        $caCourse->roles()->attach($role->id);
 
         $store = Store::query()->create([
             'name' => 'Texas Store Test',
-            'slug' => 'texas-store-test',
+            'slug' => 'texas-store-test-sc',
             'state' => 'Texas',
         ]);
 
@@ -406,23 +407,24 @@ describe('Course Assignment - Special Cases', function (): void {
         $service = app(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
-        expect($courseIds)->not->toContain($course->id);
+        expect($courseIds)->not->toContain($caCourse->id);
     });
 
-    it('includes california sexual harassment course for users with california stores', function (): void {
+    it('includes state-specific course for users in that state', function (): void {
         $role = Role::query()->where('name', 'Employee')->first();
 
-        $course = Course::query()->create([
+        $caCourse = Course::query()->create([
             'name' => 'California Sexual Harassment Training',
             'slug' => 'sexual-harassment-training-in-california-2',
             'slides' => [],
             'optional' => false,
+            'states_required' => ['California'],
         ]);
-        $course->roles()->attach($role->id);
+        $caCourse->roles()->attach($role->id);
 
         $store = Store::query()->create([
             'name' => 'California Store Test',
-            'slug' => 'california-store-test',
+            'slug' => 'california-store-test-sc',
             'state' => 'California',
         ]);
 
@@ -437,7 +439,138 @@ describe('Course Assignment - Special Cases', function (): void {
         $service = app(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
-        expect($courseIds)->toContain($course->id);
+        expect($courseIds)->toContain($caCourse->id);
+    });
+});
+
+describe('Course Assignment - State Based', function (): void {
+    it('replaces general course with state-specific course for users in that state', function (): void {
+        $role = Role::query()->where('name', 'Employee')->first();
+
+        $generalCourse = Course::query()->create([
+            'name' => 'General Harassment',
+            'slug' => 'general-harassment-state-test',
+            'slides' => [],
+            'optional' => false,
+        ]);
+        $generalCourse->roles()->attach($role->id);
+
+        $stateCourse = Course::query()->create([
+            'name' => 'CA Harassment',
+            'slug' => 'ca-harassment-state-test',
+            'slides' => [],
+            'optional' => false,
+            'states_required' => ['California'],
+            'replaces_course_slugs' => ['general-harassment-state-test'],
+        ]);
+
+        $store = Store::query()->create([
+            'name' => 'CA Store State Test',
+            'slug' => 'ca-store-state-test',
+            'state' => 'California',
+        ]);
+
+        $user = User::query()->create([
+            'name' => 'CA Employee',
+            'email' => 'ca-employee-state@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->assignRole('Employee');
+        $user->stores()->attach($store->id);
+
+        $service = app(UserCourseService::class);
+        $courseIds = $service->getCourseIds($user);
+
+        expect($courseIds)->toContain($stateCourse->id)
+            ->and($courseIds)->not->toContain($generalCourse->id);
+    });
+
+    it('keeps general course for users not in the state with a replacement', function (): void {
+        $role = Role::query()->where('name', 'Employee')->first();
+
+        $generalCourse = Course::query()->create([
+            'name' => 'General Harassment TX',
+            'slug' => 'general-harassment-tx-test',
+            'slides' => [],
+            'optional' => false,
+        ]);
+        $generalCourse->roles()->attach($role->id);
+
+        Course::query()->create([
+            'name' => 'CA Harassment TX',
+            'slug' => 'ca-harassment-tx-test',
+            'slides' => [],
+            'optional' => false,
+            'states_required' => ['California'],
+            'replaces_course_slugs' => ['general-harassment-tx-test'],
+        ]);
+
+        $store = Store::query()->create([
+            'name' => 'TX Store',
+            'slug' => 'tx-store-state-test',
+            'state' => 'Texas',
+        ]);
+
+        $user = User::query()->create([
+            'name' => 'TX Employee',
+            'email' => 'tx-employee-state@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->assignRole('Employee');
+        $user->stores()->attach($store->id);
+
+        $service = app(UserCourseService::class);
+        $courseIds = $service->getCourseIds($user);
+
+        expect($courseIds)->toContain($generalCourse->id);
+    });
+
+    it('handles users with stores in multiple states', function (): void {
+        $role = Role::query()->where('name', 'Employee')->first();
+
+        $generalCourse = Course::query()->create([
+            'name' => 'General Harassment Multi',
+            'slug' => 'general-harassment-multi-test',
+            'slides' => [],
+            'optional' => false,
+        ]);
+        $generalCourse->roles()->attach($role->id);
+
+        $caCourse = Course::query()->create([
+            'name' => 'CA Harassment Multi',
+            'slug' => 'ca-harassment-multi-test',
+            'slides' => [],
+            'optional' => false,
+            'states_required' => ['California'],
+            'replaces_course_slugs' => ['general-harassment-multi-test'],
+        ]);
+
+        $caStore = Store::query()->create([
+            'name' => 'CA Store Multi',
+            'slug' => 'ca-store-multi-test',
+            'state' => 'California',
+        ]);
+
+        $txStore = Store::query()->create([
+            'name' => 'TX Store Multi',
+            'slug' => 'tx-store-multi-test',
+            'state' => 'Texas',
+        ]);
+
+        $user = User::query()->create([
+            'name' => 'Multi-State Employee',
+            'email' => 'multi-state-employee@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->assignRole('Employee');
+        $user->stores()->attach([$caStore->id, $txStore->id]);
+
+        $service = app(UserCourseService::class);
+        $courseIds = $service->getCourseIds($user);
+
+        // CA state course applies, general is replaced
+        expect($courseIds)->toContain($caCourse->id)
+            ->and($courseIds)->not->toContain($generalCourse->id);
     });
 });
 

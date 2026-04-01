@@ -68,28 +68,14 @@ class UserCourseService
             ->pluck('id')
             ->toArray();
 
-        $hasNoCaliforniaStore = $this->userHasNoCaliforniaStore($user);
+        $userStates = $this->getUserStates($user);
+        $baseKey = $user->department_id.'|'.$roleKey.'|'.implode(',', $userStates);
 
-        $baseKey = $user->department_id.'|'.$roleKey.'|'.($hasNoCaliforniaStore ? 'no-ca' : 'ca');
-
-        $baseCourseIds = $this->baseCourseCache[$baseKey] ??= Course::query()
-            ->where('optional', false)
-            ->where(function ($query) use ($user, $courseWithRole, $hasNoCaliforniaStore): void {
-                $query->where(function ($q) use ($user, $courseWithRole): void {
-                    $q->whereHas('departments', fn ($q) => $q->where('id', $user->department_id))
-                        ->whereIn('id', $courseWithRole);
-                })
-                    ->orWhere(function ($q) use ($courseWithRole, $hasNoCaliforniaStore): void {
-                        $q->whereDoesntHave('departments')
-                            ->where(function ($subQuery) use ($courseWithRole): void {
-                                $subQuery->whereIn('id', $courseWithRole)
-                                    ->orWhereDoesntHave('roles');
-                            })
-                            ->when($hasNoCaliforniaStore, fn ($q) => $q->where('slug', '!=', Course::CALIFORNIA_TRAINING_SLUG));
-                    });
-            })
-            ->pluck('id')
-            ->toArray();
+        $baseCourseIds = $this->baseCourseCache[$baseKey] ??= $this->resolveBaseCourseIds(
+            $user->department_id,
+            $courseWithRole,
+            $userStates
+        );
 
         return $this->courseIdsCache[$user->id] = collect($baseCourseIds)
             ->merge($addedCourseIds)
@@ -134,13 +120,69 @@ class UserCourseService
             ->get();
     }
 
-    private function userHasNoCaliforniaStore(User $user): bool
+    /**
+     * @return array<int>
+     */
+    private function resolveBaseCourseIds(mixed $departmentId, array $courseWithRole, array $userStates): array
+    {
+        $candidates = Course::query()
+            ->where('optional', false)
+            ->where(function ($query) use ($departmentId, $courseWithRole): void {
+                $query->where(function ($q) use ($departmentId, $courseWithRole): void {
+                    $q->whereHas('departments', fn ($q) => $q->where('id', $departmentId))
+                        ->whereIn('id', $courseWithRole);
+                })->orWhere(function ($q) use ($courseWithRole): void {
+                    $q->whereDoesntHave('departments')
+                        ->where(function ($subQuery) use ($courseWithRole): void {
+                            $subQuery->whereIn('id', $courseWithRole)
+                                ->orWhereDoesntHave('roles');
+                        });
+                });
+            })
+            ->get(['id', 'slug', 'states_required', 'replaces_course_slugs']);
+
+        // State-specific courses that match at least one of the user's states
+        $applicableStateCourses = $candidates->filter(
+            fn ($course): bool => $course->states_required !== null
+                && count(array_intersect($userStates, $course->states_required)) > 0
+        );
+
+        // Slugs of general courses that applicable state courses replace
+        $replacedSlugs = $applicableStateCourses
+            ->flatMap(fn ($course): array => $course->replaces_course_slugs ?? [])
+            ->unique()
+            ->all();
+
+        return $candidates
+            ->filter(function ($course) use ($userStates, $replacedSlugs): bool {
+                // Exclude state-specific courses that don't apply to this user's states
+                if ($course->states_required !== null
+                    && count(array_intersect($userStates, $course->states_required)) === 0) {
+                    return false;
+                }
+
+                // Exclude general courses that have been superseded by a state-specific course
+                if ($course->states_required === null && in_array($course->slug, $replacedSlugs, true)) {
+                    return false;
+                }
+
+                return true;
+            })
+            ->pluck('id')
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getUserStates(User $user): array
     {
         if ($user->relationLoaded('stores')) {
-            return ! $user->stores->contains('state', 'California');
+            return $user->stores->pluck('state')->filter()->sort()->unique()->values()->toArray();
         }
 
-        return ! $user->stores()->where('state', 'California')->exists();
+        return $user->stores()->distinct()->orderBy('state')->pluck('state')->filter()->toArray();
     }
 
     private function getOverrideCourseIds(User $user, string $type): array

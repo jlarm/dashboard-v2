@@ -44,6 +44,12 @@ return [
             'throw' => false,
         ],
 
+        'tmp-for-tests' => [
+            'driver' => 'local',
+            'root' => storage_path('framework/testing/disks/tmp-for-tests'),
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

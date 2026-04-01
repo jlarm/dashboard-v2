@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
 use Throwable;
 
@@ -29,6 +31,14 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e): void {
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($e);
+            }
+        });
+
+        $this->renderable(function (UnauthorizedException $e, Request $request) {
+            if (! auth()->check() && ! $request->expectsJson()) {
+                $loginRoute = tenancy()->initialized ? 'dealer.login' : 'login';
+
+                return redirect()->guest(route($loginRoute));
             }
         });
 

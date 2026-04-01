@@ -1,4 +1,4 @@
-<tr class="@if($store->state != 'California' && $course->slug === 'sexual-harassment-training-in-california') hidden @endif">
+<tr class="@if(!empty($course->states_required) && !in_array($store->state, $course->states_required)) hidden @endif">
     <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
         {{ Str::limit($course->name, 40) }}
     </td>

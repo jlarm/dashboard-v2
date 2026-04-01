@@ -1,0 +1,109 @@
+[
+    {
+        "name": "Sexual Harassment Explained",
+        "slug": "sexual-harassment-illinois",
+        "video_id": "1178846728",
+        "department": [],
+        "states_required": ["Illinois"],
+        "replaces_course_slugs": ["sexual-harassment-e"],
+        "roles": [
+            10,
+            11
+        ],
+        "slides": [],
+        "questions": [
+            {
+                "question": "Sexual harassment is best defined as:",
+                "answers": [
+                    {
+                        "a": "Any disagreement between co-workers",
+                        "b": "Unwelcome sexual advances, requests for sexual favors, and other verbal or physical conduct of a sexual nature",
+                        "c": "Strict supervision by management",
+                        "d": "Any workplace rule enforcement"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which type of sexual harassment involves employment decisions (like raises or promotions) being tied to submission to unwelcome sexual conduct?",
+                "answers": [
+                    {
+                        "a": "Hostile Work Environment",
+                        "b": "Quid Pro Quo",
+                        "c": "Non-Verbal Harassment",
+                        "d": "Physical Harassment"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which example best fits “Hostile Work Environment”?",
+                "answers": [
+                    {
+                        "a": "A manager requires a date in exchange for a promotion",
+                        "b": "Unwelcome sexual conduct creates an intimidating, hostile, or offensive workplace",
+                        "c": "A co-worker asks for help with a task",
+                        "d": "A supervisor gives a performance review"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which of the following is an example of non-verbal harassment?",
+                "answers": [
+                    {
+                        "a": "Repeated unwanted invitations",
+                        "b": "Sharing explicit images or videos",
+                        "c": "Unwanted touching",
+                        "d": "Asking about someone’s weekend plans"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "According to the training, what should you do if you experience or witness sexual harassment?",
+                "answers": [
+                    {
+                        "a": "Ignore it unless it happens again",
+                        "b": "Confront the person publicly in front of others",
+                        "c": "Document the incident and report it to HR or a supervisor following company procedures",
+                        "d": "Post about it on social media first"
+                    }
+                ],
+                "correctAnswer": "c"
+            },
+            {
+                "question": "Title VII of the Civil Rights Act of 1964 prohibits sexual harassment in the workplace.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "a"
+            },
+            {
+                "question": "Employers or managers may legally retaliate against someone for reporting harassment if the claim is inconvenient.",
+                "answers": [
+                    {
+                        "a": "True",
+                        "b": "False"
+                    }
+                ],
+                "correctAnswer": "b"
+            },
+            {
+                "question": "Which statement best reflects Illinois sexual harassment law?",
+                "answers": [
+                    {
+                        "a": "Only full-time employees are protected under Illinois sexual harassment law.",
+                        "b": "A sexual harassment charge in Illinois must be filed with IDHR within 30 days.",
+                        "c": "Illinois law can protect nonemployees such as contractors, and a charge may generally be filed with IDHR\nwithin 2 years.",
+                        "d": "Illinois sexual harassment law applies only to employers with 15 or more employees."
+                    }
+                ],
+                "correctAnswer": "c"
+            }
+        ]
+    }
+]

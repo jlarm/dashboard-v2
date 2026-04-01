@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Services\UserCourseService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class AuditFinanceManagerCoursesCommand extends Command
@@ -131,42 +130,59 @@ class AuditFinanceManagerCoursesCommand extends Command
         $financeDeptId = $user->department_id;
         $managerRoleId = Role::query()->where('name', 'Manager')->first()->id;
 
-        // Get courses associated with Manager role
-        $courseWithRole = DB::table('course_role')
-            ->where('role_id', $managerRoleId)
-            ->pluck('course_id')
+        $courseWithRole = Course::query()
+            ->whereHas('roles', fn ($q) => $q->where('id', $managerRoleId))
+            ->pluck('id')
             ->toArray();
 
-        // Check if user has California stores
-        $hasNoCaliforniaStore = ! $user->stores()->where('state', 'California')->exists();
+        $userStates = $user->relationLoaded('stores')
+            ? $user->stores->pluck('state')->filter()->sort()->unique()->values()->toArray()
+            : $user->stores()->distinct()->orderBy('state')->pluck('state')->filter()->toArray();
 
-        // Use the EXACT same logic as UserCourseService
-        return Course::query()
+        $candidates = Course::query()
             ->where('optional', false)
-            ->where(function ($query) use ($financeDeptId, $courseWithRole, $hasNoCaliforniaStore): void {
-                // Branch 1: Courses with specific departments (must have matching role)
+            ->where(function ($query) use ($financeDeptId, $courseWithRole): void {
                 $query->where(function ($q) use ($financeDeptId, $courseWithRole): void {
                     $q->whereHas('departments', fn ($q) => $q->where('id', $financeDeptId))
                         ->whereIn('id', $courseWithRole);
-                })
-                // Branch 2: Courses without departments
-                    ->orWhere(function ($q) use ($courseWithRole, $hasNoCaliforniaStore): void {
-                        $q->whereDoesntHave('departments')
-                            ->where(function ($subQuery) use ($courseWithRole): void {
-                                // Either has a role requirement AND user has that role
-                                $subQuery->whereIn('id', $courseWithRole)
-                                    // OR has no role requirement (universal course for everyone)
-                                    ->orWhereDoesntHave('roles');
-                            })
-                            // Only exclude California-specific course for users without California stores
-                            ->when($hasNoCaliforniaStore, fn ($q) => $q->where('slug', '!=', 'sexual-harassment-training-in-california'));
-                    });
+                })->orWhere(function ($q) use ($courseWithRole): void {
+                    $q->whereDoesntHave('departments')
+                        ->where(function ($subQuery) use ($courseWithRole): void {
+                            $subQuery->whereIn('id', $courseWithRole)
+                                ->orWhereDoesntHave('roles');
+                        });
+                });
+            })
+            ->get(['id', 'slug', 'states_required', 'replaces_course_slugs']);
+
+        $applicableStateCourses = $candidates->filter(
+            fn ($course): bool => $course->states_required !== null
+                && count(array_intersect($userStates, $course->states_required)) > 0
+        );
+
+        $replacedSlugs = $applicableStateCourses
+            ->flatMap(fn ($course): array => $course->replaces_course_slugs ?? [])
+            ->unique()
+            ->all();
+
+        return $candidates
+            ->filter(function ($course) use ($userStates, $replacedSlugs): bool {
+                if ($course->states_required !== null
+                    && count(array_intersect($userStates, $course->states_required)) === 0) {
+                    return false;
+                }
+
+                if ($course->states_required === null && in_array($course->slug, $replacedSlugs, true)) {
+                    return false;
+                }
+
+                return true;
             })
             ->pluck('id')
             ->toArray();
     }
 
-    private function getFinanceManagerUsers()
+    private function getFinanceManagerUsers(): Collection
     {
         $financeDept = Department::query()->where('name', 'Finance')->first();
         $managerRole = Role::query()->where('name', 'Manager')->first();

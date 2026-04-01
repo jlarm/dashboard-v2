@@ -22,8 +22,6 @@ class Course extends Model
 {
     use LogsActivity;
 
-    public const CALIFORNIA_TRAINING_SLUG = 'sexual-harassment-training-in-california';
-
     protected $fillable = [
         'department_id',
         'slug',
@@ -33,11 +31,15 @@ class Course extends Model
         'optional',
         'years_expires',
         'video_id',
+        'states_required',
+        'replaces_course_slugs',
     ];
     protected $casts = [
         'slides' => 'array',
         'questions' => 'array',
         'optional' => 'boolean',
+        'states_required' => 'array',
+        'replaces_course_slugs' => 'array',
     ];
 
     public function users(): BelongsToMany
@@ -55,7 +57,7 @@ class Course extends Model
         return $this->belongsToMany(Department::class);
     }
 
-    public function getDepartments()
+    public function getDepartments(): array
     {
         return $this->departments->pluck('id')->toArray();
     }
