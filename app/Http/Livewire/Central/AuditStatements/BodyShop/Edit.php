@@ -23,7 +23,7 @@ class Edit extends Component
     {
         $this->statement = $this->bodyShopViolation->statement;
         $keywords = $this->bodyShopViolation->keywords;
-        $this->keywords = (array) $keywords;
+        $this->keywords = is_string($keywords) ? (json_decode($keywords, true) ?? []) : (array) $keywords;
         $this->weight = $this->bodyShopViolation->weight;
     }
 
@@ -37,7 +37,7 @@ class Edit extends Component
 
         $this->bodyShopViolation->update([
             'statement' => $this->statement,
-            'keywords' => json_encode($this->keywords),
+            'keywords' => $this->keywords,
             'weight' => $this->weight,
         ]);
 

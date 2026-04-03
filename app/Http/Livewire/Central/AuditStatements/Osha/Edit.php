@@ -24,7 +24,7 @@ class Edit extends Component
     {
         $this->statement = $this->oshaViolation->statement;
         $keywords = $this->oshaViolation->keywords;
-        $this->keywords = (array) $keywords;
+        $this->keywords = is_string($keywords) ? (json_decode($keywords, true) ?? []) : (array) $keywords;
         $this->weight = $this->oshaViolation->weight;
     }
 
@@ -38,7 +38,7 @@ class Edit extends Component
 
         $this->oshaViolation->update([
             'statement' => $this->statement,
-            'keywords' => json_encode($this->keywords),
+            'keywords' => $this->keywords,
             'weight' => $this->weight,
         ]);
 
