@@ -157,7 +157,7 @@ class AuditFinanceManagerCoursesCommand extends Command
 
         $applicableStateCourses = $candidates->filter(
             fn ($course): bool => $course->states_required !== null
-                && count(array_intersect($userStates, $course->states_required)) > 0
+                && array_intersect($userStates, $course->states_required) !== []
         );
 
         $replacedSlugs = $applicableStateCourses
@@ -168,15 +168,11 @@ class AuditFinanceManagerCoursesCommand extends Command
         return $candidates
             ->filter(function ($course) use ($userStates, $replacedSlugs): bool {
                 if ($course->states_required !== null
-                    && count(array_intersect($userStates, $course->states_required)) === 0) {
+                    && array_intersect($userStates, $course->states_required) === []) {
                     return false;
                 }
 
-                if ($course->states_required === null && in_array($course->slug, $replacedSlugs, true)) {
-                    return false;
-                }
-
-                return true;
+                return ! ($course->states_required === null && in_array($course->slug, $replacedSlugs, true));
             })
             ->pluck('id')
             ->toArray();

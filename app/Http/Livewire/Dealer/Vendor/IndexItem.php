@@ -42,7 +42,7 @@ class IndexItem extends Component
 
     public function isCompleted(): bool
     {
-        $form = $this->getLatestForm();
+        $form = $this->vendor->latestForm;
 
         if (! $form) {
             return false;

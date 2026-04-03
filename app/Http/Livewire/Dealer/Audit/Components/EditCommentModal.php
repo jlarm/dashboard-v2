@@ -12,12 +12,11 @@ use WireElements\Pro\Components\Modal\Modal;
 class EditCommentModal extends Modal
 {
     public AuditComment $comment;
-
     public string $commentText = '';
 
     public function mount(int $commentId): void
     {
-        $this->comment = AuditComment::findOrFail($commentId);
+        $this->comment = AuditComment::query()->findOrFail($commentId);
         $this->commentText = $this->comment->comment;
     }
 

@@ -25,7 +25,7 @@
     <div class="lg:pl-72">
         @include('layouts.nav')
         <div class="p-2">
-            <div class="bg-white rounded-md p-6">
+            <div class="bg-white rounded-md p-6 min-h-[calc(100vh-theme(spacing.20))]">
                 @if (isset($header))
                     <header class="p-5">
                         {{ $header }}

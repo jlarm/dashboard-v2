@@ -102,6 +102,14 @@
                     <div class="text-xs font-semibold leading-6 text-gray-400">Admin Menu</div>
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
                         <li>
+                            <a href="{{ route('violation-statements.index') }}"
+                               class="{{ (request()->routeIs('violation-statements.*') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800') }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
+                                <span
+                                    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">V</span>
+                                <span class="truncate">Violation Statements</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('osha-violations.index') }}"
                                class="{{ (request()->segment(1) == 'osha-violations') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
                                 <span

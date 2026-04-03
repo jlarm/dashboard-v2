@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Http\Livewire\Dealer\Audit\Components\DeleteCommentConfirmationModal;
 use App\Models\AuditComment;
+use App\Models\Dealer\Store;
+use App\Models\User;
 use Livewire\Livewire;
 
 beforeEach(function (): void {
@@ -12,7 +14,7 @@ beforeEach(function (): void {
     $this->comment = AuditComment::query()->create([
         'user_id' => $this->consultant->id,
         'auditable_id' => 1,
-        'auditable_type' => 'App\\Models\\Dealer\\Store',
+        'auditable_type' => Store::class,
         'comment' => 'Test comment',
     ]);
 });
@@ -47,7 +49,7 @@ it('deletes the comment and emits commentDeleted after confirmation', function (
 });
 
 it('prevents a different user from deleting the comment', function (): void {
-    $otherUser = \App\Models\User::factory()->create();
+    $otherUser = User::factory()->create();
     $this->actingAs($otherUser);
 
     Livewire::test(DeleteCommentConfirmationModal::class, ['comment' => $this->comment])

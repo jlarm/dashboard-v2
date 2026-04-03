@@ -105,11 +105,9 @@ class Import extends Modal
                 'replaces_course_slugs.*' => ['string'],
             ]);
 
-            if ($validator->fails()) {
-                throw ValidationException::withMessages([
-                    'courseImportFile' => "Course entry #{$index} is invalid: ".$validator->errors()->first(),
-                ]);
-            }
+            throw_if($validator->fails(), ValidationException::withMessages([
+                'courseImportFile' => "Course entry #{$index} is invalid: ".$validator->errors()->first(),
+            ]));
 
             $statesRequired = collect($course['states_required'] ?? [])
                 ->filter(fn ($state): bool => is_string($state) && $state !== '')

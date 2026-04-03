@@ -17,8 +17,6 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
     private const TARGET_EMPLOYEE_COURSE_SLUG = 'sexual-harassment-illinois';
     private const TARGET_MANAGER_COURSE_SLUG = 'sexual-harassment-illinois-m';
     private const TARGET_STATES = ['illinois', 'il'];
-    private const MANAGER_ROLE_NAMES = ['Owner', 'GM', 'CFO', 'GSM', 'Manager'];
-    private const EMPLOYEE_ROLE_NAMES = ['Employee', 'Porter/Driver'];
     private const NORMALIZED_MANAGER_ROLE_NAMES = ['owner', 'gm', 'cfo', 'gsm', 'manager'];
     private const NORMALIZED_EMPLOYEE_ROLE_NAMES = ['employee', 'porterdriver'];
 
@@ -269,10 +267,6 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
         if (array_intersect(self::NORMALIZED_MANAGER_ROLE_NAMES, $normalizedRoleNames) !== []) {
             return self::TARGET_MANAGER_COURSE_SLUG;
-        }
-
-        if (array_intersect(self::NORMALIZED_EMPLOYEE_ROLE_NAMES, $normalizedRoleNames) !== []) {
-            return self::TARGET_EMPLOYEE_COURSE_SLUG;
         }
 
         return self::TARGET_EMPLOYEE_COURSE_SLUG;

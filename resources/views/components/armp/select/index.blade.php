@@ -589,7 +589,27 @@
 
         _syncHiddenInput() {
             if (!this.hiddenInput) return;
-            this.hiddenInput.value = this.config.multiple ? JSON.stringify(this.selectedValue) : this.selectedValue;
+
+            if (this.config.multiple && window.Livewire) {
+                var prop = null;
+                var attrs = Array.from(this.hiddenInput.attributes);
+                for (var i = 0; i < attrs.length; i++) {
+                    if (attrs[i].name.startsWith('wire:model')) { prop = attrs[i].value; break; }
+                }
+
+                if (prop) {
+                    var componentEl = this.root.closest('[wire\\:id]');
+                    if (componentEl) {
+                        var component = window.Livewire.find(componentEl.getAttribute('wire:id'));
+                        if (component) {
+                            component.set(prop, this.selectedValue.slice(), true);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            this.hiddenInput.value = this.selectedValue;
             this.hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
             this.hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
         }

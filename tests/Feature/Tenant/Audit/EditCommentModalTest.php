@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Livewire\Dealer\Audit\Components\EditCommentModal;
 use App\Models\AuditComment;
+use App\Models\Dealer\Store;
 use App\Models\User;
 use Livewire\Livewire;
 
@@ -13,7 +14,7 @@ beforeEach(function (): void {
     $this->comment = AuditComment::query()->create([
         'user_id' => $this->consultant->id,
         'auditable_id' => 1,
-        'auditable_type' => 'App\\Models\\Dealer\\Store',
+        'auditable_type' => Store::class,
         'comment' => 'Original comment',
     ]);
 });

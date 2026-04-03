@@ -212,11 +212,7 @@ class UserCourseService
                 }
 
                 // Exclude general courses that have been superseded by a state-specific course
-                if ($course->states_required === null && in_array($course->slug, $replacedSlugs, true)) {
-                    return false;
-                }
-
-                return true;
+                return ! ($course->states_required === null && in_array($course->slug, $replacedSlugs, true));
             })
             ->pluck('id')
             ->values()
@@ -258,7 +254,7 @@ class UserCourseService
             ->values()
             ->all();
 
-        return count(array_intersect($userStates, $normalizedRequiredStates)) > 0;
+        return array_intersect($userStates, $normalizedRequiredStates) !== [];
     }
 
     private function normalizeState(string $state): string

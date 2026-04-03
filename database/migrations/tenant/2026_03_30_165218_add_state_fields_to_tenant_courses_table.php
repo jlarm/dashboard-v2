@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
+        Schema::table('courses', function (Blueprint $table): void {
             $table->json('states_required')->nullable()->after('years_expires');
             $table->json('replaces_course_slugs')->nullable()->after('states_required');
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
+        Schema::table('courses', function (Blueprint $table): void {
             $table->dropColumn(['states_required', 'replaces_course_slugs']);
         });
     }

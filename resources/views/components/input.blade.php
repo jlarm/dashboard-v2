@@ -26,6 +26,8 @@
 
     $hasError = $error || ($attributes->has('wire:model') && $errors->has($attributes->get('wire:model')));
 
+    $isFile = $type === 'file';
+
     $inputClasses = implode(' ', [
         'block w-full rounded-md shadow-sm',
         'border focus:outline-none focus:ring-2 focus:ring-offset-0',
@@ -37,7 +39,8 @@
             ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:border-red-400'
             : 'focus:border-arm-blue-500 focus:ring-arm-blue-500',
         $variantClasses[$variant],
-        $sizeClasses[$size],
+        $isFile ? 'p-0 cursor-pointer text-gray-500' : $sizeClasses[$size],
+        $isFile ? 'file:cursor-pointer file:border-0 file:border-r file:border-gray-200 file:mr-3 file:px-3 file:py-2 file:text-sm file:font-medium file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100' : '',
         $icon ? 'pl-10' : '',
         $iconTrailing ? 'pr-10' : '',
     ]);

@@ -51,7 +51,7 @@ class VimeoService
             Cache::forget($cacheKey);
         }
 
-        return Cache::remember($cacheKey, now()->addHour(), fn () => $this->fetchVideo($videoId));
+        return Cache::remember($cacheKey, now()->addHour(), fn (): ?array => $this->fetchVideo($videoId));
     }
 
     public function enableSeekButton(string $videoId): bool

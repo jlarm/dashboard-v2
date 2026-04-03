@@ -18,7 +18,7 @@ trait BuildsVimeoEmbedUrl
         $baseUrl = $urlWithoutFragment;
 
         if (is_string(parse_url($urlWithoutFragment, PHP_URL_QUERY))) {
-            parse_str((string) parse_url($urlWithoutFragment, PHP_URL_QUERY), $query);
+            parse_str(parse_url($urlWithoutFragment, PHP_URL_QUERY), $query);
         }
 
         $questionMarkPosition = mb_strpos($urlWithoutFragment, '?');

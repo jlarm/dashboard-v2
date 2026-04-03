@@ -36,8 +36,6 @@ class UploadRedFlagToDigitalOceanJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        if ($exception !== null) {
-            report($exception);
-        }
+        report_if($exception instanceof Throwable, $exception);
     }
 }
