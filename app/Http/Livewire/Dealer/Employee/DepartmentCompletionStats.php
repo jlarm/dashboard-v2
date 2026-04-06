@@ -35,6 +35,7 @@ class DepartmentCompletionStats extends Component
     public function loadStats(): void
     {
         $this->readyToLoad = true;
+        $this->stats = $this->calculateAllStats();
     }
 
     public function clearCacheAndRefresh(): void
@@ -48,10 +49,6 @@ class DepartmentCompletionStats extends Component
 
     public function render(): View
     {
-        if ($this->readyToLoad) {
-            $this->stats = $this->calculateAllStats();
-        }
-
         return view('livewire.dealer.employee.department-completion-stats', [
             'departments' => self::DEPARTMENTS,
         ]);
@@ -103,95 +100,54 @@ class DepartmentCompletionStats extends Component
         $cacheKey = $this->getCacheKey();
 
         return Cache::remember($cacheKey, 300, function () {
+            $oneYearAgo = now()->subYear();
+            $threeYearsAgo = now()->subYears(3);
+
+            $allUsers = $this->buildBaseQuery()
+                ->whereHas('roles', function ($q): void {
+                    $q->where('id', '!=', 5);
+                })
+                ->with([
+                    'roles:id,name',
+                    'stores:id,state',
+                    'courseOverrides:user_id,course_id,type',
+                    'results' => function ($q) use ($oneYearAgo, $threeYearsAgo): void {
+                        $q->select('id', 'user_id', 'course_id', 'passed', 'created_at')
+                            ->where('passed', 1)
+                            ->where(function ($query) use ($oneYearAgo, $threeYearsAgo): void {
+                                $query->where('created_at', '>=', $oneYearAgo)
+                                    ->orWhere(function ($query) use ($threeYearsAgo): void {
+                                        $query->whereIn('course_id', [9, 10, 11, 12])
+                                            ->where('created_at', '>=', $threeYearsAgo);
+                                    });
+                            })
+                            ->whereNull('deleted_at');
+                    },
+                ])
+                ->get();
+
             $stats = [];
 
             foreach (self::DEPARTMENTS as $key => $department) {
                 $departmentId = $department['id'];
-                $stats[$key] = $this->calculateDepartmentStat($departmentId, $department['name']);
+
+                $users = $departmentId === null
+                    ? $allUsers
+                    : $allUsers->where('department_id', $departmentId);
+
+                $stats[$key] = $this->calculateDepartmentStat($users, $department['name']);
             }
 
             return $stats;
         });
     }
 
-    protected function calculateDepartmentStat(?int $departmentId, string $name): array
+    /**
+     * @param  Collection<int, User>  $users
+     * @return array{name: string, total: int, incomplete: int, percentage: int}
+     */
+    protected function calculateDepartmentStat(Collection $users, string $name): array
     {
-        $query = $this->buildBaseQuery();
-
-        if ($departmentId !== null) {
-            $query->where('department_id', $departmentId);
-        }
-
-        $query->whereHas('roles', function ($q): void {
-            $q->where('id', '!=', 5);
-        });
-
-        $userIds = $query->pluck('id');
-
-        if ($userIds->isEmpty()) {
-            return [
-                'name' => $name,
-                'total' => 0,
-                'incomplete' => 0,
-                'percentage' => 0,
-            ];
-        }
-
-        $statsData = $this->getCompletionStats($userIds);
-
-        $totalUsers = $statsData['total'];
-        $completedUsers = $statsData['completed'];
-
-        if ($totalUsers === 0) {
-            return [
-                'name' => $name,
-                'total' => 0,
-                'incomplete' => 0,
-                'percentage' => 0,
-            ];
-        }
-
-        $incompleteUsers = $totalUsers - $completedUsers;
-        $percentage = round(($completedUsers / $totalUsers) * 100);
-
-        return [
-            'name' => $name,
-            'total' => $totalUsers,
-            'incomplete' => $incompleteUsers,
-            'percentage' => $percentage,
-        ];
-    }
-
-    protected function getCompletionStats(Collection $userIds): array
-    {
-        if ($userIds->isEmpty()) {
-            return ['total' => 0, 'completed' => 0];
-        }
-
-        $oneYearAgo = now()->subYear();
-        $threeYearsAgo = now()->subYears(3);
-
-        $users = User::query()
-            ->whereIn('id', $userIds)
-            ->with([
-                'roles:id,name',
-                'stores:id,state',
-                'courseOverrides:user_id,course_id,type',
-                'results' => function ($q) use ($oneYearAgo, $threeYearsAgo): void {
-                    $q->select('id', 'user_id', 'course_id', 'passed', 'created_at')
-                        ->where('passed', 1)
-                        ->where(function ($query) use ($oneYearAgo, $threeYearsAgo): void {
-                            $query->where('created_at', '>=', $oneYearAgo)
-                                ->orWhere(function ($query) use ($threeYearsAgo): void {
-                                    $query->whereIn('course_id', [9, 10, 11, 12])
-                                        ->where('created_at', '>=', $threeYearsAgo);
-                                });
-                        })
-                        ->whereNull('deleted_at');
-                },
-            ])
-            ->get();
-
         $totalCount = 0;
         $completedCount = 0;
 
@@ -207,7 +163,16 @@ class DepartmentCompletionStats extends Component
             }
         }
 
-        return ['total' => $totalCount, 'completed' => $completedCount];
+        if ($totalCount === 0) {
+            return ['name' => $name, 'total' => 0, 'incomplete' => 0, 'percentage' => 0];
+        }
+
+        return [
+            'name' => $name,
+            'total' => $totalCount,
+            'incomplete' => $totalCount - $completedCount,
+            'percentage' => (int) round(($completedCount / $totalCount) * 100),
+        ];
     }
 
     protected function buildBaseQuery(): Builder
