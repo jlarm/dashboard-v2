@@ -86,6 +86,8 @@ class Dealership extends BaseTenant implements TenantWithDatabase
 
     private function resolveDomain(): ?string
     {
-        return $this->cachedDomain ??= $this->domains()->first()?->domain;
+        return $this->cachedDomain ??= $this->relationLoaded('domains')
+            ? $this->domains->first()?->domain
+            : $this->domains()->first()?->domain;
     }
 }

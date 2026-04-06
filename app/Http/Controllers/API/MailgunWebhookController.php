@@ -77,7 +77,7 @@ class MailgunWebhookController extends Controller
                 'event' => $event,
             ]);
 
-            foreach (Dealership::query()->cursor() as $tenant) {
+            foreach (Dealership::query()->with('domains')->lazy() as $tenant) {
                 $tenant->run(function () use ($messageIdVariants, &$emailLog): void {
                     $emailLog = VendorEmailLog::query()->whereIn('message_id', $messageIdVariants)->first();
                 });
