@@ -18,7 +18,6 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
     private const TARGET_MANAGER_COURSE_SLUG = 'sexual-harassment-illinois-m';
     private const TARGET_STATES = ['illinois', 'il'];
     private const NORMALIZED_MANAGER_ROLE_NAMES = ['owner', 'gm', 'cfo', 'gsm', 'manager'];
-    private const NORMALIZED_EMPLOYEE_ROLE_NAMES = ['employee', 'porterdriver'];
 
     protected $signature = 'courses:backfill-illinois-harassment-results
         {--tenant= : Tenant ID to run against}

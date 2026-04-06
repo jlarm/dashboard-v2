@@ -13,7 +13,7 @@ class StoreServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton('currentStore', fn (): ?int => null);
-        $this->app->bind('multipleStoresExist', fn (): bool => Store::query()->count() > 1);
+        $this->app->singleton('multipleStoresExist', fn (): bool => Store::query()->count() > 1);
         $this->app->singleton('accessibleStoreIds', fn () => collect());
         $this->app->singleton('scopedStoreIds', fn () => collect());
     }

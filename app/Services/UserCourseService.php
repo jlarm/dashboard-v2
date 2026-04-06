@@ -248,7 +248,7 @@ class UserCourseService
         }
 
         $normalizedRequiredStates = collect($requiredStates)
-            ->map(fn (mixed $state): string => $this->normalizeState((string) $state))
+            ->map(fn (mixed $state): string => $this->normalizeState($state))
             ->filter()
             ->unique()
             ->values()

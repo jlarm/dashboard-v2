@@ -21,7 +21,7 @@ class Edit extends Component
     public array $keywords = [];
     public ?int $weight = null;
     public array $categories = [];
-    public $newImage = null;
+    public $newImage;
 
     public function mount(): void
     {

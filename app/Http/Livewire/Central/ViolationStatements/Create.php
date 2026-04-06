@@ -20,7 +20,7 @@ class Create extends Component
     public array $keywords = [];
     public ?int $weight = null;
     public array $categories = [];
-    public $image = null;
+    public $image;
 
     public function store(): void
     {
