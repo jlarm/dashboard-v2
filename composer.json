@@ -50,7 +50,6 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
         "driftingly/rector-laravel": "^1.2",
-        "enlightn/enlightn": "^2.10",
         "fakerphp/faker": "^1.9.1",
         "larastan/larastan": "^2.0",
         "laravel/boost": "^v1.8.10",
