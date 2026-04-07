@@ -1,8 +1,7 @@
 <div
-    x-data="{ reportQueued: false, queuedMessage: '' }"
+    x-data="{}"
     @refresh-page.window="window.location.reload()"
     @open-report-url.window="window.open($event.detail.url, '_blank', 'noopener')"
-    @report-queued.window="reportQueued = true; queuedMessage = $event.detail.message; setTimeout(() => reportQueued = false, 8000)"
     @request-cyrisma-report.window="$wire.queueReport($event.detail.type)"
 >
     <x-slot:header>
@@ -54,9 +53,6 @@
         </x-slot>
     </x-slot:header>
 
-    <div x-show="reportQueued" x-transition class="mb-4 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800 dark:border-blue-800 dark:bg-blue-900/30 dark:text-blue-300" style="display:none">
-        <span x-text="queuedMessage"></span>
-    </div>
 
     <div class="space-y-6" wire:init="loadScanData">
         @if($loaded)

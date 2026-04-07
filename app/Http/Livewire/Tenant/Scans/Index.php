@@ -9,6 +9,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Services\CyrismaService;
 use Exception;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -130,9 +131,11 @@ class Index extends Component
 
         GenerateCyrismaReportJob::dispatch($store, $type, $user);
 
-        $this->dispatchBrowserEvent('report-queued', [
-            'message' => 'Your '.ucfirst($type).' report is being generated. You\'ll receive a notification when it\'s ready.',
-        ]);
+        Notification::make()
+            ->title(ucfirst($type).' report queued')
+            ->body('Your report is being generated. You\'ll receive a notification here when it\'s ready to download.')
+            ->info()
+            ->send();
     }
 
     public function refreshCache(): void
