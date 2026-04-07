@@ -38,7 +38,7 @@ class GenerateCyrismaReportJob implements ShouldBeEncrypted, ShouldQueue
 
     public function middleware(): array
     {
-        return [new WithoutOverlapping(static::class.'-'.$this->store->id.'-'.$this->type)];
+        return [(new WithoutOverlapping(static::class.'-'.$this->store->id.'-'.$this->type))->expireAfter(360)];
     }
 
     public function handle(): void
