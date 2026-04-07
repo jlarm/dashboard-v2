@@ -143,7 +143,11 @@ class Index extends Component
             return;
         }
 
-        GenerateCyrismaReportJob::dispatch($store, $type, $user);
+        Log::info('queueReport: dispatching job', ['store_id' => $store->id, 'type' => $type, 'user_id' => $user->id]);
+
+        GenerateCyrismaReportJob::dispatch($store->id, $type, $user->id);
+
+        Log::info('queueReport: job dispatched', ['store_id' => $store->id, 'type' => $type]);
 
         $this->dispatchBrowserEvent('report-button-reset', ['type' => $type]);
 

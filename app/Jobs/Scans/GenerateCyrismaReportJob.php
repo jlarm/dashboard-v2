@@ -13,39 +13,45 @@ use Carbon\Carbon;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class GenerateCyrismaReportJob implements ShouldBeEncrypted, ShouldQueue
+class GenerateCyrismaReportJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable;
 
     /** @var int Timeout in seconds — Cyrisma API calls can be slow on a cold cache */
     public int $timeout = 300;
 
     public function __construct(
-        private readonly Store $store,
+        private readonly int $storeId,
         private readonly string $type,
-        private readonly User $user,
+        private readonly int $userId,
     ) {}
 
     public function middleware(): array
     {
-        return [(new WithoutOverlapping(static::class.'-'.$this->store->id.'-'.$this->type))->expireAfter(360)];
+        return [(new WithoutOverlapping(static::class.'-'.$this->storeId.'-'.$this->type))->expireAfter(360)];
     }
 
     public function handle(): void
     {
-        $cyrisma = app(CyrismaService::class)->forStore($this->store);
+        Log::info('GenerateCyrismaReportJob started', ['store_id' => $this->storeId, 'type' => $this->type]);
 
-        $data = $this->buildReportData($cyrisma);
+        $store = Store::query()->with('cyrisma')->findOrFail($this->storeId);
+
+        $cyrisma = app(CyrismaService::class)->forStore($store);
+
+        Log::info('GenerateCyrismaReportJob building report data', ['store_id' => $this->storeId]);
+
+        $data = $this->buildReportData($cyrisma, $store);
+
+        Log::info('GenerateCyrismaReportJob rendering PDF', ['store_id' => $this->storeId]);
 
         $view = $this->type === 'executive'
             ? 'tenant.scans.reports.executive'
@@ -59,32 +65,39 @@ class GenerateCyrismaReportJob implements ShouldBeEncrypted, ShouldQueue
 
         $pdfBinary = $pdf->output();
 
-        $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $this->store->id, $this->type);
+        $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $this->storeId, $this->type);
         Cache::put($cacheKey, $pdfBinary, now()->addMinutes(30));
 
-        $this->sendReadyNotification();
+        Log::info('GenerateCyrismaReportJob complete', ['store_id' => $this->storeId, 'type' => $this->type]);
+
+        $this->sendReadyNotification($store);
     }
 
     public function failed(?Throwable $exception): void
     {
         Log::error('GenerateCyrismaReportJob failed', [
-            'store_id' => $this->store->id,
+            'store_id' => $this->storeId,
             'type' => $this->type,
             'error' => $exception?->getMessage(),
         ]);
 
-        Notification::make()
-            ->title('Report Generation Failed')
-            ->body('We were unable to generate the '.ucfirst($this->type).' report for '.$this->store->name.'. Please try again.')
-            ->danger()
-            ->sendToDatabase($this->user)
-            ->send();
+        $user = User::query()->find($this->userId);
+        $storeName = Store::query()->find($this->storeId)?->name ?? 'your store';
+
+        if ($user instanceof User) {
+            Notification::make()
+                ->title('Report Generation Failed')
+                ->body('We were unable to generate the '.ucfirst($this->type).' report for '.$storeName.'. Please try again.')
+                ->danger()
+                ->sendToDatabase($user)
+                ->send();
+        }
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function buildReportData(CyrismaService $cyrisma): array
+    private function buildReportData(CyrismaService $cyrisma, Store $store): array
     {
         $overall = $cyrisma->getOverallDashboard() ?? [];
         $vulnerabilityScans = $cyrisma->getVulnerabilityScans() ?? [];
@@ -113,7 +126,7 @@ class GenerateCyrismaReportJob implements ShouldBeEncrypted, ShouldQueue
         $openPorts = $cyrisma->getOpenPortsByAssetType();
 
         return [
-            'storeName' => $this->store->name,
+            'storeName' => $store->name,
             'generatedAt' => now()->format('M j, Y g:i A'),
             'lastScanDate' => $lastScanDate,
             'overall' => $overall,
@@ -174,7 +187,11 @@ class GenerateCyrismaReportJob implements ShouldBeEncrypted, ShouldQueue
      */
     private function buildReportFindings(CyrismaService $cyrisma, array $asset): array
     {
-        $webApplicationFindings = $cyrisma->getWebApplicationScanFindingsForAsset($asset);
+        // Skip web app endpoint discovery for plain IP assets — they will never have
+        // web application findings and the brute-force discovery loop is expensive.
+        $webApplicationFindings = $this->assetIsWebBased($asset)
+            ? $cyrisma->getWebApplicationScanFindingsForAsset($asset)
+            : [];
 
         if ($webApplicationFindings !== []) {
             return collect($webApplicationFindings)
@@ -193,6 +210,40 @@ class GenerateCyrismaReportJob implements ShouldBeEncrypted, ShouldQueue
             ->sort($this->sortReportFindings(...))
             ->values()
             ->all();
+    }
+
+    /**
+     * Returns true when the asset is a web/domain target rather than a raw IP.
+     * Only web assets can have web application scan findings.
+     *
+     * @param  array<string, mixed>  $asset
+     */
+    /**
+     * @param  array<string, mixed>  $asset
+     */
+    private function assetIsWebBased(array $asset): bool
+    {
+        // If the asset already has flaw data it came from a web app scan
+        if (! empty($asset['flaws'])) {
+            return true;
+        }
+
+        // If the asset has a valid IP address it is an IP-based asset — never has web app findings
+        $ip = trim((string) ($asset['ipAddress'] ?? $asset['assetIp'] ?? $asset['ip'] ?? ''));
+        if ($ip !== '' && filter_var($ip, FILTER_VALIDATE_IP)) {
+            return false;
+        }
+
+        // If there is an explicit URL field it's a web asset
+        $url = trim((string) ($asset['assetUrl'] ?? $asset['url'] ?? ''));
+        if ($url !== '' && filter_var($url, FILTER_VALIDATE_URL)) {
+            return true;
+        }
+
+        // If the name contains letters (not just digits, dots, and colons) treat as a hostname
+        $name = trim((string) ($asset['name'] ?? ''));
+
+        return $name !== '' && (bool) preg_match('/[a-z]/i', $name);
     }
 
     /**
@@ -572,13 +623,19 @@ class GenerateCyrismaReportJob implements ShouldBeEncrypted, ShouldQueue
         return trim($lineNormalizedValue);
     }
 
-    private function sendReadyNotification(): void
+    private function sendReadyNotification(Store $store): void
     {
+        $user = User::query()->find($this->userId);
+
+        if (! $user instanceof User) {
+            return;
+        }
+
         $downloadUrl = route('dealer.scan.report', ['type' => $this->type]);
 
         Notification::make()
             ->title(ucfirst($this->type).' Report Ready')
-            ->body('Your '.ucfirst($this->type).' scan report for '.$this->store->name.' has been generated and is ready to download.')
+            ->body('Your '.ucfirst($this->type).' scan report for '.$store->name.' has been generated and is ready to download.')
             ->success()
             ->actions([
                 Action::make('download')
@@ -587,7 +644,7 @@ class GenerateCyrismaReportJob implements ShouldBeEncrypted, ShouldQueue
                     ->openUrlInNewTab()
                     ->button(),
             ])
-            ->sendToDatabase($this->user)
+            ->sendToDatabase($user)
             ->send();
     }
 }
