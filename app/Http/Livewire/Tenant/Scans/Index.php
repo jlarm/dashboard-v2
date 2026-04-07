@@ -120,8 +120,9 @@ class Index extends Component
         }
 
         // If already cached, open it directly instead of re-queuing
-        $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $store->id, $type);
-        if (Cache::has($cacheKey)) {
+        $pdfCacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $store->id, $type);
+        if (Cache::has($pdfCacheKey)) {
+            $this->dispatchBrowserEvent('report-button-reset', ['type' => $type]);
             $this->dispatchBrowserEvent('open-report-url', [
                 'url' => route('dealer.scan.report', ['type' => $type]),
             ]);
@@ -129,11 +130,26 @@ class Index extends Component
             return;
         }
 
+        // If a job is already running for this store/type, let the user know
+        $lockKey = 'laravel_unique_job:'.GenerateCyrismaReportJob::class.'-'.$store->id.'-'.$type;
+        if (Cache::has($lockKey)) {
+            $this->dispatchBrowserEvent('report-button-reset', ['type' => $type]);
+            Notification::make()
+                ->title('Report already being generated')
+                ->body('Your '.ucfirst($type).' report is already being generated. You\'ll receive a notification when it\'s ready.')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
         GenerateCyrismaReportJob::dispatch($store, $type, $user);
+
+        $this->dispatchBrowserEvent('report-button-reset', ['type' => $type]);
 
         Notification::make()
             ->title(ucfirst($type).' report queued')
-            ->body('Your report is being generated. You\'ll receive a notification here when it\'s ready to download.')
+            ->body('Your report is being generated in the background. You\'ll receive a notification here when it\'s ready to download.')
             ->warning()
             ->send();
     }

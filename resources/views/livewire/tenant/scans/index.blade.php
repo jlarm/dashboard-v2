@@ -18,29 +18,45 @@
                 </x-armp.button>
                 @endif
                 @endhasanyrole
-                <div x-show="showDownloads" class="flex gap-2" style="display:none">
+                <div
+                    x-show="showDownloads"
+                    x-data="{ generating: null }"
+                    @report-button-reset.window="generating = null"
+                    class="flex gap-2"
+                    style="display:none"
+                >
                     <x-armp.button
                         size="sm"
-                        onclick="window.livewire.emit('queueReport', 'executive')"
+                        x-bind:disabled="generating !== null"
+                        @click="generating = 'executive'; window.livewire.emit('queueReport', 'executive')"
                     >
                         <span class="flex items-center gap-2">
-                            <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="#141B34" stroke-width="1.5" stroke-linecap="square">
+                            <svg x-show="generating !== 'executive'" class="size-3 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
                                 <path d="M20.9997 17.0002V19.0002C20.9997 20.1048 20.1043 21.0002 18.9997 21.0002L4.99969 21.0002C3.89513 21.0002 2.99969 20.1048 2.99969 19.0002V17.0002" />
                                 <path d="M7.49976 11.5002L11.9998 16.0002L16.4998 11.5002M11.9998 15.0002L11.9998 3.0002" />
                             </svg>
-                            Executive Report
+                            <svg x-show="generating === 'executive'" class="size-3 shrink-0 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                            </svg>
+                            <span x-text="generating === 'executive' ? 'Requesting...' : 'Executive Report'"></span>
                         </span>
                     </x-armp.button>
                     <x-armp.button
                         size="sm"
-                        onclick="window.livewire.emit('queueReport', 'technical')"
+                        x-bind:disabled="generating !== null"
+                        @click="generating = 'technical'; window.livewire.emit('queueReport', 'technical')"
                     >
                         <span class="flex items-center gap-2">
-                            <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="#141B34" stroke-width="1.5" stroke-linecap="square">
+                            <svg x-show="generating !== 'technical'" class="size-3 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
                                 <path d="M20.9997 17.0002V19.0002C20.9997 20.1048 20.1043 21.0002 18.9997 21.0002L4.99969 21.0002C3.89513 21.0002 2.99969 20.1048 2.99969 19.0002V17.0002" />
                                 <path d="M7.49976 11.5002L11.9998 16.0002L16.4998 11.5002M11.9998 15.0002L11.9998 3.0002" />
                             </svg>
-                            Technical Report
+                            <svg x-show="generating === 'technical'" class="size-3 shrink-0 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                            </svg>
+                            <span x-text="generating === 'technical' ? 'Requesting...' : 'Technical Report'"></span>
                         </span>
                     </x-armp.button>
                 </div>
