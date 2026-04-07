@@ -25,6 +25,8 @@ class GenerateCyrismaReportJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
 
+    public int $tries = 1;
+
     /** @var int Timeout in seconds — Cyrisma API calls can be slow on a cold cache */
     public int $timeout = 300;
 
