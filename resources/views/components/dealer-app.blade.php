@@ -66,6 +66,9 @@
 @livewire('slide-over-pro')
 @livewire('modal-pro')
 @livewire('notifications')
+@auth
+    @livewire('notification-poller')
+@endauth
 @livewireScripts
 @stack('scripts')
 <script>
