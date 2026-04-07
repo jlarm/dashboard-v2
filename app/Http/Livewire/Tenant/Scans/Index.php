@@ -30,7 +30,7 @@ class Index extends Component
     public ?Store $store = null;
     public Collection $overviewStores;
     protected ?CyrismaService $cyrisma = null;
-    protected $listeners = ['refreshCache'];
+    protected $listeners = ['refreshCache', 'queueReport'];
 
     public function mount(): void
     {

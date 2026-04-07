@@ -72,6 +72,9 @@
     window.addEventListener('refresh-page', event => {
         location.reload();
     });
+    window.addEventListener('open-report-url', event => {
+        window.open(event.detail.url, '_blank', 'noopener');
+    });
 </script>
 </body>
 </html>

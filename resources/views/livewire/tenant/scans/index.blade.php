@@ -1,9 +1,4 @@
-<div
-    x-data="{}"
-    @refresh-page.window="window.location.reload()"
-    @open-report-url.window="window.open($event.detail.url, '_blank', 'noopener')"
-    @request-cyrisma-report.window="$wire.queueReport($event.detail.type)"
->
+<div>
     <x-slot:header>
         <x-slot:pageTitle>Scan Details</x-slot:pageTitle>
         <x-slot:actions>
@@ -26,7 +21,7 @@
                 <div x-show="showDownloads" class="flex gap-2" style="display:none">
                     <x-armp.button
                         size="sm"
-                        @click="window.dispatchEvent(new CustomEvent('request-cyrisma-report', { detail: { type: 'executive' } }))"
+                        onclick="window.livewire.emit('queueReport', 'executive')"
                     >
                         <span class="flex items-center gap-2">
                             <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="#141B34" stroke-width="1.5" stroke-linecap="square">
@@ -38,7 +33,7 @@
                     </x-armp.button>
                     <x-armp.button
                         size="sm"
-                        @click="window.dispatchEvent(new CustomEvent('request-cyrisma-report', { detail: { type: 'technical' } }))"
+                        onclick="window.livewire.emit('queueReport', 'technical')"
                     >
                         <span class="flex items-center gap-2">
                             <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="#141B34" stroke-width="1.5" stroke-linecap="square">
