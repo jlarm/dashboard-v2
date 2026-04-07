@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\DomPDF\PDF as DomPdfWrapper;
-use Dompdf\Canvas;
-use Dompdf\Dompdf;
-use Dompdf\FontMetrics;
 use Illuminate\Support\Facades\Cache;
 
 beforeEach(function (): void {
@@ -17,49 +12,18 @@ beforeEach(function (): void {
     app()->instance('currentStore', $this->store->id);
 });
 
-function mockCyrismaReportService(): void
+function mockCyrismaConfigured(): void
 {
     $cyrisma = test()->mock(CyrismaService::class);
     $cyrisma->shouldReceive('forStore')->andReturn($cyrisma);
     $cyrisma->shouldReceive('isConfigured')->andReturn(true);
     $cyrisma->shouldReceive('hasShortName')->andReturn(true);
-    $cyrisma->shouldReceive('getOverallDashboard')->andReturn([]);
-    $cyrisma->shouldReceive('getVulnerabilityScans')->andReturn(['vulnerability_scans' => []]);
-    $cyrisma->shouldReceive('getExternalIpScanData')->andReturn(['assets' => [], 'scan_info' => []]);
-    $cyrisma->shouldReceive('getWebApplicationScanFindingsForAsset')->andReturn([]);
-    $cyrisma->shouldReceive('getVulnerabilitiesByAssetType')->andReturn(['vulnerabilities' => []]);
-    $cyrisma->shouldReceive('getCveDetails')->andReturn(['cve_items' => []]);
-    $cyrisma->shouldReceive('getOpenPortsByAssetType')->andReturn([]);
 }
 
-function mockPdfFacade(): void
+function seedReportCache(Store $store, string $type): void
 {
-    $pdfInstance = buildPdfMock();
-    Pdf::shouldReceive('loadView')->andReturn($pdfInstance);
-}
-
-function buildPdfMock(bool $withPageNumbers = false): DomPdfWrapper
-{
-    $pdfInstance = Mockery::mock(DomPdfWrapper::class);
-    $pdfInstance->shouldReceive('setPaper')->with('letter')->andReturnSelf();
-    $pdfInstance->shouldReceive('render')->andReturnNull();
-    $pdfInstance->shouldReceive('output')->andReturn('%PDF-1.4 fake content');
-
-    if ($withPageNumbers) {
-        $canvas = Mockery::mock(Canvas::class);
-        $canvas->shouldReceive('page_script')->once()->andReturnNull();
-
-        $fontMetrics = Mockery::mock(FontMetrics::class);
-        $fontMetrics->shouldReceive('getFont')->once()->with('DejaVu Sans', 'normal')->andReturn('mock-font');
-
-        $dompdf = Mockery::mock(Dompdf::class);
-        $dompdf->shouldReceive('getCanvas')->once()->andReturn($canvas);
-        $dompdf->shouldReceive('getFontMetrics')->once()->andReturn($fontMetrics);
-
-        $pdfInstance->shouldReceive('getDomPDF')->once()->andReturn($dompdf);
-    }
-
-    return $pdfInstance;
+    $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $store->id, $type);
+    Cache::put($cacheKey, '%PDF-1.4 fake content', now()->addMinutes(30));
 }
 
 describe('download', function (): void {
@@ -99,9 +63,17 @@ describe('download', function (): void {
             ->assertNotFound();
     });
 
-    it('streams the executive report with pdf content type', function (): void {
-        mockCyrismaReportService();
-        mockPdfFacade();
+    it('returns 404 when the report has not been generated yet', function (): void {
+        mockCyrismaConfigured();
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.scan.report', ['type' => 'executive']))
+            ->assertNotFound();
+    });
+
+    it('streams the executive report from cache with pdf content type', function (): void {
+        mockCyrismaConfigured();
+        seedReportCache($this->store, 'executive');
 
         $this->actingAs($this->consultant)
             ->get(route('dealer.scan.report', ['type' => 'executive']))
@@ -109,9 +81,9 @@ describe('download', function (): void {
             ->assertHeader('Content-Type', 'application/pdf');
     });
 
-    it('streams the technical report with pdf content type', function (): void {
-        mockCyrismaReportService();
-        Pdf::shouldReceive('loadView')->andReturn(buildPdfMock(true));
+    it('streams the technical report from cache with pdf content type', function (): void {
+        mockCyrismaConfigured();
+        seedReportCache($this->store, 'technical');
 
         $this->actingAs($this->consultant)
             ->get(route('dealer.scan.report', ['type' => 'technical']))
@@ -120,8 +92,8 @@ describe('download', function (): void {
     });
 
     it('includes the report type and store name in the content disposition filename', function (): void {
-        mockCyrismaReportService();
-        mockPdfFacade();
+        mockCyrismaConfigured();
+        seedReportCache($this->store, 'executive');
 
         $response = $this->actingAs($this->consultant)
             ->get(route('dealer.scan.report', ['type' => 'executive']));
@@ -134,130 +106,14 @@ describe('download', function (): void {
             ->toContain('Test-Store');
     });
 
-    it('uses the executive blade view when generating the executive report', function (): void {
-        mockCyrismaReportService();
-
-        $pdfInstance = Mockery::mock(DomPdfWrapper::class);
-        $pdfInstance->shouldReceive('setPaper')->andReturnSelf();
-        $pdfInstance->shouldReceive('output')->andReturn('%PDF-1.4');
-
-        Pdf::shouldReceive('loadView')
-            ->with('tenant.scans.reports.executive', Mockery::type('array'))
-            ->once()
-            ->andReturn($pdfInstance);
-
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.scan.report', ['type' => 'executive']))
-            ->assertOk();
-    });
-
-    it('uses the technical blade view when generating the technical report', function (): void {
-        mockCyrismaReportService();
-
-        $pdfInstance = buildPdfMock(true);
-
-        Pdf::shouldReceive('loadView')
-            ->with('tenant.scans.reports.technical', Mockery::type('array'))
-            ->once()
-            ->andReturn($pdfInstance);
-
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.scan.report', ['type' => 'technical']))
-            ->assertOk();
-    });
-
-    it('passes enriched external web findings to the technical report view', function (): void {
-        $cyrisma = $this->mock(CyrismaService::class);
-        $cyrisma->shouldReceive('forStore')->andReturn($cyrisma);
-        $cyrisma->shouldReceive('isConfigured')->andReturn(true);
-        $cyrisma->shouldReceive('hasShortName')->andReturn(true);
-        $cyrisma->shouldReceive('getOverallDashboard')->andReturn([]);
-        $cyrisma->shouldReceive('getVulnerabilityScans')->andReturn(['vulnerability_scans' => []]);
-        $cyrisma->shouldReceive('getExternalIpScanData')->andReturn([
-            'assets' => [[
-                'assetId' => 1,
-                'name' => 'https://www.plazaford.com/',
-                'ipAddress' => 'https://www.plazaford.com/',
-                'flaws' => [],
-                'openPorts' => [],
-            ]],
-            'scan_info' => [],
-        ]);
-        $cyrisma->shouldReceive('getWebApplicationScanFindingsForAsset')
-            ->once()
-            ->withArgs(fn (array $asset): bool => ($asset['assetId'] ?? null) === 1)
-            ->andReturn([
-                [
-                    'name' => 'Cross-Domain JavaScript Source File Inclusion',
-                    'severity' => 'Low',
-                    'description' => 'The page includes one or more script files from a third-party domain.',
-                    'solution' => 'Ensure JavaScript source files are loaded from trusted sources.',
-                    'findingsCount' => 2,
-                    'details' => [
-                        [
-                            'URL' => 'https://plazaford.com',
-                            'Method' => 'GET',
-                            'Parameters' => 'https://barnsaa.dealeron.com/banner.js',
-                            'Attack' => '-',
-                            'Evidence' => '-',
-                        ],
-                    ],
-                ],
-            ]);
-        $cyrisma->shouldReceive('getVulnerabilitiesByAssetType')->andReturn(['vulnerabilities' => []]);
-        $cyrisma->shouldReceive('getCveDetails')->andReturn(['cve_items' => []]);
-        $cyrisma->shouldReceive('getOpenPortsByAssetType')->andReturn([]);
-
-        $pdfInstance = buildPdfMock(true);
-
-        Pdf::shouldReceive('loadView')
-            ->with('tenant.scans.reports.technical', Mockery::on(function (array $data): bool {
-                $asset = $data['externalAssets'][0] ?? [];
-                $finding = $asset['report_findings'][0] ?? [];
-                $instance = $finding['instances'][0] ?? [];
-
-                return ($finding['name'] ?? null) === 'Cross-Domain JavaScript Source File Inclusion'
-                    && ($finding['description'] ?? null) === 'The page includes one or more script files from a third-party domain.'
-                    && ($finding['solution'] ?? null) === 'Ensure JavaScript source files are loaded from trusted sources.'
-                    && ($instance['url'] ?? null) === 'https://plazaford.com'
-                    && ($instance['parameters'] ?? null) === 'https://barnsaa.dealeron.com/banner.js';
-            }))
-            ->once()
-            ->andReturn($pdfInstance);
-
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.scan.report', ['type' => 'technical']))
-            ->assertOk();
-    });
-
-    it('sets private cache headers by default', function (): void {
-        mockCyrismaReportService();
-        mockPdfFacade();
+    it('sets private cache headers on the response', function (): void {
+        mockCyrismaConfigured();
+        seedReportCache($this->store, 'executive');
 
         $response = $this->actingAs($this->consultant)
             ->get(route('dealer.scan.report', ['type' => 'executive']));
 
         $response->assertOk();
         expect($response->headers->get('Cache-Control'))->toContain('private');
-    });
-
-    it('sets no-cache headers when the refresh query param is present', function (): void {
-        mockCyrismaReportService();
-        mockPdfFacade();
-
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.scan.report', ['type' => 'executive']).'?refresh=1')
-            ->assertOk()
-            ->assertHeader('Pragma', 'no-cache');
-    });
-
-    it('returns a 500 response when pdf generation throws an exception', function (): void {
-        mockCyrismaReportService();
-
-        Pdf::shouldReceive('loadView')->andThrow(new RuntimeException('PDF render error'));
-
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.scan.report', ['type' => 'executive']))
-            ->assertStatus(500);
     });
 });

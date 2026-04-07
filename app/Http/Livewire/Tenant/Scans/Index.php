@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Tenant\Scans;
 
+use App\Jobs\Scans\GenerateCyrismaReportJob;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use App\Services\CyrismaService;
 use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -98,6 +101,37 @@ class Index extends Component
 
         $this->dispatchBrowserEvent('scan-loaded', [
             'showDownloads' => $this->isConfigured && $this->hasShortName,
+        ]);
+    }
+
+    public function queueReport(string $type): void
+    {
+        $allowedTypes = ['executive', 'technical'];
+        if (! in_array($type, $allowedTypes, true)) {
+            return;
+        }
+
+        $store = Store::query()->find($this->storeId);
+        $user = auth()->user();
+
+        if (! $store instanceof Store || ! $user instanceof User) {
+            return;
+        }
+
+        // If already cached, open it directly instead of re-queuing
+        $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $store->id, $type);
+        if (Cache::has($cacheKey)) {
+            $this->dispatchBrowserEvent('open-report-url', [
+                'url' => route('dealer.scan.report', ['type' => $type]),
+            ]);
+
+            return;
+        }
+
+        GenerateCyrismaReportJob::dispatch($store, $type, $user);
+
+        $this->dispatchBrowserEvent('report-queued', [
+            'message' => 'Your '.ucfirst($type).' report is being generated. You\'ll receive a notification when it\'s ready.',
         ]);
     }
 

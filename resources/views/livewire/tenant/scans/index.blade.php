@@ -1,4 +1,10 @@
-<div x-data @refresh-page.window="window.location.reload()">
+<div
+    x-data="{ reportQueued: false, queuedMessage: '' }"
+    @refresh-page.window="window.location.reload()"
+    @open-report-url.window="window.open($event.detail.url, '_blank', 'noopener')"
+    @report-queued.window="reportQueued = true; queuedMessage = $event.detail.message; setTimeout(() => reportQueued = false, 8000)"
+    @request-cyrisma-report.window="$wire.queueReport($event.detail.type)"
+>
     <x-slot:header>
         <x-slot:pageTitle>Scan Details</x-slot:pageTitle>
         <x-slot:actions>
@@ -21,38 +27,36 @@
                 <div x-show="showDownloads" class="flex gap-2" style="display:none">
                     <x-armp.button
                         size="sm"
-                        href="{{ route('dealer.scan.report', ['type' => 'executive']) }}?refresh=1"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onclick="window.open(this.href, '_blank', 'noopener'); return false;"
+                        @click="window.dispatchEvent(new CustomEvent('request-cyrisma-report', { detail: { type: 'executive' } }))"
                     >
                         <span class="flex items-center gap-2">
                             <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="#141B34" stroke-width="1.5" stroke-linecap="square">
                                 <path d="M20.9997 17.0002V19.0002C20.9997 20.1048 20.1043 21.0002 18.9997 21.0002L4.99969 21.0002C3.89513 21.0002 2.99969 20.1048 2.99969 19.0002V17.0002" />
                                 <path d="M7.49976 11.5002L11.9998 16.0002L16.4998 11.5002M11.9998 15.0002L11.9998 3.0002" />
                             </svg>
-                            Download Executive Report
+                            Executive Report
                         </span>
                     </x-armp.button>
                     <x-armp.button
                         size="sm"
-                        href="{{ route('dealer.scan.report', ['type' => 'technical']) }}?refresh=1"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onclick="window.open(this.href, '_blank', 'noopener'); return false;"
+                        @click="window.dispatchEvent(new CustomEvent('request-cyrisma-report', { detail: { type: 'technical' } }))"
                     >
                         <span class="flex items-center gap-2">
                             <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="#141B34" stroke-width="1.5" stroke-linecap="square">
                                 <path d="M20.9997 17.0002V19.0002C20.9997 20.1048 20.1043 21.0002 18.9997 21.0002L4.99969 21.0002C3.89513 21.0002 2.99969 20.1048 2.99969 19.0002V17.0002" />
                                 <path d="M7.49976 11.5002L11.9998 16.0002L16.4998 11.5002M11.9998 15.0002L11.9998 3.0002" />
                             </svg>
-                            Download Technical Report
+                            Technical Report
                         </span>
                     </x-armp.button>
                 </div>
             </div>
         </x-slot>
     </x-slot:header>
+
+    <div x-show="reportQueued" x-transition class="mb-4 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800 dark:border-blue-800 dark:bg-blue-900/30 dark:text-blue-300" style="display:none">
+        <span x-text="queuedMessage"></span>
+    </div>
 
     <div class="space-y-6" wire:init="loadScanData">
         @if($loaded)
