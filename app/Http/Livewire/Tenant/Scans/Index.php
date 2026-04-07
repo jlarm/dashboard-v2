@@ -134,7 +134,7 @@ class Index extends Component
         Notification::make()
             ->title(ucfirst($type).' report queued')
             ->body('Your report is being generated. You\'ll receive a notification here when it\'s ready to download.')
-            ->info()
+            ->warning()
             ->send();
     }
 
