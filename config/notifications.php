@@ -7,7 +7,7 @@ return [
     'dark_mode' => false,
 
     'database' => [
-        'enabled' => true,
+        'enabled' => false,
         'trigger' => null,
         'polling_interval' => '30s',
     ],
