@@ -710,7 +710,7 @@
                                                                     @if($training['expiring_soon'] > 0)
                                                                         {{ $training['expired'] > 0 ? ' · ' : '' }}{{ $training['expiring_soon'] }} expiring soon
                                                                     @endif
-                                                                @else
+                                                                @elseif($training['status'] === 'compliant')
                                                                     · up to date
                                                                 @endif
                                                             </p>

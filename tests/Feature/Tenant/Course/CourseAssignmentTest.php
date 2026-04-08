@@ -572,6 +572,104 @@ describe('Course Assignment - State Based', function (): void {
         expect($courseIds)->toContain($caCourse->id)
             ->and($courseIds)->not->toContain($generalCourse->id);
     });
+
+    it('uses primary store state instead of all assigned stores when primary store is set', function (): void {
+        $role = Role::query()->where('name', 'Employee')->first();
+
+        $generalCourse = Course::query()->create([
+            'name' => 'General Harassment Primary',
+            'slug' => 'general-harassment-primary-test',
+            'slides' => [],
+            'optional' => false,
+        ]);
+        $generalCourse->roles()->attach($role->id);
+
+        $caCourse = Course::query()->create([
+            'name' => 'CA Harassment Primary',
+            'slug' => 'ca-harassment-primary-test',
+            'slides' => [],
+            'optional' => false,
+            'states_required' => ['California'],
+            'replaces_course_slugs' => ['general-harassment-primary-test'],
+        ]);
+
+        $caStore = Store::query()->create([
+            'name' => 'CA Primary Store',
+            'slug' => 'ca-primary-store-test',
+            'state' => 'California',
+        ]);
+
+        $txStore = Store::query()->create([
+            'name' => 'TX Primary Store',
+            'slug' => 'tx-primary-store-test',
+            'state' => 'Texas',
+        ]);
+
+        // User is assigned both stores but primary store is TX — CA courses should not apply
+        $user = User::query()->create([
+            'name' => 'Primary Store Employee',
+            'email' => 'primary-store-employee@test.com',
+            'password' => bcrypt('password'),
+            'primary_store_id' => $txStore->id,
+        ]);
+        $user->assignRole('Employee');
+        $user->stores()->attach([$caStore->id, $txStore->id]);
+
+        $service = app(UserCourseService::class);
+        $courseIds = $service->getCourseIds($user);
+
+        // TX primary store means CA course does not apply; general course should be included
+        expect($courseIds)->not->toContain($caCourse->id)
+            ->and($courseIds)->toContain($generalCourse->id);
+    });
+
+    it('falls back to all assigned stores states when no primary store is set', function (): void {
+        $role = Role::query()->where('name', 'Employee')->first();
+
+        $generalCourse = Course::query()->create([
+            'name' => 'General Harassment Fallback',
+            'slug' => 'general-harassment-fallback-test',
+            'slides' => [],
+            'optional' => false,
+        ]);
+        $generalCourse->roles()->attach($role->id);
+
+        $caCourse = Course::query()->create([
+            'name' => 'CA Harassment Fallback',
+            'slug' => 'ca-harassment-fallback-test',
+            'slides' => [],
+            'optional' => false,
+            'states_required' => ['California'],
+            'replaces_course_slugs' => ['general-harassment-fallback-test'],
+        ]);
+
+        $caStore = Store::query()->create([
+            'name' => 'CA Fallback Store',
+            'slug' => 'ca-fallback-store-test',
+            'state' => 'California',
+        ]);
+
+        $txStore = Store::query()->create([
+            'name' => 'TX Fallback Store',
+            'slug' => 'tx-fallback-store-test',
+            'state' => 'Texas',
+        ]);
+
+        // No primary store — CA course applies because CA store is assigned
+        $user = User::query()->create([
+            'name' => 'Fallback Employee',
+            'email' => 'fallback-employee@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $user->assignRole('Employee');
+        $user->stores()->attach([$caStore->id, $txStore->id]);
+
+        $service = app(UserCourseService::class);
+        $courseIds = $service->getCourseIds($user);
+
+        expect($courseIds)->toContain($caCourse->id)
+            ->and($courseIds)->not->toContain($generalCourse->id);
+    });
 });
 
 describe('Course Assignment - Edge Cases', function (): void {

@@ -11,17 +11,21 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
-use WireElements\Pro\Components\Modal\Modal;
+use WireElements\Pro\Components\SlideOver\SlideOver;
 
-class Invite extends Modal
+class Invite extends SlideOver
 {
     public string $name = '';
     public string $email = '';
     public string $department = '';
     public string $role = '';
     public array $stores = [];
+    public ?int $primaryStoreId = null;
+    private ?Collection $memoizedAvailableStores = null;
 
     public function sendInvite(): void
     {
@@ -32,10 +36,11 @@ class Invite extends Modal
             'name' => $this->name,
             'email' => $this->email,
             'stores' => $assignedStoreIds,
+            'primary_store_id' => count($assignedStoreIds) > 1 ? $this->primaryStoreId : null,
             'department_id' => $this->department,
             'roles' => [$this->role],
-            'user_id' => auth()->user()->id,
-            'invitation_token' => mb_substr(md5(random_int(0, 9).$this->email.time()), 0, 32),
+            'user_id' => auth()->id(),
+            'invitation_token' => Str::random(32),
         ]);
 
         SendQueueEmailJob::dispatch($invite);
@@ -48,7 +53,7 @@ class Invite extends Modal
             ->send();
     }
 
-    public function render()
+    public function render(): View
     {
         $qualifiedIndividualCount = User::role('Qualified Individual')->count();
 
@@ -77,12 +82,16 @@ class Invite extends Modal
             'email' => ['required', 'email', 'unique:users', 'unique:invites', 'max:255'],
             'stores' => ['nullable', 'array'],
             'department' => ['required', 'integer', Rule::exists('departments', 'id')],
-            'role' => ['required'],
+            'role' => ['required', Rule::exists('roles', 'name')],
         ];
 
         if ($this->availableStores()->count() > 1) {
             $rules['stores'] = ['required', 'array', 'min:1'];
             $rules['stores.*'] = ['integer', Rule::exists('stores', 'id')];
+
+            if (count($this->stores) > 1) {
+                $rules['primaryStoreId'] = ['required', 'integer', Rule::exists('stores', 'id')];
+            }
         }
 
         return $rules;
@@ -113,16 +122,20 @@ class Invite extends Modal
      */
     private function availableStores(): Collection
     {
+        if ($this->memoizedAvailableStores instanceof Collection) {
+            return $this->memoizedAvailableStores;
+        }
+
         $user = auth()->user();
 
         if (! $user instanceof User) {
-            return Store::query()->orderBy('name')->get(['id', 'name']);
+            return $this->memoizedAvailableStores = Store::query()->orderBy('name')->get(['id', 'name']);
         }
 
         if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
-            return Store::query()->orderBy('name')->get(['id', 'name']);
+            return $this->memoizedAvailableStores = Store::query()->orderBy('name')->get(['id', 'name']);
         }
 
-        return $user->stores()->orderBy('stores.name')->get(['stores.id', 'stores.name']);
+        return $this->memoizedAvailableStores = $user->stores()->orderBy('stores.name')->get(['stores.id', 'stores.name']);
     }
 }

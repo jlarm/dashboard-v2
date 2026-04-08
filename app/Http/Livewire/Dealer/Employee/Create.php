@@ -30,6 +30,7 @@ class Create extends Component
     public bool $qi = false;
     public array $courses = [];
     public array $dealers = [];
+    public ?int $primaryStoreId = null;
     public ?Store $store = null;
     private ?Collection $memoizedAvailableStores = null;
 
@@ -58,6 +59,15 @@ class Create extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function updatedDealers(): void
+    {
+        $normalized = $this->normalizeStoreIds($this->dealers);
+
+        if ($this->primaryStoreId !== null && ! in_array($this->primaryStoreId, $normalized, true)) {
+            $this->primaryStoreId = null;
+        }
+    }
+
     public function submit(): RedirectResponse|Redirector
     {
         $validated = $this->validate();
@@ -72,8 +82,9 @@ class Create extends Component
             'name' => mb_convert_case($this->name, MB_CASE_TITLE, 'UTF-8'),
             'email' => mb_strtolower($this->email),
             'stores' => $assignedStoreIds,
+            'primary_store_id' => count($assignedStoreIds) > 1 ? $this->primaryStoreId : null,
             'department_id' => $validated['department'],
-            'user_id' => auth()->user()->id,
+            'user_id' => auth()->id(),
             'roles' => array_values(array_unique($roles)),
             'courses' => $this->courses,
             'invitation_token' => Str::random(32),
@@ -118,6 +129,10 @@ class Create extends Component
         if ($this->availableStores()->count() > 1) {
             $rules['dealers'] = ['required', 'array', 'min:1'];
             $rules['dealers.*'] = ['integer', Rule::exists('stores', 'id')];
+
+            if (count($this->normalizeStoreIds($this->dealers)) > 1) {
+                $rules['primaryStoreId'] = ['required', 'integer', Rule::exists('stores', 'id')];
+            }
         }
 
         return $rules;

@@ -40,4 +40,3 @@ it('streams the pdf to armpaudits, deletes the local file, and updates pdf_path'
     Storage::assertMissing('/osha/audit-report.pdf');
     expect($this->audit->fresh()->pdf_path)->toBe($expectedPath);
 });
-

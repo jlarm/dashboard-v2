@@ -29,7 +29,7 @@ it('renders working edit and delete event bindings for employee actions', functi
     Livewire::test(Details::class, ['user' => $employee])
         ->assertSee('Edit')
         ->assertSee('Delete')
-        ->assertSeeHtml("wire:click=\"\$emit('slide-over.open', 'dealer.employee.edit', { user: {$employee->id} })\"")
+        ->assertSeeHtml("wire:click=\"\$emit('slide-over.open', 'dealer.employee.edit', { userId: {$employee->id} })\"")
         ->assertSeeHtml("wire:click=\"\$emit('modal.open', 'dealer.employee.delete', { user: {$employee->id} })\"")
         ->assertDontSee('@js(');
 });

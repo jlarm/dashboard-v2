@@ -19,12 +19,19 @@
 
     <!-- Store -->
     @if($stores->count() > 1)
-        <div class="col-span-3">
-            @php
-                $selectedStoreIds = array_map('intval', $dealers);
-                $selectedStores = $stores->whereIn('id', $selectedStoreIds)->values();
-            @endphp
-            <div class="relative col-span-3" x-data="{ open: false }">
+        @php
+            $selectedStoreIds = array_map('intval', $dealers);
+            $selectedStores = $stores->whereIn('id', $selectedStoreIds)->values();
+        @endphp
+        <div
+            class="col-span-3"
+            x-data="{
+                open: false,
+                checkedCount: {{ count($dealers) }},
+                updateCount() { this.checkedCount = this.$el.querySelectorAll('input[type=checkbox]:checked').length; }
+            }"
+        >
+            <div class="relative" @change="updateCount()">
                 <x-input-label for="dealers" :value="__('Select Store(s)')"/>
                 <button
                     type="button"
@@ -65,6 +72,24 @@
                     </div>
                 </div>
                 @error('dealers') <p class="text-red-500 mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Primary Store --}}
+            <div x-show="checkedCount > 1" x-cloak class="mt-4">
+                <x-input-label for="primaryStoreId" :value="__('Primary Store')" />
+                <select
+                    wire:model.defer="primaryStoreId"
+                    id="primaryStoreId"
+                    name="primaryStoreId"
+                    required
+                    class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
+                >
+                    <option value="">{{ __('Choose a primary store...') }}</option>
+                    @foreach($stores->whereIn('id', $selectedStoreIds) as $primaryStore)
+                        <option value="{{ $primaryStore->id }}">{{ $primaryStore->name }}</option>
+                    @endforeach
+                </select>
+                @error('primaryStoreId') <p class="text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
         </div>
     @elseif($stores->count() === 1)

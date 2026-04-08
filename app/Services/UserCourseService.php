@@ -224,6 +224,18 @@ class UserCourseService
      */
     private function getUserStates(User $user): array
     {
+        if ($user->primary_store_id !== null) {
+            $primaryStore = $user->relationLoaded('primaryStore')
+                ? $user->primaryStore
+                : $user->primaryStore()->first();
+
+            $state = $primaryStore?->state;
+
+            return $state !== null
+                ? array_filter([$this->normalizeState((string) $state)])
+                : [];
+        }
+
         $states = $user->relationLoaded('stores')
             ? $user->stores->pluck('state')->filter()->all()
             : $user->stores()->distinct()->orderBy('state')->pluck('state')->filter()->toArray();

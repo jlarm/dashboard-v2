@@ -33,9 +33,7 @@ class UploadOshaPdfJob implements ShouldQueue
         }
         $localPath = '/osha/'.$this->oshaViolationAudit->pdf_path;
 
-        if (! Storage::exists($localPath)) {
-            throw new RuntimeException("OSHA PDF not found at path: {$localPath}");
-        }
+        throw_unless(Storage::exists($localPath), new RuntimeException("OSHA PDF not found at path: {$localPath}"));
 
         $stream = Storage::readStream($localPath);
         $path = tenant('id').'/osha/'.$this->oshaViolationAudit->pdf_path;
@@ -49,6 +47,6 @@ class UploadOshaPdfJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception !== null, $exception);
+        report_if($exception instanceof Throwable, $exception);
     }
 }

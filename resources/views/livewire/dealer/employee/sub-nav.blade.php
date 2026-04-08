@@ -25,7 +25,7 @@
 
     @role('Qualified Individual')
     <button
-        onclick="Livewire.emit('modal.open', 'dealer.employee.invite')"
+        onclick="Livewire.emit('slide-over.open', 'dealer.employee.invite')"
         type="button"
         class="text-sm focus:outline-none">Invite Employee
     </button>

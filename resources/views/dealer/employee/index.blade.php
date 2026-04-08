@@ -29,7 +29,7 @@
                 @endcannot
                 @endrole
                 @role('Qualified Individual')
-                    <button type="button" onclick="Livewire.emit('modal.open', 'dealer.employee.invite')" class="text-sm focus:outline-none">Invite Employee</button>
+                    <button type="button" onclick="Livewire.emit('slide-over.open', 'dealer.employee.invite')" class="text-sm focus:outline-none">Invite Employee</button>
                 @endrole
                 <a
                     href="{{ route('dealer.employees.open-invites') }}"

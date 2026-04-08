@@ -58,6 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'department_id',
         'password',
         'current_store_id',
+        'primary_store_id',
         'last_sent_course_reminder',
         'email_verified_at',
     ];
@@ -94,6 +95,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function currentStore(): BelongsTo
     {
         return $this->belongsTo(Store::class, 'current_store_id');
+    }
+
+    /**
+     * @return BelongsTo<Store, User>
+     */
+    public function primaryStore(): BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'primary_store_id');
     }
 
     public function currentStoreName(): string

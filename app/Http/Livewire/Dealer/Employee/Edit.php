@@ -27,9 +27,10 @@ class Edit extends SlideOver
     ];
 
     public ?Store $store = null;
-    public $user;
-    public string $name;
+    public User $user;
+    public string $name = '';
     public array $assignedStores = [];
+    public ?int $primaryStoreId = null;
     public ?int $department = null;
     public string $assignedRole = '';
     public bool $qi = false;
@@ -38,9 +39,16 @@ class Edit extends SlideOver
     public array $selectedAuditTypes = [];
     public bool $showStoreAssignment = false;
 
-    public function mount(User $user): void
+    public function mount(int $userId): void
     {
-        $this->initializeUserData($user);
+        $this->initializeUserData(User::query()->findOrFail($userId));
+    }
+
+    public function updatedAssignedStores(): void
+    {
+        if ($this->primaryStoreId !== null && ! in_array($this->primaryStoreId, $this->normalizedAssignedStoreIds(), true)) {
+            $this->primaryStoreId = null;
+        }
     }
 
     public function updateUser(): void
@@ -52,6 +60,7 @@ class Edit extends SlideOver
         $this->assignQiRole();
         $this->clearPermissionCache();
         $this->updateCurrentStoreId();
+        $this->updatePrimaryStoreId();
         $this->emitRefreshEvents();
         $this->closeWithSuccessNotification();
     }
@@ -77,6 +86,10 @@ class Edit extends SlideOver
         if ($this->shouldShowStoreAssignment()) {
             $rules['assignedStores'] = 'required|array';
             $rules['assignedStores.*'] = 'integer|exists:stores,id';
+
+            if (count($this->normalizedAssignedStoreIds()) > 1) {
+                $rules['primaryStoreId'] = 'required|integer|exists:stores,id';
+            }
         }
 
         return $rules;
@@ -92,6 +105,7 @@ class Edit extends SlideOver
 
         if ($this->shouldShowStoreAssignment()) {
             $messages['assignedStores.required'] = 'Please select at least one store.';
+            $messages['primaryStoreId.required'] = 'Please select a primary store.';
         }
 
         return $messages;
@@ -104,6 +118,7 @@ class Edit extends SlideOver
         $this->user = $user;
         $this->name = $user->name;
         $this->assignedStores = $user->stores()->pluck('stores.id')->map(static fn ($id): int => (int) $id)->toArray();
+        $this->primaryStoreId = $user->primary_store_id ? (int) $user->primary_store_id : null;
         $this->department = $user->department_id;
         $this->showStoreAssignment = $this->shouldShowStoreAssignment();
 
@@ -218,6 +233,25 @@ class Edit extends SlideOver
         }
     }
 
+    private function updatePrimaryStoreId(): void
+    {
+        if (! $this->showStoreAssignment) {
+            return;
+        }
+
+        $assignedStoreIds = $this->normalizedAssignedStoreIds();
+
+        if (count($assignedStoreIds) <= 1) {
+            $this->user->update(['primary_store_id' => null]);
+
+            return;
+        }
+
+        if ($this->primaryStoreId !== null && in_array($this->primaryStoreId, $assignedStoreIds, true)) {
+            $this->user->update(['primary_store_id' => $this->primaryStoreId]);
+        }
+    }
+
     private function shouldShowStoreAssignment(): bool
     {
         return Store::query()->count() > 1;
@@ -246,6 +280,6 @@ class Edit extends SlideOver
 
     private function getQualifiedIndividualRole(): Role
     {
-        return Role::query()->where('name', 'Qualified Individual')->first();
+        return Role::query()->where('name', 'Qualified Individual')->firstOrFail();
     }
 }

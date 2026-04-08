@@ -12,7 +12,7 @@
             @if($showStoreAssignment)
                 <div class="col-span-3">
                     <x-input-label for="dealers" :value="__('Select Store(s)')" />
-                    
+
                     <div class="mt-2 max-h-32 space-y-2 overflow-y-auto p-1">
                         @foreach($stores as $store)
                             <div class="relative flex items-start">
@@ -35,6 +35,25 @@
                             </div>
                         @endforeach
                     </div>
+
+                    {{-- Primary Store --}}
+                    @if(count($assignedStores) > 1)
+                        <div class="mt-4">
+                            <x-input-label for="primaryStoreId" :value="__('Primary Store')" />
+
+                            <select
+                                wire:model.defer="primaryStoreId"
+                                id="primaryStoreId"
+                                name="primaryStoreId"
+                                class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
+                            >
+                                <option value="">{{ __('Choose a primary store...') }}</option>
+                                @foreach($stores->whereIn('id', $assignedStores) as $store)
+                                    <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
                 </div>
             @endif
 
@@ -134,21 +153,22 @@
             </div>
         @endif
 
-        <x-slot name="buttons">
-            <button
-                type="submit"
-                class="inline-flex items-center justify-center rounded-md border border-transparent bg-arm-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-arm-blue-700 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:w-auto"
-            >
-                {{ __('Save Changes') }}
-            </button>
-            
-            <button
-                type="button"
-                wire:click="$emit('slide-over.close')"
-                class="inline-flex items-center justify-center rounded-md border border-arm-blue-600 px-4 py-2 text-sm font-medium text-arm-blue-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:w-auto"
-            >
-                {{ __('Cancel') }}
-            </button>
-        </div>
+    </div>
+
+    <x-slot name="buttons">
+        <button
+            type="submit"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-arm-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-arm-blue-700 focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:w-auto"
+        >
+            {{ __('Save Changes') }}
+        </button>
+
+        <button
+            type="button"
+            wire:click="$emit('slide-over.close')"
+            class="inline-flex items-center justify-center rounded-md border border-arm-blue-600 px-4 py-2 text-sm font-medium text-arm-blue-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 sm:w-auto"
+        >
+            {{ __('Cancel') }}
+        </button>
     </x-slot>
 </x-wire-elements-pro::tailwind.slide-over>

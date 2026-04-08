@@ -19,6 +19,7 @@ class Invite extends Model
         'name',
         'email',
         'stores',
+        'primary_store_id',
         'department_id',
         'user_id',
         'roles',

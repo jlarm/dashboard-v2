@@ -80,12 +80,19 @@ class UserController extends Controller
         }
 
         // Create user
+        $invitePrimaryStoreId = $invite->primary_store_id !== null ? (int) $invite->primary_store_id : null;
+        $primaryStoreId = $assignedStoreIds->count() > 1 && $invitePrimaryStoreId !== null
+            && $assignedStoreIds->contains($invitePrimaryStoreId)
+            ? $invitePrimaryStoreId
+            : null;
+
         $user = User::query()->create([
             'name' => $invite['name'],
             'email' => $invite['email'],
             'department_id' => $invite['department_id'],
             'password' => Hash::make((string) $request->input('password')),
             'current_store_id' => $assignedStoreIds->count() === 1 ? (int) $assignedStoreIds->first() : null,
+            'primary_store_id' => $primaryStoreId,
         ]);
 
         if ($invite['courses']) {

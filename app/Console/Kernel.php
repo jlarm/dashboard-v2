@@ -14,11 +14,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('telescope:prune')
-            ->daily()
-            ->onOneServer()
-            ->emailOutputOnFailure(config('app.admin_email'));
-
         $schedule->command('vendor:send-notification')
             ->daily()
             ->runInBackground()

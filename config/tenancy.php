@@ -11,7 +11,6 @@ use Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper;
 use Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper;
 use Stancl\Tenancy\Bootstrappers\RedisTenancyBootstrapper;
 use Stancl\Tenancy\Database\Models\Domain;
-use Stancl\Tenancy\Features\TelescopeTags;
 use Stancl\Tenancy\Features\UniversalRoutes;
 use Stancl\Tenancy\Features\UserImpersonation;
 use Stancl\Tenancy\Features\ViteBundler;
@@ -219,7 +218,6 @@ return [
      */
     'features' => [
         UserImpersonation::class,
-        TelescopeTags::class,
         UniversalRoutes::class,
         // Stancl\Tenancy\Features\TenantConfig::class, // https://tenancyforlaravel.com/docs/v3/features/tenant-config
         // Stancl\Tenancy\Features\CrossDomainRedirect::class, // https://tenancyforlaravel.com/docs/v3/features/cross-domain-redirect
