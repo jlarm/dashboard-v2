@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 use Throwable;
 
 class UploadGlbaPdfJob implements ShouldQueue
@@ -27,17 +28,24 @@ class UploadGlbaPdfJob implements ShouldQueue
 
     public function handle(): void
     {
-        $pdf = Storage::get('/glba/'.$this->glbaViolationAudit->pdf_path);
+        $localPath = '/glba/'.$this->glbaViolationAudit->pdf_path;
+
+        if (! Storage::exists($localPath)) {
+            throw new RuntimeException("GLBA PDF not found at path: {$localPath}");
+        }
+
+        $stream = Storage::readStream($localPath);
         $path = tenant('id').'/glba/'.$this->glbaViolationAudit->pdf_path;
-        $move = Storage::disk('armpaudits')->put(tenant('id').'/glba/'.$this->glbaViolationAudit->pdf_path, $pdf);
-        if ($move) {
-            Storage::delete('/glba/');
+        $moved = Storage::disk('armpaudits')->writeStream($path, $stream);
+
+        if ($moved) {
+            Storage::delete($localPath);
             $this->glbaViolationAudit->update(['pdf_path' => $path]);
         }
     }
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        report_if($exception !== null, $exception);
     }
 }

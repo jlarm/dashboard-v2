@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 use Throwable;
 
 class UploadBodyShopPdfJob implements ShouldQueue
@@ -27,17 +28,24 @@ class UploadBodyShopPdfJob implements ShouldQueue
 
     public function handle(): void
     {
-        $pdf = Storage::get('/bodyshop/'.$this->bodyShopViolationAudit->pdf_path);
+        $localPath = '/bodyshop/'.$this->bodyShopViolationAudit->pdf_path;
+
+        if (! Storage::exists($localPath)) {
+            throw new RuntimeException("Body Shop PDF not found at path: {$localPath}");
+        }
+
+        $stream = Storage::readStream($localPath);
         $path = tenant('id').'/bodyshop/'.$this->bodyShopViolationAudit->pdf_path;
-        $move = Storage::disk('armpaudits')->put(tenant('id').'/bodyshop/'.$this->bodyShopViolationAudit->pdf_path, $pdf);
-        if ($move) {
-            Storage::delete('/bodyshop/');
+        $moved = Storage::disk('armpaudits')->writeStream($path, $stream);
+
+        if ($moved) {
+            Storage::delete($localPath);
             $this->bodyShopViolationAudit->update(['pdf_path' => $path]);
         }
     }
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        report_if($exception !== null, $exception);
     }
 }

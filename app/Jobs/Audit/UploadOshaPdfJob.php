@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 use Throwable;
 
 class UploadOshaPdfJob implements ShouldQueue
@@ -30,17 +31,24 @@ class UploadOshaPdfJob implements ShouldQueue
         if (app()->isLocal()) {
             return;
         }
-        $pdf = Storage::get('/osha/'.$this->oshaViolationAudit->pdf_path);
+        $localPath = '/osha/'.$this->oshaViolationAudit->pdf_path;
+
+        if (! Storage::exists($localPath)) {
+            throw new RuntimeException("OSHA PDF not found at path: {$localPath}");
+        }
+
+        $stream = Storage::readStream($localPath);
         $path = tenant('id').'/osha/'.$this->oshaViolationAudit->pdf_path;
-        $move = Storage::disk('armpaudits')->put(tenant('id').'/osha/'.$this->oshaViolationAudit->pdf_path, $pdf);
-        if ($move) {
-            Storage::delete('/osha/');
+        $moved = Storage::disk('armpaudits')->writeStream($path, $stream);
+
+        if ($moved) {
+            Storage::delete($localPath);
             $this->oshaViolationAudit->update(['pdf_path' => $path]);
         }
     }
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        report_if($exception !== null, $exception);
     }
 }
