@@ -1,7 +1,7 @@
 <x-wire-elements-pro::tailwind.slide-over on-submit="updateUser">
     <x-slot name="title">Edit</x-slot>
     
-    <div class="overflow-y-auto max-h-full h-full pb-6">
+    <div class="overflow-y-auto pb-6">
         <div class="mb-3">
             @foreach($errors->all() as $error)
                 <div class="text-red-500">{{ $error }}</div>
