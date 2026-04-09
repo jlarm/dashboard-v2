@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
+use App\Enums\ViolationStatementCategory;
 use App\Models\OshaViolationStatements;
+use App\Models\ViolationStatement;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
@@ -27,7 +29,8 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     public function updatedSearch(): void
     {
         if (mb_strlen((string) $this->search) >= 2) {
-            $this->violations = tenancy()->central(fn ($tenant) => OshaViolationStatements::query()
+            $this->violations = tenancy()->central(fn ($tenant) => ViolationStatement::query()
+                ->whereJsonContains('categories', ViolationStatementCategory::Osha->value)
                 ->where(function ($term): void {
                     $term->where('statement', 'like', '%'.$this->search.'%')
                         ->orWhere('keywords', 'like', '%'.$this->search.'%');
@@ -38,7 +41,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
 
     public function selectViolation($violationId): void
     {
-        $this->selectedViolation = tenancy()->central(fn ($tenant) => OshaViolationStatements::query()->find($violationId));
+        $this->selectedViolation = tenancy()->central(fn ($tenant) => ViolationStatement::query()->find($violationId));
 
         $selectedKeys = ['id' => '', 'statement' => ''];
         $violation = $this->selectedViolation->only(array_keys($selectedKeys));
