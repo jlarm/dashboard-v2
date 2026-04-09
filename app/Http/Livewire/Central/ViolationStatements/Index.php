@@ -16,6 +16,10 @@ class Index extends Component
 
     public string $search = '';
     public ?string $category = null;
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'category' => ['except' => null],
+    ];
 
     public function updatingSearch(): void
     {

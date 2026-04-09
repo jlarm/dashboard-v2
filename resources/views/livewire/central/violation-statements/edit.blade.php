@@ -80,7 +80,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <x-armp.button type="submit" variant="primary">Update</x-armp.button>
-                <x-armp.button href="{{ route('violation-statements.index') }}">Cancel</x-armp.button>
+                <x-armp.button href="javascript:history.back()">Cancel</x-armp.button>
             </div>
             <x-armp.button
                 variant="danger"

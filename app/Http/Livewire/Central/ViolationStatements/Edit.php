@@ -26,7 +26,8 @@ class Edit extends Component
     public function mount(): void
     {
         $this->statement = $this->violationStatement->statement;
-        $this->keywords = $this->violationStatement->keywords ?? [];
+        $keywords = $this->violationStatement->keywords;
+        $this->keywords = is_array($keywords) ? $keywords : [];
         $this->weight = $this->violationStatement->weight;
         $this->categories = $this->violationStatement->categories;
     }
