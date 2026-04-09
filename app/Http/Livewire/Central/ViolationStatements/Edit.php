@@ -9,6 +9,7 @@ use App\Models\ViolationStatement;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Rule;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -27,17 +28,14 @@ class Edit extends Component
     public function mount(): void
     {
         $this->statement = $this->violationStatement->statement;
-        $keywords = $this->violationStatement->keywords;
-        $this->keywords = is_array($keywords) ? $keywords : [];
+        $this->keywords = $this->violationStatement->keywords ?? [];
         $this->weight = $this->violationStatement->weight;
         $this->categories = $this->violationStatement->categories;
     }
 
     public function delete(): void
     {
-        if ($this->violationStatement->reference_image_url) {
-            Storage::disk('digitalocean')->delete(ltrim(parse_url($this->violationStatement->reference_image_url, PHP_URL_PATH), '/'));
-        }
+        $this->deleteStoredImage();
 
         $this->violationStatement->delete();
 
@@ -48,11 +46,7 @@ class Edit extends Component
 
     public function removeImage(): void
     {
-        $url = $this->violationStatement->reference_image_url;
-
-        if ($url) {
-            Storage::disk('digitalocean')->delete(ltrim(parse_url($url, PHP_URL_PATH), '/'));
-        }
+        $this->deleteStoredImage();
 
         $this->violationStatement->update(['reference_image_url' => null]);
     }
@@ -63,7 +57,7 @@ class Edit extends Component
             'statement' => ['required', 'string', 'max:255'],
             'weight' => ['required', 'integer', 'min:1', 'max:10'],
             'categories' => ['required', 'array', 'min:1'],
-            'categories.*' => ['string', 'in:'.implode(',', array_column(ViolationStatementCategory::cases(), 'value'))],
+            'categories.*' => ['string', Rule::in(ViolationStatementCategory::cases())],
             'keywords' => ['nullable', 'array'],
             'keywords.*' => ['string', 'max:100'],
             'newImage' => ['nullable', 'image', 'max:4096'],
@@ -96,6 +90,15 @@ class Edit extends Component
     {
         return view('livewire.central.violation-statements.edit')
             ->layout('layouts.app');
+    }
+
+    private function deleteStoredImage(): void
+    {
+        $url = $this->violationStatement->reference_image_url;
+
+        if ($url) {
+            Storage::disk('digitalocean')->delete(ltrim(parse_url($url, PHP_URL_PATH), '/'));
+        }
     }
 
     private function flushViolationStatementCache(): void

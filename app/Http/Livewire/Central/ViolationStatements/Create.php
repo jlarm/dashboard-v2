@@ -9,6 +9,7 @@ use App\Models\ViolationStatement;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -29,7 +30,7 @@ class Create extends Component
             'statement' => ['required', 'string', 'max:255'],
             'weight' => ['required', 'integer', 'min:1', 'max:10'],
             'categories' => ['required', 'array', 'min:1'],
-            'categories.*' => ['string', 'in:'.implode(',', array_column(ViolationStatementCategory::cases(), 'value'))],
+            'categories.*' => ['string', Rule::in(ViolationStatementCategory::cases())],
             'keywords' => ['nullable', 'array'],
             'keywords.*' => ['string', 'max:100'],
             'image' => ['nullable', 'image', 'max:4096'],

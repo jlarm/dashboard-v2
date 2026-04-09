@@ -12,8 +12,8 @@ use Illuminate\View\View;
 
 class Modal extends \WireElements\Pro\Components\Modal\Modal
 {
-    public $search = '';
-    public $selectedViolation;
+    public string $search = '';
+    public ?ViolationStatement $selectedViolation = null;
     public Collection $violations;
     public ?int $auditId = null;
     public ?string $auditType = null;
@@ -37,7 +37,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
         $all = Cache::remember(
             'violation_statements.'.ViolationStatementCategory::Osha->value,
             now()->addDay(),
-            fn () => tenancy()->central(fn ($tenant) => ViolationStatement::query()
+            fn () => tenancy()->central(fn () => ViolationStatement::query()
                 ->whereJsonContains('categories', ViolationStatementCategory::Osha->value)
                 ->get())
         );
@@ -49,14 +49,11 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
         )->values();
     }
 
-    public function selectViolation($violationId): void
+    public function selectViolation(int $violationId): void
     {
-        $this->selectedViolation = tenancy()->central(fn ($tenant) => ViolationStatement::query()->find($violationId));
+        $this->selectedViolation = tenancy()->central(fn () => ViolationStatement::query()->find($violationId));
 
-        $selectedKeys = ['id' => '', 'statement' => ''];
-        $violation = $this->selectedViolation->only(array_keys($selectedKeys));
-
-        $this->emit('violationSelected', $violation);
+        $this->emit('violationSelected', $this->selectedViolation->only(['id', 'statement']));
         $this->close();
     }
 
