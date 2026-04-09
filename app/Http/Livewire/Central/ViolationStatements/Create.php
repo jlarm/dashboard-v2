@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Central\ViolationStatements;
 use App\Enums\ViolationStatementCategory;
 use App\Models\ViolationStatement;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -49,6 +50,8 @@ class Create extends Component
             'reference_image_url' => $referenceImageUrl,
         ]);
 
+        $this->flushViolationStatementCache();
+
         Notification::make()
             ->title('Violation statement created.')
             ->success()
@@ -60,5 +63,12 @@ class Create extends Component
     public function render(): View
     {
         return view('livewire.central.violation-statements.create');
+    }
+
+    private function flushViolationStatementCache(): void
+    {
+        foreach (ViolationStatementCategory::cases() as $category) {
+            Cache::forget('violation_statements.'.$category->value);
+        }
     }
 }

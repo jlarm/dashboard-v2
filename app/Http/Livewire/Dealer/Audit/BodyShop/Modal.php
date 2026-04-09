@@ -8,6 +8,7 @@ use App\Enums\ViolationStatementCategory;
 use App\Models\BodyShopViolationStatement;
 use App\Models\ViolationStatement;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class Modal extends \WireElements\Pro\Components\Modal\Modal
@@ -28,15 +29,25 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
 
     public function updatedSearch(): void
     {
-        $this->violations = tenancy()->central(fn ($tenant) => ViolationStatement::query()
-            ->whereJsonContains('categories', ViolationStatementCategory::BodyShop->value)
-            ->when(mb_strlen((string) $this->search) >= 2, function ($query): void {
-                $query->where(function ($term): void {
-                    $term->where('statement', 'like', '%'.$this->search.'%')
-                        ->orWhere('keywords', 'like', '%'.$this->search.'%');
-                });
-            })
-            ->get());
+        if (mb_strlen((string) $this->search) < 2) {
+            $this->violations = collect();
+
+            return;
+        }
+
+        $all = Cache::remember(
+            'violation_statements.'.ViolationStatementCategory::BodyShop->value,
+            now()->addDay(),
+            fn () => tenancy()->central(fn ($tenant) => ViolationStatement::query()
+                ->whereJsonContains('categories', ViolationStatementCategory::BodyShop->value)
+                ->get())
+        );
+
+        $search = $this->search;
+
+        $this->violations = $all->filter(fn (ViolationStatement $v): bool => mb_stripos($v->statement, (string) $search) !== false
+            || collect($v->keywords)->contains(fn ($k): bool => mb_stripos((string) $k, (string) $search) !== false)
+        )->values();
     }
 
     public function selectViolation($violationId): void
