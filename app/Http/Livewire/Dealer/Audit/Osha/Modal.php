@@ -21,11 +21,12 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     {
         $this->auditId = $auditId;
         $this->auditType = $auditType;
+        $this->violations = collect();
     }
 
     public function updatedSearch(): void
     {
-        if ($this->search >= 2 !== '') {
+        if (mb_strlen((string) $this->search) >= 2) {
             $this->violations = tenancy()->central(fn ($tenant) => OshaViolationStatements::query()
                 ->where(function ($term): void {
                     $term->where('statement', 'like', '%'.$this->search.'%')

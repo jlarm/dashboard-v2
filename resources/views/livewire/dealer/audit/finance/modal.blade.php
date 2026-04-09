@@ -8,10 +8,10 @@
                 <label>
                     <input
                         wire:model="search"
+                        x-init="$nextTick(() => $el.focus())"
                         type="text"
                         class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
                         placeholder="Search Violations..."
-                        autofocus
                     />
                 </label>
             </div>
@@ -22,7 +22,10 @@
                     <!-- Active: "bg-indigo-600 text-white" -->
                     @if(count($violations) > 0)
                         @foreach($violations as $violation)
-                            <li wire:click="selectViolation({{ $violation->id }})" class="cursor-default select-none px-4 py-2 hover:bg-arm-blue-500 hover:cursor-pointer hover:text-white" id="option-1" role="option" tabindex="-1">
+                            <li wire:key="violation-{{ $violation->id }}"
+                                wire:click="selectViolation({{ $violation->id }})"
+                                class="cursor-default select-none px-4 py-2 hover:bg-arm-blue-500 hover:cursor-pointer hover:text-white"
+                                role="option" tabindex="-1">
                                 {{ $violation->statement }}</li>
                         @endforeach
                     @endif

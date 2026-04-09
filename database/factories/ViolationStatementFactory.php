@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\ViolationStatementCategory;
 use App\Models\ViolationStatement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,7 @@ class ViolationStatementFactory extends Factory
         return [
             'statement' => $this->faker->sentence(),
             'weight' => $this->faker->numberBetween(1, 10),
-            'categories' => [\App\Enums\ViolationStatementCategory::Osha->value],
+            'categories' => [ViolationStatementCategory::Osha->value],
             'keywords' => $this->faker->words(3),
         ];
     }

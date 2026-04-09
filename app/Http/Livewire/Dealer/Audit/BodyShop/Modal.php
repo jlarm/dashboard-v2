@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
+use App\Enums\ViolationStatementCategory;
 use App\Models\BodyShopViolationStatement;
+use App\Models\ViolationStatement;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
@@ -21,18 +23,20 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     {
         $this->auditId = $auditId;
         $this->auditType = $auditType;
+        $this->violations = collect();
     }
 
     public function updatedSearch(): void
     {
-        if ($this->search >= 2 !== '') {
-            $this->violations = tenancy()->central(fn ($tenant) => BodyShopViolationStatement::query()
-                ->where(function ($term): void {
+        $this->violations = tenancy()->central(fn ($tenant) => ViolationStatement::query()
+            ->whereJsonContains('categories', ViolationStatementCategory::BodyShop->value)
+            ->when(mb_strlen((string) $this->search) >= 2, function ($query): void {
+                $query->where(function ($term): void {
                     $term->where('statement', 'like', '%'.$this->search.'%')
                         ->orWhere('keywords', 'like', '%'.$this->search.'%');
-                })
-                ->get());
-        }
+                });
+            })
+            ->get());
     }
 
     public function selectViolation($violationId): void

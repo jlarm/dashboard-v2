@@ -21,6 +21,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     {
         $this->auditId = $auditId;
         $this->auditType = $auditType;
+        $this->violations = collect();
     }
 
     public function updatedSearch(): void
