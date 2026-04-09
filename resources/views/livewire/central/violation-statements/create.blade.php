@@ -1,6 +1,6 @@
 <form class="space-y-5" wire:submit.prevent="store">
     <div>
-        <x-input label="Statement" id="statement" type="text" class="mt-1" required wire:model.defer="statement" />
+        <x-textarea label="Statement" required id="statement" wire:model.defer="statement" />
     </div>
 
     <div wire:ignore>

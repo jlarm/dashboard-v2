@@ -24,7 +24,7 @@
         <x-slot:body>
             @forelse($statements as $statement)
             <x-table.row>
-                <x-table.cell>{{ $statement->statement }}</x-table.cell>
+                <x-table.cell>{{ Str::limit($statement->statement, 100) }}</x-table.cell>
                 <x-table.cell>{{ $statement->weight }}</x-table.cell>
                 <x-table.cell>
                     {{ collect($statement->categories)->map(fn ($c) => \App\Enums\ViolationStatementCategory::from($c)->label())->join(', ') }}
