@@ -9,7 +9,10 @@
                 @endforeach
             </select>
         </div>
-        <x-armp.button href="{{ route('violation-statements.create') }}" variant="primary">Add Violation</x-armp.button>
+        <div class="flex items-center gap-2">
+            <x-armp.button href="{{ route('violation-statements.print') }}" variant="ghost" target="_blank">Print</x-armp.button>
+            <x-armp.button href="{{ route('violation-statements.create') }}" variant="primary">Add Violation</x-armp.button>
+        </div>
     </div>
 
     <x-table>

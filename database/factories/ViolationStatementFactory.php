@@ -20,7 +20,10 @@ class ViolationStatementFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'statement' => $this->faker->sentence(),
+            'weight' => $this->faker->numberBetween(1, 10),
+            'categories' => [\App\Enums\ViolationStatementCategory::Osha->value],
+            'keywords' => $this->faker->words(3),
         ];
     }
 }
