@@ -5,14 +5,14 @@
     <!-- Skeleton Loading State -->
     <div x-show="$wire.isLoading" class="grid grid-cols-1 md:grid-cols-5 gap-6">
         @for ($i = 0; $i < 5; $i++)
-            <div wire:key="rating-skeleton-{{ $i }}" class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+            <div wire:key="rating-skeleton-{{ $i }}" class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
                 <div class="animate-pulse">
                     <div class="flex justify-between items-center mb-1">
-                        <div class="h-10 bg-gray-200 rounded w-12 dark:bg-neutral-700"></div>
+                        <div class="h-10 bg-gray-200 rounded w-12"></div>
                     </div>
                     <div class="flex justify-between items-center">
-                        <div class="h-4 bg-gray-200 rounded w-20 dark:bg-neutral-700"></div>
-                        <div class="size-4 bg-gray-200 rounded dark:bg-neutral-700"></div>
+                        <div class="h-4 bg-gray-200 rounded w-20"></div>
+                        <div class="size-4 bg-gray-200 rounded"></div>
                     </div>
                 </div>
             </div>
@@ -21,16 +21,16 @@
 
     <!-- Actual Content -->
     <div x-show="!$wire.isLoading" class="grid grid-cols-1 md:grid-cols-5 gap-6">
-        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800 dark:text-neutral-200">
+                <h2 class="text-4xl font-semibold text-gray-800">
                     {{ $rating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500 dark:text-neutral-500">
+                <h3 class="text-gray-500">
                     Overall
                 </h3>
                 <x-tooltip
@@ -47,16 +47,16 @@
                 </x-tooltip>
             </div>
         </div>
-        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800 dark:text-neutral-200">
+                <h2 class="text-4xl font-semibold text-gray-800">
                     {{ $this->oshaRating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500 dark:text-neutral-500">
+                <h3 class="text-gray-500">
                     OSHA
                 </h3>
                 <x-tooltip
@@ -73,16 +73,16 @@
                 </x-tooltip>
             </div>
         </div>
-        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800 dark:text-neutral-200">
+                <h2 class="text-4xl font-semibold text-gray-800">
                     {{ $this->dealJacketRating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500 dark:text-neutral-500">
+                <h3 class="text-gray-500">
                     Deal Jackets
                 </h3>
                 <x-tooltip
@@ -99,16 +99,16 @@
                 </x-tooltip>
             </div>
         </div>
-        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800 dark:text-neutral-200">
+                <h2 class="text-4xl font-semibold text-gray-800">
                     {{ $this->glbaRating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500 dark:text-neutral-500">
+                <h3 class="text-gray-500">
                     GLBA
                 </h3>
                 <x-tooltip
@@ -125,16 +125,16 @@
                 </x-tooltip>
             </div>
         </div>
-        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800 dark:text-neutral-200">
+                <h2 class="text-4xl font-semibold text-gray-800">
                     {{ $this->bodyShopRating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500 dark:text-neutral-500">
+                <h3 class="text-gray-500">
                     Body Shop
                 </h3>
                 <x-tooltip

@@ -1,6 +1,6 @@
 <div class="bg-white shadow-sm border rounded-lg p-6">
     <div class="mb-4">
-        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Pass Rate Trend</h3>
+        <h3 class="text-lg font-medium text-gray-900">Pass Rate Trend</h3>
         <p class="text-xs text-gray-500">Based on the previous 2 years</p>
     </div>
     <div class="relative h-64">

@@ -17,13 +17,13 @@
     $baseClasses = 'inline-flex items-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-arm-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
     $variantClasses = match($variant) {
-        'outline' => 'border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-950 dark:text-white dark:hover:bg-gray-900',
-        'primary' => 'bg-arm-blue-600 text-white hover:bg-arm-blue-700 dark:bg-arm-blue-500 dark:hover:bg-arm-blue-600',
-        'filled' => 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700',
-        'danger' => 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600',
-        'ghost' => 'text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900',
-        'subtle' => 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-900',
-        default => 'border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-950 dark:text-white dark:hover:bg-gray-900',
+        'outline' => 'border border-gray-300 bg-white text-gray-900 hover:bg-gray-50',
+        'primary' => 'bg-arm-blue-600 text-white hover:bg-arm-blue-700',
+        'filled' => 'bg-gray-100 text-gray-900 hover:bg-gray-200',
+        'danger' => 'bg-red-600 text-white hover:bg-red-700',
+        'ghost' => 'text-gray-900 hover:bg-gray-100',
+        'subtle' => 'text-gray-600 hover:bg-gray-100',
+        default => 'border border-gray-300 bg-white text-gray-900 hover:bg-gray-50',
     };
 
     $sizeClasses = match($size) {

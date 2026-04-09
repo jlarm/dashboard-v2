@@ -35,18 +35,18 @@
     $sz = $sizes[$size] ?? $sizes['base'];
 
     $borderClasses = $hasError
-        ? 'border-red-500 focus-within:border-red-500 focus-within:ring-red-500/25 dark:border-red-400'
-        : 'border-zinc-200 focus-within:ring-zinc-950/10 dark:border-white/10 dark:focus-within:ring-white/10';
+        ? 'border-red-500 focus-within:border-red-500 focus-within:ring-red-500/25'
+        : 'border-zinc-200 focus-within:ring-zinc-950/10';
 
     $nativeClasses = implode(' ', [
         'block w-full appearance-none rounded-lg border shadow-sm bg-white',
-        'text-zinc-800 dark:text-white dark:bg-white/10',
+        'text-zinc-800',
         'focus:outline-none focus:ring-2 focus:ring-offset-0',
-        'disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-zinc-50 dark:disabled:bg-white/[0.03]',
+        'disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-zinc-50',
         'transition duration-100',
         $hasError
-            ? 'border-red-500 focus:border-red-500 focus:ring-red-500/25 dark:border-red-400'
-            : 'border-zinc-200 focus:ring-zinc-950/10 dark:border-white/10 dark:focus:ring-white/10',
+            ? 'border-red-500 focus:border-red-500 focus:ring-red-500/25'
+            : 'border-zinc-200 focus:ring-zinc-950/10',
         $sz['trigger'],
         'pr-10',
     ]);
@@ -66,7 +66,7 @@
 
 <div class="w-full">
     @if ($label)
-        <label for="{{ $id }}" class="block text-sm font-medium text-zinc-800 dark:text-white mb-1.5">
+        <label for="{{ $id }}" class="block text-sm font-medium text-zinc-800 mb-1.5">
             {{ $label }}
         </label>
     @endif
@@ -86,7 +86,7 @@
             </select>
 
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                <svg class="{{ $sz['icon'] }} text-zinc-400 dark:text-zinc-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <svg class="{{ $sz['icon'] }} text-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                 </svg>
             </div>
@@ -111,7 +111,7 @@
                 {{-- Combobox trigger: input --}}
                 <div @class([
                     'relative flex items-center rounded-lg border shadow-sm transition duration-100',
-                    'bg-white dark:bg-white/10',
+                    'bg-white',
                     $borderClasses,
                     'opacity-50 cursor-not-allowed' => $disabled,
                 ])>
@@ -125,20 +125,20 @@
                         @disabled($disabled)
                         @class([
                             'w-full bg-transparent border-0 outline-none focus:ring-0',
-                            'text-zinc-800 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500',
+                            'text-zinc-800 placeholder-zinc-400',
                             $sz['trigger'],
                             'pr-10',
                         ])
                     >
                     <div class="absolute inset-y-0 right-0 flex items-center gap-1 pr-3">
                         @if ($clearable)
-                            <button type="button" data-select-clear class="hidden text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300 transition" tabindex="-1">
+                            <button type="button" data-select-clear class="hidden text-zinc-400 hover:text-zinc-600 transition" tabindex="-1">
                                 <svg class="{{ $sz['icon'] }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
                                 </svg>
                             </button>
                         @endif
-                        <svg class="{{ $sz['icon'] }} text-zinc-400 dark:text-zinc-500 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <svg class="{{ $sz['icon'] }} text-zinc-400 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                         </svg>
                     </div>
@@ -155,7 +155,7 @@
                     aria-haspopup="listbox"
                     @class([
                         'relative flex w-full items-center text-left rounded-lg border shadow-sm transition duration-100',
-                        'bg-white dark:bg-white/10',
+                        'bg-white',
                         $borderClasses,
                         $sz['trigger'],
                         'pr-10',
@@ -164,19 +164,19 @@
                         'cursor-pointer' => ! $disabled,
                     ])
                 >
-                    <span data-select-label class="truncate text-zinc-400 dark:text-zinc-500">
+                    <span data-select-label class="truncate text-zinc-400">
                         {{ $placeholder }}
                     </span>
 
                     <div class="absolute inset-y-0 right-0 flex items-center gap-1 pr-3">
                         @if ($clearable)
-                            <button type="button" data-select-clear class="hidden text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300 transition" tabindex="-1">
+                            <button type="button" data-select-clear class="hidden text-zinc-400 hover:text-zinc-600 transition" tabindex="-1">
                                 <svg class="{{ $sz['icon'] }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
                                 </svg>
                             </button>
                         @endif
-                        <svg class="{{ $sz['icon'] }} text-zinc-400 dark:text-zinc-500 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <svg class="{{ $sz['icon'] }} text-zinc-400 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                         </svg>
                     </div>
@@ -187,17 +187,17 @@
             <div
                 data-select-panel
                 role="listbox"
-                class="hidden absolute z-50 mt-1 w-full rounded-xl border border-zinc-200 bg-white shadow-lg dark:border-white/10 dark:bg-zinc-800 opacity-0 scale-95 transition-all duration-150 origin-top"
+                class="hidden absolute z-50 mt-1 w-full rounded-xl border border-zinc-200 bg-white shadow-lg opacity-0 scale-95 transition-all duration-150 origin-top"
             >
                 @if ($searchable && ! $isCombobox)
-                    <div class="flex items-center gap-2 border-b border-zinc-200 dark:border-white/10 px-3 py-2">
-                        <svg class="size-4 text-zinc-400 dark:text-zinc-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <div class="flex items-center gap-2 border-b border-zinc-200 px-3 py-2">
+                        <svg class="size-4 text-zinc-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
                         </svg>
                         <input
                             type="text"
                             data-select-search
-                            class="w-full bg-transparent border-0 p-0 text-sm text-zinc-800 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-0"
+                            class="w-full bg-transparent border-0 p-0 text-sm text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-0"
                             placeholder="Search..."
                             autocomplete="off"
                         >
@@ -208,7 +208,7 @@
                     {{ $slot }}
                 </div>
 
-                <div data-select-empty class="hidden px-3 py-6 text-center text-sm text-zinc-500 dark:text-zinc-400">
+                <div data-select-empty class="hidden px-3 py-6 text-center text-sm text-zinc-500">
                     No results found.
                 </div>
             </div>
@@ -216,11 +216,11 @@
     @endif
 
     @if ($description && ! $hasError)
-        <p class="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">{{ $description }}</p>
+        <p class="mt-1.5 text-sm text-zinc-500">{{ $description }}</p>
     @endif
 
     @if ($hasError)
-        <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">
+        <p class="mt-1.5 text-sm text-red-600">
             {{ $errorMessage }}
         </p>
     @endif
@@ -438,22 +438,22 @@
                     var count = this.selectedValue.length;
                     if (count === 0) {
                         this.triggerLabel.textContent = this.config.placeholder;
-                        this.triggerLabel.className = 'truncate text-zinc-400 dark:text-zinc-500';
+                        this.triggerLabel.className = 'truncate text-zinc-400';
                     } else if (count === 1) {
                         var match = this.options.find(function (o) { return self.selectedValue.includes(o.value); });
                         this.triggerLabel.textContent = match ? match.label : '1 selected';
-                        this.triggerLabel.className = 'truncate text-zinc-800 dark:text-white';
+                        this.triggerLabel.className = 'truncate text-zinc-800';
                     } else {
                         this.triggerLabel.textContent = count + ' selected';
-                        this.triggerLabel.className = 'truncate text-zinc-800 dark:text-white';
+                        this.triggerLabel.className = 'truncate text-zinc-800';
                     }
                 } else {
                     if (this.selectedValue) {
                         this.triggerLabel.textContent = this.selectedLabel;
-                        this.triggerLabel.className = 'truncate text-zinc-800 dark:text-white';
+                        this.triggerLabel.className = 'truncate text-zinc-800';
                     } else {
                         this.triggerLabel.textContent = this.config.placeholder;
-                        this.triggerLabel.className = 'truncate text-zinc-400 dark:text-zinc-500';
+                        this.triggerLabel.className = 'truncate text-zinc-400';
                     }
                 }
             }
@@ -483,11 +483,8 @@
                 var checkboxIcon = opt.el.querySelector('[data-checkbox-icon]');
                 if (checkbox) {
                     checkbox.classList.toggle('bg-zinc-800', isSelected);
-                    checkbox.classList.toggle('dark:bg-white', isSelected);
                     checkbox.classList.toggle('border-zinc-800', isSelected);
-                    checkbox.classList.toggle('dark:border-white', isSelected);
                     checkbox.classList.toggle('border-zinc-300', !isSelected);
-                    checkbox.classList.toggle('dark:border-zinc-600', !isSelected);
                     if (checkboxIcon) checkboxIcon.classList.toggle('hidden', !isSelected);
                 }
 

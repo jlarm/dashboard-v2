@@ -51,10 +51,10 @@
     style="display: none;"
 >
     <div class="fixed inset-0" x-on:click="show = false">
-        <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
     </div>
 
-    <div class="relative bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl sm:w-full {{ $maxWidthClass }}">
+    <div class="relative bg-white rounded-lg overflow-hidden shadow-xl sm:w-full {{ $maxWidthClass }}">
         {{ $slot }}
     </div>
 </div>

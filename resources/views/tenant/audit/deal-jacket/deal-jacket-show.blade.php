@@ -14,7 +14,7 @@
                         <div class="flex justify-between gap-5 py-2.5 first:pt-0 last:pb-0 first:border-t-0 border-t border-dashed border-gray-200">
                             <div class="grow">
                                 <span class="block text-sm text-gray-800">{{ $response['statement'] }}</span>
-                                <small class="block text-xs text-gray-500 dark:text-neutral-400">
+                                <small class="block text-xs text-gray-500">
                                     {{ $response['comment'] }}
                                 </small>
                             </div>

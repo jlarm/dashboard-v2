@@ -22,7 +22,7 @@
                       @if($video['completed'])
                             <div class="flex justify-center items-center gap-x-1 whitespace-nowrap">
                                 <svg class="shrink-0 size-3.5 text-green-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-                                <small class="block text-xs text-gray-500 dark:text-neutral-400">
+                                <small class="block text-xs text-gray-500">
                                     Completed {{ $video['date']->diffForHumans() }}
                                 </small>
                             </div>

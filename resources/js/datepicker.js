@@ -155,15 +155,15 @@
             const isDisabled = this.isDateDisabled(compareDate);
 
             if (!isCurrentMonth) {
-                button.classList.add('text-gray-400', 'dark:text-gray-600');
+                button.classList.add('text-gray-400');
             }
 
             if (isSelected) {
                 button.classList.add('bg-arm-blue-600', 'text-white', 'hover:bg-arm-blue-700');
             } else if (isToday) {
-                button.classList.add('bg-arm-blue-100', 'text-arm-blue-600', 'dark:bg-arm-blue-900', 'dark:text-arm-blue-300');
+                button.classList.add('bg-arm-blue-100', 'text-arm-blue-600');
             } else {
-                button.classList.add('hover:bg-gray-100', 'dark:hover:bg-gray-700', 'text-gray-900', 'dark:text-gray-100');
+                button.classList.add('hover:bg-gray-100', 'text-gray-900');
             }
 
             if (isDisabled) {
