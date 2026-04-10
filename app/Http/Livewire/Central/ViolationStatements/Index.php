@@ -15,10 +15,10 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
-    public ?string $category = null;
+    public string $category = '';
     protected $queryString = [
         'search' => ['except' => ''],
-        'category' => ['except' => null],
+        'category' => ['except' => ''],
     ];
 
     public function updatingSearch(): void
@@ -42,6 +42,6 @@ class Index extends Component
         return view('livewire.central.violation-statements.index', [
             'statements' => $statements,
             'categories' => ViolationStatementCategory::cases(),
-        ]);
+        ])->layout('layouts.app');
     }
 }

@@ -105,7 +105,7 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
         Route::get('course-management/{course:slug}', App\Http\Livewire\Central\CourseManagement\Edit::class)->name('course-management.edit');
         Route::get('course-management/quiz/{course:slug}', EditQuiz::class)->name('course-management.edit-quiz');
 
-        Route::view('violation-statements', 'central.violation-statements.index')->name('violation-statements.index');
+        Route::get('violation-statements', App\Http\Livewire\Central\ViolationStatements\Index::class)->name('violation-statements.index');
         Route::view('violation-statements/create', 'central.violation-statements.create')->name('violation-statements.create');
         Route::get('violation-statements/{violationStatement}/edit', App\Http\Livewire\Central\ViolationStatements\Edit::class)->name('violation-statements.edit');
 

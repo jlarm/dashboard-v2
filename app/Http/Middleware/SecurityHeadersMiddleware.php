@@ -19,7 +19,7 @@ class SecurityHeadersMiddleware
 
         $response->headers->set('X-Content-Type-Options', 'nosniff');
 
-        $response->headers->set('Referrer-Policy', 'no-referrer');
+        $response->headers->set('Referrer-Policy', 'same-origin');
 
         $response->headers->set('Permissions-Policy', 'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()');
 
