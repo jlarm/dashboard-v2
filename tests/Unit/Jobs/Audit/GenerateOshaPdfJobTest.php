@@ -4,10 +4,44 @@ declare(strict_types=1);
 
 use App\Jobs\Audit\GenerateOshaPdfJob;
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use App\Models\Dealer\Violation;
 use App\Models\OshaViolationStatements;
+use App\Models\ViolationStatement;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Stancl\Tenancy\Tenancy;
+
+function invokeResolveReferenceImages(GenerateOshaPdfJob $job, Collection $violations): array
+{
+    $reflection = new ReflectionClass($job);
+    $method = $reflection->getMethod('resolveReferenceImages');
+    $method->setAccessible(true);
+
+    return $method->invoke($job, $violations);
+}
+
+function makeViolation(int $statementId, bool $showReferenceImage = false): Violation
+{
+    $violation = new Violation();
+    $violation->statement_id = $statementId;
+    $violation->show_reference_image = $showReferenceImage;
+
+    return $violation;
+}
+
+function makeViolationStatement(int $id, ?string $referenceImageUrl): ViolationStatement
+{
+    $statement = new ViolationStatement();
+    $statement->id = $id;
+    $statement->reference_image_url = $referenceImageUrl;
+
+    return $statement;
+}
+
+function makeJobForAudit(OshaViolationAudit $audit): GenerateOshaPdfJob
+{
+    return new GenerateOshaPdfJob($audit);
+}
 
 function createViolationWithStatementId(int $statementId, int $severity): object
 {
@@ -239,6 +273,77 @@ describe('rating calculation', function (): void {
         // Weight=1, severity defaults to 1 -> penalty=0.1
         // Score = (1 - 0.1) / 1 = 90%
         expect(invokeRatingMethod($job))->toBe('A');
+    });
+});
+
+describe('resolveReferenceImages', function (): void {
+    it('returns an empty array when no violations have show_reference_image enabled', function (): void {
+        $audit = Mockery::mock(OshaViolationAudit::class);
+        $job = makeJobForAudit($audit);
+
+        $violations = new Collection([
+            makeViolation(statementId: 1, showReferenceImage: false),
+            makeViolation(statementId: 2, showReferenceImage: false),
+        ]);
+
+        expect(invokeResolveReferenceImages($job, $violations))->toBe([]);
+    });
+
+    it('returns an empty array when violations collection is empty', function (): void {
+        $audit = Mockery::mock(OshaViolationAudit::class);
+        $job = makeJobForAudit($audit);
+
+        expect(invokeResolveReferenceImages($job, new Collection()))->toBe([]);
+    });
+
+    it('only fetches statement ids for violations with show_reference_image enabled', function (): void {
+        $statementWithImage = makeViolationStatement(id: 1, referenceImageUrl: 'https://cdn.example.com/ref.jpg');
+        $statementCollection = new Collection([$statementWithImage->id => $statementWithImage]);
+
+        $tenancy = Mockery::mock(Tenancy::class);
+        $tenancy->shouldReceive('central')
+            ->once()
+            ->andReturnUsing(fn ($callback) => $statementCollection);
+        app()->instance(Tenancy::class, $tenancy);
+
+        $audit = Mockery::mock(OshaViolationAudit::class);
+        $job = makeJobForAudit($audit);
+
+        $violations = new Collection([
+            makeViolation(statementId: 1, showReferenceImage: true),
+            makeViolation(statementId: 2, showReferenceImage: false),
+        ]);
+
+        $result = invokeResolveReferenceImages($job, $violations);
+
+        expect($result)->toBe([1 => 'https://cdn.example.com/ref.jpg']);
+    });
+
+    it('maps multiple statement ids to their reference image urls', function (): void {
+        $statements = new Collection([
+            1 => makeViolationStatement(id: 1, referenceImageUrl: 'https://cdn.example.com/a.jpg'),
+            3 => makeViolationStatement(id: 3, referenceImageUrl: 'https://cdn.example.com/b.jpg'),
+        ]);
+
+        $tenancy = Mockery::mock(Tenancy::class);
+        $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback) => $statements);
+        app()->instance(Tenancy::class, $tenancy);
+
+        $audit = Mockery::mock(OshaViolationAudit::class);
+        $job = makeJobForAudit($audit);
+
+        $violations = new Collection([
+            makeViolation(statementId: 1, showReferenceImage: true),
+            makeViolation(statementId: 2, showReferenceImage: false),
+            makeViolation(statementId: 3, showReferenceImage: true),
+        ]);
+
+        $result = invokeResolveReferenceImages($job, $violations);
+
+        expect($result)->toBe([
+            1 => 'https://cdn.example.com/a.jpg',
+            3 => 'https://cdn.example.com/b.jpg',
+        ]);
     });
 });
 

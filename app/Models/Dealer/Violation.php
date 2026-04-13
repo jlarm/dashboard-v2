@@ -30,6 +30,7 @@ class Violation extends Model implements HasMedia
         'violation_date',
         'risk',
         'severity',
+        'show_reference_image',
     ];
     protected $casts = [
         'id' => 'integer',
@@ -41,6 +42,7 @@ class Violation extends Model implements HasMedia
         'violation_date' => 'date:Y-m-d',
         'risk' => 'boolean',
         'severity' => 'integer',
+        'show_reference_image' => 'boolean',
     ];
 
     public function registerMediaConversions(?Media $media = null): void

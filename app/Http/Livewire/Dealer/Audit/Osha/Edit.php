@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\AuditComment;
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use App\Models\ViolationStatement;
 use App\Traits\HasOshaViolationStatements;
 use Exception;
 use Filament\Notifications\Notification;
@@ -41,6 +42,7 @@ class Edit extends Component
         'violations.*.violation_date' => 'nullable|date',
         'violations.*.risk' => 'nullable|boolean',
         'violations.*.severity' => 'nullable|integer|min:0|max:10',
+        'violations.*.show_reference_image' => 'nullable|boolean',
         'violationFiles.*.*' => 'nullable|mimes:jpg,jpeg,png,heic,heif,webp|max:15360',
     ];
 
@@ -69,6 +71,7 @@ class Edit extends Component
                     'violation_date' => $violation['violation_date'],
                     'risk' => $violation['risk'],
                     'severity' => $violation['severity'] ?? null,
+                    'show_reference_image' => (bool) ($violation['show_reference_image'] ?? false),
                 ];
 
                 foreach ($this->violationFiles as $index => $files) {
@@ -168,8 +171,16 @@ class Edit extends Component
 
     public function render(): View
     {
-        return view('livewire.dealer.audit.osha.edit')
-            ->layout('components.dealer-app');
+        $statementIds = collect($this->violations)->pluck('statement_id')->filter()->unique()->values();
+
+        $referenceImagesByStatementId = tenancy()->central(fn () => ViolationStatement::query()
+            ->whereIn('id', $statementIds)
+            ->get(['id', 'reference_image_url'])
+        )->pluck('reference_image_url', 'id')->toArray();
+
+        return view('livewire.dealer.audit.osha.edit', [
+            'referenceImagesByStatementId' => $referenceImagesByStatementId,
+        ])->layout('components.dealer-app');
     }
 
     private function checkInvalidViolations(): void
