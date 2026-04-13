@@ -26,7 +26,7 @@ readonly class AlertCenterService
             ->select(['users.id', 'users.name', 'users.slug', 'users.email', 'users.department_id'])
             ->with([
                 'department:id,name',
-                'stores:id,name',
+                'stores:id,name,state',
                 'roles:id,name',
                 'courseOverrides:user_id,course_id,type',
                 'results' => function ($query) use ($generalCourseCutoffDate, $specialCourseCutoffDate, $specialCourseIds): void {
