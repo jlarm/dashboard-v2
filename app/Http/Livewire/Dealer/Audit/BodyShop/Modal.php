@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
 use App\Enums\ViolationStatementCategory;
-use App\Models\BodyShopViolationStatement;
 use App\Models\ViolationStatement;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -50,7 +49,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
 
     public function selectViolation(int $violationId): void
     {
-        $violation = tenancy()->central(fn ($tenant) => BodyShopViolationStatement::query()->find($violationId));
+        $violation = tenancy()->central(fn ($tenant) => ViolationStatement::query()->find($violationId));
 
         $this->emit('violationSelected', $violation->only(['id', 'statement']));
         $this->close();
