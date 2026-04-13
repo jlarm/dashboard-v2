@@ -66,6 +66,7 @@ class Edit extends Component
         $referenceImageUrl = $this->violationStatement->reference_image_url;
 
         if ($this->newImage) {
+            $this->deleteStoredImage();
             $path = $this->newImage->storePublicly('violation-statements', 'digitalocean');
             $referenceImageUrl = Storage::disk('digitalocean')->url($path);
         }

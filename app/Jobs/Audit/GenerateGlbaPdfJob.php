@@ -7,6 +7,7 @@ namespace App\Jobs\Audit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\GlbaViolationStatements;
+use App\Models\ViolationStatement;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -104,9 +105,12 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     private function createPdf(string $fileName): void
     {
+        $audit = $this->glbaViolationAudit->load(['violations', 'auditComments']);
+
         $html = view('dealer.audit.finance.pdf-view', [
             'fileName' => $fileName,
-            'audit' => $this->glbaViolationAudit->load(['violations', 'auditComments']),
+            'audit' => $audit,
+            'referenceImagesByStatementId' => $this->resolveReferenceImages($audit->violations),
         ])->render();
 
         $footer = view('pdf.audit-footer')->render();
@@ -120,6 +124,29 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
             ->hideHeader()
             ->footerHtml($footer)
             ->save(storage_path('app/glba/'.$fileName));
+    }
+
+    /**
+     * @param  \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dealer\Violation>  $violations
+     * @return array<int, string|null>
+     */
+    private function resolveReferenceImages(\Illuminate\Database\Eloquent\Collection $violations): array
+    {
+        $statementIds = $violations
+            ->where('show_reference_image', true)
+            ->pluck('statement_id')
+            ->filter()
+            ->unique()
+            ->values();
+
+        if ($statementIds->isEmpty()) {
+            return [];
+        }
+
+        return tenancy()->central(fn () => ViolationStatement::query()
+            ->whereIn('id', $statementIds)
+            ->get(['id', 'reference_image_url'])
+        )->pluck('reference_image_url', 'id')->toArray();
     }
 
     private function updateAudit(string $fileName): void

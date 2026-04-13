@@ -80,6 +80,14 @@
                 </div>
                 @endif
             </div>
+            @if($violation->show_reference_image && ($referenceImagesByStatementId[$violation->statement_id] ?? null))
+                <div class="mt-4">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Reference Image</p>
+                    <div class="h-56 overflow-hidden">
+                        <img class="h-full w-auto object-contain" src="{{ $referenceImagesByStatementId[$violation->statement_id] }}" alt="Reference image for {{ $violation->statement }}">
+                    </div>
+                </div>
+            @endif
             @if(isset($remediation))
                 @if($violation->remediation)
                     <div class="mb-10 bg-gray-100 p-5">

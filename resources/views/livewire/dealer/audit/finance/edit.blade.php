@@ -254,6 +254,35 @@
                                     @error('violations.' . $index . '.comment') <span class="text-sm text-red-500 mt-3">* A comment is required</span> @enderror
                                 </div>
 
+                                {{-- Show Reference Image --}}
+                                @if($referenceImagesByStatementId[$s->statement_id] ?? null)
+                                    <div
+                                        x-data="{ checked: @entangle('violations.' . $index . '.show_reference_image').defer }"
+                                        @click="checked = !checked"
+                                        :class="checked ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-200'"
+                                        class="p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between"
+                                    >
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                :class="checked ? 'bg-arm-blue-500 text-white' : 'bg-gray-300 text-gray-500'"
+                                                class="p-2 rounded-xl transition-colors"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                                            </div>
+                                            <p :class="checked ? 'text-blue-700' : 'text-gray-500'" class="font-bold text-sm transition-colors">Include reference image in report</p>
+                                        </div>
+                                        <div
+                                            :class="checked ? 'bg-arm-blue-500' : 'bg-gray-300'"
+                                            class="w-12 h-6 rounded-full relative transition-colors"
+                                        >
+                                            <div
+                                                :class="checked ? 'translate-x-6' : 'translate-x-0'"
+                                                class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform"
+                                            ></div>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 {{-- Date of Violation --}}
                                 <div class="space-y-1">
                                     <label class="text-sm font-bold text-slate-700 uppercase tracking-tight">Date of Violation</label>
