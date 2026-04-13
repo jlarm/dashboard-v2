@@ -222,6 +222,13 @@ class Index extends Component
         $this->selectAll = count($this->selectedUsers) === $users->count() && $users->count() > 0;
     }
 
+    public function openCustomMessageModal(): void
+    {
+        $this->emit('modal.open', 'dealer.employee.custom-message-modal', [
+            'userIds' => $this->selectedUsers,
+        ]);
+    }
+
     public function exportCsv(): mixed
     {
         if ($this->selectedUsers === []) {

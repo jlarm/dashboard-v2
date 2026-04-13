@@ -12,6 +12,9 @@
                 </label>
                 <div class="flex items-center space-x-3">
                     @if(count($selectedUsers) > 0)
+                        @hasrole('super-admin')
+                        <x-armp.button variant="primary" wire:click="openCustomMessageModal">Send Message</x-armp.button>
+                        @endhasrole
                         <button
                             wire:click="exportCsv"
                             class="inline-flex items-center gap-2 bg-arm-blue-600 hover:bg-arm-blue-500 px-4 py-2 rounded-md text-white text-sm font-semibold transition-colors"
@@ -453,7 +456,7 @@
                             <x-table class="table-fixed w-full">
                                 <x-slot name="head">
                                     <x-table.row>
-                                        <x-table.cell class="!pl-0 !pr-1" style="width: {{ $nameColumnWidth }}px;">
+                                        <x-table.cell class="!pl-1 !pr-1" style="width: {{ $nameColumnWidth }}px;">
                                             <div class="flex items-center gap-3">
                                                 <input
                                                     type="checkbox"
@@ -546,7 +549,7 @@
                                                 ->values();
                                         @endphp
                                         <x-table.row wire:key="user-{{ $user->id }}">
-                                            <x-table.cell class="!pl-0 !pr-1" style="width: {{ $nameColumnWidth }}px;">
+                                            <x-table.cell class="!pl-1 !pr-1" style="width: {{ $nameColumnWidth }}px;">
                                                 <div class="flex items-center gap-3">
                                                     <input
                                                         type="checkbox"
