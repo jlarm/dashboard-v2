@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\Models\OshaViolationStatements;
 use Illuminate\Support\Str;
 
 trait HasOshaViolationStatements
@@ -18,7 +17,7 @@ trait HasOshaViolationStatements
 
     public function violationSelected(array $violation): void
     {
-        $this->violationStatements = tenancy()->central(fn ($tenant) => OshaViolationStatements::all());
+        $this->persistCurrentViolations();
 
         $this->oshaViolationAudit->violations()->create([
             'statement_id' => $violation['id'],
@@ -68,5 +67,18 @@ trait HasOshaViolationStatements
                 'cancel' => 'No, cancel',
             ],
         );
+    }
+
+    private function persistCurrentViolations(): void
+    {
+        foreach ($this->violations as $violation) {
+            $violation->update([
+                'comment' => $violation['comment'] ?? '',
+                'violation_date' => $violation['violation_date'] ?? null,
+                'risk' => $violation['risk'] ?? false,
+                'severity' => $violation['severity'] ?? null,
+                'show_reference_image' => (bool) ($violation['show_reference_image'] ?? false),
+            ]);
+        }
     }
 }

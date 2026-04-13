@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\Models\GlbaViolationStatements;
 use Illuminate\Support\Str;
 
 trait HasGlbaViolationStatements
@@ -16,7 +15,7 @@ trait HasGlbaViolationStatements
 
     public function violationSelected(array $violation): void
     {
-        $this->violationStatements = tenancy()->central(fn ($tenant) => GlbaViolationStatements::all());
+        $this->persistCurrentViolations();
 
         $this->glbaViolationAudit->violations()->create([
             'statement_id' => $violation['id'],
@@ -66,5 +65,18 @@ trait HasGlbaViolationStatements
                 'cancel' => 'No, cancel',
             ],
         );
+    }
+
+    private function persistCurrentViolations(): void
+    {
+        foreach ($this->violations as $violation) {
+            $violation->update([
+                'comment' => $violation['comment'] ?? '',
+                'violation_date' => $violation['violation_date'] ?? null,
+                'risk' => $violation['risk'] ?? false,
+                'severity' => $violation['severity'] ?? null,
+                'show_reference_image' => (bool) ($violation['show_reference_image'] ?? false),
+            ]);
+        }
     }
 }
