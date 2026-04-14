@@ -54,7 +54,7 @@
                         wire:model.defer="primaryStoreId"
                         id="primaryStoreId"
                         name="primaryStoreId"
-                        required
+                        :required="selectedStoreIds.length > 1"
                         class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-arm-blue-500 focus:outline-none focus:ring-arm-blue-500 sm:text-sm"
                     >
                         <option value="">{{ __('Choose a primary store...') }}</option>
