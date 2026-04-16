@@ -13,11 +13,9 @@ use Illuminate\View\View;
 class Modal extends \WireElements\Pro\Components\Modal\Modal
 {
     public string $search = '';
-    public ?ViolationStatement $selectedViolation = null;
     public Collection $violations;
     public ?int $auditId = null;
     public ?string $auditType = null;
-    public array $selectedViolations = [];
 
     public function mount(?int $auditId = null, ?string $auditType = null): void
     {
@@ -28,7 +26,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
 
     public function updatedSearch(): void
     {
-        if (mb_strlen((string) $this->search) < 2) {
+        if (mb_strlen($this->search) < 2) {
             $this->violations = collect();
 
             return;
@@ -44,16 +42,16 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
 
         $search = $this->search;
 
-        $this->violations = $all->filter(fn (ViolationStatement $v): bool => mb_stripos($v->statement, (string) $search) !== false
-            || collect($v->keywords)->contains(fn ($k): bool => mb_stripos((string) $k, (string) $search) !== false)
+        $this->violations = $all->filter(fn (ViolationStatement $v): bool => mb_stripos($v->statement, $search) !== false
+            || collect($v->keywords)->contains(fn ($k): bool => mb_stripos((string) $k, $search) !== false)
         )->values();
     }
 
     public function selectViolation(int $violationId): void
     {
-        $this->selectedViolation = tenancy()->central(fn () => ViolationStatement::query()->find($violationId));
+        $violation = tenancy()->central(fn () => ViolationStatement::query()->find($violationId));
 
-        $this->emit('violationSelected', $this->selectedViolation->only(['id', 'statement']));
+        $this->emit('violationSelected', $violation->only(['id', 'statement']));
         $this->close();
     }
 

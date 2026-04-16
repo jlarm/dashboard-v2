@@ -19,6 +19,8 @@ class Delete extends Modal
 
     public function delete(): void
     {
+        $this->deleteViolationPhotos();
+
         $this->bodyShopAudit->delete();
 
         $this->emitTo('dealer.audit.body-shop.index', 'refreshAudits');

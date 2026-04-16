@@ -13,13 +13,8 @@ class IndexItem extends Component
 {
     public IndividualAudit $individualAudit;
     public Store $store;
-    public $drafts;
-    public $tenants;
-    public $deals;
-    public $sum;
+    public bool $tenants;
     public $rating;
-    public $flat;
-    public $test;
     protected $listeners = [
         'refreshIndividualAudits' => '$refresh',
     ];
@@ -27,13 +22,12 @@ class IndexItem extends Component
     public function mount(): void
     {
         $this->individualAudit->loadMissing('children');
-        $combine = collect([$this->individualAudit, $this->individualAudit->children]);
-        $this->flat = $combine->flatten();
         $this->tenants = app('multipleStoresExist');
 
-        $this->test = $this->flat->pluck('rating');
+        $flat = collect([$this->individualAudit, $this->individualAudit->children])->flatten();
+        $ratings = $flat->pluck('rating');
 
-        $this->rating = $this->test->contains(null) ? 0 : $this->test->avg();
+        $this->rating = $ratings->contains(null) ? 0 : $ratings->avg();
     }
 
     public function getQuarterNameAttribute(): ?string

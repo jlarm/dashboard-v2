@@ -6,35 +6,33 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Store;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class GeneratedReportIndexItem extends Component
 {
     public FinanceAudit $financeAudit;
     public Store $store;
-    public $rating;
-    protected $sum;
-    protected $audit;
+    public string $rating = '';
     protected $listeners = [
         'refreshFinanceAudits' => '$refresh',
     ];
 
     public function mount(): void
     {
-        $this->sum = 0;
-        $this->audit = FinanceAudit::query()->where('id', $this->financeAudit->id)->get();
-        $this->audit->each(function ($value): void {
-            for ($i = 1; $i <= 46; $i++) {
-                if ($value->{'finance_q'.$i.'_answer'} === 2) {
-                    $this->sum += 1;
-                }
+        $sum = 0;
+        $total = 46;
+
+        for ($i = 1; $i <= $total; $i++) {
+            if ($this->financeAudit->{'finance_q'.$i.'_answer'} === 2) {
+                $sum++;
             }
-        });
-        $total = count($this->audit) * 46;
-        $this->rating = number_format(100 * ($total) / $total, 2, '.', '');
+        }
+
+        $this->rating = number_format(100 * ($total - $sum) / $total, 2, '.', '');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.audit.finance.generated-report-index-item');
     }

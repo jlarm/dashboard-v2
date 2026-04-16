@@ -6,32 +6,30 @@ namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
 use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Store;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class GeneratedReportIndexItem extends Component
 {
     public BodyShopAudit $bodyShopAudit;
     public Store $store;
-    public $rating;
-    public $audits;
-    protected $sum;
+    public string $rating = '';
 
     public function mount(): void
     {
-        $this->audits = BodyShopAudit::query()->where('id', $this->bodyShopAudit->id)->get();
-        $this->sum = 0;
-        $this->audits->each(function ($value): void {
-            for ($i = 1; $i <= 43; $i++) {
-                if ($value->{'body_shop_q'.$i.'_answer'} === 2) {
-                    $this->sum += 1;
-                }
+        $sum = 0;
+        $total = 43;
+
+        for ($i = 1; $i <= $total; $i++) {
+            if ($this->bodyShopAudit->{'body_shop_q'.$i.'_answer'} === 2) {
+                $sum++;
             }
-        });
-        $total = count($this->audits) * 43;
-        $this->rating = number_format(100 * ($total) / $total, 2, '.', '');
+        }
+
+        $this->rating = number_format(100 * ($total - $sum) / $total, 2, '.', '');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.dealer.audit.body-shop.generated-report-index-item');
     }

@@ -303,7 +303,7 @@ describe('resolveReferenceImages', function (): void {
         $tenancy = Mockery::mock(Tenancy::class);
         $tenancy->shouldReceive('central')
             ->once()
-            ->andReturnUsing(fn ($callback) => $statementCollection);
+            ->andReturnUsing(fn ($callback): Collection => $statementCollection);
         app()->instance(Tenancy::class, $tenancy);
 
         $audit = Mockery::mock(OshaViolationAudit::class);
@@ -326,7 +326,7 @@ describe('resolveReferenceImages', function (): void {
         ]);
 
         $tenancy = Mockery::mock(Tenancy::class);
-        $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback) => $statements);
+        $tenancy->shouldReceive('central')->andReturnUsing(fn ($callback): Collection => $statements);
         app()->instance(Tenancy::class, $tenancy);
 
         $audit = Mockery::mock(OshaViolationAudit::class);

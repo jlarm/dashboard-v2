@@ -13,11 +13,9 @@ use Illuminate\View\View;
 class Modal extends \WireElements\Pro\Components\Modal\Modal
 {
     public string $search = '';
-    public ?ViolationStatement $selectedViolation = null;
     public Collection $violations;
     public ?int $auditId = null;
     public ?string $auditType = null;
-    public array $selectedViolations = [];
 
     public function mount(?int $auditId = null, ?string $auditType = null): void
     {
@@ -51,9 +49,9 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
 
     public function selectViolation(int $violationId): void
     {
-        $this->selectedViolation = tenancy()->central(fn ($tenant) => ViolationStatement::query()->find($violationId));
+        $violation = tenancy()->central(fn () => ViolationStatement::query()->find($violationId));
 
-        $this->emit('violationSelected', $this->selectedViolation->only(['id', 'statement']));
+        $this->emit('violationSelected', $violation->only(['id', 'statement']));
         $this->close();
     }
 

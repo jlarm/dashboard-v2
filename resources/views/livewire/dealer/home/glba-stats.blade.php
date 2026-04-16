@@ -1,12 +1,12 @@
-<div>
-    <div class="relative overflow-hidden p-3 bg-white border border-gray-200 rounded-xl shadow-sm before:absolute before:top-0 before:end-0 before:size-full before:bg-gradient-to-br before:from-orange-100 before:via-transparent before:blur-xl">
+<div class="h-full">
+    <div class="relative overflow-hidden p-3 bg-white border border-gray-200 rounded-xl shadow-sm h-full before:absolute before:top-0 before:end-0 before:size-full before:bg-gradient-to-br before:from-orange-100 before:via-transparent before:blur-xl">
         <a
             href="{{ route('dealer.audit.finance.index') }}"
             class="absolute inset-0 z-0"
             aria-label="View GLBA audits"
         ></a>
 
-        <div class="relative z-10 pointer-events-none">
+        <div class="relative z-10 pointer-events-none flex flex-col h-full">
             @php($progress = $this->progress())
             <!-- Header -->
             <div class="flex justify-between items-center gap-x-3 mb-3">
@@ -38,14 +38,11 @@
             </div>
             <!-- End Header -->
 
-            <h2 class="text-sm text-gray-800">
-                GLBA Rating
-            </h2>
+            <h2 class="text-sm text-gray-800">GLBA Rating</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mt-2">
-                <h3 class="text-base font-semibold text-gray-800">
-                    {{ $this->rating() }}
-                </h3>
+            <h3 class="text-base font-semibold text-gray-800 mt-2 mb-2">{{ $this->rating() }}</h3>
+
+            <div class="mt-auto">
                 @if($this->pdfPath())
                     <div class="pointer-events-auto">
                         <x-armp.button wire:click.stop="downloadPdf" type="button" size="xs" class="w-full">
@@ -56,8 +53,6 @@
                             </span>
                         </x-armp.button>
                     </div>
-                @else
-                    <div class="hidden md:block h-7"></div>
                 @endif
             </div>
         </div>

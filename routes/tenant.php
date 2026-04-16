@@ -42,6 +42,7 @@ use App\Http\Livewire\Dealer\Docs\Index;
 use App\Http\Livewire\Dealer\Employee\DeletedIndex;
 use App\Http\Livewire\Dealer\Log\Show;
 use App\Http\Livewire\Dealer\Phish\Create;
+use App\Http\Livewire\Dealer\Settings\AutomatedReports;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use App\Http\Livewire\Dealer\Settings\GlobalSettings;
 use App\Http\Livewire\Dealer\Vendor\NewForm;
@@ -147,6 +148,10 @@ Route::name('dealer.')->middleware([
                 ->name('phishing');
         });
     });
+
+    Route::middleware('role:super-admin|Consultant|Owner|GM|CFO|GSM|Qualified Individual')
+        ->get('automated-reports', AutomatedReports::class)
+        ->name('settings.automated-reports');
 
     // **************************************************
     // Roles to Consultant

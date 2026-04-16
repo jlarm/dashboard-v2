@@ -106,6 +106,13 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->emailOutputOnFailure(config('app.admin_email'));
 
+        $schedule->command('compliance-summary:send')
+            ->dailyAt('07:00')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->onOneServer()
+            ->emailOutputOnFailure(config('app.admin_email'));
+
         // Clean up old deal jacket reports
         $schedule->command('deal-jacket-reports:clean')
             ->dailyAt('02:00')

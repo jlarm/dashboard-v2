@@ -54,7 +54,6 @@ class GlobalSettings extends Component
                 'courses_not_taken_notification' => ! $store->courses_not_taken_notification,
             ]);
 
-            // Refresh the stores list
             $this->stores = Store::query()
                 ->with('remediationSettings')
                 ->orderBy('name')
@@ -72,7 +71,6 @@ class GlobalSettings extends Component
                 'active' => ! ($store->remediationSettings->active ?? false),
             ]);
 
-            // Refresh the stores list
             $this->stores = Store::query()
                 ->with('remediationSettings')
                 ->orderBy('name')

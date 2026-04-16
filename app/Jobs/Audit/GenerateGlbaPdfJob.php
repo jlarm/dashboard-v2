@@ -6,11 +6,13 @@ namespace App\Jobs\Audit;
 
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Store;
+use App\Models\Dealer\Violation;
 use App\Models\GlbaViolationStatements;
 use App\Models\ViolationStatement;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
@@ -127,10 +129,10 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dealer\Violation>  $violations
+     * @param  Collection<int, Violation>  $violations
      * @return array<int, string|null>
      */
-    private function resolveReferenceImages(\Illuminate\Database\Eloquent\Collection $violations): array
+    private function resolveReferenceImages(Collection $violations): array
     {
         $statementIds = $violations
             ->where('show_reference_image', true)

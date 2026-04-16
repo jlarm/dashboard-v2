@@ -10,7 +10,6 @@ use Livewire\Component;
 class Single extends Component
 {
     public GlbaViolationAudit $glbaViolationAudit;
-    public $store;
     public $rating;
 
     public function mount(): void

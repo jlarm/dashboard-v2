@@ -1,9 +1,10 @@
 <div wire:init="loadRatings">
-{{--    <p class="font-bold text-2xl">Overall Audit Ratings</p>--}}
-{{--    <p class="text-sm text-gray-500 mb-5">Based on all stores in your group</p>--}}
+    @php($showGroupExecutiveSummary = auth()->user()?->hasAnyRole(['super-admin', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual']))
+    @php($gridClass = $showGroupExecutiveSummary ? 'md:grid-cols-7' : 'md:grid-cols-5')
 
+    @if($isLoading)
     <!-- Skeleton Loading State -->
-    <div x-show="$wire.isLoading" class="grid grid-cols-1 md:grid-cols-5 gap-6">
+    <div class="grid grid-cols-1 {{ $gridClass }} gap-6">
         @for ($i = 0; $i < 5; $i++)
             <div wire:key="rating-skeleton-{{ $i }}" class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
                 <div class="animate-pulse">
@@ -17,20 +18,34 @@
                 </div>
             </div>
         @endfor
+        @if($showGroupExecutiveSummary)
+            <div wire:key="rating-skeleton-summary" class="md:col-span-2 p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
+                <div class="animate-pulse">
+                    <div class="flex justify-between items-center mb-1">
+                        <div class="h-10 bg-gray-200 rounded w-12"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="h-4 bg-gray-200 rounded w-20"></div>
+                        <div class="size-4 bg-gray-200 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 
+    @else
     <!-- Actual Content -->
-    <div x-show="!$wire.isLoading" class="grid grid-cols-1 md:grid-cols-5 gap-6">
+    <div class="grid grid-cols-1 {{ $gridClass }} gap-6">
         <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800">
+                <h2 class="text-2xl font-semibold text-gray-800">
                     {{ $rating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500">
+                <h3 class="text-gray-500 text-sm">
                     Overall
                 </h3>
                 <x-tooltip
@@ -49,14 +64,14 @@
         </div>
         <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800">
+                <h2 class="text-2xl font-semibold text-gray-800">
                     {{ $this->oshaRating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500">
+                <h3 class="text-gray-500 text-sm">
                     OSHA
                 </h3>
                 <x-tooltip
@@ -75,14 +90,14 @@
         </div>
         <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800">
+                <h2 class="text-2xl font-semibold text-gray-800">
                     {{ $this->dealJacketRating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500">
+                <h3 class="text-gray-500 text-sm">
                     Deal Jackets
                 </h3>
                 <x-tooltip
@@ -101,14 +116,14 @@
         </div>
         <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800">
+                <h2 class="text-2xl font-semibold text-gray-800">
                     {{ $this->glbaRating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500">
+                <h3 class="text-gray-500 text-sm">
                     GLBA
                 </h3>
                 <x-tooltip
@@ -127,14 +142,14 @@
         </div>
         <div class="p-4 flex flex-col bg-white border border-gray-200 rounded-xl">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-4xl font-semibold text-gray-800">
+                <h2 class="text-2xl font-semibold text-gray-800">
                     {{ $this->bodyShopRating ?? '-' }}
                 </h2>
                 <div class="flex items-center -space-x-2">
                 </div>
             </div>
             <div class="flex justify-between items-center">
-                <h3 class="text-gray-500">
+                <h3 class="text-gray-500 text-sm">
                     Body Shop
                 </h3>
                 <x-tooltip
@@ -151,5 +166,9 @@
                 </x-tooltip>
             </div>
         </div>
+        @if($showGroupExecutiveSummary)
+            <livewire:dealer.home.group-executive-summary/>
+        @endif
     </div>
+    @endif
 </div>
