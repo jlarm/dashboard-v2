@@ -33,22 +33,6 @@ class Violation extends Model implements HasMedia
         'show_reference_image',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'id' => 'integer',
-            'uuid' => 'string',
-            'statement_id' => 'integer',
-            'statement' => 'string',
-            'text' => 'string',
-            'date' => 'date',
-            'violation_date' => 'date:Y-m-d',
-            'risk' => 'boolean',
-            'severity' => 'integer',
-            'show_reference_image' => 'boolean',
-        ];
-    }
-
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
@@ -86,5 +70,21 @@ class Violation extends Model implements HasMedia
     public function glbaStatement(): BelongsTo
     {
         return $this->belongsTo(GlbaViolationStatements::class, 'statement_id');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'uuid' => 'string',
+            'statement_id' => 'integer',
+            'statement' => 'string',
+            'text' => 'string',
+            'date' => 'date',
+            'violation_date' => 'date:Y-m-d',
+            'risk' => 'boolean',
+            'severity' => 'integer',
+            'show_reference_image' => 'boolean',
+        ];
     }
 }

@@ -24,14 +24,6 @@ class Remediation extends Model implements HasMedia
         'completed_date',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'completed' => 'boolean',
-            'completed_date' => 'date',
-        ];
-    }
-
     public function violation(): BelongsTo
     {
         return $this->belongsTo(Violation::class);
@@ -48,5 +40,13 @@ class Remediation extends Model implements HasMedia
             ->format(Manipulations::FORMAT_WEBP)
             ->width(400)
             ->height(400);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'completed' => 'boolean',
+            'completed_date' => 'date',
+        ];
     }
 }

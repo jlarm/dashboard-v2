@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Models\User;
 use App\Notifications\ResetPassword;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;

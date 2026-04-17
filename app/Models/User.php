@@ -67,14 +67,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'last_sent_course_reminder' => 'datetime',
-        ];
-    }
-
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -282,5 +274,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function courseOverrides(): HasMany
     {
         return $this->hasMany(CourseUser::class, 'user_id');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'last_sent_course_reminder' => 'datetime',
+        ];
     }
 }

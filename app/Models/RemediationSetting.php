@@ -19,6 +19,11 @@ class RemediationSetting extends Model
         'managers',
     ];
 
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
     protected function casts(): array
     {
         return [
@@ -27,10 +32,5 @@ class RemediationSetting extends Model
             'frequency' => Frequency::class,
             'managers' => 'array',
         ];
-    }
-
-    public function store(): BelongsTo
-    {
-        return $this->belongsTo(Store::class);
     }
 }

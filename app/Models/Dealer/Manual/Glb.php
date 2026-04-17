@@ -51,6 +51,11 @@ class Glb extends Model
         'q12c',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected function casts(): array
     {
         return [
@@ -58,10 +63,5 @@ class Glb extends Model
             'receptacles' => 'array',
             'managers' => 'array',
         ];
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
     }
 }

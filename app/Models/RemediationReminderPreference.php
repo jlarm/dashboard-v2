@@ -16,16 +16,16 @@ class RemediationReminderPreference extends Model
         'enabled',
     ];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     protected function casts(): array
     {
         return [
             'audit_type' => AuditTypes::class,
             'enabled' => 'boolean',
         ];
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 }

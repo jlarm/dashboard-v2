@@ -34,16 +34,16 @@ class DealerInfo extends Model
         'compliance_issues',
     ];
 
+    public function dealer(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
     protected function casts(): array
     {
         return [
             'ip_addresses' => AsCollection::class,
             'website_urls' => AsCollection::class,
         ];
-    }
-
-    public function dealer(): BelongsTo
-    {
-        return $this->belongsTo(Store::class);
     }
 }

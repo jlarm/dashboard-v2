@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Auth;
 
-use App\Providers\AppServiceProvider;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use Database\Seeders\RoleAndPermissionSeeder;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 

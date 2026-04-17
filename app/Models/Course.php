@@ -28,17 +28,6 @@ class Course extends Model
         'replaces_course_slugs',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'slides' => 'array',
-            'questions' => 'array',
-            'answers' => 'array',
-            'states_required' => 'array',
-            'replaces_course_slugs' => 'array',
-        ];
-    }
-
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
@@ -52,5 +41,16 @@ class Course extends Model
     public function departments(): BelongsToMany
     {
         return $this->belongsToMany(Department::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'slides' => 'array',
+            'questions' => 'array',
+            'answers' => 'array',
+            'states_required' => 'array',
+            'replaces_course_slugs' => 'array',
+        ];
     }
 }

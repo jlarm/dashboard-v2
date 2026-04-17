@@ -21,15 +21,6 @@ class BodyShopAudit extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected function casts(): array
-    {
-        return [
-            'draft' => 'boolean',
-            'audit_date' => 'date:Y-m-d',
-            'body_shop_q16_inspection_date' => 'date:Y-m-d',
-        ];
-    }
-
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
@@ -57,5 +48,14 @@ class BodyShopAudit extends Model implements HasMedia
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'draft' => 'boolean',
+            'audit_date' => 'date:Y-m-d',
+            'body_shop_q16_inspection_date' => 'date:Y-m-d',
+        ];
     }
 }

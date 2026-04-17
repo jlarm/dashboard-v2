@@ -54,20 +54,6 @@ class Contract extends Model
         'pdf_path',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'agreement_date' => 'date',
-            'services' => 'array',
-            'commence_date' => 'date',
-            'armp_date_signed' => 'date',
-            'dealer_date_signed' => 'date',
-            'initial_fee' => MoneyCast::class,
-            'monthly_fee' => MoneyCast::class,
-            'additional_locations' => 'array',
-        ];
-    }
-
     /**
      * @return BelongsTo<User, Contract>
      */
@@ -103,5 +89,19 @@ class Contract extends Model
                 $contract->uuid = (string) Str::uuid();
             }
         });
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'agreement_date' => 'date',
+            'services' => 'array',
+            'commence_date' => 'date',
+            'armp_date_signed' => 'date',
+            'dealer_date_signed' => 'date',
+            'initial_fee' => MoneyCast::class,
+            'monthly_fee' => MoneyCast::class,
+            'additional_locations' => 'array',
+        ];
     }
 }

@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Providers\AppServiceProvider;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use Illuminate\Support\Str;
 
 describe('invite registration store assignment', function (): void {

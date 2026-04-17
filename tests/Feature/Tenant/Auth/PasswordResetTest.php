@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Notifications\ResetPassword;
 use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use App\Notifications\ResetPassword;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 

@@ -27,6 +27,11 @@ class PhishingCampaign extends Model
         'emails_reported',
     ];
 
+    public function timelines(): HasMany
+    {
+        return $this->hasMany(Timeline::class);
+    }
+
     protected function casts(): array
     {
         return [
@@ -34,11 +39,6 @@ class PhishingCampaign extends Model
             'launched_at' => 'datetime',
             'campaign_created_at' => 'datetime',
         ];
-    }
-
-    public function timelines(): HasMany
-    {
-        return $this->hasMany(Timeline::class);
     }
 
     protected function store(): BelongsTo

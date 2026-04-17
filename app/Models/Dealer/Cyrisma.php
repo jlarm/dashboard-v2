@@ -16,16 +16,16 @@ class Cyrisma extends Model
         'instance_url',
     ];
 
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
     protected function casts(): array
     {
         return [
             'instance_id' => 'encrypted',
             'instance_url' => 'encrypted',
         ];
-    }
-
-    public function store(): BelongsTo
-    {
-        return $this->belongsTo(Store::class);
     }
 }

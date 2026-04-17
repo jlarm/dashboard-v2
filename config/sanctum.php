@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Laravel\Sanctum\Sanctum;
 
 return [
@@ -65,7 +64,7 @@ return [
 
     'middleware' => [
         'validate_csrf_token' => Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
-        'encrypt_cookies' => Illuminate\Cookie\Middleware\EncryptCookies::class,
+        'encrypt_cookies' => EncryptCookies::class,
     ],
 
 ];

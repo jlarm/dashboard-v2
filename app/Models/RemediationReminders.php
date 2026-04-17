@@ -14,15 +14,15 @@ class RemediationReminders extends Model
         'store_id',
     ];
 
+    public function remindable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
     protected function casts(): array
     {
         return [
             'send_date' => 'datetime',
         ];
-    }
-
-    public function remindable(): MorphTo
-    {
-        return $this->morphTo();
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Models\User;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 

@@ -17,6 +17,11 @@ class FitTestDoc extends Model
         'file_path',
     ];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     protected function casts(): array
     {
         return [
@@ -26,10 +31,5 @@ class FitTestDoc extends Model
             'date' => 'date',
             'file_path' => 'string',
         ];
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 }

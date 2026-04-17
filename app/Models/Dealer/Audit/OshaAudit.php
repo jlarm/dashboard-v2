@@ -24,15 +24,6 @@ class OshaAudit extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected function casts(): array
-    {
-        return [
-            'draft' => 'boolean',
-            'audit_date' => 'date:Y-m-d',
-            'osha_q64_date' => 'date:Y-m-d',
-        ];
-    }
-
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
@@ -70,5 +61,14 @@ class OshaAudit extends Model implements HasMedia
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'draft' => 'boolean',
+            'audit_date' => 'date:Y-m-d',
+            'osha_q64_date' => 'date:Y-m-d',
+        ];
     }
 }

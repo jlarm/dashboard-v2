@@ -35,22 +35,6 @@ class DealJacket extends Model
         'percentage',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'uuid' => 'string',
-            'audit_date' => 'date',
-            'date_of_deal_jacket' => 'date',
-            'customer_name' => 'encrypted',
-            'customer_deal_number' => 'encrypted',
-            'responses' => 'encrypted:array',
-            'total_passed' => 'integer',
-            'total_failed' => 'integer',
-            'total_high_risk' => 'integer',
-            'percentage' => 'integer',
-        ];
-    }
-
     public function dealJacketGroup(): BelongsTo
     {
         return $this->belongsTo(DealJacketGroup::class);
@@ -69,5 +53,21 @@ class DealJacket extends Model
     protected static function newFactory(): DealJacketFactory
     {
         return DealJacketFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'uuid' => 'string',
+            'audit_date' => 'date',
+            'date_of_deal_jacket' => 'date',
+            'customer_name' => 'encrypted',
+            'customer_deal_number' => 'encrypted',
+            'responses' => 'encrypted:array',
+            'total_passed' => 'integer',
+            'total_failed' => 'integer',
+            'total_high_risk' => 'integer',
+            'percentage' => 'integer',
+        ];
     }
 }

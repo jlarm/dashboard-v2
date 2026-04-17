@@ -28,15 +28,6 @@ class Invite extends Model
         'courses',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'stores' => 'array',
-            'roles' => 'array',
-            'courses' => 'array',
-        ];
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -50,6 +41,15 @@ class Invite extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'stores' => 'array',
+            'roles' => 'array',
+            'courses' => 'array',
+        ];
     }
 
     protected function serializeDate(DateTimeInterface $date): string

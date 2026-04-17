@@ -15,15 +15,15 @@ class Ridgeback extends Model
         'active',
     ];
 
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
     protected function casts(): array
     {
         return [
             'active' => 'boolean',
         ];
-    }
-
-    public function store(): BelongsTo
-    {
-        return $this->belongsTo(Store::class);
     }
 }

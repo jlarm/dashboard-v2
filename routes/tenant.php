@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\BodyShopPdfTestController;
 use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
 use App\Http\Controllers\Dealer\Audit\FinanceCreateController;
@@ -36,6 +35,7 @@ use App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController;
 use App\Http\Controllers\Tenant\CyrismaController;
 use App\Http\Controllers\Tenant\CyrismaReportController;
 use App\Http\Controllers\Tenant\SdsController;
+use App\Http\Controllers\WebhookController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
 use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
@@ -310,5 +310,5 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function (): void {
-    Route::post('/webhooks/gophish/', [App\Http\Controllers\WebhookController::class, 'gophish'])->name('webhooks.gophish');
+    Route::post('/webhooks/gophish/', [WebhookController::class, 'gophish'])->name('webhooks.gophish');
 });

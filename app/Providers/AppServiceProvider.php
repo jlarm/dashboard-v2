@@ -123,7 +123,6 @@ class AppServiceProvider extends ServiceProvider
             return stream_get_contents($output);
         });
 
-
         $this->bootAuth();
         $this->bootEvent();
     }

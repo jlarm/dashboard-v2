@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dealer;
 
-use App\Providers\AppServiceProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealer\StoreUserRequest;
 use App\Models\Certificate;
@@ -13,7 +12,7 @@ use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;

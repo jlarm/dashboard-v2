@@ -32,18 +32,6 @@ class GlbaViolationAudit extends Model
         'reminder_logs',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'uuid' => 'string',
-            'date' => 'date',
-            'completed_date' => 'date',
-            'grade_updated_at' => 'datetime',
-            'data' => 'array',
-            'reminder_logs' => 'array',
-        ];
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -97,5 +85,17 @@ class GlbaViolationAudit extends Model
     public function getOutstandingRemediationCountAttribute(): int
     {
         return $this->violation_count - $this->remediation_count;
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'uuid' => 'string',
+            'date' => 'date',
+            'completed_date' => 'date',
+            'grade_updated_at' => 'datetime',
+            'data' => 'array',
+            'reminder_logs' => 'array',
+        ];
     }
 }

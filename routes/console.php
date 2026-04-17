@@ -22,7 +22,6 @@ Artisan::command('inspire', function (Command $command): void {
     $command->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-
 Schedule::command('vendor:send-notification')
     ->daily()
     ->runInBackground()

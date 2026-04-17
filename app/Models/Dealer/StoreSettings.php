@@ -52,14 +52,6 @@ class StoreSettings extends Model
         'compliance_issues',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'ip_addresses' => 'array',
-            'website_urls' => 'array',
-        ];
-    }
-
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
@@ -68,5 +60,13 @@ class StoreSettings extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'ip_addresses' => 'array',
+            'website_urls' => 'array',
+        ];
     }
 }

@@ -28,15 +28,6 @@ class DealJacketGroup extends Model
         'completed',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'uuid' => 'string',
-            'store_id' => 'integer',
-            'completed' => 'boolean',
-        ];
-    }
-
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
@@ -59,5 +50,14 @@ class DealJacketGroup extends Model
     protected static function newFactory(): DealJacketGroupFactory
     {
         return DealJacketGroupFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'uuid' => 'string',
+            'store_id' => 'integer',
+            'completed' => 'boolean',
+        ];
     }
 }

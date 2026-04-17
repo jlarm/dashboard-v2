@@ -18,14 +18,6 @@ class Timeline extends Model
         'details',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'details' => 'array',
-            'time' => 'datetime',
-        ];
-    }
-
     public function campaign(): BelongsTo
     {
         return $this->belongsTo(PhishingCampaign::class);
@@ -34,5 +26,13 @@ class Timeline extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'email', 'email');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'details' => 'array',
+            'time' => 'datetime',
+        ];
     }
 }

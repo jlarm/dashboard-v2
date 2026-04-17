@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use App\Providers\RouteServiceProvider;
 
 describe('Tenant Auth - Login Screen', function (): void {
     it('can render the login screen', function (): void {

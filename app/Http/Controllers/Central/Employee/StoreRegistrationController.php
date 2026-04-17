@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Central\Employee;
 
-use App\Providers\AppServiceProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use App\Repositories\CentralUserInviteRegisterRepository;
 
 class StoreRegistrationController extends Controller

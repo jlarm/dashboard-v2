@@ -25,6 +25,21 @@ class VendorForm extends Model
         'document_path',
     ];
 
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
+    public function emailLogs(): HasMany
+    {
+        return $this->hasMany(VendorEmailLog::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
     protected function casts(): array
     {
         return [
@@ -40,20 +55,5 @@ class VendorForm extends Model
             'updated_at' => 'datetime',
             'deleted_at' => 'datetime',
         ];
-    }
-
-    public function vendor(): BelongsTo
-    {
-        return $this->belongsTo(Vendor::class);
-    }
-
-    public function emailLogs(): HasMany
-    {
-        return $this->hasMany(VendorEmailLog::class);
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
     }
 }

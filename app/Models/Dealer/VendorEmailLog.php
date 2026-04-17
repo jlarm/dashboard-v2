@@ -23,16 +23,16 @@ class VendorEmailLog extends Model
         'event_type',
     ];
 
+    public function vendorForm(): BelongsTo
+    {
+        return $this->belongsTo(VendorForm::class);
+    }
+
     protected function casts(): array
     {
         return [
             'sent_at' => 'datetime',
             'delivered_at' => 'datetime',
         ];
-    }
-
-    public function vendorForm(): BelongsTo
-    {
-        return $this->belongsTo(VendorForm::class);
     }
 }
