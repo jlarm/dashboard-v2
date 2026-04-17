@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Sentry\Laravel\Integration;
 use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -36,18 +38,11 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\ImpersonationMiddleware::class,
         ]);
 
-        $middleware->group('universal', [
-            ],
-            'api' => [,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ]);
-
         $middleware->alias([
             'has.stores' => \App\Http\Middleware\CheckStoreStatusMiddleware::class,
-            'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
-            'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
-            'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'single.store' => \App\Http\Middleware\SingleStoreMiddleware::class,
             'stores' => \App\Http\Middleware\StoreMiddleware::class,
             'tenant.not-suspended' => \App\Http\Middleware\EnsureTenantIsNotSuspended::class,
