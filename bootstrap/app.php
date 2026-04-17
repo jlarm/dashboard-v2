@@ -1,5 +1,9 @@
 <?php
 
+use Sentry\Laravel\Integration;
+use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Illuminate\Http\Request;
 use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -51,5 +55,23 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->reportable(function (Throwable $e): void {
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($e);
+            }
+        });
+
+        $exceptions->renderable(function (UnauthorizedException $e, Request $request) {
+            if (! auth()->check() && ! $request->expectsJson()) {
+                $loginRoute = tenancy()->initialized ? 'dealer.login' : 'login';
+
+                return redirect()->guest(route($loginRoute));
+            }
+        });
+
+        $exceptions->renderable(function (TenantCouldNotBeIdentifiedException $e): never {
+            abort(404);
+        });
+
+        Integration::handles($exceptions);
     })->create();
