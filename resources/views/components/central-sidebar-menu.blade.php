@@ -8,7 +8,7 @@
                 <li>
                     <ul role="list" class="-mx-2 space-y-1">
                         <li>
-                            <a href="{{ route('dashboard') }}"
+                            <a wire:navigate href="{{ route('dashboard') }}"
                                class="{{ (request()->is('dashboard')) ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                 <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                      stroke="currentColor" aria-hidden="true">
@@ -19,7 +19,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('contracts.index') }}"
+                            <a wire:navigate href="{{ route('contracts.index') }}"
                                class="{{ (request()->segment(1) == 'contracts') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
@@ -30,7 +30,7 @@
                         </li>
                         @role('super-admin')
                             <li>
-                                <a href="{{ route('employees.index') }}"
+                                <a wire:navigate href="{{ route('employees.index') }}"
                                    class="{{ (request()->segment(1) == 'employees') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                     <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                          stroke="currentColor" aria-hidden="true">
@@ -42,7 +42,7 @@
                             </li>
                         @endrole
                         <li>
-                            <a href="{{ route('dealerships.index') }}"
+                            <a wire:navigate href="{{ route('dealerships.index') }}"
                                class="{{ (request()->segment(1) == 'dealerships') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -53,7 +53,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('courses.index') }}"
+                            <a wire:navigate href="{{ route('courses.index') }}"
                                class="{{ (request()->segment(1) == 'courses') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -64,7 +64,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('docs.index') }}"
+                            <a wire:navigate href="{{ route('docs.index') }}"
                                class="{{ (request()->segment(1) == 'documents') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
@@ -75,7 +75,7 @@
                         </li>
                         @role('super-admin')
                         <li>
-                            <a href="{{ route('dealer-docs.index') }}"
+                            <a wire:navigate href="{{ route('dealer-docs.index') }}"
                                class="{{ (request()->routeIs('dealer-docs.*')) ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
@@ -86,7 +86,7 @@
                         </li>
                         @endrole
                         <li>
-                            <a href="{{ route('videos.index') }}"
+                            <a wire:navigate href="{{ route('videos.index') }}"
                                class="{{ (request()->routeIs('videos.*')) ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="size-6">
                                     <path d="M17.0001 20.9998H3.00006V2.99976H21.0001V17.9998L18.0001 15.9998" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
@@ -102,7 +102,7 @@
                     <div class="text-xs font-semibold leading-6 text-gray-400">Admin Menu</div>
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
                         <li>
-                            <a href="{{ route('violation-statements.index') }}"
+                            <a wire:navigate href="{{ route('violation-statements.index') }}"
                                class="{{ (request()->routeIs('violation-statements.*') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800') }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
                                 <span
                                     class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">V</span>
@@ -110,7 +110,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('sds.index') }}"
+                            <a wire:navigate href="{{ route('sds.index') }}"
                                class="{{ (request()->segment(1) == 'sds') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
                                 <span
                                     class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">S</span>
@@ -119,7 +119,7 @@
                         </li>
                         @role('super-admin')
                         <li>
-                            <a href="{{ route('logs.index') }}"
+                            <a wire:navigate href="{{ route('logs.index') }}"
                                class="{{ (request()->segment(1) == 'logs') ? 'text-white bg-gray-800' : 'text-gray-400 hover:text-white hover:bg-gray-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6">
                                 <span
                                     class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium group-hover:text-white">L</span>
@@ -130,7 +130,7 @@
                     </ul>
                 </li>
                 <li class="mt-auto">
-                    <a href="https://docs.armp.app/"
+                    <a wire:navigate href="https://docs.armp.app/"
                        target="_blank"
                        class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
