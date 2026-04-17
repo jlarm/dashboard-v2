@@ -15,10 +15,6 @@ return [
     |
     */
 
-    'reset' => 'Your password has been reset.',
     'sent' => 'If an account with that email address exists, you will receive a password reset link shortly.',
-    'throttled' => 'Please wait before retrying.',
-    'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that email address.",
 
 ];
