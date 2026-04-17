@@ -222,7 +222,7 @@ class ExternalIpExposure extends Component
             $cleanedReferences = $this->sanitizeText($references);
 
             return collect(preg_split('/[\r\n,]+/', $cleanedReferences) ?: [])
-                ->map(fn (string $value): string => trim($value))
+                ->map(fn (string $value): string => mb_trim($value))
                 ->filter(fn (string $value): bool => $value !== '')
                 ->values()
                 ->all();
@@ -289,7 +289,7 @@ class ExternalIpExposure extends Component
         }
 
         if (is_string($source)) {
-            $trimmedSource = trim($source);
+            $trimmedSource = mb_trim($source);
 
             if ($trimmedSource === '') {
                 return [];
@@ -311,7 +311,7 @@ class ExternalIpExposure extends Component
             }
 
             return collect($parts)
-                ->map(fn (string $part): string => trim($part))
+                ->map(fn (string $part): string => mb_trim($part))
                 ->filter(fn (string $part): bool => $part !== '')
                 ->values()
                 ->all();
@@ -466,7 +466,7 @@ class ExternalIpExposure extends Component
             $flattened = collect($value)
                 ->map(function (mixed $item): string {
                     if (is_scalar($item)) {
-                        return trim((string) $item);
+                        return mb_trim((string) $item);
                     }
 
                     if (is_array($item)) {
@@ -495,6 +495,6 @@ class ExternalIpExposure extends Component
         $spaceNormalizedValue = preg_replace('/[ \t]+/u', ' ', $strippedValue) ?? $strippedValue;
         $lineNormalizedValue = preg_replace('/\n{3,}/u', "\n\n", $spaceNormalizedValue) ?? $spaceNormalizedValue;
 
-        return trim($lineNormalizedValue);
+        return mb_trim($lineNormalizedValue);
     }
 }

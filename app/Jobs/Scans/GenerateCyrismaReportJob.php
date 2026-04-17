@@ -231,19 +231,19 @@ class GenerateCyrismaReportJob implements ShouldQueue
         }
 
         // If the asset has a valid IP address it is an IP-based asset — never has web app findings
-        $ip = trim((string) ($asset['ipAddress'] ?? $asset['assetIp'] ?? $asset['ip'] ?? ''));
+        $ip = mb_trim((string) ($asset['ipAddress'] ?? $asset['assetIp'] ?? $asset['ip'] ?? ''));
         if ($ip !== '' && filter_var($ip, FILTER_VALIDATE_IP)) {
             return false;
         }
 
         // If there is an explicit URL field it's a web asset
-        $url = trim((string) ($asset['assetUrl'] ?? $asset['url'] ?? ''));
+        $url = mb_trim((string) ($asset['assetUrl'] ?? $asset['url'] ?? ''));
         if ($url !== '' && filter_var($url, FILTER_VALIDATE_URL)) {
             return true;
         }
 
         // If the name contains letters (not just digits, dots, and colons) treat as a hostname
-        $name = trim((string) ($asset['name'] ?? ''));
+        $name = mb_trim((string) ($asset['name'] ?? ''));
 
         return $name !== '' && (bool) preg_match('/[a-z]/i', $name);
     }
@@ -339,7 +339,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
             $cleanedReferences = $this->sanitizeReportText($references);
 
             return collect(preg_split('/[\r\n,]+/', $cleanedReferences) ?: [])
-                ->map(fn (string $value): string => trim($value))
+                ->map(fn (string $value): string => mb_trim($value))
                 ->filter(fn (string $value): bool => $value !== '')
                 ->values()
                 ->all();
@@ -410,7 +410,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
         }
 
         if (is_string($source)) {
-            $trimmedSource = trim($source);
+            $trimmedSource = mb_trim($source);
 
             if ($trimmedSource === '') {
                 return [];
@@ -432,7 +432,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
             }
 
             return collect($parts)
-                ->map(fn (string $part): string => trim($part))
+                ->map(fn (string $part): string => mb_trim($part))
                 ->filter(fn (string $part): bool => $part !== '')
                 ->values()
                 ->all();
@@ -622,7 +622,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
         $spaceNormalizedValue = preg_replace('/[ \t]+/u', ' ', $strippedValue) ?? $strippedValue;
         $lineNormalizedValue = preg_replace('/\n{3,}/u', "\n\n", $spaceNormalizedValue) ?? $spaceNormalizedValue;
 
-        return trim($lineNormalizedValue);
+        return mb_trim($lineNormalizedValue);
     }
 
     private function sendReadyNotification(Store $store): void

@@ -89,7 +89,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
         }
 
         return $users->map(function ($user): array {
-            $splitName = preg_split('/\s+/', trim((string) $user->name), 2) ?: [];
+            $splitName = preg_split('/\s+/', mb_trim((string) $user->name), 2) ?: [];
             $firstName = $splitName[0] ?? '';
             $lastName = $splitName[1] ?? '';
 

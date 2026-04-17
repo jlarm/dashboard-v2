@@ -54,7 +54,7 @@ class Form extends Component
 
     public function addPin(): void
     {
-        if (trim($this->newPin) !== '' && ! in_array($this->newPin, $this->productIdentificationNumbers)) {
+        if (mb_trim($this->newPin) !== '' && ! in_array($this->newPin, $this->productIdentificationNumbers)) {
             $this->productIdentificationNumbers[] = $this->newPin;
             $this->newPin = '';
         }
@@ -62,7 +62,7 @@ class Form extends Component
 
     public function addCas(): void
     {
-        if (trim($this->newCasNo) !== '' && ! in_array($this->newCasNo, $this->casNos)) {
+        if (mb_trim($this->newCasNo) !== '' && ! in_array($this->newCasNo, $this->casNos)) {
             $this->casNos[] = $this->newCasNo;
             $this->newCasNo = '';
         }

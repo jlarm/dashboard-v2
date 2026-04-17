@@ -218,6 +218,6 @@ class MailgunWebhookController extends Controller
 
     private function normalizeMessageId(string $messageId): string
     {
-        return trim($messageId, '<>');
+        return mb_trim($messageId, '<>');
     }
 }

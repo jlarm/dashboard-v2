@@ -85,7 +85,7 @@ class MigrateViolationStatementsCommand extends Command
 
         foreach ($merged as $entry) {
             $alreadyExists = ViolationStatement::query()
-                ->whereRaw('LOWER(TRIM(statement)) = ?', [mb_strtolower(trim($entry['statement']))])
+                ->whereRaw('LOWER(TRIM(statement)) = ?', [mb_strtolower(mb_trim($entry['statement']))])
                 ->exists();
 
             if ($alreadyExists) {
@@ -111,6 +111,6 @@ class MigrateViolationStatementsCommand extends Command
 
     private function normalizeStatement(string $statement): string
     {
-        return mb_strtolower(trim($statement));
+        return mb_strtolower(mb_trim($statement));
     }
 }

@@ -98,7 +98,7 @@ class Edit extends Component
         $url = $this->violationStatement->reference_image_url;
 
         if ($url) {
-            Storage::disk('digitalocean')->delete(ltrim(parse_url($url, PHP_URL_PATH), '/'));
+            Storage::disk('digitalocean')->delete(mb_ltrim(parse_url($url, PHP_URL_PATH), '/'));
         }
     }
 

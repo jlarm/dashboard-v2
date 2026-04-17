@@ -138,7 +138,7 @@ class DealershipCreator
 
     private function getInitialsFromName(string $name): string
     {
-        $words = preg_split('/\s+/', trim($name)) ?: [];
+        $words = preg_split('/\s+/', mb_trim($name)) ?: [];
         $initials = '';
 
         foreach ($words as $word) {

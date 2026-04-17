@@ -69,7 +69,7 @@ trait HandlesStoreSwitchRedirect
             return false;
         }
 
-        $trimmedPath = trim(ltrim($path, '/'), '/');
+        $trimmedPath = mb_trim(mb_ltrim($path, '/'), '/');
         if ($trimmedPath === 'scans') {
             return true;
         }
@@ -107,7 +107,7 @@ trait HandlesStoreSwitchRedirect
             return false;
         }
 
-        $trimmedPath = trim(ltrim($path, '/'), '/');
+        $trimmedPath = mb_trim(mb_ltrim($path, '/'), '/');
 
         if ($trimmedPath === 'settings') {
             return true;
@@ -124,7 +124,7 @@ trait HandlesStoreSwitchRedirect
             return false;
         }
 
-        $trimmedPath = trim(ltrim($path, '/'), '/');
+        $trimmedPath = mb_trim(mb_ltrim($path, '/'), '/');
 
         if ($trimmedPath === 'global-settings') {
             return true;
@@ -141,7 +141,7 @@ trait HandlesStoreSwitchRedirect
             return $url;
         }
 
-        $segments = array_values(array_filter(explode('/', trim($path, '/'))));
+        $segments = array_values(array_filter(explode('/', mb_trim($path, '/'))));
 
         if (count($segments) < 3 || $segments[0] !== 'audits') {
             return $url;
@@ -173,7 +173,7 @@ trait HandlesStoreSwitchRedirect
             return $url;
         }
 
-        $segments = array_values(array_filter(explode('/', trim($path, '/'))));
+        $segments = array_values(array_filter(explode('/', mb_trim($path, '/'))));
 
         if (count($segments) < 2 || $segments[0] !== 'employees') {
             return $url;

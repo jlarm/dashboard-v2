@@ -30,7 +30,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
         $tenantId = $this->option('tenant');
         $email = $this->option('email');
         $dryRun = (bool) $this->option('dry-run');
-        $emailFilter = is_string($email) && trim($email) !== '' ? mb_strtolower(trim($email)) : null;
+        $emailFilter = is_string($email) && mb_trim($email) !== '' ? mb_strtolower(mb_trim($email)) : null;
 
         $tenants = Dealership::query()
             ->when(
@@ -273,6 +273,6 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
     private function normalizeRoleName(string $name): string
     {
-        return str_replace([' ', '/'], '', mb_strtolower(trim($name)));
+        return str_replace([' ', '/'], '', mb_strtolower(mb_trim($name)));
     }
 }

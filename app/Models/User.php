@@ -257,11 +257,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getInitialsAttribute(): string
     {
-        $segments = preg_split('/\s+/', trim((string) $this->name)) ?: [];
+        $segments = preg_split('/\s+/', mb_trim((string) $this->name)) ?: [];
         $segments = array_values(array_filter($segments, static fn (string $segment): bool => $segment !== ''));
 
         if ($segments === []) {
-            $email = trim((string) $this->email);
+            $email = mb_trim((string) $this->email);
 
             return $email === '' ? '' : mb_strtoupper(mb_substr($email, 0, 1));
         }

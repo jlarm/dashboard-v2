@@ -82,8 +82,8 @@ class Create extends Component
 
     public function addKeyword(): void
     {
-        if (trim($this->newKeyword) && ! in_array($this->newKeyword, $this->keywords, true)) {
-            $this->keywords[] = trim($this->newKeyword);
+        if (mb_trim($this->newKeyword) && ! in_array($this->newKeyword, $this->keywords, true)) {
+            $this->keywords[] = mb_trim($this->newKeyword);
             $this->newKeyword = '';
         }
     }

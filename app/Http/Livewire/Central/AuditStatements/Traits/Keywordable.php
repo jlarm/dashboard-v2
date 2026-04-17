@@ -11,7 +11,7 @@ trait Keywordable
 
     public function addKeyword(): void
     {
-        if (trim($this->newKeyword) !== '' && ! in_array($this->newKeyword, $this->keywords)) {
+        if (mb_trim($this->newKeyword) !== '' && ! in_array($this->newKeyword, $this->keywords)) {
             $this->keywords[] = $this->newKeyword;
             $this->newKeyword = '';
         }

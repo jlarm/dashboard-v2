@@ -46,7 +46,7 @@ class CheckMultiStateUsersCommand extends Command
                     $states = $user->stores
                         ->pluck('state')
                         ->filter()
-                        ->map(fn (string $s): string => mb_strtolower(trim($s)))
+                        ->map(fn (string $s): string => mb_strtolower(mb_trim($s)))
                         ->unique();
 
                     return $states->count() > 1;

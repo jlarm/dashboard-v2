@@ -578,9 +578,9 @@ class CyrismaService
 
                 $matchingFindings = collect($findings)
                     ->filter(function (array $finding) use ($findingName): bool {
-                        $name = mb_strtolower(trim((string) ($finding['alertName'] ?? $finding['title'] ?? $finding['name'] ?? $finding['alertRef'] ?? '')));
+                        $name = mb_strtolower(mb_trim((string) ($finding['alertName'] ?? $finding['title'] ?? $finding['name'] ?? $finding['alertRef'] ?? '')));
 
-                        return $name === mb_strtolower(trim($findingName));
+                        return $name === mb_strtolower(mb_trim($findingName));
                     })
                     ->values()
                     ->all();
@@ -690,10 +690,10 @@ class CyrismaService
      */
     protected function buildWebAssetParamSets(array $asset): array
     {
-        $assetId = trim((string) ($asset['assetId'] ?? $asset['id'] ?? ''));
-        $assetName = trim((string) ($asset['name'] ?? ''));
-        $assetUrl = trim((string) ($asset['assetUrl'] ?? $asset['url'] ?? ''));
-        $assetIp = trim((string) ($asset['ipAddress'] ?? $asset['assetIp'] ?? $asset['ip'] ?? ''));
+        $assetId = mb_trim((string) ($asset['assetId'] ?? $asset['id'] ?? ''));
+        $assetName = mb_trim((string) ($asset['name'] ?? ''));
+        $assetUrl = mb_trim((string) ($asset['assetUrl'] ?? $asset['url'] ?? ''));
+        $assetIp = mb_trim((string) ($asset['ipAddress'] ?? $asset['assetIp'] ?? $asset['ip'] ?? ''));
 
         $paramSets = [];
 

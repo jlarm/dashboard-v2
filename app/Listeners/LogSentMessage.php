@@ -78,7 +78,7 @@ class LogSentMessage
 
         $tenantId = tenant('id');
         if ($tenantId) {
-            $normalizedMessageId = trim((string) $messageId, '<>');
+            $normalizedMessageId = mb_trim((string) $messageId, '<>');
             tenancy()->central(function () use ($tenantId, $normalizedMessageId): void {
                 VendorEmailLogIndex::query()->updateOrCreate(['message_id' => $normalizedMessageId], ['tenant_id' => $tenantId]);
             });

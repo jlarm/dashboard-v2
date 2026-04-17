@@ -146,7 +146,7 @@ class CourseResetManager extends Component
 
     private function resettableUsersQuery(?string $search = null): Builder
     {
-        $searchTerm = trim((string) $search);
+        $searchTerm = mb_trim((string) $search);
 
         return User::query()
             ->withoutSuperAdminsAndConsultants()

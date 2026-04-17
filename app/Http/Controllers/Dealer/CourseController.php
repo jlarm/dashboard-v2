@@ -162,7 +162,7 @@ class CourseController extends Controller
 
     private function normalizeState(string $state): string
     {
-        $normalized = mb_strtolower(trim($state));
+        $normalized = mb_strtolower(mb_trim($state));
         if ($normalized === '') {
             return '';
         }
