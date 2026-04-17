@@ -24,6 +24,7 @@
         "laravel/slack-notification-channel": "^3.2",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^3.0",
+        "laravel/wayfinder": "^0.1.16",
         "livewire/flux-pro": "^2.13",
         "livewire/livewire": "^4.2",
         "maatwebsite/excel": "^3.1",

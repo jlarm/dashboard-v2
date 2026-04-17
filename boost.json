@@ -16,9 +16,11 @@
         "laravel-best-practices",
         "configuring-horizon",
         "configure-nightwatch",
+        "wayfinder-development",
         "fluxui-development",
         "livewire-development",
         "pest-testing",
+        "inertia-vue-development",
         "tailwindcss-development",
         "laravel-backup",
         "debug-using-debugbar"

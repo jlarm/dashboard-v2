@@ -1,38 +1,15 @@
-import {defineConfig} from 'vite';
-import laravel, {refreshPaths} from 'laravel-vite-plugin';
+import {wayfinder} from "@laravel/vite-plugin-wayfinder";
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
+import laravel from 'laravel-vite-plugin';
+import {defineConfig} from 'vite';
 
 export default defineConfig({
-    server: {
-        cors: {
-            origin: /^https:\/\/([a-z0-9-]+\.)?dashboard\.test$/,
-        },
-        host: '0.0.0.0',
-        port: 5173,
-        strictPort: true,
-        watch: {
-            usePolling: true,
-            interval: 120,
-        },
-        hmr: {
-            host: 'dashboard.test',
-            port: 5173,
-        },
-    },
     plugins: [
         laravel({
-            detectTls: 'dashboard.test',
-            input: [
-                'resources/css/app.css',
-                'resources/js/app.js',
-                'resources/js/inertia.js',
-            ],
-            refresh: [
-                ...refreshPaths,
-                'app/Http/Livewire/**',
-                'app/Forms/Components/**',
-            ],
+            input: ['resources/js/app.ts'],
+            ssr: 'resources/js/ssr.ts',
+            refresh: true,
         }),
         tailwindcss(),
         vue({
@@ -42,6 +19,9 @@ export default defineConfig({
                     includeAbsolute: false,
                 },
             },
+        }),
+        wayfinder({
+            formVariants: true,
         }),
     ],
 });
