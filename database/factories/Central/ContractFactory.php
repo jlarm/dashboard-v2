@@ -14,8 +14,6 @@ use Illuminate\Support\Carbon;
  */
 class ContractFactory extends Factory
 {
-    protected $model = Contract::class;
-
     public function definition(): array
     {
         return [

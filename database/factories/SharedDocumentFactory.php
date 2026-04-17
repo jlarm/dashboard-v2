@@ -10,8 +10,6 @@ use Illuminate\Support\Carbon;
 
 class SharedDocumentFactory extends Factory
 {
-    protected $model = SharedDocument::class;
-
     public function definition(): array
     {
         return [

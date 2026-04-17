@@ -10,8 +10,6 @@ use Illuminate\Support\Carbon;
 
 class SdsFactory extends Factory
 {
-    protected $model = Sds::class;
-
     public function definition()
     {
         return [
