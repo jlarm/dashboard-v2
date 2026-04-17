@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-use Sentry\Laravel\Integration;
-use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
-use Spatie\Permission\Exceptions\UnauthorizedException;
-use Illuminate\Http\Request;
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Sentry\Laravel\Integration;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
-        \Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
-        \Maatwebsite\Excel\ExcelServiceProvider::class,
+        Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ])
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -27,23 +28,24 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(AppServiceProvider::HOME);
 
-        $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
+        $middleware->append(App\Http\Middleware\SecurityHeadersMiddleware::class);
 
         $middleware->web([
-            \App\Http\Middleware\StoreIdentifierMiddleware::class,
-            \App\Http\Middleware\Localization::class,
-            \App\Http\Middleware\ImpersonationMiddleware::class,
+            App\Http\Middleware\StoreIdentifierMiddleware::class,
+            App\Http\Middleware\Localization::class,
+            App\Http\Middleware\ImpersonationMiddleware::class,
+            HandleInertiaRequests::class,
         ]);
 
         $middleware->alias([
-            'has.stores' => \App\Http\Middleware\CheckStoreStatusMiddleware::class,
-            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
-            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-            'single.store' => \App\Http\Middleware\SingleStoreMiddleware::class,
-            'stores' => \App\Http\Middleware\StoreMiddleware::class,
-            'tenant.not-suspended' => \App\Http\Middleware\EnsureTenantIsNotSuspended::class,
-            'tenant.requires-store' => \App\Http\Middleware\RequireTenantStoreMiddleware::class,
+            'has.stores' => App\Http\Middleware\CheckStoreStatusMiddleware::class,
+            'permission' => Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role' => Spatie\Permission\Middleware\RoleMiddleware::class,
+            'role_or_permission' => Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'single.store' => App\Http\Middleware\SingleStoreMiddleware::class,
+            'stores' => App\Http\Middleware\StoreMiddleware::class,
+            'tenant.not-suspended' => App\Http\Middleware\EnsureTenantIsNotSuspended::class,
+            'tenant.requires-store' => App\Http\Middleware\RequireTenantStoreMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -22,12 +22,13 @@ use App\Http\Livewire\Central\Course\Show;
 use App\Http\Livewire\Central\CourseManagement\EditQuiz;
 use App\Http\Livewire\Central\Dashboard;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(function (): void {
 
-    Route::view('/', 'welcome')->name('home');
-
-//    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::inertia('/', 'Welcome')->name('welcome');
+    
+    //    Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::view('dashboard', 'central.dashboard')->name('dashboard');
 
     Route::prefix('dealerships/')->name('dealerships.')->group(function (): void {
@@ -122,5 +123,9 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
         Route::get('logs', App\Http\Livewire\Central\Logs\Index::class)->name('logs.index');
     });
 });
+
+Route::get('/inertia-welcome', fn () => Inertia::render('Welcome', [
+    'message' => 'Hello from Inertia + Vue 3',
+]))->name('inertia.welcome');
 
 require __DIR__.'/auth.php';
