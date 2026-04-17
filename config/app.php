@@ -30,30 +30,6 @@ return [
         'Spanish' => 'es',
     ],
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-        /*
-         * Package Service Providers...
-         */
-        WireElementsProServiceProvider::class,
-        SlideOverServiceProvider::class,
-        ModalServiceProvider::class,
-        PDFMergerServiceProvider::class,
-
-        /*
-         * Application Service Providers...
-         */
-        AppServiceProvider::class,
-        AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        EventServiceProvider::class,
-        HorizonServiceProvider::class,
-        RouteServiceProvider::class,
-        VaporUiServiceProvider::class,
-        TelescopeServiceProvider::class,
-        TenancyServiceProvider::class,
-        ExcelServiceProvider::class,
-        StoreServiceProvider::class,
-    ])->toArray(),
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
