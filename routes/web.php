@@ -27,7 +27,8 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
 
     Route::view('/', 'welcome')->name('home');
 
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+//    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::view('dashboard', 'central.dashboard')->name('dashboard');
 
     Route::prefix('dealerships/')->name('dealerships.')->group(function (): void {
         Route::view('/', 'central.dealership.index')->name('index');
