@@ -39,12 +39,17 @@ export function useCurrentUrl(): UseCurrentUrlReturn {
         const comparePath = (path: string): boolean =>
             startsWith ? urlToCompare.startsWith(path) : path === urlToCompare;
 
-        if (!urlString.startsWith('http')) {
+        const isAbsolute =
+            urlString.startsWith('http') || urlString.startsWith('//');
+
+        if (!isAbsolute) {
             return comparePath(urlString);
         }
 
         try {
-            const absoluteUrl = new URL(urlString);
+            const absoluteUrl = new URL(
+                urlString.startsWith('//') ? `https:${urlString}` : urlString,
+            );
 
             return comparePath(absoluteUrl.pathname);
         } catch {
