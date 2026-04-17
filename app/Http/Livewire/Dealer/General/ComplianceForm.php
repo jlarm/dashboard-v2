@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\General;
 
 use App\Models\Dealer\Store;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
-class ComplianceForm extends Component implements HasForms
+class ComplianceForm extends Component
 {
-    use InteractsWithForms;
-
     public Store $store;
     public ?int $store_id = null;
     public $firewall_company;

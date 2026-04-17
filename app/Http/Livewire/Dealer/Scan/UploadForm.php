@@ -67,7 +67,7 @@ class UploadForm extends Component
                 ->success()
                 ->send();
 
-            $this->dispatchBrowserEvent('upload-finished');
+            $this->dispatch('upload-finished');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             captureException($e);
@@ -78,7 +78,7 @@ class UploadForm extends Component
                 ->danger()
                 ->send();
 
-            $this->dispatchBrowserEvent('upload-error');
+            $this->dispatch('upload-error');
         }
     }
 

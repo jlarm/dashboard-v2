@@ -6,18 +6,18 @@ namespace App\Http\Livewire\Central\CourseManagement;
 
 use App\Models\Course;
 use App\Models\Dealership;
-use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Illuminate\View\View;
 use Livewire\Component;
 
 /**
- * @property-read ComponentContainer $form
+ * @property-read Schema $form
  */
 class Edit extends Component implements HasForms
 {
@@ -78,8 +78,8 @@ class Edit extends Component implements HasForms
                     TextInput::make('title'),
                     RichEditor::make('description'),
                 ])
-                ->disableItemMovement()
-                ->createItemButtonLabel('Add Slide'),
+                ->reorderable(false)
+                ->addActionLabel('Add Slide'),
         ];
     }
 }

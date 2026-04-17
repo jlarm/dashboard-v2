@@ -43,9 +43,9 @@ class Create extends Component
                 ->get()
                 ->toArray();
 
-            $this->dispatchBrowserEvent('search-updated', ['users' => $users]);
+            $this->dispatch('search-updated', users: $users);
         } else {
-            $this->dispatchBrowserEvent('search-updated', ['users' => []]);
+            $this->dispatch('search-updated', users: []);
         }
     }
 
@@ -58,7 +58,7 @@ class Create extends Component
         $this->search = $this->selectedUser['name'];
 
         // Hide dropdown
-        $this->dispatchBrowserEvent('search-updated', ['users' => []]);
+        $this->dispatch('search-updated', users: []);
     }
 
     public function save(): void
@@ -95,7 +95,7 @@ class Create extends Component
 
             $this->reset(['search', 'selectedUser', 'date', 'file']);
 
-            $this->dispatchBrowserEvent('reset-file-input');
+            $this->dispatch('reset-file-input');
 
             $this->dispatch('saved');
 
@@ -105,7 +105,7 @@ class Create extends Component
                 ->send();
 
         } catch (ValidationException $e) {
-            $this->dispatchBrowserEvent('search-updated', ['users' => []]); // Clear the dropdown
+            $this->dispatch('search-updated', users: []); // Clear the dropdown
             throw $e; // Re-throw to let Livewire handle the validation error
         }
 

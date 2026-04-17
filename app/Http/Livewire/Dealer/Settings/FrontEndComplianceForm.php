@@ -209,7 +209,7 @@ class FrontEndComplianceForm extends Component
     public function update(): void
     {
         if ($this->user_submitted === 1) {
-            $this->dispatchBrowserEvent('refresh-page');
+            $this->dispatch('refresh-page');
 
             return;
         }
@@ -273,7 +273,7 @@ class FrontEndComplianceForm extends Component
 
         sleep(1);
 
-        $this->dispatchBrowserEvent('refresh-page');
+        $this->dispatch('refresh-page');
     }
 
     public function render()

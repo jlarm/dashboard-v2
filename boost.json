@@ -2,15 +2,25 @@
     "agents": [
         "claude_code",
         "codex",
-        "gemini",
-        "phpstorm"
+        "gemini"
     ],
-    "editors": [
-        "claude_code",
-        "codex",
-        "gemini",
-        "phpstorm"
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch_mcp": true,
+    "packages": [
+        "spatie/laravel-backup",
+        "barryvdh/laravel-debugbar"
     ],
-    "guidelines": [],
-    "herd_mcp": true
+    "sail": false,
+    "skills": [
+        "laravel-best-practices",
+        "configuring-horizon",
+        "configure-nightwatch",
+        "fluxui-development",
+        "livewire-development",
+        "pest-testing",
+        "tailwindcss-development",
+        "laravel-backup",
+        "debug-using-debugbar"
+    ]
 }

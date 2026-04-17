@@ -33,7 +33,7 @@ class Delete extends Modal
             ->success()
             ->send();
 
-        $this->dispatchBrowserEvent('refresh-page');
+        $this->dispatch('refresh-page');
     }
 
     public function render(): View

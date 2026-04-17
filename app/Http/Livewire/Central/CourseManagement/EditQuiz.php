@@ -6,19 +6,19 @@ namespace App\Http\Livewire\Central\CourseManagement;
 
 use App\Models\Course;
 use App\Models\Dealership;
-use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Illuminate\View\View;
 use Livewire\Component;
 use Throwable;
 
 /**
- * @property-read ComponentContainer $form
+ * @property-read Schema $form
  */
 class EditQuiz extends Component implements HasForms
 {
@@ -60,10 +60,7 @@ class EditQuiz extends Component implements HasForms
                 ->success()
                 ->send();
 
-            $this->dispatchBrowserEvent('course-quiz-updated', [
-                'status' => 'success',
-                'message' => 'Course quiz updated.',
-            ]);
+            $this->dispatch('course-quiz-updated', status: 'success', message: 'Course quiz updated.');
         } catch (Throwable $exception) {
             report($exception);
 
@@ -72,10 +69,7 @@ class EditQuiz extends Component implements HasForms
                 ->danger()
                 ->send();
 
-            $this->dispatchBrowserEvent('course-quiz-updated', [
-                'status' => 'error',
-                'message' => 'Unable to update course quiz.',
-            ]);
+            $this->dispatch('course-quiz-updated', status: 'error', message: 'Unable to update course quiz.');
         }
     }
 
@@ -94,11 +88,11 @@ class EditQuiz extends Component implements HasForms
                         ->schema([
                             KeyValue::make(''),
                         ])
-                        ->disableItemMovement(),
+                        ->reorderable(false),
                     TextInput::make('correctAnswer'),
                 ])
-                ->disableItemMovement()
-                ->createItemButtonLabel('Add Question'),
+                ->reorderable(false)
+                ->addActionLabel('Add Question'),
         ];
     }
 }

@@ -19,14 +19,14 @@ class Index extends Component
     {
         $this->selectedLog = Activity::with('causer', 'subject')->findOrFail($logId);
 
-        $this->dispatchBrowserEvent('open-log-modal');
+        $this->dispatch('open-log-modal');
     }
 
     public function closeModal(): void
     {
         $this->selectedLog = null;
 
-        $this->dispatchBrowserEvent('close-log-modal');
+        $this->dispatch('close-log-modal');
     }
 
     public function render(): View

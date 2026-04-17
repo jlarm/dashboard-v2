@@ -100,9 +100,7 @@ class Index extends Component
 
         $this->loaded = true;
 
-        $this->dispatchBrowserEvent('scan-loaded', [
-            'showDownloads' => $this->isConfigured && $this->hasShortName,
-        ]);
+        $this->dispatch('scan-loaded', showDownloads: $this->isConfigured && $this->hasShortName);
     }
 
     public function queueReport(string $type): void
@@ -122,10 +120,8 @@ class Index extends Component
         // If already cached, open it directly instead of re-queuing
         $pdfCacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $store->id, $type);
         if (Cache::has($pdfCacheKey)) {
-            $this->dispatchBrowserEvent('report-button-reset', ['type' => $type]);
-            $this->dispatchBrowserEvent('open-report-url', [
-                'url' => route('dealer.scan.report', ['type' => $type]),
-            ]);
+            $this->dispatch('report-button-reset', type: $type);
+            $this->dispatch('open-report-url', url: route('dealer.scan.report', ['type' => $type]));
 
             return;
         }
@@ -133,7 +129,7 @@ class Index extends Component
         // If a job is already running for this store/type, let the user know
         $lockKey = 'laravel_unique_job:'.GenerateCyrismaReportJob::class.'-'.$store->id.'-'.$type;
         if (Cache::has($lockKey)) {
-            $this->dispatchBrowserEvent('report-button-reset', ['type' => $type]);
+            $this->dispatch('report-button-reset', type: $type);
             Notification::make()
                 ->title('Report already being generated')
                 ->body('Your '.ucfirst($type).' report is already being generated. You\'ll receive a notification when it\'s ready.')
@@ -149,7 +145,7 @@ class Index extends Component
 
         Log::info('queueReport: job dispatched', ['store_id' => $store->id, 'type' => $type]);
 
-        $this->dispatchBrowserEvent('report-button-reset', ['type' => $type]);
+        $this->dispatch('report-button-reset', type: $type);
 
         Notification::make()
             ->title(ucfirst($type).' report queued')
@@ -173,7 +169,7 @@ class Index extends Component
             }
         }
 
-        $this->dispatchBrowserEvent('refresh-page');
+        $this->dispatch('refresh-page');
     }
 
     public function render(): View
