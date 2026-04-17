@@ -14,7 +14,6 @@ use RuntimeException;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
 
     protected function setUp(): void
     {
