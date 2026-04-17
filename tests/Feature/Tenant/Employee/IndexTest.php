@@ -606,3 +606,78 @@ describe('employee index component query optimization', function (): void {
             ->assertDontSeeHtml('data-role-badge="qualified-individual"');
     });
 });
+
+describe('employee index custom message modal authorization', function (): void {
+    it('allows privileged roles to open the custom message modal', function (string $roleName): void {
+        $store = Store::query()->firstOrFail();
+
+        $actor = User::query()->create([
+            'name' => $roleName.' Actor',
+            'email' => str($roleName)->slug().'-actor@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $actor->assignRole($roleName);
+        $actor->stores()->attach($store->id);
+
+        $target = User::query()->create([
+            'name' => 'Message Target '.$roleName,
+            'email' => str($roleName)->slug().'-target@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $target->assignRole('Employee');
+        $target->stores()->attach($store->id);
+
+        $this->actingAs($actor);
+        app()->instance('currentStore', $store->id);
+        app()->instance('scopedStoreIds', collect([$store->id]));
+
+        Livewire::test(Index::class)
+            ->set('selectedUsers', [$target->id])
+            ->call('openCustomMessageModal')
+            ->assertOk()
+            ->assertEmitted('modal.open');
+    })->with([
+        'super-admin',
+        'Admin',
+        'Consultant',
+        'Owner',
+        'GM',
+        'CFO',
+        'GSM',
+        'Qualified Individual',
+    ]);
+
+    it('forbids restricted roles from opening the custom message modal', function (string $roleName): void {
+        $store = Store::query()->firstOrFail();
+
+        $actor = User::query()->create([
+            'name' => $roleName.' Actor',
+            'email' => str($roleName)->slug().'-forbidden@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $actor->assignRole($roleName);
+        $actor->stores()->attach($store->id);
+
+        $target = User::query()->create([
+            'name' => 'Forbidden Target '.$roleName,
+            'email' => str($roleName)->slug().'-forbidden-target@test.com',
+            'password' => bcrypt('password'),
+        ]);
+        $target->assignRole('Employee');
+        $target->stores()->attach($store->id);
+
+        $this->actingAs($actor);
+        app()->instance('currentStore', $store->id);
+        app()->instance('scopedStoreIds', collect([$store->id]));
+
+        Livewire::test(Index::class)
+            ->set('selectedUsers', [$target->id])
+            ->call('openCustomMessageModal')
+            ->assertForbidden()
+            ->assertNotEmitted('modal.open');
+    })->with([
+        'Manager',
+        'Employee',
+        'Porter/Driver',
+    ]);
+});

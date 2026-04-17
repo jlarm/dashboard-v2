@@ -224,6 +224,8 @@ class Index extends Component
 
     public function openCustomMessageModal(): void
     {
+        abort_if(auth()->user()?->hasAnyRole(['Manager', 'Employee', 'Porter/Driver']) ?? true, 403);
+
         $this->emit('modal.open', 'dealer.employee.custom-message-modal', [
             'userIds' => $this->selectedUsers,
         ]);

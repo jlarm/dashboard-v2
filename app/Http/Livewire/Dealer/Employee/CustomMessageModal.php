@@ -8,6 +8,7 @@ use App\Jobs\SendCustomEmployeeMessageJob;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
+use Throwable;
 use WireElements\Pro\Components\Modal\Modal;
 
 class CustomMessageModal extends Modal
@@ -30,23 +31,33 @@ class CustomMessageModal extends Modal
     {
         $this->validate();
 
-        $users = User::query()->whereIn('id', $this->userIds)->get();
+        try {
+            $users = User::query()->whereIn('id', $this->userIds)->get();
 
-        foreach ($users as $user) {
-            SendCustomEmployeeMessageJob::dispatch(
-                user: $user,
-                subject: $this->subject,
-                messageBody: $this->messageBody,
-            );
+            foreach ($users as $user) {
+                SendCustomEmployeeMessageJob::dispatch(
+                    user: $user,
+                    subject: $this->subject,
+                    messageBody: $this->messageBody,
+                );
+            }
+
+            $this->close();
+
+            Notification::make()
+                ->title('Messages sent successfully.')
+                ->body("A custom message has been sent for {$users->count()} employee(s).")
+                ->success()
+                ->send();
+        } catch (Throwable $exception) {
+            report($exception);
+
+            Notification::make()
+                ->title('Unable to send messages')
+                ->body('Something went wrong while queuing the messages. Please try again.')
+                ->danger()
+                ->send();
         }
-
-        $this->close();
-
-        Notification::make()
-            ->title('Messages sent successfully.')
-            ->body("A custom message has been sent for {$users->count()} employee(s).")
-            ->success()
-            ->send();
     }
 
     public function render(): View

@@ -12,9 +12,9 @@
                 </label>
                 <div class="flex items-center space-x-3">
                     @if(count($selectedUsers) > 0)
-                        @hasrole('super-admin')
-                        <x-armp.button variant="primary" wire:click="openCustomMessageModal">Send Message</x-armp.button>
-                        @endhasrole
+                        @unless(auth()->user()->hasAnyRole(['Manager', 'Employee', 'Porter/Driver']))
+                            <x-armp.button variant="primary" wire:click="openCustomMessageModal">Send Message</x-armp.button>
+                        @endunless
                         <button
                             wire:click="exportCsv"
                             class="inline-flex items-center gap-2 bg-arm-blue-600 hover:bg-arm-blue-500 px-4 py-2 rounded-md text-white text-sm font-semibold transition-colors"
