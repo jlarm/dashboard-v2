@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Jobs\CrossTenantPasswordResetJob;
 use App\Models\User;
 use App\Notifications\ResetPassword;

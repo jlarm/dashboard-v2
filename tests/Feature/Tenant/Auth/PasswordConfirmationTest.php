@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 describe('Tenant Password Confirmation - Render', function (): void {
     it('can render the password confirmation screen', function (): void {
