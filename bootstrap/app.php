@@ -2,54 +2,68 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\CheckStoreStatusMiddleware;
+use App\Http\Middleware\EnsureTenantIsNotSuspended;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\ImpersonationMiddleware;
+use App\Http\Middleware\Localization;
+use App\Http\Middleware\RequireTenantStoreMiddleware;
+use App\Http\Middleware\SecurityHeadersMiddleware;
+use App\Http\Middleware\SingleStoreMiddleware;
+use App\Http\Middleware\StoreIdentifierMiddleware;
+use App\Http\Middleware\StoreMiddleware;
 use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\ExcelServiceProvider;
 use Sentry\Laravel\Integration;
 use Spatie\Permission\Exceptions\UnauthorizedException;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
+use Webklex\PDFMerger\Providers\PDFMergerServiceProvider;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
-        Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+        PDFMergerServiceProvider::class,
+        ExcelServiceProvider::class,
     ])
     ->withRouting(
         commands: __DIR__.'/../routes/console.php',
         channels: __DIR__.'/../routes/channels.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->redirectGuestsTo(fn () => route('login'));
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->redirectGuestsTo(fn (): string => route('login'));
         $middleware->redirectUsersTo(AppServiceProvider::HOME);
 
-        $middleware->append(App\Http\Middleware\SecurityHeadersMiddleware::class);
+        $middleware->append(SecurityHeadersMiddleware::class);
 
         $middleware->web([
-            App\Http\Middleware\StoreIdentifierMiddleware::class,
-            App\Http\Middleware\Localization::class,
-            App\Http\Middleware\ImpersonationMiddleware::class,
+            StoreIdentifierMiddleware::class,
+            Localization::class,
+            ImpersonationMiddleware::class,
             HandleInertiaRequests::class,
         ]);
 
         $middleware->alias([
-            'has.stores' => App\Http\Middleware\CheckStoreStatusMiddleware::class,
-            'permission' => Spatie\Permission\Middleware\PermissionMiddleware::class,
-            'role' => Spatie\Permission\Middleware\RoleMiddleware::class,
-            'role_or_permission' => Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-            'single.store' => App\Http\Middleware\SingleStoreMiddleware::class,
-            'stores' => App\Http\Middleware\StoreMiddleware::class,
-            'tenant.not-suspended' => App\Http\Middleware\EnsureTenantIsNotSuspended::class,
-            'tenant.requires-store' => App\Http\Middleware\RequireTenantStoreMiddleware::class,
+            'has.stores' => CheckStoreStatusMiddleware::class,
+            'permission' => PermissionMiddleware::class,
+            'role' => RoleMiddleware::class,
+            'role_or_permission' => RoleOrPermissionMiddleware::class,
+            'single.store' => SingleStoreMiddleware::class,
+            'stores' => StoreMiddleware::class,
+            'tenant.not-suspended' => EnsureTenantIsNotSuspended::class,
+            'tenant.requires-store' => RequireTenantStoreMiddleware::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions) {
+    ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->reportable(function (Throwable $e): void {
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($e);
+                resolve('sentry')->captureException($e);
             }
         });
 

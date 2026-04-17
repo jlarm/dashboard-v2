@@ -10,7 +10,7 @@ use App\Services\ComplianceSummaryPdfService;
 describe('SendComplianceSummaryJob vendor stats', function (): void {
 
     beforeEach(function (): void {
-        $this->service = app(ComplianceSummaryPdfService::class);
+        $this->service = resolve(ComplianceSummaryPdfService::class);
         $this->store = Store::query()->first();
     });
 

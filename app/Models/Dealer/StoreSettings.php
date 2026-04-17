@@ -6,6 +6,7 @@ namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -13,6 +14,7 @@ class StoreSettings extends Model
 {
     use LogsActivity;
 
+    #[Override]
     protected $fillable = [
         'store_id',
         'name',
@@ -62,6 +64,7 @@ class StoreSettings extends Model
         return LogOptions::defaults()->logFillable();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

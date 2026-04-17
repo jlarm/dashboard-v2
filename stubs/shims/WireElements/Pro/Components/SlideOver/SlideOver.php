@@ -13,17 +13,17 @@ use Livewire\Component;
  */
 abstract class SlideOver extends Component
 {
-    public static function behavior(): array
+    final public static function behavior(): array
     {
         return [];
     }
 
-    public function closeSlideOver(): void
+    final public function closeSlideOver(): void
     {
         $this->dispatch('close-slide-over');
     }
 
-    public function forceCloseSlideOver(): void
+    final public function forceCloseSlideOver(): void
     {
         $this->dispatch('close-slide-over');
     }

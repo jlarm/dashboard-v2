@@ -7,10 +7,13 @@ namespace App\Http\Livewire\Central\Contracts;
 use App\Models\Contract;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Override;
 
 class Edit extends Component
 {
@@ -42,7 +45,10 @@ class Edit extends Component
     public $dealerBillingContactTitle;
     public $dealerBillingContactEmail;
     public Collection $additionalLocations;
+
+    #[Override]
     protected $listeners = ['contractUpdated' => '$refresh'];
+
     protected $rules = [
         'user' => 'required|exists:users,id',
         'contractType' => 'required|string',
@@ -203,7 +209,7 @@ class Edit extends Component
         $this->dispatch('contractUpdated');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.contracts.edit', [
             'consultants' => User::query()->whereNot('name', 'Joe Lohr')->get(),

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Permission;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
@@ -18,7 +20,7 @@ class IndexItem extends Component
         Str::startsWith($this->permission->name, 'create') ? $this->enableEditing = true : $this->enableEditing = false;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.permission.index-item');
     }

@@ -15,7 +15,7 @@ class CourseIndex extends Component
 
     public function render(): View
     {
-        $courses = (new CoursesFeed($this->user))
+        $courses = new CoursesFeed($this->user)
             ->builder()
             ->orderBy('name')
             ->get();

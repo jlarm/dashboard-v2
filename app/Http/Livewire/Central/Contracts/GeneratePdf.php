@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Central\Contracts;
 use App\Jobs\Contracts\GeneratePdfJob;
 use App\Jobs\Contracts\UploadToDigitalOceanJob;
 use App\Models\Contract;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Bus;
 use Livewire\Component;
 
@@ -22,7 +24,7 @@ class GeneratePdf extends Component
         ])->dispatch();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.contracts.generate-pdf');
     }

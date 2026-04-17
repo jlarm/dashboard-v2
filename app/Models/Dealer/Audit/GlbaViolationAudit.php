@@ -13,11 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 class GlbaViolationAudit extends Model
 {
     use SoftDeletes;
 
+    #[Override]
     protected $fillable = [
         'uuid',
         'user_id',
@@ -62,7 +64,7 @@ class GlbaViolationAudit extends Model
         return $this->morphMany(AuditComment::class, 'auditable');
     }
 
-    public function getViolationCountAttribute(): int
+    protected function getViolationCountAttribute(): int
     {
         if (array_key_exists('violation_count', $this->attributes)) {
             return (int) $this->attributes['violation_count'];
@@ -71,7 +73,7 @@ class GlbaViolationAudit extends Model
         return $this->violations()->count();
     }
 
-    public function getRemediationCountAttribute(): int
+    protected function getRemediationCountAttribute(): int
     {
         if (array_key_exists('remediation_count', $this->attributes)) {
             return (int) $this->attributes['remediation_count'];
@@ -82,11 +84,12 @@ class GlbaViolationAudit extends Model
         })->count();
     }
 
-    public function getOutstandingRemediationCountAttribute(): int
+    protected function getOutstandingRemediationCountAttribute(): int
     {
         return $this->violation_count - $this->remediation_count;
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

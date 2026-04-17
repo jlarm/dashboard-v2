@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 /**
  * @property-read int $id
@@ -17,12 +18,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BodyShopViolationStatement extends Model
 {
+    #[Override]
     protected $fillable = [
         'statement',
         'keywords',
         'weight',
     ];
 
+    #[Override]
     protected function casts(): array
     {
         return [

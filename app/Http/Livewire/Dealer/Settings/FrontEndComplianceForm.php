@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Dealer\Settings;
 use App\Models\Dealer\Store;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Sleep;
 use Livewire\Component;
 
 class FrontEndComplianceForm extends Component
@@ -271,7 +272,7 @@ class FrontEndComplianceForm extends Component
             'fi_password' => Crypt::encryptString($this->fi_password),
         ]);
 
-        sleep(1);
+        Sleep::sleep(1);
 
         $this->dispatch('refresh-page');
     }

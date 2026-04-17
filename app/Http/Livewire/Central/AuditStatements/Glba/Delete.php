@@ -27,7 +27,7 @@ class Delete extends Modal
                     ->success()
                     ->send();
 
-                redirect()->route('glba-violations.index');
+                to_route('glba-violations.index');
             }
         );
     }

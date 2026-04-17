@@ -7,10 +7,12 @@ namespace App\Http\Livewire\Central\Event;
 use App\Models\Event;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Index extends Component
 {
     /** @var array<string, string> */
+    #[Override]
     protected $listeners = [
         'eventAdded' => '$refresh',
     ];
@@ -19,7 +21,7 @@ class Index extends Component
     {
         return view('livewire.central.event.index', [
             'events' => Event::query()->where('end_date', '>=', now())
-                ->orderBy('start_date', 'asc')
+                ->oldest('start_date')
                 ->get(),
         ]);
     }

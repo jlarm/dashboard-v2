@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Employee;
 
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
 use Livewire\Component;
 
 class View extends Component
@@ -16,7 +17,7 @@ class View extends Component
         $this->user = $user;
     }
 
-    public function render()
+    public function render(): Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.central.employee.view');
     }

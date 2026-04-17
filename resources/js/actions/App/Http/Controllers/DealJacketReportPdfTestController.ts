@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
-* @see app/Http/Controllers/DealJacketReportPdfTestController.php:12
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
 * @route '/deal-jacket-report-pdf'
 */
 const DealJacketReportPdfTestController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ DealJacketReportPdfTestController.definition = {
 
 /**
 * @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
-* @see app/Http/Controllers/DealJacketReportPdfTestController.php:12
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
 * @route '/deal-jacket-report-pdf'
 */
 DealJacketReportPdfTestController.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ DealJacketReportPdfTestController.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
-* @see app/Http/Controllers/DealJacketReportPdfTestController.php:12
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
 * @route '/deal-jacket-report-pdf'
 */
 DealJacketReportPdfTestController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ DealJacketReportPdfTestController.get = (options?: RouteQueryOptions): RouteDefi
 
 /**
 * @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
-* @see app/Http/Controllers/DealJacketReportPdfTestController.php:12
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
 * @route '/deal-jacket-report-pdf'
 */
 DealJacketReportPdfTestController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ DealJacketReportPdfTestController.head = (options?: RouteQueryOptions): RouteDef
 
 /**
 * @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
-* @see app/Http/Controllers/DealJacketReportPdfTestController.php:12
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
 * @route '/deal-jacket-report-pdf'
 */
 const DealJacketReportPdfTestControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const DealJacketReportPdfTestControllerForm = (options?: RouteQueryOptions): Rou
 
 /**
 * @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
-* @see app/Http/Controllers/DealJacketReportPdfTestController.php:12
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
 * @route '/deal-jacket-report-pdf'
 */
 DealJacketReportPdfTestControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ DealJacketReportPdfTestControllerForm.get = (options?: RouteQueryOptions): Route
 
 /**
 * @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
-* @see app/Http/Controllers/DealJacketReportPdfTestController.php:12
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
 * @route '/deal-jacket-report-pdf'
 */
 DealJacketReportPdfTestControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

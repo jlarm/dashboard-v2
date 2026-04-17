@@ -11,6 +11,7 @@ use App\Services\VimeoService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Show extends Component
 {
@@ -21,6 +22,8 @@ class Show extends Component
     public ?array $video = null;
     public bool $showSlidesFallback = false;
     public int $videoRetryCount = 0;
+
+    #[Override]
     protected $listeners = ['markVideoCompleted', 'showSlidesFallback', 'retryVideoLoad'];
 
     public function mount(): void
@@ -111,6 +114,6 @@ class Show extends Component
 
     private function getVimeoVideo(): ?array
     {
-        return app(VimeoService::class)->getVideo($this->course->video_id);
+        return resolve(VimeoService::class)->getVideo($this->course->video_id);
     }
 }

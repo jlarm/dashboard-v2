@@ -55,15 +55,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (! ($key !== 'id' &&
-                        $key !== 'parent_id' &&
-                        $key !== 'user_id' &&
-                        $key !== 'store_id' &&
-                        $key !== 'manager_id' &&
-                        $key !== 'mileage' &&
-                        $key !== 'customer_number' &&
-                        $key !== 'rating' &&
-                        $key !== 'individual_q1_answer')) {
+                        if (in_array($key, ['id', 'parent_id', 'user_id', 'store_id', 'manager_id', 'mileage', 'customer_number', 'rating', 'individual_q1_answer'], true)) {
                             continue;
                         }
                         if ($key === 'individual_q2_answer') {
@@ -86,15 +78,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (! ($key !== 'id' &&
-                        $key !== 'parent_id' &&
-                        $key !== 'user_id' &&
-                        $key !== 'store_id' &&
-                        $key !== 'manager_id' &&
-                        $key !== 'mileage' &&
-                        $key !== 'customer_number' &&
-                        $key !== 'rating' &&
-                        $key !== 'individual_q1_answer')) {
+                        if (in_array($key, ['id', 'parent_id', 'user_id', 'store_id', 'manager_id', 'mileage', 'customer_number', 'rating', 'individual_q1_answer'], true)) {
                             continue;
                         }
                         if ($key === 'individual_q2_answer') {
@@ -119,15 +103,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                 $this->array = [];
                 $item->each(function ($item, $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
-                        if (! ($key !== 'id' &&
-                        $key !== 'parent_id' &&
-                        $key !== 'user_id' &&
-                        $key !== 'store_id' &&
-                        $key !== 'manager_id' &&
-                        $key !== 'mileage' &&
-                        $key !== 'customer_number' &&
-                        $key !== 'rating' &&
-                        $key !== 'individual_q1_answer')) {
+                        if (in_array($key, ['id', 'parent_id', 'user_id', 'store_id', 'manager_id', 'mileage', 'customer_number', 'rating', 'individual_q1_answer'], true)) {
                             continue;
                         }
                         if ($key === 'individual_q2_answer') {
@@ -157,7 +133,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
         }
 
         // Fill in missing answers for each question
-        $allNames = array_keys($this->managerIssueCount->toArray());
+        $allNames = array_keys($this->managerIssueCount->all());
         foreach ($this->results as $question => $answers) {
             foreach ($allNames as $name) {
                 if (! isset($answers[$name])) {

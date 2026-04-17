@@ -31,7 +31,6 @@ function invokeGlbaRatingMethod(GenerateGlbaPdfJob $job): string
 {
     $reflection = new ReflectionClass($job);
     $method = $reflection->getMethod('rating');
-    $method->setAccessible(true);
 
     return $method->invoke($job);
 }

@@ -8,6 +8,7 @@ use App\Enums\ViolationStatementCategory;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 /**
  * @property-read int $id
@@ -23,6 +24,7 @@ class ViolationStatement extends Model
 {
     use HasFactory;
 
+    #[Override]
     protected $fillable = [
         'statement',
         'keywords',
@@ -31,6 +33,7 @@ class ViolationStatement extends Model
         'reference_image_url',
     ];
 
+    #[Override]
     protected function casts(): array
     {
         return [

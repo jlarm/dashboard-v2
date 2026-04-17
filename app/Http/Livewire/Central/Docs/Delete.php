@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Central\Docs;
 use App\Models\Document;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use WireElements\Pro\Components\Modal\Modal;
@@ -41,7 +43,7 @@ class Delete extends Modal
         }
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.docs.delete');
     }

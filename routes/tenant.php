@@ -47,6 +47,8 @@ use App\Http\Livewire\Dealer\Settings\AutomatedReports;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use App\Http\Livewire\Dealer\Settings\GlobalSettings;
 use App\Http\Livewire\Dealer\Vendor\NewForm;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Features\UserImpersonation;
@@ -73,7 +75,7 @@ Route::name('dealer.')->middleware([
         Route::get('deal-jacket-report-pdf', DealJacketReportPdfTestController::class);
         Route::get('glba-audit-pdf', GlbaPdfTestController::class);
         Route::get('body-shop-audit-pdf', BodyShopPdfTestController::class);
-        Route::Get('dot-cert', fn () => view('dealer.course.CertDownloadView'));
+        Route::Get('dot-cert', fn (): Factory|View => view('dealer.course.CertDownloadView'));
     }
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -83,17 +85,17 @@ Route::name('dealer.')->middleware([
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 
-    Route::get('language/{locale}', function ($locale) {
+    Route::get('language/{locale}', function ($locale): RedirectResponse {
         app()->setLocale($locale);
         session()->put('locale', $locale);
 
-        return redirect()->back();
+        return back();
     })->middleware('auth');
 
     Route::view('/dashboard', 'dealer.dashboard')->middleware('auth')->name('dashboard');
     Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
 
-    Route::any('stores/{path?}', static fn () => redirect()->route('dealer.dashboard'))
+    Route::any('stores/{path?}', static fn () => to_route('dealer.dashboard'))
         ->where('path', '.*')
         ->name('legacy-stores.redirect');
 

@@ -8,6 +8,8 @@ use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Invite;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Livewire\WithFileUploads;
@@ -34,19 +36,19 @@ class Import extends Modal
                 foreach ($data['employees'] as $index => $item) {
                     try {
                         $validator = Validator::make($item, [
-                            'Name' => 'required|string',
-                            'Email' => 'required|email|unique:users,email|unique:invites,email',
-                            'Stores' => 'nullable',
-                            'Department' => 'nullable',
-                            'Position' => 'nullable',
-                            'Training' => 'nullable|array',
+                            'Name' => ['required', 'string'],
+                            'Email' => ['required', 'email', 'unique:users,email', 'unique:invites,email'],
+                            'Stores' => ['nullable'],
+                            'Department' => ['nullable'],
+                            'Position' => ['nullable'],
+                            'Training' => ['nullable', 'array'],
                         ]);
 
                         if ($validator->fails()) {
                             $errors = $validator->errors()->all();
 
                             // Skip only if the only error is email already taken
-                            if (count($errors) === 1 && str_contains((string) $errors[0], 'email has already been taken')) {
+                            if (count($errors) === 1 && str_contains($errors[0], 'email has already been taken')) {
                                 continue;
                             }
 
@@ -69,7 +71,7 @@ class Import extends Modal
                         Invite::query()->create([
                             'name' => $item['Name'],
                             'email' => $item['Email'],
-                            'stores' => $item['Stores'] === null ? null : array_map('strval', (array) $item['Stores']),
+                            'stores' => $item['Stores'] === null ? null : array_map(strval(...), (array) $item['Stores']),
                             'department_id' => $item['Department'],
                             'user_id' => auth()->id(),
                             'roles' => [$item['Position']],
@@ -85,13 +87,13 @@ class Import extends Modal
                     }
                 }
 
-                throw_unless(empty($this->importErrors), new Exception('Import failed due to errors'));
+                throw_unless(empty($this->importErrors), Exception::class, 'Import failed due to errors');
             });
 
             // If we reach here, it means the transaction was successful
             $invites = Invite::query()->where('user_id', auth()->id())->latest()->take(count($data['employees']))->get();
             foreach ($invites as $invite) {
-                SendQueueEmailJob::dispatch($invite);
+                dispatch(new SendQueueEmailJob($invite));
                 $this->successCount++;
             }
 
@@ -106,7 +108,7 @@ class Import extends Modal
         }
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.import');
     }

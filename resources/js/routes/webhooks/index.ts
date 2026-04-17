@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:17
+* @see app/Http/Controllers/API/MailgunWebhookController.php:18
 * @route '//dashboard.test/api/webhooks/mailgun'
 */
 export const mailgun = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ mailgun.definition = {
 
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:17
+* @see app/Http/Controllers/API/MailgunWebhookController.php:18
 * @route '//dashboard.test/api/webhooks/mailgun'
 */
 mailgun.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ mailgun.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:17
+* @see app/Http/Controllers/API/MailgunWebhookController.php:18
 * @route '//dashboard.test/api/webhooks/mailgun'
 */
 mailgun.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ mailgun.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:17
+* @see app/Http/Controllers/API/MailgunWebhookController.php:18
 * @route '//dashboard.test/api/webhooks/mailgun'
 */
 const mailgunForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const mailgunForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:17
+* @see app/Http/Controllers/API/MailgunWebhookController.php:18
 * @route '//dashboard.test/api/webhooks/mailgun'
 */
 mailgunForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

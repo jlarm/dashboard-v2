@@ -12,13 +12,13 @@ use Livewire\Component;
 
 class GlobalSettings extends Component
 {
-    private const SECTION_GENERAL = 'general';
+    private const string SECTION_GENERAL = 'general';
 
-    private const SECTION_COURSE_MANAGEMENT = 'course-management';
+    private const string SECTION_COURSE_MANAGEMENT = 'course-management';
 
-    private const SECTION_RESET_COURSES = 'reset-courses';
+    private const string SECTION_RESET_COURSES = 'reset-courses';
 
-    private const SECTION_PHISHING = 'phishing';
+    private const string SECTION_PHISHING = 'phishing';
 
     public $settings;
     public $phishing_active;

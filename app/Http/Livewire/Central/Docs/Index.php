@@ -8,12 +8,15 @@ use App\Models\Document;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 class Index extends Component
 {
     use WithPagination;
 
     public $search = '';
+
+    #[Override]
     protected $listeners = ['saved' => '$refresh'];
 
     public function updatingSearch(): void

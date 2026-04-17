@@ -8,10 +8,13 @@ use App\Models\VideoProgress;
 use App\Services\VimeoService;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Show extends Component
 {
     public string $videoId;
+
+    #[Override]
     protected $listeners = [
         'completedVideo' => 'completedVideo',
         'refresh' => 'videoCompleted',

@@ -9,10 +9,14 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Override;
 
 class SetCurrentStoreCommand extends Command
 {
+    #[Override]
     protected $signature = 'set:current-store  {--tenants=* : The tenant(s) to run the command for. Default all.}';
+
+    #[Override]
     protected $description = 'Update all employees current_store_id to their first store id';
 
     public function handle(): void

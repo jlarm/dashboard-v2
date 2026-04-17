@@ -35,11 +35,7 @@ class CustomMessageModal extends Modal
             $users = User::query()->whereIn('id', $this->userIds)->get();
 
             foreach ($users as $user) {
-                SendCustomEmployeeMessageJob::dispatch(
-                    user: $user,
-                    subject: $this->subject,
-                    messageBody: $this->messageBody,
-                );
+                dispatch(new SendCustomEmployeeMessageJob(user: $user, subject: $this->subject, messageBody: $this->messageBody));
             }
 
             $this->close();

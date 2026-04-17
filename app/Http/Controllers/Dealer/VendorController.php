@@ -17,7 +17,7 @@ class VendorController extends Controller
 
     public function show(): View
     {
-        $id = app('request')->input('id');
+        $id = resolve('request')->input('id');
         $vendor = Vendor::query()->where('id', $id)->firstOrFail();
 
         return view('dealer.vendor.form', [

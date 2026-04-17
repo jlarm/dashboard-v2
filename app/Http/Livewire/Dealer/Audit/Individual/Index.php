@@ -8,10 +8,13 @@ use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Index extends Component
 {
     public Store $store;
+
+    #[Override]
     protected $listeners = [
         'refreshIndividualAudits' => '$refresh',
     ];
@@ -20,8 +23,8 @@ class Index extends Component
     {
         return view('livewire.dealer.audit.individual.index', [
             'audits' => IndividualAudit::query()
-                ->orderBy('audit_date', 'desc')
-                ->where('parent_id', null)
+                ->latest('audit_date')
+                ->where('parent_id')
                 ->with('store')
                 ->where('store_id', $this->store->id)
                 ->get(),

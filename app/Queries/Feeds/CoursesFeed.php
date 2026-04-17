@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\DB;
 
 final readonly class CoursesFeed
 {
-    private readonly UserCourseService $userCourseService;
+    private UserCourseService $userCourseService;
 
     public function __construct(
-        private readonly User $user,
+        private User $user,
     ) {
-        $this->userCourseService = app(UserCourseService::class);
+        $this->userCourseService = resolve(UserCourseService::class);
     }
 
     public function builder(): Builder

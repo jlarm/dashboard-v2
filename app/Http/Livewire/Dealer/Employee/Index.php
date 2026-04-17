@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 use Sentry;
 use Spatie\Permission\Models\Role;
 
@@ -44,7 +45,10 @@ class Index extends Component
     public User $currentUser;
     public array $selectedUsers = [];
     public bool $selectAll = false;
+
+    #[Override]
     protected $listeners = ['toggleUserSelection'];
+
     protected $queryString = [
         'search' => ['except' => '', 'as' => 's'],
         'selectedDepartment' => ['except' => null, 'as' => 'd'],
@@ -249,7 +253,7 @@ class Index extends Component
 
         $csvContent = $this->generateExportCsvContent($selectedUsers);
         $contextName = app()->bound('currentStoreModel')
-            ? app('currentStoreModel')->name
+            ? resolve('currentStoreModel')->name
             : tenant('name');
         $slug = str($contextName)->slug()->value();
         $filename = "incomplete-employee-courses-report-{$slug}-".date('m-d-Y').'.csv';
@@ -333,7 +337,7 @@ class Index extends Component
         $showComplianceFilters = $this->showIncompleteCourseUsers || $this->showExpiredCourseUsers || $this->showExpiringSoonCourseUsers;
         $perPage = $showComplianceFilters ? 500 : 15;
         $paginatedUsers = (clone $query)
-            ->with(['results' => fn ($q) => $this->constrainResultsQuery($q)])
+            ->with(['results' => $this->constrainResultsQuery(...)])
             ->paginate($perPage);
         $paginatedCollection = collect($paginatedUsers->items());
         $trainingSummaries = $scopedTrainingSummaries->only($paginatedCollection->pluck('id')->all());
@@ -397,7 +401,7 @@ class Index extends Component
 
     private function applyStoreFilter(Builder $query): void
     {
-        if (! app('multipleStoresExist')) {
+        if (! resolve('multipleStoresExist')) {
             return;
         }
 
@@ -417,7 +421,7 @@ class Index extends Component
     private function resolveScopedStoreIds(): Collection
     {
         /** @var Collection $storeIds */
-        $storeIds = app('scopedStoreIds');
+        $storeIds = resolve('scopedStoreIds');
 
         return $storeIds;
     }
@@ -598,7 +602,7 @@ class Index extends Component
      */
     private function resolveTrainingSummaries(Collection $users): Collection
     {
-        return app(TrainingComplianceService::class)->summarizeUsers(
+        return resolve(TrainingComplianceService::class)->summarizeUsers(
             $users
                 ->filter(static fn ($user): bool => $user instanceof User)
                 ->values()

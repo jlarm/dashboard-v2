@@ -6,9 +6,11 @@ namespace App\Http\Livewire\Dealer\Phish;
 
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\PhishingCampaign;
-use Carbon\Carbon;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -62,7 +64,7 @@ class Form extends Component
         try {
             $send_by_date = null;
             if ($this->date) {
-                $date = Carbon::parse($this->date);
+                $date = Date::parse($this->date);
                 $send_by_date = $date->addDays(3)->format('Y-m-d').'T00:00:00+00:00';
             }
 
@@ -88,8 +90,8 @@ class Form extends Component
             Log::info($campaign);
 
             if ($response->successful()) {
-                $launched_at = Carbon::parse($campaign['launch_date']);
-                $campaign_created_at = Carbon::parse($campaign['created_date']);
+                $launched_at = Date::parse($campaign['launch_date']);
+                $campaign_created_at = Date::parse($campaign['created_date']);
 
                 PhishingCampaign::query()->create([
                     'campaign_id' => $campaign['id'],
@@ -107,7 +109,7 @@ class Form extends Component
                 ->success()
                 ->send();
 
-            return redirect()->route('dealer.phishing.index');
+            return to_route('dealer.phishing.index');
 
         } catch (Exception $e) {
             $this->error = $e->getMessage();
@@ -117,7 +119,7 @@ class Form extends Component
         return null;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.phish.form');
     }

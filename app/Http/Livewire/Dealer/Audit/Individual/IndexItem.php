@@ -8,6 +8,7 @@ use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class IndexItem extends Component
 {
@@ -15,6 +16,8 @@ class IndexItem extends Component
     public Store $store;
     public bool $tenants;
     public $rating;
+
+    #[Override]
     protected $listeners = [
         'refreshIndividualAudits' => '$refresh',
     ];
@@ -22,7 +25,7 @@ class IndexItem extends Component
     public function mount(): void
     {
         $this->individualAudit->loadMissing('children');
-        $this->tenants = app('multipleStoresExist');
+        $this->tenants = resolve('multipleStoresExist');
 
         $flat = collect([$this->individualAudit, $this->individualAudit->children])->flatten();
         $ratings = $flat->pluck('rating');

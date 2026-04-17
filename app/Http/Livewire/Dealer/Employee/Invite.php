@@ -43,7 +43,7 @@ class Invite extends SlideOver
             'invitation_token' => Str::random(32),
         ]);
 
-        SendQueueEmailJob::dispatch($invite);
+        dispatch(new SendQueueEmailJob($invite));
 
         $this->close();
 
@@ -55,7 +55,7 @@ class Invite extends SlideOver
 
     public function render(): View
     {
-        $qualifiedIndividualCount = User::role('Qualified Individual')->count();
+        $qualifiedIndividualCount = User::query()->role('Qualified Individual')->count();
 
         $rolesQuery = Role::query()->whereNot('name', 'super-admin')
             ->whereNot('name', 'Admin')

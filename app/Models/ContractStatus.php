@@ -6,9 +6,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class ContractStatus extends Model
 {
+    #[Override]
     protected $fillable = [
         'contract_id',
         'name',

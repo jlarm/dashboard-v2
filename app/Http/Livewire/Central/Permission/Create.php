@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Permission;
 
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 
@@ -41,10 +43,10 @@ class Create extends Component
             ->success()
             ->send();
 
-        return redirect()->route('permission.index');
+        return to_route('permission.index');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.permission.create');
     }

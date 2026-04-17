@@ -11,10 +11,10 @@ use Spatie\Permission\Models\Role;
 
 class UserCourseService
 {
-    private const ADMIN_ROLES = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
+    private const array ADMIN_ROLES = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
 
-    private const QUALIFIED_INDIVIDUAL_ROLE_ID = 5;
-    private const STATE_ALIASES = [
+    private const int QUALIFIED_INDIVIDUAL_ROLE_ID = 5;
+    private const array STATE_ALIASES = [
         'al' => 'alabama',
         'ak' => 'alaska',
         'az' => 'arizona',

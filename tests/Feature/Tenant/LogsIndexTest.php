@@ -15,7 +15,7 @@ describe('Logs Index Page - Authorization', function (): void {
         $user->assignRole('Admin');
 
         // Refresh permissions cache
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $this->actingAs($user)
             ->get(route('dealer.logs.index'))

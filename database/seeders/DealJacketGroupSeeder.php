@@ -9,13 +9,14 @@ use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Spatie\Permission\Models\Role;
 
 class DealJacketGroupSeeder extends Seeder
 {
-    private $financeManagers;
+    private ?Collection $financeManagers = null;
 
     public function run(): void
     {
@@ -79,7 +80,7 @@ class DealJacketGroupSeeder extends Seeder
 
     private function seedStoreGroups(int $storeId): void
     {
-        $now = Carbon::now();
+        $now = Date::now();
 
         // Generate groups for the last 3 years, one per quarter
         for ($i = 0; $i < 12; $i++) {

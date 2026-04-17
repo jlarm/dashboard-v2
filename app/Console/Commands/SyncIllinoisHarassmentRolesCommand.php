@@ -8,18 +8,22 @@ use App\Models\Dealer\Course;
 use App\Models\Dealership;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
+use Override;
 use Spatie\Permission\Models\Role;
 
 class SyncIllinoisHarassmentRolesCommand extends Command
 {
-    private const EMPLOYEE_COURSE_SLUG = 'sexual-harassment-illinois';
-    private const MANAGER_COURSE_SLUG = 'sexual-harassment-illinois-m';
-    private const EMPLOYEE_ROLES = ['Employee', 'Porter/Driver'];
-    private const MANAGER_ROLES = ['Owner', 'GM', 'CFO', 'GSM', 'Manager'];
+    private const string EMPLOYEE_COURSE_SLUG = 'sexual-harassment-illinois';
+    private const string MANAGER_COURSE_SLUG = 'sexual-harassment-illinois-m';
+    private const array EMPLOYEE_ROLES = ['Employee', 'Porter/Driver'];
+    private const array MANAGER_ROLES = ['Owner', 'GM', 'CFO', 'GSM', 'Manager'];
 
+    #[Override]
     protected $signature = 'courses:sync-illinois-harassment-roles
         {--tenant= : Tenant ID to run against}
         {--dry-run : Preview changes without updating records}';
+
+    #[Override]
     protected $description = 'Assign correct roles to Illinois harassment courses (employee vs manager variants)';
 
     public function handle(): int

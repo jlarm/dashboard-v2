@@ -137,7 +137,7 @@ class Create extends Component
             'dealer_billing_contact_name' => $this->dealerBillingContactName,
             'dealer_billing_contact_title' => $this->dealerBillingContactTitle,
             'dealer_billing_contact_email' => $this->dealerBillingContactEmail,
-            'additional_locations' => $this->additionalLocations->toArray(),
+            'additional_locations' => $this->additionalLocations->all(),
         ]);
 
         $contract->status()->create([
@@ -151,7 +151,7 @@ class Create extends Component
             ->success()
             ->send();
 
-        return redirect()->route('contracts.edit', $contract);
+        return to_route('contracts.edit', $contract);
 
     }
 

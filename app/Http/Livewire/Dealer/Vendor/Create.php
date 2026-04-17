@@ -29,7 +29,7 @@ class Create extends Modal
 
     public function mount(): void
     {
-        $this->qi = User::role('Qualified Individual')->first();
+        $this->qi = User::query()->role('Qualified Individual')->first();
     }
 
     public function create(): void
@@ -40,7 +40,7 @@ class Create extends Modal
 
         $vendorForm = $this->createVendorForm($vendor);
 
-        SendVendorEmailJob::dispatch($vendorForm);
+        dispatch(new SendVendorEmailJob($vendorForm));
 
         $this->reset();
 
@@ -57,7 +57,7 @@ class Create extends Modal
     public function render(): View
     {
         return view('livewire.dealer.vendor.create', [
-            'stores' => app('multipleStoresExist') ? Store::query()->orderBy('name')->get() : null,
+            'stores' => resolve('multipleStoresExist') ? Store::query()->orderBy('name')->get() : null,
         ]);
     }
 

@@ -7,6 +7,7 @@ namespace App\Models\Dealer\Settings;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -14,6 +15,7 @@ class EmployeeList extends Model
 {
     use LogsActivity;
 
+    #[Override]
     protected $fillable = [
         'store_id',
         'qualified_individual_name',

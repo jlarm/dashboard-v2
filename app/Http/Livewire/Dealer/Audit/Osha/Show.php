@@ -7,8 +7,10 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Store;
 use App\Models\OshaQuestions;
-use Carbon\Carbon;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
@@ -654,7 +656,7 @@ class Show extends Component
     public function mount(): void
     {
         $this->draft = $this->oshaAudit->draft;
-        $this->audit_date = Carbon::make($this->oshaAudit->audit_date)->format('Y-m-d');
+        $this->audit_date = Date::make($this->oshaAudit->audit_date)->format('Y-m-d');
         $this->osha_q1_answer = $this->oshaAudit->osha_q1_answer;
         $this->osha_q1_comment = $this->oshaAudit->osha_q1_comment;
         $this->osha_q1_danger = $this->oshaAudit->osha_q1_danger;
@@ -1064,7 +1066,7 @@ class Show extends Component
             'osha_q64_answer' => $this->osha_q64_answer,
             'osha_q64_comment' => $this->osha_q64_comment,
             'osha_q64_danger' => $this->osha_q64_danger,
-            'osha_q64_date' => ($this->osha_q64_date) ? Carbon::make($this->osha_q64_date)->format('Y-m-d') : null,
+            'osha_q64_date' => ($this->osha_q64_date) ? Date::make($this->osha_q64_date)->format('Y-m-d') : null,
             'osha_q65_answer' => $this->osha_q65_answer,
             'osha_q65_comment' => $this->osha_q65_comment,
             'osha_q65_danger' => $this->osha_q65_danger,
@@ -1093,13 +1095,13 @@ class Show extends Component
             ->send();
 
         if ($exit) {
-            return redirect()->route('dealer.audit.osha.index');
+            return to_route('dealer.audit.osha.index');
         }
 
         return null;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.osha.show', [
             'questions' => tenancy()->central(fn ($tenant) => OshaQuestions::query()->search('question', $this->search)->get()),

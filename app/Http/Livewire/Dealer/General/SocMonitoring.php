@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\General;
 
 use App\Models\Dealer\Store;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Livewire\Component;
 
@@ -20,7 +22,7 @@ class SocMonitoring extends Component
             ->first();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.general.soc-monitoring');
     }

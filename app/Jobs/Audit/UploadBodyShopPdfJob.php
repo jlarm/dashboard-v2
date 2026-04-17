@@ -30,7 +30,7 @@ class UploadBodyShopPdfJob implements ShouldQueue
     {
         $localPath = '/bodyshop/'.$this->bodyShopViolationAudit->pdf_path;
 
-        throw_unless(Storage::exists($localPath), new RuntimeException("Body Shop PDF not found at path: {$localPath}"));
+        throw_unless(Storage::exists($localPath), RuntimeException::class, "Body Shop PDF not found at path: {$localPath}");
 
         $stream = Storage::readStream($localPath);
         $path = tenant('id').'/bodyshop/'.$this->bodyShopViolationAudit->pdf_path;

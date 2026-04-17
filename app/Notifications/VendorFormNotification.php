@@ -31,7 +31,7 @@ class VendorFormNotification extends Notification
     {
 
         $url = $this->generateUrl($notifiable->routes['mail']);
-        $user = User::role('Qualified Individual')->select('name', 'email')->first();
+        $user = User::query()->role('Qualified Individual')->select('name', 'email')->first();
 
         return (new MailMessage)
             ->greeting('Hello '.$this->vendor->vendor->name.',')

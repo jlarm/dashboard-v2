@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Override;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[Override]
     public function register(): void
     {
         $this->app->singleton(UserCourseService::class);
@@ -82,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
             $values = $results->map(function ($result): string {
                 $attributes = (array) $result;
 
-                return implode(',', collect($attributes)->map(fn ($value): string => '"'.$value.'"')->toArray());
+                return implode(',', collect($attributes)->map(fn ($value): string => '"'.$value.'"')->all());
             });
 
             $values->prepend($titles);
@@ -103,19 +105,19 @@ class AppServiceProvider extends ServiceProvider
 
                 $firstRow = $first->toArray();
 
-                fputcsv($output, array_keys($firstRow));
+                fputcsv($output, array_keys($firstRow), escape: '\\');
             }
 
             // Write the data
             foreach ($this as $row) {
                 $rowData = $row->toArray();
 
-                if (array_filter($rowData, 'is_array') !== []) {
+                if (array_filter($rowData, is_array(...)) !== []) {
                     // Log the problematic row for inspection
                     Log::error('Problematic row:', ['row' => $rowData]);
                 }
 
-                fputcsv($output, $rowData);
+                fputcsv($output, $rowData, escape: '\\');
             }
 
             rewind($output);

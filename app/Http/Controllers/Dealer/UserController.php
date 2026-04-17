@@ -13,11 +13,11 @@ use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Providers\AppServiceProvider;
-use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -27,13 +27,13 @@ use Spatie\Permission\PermissionRegistrar;
 
 class UserController extends Controller
 {
-    private const SECTION_COURSES = 'courses';
+    private const string SECTION_COURSES = 'courses';
 
-    private const SECTION_MANAGE_COURSES = 'manage-courses';
+    private const string SECTION_MANAGE_COURSES = 'manage-courses';
 
-    private const SECTION_CERTIFICATES = 'certificates';
+    private const string SECTION_CERTIFICATES = 'certificates';
 
-    private const SECTION_VIDEO_PROGRESS = 'video-progress';
+    private const string SECTION_VIDEO_PROGRESS = 'video-progress';
 
     public function show(User $user): View
     {
@@ -112,7 +112,7 @@ class UserController extends Controller
                     $html = view('dealer.course.CertDownloadView', [
                         'user' => User::query()->where('id', $user->id)->first(),
                         'store' => $request->get('store')?->name ?? tenant('name'),
-                        'passed_on' => Carbon::parse($course)->format('F d, Y'),
+                        'passed_on' => Date::parse($course)->format('F d, Y'),
                     ])->render();
 
                     $pdf = Browsershot::html($html)->landscape()->pdf();
@@ -189,7 +189,7 @@ class UserController extends Controller
 
         $store = Store::query()
             ->select(['id', 'videos'])
-            ->find((int) app('currentStore'));
+            ->find((int) resolve('currentStore'));
 
         $videosActive = (bool) ($store?->videos ?? false);
 

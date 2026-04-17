@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
@@ -18,7 +20,7 @@ class Roles extends Component
         $this->assignedRoles = $this->user->roles->pluck('name')->toArray();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.roles', [
             'roles' => Role::query()->whereNot('name', 'super-admin')

@@ -8,6 +8,8 @@ use App\Models\Dealer\Store;
 use App\Models\Dealer\VendorForm;
 use App\Models\User;
 use App\Notifications\VendorSignedNotification;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -28,7 +30,7 @@ class NewForm extends Component
     public $qis;
     protected $queryString = ['vid'];
 
-    public function mount()
+    public function mount(): Redirector|RedirectResponse|null
     {
         $this->vendor = VendorForm::query()->findOrFail($this->vid);
 
@@ -36,7 +38,7 @@ class NewForm extends Component
             return redirect(route('dealer.vendors.thankyou'));
         }
 
-        $this->qis = User::role('Qualified Individual')->get();
+        $this->qis = User::query()->role('Qualified Individual')->get();
 
         $this->storeName = $this->vendor->vendor->store->name ?? Store::query()->first()->name;
 
@@ -66,7 +68,7 @@ class NewForm extends Component
         return null;
     }
 
-    public function submit()
+    public function submit(): Redirector|RedirectResponse
     {
         $this->validate();
 

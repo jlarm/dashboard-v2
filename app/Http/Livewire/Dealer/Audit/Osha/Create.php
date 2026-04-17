@@ -7,6 +7,10 @@ namespace App\Http\Livewire\Dealer\Audit\Osha;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
@@ -506,7 +510,7 @@ class Create extends Component
         'osha_q69_images' => 'nullable',
     ];
 
-    public function submit()
+    public function submit(): Redirector|RedirectResponse
     {
         $this->validate();
 
@@ -666,7 +670,7 @@ class Create extends Component
         return redirect(route('dealer.audit.osha.index'));
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.osha.create');
     }

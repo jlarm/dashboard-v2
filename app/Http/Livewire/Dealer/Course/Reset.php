@@ -27,15 +27,12 @@ class Reset extends Modal
 
         $this->askForConfirmation(
             callback: function (): void {
-                $affectedUserIds = app(CourseResetService::class)->reset(store: $this->store);
+                $affectedUserIds = resolve(CourseResetService::class)->reset(store: $this->store);
 
                 $this->logCourseReset();
 
                 if ($affectedUserIds->isNotEmpty()) {
-                    SendCoursesResetNotifications::dispatch(
-                        $affectedUserIds,
-                        tenant()->name
-                    );
+                    dispatch(new SendCoursesResetNotifications($affectedUserIds, tenant()->name));
                 }
 
                 Notification::make()

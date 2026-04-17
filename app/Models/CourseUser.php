@@ -6,13 +6,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Override;
 
 class CourseUser extends Pivot
 {
+    #[Override]
     public $incrementing = false;
+
+    #[Override]
     protected $table = 'course_user';
+
+    #[Override]
     protected $fillable = ['user_id', 'course_id', 'type', 'assigned_by'];
 
+    #[Override]
     protected function setKeysForSaveQuery($query): Builder
     {
         foreach (['user_id', 'course_id'] as $keyName) {

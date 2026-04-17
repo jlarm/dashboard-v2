@@ -25,14 +25,14 @@ beforeEach(function (): void {
 });
 
 it('throws when the pdf does not exist in local storage', function (): void {
-    expect(fn () => (new UploadOshaPdfJob($this->audit))->handle())
+    expect(fn () => new UploadOshaPdfJob($this->audit)->handle())
         ->toThrow(RuntimeException::class, 'OSHA PDF not found at path: /osha/audit-report.pdf');
 });
 
 it('streams the pdf to armpaudits, deletes the local file, and updates pdf_path', function (): void {
     Storage::put('/osha/audit-report.pdf', 'pdf-content');
 
-    (new UploadOshaPdfJob($this->audit))->handle();
+    new UploadOshaPdfJob($this->audit)->handle();
 
     $expectedPath = tenant('id').'/osha/audit-report.pdf';
 

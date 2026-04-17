@@ -8,6 +8,7 @@ use App\Jobs\IncompleteVendorNotificationJob;
 use App\Models\Dealer\VendorForm;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 
 class SendVendorNotificationCommand extends Command
 {
@@ -16,6 +17,7 @@ class SendVendorNotificationCommand extends Command
      *
      * @var string
      */
+    #[Override]
     protected $signature = 'vendor:send-notification {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     /**
@@ -23,6 +25,7 @@ class SendVendorNotificationCommand extends Command
      *
      * @var string
      */
+    #[Override]
     protected $description = 'Send notification to vendor every 30 days if they have not completed the form.';
 
     /**
@@ -45,7 +48,7 @@ class SendVendorNotificationCommand extends Command
                 ->get();
 
             foreach ($incompleteVendors as $vendor) {
-                IncompleteVendorNotificationJob::dispatch($vendor);
+                dispatch(new IncompleteVendorNotificationJob($vendor));
                 $vendor->update(['last_notification_sent_at' => now()]);
             }
         });

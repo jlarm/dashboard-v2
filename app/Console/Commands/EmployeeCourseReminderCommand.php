@@ -8,13 +8,17 @@ use App\Models\Dealer\CourseUserNotificationSent;
 use App\Models\User;
 use App\Notifications\ExpiredCourseNotification;
 use App\Services\UserCourseService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
+use Override;
 
 class EmployeeCourseReminderCommand extends Command
 {
+    #[Override]
     protected $signature = 'run:course-reminder  {--tenants=* : The tenant(s) to run the command for. Default all.}';
+
+    #[Override]
     protected $description = 'Reminder employee that course expires soon or expired.';
 
     public function __construct(public UserCourseService $userCourseService)
@@ -30,7 +34,7 @@ class EmployeeCourseReminderCommand extends Command
             ->values();
 
         tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
-            app(UserCourseService::class)->clearAllCaches();
+            resolve(UserCourseService::class)->clearAllCaches();
 
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
@@ -40,7 +44,7 @@ class EmployeeCourseReminderCommand extends Command
                 ->with('roles', 'stores')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get()
-                ->each(fn ($user) => $this->processUserResults($user));
+                ->each(fn (User $user) => $this->processUserResults($user));
 
             $this->info("Command for tenant {$tenant->id} ({$tenant->name}) completed");
         });
@@ -70,8 +74,8 @@ class EmployeeCourseReminderCommand extends Command
 
         $results->each(function ($result) use (&$coursesToNotify, $user): void {
             // Course expires 1 year (365 days) after completion
-            $expirationDate = Carbon::parse($result->created_at)->addYear();
-            $now = Carbon::now();
+            $expirationDate = Date::parse($result->created_at)->addYear();
+            $now = Date::now();
             $daysUntilExpiration = $now->diffInDays($expirationDate, false);
 
             // Determine notification type based on days until expiration
@@ -94,7 +98,7 @@ class EmployeeCourseReminderCommand extends Command
                 // Check if notification was already sent recently (within last 7 days to avoid duplicates)
                 $recentNotification = CourseUserNotificationSent::query()->where('user_id', $user->id)
                     ->where('course_id', $result->course_id)
-                    ->where('sent', '>=', Carbon::now()->subDays(7))
+                    ->where('sent', '>=', Date::now()->subDays(7))
                     ->first();
 
                 if (! $recentNotification) {
@@ -115,7 +119,7 @@ class EmployeeCourseReminderCommand extends Command
                     CourseUserNotificationSent::query()->create([
                         'user_id' => $user->id,
                         'course_id' => $courseId,
-                        'sent' => Carbon::now(),
+                        'sent' => Date::now(),
                     ]);
                 }
             }
@@ -126,6 +130,6 @@ class EmployeeCourseReminderCommand extends Command
     {
         // Delete notifications older than 60 days to keep the table clean
         // We keep them for 60 days to ensure we have a record across all three notification periods
-        CourseUserNotificationSent::query()->where('sent', '<', Carbon::now()->subDays(60))->delete();
+        CourseUserNotificationSent::query()->where('sent', '<', Date::now()->subDays(60))->delete();
     }
 }

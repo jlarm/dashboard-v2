@@ -8,6 +8,8 @@ use App\Models\Dealer\VendorForm;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -28,7 +30,7 @@ class Download extends Component
         return $this->downloadGeneratedPdf($pdfName);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.vendor.download');
     }

@@ -8,10 +8,14 @@ use App\Models\Dealer\Course as DealerCourse;
 use App\Services\VimeoService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 
 class EnableVimeoSeek extends Command
 {
+    #[Override]
     protected $signature = 'vimeo:enable-seek {video_id? : A specific Vimeo video ID} {--all : Enable seek on all course videos} {--tenants=* : Specific tenant(s) to scan. Defaults to all.}';
+
+    #[Override]
     protected $description = 'Enable the seek/scrub button and assign the Default embed preset on Vimeo videos';
 
     public function handle(VimeoService $vimeoService): int

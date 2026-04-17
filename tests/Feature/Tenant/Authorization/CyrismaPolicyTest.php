@@ -20,7 +20,7 @@ function makeCyrismaPolicyUser(string $role, Store $store): User
     $user->stores()->attach($store->id);
     $user->update(['current_store_id' => $store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
     return $user;
 }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\FinanceAudit;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -35,7 +37,7 @@ class OldAuditIndex extends Component
             ->download(tenant('id').'/finance/'.$this->financeAudit->pdf_path);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.finance.old-audit-index');
     }

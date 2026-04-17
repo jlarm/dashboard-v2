@@ -7,22 +7,24 @@ namespace App\Http\Livewire\Tenant\Audit\Fit;
 use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Index extends Component
 {
     public ?Store $store = null;
+
+    #[Override]
     protected $listeners = ['saved' => '$refresh'];
 
     public function mount(): void
     {
-        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
-            ?? Store::query()->find(app('currentStore'));
+        $this->store = (app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null)
+            ?? Store::query()->find(resolve('currentStore'));
     }
 
     public function render(): View
     {
-        $fitTests = $this->store->fitTests()
-            ->orderBy('created_at')
+        $fitTests = $this->store->fitTests()->oldest()
             ->orderBy('employee_name')
             ->get()
             ->fresh();

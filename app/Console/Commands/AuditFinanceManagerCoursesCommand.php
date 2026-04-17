@@ -10,11 +10,15 @@ use App\Models\User;
 use App\Services\UserCourseService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 use Spatie\Permission\Models\Role;
 
 class AuditFinanceManagerCoursesCommand extends Command
 {
+    #[Override]
     protected $signature = 'audit:finance-manager-courses {--tenants=* : The tenant(s) to audit. Default all.} {--fix : Fix inconsistencies by recalculating courses}';
+
+    #[Override]
     protected $description = 'Audit course assignments for Finance Manager users across all tenants';
 
     public function handle(UserCourseService $courseService): void
@@ -35,7 +39,7 @@ class AuditFinanceManagerCoursesCommand extends Command
             ->values();
 
         tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($courseService, &$stats): void {
-            app(UserCourseService::class)->clearAllCaches();
+            resolve(UserCourseService::class)->clearAllCaches();
 
             $this->info("Checking tenant: {$tenant->name} (ID: {$tenant->id})");
 

@@ -8,9 +8,11 @@ use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class CommonIssuesChart extends Component
 {
+    #[Override]
     protected $listeners = ['refreshDealJacketGroups' => '$refresh'];
 
     public function render(): View
@@ -43,7 +45,7 @@ class CommonIssuesChart extends Component
         $topIssues = array_slice($issuesCounts, 0, 5, true);
 
         $labels = array_map(
-            fn ($statement): string => $this->truncateLabel($statement),
+            fn (int|string $statement): string => $this->truncateLabel($statement),
             array_keys($topIssues)
         );
 
@@ -64,13 +66,13 @@ class CommonIssuesChart extends Component
 
     private function resolveStoreId(): ?int
     {
-        $currentStore = app()->bound('currentStore') ? app('currentStore') : null;
+        $currentStore = app()->bound('currentStore') ? resolve('currentStore') : null;
 
         if (is_numeric($currentStore)) {
             return (int) $currentStore;
         }
 
-        $scopedStoreIds = app()->bound('scopedStoreIds') ? app('scopedStoreIds') : collect();
+        $scopedStoreIds = app()->bound('scopedStoreIds') ? resolve('scopedStoreIds') : collect();
         $firstScopedStoreId = $scopedStoreIds->first();
 
         if (is_numeric($firstScopedStoreId)) {

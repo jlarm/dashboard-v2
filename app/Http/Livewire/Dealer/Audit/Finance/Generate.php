@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 use App\Jobs\GenerateAuditPdfJob;
 use App\Jobs\UploadAuditToDigitalOceanJob;
 use App\Models\Dealer\Audit\FinanceAudit;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Bus;
 use Livewire\Component;
 
@@ -22,7 +24,7 @@ class Generate extends Component
         ])->dispatch();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.finance.generate');
     }

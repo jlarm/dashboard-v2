@@ -19,7 +19,7 @@ use Stancl\Tenancy\Database\Models\Domain;
 
 class DealershipCreator
 {
-    private const DEALERSHIP_NOTIFICATION_EMAIL = 'jlohr@autorisknow.com';
+    private const string DEALERSHIP_NOTIFICATION_EMAIL = 'jlohr@autorisknow.com';
 
     public function create(User $centralUser, string $name): Dealership
     {

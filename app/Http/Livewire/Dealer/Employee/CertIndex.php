@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Override;
 
 class CertIndex extends Component
 {
     public User $user;
     public bool $autoload = false;
     public bool $isLoaded = false;
+
+    #[Override]
     protected $listeners = [
         'employeeTabChanged' => 'handleTabChanged',
         'certificateGenerated' => 'reloadCertificates',
@@ -37,7 +42,7 @@ class CertIndex extends Component
         $this->isLoaded = true;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         $certs = $this->isLoaded
             ? $this->user->certificates()->latest()->get()

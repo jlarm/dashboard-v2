@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Tenant\Sds;
 
 use App\Models\Sds;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -59,7 +60,7 @@ class Search extends Component
 
     public function render(): View
     {
-        return tenancy()->central(function () {
+        return tenancy()->central(function (): Factory|\Illuminate\Contracts\View\View {
             if (! $this->hasSearchCriteria()) {
                 $sdsRecords = collect([]);
             } else {

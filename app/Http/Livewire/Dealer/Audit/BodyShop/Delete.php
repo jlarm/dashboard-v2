@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
@@ -33,7 +35,7 @@ class Delete extends Modal
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.body-shop.delete');
     }

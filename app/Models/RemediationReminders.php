@@ -6,9 +6,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Override;
 
 class RemediationReminders extends Model
 {
+    #[Override]
     protected $fillable = [
         'send_date',
         'store_id',
@@ -19,6 +21,7 @@ class RemediationReminders extends Model
         return $this->morphTo();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

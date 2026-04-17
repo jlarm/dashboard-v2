@@ -12,7 +12,7 @@ beforeEach(function (): void {
     $this->manager->stores()->attach($this->store->id);
     $this->manager->update(['current_store_id' => $this->store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 describe('Manager - General Access', function (): void {

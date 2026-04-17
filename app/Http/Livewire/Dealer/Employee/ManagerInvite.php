@@ -9,6 +9,8 @@ use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
 use WireElements\Pro\Components\Modal\Modal;
@@ -35,7 +37,7 @@ class ManagerInvite extends Modal
             'invitation_token' => mb_substr(md5(random_int(0, 9).$this->email.time()), 0, 32),
         ]);
 
-        SendQueueEmailJob::dispatch($invite);
+        dispatch(new SendQueueEmailJob($invite));
 
         Notification::make()
             ->title('Invite Successfully Sent!')
@@ -45,7 +47,7 @@ class ManagerInvite extends Modal
         $this->close();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.manager-invite', [
             'allStore' => $this->availableStores(),

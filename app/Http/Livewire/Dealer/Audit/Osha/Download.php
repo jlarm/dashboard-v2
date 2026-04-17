@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit\Osha;
 
 use App\Models\Dealer\Audit\OshaAudit;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -25,7 +27,7 @@ class Download extends Component
         return Storage::disk('do-audits')->download(tenant('id').'/osha/'.$this->oshaAudit->pdf_path);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.osha.download');
     }

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:23
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
 * @route '/audits/deal-jackets/{dealJacketGroup}/create'
 */
 export const create = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:23
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
 * @route '/audits/deal-jackets/{dealJacketGroup}/create'
 */
 create.url = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ create.url = (args: { dealJacketGroup: string | number | { uuid: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:23
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
 * @route '/audits/deal-jackets/{dealJacketGroup}/create'
 */
 create.get = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ create.get = (args: { dealJacketGroup: string | number | { uuid: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:23
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
 * @route '/audits/deal-jackets/{dealJacketGroup}/create'
 */
 create.head = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ create.head = (args: { dealJacketGroup: string | number | { uuid: string | numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:23
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
 * @route '/audits/deal-jackets/{dealJacketGroup}/create'
 */
 const createForm = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ const createForm = (args: { dealJacketGroup: string | number | { uuid: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:23
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
 * @route '/audits/deal-jackets/{dealJacketGroup}/create'
 */
 createForm.get = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +89,7 @@ createForm.get = (args: { dealJacketGroup: string | number | { uuid: string | nu
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:23
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
 * @route '/audits/deal-jackets/{dealJacketGroup}/create'
 */
 createForm.head = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -106,7 +106,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:32
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
 * @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
 */
 export const edit = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -121,7 +121,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:32
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
 * @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
 */
 edit.url = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions) => {
@@ -151,7 +151,7 @@ edit.url = (args: { dealJacketGroup: string | number | { uuid: string | number }
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:32
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
 * @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
 */
 edit.get = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -161,7 +161,7 @@ edit.get = (args: { dealJacketGroup: string | number | { uuid: string | number }
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:32
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
 * @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
 */
 edit.head = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -171,7 +171,7 @@ edit.head = (args: { dealJacketGroup: string | number | { uuid: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:32
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
 * @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
 */
 const editForm = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -181,7 +181,7 @@ const editForm = (args: { dealJacketGroup: string | number | { uuid: string | nu
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:32
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
 * @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
 */
 editForm.get = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -191,7 +191,7 @@ editForm.get = (args: { dealJacketGroup: string | number | { uuid: string | numb
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:32
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
 * @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
 */
 editForm.head = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -289,7 +289,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketGroupController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:13
+* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:15
 * @route '/audits/deal-jackets/{dealJacketGroup}'
 */
 export const show = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -304,7 +304,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketGroupController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:13
+* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:15
 * @route '/audits/deal-jackets/{dealJacketGroup}'
 */
 show.url = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions) => {
@@ -337,7 +337,7 @@ show.url = (args: { dealJacketGroup: string | number | { uuid: string | number }
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketGroupController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:13
+* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:15
 * @route '/audits/deal-jackets/{dealJacketGroup}'
 */
 show.get = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -347,7 +347,7 @@ show.get = (args: { dealJacketGroup: string | number | { uuid: string | number }
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketGroupController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:13
+* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:15
 * @route '/audits/deal-jackets/{dealJacketGroup}'
 */
 show.head = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -357,7 +357,7 @@ show.head = (args: { dealJacketGroup: string | number | { uuid: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketGroupController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:13
+* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:15
 * @route '/audits/deal-jackets/{dealJacketGroup}'
 */
 const showForm = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -367,7 +367,7 @@ const showForm = (args: { dealJacketGroup: string | number | { uuid: string | nu
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketGroupController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:13
+* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:15
 * @route '/audits/deal-jackets/{dealJacketGroup}'
 */
 showForm.get = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -377,7 +377,7 @@ showForm.get = (args: { dealJacketGroup: string | number | { uuid: string | numb
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketGroupController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:13
+* @see app/Http/Controllers/Tenant/Audit/DealJacketGroupController.php:15
 * @route '/audits/deal-jackets/{dealJacketGroup}'
 */
 showForm.head = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -394,7 +394,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::single
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:14
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
 * @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
 */
 export const single = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -409,7 +409,7 @@ single.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::single
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:14
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
 * @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
 */
 single.url = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions) => {
@@ -439,7 +439,7 @@ single.url = (args: { dealJacketGroup: string | number | { uuid: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::single
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:14
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
 * @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
 */
 single.get = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -449,7 +449,7 @@ single.get = (args: { dealJacketGroup: string | number | { uuid: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::single
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:14
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
 * @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
 */
 single.head = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -459,7 +459,7 @@ single.head = (args: { dealJacketGroup: string | number | { uuid: string | numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::single
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:14
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
 * @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
 */
 const singleForm = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -469,7 +469,7 @@ const singleForm = (args: { dealJacketGroup: string | number | { uuid: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::single
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:14
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
 * @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
 */
 singleForm.get = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -479,7 +479,7 @@ singleForm.get = (args: { dealJacketGroup: string | number | { uuid: string | nu
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::single
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:14
+* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
 * @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
 */
 singleForm.head = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

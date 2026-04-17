@@ -10,11 +10,16 @@ use App\Models\User;
 use App\Services\GoPhishService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 
 class CreateUpdateGoPhishUserGroupsCommand extends Command
 {
+    #[Override]
     protected $signature = 'run:go-phish-user-groups {--tenants=* : The tenant(s) to run the command for. Default all.}';
+
+    #[Override]
     protected $description = 'Create/Update User Groups for GoPhish';
+
     protected $token;
     protected $ip;
 
@@ -99,6 +104,6 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
                 'last_name' => $lastName,
                 'position' => null,
             ];
-        })->toArray();
+        })->all();
     }
 }

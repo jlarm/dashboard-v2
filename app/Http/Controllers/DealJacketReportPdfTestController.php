@@ -6,10 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class DealJacketReportPdfTestController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): string|Factory|View
     {
         $dealJacketGroup = DealJacketGroup::with(['dealJackets.user', 'store'])
             ->withCount('dealJackets')

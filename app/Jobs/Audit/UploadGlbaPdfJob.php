@@ -30,7 +30,7 @@ class UploadGlbaPdfJob implements ShouldQueue
     {
         $localPath = '/glba/'.$this->glbaViolationAudit->pdf_path;
 
-        throw_unless(Storage::exists($localPath), new RuntimeException("GLBA PDF not found at path: {$localPath}"));
+        throw_unless(Storage::exists($localPath), RuntimeException::class, "GLBA PDF not found at path: {$localPath}");
 
         $stream = Storage::readStream($localPath);
         $path = tenant('id').'/glba/'.$this->glbaViolationAudit->pdf_path;

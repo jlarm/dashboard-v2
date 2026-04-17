@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\General;
 
 use App\Models\Dealer\Store;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class SocMonitoringMultiStore extends Component
@@ -21,7 +23,7 @@ class SocMonitoringMultiStore extends Component
             ?->pluck('monitoring_start_date');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.general.soc-monitoring-multi-store');
     }

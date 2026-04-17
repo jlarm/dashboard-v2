@@ -40,6 +40,6 @@ class CourseResultsController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
-        return redirect()->route('courses.index');
+        return to_route('courses.index');
     }
 }

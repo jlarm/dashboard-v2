@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Services\CyrismaService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as DomPdfWrapper;
-use Carbon\Carbon;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Bus\Queueable;
@@ -18,6 +17,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -38,7 +38,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
 
     public function middleware(): array
     {
-        return [(new WithoutOverlapping(static::class.'-'.$this->storeId.'-'.$this->type))->expireAfter(360)];
+        return [new WithoutOverlapping(static::class.'-'.$this->storeId.'-'.$this->type)->expireAfter(360)];
     }
 
     public function handle(): void
@@ -47,7 +47,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
 
         $store = Store::query()->with('cyrisma')->findOrFail($this->storeId);
 
-        $cyrisma = app(CyrismaService::class)->forStore($store);
+        $cyrisma = resolve(CyrismaService::class)->forStore($store);
 
         Log::info('GenerateCyrismaReportJob building report data', ['store_id' => $this->storeId]);
 
@@ -110,7 +110,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
         if (! empty($scanList)) {
             $latestScan = collect($scanList)->sortByDesc('scan_finished')->first();
             if (! empty($latestScan['scan_finished'])) {
-                $lastScanDate = Carbon::parse($latestScan['scan_finished'])->format('M j, Y');
+                $lastScanDate = Date::parse($latestScan['scan_finished'])->format('M j, Y');
             }
         }
 

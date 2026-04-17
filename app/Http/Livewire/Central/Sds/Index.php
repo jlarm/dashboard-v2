@@ -8,11 +8,13 @@ use App\Models\Sds;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 class Index extends Component
 {
     use Searchable, WithPagination;
 
+    #[Override]
     protected $listeners = ['refresh' => '$refresh'];
 
     public function render(): View

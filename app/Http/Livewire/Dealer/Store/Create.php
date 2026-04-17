@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Store;
 
 use App\Services\StoreCreator;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Create extends Modal
@@ -49,7 +51,7 @@ class Create extends Modal
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.store.create');
     }

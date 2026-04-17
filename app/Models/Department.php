@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Override;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -14,6 +15,7 @@ class Department extends Model
 {
     use HasSlug;
 
+    #[Override]
     protected $fillable = [
         'name',
         'slug',

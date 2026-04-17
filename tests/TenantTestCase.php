@@ -95,7 +95,7 @@ abstract class TenantTestCase extends TestCase
             $this->manager->assignRole('Manager');
 
             // Refresh permissions cache after assigning roles
-            app()[PermissionRegistrar::class]->forgetCachedPermissions();
+            app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
             // Configure URL generation for tenant
             config(['app.url' => 'http://test-tenant.localhost']);

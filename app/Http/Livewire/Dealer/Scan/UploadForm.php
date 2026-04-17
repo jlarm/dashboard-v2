@@ -6,9 +6,9 @@ namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
-use Carbon\Carbon;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -51,7 +51,7 @@ class UploadForm extends Component
             ];
 
             if ($this->date) {
-                $customDate = Carbon::parse($this->date)->startOfDay();
+                $customDate = Date::parse($this->date)->startOfDay();
                 $data['created_at'] = $customDate;
                 $data['updated_at'] = $customDate;
             }

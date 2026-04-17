@@ -22,7 +22,7 @@ class ImpersonationController extends Controller
 
         // Don't allow impersonating yourself
         if (auth()->id() === $user->id) {
-            return redirect()->back()->with('error', 'You cannot impersonate yourself.');
+            return back()->with('error', 'You cannot impersonate yourself.');
         }
 
         // Generate impersonation token
@@ -45,7 +45,7 @@ class ImpersonationController extends Controller
     {
         // Check if user is being impersonated
         if (! session()->has('impersonated_by')) {
-            return redirect()->back();
+            return back();
         }
 
         // Get the original user ID

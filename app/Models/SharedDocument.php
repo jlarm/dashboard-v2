@@ -6,17 +6,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 class SharedDocument extends Model
 {
     use HasFactory;
 
+    #[Override]
     protected $fillable = [
         'title',
         'file_name',
         'url',
     ];
 
+    #[Override]
     protected function casts(): array
     {
         return [

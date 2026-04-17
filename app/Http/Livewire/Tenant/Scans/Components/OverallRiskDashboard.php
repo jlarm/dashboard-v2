@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Tenant\Scans\Components;
 
 use App\Services\CyrismaService;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -66,6 +66,6 @@ class OverallRiskDashboard extends Component
             return null;
         }
 
-        return Carbon::parse($latestScan['scan_finished'])->format('M j, Y');
+        return Date::parse($latestScan['scan_finished'])->format('M j, Y');
     }
 }

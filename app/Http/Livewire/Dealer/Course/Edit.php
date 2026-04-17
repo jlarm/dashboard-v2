@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Course;
 
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Edit extends Component
@@ -18,7 +20,7 @@ class Edit extends Component
         $this->assignedDepartments = $this->course->departments()->pluck('name')->toArray();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.course.edit', [
             'departments' => Department::all(),

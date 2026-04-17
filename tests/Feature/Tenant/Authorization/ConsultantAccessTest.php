@@ -183,7 +183,7 @@ describe('Consultant - Routes It Should NOT Access', function (): void {
 
     it('can access logs when given delete-stores permission directly', function (): void {
         $this->consultant->givePermissionTo('delete-stores');
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $this->actingAs($this->consultant)
             ->get(route('dealer.logs.index'))

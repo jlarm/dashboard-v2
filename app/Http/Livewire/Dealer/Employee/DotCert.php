@@ -10,10 +10,13 @@ use App\Models\Dealer\CourseResults;
 use App\Models\User;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Override;
 use Spatie\Browsershot\Browsershot;
 
 class DotCert extends Component
@@ -22,6 +25,8 @@ class DotCert extends Component
     public bool $autoload = false;
     public bool $showCertButton = false;
     public bool $isLoaded = false;
+
+    #[Override]
     protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
 
     public function mount(): void
@@ -68,7 +73,7 @@ class DotCert extends Component
         $this->sendNotification($url);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.dot-cert');
     }

@@ -45,7 +45,7 @@ beforeEach(function (): void {
     $this->admin->assignRole('Admin');
     $this->admin->stores()->sync([$this->store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 describe('manual route access', function (): void {

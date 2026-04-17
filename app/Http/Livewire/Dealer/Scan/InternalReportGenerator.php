@@ -10,6 +10,8 @@ use App\Models\Dealer\Store;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -28,7 +30,7 @@ class InternalReportGenerator extends Component
 
     public function mount(): void
     {
-        if ((bool) app('multipleStoresExist')) {
+        if ((bool) resolve('multipleStoresExist')) {
             $this->store = Store::query()->where('id', $this->store->id)->first() ?? '';
         } else {
             $this->dealer = ScanSetting::query()->first()->name ?? '';
@@ -40,7 +42,7 @@ class InternalReportGenerator extends Component
         $token = Cookie::get('sentry');
         $client = new Client;
 
-        $dealerName = app('multipleStoresExist') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
+        $dealerName = resolve('multipleStoresExist') ? str_replace(' ', '-', $this->store->name) : str_replace(' ', '-', tenant('name'));
 
         $fileName = $dealerName.'-'.now()->format('Ymdhis').'-internal-scan.pdf';
 
@@ -66,7 +68,7 @@ class InternalReportGenerator extends Component
 
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.scan.internal-report-generator');
     }

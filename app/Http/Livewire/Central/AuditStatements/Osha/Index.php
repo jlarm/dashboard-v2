@@ -8,11 +8,13 @@ use App\Models\OshaViolationStatements;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 class Index extends Component
 {
     use WithPagination;
 
+    #[Override]
     protected $listeners = ['statementDeleted' => '$refresh'];
 
     public function render(): View

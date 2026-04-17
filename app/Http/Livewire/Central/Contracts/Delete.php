@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Central\Contracts;
 
 use App\Models\Contract;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
@@ -36,7 +38,7 @@ class Delete extends Modal
         );
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.contracts.delete');
     }

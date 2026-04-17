@@ -7,10 +7,14 @@ namespace App\Console\Commands;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealership;
 use Illuminate\Console\Command;
+use Override;
 
 class RevertCourseResetCommand extends Command
 {
+    #[Override]
     protected $signature = 'revert:course-reset {tenant : The tenant UUID}';
+
+    #[Override]
     protected $description = 'Restore soft-deleted course results for a specific tenant';
 
     public function handle(): void

@@ -16,7 +16,7 @@ trait OshaGenerateRating
 
     public function rating(): ?string
     {
-        $this->audits = OshaAudit::query()->where('pdf_path', '!=', null)
+        $this->audits = OshaAudit::query()->where('pdf_path', '!=')
             ->get();
 
         $this->audits->filter(function ($value): void {

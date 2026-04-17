@@ -6,13 +6,15 @@ namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class InternalStats extends Component
 {
     public Store $store;
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.scan.internal-stats', [
             'stats' => ScanReport::query()

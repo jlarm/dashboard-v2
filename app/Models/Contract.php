@@ -13,11 +13,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Override;
 
 class Contract extends Model
 {
     use HasFactory, SoftDeletes;
 
+    #[Override]
     protected $fillable = [
         'uuid',
         'user_id',
@@ -78,6 +80,7 @@ class Contract extends Model
         return ContractFactory::new();
     }
 
+    #[Override]
     protected static function booted(): void
     {
         static::creating(static function ($contract): void {
@@ -91,6 +94,7 @@ class Contract extends Model
         });
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

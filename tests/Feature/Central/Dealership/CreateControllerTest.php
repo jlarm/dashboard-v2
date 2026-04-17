@@ -13,7 +13,7 @@ use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
     $this->seed(RoleAndPermissionSeeder::class);
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 it('creates dealership from a consultant with only name and provisions super-admins plus creator', function (): void {

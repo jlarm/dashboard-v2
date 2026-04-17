@@ -27,7 +27,7 @@ class SettingsForm extends Component
 
     public function mount(): void
     {
-        $this->store = Store::query()->find(app('currentStore'));
+        $this->store = Store::query()->find(resolve('currentStore'));
         Gate::authorize('viewAny', Cyrisma::class);
         $instanceUrl = $this->store->cyrisma->instance_url ?? null;
         $this->instanceId = $instanceUrl ? str($instanceUrl)->before('.')->toString() : null;
@@ -56,7 +56,7 @@ class SettingsForm extends Component
         $this->successMessage = null;
 
         try {
-            $cyrisma = app(CyrismaService::class);
+            $cyrisma = resolve(CyrismaService::class);
 
             $instances = $cyrisma->getAllInstances();
             $instanceUrl = $this->instanceId.'.cyrisma.com';

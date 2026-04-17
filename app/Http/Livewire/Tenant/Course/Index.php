@@ -14,7 +14,7 @@ class Index extends Component
     {
         $user = auth()->user();
 
-        $courses = (new CoursesFeed($user))
+        $courses = new CoursesFeed($user)
             ->builder()
             ->orderby('name')
             ->get();

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -17,7 +19,7 @@ class GenerateRemediationButton extends Component
         return Storage::disk('armpaudits')->download($this->bodyShopViolationAudit->remediation_pdf_path);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.body-shop.generate-remediation-button');
     }

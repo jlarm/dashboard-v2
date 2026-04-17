@@ -9,6 +9,7 @@ use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 
 class UpdateCompletedAtFieldForAudits extends Command
 {
@@ -17,6 +18,7 @@ class UpdateCompletedAtFieldForAudits extends Command
      *
      * @var string
      */
+    #[Override]
     protected $signature = 'audit:update-completed-at-field {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     /**
@@ -24,6 +26,7 @@ class UpdateCompletedAtFieldForAudits extends Command
      *
      * @var string
      */
+    #[Override]
     protected $description = 'Update completed_at field for audits';
 
     /**

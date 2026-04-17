@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Store;
 
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Spatie\Browsershot\Browsershot;
@@ -247,10 +249,10 @@ class SingleOnboardingDetails extends Component
 
         return response()->streamDownload(function () use ($pdf): void {
             echo $pdf;
-        }, str_replace(' ', '-', mb_strtolower($this->store->name)).'-compliance-info-'.now()->format('m-d-y').'.pdf');
+        }, str_replace(' ', '-', mb_strtolower((string) $this->store->name)).'-compliance-info-'.now()->format('m-d-y').'.pdf');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.store.single-onboarding-details');
     }

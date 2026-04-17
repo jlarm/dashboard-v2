@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 use App\Jobs\Audit\GenerateGlbaRemediationPdfJob;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
@@ -23,7 +25,7 @@ class CompleteRemediationModal extends Modal
 
     public function generate(): void
     {
-        GenerateGlbaRemediationPdfJob::dispatch($this->glbaViolationAudit);
+        dispatch(new GenerateGlbaRemediationPdfJob($this->glbaViolationAudit));
 
         $this->close();
 
@@ -33,7 +35,7 @@ class CompleteRemediationModal extends Modal
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.finance.complete-remediation-modal');
     }

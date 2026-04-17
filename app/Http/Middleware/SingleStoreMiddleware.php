@@ -14,13 +14,13 @@ class SingleStoreMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         /** @var Collection<int, int> $scopedStoreIds */
-        $scopedStoreIds = app()->bound('scopedStoreIds') ? app('scopedStoreIds') : collect();
-        $currentStoreId = app()->bound('currentStore') ? app('currentStore') : null;
+        $scopedStoreIds = app()->bound('scopedStoreIds') ? resolve('scopedStoreIds') : collect();
+        $currentStoreId = app()->bound('currentStore') ? resolve('currentStore') : null;
 
         if ($currentStoreId !== null || $scopedStoreIds->count() <= 1) {
             return $next($request);
         }
 
-        return redirect()->route('dealer.dashboard');
+        return to_route('dealer.dashboard');
     }
 }

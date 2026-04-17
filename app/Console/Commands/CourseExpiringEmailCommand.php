@@ -8,13 +8,17 @@ use App\Models\User;
 use App\Notifications\CourseExpiredNotification;
 use App\Notifications\CourseExpiringSoonNotification;
 use App\Services\UserCourseService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
+use Override;
 
 class CourseExpiringEmailCommand extends Command
 {
+    #[Override]
     protected $signature = 'course:check-reminders {--tenants=* : The tenant(s) to run the command for. Default all.}';
+
+    #[Override]
     protected $description = 'Send notifications for courses expiring soon.';
 
     public function __construct(public UserCourseService $userCourseService)
@@ -30,13 +34,13 @@ class CourseExpiringEmailCommand extends Command
             ->values();
 
         tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
-            app(UserCourseService::class)->clearAllCaches();
+            resolve(UserCourseService::class)->clearAllCaches();
 
             User::query()->select(['id', 'name', 'email', 'department_id'])
                 ->with('roles', 'stores')
                 ->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])
                 ->get()
-                ->each(fn ($user) => $this->processUserResults($tenant, $user));
+                ->each(fn (User $user) => $this->processUserResults($tenant, $user));
         });
     }
 
@@ -47,11 +51,11 @@ class CourseExpiringEmailCommand extends Command
         $this->info($results);
 
         foreach ($results as $result) {
-            if ($result->created_at->addYear()->subDays(15)->isSameDay(Carbon::now())) {
+            if ($result->created_at->addYear()->subDays(15)->isSameDay(Date::now())) {
                 $user->notify(new CourseExpiringSoonNotification($tenant->domain, $user->name, $result->course_id, $result->created_at->addYear()));
             }
 
-            if ($result->created_at->addYear()->addDays(15)->isSameDay(Carbon::now()) || $result->created_at->addYear()->addDays(30)->isSameDay(Carbon::now())) {
+            if ($result->created_at->addYear()->addDays(15)->isSameDay(Date::now()) || $result->created_at->addYear()->addDays(30)->isSameDay(Date::now())) {
                 $user->notify(new CourseExpiredNotification($tenant->domain, $user->name, $result->course_id, $result->created_at->addYear()));
             }
         }
@@ -59,9 +63,9 @@ class CourseExpiringEmailCommand extends Command
 
     private function getExpiringCourses(User $user)
     {
-        $lastYear = Carbon::now()->subYear()->addDays(15)->format('Y-m-d');
-        $fifteenDays = Carbon::now()->subYear()->subDays(15)->format('Y-m-d');
-        $thirtyDays = Carbon::now()->subYear()->subDays(30)->format('Y-m-d');
+        $lastYear = Date::now()->subYear()->addDays(15)->format('Y-m-d');
+        $fifteenDays = Date::now()->subYear()->subDays(15)->format('Y-m-d');
+        $thirtyDays = Date::now()->subYear()->subDays(30)->format('Y-m-d');
 
         // Use UserCourseService to get the correct course IDs assigned to this user
         $courseIds = $this->userCourseService->getCourseIds($user);

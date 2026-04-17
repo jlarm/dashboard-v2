@@ -8,6 +8,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -19,6 +20,7 @@ class BodyShopAudit extends Model implements HasMedia
 {
     use InteractsWithMedia, LogsActivity;
 
+    #[Override]
     protected $guarded = [];
 
     public function store(): BelongsTo
@@ -50,6 +52,7 @@ class BodyShopAudit extends Model implements HasMedia
         return LogOptions::defaults()->logFillable();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

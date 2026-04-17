@@ -10,19 +10,23 @@ use App\Models\Dealership;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
+use Override;
 
 class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 {
-    private const SOURCE_COURSE_SLUGS = ['sexual-harassment-e', 'sexual-harassment-m'];
-    private const TARGET_EMPLOYEE_COURSE_SLUG = 'sexual-harassment-illinois';
-    private const TARGET_MANAGER_COURSE_SLUG = 'sexual-harassment-illinois-m';
-    private const TARGET_STATES = ['illinois', 'il'];
-    private const NORMALIZED_MANAGER_ROLE_NAMES = ['owner', 'gm', 'cfo', 'gsm', 'manager'];
+    private const array SOURCE_COURSE_SLUGS = ['sexual-harassment-e', 'sexual-harassment-m'];
+    private const string TARGET_EMPLOYEE_COURSE_SLUG = 'sexual-harassment-illinois';
+    private const string TARGET_MANAGER_COURSE_SLUG = 'sexual-harassment-illinois-m';
+    private const array TARGET_STATES = ['illinois', 'il'];
+    private const array NORMALIZED_MANAGER_ROLE_NAMES = ['owner', 'gm', 'cfo', 'gsm', 'manager'];
 
+    #[Override]
     protected $signature = 'courses:backfill-illinois-harassment-results
         {--tenant= : Tenant ID to run against}
         {--email= : Limit run to a specific user email}
         {--dry-run : Preview without writing course results}';
+
+    #[Override]
     protected $description = 'Backfill Illinois harassment course results from passed sexual harassment course results';
 
     public function handle(): int
@@ -187,7 +191,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
                 ->where('user_id', $user->id)
                 ->whereIn('course_id', $sourceCourseIds)
                 ->where('passed', true)
-                ->orderByDesc('updated_at')
+                ->latest('updated_at')
                 ->orderByDesc('id')
                 ->first();
 
@@ -257,7 +261,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
         ];
     }
 
-    private function resolveTargetCourseSlugForUser(User $user): ?string
+    private function resolveTargetCourseSlugForUser(User $user): string
     {
         $normalizedRoleNames = $user->roles
             ->pluck('name')

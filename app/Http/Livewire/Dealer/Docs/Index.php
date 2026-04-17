@@ -9,9 +9,11 @@ use App\Models\SharedDocument;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Index extends Component
 {
+    #[Override]
     protected $listeners = ['saved' => '$refresh'];
 
     public function download($doc)

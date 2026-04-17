@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
@@ -50,6 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
         Notifiable,
         SoftDeletes;
 
+    #[Override]
     protected $fillable = [
         'name',
         'email',
@@ -62,6 +64,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_sent_course_reminder',
         'email_verified_at',
     ];
+
+    #[Override]
     protected $hidden = [
         'password',
         'remember_token',
@@ -72,17 +76,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
-    }
-
-    /**
-     * @param  Builder<User>  $query
-     * @return Builder<User>
-     */
-    public function scopeWithoutSuperAdminsAndConsultants(Builder $query): Builder
-    {
-        return $query->whereDoesntHave('roles', function ($q): void {
-            $q->whereIn('name', ['super-admin', 'Consultant']);
-        });
     }
 
     /**
@@ -104,21 +97,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function currentStoreName(): string
     {
         return $this->currentStore()->name ?? tenant('name');
-    }
-
-    public function getPhoneNumberAttribute(): string
-    {
-        if (! $this->phone) {
-            return '';
-        }
-
-        $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-
-        if (! is_string($cleaned) || ! preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches)) {
-            return '';
-        }
-
-        return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
     }
 
     /**
@@ -209,36 +187,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(RemediationReminderPreference::class);
     }
 
-    /**
-     * @param  Builder<User>  $query
-     */
-    public function scopeUserStore(Builder $query, ?Store $store): void
-    {
-        if ($store instanceof Store) {
-            $query->whereHas('stores', function ($q) use ($store): void {
-                $q->where('store_id', $store->id);
-            });
-        }
-    }
-
-    /**
-     * @param  Builder<User>  $query
-     */
-    public function scopeCurrentUserIsManager(Builder $query, self $currentUser): void
-    {
-        if ($currentUser->hasRole('Manager') && ! $currentUser->hasRole('Qualified Individual')) {
-            $query->where('department_id', $currentUser->department_id);
-        }
-    }
-
-    /**
-     * @param  Builder<User>  $query
-     */
-    public function scopeUsersNotCompletedCourses(Builder $query, bool $showNotCompleted): void
-    {
-        $query->when($showNotCompleted, fn ($query) => $query->where('user_has_not_completed_courses', true));
-    }
-
+    #[Override]
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPassword($token));
@@ -251,7 +200,68 @@ class User extends Authenticatable implements MustVerifyEmail
             ->logExcept(['password', 'remember_token']);
     }
 
-    public function getInitialsAttribute(): string
+    public function courseOverrides(): HasMany
+    {
+        return $this->hasMany(CourseUser::class, 'user_id');
+    }
+
+    /**
+     * @param  Builder<User>  $query
+     * @return Builder<User>
+     */
+    protected function scopeWithoutSuperAdminsAndConsultants(Builder $query): Builder
+    {
+        return $query->whereDoesntHave('roles', function ($q): void {
+            $q->whereIn('name', ['super-admin', 'Consultant']);
+        });
+    }
+
+    protected function getPhoneNumberAttribute(): string
+    {
+        if (! $this->phone) {
+            return '';
+        }
+
+        $cleaned = preg_replace('/[^[:digit:]]/', '', (string) $this->phone);
+
+        if (! is_string($cleaned) || ! preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches)) {
+            return '';
+        }
+
+        return "{$matches[1]}-{$matches[2]}-{$matches[3]}";
+    }
+
+    /**
+     * @param  Builder<User>  $query
+     */
+    protected function scopeUserStore(Builder $query, ?Store $store): void
+    {
+        if ($store instanceof Store) {
+            $query->whereHas('stores', function ($q) use ($store): void {
+                $q->where('store_id', $store->id);
+            });
+        }
+    }
+
+    /**
+     * @param  Builder<User>  $query
+     */
+    protected function scopeCurrentUserIsManager(Builder $query, self $currentUser): void
+    {
+        if ($currentUser->hasRole('Manager') && ! $currentUser->hasRole('Qualified Individual')) {
+            $query->where('department_id', $currentUser->department_id);
+        }
+    }
+
+    /**
+     * @param  Builder<User>  $query
+     */
+    protected function scopeUsersNotCompletedCourses(Builder $query, bool $showNotCompleted): void
+    {
+        $query->when($showNotCompleted, fn ($query) => $query->where('user_has_not_completed_courses', true));
+    }
+
+    protected function getInitialsAttribute(): string
     {
         $segments = preg_split('/\s+/', mb_trim((string) $this->name)) ?: [];
         $segments = array_values(array_filter($segments, static fn (string $segment): bool => $segment !== ''));
@@ -271,11 +281,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $initials;
     }
 
-    public function courseOverrides(): HasMany
-    {
-        return $this->hasMany(CourseUser::class, 'user_id');
-    }
-
+    #[Override]
     protected function casts(): array
     {
         return [

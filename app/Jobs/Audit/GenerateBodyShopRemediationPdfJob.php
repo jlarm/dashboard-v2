@@ -43,11 +43,11 @@ class GenerateBodyShopRemediationPdfJob implements ShouldBeEncrypted, ShouldQueu
 
             $relativePath = 'temp/'.$fileName;
 
-            throw_unless(Storage::disk('local')->exists($relativePath), new Exception("File not found at path: {$relativePath}"));
+            throw_unless(Storage::disk('local')->exists($relativePath), Exception::class, "File not found at path: {$relativePath}");
 
             $contents = Storage::disk('local')->get($relativePath);
 
-            throw_if($contents === null, new Exception("Failed to retrieve contents from: {$relativePath}"));
+            throw_if($contents === null, Exception::class, "Failed to retrieve contents from: {$relativePath}");
 
             Storage::disk('armpaudits')->put($doPath, $contents);
 

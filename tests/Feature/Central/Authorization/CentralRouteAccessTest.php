@@ -8,7 +8,7 @@ use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
     $this->seed(RoleAndPermissionSeeder::class);
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 describe('Central Routes - Super Admin Access', function (): void {
@@ -279,7 +279,7 @@ describe('Central Routes - Unauthorized Roles', function (): void {
     it('denies access to non super-admin|Consultant roles', function (): void {
         $user = User::factory()->create();
         $user->assignRole('Manager');
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
         test()->actingAs($user)
             ->get(route('dashboard'))
@@ -289,7 +289,7 @@ describe('Central Routes - Unauthorized Roles', function (): void {
     it('denies employee access to central dashboard', function (): void {
         $user = User::factory()->create();
         $user->assignRole('Employee');
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
         test()->actingAs($user)
             ->get(route('dashboard'))

@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
@@ -43,6 +44,7 @@ class Store extends Model implements HasMedia
 
     private const GRADE_CACHE_TTL = 300;
 
+    #[Override]
     protected $fillable = [
         'name',
         'slug',
@@ -103,6 +105,8 @@ class Store extends Model implements HasMedia
         'frequency',
         'videos',
     ];
+
+    #[Override]
     protected $hidden = [
         'fi_password',
     ];
@@ -112,69 +116,6 @@ class Store extends Model implements HasMedia
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
-    }
-
-    public function getPhoneNumberAttribute(): string
-    {
-        $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-        preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
-
-        return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
-    }
-
-    public function getDealJacketGradeAttribute(): ?string
-    {
-        return $this->rememberGradeValue(
-            'deal_jacket',
-            function (): ?string {
-                $latestRating = $this->individualAudits()
-                    ->whereNotNull('rating')
-                    ->orderByDesc('audit_date')
-                    ->orderByDesc('id')
-                    ->value('rating');
-
-                if ($latestRating === null) {
-                    return null;
-                }
-
-                return $this->calculateGrade([(float) $latestRating]);
-            }
-        );
-    }
-
-    public function getOverallGradeAttribute(): ?string
-    {
-        return $this->rememberGradeValue(
-            'overall',
-            function (): ?string {
-                $latestGrades = array_values(array_filter([
-                    $this->deal_jacket_grade,
-                    $this->osha_grade,
-                    $this->glba_grade,
-                    $this->body_shop_grade,
-                ], fn (?string $grade): bool => in_array($grade, ['A', 'B', 'C', 'D', 'F'], true)));
-
-                if ($latestGrades === []) {
-                    return null;
-                }
-
-                $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
-                $total = array_reduce(
-                    $latestGrades,
-                    fn (int $carry, string $grade): int => $carry + $gradeValues[$grade],
-                    0
-                );
-                $avg = $total / count($latestGrades);
-
-                return match (true) {
-                    $avg >= 3.5 => 'A',
-                    $avg >= 2.5 => 'B',
-                    $avg >= 1.5 => 'C',
-                    $avg >= 0.5 => 'D',
-                    default => 'F',
-                };
-            }
-        );
     }
 
     public function users(): BelongsToMany
@@ -317,6 +258,70 @@ class Store extends Model implements HasMedia
         return LogOptions::defaults()->logFillable();
     }
 
+    protected function getPhoneNumberAttribute(): string
+    {
+        $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
+        preg_match('/(\d{3})(\d{3})(\d{4})/', $cleaned, $matches);
+
+        return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+    }
+
+    protected function getDealJacketGradeAttribute(): ?string
+    {
+        return $this->rememberGradeValue(
+            'deal_jacket',
+            function (): ?string {
+                $latestRating = $this->individualAudits()
+                    ->whereNotNull('rating')
+                    ->latest('audit_date')
+                    ->orderByDesc('id')
+                    ->value('rating');
+
+                if ($latestRating === null) {
+                    return null;
+                }
+
+                return $this->calculateGrade([(float) $latestRating]);
+            }
+        );
+    }
+
+    protected function getOverallGradeAttribute(): ?string
+    {
+        return $this->rememberGradeValue(
+            'overall',
+            function (): ?string {
+                $latestGrades = array_values(array_filter([
+                    $this->deal_jacket_grade,
+                    $this->osha_grade,
+                    $this->glba_grade,
+                    $this->body_shop_grade,
+                ], fn (?string $grade): bool => in_array($grade, ['A', 'B', 'C', 'D', 'F'], true)));
+
+                if ($latestGrades === []) {
+                    return null;
+                }
+
+                $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
+                $total = array_reduce(
+                    $latestGrades,
+                    fn (int $carry, string $grade): int => $carry + $gradeValues[$grade],
+                    0
+                );
+                $avg = $total / count($latestGrades);
+
+                return match (true) {
+                    $avg >= 3.5 => 'A',
+                    $avg >= 2.5 => 'B',
+                    $avg >= 1.5 => 'C',
+                    $avg >= 0.5 => 'D',
+                    default => 'F',
+                };
+            }
+        );
+    }
+
+    #[Override]
     protected function casts(): array
     {
         return [

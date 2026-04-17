@@ -27,7 +27,7 @@ class Delete extends Modal
                     ->success()
                     ->send();
 
-                redirect()->route('osha-violations.index');
+                to_route('osha-violations.index');
             }
         );
     }

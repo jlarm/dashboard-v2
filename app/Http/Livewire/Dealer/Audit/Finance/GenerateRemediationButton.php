@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit\Finance;
 
 use App\Models\Dealer\Audit\GlbaViolationAudit;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -17,7 +19,7 @@ class GenerateRemediationButton extends Component
         return Storage::disk('armpaudits')->download($this->glbaViolationAudit->remediation_pdf_path);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.finance.generate-remediation-button');
     }

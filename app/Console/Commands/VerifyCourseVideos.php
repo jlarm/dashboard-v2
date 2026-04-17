@@ -8,11 +8,16 @@ use App\Models\Course;
 use App\Models\Dealer\Course as DealerCourse;
 use App\Services\VimeoService;
 use Illuminate\Console\Command;
+use Override;
 
 class VerifyCourseVideos extends Command
 {
+    #[Override]
     protected $signature = 'courses:verify-videos {--fix : Attempt to fix issues by refreshing video data}';
+
+    #[Override]
     protected $description = 'Verify all course videos are accessible and properly configured';
+
     protected VimeoService $vimeoService;
 
     public function handle(): int
@@ -24,7 +29,7 @@ class VerifyCourseVideos extends Command
 
         // Get all courses with video IDs
         $centralCourses = Course::query()->whereNotNull('video_id')->get();
-        $dealerCourses = DealerCourse::whereNotNull('video_id')->get();
+        $dealerCourses = DealerCourse::query()->whereNotNull('video_id')->get();
 
         $allCourses = collect()
             ->concat($centralCourses)

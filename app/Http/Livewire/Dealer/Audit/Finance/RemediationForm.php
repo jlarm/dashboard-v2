@@ -41,7 +41,7 @@ class RemediationForm extends Component
 
     private function loadRemediations(): void
     {
-        $this->violationRemediations = ($this->memoizedViolations ??= $this->violations()->get())->mapWithKeys(fn ($violation) => [$violation->id => [
+        $this->violationRemediations = ($this->memoizedViolations ??= $this->violations()->get())->mapWithKeys(fn ($violation): array => [$violation->id => [
             'comment' => $violation->remediation?->comment ?? '',
             'completed' => $violation->remediation?->completed,
         ]])->toArray();

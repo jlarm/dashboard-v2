@@ -186,14 +186,14 @@ class Create extends Component
 
     private function loadQi(): void
     {
-        if ((bool) app('multipleStoresExist')) {
+        if ((bool) resolve('multipleStoresExist')) {
             $this->qi = User::query()->whereHas('roles', function ($query): void {
                 $query->where('name', 'Qualified Individual');
             })->whereHas('stores', function ($query): void {
                 $query->where('store_id', $this->store->id);
             })->value('name');
         } else {
-            $this->qi = User::role('Qualified Individual')->value('name');
+            $this->qi = User::query()->role('Qualified Individual')->value('name');
         }
 
         if (! $this->qi) {

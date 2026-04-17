@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Central\Department;
 
 use App\Models\Department;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Create extends Component
@@ -31,7 +33,7 @@ class Create extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.department.create');
     }

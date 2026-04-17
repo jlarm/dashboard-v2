@@ -9,13 +9,17 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Override;
 use Stancl\Tenancy\Concerns\HasATenantsOption;
 
 class BackupCommand extends Command
 {
     use HasATenantsOption;
 
+    #[Override]
     protected $signature = 'backups:go {--tenants=* : The tenant(s) to run the command for. Default all.}';
+
+    #[Override]
     protected $description = 'Run backup for tenant(s)';
 
     public function handle(): void

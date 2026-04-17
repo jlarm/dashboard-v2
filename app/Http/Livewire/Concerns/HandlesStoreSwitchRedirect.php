@@ -49,10 +49,10 @@ trait HandlesStoreSwitchRedirect
                 return redirect()->to($fallback);
             }
             if ($redirectSettingsRoutesToGlobal && $this->shouldRedirectSettingsToGlobal($candidate)) {
-                return redirect()->route('dealer.settings.global');
+                return to_route('dealer.settings.global');
             }
             if ($redirectGlobalSettingsRoutesToSettings && $this->isGlobalSettingsPath($candidate)) {
-                return redirect()->route('dealer.dealer.settings');
+                return to_route('dealer.dealer.settings');
             }
 
             return redirect()->to($candidate);

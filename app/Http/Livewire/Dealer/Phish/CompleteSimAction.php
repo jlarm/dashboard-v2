@@ -8,6 +8,8 @@ use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\PhishingCampaign;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -47,7 +49,7 @@ class CompleteSimAction extends Component
                 ]);
             }
 
-            return redirect()->route('dealer.phishing.index');
+            return to_route('dealer.phishing.index');
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
@@ -55,7 +57,7 @@ class CompleteSimAction extends Component
         return null;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.phish.complete-sim-action');
     }

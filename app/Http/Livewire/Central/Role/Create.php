@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Role;
 
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -35,7 +37,7 @@ class Create extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.role.create', [
             'permissions' => Permission::all(),

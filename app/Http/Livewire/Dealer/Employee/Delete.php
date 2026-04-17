@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Models\User;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -29,7 +31,7 @@ class Delete extends Modal
                 ->success()
                 ->send();
 
-            return redirect()->route('dealer.employees.index');
+            return to_route('dealer.employees.index');
         } catch (Exception $e) {
             Log::error($e->getMessage(), ['exception' => $e]);
             $this->addError('file', 'An error occurred while deleting the user.');
@@ -38,7 +40,7 @@ class Delete extends Modal
         return null;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.delete');
     }

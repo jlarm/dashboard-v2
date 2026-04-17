@@ -10,6 +10,8 @@ use App\Jobs\Audit\UploadGlbaPdfJob;
 use App\Jobs\RemediationReminderEmailJob;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -25,7 +27,7 @@ class GenerateButton extends Component
             new GenerateGlbaPdfJob($this->glbaViolationAudit),
             new UploadGlbaPdfJob($this->glbaViolationAudit),
             new RemediationReminderEmailJob(
-                tenants: (bool) app('multipleStoresExist'),
+                tenants: (bool) resolve('multipleStoresExist'),
                 store: $this->glbaViolationAudit->store,
                 audit: $this->glbaViolationAudit,
                 auditType: AuditTypes::GLBA
@@ -51,7 +53,7 @@ class GenerateButton extends Component
         $this->dispatch('pdfGenerated');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.finance.generate-button');
     }

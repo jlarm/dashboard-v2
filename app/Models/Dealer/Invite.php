@@ -8,6 +8,7 @@ use App\Models\User;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -15,6 +16,7 @@ class Invite extends Model
 {
     use LogsActivity;
 
+    #[Override]
     protected $fillable = [
         'name',
         'email',
@@ -43,6 +45,7 @@ class Invite extends Model
         return LogOptions::defaults()->logFillable();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [
@@ -52,6 +55,7 @@ class Invite extends Model
         ];
     }
 
+    #[Override]
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('F-m-Y');

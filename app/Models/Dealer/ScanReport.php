@@ -6,9 +6,11 @@ namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class ScanReport extends Model
 {
+    #[Override]
     protected $fillable = [
         'user_id',
         'store_id',

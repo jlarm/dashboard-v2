@@ -91,7 +91,7 @@ beforeEach(function (): void {
     $this->routeConsultant->givePermissionTo(['delete-stores', 'impersonate-users']);
     $this->superAdmin->givePermissionTo(['impersonate-users']);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
     $vimeoService = $this->mock(VimeoService::class);
     $vimeoService->shouldReceive('getVideo')->andReturn([
@@ -403,7 +403,7 @@ function actorForNamedRoute(object $test, IlluminateRoute $route, bool $consulta
 
 function assertResponseHealthy(string $routeName, int $status): void
 {
-    throw_if($status >= 500, new RuntimeException("{$routeName} returned server error status {$status}."));
+    throw_if($status >= 500, RuntimeException::class, "{$routeName} returned server error status {$status}.");
 
     expect($status)
         ->toBeLessThan(500);

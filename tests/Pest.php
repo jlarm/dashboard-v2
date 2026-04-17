@@ -75,10 +75,10 @@ function setupCentralDatabase(): void
 {
     // Verify we're using the testing database
     $currentDb = DB::connection()->getDatabaseName();
-    throw_if($currentDb !== 'dashboard_testing', new RuntimeException(
+    throw_if($currentDb !== 'dashboard_testing',
+        RuntimeException::class,
         "SAFETY CHECK FAILED: Tests must use 'dashboard_testing' database, currently using: {$currentDb}. ".
-        'Check your phpunit.xml configuration.'
-    ));
+        'Check your phpunit.xml configuration.');
 
     config([
         'tenancy.queue_database_creation' => false,

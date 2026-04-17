@@ -6,9 +6,11 @@ namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class VendorEmailLog extends Model
 {
+    #[Override]
     protected $fillable = [
         'vendor_form_id',
         'to',
@@ -28,6 +30,7 @@ class VendorEmailLog extends Model
         return $this->belongsTo(VendorForm::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

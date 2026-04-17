@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Docs;
 
 use App\Models\Document;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -17,7 +19,7 @@ class Download extends Component
         return Storage::disk('central-docs')->download($this->document->file_name);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.docs.download');
     }

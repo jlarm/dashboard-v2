@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit\Individual;
 
 use App\Models\Dealer\Store;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class GeneratedReportIndex extends Component
@@ -16,7 +18,7 @@ class GeneratedReportIndex extends Component
         $this->store = $this->resolveStore();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.individual.generated-report-index', [
             'individualAudits' => $this->store->individualAudits()
@@ -29,7 +31,7 @@ class GeneratedReportIndex extends Component
 
     private function resolveStore(): Store
     {
-        $currentStore = app()->bound('currentStore') ? app('currentStore') : null;
+        $currentStore = app()->bound('currentStore') ? resolve('currentStore') : null;
 
         if (is_numeric($currentStore)) {
             $store = Store::query()->find((int) $currentStore);
@@ -39,7 +41,7 @@ class GeneratedReportIndex extends Component
             }
         }
 
-        $scopedStoreIds = app()->bound('scopedStoreIds') ? app('scopedStoreIds') : collect();
+        $scopedStoreIds = app()->bound('scopedStoreIds') ? resolve('scopedStoreIds') : collect();
         $firstScopedStoreId = $scopedStoreIds->first();
 
         if (is_numeric($firstScopedStoreId)) {

@@ -13,7 +13,7 @@ use Illuminate\View\View;
 
 class CourseController extends Controller
 {
-    private const STATE_ALIASES = [
+    private const array STATE_ALIASES = [
         'al' => 'alabama',
         'ak' => 'alaska',
         'az' => 'arizona',
@@ -71,7 +71,7 @@ class CourseController extends Controller
         $replacementCourse = $this->resolveReplacementCourse($course);
 
         if ($replacementCourse instanceof Course) {
-            return redirect()->route('dealer.courses.show', $replacementCourse);
+            return to_route('dealer.courses.show', $replacementCourse);
         }
 
         return view('dealer.course.show', [
@@ -84,7 +84,7 @@ class CourseController extends Controller
         $replacementCourse = $this->resolveReplacementCourse($course);
 
         if ($replacementCourse instanceof Course) {
-            return redirect()->route('dealer.courses.quiz', $replacementCourse);
+            return to_route('dealer.courses.quiz', $replacementCourse);
         }
 
         return view('dealer.course.quiz', [
@@ -106,7 +106,7 @@ class CourseController extends Controller
             return null;
         }
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         if ($courseIds === []) {

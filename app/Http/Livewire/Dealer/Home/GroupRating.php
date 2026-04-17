@@ -10,13 +10,15 @@ use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class GroupRating extends Component
 {
-    private const GRADE_VALUES = [
+    private const array GRADE_VALUES = [
         'A' => 90,
         'B' => 80,
         'C' => 70,
@@ -128,7 +130,7 @@ class GroupRating extends Component
         return $this->calculateGrade(collect($this->bodyShopGrades));
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.home.group-rating');
     }

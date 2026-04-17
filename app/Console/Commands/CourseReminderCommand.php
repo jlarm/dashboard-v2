@@ -9,15 +9,19 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Notifications\IncompleteCoursesNotification;
 use App\Services\UserCourseService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
+use Override;
 
 class CourseReminderCommand extends Command
 {
+    #[Override]
     protected $signature = 'course:reminder {--tenants=* : The tenant(s) to run the command for. Default all.}
                                            {--debug : Enable detailed debugging output}
                                            {--test : Run in test mode without sending notifications}';
+
+    #[Override]
     protected $description = 'Notify user every 15 days until they have attempted all of their courses.';
 
     public function handle(): void
@@ -49,7 +53,7 @@ class CourseReminderCommand extends Command
             ->values();
 
         tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($debugEnabled, $isTestMode): void {
-            app(UserCourseService::class)->clearAllCaches();
+            resolve(UserCourseService::class)->clearAllCaches();
 
             $this->info("Running command for tenant: {$tenant->id}");
             if (Store::query()->count() > 1) {
@@ -93,7 +97,7 @@ class CourseReminderCommand extends Command
             $this->info('Found '.$users->count()." users for store {$store->name}");
 
             // Process each user
-            $users->each(function ($user) use ($debugEnabled, $isTestMode, $store): void {
+            $users->each(function (User $user) use ($debugEnabled, $isTestMode, $store): void {
                 $this->processUser($user, $debugEnabled, $isTestMode, $store);
             });
         }
@@ -118,7 +122,7 @@ class CourseReminderCommand extends Command
             ->with('roles', 'stores')
             ->select('id', 'name', 'email', 'created_at', 'last_sent_course_reminder', 'department_id')
             ->get()
-            ->each(function ($user) use ($debugEnabled, $isTestMode): void {
+            ->each(function (User $user) use ($debugEnabled, $isTestMode): void {
                 $this->processUser($user, $debugEnabled, $isTestMode);
             });
     }
@@ -129,7 +133,7 @@ class CourseReminderCommand extends Command
     private function processUser(User $user, bool $debugEnabled, bool $isTestMode, ?Store $store = null): void
     {
         // Get current time once to ensure consistency in comparisons
-        $now = Carbon::now();
+        $now = Date::now();
         $fifteenDaysAgo = $now->copy()->subDays(15);
 
         if ($debugEnabled) {
@@ -178,7 +182,7 @@ class CourseReminderCommand extends Command
      */
     private function getUnattemptedCoursesCount(User $user): int
     {
-        $assignedCourseIds = app(UserCourseService::class)->getCourseIds($user);
+        $assignedCourseIds = resolve(UserCourseService::class)->getCourseIds($user);
 
         if ($assignedCourseIds === []) {
             return 0;

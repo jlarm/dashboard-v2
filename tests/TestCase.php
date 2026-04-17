@@ -33,12 +33,12 @@ abstract class TestCase extends BaseTestCase
 
         // Verify we're using the testing database
         $currentDb = DB::connection()->getDatabaseName();
-        throw_if($currentDb !== 'dashboard_testing', new RuntimeException(
+        throw_if($currentDb !== 'dashboard_testing',
+            RuntimeException::class,
             "SAFETY CHECK FAILED: Tests must use 'dashboard_testing' database, currently using: {$currentDb}. ".
-            'Environment: '.env('DB_DATABASE').' | Config: '.config('database.connections.mysql.database')
-        ));
+            'Environment: '.env('DB_DATABASE').' | Config: '.config('database.connections.mysql.database'));
 
-        app(UserCourseService::class)->clearAllCaches();
+        resolve(UserCourseService::class)->clearAllCaches();
     }
 
     protected function createTenant(array $data = []): Dealership

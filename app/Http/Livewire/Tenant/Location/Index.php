@@ -8,12 +8,14 @@ use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 /**
  * @property-read Collection<int, Store> $stores
  */
 class Index extends Component
 {
+    #[Override]
     protected $listeners = ['refreshLocations' => '$refresh'];
 
     public function getStoresProperty(): Collection

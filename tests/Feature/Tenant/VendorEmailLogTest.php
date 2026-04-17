@@ -37,7 +37,7 @@ it('logs vendor notification emails to database', function (): void {
     expect(VendorEmailLog::query()->count())->toBe(0);
 
     // Dispatch the job synchronously
-    IncompleteVendorNotificationJob::dispatchSync($vendorForm);
+    dispatch_sync(new IncompleteVendorNotificationJob($vendorForm));
 
     // Check that the email log was created
     expect(VendorEmailLog::query()->count())->toBe(1);
@@ -83,7 +83,7 @@ it('stores vendor form relationship correctly', function (): void {
         'email' => 'vendor@example.com',
     ]);
 
-    IncompleteVendorNotificationJob::dispatchSync($vendorForm);
+    dispatch_sync(new IncompleteVendorNotificationJob($vendorForm));
 
     $log = VendorEmailLog::query()->first();
 
@@ -116,9 +116,9 @@ it('logs multiple emails for the same vendor form', function (): void {
     ]);
 
     // Send multiple emails
-    IncompleteVendorNotificationJob::dispatchSync($vendorForm);
-    IncompleteVendorNotificationJob::dispatchSync($vendorForm);
-    IncompleteVendorNotificationJob::dispatchSync($vendorForm);
+    dispatch_sync(new IncompleteVendorNotificationJob($vendorForm));
+    dispatch_sync(new IncompleteVendorNotificationJob($vendorForm));
+    dispatch_sync(new IncompleteVendorNotificationJob($vendorForm));
 
     expect(VendorEmailLog::query()->count())->toBe(3);
     expect($vendorForm->emailLogs->count())->toBe(3);

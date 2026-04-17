@@ -9,11 +9,13 @@ use App\Models\Dealer\Store;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 class GroupIndex extends Component
 {
     use WithPagination;
 
+    #[Override]
     protected $listeners = ['refreshDealJacketGroups' => '$refresh'];
 
     public function render(): View
@@ -40,13 +42,13 @@ class GroupIndex extends Component
 
     private function resolveStoreId(): ?int
     {
-        $currentStore = app()->bound('currentStore') ? app('currentStore') : null;
+        $currentStore = app()->bound('currentStore') ? resolve('currentStore') : null;
 
         if (is_numeric($currentStore)) {
             return (int) $currentStore;
         }
 
-        $scopedStoreIds = app()->bound('scopedStoreIds') ? app('scopedStoreIds') : collect();
+        $scopedStoreIds = app()->bound('scopedStoreIds') ? resolve('scopedStoreIds') : collect();
         $firstScopedStoreId = $scopedStoreIds->first();
 
         if (is_numeric($firstScopedStoreId)) {

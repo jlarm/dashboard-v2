@@ -7,10 +7,14 @@ namespace App\Console\Commands;
 use App\Models\Dealership;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Override;
 
 class ReportTenantSizeCommand extends Command
 {
+    #[Override]
     protected $signature = 'tenant:report-sizes';
+
+    #[Override]
     protected $description = 'Command description';
 
     public function handle(): void

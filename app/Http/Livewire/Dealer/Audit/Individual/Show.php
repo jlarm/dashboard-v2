@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit\Individual;
 
 use App\Models\Dealer\Audit\IndividualAudit;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Override;
 
 class Show extends Component
 {
@@ -14,6 +17,8 @@ class Show extends Component
     public $children;
     public $rating;
     protected $sum;
+
+    #[Override]
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function mount(): void
@@ -37,10 +42,10 @@ class Show extends Component
     {
         $this->individualAudit->delete();
 
-        return redirect()->route('dealer.audit.individual.index');
+        return to_route('dealer.audit.individual.index');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.individual.show');
     }

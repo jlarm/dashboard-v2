@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class DepartmentCompletionStats extends Component
 {
-    private const DEPARTMENTS = [
+    private const array DEPARTMENTS = [
         'all' => ['id' => null, 'name' => 'All'],
         'sales' => ['id' => 1, 'name' => 'Sales'],
         'accounting' => ['id' => 2, 'name' => 'Accounting'],
@@ -30,6 +31,8 @@ class DepartmentCompletionStats extends Component
     public ?Store $store = null;
     public bool $readyToLoad = false;
     public array $stats = [];
+
+    #[Override]
     protected $listeners = ['refreshEmployeeDetails' => 'clearCacheAndRefresh'];
 
     public function loadStats(): void
@@ -99,7 +102,7 @@ class DepartmentCompletionStats extends Component
     {
         $cacheKey = $this->getCacheKey();
 
-        return Cache::remember($cacheKey, 300, function () {
+        return Cache::remember($cacheKey, 300, function (): array {
             $oneYearAgo = now()->subYear();
             $threeYearsAgo = now()->subYears(3);
 
@@ -265,7 +268,7 @@ class DepartmentCompletionStats extends Component
                 : collect();
         }
 
-        if ((bool) app('multipleStoresExist')) {
+        if ((bool) resolve('multipleStoresExist')) {
             return $assignedStoreIds;
         }
 
@@ -284,7 +287,7 @@ class DepartmentCompletionStats extends Component
         }
 
         /** @var Collection<int, int|string> $boundStoreIds */
-        $boundStoreIds = app('scopedStoreIds');
+        $boundStoreIds = resolve('scopedStoreIds');
 
         return $boundStoreIds
             ->map(static fn ($id): int => (int) $id)

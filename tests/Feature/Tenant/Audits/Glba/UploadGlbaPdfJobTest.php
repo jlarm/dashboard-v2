@@ -25,14 +25,14 @@ beforeEach(function (): void {
 });
 
 it('throws when the pdf does not exist in local storage', function (): void {
-    expect(fn () => (new UploadGlbaPdfJob($this->audit))->handle())
+    expect(fn () => new UploadGlbaPdfJob($this->audit)->handle())
         ->toThrow(RuntimeException::class, 'GLBA PDF not found at path: /glba/audit-report.pdf');
 });
 
 it('streams the pdf to armpaudits, deletes the local file, and updates pdf_path', function (): void {
     Storage::put('/glba/audit-report.pdf', 'pdf-content');
 
-    (new UploadGlbaPdfJob($this->audit))->handle();
+    new UploadGlbaPdfJob($this->audit)->handle();
 
     $expectedPath = tenant('id').'/glba/audit-report.pdf';
 

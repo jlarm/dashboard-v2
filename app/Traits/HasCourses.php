@@ -29,7 +29,7 @@ trait HasCourses
         $this->userCourses = null;
 
         // Clear service-level caches for this user
-        app(UserCourseService::class)->clearCacheForUser($this->id);
+        resolve(UserCourseService::class)->clearCacheForUser($this->id);
 
         // Clear Laravel's attribute cache for computed attributes
         if (isset($this->attributes['total_completed_courses'])) {
@@ -40,7 +40,18 @@ trait HasCourses
         }
     }
 
-    public function getTotalCompletedCoursesAttribute(): int
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class)
+            ->withPivot(['type', 'assigned_by']);
+    }
+
+    public function results(): HasMany
+    {
+        return $this->hasMany(CourseResults::class);
+    }
+
+    protected function getTotalCompletedCoursesAttribute(): int
     {
         // If results are already loaded, use them to avoid additional query
         if ($this->relationLoaded('results')) {
@@ -73,25 +84,14 @@ trait HasCourses
             ->count('course_id');
     }
 
-    public function getTotalUserCoursesAttribute(): int
+    protected function getTotalUserCoursesAttribute(): int
     {
         return count($this->totalUserCourses());
     }
 
-    public function getUserHasNotCompletedCoursesAttribute(): bool
+    protected function getUserHasNotCompletedCoursesAttribute(): bool
     {
         return $this->total_completed_courses !== $this->total_user_courses;
-    }
-
-    public function courses(): BelongsToMany
-    {
-        return $this->belongsToMany(Course::class)
-            ->withPivot(['type', 'assigned_by']);
-    }
-
-    public function results(): HasMany
-    {
-        return $this->hasMany(CourseResults::class);
     }
 
     private function totalUserCourses(): array
@@ -101,7 +101,7 @@ trait HasCourses
                 $this->load('roles');
             }
 
-            $service = app(UserCourseService::class);
+            $service = resolve(UserCourseService::class);
             $this->userCourses = $service->getCourseIds($this);
         }
 

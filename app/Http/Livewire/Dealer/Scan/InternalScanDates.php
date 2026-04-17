@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\ScanReport;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class InternalScanDates extends Component
 {
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.scan.internal-scan-dates', [
             'scanDates' => ScanReport::query()

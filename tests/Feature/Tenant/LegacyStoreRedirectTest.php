@@ -15,7 +15,7 @@ describe('legacy store slug routes', function (): void {
     it('does not register legacy dealer.stores route names', function (): void {
         $store = Store::query()->firstOrFail();
 
-        expect(fn () => route('dealer.stores.home', $store))
+        expect(fn (): string => route('dealer.stores.home', $store))
             ->toThrow(RouteNotFoundException::class);
     });
 

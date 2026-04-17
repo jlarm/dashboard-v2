@@ -192,7 +192,7 @@ readonly class AlertCenterService
         }
 
         /** @var Collection<int, int|string> $scopedStoreIds */
-        $scopedStoreIds = app('scopedStoreIds');
+        $scopedStoreIds = resolve('scopedStoreIds');
 
         return $scopedStoreIds
             ->map(static fn ($id): int => (int) $id)

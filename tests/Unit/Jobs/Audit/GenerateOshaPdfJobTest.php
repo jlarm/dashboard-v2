@@ -15,7 +15,6 @@ function invokeResolveReferenceImages(GenerateOshaPdfJob $job, Collection $viola
 {
     $reflection = new ReflectionClass($job);
     $method = $reflection->getMethod('resolveReferenceImages');
-    $method->setAccessible(true);
 
     return $method->invoke($job, $violations);
 }
@@ -83,7 +82,6 @@ function invokeRatingMethod(GenerateOshaPdfJob $job): string
 {
     $reflection = new ReflectionClass($job);
     $method = $reflection->getMethod('rating');
-    $method->setAccessible(true);
 
     return $method->invoke($job);
 }

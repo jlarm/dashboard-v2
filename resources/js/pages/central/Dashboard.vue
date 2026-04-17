@@ -2,12 +2,75 @@
 
 import {Head} from "@inertiajs/vue3";
 import AppLayout from "@/layouts/AppLayout.vue";
+import { PaginatedResponse } from '@/types/paginator';
+import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
+import {Button} from "@/components/ui/button";
+
+type Dealership = {
+    id: string;
+    name: string;
+    domain: string | null;
+}
+
+defineProps<{
+    dealershipsCount: number;
+    dealerships?: PaginatedResponse<Dealership>;
+}>();
+
+const dealershipUrl = (domain: string | null): string | null => {
+    if (!domain) {
+        return null;
+    }
+    return `https://${domain}/dashboard`;
+};
 </script>
 
 <template>
     <Head title="Dashboard" />
 
     <AppLayout>
-        <h1>Dashboard</h1>
+        <div class="rounded-md border w-full max-w-xl mx-auto">
+            <Table>
+                <TableBody>
+                    <template v-if="!dealerships">
+                        <TableRow v-for="i in dealershipsCount" :key="i">
+                            <TableCell>
+                                <div class="bg-muted h-4 w-40 animate-pulse rounded" />
+                            </TableCell>
+                            <TableCell />
+                        </TableRow>
+                    </template>
+                    <template v-else>
+                        <TableRow v-if="dealerships.data.length === 0">
+                            <TableCell colspan="2" class="py-8 text-center text-sm text-muted-foreground">
+                                No dealerships found.
+                            </TableCell>
+                        </TableRow>
+                        <TableRow
+                            v-for="dealership in dealerships.data"
+                            :key="dealership.id"
+                        >
+                            <TableCell class="font-medium">{{ dealership.name }}</TableCell>
+                            <TableCell class="text-right">
+                                <Button
+                                    v-if="dealershipUrl(dealership.domain)"
+                                    size="sm"
+                                    variant="outline"
+                                    as-child
+                                >
+                                    <a
+                                        :href="dealershipUrl(dealership.domain) ?? undefined"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        View
+                                    </a>
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    </template>
+                </TableBody>
+            </Table>
+        </div>
     </AppLayout>
 </template>

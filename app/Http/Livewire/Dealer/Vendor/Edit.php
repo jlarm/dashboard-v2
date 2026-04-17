@@ -10,6 +10,7 @@ use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorForm;
 use Filament\Notifications\Notification;
 use Illuminate\View\View;
+use Override;
 use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class Edit extends SlideOver
@@ -17,10 +18,13 @@ class Edit extends SlideOver
     public $vendor;
     public string $name = '';
     public string $email = '';
+
+    #[Override]
     protected $listeners = [
         'refreshVendorForms' => '$refresh',
         'vendorDeleted' => 'handleVendorDeleted',
     ];
+
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|email',
@@ -37,7 +41,7 @@ class Edit extends SlideOver
 
         $vendorForm = $this->createVendorForm();
 
-        SendVendorEmailJob::dispatch($vendorForm);
+        dispatch(new SendVendorEmailJob($vendorForm));
 
         $this->reset(['name', 'email']);
 

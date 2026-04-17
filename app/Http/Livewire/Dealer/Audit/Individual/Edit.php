@@ -8,8 +8,10 @@ use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
 use App\Models\IndividualQuestions;
 use App\Models\User;
-use Carbon\Carbon;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
@@ -286,13 +288,13 @@ class Edit extends Component
 
     public function mount(): void
     {
-        $this->managers = User::role('manager')->whereDepartmentId(6)->select('id', 'name')->get();
+        $this->managers = User::query()->role('manager')->whereDepartmentId(6)->select('id', 'name')->get();
         $this->parent = $this->individualAudit->parent ?? $this->individualAudit;
         $this->draft = $this->individualAudit->draft;
-        $this->audit_date = Carbon::make($this->individualAudit->audit_date)->format('Y-m-d');
+        $this->audit_date = Date::make($this->individualAudit->audit_date)->format('Y-m-d');
         $this->customer_number = $this->individualAudit->customer_number;
         $this->customer_name = $this->individualAudit->customer_name;
-        $this->deal_jacket_date = ($this->individualAudit->deal_jacket_date) ? Carbon::make($this->individualAudit->deal_jacket_date)->format('Y-m-d') : null;
+        $this->deal_jacket_date = ($this->individualAudit->deal_jacket_date) ? Date::make($this->individualAudit->deal_jacket_date)->format('Y-m-d') : null;
         $this->manager_id = $this->individualAudit->manager_id;
         $this->mileage = $this->individualAudit->mileage;
         $this->individual_q1_answer = $this->individualAudit->individual_q1_answer;
@@ -566,13 +568,13 @@ class Edit extends Component
         }
 
         if ($exit) {
-            return redirect()->route('dealer.audit.individual.show', $parent);
+            return to_route('dealer.audit.individual.show', $parent);
         }
 
         return null;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.individual.edit', [
             'questions' => tenancy()->central(fn ($tenant) => IndividualQuestions::query()->search('question', $this->search)->get()),

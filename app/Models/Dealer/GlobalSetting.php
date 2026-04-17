@@ -6,9 +6,11 @@ namespace App\Models\Dealer;
 
 use App\Enums\ComplianceSummaryFrequency;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 class GlobalSetting extends Model
 {
+    #[Override]
     protected $fillable = [
         'phishing_active',
         'phishing_token',
@@ -18,6 +20,7 @@ class GlobalSetting extends Model
         'compliance_summary_recipients',
     ];
 
+    #[Override]
     protected function casts(): array
     {
         return [

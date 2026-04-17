@@ -8,6 +8,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -15,6 +16,7 @@ class RedFlag extends Model
 {
     use LogsActivity;
 
+    #[Override]
     protected $fillable = [
         'store_id',
         'user_id',

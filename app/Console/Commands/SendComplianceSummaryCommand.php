@@ -11,10 +11,14 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 
 class SendComplianceSummaryCommand extends Command
 {
+    #[Override]
     protected $signature = 'compliance-summary:send {--tenants=* : The tenant(s) to run for. Default all.}';
+
+    #[Override]
     protected $description = 'Send automated compliance summary emails to configured recipients.';
 
     public function handle(): void
@@ -66,6 +70,6 @@ class SendComplianceSummaryCommand extends Command
 
         $storeIds = Store::query()->pluck('id')->all();
 
-        SendComplianceSummaryJob::dispatch($storeIds, $recipientEmails, $reportPeriod);
+        dispatch(new SendComplianceSummaryJob($storeIds, $recipientEmails, $reportPeriod));
     }
 }

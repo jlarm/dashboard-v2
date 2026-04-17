@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Course;
 
 use App\Models\Course;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,7 +16,7 @@ class Index extends Component
 
     public $selectedStatus;
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.course.index', [
             'courses' => Course::query()

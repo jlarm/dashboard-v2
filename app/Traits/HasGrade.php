@@ -14,48 +14,6 @@ trait HasGrade
 
     private array $resolvedGradeValues = [];
 
-    public function getOshaGradeAttribute(): ?string
-    {
-        return $this->rememberGradeValue(
-            'osha',
-            fn () => $this->oshaViolationAudits()
-                ->whereNotNull('grade')
-                ->where('grade', '!=', 'N/A')
-                ->orderByDesc('date')
-                ->orderByDesc('id')
-                ->first()
-                ?->grade
-        );
-    }
-
-    public function getGlbaGradeAttribute(): ?string
-    {
-        return $this->rememberGradeValue(
-            'glba',
-            fn () => $this->glbaViolationAudits()
-                ->whereNotNull('grade')
-                ->where('grade', '!=', 'N/A')
-                ->orderByDesc('date')
-                ->orderByDesc('id')
-                ->first()
-                ?->grade
-        );
-    }
-
-    public function getBodyShopGradeAttribute(): ?string
-    {
-        return $this->rememberGradeValue(
-            'body_shop',
-            fn () => $this->bodyShopViolationAudits()
-                ->whereNotNull('grade')
-                ->where('grade', '!=', 'N/A')
-                ->orderByDesc('date')
-                ->orderByDesc('id')
-                ->first()
-                ?->grade
-        );
-    }
-
     public function clearGradeCache(?string $type = null): void
     {
         $types = $type ? [$type] : ['osha', 'glba', 'body_shop', 'deal_jacket', 'overall'];
@@ -94,6 +52,48 @@ trait HasGrade
             $avg >= 0 && $avg < 0.5 => 'F',
             default => 'N/A',
         };
+    }
+
+    protected function getOshaGradeAttribute(): ?string
+    {
+        return $this->rememberGradeValue(
+            'osha',
+            fn () => $this->oshaViolationAudits()
+                ->whereNotNull('grade')
+                ->where('grade', '!=', 'N/A')
+                ->orderByDesc('date')
+                ->orderByDesc('id')
+                ->first()
+                ?->grade
+        );
+    }
+
+    protected function getGlbaGradeAttribute(): ?string
+    {
+        return $this->rememberGradeValue(
+            'glba',
+            fn () => $this->glbaViolationAudits()
+                ->whereNotNull('grade')
+                ->where('grade', '!=', 'N/A')
+                ->orderByDesc('date')
+                ->orderByDesc('id')
+                ->first()
+                ?->grade
+        );
+    }
+
+    protected function getBodyShopGradeAttribute(): ?string
+    {
+        return $this->rememberGradeValue(
+            'body_shop',
+            fn () => $this->bodyShopViolationAudits()
+                ->whereNotNull('grade')
+                ->where('grade', '!=', 'N/A')
+                ->orderByDesc('date')
+                ->orderByDesc('id')
+                ->first()
+                ?->grade
+        );
     }
 
     private function getGradeCacheKey(string $type): string

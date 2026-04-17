@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Central\Department;
 
 use App\Models\Dealer\Department;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
 class Delete extends Modal
@@ -27,10 +29,10 @@ class Delete extends Modal
             ->success()
             ->send();
 
-        return redirect()->route('department.index');
+        return to_route('department.index');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.department.delete');
     }

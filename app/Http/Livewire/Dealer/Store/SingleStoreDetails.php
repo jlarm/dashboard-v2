@@ -50,10 +50,10 @@ class SingleStoreDetails extends Component
 
     public function mount(): void
     {
-        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
-            ?? Store::query()->find(app('currentStore'));
+        $this->store = (app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null)
+            ?? Store::query()->find(resolve('currentStore'));
 
-        $this->settings = app()->bound('globalSetting') ? app('globalSetting') : GlobalSetting::query()->first();
+        $this->settings = app()->bound('globalSetting') ? resolve('globalSetting') : GlobalSetting::query()->first();
 
         $this->name = $this->store->name;
         $this->address = $this->store->address;
@@ -112,7 +112,7 @@ class SingleStoreDetails extends Component
             'logo' => null,
         ]);
 
-        return redirect()->route('dealer.dealer.settings');
+        return to_route('dealer.dealer.settings');
     }
 
     public function render(): View
@@ -208,10 +208,10 @@ class SingleStoreDetails extends Component
 
     private function getRemediationReminderUsers(): array
     {
-        if ((bool) app('multipleStoresExist')) {
+        if ((bool) resolve('multipleStoresExist')) {
             $relevantUsersCollection = $this->store->users()->permission('create-users')->get(['id', 'name', 'slug'])->keyBy('id');
         } else {
-            $relevantUsersCollection = User::permission('create-users')->get(['id', 'name', 'slug'])->keyBy('id');
+            $relevantUsersCollection = User::query()->permission('create-users')->get(['id', 'name', 'slug'])->keyBy('id');
         }
 
         $userIdsForQuery = $relevantUsersCollection->keys()->all();
@@ -231,7 +231,7 @@ class SingleStoreDetails extends Component
                 }
 
                 return null;
-            })->filter()->values()->toArray())
-            ->toArray();
+            })->filter()->values()->all())
+            ->all();
     }
 }

@@ -8,10 +8,12 @@ use App\Models\Contract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Index extends Component
 {
     /** @var array<string, string> */
+    #[Override]
     protected $listeners = ['contractDeleted' => '$refresh'];
 
     public function render(): View

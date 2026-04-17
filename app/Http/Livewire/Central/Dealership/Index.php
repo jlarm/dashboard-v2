@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 class Index extends Component
 {
@@ -20,6 +21,8 @@ class Index extends Component
 
     public string $search = '';
     public int $perPage = 25;
+
+    #[Override]
     protected $listeners = [
         'refreshDealerships' => '$refresh',
         'deleteDealership' => 'deleteDealership',

@@ -16,7 +16,7 @@ trait EmployeeCourses
     {
         $this->loadCurrentUser();
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($this->user);
 
         $this->courses = Course::query()

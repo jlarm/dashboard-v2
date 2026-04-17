@@ -8,11 +8,15 @@ use App\Models\Dealership;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
+use Override;
 
 class CheckMultiStateUsersCommand extends Command
 {
+    #[Override]
     protected $signature = 'users:check-multi-state
         {--tenant= : Limit to a specific tenant ID}';
+
+    #[Override]
     protected $description = 'List users assigned to stores in more than one state across all tenants';
 
     public function handle(): int

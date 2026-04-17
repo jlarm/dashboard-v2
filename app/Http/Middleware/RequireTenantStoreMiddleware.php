@@ -15,7 +15,7 @@ class RequireTenantStoreMiddleware
     /**
      * @var array<int, string>
      */
-    private const ALLOWED_ROUTE_NAMES = [
+    private const array ALLOWED_ROUTE_NAMES = [
         'dealer.dashboard',
         'dealer.store.first',
         'dealer.logout',
@@ -45,6 +45,6 @@ class RequireTenantStoreMiddleware
             return $next($request);
         }
 
-        return redirect()->route('dealer.dashboard');
+        return to_route('dealer.dashboard');
     }
 }

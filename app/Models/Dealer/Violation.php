@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Override;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -20,6 +21,7 @@ class Violation extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
+    #[Override]
     protected $fillable = [
         'model_type',
         'model_id',
@@ -72,6 +74,7 @@ class Violation extends Model implements HasMedia
         return $this->belongsTo(GlbaViolationStatements::class, 'statement_id');
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

@@ -17,7 +17,7 @@ beforeEach(function (): void {
     $this->store = Store::query()->first();
     $this->superAdmin->stores()->attach($this->store->id);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 describe('Super Admin - Central Route Access', function (): void {

@@ -6,13 +6,15 @@ namespace App\Http\Livewire\Central\Employee;
 
 use App\Models\Dealership;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class DealershipList extends Component
 {
     public User $user;
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.employee.dealership-list', [
             'dealerships' => Dealership::query()->where('user_id', $this->user->id)->get(),

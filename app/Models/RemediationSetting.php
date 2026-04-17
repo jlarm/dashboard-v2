@@ -8,9 +8,11 @@ use App\Enums\Frequency;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class RemediationSetting extends Model
 {
+    #[Override]
     protected $fillable = [
         'store_id',
         'active',
@@ -24,6 +26,7 @@ class RemediationSetting extends Model
         return $this->belongsTo(Store::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

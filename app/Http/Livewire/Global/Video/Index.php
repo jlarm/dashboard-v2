@@ -31,7 +31,7 @@ class Index extends Component
         $videoProgressMap = [];
 
         if ($this->readyToLoad) {
-            $vimeoService = app(VimeoService::class);
+            $vimeoService = resolve(VimeoService::class);
             $videos = collect($vimeoService->getVideos());
             $categories = $vimeoService->getCategories();
 

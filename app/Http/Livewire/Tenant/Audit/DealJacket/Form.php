@@ -109,14 +109,14 @@ class Form extends Component
             'id' => $q['id'],
             'question' => $q['question'],
             'weight' => $q['weight'],
-        ])->values()->toArray();
+        ])->values()->all();
 
         $this->responses = $filtered->map(fn (array $q): array => [
             'statement' => $q['statement'],
             'answer' => null,
             'high_risk' => false,
             'comment' => null,
-        ])->values()->toArray();
+        ])->values()->all();
     }
 
     public function submit(): void
@@ -290,11 +290,11 @@ class Form extends Component
 
     private function resolveStore(): Store
     {
-        if (app()->bound('currentStoreModel') && app('currentStoreModel') instanceof Store) {
-            return app('currentStoreModel');
+        if (app()->bound('currentStoreModel') && resolve('currentStoreModel') instanceof Store) {
+            return resolve('currentStoreModel');
         }
 
-        $currentStoreId = app()->bound('currentStore') ? app('currentStore') : null;
+        $currentStoreId = app()->bound('currentStore') ? resolve('currentStore') : null;
 
         if (is_numeric($currentStoreId)) {
             $store = Store::query()->find((int) $currentStoreId);

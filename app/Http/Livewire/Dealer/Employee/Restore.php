@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Restore extends Component
@@ -24,7 +26,7 @@ class Restore extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.restore');
     }

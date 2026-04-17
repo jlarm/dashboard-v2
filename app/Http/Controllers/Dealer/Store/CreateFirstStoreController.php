@@ -15,7 +15,7 @@ class CreateFirstStoreController extends Controller
     public function __invoke(CreateFirstStoreRequest $request, StoreCreator $storeCreator): RedirectResponse
     {
         if (Store::query()->exists()) {
-            return redirect()->route('dealer.dashboard');
+            return to_route('dealer.dashboard');
         }
 
         $storeCreator->create($request->validated());
@@ -24,6 +24,6 @@ class CreateFirstStoreController extends Controller
         session()->flash('flash.title', 'Store Created');
         session()->flash('flash.message', 'Your first store has been created successfully.');
 
-        return redirect()->route('dealer.dashboard');
+        return to_route('dealer.dashboard');
     }
 }

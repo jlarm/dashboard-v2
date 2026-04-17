@@ -17,7 +17,7 @@ use Livewire\Component;
 
 class AutomatedReports extends Component
 {
-    private const AUTHORIZED_ROLES = [
+    private const array AUTHORIZED_ROLES = [
         'super-admin',
         'Consultant',
         'Owner',
@@ -27,7 +27,7 @@ class AutomatedReports extends Component
         'Qualified Individual',
     ];
 
-    private const RECIPIENT_ROLES = ['Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
+    private const array RECIPIENT_ROLES = ['Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
 
     public bool $compliance_summary_active = false;
     public string $compliance_summary_frequency = '';
@@ -111,11 +111,7 @@ class AutomatedReports extends Component
         $frequency = ComplianceSummaryFrequency::tryFrom($this->compliance_summary_frequency)
             ?? ComplianceSummaryFrequency::Monthly;
 
-        SendComplianceSummaryJob::dispatch(
-            Store::query()->pluck('id')->all(),
-            $recipientEmails,
-            $frequency->periodLabel(),
-        );
+        dispatch(new SendComplianceSummaryJob(Store::query()->pluck('id')->all(), $recipientEmails, $frequency->periodLabel()));
 
         Notification::make()
             ->title('Compliance summary queued!')

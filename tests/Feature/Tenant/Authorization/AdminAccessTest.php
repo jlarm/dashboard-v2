@@ -19,7 +19,7 @@ beforeEach(function (): void {
     $this->admin->stores()->attach($this->store->id);
     $this->admin->update(['current_store_id' => $this->store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 describe('Admin - General Access', function (): void {

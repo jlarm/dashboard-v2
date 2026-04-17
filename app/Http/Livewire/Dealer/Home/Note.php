@@ -17,13 +17,13 @@ class Note extends Component
 
     public function mount(): void
     {
-        if (app()->bound('currentStoreModel') && app('currentStoreModel') instanceof Store) {
-            $this->store = app('currentStoreModel');
+        if (app()->bound('currentStoreModel') && resolve('currentStoreModel') instanceof Store) {
+            $this->store = resolve('currentStoreModel');
         } else {
-            $currentStoreId = app('currentStore');
+            $currentStoreId = resolve('currentStore');
 
             if ($currentStoreId === null && app()->bound('accessibleStoreIds')) {
-                $accessibleStoreIds = app('accessibleStoreIds');
+                $accessibleStoreIds = resolve('accessibleStoreIds');
 
                 if ($accessibleStoreIds instanceof Collection && $accessibleStoreIds->count() === 1) {
                     $currentStoreId = (int) $accessibleStoreIds->first();

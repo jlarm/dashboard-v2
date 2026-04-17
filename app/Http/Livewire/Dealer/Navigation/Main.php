@@ -21,12 +21,12 @@ class Main extends Component
 
     public function mount(): void
     {
-        $currentStore = app()->bound('currentStoreModel') ? app('currentStoreModel') : null;
+        $currentStore = app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null;
         $this->currentStore = $currentStore instanceof Store ? $currentStore : null;
-        $this->phishingIsEnabled = (bool) ((app()->bound('globalSetting') ? app('globalSetting') : null)?->phishing_active ?? false);
-        $this->hasStores = app()->bound('storesExist') ? (bool) app('storesExist') : Store::query()->exists();
+        $this->phishingIsEnabled = (bool) ((app()->bound('globalSetting') ? resolve('globalSetting') : null)?->phishing_active ?? false);
+        $this->hasStores = app()->bound('storesExist') ? (bool) resolve('storesExist') : Store::query()->exists();
         $this->hasCurrentStore = auth()->user()?->current_store_id !== null;
-        $this->multipleScopedStores = app()->bound('scopedStoreIds') && collect(app('scopedStoreIds'))->count() > 1;
+        $this->multipleScopedStores = app()->bound('scopedStoreIds') && collect(resolve('scopedStoreIds'))->count() > 1;
 
         $this->primaryItems = $this->resolveItems($this->primaryItemDefinitions());
         $this->secondaryItems = $this->resolveItems($this->secondaryItemDefinitions());

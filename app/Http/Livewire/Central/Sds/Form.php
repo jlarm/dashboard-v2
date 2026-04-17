@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Central\Sds;
 use App\Models\Sds;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -125,7 +127,7 @@ class Form extends Component
         }
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.sds.form');
     }

@@ -65,10 +65,10 @@ it('shows employee with completed state-specific course as compliant, not missin
     app()->instance('scopedStoreIds', collect([$store->id]));
 
     // Clear singleton cache so new courses/role are picked up
-    app(UserCourseService::class)->clearAllCaches();
+    resolve(UserCourseService::class)->clearAllCaches();
 
     // Use AlertCenterService directly so only our test employee is in scope
-    $service = app(AlertCenterService::class);
+    $service = resolve(AlertCenterService::class);
     $users = $service->scopedEmployeeQuery($this->consultant)->where('users.id', $employee->id)->get();
     $summaries = $service->summarizeUsers($users);
     $summary = $summaries->get($employee->id);
@@ -78,7 +78,7 @@ it('shows employee with completed state-specific course as compliant, not missin
     expect($loadedUser->stores->pluck('state')->filter()->first())->toBe('california');
 
     // The state-specific CA course should replace the general one in the assigned course list
-    $userCourseService = app(UserCourseService::class);
+    $userCourseService = resolve(UserCourseService::class);
     $courseIds = $userCourseService->getCourseIds($loadedUser);
 
     expect($courseIds)->toContain($californiaCourse->id);

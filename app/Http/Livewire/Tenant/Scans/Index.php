@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Index extends Component
 {
@@ -30,14 +31,16 @@ class Index extends Component
     public ?Store $store = null;
     public Collection $overviewStores;
     protected ?CyrismaService $cyrisma = null;
+
+    #[Override]
     protected $listeners = ['refreshCache', 'queueReport'];
 
     public function mount(): void
     {
         $this->overviewStores = collect();
 
-        $this->store = app()->bound('currentStoreModel') ? app('currentStoreModel') : null;
-        $this->storeId = $this->store instanceof Store ? $this->store->id : (int) app('currentStore');
+        $this->store = app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null;
+        $this->storeId = $this->store instanceof Store ? $this->store->id : (int) resolve('currentStore');
 
         $scopedStoreIds = $this->resolveScopedStoreIds();
 
@@ -79,7 +82,7 @@ class Index extends Component
         }
 
         try {
-            $this->cyrisma = app(CyrismaService::class)->forStore($this->store);
+            $this->cyrisma = resolve(CyrismaService::class)->forStore($this->store);
             $this->isConfigured = $this->cyrisma->isConfigured();
             $this->hasShortName = $this->cyrisma->hasShortName();
 
@@ -141,7 +144,7 @@ class Index extends Component
 
         Log::info('queueReport: dispatching job', ['store_id' => $store->id, 'type' => $type, 'user_id' => $user->id]);
 
-        GenerateCyrismaReportJob::dispatch($store->id, $type, $user->id);
+        dispatch(new GenerateCyrismaReportJob($store->id, $type, $user->id));
 
         Log::info('queueReport: job dispatched', ['store_id' => $store->id, 'type' => $type]);
 
@@ -160,7 +163,7 @@ class Index extends Component
 
         if ($store) {
             try {
-                app(CyrismaService::class)->forStore($store)->clearCache();
+                resolve(CyrismaService::class)->forStore($store)->clearCache();
             } catch (Exception $e) {
                 Log::error('Failed to clear cache', [
                     'store_id' => $store->id,
@@ -183,7 +186,7 @@ class Index extends Component
     {
         if (app()->bound('scopedStoreIds')) {
             /** @var Collection $storeIds */
-            $storeIds = app('scopedStoreIds');
+            $storeIds = resolve('scopedStoreIds');
 
             $normalizedStoreIds = $storeIds->map(static fn ($id): int => (int) $id)->values();
 

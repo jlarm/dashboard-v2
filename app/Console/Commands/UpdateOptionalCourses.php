@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Models\Course;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 
 class UpdateOptionalCourses extends Command
 {
@@ -15,6 +16,7 @@ class UpdateOptionalCourses extends Command
      *
      * @var string
      */
+    #[Override]
     protected $signature = 'courses:update-optional {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     /**
@@ -22,6 +24,7 @@ class UpdateOptionalCourses extends Command
      *
      * @var string
      */
+    #[Override]
     protected $description = 'Command description';
 
     /**

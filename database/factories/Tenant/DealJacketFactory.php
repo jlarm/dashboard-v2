@@ -10,9 +10,11 @@ use App\Models\DealJacketQuestion;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Override;
 
 class DealJacketFactory extends Factory
 {
+    #[Override]
     protected $model = DealJacket::class;
 
     public function definition(): array

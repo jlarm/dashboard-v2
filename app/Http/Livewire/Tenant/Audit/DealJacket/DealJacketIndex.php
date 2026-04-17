@@ -7,10 +7,13 @@ namespace App\Http\Livewire\Tenant\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class DealJacketIndex extends Component
 {
     public DealJacketGroup $dealJacketGroup;
+
+    #[Override]
     protected $listeners = ['refreshDealJackets' => '$refresh'];
 
     public function render(): View

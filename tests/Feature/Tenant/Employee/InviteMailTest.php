@@ -24,7 +24,7 @@ it('renders invite email with the tenant domain registration link', function ():
         'courses' => [],
     ]);
 
-    $rendered = (new InviteMail($invite))->render();
+    $rendered = new InviteMail($invite)->render();
 
     expect($rendered)->toContain('https://test-tenant.localhost/invite_registration/'.$invite->invitation_token);
 });

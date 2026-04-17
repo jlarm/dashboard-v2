@@ -63,7 +63,7 @@ class DealJacketStats extends Component
 
         abort_unless($user instanceof User, 403);
 
-        GenerateDealJacketReportJob::dispatchSync($dealJacketGroup, $user);
+        dispatch_sync(new GenerateDealJacketReportJob($dealJacketGroup, $user));
 
         $fileName = $this->buildReportFileName($dealJacketGroup);
         $filePath = "deal-jacket-reports/{$fileName}";

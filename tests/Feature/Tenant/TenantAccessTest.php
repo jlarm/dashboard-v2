@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 
 it('returns 404 when accessing a soft-deleted tenant domain', function (): void {
     tenancy()->end();
@@ -16,7 +16,7 @@ it('returns 404 when accessing a soft-deleted tenant domain', function (): void 
 it('returns 503 with tenant-suspended view when tenant is suspended', function (): void {
     tenancy()->end();
 
-    $this->tenant->update(['suspended_at' => Carbon::now()]);
+    $this->tenant->update(['suspended_at' => Date::now()]);
 
     $this->get('/')
         ->assertStatus(503)

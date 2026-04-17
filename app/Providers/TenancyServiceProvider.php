@@ -10,6 +10,7 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Override;
 use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Events\BootstrappingTenancy;
 use Stancl\Tenancy\Events\CreatingDomain;
@@ -129,6 +130,7 @@ class TenancyServiceProvider extends ServiceProvider
         ];
     }
 
+    #[Override]
     public function register(): void
     {
         //

@@ -10,10 +10,13 @@ use App\Models\Dealer\Store;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Index extends Component
 {
     public ?Store $store = null;
+
+    #[Override]
     protected $listeners = [
         'refreshAudits' => '$refresh',
     ];
@@ -21,7 +24,7 @@ class Index extends Component
     public function mount(): void
     {
         /** @var Store|null $currentStore */
-        $currentStore = app()->bound('currentStoreModel') ? app('currentStoreModel') : null;
+        $currentStore = app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null;
         $this->store = $currentStore;
     }
 
@@ -91,8 +94,8 @@ class Index extends Component
 
         return [
             'labels' => $sorted->map(fn ($item) => $item['date']->format('M \'y'))->toArray(),
-            'gradesNumeric' => $sorted->map(fn ($item): int => $gradeMap[mb_strtoupper((string) $item['grade'])] ?? 0)->toArray(),
-            'gradesLetters' => $sorted->map(fn ($item): string => mb_strtoupper((string) $item['grade']))->toArray(),
+            'gradesNumeric' => $sorted->map(fn ($item): int => $gradeMap[mb_strtoupper((string) $item['grade'])] ?? 0)->all(),
+            'gradesLetters' => $sorted->map(fn ($item): string => mb_strtoupper((string) $item['grade']))->all(),
             'violations' => $sorted->map(fn ($item) => $item['violations'])->toArray(),
             'remediations' => $sorted->map(fn ($item) => $item['remediations'])->toArray(),
         ];
@@ -101,7 +104,7 @@ class Index extends Component
     private function resolveScopedStoreIds(): Collection
     {
         /** @var Collection $storeIds */
-        $storeIds = app('scopedStoreIds');
+        $storeIds = resolve('scopedStoreIds');
 
         return $storeIds;
     }

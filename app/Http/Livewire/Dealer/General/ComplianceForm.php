@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\General;
 
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class ComplianceForm extends Component
@@ -170,7 +172,7 @@ class ComplianceForm extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.general.compliance-form');
     }

@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\Vendor;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class StoreIndexItem extends Component
@@ -43,7 +45,7 @@ class StoreIndexItem extends Component
         ]);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.vendor.store-index-item');
     }

@@ -9,7 +9,7 @@ use App\Models\User;
 
 class CyrismaPolicy
 {
-    private const VIEW_ROLES = [
+    private const array VIEW_ROLES = [
         'super-admin',
         'Consultant',
         'Owner',
@@ -20,7 +20,7 @@ class CyrismaPolicy
         'Manager',
     ];
 
-    private const MUTATION_ROLES = [
+    private const array MUTATION_ROLES = [
         'super-admin',
         'Consultant',
     ];

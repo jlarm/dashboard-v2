@@ -26,7 +26,7 @@ class RequestForm extends Modal
         $user = auth()->user();
         $tenantName = tenant('name');
 
-        $superAdmins = User::role('super-admin')->pluck('email')->toArray();
+        $superAdmins = User::query()->role('super-admin')->pluck('email')->toArray();
 
         foreach ($superAdmins as $superAdmin) {
             Mail::raw($this->buildEmailContent($user, $tenantName), static function ($message) use ($superAdmin): void {

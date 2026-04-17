@@ -11,6 +11,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class IndexItem extends Component
 {
@@ -19,9 +20,12 @@ class IndexItem extends Component
     public bool $remediations;
     public bool $editingGrade = false;
     public string $grade = '';
+
+    #[Override]
     protected $listeners = [
         'pdfGenerated' => '$refresh',
     ];
+
     protected $rules = [
         'grade' => 'required|in:A,B,C,D,F',
     ];
@@ -30,7 +34,7 @@ class IndexItem extends Component
 
     public function mount(): void
     {
-        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
+        $this->store = (app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null)
             ?? $this->glbaViolationAudit->store()->firstOrFail();
         $this->remediations = (bool) $this->store->remediations;
         $this->grade = $this->glbaViolationAudit->grade ?? '';

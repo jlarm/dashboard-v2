@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Override;
 
 /**
  * @property int $total_passed
@@ -22,6 +23,7 @@ class DealJacketGroup extends Model
 {
     use HasFactory;
 
+    #[Override]
     protected $fillable = [
         'uuid',
         'store_id',
@@ -38,7 +40,12 @@ class DealJacketGroup extends Model
         return $this->hasMany(DealJacket::class);
     }
 
-    public function getPassRateAttribute(): ?float
+    protected static function newFactory(): DealJacketGroupFactory
+    {
+        return DealJacketGroupFactory::new();
+    }
+
+    protected function getPassRateAttribute(): ?float
     {
         $total = $this->total_passed + $this->total_failed;
 
@@ -47,11 +54,7 @@ class DealJacketGroup extends Model
             : null;
     }
 
-    protected static function newFactory(): DealJacketGroupFactory
-    {
-        return DealJacketGroupFactory::new();
-    }
-
+    #[Override]
     protected function casts(): array
     {
         return [

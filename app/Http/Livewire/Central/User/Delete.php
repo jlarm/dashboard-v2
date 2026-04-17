@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Central\User;
 use App\Models\User;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -38,7 +40,7 @@ class Delete extends Modal
         }
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.user.delete');
     }

@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Dealer\Settings;
 use App\Mail\ComplianceFormMail;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Livewire\Component;
@@ -30,7 +32,7 @@ class SendComplianceEmailLink extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.settings.send-compliance-email-link');
     }

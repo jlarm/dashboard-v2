@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Dealer\Violation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -16,6 +17,7 @@ class Remediation extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
+    #[Override]
     protected $fillable = [
         'violation_id',
         'user_id',
@@ -42,6 +44,7 @@ class Remediation extends Model implements HasMedia
             ->height(400);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

@@ -25,14 +25,14 @@ beforeEach(function (): void {
 });
 
 it('throws when the pdf does not exist in local storage', function (): void {
-    expect(fn () => (new UploadBodyShopPdfJob($this->audit))->handle())
+    expect(fn () => new UploadBodyShopPdfJob($this->audit)->handle())
         ->toThrow(RuntimeException::class, 'Body Shop PDF not found at path: /bodyshop/audit-report.pdf');
 });
 
 it('streams the pdf to armpaudits, deletes the local file, and updates pdf_path', function (): void {
     Storage::put('/bodyshop/audit-report.pdf', 'pdf-content');
 
-    (new UploadBodyShopPdfJob($this->audit))->handle();
+    new UploadBodyShopPdfJob($this->audit)->handle();
 
     $expectedPath = tenant('id').'/bodyshop/audit-report.pdf';
 

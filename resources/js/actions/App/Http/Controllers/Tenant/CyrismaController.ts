@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:16
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
 * @route '/scans/settings'
 */
 export const settings = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ settings.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:16
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
 * @route '/scans/settings'
 */
 settings.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ settings.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:16
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
 * @route '/scans/settings'
 */
 settings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ settings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:16
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
 * @route '/scans/settings'
 */
 settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:16
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
 * @route '/scans/settings'
 */
 const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:16
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
 * @route '/scans/settings'
 */
 settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:16
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
 * @route '/scans/settings'
 */
 settingsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

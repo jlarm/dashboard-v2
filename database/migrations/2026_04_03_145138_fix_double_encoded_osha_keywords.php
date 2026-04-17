@@ -13,7 +13,7 @@ return new class extends Migration
             ->whereNotNull('keywords')
             ->orderBy('id')
             ->each(function (object $row): void {
-                $step1 = json_decode($row->keywords);
+                $step1 = json_decode((string) $row->keywords);
 
                 if (! is_string($step1)) {
                     return;

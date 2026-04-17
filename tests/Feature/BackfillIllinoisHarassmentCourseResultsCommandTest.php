@@ -6,8 +6,8 @@ use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Store;
 use App\Models\User;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Date;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -22,7 +22,7 @@ afterEach(function (): void {
 });
 
 it('backfills illinois course results from passed sexual-harassment-e results', function (): void {
-    $sourceTimestamp = Carbon::parse('2026-01-10 09:15:00');
+    $sourceTimestamp = Date::parse('2026-01-10 09:15:00');
 
     $this->tenant->run(function () use ($sourceTimestamp): void {
         $sourceCourse = Course::query()->create([

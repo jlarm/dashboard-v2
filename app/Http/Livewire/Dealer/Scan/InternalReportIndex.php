@@ -7,15 +7,17 @@ namespace App\Http\Livewire\Dealer\Scan;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class InternalReportIndex extends Component
 {
     public Store $store;
 
-    public function render()
+    public function render(): Factory|View
     {
-        if ((bool) app('multipleStoresExist')) {
+        if ((bool) resolve('multipleStoresExist')) {
             return view('livewire.dealer.scan.internal-report-index', [
                 'reports' => ScanReport::query()->where('scan_type', 'internal')
                     ->where('store_id', $this->store->id)

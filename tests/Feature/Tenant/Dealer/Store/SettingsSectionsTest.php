@@ -43,7 +43,7 @@ it('renders the reset courses settings page for authorized users', function (): 
     $superAdmin->assignRole('super-admin');
     $superAdmin->stores()->sync([$store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
     $this->actingAs($superAdmin)
         ->get(route('dealer.dealer.settings.reset-courses'))
@@ -64,7 +64,7 @@ it('renders the ridgeback settings page for authorized users', function (): void
     $superAdmin->assignRole('super-admin');
     $superAdmin->stores()->sync([$store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
     $this->actingAs($superAdmin)
         ->get(route('dealer.dealer.settings.ridgeback'))
@@ -85,7 +85,7 @@ it('forbids the ridgeback settings page for users without dealership creation ac
     $qualifiedIndividual->assignRole('Qualified Individual');
     $qualifiedIndividual->stores()->sync([$store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
     $this->actingAs($qualifiedIndividual)
         ->get(route('dealer.dealer.settings.ridgeback'))
@@ -104,7 +104,7 @@ it('forbids the reset courses settings page for users without dealership creatio
     $qualifiedIndividual->assignRole('Qualified Individual');
     $qualifiedIndividual->stores()->sync([$store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
     $this->actingAs($qualifiedIndividual)
         ->get(route('dealer.dealer.settings.reset-courses'))

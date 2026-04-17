@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Override;
 
 /**
  * @property array|null $product_identification_numbers
@@ -16,6 +17,7 @@ class Sds extends Model
 {
     use HasFactory;
 
+    #[Override]
     protected $fillable = [
         'uuid',
         'name',
@@ -29,6 +31,7 @@ class Sds extends Model
         'file_name',
     ];
 
+    #[Override]
     protected static function boot(): void
     {
         parent::boot();
@@ -38,6 +41,7 @@ class Sds extends Model
         });
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

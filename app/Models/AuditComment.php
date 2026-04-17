@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Override;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -15,6 +16,7 @@ class AuditComment extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
+    #[Override]
     protected $fillable = [
         'user_id',
         'auditable_id',

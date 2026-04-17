@@ -29,7 +29,7 @@ beforeEach(function (): void {
     $this->storeManager->assignRole('Manager');
     $this->storeManager->stores()->attach($this->assignedStore->id);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 describe('Store Access Control', function (): void {

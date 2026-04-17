@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Redirector as LivewireRedirector;
+use Override;
 
 /**
  * @property-read Collection<int, Store> $stores
@@ -24,6 +25,8 @@ class StoreSwitcher extends Component
 
     public ?int $currentStoreId = null;
     public ?string $currentStoreName = null;
+
+    #[Override]
     protected $listeners = ['refreshStores' => '$refresh'];
 
     public function mount(): void

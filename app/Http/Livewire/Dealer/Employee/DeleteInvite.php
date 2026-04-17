@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Employee;
 
 use App\Models\Dealer\Invite;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
 class DeleteInvite extends Modal
@@ -36,7 +38,7 @@ class DeleteInvite extends Modal
         $this->close();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.delete-invite');
     }

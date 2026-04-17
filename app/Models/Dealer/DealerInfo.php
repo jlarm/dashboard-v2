@@ -7,9 +7,11 @@ namespace App\Models\Dealer;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class DealerInfo extends Model
 {
+    #[Override]
     protected $fillable = [
         'store_id',
         'firewall_company',
@@ -39,6 +41,7 @@ class DealerInfo extends Model
         return $this->belongsTo(Store::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

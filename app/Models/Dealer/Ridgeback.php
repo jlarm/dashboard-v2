@@ -6,9 +6,11 @@ namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class Ridgeback extends Model
 {
+    #[Override]
     protected $fillable = [
         'store_id',
         'ip_address',
@@ -20,6 +22,7 @@ class Ridgeback extends Model
         return $this->belongsTo(Store::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

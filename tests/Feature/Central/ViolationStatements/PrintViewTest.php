@@ -43,5 +43,5 @@ it('renders statements in alphabetical order', function (): void {
         ->assertSee('Alpha violation statement here');
 
     $rendered = $view->lastRenderedDom ?? $view->payload['effects']['html'] ?? '';
-    expect(mb_strpos($rendered, 'Alpha violation'))->toBeLessThan(mb_strpos($rendered, 'Zebra violation'));
+    expect(mb_strpos((string) $rendered, 'Alpha violation'))->toBeLessThan(mb_strpos((string) $rendered, 'Zebra violation'));
 });

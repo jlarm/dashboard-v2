@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 /**
  * @property-read Builder $invites
@@ -28,6 +29,8 @@ class OpenInvites extends Component
     public $selectPage = false;
     public $selectAll = false;
     public $selected = [];
+
+    #[Override]
     protected $listeners = ['refreshOpenInvites' => '$refresh'];
 
     public function sendInvite($inviteId): void
@@ -147,7 +150,7 @@ class OpenInvites extends Component
             ->with(['user', 'store'])
             ->orderByDesc('created_at');
 
-        if (! app('multipleStoresExist')) {
+        if (! resolve('multipleStoresExist')) {
             return $query;
         }
 
@@ -176,7 +179,7 @@ class OpenInvites extends Component
 
     private function dispatchInvite($invite): void
     {
-        SendQueueEmailJob::dispatch($invite);
+        dispatch(new SendQueueEmailJob($invite));
         $invite->touch();
     }
 
@@ -224,7 +227,7 @@ class OpenInvites extends Component
     {
         if (app()->bound('scopedStoreIds')) {
             /** @var Collection $scopedStoreIds */
-            $scopedStoreIds = app('scopedStoreIds');
+            $scopedStoreIds = resolve('scopedStoreIds');
 
             $normalizedScopedStoreIds = $scopedStoreIds->map(static fn ($id): int => (int) $id)->values();
 

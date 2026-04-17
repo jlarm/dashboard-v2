@@ -9,10 +9,13 @@ use App\Models\User;
 use App\Services\UserCourseService;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class CourseResults extends Component
 {
     public User $user;
+
+    #[Override]
     protected $listeners = ['refreshEmployeeDetails' => 'refreshDetails'];
 
     public function refreshDetails(): void
@@ -23,9 +26,9 @@ class CourseResults extends Component
 
     public function render(): View
     {
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courses = $service->getCoursesWithResults($this->user);
-        $store = Store::query()->find((int) app('currentStore')) ?? Store::query()->first();
+        $store = Store::query()->find((int) resolve('currentStore')) ?? Store::query()->first();
 
         return view('livewire.dealer.employee.course-results', [
             'courses' => $courses,

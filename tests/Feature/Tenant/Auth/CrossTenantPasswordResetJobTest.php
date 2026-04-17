@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Jobs\CrossTenantPasswordResetJob;
 use App\Notifications\TenantResetPasswordNotification;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -15,7 +15,7 @@ it('sends a TenantResetPasswordNotification to a matching tenant user', function
     // The job runs from central context — end tenancy before dispatching.
     tenancy()->end();
 
-    CrossTenantPasswordResetJob::dispatchSync($this->consultant->email);
+    dispatch_sync(new CrossTenantPasswordResetJob($this->consultant->email));
 
     Notification::assertSentTo($this->consultant, TenantResetPasswordNotification::class);
 });
@@ -25,7 +25,7 @@ it('includes a correctly formatted reset URL in the notification', function (): 
 
     tenancy()->end();
 
-    CrossTenantPasswordResetJob::dispatchSync($this->consultant->email);
+    dispatch_sync(new CrossTenantPasswordResetJob($this->consultant->email));
 
     Notification::assertSentTo(
         $this->consultant,
@@ -38,7 +38,7 @@ it('includes a correctly formatted reset URL in the notification', function (): 
             expect($action)
                 ->toContain('test-tenant.localhost')
                 ->toContain('/reset-password/')
-                ->toContain(urlencode($this->consultant->email));
+                ->toContain(urlencode((string) $this->consultant->email));
 
             return true;
         }
@@ -50,7 +50,7 @@ it('stores a hashed token in the tenant password_reset_tokens table', function (
 
     tenancy()->end();
 
-    CrossTenantPasswordResetJob::dispatchSync($this->consultant->email);
+    dispatch_sync(new CrossTenantPasswordResetJob($this->consultant->email));
 
     // Re-initialize tenancy to inspect the tenant DB.
     tenancy()->initialize($this->tenant);
@@ -68,7 +68,7 @@ it('stores a token that is not expired', function (): void {
 
     tenancy()->end();
 
-    CrossTenantPasswordResetJob::dispatchSync($this->consultant->email);
+    dispatch_sync(new CrossTenantPasswordResetJob($this->consultant->email));
 
     tenancy()->initialize($this->tenant);
 
@@ -76,7 +76,7 @@ it('stores a token that is not expired', function (): void {
         ->where('email', $this->consultant->email)
         ->first();
 
-    $createdAt = Carbon::parse($record->created_at);
+    $createdAt = Date::parse($record->created_at);
     expect($createdAt->diffInSeconds(now()))->toBeLessThan(10);
 });
 
@@ -85,7 +85,7 @@ it('does not send a notification when the email does not exist in the tenant DB'
 
     tenancy()->end();
 
-    CrossTenantPasswordResetJob::dispatchSync('nobody@example.com');
+    dispatch_sync(new CrossTenantPasswordResetJob('nobody@example.com'));
 
     Notification::assertNothingSent();
 });
@@ -96,7 +96,7 @@ it('does not send a notification for suspended dealerships', function (): void {
     $this->tenant->update(['suspended_at' => now()]);
     tenancy()->end();
 
-    CrossTenantPasswordResetJob::dispatchSync($this->consultant->email);
+    dispatch_sync(new CrossTenantPasswordResetJob($this->consultant->email));
 
     Notification::assertNothingSent();
 
@@ -109,7 +109,7 @@ it('ends tenancy after processing each tenant', function (): void {
 
     tenancy()->end();
 
-    CrossTenantPasswordResetJob::dispatchSync($this->consultant->email);
+    dispatch_sync(new CrossTenantPasswordResetJob($this->consultant->email));
 
     expect(tenancy()->initialized)->toBeFalse();
 });

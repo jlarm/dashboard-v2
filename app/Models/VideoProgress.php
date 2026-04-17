@@ -6,9 +6,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class VideoProgress extends Model
 {
+    #[Override]
     protected $fillable = [
         'user_id',
         'video_id',
@@ -20,6 +22,7 @@ class VideoProgress extends Model
         return $this->belongsTo(User::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

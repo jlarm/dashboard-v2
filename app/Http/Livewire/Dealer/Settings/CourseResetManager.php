@@ -95,7 +95,7 @@ class CourseResetManager extends Component
 
         $this->askForConfirmation(
             callback: function () use ($selectedUserIds): void {
-                $affectedUserIds = app(CourseResetService::class)->reset(
+                $affectedUserIds = resolve(CourseResetService::class)->reset(
                     store: $this->resolvedStore(),
                     selectedUserIds: $selectedUserIds
                 );
@@ -103,10 +103,7 @@ class CourseResetManager extends Component
                 $this->logCourseReset($selectedUserIds, $affectedUserIds);
 
                 if ($affectedUserIds->isNotEmpty()) {
-                    SendCoursesResetNotifications::dispatch(
-                        $affectedUserIds,
-                        tenant()->name
-                    );
+                    dispatch(new SendCoursesResetNotifications($affectedUserIds, tenant()->name));
                 }
 
                 Notification::make()

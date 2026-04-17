@@ -16,6 +16,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Override;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 use WireElements\Pro\Concerns\InteractsWithConfirmationModal;
 
@@ -31,12 +32,15 @@ class Edit extends Component
     public $violationStatements = [];
     public bool $hasInvalidViolations = false;
     public OshaViolationAudit $oshaViolationAudit;
+
+    #[Override]
     protected $listeners = [
         'commentAdded' => 'refreshComments',
         'commentDeleted' => 'refreshComments',
         'commentUpdated' => 'refreshComments',
         'violationSelected',
     ];
+
     protected $rules = [
         'violations.*.comment' => 'required',
         'violations.*.violation_date' => 'nullable|date',

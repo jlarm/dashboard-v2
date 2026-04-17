@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Central\Role;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Spatie\Permission\Models\Role;
 use WireElements\Pro\Components\Modal\Modal;
 
@@ -23,7 +25,7 @@ class Delete extends Modal
         $this->close();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.role.delete');
     }

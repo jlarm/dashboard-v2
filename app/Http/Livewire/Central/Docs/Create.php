@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Central\Docs;
 use App\Models\Document;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -55,7 +57,7 @@ class Create extends Component
                 // Attempt to upload the file
                 $filePath = Storage::disk('central-docs')->putFileAs('/', $this->file, $fileName);
 
-                throw_unless($filePath, new Exception('File upload failed. Please try again.'));
+                throw_unless($filePath, Exception::class, 'File upload failed. Please try again.');
             }
 
             // Create the Document record in the database
@@ -102,7 +104,7 @@ class Create extends Component
         }
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.docs.create');
     }

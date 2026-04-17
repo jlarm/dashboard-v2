@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 class Event extends Model
 {
+    #[Override]
     protected $fillable = [
         'name',
         'start_date',
@@ -20,6 +22,7 @@ class Event extends Model
         'link',
     ];
 
+    #[Override]
     protected function casts(): array
     {
         return [

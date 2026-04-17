@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Dealer\Scan;
 use App\Models\Dealer\ScanSetting;
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -25,14 +27,14 @@ class Settings extends Component
 
     public function mount(): void
     {
-        $this->store = Store::query()->find(app('currentStore'));
+        $this->store = Store::query()->find(resolve('currentStore'));
         $this->scan = ScanSetting::query()->find($this->store->id);
         $this->name = $this->scan->name ?? '';
         $this->internalId = $this->scan->internal_id ?? '';
         $this->externalId = $this->scan->external_id ?? '';
     }
 
-    public function update()
+    public function update(): Redirector|RedirectResponse
     {
         $this->validate();
 

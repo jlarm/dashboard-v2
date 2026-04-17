@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Central\Contracts;
 
 use App\Models\Contract;
 use App\Notifications\ContractPdfNotification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 
@@ -35,7 +37,7 @@ class SendContractPdf extends Component
         $this->dispatch('contractUpdated');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.contracts.send-contract-pdf');
     }

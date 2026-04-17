@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CyrismaReportController
 {
-    private const REPORT_TYPES = ['executive', 'technical'];
+    private const array REPORT_TYPES = ['executive', 'technical'];
 
     public function download(): Response|StreamedResponse
     {
@@ -24,7 +24,7 @@ class CyrismaReportController
 
         abort_unless($store instanceof Store, 404);
 
-        $cyrisma = app(CyrismaService::class)->forStore($store);
+        $cyrisma = resolve(CyrismaService::class)->forStore($store);
 
         abort_if(! $cyrisma->isConfigured() || ! $cyrisma->hasShortName(), 404);
 
@@ -58,7 +58,7 @@ class CyrismaReportController
             return $requestStore;
         }
 
-        $currentStore = app()->bound('currentStore') ? app('currentStore') : null;
+        $currentStore = app()->bound('currentStore') ? resolve('currentStore') : null;
 
         if ($currentStore instanceof Store) {
             return $currentStore;
@@ -72,7 +72,7 @@ class CyrismaReportController
             }
         }
 
-        $scopedStoreIds = app()->bound('scopedStoreIds') ? app('scopedStoreIds') : collect();
+        $scopedStoreIds = app()->bound('scopedStoreIds') ? resolve('scopedStoreIds') : collect();
         $firstScopedStoreId = $scopedStoreIds->first();
 
         if (is_numeric($firstScopedStoreId)) {

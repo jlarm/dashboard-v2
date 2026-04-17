@@ -75,7 +75,7 @@ class TrainingCompliance extends Component
             return;
         }
 
-        $service = app(AlertCenterService::class);
+        $service = resolve(AlertCenterService::class);
         $users = $service->scopedEmployeeQuery($viewer)->get();
         $summaries = $service->summarizeUsers($users);
         $alerts = $service->buildTrainingAlerts($users, $summaries)->take(5)->values();

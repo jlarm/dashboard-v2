@@ -8,16 +8,21 @@ use App\Models\Course;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class CourseUserNotificationSent extends Model
 {
+    #[Override]
     public $timestamps = false;
+
+    #[Override]
     protected $fillable = [
         'user_id',
         'course_id',
         'sent',
     ];
 
+    #[Override]
     protected function casts(): array
     {
         return [

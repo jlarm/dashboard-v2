@@ -11,16 +11,21 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Override;
 
 class ImportSdsCommand extends Command
 {
     public int $chunkSize;
+
+    #[Override]
     protected $signature = 'import:sds
         {--file= : Path to JSON file (defaults to database/seeders/data/data.json)}
         {--chunkSize=500 : Number of records per chunk}
         {--skip-duplicates : Skip duplicate records instead of failing}
         {--update-duplicates : Update existing records instead of skipping}
         {--dry-run : Preview import without making changes}';
+
+    #[Override]
     protected $description = 'Import SDS data from json file';
 
     public function handle(): int
@@ -57,9 +62,9 @@ class ImportSdsCommand extends Command
     {
         $filePath = $this->getFilePath();
 
-        throw_unless(file_exists($filePath), new InvalidArgumentException("File not found: {$filePath}"));
+        throw_unless(file_exists($filePath), InvalidArgumentException::class, "File not found: {$filePath}");
 
-        throw_if(filesize($filePath) === 0, new InvalidArgumentException("File is empty: {$filePath}"));
+        throw_if(filesize($filePath) === 0, InvalidArgumentException::class, "File is empty: {$filePath}");
 
         $this->info("Using file: {$filePath}");
     }
@@ -67,14 +72,14 @@ class ImportSdsCommand extends Command
     private function validateRecord(array $record, int $index): array
     {
         $validator = Validator::make($record, [
-            'name' => 'required|string|max:255',
-            'manufacturer' => 'required|string|max:255',
-            'keywords' => 'nullable|array',
-            'keywords.*' => 'string',
-            'filename' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
+            'manufacturer' => ['required', 'string', 'max:255'],
+            'keywords' => ['nullable', 'array'],
+            'keywords.*' => ['string'],
+            'filename' => ['required', 'string', 'max:255'],
         ]);
 
-        throw_if($validator->fails(), new InvalidArgumentException("Record {$index}: ".$validator->errors()->first()));
+        throw_if($validator->fails(), InvalidArgumentException::class, "Record {$index}: ".$validator->errors()->first());
 
         return $validator->validated();
     }
@@ -84,13 +89,13 @@ class ImportSdsCommand extends Command
         $filePath = $this->getFilePath();
         $content = file_get_contents($filePath);
 
-        throw_if($content === false, new InvalidArgumentException("Failed to read file: {$filePath}"));
+        throw_if($content === false, InvalidArgumentException::class, "Failed to read file: {$filePath}");
 
         $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
-        throw_if(json_last_error() !== JSON_ERROR_NONE, new InvalidArgumentException('Invalid JSON: '.json_last_error_msg()));
+        throw_if(json_last_error() !== JSON_ERROR_NONE, InvalidArgumentException::class, 'Invalid JSON: '.json_last_error_msg());
 
-        throw_unless(is_array($data), new InvalidArgumentException('JSON must contain an array'));
+        throw_unless(is_array($data), InvalidArgumentException::class, 'JSON must contain an array');
 
         if (isset($data['pdfs']) && is_array($data['pdfs'])) {
             $records = $data['pdfs'];
@@ -209,7 +214,7 @@ class ImportSdsCommand extends Command
             ->whereIn('manufacturer', $manufacturers)
             ->get(['name', 'manufacturer'])
             ->map(fn ($record): string => $record->name.'|'.$record->manufacturer)
-            ->toArray();
+            ->all();
     }
 
     private function handleDuplicates(array $records): array

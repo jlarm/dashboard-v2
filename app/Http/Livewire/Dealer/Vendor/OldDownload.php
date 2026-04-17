@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Vendor;
 
 use App\Models\Dealer\Vendor;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Spatie\Browsershot\Browsershot;
@@ -36,7 +38,7 @@ class OldDownload extends Component
         return null;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.vendor.old-download');
     }

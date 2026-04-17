@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class CveList extends Component
 {
-    private const ALL_ASSET_TYPES = ['internal', 'external_ip', 'external_web'];
+    private const array ALL_ASSET_TYPES = ['internal', 'external_ip', 'external_web'];
 
     public array $cveItems = [];
     public int $perPage = 5;
@@ -68,13 +68,13 @@ class CveList extends Component
 
     protected function loadCveData(): void
     {
-        $store = Store::query()->find(app('currentStore'));
+        $store = Store::query()->find(resolve('currentStore'));
 
         if (! $store) {
             return;
         }
 
-        $cyrisma = app(CyrismaService::class)->forStore($store);
+        $cyrisma = resolve(CyrismaService::class)->forStore($store);
 
         if ($this->assetType !== '') {
             // Use the scan-based filtering for specific asset types

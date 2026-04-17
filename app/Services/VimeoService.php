@@ -7,6 +7,7 @@ namespace App\Services;
 use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Sleep;
 use Vimeo\Exceptions\VimeoRequestException;
 use Vimeo\Vimeo;
 
@@ -139,7 +140,7 @@ class VimeoService
             Log::error("Vimeo API Error checking privacy for video {$videoId}: {$e->getMessage()}");
 
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($e);
+                resolve('sentry')->captureException($e);
             }
 
             return null;
@@ -156,14 +157,14 @@ class VimeoService
             }
 
             return array_map(
-                fn (array $video): array => $this->transformVideoData($video),
+                $this->transformVideoData(...),
                 $response['body']['data']
             );
         } catch (VimeoRequestException|Exception $e) {
             Log::error("Vimeo API Error: {$e->getMessage()}");
 
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($e);
+                resolve('sentry')->captureException($e);
             }
 
             return null;
@@ -211,7 +212,7 @@ class VimeoService
             Log::error("Vimeo API Error: {$e->getMessage()}");
 
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($e);
+                resolve('sentry')->captureException($e);
             }
 
             return [];
@@ -243,7 +244,7 @@ class VimeoService
             Log::error("Vimeo API Error for video {$videoId}: {$e->getMessage()}");
 
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($e);
+                resolve('sentry')->captureException($e);
             }
 
             return null;
@@ -271,12 +272,12 @@ class VimeoService
                 if ($attempt < $this->maxRetries) {
                     $delay = $this->retryDelayMs * $attempt;
                     Log::warning("Vimeo request failed (attempt {$attempt}/{$this->maxRetries}), retrying in {$delay}ms: {$e->getMessage()}");
-                    usleep($delay * 1000);
+                    Sleep::usleep($delay * 1000);
                 } else {
                     Log::error("Vimeo request failed after {$this->maxRetries} attempts: {$e->getMessage()}");
 
                     if (app()->bound('sentry')) {
-                        app('sentry')->captureException($e);
+                        resolve('sentry')->captureException($e);
                     }
                 }
             }

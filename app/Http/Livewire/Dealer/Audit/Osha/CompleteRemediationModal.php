@@ -24,7 +24,7 @@ class CompleteRemediationModal extends Modal
 
     public function generate(): void
     {
-        GenerateOshaRemediationPdfJob::dispatch($this->oshaViolationAudit);
+        dispatch(new GenerateOshaRemediationPdfJob($this->oshaViolationAudit));
 
         $this->close();
 

@@ -8,11 +8,13 @@ use App\Models\SharedDocument;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 class Index extends Component
 {
     use WithPagination;
 
+    #[Override]
     protected $listeners = ['deletedSharedDocument', '$refresh'];
 
     public function render(): View

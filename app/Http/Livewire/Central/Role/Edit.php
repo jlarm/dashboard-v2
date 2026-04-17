@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Central\Role;
 use App\Models\Course;
 use App\Models\Role;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 
@@ -56,7 +58,7 @@ class Edit extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.role.edit', [
             'permissions' => Permission::all(),

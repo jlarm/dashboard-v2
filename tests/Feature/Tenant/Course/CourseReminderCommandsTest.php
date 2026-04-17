@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Notifications\ExpiredCourseNotification;
 use App\Notifications\IncompleteCoursesNotification;
 use App\Services\UserCourseService;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Role;
@@ -18,7 +18,7 @@ use Spatie\Permission\Models\Role;
 use function Pest\Laravel\artisan;
 
 beforeEach(function (): void {
-    app(UserCourseService::class)->clearAllCaches();
+    resolve(UserCourseService::class)->clearAllCaches();
 
     // Ensure we have the basic roles
     Role::query()->firstOrCreate(['name' => 'Employee']);
@@ -53,7 +53,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'course_id' => $course->id,
             'passed' => true,
             'percentage' => 100,
-            'created_at' => Carbon::now()->subDays(335),
+            'created_at' => Date::now()->subDays(335),
         ]);
 
         artisan('run:course-reminder')
@@ -91,7 +91,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'course_id' => $course->id,
             'passed' => true,
             'percentage' => 100,
-            'created_at' => Carbon::now()->subDays(365),
+            'created_at' => Date::now()->subDays(365),
         ]);
 
         artisan('run:course-reminder')
@@ -129,7 +129,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'course_id' => $course->id,
             'passed' => true,
             'percentage' => 100,
-            'created_at' => Carbon::now()->subDays(395),
+            'created_at' => Date::now()->subDays(395),
         ]);
 
         artisan('run:course-reminder')
@@ -171,7 +171,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'course_id' => $managerCourse->id,
             'passed' => true,
             'percentage' => 100,
-            'created_at' => Carbon::now()->subDays(335),
+            'created_at' => Date::now()->subDays(335),
         ]);
 
         artisan('run:course-reminder')
@@ -205,14 +205,14 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'course_id' => $course->id,
             'passed' => true,
             'percentage' => 100,
-            'created_at' => Carbon::now()->subDays(335),
+            'created_at' => Date::now()->subDays(335),
         ]);
 
         // Record that notification was sent 5 days ago
         CourseUserNotificationSent::query()->create([
             'user_id' => $user->id,
             'course_id' => $course->id,
-            'sent' => Carbon::now()->subDays(5),
+            'sent' => Date::now()->subDays(5),
         ]);
 
         artisan('run:course-reminder')
@@ -240,7 +240,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
         CourseUserNotificationSent::query()->create([
             'user_id' => $user->id,
             'course_id' => $course->id,
-            'sent' => Carbon::now()->subDays(65),
+            'sent' => Date::now()->subDays(65),
         ]);
 
         expect(CourseUserNotificationSent::query()->count())->toBe(1);
@@ -345,7 +345,7 @@ describe('CourseReminderCommand', function (): void {
             'course_id' => $course->id,
             'passed' => false,
             'percentage' => 50,
-            'created_at' => Carbon::now(),
+            'created_at' => Date::now(),
         ]);
 
         artisan('course:reminder')
@@ -374,7 +374,7 @@ describe('CourseReminderCommand', function (): void {
             'name' => 'Test Employee',
             'email' => 'employee@test.com',
             'password' => bcrypt('password'),
-            'last_sent_course_reminder' => Carbon::now()->subDays(10),
+            'last_sent_course_reminder' => Date::now()->subDays(10),
         ]);
         $user->assignRole('Employee');
 
@@ -404,7 +404,7 @@ describe('CourseReminderCommand', function (): void {
             'name' => 'Test Employee',
             'email' => 'employee@test.com',
             'password' => bcrypt('password'),
-            'last_sent_course_reminder' => Carbon::now()->subDays(20),
+            'last_sent_course_reminder' => Date::now()->subDays(20),
         ]);
         $user->assignRole('Employee');
 
@@ -472,7 +472,7 @@ describe('CourseExpiringEmailCommand', function (): void {
             'course_id' => $managerCourse->id,
             'passed' => true,
             'percentage' => 100,
-            'created_at' => Carbon::now()->subYear()->addDays(15),
+            'created_at' => Date::now()->subYear()->addDays(15),
         ]);
 
         artisan('course:check-reminders')

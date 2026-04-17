@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    private const QUESTION_COUNT = 22;
+    private const int QUESTION_COUNT = 22;
 
     public Vendor $vendor;
     public string $name = '';

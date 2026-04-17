@@ -5,7 +5,9 @@ declare(strict_types=1);
 use App\Http\Middleware\StoreIdentifierMiddleware;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 describe('store identifier middleware', function (): void {
     beforeEach(function (): void {
@@ -28,13 +30,13 @@ describe('store identifier middleware', function (): void {
         $request = Request::create('/dashboard');
         $request->setUserResolver(fn () => $user);
 
-        $response = app(StoreIdentifierMiddleware::class)->handle($request, fn () => response('ok'));
+        $response = resolve(StoreIdentifierMiddleware::class)->handle($request, fn (): ResponseFactory|Response => response('ok'));
 
         expect($response->getContent())->toBe('ok');
-        expect(app('currentStore'))->toBe($store->id);
-        expect(app('currentStoreModel')?->id)->toBe($store->id);
-        expect(app('accessibleStoreIds')->all())->toBe([$store->id]);
-        expect(app('scopedStoreIds')->all())->toBe([$store->id]);
+        expect(resolve('currentStore'))->toBe($store->id);
+        expect(resolve('currentStoreModel')?->id)->toBe($store->id);
+        expect(resolve('accessibleStoreIds')->all())->toBe([$store->id]);
+        expect(resolve('scopedStoreIds')->all())->toBe([$store->id]);
     });
 
     it('binds the only store as accessible scope when current_store_id is null in a single-store tenant', function (): void {
@@ -51,13 +53,13 @@ describe('store identifier middleware', function (): void {
         $request = Request::create('/dashboard');
         $request->setUserResolver(fn () => $user);
 
-        $response = app(StoreIdentifierMiddleware::class)->handle($request, fn () => response('ok'));
+        $response = resolve(StoreIdentifierMiddleware::class)->handle($request, fn (): ResponseFactory|Response => response('ok'));
 
         expect($response->getContent())->toBe('ok');
-        expect(app('currentStore'))->toBeNull();
+        expect(resolve('currentStore'))->toBeNull();
         expect(app()->bound('currentStoreModel'))->toBeFalse();
-        expect(app('accessibleStoreIds')->all())->toBe([$store->id]);
-        expect(app('scopedStoreIds')->all())->toBe([$store->id]);
+        expect(resolve('accessibleStoreIds')->all())->toBe([$store->id]);
+        expect(resolve('scopedStoreIds')->all())->toBe([$store->id]);
     });
 
     it('auto selects the only accessible store for consultants when current_store_id is null', function (): void {
@@ -74,14 +76,14 @@ describe('store identifier middleware', function (): void {
         $request = Request::create('/dashboard');
         $request->setUserResolver(fn () => $user);
 
-        $response = app(StoreIdentifierMiddleware::class)->handle($request, fn () => response('ok'));
+        $response = resolve(StoreIdentifierMiddleware::class)->handle($request, fn (): ResponseFactory|Response => response('ok'));
 
         expect($response->getContent())->toBe('ok');
         expect($user->fresh()->current_store_id)->toBe($store->id);
-        expect(app('currentStore'))->toBe($store->id);
-        expect(app('currentStoreModel')?->id)->toBe($store->id);
-        expect(app('accessibleStoreIds')->all())->toBe([$store->id]);
-        expect(app('scopedStoreIds')->all())->toBe([$store->id]);
+        expect(resolve('currentStore'))->toBe($store->id);
+        expect(resolve('currentStoreModel')?->id)->toBe($store->id);
+        expect(resolve('accessibleStoreIds')->all())->toBe([$store->id]);
+        expect(resolve('scopedStoreIds')->all())->toBe([$store->id]);
     });
 
     it('clears invalid selected stores for non consultants even when they only have one accessible store', function (): void {
@@ -108,13 +110,13 @@ describe('store identifier middleware', function (): void {
         $request = Request::create('/dashboard');
         $request->setUserResolver(fn () => $user);
 
-        $response = app(StoreIdentifierMiddleware::class)->handle($request, fn () => response('ok'));
+        $response = resolve(StoreIdentifierMiddleware::class)->handle($request, fn (): ResponseFactory|Response => response('ok'));
 
         expect($response->getContent())->toBe('ok');
         expect($user->fresh()->current_store_id)->toBeNull();
-        expect(app('currentStore'))->toBeNull();
+        expect(resolve('currentStore'))->toBeNull();
         expect(app()->bound('currentStoreModel'))->toBeFalse();
-        expect(app('scopedStoreIds')->all())->toBe([$assignedStore->id]);
+        expect(resolve('scopedStoreIds')->all())->toBe([$assignedStore->id]);
     });
 
     it('clears invalid selected stores when user has multiple accessible stores', function (): void {
@@ -149,12 +151,12 @@ describe('store identifier middleware', function (): void {
         $request = Request::create('/dashboard');
         $request->setUserResolver(fn () => $user);
 
-        $response = app(StoreIdentifierMiddleware::class)->handle($request, fn () => response('ok'));
+        $response = resolve(StoreIdentifierMiddleware::class)->handle($request, fn (): ResponseFactory|Response => response('ok'));
 
         expect($response->getContent())->toBe('ok');
         expect($user->fresh()->current_store_id)->toBeNull();
-        expect(app('currentStore'))->toBeNull();
+        expect(resolve('currentStore'))->toBeNull();
         expect(app()->bound('currentStoreModel'))->toBeFalse();
-        expect(app('scopedStoreIds')->all())->toBe([$assignedStoreA->id, $assignedStoreB->id]);
+        expect(resolve('scopedStoreIds')->all())->toBe([$assignedStoreA->id, $assignedStoreB->id]);
     });
 });

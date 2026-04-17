@@ -9,9 +9,12 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Services\UserCourseService;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
+use Override;
 
 class AssignCustomCoursesForm extends Component
 {
@@ -21,6 +24,8 @@ class AssignCustomCoursesForm extends Component
     public $courseStates = [];
     public $defaultCourseIds = [];
     public bool $isLoaded = false;
+
+    #[Override]
     protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
 
     public function mount(): void
@@ -82,7 +87,7 @@ class AssignCustomCoursesForm extends Component
         $this->setCourseState((int) $key, $value);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.assign-custom-courses-form');
     }
@@ -125,7 +130,7 @@ class AssignCustomCoursesForm extends Component
             ->get();
 
         // Get courses that would be assigned by default using the service
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $this->defaultCourseIds = $service->getCourseIds($this->user);
 
         // Get user's custom course overrides

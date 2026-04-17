@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -15,6 +16,7 @@ class VendorForm extends Model
 {
     use LogsActivity, SoftDeletes;
 
+    #[Override]
     protected $fillable = [
         'vendor_id',
         'name',
@@ -40,6 +42,7 @@ class VendorForm extends Model
         return LogOptions::defaults()->logFillable();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

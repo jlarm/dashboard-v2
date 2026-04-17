@@ -19,7 +19,7 @@ beforeEach(function (): void {
         'campaign_created_at' => now(),
     ]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 function makeQiGroupUser(string $role, Store $store): User

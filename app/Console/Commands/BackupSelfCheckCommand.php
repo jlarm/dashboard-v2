@@ -5,23 +5,27 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Override;
 use Stancl\Tenancy\Concerns\HasATenantsOption;
 
 class BackupSelfCheckCommand extends Command
 {
     use HasATenantsOption;
 
+    #[Override]
     protected $signature = 'backups:check {--tenants=* : The tenant(s) to run the command for. Default all.} {--disk=armp-backups : Backup disk to check.}';
+
+    #[Override]
     protected $description = 'Verify each tenant has a backup in the last 24 hours';
 
     public function handle(): int
     {
         $disk = $this->option('disk');
-        $cutoff = Carbon::now()->subDay()->getTimestamp();
+        $cutoff = Date::now()->subDay()->getTimestamp();
         $failures = [];
         $checked = 0;
 

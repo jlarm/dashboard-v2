@@ -7,7 +7,7 @@ namespace Database\Factories\Central;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 /**
  * @extends Factory<Contract>
@@ -17,10 +17,10 @@ class ContractFactory extends Factory
     public function definition(): array
     {
         return [
-            'agreement_date' => Carbon::now()->subDays($this->faker->numberBetween(1, 30)),
+            'agreement_date' => Date::now()->subDays($this->faker->numberBetween(1, 30)),
             'dealer_name' => $this->faker->company(),
             'services' => $this->faker->randomElements(['Service A', 'Service B', 'Service C'], $this->faker->numberBetween(1, 3)),
-            'commence_date' => Carbon::now()->addDays($this->faker->numberBetween(1, 60)),
+            'commence_date' => Date::now()->addDays($this->faker->numberBetween(1, 60)),
             'yearly_inspection_total' => $this->faker->numberBetween(1, 100),
             'initial_fee' => $this->faker->randomFloat(2, 100, 5000),
             'monthly_fee' => $this->faker->randomFloat(2, 50, 500),

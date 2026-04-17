@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Scan;
 
 use App\Models\Dealer\Store;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
@@ -29,7 +31,7 @@ class Login extends Component
 
             Cookie::queue('sentry', $this->token, 604800);
 
-            return redirect()->route('dealer.scan.archive');
+            return to_route('dealer.scan.archive');
 
         } catch (Exception) {
             $this->addError('email', 'Invalid credentials');
@@ -38,7 +40,7 @@ class Login extends Component
         return null;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.scan.login');
     }

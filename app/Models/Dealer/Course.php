@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Role;
@@ -22,6 +23,7 @@ class Course extends Model
 {
     use LogsActivity;
 
+    #[Override]
     protected $fillable = [
         'department_id',
         'slug',
@@ -70,7 +72,7 @@ class Course extends Model
         return $this->belongsTo(CourseResults::class);
     }
 
-    public function scopeWithLastResult($query, $userId): void
+    protected function scopeWithLastResult($query, $userId): void
     {
         $query->addSelect(['last_result_id' => CourseResults::query()->select('id')
             ->whereColumn('course_id', 'courses.id')
@@ -80,6 +82,7 @@ class Course extends Model
         ])->with('lastResult');
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

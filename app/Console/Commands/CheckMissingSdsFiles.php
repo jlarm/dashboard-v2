@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Models\Sds;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Override;
 
 class CheckMissingSdsFiles extends Command
 {
@@ -15,6 +16,7 @@ class CheckMissingSdsFiles extends Command
      *
      * @var string
      */
+    #[Override]
     protected $signature = 'sds:check-missing-files {--output=missing_sds_files.txt : Output file name}';
 
     /**
@@ -22,6 +24,7 @@ class CheckMissingSdsFiles extends Command
      *
      * @var string
      */
+    #[Override]
     protected $description = 'Check for missing SDS files in storage and log them to a text file';
 
     /**

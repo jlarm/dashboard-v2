@@ -10,12 +10,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 class Index extends Component
 {
     use WithPagination;
 
     public ?Store $store = null;
+
+    #[Override]
     protected $listeners = ['refreshVendors' => '$refresh'];
 
     public function mount(): void
@@ -45,7 +48,7 @@ class Index extends Component
     {
         if (app()->bound('scopedStoreIds')) {
             /** @var Collection $storeIds */
-            $storeIds = app('scopedStoreIds');
+            $storeIds = resolve('scopedStoreIds');
 
             $normalizedStoreIds = $storeIds->map(static fn ($id): int => (int) $id)->values();
 

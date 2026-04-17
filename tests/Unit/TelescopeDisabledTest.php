@@ -18,11 +18,10 @@ it('does not include telescope tenancy features', function (): void {
 });
 
 it('does not schedule telescope pruning', function (): void {
-    $schedule = app(Schedule::class);
-    $kernel = app(Kernel::class);
+    $schedule = resolve(Schedule::class);
+    $kernel = resolve(Kernel::class);
 
     $method = new ReflectionMethod($kernel, 'schedule');
-    $method->setAccessible(true);
     $method->invoke($kernel, $schedule);
 
     $commands = collect($schedule->events())

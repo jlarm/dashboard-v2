@@ -41,7 +41,7 @@ class PasswordResetLinkController extends Controller
         Password::sendResetLink(['email' => $email]);
 
         // Search every tenant DB for this email and send a tenant-specific reset link.
-        CrossTenantPasswordResetJob::dispatch($email);
+        dispatch(new CrossTenantPasswordResetJob($email));
 
         // Always return the same response to prevent email enumeration.
         return back()->with('status', __('passwords.sent'));

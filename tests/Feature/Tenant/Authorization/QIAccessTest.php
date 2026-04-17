@@ -19,7 +19,7 @@ beforeEach(function (): void {
     $this->qi->stores()->attach($this->store->id);
     $this->qi->update(['current_store_id' => $this->store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 describe('QI - General Access', function (): void {

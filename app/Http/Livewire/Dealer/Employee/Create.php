@@ -21,7 +21,7 @@ use Spatie\Permission\Models\Role;
 
 class Create extends Component
 {
-    private const EXCLUDED_ROLES = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
+    private const array EXCLUDED_ROLES = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
 
     public string $name = '';
     public string $email = '';
@@ -90,13 +90,13 @@ class Create extends Component
             'invitation_token' => Str::random(32),
         ]);
 
-        SendQueueEmailJob::dispatch($invite);
+        dispatch(new SendQueueEmailJob($invite));
 
         session()->flash('flash.type', 'success');
         session()->flash('flash.title', 'Employee Invited');
         session()->flash('flash.message', $this->name.' has been successfully invited.');
 
-        return redirect()->route('dealer.employees.index');
+        return to_route('dealer.employees.index');
     }
 
     public function render(): View

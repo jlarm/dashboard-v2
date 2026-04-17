@@ -7,9 +7,11 @@ namespace App\Models;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class DealerDoc extends Model
 {
+    #[Override]
     protected $fillable = [
         'title',
         'store_id',

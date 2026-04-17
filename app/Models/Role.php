@@ -6,11 +6,14 @@ namespace App\Models;
 
 use App\Models\Dealer\Course;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Override;
 use Spatie\Permission\Models\Role as SpatieRole;
 
 class Role extends SpatieRole
 {
+    #[Override]
     protected $guarded = [];
+
     protected $guard_name = 'web';
 
     public function courses(): BelongsToMany

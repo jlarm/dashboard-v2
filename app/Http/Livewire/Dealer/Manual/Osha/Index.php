@@ -9,16 +9,19 @@ use App\Models\Dealer\Store;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class Index extends Component
 {
     public ?Store $store = null;
+
+    #[Override]
     protected $listeners = ['$refresh'];
 
     public function mount(): void
     {
         /** @var Store|null $currentStore */
-        $currentStore = app()->bound('currentStoreModel') ? app('currentStoreModel') : null;
+        $currentStore = app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null;
         $this->store = $currentStore;
     }
 
@@ -38,7 +41,7 @@ class Index extends Component
     {
         if (app()->bound('scopedStoreIds')) {
             /** @var Collection $storeIds */
-            $storeIds = app('scopedStoreIds');
+            $storeIds = resolve('scopedStoreIds');
 
             $normalizedStoreIds = $storeIds->map(static fn ($id): int => (int) $id)->values();
 

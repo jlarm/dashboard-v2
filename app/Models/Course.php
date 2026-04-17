@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Override;
 use Spatie\Permission\Traits\HasRoles;
 
 class Course extends Model
@@ -15,6 +16,8 @@ class Course extends Model
     use HasFactory, HasRoles;
 
     protected string $guard_name = 'web';
+
+    #[Override]
     protected $fillable = [
         'model_type',
         'department_id',
@@ -43,6 +46,7 @@ class Course extends Model
         return $this->belongsToMany(Department::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

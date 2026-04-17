@@ -8,6 +8,8 @@ use App\Models\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
 class EditCourseTaken extends Modal
@@ -42,7 +44,7 @@ class EditCourseTaken extends Modal
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.edit-course-taken');
     }

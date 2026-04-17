@@ -6,9 +6,11 @@ namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 class Cyrisma extends Model
 {
+    #[Override]
     protected $fillable = [
         'store_id',
         'short_name',
@@ -21,6 +23,7 @@ class Cyrisma extends Model
         return $this->belongsTo(Store::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

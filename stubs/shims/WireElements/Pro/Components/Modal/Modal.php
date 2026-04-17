@@ -13,17 +13,17 @@ use Livewire\Component;
  */
 abstract class Modal extends Component
 {
-    public static function behavior(): array
+    final public static function behavior(): array
     {
         return [];
     }
 
-    public function closeModal(): void
+    final public function closeModal(): void
     {
         $this->dispatch('close-modal');
     }
 
-    public function forceCloseModal(): void
+    final public function forceCloseModal(): void
     {
         $this->dispatch('close-modal');
     }

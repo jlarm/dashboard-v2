@@ -91,7 +91,7 @@ describe('employee create component', function (): void {
             ->set('department', $department->id)
             ->set('role', 'Employee')
             ->set('dealers', [(string) $storeA->id, (string) $storeB->id])
-            ->set('primaryStoreId', null)
+            ->set('primaryStoreId')
             ->call('submit')
             ->assertHasErrors(['primaryStoreId' => 'required']);
     });

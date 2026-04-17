@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Override;
 
 /**
  * @extends Factory<User>
@@ -32,6 +33,7 @@ class UserFactory extends Factory
 
     }
 
+    #[Override]
     public function configure(): Factory|self
     {
         return $this;

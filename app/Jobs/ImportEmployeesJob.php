@@ -29,11 +29,11 @@ class ImportEmployeesJob implements ShouldQueue
             foreach ($this->data as $index => $item) {
                 try {
                     $validator = Validator::make($item, [
-                        'Name' => 'required|string',
-                        'Email' => 'required|email|unique:users,email|unique:invites,email',
-                        'Stores' => 'nullable',
-                        'Department' => 'nullable',
-                        'Role' => 'nullable',
+                        'Name' => ['required', 'string'],
+                        'Email' => ['required', 'email', 'unique:users,email', 'unique:invites,email'],
+                        'Stores' => ['nullable'],
+                        'Department' => ['nullable'],
+                        'Role' => ['nullable'],
                     ]);
 
                     if ($validator->fails()) {
@@ -57,7 +57,7 @@ class ImportEmployeesJob implements ShouldQueue
                         'invitation_token' => mb_substr(md5(random_int(0, 9).$item['Email'].time()), 0, 32),
                     ]);
 
-                    SendQueueEmailJob::dispatch($invite);
+                    dispatch(new SendQueueEmailJob($invite));
                 } catch (Exception $e) {
                     $importErrors[] = [
                         'row' => $index + 1,
@@ -67,7 +67,7 @@ class ImportEmployeesJob implements ShouldQueue
                 }
             }
 
-            throw_unless($importErrors === [], new Exception('Import failed due to errors'));
+            throw_unless($importErrors === [], Exception::class, 'Import failed due to errors');
         });
     }
 

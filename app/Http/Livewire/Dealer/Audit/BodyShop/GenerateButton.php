@@ -10,6 +10,8 @@ use App\Jobs\Audit\UploadBodyShopPdfJob;
 use App\Jobs\RemediationReminderEmailJob;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -25,7 +27,7 @@ class GenerateButton extends Component
             new GenerateBodyShopPdfJob($this->bodyShopViolationAudit),
             new UploadBodyShopPdfJob($this->bodyShopViolationAudit),
             new RemediationReminderEmailJob(
-                tenants: (bool) app('multipleStoresExist'),
+                tenants: (bool) resolve('multipleStoresExist'),
                 store: $this->bodyShopViolationAudit->store,
                 audit: $this->bodyShopViolationAudit,
                 auditType: AuditTypes::BODYSHOP
@@ -51,7 +53,7 @@ class GenerateButton extends Component
         $this->dispatch('pdfGenerated');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.body-shop.generate-button');
     }

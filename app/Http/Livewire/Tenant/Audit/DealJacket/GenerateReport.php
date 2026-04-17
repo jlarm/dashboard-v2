@@ -34,7 +34,7 @@ class GenerateReport extends Modal
 
         $this->generating = true;
 
-        GenerateDealJacketReportJob::dispatch($this->dealJacketGroup, auth()->user());
+        dispatch(new GenerateDealJacketReportJob($this->dealJacketGroup, auth()->user()));
 
         $this->close();
     }

@@ -12,7 +12,7 @@ use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
     $this->seed(RoleAndPermissionSeeder::class);
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
     $this->actingAs(User::factory()->create());
 });

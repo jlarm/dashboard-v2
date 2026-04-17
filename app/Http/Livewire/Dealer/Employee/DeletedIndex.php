@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Override;
 
 class DeletedIndex extends Component
 {
@@ -16,7 +17,10 @@ class DeletedIndex extends Component
 
     public string $search = '';
     public ?Store $store = null;
+
+    #[Override]
     protected $listeners = ['refresh-deleted' => '$refresh'];
+
     protected $queryString = [
         'search' => ['except' => '', 'as' => 's'],
     ];

@@ -12,13 +12,18 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Override;
 
 class RemediationReminderCommand extends Command
 {
-    private const MAX_REMINDERS = 3;
+    private const int MAX_REMINDERS = 3;
 
+    #[Override]
     protected $signature = 'remediation:reminder  {--tenants=* : The tenant(s) to run the command for. Default all.}';
+
+    #[Override]
     protected $description = 'Command description';
+
     private array $modelTypeMap = [
         'OshaViolationAudit' => AuditTypes::OSHA,
         'BodyShopViolationAudit' => AuditTypes::BODYSHOP,

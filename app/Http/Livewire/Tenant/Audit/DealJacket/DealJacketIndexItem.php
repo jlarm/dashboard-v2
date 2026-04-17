@@ -18,7 +18,7 @@ class DealJacketIndexItem extends Component
 
     public function mount(): void
     {
-        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
+        $this->store = (app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null)
             ?? Store::query()->findOrFail($this->dealJacketGroup->store_id);
     }
 

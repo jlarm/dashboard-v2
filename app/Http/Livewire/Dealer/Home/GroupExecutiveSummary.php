@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class GroupExecutiveSummary extends Component
 {
-    private const AUTHORIZED_ROLES = ['super-admin', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
+    private const array AUTHORIZED_ROLES = ['super-admin', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
 
-    private const UNRESTRICTED_ROLES = ['super-admin'];
+    private const array UNRESTRICTED_ROLES = ['super-admin'];
 
     public function download(ComplianceSummaryPdfService $service): BinaryFileResponse
     {

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit;
 
 use App\Models\Dealer\Violation;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\Modal\Modal;
 
 class ImageModal extends Modal
@@ -24,7 +26,7 @@ class ImageModal extends Modal
         $this->violation = $violation;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.image-modal');
     }

@@ -18,6 +18,6 @@ class StoreController extends Controller
         session()->flash('flash.title', 'Employee Invited');
         session()->flash('flash.message', 'Employee has been successfully invited.');
 
-        return redirect()->route('employees.index');
+        return to_route('employees.index');
     }
 }

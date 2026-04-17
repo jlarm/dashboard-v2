@@ -20,7 +20,7 @@ class ExternalIpExposure extends Component
 
     public function mount(CyrismaService $cyrisma): void
     {
-        $current = app('currentStore');
+        $current = resolve('currentStore');
         $this->storeId = $current instanceof Store ? $current->id : (int) $current;
 
         $this->cyrisma = $cyrisma;
@@ -189,7 +189,7 @@ class ExternalIpExposure extends Component
             return null;
         }
 
-        $details = app(CyrismaService::class)
+        $details = resolve(CyrismaService::class)
             ->forStore($store)
             ->getWebApplicationScanFindingsForAsset($asset, $findingName);
 

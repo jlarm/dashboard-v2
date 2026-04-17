@@ -11,8 +11,8 @@ trait ResolvesDashboardStore
 {
     protected function resolveDashboardStore(): ?Store
     {
-        if (app()->bound('currentStoreModel') && app('currentStoreModel') instanceof Store) {
-            return app('currentStoreModel');
+        if (app()->bound('currentStoreModel') && resolve('currentStoreModel') instanceof Store) {
+            return resolve('currentStoreModel');
         }
 
         $storeId = $this->resolveDashboardStoreId();
@@ -27,7 +27,7 @@ trait ResolvesDashboardStore
     protected function resolveDashboardStoreId(): ?int
     {
         if (app()->bound('currentStore')) {
-            $currentStoreId = app('currentStore');
+            $currentStoreId = resolve('currentStore');
 
             if (is_numeric($currentStoreId) && (int) $currentStoreId > 0) {
                 return (int) $currentStoreId;
@@ -44,7 +44,7 @@ trait ResolvesDashboardStore
             return null;
         }
 
-        $storeIds = app($binding);
+        $storeIds = resolve($binding);
 
         if (! $storeIds instanceof Collection) {
             $storeIds = collect($storeIds);

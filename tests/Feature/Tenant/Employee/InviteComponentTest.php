@@ -161,7 +161,7 @@ describe('Invite slide-over component', function (): void {
                 ->set('department', (string) $department->id)
                 ->set('role', 'Employee')
                 ->set('stores', [(string) $storeA->id, (string) $storeB->id])
-                ->set('primaryStoreId', null)
+                ->set('primaryStoreId')
                 ->call('sendInvite')
                 ->assertHasErrors(['primaryStoreId' => 'required']);
         });

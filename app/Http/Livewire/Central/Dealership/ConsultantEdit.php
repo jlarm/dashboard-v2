@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Central\Dealership;
 
 use App\Models\Dealership;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class ConsultantEdit extends SlideOver
@@ -44,7 +46,7 @@ class ConsultantEdit extends SlideOver
         $this->close();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.dealership.consultant-edit');
     }

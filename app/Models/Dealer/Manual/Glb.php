@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Dealer\Manual;
 
 use Illuminate\Database\Eloquent\Model;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -12,6 +13,7 @@ class Glb extends Model
 {
     use LogsActivity;
 
+    #[Override]
     protected $fillable = [
         'user_id',
         'name',
@@ -56,6 +58,7 @@ class Glb extends Model
         return LogOptions::defaults()->logFillable();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

@@ -7,10 +7,14 @@ namespace App\Console\Commands;
 use App\Models\Dealership;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Override;
 
 class ClearLivewireTempFiles extends Command
 {
+    #[Override]
     protected $signature = 'livewire:clear-temp-files';
+
+    #[Override]
     protected $description = 'Clear Livewire temporary files for all tenants';
 
     public function handle(): int

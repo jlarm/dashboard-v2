@@ -84,7 +84,7 @@ class StoreScopeService
             return $this->resetOrAutoSelectSingleStore($user, $accessibleStoreIds);
         }
 
-        if (! $accessibleStoreIds->contains($selectedStore->id)) {
+        if ($accessibleStoreIds->doesntContain($selectedStore->id)) {
             return $this->resetOrAutoSelectSingleStore($user, $accessibleStoreIds);
         }
 

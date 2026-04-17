@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Dealership;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TenantLookupController extends Controller
 {
-    public function index()
+    public function index(): Factory|View
     {
         return view('central.tenant-lookup.index');
     }
@@ -19,7 +21,7 @@ class TenantLookupController extends Controller
     public function lookup(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email' => ['required', 'email'],
         ]);
 
         $email = $request->email;

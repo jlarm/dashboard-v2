@@ -115,6 +115,6 @@ class CourseResultsController extends Controller
         session()->flash('flash.courseUrl', route('dealer.courses.show', $course));
         session()->flash('flash.quizIncorrectQuestions', $incorrectQuestions);
 
-        return redirect()->route('dealer.courses.index');
+        return to_route('dealer.courses.index');
     }
 }

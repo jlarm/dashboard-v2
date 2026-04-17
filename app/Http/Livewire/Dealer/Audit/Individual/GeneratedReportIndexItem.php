@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Dealer\Audit\Individual;
 
 use App\Models\Dealer\Audit\IndividualAudit;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class GeneratedReportIndexItem extends Component
@@ -47,7 +49,7 @@ class GeneratedReportIndexItem extends Component
         };
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.individual.generated-report-index-item');
     }

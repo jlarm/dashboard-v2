@@ -11,15 +11,15 @@ use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
-    private const SECTION_GENERAL = 'general';
+    private const string SECTION_GENERAL = 'general';
 
-    private const SECTION_MANAGERS = 'managers';
+    private const string SECTION_MANAGERS = 'managers';
 
-    private const SECTION_COMPLIANCE = 'compliance';
+    private const string SECTION_COMPLIANCE = 'compliance';
 
-    private const SECTION_RESET_COURSES = 'reset-courses';
+    private const string SECTION_RESET_COURSES = 'reset-courses';
 
-    private const SECTION_RIDGEBACK = 'ridgeback';
+    private const string SECTION_RIDGEBACK = 'ridgeback';
 
     public function __invoke(): View
     {
@@ -38,7 +38,7 @@ class SettingsController extends Controller
         $scopedStoreIds = $this->resolveScopedStoreIds();
 
         /** @var Store|null $currentStore */
-        $currentStore = app()->bound('currentStoreModel') ? app('currentStoreModel') : null;
+        $currentStore = app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null;
         if ($currentStore instanceof Store) {
             return view('dealer.store.settings', [
                 'section' => $section,
@@ -94,7 +94,7 @@ class SettingsController extends Controller
     {
         if (app()->bound('scopedStoreIds')) {
             /** @var Collection $storeIds */
-            $storeIds = app('scopedStoreIds');
+            $storeIds = resolve('scopedStoreIds');
 
             $normalizedStoreIds = $storeIds->map(static fn ($id): int => (int) $id)->values();
 

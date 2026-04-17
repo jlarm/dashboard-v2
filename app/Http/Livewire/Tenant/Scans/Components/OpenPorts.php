@@ -61,13 +61,13 @@ class OpenPorts extends Component
 
     protected function loadOpenPorts(): void
     {
-        $store = Store::query()->find(app('currentStore'));
+        $store = Store::query()->find(resolve('currentStore'));
 
         if (! $store) {
             return;
         }
 
-        $this->openPorts = app(CyrismaService::class)
+        $this->openPorts = resolve(CyrismaService::class)
             ->forStore($store)
             ->getOpenPortsByAssetType($this->assetType);
     }

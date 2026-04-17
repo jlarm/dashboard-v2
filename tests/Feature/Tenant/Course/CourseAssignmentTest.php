@@ -10,7 +10,7 @@ use App\Services\UserCourseService;
 use Spatie\Permission\Models\Role;
 
 beforeEach(function (): void {
-    app(UserCourseService::class)->clearAllCaches();
+    resolve(UserCourseService::class)->clearAllCaches();
 });
 
 describe('Course Assignment - Role Based', function (): void {
@@ -31,7 +31,7 @@ describe('Course Assignment - Role Based', function (): void {
         ]);
         $user->assignRole('Manager');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($course->id);
@@ -54,7 +54,7 @@ describe('Course Assignment - Role Based', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($course->id);
@@ -78,7 +78,7 @@ describe('Course Assignment - Role Based', function (): void {
         ]);
         $user->assignRole('Consultant');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         // FIXED: Consultants now properly return empty array
@@ -107,7 +107,7 @@ describe('Course Assignment - Role Based', function (): void {
             'assigned_by' => $this->consultant->id,
         ]);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($course->id);
@@ -130,7 +130,7 @@ describe('Course Assignment - Role Based', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         // FIXED: Optional courses are now properly excluded
@@ -160,7 +160,7 @@ describe('Course Assignment - Department Based', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($course->id);
@@ -188,7 +188,7 @@ describe('Course Assignment - Department Based', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->not->toContain($course->id);
@@ -213,7 +213,7 @@ describe('Course Assignment - Department Based', function (): void {
         ]);
         $user->assignRole('Manager');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($course->id);
@@ -241,7 +241,7 @@ describe('Course Assignment - Custom Overrides', function (): void {
             'assigned_by' => $this->consultant->id,
         ]);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($course->id);
@@ -265,7 +265,7 @@ describe('Course Assignment - Custom Overrides', function (): void {
         $user->assignRole('Employee');
 
         // Course should be assigned by default
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
         expect($courseIds)->toContain($course->id);
 
@@ -317,7 +317,7 @@ describe('Course Assignment - Custom Overrides', function (): void {
             'assigned_by' => $this->consultant->id,
         ]);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->not->toContain($requiredCourse->id)
@@ -345,7 +345,7 @@ describe('Course Assignment - Special Cases', function (): void {
         ]);
         $user->assignRole('Manager');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         // Managers should get sexual-harassment-m
@@ -371,7 +371,7 @@ describe('Course Assignment - Special Cases', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         // Employees should get sexual-harassment-e
@@ -404,7 +404,7 @@ describe('Course Assignment - Special Cases', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach($store->id);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->not->toContain($caCourse->id);
@@ -436,7 +436,7 @@ describe('Course Assignment - Special Cases', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach($store->id);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($caCourse->id);
@@ -478,7 +478,7 @@ describe('Course Assignment - State Based', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach($store->id);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($stateCourse->id)
@@ -519,7 +519,7 @@ describe('Course Assignment - State Based', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach($store->id);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($generalCourse->id);
@@ -565,7 +565,7 @@ describe('Course Assignment - State Based', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach([$caStore->id, $txStore->id]);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         // CA state course applies, general is replaced
@@ -615,7 +615,7 @@ describe('Course Assignment - State Based', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach([$caStore->id, $txStore->id]);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         // TX primary store means CA course does not apply; general course should be included
@@ -664,7 +664,7 @@ describe('Course Assignment - State Based', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach([$caStore->id, $txStore->id]);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($caCourse->id)
@@ -680,7 +680,7 @@ describe('Course Assignment - Edge Cases', function (): void {
             'password' => bcrypt('password'),
         ]);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toBeEmpty();
@@ -713,7 +713,7 @@ describe('Course Assignment - Edge Cases', function (): void {
         ]);
         $user->assignRole(['Manager', 'Employee']);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect($courseIds)->toContain($managerCourse->id)
@@ -744,7 +744,7 @@ describe('Course Assignment - Edge Cases', function (): void {
             'assigned_by' => $this->consultant->id,
         ]);
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courseIds = $service->getCourseIds($user);
 
         expect(array_count_values($courseIds)[$course->id] ?? 0)->toBe(1);
@@ -779,7 +779,7 @@ describe('Course Assignment - Service Methods', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courses = $service->getCoursesSimple($user);
 
         // Both courses should be assigned
@@ -804,7 +804,7 @@ describe('Course Assignment - Service Methods', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $service = app(UserCourseService::class);
+        $service = resolve(UserCourseService::class);
         $courses = $service->getCoursesWithResults($user);
 
         $assignedCourse = $courses->firstWhere('id', $course->id);

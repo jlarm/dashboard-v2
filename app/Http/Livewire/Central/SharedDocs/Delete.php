@@ -35,7 +35,7 @@ class Delete extends Modal
                 ->success()
                 ->send();
 
-            return redirect()->route('dealer-docs.index');
+            return to_route('dealer-docs.index');
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }

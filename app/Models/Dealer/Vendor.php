@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -17,6 +18,7 @@ class Vendor extends Model
     use LogsActivity;
     use SoftDeletes;
 
+    #[Override]
     protected $fillable = [
         'name',
         'contact_name',
@@ -89,6 +91,7 @@ class Vendor extends Model
         return $this->hasOne(VendorForm::class)->latestOfMany();
     }
 
+    #[Override]
     protected static function booted(): void
     {
         static::deleting(function (Vendor $vendor): void {

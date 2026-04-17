@@ -14,13 +14,13 @@ class CheckStoreStatusMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $storesExist = app()->bound('storesExist')
-            ? (bool) app('storesExist')
+            ? (bool) resolve('storesExist')
             : Store::query()->exists();
 
         if ($storesExist) {
             return $next($request);
         }
 
-        return redirect()->route('dealer.dashboard');
+        return to_route('dealer.dashboard');
     }
 }

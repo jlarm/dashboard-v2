@@ -9,6 +9,8 @@ use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -82,7 +84,7 @@ class DotCert extends Component
 
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.course.dot-cert');
     }

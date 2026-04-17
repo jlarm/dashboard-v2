@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -22,6 +23,7 @@ class OshaAudit extends Model implements HasMedia
 {
     use InteractsWithMedia, LogsActivity;
 
+    #[Override]
     protected $guarded = [];
 
     public function store(): BelongsTo
@@ -63,6 +65,7 @@ class OshaAudit extends Model implements HasMedia
         return LogOptions::defaults()->logFillable();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

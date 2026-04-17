@@ -22,12 +22,12 @@ class StoreController extends Controller
     {
         if (! $store instanceof Store) {
             /** @var Store|null $currentStore */
-            $currentStore = app()->bound('currentStoreModel') ? app('currentStoreModel') : null;
+            $currentStore = app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null;
             $store = $currentStore;
 
             if (! $store instanceof Store) {
                 /** @var Collection $scopedStoreIds */
-                $scopedStoreIds = app('scopedStoreIds');
+                $scopedStoreIds = resolve('scopedStoreIds');
 
                 $store = Store::query()
                     ->whereIn('id', $scopedStoreIds)

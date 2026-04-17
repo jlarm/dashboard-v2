@@ -11,11 +11,15 @@ use App\Models\OshaViolationStatements;
 use App\Models\ViolationStatement;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 
 class MigrateViolationStatementsCommand extends Command
 {
+    #[Override]
     protected $signature = 'violation-statements:migrate
                             {--dry-run : Preview what will be inserted without writing to the database}';
+
+    #[Override]
     protected $description = 'Copy body_shop, glba, and osha violation statements into violation_statements, merging duplicates by statement text.';
 
     public function handle(): void

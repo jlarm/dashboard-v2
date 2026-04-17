@@ -7,8 +7,8 @@ namespace App\Http\Livewire\Dealer\Audit\BodyShop;
 use App\Models\BodyShopQuestions;
 use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Store;
-use Carbon\Carbon;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Date;
 use Illuminate\View\View;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
@@ -439,7 +439,7 @@ class Show extends Component
     public function mount(): void
     {
         $this->draft = $this->bodyShopAudit->draft;
-        $this->audit_date = Carbon::make($this->bodyShopAudit->audit_date)->format('Y-m-d');
+        $this->audit_date = Date::make($this->bodyShopAudit->audit_date)->format('Y-m-d');
         $this->body_shop_q1_answer = $this->bodyShopAudit->body_shop_q1_answer;
         $this->body_shop_q1_comment = $this->bodyShopAudit->body_shop_q1_comment;
         $this->body_shop_q1_danger = $this->bodyShopAudit->body_shop_q1_danger;
@@ -487,7 +487,7 @@ class Show extends Component
         $this->body_shop_q15_danger = $this->bodyShopAudit->body_shop_q15_danger;
         $this->body_shop_q16_answer = $this->bodyShopAudit->body_shop_q16_answer;
         $this->body_shop_q16_comment = $this->bodyShopAudit->body_shop_q16_comment;
-        $this->body_shop_q16_inspection_date = ($this->bodyShopAudit->body_shop_q16_inspection_date) ? Carbon::make($this->bodyShopAudit->body_shop_q16_inspection_date)->format('Y-m-d') : null;
+        $this->body_shop_q16_inspection_date = ($this->bodyShopAudit->body_shop_q16_inspection_date) ? Date::make($this->bodyShopAudit->body_shop_q16_inspection_date)->format('Y-m-d') : null;
         $this->body_shop_q16_danger = $this->bodyShopAudit->body_shop_q16_danger;
         $this->body_shop_q17_answer = $this->bodyShopAudit->body_shop_q17_answer;
         $this->body_shop_q17_comment = $this->bodyShopAudit->body_shop_q17_comment;
@@ -734,7 +734,7 @@ class Show extends Component
             ->send();
 
         if ($exit) {
-            return redirect()->route('dealer.audit.body-shop.index');
+            return to_route('dealer.audit.body-shop.index');
         }
 
         return null;

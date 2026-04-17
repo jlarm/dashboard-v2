@@ -6,10 +6,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Override;
 
 class DeleteOldDealJacketReports extends Command
 {
+    #[Override]
     protected $signature = 'deal-jacket-reports:cleanup';
+
+    #[Override]
     protected $description = 'Delete deal jacket reports older than 24 hours';
 
     public function handle(): int

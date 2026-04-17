@@ -9,16 +9,20 @@ use App\Models\Dealer\Course as TenantCourse;
 use App\Models\Dealership;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
+use Override;
 
 class SyncCaliforniaHarassmentReplacementCommand extends Command
 {
-    private const CALIFORNIA_COURSE_SLUG = 'sexual-harassment-training-in-california';
-    private const TARGET_STATES = ['California'];
-    private const REPLACED_SLUGS = ['sexual-harassment-e', 'sexual-harassment-m'];
+    private const string CALIFORNIA_COURSE_SLUG = 'sexual-harassment-training-in-california';
+    private const array TARGET_STATES = ['California'];
+    private const array REPLACED_SLUGS = ['sexual-harassment-e', 'sexual-harassment-m'];
 
+    #[Override]
     protected $signature = 'courses:sync-california-harassment-replacement
         {--tenant= : Tenant ID to run against}
         {--dry-run : Preview changes without updating records}';
+
+    #[Override]
     protected $description = 'Ensure California harassment course replaces sexual-harassment-e and sexual-harassment-m';
 
     public function handle(): int

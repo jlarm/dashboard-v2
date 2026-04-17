@@ -16,7 +16,7 @@ use WireElements\Pro\Components\SlideOver\SlideOver;
 
 class Edit extends SlideOver
 {
-    private const ROLE_PRIORITY = [
+    private const array ROLE_PRIORITY = [
         'Owner' => 1,
         'GM' => 2,
         'CFO' => 3,
@@ -113,11 +113,11 @@ class Edit extends SlideOver
 
     private function initializeUserData(User $user): void
     {
-        $this->store = (app()->bound('currentStoreModel') ? app('currentStoreModel') : null)
-            ?? Store::query()->find(app('currentStore'));
+        $this->store = (app()->bound('currentStoreModel') ? resolve('currentStoreModel') : null)
+            ?? Store::query()->find(resolve('currentStore'));
         $this->user = $user;
         $this->name = $user->name;
-        $this->assignedStores = $user->stores()->pluck('stores.id')->map(static fn ($id): int => (int) $id)->toArray();
+        $this->assignedStores = $user->stores()->pluck('stores.id')->map(static fn ($id): int => (int) $id)->all();
         $this->primaryStoreId = $user->primary_store_id ? (int) $user->primary_store_id : null;
         $this->department = $user->department_id;
         $this->showStoreAssignment = $this->shouldShowStoreAssignment();

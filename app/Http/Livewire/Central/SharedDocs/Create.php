@@ -55,7 +55,7 @@ class Create extends Component
 
                 $filePath = Storage::disk('public')->putFileAs('/shared-documents', $this->file, $fileName);
 
-                throw_unless($filePath, new Exception('Error uploading the file'));
+                throw_unless($filePath, Exception::class, 'Error uploading the file');
             }
 
             SharedDocument::query()->create([

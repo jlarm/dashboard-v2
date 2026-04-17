@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 class SdsFactory extends Factory
 {
     public function definition(): array
     {
         return [
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'created_at' => Date::now(),
+            'updated_at' => Date::now(),
             'name' => $this->faker->name(),
             'product_identifier' => $this->faker->word(),
             'product_identification_number' => $this->faker->word(),

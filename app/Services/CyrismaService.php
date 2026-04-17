@@ -29,9 +29,9 @@ class CyrismaService
 
     public function isConfigured(): bool
     {
-        return $this->baseUrl !== null && $this->baseUrl !== '' && $this->baseUrl !== '0'
-            && ($this->apiKey !== null && $this->apiKey !== '' && $this->apiKey !== '0')
-            && ($this->apiSecret !== null && $this->apiSecret !== '' && $this->apiSecret !== '0');
+        return ! in_array($this->baseUrl, [null, '', '0'], true)
+            && (! in_array($this->apiKey, [null, '', '0'], true))
+            && (! in_array($this->apiSecret, [null, '', '0'], true));
     }
 
     public function forStore(Store $store): self
@@ -56,7 +56,7 @@ class CyrismaService
         }
 
         return collect($vulnerabilityScans['vulnerability_scans'])
-            ->contains(function ($scan): bool {
+            ->contains(function (array $scan): bool {
                 $scanType = $scan['scan_type'] ?? null;
                 $scanTypeName = mb_strtolower($scan['scan_type_name'] ?? '');
 
@@ -286,7 +286,7 @@ class CyrismaService
         // - scan type 10 = Internal Unauthenticated
         // - scan type 11 = External Web Application
         if ($assetType) {
-            $scans = $scans->filter(function ($scan) use ($assetType): bool {
+            $scans = $scans->filter(function (array $scan) use ($assetType): bool {
                 $scanType = $scan['scan_type'] ?? null;
                 $scanTypeName = mb_strtolower($scan['scan_type_name'] ?? '');
 
@@ -481,7 +481,7 @@ class CyrismaService
 
         // Look specifically for External scan types (type 9 = External IP, type 11 = External Web)
         $externalScans = collect($vulnerabilityScans['vulnerability_scans'])
-            ->filter(function ($scan): bool {
+            ->filter(function (array $scan): bool {
                 $scanTypeName = mb_strtolower($scan['scan_type_name'] ?? '');
                 $scanType = $scan['scan_type'] ?? '';
 
@@ -761,15 +761,7 @@ class CyrismaService
             ->flatten(1)
             ->filter(fn (mixed $item): bool => is_array($item))
             ->map(fn (mixed $item): array => $item)
-            ->filter(function (array $finding): bool {
-                foreach (['alertName', 'alertRef', 'title', 'name', 'riskLevel', 'severity', 'description', 'alertDesc', 'solution', 'alertSolution', 'instances', 'alertInstances', 'details', 'urls', 'targets', 'referenceURLs'] as $key) {
-                    if (array_key_exists($key, $finding)) {
-                        return true;
-                    }
-                }
-
-                return false;
-            })
+            ->filter(fn (array $finding): bool => array_any(['alertName', 'alertRef', 'title', 'name', 'riskLevel', 'severity', 'description', 'alertDesc', 'solution', 'alertSolution', 'instances', 'alertInstances', 'details', 'urls', 'targets', 'referenceURLs'], fn ($key): bool => array_key_exists((string) $key, $finding)))
             ->values()
             ->all();
     }

@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Dealer\Employee;
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Invite;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class OpenInvitesItem extends Component
@@ -15,7 +17,7 @@ class OpenInvitesItem extends Component
 
     public function sendInvite(): void
     {
-        SendQueueEmailJob::dispatch($this->invite);
+        dispatch(new SendQueueEmailJob($this->invite));
 
         Notification::make()
             ->title('Invite to '.$this->invite->name.' sent')
@@ -23,7 +25,7 @@ class OpenInvitesItem extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.employee.open-invites-item');
     }

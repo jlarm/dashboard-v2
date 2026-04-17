@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 #[ObservedBy(DealJacketObserver::class)]
 class DealJacket extends Model
 {
     use HasFactory;
 
+    #[Override]
     protected $fillable = [
         'uuid',
         'deal_jacket_group_id',
@@ -55,6 +57,7 @@ class DealJacket extends Model
         return DealJacketFactory::new();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

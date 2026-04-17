@@ -13,7 +13,7 @@ trait GlbaGenerateRating
 
     public function rating(): ?string
     {
-        $this->audits = FinanceAudit::query()->where('pdf_path', '!=', null)
+        $this->audits = FinanceAudit::query()->where('pdf_path', '!=')
             ->get();
 
         $this->audits->filter(function ($value): void {

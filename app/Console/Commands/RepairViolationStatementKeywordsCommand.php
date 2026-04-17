@@ -6,11 +6,15 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Override;
 
 class RepairViolationStatementKeywordsCommand extends Command
 {
+    #[Override]
     protected $signature = 'violation-statements:repair-keywords
                             {--dry-run : Preview affected rows without writing to the database}';
+
+    #[Override]
     protected $description = 'Fix double-encoded keywords JSON in violation_statements and the three legacy tables.';
 
     /** @var list<string> */

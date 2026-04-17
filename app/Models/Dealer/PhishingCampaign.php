@@ -8,9 +8,11 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Override;
 
 class PhishingCampaign extends Model
 {
+    #[Override]
     protected $fillable = [
         'campaign_id',
         'user_id',
@@ -32,6 +34,7 @@ class PhishingCampaign extends Model
         return $this->hasMany(Timeline::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

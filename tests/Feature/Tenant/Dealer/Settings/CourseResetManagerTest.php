@@ -23,7 +23,7 @@ beforeEach(function (): void {
     $this->superAdmin->assignRole('super-admin');
     $this->superAdmin->stores()->sync([$this->store->id]);
 
-    app()[PermissionRegistrar::class]->forgetCachedPermissions();
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
 it('renders the global course reset manager', function (): void {

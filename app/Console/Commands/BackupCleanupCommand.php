@@ -7,13 +7,17 @@ namespace App\Console\Commands;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Override;
 use Stancl\Tenancy\Concerns\HasATenantsOption;
 
 class BackupCleanupCommand extends Command
 {
     use HasATenantsOption;
 
+    #[Override]
     protected $signature = 'backups:clean {--tenants=* : The tenant(s) to run the command for. Default all.}';
+
+    #[Override]
     protected $description = 'Run backup cleanup for tenant(s)';
 
     public function handle(): void

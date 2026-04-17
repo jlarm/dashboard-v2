@@ -8,6 +8,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -18,6 +19,7 @@ class Isp extends Model
 {
     use LogsActivity;
 
+    #[Override]
     protected $fillable = [
         'store_id',
         'user_id',
@@ -43,14 +45,6 @@ class Isp extends Model
         'signature',
     ];
 
-    public function getPhoneNumberAttribute(): string
-    {
-        $cleaned = preg_replace('/[^[:digit:]]/', '', $this->phone);
-        preg_match('/(\d{3})(\d{3})(\d{4})/', (string) $cleaned, $matches);
-
-        return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
-    }
-
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
@@ -64,5 +58,13 @@ class Isp extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    protected function getPhoneNumberAttribute(): string
+    {
+        $cleaned = preg_replace('/[^[:digit:]]/', '', (string) $this->phone);
+        preg_match('/(\d{3})(\d{3})(\d{4})/', (string) $cleaned, $matches);
+
+        return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
     }
 }

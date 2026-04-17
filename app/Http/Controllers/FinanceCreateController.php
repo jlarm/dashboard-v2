@@ -20,6 +20,6 @@ class FinanceCreateController extends Controller
             'audit_date' => now()->format('Y-m-d'),
         ]);
 
-        return redirect()->route('dealer.audit.finance.show', $audit->id);
+        return to_route('dealer.audit.finance.show', $audit->id);
     }
 }

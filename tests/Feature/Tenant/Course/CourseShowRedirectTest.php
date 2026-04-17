@@ -9,7 +9,7 @@ use App\Services\UserCourseService;
 use Spatie\Permission\Models\Role;
 
 beforeEach(function (): void {
-    app(UserCourseService::class)->clearAllCaches();
+    resolve(UserCourseService::class)->clearAllCaches();
 });
 
 it('redirects illinois employee from sexual-harassment-e to sexual-harassment-illinois', function (): void {

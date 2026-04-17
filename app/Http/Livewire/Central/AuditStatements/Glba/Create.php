@@ -7,6 +7,8 @@ namespace App\Http\Livewire\Central\AuditStatements\Glba;
 use App\Http\Livewire\Central\AuditStatements\Traits\Keywordable;
 use App\Models\GlbaViolationStatements;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Create extends Component
@@ -45,7 +47,7 @@ class Create extends Component
 
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.central.audit-statements.glba.create');
     }

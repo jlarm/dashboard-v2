@@ -230,7 +230,7 @@ class Import extends Modal
                 ->map(fn (int $id): ?string => $roleNamesById->get($id))
                 ->filter()
                 ->values()
-                ->toArray();
+                ->all();
         }
         unset($course);
 

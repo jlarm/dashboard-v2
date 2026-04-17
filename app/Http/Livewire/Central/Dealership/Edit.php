@@ -57,7 +57,7 @@ class Edit extends SlideOver
 
     public function removeUser($userId): void
     {
-        $this->selectedUsers = array_filter($this->selectedUsers, fn ($user): bool => $user['id'] !== $userId);
+        $this->selectedUsers = array_filter($this->selectedUsers, fn (array $user): bool => $user['id'] !== $userId);
     }
 
     public function updateDealership(): void

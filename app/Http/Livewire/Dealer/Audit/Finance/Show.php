@@ -7,8 +7,10 @@ namespace App\Http\Livewire\Dealer\Audit\Finance;
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Store;
 use App\Models\FinanceQuestions;
-use Carbon\Carbon;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 use Spatie\MediaLibraryPro\Http\Livewire\Concerns\WithMedia;
 
@@ -472,7 +474,7 @@ class Show extends Component
     public function mount(): void
     {
         $this->draft = $this->financeAudit->draft;
-        $this->audit_date = Carbon::make($this->financeAudit->audit_date)->format('Y-m-d');
+        $this->audit_date = Date::make($this->financeAudit->audit_date)->format('Y-m-d');
         $this->finance_q1_answer = $this->financeAudit->finance_q1_answer;
         $this->finance_q1_comment = $this->financeAudit->finance_q1_comment;
         $this->finance_q1_danger = $this->financeAudit->finance_q1_danger;
@@ -783,13 +785,13 @@ class Show extends Component
             ->send();
 
         if ($exit) {
-            return redirect()->route('dealer.audit.finance.index');
+            return to_route('dealer.audit.finance.index');
         }
 
         return null;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.audit.finance.show', [
             'questions' => tenancy()->central(fn ($tenant) => FinanceQuestions::query()->whereNot('id', 24)->search('question', $this->search)->get()),

@@ -13,12 +13,15 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Redirector as LivewireRedirector;
 use Livewire\WithPagination;
+use Override;
 
 class StoreList extends Component
 {
     use WithPagination;
 
     public string $search = '';
+
+    #[Override]
     protected $listeners = ['refreshStores' => '$refresh'];
 
     public function updatedSearch(): void
@@ -39,7 +42,7 @@ class StoreList extends Component
             'current_store_id' => $store->id,
         ]);
 
-        return redirect()->route('dealer.dashboard');
+        return to_route('dealer.dashboard');
     }
 
     public function render(): View

@@ -6,6 +6,8 @@ namespace App\Http\Livewire\Dealer\Home;
 
 use App\Models\Dealer\Store;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class MultiNote extends Component
@@ -30,7 +32,7 @@ class MultiNote extends Component
             ->send();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.dealer.home.multi-note');
     }

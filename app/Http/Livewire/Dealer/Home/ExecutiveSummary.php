@@ -15,9 +15,9 @@ class ExecutiveSummary extends Component
 {
     use ResolvesDashboardStore;
 
-    private const AUTHORIZED_ROLES = ['super-admin', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
+    private const array AUTHORIZED_ROLES = ['super-admin', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
 
-    private const UNRESTRICTED_ROLES = ['super-admin', 'Consultant'];
+    private const array UNRESTRICTED_ROLES = ['super-admin', 'Consultant'];
 
     public ?Store $store = null;
 

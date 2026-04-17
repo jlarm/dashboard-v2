@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
+use Override;
 
 class VideoProgress extends Component
 {
@@ -17,6 +18,8 @@ class VideoProgress extends Component
     public bool $autoload = false;
     public bool $isLoaded = false;
     public array $videos = [];
+
+    #[Override]
     protected $listeners = ['employeeTabChanged' => 'handleTabChanged'];
 
     public function mount(): void
@@ -47,7 +50,7 @@ class VideoProgress extends Component
         $cacheKey = sprintf('employee_video_progress_%s_%d', tenant('id') ?? 'no-tenant', $this->user->id);
 
         $this->videos = Cache::remember($cacheKey, now()->addMinutes(5), function (): array {
-            $vimeoService = app(VimeoService::class);
+            $vimeoService = resolve(VimeoService::class);
             $videos = $this->getVimeoVideos($vimeoService);
             $progress = $this->getUserVideoProgress();
 

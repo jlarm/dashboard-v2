@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -21,6 +22,7 @@ class IndividualAudit extends Model implements HasMedia
 {
     use HasUuid, InteractsWithMedia, LogsActivity;
 
+    #[Override]
     protected $guarded = [];
 
     public function store(): BelongsTo
@@ -62,7 +64,12 @@ class IndividualAudit extends Model implements HasMedia
         return $this->belongsTo(User::class, 'manager_id');
     }
 
-    public function getQuarterNameAttribute(): string
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable();
+    }
+
+    protected function getQuarterNameAttribute(): string
     {
         $month = (int) $this->audit_date->format('n');
 
@@ -74,11 +81,7 @@ class IndividualAudit extends Model implements HasMedia
         };
     }
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logFillable();
-    }
-
+    #[Override]
     protected function casts(): array
     {
         return [
