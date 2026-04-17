@@ -100,7 +100,7 @@ describe('Reset All Course Results', function (): void {
 
         Livewire::test(Reset::class)
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         expect(CourseResults::query()->count())->toBe(0);
@@ -113,7 +113,7 @@ describe('Reset All Course Results', function (): void {
 
         Livewire::test(Reset::class)
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         expect(CourseResults::query()->count())->toBe(0);
@@ -170,7 +170,7 @@ describe('Reset Store-Specific Course Results', function (): void {
 
         Livewire::test(Reset::class, ['store' => $store1])
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         expect(CourseResults::query()->count())->toBe(1);
@@ -204,7 +204,7 @@ describe('Reset Store-Specific Course Results', function (): void {
 
         Livewire::test(Reset::class, ['store' => $emptyStore])
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         expect(CourseResults::query()->count())->toBe(1);
@@ -230,7 +230,7 @@ describe('Activity Logging', function (): void {
 
         Livewire::test(Reset::class)
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         $this->assertDatabaseHas('activity_log', [
@@ -268,7 +268,7 @@ describe('Activity Logging', function (): void {
 
         Livewire::test(Reset::class, ['store' => $store])
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         $this->assertDatabaseHas('activity_log', [
@@ -318,7 +318,7 @@ describe('Email Notifications', function (): void {
 
         Livewire::test(Reset::class)
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         Queue::assertPushed(SendCoursesResetNotifications::class, function ($job) use ($user1, $user2): bool {
@@ -377,7 +377,7 @@ describe('Email Notifications', function (): void {
 
         Livewire::test(Reset::class, ['store' => $store1])
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         Queue::assertPushed(SendCoursesResetNotifications::class, function ($job) use ($storeUser, $otherStoreUser): bool {
@@ -396,7 +396,7 @@ describe('Email Notifications', function (): void {
 
         Livewire::test(Reset::class)
             ->call('resetCourses')
-            ->emit('actionConfirmed')
+            ->dispatch('actionConfirmed')
             ->assertHasNoErrors();
 
         Queue::assertNotPushed(SendCoursesResetNotifications::class);

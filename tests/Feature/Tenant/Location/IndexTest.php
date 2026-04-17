@@ -59,7 +59,7 @@ describe('tenant locations index', function (): void {
 
         Livewire::test(LocationIndex::class)
             ->call('openEditModal', $store->id)
-            ->assertEmitted('modal.open', 'tenant.location.edit-store-modal', ['storeId' => $store->id]);
+            ->assertDispatched('modal.open', 'tenant.location.edit-store-modal', ['storeId' => $store->id]);
     });
 
     it('updates store details from the edit modal', function (): void {
@@ -85,7 +85,7 @@ describe('tenant locations index', function (): void {
             ->set('website', 'https://updated.example.com')
             ->call('updateStore')
             ->assertHasNoErrors()
-            ->assertEmitted('refreshLocations');
+            ->assertDispatched('refreshLocations');
 
         expect($store->fresh())
             ->name->toBe('Updated Location Name')

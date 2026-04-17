@@ -41,8 +41,8 @@ class Edit extends SlideOver
 
         $this->reset(['name', 'email']);
 
-        $this->emit('refreshVendorForms');
-        $this->emit('refreshVendors');
+        $this->dispatch('refreshVendorForms');
+        $this->dispatch('refreshVendors');
 
         Notification::make()
             ->title('Email Successfully Sent!')

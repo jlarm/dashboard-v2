@@ -98,7 +98,7 @@ class IndexItem extends Component
         $this->deleteViolationPhotos();
         $this->glbaViolationAudit->delete();
 
-        $this->emitTo('dealer.audit.finance.index', 'refreshAudits');
+        $this->dispatch('refreshAudits')->to('dealer.audit.finance.index');
 
         Notification::make()
             ->title('GLBA Audit Deleted Successfully!')

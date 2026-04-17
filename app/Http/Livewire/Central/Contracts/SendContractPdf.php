@@ -32,7 +32,7 @@ class SendContractPdf extends Component
 
         $this->reset('sendPdfEmailAddress');
 
-        $this->emit('contractUpdated');
+        $this->dispatch('contractUpdated');
     }
 
     public function render()

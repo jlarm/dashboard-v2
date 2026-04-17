@@ -166,7 +166,7 @@ it('resets only the selected users course results', function (): void {
         ->call('setMode', 'selected-users')
         ->set('selectedUserIds', [$userOne->id, $userTwo->id])
         ->call('resetCourses')
-        ->emit('actionConfirmed')
+        ->dispatch('actionConfirmed')
         ->assertHasNoErrors();
 
     expect(CourseResults::query()->pluck('user_id')->all())->toBe([$userThree->id]);

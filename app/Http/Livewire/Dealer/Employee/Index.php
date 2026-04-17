@@ -226,7 +226,7 @@ class Index extends Component
     {
         abort_if(auth()->user()?->hasAnyRole(['Manager', 'Employee', 'Porter/Driver']) ?? true, 403);
 
-        $this->emit('modal.open', 'dealer.employee.custom-message-modal', [
+        $this->dispatch('modal.open', 'dealer.employee.custom-message-modal', [
             'userIds' => $this->selectedUsers,
         ]);
     }

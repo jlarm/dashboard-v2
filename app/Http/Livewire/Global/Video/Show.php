@@ -31,7 +31,7 @@ class Show extends Component
             'completed' => true,
         ]);
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
     }
 
     public function videoCompleted(): bool

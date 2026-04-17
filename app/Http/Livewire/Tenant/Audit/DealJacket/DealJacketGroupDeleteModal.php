@@ -26,9 +26,9 @@ class DealJacketGroupDeleteModal extends Modal
 
         $this->group->delete();
 
-        $this->emitTo('tenant.audit.deal-jacket.group-index', 'refreshDealJacketGroups');
-        $this->emitTo('tenant.audit.deal-jacket.pass-rate-trend-chart', 'refreshDealJacketGroups');
-        $this->emitTo('tenant.audit.deal-jacket.common-issues-chart', 'refreshDealJacketGroups');
+        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.group-index');
+        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.pass-rate-trend-chart');
+        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.common-issues-chart');
 
         $this->close();
 

@@ -20,7 +20,7 @@ class Delete extends Modal
         $this->askForConfirmation(
             callback: function (): void {
                 $this->contract->delete();
-                $this->emit('contractDeleted');
+                $this->dispatch('contractDeleted');
 
                 Notification::make()
                     ->title('Contract Deleted')

@@ -635,7 +635,7 @@ describe('employee index custom message modal authorization', function (): void 
             ->set('selectedUsers', [$target->id])
             ->call('openCustomMessageModal')
             ->assertOk()
-            ->assertEmitted('modal.open');
+            ->assertDispatched('modal.open');
     })->with([
         'super-admin',
         'Admin',

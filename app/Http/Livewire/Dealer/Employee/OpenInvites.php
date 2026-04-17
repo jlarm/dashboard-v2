@@ -187,7 +187,7 @@ class OpenInvites extends Component
             ->success()
             ->send();
 
-        $this->emit('refreshOpenInvites');
+        $this->dispatch('refreshOpenInvites');
     }
 
     private function notifyInvitesSent(): void
@@ -197,7 +197,7 @@ class OpenInvites extends Component
             ->success()
             ->send();
 
-        $this->emit('refreshOpenInvites');
+        $this->dispatch('refreshOpenInvites');
     }
 
     private function resetSelection(): void

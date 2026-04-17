@@ -28,7 +28,7 @@ class DeleteCommentConfirmationModal extends Modal
         $this->askForConfirmation(
             callback: function (): void {
                 $this->comment->delete();
-                $this->emit('commentDeleted');
+                $this->dispatch('commentDeleted');
             },
             prompt: [
                 'title' => 'Are you sure you want to delete this comment?',

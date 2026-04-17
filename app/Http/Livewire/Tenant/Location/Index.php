@@ -27,7 +27,7 @@ class Index extends Component
     {
         $store = Store::query()->findOrFail($storeId);
 
-        $this->emit('modal.open', 'tenant.location.edit-store-modal', ['storeId' => $store->id]);
+        $this->dispatch('modal.open', 'tenant.location.edit-store-modal', ['storeId' => $store->id]);
     }
 
     public function render(): View

@@ -23,7 +23,7 @@ class Delete extends Modal
 
         $this->glbaAudit->delete();
 
-        $this->emitTo('dealer.audit.finance.index', 'refreshAudits');
+        $this->dispatch('refreshAudits')->to('dealer.audit.finance.index');
 
         $this->close();
 

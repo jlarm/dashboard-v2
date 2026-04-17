@@ -49,7 +49,7 @@ class GenerateButton extends Component
             ->iconColor('success')
             ->send();
 
-        $this->emit('pdfGenerated');
+        $this->dispatch('pdfGenerated');
     }
 
     public function render(): View

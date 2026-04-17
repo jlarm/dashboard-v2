@@ -41,14 +41,14 @@ it('emits commentUpdated after a successful edit', function (): void {
     Livewire::test(EditCommentModal::class, ['commentId' => $this->comment->id])
         ->set('commentText', 'Updated comment')
         ->call('edit')
-        ->assertEmitted('commentUpdated');
+        ->assertDispatched('commentUpdated');
 });
 
 it('closes the modal after a successful edit', function (): void {
     Livewire::test(EditCommentModal::class, ['commentId' => $this->comment->id])
         ->set('commentText', 'Updated comment')
         ->call('edit')
-        ->assertEmitted('modal.close');
+        ->assertDispatched('modal.close');
 });
 
 it('requires commentText to not be empty', function (): void {

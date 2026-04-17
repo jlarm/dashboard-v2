@@ -220,7 +220,7 @@ return [
         'notifiable' => Notifiable::class,
 
         'mail' => [
-            'to' => env('BACKUP_MAIL_TO', env('ADMIN_EMAIL')),
+            'to' => env('BACKUP_MAIL_TO', env('ADMIN_EMAIL', 'noreply@example.com')),
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'noreply@armp.app'),
@@ -229,7 +229,7 @@ return [
         ],
 
         'slack' => [
-            'webhook_url' => env('SLACK_BACKUPS_WEBHOOK_URL'),
+            'webhook_url' => env('SLACK_BACKUPS_WEBHOOK_URL', ''),
 
             /*
              * If this is set to null the default channel of the webhook will be used.

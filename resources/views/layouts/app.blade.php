@@ -16,6 +16,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    @fluxAppearance
 </head>
 <body class="h-full font-sans antialiased min-h-screen bg-gray-100">
 <x-notification />
@@ -25,7 +26,7 @@
     <div class="lg:pl-72">
         @include('layouts.nav')
         <div class="p-2">
-            <div class="bg-white rounded-md p-6 min-h-[calc(100vh-theme(spacing.20))]">
+            <div class="bg-white rounded-md p-6 min-h-[calc(100vh-5rem)]">
                 @if (isset($header))
                     <header class="p-5">
                         {{ $header }}
@@ -36,9 +37,8 @@
         </div>
     </div>
 </div>
-@livewire('slide-over-pro')
-@livewire('modal-pro')
 @livewire('notifications')
 @livewireScripts
+@fluxScripts
 </body>
 </html>

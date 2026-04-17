@@ -100,7 +100,7 @@
                 }
             }
 
-            document.addEventListener('livewire:load', initChart);
+            document.addEventListener('livewire:init', initChart);
 
             Livewire.hook('message.processed', (message, component) => {
                 if (component.id === componentId) {

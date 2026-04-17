@@ -54,7 +54,7 @@ describe('custom message modal', function (): void {
             ->set('messageBody', '<p>You have outstanding compliance courses.</p>')
             ->call('send')
             ->assertHasNoErrors()
-            ->assertEmitted('modal.close');
+            ->assertDispatched('modal.close');
 
         Queue::assertPushed(SendCustomEmployeeMessageJob::class, 2);
 

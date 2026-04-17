@@ -28,7 +28,7 @@ class EditCommentModal extends Modal
 
         $this->comment->update(['comment' => $this->commentText]);
 
-        $this->emit('commentUpdated');
+        $this->dispatch('commentUpdated');
         $this->close();
 
         Notification::make()

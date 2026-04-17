@@ -31,7 +31,7 @@ class Delete extends Modal
 
                     DB::commit();
 
-                    $this->emit('refreshDealerships');
+                    $this->dispatch('refreshDealerships');
 
                     Notification::make()
                         ->title('Dealership Deleted')

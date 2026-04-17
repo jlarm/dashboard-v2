@@ -25,7 +25,7 @@ class DealJacketDeleteModal extends Modal
 
         $this->dealJacket->delete();
 
-        $this->emit('refreshDealJackets');
+        $this->dispatch('refreshDealJackets');
 
         $this->close();
 

@@ -27,8 +27,8 @@ class Delete extends Modal
 
             $this->close();
 
-            $this->emit('refreshVendors');
-            $this->emit('vendorDeleted', $vendorId);
+            $this->dispatch('refreshVendors');
+            $this->dispatch('vendorDeleted', $vendorId);
 
             Notification::make()
                 ->title('Vendor Deleted Successfully')

@@ -125,7 +125,7 @@ class Edit extends Component
 
         $comment->delete();
 
-        $this->emit('commentDeleted');
+        $this->dispatch('commentDeleted');
     }
 
     public function render(): View

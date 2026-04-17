@@ -14,7 +14,7 @@ class IndexItem extends Component
 
     public function deleteDealership(): void
     {
-        $this->emit('deleteDealership', $this->dealership->id);
+        $this->dispatch('deleteDealership', $this->dealership->id);
     }
 
     public function render(): View

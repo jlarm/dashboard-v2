@@ -27,7 +27,7 @@ describe('Notifications Component', function (): void {
 
         Livewire::test(Notifications::class)
             ->call('markAsRead', $notification->toArray())
-            ->assertEmitted('notification');
+            ->assertDispatched('notification');
 
         $this->assertDatabaseMissing('notifications', ['id' => $notification->id]);
     });
@@ -37,7 +37,7 @@ describe('Notifications Component', function (): void {
 
         Livewire::test(Notifications::class)
             ->call('markAsRead', ['id' => fake()->uuid()])
-            ->assertEmitted('notification');
+            ->assertDispatched('notification');
     });
 
     it('can mark all notifications as read', function (): void {
@@ -61,7 +61,7 @@ describe('Notifications Component', function (): void {
 
         Livewire::test(Notifications::class)
             ->call('markAllAsRead')
-            ->assertEmitted('notification');
+            ->assertDispatched('notification');
 
         expect($this->consultant->fresh()->unreadNotifications)->toHaveCount(0);
     });

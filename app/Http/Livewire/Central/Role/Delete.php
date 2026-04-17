@@ -19,7 +19,7 @@ class Delete extends Modal
     public function delete(): void
     {
         $this->role->delete();
-        $this->emit('roleDeleted');
+        $this->dispatch('roleDeleted');
         $this->close();
     }
 

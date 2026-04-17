@@ -15,7 +15,7 @@ it('emits violationSelected with id and statement when selectViolation is called
 
     Livewire::test(Modal::class)
         ->call('selectViolation', $violation->id)
-        ->assertEmitted('violationSelected', ['id' => $violation->id, 'statement' => $violation->statement]);
+        ->assertDispatched('violationSelected', ['id' => $violation->id, 'statement' => $violation->statement]);
 });
 
 it('does not throw when the violation id exists as a ViolationStatement (not BodyShopViolationStatement)', function (): void {
@@ -26,5 +26,5 @@ it('does not throw when the violation id exists as a ViolationStatement (not Bod
     // If the bug were present this would throw "Call to a member function only() on null"
     Livewire::test(Modal::class)
         ->call('selectViolation', $violation->id)
-        ->assertEmitted('violationSelected');
+        ->assertDispatched('violationSelected');
 });

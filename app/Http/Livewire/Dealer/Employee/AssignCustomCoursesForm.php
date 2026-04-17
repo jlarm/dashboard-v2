@@ -74,7 +74,7 @@ class AssignCustomCoursesForm extends Component
         // Clear department completion stats cache
         $this->clearDepartmentStatsCache();
 
-        $this->emit('refreshEmployeeDetails');
+        $this->dispatch('refreshEmployeeDetails');
     }
 
     public function updatedCourseStates($value, $key): void

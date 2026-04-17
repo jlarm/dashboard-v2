@@ -34,7 +34,7 @@ class Create extends Component
 
         $this->reset();
 
-        //        $this->emit('permissionCreated');
+        //        $this->dispatch('permissionCreated');
 
         Notification::make()
             ->title('Permission Successfully Created!')

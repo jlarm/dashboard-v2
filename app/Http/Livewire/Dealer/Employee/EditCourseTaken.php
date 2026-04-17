@@ -32,7 +32,7 @@ class EditCourseTaken extends Modal
             'created_at' => $this->dateTaken,
         ]);
 
-        $this->emit('refreshEmployeeDetails');
+        $this->dispatch('refreshEmployeeDetails');
 
         $this->close();
 

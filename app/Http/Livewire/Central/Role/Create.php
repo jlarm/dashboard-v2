@@ -25,7 +25,7 @@ class Create extends Component
         $role = Role::create(['name' => $this->name]);
         $role->syncPermissions($this->assignedPermissions);
 
-        $this->emit('roleCreated');
+        $this->dispatch('roleCreated');
 
         $this->reset(['name', 'assignedPermissions']);
 

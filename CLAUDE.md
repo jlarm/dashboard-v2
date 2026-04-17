@@ -1,3 +1,28 @@
+# Dashboard — Active Upgrade In Progress
+
+This project is mid-migration from Laravel 10 to **Laravel 13 + Livewire 4 + Filament 4 + Tailwind 4 + Flux UI**, being done on the `shift-172092` branch (PR into `upgrade`).
+
+## Target stack
+- PHP ^8.3 (aiming for 8.5 runtime)
+- laravel/framework ^13
+- livewire/livewire ^4.2
+- filament/forms ^4, filament/notifications ^4
+- tailwindcss ^4.2
+- livewire/flux + livewire/flux-pro (user has Flux Pro license)
+
+## Notable removals
+- `wire-elements/pro` — removed, all modals/slide-overs replaced with Flux equivalents (~99 files)
+- Vapor packages (vapor-cli, vapor-core, vapor-ui) — no longer used
+- Vonage + spatie/laravel-onboard + spatie/laravel-ray — unused
+
+## Strategy
+1. This PR: bulk mechanical migration — get app booting on new stack with Flux modals standing in for wire-elements.
+2. Follow-up PRs (per page): polish/redesign page components using full Flux UI component library.
+
+Until this upgrade merges, ignore version-specific rules below that reference Laravel 10, Livewire 2, or Tailwind 3 — treat them as legacy context, not current truth.
+
+---
+
 <laravel-boost-guidelines>
 === foundation rules ===
 

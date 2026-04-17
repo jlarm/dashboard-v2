@@ -98,7 +98,7 @@ class IndexItem extends Component
         $this->deleteViolationPhotos();
         $this->bodyShopAudit->delete();
 
-        $this->emitTo('dealer.audit.body-shop.index', 'refreshAudits');
+        $this->dispatch('refreshAudits')->to('dealer.audit.body-shop.index');
 
         Notification::make()
             ->title('Body Shop Audit Deleted Successfully!')

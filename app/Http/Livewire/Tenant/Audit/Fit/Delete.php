@@ -28,7 +28,7 @@ class Delete extends Modal
 
             $this->doc->delete();
 
-            $this->emit('saved');
+            $this->dispatch('saved');
 
             $this->close();
 

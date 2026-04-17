@@ -31,7 +31,7 @@ class Delete extends Modal
 
         $this->close();
 
-        $this->emit('$refresh');
+        $this->dispatch('$refresh');
 
         Notification::make()
             ->title('Manual Deleted')

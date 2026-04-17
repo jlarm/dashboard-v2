@@ -40,7 +40,7 @@ class CreateModal extends Modal
         $validated = $this->validate();
         $storeCreator->create($validated);
 
-        $this->emit('refreshLocations');
+        $this->dispatch('refreshLocations');
 
         $this->close();
 

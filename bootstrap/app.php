@@ -13,9 +13,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
-        \WireElements\Pro\WireElementsProServiceProvider::class,
-        \WireElements\Pro\Components\SlideOver\SlideOverServiceProvider::class,
-        \WireElements\Pro\Components\Modal\ModalServiceProvider::class,
         \Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
         \Maatwebsite\Excel\ExcelServiceProvider::class,
     ])

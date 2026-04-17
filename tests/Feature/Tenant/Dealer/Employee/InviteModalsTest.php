@@ -62,7 +62,7 @@ describe('DeleteInvite Modal', function (): void {
         Livewire::actingAs($this->consultant)
             ->test(DeleteInvite::class, ['inviteId' => $invite->id])
             ->call('deleteInvite')
-            ->assertEmitted('refreshOpenInvites');
+            ->assertDispatched('refreshOpenInvites');
 
         expect(Invite::query()->find($invite->id))->toBeNull();
     });

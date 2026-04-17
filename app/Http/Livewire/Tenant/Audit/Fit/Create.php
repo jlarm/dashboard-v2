@@ -97,7 +97,7 @@ class Create extends Component
 
             $this->dispatchBrowserEvent('reset-file-input');
 
-            $this->emit('saved');
+            $this->dispatch('saved');
 
             Notification::make()
                 ->title('File Uploaded Successfully')

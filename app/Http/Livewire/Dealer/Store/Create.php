@@ -39,7 +39,7 @@ class Create extends Modal
 
         $this->reset();
 
-        $this->emit('refreshStores');
+        $this->dispatch('refreshStores');
 
         $this->close();
 

@@ -196,8 +196,8 @@ class Edit extends SlideOver
 
     private function emitRefreshEvents(): void
     {
-        $this->emitTo('dealer.employee.details', 'refreshEmployeeDetails');
-        $this->emitTo('dealer.employee.course-results', 'refreshEmployeeDetails');
+        $this->dispatch('refreshEmployeeDetails')->to('dealer.employee.details');
+        $this->dispatch('refreshEmployeeDetails')->to('dealer.employee.course-results');
     }
 
     private function closeWithSuccessNotification(): void

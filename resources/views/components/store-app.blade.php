@@ -21,6 +21,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    @fluxAppearance
 </head>
 <body class="font-sans antialiased">
 <div x-data="{ open: false }" @keydown.window.escape="open = false">
@@ -42,9 +43,8 @@
         </main>
     </div>
 </div>
-@livewire('slide-over-pro')
-@livewire('modal-pro')
 @livewire('notifications')
 @livewireScripts
+@fluxScripts
 </body>
 </html>

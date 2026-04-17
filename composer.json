@@ -8,68 +8,63 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-imagick": "*",
         "aws/aws-sdk-php": "^3.261",
-        "barryvdh/laravel-dompdf": "^2.1",
-        "doctrine/dbal": "^3.6",
-        "filament/forms": "^3.2",
-        "filament/notifications": "^3.2",
+        "barryvdh/laravel-dompdf": "^3.0",
+        "doctrine/dbal": "^4.0",
+        "filament/forms": "^5.0",
+        "filament/notifications": "^5.0",
         "guzzlehttp/guzzle": "^7.8",
-        "laravel/framework": "^11.51",
+        "laravel/framework": "^13.0",
         "laravel/horizon": "^5.33",
         "laravel/nightwatch": "^1.7",
         "laravel/sanctum": "^4.0",
         "laravel/slack-notification-channel": "^3.2",
         "laravel/telescope": "^5.0",
-        "laravel/tinker": "^2.9",
-        "laravel/vapor-cli": "^1.63",
-        "laravel/vapor-core": "^2.36",
-        "laravel/vapor-ui": "^1.7",
-        "laravel/vonage-notification-channel": "^3.3",
-        "livewire/livewire": "^2.11",
+        "laravel/tinker": "^3.0",
+        "livewire/flux-pro": "^2.13",
+        "livewire/livewire": "^4.2",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.27",
         "predis/predis": "^2.3",
         "sentry/sentry-laravel": "^4.3",
         "spatie/browsershot": "^5.0",
         "spatie/laravel-activitylog": "^4.8",
-        "spatie/laravel-backup": "^8.6",
+        "spatie/laravel-backup": "^10.0",
         "spatie/laravel-medialibrary": "^11.3",
-        "spatie/laravel-medialibrary-pro": "^2.0.0",
-        "spatie/laravel-onboard": "^2.6",
         "spatie/laravel-permission": "^6.2",
-        "spatie/laravel-ray": "^1.35",
         "spatie/laravel-sluggable": "^3.6",
         "stancl/tenancy": "^3.8",
         "vimeo/laravel": "^5.10",
-        "vonage/vonage-laravel": "^1.0",
-        "webklex/laravel-pdfmerger": "^1.3",
-        "wire-elements/pro": "^3.0"
+        "webklex/laravel-pdfmerger": "^1.3"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.10",
+        "barryvdh/laravel-debugbar": "^4.0",
         "driftingly/rector-laravel": "^2.1",
         "fakerphp/faker": "^1.23",
-        "larastan/larastan": "^2.8",
-        "laravel/boost": "^v1.8.10",
+        "larastan/larastan": "^3.0",
+        "laravel/boost": "^2.0",
         "laravel/breeze": "^2.0",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "nunomaduro/phpinsights": "^2.11",
-        "pestphp/pest": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "phpunit/phpunit": "^10.0",
-        "rector/rector": "^1.2"
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "phpunit/phpunit": "^12.0",
+        "rector/rector": "^2.0"
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "classmap": [
+            "stubs/shims"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -102,12 +97,9 @@
     },
     "repositories": [
         {
+            "name": "flux-pro",
             "type": "composer",
-            "url": "https://wire-elements-pro.composer.sh"
-        },
-        {
-            "type": "composer",
-            "url": "https://satis.spatie.be"
+            "url": "https://composer.fluxui.dev"
         }
     ],
     "config": {

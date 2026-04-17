@@ -93,7 +93,7 @@ class IndexItem extends Component
         $this->deleteViolationPhotos();
         $this->oshaAudit->delete();
 
-        $this->emitTo('dealer.audit.osha.index', 'refreshAudits');
+        $this->dispatch('refreshAudits')->to('dealer.audit.osha.index');
 
         Notification::make()
             ->title('Osha Audit Deleted Successfully!')

@@ -329,7 +329,7 @@ describe('Cache Clearing and Refresh', function (): void {
         expect(Cache::has($cacheKey))->toBeFalse();
 
         // Emit event to clear cache and refresh
-        $component->emit('refreshEmployeeDetails');
+        $component->dispatch('refreshEmployeeDetails');
 
         // Cache should be repopulated after refresh (because readyToLoad is true)
         expect(Cache::has($cacheKey))->toBeTrue();
@@ -355,7 +355,7 @@ describe('Cache Clearing and Refresh', function (): void {
         expect(Cache::has($cacheKey))->toBeFalse();
 
         // Emit event to clear cache and refresh
-        $component->emit('refreshEmployeeDetails');
+        $component->dispatch('refreshEmployeeDetails');
 
         // Cache should be repopulated after refresh
         expect(Cache::has($cacheKey))->toBeTrue();
@@ -384,7 +384,7 @@ describe('Cache Clearing and Refresh', function (): void {
         // Clear all caches via component without store
         $component = Livewire::test(DepartmentCompletionStats::class)
             ->call('loadStats')
-            ->emit('refreshEmployeeDetails');
+            ->dispatch('refreshEmployeeDetails');
 
         // Individual store caches should be cleared (may be repopulated depending on logic)
         // The clearAllCachesForTenantAndStore method clears all store caches when no store is specified

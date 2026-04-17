@@ -23,7 +23,7 @@ class Delete extends Modal
 
         $this->bodyShopAudit->delete();
 
-        $this->emitTo('dealer.audit.body-shop.index', 'refreshAudits');
+        $this->dispatch('refreshAudits')->to('dealer.audit.body-shop.index');
 
         $this->close();
 

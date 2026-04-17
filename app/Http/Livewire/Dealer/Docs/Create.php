@@ -52,7 +52,7 @@ class Create extends Component
 
             $this->file = null;
 
-            $this->emit('saved');
+            $this->dispatch('saved');
 
             Notification::make()
                 ->title('Document Added Successfully!')

@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 import laravel, {refreshPaths} from 'laravel-vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     server: {
@@ -31,5 +32,6 @@ export default defineConfig({
                 'app/Forms/Components/**',
             ],
         }),
+        tailwindcss(),
     ],
 });

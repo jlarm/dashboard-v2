@@ -200,7 +200,7 @@ class Edit extends Component
             ->success()
             ->send();
 
-        $this->emit('contractUpdated');
+        $this->dispatch('contractUpdated');
     }
 
     public function render()

@@ -33,7 +33,7 @@ class Create extends Modal
 
         $dealershipCreator->create($user, $validated['name']);
 
-        $this->emit('refreshDealerships');
+        $this->dispatch('refreshDealerships');
         $this->close();
 
         Notification::make()

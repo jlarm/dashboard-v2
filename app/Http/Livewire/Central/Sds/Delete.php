@@ -25,7 +25,7 @@ class Delete extends Modal
 
                 $this->sds->delete();
 
-                $this->emit('refresh');
+                $this->dispatch('refresh');
 
                 Notification::make()
                     ->title('SDS Sheet Added Successfully!')

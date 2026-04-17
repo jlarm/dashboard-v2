@@ -16,7 +16,7 @@ class Restore extends Component
     {
         $this->user->restore();
 
-        $this->emit('refresh-deleted');
+        $this->dispatch('refresh-deleted');
 
         Notification::make()
             ->title('Employee Restored Successfully!')

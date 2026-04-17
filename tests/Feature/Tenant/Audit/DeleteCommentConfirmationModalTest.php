@@ -33,7 +33,7 @@ it('has confirmationCaller initialized so actionConfirmed does not throw before 
 it('opens a confirmation modal when delete is called', function (): void {
     Livewire::test(DeleteCommentConfirmationModal::class, ['comment' => $this->comment])
         ->call('delete')
-        ->assertEmitted('modal.open');
+        ->assertDispatched('modal.open');
 });
 
 it('deletes the comment and emits commentDeleted after confirmation', function (): void {
@@ -43,7 +43,7 @@ it('deletes the comment and emits commentDeleted after confirmation', function (
         ->set('actionConfirmed', true)
         ->set('confirmationCaller', 'delete')
         ->call('delete')
-        ->assertEmitted('commentDeleted');
+        ->assertDispatched('commentDeleted');
 
     expect(AuditComment::query()->find($commentId))->toBeNull();
 });

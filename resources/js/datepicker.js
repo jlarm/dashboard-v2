@@ -313,7 +313,7 @@
 
     // Support for Livewire
     document.addEventListener('livewire:navigated', initDatepickers);
-    document.addEventListener('livewire:load', function() {
+    document.addEventListener('livewire:init', function() {
         initDatepickers();
         // Livewire 2: Re-initialize datepickers after DOM is updated
         if (window.Livewire && window.Livewire.hook) {

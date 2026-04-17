@@ -50,7 +50,7 @@ class Create extends Modal
             'link' => $validated['link'],
         ]);
 
-        $this->emit('eventAdded');
+        $this->dispatch('eventAdded');
 
         $this->close();
 

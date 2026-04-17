@@ -15,14 +15,14 @@ class Notifications extends Component
     {
         DatabaseNotification::query()->find($notification['id'])?->delete();
 
-        $this->emit('notification');
+        $this->dispatch('notification');
     }
 
     public function markAllAsRead(): void
     {
         auth()->user()->notifications->each->delete();
 
-        $this->emit('notification');
+        $this->dispatch('notification');
     }
 
     public function render()

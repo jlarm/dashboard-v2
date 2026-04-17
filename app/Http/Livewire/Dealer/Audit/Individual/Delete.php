@@ -22,9 +22,9 @@ class Delete extends Modal
     {
         $this->individualAudit->delete();
 
-        $this->emitTo('dealer.audit.individual.index', 'refreshIndividualAudits');
-        $this->emitTo('dealer.audit.individual.show', 'refreshComponent');
-        $this->emitTo('dealer.audit.individual.parent-show-single', 'refreshParentComponent');
+        $this->dispatch('refreshIndividualAudits')->to('dealer.audit.individual.index');
+        $this->dispatch('refreshComponent')->to('dealer.audit.individual.show');
+        $this->dispatch('refreshParentComponent')->to('dealer.audit.individual.parent-show-single');
 
         $this->close();
 

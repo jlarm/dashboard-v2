@@ -51,7 +51,7 @@ class AuditCommentForm extends Component
                 ->toMediaCollection('comments', 'armpaudits');
         }
 
-        $this->emit('commentAdded');
+        $this->dispatch('commentAdded');
         $this->reset(['comment', 'image', 'showForm']);
         $this->clearMedia();
     }

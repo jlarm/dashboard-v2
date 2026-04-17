@@ -22,7 +22,7 @@ class Delete extends Modal
         $this->oshaAudit->auditComments()->delete();
         $this->oshaAudit->delete();
 
-        $this->emitTo('dealer.audit.osha.index', 'refreshAudits');
+        $this->dispatch('refreshAudits')->to('dealer.audit.osha.index');
 
         $this->close();
 

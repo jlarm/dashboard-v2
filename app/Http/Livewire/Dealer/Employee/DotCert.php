@@ -61,7 +61,7 @@ class DotCert extends Component
         ]);
 
         $this->showCertButton = false;
-        $this->emit('certificateGenerated');
+        $this->dispatch('certificateGenerated');
 
         $url = Storage::disk('armp-certs')->temporaryUrl($filePath, now()->addHour());
 

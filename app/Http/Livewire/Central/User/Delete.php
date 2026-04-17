@@ -24,7 +24,7 @@ class Delete extends Modal
         try {
             $this->user->delete();
 
-            $this->emit('saved');
+            $this->dispatch('saved');
 
             $this->close();
 

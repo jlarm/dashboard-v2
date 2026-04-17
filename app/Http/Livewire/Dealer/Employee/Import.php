@@ -102,7 +102,7 @@ class Import extends Modal
 
             $this->close();
         } catch (Exception) {
-            $this->emit('importFailed');
+            $this->dispatch('importFailed');
         }
     }
 

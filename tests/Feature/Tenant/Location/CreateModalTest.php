@@ -24,7 +24,7 @@ describe('tenant locations create modal', function (): void {
             ->set('website', 'https://consultant-created.example.com')
             ->call('createStore')
             ->assertHasNoErrors()
-            ->assertEmitted('refreshLocations');
+            ->assertDispatched('refreshLocations');
 
         $store = Store::query()->where('name', 'Consultant Created Store')->first();
 
@@ -54,7 +54,7 @@ describe('tenant locations create modal', function (): void {
             ->set('website', 'https://super-admin-created.example.com')
             ->call('createStore')
             ->assertHasNoErrors()
-            ->assertEmitted('refreshLocations');
+            ->assertDispatched('refreshLocations');
 
         expect(Store::query()->where('name', 'Super Admin Created Store')->exists())->toBeTrue();
     });

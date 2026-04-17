@@ -625,7 +625,7 @@
         ArmpSelect.initAll();
     }
 
-    document.addEventListener('livewire:load', function () {
+    document.addEventListener('livewire:init', function () {
         if (window.Livewire) {
             Livewire.hook('message.processed', function () { ArmpSelect.initAll(); });
         }

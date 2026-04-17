@@ -52,7 +52,7 @@ class Import extends Modal
                 ->success()
                 ->send();
 
-            $this->emit('coursesImported');
+            $this->dispatch('coursesImported');
             $this->close();
         } catch (ValidationException $exception) {
             throw $exception;

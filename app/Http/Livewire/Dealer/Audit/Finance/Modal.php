@@ -51,7 +51,7 @@ class Modal extends \WireElements\Pro\Components\Modal\Modal
     {
         $violation = tenancy()->central(fn () => ViolationStatement::query()->find($violationId));
 
-        $this->emit('violationSelected', $violation->only(['id', 'statement']));
+        $this->dispatch('violationSelected', $violation->only(['id', 'statement']));
         $this->close();
     }
 

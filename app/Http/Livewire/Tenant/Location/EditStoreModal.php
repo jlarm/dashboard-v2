@@ -56,7 +56,7 @@ class EditStoreModal extends Modal
             'website' => $this->website,
         ]);
 
-        $this->emit('refreshLocations');
+        $this->dispatch('refreshLocations');
 
         $this->close();
 

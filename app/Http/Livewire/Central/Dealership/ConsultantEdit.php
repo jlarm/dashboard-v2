@@ -39,7 +39,7 @@ class ConsultantEdit extends SlideOver
             'locations' => $this->locations,
         ]);
 
-        $this->emit('refreshDealerships');
+        $this->dispatch('refreshDealerships');
 
         $this->close();
     }

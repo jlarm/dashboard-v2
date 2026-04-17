@@ -52,14 +52,14 @@ class Edit extends Component
             'website' => $this->website,
         ]);
 
-        $this->emitTo('dealer.store.details', 'refreshStoreDetails');
+        $this->dispatch('refreshStoreDetails')->to('dealer.store.details');
 
         $this->close();
     }
 
     public function close(): void
     {
-        $this->emit('slide-over.close');
+        $this->dispatch('slide-over.close');
     }
 
     public function render()

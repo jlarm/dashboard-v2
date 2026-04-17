@@ -23,7 +23,7 @@ class Create extends Component
 
         $this->reset();
 
-        $this->emit('departmentCreated');
+        $this->dispatch('departmentCreated');
 
         Notification::make()
             ->title('Department Successfully Created!')

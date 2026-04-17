@@ -31,7 +31,7 @@ class DeleteInvite extends Modal
 
         Invite::destroy($this->invite->id);
 
-        $this->emitTo('dealer.employee.open-invites', 'refreshOpenInvites');
+        $this->dispatch('refreshOpenInvites')->to('dealer.employee.open-invites');
 
         $this->close();
     }

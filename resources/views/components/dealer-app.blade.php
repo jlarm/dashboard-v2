@@ -19,6 +19,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    @fluxAppearance
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://js.sentry-cdn.com/487c58c833df4192b1a5311b2e1a849e.min.js" crossorigin="anonymous"></script>
 </head>
@@ -63,13 +64,12 @@
         </main>
     </div>
 </div>
-@livewire('slide-over-pro')
-@livewire('modal-pro')
 @livewire('notifications')
 @auth
     @livewire('notification-poller')
 @endauth
 @livewireScripts
+@fluxScripts
 @stack('scripts')
 <script>
     window.addEventListener('refresh-page', event => {

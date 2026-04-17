@@ -72,7 +72,7 @@ class Create extends Component
             $this->reset(['title', 'url', 'file']);
 
             // Emit the 'saved' event
-            $this->emit('saved');
+            $this->dispatch('saved');
 
             // Send a success notification
             Notification::make()

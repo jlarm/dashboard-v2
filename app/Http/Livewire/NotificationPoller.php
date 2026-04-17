@@ -31,7 +31,7 @@ class NotificationPoller extends Component
             ->get();
 
         foreach ($notifications as $notification) {
-            $this->emit('notificationSent', $notification->data);
+            $this->dispatch('notificationSent', $notification->data);
         }
 
         $this->since = now()->toISOString();
