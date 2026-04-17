@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\BodyShopPdfTestController;
 use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
 use App\Http\Controllers\Dealer\Audit\FinanceCreateController;
@@ -309,5 +310,5 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function (): void {
-    Route::post('/webhooks/gophish/', 'App\Http\Controllers\WebhookController@gophish')->name('webhooks.gophish');
+    Route::post('/webhooks/gophish/', [App\Http\Controllers\WebhookController::class, 'gophish'])->name('webhooks.gophish');
 });
