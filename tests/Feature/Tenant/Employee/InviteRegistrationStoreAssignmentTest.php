@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Providers\AppServiceProvider;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
@@ -32,7 +33,7 @@ describe('invite registration store assignment', function (): void {
             'id' => $invite->id,
             'password' => 'password123',
             'password_confirmation' => 'password123',
-        ])->assertRedirect(RouteServiceProvider::HOME);
+        ])->assertRedirect(AppServiceProvider::HOME);
 
         $user = User::query()->where('email', 'fallback-store-invite-user@test.com')->firstOrFail();
 
@@ -62,7 +63,7 @@ describe('invite registration store assignment', function (): void {
             'id' => $invite->id,
             'password' => 'password123',
             'password_confirmation' => 'password123',
-        ])->assertRedirect(RouteServiceProvider::HOME);
+        ])->assertRedirect(AppServiceProvider::HOME);
 
         $user = User::query()->where('email', 'single-store-invite-user@test.com')->firstOrFail();
 
@@ -101,7 +102,7 @@ describe('invite registration store assignment', function (): void {
             'id' => $invite->id,
             'password' => 'password123',
             'password_confirmation' => 'password123',
-        ])->assertRedirect(RouteServiceProvider::HOME);
+        ])->assertRedirect(AppServiceProvider::HOME);
 
         $user = User::query()->where('email', 'multi-store-invite-user@test.com')->firstOrFail();
         $assignedStoreIds = $user->stores()->orderBy('stores.id')->pluck('stores.id')->all();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dealer;
 
+use App\Providers\AppServiceProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dealer\StoreUserRequest;
 use App\Models\Certificate;
@@ -152,7 +153,7 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->to(RouteServiceProvider::HOME);
+        return redirect()->to(AppServiceProvider::HOME);
     }
 
     private function authorizeUserVisibility(User $user): void

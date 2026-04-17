@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Notifications\ResetPassword;
 use App\Providers\RouteServiceProvider;
@@ -180,7 +181,7 @@ describe('Tenant Password Reset - Reset Password', function (): void {
             ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(AppServiceProvider::HOME);
     });
 
     it('cannot login with old password after reset', function (): void {

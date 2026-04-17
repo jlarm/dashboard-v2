@@ -4,18 +4,32 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\CourseResults;
 use App\Models\User;
+use App\Observers\CourseResultsObserver;
+use App\Observers\UserObserver;
 use App\Services\StoreScopeService;
 use App\Services\UserCourseService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * The path to your application's "home" route.
+     *
+     * Typically, users are redirected here after authentication.
+     *
+     * @var string
+     */
+    public const HOME = '/home';
+
     /**
      * Register any application services.
      */
@@ -109,5 +123,22 @@ class AppServiceProvider extends ServiceProvider
             return stream_get_contents($output);
         });
 
+
+        $this->bootAuth();
+        $this->bootEvent();
+    }
+
+    public function bootAuth(): void
+    {
+
+        Gate::before(fn ($user, $ability): ?true => $user->hasRole('super-admin') ? true : null);
+
+        Password::defaults(fn () => Password::min(8)->uncompromised());
+    }
+
+    public function bootEvent(): void
+    {
+        User::observe(UserObserver::class);
+        CourseResults::observe(CourseResultsObserver::class);
     }
 }

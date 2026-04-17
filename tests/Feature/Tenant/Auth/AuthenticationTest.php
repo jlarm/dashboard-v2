@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Providers\RouteServiceProvider;
 
@@ -27,7 +28,7 @@ describe('Tenant Auth - Authentication', function (): void {
             ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(AppServiceProvider::HOME);
     });
 
     it('cannot authenticate with invalid password', function (): void {

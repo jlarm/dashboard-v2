@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Auth;
 
+use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -39,7 +40,7 @@ class AuthenticationTest extends TestCase
             ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(AppServiceProvider::HOME);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
