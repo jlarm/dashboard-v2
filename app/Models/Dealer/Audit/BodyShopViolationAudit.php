@@ -31,14 +31,18 @@ class BodyShopViolationAudit extends Model
         'grade_updated_at',
         'reminder_logs',
     ];
-    protected $casts = [
-        'uuid' => 'string',
-        'date' => 'date',
-        'completed_date' => 'date',
-        'grade_updated_at' => 'datetime',
-        'data' => 'array',
-        'reminder_logs' => 'array',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'uuid' => 'string',
+            'date' => 'date',
+            'completed_date' => 'date',
+            'grade_updated_at' => 'datetime',
+            'data' => 'array',
+            'reminder_logs' => 'array',
+        ];
+    }
 
     public function user(): BelongsTo
     {

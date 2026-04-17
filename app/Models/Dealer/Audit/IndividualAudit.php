@@ -22,11 +22,15 @@ class IndividualAudit extends Model implements HasMedia
     use HasUuid, InteractsWithMedia, LogsActivity;
 
     protected $guarded = [];
-    protected $casts = [
-        'draft' => 'boolean',
-        'audit_date' => 'date:Y-m-d',
-        'deal_jacket_date' => 'date:Y-m-d',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'draft' => 'boolean',
+            'audit_date' => 'date:Y-m-d',
+            'deal_jacket_date' => 'date:Y-m-d',
+        ];
+    }
 
     public function store(): BelongsTo
     {

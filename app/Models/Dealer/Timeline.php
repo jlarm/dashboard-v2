@@ -17,10 +17,14 @@ class Timeline extends Model
         'message',
         'details',
     ];
-    protected $casts = [
-        'details' => 'array',
-        'time' => 'datetime',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'details' => 'array',
+            'time' => 'datetime',
+        ];
+    }
 
     public function campaign(): BelongsTo
     {

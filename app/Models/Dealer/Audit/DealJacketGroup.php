@@ -27,11 +27,15 @@ class DealJacketGroup extends Model
         'store_id',
         'completed',
     ];
-    protected $casts = [
-        'uuid' => 'string',
-        'store_id' => 'integer',
-        'completed' => 'boolean',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'uuid' => 'string',
+            'store_id' => 'integer',
+            'completed' => 'boolean',
+        ];
+    }
 
     public function store(): BelongsTo
     {

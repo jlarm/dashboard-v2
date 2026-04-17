@@ -24,19 +24,23 @@ class VendorForm extends Model
         'data',
         'document_path',
     ];
-    protected $casts = [
-        'id' => 'integer',
-        'vendor_id' => 'integer',
-        'name' => 'string',
-        'email' => 'string',
-        'signature' => 'string',
-        'last_notification_sent_at' => 'datetime',
-        'data' => 'array',
-        'document_path' => 'string',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'deleted_at' => 'datetime',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'vendor_id' => 'integer',
+            'name' => 'string',
+            'email' => 'string',
+            'signature' => 'string',
+            'last_notification_sent_at' => 'datetime',
+            'data' => 'array',
+            'document_path' => 'string',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+            'deleted_at' => 'datetime',
+        ];
+    }
 
     public function vendor(): BelongsTo
     {

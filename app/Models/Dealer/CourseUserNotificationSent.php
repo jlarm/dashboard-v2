@@ -17,9 +17,13 @@ class CourseUserNotificationSent extends Model
         'course_id',
         'sent',
     ];
-    protected $casts = [
-        'sent' => 'date',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'sent' => 'date',
+        ];
+    }
 
     protected function user(): BelongsTo
     {

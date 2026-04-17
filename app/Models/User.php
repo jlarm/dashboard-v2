@@ -66,10 +66,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'last_sent_course_reminder' => 'datetime',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'last_sent_course_reminder' => 'datetime',
+        ];
+    }
 
     public function getSlugOptions(): SlugOptions
     {

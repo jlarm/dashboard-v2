@@ -14,9 +14,13 @@ class VideoProgress extends Model
         'video_id',
         'completed',
     ];
-    protected $casts = [
-        'completed' => 'boolean',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'completed' => 'boolean',
+        ];
+    }
 
     public function user(): BelongsTo
     {

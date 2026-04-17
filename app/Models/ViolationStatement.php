@@ -30,14 +30,18 @@ class ViolationStatement extends Model
         'categories',
         'reference_image_url',
     ];
-    protected $casts = [
-        'id' => 'integer',
-        'statement' => 'string',
-        'keywords' => 'array',
-        'weight' => 'integer',
-        'categories' => 'array',
-        'reference_image_url' => 'string',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'statement' => 'string',
+            'keywords' => 'array',
+            'weight' => 'integer',
+            'categories' => 'array',
+            'reference_image_url' => 'string',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 }

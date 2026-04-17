@@ -106,22 +106,26 @@ class Store extends Model implements HasMedia
     protected $hidden = [
         'fi_password',
     ];
-    protected $casts = [
-        'ip_addresses' => 'array',
-        'website_urls' => 'array',
-        'monitoring_start_date' => 'date:Y-m-d',
-        'currently_monitoring' => 'boolean',
-        'service_contracts' => 'array',
-        'tire_wheel' => 'array',
-        'other_fi' => 'array',
-        'reinsurance' => 'boolean',
-        'user_submitted' => 'array',
-        'courses_not_taken_notification' => 'boolean',
-        'frequency' => Frequency::class,
-        'remediation_notifications_last_sent' => 'datetime',
-        'videos' => 'boolean',
-        'fi_password' => 'encrypted',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'ip_addresses' => 'array',
+            'website_urls' => 'array',
+            'monitoring_start_date' => 'date:Y-m-d',
+            'currently_monitoring' => 'boolean',
+            'service_contracts' => 'array',
+            'tire_wheel' => 'array',
+            'other_fi' => 'array',
+            'reinsurance' => 'boolean',
+            'user_submitted' => 'array',
+            'courses_not_taken_notification' => 'boolean',
+            'frequency' => Frequency::class,
+            'remediation_notifications_last_sent' => 'datetime',
+            'videos' => 'boolean',
+            'fi_password' => 'encrypted',
+        ];
+    }
 
     public function getSlugOptions(): SlugOptions
     {

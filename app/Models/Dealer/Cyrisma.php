@@ -15,10 +15,14 @@ class Cyrisma extends Model
         'instance_id',
         'instance_url',
     ];
-    protected $casts = [
-        'instance_id' => 'encrypted',
-        'instance_url' => 'encrypted',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'instance_id' => 'encrypted',
+            'instance_url' => 'encrypted',
+        ];
+    }
 
     public function store(): BelongsTo
     {

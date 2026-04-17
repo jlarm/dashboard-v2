@@ -17,10 +17,14 @@ class GlobalSetting extends Model
         'compliance_summary_frequency',
         'compliance_summary_recipients',
     ];
-    protected $casts = [
-        'phishing_active' => 'boolean',
-        'compliance_summary_active' => 'boolean',
-        'compliance_summary_frequency' => ComplianceSummaryFrequency::class,
-        'compliance_summary_recipients' => 'array',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'phishing_active' => 'boolean',
+            'compliance_summary_active' => 'boolean',
+            'compliance_summary_frequency' => ComplianceSummaryFrequency::class,
+            'compliance_summary_recipients' => 'array',
+        ];
+    }
 }

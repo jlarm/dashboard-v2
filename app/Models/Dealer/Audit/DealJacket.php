@@ -34,18 +34,22 @@ class DealJacket extends Model
         'total_high_risk',
         'percentage',
     ];
-    protected $casts = [
-        'uuid' => 'string',
-        'audit_date' => 'date',
-        'date_of_deal_jacket' => 'date',
-        'customer_name' => 'encrypted',
-        'customer_deal_number' => 'encrypted',
-        'responses' => 'encrypted:array',
-        'total_passed' => 'integer',
-        'total_failed' => 'integer',
-        'total_high_risk' => 'integer',
-        'percentage' => 'integer',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'uuid' => 'string',
+            'audit_date' => 'date',
+            'date_of_deal_jacket' => 'date',
+            'customer_name' => 'encrypted',
+            'customer_deal_number' => 'encrypted',
+            'responses' => 'encrypted:array',
+            'total_passed' => 'integer',
+            'total_failed' => 'integer',
+            'total_high_risk' => 'integer',
+            'percentage' => 'integer',
+        ];
+    }
 
     public function dealJacketGroup(): BelongsTo
     {

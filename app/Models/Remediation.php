@@ -23,10 +23,14 @@ class Remediation extends Model implements HasMedia
         'completed',
         'completed_date',
     ];
-    protected $casts = [
-        'completed' => 'boolean',
-        'completed_date' => 'date',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'completed' => 'boolean',
+            'completed_date' => 'date',
+        ];
+    }
 
     public function violation(): BelongsTo
     {

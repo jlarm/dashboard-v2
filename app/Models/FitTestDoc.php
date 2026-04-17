@@ -16,13 +16,17 @@ class FitTestDoc extends Model
         'date',
         'file_path',
     ];
-    protected $casts = [
-        'store_id' => 'integer',
-        'user_id' => 'integer',
-        'employee_name' => 'string',
-        'date' => 'date',
-        'file_path' => 'string',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'store_id' => 'integer',
+            'user_id' => 'integer',
+            'employee_name' => 'string',
+            'date' => 'date',
+            'file_path' => 'string',
+        ];
+    }
 
     public function user(): BelongsTo
     {

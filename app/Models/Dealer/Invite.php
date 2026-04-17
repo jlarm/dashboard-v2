@@ -27,11 +27,15 @@ class Invite extends Model
         'registered_at',
         'courses',
     ];
-    protected $casts = [
-        'stores' => 'array',
-        'roles' => 'array',
-        'courses' => 'array',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'stores' => 'array',
+            'roles' => 'array',
+            'courses' => 'array',
+        ];
+    }
 
     public function user(): BelongsTo
     {

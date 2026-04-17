@@ -23,11 +23,15 @@ class OshaAudit extends Model implements HasMedia
     use InteractsWithMedia, LogsActivity;
 
     protected $guarded = [];
-    protected $casts = [
-        'draft' => 'boolean',
-        'audit_date' => 'date:Y-m-d',
-        'osha_q64_date' => 'date:Y-m-d',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'draft' => 'boolean',
+            'audit_date' => 'date:Y-m-d',
+            'osha_q64_date' => 'date:Y-m-d',
+        ];
+    }
 
     public function store(): BelongsTo
     {

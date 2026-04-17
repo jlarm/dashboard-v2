@@ -22,10 +22,14 @@ class VendorEmailLog extends Model
         'delivery_message',
         'event_type',
     ];
-    protected $casts = [
-        'sent_at' => 'datetime',
-        'delivered_at' => 'datetime',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'sent_at' => 'datetime',
+            'delivered_at' => 'datetime',
+        ];
+    }
 
     public function vendorForm(): BelongsTo
     {

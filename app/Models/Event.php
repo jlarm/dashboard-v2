@@ -19,8 +19,12 @@ class Event extends Model
         'location_name',
         'link',
     ];
-    protected $casts = [
-        'start_date' => 'date:Y-m-d',
-        'end_date' => 'date:Y-m-d',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'date:Y-m-d',
+            'end_date' => 'date:Y-m-d',
+        ];
+    }
 }

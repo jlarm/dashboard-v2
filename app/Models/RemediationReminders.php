@@ -13,9 +13,13 @@ class RemediationReminders extends Model
         'send_date',
         'store_id',
     ];
-    protected $casts = [
-        'send_date' => 'datetime',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'send_date' => 'datetime',
+        ];
+    }
 
     public function remindable(): MorphTo
     {

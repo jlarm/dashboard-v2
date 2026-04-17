@@ -51,10 +51,14 @@ class StoreSettings extends Model
         'personal_devices',
         'compliance_issues',
     ];
-    protected $casts = [
-        'ip_addresses' => 'array',
-        'website_urls' => 'array',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'ip_addresses' => 'array',
+            'website_urls' => 'array',
+        ];
+    }
 
     public function store(): BelongsTo
     {

@@ -14,9 +14,13 @@ class Ridgeback extends Model
         'ip_address',
         'active',
     ];
-    protected $casts = [
-        'active' => 'boolean',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
+    }
 
     public function store(): BelongsTo
     {

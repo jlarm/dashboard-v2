@@ -26,11 +26,15 @@ class PhishingCampaign extends Model
         'data_submitted',
         'emails_reported',
     ];
-    protected $casts = [
-        'results' => 'array',
-        'launched_at' => 'datetime',
-        'campaign_created_at' => 'datetime',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'results' => 'array',
+            'launched_at' => 'datetime',
+            'campaign_created_at' => 'datetime',
+        ];
+    }
 
     public function timelines(): HasMany
     {

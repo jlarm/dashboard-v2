@@ -14,10 +14,14 @@ class DealJacketQuestion extends Model
         'categories',
         'weight',
     ];
-    protected $casts = [
-        'question' => 'string',
-        'statement' => 'string',
-        'categories' => 'array',
-        'weight' => 'integer',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'question' => 'string',
+            'statement' => 'string',
+            'categories' => 'array',
+            'weight' => 'integer',
+        ];
+    }
 }

@@ -50,11 +50,15 @@ class Glb extends Model
         'q12a',
         'q12c',
     ];
-    protected $casts = [
-        'assessment_date' => 'date',
-        'receptacles' => 'array',
-        'managers' => 'array',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'assessment_date' => 'date',
+            'receptacles' => 'array',
+            'managers' => 'array',
+        ];
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

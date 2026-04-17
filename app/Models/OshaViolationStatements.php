@@ -22,12 +22,16 @@ class OshaViolationStatements extends Model
         'keywords',
         'weight',
     ];
-    protected $casts = [
-        'id' => 'integer',
-        'statement' => 'string',
-        'keywords' => 'array',
-        'weight' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'statement' => 'string',
+            'keywords' => 'array',
+            'weight' => 'integer',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 }

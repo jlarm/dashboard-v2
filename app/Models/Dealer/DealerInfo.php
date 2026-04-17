@@ -33,10 +33,14 @@ class DealerInfo extends Model
         'personal_devices',
         'compliance_issues',
     ];
-    protected $casts = [
-        'ip_addresses' => AsCollection::class,
-        'website_urls' => AsCollection::class,
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'ip_addresses' => AsCollection::class,
+            'website_urls' => AsCollection::class,
+        ];
+    }
 
     public function dealer(): BelongsTo
     {

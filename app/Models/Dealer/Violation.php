@@ -32,18 +32,22 @@ class Violation extends Model implements HasMedia
         'severity',
         'show_reference_image',
     ];
-    protected $casts = [
-        'id' => 'integer',
-        'uuid' => 'string',
-        'statement_id' => 'integer',
-        'statement' => 'string',
-        'text' => 'string',
-        'date' => 'date',
-        'violation_date' => 'date:Y-m-d',
-        'risk' => 'boolean',
-        'severity' => 'integer',
-        'show_reference_image' => 'boolean',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'uuid' => 'string',
+            'statement_id' => 'integer',
+            'statement' => 'string',
+            'text' => 'string',
+            'date' => 'date',
+            'violation_date' => 'date:Y-m-d',
+            'risk' => 'boolean',
+            'severity' => 'integer',
+            'show_reference_image' => 'boolean',
+        ];
+    }
 
     public function registerMediaConversions(?Media $media = null): void
     {

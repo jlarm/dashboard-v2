@@ -53,16 +53,20 @@ class Contract extends Model
         'additional_locations',
         'pdf_path',
     ];
-    protected $casts = [
-        'agreement_date' => 'date',
-        'services' => 'array',
-        'commence_date' => 'date',
-        'armp_date_signed' => 'date',
-        'dealer_date_signed' => 'date',
-        'initial_fee' => MoneyCast::class,
-        'monthly_fee' => MoneyCast::class,
-        'additional_locations' => 'array',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'agreement_date' => 'date',
+            'services' => 'array',
+            'commence_date' => 'date',
+            'armp_date_signed' => 'date',
+            'dealer_date_signed' => 'date',
+            'initial_fee' => MoneyCast::class,
+            'monthly_fee' => MoneyCast::class,
+            'additional_locations' => 'array',
+        ];
+    }
 
     /**
      * @return BelongsTo<User, Contract>

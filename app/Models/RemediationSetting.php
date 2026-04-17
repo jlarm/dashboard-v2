@@ -18,12 +18,16 @@ class RemediationSetting extends Model
         'frequency',
         'managers',
     ];
-    protected $casts = [
-        'active' => 'boolean',
-        'notifications' => 'boolean',
-        'frequency' => Frequency::class,
-        'managers' => 'array',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+            'notifications' => 'boolean',
+            'frequency' => Frequency::class,
+            'managers' => 'array',
+        ];
+    }
 
     public function store(): BelongsTo
     {

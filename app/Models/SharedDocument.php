@@ -16,9 +16,13 @@ class SharedDocument extends Model
         'file_name',
         'url',
     ];
-    protected $casts = [
-        'title' => 'string',
-        'file_name' => 'string',
-        'url' => 'string',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'title' => 'string',
+            'file_name' => 'string',
+            'url' => 'string',
+        ];
+    }
 }

@@ -15,10 +15,14 @@ class RemediationReminderPreference extends Model
         'audit_type',
         'enabled',
     ];
-    protected $casts = [
-        'audit_type' => AuditTypes::class,
-        'enabled' => 'boolean',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'audit_type' => AuditTypes::class,
+            'enabled' => 'boolean',
+        ];
+    }
 
     public function user(): BelongsTo
     {

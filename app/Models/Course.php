@@ -27,13 +27,17 @@ class Course extends Model
         'states_required',
         'replaces_course_slugs',
     ];
-    protected $casts = [
-        'slides' => 'array',
-        'questions' => 'array',
-        'answers' => 'array',
-        'states_required' => 'array',
-        'replaces_course_slugs' => 'array',
-    ];
+
+    protected function casts(): array
+    {
+        return [
+            'slides' => 'array',
+            'questions' => 'array',
+            'answers' => 'array',
+            'states_required' => 'array',
+            'replaces_course_slugs' => 'array',
+        ];
+    }
 
     public function users(): BelongsToMany
     {

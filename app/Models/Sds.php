@@ -28,11 +28,6 @@ class Sds extends Model
         'keywords',
         'file_name',
     ];
-    protected $casts = [
-        'product_identification_numbers' => 'array',
-        'cas_nos' => 'array',
-        'keywords' => 'array',
-    ];
 
     protected static function boot(): void
     {
@@ -41,5 +36,14 @@ class Sds extends Model
         static::creating(static function ($model): void {
             $model->uuid = (string) Str::uuid();
         });
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'product_identification_numbers' => 'array',
+            'cas_nos' => 'array',
+            'keywords' => 'array',
+        ];
     }
 }
