@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Dealer;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -20,7 +21,7 @@ class ScanSetting extends Model
         'internal_id',
     ];
 
-    public function store()
+    public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
     }

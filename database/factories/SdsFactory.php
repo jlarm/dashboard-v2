@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 
 class SdsFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
         return [
             'created_at' => Carbon::now(),
