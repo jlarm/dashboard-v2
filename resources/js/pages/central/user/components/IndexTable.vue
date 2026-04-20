@@ -22,6 +22,7 @@ defineProps<{
                     <TableHead>Email</TableHead>
                     <TableHead>Completed Courses</TableHead>
                     <TableHead>Role</TableHead>
+                    <TableHead>Last Login</TableHead>
                     <TableHead></TableHead>
                 </TableRow>
             </TableHeader>
@@ -43,6 +44,9 @@ defineProps<{
                     >
                     <TableCell>
                         <Badge>{{ user.role }}</Badge>
+                    </TableCell>
+                    <TableCell class="text-muted-foreground">
+                        {{ user.last_login_at ? new Date(user.last_login_at).toLocaleString() : 'Never' }}
                     </TableCell>
                     <TableCell class="text-right">
                         <Button size="sm" variant="outline" as-child>

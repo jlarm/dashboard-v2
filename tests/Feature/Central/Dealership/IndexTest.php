@@ -144,7 +144,7 @@ describe('deferred dealerships', function (): void {
 
     it('paginates at 15 per page', function (): void {
         for ($i = 1; $i <= 20; $i++) {
-            makeDealership('Dealer '.str_pad((string) $i, 2, '0', STR_PAD_LEFT));
+            makeDealership('Dealer '.mb_str_pad((string) $i, 2, '0', STR_PAD_LEFT));
         }
 
         asSuperAdmin()

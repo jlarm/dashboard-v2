@@ -5,6 +5,7 @@ export type User = {
     email: string;
     role: string;
     completed_courses_count: number;
+    last_login_at: string | null;
 }
 
 export type DeletedUser = {

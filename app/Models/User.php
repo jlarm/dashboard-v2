@@ -297,6 +297,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email' => 'string',
             'phone' => 'string',
             'email_verified_at' => 'datetime',
+            'last_login_at' => 'datetime',
             'current_store_id' => 'integer',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

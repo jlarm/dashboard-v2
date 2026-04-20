@@ -23,6 +23,7 @@ class UserResource extends JsonResource
                 isset($this->completed_courses_count),
                 fn (): int => (int) $this->completed_courses_count,
             ),
+            'last_login_at' => $this->last_login_at?->toIso8601String(),
         ];
     }
 }

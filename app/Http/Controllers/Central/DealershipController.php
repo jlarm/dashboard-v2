@@ -14,6 +14,7 @@ use App\Http\Resources\Central\DealershipResource;
 use App\Models\Dealership;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -34,7 +35,7 @@ class DealershipController extends Controller
             'dealerships' => Inertia::defer(
                 fn () => DealershipResource::collection($searchDealerships->handle($search, $user)),
             ),
-            'consultants' => Inertia::defer(fn () => $getConsultants->handle($user->id)),
+            'consultants' => Inertia::defer(fn (): Collection => $getConsultants->handle($user->id)),
         ]);
     }
 

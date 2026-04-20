@@ -8,6 +8,7 @@ use App\Models\Dealership;
 use App\Models\User;
 use App\Notifications\NewDealershipNotification;
 use Database\Seeders\RoleAndPermissionSeeder;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -217,7 +218,7 @@ describe('notifications', function (): void {
     it('queues the notification with afterCommit semantics', function (): void {
         $notification = new NewDealershipNotification('Queued Auto');
 
-        expect($notification)->toBeInstanceOf(Illuminate\Contracts\Queue\ShouldQueue::class);
+        expect($notification)->toBeInstanceOf(ShouldQueue::class);
         expect($notification->afterCommit)->toBeTrue();
     });
 });
@@ -233,11 +234,9 @@ describe('action invocation', function (): void {
         mock(CreateDealership::class)
             ->shouldReceive('handle')
             ->once()
-            ->withArgs(function (User $user, DealershipData $data) use ($creator, $otherConsultant): bool {
-                return $user->id === $creator->id
-                    && $data->name === 'Action Auto'
-                    && $data->consultantIds === [$otherConsultant->id];
-            })
+            ->withArgs(fn (User $user, DealershipData $data): bool => $user->id === $creator->id
+                && $data->name === 'Action Auto'
+                && $data->consultantIds === [$otherConsultant->id])
             ->andReturn(new Dealership(['name' => 'Action Auto']));
 
         $this->actingAs($creator)

@@ -53,4 +53,18 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
     }
+
+    public function test_last_login_at_is_recorded_on_successful_login(): void
+    {
+        $user = User::factory()->create(['last_login_at' => null]);
+
+        $this->withoutMiddleware(VerifyCsrfToken::class)
+            ->post('/login', [
+                'email' => $user->email,
+                'password' => 'password',
+            ]);
+
+        $this->assertAuthenticated();
+        $this->assertNotNull($user->refresh()->last_login_at);
+    }
 }
