@@ -15,6 +15,7 @@ use App\Traits\HasCourses;
 use App\Traits\HasManuals;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Override;
 use Spatie\Activitylog\LogOptions;
@@ -205,6 +207,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(CourseUser::class, 'user_id');
     }
 
+    public function primaryRoleName(): ?string
+    {
+        return $this->roles->first()->name ?? '';
+    }
+
     /**
      * @param  Builder<User>  $query
      * @return Builder<User>
@@ -261,32 +268,53 @@ class User extends Authenticatable implements MustVerifyEmail
         $query->when($showNotCompleted, fn ($query) => $query->where('user_has_not_completed_courses', true));
     }
 
-    protected function getInitialsAttribute(): string
+    protected function initials(): Attribute
     {
-        $segments = preg_split('/\s+/', mb_trim((string) $this->name)) ?: [];
-        $segments = array_values(array_filter($segments, static fn (string $segment): bool => $segment !== ''));
+        return Attribute::make(
+            get: function (mixed $value, array $attributes): string {
+                $name = $attributes['name'] ?? '';
 
-        if ($segments === []) {
-            $email = mb_trim((string) $this->email);
-
-            return $email === '' ? '' : mb_strtoupper(mb_substr($email, 0, 1));
-        }
-
-        $initials = '';
-
-        foreach ($segments as $segment) {
-            $initials .= mb_strtoupper(mb_substr($segment, 0, 1));
-        }
-
-        return $initials;
+                return (string) Str::of($name)
+                    ->trim()
+                    ->explode(' ')
+                    ->filter()
+                    ->take(2)
+                    ->map(fn (string $word) => Str::substr($word, 0, 1))
+                    ->implode('')
+                    ->upper();
+            }
+        );
     }
 
     #[Override]
     protected function casts(): array
     {
         return [
+            'id' => 'integer',
+            'department_id' => 'integer',
+            'name' => 'string',
+            'slug' => 'string',
+            'email' => 'string',
+            'phone' => 'string',
             'email_verified_at' => 'datetime',
+            'current_store_id' => 'integer',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+            'deleted_at' => 'datetime',
             'last_sent_course_reminder' => 'datetime',
         ];
+    }
+
+    protected function scopeWithCompletedCoursesCount(Builder $query): Builder
+    {
+        return $query
+            ->select('users.*')
+            ->selectSub(
+                CourseResults::query()
+                    ->selectRaw('COUNT(DISTINCT course_id)')
+                    ->whereColumn('user_id', 'users.id')
+                    ->where('passed', 1),
+                'completed_courses_count'
+            );
     }
 }

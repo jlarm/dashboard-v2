@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { LayoutGrid } from 'lucide-vue-next';
+import { Link, usePage } from '@inertiajs/vue3';
+import { LayoutGrid, Users } from 'lucide-vue-next';
+import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -14,7 +15,8 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
+import type { Auth, NavItem } from '@/types';
+import employees from '@/routes/employees';
 
 const mainNavItems: NavItem[] = [
     {
@@ -22,7 +24,22 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Employees',
+        href: employees.index.url(),
+        icon: Users,
+        roles: ['super-admin'],
+    },
 ];
+
+const page = usePage<{ auth: Auth }>();
+
+const visibleNavItems = computed(() =>
+    mainNavItems.filter(
+        (item) =>
+            !item.roles || item.roles.some((role) => page.props.auth.roles.includes(role)),
+    ),
+);
 </script>
 
 <template>
@@ -40,7 +57,7 @@ const mainNavItems: NavItem[] = [
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain :items="visibleNavItems" />
         </SidebarContent>
 
         <SidebarFooter>

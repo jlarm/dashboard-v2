@@ -9,11 +9,11 @@
 
                 <div class="mt-10">
                     <div>
-                        <form method="POST" action="{{ route('employees.store') }}">
+                        <form method="POST" action="{{ route('employees.store', array_merge(['centralUserInvite' => $invite], request()->query())) }}">
                             @csrf
-                            <input type="hidden" id="nameHidden" name="name" value="{{ $name }}">
-                            <input type="hidden" id="emailHidden" name="email" value="{{ $email }}">
-                            <input type="hidden" id="roleHidden" name="role" value="{{ $role }}">
+                            <input type="hidden" id="nameHidden" name="name" value="{{ $invite->name }}">
+                            <input type="hidden" id="emailHidden" name="email" value="{{ $invite->email }}">
+                            <input type="hidden" id="roleHidden" name="role" value="{{ $invite->role }}">
 
                             <!-- Name -->
                             <div>
@@ -21,7 +21,7 @@
                                 <x-text-input id="name" class="block mt-1 w-full"
                                               type="text"
                                               name="name"
-                                              value="{{ $name }}"
+                                              value="{{ $invite->name }}"
                                               disabled />
 
                                 <x-input-error :messages="$errors->get('name')" class="mt-2"/>
@@ -33,7 +33,7 @@
                                 <x-text-input id="email" class="block mt-1 w-full"
                                               type="email"
                                               name="email"
-                                              value="{{ $email }}"
+                                              value="{{ $invite->email }}"
                                               disabled />
 
                                 <x-input-error :messages="$errors->get('email')" class="mt-2"/>
