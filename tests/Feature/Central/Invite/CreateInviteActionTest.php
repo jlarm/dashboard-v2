@@ -56,7 +56,7 @@ it('sends an on-demand mail notification to the invitee', function (): void {
 
     Notification::assertSentOnDemand(
         UserInviteNotification::class,
-        fn ($notification, $channels, $notifiable) => in_array('mail', $channels, true)
+        fn ($notification, $channels, $notifiable): bool => in_array('mail', $channels, true)
             && $notifiable->routes['mail'] === 'linus@example.com',
     );
 });
