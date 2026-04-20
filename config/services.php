@@ -26,4 +26,8 @@ return [
         'base_url' => env('CYRISMA_API_BASE_URL', 'https://api.cyrisma.com/app'),
     ],
 
+    'dealership' => [
+        'notification_email' => env('DEALERSHIP_NOTIFICATION_EMAIL', 'jlohr@autorisknow.com'),
+    ],
+
 ];

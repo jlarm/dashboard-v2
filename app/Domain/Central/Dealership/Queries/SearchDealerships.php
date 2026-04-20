@@ -11,19 +11,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchDealerships
 {
+    private const int PER_PAGE = 15;
+
     public function handle(?string $search, User $user): LengthAwarePaginator
     {
         return $this->baseQuery($user)
             ->when($search, fn (Builder $query, string $value) => $query->where('name', 'like', "%{$value}%"))
             ->with(['users:id,name', 'domains:tenant_id,domain'])
             ->orderBy('name')
-            ->paginate(10)
+            ->paginate(self::PER_PAGE)
             ->withQueryString();
-    }
-
-    public function count(User $user): int
-    {
-        return $this->baseQuery($user)->count();
     }
 
     private function baseQuery(User $user): Builder
@@ -31,7 +28,7 @@ class SearchDealerships
         return Dealership::query()
             ->when(
                 $user->hasRole('Consultant'),
-                fn (Builder $query) => $query->whereHas('users', fn (Builder $query) => $query->where('users.id', $user->id))
+                fn (Builder $query) => $query->whereRelation('users', 'users.id', $user->id),
             );
     }
 }

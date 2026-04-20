@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Central\UserInvite;
 use App\Models\CourseResults;
+use App\Models\Dealership;
 use App\Models\User;
 use App\Observers\CourseResultsObserver;
 use App\Observers\UserObserver;
+use App\Policies\Central\DealershipPolicy;
+use App\Policies\Central\InvitePolicy;
+use App\Policies\Central\UserPolicy;
 use App\Services\StoreScopeService;
 use App\Services\UserCourseService;
 use Illuminate\Database\Eloquent\Collection;
@@ -131,8 +136,11 @@ class AppServiceProvider extends ServiceProvider
 
     public function bootAuth(): void
     {
-
         Gate::before(fn ($user, $ability): ?true => $user->hasRole('super-admin') ? true : null);
+
+        Gate::policy(Dealership::class, DealershipPolicy::class);
+        Gate::policy(UserInvite::class, InvitePolicy::class);
+        Gate::policy(User::class, UserPolicy::class);
 
         Password::defaults(fn () => Password::min(8)->uncompromised());
     }

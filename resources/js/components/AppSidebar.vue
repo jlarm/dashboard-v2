@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { LayoutGrid, Users } from 'lucide-vue-next';
+import {Building, LayoutGrid, Users} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -17,6 +17,7 @@ import {
 import { dashboard } from '@/routes';
 import type { Auth, NavItem } from '@/types';
 import employees from '@/routes/employees';
+import dealerships from "@/routes/dealerships";
 
 const mainNavItems: NavItem[] = [
     {
@@ -30,6 +31,11 @@ const mainNavItems: NavItem[] = [
         icon: Users,
         roles: ['super-admin'],
     },
+    {
+        title: 'Dealerships',
+        href: dealerships.index.url(),
+        icon: Building,
+    }
 ];
 
 const page = usePage<{ auth: Auth }>();

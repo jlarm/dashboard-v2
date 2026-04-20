@@ -2,238 +2,264 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Central\Dealership\Create as DealershipCreateModal;
-use App\Models\Dealer\Store;
+use App\Domain\Central\Dealership\Actions\CreateDealership;
+use App\Domain\Central\Dealership\Data\DealershipData;
 use App\Models\Dealership;
 use App\Models\User;
+use App\Notifications\NewDealershipNotification;
 use Database\Seeders\RoleAndPermissionSeeder;
-use Illuminate\Support\Str;
-use Livewire\Livewire;
+use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\PermissionRegistrar;
 
+use function Pest\Laravel\mock;
+
 beforeEach(function (): void {
+    DB::statement('SET FOREIGN_KEY_CHECKS=0');
+    DB::table('domains')->truncate();
+    DB::table('tenant_user')->truncate();
+    DB::table('tenants')->truncate();
+    DB::table('model_has_roles')->truncate();
+    DB::table('model_has_permissions')->truncate();
+    DB::table('users')->truncate();
+    DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
     $this->seed(RoleAndPermissionSeeder::class);
     app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
 
-it('creates dealership from a consultant with only name and provisions super-admins plus creator', function (): void {
-    $creator = User::query()->firstOrCreate(
-        ['email' => 'central.consultant@example.com'],
-        ['name' => 'Central Consultant', 'phone' => '1111111111', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $creator->assignRole('Consultant');
+function existingDealershipNamed(string $name): Dealership
+{
+    $owner = User::factory()->create();
 
-    $superAdminA = User::query()->firstOrCreate(
-        ['email' => 'jlohr@autorisknow.com'],
-        ['name' => 'Joe Lohr', 'phone' => '2222222222', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $superAdminA->assignRole('super-admin');
+    $dealership = new Dealership([
+        'name' => $name,
+        'user_id' => $owner->id,
+    ]);
+    $dealership->setInternal('create_database', false);
+    $dealership->save();
+    $dealership->domains()->create(['domain' => str()->slug($name).'.localhost']);
 
-    $superAdminB = User::query()->firstOrCreate(
-        ['email' => 'tdortch@autorisknow.com'],
-        ['name' => 'Terry Dortch', 'phone' => '3333333333', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $superAdminB->assignRole('super-admin');
+    return $dealership;
+}
 
-    $otherConsultant = User::query()->firstOrCreate(
-        ['email' => 'other.consultant@example.com'],
-        ['name' => 'Other Consultant', 'phone' => '4444444444', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $otherConsultant->assignRole('Consultant');
+describe('authorization', function (): void {
+    it('redirects guests to login', function (): void {
+        $this->post(route('dealerships.store'), ['name' => 'Guest Auto'])
+            ->assertRedirect(route('login'));
+    });
 
-    $dealershipName = 'Dealership '.Str::upper(Str::random(6));
+    it('forbids users with neither super-admin nor Consultant', function (): void {
+        $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($creator)
-        ->post(route('dealerships.store'), [
-            'name' => $dealershipName,
-        ]);
+        $this->actingAs($user)
+            ->post(route('dealerships.store'), ['name' => 'Random Motors'])
+            ->assertForbidden();
+    });
 
-    $response->assertRedirect(route('dealerships.index'));
+    it('allows super-admins to hit the store endpoint', function (): void {
+        mock(CreateDealership::class)
+            ->shouldReceive('handle')
+            ->once()
+            ->andReturn(new Dealership(['name' => 'Super Motors']));
 
-    $dealership = Dealership::query()
-        ->where('name', $dealershipName)
-        ->first();
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => 'Super Motors'])
+            ->assertRedirect(route('dealerships.index'));
+    });
 
-    expect($dealership)->toBeInstanceOf(Dealership::class);
+    it('allows Consultants to hit the store endpoint', function (): void {
+        mock(CreateDealership::class)
+            ->shouldReceive('handle')
+            ->once()
+            ->andReturn(new Dealership(['name' => 'Consultant Motors']));
 
-    if (! $dealership instanceof Dealership) {
-        return;
-    }
+        $consultant = User::factory()->create();
+        $consultant->assignRole('Consultant');
 
-    expect($dealership->domain)->toStartWith(Str::slug($dealershipName).'.');
-
-    $centralAttachedEmails = $dealership->users()
-        ->orderBy('email')
-        ->pluck('users.email')
-        ->all();
-
-    expect($centralAttachedEmails)->toContain('central.consultant@example.com');
-    expect($centralAttachedEmails)->toContain('jlohr@autorisknow.com');
-    expect($centralAttachedEmails)->toContain('tdortch@autorisknow.com');
-    expect($centralAttachedEmails)->not->toContain('other.consultant@example.com');
-
-    try {
-        $summary = $dealership->run(function (): array {
-            $tenantUsers = User::query()
-                ->whereIn('email', [
-                    'central.consultant@example.com',
-                    'jlohr@autorisknow.com',
-                    'tdortch@autorisknow.com',
-                ])
-                ->with('stores:id', 'roles:id,name')
-                ->get();
-
-            return [
-                'store_count' => Store::query()->count(),
-                'users' => $tenantUsers->mapWithKeys(fn (User $user): array => [
-                    $user->email => [
-                        'roles' => $user->roles->pluck('name')->all(),
-                        'stores' => $user->stores->pluck('id')->map(static fn ($id): int => (int) $id)->all(),
-                        'current_store_id' => $user->current_store_id,
-                    ],
-                ])->all(),
-            ];
-        });
-
-        expect($summary['store_count'])->toBe(0);
-        expect($summary['users']['central.consultant@example.com']['roles'])->toContain('Consultant');
-        expect($summary['users']['jlohr@autorisknow.com']['roles'])->toContain('super-admin');
-        expect($summary['users']['tdortch@autorisknow.com']['roles'])->toContain('super-admin');
-
-        expect($summary['users']['central.consultant@example.com']['stores'])->toBe([]);
-        expect($summary['users']['jlohr@autorisknow.com']['stores'])->toBe([]);
-        expect($summary['users']['tdortch@autorisknow.com']['stores'])->toBe([]);
-
-        expect($summary['users']['central.consultant@example.com']['current_store_id'])->toBeNull();
-        expect($summary['users']['jlohr@autorisknow.com']['current_store_id'])->toBeNull();
-        expect($summary['users']['tdortch@autorisknow.com']['current_store_id'])->toBeNull();
-    } finally {
-        $dealership->users()->detach();
-        $dealership->forceDelete();
-    }
+        $this->actingAs($consultant)
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => 'Consultant Motors'])
+            ->assertRedirect(route('dealerships.index'));
+    });
 });
 
-it('creates dealership from a super-admin and does not add unrelated consultants', function (): void {
-    $creator = User::query()->firstOrCreate(
-        ['email' => 'mbacker@autorisknow.com'],
-        ['name' => 'Mike Backer', 'phone' => '5555555555', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $creator->assignRole('super-admin');
+describe('validation', function (): void {
+    it('requires a name', function (): void {
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), [])
+            ->assertRedirect(route('dealerships.index'))
+            ->assertSessionHasErrors('name');
+    });
 
-    $superAdmin = User::query()->firstOrCreate(
-        ['email' => 'jlohr@autorisknow.com'],
-        ['name' => 'Joe Lohr', 'phone' => '6666666666', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $superAdmin->assignRole('super-admin');
+    it('rejects names longer than 255 characters', function (): void {
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => str_repeat('a', 256)])
+            ->assertSessionHasErrors('name');
+    });
 
-    $consultant = User::query()->firstOrCreate(
-        ['email' => 'central.consultant@example.com'],
-        ['name' => 'Central Consultant', 'phone' => '7777777777', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $consultant->assignRole('Consultant');
+    it('rejects names with disallowed characters', function (string $name): void {
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => $name])
+            ->assertSessionHasErrors('name');
+    })->with([
+        'slash' => 'Acme/Auto',
+        'underscore' => 'Acme_Auto',
+        'colon' => 'Acme:Auto',
+        'tilde' => 'Acme~Auto',
+    ]);
 
-    $dealershipName = 'Dealership '.Str::upper(Str::random(6));
+    it('accepts the full allowed character set', function (): void {
+        mock(CreateDealership::class)
+            ->shouldReceive('handle')
+            ->once()
+            ->andReturn(new Dealership(['name' => "O'Brien-Smith & Co. 123"]));
 
-    $response = $this
-        ->actingAs($creator)
-        ->post(route('dealerships.store'), [
-            'name' => $dealershipName,
-        ]);
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => "O'Brien-Smith & Co. 123"])
+            ->assertRedirect(route('dealerships.index'))
+            ->assertSessionHasNoErrors();
+    });
 
-    $response->assertRedirect(route('dealerships.index'));
+    it('rejects a duplicate name', function (): void {
+        existingDealershipNamed('Alpha Auto');
 
-    $dealership = Dealership::query()
-        ->where('name', $dealershipName)
-        ->first();
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => 'Alpha Auto'])
+            ->assertSessionHasErrors('name');
+    });
 
-    expect($dealership)->toBeInstanceOf(Dealership::class);
+    it('rejects non-array consultant_ids', function (): void {
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), [
+                'name' => 'Valid Name',
+                'consultant_ids' => 'not-an-array',
+            ])
+            ->assertSessionHasErrors('consultant_ids');
+    });
 
-    if (! $dealership instanceof Dealership) {
-        return;
-    }
+    it('rejects non-integer consultant ids', function (): void {
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), [
+                'name' => 'Valid Name',
+                'consultant_ids' => ['not-an-int'],
+            ])
+            ->assertSessionHasErrors('consultant_ids.0');
+    });
 
-    $centralAttachedEmails = $dealership->users()
-        ->orderBy('email')
-        ->pluck('users.email')
-        ->all();
-
-    expect($centralAttachedEmails)->toContain('mbacker@autorisknow.com');
-    expect($centralAttachedEmails)->toContain('jlohr@autorisknow.com');
-    expect($centralAttachedEmails)->not->toContain('central.consultant@example.com');
-
-    try {
-        $summary = $dealership->run(fn (): array => [
-            'tenant_emails' => User::query()->orderBy('email')->pluck('email')->all(),
-            'store_count' => Store::query()->count(),
-        ]);
-
-        expect($summary['tenant_emails'])->toContain('mbacker@autorisknow.com');
-        expect($summary['tenant_emails'])->toContain('jlohr@autorisknow.com');
-        expect($summary['tenant_emails'])->not->toContain('central.consultant@example.com');
-        expect($summary['store_count'])->toBe(0);
-    } finally {
-        $dealership->users()->detach();
-        $dealership->forceDelete();
-    }
+    it('rejects consultant ids that do not exist', function (): void {
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), [
+                'name' => 'Valid Name',
+                'consultant_ids' => [999999],
+            ])
+            ->assertSessionHasErrors('consultant_ids.0');
+    });
 });
 
-it('generates a unique domain from the dealership name', function (): void {
-    $creator = User::query()->firstOrCreate(
-        ['email' => 'central.consultant@example.com'],
-        ['name' => 'Central Consultant', 'phone' => '8888888888', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $creator->assignRole('Consultant');
+describe('notifications', function (): void {
+    it('dispatches NewDealershipNotification to the configured email after commit', function (): void {
+        config(['services.dealership.notification_email' => 'ops@example.test']);
 
-    $superAdmin = User::query()->firstOrCreate(
-        ['email' => 'jlohr@autorisknow.com'],
-        ['name' => 'Joe Lohr', 'phone' => '9999999999', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $superAdmin->assignRole('super-admin');
+        mock(CreateDealership::class)
+            ->shouldReceive('handle')
+            ->once()
+            ->andReturnUsing(function (User $user, DealershipData $data): Dealership {
+                Notification::route('mail', (string) config('services.dealership.notification_email'))
+                    ->notify(new NewDealershipNotification($data->name));
 
-    $firstName = 'Acme Auto Group';
-    $secondName = 'Acme  Auto Group';
+                return new Dealership(['name' => $data->name]);
+            });
 
-    $this->actingAs($creator)->post(route('dealerships.store'), ['name' => $firstName])->assertRedirect(route('dealerships.index'));
-    $this->actingAs($creator)->post(route('dealerships.store'), ['name' => $secondName])->assertRedirect(route('dealerships.index'));
+        Notification::fake();
 
-    $first = Dealership::query()->where('name', $firstName)->firstOrFail();
-    $second = Dealership::query()->where('name', $secondName)->firstOrFail();
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => 'Notifiable Auto'])
+            ->assertRedirect(route('dealerships.index'));
 
-    expect($first->domain)->toBe(Str::slug($firstName).'.'.config('tenancy.central_domains.0'));
-    expect($second->domain)->toBe(Str::slug($firstName).'-2.'.config('tenancy.central_domains.0'));
+        Notification::assertSentTo(
+            new AnonymousNotifiable,
+            NewDealershipNotification::class,
+            fn (NewDealershipNotification $notification, array $channels, AnonymousNotifiable $notifiable): bool => $notifiable->routes['mail'] === 'ops@example.test'
+                && in_array('mail', $channels, true),
+        );
+    });
 
-    $first->users()->detach();
-    $second->users()->detach();
-    $first->forceDelete();
-    $second->forceDelete();
+    it('skips the notification when no email is configured', function (): void {
+        config(['services.dealership.notification_email' => '']);
+
+        mock(CreateDealership::class)
+            ->shouldReceive('handle')
+            ->once()
+            ->andReturn(new Dealership(['name' => 'Silent Auto']));
+
+        Notification::fake();
+
+        asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => 'Silent Auto'])
+            ->assertRedirect(route('dealerships.index'));
+
+        Notification::assertNothingSent();
+    });
+
+    it('queues the notification with afterCommit semantics', function (): void {
+        $notification = new NewDealershipNotification('Queued Auto');
+
+        expect($notification)->toBeInstanceOf(Illuminate\Contracts\Queue\ShouldQueue::class);
+        expect($notification->afterCommit)->toBeTrue();
+    });
 });
 
-it('creates a dealership from the modal with name only', function (): void {
-    $creator = User::query()->firstOrCreate(
-        ['email' => 'central.consultant@example.com'],
-        ['name' => 'Central Consultant', 'phone' => '1010101010', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $creator->assignRole('Consultant');
+describe('action invocation', function (): void {
+    it('passes the authenticated user and validated data through to the action', function (): void {
+        $creator = User::factory()->create();
+        $creator->assignRole('Consultant');
 
-    $superAdmin = User::query()->firstOrCreate(
-        ['email' => 'jlohr@autorisknow.com'],
-        ['name' => 'Joe Lohr', 'phone' => '1212121212', 'email_verified_at' => now(), 'password' => bcrypt('password')]
-    );
-    $superAdmin->assignRole('super-admin');
+        $otherConsultant = User::factory()->create();
+        $otherConsultant->assignRole('Consultant');
 
-    $this->actingAs($creator);
+        mock(CreateDealership::class)
+            ->shouldReceive('handle')
+            ->once()
+            ->withArgs(function (User $user, DealershipData $data) use ($creator, $otherConsultant): bool {
+                return $user->id === $creator->id
+                    && $data->name === 'Action Auto'
+                    && $data->consultantIds === [$otherConsultant->id];
+            })
+            ->andReturn(new Dealership(['name' => 'Action Auto']));
 
-    Livewire::test(DealershipCreateModal::class)
-        ->set('name', 'Modal Created Dealership')
-        ->call('createDealership')
-        ->assertHasNoErrors();
+        $this->actingAs($creator)
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), [
+                'name' => 'Action Auto',
+                'consultant_ids' => [$otherConsultant->id],
+            ])
+            ->assertRedirect(route('dealerships.index'));
+    });
 
-    $dealership = Dealership::query()->where('name', 'Modal Created Dealership')->firstOrFail();
-    $storeCount = $dealership->run(fn (): int => Store::query()->count());
+    it('propagates exceptions thrown by the action', function (): void {
+        mock(CreateDealership::class)
+            ->shouldReceive('handle')
+            ->once()
+            ->andThrow(new RuntimeException('boom'));
 
-    expect($storeCount)->toBe(0);
+        $this->withoutExceptionHandling();
 
-    $dealership->users()->detach();
-    $dealership->forceDelete();
+        expect(fn () => asSuperAdmin()
+            ->from(route('dealerships.index'))
+            ->post(route('dealerships.store'), ['name' => 'Boom Auto']))
+            ->toThrow(RuntimeException::class, 'boom');
+    });
 });

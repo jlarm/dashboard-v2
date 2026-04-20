@@ -18,7 +18,6 @@ class DashboardController extends Controller
         $user = $request->user();
 
         return Inertia::render('central/Dashboard', [
-            'dealershipsCount' => min($searchDealerships->count($user), 10),
             'dealerships' => Inertia::defer(fn () => DealershipResource::collection(
                 $searchDealerships->handle(null, $user),
             )),

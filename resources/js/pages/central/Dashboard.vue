@@ -13,9 +13,10 @@ type Dealership = {
 }
 
 defineProps<{
-    dealershipsCount: number;
     dealerships?: PaginatedResponse<Dealership>;
 }>();
+
+const SKELETON_ROWS = 5;
 
 const dealershipUrl = (domain: string | null): string | null => {
     if (!domain) {
@@ -33,7 +34,7 @@ const dealershipUrl = (domain: string | null): string | null => {
             <Table>
                 <TableBody>
                     <template v-if="!dealerships">
-                        <TableRow v-for="i in dealershipsCount" :key="i">
+                        <TableRow v-for="i in SKELETON_ROWS" :key="i">
                             <TableCell>
                                 <div class="bg-muted h-4 w-40 animate-pulse rounded" />
                             </TableCell>
