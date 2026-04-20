@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import {Building, LayoutGrid, Users} from 'lucide-vue-next';
+import {GraduationCap, Building, LayoutGrid, Users} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -18,6 +18,7 @@ import { dashboard } from '@/routes';
 import type { Auth, NavItem } from '@/types';
 import employees from '@/routes/employees';
 import dealerships from "@/routes/dealerships";
+import courses from "@/routes/courses";
 
 const mainNavItems: NavItem[] = [
     {
@@ -35,6 +36,11 @@ const mainNavItems: NavItem[] = [
         title: 'Dealerships',
         href: dealerships.index.url(),
         icon: Building,
+    },
+    {
+        title: 'Courses',
+        href: courses.index.url(),
+        icon: GraduationCap,
     }
 ];
 

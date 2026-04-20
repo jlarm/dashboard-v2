@@ -4,17 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Abstracts\AbstractCourse;
 use Override;
-use Spatie\Permission\Traits\HasRoles;
 
-class Course extends Model
+class Course extends AbstractCourse
 {
-    use HasFactory, HasRoles;
-
     protected string $guard_name = 'web';
 
     #[Override]
@@ -31,27 +25,11 @@ class Course extends Model
         'replaces_course_slugs',
     ];
 
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
-
-    public function results(): HasMany
-    {
-        return $this->hasMany(CourseResults::class);
-    }
-
-    public function departments(): BelongsToMany
-    {
-        return $this->belongsToMany(Department::class);
-    }
-
     #[Override]
     protected function casts(): array
     {
         return [
-            'slides' => 'array',
-            'questions' => 'array',
+            ...parent::casts(),
             'answers' => 'array',
             'states_required' => 'array',
             'replaces_course_slugs' => 'array',
