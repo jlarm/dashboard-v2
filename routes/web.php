@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Central\ContractController;
+use App\Http\Controllers\Central\ContractPdfController;
+use App\Http\Controllers\Central\ContractReviewController;
+use App\Http\Controllers\Central\ContractSendController;
 use App\Http\Controllers\Central\CourseController;
 use App\Http\Controllers\Central\CourseResultController;
 use App\Http\Controllers\Central\DashboardController;
@@ -13,6 +17,7 @@ use App\Http\Controllers\Central\UserController;
 use App\Http\Controllers\Central\UserInviteRegistrationController;
 use App\Http\Controllers\Central\VideoProgressController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::inertia('/', 'Welcome')->name('home');
 
@@ -22,6 +27,13 @@ Route::middleware(['guest', 'signed'])->group(function (): void {
     Route::post('employees/register/{centralUserInvite}', [UserInviteRegistrationController::class, 'store'])
         ->name('employees.store');
 });
+
+Route::middleware('signed')->group(function (): void {
+    Route::get('contract/view/{contract:uuid}', [ContractReviewController::class, 'show'])->name('contracts.show');
+    Route::post('contract/view/{contract:uuid}', [ContractReviewController::class, 'store'])->name('contracts.review.store');
+});
+
+Route::get('/thank-you', fn () => Inertia::render('contract/ThankYou'))->name('contracts.thank-you');
 
 Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(function (): void {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -49,6 +61,19 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
         Route::post('/', [SharedDocumentController::class, 'store'])->name('store');
         Route::get('/{sharedDocument}/download', [SharedDocumentController::class, 'download'])->name('download');
         Route::delete('/{sharedDocument}', [SharedDocumentController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('contracts')->name('contracts.')->group(function (): void {
+        Route::get('/', [ContractController::class, 'index'])->name('index');
+        Route::get('create', [ContractController::class, 'create'])->name('create');
+        Route::post('/', [ContractController::class, 'store'])->name('store');
+        Route::get('{contract:uuid}', [ContractController::class, 'edit'])->name('edit');
+        Route::patch('{contract:uuid}', [ContractController::class, 'update'])->name('update');
+        Route::delete('{contract:uuid}', [ContractController::class, 'destroy'])->name('destroy');
+        Route::post('{contract:uuid}/send', [ContractSendController::class, 'review'])->name('send');
+        Route::post('{contract:uuid}/pdf', [ContractPdfController::class, 'generate'])->name('pdf.generate');
+        Route::get('{contract:uuid}/pdf', [ContractPdfController::class, 'download'])->name('pdf.download');
+        Route::post('{contract:uuid}/pdf/send', [ContractSendController::class, 'pdf'])->name('pdf.send');
     });
 });
 

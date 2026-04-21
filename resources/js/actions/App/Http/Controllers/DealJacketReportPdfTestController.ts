@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
 * @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
@@ -42,5 +42,42 @@ DealJacketReportPdfTestController.head = (options?: RouteQueryOptions): RouteDef
     url: DealJacketReportPdfTestController.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
+* @route '/deal-jacket-report-pdf'
+*/
+const DealJacketReportPdfTestControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: DealJacketReportPdfTestController.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
+* @route '/deal-jacket-report-pdf'
+*/
+DealJacketReportPdfTestControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: DealJacketReportPdfTestController.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\DealJacketReportPdfTestController::__invoke
+* @see app/Http/Controllers/DealJacketReportPdfTestController.php:14
+* @route '/deal-jacket-report-pdf'
+*/
+DealJacketReportPdfTestControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: DealJacketReportPdfTestController.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+DealJacketReportPdfTestController.form = DealJacketReportPdfTestControllerForm
 
 export default DealJacketReportPdfTestController

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\UserInviteRegistrationController::create
 * @see app/Http/Controllers/Central/UserInviteRegistrationController.php:24
@@ -68,6 +68,43 @@ create.head = (args: { centralUserInvite: number | { id: number } } | [centralUs
 })
 
 /**
+* @see \App\Http\Controllers\Central\UserInviteRegistrationController::create
+* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:24
+* @route '//dashboard.test/employees/register/{centralUserInvite}'
+*/
+const createForm = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserInviteRegistrationController::create
+* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:24
+* @route '//dashboard.test/employees/register/{centralUserInvite}'
+*/
+createForm.get = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserInviteRegistrationController::create
+* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:24
+* @route '//dashboard.test/employees/register/{centralUserInvite}'
+*/
+createForm.head = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+create.form = createForm
+
+/**
 * @see \App\Http\Controllers\Central\UserInviteRegistrationController::store
 * @see app/Http/Controllers/Central/UserInviteRegistrationController.php:33
 * @route '//dashboard.test/employees/register/{centralUserInvite}'
@@ -124,6 +161,28 @@ store.post = (args: { centralUserInvite: number | { id: number } } | [centralUse
     url: store.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Central\UserInviteRegistrationController::store
+* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:33
+* @route '//dashboard.test/employees/register/{centralUserInvite}'
+*/
+const storeForm = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserInviteRegistrationController::store
+* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:33
+* @route '//dashboard.test/employees/register/{centralUserInvite}'
+*/
+storeForm.post = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(args, options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 const UserInviteRegistrationController = { create, store }
 

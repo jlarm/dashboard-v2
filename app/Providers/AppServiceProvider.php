@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Central\UserInvite;
+use App\Models\Contract;
 use App\Models\Course;
 use App\Models\CourseResults;
 use App\Models\Dealership;
@@ -13,6 +14,7 @@ use App\Models\SharedDocument;
 use App\Models\User;
 use App\Observers\CourseResultsObserver;
 use App\Observers\UserObserver;
+use App\Policies\Central\ContractPolicy;
 use App\Policies\Central\DealershipPolicy;
 use App\Policies\Central\DocumentPolicy;
 use App\Policies\Central\InvitePolicy;
@@ -144,6 +146,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::before(fn ($user, $ability): ?true => $user->hasRole('super-admin') ? true : null);
 
+        Gate::policy(Contract::class, ContractPolicy::class);
         Gate::policy(Course::class, CoursePolicy::class);
         Gate::policy(Dealership::class, DealershipPolicy::class);
         Gate::policy(Document::class, DocumentPolicy::class);

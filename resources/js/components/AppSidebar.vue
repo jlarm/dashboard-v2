@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import {GraduationCap, Building, LayoutGrid, Users, FileText, FolderOpen} from 'lucide-vue-next';
+import {GraduationCap, Building, LayoutGrid, Users, FileText, FolderOpen, ScrollText} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -21,6 +21,7 @@ import dealerships from "@/routes/dealerships";
 import courses from "@/routes/courses";
 import documents from "@/routes/documents";
 import sharedDocuments from "@/routes/shared-documents";
+import contracts from "@/routes/contracts";
 
 const mainNavItems: NavItem[] = [
     {
@@ -53,6 +54,11 @@ const mainNavItems: NavItem[] = [
         title: 'Shared Documents',
         href: sharedDocuments.index.url(),
         icon: FolderOpen,
+    },
+    {
+        title: 'Contracts',
+        href: contracts.index.url(),
+        icon: ScrollText,
     }
 ];
 

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Osha\Edit::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Osha/Edit.php:7
@@ -66,5 +66,42 @@ Edit.head = (args: { oshaViolationAudit: string | number | { uuid: string | numb
     url: Edit.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Edit::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Edit.php:7
+* @route '/audits/osha/{oshaViolationAudit}/edit'
+*/
+const EditForm = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Edit::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Edit.php:7
+* @route '/audits/osha/{oshaViolationAudit}/edit'
+*/
+EditForm.get = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Edit::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Edit.php:7
+* @route '/audits/osha/{oshaViolationAudit}/edit'
+*/
+EditForm.head = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Edit.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+Edit.form = EditForm
 
 export default Edit

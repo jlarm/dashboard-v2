@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Resources\Central;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Override;
+
+class ContractStatusResource extends JsonResource
+{
+    #[Override]
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'status' => $this->status,
+            'step' => $this->step,
+            'created_at' => $this->created_at?->toIso8601String(),
+            'created_at_for_humans' => $this->created_at?->diffForHumans(),
+        ];
+    }
+}
