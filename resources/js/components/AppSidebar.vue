@@ -8,7 +8,7 @@ import {
     FileText,
     FolderOpen,
     ScrollText,
-    FileWarning
+    FileWarning, OctagonAlert
 } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
@@ -73,7 +73,7 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Violation Statements',
         href: violationStatements.index.url(),
-        icon: FileWarning,
+        icon: OctagonAlert,
     }
 ];
 
