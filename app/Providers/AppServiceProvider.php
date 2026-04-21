@@ -8,10 +8,12 @@ use App\Models\Central\UserInvite;
 use App\Models\Course;
 use App\Models\CourseResults;
 use App\Models\Dealership;
+use App\Models\Document;
 use App\Models\User;
 use App\Observers\CourseResultsObserver;
 use App\Observers\UserObserver;
 use App\Policies\Central\DealershipPolicy;
+use App\Policies\Central\DocumentPolicy;
 use App\Policies\Central\InvitePolicy;
 use App\Policies\Central\UserPolicy;
 use App\Policies\CoursePolicy;
@@ -142,6 +144,7 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::policy(Course::class, CoursePolicy::class);
         Gate::policy(Dealership::class, DealershipPolicy::class);
+        Gate::policy(Document::class, DocumentPolicy::class);
         Gate::policy(UserInvite::class, InvitePolicy::class);
         Gate::policy(User::class, UserPolicy::class);
 

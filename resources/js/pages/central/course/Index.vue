@@ -60,6 +60,8 @@ const breadcrumbItems: BreadcrumbItem[] = [
                 </TableBody>
             </Table>
         </div>
-        <AppPagination :pagination="courses" />
+        <div class="mt-3">
+            <AppPagination :pagination="courses" />
+        </div>
     </AppLayout>
 </template>

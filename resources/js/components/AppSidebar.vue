@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import {GraduationCap, Building, LayoutGrid, Users} from 'lucide-vue-next';
+import {GraduationCap, Building, LayoutGrid, Users, FileText} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -19,6 +19,7 @@ import type { Auth, NavItem } from '@/types';
 import employees from '@/routes/employees';
 import dealerships from "@/routes/dealerships";
 import courses from "@/routes/courses";
+import documents from "@/routes/documents";
 
 const mainNavItems: NavItem[] = [
     {
@@ -41,6 +42,11 @@ const mainNavItems: NavItem[] = [
         title: 'Courses',
         href: courses.index.url(),
         icon: GraduationCap,
+    },
+    {
+        title: 'Documents',
+        href: documents.index.url(),
+        icon: FileText,
     }
 ];
 

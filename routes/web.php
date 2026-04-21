@@ -6,6 +6,7 @@ use App\Http\Controllers\Central\CourseController;
 use App\Http\Controllers\Central\CourseResultController;
 use App\Http\Controllers\Central\DashboardController;
 use App\Http\Controllers\Central\DealershipController;
+use App\Http\Controllers\Central\DocumentController;
 use App\Http\Controllers\Central\InviteController;
 use App\Http\Controllers\Central\UserController;
 use App\Http\Controllers\Central\UserInviteRegistrationController;
@@ -33,6 +34,13 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
         Route::post('{course:slug}/progress', [VideoProgressController::class, 'store'])->name('progress.store');
         Route::get('{course:slug}/quiz', [CourseController::class, 'quiz'])->name('quiz');
         Route::post('{course:slug}/quiz', [CourseResultController::class, 'store'])->name('quiz.store');
+    });
+
+    Route::prefix('documents')->name('documents.')->group(function (): void {
+        Route::get('/', [DocumentController::class, 'index'])->name('index');
+        Route::post('/', [DocumentController::class, 'store'])->name('store');
+        Route::get('/{document}/download', [DocumentController::class, 'download'])->name('download');
+        Route::delete('/{document}', [DocumentController::class, 'destroy'])->name('destroy');
     });
 });
 

@@ -4,6 +4,7 @@ import DealershipController from './DealershipController'
 import CourseController from './CourseController'
 import VideoProgressController from './VideoProgressController'
 import CourseResultController from './CourseResultController'
+import DocumentController from './DocumentController'
 import UserController from './UserController'
 import InviteController from './InviteController'
 
@@ -14,6 +15,7 @@ const Central = {
     CourseController: Object.assign(CourseController, CourseController),
     VideoProgressController: Object.assign(VideoProgressController, VideoProgressController),
     CourseResultController: Object.assign(CourseResultController, CourseResultController),
+    DocumentController: Object.assign(DocumentController, DocumentController),
     UserController: Object.assign(UserController, UserController),
     InviteController: Object.assign(InviteController, InviteController),
 }

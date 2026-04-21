@@ -86,13 +86,7 @@ describe('Central Routes - Super Admin Access', function (): void {
 
     it('can access documents index', function (): void {
         asSuperAdmin()
-            ->get(route('docs.index'))
-            ->assertOk();
-    });
-
-    it('can access documents create', function (): void {
-        asSuperAdmin()
-            ->get(route('docs.create'))
+            ->get(route('documents.index'))
             ->assertOk();
     });
 
@@ -196,7 +190,7 @@ describe('Central Routes - Consultant Access', function (): void {
 
     it('can access documents index', function (): void {
         asConsultant()
-            ->get(route('docs.index'))
+            ->get(route('documents.index'))
             ->assertOk();
     });
 
