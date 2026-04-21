@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 import showBac614 from './show'
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
@@ -69,43 +69,6 @@ create.head = (args: { invite: string | number | { invitation_token: string | nu
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-const createForm = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-createForm.get = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-createForm.head = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
 * @see \App\Http\Controllers\Dealer\UserController::store
 * @see app/Http/Controllers/Dealer/UserController.php:65
 * @route '/employees/dealer/store'
@@ -138,28 +101,6 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:65
-* @route '/employees/dealer/store'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:65
-* @route '/employees/dealer/store'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
 
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
@@ -206,43 +147,6 @@ newMethod.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-const newMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethodForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethodForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-newMethod.form = newMethodForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
 * @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
 * @route '/employees/deleted'
@@ -285,43 +189,6 @@ deleted.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: deleted.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-const deletedForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-deletedForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-deletedForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-deleted.form = deletedForm
 
 /**
 * @see \App\Http\Controllers\Dealer\EmployeeIndexController::__invoke
@@ -368,43 +235,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\EmployeeIndexController::__invoke
-* @see app/Http/Controllers/Dealer/EmployeeIndexController.php:12
-* @route '/employees'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\EmployeeIndexController::__invoke
-* @see app/Http/Controllers/Dealer/EmployeeIndexController.php:12
-* @route '/employees'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\EmployeeIndexController::__invoke
-* @see app/Http/Controllers/Dealer/EmployeeIndexController.php:12
-* @route '/employees'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-/**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
 * @route '/employees/open-invites'
@@ -447,43 +277,6 @@ openInvites.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: openInvites.url(options),
     method: 'head',
 })
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-const openInvitesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: openInvites.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-openInvitesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: openInvites.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-openInvitesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: openInvites.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-openInvites.form = openInvitesForm
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::show
@@ -552,43 +345,6 @@ show.head = (args: { user: string | { slug: string } } | [user: string | { slug:
     url: show.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::show
-* @see app/Http/Controllers/Dealer/UserController.php:38
-* @route '/employees/{user}'
-*/
-const showForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::show
-* @see app/Http/Controllers/Dealer/UserController.php:38
-* @route '/employees/{user}'
-*/
-showForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::show
-* @see app/Http/Controllers/Dealer/UserController.php:38
-* @route '/employees/{user}'
-*/
-showForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
 
 const employees = {
     create: Object.assign(create, create),

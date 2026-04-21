@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
 * @see app/Http/Controllers/Tenant/SdsController.php:22
@@ -60,43 +60,6 @@ view.head = (args: { uuid: string | number } | [uuid: string | number ] | string
     url: view.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:22
-* @route '/sds-sheets/{uuid}/view'
-*/
-const viewForm = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: view.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:22
-* @route '/sds-sheets/{uuid}/view'
-*/
-viewForm.get = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: view.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:22
-* @route '/sds-sheets/{uuid}/view'
-*/
-viewForm.head = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: view.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-view.form = viewForm
 
 const SdsController = { view }
 

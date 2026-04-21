@@ -12,6 +12,7 @@ use App\Models\Dealership;
 use App\Models\Document;
 use App\Models\SharedDocument;
 use App\Models\User;
+use App\Models\ViolationStatement;
 use App\Observers\CourseResultsObserver;
 use App\Observers\UserObserver;
 use App\Policies\Central\ContractPolicy;
@@ -20,6 +21,7 @@ use App\Policies\Central\DocumentPolicy;
 use App\Policies\Central\InvitePolicy;
 use App\Policies\Central\SharedDocumentPolicy;
 use App\Policies\Central\UserPolicy;
+use App\Policies\Central\ViolationStatementPolicy;
 use App\Policies\CoursePolicy;
 use App\Services\StoreScopeService;
 use App\Services\UserCourseService;
@@ -153,6 +155,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(SharedDocument::class, SharedDocumentPolicy::class);
         Gate::policy(UserInvite::class, InvitePolicy::class);
         Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(ViolationStatement::class, ViolationStatementPolicy::class);
 
         Password::defaults(fn () => Password::min(8)->uncompromised());
     }

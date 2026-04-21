@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\UserController::manageCourses
 * @see app/Http/Controllers/Dealer/UserController.php:43
@@ -66,43 +66,6 @@ manageCourses.head = (args: { user: string | { slug: string } } | [user: string 
     url: manageCourses.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
-* @route '/employees/{user}/manage-courses'
-*/
-const manageCoursesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: manageCourses.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
-* @route '/employees/{user}/manage-courses'
-*/
-manageCoursesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: manageCourses.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
-* @route '/employees/{user}/manage-courses'
-*/
-manageCoursesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: manageCourses.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-manageCourses.form = manageCoursesForm
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::certificates
@@ -173,43 +136,6 @@ certificates.head = (args: { user: string | { slug: string } } | [user: string |
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
-*/
-const certificatesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: certificates.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
-*/
-certificatesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: certificates.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
-*/
-certificatesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: certificates.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-certificates.form = certificatesForm
-
-/**
 * @see \App\Http\Controllers\Dealer\UserController::videoProgress
 * @see app/Http/Controllers/Dealer/UserController.php:53
 * @route '/employees/{user}/video-progress'
@@ -276,43 +202,6 @@ videoProgress.head = (args: { user: string | { slug: string } } | [user: string 
     url: videoProgress.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-const videoProgressForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: videoProgress.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-videoProgressForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: videoProgress.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-videoProgressForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: videoProgress.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-videoProgress.form = videoProgressForm
 
 const show = {
     manageCourses: Object.assign(manageCourses, manageCourses),

@@ -22,6 +22,7 @@ import courses from "@/routes/courses";
 import documents from "@/routes/documents";
 import sharedDocuments from "@/routes/shared-documents";
 import contracts from "@/routes/contracts";
+import violationStatements from "@/routes/violation-statements";
 
 const mainNavItems: NavItem[] = [
     {
@@ -59,6 +60,11 @@ const mainNavItems: NavItem[] = [
         title: 'Contracts',
         href: contracts.index.url(),
         icon: ScrollText,
+    },
+    {
+        title: 'Violation Statements',
+        href: violationStatements.index.url(),
+        icon: FileText,
     }
 ];
 

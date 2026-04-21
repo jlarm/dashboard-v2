@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\CourseResultController::store
 * @see app/Http/Controllers/Central/CourseResultController.php:16
@@ -56,28 +56,6 @@ store.post = (args: { course: string | { slug: string } } | [course: string | { 
     url: store.url(args, options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Central\CourseResultController::store
-* @see app/Http/Controllers/Central/CourseResultController.php:16
-* @route '//dashboard.test/courses/{course}/quiz'
-*/
-const storeForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\CourseResultController::store
-* @see app/Http/Controllers/Central/CourseResultController.php:16
-* @route '//dashboard.test/courses/{course}/quiz'
-*/
-storeForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(args, options),
-    method: 'post',
-})
-
-store.form = storeForm
 
 const CourseResultController = { store }
 

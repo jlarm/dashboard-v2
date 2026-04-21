@@ -16,6 +16,7 @@ use App\Http\Controllers\Central\SharedDocumentController;
 use App\Http\Controllers\Central\UserController;
 use App\Http\Controllers\Central\UserInviteRegistrationController;
 use App\Http\Controllers\Central\VideoProgressController;
+use App\Http\Controllers\Central\ViolationStatementController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -74,6 +75,13 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
         Route::post('{contract:uuid}/pdf', [ContractPdfController::class, 'generate'])->name('pdf.generate');
         Route::get('{contract:uuid}/pdf', [ContractPdfController::class, 'download'])->name('pdf.download');
         Route::post('{contract:uuid}/pdf/send', [ContractSendController::class, 'pdf'])->name('pdf.send');
+    });
+
+    Route::prefix('violation-statements')->name('violation-statements.')->group(function (): void {
+        Route::get('/', [ViolationStatementController::class, 'index'])->name('index');
+        Route::post('/', [ViolationStatementController::class, 'store'])->name('store');
+        Route::patch('{violationStatement}', [ViolationStatementController::class, 'update'])->name('update');
+        Route::delete('{violationStatement}', [ViolationStatementController::class, 'destroy'])->name('destroy');
     });
 });
 

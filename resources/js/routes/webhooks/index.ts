@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
 * @see app/Http/Controllers/API/MailgunWebhookController.php:18
@@ -34,28 +34,6 @@ mailgun.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:18
-* @route '//dashboard.test/api/webhooks/mailgun'
-*/
-const mailgunForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: mailgun.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:18
-* @route '//dashboard.test/api/webhooks/mailgun'
-*/
-mailgunForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: mailgun.url(options),
-    method: 'post',
-})
-
-mailgun.form = mailgunForm
-
-/**
 * @see \App\Http\Controllers\WebhookController::gophish
 * @see app/Http/Controllers/WebhookController.php:14
 * @route '/webhooks/gophish'
@@ -88,28 +66,6 @@ gophish.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: gophish.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\WebhookController::gophish
-* @see app/Http/Controllers/WebhookController.php:14
-* @route '/webhooks/gophish'
-*/
-const gophishForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: gophish.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\WebhookController::gophish
-* @see app/Http/Controllers/WebhookController.php:14
-* @route '/webhooks/gophish'
-*/
-gophishForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: gophish.url(options),
-    method: 'post',
-})
-
-gophish.form = gophishForm
 
 const webhooks = {
     mailgun: Object.assign(mailgun, mailgun),

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\BodyShopCreateController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/BodyShopCreateController.php:14
@@ -60,42 +60,5 @@ BodyShopCreateController.head = (args: { store: string | number } | [store: stri
     url: BodyShopCreateController.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\BodyShopCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/BodyShopCreateController.php:14
-* @route '/audits/body-shop/create/{store}'
-*/
-const BodyShopCreateControllerForm = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: BodyShopCreateController.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\BodyShopCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/BodyShopCreateController.php:14
-* @route '/audits/body-shop/create/{store}'
-*/
-BodyShopCreateControllerForm.get = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: BodyShopCreateController.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\BodyShopCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/BodyShopCreateController.php:14
-* @route '/audits/body-shop/create/{store}'
-*/
-BodyShopCreateControllerForm.head = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: BodyShopCreateController.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-BodyShopCreateController.form = BodyShopCreateControllerForm
 
 export default BodyShopCreateController
