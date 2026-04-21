@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import {GraduationCap, Building, LayoutGrid, Users, FileText, FolderOpen, ScrollText} from 'lucide-vue-next';
+import {
+    GraduationCap,
+    Building,
+    LayoutGrid,
+    Users,
+    FileText,
+    FolderOpen,
+    ScrollText,
+    FileWarning
+} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -64,7 +73,7 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Violation Statements',
         href: violationStatements.index.url(),
-        icon: FileText,
+        icon: FileWarning,
     }
 ];
 
