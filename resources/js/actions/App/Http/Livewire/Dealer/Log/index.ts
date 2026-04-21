@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Log\Index::__invoke
 * @see app/Http/Livewire/Dealer/Log/Index.php:7
@@ -42,42 +42,5 @@ Index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: Index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Log\Index::__invoke
-* @see app/Http/Livewire/Dealer/Log/Index.php:7
-* @route '/logs'
-*/
-const IndexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Log\Index::__invoke
-* @see app/Http/Livewire/Dealer/Log/Index.php:7
-* @route '/logs'
-*/
-IndexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Log\Index::__invoke
-* @see app/Http/Livewire/Dealer/Log/Index.php:7
-* @route '/logs'
-*/
-IndexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-Index.form = IndexForm
 
 export default Index

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\ImpersonationController::impersonate
 * @see app/Http/Controllers/Dealer/ImpersonationController.php:13
@@ -66,43 +66,6 @@ impersonate.head = (args: { user: number | { id: number } } | [user: number | { 
     url: impersonate.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\ImpersonationController::impersonate
-* @see app/Http/Controllers/Dealer/ImpersonationController.php:13
-* @route '/employee/{user}/impersonate'
-*/
-const impersonateForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: impersonate.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\ImpersonationController::impersonate
-* @see app/Http/Controllers/Dealer/ImpersonationController.php:13
-* @route '/employee/{user}/impersonate'
-*/
-impersonateForm.get = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: impersonate.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\ImpersonationController::impersonate
-* @see app/Http/Controllers/Dealer/ImpersonationController.php:13
-* @route '/employee/{user}/impersonate'
-*/
-impersonateForm.head = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: impersonate.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-impersonate.form = impersonateForm
 
 const employee = {
     impersonate: Object.assign(impersonate, impersonate),

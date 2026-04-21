@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\BodyShopCreateController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/BodyShopCreateController.php:14
@@ -60,43 +60,6 @@ create.head = (args: { store: string | number } | [store: string | number ] | st
     url: create.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\BodyShopCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/BodyShopCreateController.php:14
-* @route '/audits/body-shop/create/{store}'
-*/
-const createForm = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\BodyShopCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/BodyShopCreateController.php:14
-* @route '/audits/body-shop/create/{store}'
-*/
-createForm.get = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\BodyShopCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/BodyShopCreateController.php:14
-* @route '/audits/body-shop/create/{store}'
-*/
-createForm.head = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::__invoke
@@ -167,43 +130,6 @@ edit.head = (args: { bodyShopViolationAudit: string | number | { uuid: string | 
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Edit.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/edit'
-*/
-const editForm = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Edit.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/edit'
-*/
-editForm.get = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Edit.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/edit'
-*/
-editForm.head = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-edit.form = editForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Audit\BodyShop\Index::__invoke
 * @see app/Http/Livewire/Dealer/Audit/BodyShop/Index.php:7
 * @route '/audits/body-shop'
@@ -246,43 +172,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Index::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Index.php:7
-* @route '/audits/body-shop'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Index::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Index.php:7
-* @route '/audits/body-shop'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Index::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Index.php:7
-* @route '/audits/body-shop'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::__invoke
@@ -353,43 +242,6 @@ remediation.head = (args: { bodyShopViolationAudit: string | number | { uuid: st
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/RemediationForm.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/remediation'
-*/
-const remediationForm = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/RemediationForm.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/remediation'
-*/
-remediationForm.get = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/RemediationForm.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/remediation'
-*/
-remediationForm.head = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-remediation.form = remediationForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Audit\BodyShop\Single::__invoke
 * @see app/Http/Livewire/Dealer/Audit/BodyShop/Single.php:7
 * @route '/audits/body-shop/{bodyShopViolationAudit}'
@@ -456,43 +308,6 @@ show.head = (args: { bodyShopViolationAudit: string | number | { uuid: string | 
     url: show.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Single.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}'
-*/
-const showForm = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Single.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}'
-*/
-showForm.get = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Single.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}'
-*/
-showForm.head = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
 
 const bodyShop = {
     create: Object.assign(create, create),

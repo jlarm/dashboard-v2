@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../wayfinder'
 import global6b02c0 from './global'
 /**
 * @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
@@ -45,43 +45,6 @@ global.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings'
-*/
-const globalForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: global.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings'
-*/
-globalForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: global.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings'
-*/
-globalForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: global.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-global.form = globalForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Settings\AutomatedReports::__invoke
 * @see app/Http/Livewire/Dealer/Settings/AutomatedReports.php:7
 * @route '/automated-reports'
@@ -124,43 +87,6 @@ automatedReports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
     url: automatedReports.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\AutomatedReports::__invoke
-* @see app/Http/Livewire/Dealer/Settings/AutomatedReports.php:7
-* @route '/automated-reports'
-*/
-const automatedReportsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: automatedReports.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\AutomatedReports::__invoke
-* @see app/Http/Livewire/Dealer/Settings/AutomatedReports.php:7
-* @route '/automated-reports'
-*/
-automatedReportsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: automatedReports.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\AutomatedReports::__invoke
-* @see app/Http/Livewire/Dealer/Settings/AutomatedReports.php:7
-* @route '/automated-reports'
-*/
-automatedReportsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: automatedReports.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-automatedReports.form = automatedReportsForm
 
 const settings = {
     global: Object.assign(global, global6b02c0),

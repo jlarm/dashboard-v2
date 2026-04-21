@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
 * @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
@@ -68,43 +68,6 @@ create.head = (args: { dealJacketGroup: string | number | { uuid: string | numbe
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
-* @route '/audits/deal-jackets/{dealJacketGroup}/create'
-*/
-const createForm = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
-* @route '/audits/deal-jackets/{dealJacketGroup}/create'
-*/
-createForm.get = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::create
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:25
-* @route '/audits/deal-jackets/{dealJacketGroup}/create'
-*/
-createForm.head = (args: { dealJacketGroup: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
 * @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
 * @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
@@ -170,43 +133,6 @@ edit.head = (args: { dealJacketGroup: string | number | { uuid: string | number 
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
-* @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
-*/
-const editForm = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
-* @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
-*/
-editForm.get = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::edit
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:34
-* @route '/audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}'
-*/
-editForm.head = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-edit.form = editForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketController::show
 * @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
 * @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
@@ -270,43 +196,6 @@ show.head = (args: { dealJacketGroup: string | number | { uuid: string | number 
     url: show.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
-* @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
-*/
-const showForm = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
-* @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
-*/
-showForm.get = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketController::show
-* @see app/Http/Controllers/Tenant/Audit/DealJacketController.php:16
-* @route '/audits/deal-jackets/{dealJacketGroup}/{dealJacket}'
-*/
-showForm.head = (args: { dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } } | [dealJacketGroup: string | number | { uuid: string | number }, dealJacket: string | number | { uuid: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
 
 const DealJacketController = { create, edit, show }
 

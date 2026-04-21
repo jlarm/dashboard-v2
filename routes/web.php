@@ -8,6 +8,7 @@ use App\Http\Controllers\Central\DashboardController;
 use App\Http\Controllers\Central\DealershipController;
 use App\Http\Controllers\Central\DocumentController;
 use App\Http\Controllers\Central\InviteController;
+use App\Http\Controllers\Central\SharedDocumentController;
 use App\Http\Controllers\Central\UserController;
 use App\Http\Controllers\Central\UserInviteRegistrationController;
 use App\Http\Controllers\Central\VideoProgressController;
@@ -41,6 +42,13 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
         Route::post('/', [DocumentController::class, 'store'])->name('store');
         Route::get('/{document}/download', [DocumentController::class, 'download'])->name('download');
         Route::delete('/{document}', [DocumentController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('shared-documents')->name('shared-documents.')->group(function (): void {
+        Route::get('/', [SharedDocumentController::class, 'index'])->name('index');
+        Route::post('/', [SharedDocumentController::class, 'store'])->name('store');
+        Route::get('/{sharedDocument}/download', [SharedDocumentController::class, 'download'])->name('download');
+        Route::delete('/{sharedDocument}', [SharedDocumentController::class, 'destroy'])->name('destroy');
     });
 });
 

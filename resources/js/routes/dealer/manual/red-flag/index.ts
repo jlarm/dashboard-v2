@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Manual\RedFlag\Index::__invoke
 * @see app/Http/Livewire/Dealer/Manual/RedFlag/Index.php:7
@@ -44,43 +44,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\RedFlag\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/RedFlag/Index.php:7
-* @route '/manuals/red-flag'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Manual\RedFlag\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/RedFlag/Index.php:7
-* @route '/manuals/red-flag'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Manual\RedFlag\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/RedFlag/Index.php:7
-* @route '/manuals/red-flag'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Manual\RedFlag\Create::__invoke
 * @see app/Http/Livewire/Dealer/Manual/RedFlag/Create.php:7
 * @route '/manuals/red-flag/create'
@@ -123,43 +86,6 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: create.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Manual\RedFlag\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/RedFlag/Create.php:7
-* @route '/manuals/red-flag/create'
-*/
-const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Manual\RedFlag\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/RedFlag/Create.php:7
-* @route '/manuals/red-flag/create'
-*/
-createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Manual\RedFlag\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/RedFlag/Create.php:7
-* @route '/manuals/red-flag/create'
-*/
-createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
 
 const redFlag = {
     index: Object.assign(index, index),

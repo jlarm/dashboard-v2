@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\OshaPdfTestController::__invoke
 * @see app/Http/Controllers/OshaPdfTestController.php:12
@@ -42,42 +42,5 @@ OshaPdfTestController.head = (options?: RouteQueryOptions): RouteDefinition<'hea
     url: OshaPdfTestController.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\OshaPdfTestController::__invoke
-* @see app/Http/Controllers/OshaPdfTestController.php:12
-* @route '/osha-audit-pdf'
-*/
-const OshaPdfTestControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: OshaPdfTestController.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\OshaPdfTestController::__invoke
-* @see app/Http/Controllers/OshaPdfTestController.php:12
-* @route '/osha-audit-pdf'
-*/
-OshaPdfTestControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: OshaPdfTestController.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\OshaPdfTestController::__invoke
-* @see app/Http/Controllers/OshaPdfTestController.php:12
-* @route '/osha-audit-pdf'
-*/
-OshaPdfTestControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: OshaPdfTestController.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-OshaPdfTestController.form = OshaPdfTestControllerForm
 
 export default OshaPdfTestController
