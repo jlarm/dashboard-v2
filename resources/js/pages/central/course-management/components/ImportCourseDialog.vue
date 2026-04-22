@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { FileUpload } from "@/components/ui/file-upload";
 import CourseManagementController from "@/actions/App/Http/Controllers/Central/CourseManagementController";
 
 const open = ref(false);
@@ -45,13 +46,12 @@ const handleSuccess = (): void => {
                 class="space-y-6"
             >
                 <Field>
-                    <FieldLabel for="course-import-file">JSON file *</FieldLabel>
-                    <input
-                        id="course-import-file"
-                        type="file"
+                    <FieldLabel>JSON file *</FieldLabel>
+                    <FileUpload
                         name="file"
                         accept=".json,application/json"
-                        class="text-sm"
+                        label="Drop your JSON file here, or"
+                        hint="JSON only — up to 10 MB"
                     />
                     <FieldError v-if="errors.file">{{ errors.file }}</FieldError>
                 </Field>
