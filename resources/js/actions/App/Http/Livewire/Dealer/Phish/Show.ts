@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Phish\Show::__invoke
 * @see app/Http/Livewire/Dealer/Phish/Show.php:7
@@ -60,5 +60,42 @@ Show.head = (args: { phishingCampaign: string | number } | [phishingCampaign: st
     url: Show.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Phish\Show::__invoke
+* @see app/Http/Livewire/Dealer/Phish/Show.php:7
+* @route '/phishing/{phishingCampaign}'
+*/
+const ShowForm = (args: { phishingCampaign: string | number } | [phishingCampaign: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Phish\Show::__invoke
+* @see app/Http/Livewire/Dealer/Phish/Show.php:7
+* @route '/phishing/{phishingCampaign}'
+*/
+ShowForm.get = (args: { phishingCampaign: string | number } | [phishingCampaign: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Phish\Show::__invoke
+* @see app/Http/Livewire/Dealer/Phish/Show.php:7
+* @route '/phishing/{phishingCampaign}'
+*/
+ShowForm.head = (args: { phishingCampaign: string | number } | [phishingCampaign: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+Show.form = ShowForm
 
 export default Show

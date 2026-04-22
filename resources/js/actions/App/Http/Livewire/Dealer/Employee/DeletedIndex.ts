@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
 * @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
@@ -42,5 +42,42 @@ DeletedIndex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: DeletedIndex.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
+* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
+* @route '/employees/deleted'
+*/
+const DeletedIndexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: DeletedIndex.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
+* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
+* @route '/employees/deleted'
+*/
+DeletedIndexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: DeletedIndex.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
+* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
+* @route '/employees/deleted'
+*/
+DeletedIndexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: DeletedIndex.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+DeletedIndex.form = DeletedIndexForm
 
 export default DeletedIndex

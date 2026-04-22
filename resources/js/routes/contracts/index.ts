@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 import review from './review'
 import pdf from './pdf'
 /**
@@ -70,6 +70,43 @@ show.head = (args: { contract: string | { uuid: string } } | [contract: string |
 })
 
 /**
+* @see \App\Http\Controllers\Central\ContractReviewController::show
+* @see app/Http/Controllers/Central/ContractReviewController.php:21
+* @route '//dashboard.test/contract/view/{contract}'
+*/
+const showForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractReviewController::show
+* @see app/Http/Controllers/Central/ContractReviewController.php:21
+* @route '//dashboard.test/contract/view/{contract}'
+*/
+showForm.get = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractReviewController::show
+* @see app/Http/Controllers/Central/ContractReviewController.php:21
+* @route '//dashboard.test/contract/view/{contract}'
+*/
+showForm.head = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see routes/web.php:37
 * @route '//dashboard.test/thank-you'
 */
@@ -108,6 +145,40 @@ thankYou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: thankYou.url(options),
     method: 'head',
 })
+
+/**
+* @see routes/web.php:37
+* @route '//dashboard.test/thank-you'
+*/
+const thankYouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: thankYou.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:37
+* @route '//dashboard.test/thank-you'
+*/
+thankYouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: thankYou.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:37
+* @route '//dashboard.test/thank-you'
+*/
+thankYouForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: thankYou.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+thankYou.form = thankYouForm
 
 /**
 * @see \App\Http\Controllers\Central\ContractController::index
@@ -154,6 +225,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Central\ContractController::index
+* @see app/Http/Controllers/Central/ContractController.php:28
+* @route '//dashboard.test/contracts'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::index
+* @see app/Http/Controllers/Central/ContractController.php:28
+* @route '//dashboard.test/contracts'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::index
+* @see app/Http/Controllers/Central/ContractController.php:28
+* @route '//dashboard.test/contracts'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+/**
 * @see \App\Http\Controllers\Central\ContractController::create
 * @see app/Http/Controllers/Central/ContractController.php:43
 * @route '//dashboard.test/contracts/create'
@@ -198,6 +306,43 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Central\ContractController::create
+* @see app/Http/Controllers/Central/ContractController.php:43
+* @route '//dashboard.test/contracts/create'
+*/
+const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::create
+* @see app/Http/Controllers/Central/ContractController.php:43
+* @route '//dashboard.test/contracts/create'
+*/
+createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::create
+* @see app/Http/Controllers/Central/ContractController.php:43
+* @route '//dashboard.test/contracts/create'
+*/
+createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+create.form = createForm
+
+/**
 * @see \App\Http\Controllers\Central\ContractController::store
 * @see app/Http/Controllers/Central/ContractController.php:52
 * @route '//dashboard.test/contracts'
@@ -230,6 +375,28 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::store
+* @see app/Http/Controllers/Central/ContractController.php:52
+* @route '//dashboard.test/contracts'
+*/
+const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::store
+* @see app/Http/Controllers/Central/ContractController.php:52
+* @route '//dashboard.test/contracts'
+*/
+storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Central\ContractController::edit
@@ -300,6 +467,43 @@ edit.head = (args: { contract: string | { uuid: string } } | [contract: string |
 })
 
 /**
+* @see \App\Http\Controllers\Central\ContractController::edit
+* @see app/Http/Controllers/Central/ContractController.php:63
+* @route '//dashboard.test/contracts/{contract}'
+*/
+const editForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::edit
+* @see app/Http/Controllers/Central/ContractController.php:63
+* @route '//dashboard.test/contracts/{contract}'
+*/
+editForm.get = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::edit
+* @see app/Http/Controllers/Central/ContractController.php:63
+* @route '//dashboard.test/contracts/{contract}'
+*/
+editForm.head = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+edit.form = editForm
+
+/**
 * @see \App\Http\Controllers\Central\ContractController::update
 * @see app/Http/Controllers/Central/ContractController.php:90
 * @route '//dashboard.test/contracts/{contract}'
@@ -356,6 +560,38 @@ update.patch = (args: { contract: string | { uuid: string } } | [contract: strin
     url: update.url(args, options),
     method: 'patch',
 })
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::update
+* @see app/Http/Controllers/Central/ContractController.php:90
+* @route '//dashboard.test/contracts/{contract}'
+*/
+const updateForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::update
+* @see app/Http/Controllers/Central/ContractController.php:90
+* @route '//dashboard.test/contracts/{contract}'
+*/
+updateForm.patch = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Central\ContractController::destroy
@@ -416,6 +652,38 @@ destroy.delete = (args: { contract: string | { uuid: string } } | [contract: str
 })
 
 /**
+* @see \App\Http\Controllers\Central\ContractController::destroy
+* @see app/Http/Controllers/Central/ContractController.php:100
+* @route '//dashboard.test/contracts/{contract}'
+*/
+const destroyForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractController::destroy
+* @see app/Http/Controllers/Central/ContractController.php:100
+* @route '//dashboard.test/contracts/{contract}'
+*/
+destroyForm.delete = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
+
+/**
 * @see \App\Http\Controllers\Central\ContractSendController::send
 * @see app/Http/Controllers/Central/ContractSendController.php:18
 * @route '//dashboard.test/contracts/{contract}/send'
@@ -472,6 +740,28 @@ send.post = (args: { contract: string | { uuid: string } } | [contract: string |
     url: send.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Central\ContractSendController::send
+* @see app/Http/Controllers/Central/ContractSendController.php:18
+* @route '//dashboard.test/contracts/{contract}/send'
+*/
+const sendForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: send.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractSendController::send
+* @see app/Http/Controllers/Central/ContractSendController.php:18
+* @route '//dashboard.test/contracts/{contract}/send'
+*/
+sendForm.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: send.url(args, options),
+    method: 'post',
+})
+
+send.form = sendForm
 
 const contracts = {
     show: Object.assign(show, show),

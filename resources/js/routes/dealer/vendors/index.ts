@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
@@ -42,6 +42,43 @@ thankyou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: thankyou.url(options),
     method: 'head',
 })
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/vendors/thankyou'
+*/
+const thankyouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: thankyou.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/vendors/thankyou'
+*/
+thankyouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: thankyou.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/vendors/thankyou'
+*/
+thankyouForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: thankyou.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+thankyou.form = thankyouForm
 
 const vendors = {
     thankyou: Object.assign(thankyou, thankyou),
