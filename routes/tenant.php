@@ -35,6 +35,7 @@ use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Tenant\CyrismaController;
 use App\Http\Controllers\Tenant\CyrismaReportController;
 use App\Http\Controllers\Tenant\SdsController;
+use App\Http\Controllers\Tenant\Store\CreateStoreController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
@@ -190,6 +191,7 @@ Route::name('dealer.')->middleware([
             ->name('ridgeback.index');
 
         Route::view('locations', 'tenant.store.index')->name('locations.index');
+        Route::post('locations', CreateStoreController::class)->name('locations.store');
 
     });
 

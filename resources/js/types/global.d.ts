@@ -18,6 +18,11 @@ export type StoreOption = {
     name: string;
 };
 
+export type StateOption = {
+    value: string;
+    label: string;
+};
+
 declare module '@inertiajs/core' {
     export interface InertiaConfig {
         sharedPageProps: {

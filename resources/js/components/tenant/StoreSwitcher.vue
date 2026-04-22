@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SwitchStoreController from '@/actions/App/Http/Controllers/Tenant/Store/SwitchStoreController';
+import AddLocationDialog from '@/components/tenant/AddLocationDialog.vue';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -14,11 +15,10 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar';
-import { index as locationsIndex } from '@/routes/dealer/locations';
 import type { StoreOption } from '@/types/global';
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { Check, ChevronsUpDown, Plus } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const page = usePage();
 
@@ -56,6 +56,8 @@ const displayName = computed(() => {
 });
 
 const { isMobile, state } = useSidebar();
+
+const addLocationOpen = ref(false);
 
 function switchStore(storeId: number | null): void {
     if (storeId === currentStoreId.value) {
@@ -139,19 +141,22 @@ function switchStore(storeId: number | null): void {
 
                     <template v-if="canManageLocations">
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem as-child class="gap-2 p-2">
-                            <Link :href="locationsIndex().url" class="flex items-center gap-2">
-                                <div
-                                    class="flex size-6 items-center justify-center rounded-sm border bg-background"
-                                >
-                                    <Plus class="size-3.5" />
-                                </div>
-                                <span class="text-muted-foreground">Add location</span>
-                            </Link>
+                        <DropdownMenuItem
+                            class="gap-2 p-2"
+                            @select="addLocationOpen = true"
+                        >
+                            <div
+                                class="flex size-6 items-center justify-center rounded-sm border bg-background"
+                            >
+                                <Plus class="size-3.5" />
+                            </div>
+                            <span class="text-muted-foreground">Add location</span>
                         </DropdownMenuItem>
                     </template>
                 </DropdownMenuContent>
             </DropdownMenu>
         </SidebarMenuItem>
+
+        <AddLocationDialog v-if="canManageLocations" v-model:open="addLocationOpen" />
     </SidebarMenu>
 </template>

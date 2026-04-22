@@ -80,8 +80,65 @@ indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 index.form = indexForm
 
+/**
+* @see \App\Http\Controllers\Tenant\Store\CreateStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/CreateStoreController.php:14
+* @route '/locations'
+*/
+export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
+    method: 'post',
+})
+
+store.definition = {
+    methods: ["post"],
+    url: '/locations',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Store\CreateStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/CreateStoreController.php:14
+* @route '/locations'
+*/
+store.url = (options?: RouteQueryOptions) => {
+    return store.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Store\CreateStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/CreateStoreController.php:14
+* @route '/locations'
+*/
+store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Store\CreateStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/CreateStoreController.php:14
+* @route '/locations'
+*/
+const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Store\CreateStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/CreateStoreController.php:14
+* @route '/locations'
+*/
+storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+store.form = storeForm
+
 const locations = {
     index: Object.assign(index, index),
+    store: Object.assign(store, store),
 }
 
 export default locations
