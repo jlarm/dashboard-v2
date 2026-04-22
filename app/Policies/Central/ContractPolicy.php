@@ -19,7 +19,11 @@ class ContractPolicy
 
     public function view(User $user, Contract $contract): bool
     {
-        return $this->owns($user, $contract) || $user->hasRole('super-admin');
+        if ($this->owns($user, $contract)) {
+            return true;
+        }
+
+        return $user->hasRole('super-admin');
     }
 
     public function create(User $user): bool

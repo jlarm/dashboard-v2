@@ -64,7 +64,7 @@ it('creates selected consultants as users inside the tenant database', function 
     $notPicked = User::factory()->create(['name' => 'Not Picked', 'email' => 'not-picked@example.test']);
     $notPicked->assignRole('Consultant');
 
-    $dealership = app(CreateDealership::class)->handle(
+    $dealership = resolve(CreateDealership::class)->handle(
         $creator,
         new DealershipData(
             name: 'Consultant Test Motors',
@@ -96,7 +96,7 @@ it('creates only the creator in the tenant when no consultants are selected', fu
     $creator = User::factory()->create(['email' => 'solo@example.test']);
     $creator->assignRole('Consultant');
 
-    $dealership = app(CreateDealership::class)->handle(
+    $dealership = resolve(CreateDealership::class)->handle(
         $creator,
         new DealershipData(name: 'Solo Motors'),
     );
@@ -116,7 +116,7 @@ it('always includes every super-admin in the tenant regardless of selection', fu
     $picked = User::factory()->create(['email' => 'picked@example.test']);
     $picked->assignRole('Consultant');
 
-    $dealership = app(CreateDealership::class)->handle(
+    $dealership = resolve(CreateDealership::class)->handle(
         $creator,
         new DealershipData(name: 'Admin Motors', consultantIds: [$picked->id]),
     );
@@ -137,7 +137,7 @@ it('ignores non-Consultant ids passed in consultantIds', function (): void {
     $stranger = User::factory()->create(['email' => 'stranger@example.test']);
     // No role — should be filtered out by ->role('Consultant') scope.
 
-    $dealership = app(CreateDealership::class)->handle(
+    $dealership = resolve(CreateDealership::class)->handle(
         $creator,
         new DealershipData(name: 'Stranger Motors', consultantIds: [$stranger->id]),
     );

@@ -23,9 +23,7 @@ class ReviewContract
     public function handle(Contract $contract, ContractReviewData $data): Contract
     {
         return DB::transaction(function () use ($contract, $data): Contract {
-            if ($contract->dealer_signature !== null && $contract->dealer_signature !== '') {
-                throw new RuntimeException('The contract has already been signed.');
-            }
+            throw_if($contract->dealer_signature !== null && $contract->dealer_signature !== '', RuntimeException::class, 'The contract has already been signed.');
 
             $signaturePath = $this->signatures->storeDataUri($contract, $data->dealerSignature);
 

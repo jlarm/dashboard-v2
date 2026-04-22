@@ -28,7 +28,7 @@ it('deletes an unsigned contract', function (): void {
         ->delete(route('contracts.destroy', $contract))
         ->assertRedirect(route('contracts.index'));
 
-    expect(Contract::find($contract->id))->toBeNull();
+    expect(Contract::query()->find($contract->id))->toBeNull();
 });
 
 it('forbids deleting a signed contract', function (): void {

@@ -112,7 +112,7 @@ class ContractController extends Controller
     private function contractData(array $validated): ContractData
     {
         $locations = array_map(
-            fn (array $row): AdditionalLocationData => AdditionalLocationData::fromArray($row),
+            AdditionalLocationData::fromArray(...),
             $validated['additional_locations'] ?? [],
         );
 

@@ -7,6 +7,7 @@ namespace App\Domain\Central\Sds\Actions;
 use App\Domain\Central\Sds\Data\SdsData;
 use App\Domain\Central\Sds\Support\SdsStorage;
 use App\Models\Sds;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
 class CreateSds
@@ -18,7 +19,7 @@ class CreateSds
     public function handle(SdsData $data): Sds
     {
         return DB::transaction(function () use ($data): Sds {
-            $fileName = $data->file !== null ? $this->storage->store($data->file) : null;
+            $fileName = $data->file instanceof UploadedFile ? $this->storage->store($data->file) : null;
 
             return Sds::query()->create([
                 'name' => $data->name,

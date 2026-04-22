@@ -9,12 +9,14 @@ use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Date;
+use Override;
 
 /**
  * @extends Factory<Contract>
  */
 class ContractFactory extends Factory
 {
+    #[Override]
     protected $model = Contract::class;
 
     public function definition(): array

@@ -12,7 +12,7 @@ use Throwable;
 
 class SdsStorage
 {
-    private const DISK = 'sds-sheets';
+    private const string DISK = 'sds-sheets';
 
     /**
      * @throws Throwable

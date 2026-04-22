@@ -7,6 +7,7 @@ namespace App\Domain\Central\ViolationStatements\Actions;
 use App\Domain\Central\ViolationStatements\Data\ViolationStatementData;
 use App\Domain\Central\ViolationStatements\Support\ViolationStatementCache;
 use App\Domain\Central\ViolationStatements\Support\ViolationStatementImageStorage;
+use App\Enums\ViolationStatementCategory;
 use App\Models\ViolationStatement;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,7 @@ class CreateViolationStatement
             return ViolationStatement::query()->create([
                 'statement' => $data->statement,
                 'weight' => $data->weight,
-                'categories' => array_map(fn ($category) => $category->value, $data->categories),
+                'categories' => array_map(fn (ViolationStatementCategory $category) => $category->value, $data->categories),
                 'keywords' => $data->keywords ?: null,
                 'reference_image_url' => $referenceImageUrl,
             ]);

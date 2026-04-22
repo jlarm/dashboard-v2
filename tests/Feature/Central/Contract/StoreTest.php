@@ -41,7 +41,7 @@ it('creates a contract and redirects to edit', function (): void {
         ->post(route('contracts.store'), validContractPayload())
         ->assertRedirect();
 
-    $contract = Contract::firstOrFail();
+    $contract = Contract::query()->firstOrFail();
 
     expect($contract->dealer_name)->toBe('Acme Motors')
         ->and($contract->services)->toBe([Service::GLBA->value]);

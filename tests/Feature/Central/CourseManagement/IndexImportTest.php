@@ -28,7 +28,7 @@ describe('central course management index', function (): void {
             ->assertInertia(fn ($page) => $page
                 ->component('central/course-management/Index')
                 ->has('courses.data')
-                ->where('courses.data', fn ($courses) => collect($courses)->contains(fn ($course) => $course['name'] === '!AAA Listed Course'))
+                ->where('courses.data', fn ($courses) => collect($courses)->contains(fn ($course): bool => $course['name'] === '!AAA Listed Course'))
             );
     });
 

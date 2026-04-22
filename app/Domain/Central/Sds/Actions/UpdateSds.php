@@ -7,6 +7,7 @@ namespace App\Domain\Central\Sds\Actions;
 use App\Domain\Central\Sds\Data\SdsData;
 use App\Domain\Central\Sds\Support\SdsStorage;
 use App\Models\Sds;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
 class UpdateSds
@@ -20,7 +21,7 @@ class UpdateSds
         return DB::transaction(function () use ($sds, $data): Sds {
             $fileName = $sds->file_name;
 
-            if ($data->file !== null) {
+            if ($data->file instanceof UploadedFile) {
                 $this->storage->delete($sds->file_name);
                 $fileName = $this->storage->store($data->file);
             }

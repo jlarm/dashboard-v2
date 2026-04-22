@@ -101,7 +101,7 @@ class ViolationStatementController extends Controller
             statement: $validated['statement'],
             weight: (int) $validated['weight'],
             categories: array_map(
-                fn (string $value): ViolationStatementCategory => ViolationStatementCategory::from($value),
+                ViolationStatementCategory::from(...),
                 $validated['categories'],
             ),
             keywords: $validated['keywords'] ?? null,

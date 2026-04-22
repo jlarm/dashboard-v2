@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 class ViolationStatementImageStorage
 {
-    private const DISK = 'digitalocean';
+    private const string DISK = 'digitalocean';
 
-    private const DIRECTORY = 'violation-statements';
+    private const string DIRECTORY = 'violation-statements';
 
     public function store(UploadedFile $file): string
     {

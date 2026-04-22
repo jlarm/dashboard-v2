@@ -75,7 +75,7 @@ class ContractReviewController extends Controller
         $validated = $request->validated();
 
         $locations = array_map(
-            fn (array $row): AdditionalLocationData => AdditionalLocationData::fromArray($row),
+            AdditionalLocationData::fromArray(...),
             $validated['additional_locations'] ?? [],
         );
 

@@ -6,12 +6,14 @@ namespace Database\Factories;
 
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Override;
 
 /**
  * @extends Factory<Document>
  */
 class DocumentFactory extends Factory
 {
+    #[Override]
     protected $model = Document::class;
 
     public function definition(): array

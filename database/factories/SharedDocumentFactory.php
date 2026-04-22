@@ -6,12 +6,14 @@ namespace Database\Factories;
 
 use App\Models\SharedDocument;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Override;
 
 /**
  * @extends Factory<SharedDocument>
  */
 class SharedDocumentFactory extends Factory
 {
+    #[Override]
     protected $model = SharedDocument::class;
 
     public function definition(): array

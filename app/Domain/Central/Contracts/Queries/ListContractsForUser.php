@@ -14,8 +14,8 @@ class ListContractsForUser
     {
         return Contract::query()
             ->with(['user', 'status'])
-            ->when(
-                ! $user->hasRole('super-admin'),
+            ->unless(
+                $user->hasRole('super-admin'),
                 fn ($query) => $query->where('user_id', $user->id),
             )
             ->orderByDesc('id')
