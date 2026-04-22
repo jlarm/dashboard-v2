@@ -12,6 +12,7 @@ export type User = {
 export type Auth = {
     user: User;
     roles: string[];
+    current_store_id: number | null;
 };
 
 export type TwoFactorConfigContent = {

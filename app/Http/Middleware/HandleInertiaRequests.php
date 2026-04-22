@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Domain\Tenant\Store\Queries\GetAccessibleStoreOptions;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Override;
@@ -41,13 +43,32 @@ class HandleInertiaRequests extends Middleware
     #[Override]
     public function share(Request $request): array
     {
+        $user = $request->user();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
-                'roles' => $request->user()?->getRoleNames()->all() ?? [],
+                'user' => $user,
+                'roles' => $user?->getRoleNames()->all() ?? [],
+                'current_store_id' => $user instanceof User ? $user->current_store_id : null,
             ],
+            'stores' => fn (): array => $this->accessibleStores($user),
         ];
+    }
+
+    /**
+     * @return array<int, array{id: int, name: string}>
+     */
+    private function accessibleStores(?User $user): array
+    {
+        if (! $user instanceof User || ! tenancy()->initialized) {
+            return [];
+        }
+
+        return resolve(GetAccessibleStoreOptions::class)
+            ->handle($user)
+            ->map(fn ($option): array => $option->toArray())
+            ->all();
     }
 }

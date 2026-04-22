@@ -56,6 +56,62 @@ firstForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 first.form = firstForm
 
 /**
+* @see \App\Http\Controllers\Tenant\Store\SwitchStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/SwitchStoreController.php:15
+* @route '/current-store'
+*/
+export const switchMethod = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: switchMethod.url(options),
+    method: 'post',
+})
+
+switchMethod.definition = {
+    methods: ["post"],
+    url: '/current-store',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Store\SwitchStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/SwitchStoreController.php:15
+* @route '/current-store'
+*/
+switchMethod.url = (options?: RouteQueryOptions) => {
+    return switchMethod.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Store\SwitchStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/SwitchStoreController.php:15
+* @route '/current-store'
+*/
+switchMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: switchMethod.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Store\SwitchStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/SwitchStoreController.php:15
+* @route '/current-store'
+*/
+const switchMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: switchMethod.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Store\SwitchStoreController::__invoke
+* @see app/Http/Controllers/Tenant/Store/SwitchStoreController.php:15
+* @route '/current-store'
+*/
+switchMethodForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: switchMethod.url(options),
+    method: 'post',
+})
+
+switchMethod.form = switchMethodForm
+
+/**
 * @see \App\Http\Controllers\Dealer\StoreController::edit
 * @see app/Http/Controllers/Dealer/StoreController.php:21
 * @route '/edit'
@@ -138,6 +194,7 @@ edit.form = editForm
 
 const store = {
     first: Object.assign(first, first),
+    switch: Object.assign(switchMethod, switchMethod),
     edit: Object.assign(edit, edit),
 }
 

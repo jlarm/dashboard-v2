@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { LayoutGrid } from 'lucide-vue-next';
-import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
+import StoreSwitcher from '@/components/tenant/StoreSwitcher.vue';
 import {
     Sidebar,
     SidebarContent,
     SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
+import { LayoutGrid } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -26,15 +22,7 @@ const mainNavItems: NavItem[] = [
 <template>
     <Sidebar collapsible="icon" variant="inset">
         <SidebarHeader>
-            <SidebarMenu>
-                <SidebarMenuItem>
-                    <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
-                            <AppLogo />
-                        </Link>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
+            <StoreSwitcher />
         </SidebarHeader>
 
         <SidebarContent>

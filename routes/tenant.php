@@ -35,6 +35,7 @@ use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Tenant\CyrismaController;
 use App\Http\Controllers\Tenant\CyrismaReportController;
 use App\Http\Controllers\Tenant\SdsController;
+use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
 use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
@@ -94,6 +95,7 @@ Route::name('dealer.')->middleware([
 
     Route::inertia('/dashboard', 'tenant/Dashboard')->middleware('auth')->name('dashboard');
     Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
+    Route::post('/current-store', SwitchStoreController::class)->middleware('auth')->name('store.switch');
 
     Route::any('stores/{path?}', static fn () => to_route('dealer.dashboard'))
         ->where('path', '.*')

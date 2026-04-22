@@ -13,12 +13,18 @@ declare module 'vite/client' {
     }
 }
 
+export type StoreOption = {
+    id: number;
+    name: string;
+};
+
 declare module '@inertiajs/core' {
     export interface InertiaConfig {
         sharedPageProps: {
             name: string;
             auth: Auth;
             sidebarOpen: boolean;
+            stores: StoreOption[];
             [key: string]: unknown;
         };
     }
