@@ -67,7 +67,7 @@ Route::name('dealer.')->middleware([
     // All Access
     // **************************************************
 
-    Route::view('/', 'dealer.welcome');
+    Route::inertia('/', 'tenant/Welcome')->name('welcome');
 
     if (app()->environment('local')) {
         Route::get('osha-audit-pdf', OshaPdfTestController::class);

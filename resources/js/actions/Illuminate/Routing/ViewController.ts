@@ -2,86 +2,6 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/'
-*/
-const ViewController980bb49ee7ae63891f1d891d2fbcf1c9 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
-    method: 'get',
-})
-
-ViewController980bb49ee7ae63891f1d891d2fbcf1c9.definition = {
-    methods: ["get","head"],
-    url: '/',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/'
-*/
-ViewController980bb49ee7ae63891f1d891d2fbcf1c9.url = (options?: RouteQueryOptions) => {
-    return ViewController980bb49ee7ae63891f1d891d2fbcf1c9.definition.url + queryParams(options)
-}
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/'
-*/
-ViewController980bb49ee7ae63891f1d891d2fbcf1c9.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/'
-*/
-ViewController980bb49ee7ae63891f1d891d2fbcf1c9.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: ViewController980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/'
-*/
-const ViewController980bb49ee7ae63891f1d891d2fbcf1c9Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/'
-*/
-ViewController980bb49ee7ae63891f1d891d2fbcf1c9Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/'
-*/
-ViewController980bb49ee7ae63891f1d891d2fbcf1c9Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController980bb49ee7ae63891f1d891d2fbcf1c9.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-ViewController980bb49ee7ae63891f1d891d2fbcf1c9.form = ViewController980bb49ee7ae63891f1d891d2fbcf1c9Form
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
 * @route '/dashboard'
 */
 const ViewController42a740574ecbfbac32f8cc353fc32db9 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -881,7 +801,6 @@ ViewController86a0d0e665572eead9d650bb21337c56Form.head = (options?: RouteQueryO
 ViewController86a0d0e665572eead9d650bb21337c56.form = ViewController86a0d0e665572eead9d650bb21337c56Form
 
 const ViewController = {
-    '/': ViewController980bb49ee7ae63891f1d891d2fbcf1c9,
     '/dashboard': ViewController42a740574ecbfbac32f8cc353fc32db9,
     '/sds-sheets': ViewControllerf00abb0097e42b00e09cbcd59b20e7f6,
     '/courses': ViewControllerae0d8013bc7dd1aeb7c9b49bac5f9e3b,
