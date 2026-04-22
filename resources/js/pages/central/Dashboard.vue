@@ -4,7 +4,7 @@ import {Head} from "@inertiajs/vue3";
 import AppLayout from "@/layouts/AppLayout.vue";
 import { PaginatedResponse } from '@/types/paginator';
 import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
-import {Button} from "@/components/ui/button";
+import { ChevronRight } from "lucide-vue-next";
 
 type Dealership = {
     id: string;
@@ -23,6 +23,13 @@ const dealershipUrl = (domain: string | null): string | null => {
         return null;
     }
     return `https://${domain}/dashboard`;
+};
+
+const openDealership = (domain: string | null): void => {
+    const url = dealershipUrl(domain);
+    if (url) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
 };
 </script>
 
@@ -50,23 +57,12 @@ const dealershipUrl = (domain: string | null): string | null => {
                         <TableRow
                             v-for="dealership in dealerships.data"
                             :key="dealership.id"
+                            :class="dealership.domain ? 'cursor-pointer' : ''"
+                            @click="openDealership(dealership.domain)"
                         >
                             <TableCell class="font-medium">{{ dealership.name }}</TableCell>
                             <TableCell class="text-right">
-                                <Button
-                                    v-if="dealershipUrl(dealership.domain)"
-                                    size="sm"
-                                    variant="outline"
-                                    as-child
-                                >
-                                    <a
-                                        :href="dealershipUrl(dealership.domain) ?? undefined"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        View
-                                    </a>
-                                </Button>
+                                <ChevronRight v-if="dealership.domain" class="size-4 ml-auto" />
                             </TableCell>
                         </TableRow>
                     </template>
