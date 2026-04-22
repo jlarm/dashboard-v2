@@ -10,6 +10,7 @@ import SharedDocumentController from './SharedDocumentController'
 import ContractController from './ContractController'
 import ContractSendController from './ContractSendController'
 import ContractPdfController from './ContractPdfController'
+import SdsController from './SdsController'
 import ViolationStatementController from './ViolationStatementController'
 import UserController from './UserController'
 import InviteController from './InviteController'
@@ -27,6 +28,7 @@ const Central = {
     ContractController: Object.assign(ContractController, ContractController),
     ContractSendController: Object.assign(ContractSendController, ContractSendController),
     ContractPdfController: Object.assign(ContractPdfController, ContractPdfController),
+    SdsController: Object.assign(SdsController, SdsController),
     ViolationStatementController: Object.assign(ViolationStatementController, ViolationStatementController),
     UserController: Object.assign(UserController, UserController),
     InviteController: Object.assign(InviteController, InviteController),

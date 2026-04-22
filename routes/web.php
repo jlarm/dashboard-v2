@@ -12,6 +12,7 @@ use App\Http\Controllers\Central\DashboardController;
 use App\Http\Controllers\Central\DealershipController;
 use App\Http\Controllers\Central\DocumentController;
 use App\Http\Controllers\Central\InviteController;
+use App\Http\Controllers\Central\SdsController;
 use App\Http\Controllers\Central\SharedDocumentController;
 use App\Http\Controllers\Central\UserController;
 use App\Http\Controllers\Central\UserInviteRegistrationController;
@@ -75,6 +76,14 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
         Route::post('{contract:uuid}/pdf', [ContractPdfController::class, 'generate'])->name('pdf.generate');
         Route::get('{contract:uuid}/pdf', [ContractPdfController::class, 'download'])->name('pdf.download');
         Route::post('{contract:uuid}/pdf/send', [ContractSendController::class, 'pdf'])->name('pdf.send');
+    });
+
+    Route::prefix('sds')->name('sds.')->group(function (): void {
+        Route::get('/', [SdsController::class, 'index'])->name('index');
+        Route::post('/', [SdsController::class, 'store'])->name('store');
+        Route::patch('{sds:uuid}', [SdsController::class, 'update'])->name('update');
+        Route::delete('{sds:uuid}', [SdsController::class, 'destroy'])->name('destroy');
+        Route::get('{sds:uuid}/download', [SdsController::class, 'download'])->name('download');
     });
 
     Route::prefix('violation-statements')->name('violation-statements.')->group(function (): void {

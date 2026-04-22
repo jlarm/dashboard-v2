@@ -8,7 +8,8 @@ import {
     FileText,
     FolderOpen,
     ScrollText,
-    FileWarning, OctagonAlert
+    FileWarning, OctagonAlert,
+    FlaskConical
 } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
@@ -31,6 +32,7 @@ import courses from "@/routes/courses";
 import documents from "@/routes/documents";
 import sharedDocuments from "@/routes/shared-documents";
 import contracts from "@/routes/contracts";
+import sds from "@/routes/sds";
 import violationStatements from "@/routes/violation-statements";
 
 const mainNavItems: NavItem[] = [
@@ -74,6 +76,11 @@ const mainNavItems: NavItem[] = [
         title: 'Violation Statements',
         href: violationStatements.index.url(),
         icon: OctagonAlert,
+    },
+    {
+        title: 'SDS Sheets',
+        href: sds.index.url(),
+        icon: FlaskConical,
     }
 ];
 
