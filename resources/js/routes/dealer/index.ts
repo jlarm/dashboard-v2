@@ -185,8 +185,8 @@ loginForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 login.form = loginForm
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -200,8 +200,8 @@ dashboard.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 dashboard.url = (options?: RouteQueryOptions) => {
@@ -209,8 +209,8 @@ dashboard.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -219,8 +219,8 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -229,8 +229,8 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -239,8 +239,8 @@ const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -249,8 +249,8 @@ dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -92,7 +92,7 @@ Route::name('dealer.')->middleware([
         return back();
     })->middleware('auth');
 
-    Route::view('/dashboard', 'dealer.dashboard')->middleware('auth')->name('dashboard');
+    Route::inertia('/dashboard', 'tenant/Dashboard')->middleware('auth')->name('dashboard');
     Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
 
     Route::any('stores/{path?}', static fn () => to_route('dealer.dashboard'))
