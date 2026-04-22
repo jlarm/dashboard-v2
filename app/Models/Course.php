@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Abstracts\AbstractCourse;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Override;
+use Spatie\Permission\Models\Role;
 
 class Course extends AbstractCourse
 {
@@ -24,6 +26,12 @@ class Course extends AbstractCourse
         'states_required',
         'replaces_course_slugs',
     ];
+
+    #[Override]
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'course_role');
+    }
 
     #[Override]
     protected function casts(): array

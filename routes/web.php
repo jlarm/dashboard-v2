@@ -7,6 +7,7 @@ use App\Http\Controllers\Central\ContractPdfController;
 use App\Http\Controllers\Central\ContractReviewController;
 use App\Http\Controllers\Central\ContractSendController;
 use App\Http\Controllers\Central\CourseController;
+use App\Http\Controllers\Central\CourseManagementController;
 use App\Http\Controllers\Central\CourseResultController;
 use App\Http\Controllers\Central\DashboardController;
 use App\Http\Controllers\Central\DealershipController;
@@ -95,6 +96,15 @@ Route::middleware(['auth', 'verified', 'role:super-admin|Consultant'])->group(fu
 });
 
 Route::middleware(['role:super-admin'])->group(function (): void {
+    Route::prefix('course-management')->name('course-management.')->group(function (): void {
+        Route::get('/', [CourseManagementController::class, 'index'])->name('index');
+        Route::post('import', [CourseManagementController::class, 'import'])->name('import');
+        Route::get('{course:slug}', [CourseManagementController::class, 'edit'])->name('edit');
+        Route::patch('{course:slug}', [CourseManagementController::class, 'update'])->name('update');
+        Route::patch('{course:slug}/quiz', [CourseManagementController::class, 'updateQuiz'])->name('update-quiz');
+        Route::patch('{course:slug}/settings', [CourseManagementController::class, 'updateSettings'])->name('update-settings');
+    });
+
     Route::prefix('employees')->name('employees.')->group(function (): void {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('invites', [InviteController::class, 'index'])->name('invites');

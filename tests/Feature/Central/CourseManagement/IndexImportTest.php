@@ -2,16 +2,41 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Central\CourseManagement\Import;
 use App\Models\Course;
 use App\Models\Dealer\Course as TenantCourse;
 use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Http\UploadedFile;
-use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 
 beforeEach(function (): void {
     $this->seed(RoleAndPermissionSeeder::class);
+});
+
+describe('central course management index', function (): void {
+    it('renders the index page for super admins', function (): void {
+        Course::query()->create([
+            'name' => '!AAA Listed Course',
+            'slug' => 'listed-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+        ]);
+
+        asSuperAdmin();
+
+        $this->get(route('course-management.index'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page
+                ->component('central/course-management/Index')
+                ->has('courses.data')
+                ->where('courses.data', fn ($courses) => collect($courses)->contains(fn ($course) => $course['name'] === '!AAA Listed Course'))
+            );
+    });
+
+    it('forbids non super-admin users', function (): void {
+        asConsultant();
+
+        $this->get(route('course-management.index'))->assertForbidden();
+    });
 });
 
 describe('central course management import', function (): void {
@@ -29,10 +54,10 @@ describe('central course management import', function (): void {
             ],
         ], JSON_THROW_ON_ERROR);
 
-        Livewire::test(Import::class)
-            ->set('courseImportFile', UploadedFile::fake()->createWithContent('course-empty-slides.json', $json))
-            ->call('importCourses')
-            ->assertHasNoErrors();
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('course-empty-slides.json', $json)],
+        )->assertRedirect(route('course-management.index'));
 
         $course = Course::query()->where('slug', 'imported-empty-slides-course')->firstOrFail();
 
@@ -60,11 +85,10 @@ describe('central course management import', function (): void {
             ],
         ], JSON_THROW_ON_ERROR);
 
-        $component = Livewire::test(Import::class)
-            ->set('courseImportFile', UploadedFile::fake()->createWithContent('course-import.json', $json))
-            ->call('importCourses');
-
-        $component->assertHasNoErrors();
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('course-import.json', $json)],
+        )->assertRedirect(route('course-management.index'));
 
         $course = Course::query()->where('slug', 'imported-california-course')->firstOrFail();
 
@@ -77,7 +101,6 @@ describe('central course management import', function (): void {
 
         [$tenant] = createDealershipTenant();
 
-        // Get the central 'Employee' role ID to use in the JSON payload
         $centralEmployeeRoleId = Role::query()->where('name', 'Employee')->value('id');
 
         $json = json_encode([
@@ -91,10 +114,10 @@ describe('central course management import', function (): void {
             ],
         ], JSON_THROW_ON_ERROR);
 
-        Livewire::test(Import::class)
-            ->set('courseImportFile', UploadedFile::fake()->createWithContent('role-sync.json', $json))
-            ->call('importCourses')
-            ->assertHasNoErrors();
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('role-sync.json', $json)],
+        )->assertRedirect(route('course-management.index'));
 
         $tenant->run(function (): void {
             $course = TenantCourse::query()->where('slug', 'role-sync-test-course')->firstOrFail();
@@ -139,11 +162,10 @@ describe('central course management import', function (): void {
             ],
         ], JSON_THROW_ON_ERROR);
 
-        $component = Livewire::test(Import::class)
-            ->set('courseImportFile', UploadedFile::fake()->createWithContent('course-update.json', $json))
-            ->call('importCourses');
-
-        $component->assertHasNoErrors();
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('course-update.json', $json)],
+        )->assertRedirect(route('course-management.index'));
 
         $course = Course::query()->where('slug', 'existing-import-course')->firstOrFail();
 

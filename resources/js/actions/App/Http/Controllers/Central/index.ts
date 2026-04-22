@@ -12,6 +12,7 @@ import ContractSendController from './ContractSendController'
 import ContractPdfController from './ContractPdfController'
 import SdsController from './SdsController'
 import ViolationStatementController from './ViolationStatementController'
+import CourseManagementController from './CourseManagementController'
 import UserController from './UserController'
 import InviteController from './InviteController'
 
@@ -30,6 +31,7 @@ const Central = {
     ContractPdfController: Object.assign(ContractPdfController, ContractPdfController),
     SdsController: Object.assign(SdsController, SdsController),
     ViolationStatementController: Object.assign(ViolationStatementController, ViolationStatementController),
+    CourseManagementController: Object.assign(CourseManagementController, CourseManagementController),
     UserController: Object.assign(UserController, UserController),
     InviteController: Object.assign(InviteController, InviteController),
 }

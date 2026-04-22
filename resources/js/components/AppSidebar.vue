@@ -9,7 +9,8 @@ import {
     FolderOpen,
     ScrollText,
     FileWarning, OctagonAlert,
-    FlaskConical
+    FlaskConical,
+    BookOpen
 } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
@@ -34,6 +35,7 @@ import sharedDocuments from "@/routes/shared-documents";
 import contracts from "@/routes/contracts";
 import sds from "@/routes/sds";
 import violationStatements from "@/routes/violation-statements";
+import courseManagement from "@/routes/course-management";
 
 const mainNavItems: NavItem[] = [
     {
@@ -81,6 +83,12 @@ const mainNavItems: NavItem[] = [
         title: 'SDS Sheets',
         href: sds.index.url(),
         icon: FlaskConical,
+    },
+    {
+        title: 'Course Management',
+        href: courseManagement.index.url(),
+        icon: BookOpen,
+        roles: ['super-admin'],
     }
 ];
 

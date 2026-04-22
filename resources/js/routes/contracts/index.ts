@@ -107,7 +107,7 @@ showForm.head = (args: { contract: string | { uuid: string } } | [contract: stri
 show.form = showForm
 
 /**
-* @see routes/web.php:38
+* @see routes/web.php:39
 * @route '//dashboard.test/thank-you'
 */
 export const thankYou = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -121,7 +121,7 @@ thankYou.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:38
+* @see routes/web.php:39
 * @route '//dashboard.test/thank-you'
 */
 thankYou.url = (options?: RouteQueryOptions) => {
@@ -129,7 +129,7 @@ thankYou.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:38
+* @see routes/web.php:39
 * @route '//dashboard.test/thank-you'
 */
 thankYou.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -138,7 +138,7 @@ thankYou.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:38
+* @see routes/web.php:39
 * @route '//dashboard.test/thank-you'
 */
 thankYou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -147,7 +147,7 @@ thankYou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:38
+* @see routes/web.php:39
 * @route '//dashboard.test/thank-you'
 */
 const thankYouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -156,7 +156,7 @@ const thankYouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 })
 
 /**
-* @see routes/web.php:38
+* @see routes/web.php:39
 * @route '//dashboard.test/thank-you'
 */
 thankYouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -165,7 +165,7 @@ thankYouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see routes/web.php:38
+* @see routes/web.php:39
 * @route '//dashboard.test/thank-you'
 */
 thankYouForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

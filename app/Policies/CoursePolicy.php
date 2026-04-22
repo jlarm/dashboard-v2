@@ -21,4 +21,19 @@ class CoursePolicy
     {
         return $user->hasAnyRole(['super-admin', 'Consultant']);
     }
+
+    public function manage(User $user): bool
+    {
+        return $user->hasRole('super-admin');
+    }
+
+    public function update(User $user, Course $course): bool
+    {
+        return $user->hasRole('super-admin');
+    }
+
+    public function import(User $user): bool
+    {
+        return $user->hasRole('super-admin');
+    }
 }
