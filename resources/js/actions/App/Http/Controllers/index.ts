@@ -7,8 +7,8 @@ import DealJacketPdfTestController from './DealJacketPdfTestController'
 import DealJacketReportPdfTestController from './DealJacketReportPdfTestController'
 import GlbaPdfTestController from './GlbaPdfTestController'
 import BodyShopPdfTestController from './BodyShopPdfTestController'
-import Dealer from './Dealer'
 import Tenant from './Tenant'
+import Dealer from './Dealer'
 import WebhookController from './WebhookController'
 
 const Controllers = {
@@ -21,8 +21,8 @@ const Controllers = {
     DealJacketReportPdfTestController: Object.assign(DealJacketReportPdfTestController, DealJacketReportPdfTestController),
     GlbaPdfTestController: Object.assign(GlbaPdfTestController, GlbaPdfTestController),
     BodyShopPdfTestController: Object.assign(BodyShopPdfTestController, BodyShopPdfTestController),
-    Dealer: Object.assign(Dealer, Dealer),
     Tenant: Object.assign(Tenant, Tenant),
+    Dealer: Object.assign(Dealer, Dealer),
     WebhookController: Object.assign(WebhookController, WebhookController),
 }
 

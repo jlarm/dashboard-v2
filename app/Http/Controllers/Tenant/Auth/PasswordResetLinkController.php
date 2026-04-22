@@ -2,23 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Dealer\Auth;
+namespace App\Http\Controllers\Tenant\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PasswordResetLinkController extends Controller
 {
     /**
      * Display the password reset link request view.
      */
-    public function create(): View
+    public function create(): Response
     {
-        return view('auth.forgot-password');
+        return Inertia::render('tenant/auth/ForgotPassword', [
+            'status' => session('status'),
+        ]);
     }
 
     /**

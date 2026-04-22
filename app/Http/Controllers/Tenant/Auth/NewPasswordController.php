@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Dealer\Auth;
+namespace App\Http\Controllers\Tenant\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
@@ -13,16 +13,20 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class NewPasswordController extends Controller
 {
     /**
      * Display the password reset view.
      */
-    public function create(Request $request): View
+    public function create(Request $request): Response
     {
-        return view('dealer.auth.reset-password', ['request' => $request]);
+        return Inertia::render('tenant/auth/ResetPassword', [
+            'email' => $request->query('email', ''),
+            'token' => (string) $request->route('token'),
+        ]);
     }
 
     /**
