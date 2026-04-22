@@ -24,7 +24,7 @@ const { isCurrentOrParentUrl } = useCurrentUrl();
                     as-child
                     :is-active="isCurrentOrParentUrl(item.href)"
                     :tooltip="item.title"
-                    class="data-[active=true]:bg-arm-blue-100 data-[active=true]:font-normal data-[active=true]:text-arm-blue-900 data-[active=true]:[&_svg]:text-arm-blue-500"
+                    class="data-[active=true]:bg-primary/10 data-[active=true]:font-normal data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary"
                 >
                     <Link :href="item.href">
                         <component :is="item.icon" />
