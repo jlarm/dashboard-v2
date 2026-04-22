@@ -78,11 +78,13 @@ const mainNavItems: NavItem[] = [
         title: 'Violation Statements',
         href: violationStatements.index.url(),
         icon: OctagonAlert,
+        roles: ['super-admin'],
     },
     {
         title: 'SDS Sheets',
         href: sds.index.url(),
         icon: FlaskConical,
+        roles: ['super-admin'],
     },
     {
         title: 'Course Management',
