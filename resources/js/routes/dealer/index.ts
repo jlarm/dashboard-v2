@@ -9,6 +9,8 @@ import vendor from './vendor'
 import vendors from './vendors'
 import dealer from './dealer'
 import profile from './profile'
+import userPassword from './user-password'
+import appearance from './appearance'
 import settings from './settings'
 import audit from './audit'
 import phishing from './phishing'
@@ -335,6 +337,8 @@ const dealerNamespace = {
     vendors: Object.assign(vendors, vendors),
     dealer: Object.assign(dealer, dealer),
     profile: Object.assign(profile, profile),
+    userPassword: Object.assign(userPassword, userPassword),
+    appearance: Object.assign(appearance, appearance),
     logout: Object.assign(logout, logout),
     settings: Object.assign(settings, settings),
     audit: Object.assign(audit, audit),

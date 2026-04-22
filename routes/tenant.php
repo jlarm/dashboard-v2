@@ -11,12 +11,10 @@ use App\Http\Controllers\Dealer\Audit\IndividualIndexController;
 use App\Http\Controllers\Dealer\Audit\OshaCreateController;
 use App\Http\Controllers\Dealer\Audit\SingleIndividualController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Dealer\Auth\PasswordController;
 use App\Http\Controllers\Dealer\CourseController;
 use App\Http\Controllers\Dealer\CourseResultsController;
 use App\Http\Controllers\Dealer\EmployeeIndexController;
 use App\Http\Controllers\Dealer\ImpersonationController;
-use App\Http\Controllers\Dealer\ProfileController;
 use App\Http\Controllers\Dealer\Store\CreateFirstStoreController;
 use App\Http\Controllers\Dealer\Store\SettingsController;
 use App\Http\Controllers\Dealer\StoreController;
@@ -35,6 +33,8 @@ use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Tenant\CyrismaController;
 use App\Http\Controllers\Tenant\CyrismaReportController;
 use App\Http\Controllers\Tenant\SdsController;
+use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
+use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileController;
 use App\Http\Controllers\Tenant\Store\CreateStoreController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\WebhookController;
@@ -125,14 +125,21 @@ Route::name('dealer.')->middleware([
 
     Route::get('email/settings', FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
+    Route::middleware('auth')->group(function (): void {
+        Route::get('/profile', [SettingsProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [SettingsProfileController::class, 'update'])->name('profile.update');
+
+        Route::get('/password', [SettingsPasswordController::class, 'edit'])->name('user-password.edit');
+        Route::put('/password', [SettingsPasswordController::class, 'update'])
+            ->middleware('throttle:6,1')
+            ->name('password.update');
+
+        Route::inertia('/appearance', 'tenant/settings/Appearance')->name('appearance.edit');
+    });
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->middleware('auth')->name('password.confirm');
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store'])->middleware('auth');
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update')->middleware('auth');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
 

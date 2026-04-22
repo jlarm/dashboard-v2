@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::edit
-* @see app/Http/Controllers/Dealer/ProfileController.php:20
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::edit
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:17
 * @route '/profile'
 */
 export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +15,8 @@ edit.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::edit
-* @see app/Http/Controllers/Dealer/ProfileController.php:20
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::edit
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:17
 * @route '/profile'
 */
 edit.url = (options?: RouteQueryOptions) => {
@@ -24,8 +24,8 @@ edit.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::edit
-* @see app/Http/Controllers/Dealer/ProfileController.php:20
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::edit
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:17
 * @route '/profile'
 */
 edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,8 +34,8 @@ edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::edit
-* @see app/Http/Controllers/Dealer/ProfileController.php:20
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::edit
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:17
 * @route '/profile'
 */
 edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,8 +44,8 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::edit
-* @see app/Http/Controllers/Dealer/ProfileController.php:20
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::edit
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:17
 * @route '/profile'
 */
 const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,8 +54,8 @@ const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::edit
-* @see app/Http/Controllers/Dealer/ProfileController.php:20
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::edit
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:17
 * @route '/profile'
 */
 editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -64,8 +64,8 @@ editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::edit
-* @see app/Http/Controllers/Dealer/ProfileController.php:20
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::edit
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:17
 * @route '/profile'
 */
 editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -81,8 +81,8 @@ editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 edit.form = editForm
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::update
-* @see app/Http/Controllers/Dealer/ProfileController.php:30
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::update
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:25
 * @route '/profile'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -96,8 +96,8 @@ update.definition = {
 } satisfies RouteDefinition<["patch"]>
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::update
-* @see app/Http/Controllers/Dealer/ProfileController.php:30
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::update
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:25
 * @route '/profile'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -105,8 +105,8 @@ update.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::update
-* @see app/Http/Controllers/Dealer/ProfileController.php:30
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::update
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:25
 * @route '/profile'
 */
 update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -115,8 +115,8 @@ update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::update
-* @see app/Http/Controllers/Dealer/ProfileController.php:30
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::update
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:25
 * @route '/profile'
 */
 const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -130,8 +130,8 @@ const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\ProfileController::update
-* @see app/Http/Controllers/Dealer/ProfileController.php:30
+* @see \App\Http\Controllers\Tenant\Settings\ProfileController::update
+* @see app/Http/Controllers/Tenant/Settings/ProfileController.php:25
 * @route '/profile'
 */
 updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -146,76 +146,9 @@ updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 
 update.form = updateForm
 
-/**
-* @see \App\Http\Controllers\Dealer\ProfileController::destroy
-* @see app/Http/Controllers/Dealer/ProfileController.php:46
-* @route '/profile'
-*/
-export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: destroy.url(options),
-    method: 'delete',
-})
-
-destroy.definition = {
-    methods: ["delete"],
-    url: '/profile',
-} satisfies RouteDefinition<["delete"]>
-
-/**
-* @see \App\Http\Controllers\Dealer\ProfileController::destroy
-* @see app/Http/Controllers/Dealer/ProfileController.php:46
-* @route '/profile'
-*/
-destroy.url = (options?: RouteQueryOptions) => {
-    return destroy.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Dealer\ProfileController::destroy
-* @see app/Http/Controllers/Dealer/ProfileController.php:46
-* @route '/profile'
-*/
-destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: destroy.url(options),
-    method: 'delete',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\ProfileController::destroy
-* @see app/Http/Controllers/Dealer/ProfileController.php:46
-* @route '/profile'
-*/
-const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\ProfileController::destroy
-* @see app/Http/Controllers/Dealer/ProfileController.php:46
-* @route '/profile'
-*/
-destroyForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
-
 const profile = {
     edit: Object.assign(edit, edit),
     update: Object.assign(update, update),
-    destroy: Object.assign(destroy, destroy),
 }
 
 export default profile

@@ -349,10 +349,6 @@ function namedRoutePayload(object $test, string $routeName): array
             'email' => 'updated-route-'.Str::random(6).'@test-tenant.localhost',
         ],
 
-        'dealer.profile.destroy' => [
-            'password' => 'incorrect-password',
-        ],
-
         default => [],
     };
 }

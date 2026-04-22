@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { Form, Head, Link, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import ProfileController from '@/actions/App/Http/Controllers/Tenant/Settings/ProfileController';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
-import { edit } from '@/routes/profile';
-import { send } from '@/routes/verification';
+import AppLayout from '@/layouts/tenant/AppLayout.vue';
+import SettingsLayout from '@/layouts/tenant/settings/Layout.vue';
+import { edit } from '@/routes/dealer/profile';
 import type { BreadcrumbItem } from '@/types';
+import { Form, Head, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 type Props = {
     mustVerifyEmail: boolean;
@@ -46,9 +45,9 @@ const user = computed(() => page.props.auth.user);
                 />
 
                 <Form
+                    v-slot="{ errors, processing, recentlySuccessful }"
                     v-bind="ProfileController.update.form()"
                     class="space-y-6"
-                    v-slot="{ errors, processing, recentlySuccessful }"
                 >
                     <div class="grid gap-2">
                         <Label for="name">Name</Label>
@@ -82,13 +81,6 @@ const user = computed(() => page.props.auth.user);
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
                         <p class="-mt-4 text-sm text-muted-foreground">
                             Your email address is unverified.
-                            <Link
-                                :href="send()"
-                                as="button"
-                                class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
-                            >
-                                Click here to resend the verification email.
-                            </Link>
                         </p>
 
                         <div
@@ -101,11 +93,9 @@ const user = computed(() => page.props.auth.user);
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <Button
-                            :disabled="processing"
-                            data-test="update-profile-button"
-                            >Save</Button
-                        >
+                        <Button :disabled="processing" data-test="update-profile-button">
+                            Save
+                        </Button>
 
                         <Transition
                             enter-active-class="transition ease-in-out"

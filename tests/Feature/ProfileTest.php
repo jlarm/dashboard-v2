@@ -70,26 +70,6 @@ class ProfileTest extends TestCase
         $this->assertNotNull($user->refresh()->email_verified_at);
     }
 
-    public function test_correct_password_must_be_provided_to_delete_account(): void
-    {
-        $user = User::factory()->create();
-        $this->grantConsultantRole($user);
-
-        $response = $this
-            ->actingAs($user)
-            ->withoutMiddleware(VerifyCsrfToken::class)
-            ->from('/profile')
-            ->delete('/profile', [
-                'password' => 'wrong-password',
-            ]);
-
-        $response
-            ->assertSessionHasErrorsIn('userDeletion', 'password')
-            ->assertRedirect('/profile');
-
-        $this->assertNotNull($user->fresh());
-    }
-
     private function grantConsultantRole(User $user): void
     {
         Role::findOrCreate('Consultant');

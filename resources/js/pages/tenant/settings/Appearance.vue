@@ -1,0 +1,35 @@
+<script setup lang="ts">
+import AppearanceTabs from '@/components/AppearanceTabs.vue';
+import Heading from '@/components/Heading.vue';
+import AppLayout from '@/layouts/tenant/AppLayout.vue';
+import SettingsLayout from '@/layouts/tenant/settings/Layout.vue';
+import { edit } from '@/routes/dealer/appearance';
+import type { BreadcrumbItem } from '@/types';
+import { Head } from '@inertiajs/vue3';
+
+const breadcrumbItems: BreadcrumbItem[] = [
+    {
+        title: 'Appearance settings',
+        href: edit(),
+    },
+];
+</script>
+
+<template>
+    <AppLayout :breadcrumbs="breadcrumbItems">
+        <Head title="Appearance settings" />
+
+        <h1 class="sr-only">Appearance settings</h1>
+
+        <SettingsLayout>
+            <div class="space-y-6">
+                <Heading
+                    variant="small"
+                    title="Appearance settings"
+                    description="Update your account's appearance settings"
+                />
+                <AppearanceTabs />
+            </div>
+        </SettingsLayout>
+    </AppLayout>
+</template>

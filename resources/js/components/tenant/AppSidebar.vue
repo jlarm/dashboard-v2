@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import NavMain from '@/components/NavMain.vue';
+import NavUser from '@/components/tenant/NavUser.vue';
 import StoreSwitcher from '@/components/tenant/StoreSwitcher.vue';
 import {
     Sidebar,
     SidebarContent,
+    SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes/dealer';
@@ -28,6 +30,10 @@ const mainNavItems: NavItem[] = [
         <SidebarContent>
             <NavMain :items="mainNavItems" />
         </SidebarContent>
+
+        <SidebarFooter>
+            <NavUser />
+        </SidebarFooter>
     </Sidebar>
     <slot />
 </template>

@@ -28,7 +28,7 @@ describe('Tenant Password Update', function (): void {
                 'password_confirmation' => 'new-secure-password-123',
             ]);
 
-        $response->assertSessionHasErrorsIn('updatePassword', 'current_password');
+        $response->assertSessionHasErrors('current_password');
     });
 
     it('cannot update password with mismatched confirmation', function (): void {
@@ -40,7 +40,7 @@ describe('Tenant Password Update', function (): void {
                 'password_confirmation' => 'different-password',
             ]);
 
-        $response->assertSessionHasErrorsIn('updatePassword', 'password');
+        $response->assertSessionHasErrors('password');
     });
 
     it('requires authentication to update password', function (): void {
