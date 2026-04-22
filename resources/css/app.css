@@ -20,6 +20,39 @@
 @theme {
     --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    --color-arm-blue-50: #f2f8fa;
+    --color-arm-blue-100: #e6f0f5;
+    --color-arm-blue-200: #bfdae5;
+    --color-arm-blue-300: #99c4d6;
+    --color-arm-blue-400: #4d98b7;
+    --color-arm-blue-500: #006c98;
+    --color-arm-blue-600: #006189;
+    --color-arm-blue-700: #005172;
+    --color-arm-blue-800: #00415b;
+    --color-arm-blue-900: #00354a;
+
+    --color-arm-green-50: #f8faf6;
+    --color-arm-green-100: #f1f5ed;
+    --color-arm-green-200: #dce5d2;
+    --color-arm-green-300: #c6d6b7;
+    --color-arm-green-400: #9cb780;
+    --color-arm-green-500: #71984a;
+    --color-arm-green-600: #668943;
+    --color-arm-green-700: #557238;
+    --color-arm-green-800: #445b2c;
+    --color-arm-green-900: #374a24;
+
+    --color-arm-orange-50: #fef8f2;
+    --color-arm-orange-100: #fdf1e6;
+    --color-arm-orange-200: #faddbf;
+    --color-arm-orange-300: #f7c999;
+    --color-arm-orange-400: #f2a04d;
+    --color-arm-orange-500: #ec7700;
+    --color-arm-orange-600: #d46b00;
+    --color-arm-orange-700: #b15900;
+    --color-arm-orange-800: #8e4700;
+    --color-arm-orange-900: #743a00;
+
     --color-danger-50: var(--color-rose-50);
     --color-danger-100: var(--color-rose-100);
     --color-danger-200: var(--color-rose-200);
