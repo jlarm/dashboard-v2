@@ -1,5 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 import invite9ae5a1 from './invite'
+import openInvitesA232b1 from './open-invites'
 import showBac614 from './show'
 import courses from './courses'
 import courseOverrides from './course-overrides'
@@ -488,6 +489,80 @@ inviteForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 })
 
 invite.form = inviteForm
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::openInvites
+* @route '/employees/open-invites'
+*/
+export const openInvites = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: openInvites.url(options),
+    method: 'get',
+})
+
+openInvites.definition = {
+    methods: ["get","head"],
+    url: '/employees/open-invites',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::openInvites
+* @route '/employees/open-invites'
+*/
+openInvites.url = (options?: RouteQueryOptions) => {
+    return openInvites.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::openInvites
+* @route '/employees/open-invites'
+*/
+openInvites.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: openInvites.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::openInvites
+* @route '/employees/open-invites'
+*/
+openInvites.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: openInvites.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::openInvites
+* @route '/employees/open-invites'
+*/
+const openInvitesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: openInvites.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::openInvites
+* @route '/employees/open-invites'
+*/
+openInvitesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: openInvites.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::openInvites
+* @route '/employees/open-invites'
+*/
+openInvitesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: openInvites.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+openInvites.form = openInvitesForm
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::importMethod
@@ -1029,6 +1104,7 @@ const employees = {
     deleted: Object.assign(deleted, deleted),
     index: Object.assign(index, index),
     invite: Object.assign(invite, invite9ae5a1),
+    openInvites: Object.assign(openInvites, openInvitesA232b1),
     import: Object.assign(importMethod, importMethod),
     export: Object.assign(exportMethod, exportMethod),
     emailReport: Object.assign(emailReport, emailReport),

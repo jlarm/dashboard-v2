@@ -237,6 +237,10 @@ Route::name('dealer.')->middleware([
             Route::get('/', [App\Http\Controllers\Tenant\UserController::class, 'index'])->name('index');
             Route::get('/invite', [App\Http\Controllers\Tenant\UserController::class, 'invite'])->name('invite');
             Route::post('/invite', [App\Http\Controllers\Tenant\UserController::class, 'storeInvite'])->name('invite.store');
+            Route::get('/open-invites', [App\Http\Controllers\Tenant\UserController::class, 'openInvites'])->name('open-invites');
+            Route::post('/open-invites/resend', [App\Http\Controllers\Tenant\UserController::class, 'resendInvites'])->name('open-invites.resend');
+            Route::post('/open-invites/{invite}/resend', [App\Http\Controllers\Tenant\UserController::class, 'resendInvite'])->name('open-invites.resend-one');
+            Route::delete('/open-invites/{invite}', [App\Http\Controllers\Tenant\UserController::class, 'destroyInvite'])->name('open-invites.destroy');
             Route::post('/import', [App\Http\Controllers\Tenant\UserController::class, 'import'])->name('import');
             Route::post('/export', [App\Http\Controllers\Tenant\UserController::class, 'export'])->name('export');
             Route::post('/email-report', [App\Http\Controllers\Tenant\UserController::class, 'emailReport'])->name('email-report');

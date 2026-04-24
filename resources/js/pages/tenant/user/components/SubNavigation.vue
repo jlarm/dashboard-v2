@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
     { kind: 'link', name: 'Employees', href: employees.index.url() },
     { kind: 'action', name: 'Import', key: 'import' },
     { kind: 'link', name: 'Invite Employee', href: employees.invite.url() },
-    { kind: 'disabled', name: 'Open Invites' },
+    { kind: 'link', name: 'Open Invites', href: employees.openInvites.url() },
     { kind: 'disabled', name: 'Deleted' },
 ];
 

@@ -9,6 +9,7 @@ use App\Domain\Tenant\User\Actions\GenerateDotCertificate;
 use App\Domain\Tenant\User\Actions\ImportEmployees;
 use App\Domain\Tenant\User\Actions\InviteEmployee;
 use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
+use App\Domain\Tenant\User\Actions\ResendInvite;
 use App\Domain\Tenant\User\Actions\SendEmployeesReport;
 use App\Domain\Tenant\User\Actions\SetCourseOverride;
 use App\Domain\Tenant\User\Actions\UpdateEmployee;
@@ -21,18 +22,22 @@ use App\Domain\Tenant\User\Queries\GetEmployeeFilterOptions;
 use App\Domain\Tenant\User\Queries\GetEmployees;
 use App\Domain\Tenant\User\Queries\GetInviteEmployeeOptions;
 use App\Domain\Tenant\User\Queries\GetManageCoursesOptions;
+use App\Domain\Tenant\User\Queries\GetOpenInvites;
 use App\Enums\AuditTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\User\EmailEmployeesReportRequest;
 use App\Http\Requests\Tenant\User\ExportEmployeesRequest;
 use App\Http\Requests\Tenant\User\ImportEmployeesRequest;
 use App\Http\Requests\Tenant\User\IndexEmployeesRequest;
+use App\Http\Requests\Tenant\User\IndexOpenInvitesRequest;
 use App\Http\Requests\Tenant\User\InviteEmployeeRequest;
 use App\Http\Requests\Tenant\User\RecordCourseResultRequest;
+use App\Http\Requests\Tenant\User\ResendInvitesRequest;
 use App\Http\Requests\Tenant\User\SetCourseOverrideRequest;
 use App\Http\Requests\Tenant\User\UpdateEmployeeRequest;
 use App\Http\Resources\Tenant\EmployeeResource;
 use App\Models\Dealer\Course;
+use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\Role;
@@ -132,6 +137,51 @@ class UserController extends Controller
         return redirect()
             ->route('employees.index')
             ->with('success', "{$invite->name} has been invited.");
+    }
+
+    public function openInvites(IndexOpenInvitesRequest $request, GetOpenInvites $query): Response
+    {
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        $result = $query->handle($viewer, $request->filters(), $request->page());
+
+        return Inertia::render('tenant/user/OpenInvites', [
+            'invites' => $result['paginator'],
+            'filters' => $request->filters(),
+            'departments' => $result['departments'],
+            'multipleStores' => $result['multiple_stores'],
+        ]);
+    }
+
+    public function resendInvite(Invite $invite, ResendInvite $action): RedirectResponse
+    {
+        abort_unless(auth()->user()?->can('create-dealerships'), 403);
+
+        $action->handle($invite);
+
+        return back()->with('success', "Invite to {$invite->name} resent.");
+    }
+
+    public function resendInvites(ResendInvitesRequest $request, ResendInvite $action): RedirectResponse
+    {
+        $invites = Invite::query()->whereIn('id', $request->inviteIds())->get();
+
+        foreach ($invites as $invite) {
+            $action->handle($invite);
+        }
+
+        return back()->with('success', "{$invites->count()} invite(s) resent.");
+    }
+
+    public function destroyInvite(Invite $invite): RedirectResponse
+    {
+        abort_unless(auth()->user()?->can('create-dealerships'), 403);
+
+        $name = $invite->name;
+        $invite->delete();
+
+        return back()->with('success', "Invite to {$name} deleted.");
     }
 
     public function import(ImportEmployeesRequest $request, ImportEmployees $action): RedirectResponse
