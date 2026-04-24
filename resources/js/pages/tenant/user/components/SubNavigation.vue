@@ -25,7 +25,7 @@ const navItems: NavItem[] = [
     { kind: 'action', name: 'Import', key: 'import' },
     { kind: 'link', name: 'Invite Employee', href: employees.invite.url() },
     { kind: 'link', name: 'Open Invites', href: employees.openInvites.url() },
-    { kind: 'disabled', name: 'Deleted' },
+    { kind: 'link', name: 'Deleted', href: employees.deleted.url() },
 ];
 
 const { isCurrentUrl } = useCurrentUrl();

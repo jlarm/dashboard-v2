@@ -37,7 +37,6 @@ use App\Http\Livewire\Dealer\Audit\Osha\Edit;
 use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Docs\Index;
-use App\Http\Livewire\Dealer\Employee\DeletedIndex;
 use App\Http\Livewire\Dealer\Log\Show;
 use App\Http\Livewire\Dealer\Phish\Create;
 use App\Http\Livewire\Dealer\Settings\AutomatedReports;
@@ -191,7 +190,8 @@ Route::name('dealer.')->middleware([
 
     Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function (): void {
 
-        Route::get('employees/deleted', DeletedIndex::class)->name('employees.deleted');
+        Route::get('employees/deleted', [App\Http\Controllers\Tenant\UserController::class, 'deleted'])->name('employees.deleted');
+        Route::post('employees/deleted/{user}/restore', [App\Http\Controllers\Tenant\UserController::class, 'restoreEmployee'])->name('employees.deleted.restore');
 
         Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function (): void {
             Route::get('/isp', App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');

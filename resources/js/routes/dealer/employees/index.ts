@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import deleted93c03f from './deleted'
 import invite9ae5a1 from './invite'
 import openInvitesA232b1 from './open-invites'
 import showBac614 from './show'
@@ -1108,7 +1109,7 @@ const employees = {
     create: Object.assign(create, create),
     store: Object.assign(store, store),
     new: Object.assign(newMethod, newMethod),
-    deleted: Object.assign(deleted, deleted),
+    deleted: Object.assign(deleted, deleted93c03f),
     index: Object.assign(index, index),
     invite: Object.assign(invite, invite9ae5a1),
     openInvites: Object.assign(openInvites, openInvitesA232b1),

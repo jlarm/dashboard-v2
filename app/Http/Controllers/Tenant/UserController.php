@@ -10,12 +10,14 @@ use App\Domain\Tenant\User\Actions\ImportEmployees;
 use App\Domain\Tenant\User\Actions\InviteEmployee;
 use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
 use App\Domain\Tenant\User\Actions\ResendInvite;
+use App\Domain\Tenant\User\Actions\RestoreEmployee;
 use App\Domain\Tenant\User\Actions\SendEmployeesReport;
 use App\Domain\Tenant\User\Actions\SetCourseOverride;
 use App\Domain\Tenant\User\Actions\UpdateEmployee;
 use App\Domain\Tenant\User\Data\EmployeeData;
 use App\Domain\Tenant\User\Data\TrainingCountsData;
 use App\Domain\Tenant\User\Data\TrainingSummaryData;
+use App\Domain\Tenant\User\Queries\GetDeletedEmployees;
 use App\Domain\Tenant\User\Queries\GetEmployeeCertificates;
 use App\Domain\Tenant\User\Queries\GetEmployeeCourses;
 use App\Domain\Tenant\User\Queries\GetEmployeeFilterOptions;
@@ -28,6 +30,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\User\EmailEmployeesReportRequest;
 use App\Http\Requests\Tenant\User\ExportEmployeesRequest;
 use App\Http\Requests\Tenant\User\ImportEmployeesRequest;
+use App\Http\Requests\Tenant\User\IndexDeletedEmployeesRequest;
 use App\Http\Requests\Tenant\User\IndexEmployeesRequest;
 use App\Http\Requests\Tenant\User\IndexOpenInvitesRequest;
 use App\Http\Requests\Tenant\User\InviteEmployeeRequest;
@@ -35,6 +38,7 @@ use App\Http\Requests\Tenant\User\RecordCourseResultRequest;
 use App\Http\Requests\Tenant\User\ResendInvitesRequest;
 use App\Http\Requests\Tenant\User\SetCourseOverrideRequest;
 use App\Http\Requests\Tenant\User\UpdateEmployeeRequest;
+use App\Http\Resources\Tenant\DeletedEmployeeResource;
 use App\Http\Resources\Tenant\EmployeeResource;
 use App\Http\Resources\Tenant\OpenInviteResource;
 use App\Models\Dealer\Course;
@@ -183,6 +187,39 @@ class UserController extends Controller
         $invite->delete();
 
         return back()->with('success', "Invite to {$name} deleted.");
+    }
+
+    public function deleted(IndexDeletedEmployeesRequest $request, GetDeletedEmployees $query): Response
+    {
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        $paginator = $query->handle($viewer, $request->filters(), $request->page());
+
+        return Inertia::render('tenant/user/Deleted', [
+            'employees' => DeletedEmployeeResource::collection($paginator),
+            'filters' => $request->filters(),
+        ]);
+    }
+
+    public function restoreEmployee(Request $request, int $user, RestoreEmployee $action): RedirectResponse
+    {
+        abort_unless($request->user()?->hasAnyRole([
+            'super-admin',
+            'Consultant',
+            'Owner',
+            'CFO',
+            'GM',
+            'GSM',
+            'Qualified Individual',
+        ]), 403);
+
+        /** @var User $target */
+        $target = User::query()->onlyTrashed()->findOrFail($user);
+
+        $action->handle($target);
+
+        return back()->with('success', "{$target->name} restored.");
     }
 
     public function import(ImportEmployeesRequest $request, ImportEmployees $action): RedirectResponse
