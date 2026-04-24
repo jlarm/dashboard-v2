@@ -322,8 +322,8 @@ function namedRoutePayload(object $test, string $routeName): array
 
             return [
                 'id' => $invite->id,
-                'password' => 'password123',
-                'password_confirmation' => 'password123',
+                'password' => 'super-strong-pass',
+                'password_confirmation' => 'super-strong-pass',
             ];
         })(),
 
@@ -334,8 +334,8 @@ function namedRoutePayload(object $test, string $routeName): array
         'dealer.password.store' => [
             'token' => 'invalid-token',
             'email' => $test->routeConsultant->email,
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
+            'password' => 'super-strong-pass',
+            'password_confirmation' => 'super-strong-pass',
         ],
 
         'dealer.password.update' => [

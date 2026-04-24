@@ -30,8 +30,8 @@ describe('invite registration store assignment', function (): void {
 
         $this->post(route('dealer.employees.store'), [
             'id' => $invite->id,
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
+            'password' => 'super-strong-pass',
+            'password_confirmation' => 'super-strong-pass',
         ])->assertRedirect(AppServiceProvider::HOME);
 
         $user = User::query()->where('email', 'fallback-store-invite-user@test.com')->firstOrFail();
@@ -60,8 +60,8 @@ describe('invite registration store assignment', function (): void {
 
         $this->post(route('dealer.employees.store'), [
             'id' => $invite->id,
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
+            'password' => 'super-strong-pass',
+            'password_confirmation' => 'super-strong-pass',
         ])->assertRedirect(AppServiceProvider::HOME);
 
         $user = User::query()->where('email', 'single-store-invite-user@test.com')->firstOrFail();
@@ -99,8 +99,8 @@ describe('invite registration store assignment', function (): void {
 
         $this->post(route('dealer.employees.store'), [
             'id' => $invite->id,
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
+            'password' => 'super-strong-pass',
+            'password_confirmation' => 'super-strong-pass',
         ])->assertRedirect(AppServiceProvider::HOME);
 
         $user = User::query()->where('email', 'multi-store-invite-user@test.com')->firstOrFail();

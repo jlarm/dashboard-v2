@@ -4,26 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dealer;
 
+use App\Domain\Tenant\User\Actions\RegisterInvitedEmployee;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dealer\StoreUserRequest;
-use App\Models\Certificate;
-use App\Models\Course;
-use App\Models\Dealer\CourseResults;
+use App\Http\Requests\Tenant\User\RegisterInvitedEmployeeRequest;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Providers\AppServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Spatie\Browsershot\Browsershot;
-use Spatie\Permission\PermissionRegistrar;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class UserController extends Controller
 {
@@ -55,104 +48,53 @@ class UserController extends Controller
         return $this->renderSection($user, self::SECTION_VIDEO_PROGRESS);
     }
 
-    public function create(Invite $invite): View
+    public function create(Invite $invite): Response
     {
-        return view('dealer.employee.register', [
-            'invite' => $invite,
+        return Inertia::render('tenant/user/Register', [
+            'invite' => [
+                'id' => $invite->id,
+                'name' => $invite->name,
+                'email' => $invite->email,
+                'company' => (string) tenant('name'),
+                'stores' => $this->inviteStoreNames($invite),
+            ],
         ]);
     }
 
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(RegisterInvitedEmployeeRequest $request, RegisterInvitedEmployee $action): RedirectResponse
     {
         $invite = Invite::query()->findOrFail($request->integer('id'));
-        $assignedStoreIds = collect(Arr::wrap($invite->stores))
-            ->map(static fn ($storeId): int => (int) $storeId)
-            ->filter()
-            ->unique()
-            ->values();
 
-        if ($assignedStoreIds->isEmpty() && Store::query()->count() === 1) {
-            $singleStoreId = Store::query()->value('id');
-
-            if ($singleStoreId !== null) {
-                $assignedStoreIds = collect([(int) $singleStoreId]);
-            }
-        }
-
-        // Create user
-        $invitePrimaryStoreId = $invite->primary_store_id !== null ? (int) $invite->primary_store_id : null;
-        $primaryStoreId = $assignedStoreIds->count() > 1 && $invitePrimaryStoreId !== null
-            && $assignedStoreIds->contains($invitePrimaryStoreId)
-            ? $invitePrimaryStoreId
-            : null;
-
-        $user = User::query()->create([
-            'name' => $invite['name'],
-            'email' => $invite['email'],
-            'department_id' => $invite['department_id'],
-            'password' => Hash::make((string) $request->input('password')),
-            'current_store_id' => $assignedStoreIds->count() === 1 ? (int) $assignedStoreIds->first() : null,
-            'primary_store_id' => $primaryStoreId,
-        ]);
-
-        if ($invite['courses']) {
-            foreach ($invite['courses'] as $key => $course) {
-                CourseResults::query()->create([
-                    'user_id' => $user->id,
-                    'course_id' => $key,
-                    'percentage' => 100,
-                    'passed' => 1,
-                    'created_at' => $course.' '.now()->format('H:i:s'),
-                    'updated_at' => $course.' '.now()->format('H:i:s'),
-                ]);
-
-                $dotCompletion = Course::query()->where('id', $key)->where('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')->first() ?? null;
-
-                if ($dotCompletion) {
-                    $html = view('dealer.course.CertDownloadView', [
-                        'user' => User::query()->where('id', $user->id)->first(),
-                        'store' => $request->get('store')?->name ?? tenant('name'),
-                        'passed_on' => Date::parse($course)->format('F d, Y'),
-                    ])->render();
-
-                    $pdf = Browsershot::html($html)->landscape()->pdf();
-
-                    $fileName = Str::slug($user->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
-
-                    Storage::disk('local')->put($fileName, $pdf);
-
-                    $localFile = Storage::disk('local')->get($fileName);
-
-                    Storage::disk('armp-certs')->put(tenant('id').'/'.$user->id.'/'.$fileName, $localFile);
-
-                    Storage::delete($fileName);
-
-                    Certificate::query()->create([
-                        'user_id' => $user->id,
-                        'course_name' => 'DOT Hazardous Materials Transportation',
-                        'file_name' => $fileName,
-                    ]);
-                }
-            }
-        }
-
-        if ($assignedStoreIds->isNotEmpty()) {
-            $user->stores()->sync($assignedStoreIds->all());
-        }
-
-        $user->assignRole(Arr::wrap($invite['roles']));
-
-        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
-
-        $invite->delete();
+        $user = $action->handle($invite, $request->password());
 
         event(new Registered($user));
-
-        $user->markEmailAsVerified();
 
         Auth::login($user);
 
         return redirect()->to(AppServiceProvider::HOME);
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function inviteStoreNames(Invite $invite): array
+    {
+        $storeIds = collect($invite->stores ?? [])
+            ->map(static fn ($id): int => (int) $id)
+            ->filter()
+            ->unique()
+            ->values();
+
+        if ($storeIds->isEmpty()) {
+            return [];
+        }
+
+        return Store::query()
+            ->whereIn('id', $storeIds)
+            ->orderBy('name')
+            ->pluck('name')
+            ->map(static fn ($name): string => (string) $name)
+            ->all();
     }
 
     private function authorizeUserVisibility(User $user): void
