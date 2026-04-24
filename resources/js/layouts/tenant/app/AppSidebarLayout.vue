@@ -3,6 +3,7 @@ import AppContent from '@/components/AppContent.vue';
 import AppShell from '@/components/AppShell.vue';
 import AppSidebar from '@/components/tenant/AppSidebar.vue';
 import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
+import ImpersonationBanner from '@/components/ImpersonationBanner.vue';
 import { Toaster } from '@/components/ui/sonner';
 import { useFlashToasts } from '@/composables/useFlashToasts';
 import type { BreadcrumbItem } from '@/types';
@@ -22,12 +23,13 @@ useFlashToasts();
     <AppShell variant="sidebar">
         <AppSidebar />
         <AppContent variant="sidebar" class="overflow-x-hidden">
+            <ImpersonationBanner />
             <AppSidebarHeader :breadcrumbs="breadcrumbs">
                 <template v-if="$slots.actions" #actions>
                     <slot name="actions" />
                 </template>
             </AppSidebarHeader>
-            <div class="p-4">
+            <div class="p-4" :key="$page.component">
                 <slot />
             </div>
         </AppContent>

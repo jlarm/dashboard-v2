@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\BodyShopPdfTestController;
 use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
 use App\Http\Controllers\Dealer\Audit\FinanceCreateController;
 use App\Http\Controllers\Dealer\Audit\IndividualController;
@@ -20,10 +19,6 @@ use App\Http\Controllers\Dealer\Store\SettingsController;
 use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
-use App\Http\Controllers\DealJacketPdfTestController;
-use App\Http\Controllers\DealJacketReportPdfTestController;
-use App\Http\Controllers\GlbaPdfTestController;
-use App\Http\Controllers\OshaPdfTestController;
 use App\Http\Controllers\Tenant\Audit\DealJacketController;
 use App\Http\Controllers\Tenant\Audit\DealJacketGroupController;
 use App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController;
@@ -49,7 +44,6 @@ use App\Http\Livewire\Dealer\Settings\AutomatedReports;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use App\Http\Livewire\Dealer\Settings\GlobalSettings;
 use App\Http\Livewire\Dealer\Vendor\NewForm;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
@@ -71,28 +65,12 @@ Route::name('dealer.')->middleware([
 
     Route::inertia('/', 'tenant/Welcome')->name('welcome');
 
-    if (app()->environment('local')) {
-        Route::get('osha-audit-pdf', OshaPdfTestController::class);
-        Route::get('deal-jacket-audit-pdf', DealJacketPdfTestController::class);
-        Route::get('deal-jacket-report-pdf', DealJacketReportPdfTestController::class);
-        Route::get('glba-audit-pdf', GlbaPdfTestController::class);
-        Route::get('body-shop-audit-pdf', BodyShopPdfTestController::class);
-        Route::Get('dot-cert', fn (): Factory|View => view('dealer.course.CertDownloadView'));
-    }
-
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
-
-    Route::get('language/{locale}', function ($locale): RedirectResponse {
-        app()->setLocale($locale);
-        session()->put('locale', $locale);
-
-        return back();
-    })->middleware('auth');
 
     Route::inertia('/dashboard', 'tenant/Dashboard')->middleware('auth')->name('dashboard');
     Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
@@ -255,19 +233,37 @@ Route::name('dealer.')->middleware([
 
     Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual|Manager')->group(function (): void {
 
-        Route::prefix('employees/')->name('employees.')->group(function (): void {
-            Route::get('/', EmployeeIndexController::class)->name('index');
-            Route::view('create', 'dealer.employee.create')->name('new');
-            Route::view('open-invites', 'dealer.employee.open-invites')->name('open-invites');
+        Route::prefix('employees')->name('employees.')->group(function (): void {
+            Route::get('/', [App\Http\Controllers\Tenant\UserController::class, 'index'])->name('index');
+            Route::post('/export', [App\Http\Controllers\Tenant\UserController::class, 'export'])->name('export');
+            Route::post('/email-report', [App\Http\Controllers\Tenant\UserController::class, 'emailReport'])->name('email-report');
+
             Route::prefix('{user:slug}')->group(function (): void {
-                Route::get('/', [UserController::class, 'show'])->name('show');
-                Route::get('manage-courses', [UserController::class, 'showManageCourses'])
+                Route::get('/', [App\Http\Controllers\Tenant\UserController::class, 'show'])->name('show');
+                Route::get('courses', [App\Http\Controllers\Tenant\UserController::class, 'courses'])->name('show.courses');
+                Route::get('manage-courses', [App\Http\Controllers\Tenant\UserController::class, 'manageCourses'])
                     ->middleware('role:super-admin|Consultant|Qualified Individual')
                     ->name('show.manage-courses');
-                Route::get('certificates', [UserController::class, 'showCertificates'])->name('show.certificates');
-                Route::get('video-progress', [UserController::class, 'showVideoProgress'])->name('show.video-progress');
+                Route::get('dot-certificates', [App\Http\Controllers\Tenant\UserController::class, 'dotCertificates'])->name('show.dot-certificates');
+                Route::patch('/', [App\Http\Controllers\Tenant\UserController::class, 'update'])->name('update');
+                Route::delete('/', [App\Http\Controllers\Tenant\UserController::class, 'destroy'])->name('destroy');
+                Route::post('impersonate', [App\Http\Controllers\Tenant\UserController::class, 'impersonate'])->name('impersonate');
             });
         });
+
+        //        Route::prefix('employees/')->name('employees.')->group(function (): void {
+        //            Route::get('/', EmployeeIndexController::class)->name('index');
+        //            Route::view('create', 'dealer.employee.create')->name('new');
+        //            Route::view('open-invites', 'dealer.employee.open-invites')->name('open-invites');
+        //            Route::prefix('{user:slug}')->group(function (): void {
+        //                Route::get('/', [UserController::class, 'show'])->name('show');
+        //                Route::get('manage-courses', [UserController::class, 'showManageCourses'])
+        //                    ->middleware('role:super-admin|Consultant|Qualified Individual')
+        //                    ->name('show.manage-courses');
+        //                Route::get('certificates', [UserController::class, 'showCertificates'])->name('show.certificates');
+        //                Route::get('video-progress', [UserController::class, 'showVideoProgress'])->name('show.video-progress');
+        //            });
+        //        });
 
         Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->middleware(['single.store'])->name('scan.index');
 

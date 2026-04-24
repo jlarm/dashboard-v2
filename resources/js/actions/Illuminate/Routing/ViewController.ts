@@ -482,86 +482,6 @@ ViewController4420dcf8aa0401dd2e787b7842100090.form = ViewController4420dcf8aa04
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-const ViewController3fa5b939b8f68b69fe6a112437c1bb19 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController3fa5b939b8f68b69fe6a112437c1bb19.url(options),
-    method: 'get',
-})
-
-ViewController3fa5b939b8f68b69fe6a112437c1bb19.definition = {
-    methods: ["get","head"],
-    url: '/employees/open-invites',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-ViewController3fa5b939b8f68b69fe6a112437c1bb19.url = (options?: RouteQueryOptions) => {
-    return ViewController3fa5b939b8f68b69fe6a112437c1bb19.definition.url + queryParams(options)
-}
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-ViewController3fa5b939b8f68b69fe6a112437c1bb19.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController3fa5b939b8f68b69fe6a112437c1bb19.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-ViewController3fa5b939b8f68b69fe6a112437c1bb19.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: ViewController3fa5b939b8f68b69fe6a112437c1bb19.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-const ViewController3fa5b939b8f68b69fe6a112437c1bb19Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController3fa5b939b8f68b69fe6a112437c1bb19.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-ViewController3fa5b939b8f68b69fe6a112437c1bb19Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController3fa5b939b8f68b69fe6a112437c1bb19.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/open-invites'
-*/
-ViewController3fa5b939b8f68b69fe6a112437c1bb19Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController3fa5b939b8f68b69fe6a112437c1bb19.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-ViewController3fa5b939b8f68b69fe6a112437c1bb19.form = ViewController3fa5b939b8f68b69fe6a112437c1bb19Form
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
 * @route '/scans-archive'
 */
 const ViewController00b8255e77f8b9a60ccb93668a7a17ae = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -727,7 +647,6 @@ const ViewController = {
     '/vendors/thankyou': ViewController63db0bdc59264ba3ad0fbd8a32b71620,
     '/employees/create': ViewController25849e51446dd6841a9e89ac6c28cbec,
     '/locations': ViewController4420dcf8aa0401dd2e787b7842100090,
-    '/employees/open-invites': ViewController3fa5b939b8f68b69fe6a112437c1bb19,
     '/scans-archive': ViewController00b8255e77f8b9a60ccb93668a7a17ae,
     '/audits/deal-jackets': ViewController86a0d0e665572eead9d650bb21337c56,
 }

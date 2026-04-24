@@ -9,8 +9,8 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 /**
  * Super-admin access is granted globally via Gate::before in AppServiceProvider.
- * Each method denies by default; add role-specific rules here when introducing
- * non-super-admin actors.
+ * Tenant visibility (department/store scoping) is enforced at the query layer via
+ * GetEmployees::isVisibleTo, so `view` stays denied here.
  */
 class UserPolicy
 {
@@ -38,12 +38,23 @@ class UserPolicy
 
     public function update(User $user, User $model): bool
     {
-        return false;
+        return $user->can('create-stores')
+            && $user->id !== $model->id
+            && ! $model->hasAnyRole(['super-admin', 'Consultant']);
     }
 
     public function delete(User $user, User $model): bool
     {
-        return false;
+        return $user->can('create-stores')
+            && $user->id !== $model->id
+            && ! $model->hasAnyRole(['super-admin', 'Consultant']);
+    }
+
+    public function impersonate(User $user, User $model): bool
+    {
+        return $user->hasAnyRole(['super-admin', 'Consultant'])
+            && $user->id !== $model->id
+            && ! $model->hasRole('super-admin');
     }
 
     public function restore(User $user, User $model): bool

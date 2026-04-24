@@ -6,7 +6,6 @@ import VendorController from './VendorController'
 import Auth from './Auth'
 import Audit from './Audit'
 import StoreController from './StoreController'
-import EmployeeIndexController from './EmployeeIndexController'
 import ImpersonationController from './ImpersonationController'
 
 const Dealer = {
@@ -18,7 +17,6 @@ const Dealer = {
     Auth: Object.assign(Auth, Auth),
     Audit: Object.assign(Audit, Audit),
     StoreController: Object.assign(StoreController, StoreController),
-    EmployeeIndexController: Object.assign(EmployeeIndexController, EmployeeIndexController),
     ImpersonationController: Object.assign(ImpersonationController, ImpersonationController),
 }
 

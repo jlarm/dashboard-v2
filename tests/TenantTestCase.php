@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\PermissionRegistrar;
+use Throwable;
 
 abstract class TenantTestCase extends TestCase
 {
@@ -118,9 +119,15 @@ abstract class TenantTestCase extends TestCase
         }
 
         // Force-delete the tenant, which will trigger the TenantDeleted event
-        // and automatically drop the MySQL database
+        // and automatically drop the MySQL database. If something else already
+        // dropped it (e.g. a duplicate listener), swallow the error — teardown
+        // must stay idempotent so assertion failures surface cleanly.
         if ($this->tenant !== null) {
-            $this->tenant->forceDelete();
+            try {
+                $this->tenant->forceDelete();
+            } catch (Throwable) {
+                // No-op.
+            }
         }
 
         DB::disconnect('tenant');

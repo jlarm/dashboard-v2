@@ -10,7 +10,8 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { LayoutGrid } from 'lucide-vue-next';
+import {LayoutGrid, Users} from 'lucide-vue-next';
+import employees from "@/routes/dealer/employees";
 
 const mainNavItems: NavItem[] = [
     {
@@ -18,6 +19,11 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Employees',
+        href: employees.index.url(),
+        icon: Users
+    }
 ];
 </script>
 

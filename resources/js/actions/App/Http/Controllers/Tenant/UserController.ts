@@ -1,328 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
-import showBac614 from './show'
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-export const create = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: create.url(args, options),
-    method: 'get',
-})
-
-create.definition = {
-    methods: ["get","head"],
-    url: '/invite_registration/{invite}',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-create.url = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { invite: args }
-    }
-
-    if (typeof args === 'object' && !Array.isArray(args) && 'invitation_token' in args) {
-        args = { invite: args.invitation_token }
-    }
-
-    if (Array.isArray(args)) {
-        args = {
-            invite: args[0],
-        }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-        invite: typeof args.invite === 'object'
-        ? args.invite.invitation_token
-        : args.invite,
-    }
-
-    return create.definition.url
-            .replace('{invite}', parsedArgs.invite.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-create.get = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-create.head = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: create.url(args, options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-const createForm = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-createForm.get = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:58
-* @route '/invite_registration/{invite}'
-*/
-createForm.head = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:65
-* @route '/employees/dealer/store'
-*/
-export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: store.url(options),
-    method: 'post',
-})
-
-store.definition = {
-    methods: ["post"],
-    url: '/employees/dealer/store',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:65
-* @route '/employees/dealer/store'
-*/
-store.url = (options?: RouteQueryOptions) => {
-    return store.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:65
-* @route '/employees/dealer/store'
-*/
-store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:65
-* @route '/employees/dealer/store'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:65
-* @route '/employees/dealer/store'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-export const newMethod = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: newMethod.url(options),
-    method: 'get',
-})
-
-newMethod.definition = {
-    methods: ["get","head"],
-    url: '/employees/create',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethod.url = (options?: RouteQueryOptions) => {
-    return newMethod.definition.url + queryParams(options)
-}
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethod.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: newMethod.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethod.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: newMethod.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-const newMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethodForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethodForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-newMethod.form = newMethodForm
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-export const deleted = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: deleted.url(options),
-    method: 'get',
-})
-
-deleted.definition = {
-    methods: ["get","head"],
-    url: '/employees/deleted',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-deleted.url = (options?: RouteQueryOptions) => {
-    return deleted.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-deleted.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: deleted.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-deleted.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: deleted.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-const deletedForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-deletedForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
-* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
-* @route '/employees/deleted'
-*/
-deletedForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-deleted.form = deletedForm
-
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::index
 * @see app/Http/Controllers/Tenant/UserController.php:38
@@ -622,6 +298,321 @@ showForm.head = (args: { user: string | { slug: string } } | [user: string | { s
 show.form = showForm
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+export const courses = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: courses.url(args, options),
+    method: 'get',
+})
+
+courses.definition = {
+    methods: ["get","head"],
+    url: '/employees/{user}/courses',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+courses.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { user: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'slug' in args) {
+        args = { user: args.slug }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            user: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        user: typeof args.user === 'object'
+        ? args.user.slug
+        : args.user,
+    }
+
+    return courses.definition.url
+            .replace('{user}', parsedArgs.user.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+courses.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: courses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+courses.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: courses.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+const coursesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: courses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+coursesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: courses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+coursesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: courses.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+courses.form = coursesForm
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
+* @route '/employees/{user}/manage-courses'
+*/
+export const manageCourses = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: manageCourses.url(args, options),
+    method: 'get',
+})
+
+manageCourses.definition = {
+    methods: ["get","head"],
+    url: '/employees/{user}/manage-courses',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
+* @route '/employees/{user}/manage-courses'
+*/
+manageCourses.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { user: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'slug' in args) {
+        args = { user: args.slug }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            user: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        user: typeof args.user === 'object'
+        ? args.user.slug
+        : args.user,
+    }
+
+    return manageCourses.definition.url
+            .replace('{user}', parsedArgs.user.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
+* @route '/employees/{user}/manage-courses'
+*/
+manageCourses.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: manageCourses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
+* @route '/employees/{user}/manage-courses'
+*/
+manageCourses.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: manageCourses.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
+* @route '/employees/{user}/manage-courses'
+*/
+const manageCoursesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: manageCourses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
+* @route '/employees/{user}/manage-courses'
+*/
+manageCoursesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: manageCourses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
+* @route '/employees/{user}/manage-courses'
+*/
+manageCoursesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: manageCourses.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+manageCourses.form = manageCoursesForm
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
+*/
+export const dotCertificates = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dotCertificates.url(args, options),
+    method: 'get',
+})
+
+dotCertificates.definition = {
+    methods: ["get","head"],
+    url: '/employees/{user}/dot-certificates',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
+*/
+dotCertificates.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { user: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'slug' in args) {
+        args = { user: args.slug }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            user: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        user: typeof args.user === 'object'
+        ? args.user.slug
+        : args.user,
+    }
+
+    return dotCertificates.definition.url
+            .replace('{user}', parsedArgs.user.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
+*/
+dotCertificates.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dotCertificates.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
+*/
+dotCertificates.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: dotCertificates.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
+*/
+const dotCertificatesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dotCertificates.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
+*/
+dotCertificatesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dotCertificates.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
+*/
+dotCertificatesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dotCertificates.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+dotCertificates.form = dotCertificatesForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::update
 * @see app/Http/Controllers/Tenant/UserController.php:161
 * @route '/employees/{user}'
@@ -881,18 +872,6 @@ impersonateForm.post = (args: { user: string | { slug: string } } | [user: strin
 
 impersonate.form = impersonateForm
 
-const employees = {
-    create: Object.assign(create, create),
-    store: Object.assign(store, store),
-    new: Object.assign(newMethod, newMethod),
-    deleted: Object.assign(deleted, deleted),
-    index: Object.assign(index, index),
-    export: Object.assign(exportMethod, exportMethod),
-    emailReport: Object.assign(emailReport, emailReport),
-    show: Object.assign(show, showBac614),
-    update: Object.assign(update, update),
-    destroy: Object.assign(destroy, destroy),
-    impersonate: Object.assign(impersonate, impersonate),
-}
+const UserController = { index, exportMethod, emailReport, show, courses, manageCourses, dotCertificates, update, destroy, impersonate, export: exportMethod }
 
-export default employees
+export default UserController

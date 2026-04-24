@@ -52,6 +52,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user,
                 'roles' => $user?->getRoleNames()->all() ?? [],
                 'current_store_id' => $user instanceof User ? $user->current_store_id : null,
+                'impersonating' => $request->session()->has('impersonated_by'),
             ],
             'stores' => fn (): array => $this->accessibleStores($user),
         ];

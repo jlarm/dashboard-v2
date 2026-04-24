@@ -1,7 +1,112 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+export const courses = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: courses.url(args, options),
+    method: 'get',
+})
+
+courses.definition = {
+    methods: ["get","head"],
+    url: '/employees/{user}/courses',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+courses.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { user: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'slug' in args) {
+        args = { user: args.slug }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            user: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        user: typeof args.user === 'object'
+        ? args.user.slug
+        : args.user,
+    }
+
+    return courses.definition.url
+            .replace('{user}', parsedArgs.user.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+courses.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: courses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+courses.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: courses.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+const coursesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: courses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+coursesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: courses.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::courses
+* @see app/Http/Controllers/Tenant/UserController.php:125
+* @route '/employees/{user}/courses'
+*/
+coursesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: courses.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+courses.form = coursesForm
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
 * @route '/employees/{user}/manage-courses'
 */
 export const manageCourses = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +120,8 @@ manageCourses.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
 * @route '/employees/{user}/manage-courses'
 */
 manageCourses.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -48,8 +153,8 @@ manageCourses.url = (args: { user: string | { slug: string } } | [user: string |
 }
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
 * @route '/employees/{user}/manage-courses'
 */
 manageCourses.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -58,8 +163,8 @@ manageCourses.get = (args: { user: string | { slug: string } } | [user: string |
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
 * @route '/employees/{user}/manage-courses'
 */
 manageCourses.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -68,8 +173,8 @@ manageCourses.head = (args: { user: string | { slug: string } } | [user: string 
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
 * @route '/employees/{user}/manage-courses'
 */
 const manageCoursesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -78,8 +183,8 @@ const manageCoursesForm = (args: { user: string | { slug: string } } | [user: st
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
 * @route '/employees/{user}/manage-courses'
 */
 manageCoursesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -88,8 +193,8 @@ manageCoursesForm.get = (args: { user: string | { slug: string } } | [user: stri
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::manageCourses
-* @see app/Http/Controllers/Dealer/UserController.php:43
+* @see \App\Http\Controllers\Tenant\UserController::manageCourses
+* @see app/Http/Controllers/Tenant/UserController.php:137
 * @route '/employees/{user}/manage-courses'
 */
 manageCoursesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -105,26 +210,26 @@ manageCoursesForm.head = (args: { user: string | { slug: string } } | [user: str
 manageCourses.form = manageCoursesForm
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
 */
-export const certificates = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: certificates.url(args, options),
+export const dotCertificates = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dotCertificates.url(args, options),
     method: 'get',
 })
 
-certificates.definition = {
+dotCertificates.definition = {
     methods: ["get","head"],
-    url: '/employees/{user}/certificates',
+    url: '/employees/{user}/dot-certificates',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
 */
-certificates.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
+dotCertificates.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
     }
@@ -147,58 +252,58 @@ certificates.url = (args: { user: string | { slug: string } } | [user: string | 
         : args.user,
     }
 
-    return certificates.definition.url
+    return dotCertificates.definition.url
             .replace('{user}', parsedArgs.user.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
 */
-certificates.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: certificates.url(args, options),
+dotCertificates.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dotCertificates.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
 */
-certificates.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: certificates.url(args, options),
+dotCertificates.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: dotCertificates.url(args, options),
     method: 'head',
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
 */
-const certificatesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: certificates.url(args, options),
+const dotCertificatesForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dotCertificates.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
 */
-certificatesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: certificates.url(args, options),
+dotCertificatesForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dotCertificates.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::certificates
-* @see app/Http/Controllers/Dealer/UserController.php:48
-* @route '/employees/{user}/certificates'
+* @see \App\Http\Controllers\Tenant\UserController::dotCertificates
+* @see app/Http/Controllers/Tenant/UserController.php:149
+* @route '/employees/{user}/dot-certificates'
 */
-certificatesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: certificates.url(args, {
+dotCertificatesForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dotCertificates.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -207,117 +312,12 @@ certificatesForm.head = (args: { user: string | { slug: string } } | [user: stri
     method: 'get',
 })
 
-certificates.form = certificatesForm
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-export const videoProgress = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: videoProgress.url(args, options),
-    method: 'get',
-})
-
-videoProgress.definition = {
-    methods: ["get","head"],
-    url: '/employees/{user}/video-progress',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-videoProgress.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { user: args }
-    }
-
-    if (typeof args === 'object' && !Array.isArray(args) && 'slug' in args) {
-        args = { user: args.slug }
-    }
-
-    if (Array.isArray(args)) {
-        args = {
-            user: args[0],
-        }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-        user: typeof args.user === 'object'
-        ? args.user.slug
-        : args.user,
-    }
-
-    return videoProgress.definition.url
-            .replace('{user}', parsedArgs.user.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-videoProgress.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: videoProgress.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-videoProgress.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: videoProgress.url(args, options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-const videoProgressForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: videoProgress.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-videoProgressForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: videoProgress.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::videoProgress
-* @see app/Http/Controllers/Dealer/UserController.php:53
-* @route '/employees/{user}/video-progress'
-*/
-videoProgressForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: videoProgress.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-videoProgress.form = videoProgressForm
+dotCertificates.form = dotCertificatesForm
 
 const show = {
+    courses: Object.assign(courses, courses),
     manageCourses: Object.assign(manageCourses, manageCourses),
-    certificates: Object.assign(certificates, certificates),
-    videoProgress: Object.assign(videoProgress, videoProgress),
+    dotCertificates: Object.assign(dotCertificates, dotCertificates),
 }
 
 export default show

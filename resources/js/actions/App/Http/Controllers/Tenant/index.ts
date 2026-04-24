@@ -3,6 +3,7 @@ import Store from './Store'
 import SdsController from './SdsController'
 import Settings from './Settings'
 import Audit from './Audit'
+import UserController from './UserController'
 import CyrismaController from './CyrismaController'
 import CyrismaReportController from './CyrismaReportController'
 
@@ -12,6 +13,7 @@ const Tenant = {
     SdsController: Object.assign(SdsController, SdsController),
     Settings: Object.assign(Settings, Settings),
     Audit: Object.assign(Audit, Audit),
+    UserController: Object.assign(UserController, UserController),
     CyrismaController: Object.assign(CyrismaController, CyrismaController),
     CyrismaReportController: Object.assign(CyrismaReportController, CyrismaReportController),
 }

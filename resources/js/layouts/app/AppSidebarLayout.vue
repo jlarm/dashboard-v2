@@ -27,7 +27,7 @@ useFlashToasts();
                     <slot name="actions" />
                 </template>
             </AppSidebarHeader>
-            <div class="p-4">
+            <div class="p-4" :key="$page.component">
                 <slot />
             </div>
         </AppContent>
