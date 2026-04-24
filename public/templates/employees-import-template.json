@@ -1,0 +1,25 @@
+{
+    "employees": [
+        {
+            "Name": "Jane Doe",
+            "Email": "jane.doe@example.com",
+            "Stores": ["1"],
+            "Department": 1,
+            "Position": "Employee",
+            "Training": [
+                {
+                    "Course": "Example Course",
+                    "Training Date": "2026-01-15"
+                }
+            ]
+        },
+        {
+            "Name": "John Smith",
+            "Email": "john.smith@example.com",
+            "Stores": null,
+            "Department": null,
+            "Position": "Manager",
+            "Training": []
+        }
+    ]
+}

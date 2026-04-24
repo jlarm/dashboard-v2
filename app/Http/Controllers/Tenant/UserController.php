@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\User\Actions\BuildEmployeesCsv;
 use App\Domain\Tenant\User\Actions\GenerateDotCertificate;
+use App\Domain\Tenant\User\Actions\ImportEmployees;
 use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
 use App\Domain\Tenant\User\Actions\SendEmployeesReport;
 use App\Domain\Tenant\User\Actions\SetCourseOverride;
@@ -22,6 +23,7 @@ use App\Enums\AuditTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\User\EmailEmployeesReportRequest;
 use App\Http\Requests\Tenant\User\ExportEmployeesRequest;
+use App\Http\Requests\Tenant\User\ImportEmployeesRequest;
 use App\Http\Requests\Tenant\User\IndexEmployeesRequest;
 use App\Http\Requests\Tenant\User\RecordCourseResultRequest;
 use App\Http\Requests\Tenant\User\SetCourseOverrideRequest;
@@ -77,6 +79,31 @@ class UserController extends Controller
                     : (string) tenant('name'),
             ],
         ]);
+    }
+
+    public function import(ImportEmployeesRequest $request, ImportEmployees $action): RedirectResponse
+    {
+        try {
+            $result = $action->handle(
+                importer: $request->user(),
+                jsonContent: (string) $request->spreadsheet()->get(),
+            );
+        } catch (Throwable $e) {
+            return back()->withErrors(['spreadsheet' => $e->getMessage()]);
+        }
+
+        if ($result->errors !== []) {
+            return back()
+                ->withErrors(['spreadsheet' => 'Import failed due to validation errors.'])
+                ->with('import_errors', $result->errors);
+        }
+
+        $message = "{$result->successCount} invite(s) imported successfully.";
+        if ($result->skippedCount > 0) {
+            $message .= " {$result->skippedCount} row(s) skipped (already invited or registered).";
+        }
+
+        return back()->with('success', $message);
     }
 
     public function export(

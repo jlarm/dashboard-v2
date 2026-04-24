@@ -9,43 +9,64 @@ import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import employees from '@/routes/dealer/employees';
 import { Link } from '@inertiajs/vue3';
 
-type NavItem = {
-    name: string;
-    href: string;
-    disabled: boolean;
-};
+type NavKey = 'import';
+
+type NavItem =
+    | { kind: 'link'; name: string; href: string }
+    | { kind: 'action'; name: string; key: NavKey }
+    | { kind: 'disabled'; name: string };
+
+const emit = defineEmits<{
+    (e: 'import'): void;
+}>();
 
 const navItems: NavItem[] = [
-    { name: 'Employees', href: employees.index.url(), disabled: false },
-    { name: 'Import', href: '#', disabled: true },
-    { name: 'Invite Employee', href: '#', disabled: true },
-    { name: 'Open Invites', href: '#', disabled: true },
-    { name: 'Deleted', href: '#', disabled: true },
+    { kind: 'link', name: 'Employees', href: employees.index.url() },
+    { kind: 'action', name: 'Import', key: 'import' },
+    { kind: 'disabled', name: 'Invite Employee' },
+    { kind: 'disabled', name: 'Open Invites' },
+    { kind: 'disabled', name: 'Deleted' },
 ];
 
 const { isCurrentUrl } = useCurrentUrl();
+
+const activeClasses =
+    'hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary data-active:bg-primary/10 data-active:text-primary data-active:focus:bg-primary/10 data-active:hover:bg-primary/10';
+const disabledClasses = 'cursor-not-allowed text-muted-foreground opacity-60';
 </script>
 
 <template>
     <NavigationMenu>
         <NavigationMenuList>
             <NavigationMenuItem v-for="item in navItems" :key="item.name">
-                <NavigationMenuLink
-                    v-if="item.disabled"
-                    as="span"
-                    aria-disabled="true"
-                    class="cursor-not-allowed text-muted-foreground opacity-60"
-                >
-                    {{ item.name }}
-                </NavigationMenuLink>
-                <NavigationMenuLink
-                    v-else
-                    as-child
-                    :active="isCurrentUrl(item.href)"
-                    class="data-active:bg-primary/10 data-active:text-primary data-active:focus:bg-primary/10 data-active:hover:bg-primary/10"
-                >
-                    <Link :href="item.href">{{ item.name }}</Link>
-                </NavigationMenuLink>
+                <template v-if="item.kind === 'link'">
+                    <NavigationMenuLink
+                        as-child
+                        :active="isCurrentUrl(item.href)"
+                        :class="activeClasses"
+                    >
+                        <Link :href="item.href">{{ item.name }}</Link>
+                    </NavigationMenuLink>
+                </template>
+                <template v-else-if="item.kind === 'action'">
+                    <NavigationMenuLink
+                        as-child
+                        :class="activeClasses"
+                    >
+                        <button type="button" class="cursor-pointer" @click="emit(item.key)">
+                            {{ item.name }}
+                        </button>
+                    </NavigationMenuLink>
+                </template>
+                <template v-else>
+                    <NavigationMenuLink
+                        as="span"
+                        aria-disabled="true"
+                        :class="disabledClasses"
+                    >
+                        {{ item.name }}
+                    </NavigationMenuLink>
+                </template>
             </NavigationMenuItem>
         </NavigationMenuList>
     </NavigationMenu>

@@ -408,6 +408,62 @@ indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 index.form = indexForm
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::importMethod
+* @see app/Http/Controllers/Tenant/UserController.php:84
+* @route '/employees/import'
+*/
+export const importMethod = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: importMethod.url(options),
+    method: 'post',
+})
+
+importMethod.definition = {
+    methods: ["post"],
+    url: '/employees/import',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::importMethod
+* @see app/Http/Controllers/Tenant/UserController.php:84
+* @route '/employees/import'
+*/
+importMethod.url = (options?: RouteQueryOptions) => {
+    return importMethod.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::importMethod
+* @see app/Http/Controllers/Tenant/UserController.php:84
+* @route '/employees/import'
+*/
+importMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: importMethod.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::importMethod
+* @see app/Http/Controllers/Tenant/UserController.php:84
+* @route '/employees/import'
+*/
+const importMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: importMethod.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::importMethod
+* @see app/Http/Controllers/Tenant/UserController.php:84
+* @route '/employees/import'
+*/
+importMethodForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: importMethod.url(options),
+    method: 'post',
+})
+
+importMethod.form = importMethodForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::exportMethod
 * @see app/Http/Controllers/Tenant/UserController.php:82
 * @route '/employees/export'
@@ -890,6 +946,7 @@ const employees = {
     new: Object.assign(newMethod, newMethod),
     deleted: Object.assign(deleted, deleted),
     index: Object.assign(index, index),
+    import: Object.assign(importMethod, importMethod),
     export: Object.assign(exportMethod, exportMethod),
     emailReport: Object.assign(emailReport, emailReport),
     show: Object.assign(show, showBac614),
