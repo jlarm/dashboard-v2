@@ -1,7 +1,7 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:173
+* @see app/Http/Controllers/Tenant/UserController.php:175
 * @route '/employees/{user}/course-overrides/{course}'
 */
 export const update = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -16,7 +16,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:173
+* @see app/Http/Controllers/Tenant/UserController.php:175
 * @route '/employees/{user}/course-overrides/{course}'
 */
 update.url = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -46,45 +46,13 @@ update.url = (args: { user: string | { slug: string }, course: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:173
+* @see app/Http/Controllers/Tenant/UserController.php:175
 * @route '/employees/{user}/course-overrides/{course}'
 */
 update.patch = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:173
-* @route '/employees/{user}/course-overrides/{course}'
-*/
-const updateForm = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:173
-* @route '/employees/{user}/course-overrides/{course}'
-*/
-updateForm.patch = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-update.form = updateForm
 
 const courseOverrides = {
     update: Object.assign(update, update),

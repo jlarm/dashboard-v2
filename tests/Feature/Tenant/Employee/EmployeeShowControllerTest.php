@@ -212,7 +212,11 @@ describe('sub-page role access', function (): void {
         $this->actingAs($viewer)
             ->get(route('dealer.employees.show.dot-certificates', $this->target))
             ->assertOk()
-            ->assertInertia(fn ($page) => $page->component('tenant/user/DotCertificates'));
+            ->assertInertia(fn ($page) => $page
+                ->component('tenant/user/DotCertificates')
+                ->has('certificates')
+                ->has('canGenerateDotCert'),
+            );
     })->with(['super-admin', 'Consultant', 'Manager']);
 
     it('allows privileged roles to access the Manage Courses sub-page', function (string $role): void {
@@ -465,6 +469,14 @@ describe('course override action', function (): void {
                 ]),
                 ['state' => 'add'],
             )
+            ->assertForbidden();
+    });
+});
+
+describe('generate DOT certificate action', function (): void {
+    it('forbids actors without the create-dealerships permission', function (): void {
+        $this->actingAs($this->manager)
+            ->post(route('dealer.employees.dot-certificates.generate', $this->target))
             ->assertForbidden();
     });
 });

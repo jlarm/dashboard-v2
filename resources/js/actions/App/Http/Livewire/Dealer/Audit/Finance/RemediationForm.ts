@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Finance/RemediationForm.php:7
@@ -66,42 +66,5 @@ RemediationForm.head = (args: { glbaViolationAudit: string | number | { uuid: st
     url: RemediationForm.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/RemediationForm.php:7
-* @route '/audits/finance/{glbaViolationAudit}/remediation'
-*/
-const RemediationFormForm = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: RemediationForm.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/RemediationForm.php:7
-* @route '/audits/finance/{glbaViolationAudit}/remediation'
-*/
-RemediationFormForm.get = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: RemediationForm.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/RemediationForm.php:7
-* @route '/audits/finance/{glbaViolationAudit}/remediation'
-*/
-RemediationFormForm.head = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: RemediationForm.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-RemediationForm.form = RemediationFormForm
 
 export default RemediationForm

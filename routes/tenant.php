@@ -249,6 +249,7 @@ Route::name('dealer.')->middleware([
                     ->middleware('role:super-admin|Consultant|Qualified Individual')
                     ->name('course-overrides.update');
                 Route::get('dot-certificates', [App\Http\Controllers\Tenant\UserController::class, 'dotCertificates'])->name('show.dot-certificates');
+                Route::post('dot-certificates', [App\Http\Controllers\Tenant\UserController::class, 'generateDotCertificate'])->name('dot-certificates.generate');
                 Route::patch('/', [App\Http\Controllers\Tenant\UserController::class, 'update'])->name('update');
                 Route::delete('/', [App\Http\Controllers\Tenant\UserController::class, 'destroy'])->name('destroy');
                 Route::post('impersonate', [App\Http\Controllers\Tenant\UserController::class, 'impersonate'])->name('impersonate');

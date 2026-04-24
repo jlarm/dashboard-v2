@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::create
 * @see app/Http/Controllers/Dealer/VendorController.php:18
@@ -42,43 +42,6 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: create.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::create
-* @see app/Http/Controllers/Dealer/VendorController.php:18
-* @route '/vendors/form'
-*/
-const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::create
-* @see app/Http/Controllers/Dealer/VendorController.php:18
-* @route '/vendors/form'
-*/
-createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::create
-* @see app/Http/Controllers/Dealer/VendorController.php:18
-* @route '/vendors/form'
-*/
-createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Vendor\NewForm::__invoke
@@ -125,43 +88,6 @@ form.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Vendor\NewForm::__invoke
-* @see app/Http/Livewire/Dealer/Vendor/NewForm.php:7
-* @route '/form'
-*/
-const formForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: form.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Vendor\NewForm::__invoke
-* @see app/Http/Livewire/Dealer/Vendor/NewForm.php:7
-* @route '/form'
-*/
-formForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: form.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Vendor\NewForm::__invoke
-* @see app/Http/Livewire/Dealer/Vendor/NewForm.php:7
-* @route '/form'
-*/
-formForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: form.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-form.form = formForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Vendor\Index::__invoke
 * @see app/Http/Livewire/Dealer/Vendor/Index.php:7
 * @route '/vendors'
@@ -204,43 +130,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Vendor\Index::__invoke
-* @see app/Http/Livewire/Dealer/Vendor/Index.php:7
-* @route '/vendors'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Vendor\Index::__invoke
-* @see app/Http/Livewire/Dealer/Vendor/Index.php:7
-* @route '/vendors'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Vendor\Index::__invoke
-* @see app/Http/Livewire/Dealer/Vendor/Index.php:7
-* @route '/vendors'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 const vendor = {
     create: Object.assign(create, create),

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\CourseController::show
 * @see app/Http/Controllers/Dealer/CourseController.php:69
@@ -68,43 +68,6 @@ show.head = (args: { course: string | { slug: string } } | [course: string | { s
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\CourseController::show
-* @see app/Http/Controllers/Dealer/CourseController.php:69
-* @route '/courses/{course}'
-*/
-const showForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\CourseController::show
-* @see app/Http/Controllers/Dealer/CourseController.php:69
-* @route '/courses/{course}'
-*/
-showForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\CourseController::show
-* @see app/Http/Controllers/Dealer/CourseController.php:69
-* @route '/courses/{course}'
-*/
-showForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
-
-/**
 * @see \App\Http\Controllers\Dealer\CourseController::quiz
 * @see app/Http/Controllers/Dealer/CourseController.php:82
 * @route '/courses/{course}/quiz'
@@ -171,43 +134,6 @@ quiz.head = (args: { course: string | { slug: string } } | [course: string | { s
     url: quiz.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\CourseController::quiz
-* @see app/Http/Controllers/Dealer/CourseController.php:82
-* @route '/courses/{course}/quiz'
-*/
-const quizForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: quiz.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\CourseController::quiz
-* @see app/Http/Controllers/Dealer/CourseController.php:82
-* @route '/courses/{course}/quiz'
-*/
-quizForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: quiz.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\CourseController::quiz
-* @see app/Http/Controllers/Dealer/CourseController.php:82
-* @route '/courses/{course}/quiz'
-*/
-quizForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: quiz.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-quiz.form = quizForm
 
 const CourseController = { show, quiz }
 

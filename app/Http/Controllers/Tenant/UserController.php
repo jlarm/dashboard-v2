@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\User\Actions\BuildEmployeesCsv;
+use App\Domain\Tenant\User\Actions\GenerateDotCertificate;
 use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
 use App\Domain\Tenant\User\Actions\SendEmployeesReport;
 use App\Domain\Tenant\User\Actions\SetCourseOverride;
@@ -12,6 +13,7 @@ use App\Domain\Tenant\User\Actions\UpdateEmployee;
 use App\Domain\Tenant\User\Data\EmployeeData;
 use App\Domain\Tenant\User\Data\TrainingCountsData;
 use App\Domain\Tenant\User\Data\TrainingSummaryData;
+use App\Domain\Tenant\User\Queries\GetEmployeeCertificates;
 use App\Domain\Tenant\User\Queries\GetEmployeeCourses;
 use App\Domain\Tenant\User\Queries\GetEmployeeFilterOptions;
 use App\Domain\Tenant\User\Queries\GetEmployees;
@@ -189,11 +191,33 @@ class UserController extends Controller
         User $user,
         GetEmployees $getEmployees,
         TrainingComplianceService $complianceService,
+        GetEmployeeCertificates $certificatesQuery,
     ): Response {
-        return Inertia::render(
-            'tenant/user/DotCertificates',
-            $this->sharedProps($request, $user, $getEmployees, $complianceService),
-        );
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService);
+        $props['certificates'] = $certificatesQuery->certificates($user);
+        $props['canGenerateDotCert'] = $viewer->can('generateDotCertificate', $user)
+            && $certificatesQuery->canGenerateDotCertificate($user);
+
+        return Inertia::render('tenant/user/DotCertificates', $props);
+    }
+
+    public function generateDotCertificate(
+        Request $request,
+        User $user,
+        GenerateDotCertificate $action,
+    ): RedirectResponse {
+        $this->authorize('generateDotCertificate', $user);
+
+        $storeName = app()->bound('currentStoreModel')
+            ? (string) resolve('currentStoreModel')->name
+            : (string) tenant('name');
+
+        $url = $action->handle($user, $storeName);
+
+        return back()->with('success', 'DOT certificate generated.')->with('dot_certificate_url', $url);
     }
 
     public function update(UpdateEmployeeRequest $request, User $user, UpdateEmployee $action): RedirectResponse

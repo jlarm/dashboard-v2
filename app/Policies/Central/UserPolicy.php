@@ -68,6 +68,11 @@ class UserPolicy
             && $user->id !== $model->id;
     }
 
+    public function generateDotCertificate(User $user, User $model): bool
+    {
+        return $user->can('create-dealerships') && $user->id !== $model->id;
+    }
+
     public function restore(User $user, User $model): bool
     {
         return false;

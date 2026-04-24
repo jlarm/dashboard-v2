@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Store\SwitchStoreController::__invoke
 * @see app/Http/Controllers/Tenant/Store/SwitchStoreController.php:15
@@ -32,27 +32,5 @@ SwitchStoreController.post = (options?: RouteQueryOptions): RouteDefinition<'pos
     url: SwitchStoreController.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Store\SwitchStoreController::__invoke
-* @see app/Http/Controllers/Tenant/Store/SwitchStoreController.php:15
-* @route '/current-store'
-*/
-const SwitchStoreControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: SwitchStoreController.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Store\SwitchStoreController::__invoke
-* @see app/Http/Controllers/Tenant/Store/SwitchStoreController.php:15
-* @route '/current-store'
-*/
-SwitchStoreControllerForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: SwitchStoreController.url(options),
-    method: 'post',
-})
-
-SwitchStoreController.form = SwitchStoreControllerForm
 
 export default SwitchStoreController

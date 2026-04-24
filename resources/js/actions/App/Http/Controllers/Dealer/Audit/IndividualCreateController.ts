@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults, validateParameters } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults, validateParameters } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\IndividualCreateController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/IndividualCreateController.php:15
@@ -70,42 +70,5 @@ IndividualCreateController.head = (args?: { individualAudit?: string | number | 
     url: IndividualCreateController.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\IndividualCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/IndividualCreateController.php:15
-* @route '/audits/deal-jackets-archived/create/{individualAudit?}'
-*/
-const IndividualCreateControllerForm = (args?: { individualAudit?: string | number | { id: string | number } } | [individualAudit: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: IndividualCreateController.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\IndividualCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/IndividualCreateController.php:15
-* @route '/audits/deal-jackets-archived/create/{individualAudit?}'
-*/
-IndividualCreateControllerForm.get = (args?: { individualAudit?: string | number | { id: string | number } } | [individualAudit: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: IndividualCreateController.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\IndividualCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/IndividualCreateController.php:15
-* @route '/audits/deal-jackets-archived/create/{individualAudit?}'
-*/
-IndividualCreateControllerForm.head = (args?: { individualAudit?: string | number | { id: string | number } } | [individualAudit: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: IndividualCreateController.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-IndividualCreateController.form = IndividualCreateControllerForm
 
 export default IndividualCreateController

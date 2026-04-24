@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Store\CreateStoreController::__invoke
 * @see app/Http/Controllers/Tenant/Store/CreateStoreController.php:14
@@ -32,27 +32,5 @@ CreateStoreController.post = (options?: RouteQueryOptions): RouteDefinition<'pos
     url: CreateStoreController.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Store\CreateStoreController::__invoke
-* @see app/Http/Controllers/Tenant/Store/CreateStoreController.php:14
-* @route '/locations'
-*/
-const CreateStoreControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: CreateStoreController.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Store\CreateStoreController::__invoke
-* @see app/Http/Controllers/Tenant/Store/CreateStoreController.php:14
-* @route '/locations'
-*/
-CreateStoreControllerForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: CreateStoreController.url(options),
-    method: 'post',
-})
-
-CreateStoreController.form = CreateStoreControllerForm
 
 export default CreateStoreController

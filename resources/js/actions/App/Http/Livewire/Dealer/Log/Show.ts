@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Log\Show::__invoke
 * @see app/Http/Livewire/Dealer/Log/Show.php:7
@@ -66,42 +66,5 @@ Show.head = (args: { activity: string | number | { id: string | number } } | [ac
     url: Show.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Log\Show::__invoke
-* @see app/Http/Livewire/Dealer/Log/Show.php:7
-* @route '/logs/{activity}'
-*/
-const ShowForm = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Log\Show::__invoke
-* @see app/Http/Livewire/Dealer/Log/Show.php:7
-* @route '/logs/{activity}'
-*/
-ShowForm.get = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Log\Show::__invoke
-* @see app/Http/Livewire/Dealer/Log/Show.php:7
-* @route '/logs/{activity}'
-*/
-ShowForm.head = (args: { activity: string | number | { id: string | number } } | [activity: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-Show.form = ShowForm
 
 export default Show
