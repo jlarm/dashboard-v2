@@ -36,6 +36,7 @@ use App\Http\Requests\Tenant\User\ResendInvitesRequest;
 use App\Http\Requests\Tenant\User\SetCourseOverrideRequest;
 use App\Http\Requests\Tenant\User\UpdateEmployeeRequest;
 use App\Http\Resources\Tenant\EmployeeResource;
+use App\Http\Resources\Tenant\OpenInviteResource;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\Store;
@@ -147,7 +148,7 @@ class UserController extends Controller
         $result = $query->handle($viewer, $request->filters(), $request->page());
 
         return Inertia::render('tenant/user/OpenInvites', [
-            'invites' => $result['paginator'],
+            'invites' => OpenInviteResource::collection($result['paginator']),
             'filters' => $request->filters(),
             'departments' => $result['departments'],
             'multipleStores' => $result['multiple_stores'],

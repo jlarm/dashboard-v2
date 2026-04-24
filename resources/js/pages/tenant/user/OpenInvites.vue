@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import AppPagination from '@/components/AppPagination.vue';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import { ButtonGroup } from '@/components/ui/button-group';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import {
     Dialog,
     DialogContent,
@@ -75,6 +76,7 @@ const localFilters = reactive<{ department_id: number | null }>({
 const selected = ref<number[]>([]);
 const importDialogOpen = ref(false);
 const inviteToDelete = ref<OpenInvite | null>(null);
+const inviteToResend = ref<OpenInvite | null>(null);
 const resendingIds = ref<Set<number>>(new Set());
 const bulkSending = ref(false);
 const deleting = ref(false);
@@ -156,7 +158,20 @@ watch(
     },
 );
 
-const resendOne = (invite: OpenInvite) => {
+const confirmResend = (invite: OpenInvite) => {
+    inviteToResend.value = invite;
+};
+
+const cancelResend = () => {
+    inviteToResend.value = null;
+};
+
+const performResend = () => {
+    if (!inviteToResend.value) {
+        return;
+    }
+
+    const invite = inviteToResend.value;
     resendingIds.value.add(invite.id);
     router.post(
         employees.openInvites.resendOne.url({ invite: invite.id }),
@@ -165,6 +180,7 @@ const resendOne = (invite: OpenInvite) => {
             preserveScroll: true,
             onFinish: () => {
                 resendingIds.value.delete(invite.id);
+                inviteToResend.value = null;
             },
         },
     );
@@ -279,13 +295,16 @@ const performDelete = () => {
 
             <div class="overflow-x-auto rounded-md border">
                 <Table>
-                    <TableHeader>
+                    <TableHeader class="bg-muted">
                         <TableRow>
                             <TableHead class="w-10">
-                                <Checkbox
-                                    :model-value="allOnPageSelected"
+                                <input
+                                    type="checkbox"
+                                    :checked="allOnPageSelected"
                                     :disabled="invites.data.length === 0"
-                                    @update:model-value="(value) => toggleSelectPage(value === true)"
+                                    class="size-4 rounded border-input text-primary focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                    aria-label="Select all on page"
+                                    @change="(event) => toggleSelectPage((event.target as HTMLInputElement).checked)"
                                 />
                             </TableHead>
                             <TableHead>Name</TableHead>
@@ -294,7 +313,7 @@ const performDelete = () => {
                             <TableHead>Email</TableHead>
                             <TableHead>Last sent</TableHead>
                             <TableHead>Sent by</TableHead>
-                            <TableHead class="text-right">Actions</TableHead>
+                            <TableHead class="text-right" />
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -305,9 +324,12 @@ const performDelete = () => {
                         </TableRow>
                         <TableRow v-for="invite in invites.data" :key="invite.id">
                             <TableCell>
-                                <Checkbox
-                                    :model-value="selected.includes(invite.id)"
-                                    @update:model-value="(value) => toggleSelection(invite.id, value === true)"
+                                <input
+                                    type="checkbox"
+                                    :checked="selected.includes(invite.id)"
+                                    class="size-4 rounded border-input text-primary focus:ring-2 focus:ring-ring"
+                                    :aria-label="`Select ${invite.name}`"
+                                    @change="(event) => toggleSelection(invite.id, (event.target as HTMLInputElement).checked)"
                                 />
                             </TableCell>
                             <TableCell class="font-medium">{{ invite.name }}</TableCell>
@@ -317,25 +339,39 @@ const performDelete = () => {
                             <TableCell>{{ invite.last_sent_at_formatted ?? '—' }}</TableCell>
                             <TableCell>{{ invite.sent_by ?? '—' }}</TableCell>
                             <TableCell>
-                                <div class="flex justify-end gap-2">
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        :disabled="resendingIds.has(invite.id)"
-                                        @click="resendOne(invite)"
-                                    >
-                                        <Send class="size-3.5" />
-                                        {{ resendingIds.has(invite.id) ? 'Sending...' : 'Resend' }}
-                                    </Button>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        class="text-red-600 hover:text-red-700"
-                                        @click="confirmDelete(invite)"
-                                    >
-                                        <Trash2 class="size-3.5" />
-                                        Delete
-                                    </Button>
+                                <div class="flex justify-end">
+                                    <ButtonGroup>
+                                        <Tooltip>
+                                            <TooltipTrigger as-child>
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    :disabled="resendingIds.has(invite.id)"
+                                                    :aria-label="`Resend invite to ${invite.name}`"
+                                                    @click="confirmResend(invite)"
+                                                >
+                                                    <Send class="size-4" />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                {{ resendingIds.has(invite.id) ? 'Sending...' : 'Resend invite' }}
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger as-child>
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    class="text-red-600 hover:bg-red-50 hover:text-red-700"
+                                                    :aria-label="`Delete invite to ${invite.name}`"
+                                                    @click="confirmDelete(invite)"
+                                                >
+                                                    <Trash2 class="size-4" />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>Delete invite</TooltipContent>
+                                        </Tooltip>
+                                    </ButtonGroup>
                                 </div>
                             </TableCell>
                         </TableRow>
@@ -360,6 +396,34 @@ const performDelete = () => {
                     <Button variant="outline" :disabled="deleting" @click="cancelDelete">Cancel</Button>
                     <Button variant="destructive" :disabled="deleting" @click="performDelete">
                         {{ deleting ? 'Deleting...' : 'Delete invite' }}
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+
+        <Dialog :open="inviteToResend !== null" @update:open="(value) => !value && cancelResend()">
+            <DialogContent class="sm:max-w-md">
+                <DialogHeader>
+                    <DialogTitle>Resend invite?</DialogTitle>
+                    <DialogDescription v-if="inviteToResend">
+                        Send the registration email again to
+                        <span class="font-medium">{{ inviteToResend.name }}</span>
+                        ({{ inviteToResend.email }}).
+                    </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                    <Button
+                        variant="outline"
+                        :disabled="inviteToResend !== null && resendingIds.has(inviteToResend.id)"
+                        @click="cancelResend"
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        :disabled="inviteToResend !== null && resendingIds.has(inviteToResend.id)"
+                        @click="performResend"
+                    >
+                        {{ inviteToResend !== null && resendingIds.has(inviteToResend.id) ? 'Sending...' : 'Send invite' }}
                     </Button>
                 </DialogFooter>
             </DialogContent>

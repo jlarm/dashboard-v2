@@ -3,16 +3,20 @@ import { onBeforeUnmount } from 'vue';
 import { toast } from 'vue-sonner';
 
 type FlashShape = {
-    message?: string;
-    success?: string;
-    error?: string;
-    warning?: string;
-    info?: string;
+    message?: string | null;
+    success?: string | null;
+    error?: string | null;
+    warning?: string | null;
+    info?: string | null;
 };
 
 export function useFlashToasts(): void {
-    const stop = router.on('flash', (event) => {
-        const flash = event.detail.flash as FlashShape;
+    const stop = router.on('success', (event) => {
+        const flash = (event.detail.page.props as { flash?: FlashShape }).flash;
+
+        if (!flash) {
+            return;
+        }
 
         if (flash.success) {
             toast.success(flash.success);
