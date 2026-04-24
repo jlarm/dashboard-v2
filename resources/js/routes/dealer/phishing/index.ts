@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Phish\Create::__invoke
 * @see app/Http/Livewire/Dealer/Phish/Create.php:7
@@ -44,43 +44,6 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Phish\Create::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Create.php:7
-* @route '/phishing/create'
-*/
-const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Phish\Create::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Create.php:7
-* @route '/phishing/create'
-*/
-createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Phish\Create::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Create.php:7
-* @route '/phishing/create'
-*/
-createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Phish\Index::__invoke
 * @see app/Http/Livewire/Dealer/Phish/Index.php:7
 * @route '/phishing'
@@ -123,43 +86,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Phish\Index::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Index.php:7
-* @route '/phishing'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Phish\Index::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Index.php:7
-* @route '/phishing'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Phish\Index::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Index.php:7
-* @route '/phishing'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Phish\Show::__invoke
@@ -222,43 +148,6 @@ show.head = (args: { phishingCampaign: string | number } | [phishingCampaign: st
     url: show.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Phish\Show::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Show.php:7
-* @route '/phishing/{phishingCampaign}'
-*/
-const showForm = (args: { phishingCampaign: string | number } | [phishingCampaign: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Phish\Show::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Show.php:7
-* @route '/phishing/{phishingCampaign}'
-*/
-showForm.get = (args: { phishingCampaign: string | number } | [phishingCampaign: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Phish\Show::__invoke
-* @see app/Http/Livewire/Dealer/Phish/Show.php:7
-* @route '/phishing/{phishingCampaign}'
-*/
-showForm.head = (args: { phishingCampaign: string | number } | [phishingCampaign: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
 
 const phishing = {
     create: Object.assign(create, create),

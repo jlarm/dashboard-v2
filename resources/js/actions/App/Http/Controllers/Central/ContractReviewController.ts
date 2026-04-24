@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\ContractReviewController::show
 * @see app/Http/Controllers/Central/ContractReviewController.php:21
@@ -68,43 +68,6 @@ show.head = (args: { contract: string | { uuid: string } } | [contract: string |
 })
 
 /**
-* @see \App\Http\Controllers\Central\ContractReviewController::show
-* @see app/Http/Controllers/Central/ContractReviewController.php:21
-* @route '//dashboard.test/contract/view/{contract}'
-*/
-const showForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\ContractReviewController::show
-* @see app/Http/Controllers/Central/ContractReviewController.php:21
-* @route '//dashboard.test/contract/view/{contract}'
-*/
-showForm.get = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\ContractReviewController::show
-* @see app/Http/Controllers/Central/ContractReviewController.php:21
-* @route '//dashboard.test/contract/view/{contract}'
-*/
-showForm.head = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
-
-/**
 * @see \App\Http\Controllers\Central\ContractReviewController::store
 * @see app/Http/Controllers/Central/ContractReviewController.php:68
 * @route '//dashboard.test/contract/view/{contract}'
@@ -161,28 +124,6 @@ store.post = (args: { contract: string | { uuid: string } } | [contract: string 
     url: store.url(args, options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Central\ContractReviewController::store
-* @see app/Http/Controllers/Central/ContractReviewController.php:68
-* @route '//dashboard.test/contract/view/{contract}'
-*/
-const storeForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\ContractReviewController::store
-* @see app/Http/Controllers/Central/ContractReviewController.php:68
-* @route '//dashboard.test/contract/view/{contract}'
-*/
-storeForm.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(args, options),
-    method: 'post',
-})
-
-store.form = storeForm
 
 const ContractReviewController = { show, store }
 

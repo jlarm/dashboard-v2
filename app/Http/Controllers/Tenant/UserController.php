@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\User\Actions\BuildEmployeesCsv;
+use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
 use App\Domain\Tenant\User\Actions\SendEmployeesReport;
 use App\Domain\Tenant\User\Actions\UpdateEmployee;
 use App\Domain\Tenant\User\Data\EmployeeData;
 use App\Domain\Tenant\User\Data\TrainingCountsData;
 use App\Domain\Tenant\User\Data\TrainingSummaryData;
+use App\Domain\Tenant\User\Queries\GetEmployeeCourses;
 use App\Domain\Tenant\User\Queries\GetEmployeeFilterOptions;
 use App\Domain\Tenant\User\Queries\GetEmployees;
 use App\Enums\AuditTypes;
@@ -17,8 +19,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\User\EmailEmployeesReportRequest;
 use App\Http\Requests\Tenant\User\ExportEmployeesRequest;
 use App\Http\Requests\Tenant\User\IndexEmployeesRequest;
+use App\Http\Requests\Tenant\User\RecordCourseResultRequest;
 use App\Http\Requests\Tenant\User\UpdateEmployeeRequest;
 use App\Http\Resources\Tenant\EmployeeResource;
+use App\Models\Dealer\Course;
 use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\Role;
@@ -127,11 +131,27 @@ class UserController extends Controller
         User $user,
         GetEmployees $getEmployees,
         TrainingComplianceService $complianceService,
+        GetEmployeeCourses $getEmployeeCourses,
     ): Response {
-        return Inertia::render(
-            'tenant/user/Courses',
-            $this->sharedProps($request, $user, $getEmployees, $complianceService),
-        );
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService);
+        $props['courses'] = $getEmployeeCourses->handle($user);
+        $props['canRecordCourseResult'] = $viewer->can('recordCourseResult', $user);
+
+        return Inertia::render('tenant/user/Courses', $props);
+    }
+
+    public function recordCourseResult(
+        RecordCourseResultRequest $request,
+        User $user,
+        Course $course,
+        RecordEmployeeCourseResult $action,
+    ): RedirectResponse {
+        $action->handle($user, $course, $request->takenOn());
+
+        return back()->with('success', "Recorded {$course->name} for {$user->name}.");
     }
 
     public function manageCourses(

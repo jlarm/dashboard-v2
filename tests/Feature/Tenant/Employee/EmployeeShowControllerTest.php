@@ -199,7 +199,11 @@ describe('sub-page role access', function (): void {
         $this->actingAs($viewer)
             ->get(route('dealer.employees.show.courses', $this->target))
             ->assertOk()
-            ->assertInertia(fn ($page) => $page->component('tenant/user/Courses'));
+            ->assertInertia(fn ($page) => $page
+                ->component('tenant/user/Courses')
+                ->has('courses')
+                ->has('canRecordCourseResult'),
+            );
     })->with(['super-admin', 'Consultant', 'Manager']);
 
     it('renders the DOT Certificates sub-page for any privileged role', function (string $role): void {
@@ -362,6 +366,79 @@ describe('update action', function (): void {
                 'qualified_individual' => false,
             ])
             ->assertServerError();
+    });
+});
+
+describe('record course result action', function (): void {
+    it('creates a passing course result with the submitted date', function (): void {
+        $course = App\Models\Dealer\Course::query()->create([
+            'name' => 'Record Test Course',
+            'slug' => 'record-test-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $takenOn = now()->subMonth()->startOfDay();
+
+        $this->actingAs($this->consultant)
+            ->post(
+                route('dealer.employees.courses.record-result', [
+                    'user' => $this->target,
+                    'course' => $course->id,
+                ]),
+                ['taken_on' => $takenOn->toDateString()],
+            )
+            ->assertRedirect();
+
+        $result = App\Models\Dealer\CourseResults::query()
+            ->where('user_id', $this->target->id)
+            ->where('course_id', $course->id)
+            ->firstOrFail();
+
+        expect((int) $result->passed)->toBe(1)
+            ->and((int) $result->percentage)->toBe(100)
+            ->and($result->created_at->toDateString())->toBe($takenOn->toDateString());
+    });
+
+    it('rejects future dates', function (): void {
+        $course = App\Models\Dealer\Course::query()->create([
+            'name' => 'Future Date Course',
+            'slug' => 'future-date-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $this->actingAs($this->consultant)
+            ->post(
+                route('dealer.employees.courses.record-result', [
+                    'user' => $this->target,
+                    'course' => $course->id,
+                ]),
+                ['taken_on' => now()->addDay()->toDateString()],
+            )
+            ->assertSessionHasErrors('taken_on');
+    });
+
+    it('forbids actors without the create-dealerships permission', function (): void {
+        $course = App\Models\Dealer\Course::query()->create([
+            'name' => 'Unauthorized Course',
+            'slug' => 'unauthorized-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $this->actingAs($this->manager)
+            ->post(
+                route('dealer.employees.courses.record-result', [
+                    'user' => $this->target,
+                    'course' => $course->id,
+                ]),
+                ['taken_on' => now()->toDateString()],
+            )
+            ->assertForbidden();
     });
 });
 

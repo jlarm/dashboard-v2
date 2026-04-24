@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController::download
 * @see app/Http/Controllers/Tenant/Audit/DealJacketReportDownloadController.php:14
@@ -60,43 +60,6 @@ download.head = (args: { fileName: string | number } | [fileName: string | numbe
     url: download.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController::download
-* @see app/Http/Controllers/Tenant/Audit/DealJacketReportDownloadController.php:14
-* @route '/audits/deal-jacket-reports/{fileName}/download'
-*/
-const downloadForm = (args: { fileName: string | number } | [fileName: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController::download
-* @see app/Http/Controllers/Tenant/Audit/DealJacketReportDownloadController.php:14
-* @route '/audits/deal-jacket-reports/{fileName}/download'
-*/
-downloadForm.get = (args: { fileName: string | number } | [fileName: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController::download
-* @see app/Http/Controllers/Tenant/Audit/DealJacketReportDownloadController.php:14
-* @route '/audits/deal-jacket-reports/{fileName}/download'
-*/
-downloadForm.head = (args: { fileName: string | number } | [fileName: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-download.form = downloadForm
 
 const DealJacketReportDownloadController = { download }
 

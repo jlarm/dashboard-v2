@@ -3,7 +3,7 @@ import { ref, watch } from "vue";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import DatePicker from "@/pages/central/contract/components/DatePicker.vue";
+import DatePicker from "@/components/DatePicker.vue";
 import AdditionalLocationsRepeater, {
     type AdditionalLocation,
 } from "@/pages/central/contract/components/AdditionalLocationsRepeater.vue";

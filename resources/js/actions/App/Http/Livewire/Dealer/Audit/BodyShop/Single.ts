@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Audit\BodyShop\Single::__invoke
 * @see app/Http/Livewire/Dealer/Audit/BodyShop/Single.php:7
@@ -66,42 +66,5 @@ Single.head = (args: { bodyShopViolationAudit: string | number | { uuid: string 
     url: Single.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Single.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}'
-*/
-const SingleForm = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Single.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Single.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}'
-*/
-SingleForm.get = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Single.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Single.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}'
-*/
-SingleForm.head = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Single.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-Single.form = SingleForm
 
 export default Single

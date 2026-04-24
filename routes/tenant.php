@@ -241,6 +241,7 @@ Route::name('dealer.')->middleware([
             Route::prefix('{user:slug}')->group(function (): void {
                 Route::get('/', [App\Http\Controllers\Tenant\UserController::class, 'show'])->name('show');
                 Route::get('courses', [App\Http\Controllers\Tenant\UserController::class, 'courses'])->name('show.courses');
+                Route::post('courses/{course}/result', [App\Http\Controllers\Tenant\UserController::class, 'recordCourseResult'])->name('courses.record-result');
                 Route::get('manage-courses', [App\Http\Controllers\Tenant\UserController::class, 'manageCourses'])
                     ->middleware('role:super-admin|Consultant|Qualified Individual')
                     ->name('show.manage-courses');

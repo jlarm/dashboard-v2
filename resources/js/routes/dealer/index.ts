@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
 import password from './password'
 import store from './store'
 import legacyStores from './legacy-stores'
@@ -69,43 +69,6 @@ welcome.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/'
-*/
-const welcomeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: welcome.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/'
-*/
-welcomeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: welcome.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/'
-*/
-welcomeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: welcome.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-welcome.form = welcomeForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController::login
 * @see app/Http/Controllers/Tenant/Auth/AuthenticatedSessionController.php:21
 * @route '/login'
@@ -148,43 +111,6 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: login.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController::login
-* @see app/Http/Controllers/Tenant/Auth/AuthenticatedSessionController.php:21
-* @route '/login'
-*/
-const loginForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: login.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController::login
-* @see app/Http/Controllers/Tenant/Auth/AuthenticatedSessionController.php:21
-* @route '/login'
-*/
-loginForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: login.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController::login
-* @see app/Http/Controllers/Tenant/Auth/AuthenticatedSessionController.php:21
-* @route '/login'
-*/
-loginForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: login.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-login.form = loginForm
 
 /**
 * @see \Inertia\Controller::__invoke
@@ -231,43 +157,6 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/dashboard'
-*/
-const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: dashboard.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/dashboard'
-*/
-dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: dashboard.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Inertia\Controller::__invoke
-* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
-* @route '/dashboard'
-*/
-dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: dashboard.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-dashboard.form = dashboardForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController::logout
 * @see app/Http/Controllers/Tenant/Auth/AuthenticatedSessionController.php:50
 * @route '/logout'
@@ -300,28 +189,6 @@ logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: logout.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController::logout
-* @see app/Http/Controllers/Tenant/Auth/AuthenticatedSessionController.php:50
-* @route '/logout'
-*/
-const logoutForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: logout.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController::logout
-* @see app/Http/Controllers/Tenant/Auth/AuthenticatedSessionController.php:50
-* @route '/logout'
-*/
-logoutForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: logout.url(options),
-    method: 'post',
-})
-
-logout.form = logoutForm
 
 const dealerNamespace = {
     welcome: Object.assign(welcome, welcome),

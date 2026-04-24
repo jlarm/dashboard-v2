@@ -57,6 +57,11 @@ class UserPolicy
             && ! $model->hasRole('super-admin');
     }
 
+    public function recordCourseResult(User $user, User $model): bool
+    {
+        return $user->can('create-dealerships') && $user->id !== $model->id;
+    }
+
     public function restore(User $user, User $model): bool
     {
         return false;
