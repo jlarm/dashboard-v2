@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Domain\Tenant\User\Actions\BuildEmployeesCsv;
 use App\Domain\Tenant\User\Actions\GenerateDotCertificate;
 use App\Domain\Tenant\User\Actions\ImportEmployees;
+use App\Domain\Tenant\User\Actions\InviteEmployee;
 use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
 use App\Domain\Tenant\User\Actions\SendEmployeesReport;
 use App\Domain\Tenant\User\Actions\SetCourseOverride;
@@ -18,6 +19,7 @@ use App\Domain\Tenant\User\Queries\GetEmployeeCertificates;
 use App\Domain\Tenant\User\Queries\GetEmployeeCourses;
 use App\Domain\Tenant\User\Queries\GetEmployeeFilterOptions;
 use App\Domain\Tenant\User\Queries\GetEmployees;
+use App\Domain\Tenant\User\Queries\GetInviteEmployeeOptions;
 use App\Domain\Tenant\User\Queries\GetManageCoursesOptions;
 use App\Enums\AuditTypes;
 use App\Http\Controllers\Controller;
@@ -25,6 +27,7 @@ use App\Http\Requests\Tenant\User\EmailEmployeesReportRequest;
 use App\Http\Requests\Tenant\User\ExportEmployeesRequest;
 use App\Http\Requests\Tenant\User\ImportEmployeesRequest;
 use App\Http\Requests\Tenant\User\IndexEmployeesRequest;
+use App\Http\Requests\Tenant\User\InviteEmployeeRequest;
 use App\Http\Requests\Tenant\User\RecordCourseResultRequest;
 use App\Http\Requests\Tenant\User\SetCourseOverrideRequest;
 use App\Http\Requests\Tenant\User\UpdateEmployeeRequest;
@@ -79,6 +82,56 @@ class UserController extends Controller
                     : (string) tenant('name'),
             ],
         ]);
+    }
+
+    public function invite(Request $request, GetInviteEmployeeOptions $optionsQuery): Response
+    {
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        abort_unless(
+            $viewer->hasAnyRole([
+                'super-admin',
+                'Consultant',
+                'Owner',
+                'CFO',
+                'GM',
+                'GSM',
+                'Qualified Individual',
+                'Manager',
+            ]),
+            403,
+        );
+
+        return Inertia::render('tenant/user/Invite', [
+            'options' => $optionsQuery->handle($viewer),
+            'defaults' => [
+                'department_id' => $viewer->department_id,
+                'role' => $viewer->can('create-stores') ? null : 'Employee',
+            ],
+        ]);
+    }
+
+    public function storeInvite(InviteEmployeeRequest $request, InviteEmployee $action): RedirectResponse
+    {
+        /** @var User $inviter */
+        $inviter = $request->user();
+
+        $invite = $action->handle(
+            inviter: $inviter,
+            name: $request->name(),
+            email: $request->email(),
+            departmentId: $request->departmentId(),
+            role: $request->role(),
+            qualifiedIndividual: $request->qualifiedIndividual(),
+            storeIds: $request->storeIds(),
+            primaryStoreId: $request->primaryStoreId(),
+            courses: $request->courses(),
+        );
+
+        return redirect()
+            ->route('employees.index')
+            ->with('success', "{$invite->name} has been invited.");
     }
 
     public function import(ImportEmployeesRequest $request, ImportEmployees $action): RedirectResponse

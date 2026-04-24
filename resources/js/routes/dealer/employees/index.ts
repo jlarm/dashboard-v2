@@ -3,6 +3,7 @@ import showBac614 from './show'
 import courses from './courses'
 import courseOverrides from './course-overrides'
 import dotCertificates from './dot-certificates'
+import invite9ae5a1 from './invite'
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
 * @see app/Http/Controllers/Dealer/UserController.php:58
@@ -462,6 +463,81 @@ importMethodForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post
 })
 
 importMethod.form = importMethodForm
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::invite
+* @see app/Http/Controllers/Tenant/UserController.php:87
+* @route '/employees/invite'
+*/
+export const invite = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: invite.url(options),
+    method: 'get',
+})
+
+invite.definition = {
+    methods: ["get","head"],
+    url: '/employees/invite',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::invite
+* @route '/employees/invite'
+*/
+invite.url = (options?: RouteQueryOptions) => {
+    return invite.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::invite
+* @route '/employees/invite'
+*/
+invite.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: invite.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::invite
+* @route '/employees/invite'
+*/
+invite.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: invite.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::invite
+* @route '/employees/invite'
+*/
+const inviteForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: invite.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::invite
+* @route '/employees/invite'
+*/
+inviteForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: invite.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::invite
+* @route '/employees/invite'
+*/
+inviteForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: invite.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+invite.form = inviteForm
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::exportMethod
@@ -947,6 +1023,7 @@ const employees = {
     deleted: Object.assign(deleted, deleted),
     index: Object.assign(index, index),
     import: Object.assign(importMethod, importMethod),
+    invite: Object.assign(invite, invite9ae5a1),
     export: Object.assign(exportMethod, exportMethod),
     emailReport: Object.assign(emailReport, emailReport),
     show: Object.assign(show, showBac614),

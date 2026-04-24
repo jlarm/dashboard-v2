@@ -23,7 +23,7 @@ const emit = defineEmits<{
 const navItems: NavItem[] = [
     { kind: 'link', name: 'Employees', href: employees.index.url() },
     { kind: 'action', name: 'Import', key: 'import' },
-    { kind: 'disabled', name: 'Invite Employee' },
+    { kind: 'link', name: 'Invite Employee', href: employees.invite.url() },
     { kind: 'disabled', name: 'Open Invites' },
     { kind: 'disabled', name: 'Deleted' },
 ];

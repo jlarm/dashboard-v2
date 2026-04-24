@@ -235,6 +235,8 @@ Route::name('dealer.')->middleware([
 
         Route::prefix('employees')->name('employees.')->group(function (): void {
             Route::get('/', [App\Http\Controllers\Tenant\UserController::class, 'index'])->name('index');
+            Route::get('/invite', [App\Http\Controllers\Tenant\UserController::class, 'invite'])->name('invite');
+            Route::post('/invite', [App\Http\Controllers\Tenant\UserController::class, 'storeInvite'])->name('invite.store');
             Route::post('/import', [App\Http\Controllers\Tenant\UserController::class, 'import'])->name('import');
             Route::post('/export', [App\Http\Controllers\Tenant\UserController::class, 'export'])->name('export');
             Route::post('/email-report', [App\Http\Controllers\Tenant\UserController::class, 'emailReport'])->name('email-report');
