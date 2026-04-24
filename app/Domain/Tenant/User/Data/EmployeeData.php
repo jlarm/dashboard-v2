@@ -52,7 +52,7 @@ final readonly class EmployeeData
             id: (int) $user->id,
             name: Str::headline((string) $user->name),
             slug: (string) $user->slug,
-            email: (string) $user->email,
+            email: Str::lower((string) $user->email),
             departmentName: $user->department?->name,
             roles: array_values(array_filter(
                 $roles,

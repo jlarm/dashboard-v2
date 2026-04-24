@@ -62,6 +62,15 @@ const breadcrumbs = computed<BreadcrumbItem[]>(() => [
     { title: employee.value.name, href: UserController.show.url({ slug: employee.value.slug }) },
 ]);
 
+const metaLine = computed(() => {
+    const parts = [
+        employee.value.department_name,
+        employee.value.roles[0]?.name,
+    ].filter((part): part is string => typeof part === 'string' && part !== '');
+
+    return parts.join(' · ');
+});
+
 const statusBadgeClass = computed(() => {
     switch (employee.value.training.status) {
         case 'compliant':
@@ -167,7 +176,9 @@ const impersonate = () => {
                                 QI
                             </span>
                         </div>
-                        <p class="text-sm text-muted-foreground">{{ employee.email }}</p>
+                        <p class="text-sm text-muted-foreground">
+                            {{ employee.email }}<template v-if="metaLine"> · {{ metaLine }}</template>
+                        </p>
                     </div>
                 </div>
 
