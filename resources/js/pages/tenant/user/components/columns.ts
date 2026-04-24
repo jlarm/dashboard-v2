@@ -28,6 +28,8 @@ export type Employee = {
     training: TrainingSummary;
     has_qualified_individual_role: boolean;
     can_view: boolean;
+    last_login_at: string | null;
+    last_login_at_relative: string | null;
 };
 
 type SortField = 'name' | 'department' | 'role';

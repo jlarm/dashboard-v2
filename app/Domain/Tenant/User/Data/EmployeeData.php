@@ -24,6 +24,8 @@ final readonly class EmployeeData
         public TrainingSummaryData $training,
         public bool $hasQualifiedIndividualRole,
         public bool $canView,
+        public ?string $lastLoginAt,
+        public ?string $lastLoginAtRelative,
     ) {}
 
     public static function fromModel(
@@ -64,6 +66,8 @@ final readonly class EmployeeData
                 static fn (array $role): bool => $role['name'] === 'Qualified Individual',
             ),
             canView: $canView,
+            lastLoginAt: $user->last_login_at?->format('F d, Y g:i A'),
+            lastLoginAtRelative: $user->last_login_at?->diffForHumans(),
         );
     }
 
@@ -78,7 +82,9 @@ final readonly class EmployeeData
      *     stores: list<array{id: int, name: string}>,
      *     training: array<string, mixed>,
      *     has_qualified_individual_role: bool,
-     *     can_view: bool
+     *     can_view: bool,
+     *     last_login_at: string|null,
+     *     last_login_at_relative: string|null
      * }
      */
     public function toArray(): array
@@ -94,6 +100,8 @@ final readonly class EmployeeData
             'training' => $this->training->toArray(),
             'has_qualified_individual_role' => $this->hasQualifiedIndividualRole,
             'can_view' => $this->canView,
+            'last_login_at' => $this->lastLoginAt,
+            'last_login_at_relative' => $this->lastLoginAtRelative,
         ];
     }
 }

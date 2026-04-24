@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
 * @see app/Http/Controllers/Tenant/CyrismaController.php:18
@@ -42,6 +42,43 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: settings.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @route '/scans/settings'
+*/
+const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @route '/scans/settings'
+*/
+settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @route '/scans/settings'
+*/
+settingsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+settings.form = settingsForm
 
 const CyrismaController = { settings }
 

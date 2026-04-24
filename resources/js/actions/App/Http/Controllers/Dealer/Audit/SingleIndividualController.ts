@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\SingleIndividualController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/SingleIndividualController.php:17
@@ -66,5 +66,42 @@ SingleIndividualController.head = (args: { individualAudit: string | number | { 
     url: SingleIndividualController.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\SingleIndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/SingleIndividualController.php:17
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+const SingleIndividualControllerForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: SingleIndividualController.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\SingleIndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/SingleIndividualController.php:17
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+SingleIndividualControllerForm.get = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: SingleIndividualController.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\SingleIndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/SingleIndividualController.php:17
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+SingleIndividualControllerForm.head = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: SingleIndividualController.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+SingleIndividualController.form = SingleIndividualControllerForm
 
 export default SingleIndividualController

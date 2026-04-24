@@ -32,6 +32,15 @@ setLayoutProps<{ activeTab: 'overview' }>({ activeTab: 'overview' });
         </section>
 
         <section class="rounded-md border bg-card p-4 md:col-span-2">
+            <h2 class="text-sm font-semibold text-muted-foreground">Last login</h2>
+            <p v-if="employee.last_login_at" class="mt-1 text-sm">
+                {{ employee.last_login_at }}
+                <span class="text-muted-foreground">· {{ employee.last_login_at_relative }}</span>
+            </p>
+            <p v-else class="mt-1 text-sm text-muted-foreground">Never logged in</p>
+        </section>
+
+        <section class="rounded-md border bg-card p-4 md:col-span-2">
             <h2 class="text-sm font-semibold text-muted-foreground">Locations</h2>
             <div v-if="employee.stores.length > 0" class="mt-2 flex flex-wrap gap-1">
                 <span
