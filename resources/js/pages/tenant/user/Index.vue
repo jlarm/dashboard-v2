@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import DataTable from '@/pages/tenant/user/components/DataTable.vue';
+import SubNavigation from '@/pages/tenant/user/components/SubNavigation.vue';
 import { buildColumns, type Employee } from '@/pages/tenant/user/components/columns';
 import employeesRoutes from '@/routes/dealer/employees';
 import type { BreadcrumbItem } from '@/types';
@@ -346,6 +347,9 @@ const submitEmailReport = () => {
     <Head title="Employees" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        <template #actions>
+            <SubNavigation />
+        </template>
         <div class="space-y-5">
             <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
                 <StatCard
