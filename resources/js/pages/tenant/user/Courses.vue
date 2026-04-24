@@ -11,6 +11,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import EmployeeShowLayout from '@/pages/tenant/user/components/EmployeeShowLayout.vue';
 import type { EmployeeShowProps } from '@/pages/tenant/user/components/types';
 import { setLayoutProps, useForm } from '@inertiajs/vue3';
@@ -89,23 +90,23 @@ const submitRecord = () => {
 </script>
 
 <template>
-    <div class="overflow-hidden rounded-md border bg-card">
-        <table class="min-w-full divide-y divide-border">
-            <thead class="bg-muted/50">
-                <tr>
-                    <th class="px-4 py-2 text-left text-xs font-semibold tracking-wide text-muted-foreground uppercase">Name</th>
-                    <th class="px-4 py-2 text-left text-xs font-semibold tracking-wide text-muted-foreground uppercase">Last Taken</th>
-                    <th class="px-4 py-2 text-left text-xs font-semibold tracking-wide text-muted-foreground uppercase">Status</th>
-                    <th class="px-4 py-2" />
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-border">
-                <tr v-for="course in courses" :key="course.id">
-                    <td class="px-4 py-2 text-sm">{{ course.name }}</td>
-                    <td class="px-4 py-2 text-sm text-muted-foreground">
+    <div class="rounded-md border">
+        <Table class="table-fixed">
+            <TableHeader class="bg-muted">
+                <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead class="w-48">Last Taken</TableHead>
+                    <TableHead class="w-64">Status</TableHead>
+                    <TableHead class="w-24 text-right" />
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                <TableRow v-for="course in courses" :key="course.id">
+                    <TableCell class="truncate" :title="course.name">{{ course.name }}</TableCell>
+                    <TableCell class="text-muted-foreground">
                         {{ course.last_taken_at ?? 'Never' }}
-                    </td>
-                    <td class="px-4 py-2 text-sm">
+                    </TableCell>
+                    <TableCell>
                         <span v-if="course.status === 'never'" class="text-muted-foreground">—</span>
                         <span
                             v-else
@@ -113,8 +114,8 @@ const submitRecord = () => {
                         >
                             {{ course.status_label }}
                         </span>
-                    </td>
-                    <td class="px-4 py-2 text-right text-sm">
+                    </TableCell>
+                    <TableCell class="text-right">
                         <button
                             v-if="canRecordCourseResult && course.status === 'never'"
                             type="button"
@@ -123,15 +124,15 @@ const submitRecord = () => {
                         >
                             Edit
                         </button>
-                    </td>
-                </tr>
-                <tr v-if="courses.length === 0">
-                    <td colspan="4" class="px-4 py-10 text-center text-sm text-muted-foreground">
+                    </TableCell>
+                </TableRow>
+                <TableRow v-if="courses.length === 0">
+                    <TableCell :colspan="4" class="py-10 text-center text-sm text-muted-foreground">
                         No required courses for this employee.
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </TableCell>
+                </TableRow>
+            </TableBody>
+        </Table>
     </div>
 
     <Dialog v-model:open="recordOpen">

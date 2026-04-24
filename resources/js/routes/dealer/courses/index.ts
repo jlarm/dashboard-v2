@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 import results from './results'
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
@@ -47,6 +47,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/courses'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/courses'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/courses'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
 * @route '/courses/all'
 */
 export const all = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -87,6 +124,43 @@ all.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: all.url(options),
     method: 'head',
 })
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/courses/all'
+*/
+const allForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: all.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/courses/all'
+*/
+allForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: all.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/courses/all'
+*/
+allForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: all.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+all.form = allForm
 
 /**
 * @see \App\Http\Controllers\Dealer\CourseController::show
@@ -157,6 +231,43 @@ show.head = (args: { course: string | { slug: string } } | [course: string | { s
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\CourseController::show
+* @see app/Http/Controllers/Dealer/CourseController.php:69
+* @route '/courses/{course}'
+*/
+const showForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\CourseController::show
+* @see app/Http/Controllers/Dealer/CourseController.php:69
+* @route '/courses/{course}'
+*/
+showForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\CourseController::show
+* @see app/Http/Controllers/Dealer/CourseController.php:69
+* @route '/courses/{course}'
+*/
+showForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see \App\Http\Controllers\Dealer\CourseController::quiz
 * @see app/Http/Controllers/Dealer/CourseController.php:82
 * @route '/courses/{course}/quiz'
@@ -223,6 +334,43 @@ quiz.head = (args: { course: string | { slug: string } } | [course: string | { s
     url: quiz.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\CourseController::quiz
+* @see app/Http/Controllers/Dealer/CourseController.php:82
+* @route '/courses/{course}/quiz'
+*/
+const quizForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: quiz.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\CourseController::quiz
+* @see app/Http/Controllers/Dealer/CourseController.php:82
+* @route '/courses/{course}/quiz'
+*/
+quizForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: quiz.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\CourseController::quiz
+* @see app/Http/Controllers/Dealer/CourseController.php:82
+* @route '/courses/{course}/quiz'
+*/
+quizForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: quiz.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+quiz.form = quizForm
 
 const courses = {
     index: Object.assign(index, index),

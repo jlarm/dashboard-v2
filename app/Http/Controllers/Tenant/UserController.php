@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Domain\Tenant\User\Actions\BuildEmployeesCsv;
 use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
 use App\Domain\Tenant\User\Actions\SendEmployeesReport;
+use App\Domain\Tenant\User\Actions\SetCourseOverride;
 use App\Domain\Tenant\User\Actions\UpdateEmployee;
 use App\Domain\Tenant\User\Data\EmployeeData;
 use App\Domain\Tenant\User\Data\TrainingCountsData;
@@ -14,12 +15,14 @@ use App\Domain\Tenant\User\Data\TrainingSummaryData;
 use App\Domain\Tenant\User\Queries\GetEmployeeCourses;
 use App\Domain\Tenant\User\Queries\GetEmployeeFilterOptions;
 use App\Domain\Tenant\User\Queries\GetEmployees;
+use App\Domain\Tenant\User\Queries\GetManageCoursesOptions;
 use App\Enums\AuditTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\User\EmailEmployeesReportRequest;
 use App\Http\Requests\Tenant\User\ExportEmployeesRequest;
 use App\Http\Requests\Tenant\User\IndexEmployeesRequest;
 use App\Http\Requests\Tenant\User\RecordCourseResultRequest;
+use App\Http\Requests\Tenant\User\SetCourseOverrideRequest;
 use App\Http\Requests\Tenant\User\UpdateEmployeeRequest;
 use App\Http\Resources\Tenant\EmployeeResource;
 use App\Models\Dealer\Course;
@@ -159,11 +162,26 @@ class UserController extends Controller
         User $user,
         GetEmployees $getEmployees,
         TrainingComplianceService $complianceService,
+        GetManageCoursesOptions $getManageCoursesOptions,
     ): Response {
-        return Inertia::render(
-            'tenant/user/ManageCourses',
-            $this->sharedProps($request, $user, $getEmployees, $complianceService),
-        );
+        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService);
+        $props['manageableCourses'] = $getManageCoursesOptions->handle($user);
+
+        return Inertia::render('tenant/user/ManageCourses', $props);
+    }
+
+    public function updateCourseOverride(
+        SetCourseOverrideRequest $request,
+        User $user,
+        Course $course,
+        SetCourseOverride $action,
+    ): RedirectResponse {
+        /** @var User $actor */
+        $actor = $request->user();
+
+        $action->handle($actor, $user, $course, $request->state());
+
+        return back()->with('success', "{$course->name} updated for {$user->name}.");
     }
 
     public function dotCertificates(

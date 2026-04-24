@@ -1,6 +1,7 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 import showBac614 from './show'
 import courses from './courses'
+import courseOverrides from './course-overrides'
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
 * @see app/Http/Controllers/Dealer/UserController.php:58
@@ -70,6 +71,43 @@ create.head = (args: { invite: string | number | { invitation_token: string | nu
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\UserController::create
+* @see app/Http/Controllers/Dealer/UserController.php:58
+* @route '/invite_registration/{invite}'
+*/
+const createForm = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\UserController::create
+* @see app/Http/Controllers/Dealer/UserController.php:58
+* @route '/invite_registration/{invite}'
+*/
+createForm.get = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\UserController::create
+* @see app/Http/Controllers/Dealer/UserController.php:58
+* @route '/invite_registration/{invite}'
+*/
+createForm.head = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+create.form = createForm
+
+/**
 * @see \App\Http\Controllers\Dealer\UserController::store
 * @see app/Http/Controllers/Dealer/UserController.php:65
 * @route '/employees/dealer/store'
@@ -102,6 +140,28 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\UserController::store
+* @see app/Http/Controllers/Dealer/UserController.php:65
+* @route '/employees/dealer/store'
+*/
+const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\UserController::store
+* @see app/Http/Controllers/Dealer/UserController.php:65
+* @route '/employees/dealer/store'
+*/
+storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
@@ -148,6 +208,43 @@ newMethod.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/employees/create'
+*/
+const newMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: newMethod.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/employees/create'
+*/
+newMethodForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: newMethod.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/employees/create'
+*/
+newMethodForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: newMethod.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+newMethod.form = newMethodForm
+
+/**
 * @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
 * @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
 * @route '/employees/deleted'
@@ -192,8 +289,45 @@ deleted.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
+* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
+* @route '/employees/deleted'
+*/
+const deletedForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: deleted.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
+* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
+* @route '/employees/deleted'
+*/
+deletedForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: deleted.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Employee\DeletedIndex::__invoke
+* @see app/Http/Livewire/Dealer/Employee/DeletedIndex.php:7
+* @route '/employees/deleted'
+*/
+deletedForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: deleted.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+deleted.form = deletedForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::index
-* @see app/Http/Controllers/Tenant/UserController.php:42
+* @see app/Http/Controllers/Tenant/UserController.php:45
 * @route '/employees'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -208,7 +342,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::index
-* @see app/Http/Controllers/Tenant/UserController.php:42
+* @see app/Http/Controllers/Tenant/UserController.php:45
 * @route '/employees'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -217,7 +351,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::index
-* @see app/Http/Controllers/Tenant/UserController.php:42
+* @see app/Http/Controllers/Tenant/UserController.php:45
 * @route '/employees'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -227,7 +361,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::index
-* @see app/Http/Controllers/Tenant/UserController.php:42
+* @see app/Http/Controllers/Tenant/UserController.php:45
 * @route '/employees'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -236,8 +370,45 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::index
+* @see app/Http/Controllers/Tenant/UserController.php:45
+* @route '/employees'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::index
+* @see app/Http/Controllers/Tenant/UserController.php:45
+* @route '/employees'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::index
+* @see app/Http/Controllers/Tenant/UserController.php:45
+* @route '/employees'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::exportMethod
-* @see app/Http/Controllers/Tenant/UserController.php:77
+* @see app/Http/Controllers/Tenant/UserController.php:80
 * @route '/employees/export'
 */
 export const exportMethod = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -252,7 +423,7 @@ exportMethod.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::exportMethod
-* @see app/Http/Controllers/Tenant/UserController.php:77
+* @see app/Http/Controllers/Tenant/UserController.php:80
 * @route '/employees/export'
 */
 exportMethod.url = (options?: RouteQueryOptions) => {
@@ -261,7 +432,7 @@ exportMethod.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::exportMethod
-* @see app/Http/Controllers/Tenant/UserController.php:77
+* @see app/Http/Controllers/Tenant/UserController.php:80
 * @route '/employees/export'
 */
 exportMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -270,8 +441,30 @@ exportMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::exportMethod
+* @see app/Http/Controllers/Tenant/UserController.php:80
+* @route '/employees/export'
+*/
+const exportMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: exportMethod.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::exportMethod
+* @see app/Http/Controllers/Tenant/UserController.php:80
+* @route '/employees/export'
+*/
+exportMethodForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: exportMethod.url(options),
+    method: 'post',
+})
+
+exportMethod.form = exportMethodForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::emailReport
-* @see app/Http/Controllers/Tenant/UserController.php:221
+* @see app/Http/Controllers/Tenant/UserController.php:239
 * @route '/employees/email-report'
 */
 export const emailReport = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -286,7 +479,7 @@ emailReport.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::emailReport
-* @see app/Http/Controllers/Tenant/UserController.php:221
+* @see app/Http/Controllers/Tenant/UserController.php:239
 * @route '/employees/email-report'
 */
 emailReport.url = (options?: RouteQueryOptions) => {
@@ -295,7 +488,7 @@ emailReport.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::emailReport
-* @see app/Http/Controllers/Tenant/UserController.php:221
+* @see app/Http/Controllers/Tenant/UserController.php:239
 * @route '/employees/email-report'
 */
 emailReport.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -304,8 +497,30 @@ emailReport.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::emailReport
+* @see app/Http/Controllers/Tenant/UserController.php:239
+* @route '/employees/email-report'
+*/
+const emailReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: emailReport.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::emailReport
+* @see app/Http/Controllers/Tenant/UserController.php:239
+* @route '/employees/email-report'
+*/
+emailReportForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: emailReport.url(options),
+    method: 'post',
+})
+
+emailReport.form = emailReportForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::show
-* @see app/Http/Controllers/Tenant/UserController.php:117
+* @see app/Http/Controllers/Tenant/UserController.php:120
 * @route '/employees/{user}'
 */
 export const show = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -320,7 +535,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::show
-* @see app/Http/Controllers/Tenant/UserController.php:117
+* @see app/Http/Controllers/Tenant/UserController.php:120
 * @route '/employees/{user}'
 */
 show.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -353,7 +568,7 @@ show.url = (args: { user: string | { slug: string } } | [user: string | { slug: 
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::show
-* @see app/Http/Controllers/Tenant/UserController.php:117
+* @see app/Http/Controllers/Tenant/UserController.php:120
 * @route '/employees/{user}'
 */
 show.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -363,7 +578,7 @@ show.get = (args: { user: string | { slug: string } } | [user: string | { slug: 
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::show
-* @see app/Http/Controllers/Tenant/UserController.php:117
+* @see app/Http/Controllers/Tenant/UserController.php:120
 * @route '/employees/{user}'
 */
 show.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -372,8 +587,45 @@ show.head = (args: { user: string | { slug: string } } | [user: string | { slug:
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::show
+* @see app/Http/Controllers/Tenant/UserController.php:120
+* @route '/employees/{user}'
+*/
+const showForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::show
+* @see app/Http/Controllers/Tenant/UserController.php:120
+* @route '/employees/{user}'
+*/
+showForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::show
+* @see app/Http/Controllers/Tenant/UserController.php:120
+* @route '/employees/{user}'
+*/
+showForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:181
+* @see app/Http/Controllers/Tenant/UserController.php:199
 * @route '/employees/{user}'
 */
 export const update = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -388,7 +640,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:181
+* @see app/Http/Controllers/Tenant/UserController.php:199
 * @route '/employees/{user}'
 */
 update.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -421,7 +673,7 @@ update.url = (args: { user: string | { slug: string } } | [user: string | { slug
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:181
+* @see app/Http/Controllers/Tenant/UserController.php:199
 * @route '/employees/{user}'
 */
 update.patch = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -430,8 +682,40 @@ update.patch = (args: { user: string | { slug: string } } | [user: string | { sl
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::update
+* @see app/Http/Controllers/Tenant/UserController.php:199
+* @route '/employees/{user}'
+*/
+const updateForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::update
+* @see app/Http/Controllers/Tenant/UserController.php:199
+* @route '/employees/{user}'
+*/
+updateForm.patch = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
-* @see app/Http/Controllers/Tenant/UserController.php:195
+* @see app/Http/Controllers/Tenant/UserController.php:213
 * @route '/employees/{user}'
 */
 export const destroy = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -446,7 +730,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
-* @see app/Http/Controllers/Tenant/UserController.php:195
+* @see app/Http/Controllers/Tenant/UserController.php:213
 * @route '/employees/{user}'
 */
 destroy.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -479,7 +763,7 @@ destroy.url = (args: { user: string | { slug: string } } | [user: string | { slu
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
-* @see app/Http/Controllers/Tenant/UserController.php:195
+* @see app/Http/Controllers/Tenant/UserController.php:213
 * @route '/employees/{user}'
 */
 destroy.delete = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -488,8 +772,40 @@ destroy.delete = (args: { user: string | { slug: string } } | [user: string | { 
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::destroy
+* @see app/Http/Controllers/Tenant/UserController.php:213
+* @route '/employees/{user}'
+*/
+const destroyForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::destroy
+* @see app/Http/Controllers/Tenant/UserController.php:213
+* @route '/employees/{user}'
+*/
+destroyForm.delete = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::impersonate
-* @see app/Http/Controllers/Tenant/UserController.php:206
+* @see app/Http/Controllers/Tenant/UserController.php:224
 * @route '/employees/{user}/impersonate'
 */
 export const impersonate = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -504,7 +820,7 @@ impersonate.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::impersonate
-* @see app/Http/Controllers/Tenant/UserController.php:206
+* @see app/Http/Controllers/Tenant/UserController.php:224
 * @route '/employees/{user}/impersonate'
 */
 impersonate.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -537,13 +853,35 @@ impersonate.url = (args: { user: string | { slug: string } } | [user: string | {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::impersonate
-* @see app/Http/Controllers/Tenant/UserController.php:206
+* @see app/Http/Controllers/Tenant/UserController.php:224
 * @route '/employees/{user}/impersonate'
 */
 impersonate.post = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: impersonate.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::impersonate
+* @see app/Http/Controllers/Tenant/UserController.php:224
+* @route '/employees/{user}/impersonate'
+*/
+const impersonateForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: impersonate.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::impersonate
+* @see app/Http/Controllers/Tenant/UserController.php:224
+* @route '/employees/{user}/impersonate'
+*/
+impersonateForm.post = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: impersonate.url(args, options),
+    method: 'post',
+})
+
+impersonate.form = impersonateForm
 
 const employees = {
     create: Object.assign(create, create),
@@ -555,6 +893,7 @@ const employees = {
     emailReport: Object.assign(emailReport, emailReport),
     show: Object.assign(show, showBac614),
     courses: Object.assign(courses, courses),
+    courseOverrides: Object.assign(courseOverrides, courseOverrides),
     update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),
     impersonate: Object.assign(impersonate, impersonate),

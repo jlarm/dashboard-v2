@@ -245,6 +245,9 @@ Route::name('dealer.')->middleware([
                 Route::get('manage-courses', [App\Http\Controllers\Tenant\UserController::class, 'manageCourses'])
                     ->middleware('role:super-admin|Consultant|Qualified Individual')
                     ->name('show.manage-courses');
+                Route::patch('course-overrides/{course}', [App\Http\Controllers\Tenant\UserController::class, 'updateCourseOverride'])
+                    ->middleware('role:super-admin|Consultant|Qualified Individual')
+                    ->name('course-overrides.update');
                 Route::get('dot-certificates', [App\Http\Controllers\Tenant\UserController::class, 'dotCertificates'])->name('show.dot-certificates');
                 Route::patch('/', [App\Http\Controllers\Tenant\UserController::class, 'update'])->name('update');
                 Route::delete('/', [App\Http\Controllers\Tenant\UserController::class, 'destroy'])->name('destroy');

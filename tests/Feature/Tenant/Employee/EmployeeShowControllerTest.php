@@ -221,7 +221,10 @@ describe('sub-page role access', function (): void {
         $this->actingAs($viewer)
             ->get(route('dealer.employees.show.manage-courses', $this->target))
             ->assertOk()
-            ->assertInertia(fn ($page) => $page->component('tenant/user/ManageCourses'));
+            ->assertInertia(fn ($page) => $page
+                ->component('tenant/user/ManageCourses')
+                ->has('manageableCourses'),
+            );
     })->with(['super-admin', 'Consultant', 'Qualified Individual']);
 
     it('forbids non-privileged roles from the Manage Courses sub-page', function (string $role): void {
@@ -366,6 +369,103 @@ describe('update action', function (): void {
                 'qualified_individual' => false,
             ])
             ->assertServerError();
+    });
+});
+
+describe('course override action', function (): void {
+    it('adds an override pivot when state is "add"', function (): void {
+        $course = App\Models\Dealer\Course::query()->create([
+            'name' => 'Override Add Course',
+            'slug' => 'override-add-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $this->actingAs($this->consultant)
+            ->patch(
+                route('dealer.employees.course-overrides.update', [
+                    'user' => $this->target,
+                    'course' => $course->id,
+                ]),
+                ['state' => 'add'],
+            )
+            ->assertRedirect();
+
+        expect(App\Models\CourseUser::query()
+            ->where('user_id', $this->target->id)
+            ->where('course_id', $course->id)
+            ->value('type'))->toBe('add');
+    });
+
+    it('removes the override when state is "default"', function (): void {
+        $course = App\Models\Dealer\Course::query()->create([
+            'name' => 'Override Default Course',
+            'slug' => 'override-default-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $this->target->courses()->attach($course->id, [
+            'type' => 'exclude',
+            'assigned_by' => $this->consultant->id,
+        ]);
+
+        $this->actingAs($this->consultant)
+            ->patch(
+                route('dealer.employees.course-overrides.update', [
+                    'user' => $this->target,
+                    'course' => $course->id,
+                ]),
+                ['state' => 'default'],
+            )
+            ->assertRedirect();
+
+        expect(App\Models\CourseUser::query()
+            ->where('user_id', $this->target->id)
+            ->where('course_id', $course->id)
+            ->exists())->toBeFalse();
+    });
+
+    it('rejects unknown state values', function (): void {
+        $course = App\Models\Dealer\Course::query()->create([
+            'name' => 'Override Bad Course',
+            'slug' => 'override-bad-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $this->actingAs($this->consultant)
+            ->patch(
+                route('dealer.employees.course-overrides.update', [
+                    'user' => $this->target,
+                    'course' => $course->id,
+                ]),
+                ['state' => 'bogus'],
+            )
+            ->assertSessionHasErrors('state');
+    });
+
+    it('forbids actors without manage-courses role', function (): void {
+        $course = App\Models\Dealer\Course::query()->create([
+            'name' => 'Override Forbidden Course',
+            'slug' => 'override-forbidden-course-'.uniqid(),
+            'slides' => [],
+            'questions' => [],
+            'optional' => false,
+        ]);
+
+        $this->actingAs($this->manager)
+            ->patch(
+                route('dealer.employees.course-overrides.update', [
+                    'user' => $this->target,
+                    'course' => $course->id,
+                ]),
+                ['state' => 'add'],
+            )
+            ->assertForbidden();
     });
 });
 

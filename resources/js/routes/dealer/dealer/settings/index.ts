@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
 * @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
@@ -42,6 +42,43 @@ form.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: form.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
+* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @route '/email/settings'
+*/
+const formForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: form.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
+* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @route '/email/settings'
+*/
+formForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: form.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
+* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @route '/email/settings'
+*/
+formForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: form.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+form.form = formForm
 
 /**
 * @see \App\Http\Controllers\Dealer\Store\SettingsController::managers
@@ -88,6 +125,43 @@ managers.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::managers
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/managers'
+*/
+const managersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: managers.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::managers
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/managers'
+*/
+managersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: managers.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::managers
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/managers'
+*/
+managersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: managers.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+managers.form = managersForm
+
+/**
 * @see \App\Http\Controllers\Dealer\Store\SettingsController::compliance
 * @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
 * @route '/settings/compliance'
@@ -130,6 +204,43 @@ compliance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: compliance.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::compliance
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/compliance'
+*/
+const complianceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: compliance.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::compliance
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/compliance'
+*/
+complianceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: compliance.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::compliance
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/compliance'
+*/
+complianceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: compliance.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+compliance.form = complianceForm
 
 /**
 * @see \App\Http\Controllers\Dealer\Store\SettingsController::resetCourses
@@ -176,6 +287,43 @@ resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::resetCourses
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/reset-courses'
+*/
+const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: resetCourses.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::resetCourses
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/reset-courses'
+*/
+resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: resetCourses.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::resetCourses
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/reset-courses'
+*/
+resetCoursesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: resetCourses.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+resetCourses.form = resetCoursesForm
+
+/**
 * @see \App\Http\Controllers\Dealer\Store\SettingsController::ridgeback
 * @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
 * @route '/settings/ridgeback'
@@ -218,6 +366,43 @@ ridgeback.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: ridgeback.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::ridgeback
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/ridgeback'
+*/
+const ridgebackForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: ridgeback.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::ridgeback
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/ridgeback'
+*/
+ridgebackForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: ridgeback.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Store\SettingsController::ridgeback
+* @see app/Http/Controllers/Dealer/Store/SettingsController.php:29
+* @route '/settings/ridgeback'
+*/
+ridgebackForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: ridgeback.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+ridgeback.form = ridgebackForm
 
 const settings = {
     managers: Object.assign(managers, managers),

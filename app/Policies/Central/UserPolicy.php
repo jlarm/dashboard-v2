@@ -62,6 +62,12 @@ class UserPolicy
         return $user->can('create-dealerships') && $user->id !== $model->id;
     }
 
+    public function manageCourses(User $user, User $model): bool
+    {
+        return $user->hasAnyRole(['super-admin', 'Consultant', 'Qualified Individual'])
+            && $user->id !== $model->id;
+    }
+
     public function restore(User $user, User $model): bool
     {
         return false;
