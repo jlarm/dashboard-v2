@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::generate
 * @see app/Http/Controllers/Tenant/UserController.php:372
@@ -56,6 +56,28 @@ generate.post = (args: { user: string | { slug: string } } | [user: string | { s
     url: generate.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::generate
+* @see app/Http/Controllers/Tenant/UserController.php:372
+* @route '/employees/{user}/dot-certificates'
+*/
+const generateForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::generate
+* @see app/Http/Controllers/Tenant/UserController.php:372
+* @route '/employees/{user}/dot-certificates'
+*/
+generateForm.post = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+generate.form = generateForm
 
 const dotCertificates = {
     generate: Object.assign(generate, generate),

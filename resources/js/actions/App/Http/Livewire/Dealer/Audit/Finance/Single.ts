@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Finance\Single::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Finance/Single.php:7
@@ -66,5 +66,42 @@ Single.head = (args: { glbaViolationAudit: string | number | { uuid: string | nu
     url: Single.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Finance\Single::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Finance/Single.php:7
+* @route '/audits/finance/{glbaViolationAudit}'
+*/
+const SingleForm = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Single.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Finance\Single::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Finance/Single.php:7
+* @route '/audits/finance/{glbaViolationAudit}'
+*/
+SingleForm.get = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Single.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Finance\Single::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Finance/Single.php:7
+* @route '/audits/finance/{glbaViolationAudit}'
+*/
+SingleForm.head = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Single.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+Single.form = SingleForm
 
 export default Single

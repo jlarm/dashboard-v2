@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
 * @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
@@ -46,6 +46,42 @@ GlobalSettings84eaef77ed484e45d931ed7337b74dfe.head = (options?: RouteQueryOptio
 /**
 * @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
 * @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings'
+*/
+const GlobalSettings84eaef77ed484e45d931ed7337b74dfeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettings84eaef77ed484e45d931ed7337b74dfe.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings'
+*/
+GlobalSettings84eaef77ed484e45d931ed7337b74dfeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettings84eaef77ed484e45d931ed7337b74dfe.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings'
+*/
+GlobalSettings84eaef77ed484e45d931ed7337b74dfeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettings84eaef77ed484e45d931ed7337b74dfe.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+GlobalSettings84eaef77ed484e45d931ed7337b74dfe.form = GlobalSettings84eaef77ed484e45d931ed7337b74dfeForm
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
 * @route '/global-settings/course-management'
 */
 const GlobalSettingsce0eb901513cf042a12cae43acdd20b9 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -87,6 +123,42 @@ GlobalSettingsce0eb901513cf042a12cae43acdd20b9.head = (options?: RouteQueryOptio
     method: 'head',
 })
 
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/course-management'
+*/
+const GlobalSettingsce0eb901513cf042a12cae43acdd20b9Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettingsce0eb901513cf042a12cae43acdd20b9.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/course-management'
+*/
+GlobalSettingsce0eb901513cf042a12cae43acdd20b9Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettingsce0eb901513cf042a12cae43acdd20b9.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/course-management'
+*/
+GlobalSettingsce0eb901513cf042a12cae43acdd20b9Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettingsce0eb901513cf042a12cae43acdd20b9.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+GlobalSettingsce0eb901513cf042a12cae43acdd20b9.form = GlobalSettingsce0eb901513cf042a12cae43acdd20b9Form
 /**
 * @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
 * @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
@@ -134,6 +206,42 @@ GlobalSettings28cdf476162496027c9b301bf30468cb.head = (options?: RouteQueryOptio
 /**
 * @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
 * @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/reset-courses'
+*/
+const GlobalSettings28cdf476162496027c9b301bf30468cbForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettings28cdf476162496027c9b301bf30468cb.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/reset-courses'
+*/
+GlobalSettings28cdf476162496027c9b301bf30468cbForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettings28cdf476162496027c9b301bf30468cb.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/reset-courses'
+*/
+GlobalSettings28cdf476162496027c9b301bf30468cbForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettings28cdf476162496027c9b301bf30468cb.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+GlobalSettings28cdf476162496027c9b301bf30468cb.form = GlobalSettings28cdf476162496027c9b301bf30468cbForm
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
 * @route '/global-settings/phishing'
 */
 const GlobalSettingsfdc1627b9e2da467884f33613f26ccc3 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -174,6 +282,43 @@ GlobalSettingsfdc1627b9e2da467884f33613f26ccc3.head = (options?: RouteQueryOptio
     url: GlobalSettingsfdc1627b9e2da467884f33613f26ccc3.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/phishing'
+*/
+const GlobalSettingsfdc1627b9e2da467884f33613f26ccc3Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettingsfdc1627b9e2da467884f33613f26ccc3.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/phishing'
+*/
+GlobalSettingsfdc1627b9e2da467884f33613f26ccc3Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettingsfdc1627b9e2da467884f33613f26ccc3.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
+* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @route '/global-settings/phishing'
+*/
+GlobalSettingsfdc1627b9e2da467884f33613f26ccc3Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: GlobalSettingsfdc1627b9e2da467884f33613f26ccc3.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+GlobalSettingsfdc1627b9e2da467884f33613f26ccc3.form = GlobalSettingsfdc1627b9e2da467884f33613f26ccc3Form
 
 const GlobalSettings = {
     '/global-settings': GlobalSettings84eaef77ed484e45d931ed7337b74dfe,

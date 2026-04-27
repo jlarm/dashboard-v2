@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see routes/tenant.php:309
 * @route '/impersonate/{token}'
@@ -56,6 +56,40 @@ token.head = (args: { token: string | number } | [token: string | number ] | str
     url: token.url(args, options),
     method: 'head',
 })
+
+/**
+* @see routes/tenant.php:309
+* @route '/impersonate/{token}'
+*/
+const tokenForm = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: token.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see routes/tenant.php:309
+* @route '/impersonate/{token}'
+*/
+tokenForm.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: token.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see routes/tenant.php:309
+* @route '/impersonate/{token}'
+*/
+tokenForm.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: token.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+token.form = tokenForm
 
 const impersonate = {
     token: Object.assign(token, token),

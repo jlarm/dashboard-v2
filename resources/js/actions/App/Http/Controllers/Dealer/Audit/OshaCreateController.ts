@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\OshaCreateController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/OshaCreateController.php:14
@@ -60,5 +60,42 @@ OshaCreateController.head = (args: { store: string | number } | [store: string |
     url: OshaCreateController.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\OshaCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/OshaCreateController.php:14
+* @route '/audits/osha/create/{store}'
+*/
+const OshaCreateControllerForm = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: OshaCreateController.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\OshaCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/OshaCreateController.php:14
+* @route '/audits/osha/create/{store}'
+*/
+OshaCreateControllerForm.get = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: OshaCreateController.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\OshaCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/OshaCreateController.php:14
+* @route '/audits/osha/create/{store}'
+*/
+OshaCreateControllerForm.head = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: OshaCreateController.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+OshaCreateController.form = OshaCreateControllerForm
 
 export default OshaCreateController
