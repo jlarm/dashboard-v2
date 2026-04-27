@@ -186,8 +186,7 @@ const performRestore = () => {
                     <DialogTitle>Restore employee?</DialogTitle>
                     <DialogDescription v-if="toRestore">
                         This will reactivate
-                        <span class="font-medium">{{ toRestore.name }}</span>
-                        ({{ toRestore.email }}) and restore their prior role and store assignments.
+                        <span class="font-medium">{{ toRestore.name }}</span> ({{ toRestore.email }}).
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>

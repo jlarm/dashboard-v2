@@ -81,4 +81,12 @@ store.form = storeForm
 
 const CourseResultsController = { store }
 
+export default CourseResultsControllerl(args, options),
+    method: 'post',
+})
+
+store.form = storeForm
+
+const CourseResultsController = { store }
+
 export default CourseResultsController

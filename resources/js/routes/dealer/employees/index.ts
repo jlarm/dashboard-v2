@@ -8,7 +8,7 @@ import courseOverrides from './course-overrides'
 import dotCertificates from './dot-certificates'
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:51
+* @see app/Http/Controllers/Dealer/UserController.php:21
 * @route '/invite_registration/{invite}'
 */
 export const create = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -23,7 +23,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:51
+* @see app/Http/Controllers/Dealer/UserController.php:21
 * @route '/invite_registration/{invite}'
 */
 create.url = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions) => {
@@ -56,7 +56,7 @@ create.url = (args: { invite: string | number | { invitation_token: string | num
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:51
+* @see app/Http/Controllers/Dealer/UserController.php:21
 * @route '/invite_registration/{invite}'
 */
 create.get = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -66,7 +66,7 @@ create.get = (args: { invite: string | number | { invitation_token: string | num
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:51
+* @see app/Http/Controllers/Dealer/UserController.php:21
 * @route '/invite_registration/{invite}'
 */
 create.head = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -76,7 +76,7 @@ create.head = (args: { invite: string | number | { invitation_token: string | nu
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:51
+* @see app/Http/Controllers/Dealer/UserController.php:21
 * @route '/invite_registration/{invite}'
 */
 const createForm = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -86,7 +86,7 @@ const createForm = (args: { invite: string | number | { invitation_token: string
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:51
+* @see app/Http/Controllers/Dealer/UserController.php:21
 * @route '/invite_registration/{invite}'
 */
 createForm.get = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -96,7 +96,7 @@ createForm.get = (args: { invite: string | number | { invitation_token: string |
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:51
+* @see app/Http/Controllers/Dealer/UserController.php:21
 * @route '/invite_registration/{invite}'
 */
 createForm.head = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -113,7 +113,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:64
+* @see app/Http/Controllers/Dealer/UserController.php:34
 * @route '/employees/dealer/store'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -128,7 +128,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:64
+* @see app/Http/Controllers/Dealer/UserController.php:34
 * @route '/employees/dealer/store'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -137,7 +137,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:64
+* @see app/Http/Controllers/Dealer/UserController.php:34
 * @route '/employees/dealer/store'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -147,7 +147,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:64
+* @see app/Http/Controllers/Dealer/UserController.php:34
 * @route '/employees/dealer/store'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -157,7 +157,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:64
+* @see app/Http/Controllers/Dealer/UserController.php:34
 * @route '/employees/dealer/store'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -166,87 +166,6 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 })
 
 store.form = storeForm
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-export const newMethod = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: newMethod.url(options),
-    method: 'get',
-})
-
-newMethod.definition = {
-    methods: ["get","head"],
-    url: '/employees/create',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethod.url = (options?: RouteQueryOptions) => {
-    return newMethod.definition.url + queryParams(options)
-}
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethod.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: newMethod.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethod.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: newMethod.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-const newMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethodForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/employees/create'
-*/
-newMethodForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: newMethod.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-newMethod.form = newMethodForm
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::deleted
@@ -1164,7 +1083,6 @@ impersonate.form = impersonateForm
 const employees = {
     create: Object.assign(create, create),
     store: Object.assign(store, store),
-    new: Object.assign(newMethod, newMethod),
     deleted: Object.assign(deleted, deleted3ae2e7),
     index: Object.assign(index, index),
     invite: Object.assign(invite, invite9ae5a1),

@@ -12,7 +12,6 @@ use App\Http\Controllers\Dealer\Audit\SingleIndividualController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Dealer\CourseController;
 use App\Http\Controllers\Dealer\CourseResultsController;
-use App\Http\Controllers\Dealer\EmployeeIndexController;
 use App\Http\Controllers\Dealer\ImpersonationController;
 use App\Http\Controllers\Dealer\Store\CreateFirstStoreController;
 use App\Http\Controllers\Dealer\Store\SettingsController;
@@ -43,7 +42,6 @@ use App\Http\Livewire\Dealer\Settings\AutomatedReports;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use App\Http\Livewire\Dealer\Settings\GlobalSettings;
 use App\Http\Livewire\Dealer\Vendor\NewForm;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Features\UserImpersonation;
@@ -148,10 +146,6 @@ Route::name('dealer.')->middleware([
     // **************************************************
 
     Route::middleware('role:super-admin|Consultant')->group(function (): void {
-
-        Route::prefix('employees/')->name('employees.')->group(function (): void {
-            Route::view('create', 'dealer.employee.create')->name('new');
-        });
 
         Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
             Route::get('osha/create/{store}', OshaCreateController::class)->name('osha.create');
@@ -265,20 +259,6 @@ Route::name('dealer.')->middleware([
                 Route::post('impersonate', [App\Http\Controllers\Tenant\UserController::class, 'impersonate'])->name('impersonate');
             });
         });
-
-        //        Route::prefix('employees/')->name('employees.')->group(function (): void {
-        //            Route::get('/', EmployeeIndexController::class)->name('index');
-        //            Route::view('create', 'dealer.employee.create')->name('new');
-        //            Route::view('open-invites', 'dealer.employee.open-invites')->name('open-invites');
-        //            Route::prefix('{user:slug}')->group(function (): void {
-        //                Route::get('/', [UserController::class, 'show'])->name('show');
-        //                Route::get('manage-courses', [UserController::class, 'showManageCourses'])
-        //                    ->middleware('role:super-admin|Consultant|Qualified Individual')
-        //                    ->name('show.manage-courses');
-        //                Route::get('certificates', [UserController::class, 'showCertificates'])->name('show.certificates');
-        //                Route::get('video-progress', [UserController::class, 'showVideoProgress'])->name('show.video-progress');
-        //            });
-        //        });
 
         Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->middleware(['single.store'])->name('scan.index');
 

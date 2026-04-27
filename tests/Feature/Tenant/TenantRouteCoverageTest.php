@@ -277,8 +277,6 @@ function namedRouteParameters(object $test, string $routeName): array
         ])->invitation_token],
         'dealer.employees.show' => ['user' => $test->employee->slug],
         'dealer.employees.show.manage-courses' => ['user' => $test->employee->slug],
-        'dealer.employees.show.certificates' => ['user' => $test->employee->slug],
-        'dealer.employees.show.video-progress' => ['user' => $test->employee->slug],
 
         'dealer.impersonate.token' => ['token' => tenancy()->impersonate(
             tenant(),

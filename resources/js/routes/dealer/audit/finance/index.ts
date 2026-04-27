@@ -502,4 +502,9 @@ const finance = {
     show: Object.assign(show, show),
 }
 
+export default financet.assign(index, index),
+    remediation: Object.assign(remediation, remediation),
+    show: Object.assign(show, show),
+}
+
 export default finance
