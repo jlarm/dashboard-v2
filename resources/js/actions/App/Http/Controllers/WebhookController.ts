@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\WebhookController::gophish
 * @see app/Http/Controllers/WebhookController.php:14
@@ -32,28 +32,6 @@ gophish.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: gophish.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\WebhookController::gophish
-* @see app/Http/Controllers/WebhookController.php:14
-* @route '/webhooks/gophish'
-*/
-const gophishForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: gophish.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\WebhookController::gophish
-* @see app/Http/Controllers/WebhookController.php:14
-* @route '/webhooks/gophish'
-*/
-gophishForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: gophish.url(options),
-    method: 'post',
-})
-
-gophish.form = gophishForm
 
 const WebhookController = { gophish }
 

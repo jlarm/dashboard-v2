@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
 * @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
@@ -42,43 +42,6 @@ courseManagement.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
     url: courseManagement.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/course-management'
-*/
-const courseManagementForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: courseManagement.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/course-management'
-*/
-courseManagementForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: courseManagement.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/course-management'
-*/
-courseManagementForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: courseManagement.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-courseManagement.form = courseManagementForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
@@ -127,43 +90,6 @@ resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
 * @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/reset-courses'
-*/
-const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: resetCourses.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/reset-courses'
-*/
-resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: resetCourses.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/reset-courses'
-*/
-resetCoursesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: resetCourses.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-resetCourses.form = resetCoursesForm
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
 * @route '/global-settings/phishing'
 */
 export const phishing = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -204,43 +130,6 @@ phishing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: phishing.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/phishing'
-*/
-const phishingForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: phishing.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/phishing'
-*/
-phishingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: phishing.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
-* @route '/global-settings/phishing'
-*/
-phishingForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: phishing.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-phishing.form = phishingForm
 
 const global = {
     courseManagement: Object.assign(courseManagement, courseManagement),

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Osha\Single::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Osha/Single.php:7
@@ -66,42 +66,5 @@ Single.head = (args: { oshaViolationAudit: string | number | { uuid: string | nu
     url: Single.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Osha\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Osha/Single.php:7
-* @route '/audits/osha/{oshaViolationAudit}'
-*/
-const SingleForm = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Single.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Osha\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Osha/Single.php:7
-* @route '/audits/osha/{oshaViolationAudit}'
-*/
-SingleForm.get = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Single.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Osha\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Osha/Single.php:7
-* @route '/audits/osha/{oshaViolationAudit}'
-*/
-SingleForm.head = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Single.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-Single.form = SingleForm
 
 export default Single

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\FinanceCreateController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/FinanceCreateController.php:14
@@ -60,43 +60,6 @@ create.head = (args: { store: string | number } | [store: string | number ] | st
     url: create.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\FinanceCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/FinanceCreateController.php:14
-* @route '/audits/finance/create/{store}'
-*/
-const createForm = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\FinanceCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/FinanceCreateController.php:14
-* @route '/audits/finance/create/{store}'
-*/
-createForm.get = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Audit\FinanceCreateController::__invoke
-* @see app/Http/Controllers/Dealer/Audit/FinanceCreateController.php:14
-* @route '/audits/finance/create/{store}'
-*/
-createForm.head = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Finance\Edit::__invoke
@@ -167,43 +130,6 @@ edit.head = (args: { glbaViolationAudit: string | number | { uuid: string | numb
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Edit.php:7
-* @route '/audits/finance/{glbaViolationAudit}/edit'
-*/
-const editForm = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Edit.php:7
-* @route '/audits/finance/{glbaViolationAudit}/edit'
-*/
-editForm.get = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Edit.php:7
-* @route '/audits/finance/{glbaViolationAudit}/edit'
-*/
-editForm.head = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-edit.form = editForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Audit\Finance\Index::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Finance/Index.php:7
 * @route '/audits/finance'
@@ -246,43 +172,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Index::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Index.php:7
-* @route '/audits/finance'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Index::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Index.php:7
-* @route '/audits/finance'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Index::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Index.php:7
-* @route '/audits/finance'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::__invoke
@@ -353,43 +242,6 @@ remediation.head = (args: { glbaViolationAudit: string | number | { uuid: string
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/RemediationForm.php:7
-* @route '/audits/finance/{glbaViolationAudit}/remediation'
-*/
-const remediationForm = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/RemediationForm.php:7
-* @route '/audits/finance/{glbaViolationAudit}/remediation'
-*/
-remediationForm.get = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/RemediationForm.php:7
-* @route '/audits/finance/{glbaViolationAudit}/remediation'
-*/
-remediationForm.head = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-remediation.form = remediationForm
-
-/**
 * @see \App\Http\Livewire\Dealer\Audit\Finance\Single::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Finance/Single.php:7
 * @route '/audits/finance/{glbaViolationAudit}'
@@ -457,52 +309,10 @@ show.head = (args: { glbaViolationAudit: string | number | { uuid: string | numb
     method: 'head',
 })
 
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Single.php:7
-* @route '/audits/finance/{glbaViolationAudit}'
-*/
-const showForm = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Single.php:7
-* @route '/audits/finance/{glbaViolationAudit}'
-*/
-showForm.get = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\Finance\Single::__invoke
-* @see app/Http/Livewire/Dealer/Audit/Finance/Single.php:7
-* @route '/audits/finance/{glbaViolationAudit}'
-*/
-showForm.head = (args: { glbaViolationAudit: string | number | { uuid: string | number } } | [glbaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
-
 const finance = {
     create: Object.assign(create, create),
     edit: Object.assign(edit, edit),
     index: Object.assign(index, index),
-    remediation: Object.assign(remediation, remediation),
-    show: Object.assign(show, show),
-}
-
-export default financet.assign(index, index),
     remediation: Object.assign(remediation, remediation),
     show: Object.assign(show, show),
 }

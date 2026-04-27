@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::__invoke
 * @see app/Http/Livewire/Dealer/Audit/BodyShop/Edit.php:7
@@ -66,42 +66,5 @@ Edit.head = (args: { bodyShopViolationAudit: string | number | { uuid: string | 
     url: Edit.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Edit.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/edit'
-*/
-const EditForm = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Edit.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/edit'
-*/
-EditForm.get = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Audit\BodyShop\Edit::__invoke
-* @see app/Http/Livewire/Dealer/Audit/BodyShop/Edit.php:7
-* @route '/audits/body-shop/{bodyShopViolationAudit}/edit'
-*/
-EditForm.head = (args: { bodyShopViolationAudit: string | number | { uuid: string | number } } | [bodyShopViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: Edit.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-Edit.form = EditForm
 
 export default Edit

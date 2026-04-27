@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Settings\AutomatedReports::__invoke
 * @see app/Http/Livewire/Dealer/Settings/AutomatedReports.php:7
@@ -42,42 +42,5 @@ AutomatedReports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
     url: AutomatedReports.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\AutomatedReports::__invoke
-* @see app/Http/Livewire/Dealer/Settings/AutomatedReports.php:7
-* @route '/automated-reports'
-*/
-const AutomatedReportsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: AutomatedReports.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\AutomatedReports::__invoke
-* @see app/Http/Livewire/Dealer/Settings/AutomatedReports.php:7
-* @route '/automated-reports'
-*/
-AutomatedReportsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: AutomatedReports.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Livewire\Dealer\Settings\AutomatedReports::__invoke
-* @see app/Http/Livewire/Dealer/Settings/AutomatedReports.php:7
-* @route '/automated-reports'
-*/
-AutomatedReportsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: AutomatedReports.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-AutomatedReports.form = AutomatedReportsForm
 
 export default AutomatedReports

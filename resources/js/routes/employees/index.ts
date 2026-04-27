@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 import invitesD766f2 from './invites'
 /**
 * @see \App\Http\Controllers\Central\UserInviteRegistrationController::create
@@ -69,43 +69,6 @@ create.head = (args: { centralUserInvite: number | { id: number } } | [centralUs
 })
 
 /**
-* @see \App\Http\Controllers\Central\UserInviteRegistrationController::create
-* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:24
-* @route '//dashboard.test/employees/register/{centralUserInvite}'
-*/
-const createForm = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserInviteRegistrationController::create
-* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:24
-* @route '//dashboard.test/employees/register/{centralUserInvite}'
-*/
-createForm.get = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserInviteRegistrationController::create
-* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:24
-* @route '//dashboard.test/employees/register/{centralUserInvite}'
-*/
-createForm.head = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
 * @see \App\Http\Controllers\Central\UserInviteRegistrationController::store
 * @see app/Http/Controllers/Central/UserInviteRegistrationController.php:33
 * @route '//dashboard.test/employees/register/{centralUserInvite}'
@@ -164,28 +127,6 @@ store.post = (args: { centralUserInvite: number | { id: number } } | [centralUse
 })
 
 /**
-* @see \App\Http\Controllers\Central\UserInviteRegistrationController::store
-* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:33
-* @route '//dashboard.test/employees/register/{centralUserInvite}'
-*/
-const storeForm = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserInviteRegistrationController::store
-* @see app/Http/Controllers/Central/UserInviteRegistrationController.php:33
-* @route '//dashboard.test/employees/register/{centralUserInvite}'
-*/
-storeForm.post = (args: { centralUserInvite: number | { id: number } } | [centralUserInvite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(args, options),
-    method: 'post',
-})
-
-store.form = storeForm
-
-/**
 * @see \App\Http\Controllers\Central\UserController::index
 * @see app/Http/Controllers/Central/UserController.php:24
 * @route '//dashboard.test/employees'
@@ -228,43 +169,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Central\UserController::index
-* @see app/Http/Controllers/Central/UserController.php:24
-* @route '//dashboard.test/employees'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserController::index
-* @see app/Http/Controllers/Central/UserController.php:24
-* @route '//dashboard.test/employees'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserController::index
-* @see app/Http/Controllers/Central/UserController.php:24
-* @route '//dashboard.test/employees'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::invites
@@ -311,43 +215,6 @@ invites.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
-* @route '//dashboard.test/employees/invites'
-*/
-const invitesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: invites.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
-* @route '//dashboard.test/employees/invites'
-*/
-invitesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: invites.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
-* @route '//dashboard.test/employees/invites'
-*/
-invitesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: invites.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-invites.form = invitesForm
-
-/**
 * @see \App\Http\Controllers\Central\UserController::deleted
 * @see app/Http/Controllers/Central/UserController.php:41
 * @route '//dashboard.test/employees/deleted'
@@ -390,43 +257,6 @@ deleted.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: deleted.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Central\UserController::deleted
-* @see app/Http/Controllers/Central/UserController.php:41
-* @route '//dashboard.test/employees/deleted'
-*/
-const deletedForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserController::deleted
-* @see app/Http/Controllers/Central/UserController.php:41
-* @route '//dashboard.test/employees/deleted'
-*/
-deletedForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserController::deleted
-* @see app/Http/Controllers/Central/UserController.php:41
-* @route '//dashboard.test/employees/deleted'
-*/
-deletedForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: deleted.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-deleted.form = deletedForm
 
 /**
 * @see \App\Http\Controllers\Central\UserController::show
@@ -495,43 +325,6 @@ show.head = (args: { user: string | { slug: string } } | [user: string | { slug:
     url: show.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Central\UserController::show
-* @see app/Http/Controllers/Central/UserController.php:32
-* @route '//dashboard.test/employees/{user}'
-*/
-const showForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserController::show
-* @see app/Http/Controllers/Central/UserController.php:32
-* @route '//dashboard.test/employees/{user}'
-*/
-showForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\UserController::show
-* @see app/Http/Controllers/Central/UserController.php:32
-* @route '//dashboard.test/employees/{user}'
-*/
-showForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
 
 const employees = {
     create: Object.assign(create, create),
