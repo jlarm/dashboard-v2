@@ -152,8 +152,8 @@ const grouped = computed<Group[]>(() => {
         </SheetTrigger>
 
         <SheetContent class="flex w-full flex-col gap-0 p-0 sm:max-w-[420px]">
-            <SheetHeader class="space-y-1 border-b px-6 py-4 pr-12">
-                <SheetTitle class="text-base font-semibold tracking-tight">Notifications</SheetTitle>
+            <SheetHeader class="space-y-1 border-b px-6 py-4">
+                <SheetTitle class="pr-12 text-base font-semibold tracking-tight">Notifications</SheetTitle>
                 <div class="flex items-center justify-between gap-3">
                     <p class="text-xs text-muted-foreground">
                         <template v-if="unreadCount > 0">
@@ -167,7 +167,7 @@ const grouped = computed<Group[]>(() => {
                         v-if="unreadCount > 0"
                         type="button"
                         :disabled="markingAll"
-                        class="shrink-0 text-xs font-medium text-primary hover:underline disabled:opacity-50"
+                        class="ml-auto shrink-0 text-xs font-medium text-primary hover:underline disabled:opacity-50"
                         @click="markAllRead"
                     >
                         Mark all as read
