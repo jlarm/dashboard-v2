@@ -34,7 +34,34 @@ const navItems = computed<NavItem[]>(() => [
     ...(isManager.value ? [] : [{ kind: 'link', name: 'Deleted', href: employees.deleted.url() } as const]),
 ]);
 
-const { isCurrentUrl } = useCurrentUrl();
+const { currentUrl, isCurrentUrl } = useCurrentUrl();
+
+const linkPrefixes = computed(() =>
+    navItems.value
+        .filter((item): item is { kind: 'link'; name: string; href: string } => item.kind === 'link')
+        .map((item) => item.href),
+);
+
+const isActiveLink = (href: string): boolean => {
+    if (isCurrentUrl(href)) {
+        return true;
+    }
+
+    if (href !== employees.index.url()) {
+        return false;
+    }
+
+    // The Employees link covers per-employee show pages too — but not the
+    // sibling nav links (invite, open-invites, deleted) which have their own
+    // entries and shouldn't double-highlight.
+    if (!currentUrl.value.startsWith(href)) {
+        return false;
+    }
+
+    return !linkPrefixes.value
+        .filter((prefix) => prefix !== href)
+        .some((prefix) => currentUrl.value.startsWith(prefix));
+};
 
 const activeClasses =
     'hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary data-active:bg-primary/10 data-active:text-primary data-active:focus:bg-primary/10 data-active:hover:bg-primary/10';
@@ -48,7 +75,7 @@ const disabledClasses = 'cursor-not-allowed text-muted-foreground opacity-60';
                 <template v-if="item.kind === 'link'">
                     <NavigationMenuLink
                         as-child
-                        :active="isCurrentUrl(item.href)"
+                        :active="isActiveLink(item.href)"
                         :class="activeClasses"
                     >
                         <Link :href="item.href">{{ item.name }}</Link>
