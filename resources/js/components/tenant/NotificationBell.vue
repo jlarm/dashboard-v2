@@ -206,7 +206,7 @@ const grouped = computed<Group[]>(() => {
                                         <h3 class="truncate text-sm font-medium leading-tight text-foreground">
                                             {{ notification.data.title ?? 'Notification' }}
                                         </h3>
-                                        <span class="shrink-0 text-[11px] text-muted-foreground">
+                                        <span class="shrink-0 text-[11px] text-muted-foreground transition-opacity group-hover:opacity-0">
                                             {{ notification.created_at_relative }}
                                         </span>
                                     </div>
@@ -237,11 +237,11 @@ const grouped = computed<Group[]>(() => {
 
                                 <span
                                     v-if="!notification.read_at"
-                                    class="absolute right-3 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-primary"
+                                    class="absolute right-3 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-primary transition-opacity group-hover:opacity-0"
                                     aria-hidden="true"
                                 />
 
-                                <div class="absolute right-2 top-2 hidden gap-0.5 group-hover:flex">
+                                <div class="absolute right-3 top-3 hidden items-center gap-0.5 group-hover:flex">
                                     <button
                                         v-if="!notification.read_at"
                                         type="button"
