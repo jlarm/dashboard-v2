@@ -10,15 +10,10 @@ import {
 import notificationRoutes from '@/routes/dealer/notifications';
 import { router, usePage } from '@inertiajs/vue3';
 import {
-    AlertTriangle,
     Bell,
     BellOff,
     CheckCheck,
-    Info,
-    Mail,
     Trash2,
-    UserPlus,
-    type LucideIcon,
 } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 
@@ -61,44 +56,6 @@ const unreadCount = computed(() => page.props.notifications?.unread_count ?? 0);
 const open = ref(false);
 const busyId = ref<string | null>(null);
 const markingAll = ref(false);
-
-const ICONS: Record<string, LucideIcon> = {
-    AlertTriangle,
-    Bell,
-    Info,
-    Mail,
-    UserPlus,
-};
-
-const iconFor = (notification: NotificationItem): LucideIcon => {
-    if (notification.data.icon && ICONS[notification.data.icon]) {
-        return ICONS[notification.data.icon];
-    }
-
-    switch (notification.data.level) {
-        case 'success':
-            return CheckCheck;
-        case 'error':
-            return AlertTriangle;
-        case 'warning':
-            return AlertTriangle;
-        default:
-            return Bell;
-    }
-};
-
-const iconWrapperClass = (level: NotificationLevel | undefined) => {
-    switch (level) {
-        case 'success':
-            return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300';
-        case 'error':
-            return 'bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300';
-        case 'warning':
-            return 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300';
-        default:
-            return 'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300';
-    }
-};
 
 const visitAction = (notification: NotificationItem, action: NotificationAction) => {
     if (!notification.read_at) {
@@ -195,27 +152,27 @@ const grouped = computed<Group[]>(() => {
         </SheetTrigger>
 
         <SheetContent class="flex w-full flex-col gap-0 p-0 sm:max-w-[420px]">
-            <SheetHeader class="space-y-1 border-b px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <SheetTitle class="text-base font-semibold tracking-tight">Notifications</SheetTitle>
+            <SheetHeader class="space-y-1 border-b px-6 py-4 pr-12">
+                <SheetTitle class="text-base font-semibold tracking-tight">Notifications</SheetTitle>
+                <div class="flex items-center justify-between gap-3">
+                    <p class="text-xs text-muted-foreground">
+                        <template v-if="unreadCount > 0">
+                            {{ unreadCount }} unread {{ unreadCount === 1 ? 'notification' : 'notifications' }}
+                        </template>
+                        <template v-else-if="items.length > 0">
+                            You're all caught up
+                        </template>
+                    </p>
                     <button
                         v-if="unreadCount > 0"
                         type="button"
                         :disabled="markingAll"
-                        class="text-xs font-medium text-primary hover:underline disabled:opacity-50"
+                        class="shrink-0 text-xs font-medium text-primary hover:underline disabled:opacity-50"
                         @click="markAllRead"
                     >
                         Mark all as read
                     </button>
                 </div>
-                <p class="text-xs text-muted-foreground">
-                    <template v-if="unreadCount > 0">
-                        {{ unreadCount }} unread {{ unreadCount === 1 ? 'notification' : 'notifications' }}
-                    </template>
-                    <template v-else-if="items.length > 0">
-                        You're all caught up
-                    </template>
-                </p>
             </SheetHeader>
 
             <div class="flex-1 overflow-y-auto">
@@ -241,16 +198,9 @@ const grouped = computed<Group[]>(() => {
                             <li
                                 v-for="notification in group.items"
                                 :key="notification.id"
-                                class="group relative flex items-start gap-3 px-6 py-3 transition-colors hover:bg-muted/50"
+                                class="group relative px-6 py-3 transition-colors hover:bg-muted/50"
                                 :class="!notification.read_at ? 'bg-primary/[0.03]' : ''"
                             >
-                                <div
-                                    class="flex size-9 shrink-0 items-center justify-center rounded-full"
-                                    :class="iconWrapperClass(notification.data.level)"
-                                >
-                                    <component :is="iconFor(notification)" class="size-4" />
-                                </div>
-
                                 <div class="min-w-0 flex-1 space-y-1">
                                     <div class="flex items-baseline justify-between gap-2">
                                         <h3 class="truncate text-sm font-medium leading-tight text-foreground">
