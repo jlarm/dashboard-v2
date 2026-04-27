@@ -10,9 +10,10 @@ import {
 } from '@/components/ui/sidebar';
 import { EMPLOYEE_SECTION_VIEWERS } from '@/constants/roles';
 import employees from '@/routes/dealer/employees';
+import sds from '@/routes/dealer/sds';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { LayoutGrid, Users } from 'lucide-vue-next';
+import { FlaskConical, LayoutGrid, Users } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -25,6 +26,11 @@ const mainNavItems: NavItem[] = [
         href: employees.index.url(),
         icon: Users,
         roles: EMPLOYEE_SECTION_VIEWERS,
+    },
+    {
+        title: 'SDS Sheets',
+        href: sds.index.url(),
+        icon: FlaskConical,
     },
 ];
 </script>

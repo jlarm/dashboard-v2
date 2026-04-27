@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Tenant\SdsController::index
+* @see app/Http/Controllers/Tenant/SdsController.php:28
 * @route '/sds-sheets'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +15,8 @@ index.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Tenant\SdsController::index
+* @see app/Http/Controllers/Tenant/SdsController.php:28
 * @route '/sds-sheets'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -24,8 +24,8 @@ index.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Tenant\SdsController::index
+* @see app/Http/Controllers/Tenant/SdsController.php:28
 * @route '/sds-sheets'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,8 +34,8 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Tenant\SdsController::index
+* @see app/Http/Controllers/Tenant/SdsController.php:28
 * @route '/sds-sheets'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,8 +44,42 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\SdsController::request
+* @see app/Http/Controllers/Tenant/SdsController.php:66
+* @route '/sds-sheets/request'
+*/
+export const request = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: request.url(options),
+    method: 'post',
+})
+
+request.definition = {
+    methods: ["post"],
+    url: '/sds-sheets/request',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\SdsController::request
+* @see app/Http/Controllers/Tenant/SdsController.php:66
+* @route '/sds-sheets/request'
+*/
+request.url = (options?: RouteQueryOptions) => {
+    return request.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\SdsController::request
+* @see app/Http/Controllers/Tenant/SdsController.php:66
+* @route '/sds-sheets/request'
+*/
+request.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: request.url(options),
+    method: 'post',
+})
+
+/**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:50
 * @route '/sds-sheets/{uuid}/view'
 */
 export const view = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -60,7 +94,7 @@ view.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:50
 * @route '/sds-sheets/{uuid}/view'
 */
 view.url = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -87,7 +121,7 @@ view.url = (args: { uuid: string | number } | [uuid: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:50
 * @route '/sds-sheets/{uuid}/view'
 */
 view.get = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +131,7 @@ view.get = (args: { uuid: string | number } | [uuid: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:50
 * @route '/sds-sheets/{uuid}/view'
 */
 view.head = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -107,6 +141,7 @@ view.head = (args: { uuid: string | number } | [uuid: string | number ] | string
 
 const sds = {
     index: Object.assign(index, index),
+    request: Object.assign(request, request),
     view: Object.assign(view, view),
 }
 

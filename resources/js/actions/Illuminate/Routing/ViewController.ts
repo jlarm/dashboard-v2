@@ -2,50 +2,6 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/sds-sheets'
-*/
-const ViewControllerf00abb0097e42b00e09cbcd59b20e7f6 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewControllerf00abb0097e42b00e09cbcd59b20e7f6.url(options),
-    method: 'get',
-})
-
-ViewControllerf00abb0097e42b00e09cbcd59b20e7f6.definition = {
-    methods: ["get","head"],
-    url: '/sds-sheets',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/sds-sheets'
-*/
-ViewControllerf00abb0097e42b00e09cbcd59b20e7f6.url = (options?: RouteQueryOptions) => {
-    return ViewControllerf00abb0097e42b00e09cbcd59b20e7f6.definition.url + queryParams(options)
-}
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/sds-sheets'
-*/
-ViewControllerf00abb0097e42b00e09cbcd59b20e7f6.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewControllerf00abb0097e42b00e09cbcd59b20e7f6.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/sds-sheets'
-*/
-ViewControllerf00abb0097e42b00e09cbcd59b20e7f6.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: ViewControllerf00abb0097e42b00e09cbcd59b20e7f6.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
 * @route '/courses'
 */
 const ViewControllerae0d8013bc7dd1aeb7c9b49bac5f9e3b = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -308,7 +264,6 @@ ViewController86a0d0e665572eead9d650bb21337c56.head = (options?: RouteQueryOptio
 })
 
 const ViewController = {
-    '/sds-sheets': ViewControllerf00abb0097e42b00e09cbcd59b20e7f6,
     '/courses': ViewControllerae0d8013bc7dd1aeb7c9b49bac5f9e3b,
     '/courses/all': ViewController39cf50c98836c20d29fa0dfb7a7064d0,
     '/vendors/thankyou': ViewController63db0bdc59264ba3ad0fbd8a32b71620,

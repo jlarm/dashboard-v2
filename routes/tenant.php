@@ -82,8 +82,11 @@ Route::name('dealer.')->middleware([
         ->middleware('web')->name('employees.create');
     Route::post('employees/dealer/store', [UserController::class, 'store'])->name('employees.store');
 
-    Route::view('sds-sheets', 'tenant.sds.index')->middleware('auth')->name('sds.index');
-    Route::get('sds-sheets/{uuid}/view', [SdsController::class, 'view'])->middleware('auth')->name('sds.view');
+    Route::middleware('auth')->prefix('sds-sheets')->name('sds.')->group(function (): void {
+        Route::get('/', [SdsController::class, 'index'])->name('index');
+        Route::post('request', [SdsController::class, 'storeRequest'])->name('request');
+        Route::get('{uuid}/view', [SdsController::class, 'view'])->name('view');
+    });
 
     Route::prefix('courses/')->name('courses.')->group(function (): void {
         Route::view('/', 'dealer.course.index')->middleware('auth')->name('index');
