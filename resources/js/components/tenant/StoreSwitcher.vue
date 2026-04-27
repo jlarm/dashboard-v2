@@ -36,6 +36,10 @@ const canUseOverview = computed(
     () => stores.value.length > 1 || isPrivilegedRole.value,
 );
 
+const canSwitch = computed(
+    () => canUseOverview.value || canManageLocations.value,
+);
+
 const currentStore = computed<StoreOption | null>(() => {
     if (currentStoreId.value !== null) {
         const match = stores.value.find((store) => store.id === currentStoreId.value);
@@ -75,7 +79,29 @@ function switchStore(storeId: number | null): void {
 <template>
     <SidebarMenu>
         <SidebarMenuItem>
-            <DropdownMenu>
+            <SidebarMenuButton
+                v-if="!canSwitch"
+                size="lg"
+                as="div"
+                class="cursor-default hover:bg-transparent active:bg-transparent"
+                data-test="store-switcher-trigger"
+            >
+                <div
+                    class="flex aspect-square size-8 items-center justify-center rounded-md bg-white ring-1 ring-border dark:bg-neutral-900"
+                >
+                    <img
+                        src="/favicon.svg"
+                        alt=""
+                        class="size-5"
+                    />
+                </div>
+                <div class="ml-1 grid flex-1 text-left text-sm leading-tight">
+                    <span class="truncate font-semibold">{{ displayName }}</span>
+                    <span class="truncate text-xs text-muted-foreground">Location</span>
+                </div>
+            </SidebarMenuButton>
+
+            <DropdownMenu v-else>
                 <DropdownMenuTrigger as-child>
                     <SidebarMenuButton
                         size="lg"
