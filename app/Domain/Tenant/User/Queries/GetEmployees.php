@@ -47,7 +47,7 @@ class GetEmployees
             ->with(['results' => $this->constrainResultsQuery(...)]);
 
         if ($filters->hasComplianceFilter()) {
-            $matchingIds = $this->idsMatchingComplianceFilter($baseQuery, $filters);
+            $matchingIds = $this->idsMatchingComplianceFilter($viewer, $filters);
             $paginatedQuery->whereIn('users.id', $matchingIds);
         }
 
@@ -124,6 +124,31 @@ class GetEmployees
 
     private function trainingCountsCacheKey(User $viewer, EmployeeFiltersData $filters): string
     {
+        return $this->buildCacheKey('employees_training_counts', $viewer, $filters);
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function idsMatchingComplianceFilter(User $viewer, EmployeeFiltersData $filters): array
+    {
+        return Cache::flexible(
+            $this->buildCacheKey('employees_compliance_ids', $viewer, $filters),
+            [60, 300],
+            function () use ($viewer, $filters): array {
+                $scopedUsers = (clone $this->baseQuery($viewer, $filters))->without(['department'])->get();
+                $summaries = $this->summariesFor($scopedUsers);
+
+                return $summaries
+                    ->filter(fn (TrainingSummaryData $summary): bool => $this->passesComplianceFilter($summary, $filters))
+                    ->keys()
+                    ->all();
+            },
+        );
+    }
+
+    private function buildCacheKey(string $namespace, User $viewer, EmployeeFiltersData $filters): string
+    {
         $tenantId = (string) (tenant('id') ?? 'no-tenant');
         $version = (int) Cache::get(self::trainingCountsVersionKey($tenantId), 0);
         $scopeKey = $viewer->can('create-stores')
@@ -134,21 +159,7 @@ class GetEmployees
             : '';
         $filtersHash = md5(serialize($filters->toArray()));
 
-        return "employees_training_counts:v{$version}:{$tenantId}:{$scopeKey}:{$storeKey}:{$filtersHash}";
-    }
-
-    /**
-     * @return list<int>
-     */
-    private function idsMatchingComplianceFilter(Builder $baseQuery, EmployeeFiltersData $filters): array
-    {
-        $scopedUsers = (clone $baseQuery)->without(['department'])->get();
-        $summaries = $this->summariesFor($scopedUsers);
-
-        return $summaries
-            ->filter(fn (TrainingSummaryData $summary): bool => $this->passesComplianceFilter($summary, $filters))
-            ->keys()
-            ->all();
+        return "{$namespace}:v{$version}:{$tenantId}:{$scopeKey}:{$storeKey}:{$filtersHash}";
     }
 
     private function baseQuery(User $viewer, EmployeeFiltersData $filters): Builder
