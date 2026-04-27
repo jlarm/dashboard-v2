@@ -31,16 +31,39 @@ class EmployeesImportCompleteNotification extends Notification implements Should
     {
         $hasErrors = $this->result->errors !== [];
 
+        if ($hasErrors) {
+            return [
+                'title' => 'Employee import failed',
+                'message' => count($this->result->errors).' row(s) had errors. The import was rolled back.',
+                'level' => 'error',
+                'icon' => 'AlertTriangle',
+                'actions' => [
+                    [
+                        'label' => 'View employees',
+                        'url' => route('dealer.employees.index'),
+                        'variant' => 'outline',
+                    ],
+                ],
+            ];
+        }
+
         return [
-            'title' => $hasErrors
-                ? 'Employee import failed'
-                : 'Employee import complete',
-            'message' => $hasErrors
-                ? count($this->result->errors).' row(s) had errors. The import was rolled back.'
-                : "{$this->result->successCount} invite(s) imported, {$this->result->skippedCount} skipped.",
-            'level' => $hasErrors ? 'error' : 'success',
-            'action_url' => route('dealer.employees.index'),
-            'action_label' => 'View employees',
+            'title' => 'Employee import complete',
+            'message' => "{$this->result->successCount} invite(s) imported, {$this->result->skippedCount} skipped.",
+            'level' => 'success',
+            'icon' => 'UserPlus',
+            'actions' => [
+                [
+                    'label' => 'View employees',
+                    'url' => route('dealer.employees.index'),
+                    'variant' => 'default',
+                ],
+                [
+                    'label' => 'See open invites',
+                    'url' => route('dealer.employees.open-invites'),
+                    'variant' => 'outline',
+                ],
+            ],
         ];
     }
 
