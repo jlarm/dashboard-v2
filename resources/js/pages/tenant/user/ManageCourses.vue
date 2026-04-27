@@ -67,6 +67,9 @@ const setState = (course: ManageableCourse, state: CourseState) => {
         {
             preserveScroll: true,
             preserveState: true,
+            onSuccess: () => {
+                router.flushAll();
+            },
             onFinish: () => {
                 busyCourseId.value = null;
             },
