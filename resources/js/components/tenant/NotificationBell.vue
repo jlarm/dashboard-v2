@@ -167,7 +167,7 @@ const grouped = computed<Group[]>(() => {
                         v-if="unreadCount > 0"
                         type="button"
                         :disabled="markingAll"
-                        class="ml-auto shrink-0 text-xs font-medium text-primary hover:underline disabled:opacity-50"
+                        class="-mr-2 ml-auto shrink-0 text-xs font-medium text-primary hover:underline disabled:opacity-50"
                         @click="markAllRead"
                     >
                         Mark all as read
