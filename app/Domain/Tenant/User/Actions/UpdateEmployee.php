@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\User\Actions;
 
+use App\Domain\Tenant\User\Queries\GetEmployees;
 use App\Enums\Role as RoleEnum;
 use App\Models\Role;
 use App\Models\User;
@@ -51,6 +52,8 @@ class UpdateEmployee
         });
 
         $this->permissionRegistrar->forgetCachedPermissions();
+
+        GetEmployees::bustTrainingCounts();
     }
 
     /**

@@ -6,6 +6,7 @@ namespace App\Domain\Tenant\User\Queries;
 
 use App\Domain\Tenant\User\Data\EmployeeData;
 use App\Domain\Tenant\User\Data\EmployeeFiltersData;
+use App\Domain\Tenant\User\Data\TrainingCountsData;
 use App\Domain\Tenant\User\Data\TrainingSummaryData;
 use App\Enums\Role;
 use App\Models\Dealer\Course;
@@ -15,6 +16,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class GetEmployees
@@ -30,26 +32,22 @@ class GetEmployees
     public function __construct(private readonly TrainingComplianceService $complianceService) {}
 
     /**
-     * @return array{
-     *     paginator: LengthAwarePaginator,
-     *     summaries: Collection<int, TrainingSummaryData>
-     * }
+     * Invalidate every cached trainingCounts entry for the current tenant.
      */
-    public function handle(User $viewer, EmployeeFiltersData $filters, int $page = 1): array
+    public static function bustTrainingCounts(): void
+    {
+        $tenantId = (string) (tenant('id') ?? 'no-tenant');
+        Cache::increment(self::trainingCountsVersionKey($tenantId));
+    }
+
+    public function handle(User $viewer, EmployeeFiltersData $filters, int $page = 1): LengthAwarePaginator
     {
         $baseQuery = $this->baseQuery($viewer, $filters);
-        $scopedUsers = (clone $baseQuery)->without(['department'])->get();
-        $allSummaries = $this->summariesFor($scopedUsers);
-
         $paginatedQuery = (clone $baseQuery)
             ->with(['results' => $this->constrainResultsQuery(...)]);
 
         if ($filters->hasComplianceFilter()) {
-            $matchingIds = $allSummaries
-                ->filter(fn (TrainingSummaryData $summary): bool => $this->passesComplianceFilter($summary, $filters))
-                ->keys()
-                ->all();
-
+            $matchingIds = $this->idsMatchingComplianceFilter($baseQuery, $filters);
             $paginatedQuery->whereIn('users.id', $matchingIds);
         }
 
@@ -57,7 +55,7 @@ class GetEmployees
 
         /** @var Collection<int, User> $pageUsers */
         $pageUsers = collect($paginator->items());
-        $pageSummaries = $allSummaries->only($pageUsers->pluck('id')->all());
+        $pageSummaries = $this->summariesFor($pageUsers);
 
         $paginator->setCollection(
             $pageUsers->map(fn (User $user): EmployeeData => EmployeeData::fromModel(
@@ -67,10 +65,24 @@ class GetEmployees
             )),
         );
 
-        return [
-            'paginator' => $paginator,
-            'summaries' => $allSummaries,
-        ];
+        return $paginator;
+    }
+
+    /**
+     * Aggregate compliance counts for the entire scoped set.
+     *
+     * Materializing every user is unavoidable because compliance status depends
+     * on per-user roles, department, store states, and course overrides — logic
+     * that doesn't translate to a single SQL aggregate. Cached for 5 minutes;
+     * invalidated by bumping the tenant-wide version key (see ::bustTrainingCounts).
+     */
+    public function trainingCounts(User $viewer, EmployeeFiltersData $filters): TrainingCountsData
+    {
+        return Cache::flexible(
+            $this->trainingCountsCacheKey($viewer, $filters),
+            [60, 300],
+            fn (): TrainingCountsData => $this->computeTrainingCounts($viewer, $filters),
+        );
     }
 
     public function buildScopedQuery(User $viewer, EmployeeFiltersData $filters): Builder
@@ -94,6 +106,49 @@ class GetEmployees
         return $this->complianceService
             ->summarizeUsers($users->filter(static fn ($user): bool => $user instanceof User)->values())
             ->map(static fn (array $summary): TrainingSummaryData => TrainingSummaryData::fromArray($summary));
+    }
+
+    private static function trainingCountsVersionKey(string $tenantId): string
+    {
+        return "employees_training_counts_version:{$tenantId}";
+    }
+
+    private function computeTrainingCounts(User $viewer, EmployeeFiltersData $filters): TrainingCountsData
+    {
+        $scopedUsers = (clone $this->baseQuery($viewer, $filters))
+            ->without(['department'])
+            ->get();
+
+        return TrainingCountsData::fromSummaries($this->summariesFor($scopedUsers));
+    }
+
+    private function trainingCountsCacheKey(User $viewer, EmployeeFiltersData $filters): string
+    {
+        $tenantId = (string) (tenant('id') ?? 'no-tenant');
+        $version = (int) Cache::get(self::trainingCountsVersionKey($tenantId), 0);
+        $scopeKey = $viewer->can('create-stores')
+            ? 'all'
+            : "dept-{$viewer->department_id}";
+        $storeKey = app()->bound('scopedStoreIds')
+            ? resolve('scopedStoreIds')->map(static fn ($id): int => (int) $id)->sort()->implode('_')
+            : '';
+        $filtersHash = md5(serialize($filters->toArray()));
+
+        return "employees_training_counts:v{$version}:{$tenantId}:{$scopeKey}:{$storeKey}:{$filtersHash}";
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function idsMatchingComplianceFilter(Builder $baseQuery, EmployeeFiltersData $filters): array
+    {
+        $scopedUsers = (clone $baseQuery)->without(['department'])->get();
+        $summaries = $this->summariesFor($scopedUsers);
+
+        return $summaries
+            ->filter(fn (TrainingSummaryData $summary): bool => $this->passesComplianceFilter($summary, $filters))
+            ->keys()
+            ->all();
     }
 
     private function baseQuery(User $viewer, EmployeeFiltersData $filters): Builder

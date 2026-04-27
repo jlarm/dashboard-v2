@@ -14,7 +14,7 @@ import { buildColumns, type Employee } from '@/pages/tenant/user/components/colu
 import employeesRoutes from '@/routes/dealer/employees';
 import type { BreadcrumbItem } from '@/types';
 import type { PaginatedResponse } from '@/types/paginator';
-import { Head, router, useForm } from '@inertiajs/vue3';
+import { Deferred, Head, router, useForm } from '@inertiajs/vue3';
 import { useDebounceFn } from '@vueuse/core';
 import type { RowSelectionState } from '@tanstack/vue-table';
 import { Download, RotateCcw, Search, Send } from 'lucide-vue-next';
@@ -46,7 +46,7 @@ type TrainingCounts = {
 
 const props = defineProps<{
     employees: PaginatedResponse<Employee>;
-    trainingCounts: TrainingCounts;
+    trainingCounts: TrainingCounts | null;
     filters: Filters;
     filterOptions: { departments: Option[]; roles: Option[] };
     permissions: { manage_filters: boolean; email_report: boolean; send_message: boolean };
@@ -370,33 +370,45 @@ const submitEmailReport = () => {
             }"
         />
         <div class="space-y-5">
-            <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
-                <StatCard
-                    label="Overdue"
-                    :value="trainingCounts.overdue"
-                    caption="Has expired courses"
-                />
-                <StatCard
-                    label="At Risk"
-                    :value="trainingCounts.at_risk"
-                    caption="Missing or expiring in 30 days"
-                />
-                <StatCard
-                    label="Compliant"
-                    :value="trainingCounts.compliant"
-                    caption="All courses complete"
-                />
-                <StatCard
-                    label="Unassigned"
-                    :value="trainingCounts.unassigned"
-                    caption="No required courses"
-                />
-                <StatCard
-                    label="Employees"
-                    :value="trainingCounts.employees"
-                    caption="Total in scope"
-                />
-            </section>
+            <Deferred data="trainingCounts">
+                <template #fallback>
+                    <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+                        <StatCard label="Overdue" value="—" caption="Has expired courses" />
+                        <StatCard label="At Risk" value="—" caption="Missing or expiring in 30 days" />
+                        <StatCard label="Compliant" value="—" caption="All courses complete" />
+                        <StatCard label="Unassigned" value="—" caption="No required courses" />
+                        <StatCard label="Employees" value="—" caption="Total in scope" />
+                    </section>
+                </template>
+
+                <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+                    <StatCard
+                        label="Overdue"
+                        :value="trainingCounts?.overdue ?? 0"
+                        caption="Has expired courses"
+                    />
+                    <StatCard
+                        label="At Risk"
+                        :value="trainingCounts?.at_risk ?? 0"
+                        caption="Missing or expiring in 30 days"
+                    />
+                    <StatCard
+                        label="Compliant"
+                        :value="trainingCounts?.compliant ?? 0"
+                        caption="All courses complete"
+                    />
+                    <StatCard
+                        label="Unassigned"
+                        :value="trainingCounts?.unassigned ?? 0"
+                        caption="No required courses"
+                    />
+                    <StatCard
+                        label="Employees"
+                        :value="trainingCounts?.employees ?? 0"
+                        caption="Total in scope"
+                    />
+                </section>
+            </Deferred>
 
             <div class="flex flex-wrap items-center gap-2">
                 <div class="relative flex-1 min-w-[16rem] max-w-md">

@@ -83,7 +83,6 @@ describe('index page payload', function (): void {
             ->assertInertia(fn ($page) => $page
                 ->component('tenant/user/Index')
                 ->has('employees.data')
-                ->has('trainingCounts')
                 ->has('filters')
                 ->has('filterOptions.departments')
                 ->has('filterOptions.roles')
@@ -93,6 +92,23 @@ describe('index page payload', function (): void {
                 ->has('storeContext.multiple_stores')
                 ->has('storeContext.current_store_name'),
             );
+    });
+
+    it('omits trainingCounts on first render so the page paints fast', function (): void {
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.employees.index'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page->missing('trainingCounts'));
+    });
+
+    it('computes trainingCounts on demand', function (): void {
+        $counts = app(\App\Domain\Tenant\User\Queries\GetEmployees::class)->trainingCounts(
+            $this->consultant,
+            \App\Domain\Tenant\User\Data\EmployeeFiltersData::empty(),
+        );
+
+        expect($counts->employees)->toBeGreaterThanOrEqual(0)
+            ->and($counts->compliant)->toBeGreaterThanOrEqual(0);
     });
 
     it('excludes super-admin and Consultant users from the listing', function (): void {

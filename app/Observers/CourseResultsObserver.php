@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Domain\Tenant\User\Queries\GetEmployees;
 use App\Models\CourseResults;
 use Illuminate\Cache\RedisStore;
 use Illuminate\Support\Facades\Cache;
@@ -74,6 +75,8 @@ class CourseResultsObserver
         if ($courseResults->user) {
             $courseResults->user->clearCourseCache();
         }
+
+        GetEmployees::bustTrainingCounts();
     }
 
     /**

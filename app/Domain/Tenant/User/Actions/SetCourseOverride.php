@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\User\Actions;
 
+use App\Domain\Tenant\User\Queries\GetEmployees;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Store;
 use App\Models\User;
@@ -28,6 +29,7 @@ class SetCourseOverride
 
         $target->clearCourseCache();
         $this->forgetDepartmentStatsCache();
+        GetEmployees::bustTrainingCounts();
     }
 
     private function forgetDepartmentStatsCache(): void

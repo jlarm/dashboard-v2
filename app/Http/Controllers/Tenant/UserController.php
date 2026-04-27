@@ -16,7 +16,6 @@ use App\Domain\Tenant\User\Actions\SetCourseOverride;
 use App\Domain\Tenant\User\Actions\UpdateEmployee;
 use App\Domain\Tenant\User\Data\EmployeeData;
 use App\Domain\Tenant\User\Data\EmployeeIndexPermissionsData;
-use App\Domain\Tenant\User\Data\TrainingCountsData;
 use App\Domain\Tenant\User\Data\TrainingSummaryData;
 use App\Domain\Tenant\User\Queries\GetDeletedEmployees;
 use App\Domain\Tenant\User\Queries\GetEmployeeCertificates;
@@ -69,11 +68,13 @@ class UserController extends Controller
         $viewer = $request->user();
         $filters = $request->filters();
 
-        $result = $getEmployees->handle($viewer, $filters, $request->page());
+        $paginator = $getEmployees->handle($viewer, $filters, $request->page());
 
         return Inertia::render('tenant/user/Index', [
-            'employees' => EmployeeResource::collection($result['paginator']),
-            'trainingCounts' => TrainingCountsData::fromSummaries($result['summaries'])->toArray(),
+            'employees' => EmployeeResource::collection($paginator),
+            'trainingCounts' => Inertia::defer(
+                fn () => $getEmployees->trainingCounts($viewer, $filters)->toArray(),
+            ),
             'filters' => $filters->toArray(),
             'filterOptions' => $getFilterOptions->handle(),
             'permissions' => EmployeeIndexPermissionsData::forViewer($viewer)->toArray(),
