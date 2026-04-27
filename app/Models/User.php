@@ -287,6 +287,14 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    protected function email(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value): ?string => $value === null ? null : Str::lower($value),
+            set: fn (?string $value): ?string => $value === null ? null : Str::lower(mb_trim($value)),
+        );
+    }
+
     #[Override]
     protected function casts(): array
     {

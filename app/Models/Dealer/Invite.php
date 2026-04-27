@@ -6,8 +6,10 @@ namespace App\Models\Dealer;
 
 use App\Models\User;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -43,6 +45,14 @@ class Invite extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable();
+    }
+
+    protected function email(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value): ?string => $value === null ? null : Str::lower($value),
+            set: fn (?string $value): ?string => $value === null ? null : Str::lower(mb_trim($value)),
+        );
     }
 
     #[Override]
