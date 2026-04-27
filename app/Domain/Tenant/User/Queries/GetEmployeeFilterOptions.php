@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\User\Queries;
 
+use App\Enums\Role as RoleEnum;
 use App\Models\Department;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Role;
@@ -41,7 +42,7 @@ class GetEmployeeFilterOptions
     private function roles(): Collection
     {
         return Role::query()
-            ->whereNotIn('name', ['super-admin', 'Consultant'])
+            ->whereNotIn('name', [RoleEnum::SuperAdmin->value, RoleEnum::Consultant->value])
             ->whereHas('users')
             ->orderBy('name')
             ->get(['id', 'name']);

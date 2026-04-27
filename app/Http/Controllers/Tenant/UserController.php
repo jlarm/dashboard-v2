@@ -11,21 +11,25 @@ use App\Domain\Tenant\User\Actions\InviteEmployee;
 use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
 use App\Domain\Tenant\User\Actions\ResendInvite;
 use App\Domain\Tenant\User\Actions\RestoreEmployee;
+use App\Domain\Tenant\User\Actions\SendCustomEmployeeMessage;
 use App\Domain\Tenant\User\Actions\SendEmployeesReport;
 use App\Domain\Tenant\User\Actions\SetCourseOverride;
 use App\Domain\Tenant\User\Actions\UpdateEmployee;
 use App\Domain\Tenant\User\Data\EmployeeData;
+use App\Domain\Tenant\User\Data\EmployeeIndexPermissionsData;
 use App\Domain\Tenant\User\Data\TrainingCountsData;
 use App\Domain\Tenant\User\Data\TrainingSummaryData;
 use App\Domain\Tenant\User\Queries\GetDeletedEmployees;
 use App\Domain\Tenant\User\Queries\GetEmployeeCertificates;
 use App\Domain\Tenant\User\Queries\GetEmployeeCourses;
+use App\Domain\Tenant\User\Queries\GetEmployeeEditOptions;
 use App\Domain\Tenant\User\Queries\GetEmployeeFilterOptions;
 use App\Domain\Tenant\User\Queries\GetEmployees;
 use App\Domain\Tenant\User\Queries\GetInviteEmployeeOptions;
 use App\Domain\Tenant\User\Queries\GetManageCoursesOptions;
 use App\Domain\Tenant\User\Queries\GetOpenInvites;
 use App\Enums\AuditTypes;
+use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\User\EmailEmployeesReportRequest;
 use App\Http\Requests\Tenant\User\ExportEmployeesRequest;
@@ -36,6 +40,7 @@ use App\Http\Requests\Tenant\User\IndexOpenInvitesRequest;
 use App\Http\Requests\Tenant\User\InviteEmployeeRequest;
 use App\Http\Requests\Tenant\User\RecordCourseResultRequest;
 use App\Http\Requests\Tenant\User\ResendInvitesRequest;
+use App\Http\Requests\Tenant\User\SendCustomMessageRequest;
 use App\Http\Requests\Tenant\User\SetCourseOverrideRequest;
 use App\Http\Requests\Tenant\User\UpdateEmployeeRequest;
 use App\Http\Resources\Tenant\DeletedEmployeeResource;
@@ -43,9 +48,6 @@ use App\Http\Resources\Tenant\EmployeeResource;
 use App\Http\Resources\Tenant\OpenInviteResource;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Invite;
-use App\Models\Dealer\Store;
-use App\Models\Department;
-use App\Models\Role;
 use App\Models\User;
 use App\Services\TrainingComplianceService;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -53,7 +55,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Sentry;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
@@ -68,11 +69,6 @@ class UserController extends Controller
         $viewer = $request->user();
         $filters = $request->filters();
 
-        logger()->info('employees.index filters', [
-            'query' => $request->query(),
-            'filters' => $filters->toArray(),
-        ]);
-
         $result = $getEmployees->handle($viewer, $filters, $request->page());
 
         return Inertia::render('tenant/user/Index', [
@@ -80,11 +76,7 @@ class UserController extends Controller
             'trainingCounts' => TrainingCountsData::fromSummaries($result['summaries'])->toArray(),
             'filters' => $filters->toArray(),
             'filterOptions' => $getFilterOptions->handle(),
-            'permissions' => [
-                'manage_filters' => $viewer->can('create-stores'),
-                'email_report' => $viewer->can('create-dealerships'),
-                'send_message' => ! $viewer->hasAnyRole(['Manager', 'Employee', 'Porter/Driver']),
-            ],
+            'permissions' => EmployeeIndexPermissionsData::forViewer($viewer)->toArray(),
             'storeContext' => [
                 'multiple_stores' => app()->bound('multipleStoresExist') && resolve('multipleStoresExist'),
                 'current_store_name' => app()->bound('currentStoreModel')
@@ -99,25 +91,21 @@ class UserController extends Controller
         /** @var User $viewer */
         $viewer = $request->user();
 
-        abort_unless(
-            $viewer->hasAnyRole([
-                'super-admin',
-                'Consultant',
-                'Owner',
-                'CFO',
-                'GM',
-                'GSM',
-                'Qualified Individual',
-                'Manager',
-            ]),
-            403,
-        );
+        abort_unless($viewer->hasAnyRole(Role::values(Role::employeeSectionViewers())), 403);
+
+        $isManagerOnly = $viewer->hasRole(Role::Manager->value)
+            && ! $viewer->hasAnyRole(Role::values(Role::employeeAdminRoles()));
 
         return Inertia::render('tenant/user/Invite', [
             'options' => $optionsQuery->handle($viewer),
             'defaults' => [
                 'department_id' => $viewer->department_id,
-                'role' => $viewer->can('create-stores') ? null : 'Employee',
+                'role' => $viewer->can('create-stores') ? null : Role::Employee->value,
+                'store_ids' => $viewer->current_store_id !== null ? [(int) $viewer->current_store_id] : [],
+            ],
+            'permissions' => [
+                'mark_qualified_individual' => ! $isManagerOnly,
+                'add_completed_courses' => $viewer->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value]),
             ],
         ]);
     }
@@ -159,29 +147,48 @@ class UserController extends Controller
         ]);
     }
 
-    public function resendInvite(Invite $invite, ResendInvite $action): RedirectResponse
+    public function resendInvite(Request $request, Invite $invite, GetOpenInvites $query, ResendInvite $action): RedirectResponse
     {
-        abort_unless(auth()->user()?->can('create-dealerships'), 403);
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        abort_unless($query->buildScopedQuery($viewer)->whereKey($invite->id)->exists(), 403);
 
         $action->handle($invite);
 
         return back()->with('success', "Invite to {$invite->name} resent.");
     }
 
-    public function resendInvites(ResendInvitesRequest $request, ResendInvite $action): RedirectResponse
+    public function resendInvites(ResendInvitesRequest $request, GetOpenInvites $query, ResendInvite $action): RedirectResponse
     {
-        $invites = Invite::query()->whereIn('id', $request->inviteIds())->get();
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        $requestedIds = $request->inviteIds();
+        $invites = $query->buildScopedQuery($viewer)
+            ->whereIn('id', $requestedIds)
+            ->get();
+
+        $skipped = count($requestedIds) - $invites->count();
 
         foreach ($invites as $invite) {
             $action->handle($invite);
         }
 
-        return back()->with('success', "{$invites->count()} invite(s) resent.");
+        $message = "{$invites->count()} invite(s) resent.";
+        if ($skipped > 0) {
+            $message .= " {$skipped} were skipped because they're outside your scope.";
+        }
+
+        return back()->with('success', $message);
     }
 
-    public function destroyInvite(Invite $invite): RedirectResponse
+    public function destroyInvite(Request $request, Invite $invite, GetOpenInvites $query): RedirectResponse
     {
-        abort_unless(auth()->user()?->can('create-dealerships'), 403);
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        abort_unless($query->buildScopedQuery($viewer)->whereKey($invite->id)->exists(), 403);
 
         $name = $invite->name;
         $invite->delete();
@@ -202,24 +209,18 @@ class UserController extends Controller
         ]);
     }
 
-    public function restoreEmployee(Request $request, int $user, RestoreEmployee $action): RedirectResponse
+    public function restoreEmployee(Request $request, User $user, RestoreEmployee $action): RedirectResponse
     {
-        abort_unless($request->user()?->hasAnyRole([
-            'super-admin',
-            'Consultant',
-            'Owner',
-            'CFO',
-            'GM',
-            'GSM',
-            'Qualified Individual',
-        ]), 403);
+        abort_unless(
+            $request->user()?->hasAnyRole(Role::values(Role::employeeAdminRoles())),
+            403,
+        );
 
-        /** @var User $target */
-        $target = User::query()->onlyTrashed()->findOrFail($user);
+        abort_unless($user->trashed(), 404);
 
-        $action->handle($target);
+        $action->handle($user);
 
-        return back()->with('success', "{$target->name} restored.");
+        return back()->with('success', "{$user->name} restored.");
     }
 
     public function import(ImportEmployeesRequest $request, ImportEmployees $action): RedirectResponse
@@ -292,10 +293,11 @@ class UserController extends Controller
         User $user,
         GetEmployees $getEmployees,
         TrainingComplianceService $complianceService,
+        GetEmployeeEditOptions $editOptions,
     ): Response {
         return Inertia::render(
             'tenant/user/Show',
-            $this->sharedProps($request, $user, $getEmployees, $complianceService),
+            $this->sharedProps($request, $user, $getEmployees, $complianceService, $editOptions),
         );
     }
 
@@ -305,11 +307,12 @@ class UserController extends Controller
         GetEmployees $getEmployees,
         TrainingComplianceService $complianceService,
         GetEmployeeCourses $getEmployeeCourses,
+        GetEmployeeEditOptions $editOptions,
     ): Response {
         /** @var User $viewer */
         $viewer = $request->user();
 
-        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService);
+        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService, $editOptions);
         $props['courses'] = $getEmployeeCourses->handle($user);
         $props['canRecordCourseResult'] = $viewer->can('recordCourseResult', $user);
 
@@ -333,8 +336,9 @@ class UserController extends Controller
         GetEmployees $getEmployees,
         TrainingComplianceService $complianceService,
         GetManageCoursesOptions $getManageCoursesOptions,
+        GetEmployeeEditOptions $editOptions,
     ): Response {
-        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService);
+        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService, $editOptions);
         $props['manageableCourses'] = $getManageCoursesOptions->handle($user);
 
         return Inertia::render('tenant/user/ManageCourses', $props);
@@ -360,11 +364,12 @@ class UserController extends Controller
         GetEmployees $getEmployees,
         TrainingComplianceService $complianceService,
         GetEmployeeCertificates $certificatesQuery,
+        GetEmployeeEditOptions $editOptions,
     ): Response {
         /** @var User $viewer */
         $viewer = $request->user();
 
-        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService);
+        $props = $this->sharedProps($request, $user, $getEmployees, $complianceService, $editOptions);
         $props['certificates'] = $certificatesQuery->certificates($user);
         $props['canGenerateDotCert'] = $viewer->can('generateDotCertificate', $user)
             && $certificatesQuery->canGenerateDotCertificate($user);
@@ -447,10 +452,40 @@ class UserController extends Controller
 
             return back()->with('success', 'User report sent successfully.');
         } catch (Throwable $e) {
-            Sentry::captureException($e);
+            report($e);
 
             return back()->with('error', 'Error trying to send the User Report. Please check the email address.');
         }
+    }
+
+    public function sendMessage(
+        SendCustomMessageRequest $request,
+        GetEmployees $getEmployees,
+        SendCustomEmployeeMessage $sendMessage,
+    ): RedirectResponse {
+        /** @var User $viewer */
+        $viewer = $request->user();
+
+        $scopedQuery = $getEmployees->buildScopedQuery($viewer, $request->filters());
+
+        if (! $request->selectAll()) {
+            $scopedQuery->whereIn('users.id', $request->userIds());
+        }
+
+        /** @var EloquentCollection<int, User> $users */
+        $users = $scopedQuery->get(['users.id', 'users.name', 'users.email']);
+
+        $sent = $sendMessage->handle(
+            users: $users,
+            subject: $request->subjectLine(),
+            messageBody: $request->messageBody(),
+        );
+
+        if ($sent === 0) {
+            return back()->with('error', 'No employees with valid email addresses were selected.');
+        }
+
+        return back()->with('success', "Message sent to {$sent} ".str('employee')->plural($sent).'.');
     }
 
     /**
@@ -461,6 +496,7 @@ class UserController extends Controller
         User $user,
         GetEmployees $getEmployees,
         TrainingComplianceService $complianceService,
+        GetEmployeeEditOptions $editOptions,
     ): array {
         /** @var User $viewer */
         $viewer = $request->user();
@@ -492,67 +528,13 @@ class UserController extends Controller
                 'update' => $canUpdate,
                 'delete' => $viewer->can('delete', $user),
                 'impersonate' => $viewer->can('impersonate', $user),
-                'manage_courses' => $viewer->hasAnyRole(['super-admin', 'Consultant', 'Qualified Individual']),
+                'manage_courses' => $viewer->hasAnyRole([
+                    Role::SuperAdmin->value,
+                    Role::Consultant->value,
+                    Role::QualifiedIndividual->value,
+                ]),
             ],
-            'editOptions' => $canUpdate ? $this->editOptions() : null,
-        ];
-    }
-
-    /**
-     * @return array{
-     *     departments: list<array{id: int, name: string}>,
-     *     roles: list<array{id: int, name: string}>,
-     *     stores: list<array{id: int, name: string}>|null,
-     *     audit_types: list<array{value: string, label: string}>
-     * }
-     */
-    private function editOptions(): array
-    {
-        $departments = Department::query()
-            ->orderBy('name')
-            ->get(['id', 'name'])
-            ->map(static fn (Department $department): array => [
-                'id' => (int) $department->id,
-                'name' => (string) $department->name,
-            ])
-            ->values()
-            ->all();
-
-        $roles = Role::query()
-            ->whereNotIn('name', ['super-admin', 'Consultant', 'Qualified Individual'])
-            ->orderBy('name')
-            ->get(['id', 'name'])
-            ->map(static fn (Role $role): array => [
-                'id' => (int) $role->id,
-                'name' => (string) $role->name,
-            ])
-            ->values()
-            ->all();
-
-        $stores = Store::query()
-            ->orderBy('name')
-            ->get(['id', 'name']);
-
-        $storeOptions = $stores->count() > 1
-            ? $stores
-                ->map(static fn (Store $store): array => [
-                    'id' => (int) $store->id,
-                    'name' => (string) $store->name,
-                ])
-                ->values()
-                ->all()
-            : null;
-
-        $auditTypes = array_map(
-            static fn (AuditTypes $type): array => ['value' => $type->value, 'label' => $type->label()],
-            AuditTypes::cases(),
-        );
-
-        return [
-            'departments' => $departments,
-            'roles' => $roles,
-            'stores' => $storeOptions,
-            'audit_types' => $auditTypes,
+            'editOptions' => $canUpdate ? $editOptions->handle() : null,
         ];
     }
 }

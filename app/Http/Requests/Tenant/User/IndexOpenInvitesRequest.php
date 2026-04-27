@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Tenant\User;
 
+use App\Enums\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndexOpenInvitesRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->can('create-dealerships') ?? false;
+        return $this->user()?->hasAnyRole(Role::values(Role::employeeSectionViewers())) ?? false;
     }
 
     /**

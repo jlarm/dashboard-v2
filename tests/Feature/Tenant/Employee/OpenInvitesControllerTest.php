@@ -109,10 +109,32 @@ describe('employees open-invites endpoint', function (): void {
         expect(Invite::query()->find($this->invite->id))->toBeNull();
     });
 
-    it('forbids users without the create-dealerships permission', function (): void {
+    it('lets managers view and act on invites in their own department', function (): void {
+        $this->manager->update(['department_id' => $this->department->id]);
+
         $this->actingAs($this->manager)
             ->get(route('dealer.employees.open-invites'))
-            ->assertForbidden();
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page
+                ->has('invites.data', 1)
+                ->where('invites.data.0.email', 'pending-hire@test.com'),
+            );
+
+        $this->actingAs($this->manager)
+            ->delete(route('dealer.employees.open-invites.destroy', $this->invite))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        expect(Invite::query()->find($this->invite->id))->toBeNull();
+    });
+
+    it('forbids managers from acting on invites outside their department', function (): void {
+        $otherDepartment = Department::query()->create([
+            'name' => 'Other Dept '.uniqid(),
+            'slug' => 'other-dept-'.uniqid(),
+        ]);
+
+        $this->manager->update(['department_id' => $otherDepartment->id]);
 
         $this->actingAs($this->manager)
             ->delete(route('dealer.employees.open-invites.destroy', $this->invite))

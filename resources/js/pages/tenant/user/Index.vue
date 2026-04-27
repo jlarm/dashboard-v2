@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import DataTable from '@/pages/tenant/user/components/DataTable.vue';
 import ImportEmployeesDialog from '@/pages/tenant/user/components/ImportEmployeesDialog.vue';
+import SendMessageDialog from '@/pages/tenant/user/components/SendMessageDialog.vue';
 import SubNavigation from '@/pages/tenant/user/components/SubNavigation.vue';
 import { buildColumns, type Employee } from '@/pages/tenant/user/components/columns';
 import employeesRoutes from '@/routes/dealer/employees';
@@ -57,6 +58,7 @@ const breadcrumbs = computed<BreadcrumbItem[]>(() => [
 ]);
 
 const importDialogOpen = ref(false);
+const sendMessageDialogOpen = ref(false);
 
 const search = ref(props.filters.search);
 const localFilters = reactive<Omit<Filters, 'search'>>({
@@ -229,10 +231,6 @@ const hasActiveFilters = computed(() =>
     || localFilters.role_ids.length > 0,
 );
 
-const hasComplianceFilter = computed(() =>
-    localFilters.only_incomplete || localFilters.only_expired || localFilters.only_expiring_soon,
-);
-
 type CompliancePill = {
     key: 'only_incomplete' | 'only_expired' | 'only_expiring_soon';
     label: string;
@@ -355,6 +353,22 @@ const submitEmailReport = () => {
         </template>
 
         <ImportEmployeesDialog v-model:open="importDialogOpen" />
+        <SendMessageDialog
+            v-model:open="sendMessageDialogOpen"
+            :selected-user-ids="selectedUserIds"
+            :select-all-across-pages="selectAllAcrossPages"
+            :selection-count="selectionCount"
+            :filters="{
+                search,
+                department_ids: localFilters.department_ids,
+                role_ids: localFilters.role_ids,
+                only_incomplete: localFilters.only_incomplete,
+                only_expired: localFilters.only_expired,
+                only_expiring_soon: localFilters.only_expiring_soon,
+                sort_field: localFilters.sort_field,
+                sort_direction: localFilters.sort_direction,
+            }"
+        />
         <div class="space-y-5">
             <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
                 <StatCard
@@ -452,8 +466,7 @@ const submitEmailReport = () => {
                             v-if="permissions.send_message"
                             variant="outline"
                             size="sm"
-                            disabled
-                            title="Send message feature coming soon"
+                            @click="sendMessageDialogOpen = true"
                         >
                             <Send class="size-4" />
                             Send Message
@@ -465,23 +478,6 @@ const submitEmailReport = () => {
                         </Button>
                     </template>
 
-                    <form
-                        v-if="permissions.email_report && localFilters.only_incomplete && localFilters.department_ids.length > 0"
-                        class="flex items-center gap-2"
-                        @submit.prevent="submitEmailReport"
-                    >
-                        <Input
-                            v-model="emailForm.email"
-                            type="email"
-                            placeholder="Manager email"
-                            class="w-48"
-                            required
-                        />
-                        <Button type="submit" size="sm" :disabled="emailForm.processing">
-                            <Send class="size-4" />
-                            Send
-                        </Button>
-                    </form>
                 </div>
             </div>
 
@@ -522,7 +518,7 @@ const submitEmailReport = () => {
                 empty-message="No employees match the current filters."
             />
 
-            <AppPagination v-if="!hasComplianceFilter" :pagination="employees" />
+            <AppPagination :pagination="employees" />
         </div>
     </AppLayout>
 </template>

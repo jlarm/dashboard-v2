@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\User\Actions;
 
+use App\Enums\Role;
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Invite;
 use App\Models\User;
@@ -28,7 +29,7 @@ class InviteEmployee
     ): Invite {
         $roles = [$role];
         if ($qualifiedIndividual) {
-            $roles[] = 'Qualified Individual';
+            $roles[] = Role::QualifiedIndividual->value;
         }
 
         $invite = Invite::query()->create([

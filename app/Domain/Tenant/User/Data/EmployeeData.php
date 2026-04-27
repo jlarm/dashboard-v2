@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\User\Data;
 
+use App\Enums\Role;
 use App\Models\User;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
-final readonly class EmployeeData
+/**
+ * @implements Arrayable<string, mixed>
+ */
+final readonly class EmployeeData implements Arrayable
 {
     /**
      * @param  list<array{id: int, name: string}>  $roles
@@ -58,12 +63,12 @@ final readonly class EmployeeData
             departmentName: $user->department?->name,
             roles: array_values(array_filter(
                 $roles,
-                static fn (array $role): bool => $role['name'] !== 'Qualified Individual',
+                static fn (array $role): bool => $role['name'] !== Role::QualifiedIndividual->value,
             )),
             stores: $stores,
             training: $training,
             hasQualifiedIndividualRole: collect($roles)->contains(
-                static fn (array $role): bool => $role['name'] === 'Qualified Individual',
+                static fn (array $role): bool => $role['name'] === Role::QualifiedIndividual->value,
             ),
             canView: $canView,
             lastLoginAt: $user->last_login_at?->format('F d, Y g:i A'),

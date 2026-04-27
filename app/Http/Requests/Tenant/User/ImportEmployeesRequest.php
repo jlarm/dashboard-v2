@@ -11,7 +11,7 @@ class ImportEmployeesRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->can('create-dealerships') ?? false;
+        return $this->user()?->hasRole('super-admin') ?? false;
     }
 
     /**

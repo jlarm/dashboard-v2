@@ -191,7 +191,9 @@ Route::name('dealer.')->middleware([
     Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function (): void {
 
         Route::get('employees/deleted', [App\Http\Controllers\Tenant\UserController::class, 'deleted'])->name('employees.deleted');
-        Route::post('employees/deleted/{user}/restore', [App\Http\Controllers\Tenant\UserController::class, 'restoreEmployee'])->name('employees.deleted.restore');
+        Route::post('employees/deleted/{user}/restore', [App\Http\Controllers\Tenant\UserController::class, 'restoreEmployee'])
+            ->name('employees.deleted.restore')
+            ->withTrashed();
 
         Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function (): void {
             Route::get('/isp', App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
@@ -244,6 +246,7 @@ Route::name('dealer.')->middleware([
             Route::post('/import', [App\Http\Controllers\Tenant\UserController::class, 'import'])->name('import');
             Route::post('/export', [App\Http\Controllers\Tenant\UserController::class, 'export'])->name('export');
             Route::post('/email-report', [App\Http\Controllers\Tenant\UserController::class, 'emailReport'])->name('email-report');
+            Route::post('/send-message', [App\Http\Controllers\Tenant\UserController::class, 'sendMessage'])->name('send-message');
 
             Route::prefix('{user:slug}')->group(function (): void {
                 Route::get('/', [App\Http\Controllers\Tenant\UserController::class, 'show'])->name('show');

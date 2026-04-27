@@ -4,21 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Tenant\User;
 
+use App\Enums\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndexDeletedEmployeesRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->hasAnyRole([
-            'super-admin',
-            'Consultant',
-            'Owner',
-            'CFO',
-            'GM',
-            'GSM',
-            'Qualified Individual',
-        ]) ?? false;
+        return $this->user()?->hasAnyRole(Role::values(Role::employeeAdminRoles())) ?? false;
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\User\Actions;
 
+use App\Enums\Role as RoleEnum;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,7 @@ class UpdateEmployee
     ): void {
         $role = Role::query()->findOrFail($roleId);
 
-        if (in_array($role->name, ['super-admin', 'Consultant'], true)) {
+        if (in_array($role->name, [RoleEnum::SuperAdmin->value, RoleEnum::Consultant->value], true)) {
             throw new RuntimeException('Cannot assign privileged roles to an employee.');
         }
 
@@ -37,7 +38,7 @@ class UpdateEmployee
 
             $roles = [$role->name];
             if ($qualifiedIndividual) {
-                $roles[] = 'Qualified Individual';
+                $roles[] = RoleEnum::QualifiedIndividual->value;
             }
 
             $user->syncRoles($roles);

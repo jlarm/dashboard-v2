@@ -6,6 +6,12 @@ use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Invite;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Bus;
+use Spatie\Permission\PermissionRegistrar;
+
+beforeEach(function (): void {
+    $this->consultant->assignRole('super-admin');
+    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+});
 
 describe('employees import endpoint', function (): void {
     it('creates invites and dispatches email jobs for a valid file', function (): void {

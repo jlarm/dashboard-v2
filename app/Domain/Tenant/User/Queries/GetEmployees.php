@@ -7,6 +7,7 @@ namespace App\Domain\Tenant\User\Queries;
 use App\Domain\Tenant\User\Data\EmployeeData;
 use App\Domain\Tenant\User\Data\EmployeeFiltersData;
 use App\Domain\Tenant\User\Data\TrainingSummaryData;
+use App\Enums\Role;
 use App\Models\Dealer\Course;
 use App\Models\User;
 use App\Services\TrainingComplianceService;
@@ -40,28 +41,26 @@ class GetEmployees
         $scopedUsers = (clone $baseQuery)->without(['department'])->get();
         $allSummaries = $this->summariesFor($scopedUsers);
 
-        $perPage = $filters->hasComplianceFilter() ? 500 : 15;
-
         $paginatedQuery = (clone $baseQuery)
             ->with(['results' => $this->constrainResultsQuery(...)]);
 
-        $paginator = $paginatedQuery->paginate(perPage: $perPage, page: $page);
+        if ($filters->hasComplianceFilter()) {
+            $matchingIds = $allSummaries
+                ->filter(fn (TrainingSummaryData $summary): bool => $this->passesComplianceFilter($summary, $filters))
+                ->keys()
+                ->all();
+
+            $paginatedQuery->whereIn('users.id', $matchingIds);
+        }
+
+        $paginator = $paginatedQuery->paginate(perPage: 15, page: $page);
 
         /** @var Collection<int, User> $pageUsers */
         $pageUsers = collect($paginator->items());
         $pageSummaries = $allSummaries->only($pageUsers->pluck('id')->all());
 
-        $employees = $filters->hasComplianceFilter()
-            ? $pageUsers
-                ->filter(fn (User $user): bool => $this->passesComplianceFilter(
-                    $pageSummaries->get($user->id),
-                    $filters,
-                ))
-                ->values()
-            : $pageUsers->values();
-
         $paginator->setCollection(
-            $employees->map(fn (User $user): EmployeeData => EmployeeData::fromModel(
+            $pageUsers->map(fn (User $user): EmployeeData => EmployeeData::fromModel(
                 user: $user,
                 training: $pageSummaries->get($user->id) ?? $this->unassignedSummary(),
                 canView: $this->canView($viewer, $user),
@@ -101,7 +100,7 @@ class GetEmployees
     {
         $query = $this->initialQuery($viewer)
             ->whereDoesntHave('roles', function (Builder $query): void {
-                $query->where('name', 'super-admin')->orWhere('name', 'Consultant');
+                $query->whereIn('name', [Role::SuperAdmin->value, Role::Consultant->value]);
             })
             ->select(self::SELECT_COLUMNS)
             ->with([
@@ -205,12 +204,12 @@ class GetEmployees
 
     private function constrainResultsQuery(HasMany $query): void
     {
-        $courseIdsByExpiryYears = Course::query()
+        $courseIdsByExpiryYears = once(fn (): array => Course::query()
             ->select(['id', 'years_expires'])
             ->get()
             ->groupBy(fn (Course $course): int => (int) ($course->years_expires ?? 1))
             ->map(fn (Collection $courses): array => $courses->pluck('id')->all())
-            ->all();
+            ->all());
 
         $query->select('id', 'user_id', 'course_id', 'passed', 'created_at')
             ->where('passed', 1)
@@ -246,12 +245,8 @@ class GetEmployees
             });
     }
 
-    private function passesComplianceFilter(?TrainingSummaryData $summary, EmployeeFiltersData $filters): bool
+    private function passesComplianceFilter(TrainingSummaryData $summary, EmployeeFiltersData $filters): bool
     {
-        if (! $summary instanceof TrainingSummaryData) {
-            return ! $filters->hasComplianceFilter();
-        }
-
         if ($filters->onlyIncomplete && $summary->notCompleted <= 0) {
             return false;
         }
@@ -269,7 +264,7 @@ class GetEmployees
             return false;
         }
 
-        return ! $target->hasRole('Consultant');
+        return ! $target->hasRole(Role::Consultant->value);
     }
 
     private function unassignedSummary(): TrainingSummaryData

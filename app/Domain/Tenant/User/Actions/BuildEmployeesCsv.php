@@ -19,6 +19,7 @@ class BuildEmployeesCsv
      */
     public function forSelection(EloquentCollection $users): string
     {
+        $users->loadMissing(['stores:id,name', 'department:id,name']);
         $summaries = $this->getEmployees->summariesFor(collect($users));
 
         $header = 'Name,Email,Store,Department,Training Status,Valid Completed,Required Courses,Not Completed,Expired,Expiring Soon';
@@ -48,6 +49,7 @@ class BuildEmployeesCsv
      */
     public function forReport(EloquentCollection $users): string
     {
+        $users->loadMissing(['department:id,name']);
         $summaries = $this->getEmployees->summariesFor(collect($users));
 
         $header = 'Name,Email,Department,Training Status,Valid Completed,Required Courses,Not Completed,Expired,Expiring Soon';

@@ -36,19 +36,28 @@ class GetEmployeeCourses
         $courses = Course::query()
             ->whereIn('id', $courseIds)
             ->select(['id', 'name', 'slug', 'states_required', 'years_expires'])
-            ->with(['results' => function ($query) use ($user): void {
-                $query->where('user_id', $user->id)
-                    ->select(['id', 'user_id', 'course_id', 'passed', 'percentage', 'created_at'])
-                    ->latest();
-            }])
             ->orderBy('name')
             ->get();
+
+        $latestResults = CourseResults::query()
+            ->select(['id', 'user_id', 'course_id', 'passed', 'percentage', 'created_at'])
+            ->where('user_id', $user->id)
+            ->whereIn('course_id', $courses->pluck('id'))
+            ->whereIn('id', function ($query) use ($courses, $user): void {
+                $query->selectRaw('MAX(id)')
+                    ->from((new CourseResults)->getTable())
+                    ->where('user_id', $user->id)
+                    ->whereIn('course_id', $courses->pluck('id'))
+                    ->groupBy('course_id');
+            })
+            ->get()
+            ->keyBy('course_id');
 
         $storeState = $this->currentStoreState();
 
         return $courses
             ->filter(fn (Course $course): bool => $this->isApplicableToStore($course, $storeState))
-            ->map(fn (Course $course): array => $this->toRow($course))
+            ->map(fn (Course $course): array => $this->toRow($course, $latestResults->get($course->id)))
             ->values()
             ->all();
     }
@@ -86,11 +95,8 @@ class GetEmployeeCourses
      *     percentage: int|null
      * }
      */
-    private function toRow(Course $course): array
+    private function toRow(Course $course, ?CourseResults $latest): array
     {
-        /** @var CourseResults|null $latest */
-        $latest = $course->results->first();
-
         if (! $latest instanceof CourseResults) {
             return [
                 'id' => (int) $course->id,

@@ -7,7 +7,8 @@ import {
 } from '@/components/ui/navigation-menu';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import employees from '@/routes/dealer/employees';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 type NavKey = 'import';
 
@@ -20,13 +21,18 @@ const emit = defineEmits<{
     (e: 'import'): void;
 }>();
 
-const navItems: NavItem[] = [
+const page = usePage<{ auth: { roles: string[] } }>();
+const roles = computed(() => page.props.auth?.roles ?? []);
+const isSuperAdmin = computed(() => roles.value.includes('super-admin'));
+const isManager = computed(() => roles.value.includes('Manager') && !isSuperAdmin.value);
+
+const navItems = computed<NavItem[]>(() => [
     { kind: 'link', name: 'Employees', href: employees.index.url() },
-    { kind: 'action', name: 'Import', key: 'import' },
+    ...(isSuperAdmin.value ? [{ kind: 'action', name: 'Import', key: 'import' } as const] : []),
     { kind: 'link', name: 'Invite Employee', href: employees.invite.url() },
     { kind: 'link', name: 'Open Invites', href: employees.openInvites.url() },
-    { kind: 'link', name: 'Deleted', href: employees.deleted.url() },
-];
+    ...(isManager.value ? [] : [{ kind: 'link', name: 'Deleted', href: employees.deleted.url() } as const]),
+]);
 
 const { isCurrentUrl } = useCurrentUrl();
 

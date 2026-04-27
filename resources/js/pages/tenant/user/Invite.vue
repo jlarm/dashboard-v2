@@ -33,6 +33,11 @@ const props = defineProps<{
     defaults: {
         department_id: number | null;
         role: string | null;
+        store_ids: number[];
+    };
+    permissions: {
+        mark_qualified_individual: boolean;
+        add_completed_courses: boolean;
     };
 }>();
 
@@ -56,7 +61,12 @@ const form = useForm<{
     department_id: props.defaults.department_id,
     role: props.defaults.role,
     qualified_individual: false,
-    store_ids: props.options.stores.length === 1 ? [props.options.stores[0].id] : [],
+    store_ids:
+        props.defaults.store_ids.length > 0
+            ? [...props.defaults.store_ids]
+            : props.options.stores.length === 1
+                ? [props.options.stores[0].id]
+                : [],
     primary_store_id: null,
     courses: {},
 });
@@ -70,6 +80,7 @@ const storeOptions = computed(() =>
 
 const showStoreSelector = computed(() => props.options.stores.length > 1);
 const requiresPrimary = computed(() => form.store_ids.length > 1);
+const departmentLocked = computed(() => props.options.departments.length === 1);
 
 const setStoreIds = (ids: number[]) => {
     form.store_ids = ids;
@@ -112,7 +123,7 @@ const submit = () => {
 
         <ImportEmployeesDialog v-model:open="importDialogOpen" />
 
-        <form class="mx-auto max-w-4xl space-y-8" @submit.prevent="submit">
+        <form class="mx-auto max-w-2xl space-y-8" @submit.prevent="submit">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div class="space-y-2">
                     <Label for="name">Employee name</Label>
@@ -171,9 +182,10 @@ const submit = () => {
                 <Label for="department_id">Department</Label>
                 <Select
                     :model-value="form.department_id === null ? '' : String(form.department_id)"
+                    :disabled="departmentLocked"
                     @update:model-value="(value) => (form.department_id = value ? Number(value) : null)"
                 >
-                    <SelectTrigger id="department_id" class="w-full">
+                    <SelectTrigger id="department_id" class="w-full" :disabled="departmentLocked">
                         <SelectValue placeholder="Select a department" />
                     </SelectTrigger>
                     <SelectContent>
@@ -186,6 +198,9 @@ const submit = () => {
                         </SelectItem>
                     </SelectContent>
                 </Select>
+                <p v-if="departmentLocked" class="text-xs text-muted-foreground">
+                    You can only invite employees to your department.
+                </p>
                 <p v-if="form.errors.department_id" class="text-sm text-red-600">
                     {{ form.errors.department_id }}
                 </p>
@@ -213,7 +228,10 @@ const submit = () => {
                 <p v-if="form.errors.role" class="text-sm text-red-600">{{ form.errors.role }}</p>
             </div>
 
-            <label class="flex cursor-pointer items-start gap-3 rounded-md border border-blue-200 bg-blue-50/50 p-3 transition-colors hover:bg-blue-50">
+            <label
+                v-if="permissions.mark_qualified_individual"
+                class="flex cursor-pointer items-start gap-3 rounded-md border border-blue-200 bg-blue-50/50 p-3 transition-colors hover:bg-blue-50"
+            >
                 <Checkbox
                     :model-value="form.qualified_individual"
                     class="mt-0.5"
@@ -227,7 +245,7 @@ const submit = () => {
                 </span>
             </label>
 
-            <div class="space-y-3">
+            <div v-if="permissions.add_completed_courses" class="space-y-3">
                 <label class="flex cursor-pointer items-center gap-3 rounded-md bg-muted/40 p-3">
                     <Checkbox
                         :model-value="showCourses"

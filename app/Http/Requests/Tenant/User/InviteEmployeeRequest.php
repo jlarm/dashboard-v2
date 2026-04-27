@@ -5,26 +5,26 @@ declare(strict_types=1);
 namespace App\Http\Requests\Tenant\User;
 
 use App\Domain\Tenant\User\Queries\GetInviteEmployeeOptions;
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class InviteEmployeeRequest extends FormRequest
 {
-    private const EXCLUDED_ROLES = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
+    /**
+     * @var array{
+     *     departments: list<array{id: int, name: string}>,
+     *     roles: list<array{name: string}>,
+     *     courses: list<array{id: int, name: string}>,
+     *     stores: list<array{id: int, name: string}>
+     * }|null
+     */
+    private ?array $cachedOptions = null;
 
     public function authorize(): bool
     {
-        return $this->user()?->hasAnyRole([
-            'super-admin',
-            'Consultant',
-            'Owner',
-            'CFO',
-            'GM',
-            'GSM',
-            'Qualified Individual',
-            'Manager',
-        ]) ?? false;
+        return $this->user()?->hasAnyRole(Role::values(Role::employeeSectionViewers())) ?? false;
     }
 
     /**
@@ -32,19 +32,19 @@ class InviteEmployeeRequest extends FormRequest
      */
     public function rules(): array
     {
-        $availableStoreIds = $this->availableStoreIds();
+        $options = $this->options();
+        $availableStoreIds = array_map(static fn (array $store): int => $store['id'], $options['stores']);
+        $availableDepartmentIds = array_map(static fn (array $dept): int => $dept['id'], $options['departments']);
+        $availableRoleNames = array_map(static fn (array $role): string => $role['name'], $options['roles']);
+
         $multipleStores = count($availableStoreIds) > 1;
         $selectedStoreIds = $this->selectedStoreIds();
 
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email', 'unique:invites,email'],
-            'department_id' => ['required', 'integer', Rule::exists('departments', 'id')],
-            'role' => [
-                'required',
-                'string',
-                Rule::exists('roles', 'name')->whereNotIn('name', self::EXCLUDED_ROLES),
-            ],
+            'department_id' => ['required', 'integer', Rule::in($availableDepartmentIds)],
+            'role' => ['required', 'string', Rule::in($availableRoleNames)],
             'qualified_individual' => ['nullable', 'boolean'],
             'store_ids' => [
                 Rule::requiredIf($multipleStores),
@@ -95,6 +95,10 @@ class InviteEmployeeRequest extends FormRequest
 
     public function qualifiedIndividual(): bool
     {
+        if (! $this->canMarkQualifiedIndividual()) {
+            return false;
+        }
+
         return $this->boolean('qualified_individual');
     }
 
@@ -130,6 +134,10 @@ class InviteEmployeeRequest extends FormRequest
      */
     public function courses(): array
     {
+        if (! $this->canAddCompletedCourses()) {
+            return [];
+        }
+
         /** @var array<string|int, string|null>|null $values */
         $values = $this->validated('courses');
 
@@ -149,21 +157,56 @@ class InviteEmployeeRequest extends FormRequest
         return $result;
     }
 
-    /**
-     * @return list<int>
-     */
-    private function availableStoreIds(): array
+    private function canMarkQualifiedIndividual(): bool
     {
         /** @var User|null $user */
         $user = $this->user();
 
         if (! $user instanceof User) {
-            return [];
+            return false;
         }
 
-        $options = app(GetInviteEmployeeOptions::class)->handle($user);
+        if (! $user->hasRole(Role::Manager->value)) {
+            return true;
+        }
 
-        return array_values(array_map(static fn (array $store): int => $store['id'], $options['stores']));
+        return $user->hasAnyRole(Role::values(Role::employeeAdminRoles()));
+    }
+
+    private function canAddCompletedCourses(): bool
+    {
+        return $this->user()?->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value]) ?? false;
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function availableStoreIds(): array
+    {
+        return array_values(array_map(
+            static fn (array $store): int => $store['id'],
+            $this->options()['stores'],
+        ));
+    }
+
+    /**
+     * @return array{
+     *     departments: list<array{id: int, name: string}>,
+     *     roles: list<array{name: string}>,
+     *     courses: list<array{id: int, name: string}>,
+     *     stores: list<array{id: int, name: string}>
+     * }
+     */
+    private function options(): array
+    {
+        /** @var User|null $user */
+        $user = $this->user();
+
+        if (! $user instanceof User) {
+            return ['departments' => [], 'roles' => [], 'courses' => [], 'stores' => []];
+        }
+
+        return $this->cachedOptions ??= app(GetInviteEmployeeOptions::class)->handle($user);
     }
 
     /**

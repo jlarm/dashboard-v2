@@ -4,7 +4,6 @@ import Audit from './Audit'
 import Phish from './Phish'
 import Ridgeback from './Ridgeback'
 import Log from './Log'
-import Employee from './Employee'
 import Manual from './Manual'
 import Docs from './Docs'
 
@@ -15,7 +14,6 @@ const Dealer = {
     Phish: Object.assign(Phish, Phish),
     Ridgeback: Object.assign(Ridgeback, Ridgeback),
     Log: Object.assign(Log, Log),
-    Employee: Object.assign(Employee, Employee),
     Manual: Object.assign(Manual, Manual),
     Docs: Object.assign(Docs, Docs),
 }

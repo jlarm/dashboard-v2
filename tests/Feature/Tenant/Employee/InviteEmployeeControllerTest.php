@@ -93,6 +93,114 @@ describe('employees invite endpoint', function (): void {
         expect($invite->roles)->toContain('Employee')->toContain('Qualified Individual');
     });
 
+    it('scopes options to the manager department, store, and three roles', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->manager->update([
+            'department_id' => $this->department->id,
+            'current_store_id' => $store->id,
+        ]);
+        $this->manager->stores()->syncWithoutDetaching([$store->id]);
+
+        $otherDepartment = Department::query()->create([
+            'name' => 'Other '.uniqid(),
+            'slug' => 'other-'.uniqid(),
+        ]);
+
+        $this->actingAs($this->manager)
+            ->get(route('dealer.employees.invite'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page
+                ->where('options.departments', [
+                    ['id' => $this->department->id, 'name' => $this->department->name],
+                ])
+                ->where('options.stores', fn ($stores) => collect($stores)->pluck('id')->all() === [$store->id])
+                ->where('options.roles', fn ($roles) => collect($roles)->pluck('name')->sort()->values()->all() === ['Employee', 'Manager', 'Porter/Driver'])
+                ->where('defaults.department_id', $this->department->id)
+                ->where('defaults.store_ids', [$store->id]),
+            );
+
+        expect($otherDepartment)->not->toBeNull();
+    });
+
+    it('blocks managers from inviting into another department', function (): void {
+        Bus::fake();
+
+        $this->manager->update(['department_id' => $this->department->id]);
+
+        $otherDepartment = Department::query()->create([
+            'name' => 'Other '.uniqid(),
+            'slug' => 'other-'.uniqid(),
+        ]);
+
+        $this->actingAs($this->manager)
+            ->post(route('dealer.employees.invite.store'), [
+                'name' => 'Cross Dept',
+                'email' => 'cross@example.com',
+                'department_id' => $otherDepartment->id,
+                'role' => 'Employee',
+            ])
+            ->assertSessionHasErrors('department_id');
+
+        Bus::assertNothingDispatched();
+    });
+
+    it('blocks managers from inviting with a privileged role', function (): void {
+        Bus::fake();
+
+        $this->manager->update(['department_id' => $this->department->id]);
+
+        $this->actingAs($this->manager)
+            ->post(route('dealer.employees.invite.store'), [
+                'name' => 'Promoted',
+                'email' => 'promoted@example.com',
+                'department_id' => $this->department->id,
+                'role' => 'Owner',
+            ])
+            ->assertSessionHasErrors('role');
+
+        Bus::assertNothingDispatched();
+    });
+
+    it('ignores qualified_individual when a manager submits it', function (): void {
+        Bus::fake();
+
+        $this->manager->update(['department_id' => $this->department->id]);
+
+        $this->actingAs($this->manager)
+            ->post(route('dealer.employees.invite.store'), [
+                'name' => 'Sneaky',
+                'email' => 'sneaky@example.com',
+                'department_id' => $this->department->id,
+                'role' => 'Employee',
+                'qualified_individual' => true,
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        $invite = Invite::query()->firstOrFail();
+        expect($invite->roles)->not->toContain('Qualified Individual');
+    });
+
+    it('exposes the Qualified Individual toggle to privileged viewers only', function (): void {
+        $this->manager->update(['department_id' => $this->department->id]);
+
+        $this->actingAs($this->manager)
+            ->get(route('dealer.employees.invite'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page
+                ->where('permissions.mark_qualified_individual', false)
+                ->where('permissions.add_completed_courses', false),
+            );
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.employees.invite'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page
+                ->where('permissions.mark_qualified_individual', true)
+                ->where('permissions.add_completed_courses', true),
+            );
+    });
+
     it('rejects duplicate emails', function (): void {
         Invite::query()->create([
             'name' => 'Existing',

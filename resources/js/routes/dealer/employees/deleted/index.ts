@@ -1,10 +1,10 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::restore
-* @see app/Http/Controllers/Tenant/UserController.php:205
+* @see app/Http/Controllers/Tenant/UserController.php:212
 * @route '/employees/deleted/{user}/restore'
 */
-export const restore = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const restore = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: restore.url(args, options),
     method: 'post',
 })
@@ -16,12 +16,16 @@ restore.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::restore
-* @see app/Http/Controllers/Tenant/UserController.php:205
+* @see app/Http/Controllers/Tenant/UserController.php:212
 * @route '/employees/deleted/{user}/restore'
 */
-restore.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
+restore.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { user: args.id }
     }
 
     if (Array.isArray(args)) {
@@ -33,7 +37,9 @@ restore.url = (args: { user: string | number } | [user: string | number ] | stri
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-        user: args.user,
+        user: typeof args.user === 'object'
+        ? args.user.id
+        : args.user,
     }
 
     return restore.definition.url
@@ -43,13 +49,35 @@ restore.url = (args: { user: string | number } | [user: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::restore
-* @see app/Http/Controllers/Tenant/UserController.php:205
+* @see app/Http/Controllers/Tenant/UserController.php:212
 * @route '/employees/deleted/{user}/restore'
 */
-restore.post = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+restore.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: restore.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::restore
+* @see app/Http/Controllers/Tenant/UserController.php:212
+* @route '/employees/deleted/{user}/restore'
+*/
+const restoreForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: restore.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::restore
+* @see app/Http/Controllers/Tenant/UserController.php:212
+* @route '/employees/deleted/{user}/restore'
+*/
+restoreForm.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: restore.url(args, options),
+    method: 'post',
+})
+
+restore.form = restoreForm
 
 const deleted = {
     restore: Object.assign(restore, restore),

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\User\Queries;
 
+use App\Enums\Role as RoleEnum;
 use App\Models\Course;
 use App\Models\Dealer\Store;
 use App\Models\Department;
@@ -13,7 +14,12 @@ use Spatie\Permission\Models\Role;
 
 class GetInviteEmployeeOptions
 {
-    private const EXCLUDED_ROLES = ['super-admin', 'Admin', 'Consultant', 'Qualified Individual'];
+    private const EXCLUDED_ROLE_VALUES = [
+        'super-admin',
+        'Admin',
+        'Consultant',
+        'Qualified Individual',
+    ];
 
     /**
      * @return array{
@@ -25,21 +31,37 @@ class GetInviteEmployeeOptions
      */
     public function handle(User $viewer): array
     {
+        $managerOnly = $this->isManagerOnly($viewer);
+
         return [
-            'departments' => $this->departments(),
-            'roles' => $this->roles(),
+            'departments' => $this->departments($viewer, $managerOnly),
+            'roles' => $this->roles($managerOnly),
             'courses' => $this->courses(),
-            'stores' => $this->stores($viewer),
+            'stores' => $this->stores($viewer, $managerOnly),
         ];
+    }
+
+    private function isManagerOnly(User $viewer): bool
+    {
+        if ($viewer->hasAnyRole(RoleEnum::values(RoleEnum::employeeAdminRoles()))) {
+            return false;
+        }
+
+        return $viewer->hasRole(RoleEnum::Manager->value);
     }
 
     /**
      * @return list<array{id: int, name: string}>
      */
-    private function departments(): array
+    private function departments(User $viewer, bool $managerOnly): array
     {
-        return Department::query()
-            ->orderBy('name')
+        $query = Department::query()->orderBy('name');
+
+        if ($managerOnly && $viewer->department_id !== null) {
+            $query->where('id', $viewer->department_id);
+        }
+
+        return $query
             ->get(['id', 'name'])
             ->map(static fn (Department $department): array => [
                 'id' => (int) $department->id,
@@ -51,11 +73,17 @@ class GetInviteEmployeeOptions
     /**
      * @return list<array{name: string}>
      */
-    private function roles(): array
+    private function roles(bool $managerOnly): array
     {
-        return Role::query()
-            ->whereNotIn('name', self::EXCLUDED_ROLES)
-            ->orderBy('name')
+        $query = Role::query()->orderBy('name');
+
+        if ($managerOnly) {
+            $query->whereIn('name', RoleEnum::values(RoleEnum::managerInvitableRoles()));
+        } else {
+            $query->whereNotIn('name', self::EXCLUDED_ROLE_VALUES);
+        }
+
+        return $query
             ->get(['name'])
             ->map(static fn (Role $role): array => ['name' => (string) $role->name])
             ->all();
@@ -79,9 +107,9 @@ class GetInviteEmployeeOptions
     /**
      * @return list<array{id: int, name: string}>
      */
-    private function stores(User $viewer): array
+    private function stores(User $viewer, bool $managerOnly): array
     {
-        return $this->storesQuery($viewer)
+        return $this->storesQuery($viewer, $managerOnly)
             ->map(static fn (Store $store): array => [
                 'id' => (int) $store->id,
                 'name' => (string) $store->name,
@@ -92,9 +120,18 @@ class GetInviteEmployeeOptions
     /**
      * @return EloquentCollection<int, Store>
      */
-    private function storesQuery(User $viewer): EloquentCollection
+    private function storesQuery(User $viewer, bool $managerOnly): EloquentCollection
     {
-        if ($viewer->hasAnyRole(['super-admin', 'Consultant'])) {
+        if ($managerOnly && $viewer->current_store_id !== null) {
+            /** @var EloquentCollection<int, Store> $stores */
+            $stores = Store::query()
+                ->whereKey($viewer->current_store_id)
+                ->get(['id', 'name']);
+
+            return $stores;
+        }
+
+        if ($viewer->hasAnyRole([RoleEnum::SuperAdmin->value, RoleEnum::Consultant->value])) {
             return Store::query()->orderBy('name')->get(['id', 'name']);
         }
 
