@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies\Central;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -40,21 +41,21 @@ class UserPolicy
     {
         return $user->can('create-stores')
             && $user->id !== $model->id
-            && ! $model->hasAnyRole(['super-admin', 'Consultant']);
+            && ! $model->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value]);
     }
 
     public function delete(User $user, User $model): bool
     {
         return $user->can('create-stores')
             && $user->id !== $model->id
-            && ! $model->hasAnyRole(['super-admin', 'Consultant']);
+            && ! $model->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value]);
     }
 
     public function impersonate(User $user, User $model): bool
     {
-        return $user->hasAnyRole(['super-admin', 'Consultant'])
+        return $user->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value])
             && $user->id !== $model->id
-            && ! $model->hasRole('super-admin');
+            && ! $model->hasRole(Role::SuperAdmin->value);
     }
 
     public function recordCourseResult(User $user, User $model): bool
@@ -64,8 +65,11 @@ class UserPolicy
 
     public function manageCourses(User $user, User $model): bool
     {
-        return $user->hasAnyRole(['super-admin', 'Consultant', 'Qualified Individual'])
-            && $user->id !== $model->id;
+        return $user->hasAnyRole([
+            Role::SuperAdmin->value,
+            Role::Consultant->value,
+            Role::QualifiedIndividual->value,
+        ]) && $user->id !== $model->id;
     }
 
     public function generateDotCertificate(User $user, User $model): bool

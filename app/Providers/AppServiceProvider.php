@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Enums\Role;
 use App\Models\Central\UserInvite;
 use App\Models\Contract;
 use App\Models\Course;
@@ -148,7 +149,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function bootAuth(): void
     {
-        Gate::before(fn ($user, $ability): ?true => $user->hasRole('super-admin') ? true : null);
+        Gate::before(fn ($user, $ability): ?true => $user->hasRole(Role::SuperAdmin->value) ? true : null);
 
         Gate::policy(Contract::class, ContractPolicy::class);
         Gate::policy(Course::class, CoursePolicy::class);

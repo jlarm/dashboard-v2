@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\Role;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
 use App\Models\Dealer\PhishingCampaign;
@@ -219,7 +220,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function scopeWithoutSuperAdminsAndConsultants(Builder $query): Builder
     {
         return $query->whereDoesntHave('roles', function ($q): void {
-            $q->whereIn('name', ['super-admin', 'Consultant']);
+            $q->whereIn('name', [Role::SuperAdmin->value, Role::Consultant->value]);
         });
     }
 
@@ -255,7 +256,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected function scopeCurrentUserIsManager(Builder $query, self $currentUser): void
     {
-        if ($currentUser->hasRole('Manager') && ! $currentUser->hasRole('Qualified Individual')) {
+        if ($currentUser->hasRole(Role::Manager->value) && ! $currentUser->hasRole(Role::QualifiedIndividual->value)) {
             $query->where('department_id', $currentUser->department_id);
         }
     }
