@@ -21,7 +21,27 @@ class EmployeesImportCompleteNotification extends Notification implements Should
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(object $notifiable): array
+    {
+        $hasErrors = $this->result->errors !== [];
+
+        return [
+            'title' => $hasErrors
+                ? 'Employee import failed'
+                : 'Employee import complete',
+            'message' => $hasErrors
+                ? count($this->result->errors).' row(s) had errors. The import was rolled back.'
+                : "{$this->result->successCount} invite(s) imported, {$this->result->skippedCount} skipped.",
+            'level' => $hasErrors ? 'error' : 'success',
+            'action_url' => route('dealer.employees.index'),
+            'action_label' => 'View employees',
+        ];
     }
 
     public function toMail(object $notifiable): MailMessage

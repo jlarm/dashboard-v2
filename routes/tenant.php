@@ -110,6 +110,12 @@ Route::name('dealer.')->middleware([
             ->name('password.update');
 
         Route::inertia('/appearance', 'tenant/settings/Appearance')->name('appearance.edit');
+
+        Route::prefix('notifications')->name('notifications.')->group(function (): void {
+            Route::post('mark-all-read', [App\Http\Controllers\Tenant\NotificationsController::class, 'markAllAsRead'])->name('mark-all-read');
+            Route::post('{notification}/read', [App\Http\Controllers\Tenant\NotificationsController::class, 'markAsRead'])->name('mark-read');
+            Route::delete('{notification}', [App\Http\Controllers\Tenant\NotificationsController::class, 'destroy'])->name('destroy');
+        });
     });
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->middleware('auth')->name('password.confirm');

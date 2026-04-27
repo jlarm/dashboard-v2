@@ -11,6 +11,7 @@ import dealer from './dealer'
 import profile from './profile'
 import userPassword from './user-password'
 import appearance from './appearance'
+import notifications from './notifications'
 import settings from './settings'
 import audit from './audit'
 import phishing from './phishing'
@@ -206,6 +207,7 @@ const dealerNamespace = {
     profile: Object.assign(profile, profile),
     userPassword: Object.assign(userPassword, userPassword),
     appearance: Object.assign(appearance, appearance),
+    notifications: Object.assign(notifications, notifications),
     logout: Object.assign(logout, logout),
     settings: Object.assign(settings, settings),
     audit: Object.assign(audit, audit),

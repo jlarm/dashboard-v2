@@ -7,6 +7,7 @@ namespace App\Http\Middleware;
 use App\Domain\Tenant\Store\Queries\GetAccessibleStoreOptions;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Inertia\Middleware;
 use Override;
 
@@ -55,6 +56,7 @@ class HandleInertiaRequests extends Middleware
                 'impersonating' => $request->session()->has('impersonated_by'),
             ],
             'stores' => fn (): array => $this->accessibleStores($user),
+            'notifications' => fn (): array => $this->notifications($user),
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
@@ -78,5 +80,38 @@ class HandleInertiaRequests extends Middleware
             ->handle($user)
             ->map(fn ($option): array => $option->toArray())
             ->all();
+    }
+
+    /**
+     * @return array{
+     *     items: list<array<string, mixed>>,
+     *     unread_count: int
+     * }
+     */
+    private function notifications(?User $user): array
+    {
+        if (! $user instanceof User) {
+            return ['items' => [], 'unread_count' => 0];
+        }
+
+        /** @var \Illuminate\Database\Eloquent\Collection<int, DatabaseNotification> $notifications */
+        $notifications = $user->notifications()
+            ->latest()
+            ->limit(20)
+            ->get();
+
+        return [
+            'items' => $notifications
+                ->map(static fn (DatabaseNotification $notification): array => [
+                    'id' => $notification->id,
+                    'type' => $notification->type,
+                    'data' => $notification->data,
+                    'read_at' => $notification->read_at?->toIso8601String(),
+                    'created_at' => $notification->created_at?->toIso8601String(),
+                    'created_at_relative' => $notification->created_at?->diffForHumans(),
+                ])
+                ->all(),
+            'unread_count' => $user->unreadNotifications()->count(),
+        ];
     }
 }
