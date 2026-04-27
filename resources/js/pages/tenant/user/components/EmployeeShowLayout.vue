@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import EditEmployeeDialog from '@/pages/tenant/user/components/EditEmployeeDialog.vue';
+import ImportEmployeesDialog from '@/pages/tenant/user/components/ImportEmployeesDialog.vue';
+import SubNavigation from '@/pages/tenant/user/components/SubNavigation.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -122,6 +124,7 @@ const tabs = computed<Tab[]>(() => [
 
 const editOpen = ref(false);
 const deleteOpen = ref(false);
+const importDialogOpen = ref(false);
 const isDestroying = ref(false);
 const isImpersonating = ref(false);
 
@@ -154,6 +157,12 @@ const impersonate = () => {
     <Head :title="employee.name" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
+        <template #actions>
+            <SubNavigation @import="importDialogOpen = true" />
+        </template>
+
+        <ImportEmployeesDialog v-model:open="importDialogOpen" />
+
         <div class="space-y-6">
             <div class="flex flex-wrap items-start justify-between gap-4">
                 <div class="flex items-center gap-3">
