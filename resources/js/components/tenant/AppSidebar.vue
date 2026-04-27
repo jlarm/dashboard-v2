@@ -8,10 +8,11 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
+import { EMPLOYEE_SECTION_VIEWERS } from '@/constants/roles';
+import employees from '@/routes/dealer/employees';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import {LayoutGrid, Users} from 'lucide-vue-next';
-import employees from "@/routes/dealer/employees";
+import { LayoutGrid, Users } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -22,8 +23,9 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Employees',
         href: employees.index.url(),
-        icon: Users
-    }
+        icon: Users,
+        roles: EMPLOYEE_SECTION_VIEWERS,
+    },
 ];
 </script>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import {
     SidebarGroup,
     SidebarMenu,
@@ -8,18 +8,32 @@ import {
 } from '@/components/ui/sidebar';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import type { NavItem } from '@/types';
+import { computed } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     items: NavItem[];
 }>();
 
 const { isCurrentOrParentUrl } = useCurrentUrl();
+
+const page = usePage<{ auth: { roles: string[] } }>();
+const viewerRoles = computed(() => page.props.auth?.roles ?? []);
+
+const visibleItems = computed(() =>
+    props.items.filter((item) => {
+        if (!item.roles || item.roles.length === 0) {
+            return true;
+        }
+
+        return item.roles.some((role) => viewerRoles.value.includes(role));
+    }),
+);
 </script>
 
 <template>
     <SidebarGroup class="px-2 py-0">
         <SidebarMenu>
-            <SidebarMenuItem v-for="item in items" :key="item.title">
+            <SidebarMenuItem v-for="item in visibleItems" :key="item.title">
                 <SidebarMenuButton
                     as-child
                     :is-active="isCurrentOrParentUrl(item.href)"
