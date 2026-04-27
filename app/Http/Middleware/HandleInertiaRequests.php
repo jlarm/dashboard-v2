@@ -90,7 +90,7 @@ class HandleInertiaRequests extends Middleware
      */
     private function notifications(?User $user): array
     {
-        if (! $user instanceof User) {
+        if (! $user instanceof User || ! tenancy()->initialized) {
             return ['items' => [], 'unread_count' => 0];
         }
 
