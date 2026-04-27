@@ -10,29 +10,17 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import employees from '@/routes/dealer/employees';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { Download } from 'lucide-vue-next';
-import { computed, ref, watch } from 'vue';
-
-type ImportErrorRow = {
-    row: number;
-    errors: string[];
-    values: Record<string, unknown>;
-};
+import { ref, watch } from 'vue';
 
 const open = defineModel<boolean>('open', { required: true });
-
-const page = usePage<{ flash?: { import_errors?: ImportErrorRow[] } }>();
 
 const fileInput = ref<HTMLInputElement | null>(null);
 
 const form = useForm<{ spreadsheet: File | null }>({
     spreadsheet: null,
 });
-
-const importErrors = computed<ImportErrorRow[]>(
-    () => page.props.flash?.import_errors ?? [],
-);
 
 watch(open, (isOpen) => {
     if (isOpen) {
@@ -66,7 +54,7 @@ const submit = () => {
             <DialogHeader>
                 <DialogTitle>Import Employees</DialogTitle>
                 <DialogDescription>
-                    Upload a JSON file to invite employees in bulk.
+                    Upload a JSON file to invite employees in bulk. The import runs in the background — you'll receive an email with the results when it completes.
                 </DialogDescription>
                 <a
                     href="/templates/employees-import-template.json"
@@ -95,30 +83,12 @@ const submit = () => {
                     </p>
                 </div>
 
-                <div
-                    v-if="importErrors.length > 0"
-                    class="space-y-2 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-800"
-                >
-                    <p class="font-medium">Import errors</p>
-                    <ul class="space-y-2">
-                        <li
-                            v-for="(error, index) in importErrors"
-                            :key="index"
-                            class="rounded border border-red-200 bg-white p-2 text-xs"
-                        >
-                            <p class="font-medium">Row {{ error.row }}</p>
-                            <p>{{ error.errors.join(', ') }}</p>
-                            <pre class="mt-1 whitespace-pre-wrap break-all text-[11px] text-red-900/80">{{ JSON.stringify(error.values) }}</pre>
-                        </li>
-                    </ul>
-                </div>
-
                 <DialogFooter>
                     <Button type="button" variant="outline" :disabled="form.processing" @click="open = false">
                         Cancel
                     </Button>
                     <Button type="submit" :disabled="form.processing || !form.spreadsheet">
-                        {{ form.processing ? 'Importing...' : 'Submit' }}
+                        {{ form.processing ? 'Submitting...' : 'Submit' }}
                     </Button>
                 </DialogFooter>
             </form>

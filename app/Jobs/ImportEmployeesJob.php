@@ -4,75 +4,46 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\Dealer\Invite;
-use Exception;
+use App\Domain\Tenant\User\Actions\ImportEmployees;
+use App\Models\User;
+use App\Notifications\EmployeesImportCompleteNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class ImportEmployeesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(protected array $data, protected int $userId) {}
+    public int $tries = 1;
 
-    public function handle(): void
+    public function __construct(
+        public User $importer,
+        public string $payloadPath,
+    ) {}
+
+    public function handle(ImportEmployees $action): void
     {
-        $importErrors = [];
+        $disk = Storage::disk('local');
 
-        DB::transaction(function () use (&$importErrors): void {
-            foreach ($this->data as $index => $item) {
-                try {
-                    $validator = Validator::make($item, [
-                        'Name' => ['required', 'string'],
-                        'Email' => ['required', 'email', 'unique:users,email', 'unique:invites,email'],
-                        'Stores' => ['nullable'],
-                        'Department' => ['nullable'],
-                        'Role' => ['nullable'],
-                    ]);
+        try {
+            $jsonContent = (string) $disk->get($this->payloadPath);
+            $result = $action->handle($this->importer, $jsonContent);
+        } finally {
+            $disk->delete($this->payloadPath);
+        }
 
-                    if ($validator->fails()) {
-                        $importErrors[] = [
-                            'row' => $index + 1,
-                            'errors' => $validator->errors()->all(),
-                            'values' => $item,
-                        ];
-
-                        continue;
-                    }
-
-                    $invite = Invite::query()->create([
-                        'name' => $item['Name'],
-                        'email' => $item['Email'],
-                        'stores' => $item['Stores'] === null ? null : [$item['Stores']],
-                        'department_id' => $item['Department'],
-                        'user_id' => $this->userId,
-                        'roles' => [$item['Role']],
-                        'courses' => $item['Courses'],
-                        'invitation_token' => mb_substr(md5(random_int(0, 9).$item['Email'].time()), 0, 32),
-                    ]);
-
-                    dispatch(new SendQueueEmailJob($invite));
-                } catch (Exception $e) {
-                    $importErrors[] = [
-                        'row' => $index + 1,
-                        'errors' => [$e->getMessage()],
-                        'values' => $item,
-                    ];
-                }
-            }
-
-            throw_unless($importErrors === [], Exception::class, 'Import failed due to errors');
-        });
+        $this->importer->notify(new EmployeesImportCompleteNotification($result));
     }
 
     public function failed(?Throwable $exception): void
     {
+        Storage::disk('local')->delete($this->payloadPath);
+
         report_if($exception instanceof Throwable, $exception);
     }
 }

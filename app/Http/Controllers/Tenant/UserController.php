@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\User\Actions\BuildEmployeesCsv;
 use App\Domain\Tenant\User\Actions\GenerateDotCertificate;
-use App\Domain\Tenant\User\Actions\ImportEmployees;
 use App\Domain\Tenant\User\Actions\InviteEmployee;
 use App\Domain\Tenant\User\Actions\RecordEmployeeCourseResult;
 use App\Domain\Tenant\User\Actions\ResendInvite;
@@ -46,6 +45,7 @@ use App\Http\Requests\Tenant\User\UpdateEmployeeRequest;
 use App\Http\Resources\Tenant\DeletedEmployeeResource;
 use App\Http\Resources\Tenant\EmployeeResource;
 use App\Http\Resources\Tenant\OpenInviteResource;
+use App\Jobs\ImportEmployeesJob;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Invite;
 use App\Models\User;
@@ -223,29 +223,20 @@ class UserController extends Controller
         return back()->with('success', "{$user->name} restored.");
     }
 
-    public function import(ImportEmployeesRequest $request, ImportEmployees $action): RedirectResponse
+    public function import(ImportEmployeesRequest $request): RedirectResponse
     {
-        try {
-            $result = $action->handle(
-                importer: $request->user(),
-                jsonContent: (string) $request->spreadsheet()->get(),
-            );
-        } catch (Throwable $e) {
-            return back()->withErrors(['spreadsheet' => $e->getMessage()]);
-        }
+        $tenantId = (string) (tenant('id') ?? 'central');
+        $payloadPath = "imports/employees/{$tenantId}/".str()->ulid().'.json';
 
-        if ($result->errors !== []) {
-            return back()
-                ->withErrors(['spreadsheet' => 'Import failed due to validation errors.'])
-                ->with('import_errors', $result->errors);
-        }
+        $request->spreadsheet()->storeAs(
+            dirname($payloadPath),
+            basename($payloadPath),
+            ['disk' => 'local'],
+        );
 
-        $message = "{$result->successCount} invite(s) imported successfully.";
-        if ($result->skippedCount > 0) {
-            $message .= " {$result->skippedCount} row(s) skipped (already invited or registered).";
-        }
+        ImportEmployeesJob::dispatch($request->user(), $payloadPath);
 
-        return back()->with('success', $message);
+        return back()->with('success', 'Import started — you will receive an email when it completes.');
     }
 
     public function export(
