@@ -21,7 +21,7 @@ import settings from '@/routes/dealer/settings';
 import automatedReports from '@/routes/dealer/settings/automated-reports';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { Building2, FileText, FileBarChart2, FlaskConical, Handshake, LayoutGrid, ScrollText, Settings, Users } from 'lucide-vue-next';
+import { Building2, FileText, FileBarChart2, FlaskConical, Handshake, HardHat, LayoutGrid, ScrollText, Settings, Users } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -51,6 +51,12 @@ const mainNavItems: NavItem[] = [
         href: vendor.index.url(),
         icon: Handshake,
         roles: VENDOR_VIEWERS,
+    },
+    {
+        title: 'OSHA 300 Form',
+        href: '/docs/osha-300.pdf',
+        icon: HardHat,
+        external: true,
     },
 ];
 

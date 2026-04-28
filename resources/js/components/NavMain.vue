@@ -36,11 +36,20 @@ const visibleItems = computed(() =>
             <SidebarMenuItem v-for="item in visibleItems" :key="item.title">
                 <SidebarMenuButton
                     as-child
-                    :is-active="isCurrentOrParentUrl(item.href)"
+                    :is-active="!item.external && isCurrentOrParentUrl(item.href)"
                     :tooltip="item.title"
                     class="data-[active=true]:bg-primary/10 data-[active=true]:font-normal data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary"
                 >
-                    <Link :href="item.href">
+                    <a
+                        v-if="item.external"
+                        :href="typeof item.href === 'string' ? item.href : item.href.url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <component :is="item.icon" />
+                        <span>{{ item.title }}</span>
+                    </a>
+                    <Link v-else :href="item.href">
                         <component :is="item.icon" />
                         <span>{{ item.title }}</span>
                     </Link>
