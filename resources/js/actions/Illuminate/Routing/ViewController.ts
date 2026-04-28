@@ -242,86 +242,6 @@ ViewController63db0bdc59264ba3ad0fbd8a32b71620.form = ViewController63db0bdc5926
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/locations'
-*/
-const ViewController4420dcf8aa0401dd2e787b7842100090 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController4420dcf8aa0401dd2e787b7842100090.url(options),
-    method: 'get',
-})
-
-ViewController4420dcf8aa0401dd2e787b7842100090.definition = {
-    methods: ["get","head"],
-    url: '/locations',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/locations'
-*/
-ViewController4420dcf8aa0401dd2e787b7842100090.url = (options?: RouteQueryOptions) => {
-    return ViewController4420dcf8aa0401dd2e787b7842100090.definition.url + queryParams(options)
-}
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/locations'
-*/
-ViewController4420dcf8aa0401dd2e787b7842100090.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController4420dcf8aa0401dd2e787b7842100090.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/locations'
-*/
-ViewController4420dcf8aa0401dd2e787b7842100090.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: ViewController4420dcf8aa0401dd2e787b7842100090.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/locations'
-*/
-const ViewController4420dcf8aa0401dd2e787b7842100090Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController4420dcf8aa0401dd2e787b7842100090.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/locations'
-*/
-ViewController4420dcf8aa0401dd2e787b7842100090Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController4420dcf8aa0401dd2e787b7842100090.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/locations'
-*/
-ViewController4420dcf8aa0401dd2e787b7842100090Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController4420dcf8aa0401dd2e787b7842100090.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-ViewController4420dcf8aa0401dd2e787b7842100090.form = ViewController4420dcf8aa0401dd2e787b7842100090Form
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
 * @route '/scans-archive'
 */
 const ViewController00b8255e77f8b9a60ccb93668a7a17ae = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -484,7 +404,6 @@ const ViewController = {
     '/courses': ViewControllerae0d8013bc7dd1aeb7c9b49bac5f9e3b,
     '/courses/all': ViewController39cf50c98836c20d29fa0dfb7a7064d0,
     '/vendors/thankyou': ViewController63db0bdc59264ba3ad0fbd8a32b71620,
-    '/locations': ViewController4420dcf8aa0401dd2e787b7842100090,
     '/scans-archive': ViewController00b8255e77f8b9a60ccb93668a7a17ae,
     '/audits/deal-jackets': ViewController86a0d0e665572eead9d650bb21337c56,
 }

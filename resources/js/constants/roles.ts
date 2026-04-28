@@ -51,3 +51,19 @@ export const DOCUMENT_VIEWERS: RoleName[] = [
     Role.QualifiedIndividual,
     Role.Manager,
 ];
+
+/**
+ * Roles allowed to view and manage the Automated Reports page.
+ * Mirrors App\Enums\Role::automatedReportRoles() — every role except
+ * Manager, Employee, and Porter/Driver.
+ */
+export const AUTOMATED_REPORT_VIEWERS: RoleName[] = [
+    Role.SuperAdmin,
+    Role.Admin,
+    Role.Consultant,
+    Role.Owner,
+    Role.CFO,
+    Role.GM,
+    Role.GSM,
+    Role.QualifiedIndividual,
+];

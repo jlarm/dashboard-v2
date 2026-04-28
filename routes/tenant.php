@@ -30,6 +30,7 @@ use App\Http\Controllers\Tenant\DealerDocController;
 use App\Http\Controllers\Tenant\LogController;
 use App\Http\Controllers\Tenant\NotificationsController;
 use App\Http\Controllers\Tenant\SdsController;
+use App\Http\Controllers\Tenant\Settings\AutomatedReportsController;
 use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
 use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileController;
 use App\Http\Controllers\Tenant\Store\LocationController;
@@ -40,7 +41,6 @@ use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Phish\Create;
 use App\Http\Livewire\Dealer\Ridgeback\Index;
-use App\Http\Livewire\Dealer\Settings\AutomatedReports;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use App\Http\Livewire\Dealer\Settings\GlobalSettings;
 use App\Http\Livewire\Dealer\Vendor\NewForm;
@@ -148,9 +148,14 @@ Route::name('dealer.')->middleware([
         });
     });
 
-    Route::middleware('role:super-admin|Consultant|Owner|GM|CFO|GSM|Qualified Individual')
-        ->get('automated-reports', AutomatedReports::class)
-        ->name('settings.automated-reports');
+    Route::middleware('role:super-admin|Admin|Consultant|Owner|GM|CFO|GSM|Qualified Individual')
+        ->prefix('automated-reports')
+        ->name('settings.automated-reports.')
+        ->group(function (): void {
+            Route::get('/', [AutomatedReportsController::class, 'index'])->name('index');
+            Route::patch('/', [AutomatedReportsController::class, 'update'])->name('update');
+            Route::post('send', [AutomatedReportsController::class, 'sendNow'])->name('send');
+        });
 
     // **************************************************
     // Roles to Consultant

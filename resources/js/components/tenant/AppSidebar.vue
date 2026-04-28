@@ -8,15 +8,16 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
-import { DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role } from '@/constants/roles';
+import { AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role } from '@/constants/roles';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
 import locations from '@/routes/dealer/locations';
 import logs from '@/routes/dealer/logs';
 import sds from '@/routes/dealer/sds';
+import automatedReports from '@/routes/dealer/settings/automated-reports';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { Building2, FileText, FlaskConical, LayoutGrid, ScrollText, Users } from 'lucide-vue-next';
+import { Building2, FileText, FileBarChart2, FlaskConical, LayoutGrid, ScrollText, Users } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -44,6 +45,12 @@ const mainNavItems: NavItem[] = [
 ];
 
 const footerNavItems: NavItem[] = [
+    {
+        title: 'Automated Reports',
+        href: automatedReports.index.url(),
+        icon: FileBarChart2,
+        roles: AUTOMATED_REPORT_VIEWERS,
+    },
     {
         title: 'Locations',
         href: locations.index.url(),

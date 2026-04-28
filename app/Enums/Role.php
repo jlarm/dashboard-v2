@@ -84,6 +84,26 @@ enum Role: string
     }
 
     /**
+     * Roles allowed to view and manage the automated compliance reports
+     * (every role except Manager, Employee, and Porter/Driver).
+     *
+     * @return list<self>
+     */
+    public static function automatedReportRoles(): array
+    {
+        return [
+            self::SuperAdmin,
+            self::Admin,
+            self::Consultant,
+            self::Owner,
+            self::CFO,
+            self::GM,
+            self::GSM,
+            self::QualifiedIndividual,
+        ];
+    }
+
+    /**
      * @param  list<self>  $roles
      * @return list<string>
      */
