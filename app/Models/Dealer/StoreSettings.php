@@ -61,7 +61,9 @@ class StoreSettings extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logFillable();
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logExcept(['ip_addresses']);
     }
 
     #[Override]

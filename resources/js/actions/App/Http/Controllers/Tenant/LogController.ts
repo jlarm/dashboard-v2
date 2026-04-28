@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\LogController::index
 * @see app/Http/Controllers/Tenant/LogController.php:19
@@ -185,9 +185,6 @@ showForm.head = (args: { activity: number | { id: number } } | [activity: number
 
 show.form = showForm
 
-const logs = {
-    index: Object.assign(index, index),
-    show: Object.assign(show, show),
-}
+const LogController = { index, show }
 
-export default logs
+export default LogController

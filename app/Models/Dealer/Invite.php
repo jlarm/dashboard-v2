@@ -44,7 +44,9 @@ class Invite extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logFillable();
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logExcept(['invitation_token']);
     }
 
     protected function email(): Attribute

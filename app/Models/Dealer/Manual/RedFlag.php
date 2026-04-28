@@ -54,6 +54,8 @@ class RedFlag extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logFillable();
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logExcept(['signature']);
     }
 }

@@ -27,6 +27,7 @@ use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Tenant\CyrismaController;
 use App\Http\Controllers\Tenant\CyrismaReportController;
 use App\Http\Controllers\Tenant\DealerDocController;
+use App\Http\Controllers\Tenant\LogController;
 use App\Http\Controllers\Tenant\NotificationsController;
 use App\Http\Controllers\Tenant\SdsController;
 use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
@@ -37,7 +38,6 @@ use App\Http\Controllers\WebhookController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
 use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
-use App\Http\Livewire\Dealer\Log\Show;
 use App\Http\Livewire\Dealer\Phish\Create;
 use App\Http\Livewire\Dealer\Ridgeback\Index;
 use App\Http\Livewire\Dealer\Settings\AutomatedReports;
@@ -184,9 +184,9 @@ Route::name('dealer.')->middleware([
 
     });
 
-    Route::middleware(['auth', 'permission:delete-stores'])->group(function (): void {
-        Route::get('logs', App\Http\Livewire\Dealer\Log\Index::class)->name('logs.index');
-        Route::get('logs/{activity:id}', Show::class)->name('logs.show');
+    Route::middleware(['auth', 'role:super-admin|Consultant'])->prefix('logs')->name('logs.')->group(function (): void {
+        Route::get('/', [LogController::class, 'index'])->name('index');
+        Route::get('{activity:id}', [LogController::class, 'show'])->name('show');
     });
 
     // **************************************************

@@ -255,7 +255,9 @@ class Store extends Model implements HasMedia
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logFillable();
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logExcept(['phishing_token', 'phishing_ip', 'ip_addresses']);
     }
 
     protected function getPhoneNumberAttribute(): string

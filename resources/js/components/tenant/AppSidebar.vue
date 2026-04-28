@@ -8,13 +8,14 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
-import { DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS } from '@/constants/roles';
+import { DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role } from '@/constants/roles';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
+import logs from '@/routes/dealer/logs';
 import sds from '@/routes/dealer/sds';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { FileText, FlaskConical, LayoutGrid, Users } from 'lucide-vue-next';
+import { FileText, FlaskConical, LayoutGrid, ScrollText, Users } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -40,6 +41,15 @@ const mainNavItems: NavItem[] = [
         icon: FlaskConical,
     },
 ];
+
+const footerNavItems: NavItem[] = [
+    {
+        title: 'Activity Logs',
+        href: logs.index.url(),
+        icon: ScrollText,
+        roles: [Role.SuperAdmin, Role.Consultant],
+    },
+];
 </script>
 
 <template>
@@ -53,6 +63,7 @@ const mainNavItems: NavItem[] = [
         </SidebarContent>
 
         <SidebarFooter>
+            <NavMain :items="footerNavItems" />
             <NavUser />
         </SidebarFooter>
     </Sidebar>

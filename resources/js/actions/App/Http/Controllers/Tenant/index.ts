@@ -4,6 +4,7 @@ import SdsController from './SdsController'
 import Settings from './Settings'
 import NotificationsController from './NotificationsController'
 import Audit from './Audit'
+import LogController from './LogController'
 import UserController from './UserController'
 import CyrismaController from './CyrismaController'
 import CyrismaReportController from './CyrismaReportController'
@@ -16,6 +17,7 @@ const Tenant = {
     Settings: Object.assign(Settings, Settings),
     NotificationsController: Object.assign(NotificationsController, NotificationsController),
     Audit: Object.assign(Audit, Audit),
+    LogController: Object.assign(LogController, LogController),
     UserController: Object.assign(UserController, UserController),
     CyrismaController: Object.assign(CyrismaController, CyrismaController),
     CyrismaReportController: Object.assign(CyrismaReportController, CyrismaReportController),
