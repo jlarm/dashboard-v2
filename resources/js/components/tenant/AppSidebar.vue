@@ -10,17 +10,18 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
-import { AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role } from '@/constants/roles';
+import { AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role, VENDOR_VIEWERS } from '@/constants/roles';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
 import locations from '@/routes/dealer/locations';
 import logs from '@/routes/dealer/logs';
 import sds from '@/routes/dealer/sds';
+import vendor from '@/routes/dealer/vendor';
+import settings from '@/routes/dealer/settings';
 import automatedReports from '@/routes/dealer/settings/automated-reports';
-import globalSettings from '@/routes/dealer/settings/global';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { Building2, FileText, FileBarChart2, FlaskConical, LayoutGrid, ScrollText, Settings, Users } from 'lucide-vue-next';
+import { Building2, FileText, FileBarChart2, FlaskConical, Handshake, LayoutGrid, ScrollText, Settings, Users } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -45,6 +46,12 @@ const mainNavItems: NavItem[] = [
         href: sds.index.url(),
         icon: FlaskConical,
     },
+    {
+        title: 'Vendors',
+        href: vendor.index.url(),
+        icon: Handshake,
+        roles: VENDOR_VIEWERS,
+    },
 ];
 
 const page = usePage<{ auth: { current_store_id: number | null } }>();
@@ -57,7 +64,7 @@ const footerNavItems = computed<NavItem[]>(() => {
     if (showGlobalSettings.value) {
         items.push({
             title: 'Global Settings',
-            href: globalSettings(),
+            href: settings.global.url(),
             icon: Settings,
             roles: [Role.SuperAdmin, Role.Consultant],
         });

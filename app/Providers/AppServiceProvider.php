@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\CourseResults;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
+use App\Models\Dealer\Vendor;
 use App\Models\DealerDoc;
 use App\Models\Dealership;
 use App\Models\Document;
@@ -32,6 +33,7 @@ use App\Policies\CoursePolicy;
 use App\Policies\DealerDocPolicy;
 use App\Policies\GlobalSettingPolicy;
 use App\Policies\StorePolicy;
+use App\Policies\VendorPolicy;
 use App\Services\StoreScopeService;
 use App\Services\UserCourseService;
 use Illuminate\Database\Eloquent\Collection;
@@ -168,6 +170,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Store::class, StorePolicy::class);
         Gate::policy(UserInvite::class, InvitePolicy::class);
         Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(Vendor::class, VendorPolicy::class);
         Gate::policy(ViolationStatement::class, ViolationStatementPolicy::class);
 
         Password::defaults(fn () => Password::min(8)->uncompromised());

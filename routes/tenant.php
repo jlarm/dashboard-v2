@@ -43,7 +43,6 @@ use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Phish\Create;
 use App\Http\Livewire\Dealer\Ridgeback\Index;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
-use App\Http\Livewire\Dealer\Vendor\NewForm;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Features\UserImpersonation;
@@ -99,9 +98,18 @@ Route::name('dealer.')->middleware([
         Route::get('{course:slug}/quiz', [CourseController::class, 'quiz'])->middleware('auth')->name('quiz');
     });
 
-    Route::get('vendors/form', [VendorController::class, 'show'])->middleware('signed')->name('vendor.create');
-    Route::get('form', NewForm::class)->middleware('signed')->name('vendor.form');
-    Route::view('/vendors/thankyou', 'dealer.vendor.thankyou')->middleware('web')->name('vendors.thankyou');
+    Route::get('form', [VendorController::class, 'form'])->middleware('signed')->name('vendor.form');
+    Route::post('form', [VendorController::class, 'submit'])->middleware('signed')->name('vendor.submit');
+    Route::get('/vendors/thankyou', [VendorController::class, 'thankyou'])->name('vendors.thankyou');
+
+    Route::middleware('auth')->prefix('vendors')->name('vendor.')->group(function (): void {
+        Route::get('/', [VendorController::class, 'index'])->name('index');
+        Route::post('/', [VendorController::class, 'store'])->name('store');
+        Route::get('forms/{vendorForm}/download', [VendorController::class, 'downloadForm'])->name('forms.download');
+        Route::get('{vendor}', [VendorController::class, 'show'])->name('show');
+        Route::post('{vendor}/forms', [VendorController::class, 'sendForm'])->name('forms.send');
+        Route::delete('{vendor}', [VendorController::class, 'destroy'])->name('destroy');
+    });
 
     Route::get('email/settings', FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
 
@@ -309,8 +317,6 @@ Route::name('dealer.')->middleware([
             Route::get('deal-jackets/{dealJacketGroup:uuid}/{dealJacket:uuid}', [DealJacketController::class, 'show'])->name('deal-jackets.single');
             Route::get('deal-jacket-reports/{fileName}/download', [DealJacketReportDownloadController::class, 'download'])->name('deal-jacket-reports.download');
         });
-
-        Route::get('vendors', App\Http\Livewire\Dealer\Vendor\Index::class)->middleware('auth')->name('vendor.index');
 
         Route::prefix('documents')->name('doc.')->middleware('auth')->group(function (): void {
             Route::get('/', [DealerDocController::class, 'index'])->name('index');

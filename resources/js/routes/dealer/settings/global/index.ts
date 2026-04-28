@@ -1,50 +1,10 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import resetCoursesBc10d6 from './reset-courses'
+import phishingA1fcc4 from './phishing'
+import stores from './stores'
+import courses from './courses'
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings'
-*/
-export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: index.url(options),
-    method: 'get',
-})
-
-index.definition = {
-    methods: ["get","head"],
-    url: '/global-settings',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings'
-*/
-index.url = (options?: RouteQueryOptions) => {
-    return index.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings'
-*/
-index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings'
-*/
-index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: index.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
@@ -59,7 +19,7 @@ courseManagement.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
@@ -68,7 +28,7 @@ courseManagement.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
@@ -78,7 +38,7 @@ courseManagement.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
@@ -88,7 +48,7 @@ courseManagement.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
@@ -98,7 +58,7 @@ const courseManagementForm = (options?: RouteQueryOptions): RouteFormDefinition<
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
@@ -108,7 +68,7 @@ courseManagementForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'g
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
@@ -125,7 +85,7 @@ courseManagementForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'
 courseManagement.form = courseManagementForm
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
@@ -140,7 +100,7 @@ resetCourses.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
@@ -149,7 +109,7 @@ resetCourses.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
@@ -159,7 +119,7 @@ resetCourses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
@@ -169,7 +129,7 @@ resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
@@ -179,7 +139,7 @@ const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
@@ -189,7 +149,7 @@ resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
@@ -206,7 +166,7 @@ resetCoursesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'
 resetCourses.form = resetCoursesForm
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
@@ -221,7 +181,7 @@ phishing.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
@@ -230,7 +190,7 @@ phishing.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
@@ -240,7 +200,7 @@ phishing.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
@@ -250,7 +210,7 @@ phishing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
@@ -260,7 +220,7 @@ const phishingForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
@@ -270,7 +230,7 @@ phishingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
@@ -286,11 +246,12 @@ phishingForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 phishing.form = phishingForm
 
-const global = Object.assign(index, {
-    index: Object.assign(index, index),
+const global = {
     courseManagement: Object.assign(courseManagement, courseManagement),
-    resetCourses: Object.assign(resetCourses, resetCourses),
-    phishing: Object.assign(phishing, phishing),
-})
+    resetCourses: Object.assign(resetCourses, resetCoursesBc10d6),
+    phishing: Object.assign(phishing, phishingA1fcc4),
+    stores: Object.assign(stores, stores),
+    courses: Object.assign(courses, courses),
+}
 
 export default global

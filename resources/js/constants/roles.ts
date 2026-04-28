@@ -67,3 +67,19 @@ export const AUTOMATED_REPORT_VIEWERS: RoleName[] = [
     Role.GSM,
     Role.QualifiedIndividual,
 ];
+
+/**
+ * Roles allowed to view the Vendors section. Excludes Employees and
+ * Porter/Drivers — every other role can manage vendors.
+ */
+export const VENDOR_VIEWERS: RoleName[] = [
+    Role.SuperAdmin,
+    Role.Admin,
+    Role.Consultant,
+    Role.Owner,
+    Role.CFO,
+    Role.GM,
+    Role.GSM,
+    Role.QualifiedIndividual,
+    Role.Manager,
+];

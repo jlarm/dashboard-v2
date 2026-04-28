@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Dealer\VendorController::thankyou
+* @see app/Http/Controllers/Dealer/VendorController.php:141
 * @route '/vendors/thankyou'
 */
 export const thankyou = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +15,8 @@ thankyou.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Dealer\VendorController::thankyou
+* @see app/Http/Controllers/Dealer/VendorController.php:141
 * @route '/vendors/thankyou'
 */
 thankyou.url = (options?: RouteQueryOptions) => {
@@ -24,8 +24,8 @@ thankyou.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Dealer\VendorController::thankyou
+* @see app/Http/Controllers/Dealer/VendorController.php:141
 * @route '/vendors/thankyou'
 */
 thankyou.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,8 +34,8 @@ thankyou.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Dealer\VendorController::thankyou
+* @see app/Http/Controllers/Dealer/VendorController.php:141
 * @route '/vendors/thankyou'
 */
 thankyou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,8 +44,8 @@ thankyou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Dealer\VendorController::thankyou
+* @see app/Http/Controllers/Dealer/VendorController.php:141
 * @route '/vendors/thankyou'
 */
 const thankyouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,8 +54,8 @@ const thankyouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Dealer\VendorController::thankyou
+* @see app/Http/Controllers/Dealer/VendorController.php:141
 * @route '/vendors/thankyou'
 */
 thankyouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -64,8 +64,8 @@ thankyouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Dealer\VendorController::thankyou
+* @see app/Http/Controllers/Dealer/VendorController.php:141
 * @route '/vendors/thankyou'
 */
 thankyouForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

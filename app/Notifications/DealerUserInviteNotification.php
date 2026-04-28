@@ -17,13 +17,6 @@ class DealerUserInviteNotification extends Notification
         return ['mail'];
     }
 
-    public function generateUrl(string $email)
-    {
-        return URL::temporarySignedRoute('dealer.vendor.create', now()->addDay(), [
-            'id' => $this->validated->id,
-        ]);
-    }
-
     public function generateInvitationUrl(string $email)
     {
         return URL::temporarySignedRoute('employees.create', now()->addDay(), [

@@ -28,6 +28,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import GlobalSettingsController from '@/actions/App/Http/Controllers/Tenant/Settings/GlobalSettingsController';
+import settings from '@/routes/dealer/settings';
 import globalSettings from '@/routes/dealer/settings/global';
 import type { BreadcrumbItem } from '@/types';
 
@@ -71,11 +72,11 @@ const props = defineProps<{
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Global Settings', href: globalSettings() },
+    { title: 'Global Settings', href: settings.global.url() },
 ];
 
 const sections: { key: Section; label: string; href: string }[] = [
-    { key: 'general', label: 'General', href: globalSettings.url() },
+    { key: 'general', label: 'General', href: settings.global.url() },
     { key: 'course-management', label: 'Course Management', href: globalSettings.courseManagement.url() },
     { key: 'reset-courses', label: 'Reset Courses', href: globalSettings.resetCourses.url() },
     { key: 'phishing', label: 'Phishing', href: globalSettings.phishing.url() },
