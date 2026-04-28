@@ -10,16 +10,17 @@ use App\Domain\Tenant\Vendor\Actions\DownloadVendorForm;
 use App\Domain\Tenant\Vendor\Actions\SendVendorForm;
 use App\Domain\Tenant\Vendor\Actions\SubmitVendorForm;
 use App\Domain\Tenant\Vendor\Data\VendorFormData;
-use App\Domain\Tenant\Vendor\Data\VendorListData;
 use App\Domain\Tenant\Vendor\Data\VendorPublicFormData;
 use App\Domain\Tenant\Vendor\Queries\GetVendorDetail;
 use App\Domain\Tenant\Vendor\Queries\GetVendorIndexOptions;
 use App\Domain\Tenant\Vendor\Queries\GetVendors;
 use App\Domain\Tenant\Vendor\Support\RiskAssessmentQuestions;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenant\Vendor\IndexVendorsRequest;
 use App\Http\Requests\Tenant\Vendor\SendVendorFormRequest;
 use App\Http\Requests\Tenant\Vendor\StoreVendorRequest;
 use App\Http\Requests\Tenant\Vendor\SubmitVendorFormRequest;
+use App\Http\Resources\Tenant\VendorResource;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorForm;
@@ -31,18 +32,15 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class VendorController extends Controller
 {
-    public function index(Request $request, GetVendors $getVendors, GetVendorIndexOptions $getOptions): InertiaResponse
+    public function index(IndexVendorsRequest $request, GetVendors $getVendors, GetVendorIndexOptions $getOptions): InertiaResponse
     {
-        $this->authorize('viewAny', Vendor::class);
-
         $user = $request->user();
         $options = $getOptions->handle();
+        $paginator = $getVendors->handle($user, $request->search(), $request->page());
 
         return Inertia::render('tenant/vendor/Index', [
-            'vendors' => array_map(
-                static fn (VendorListData $data): array => $data->toArray(),
-                $getVendors->handle($user),
-            ),
+            'vendors' => VendorResource::collection($paginator),
+            'filters' => ['search' => $request->search()],
             'stores' => $options['stores'],
             'multipleStoresExist' => $options['multipleStoresExist'],
             'hasQualifiedIndividual' => $options['hasQualifiedIndividual'],

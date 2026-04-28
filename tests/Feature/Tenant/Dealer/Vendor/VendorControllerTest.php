@@ -28,9 +28,42 @@ describe('vendor index', function (): void {
             ->assertOk()
             ->assertInertia(fn ($page) => $page
                 ->component('tenant/vendor/Index')
-                ->has('vendors')
+                ->has('vendors.data')
+                ->has('vendors.meta.total')
+                ->has('filters.search')
                 ->has('stores')
                 ->has('hasQualifiedIndividual'));
+    });
+
+    it('filters vendors by search term', function (): void {
+        Vendor::query()->create(['name' => 'Acme Industries', 'contact_name' => 'Alice', 'contact_email' => 'alice@acme.test']);
+        Vendor::query()->create(['name' => 'Beta Holdings', 'contact_name' => 'Bob', 'contact_email' => 'bob@beta.test']);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.vendor.index', ['search' => 'acme']))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page
+                ->where('filters.search', 'acme')
+                ->has('vendors.data', 1)
+                ->where('vendors.data.0.name', 'Acme Industries'));
+    });
+
+    it('paginates vendors at 16 per page', function (): void {
+        for ($i = 1; $i <= 20; $i++) {
+            Vendor::query()->create([
+                'name' => sprintf('Vendor %02d', $i),
+                'contact_name' => 'Contact '.$i,
+                'contact_email' => "v{$i}@test.test",
+            ]);
+        }
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.vendor.index'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page
+                ->has('vendors.data', 16)
+                ->where('vendors.meta.total', 20)
+                ->where('vendors.meta.last_page', 2));
     });
 
     it('renders for qualifying roles', function (string $role): void {

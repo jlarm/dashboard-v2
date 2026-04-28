@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
-import { Plus } from 'lucide-vue-next';
+import { computed, ref, watch } from 'vue';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { useDebounceFn } from '@vueuse/core';
+import { Plus, RotateCcw, Search } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
+import AppPagination from '@/components/AppPagination.vue';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import AddVendorDialog from '@/pages/tenant/vendor/components/AddVendorDialog.vue';
 import vendor from '@/routes/dealer/vendor';
 import type { BreadcrumbItem } from '@/types';
+import type { PaginatedResponse } from '@/types/paginator';
 
 type StoreRef = { id: number; name: string } | null;
 
@@ -22,8 +25,11 @@ type VendorRow = {
 
 type StoreOption = { id: number; name: string };
 
+type Filters = { search: string };
+
 const props = defineProps<{
-    vendors: VendorRow[];
+    vendors: PaginatedResponse<VendorRow>;
+    filters: Filters;
     stores: StoreOption[];
     multipleStoresExist: boolean;
     hasQualifiedIndividual: boolean;
@@ -35,29 +41,77 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const createOpen = ref(false);
+const search = ref(props.filters.search);
 
-const vendorCount = computed<number>(() => props.vendors.length);
+const reload = (): void => {
+    const query: Record<string, string> = {};
+    if (search.value.trim() !== '') {
+        query.search = search.value.trim();
+    }
+    router.get(vendor.index.url(), query, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true,
+        only: ['vendors', 'filters'],
+    });
+};
+
+const debouncedReload = useDebounceFn(reload, 300);
+watch(search, debouncedReload);
+
+watch(
+    () => props.filters.search,
+    (next) => {
+        if (next !== search.value) {
+            search.value = next;
+        }
+    },
+);
+
+const resetSearch = (): void => {
+    search.value = '';
+    reload();
+};
+
+const hasActiveFilters = computed<boolean>(() => search.value.trim() !== '');
+const hasResults = computed<boolean>(() => props.vendors.data.length > 0);
 </script>
 
 <template>
     <Head title="Vendors" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="space-y-6 px-4 py-6">
-            <div class="flex items-start justify-between gap-4">
-                <Heading
-                    title="Vendors"
-                    description="Manage third-party vendor risk assessments and form requests."
-                />
-                <Button v-if="props.can.create" size="sm" @click="createOpen = true">
-                    <Plus class="size-3.5" />
-                    Add Vendor
+        <div class="space-y-5">
+            <div class="flex flex-wrap items-center gap-2">
+                <div class="relative w-full max-w-sm">
+                    <Search class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                        v-model="search"
+                        type="search"
+                        placeholder="Search by name, contact, or email"
+                        class="pl-9"
+                    />
+                </div>
+                <Button
+                    v-if="hasActiveFilters"
+                    variant="ghost"
+                    size="sm"
+                    @click="resetSearch"
+                >
+                    <RotateCcw class="size-3.5" />
+                    Reset
                 </Button>
+                <div class="ml-auto">
+                    <Button v-if="props.can.create" size="sm" @click="createOpen = true">
+                        <Plus class="size-3.5" />
+                        Add Vendor
+                    </Button>
+                </div>
             </div>
 
-            <div v-if="vendorCount > 0" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div v-if="hasResults" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <Link
-                    v-for="row in props.vendors"
+                    v-for="row in props.vendors.data"
                     :key="row.id"
                     :href="vendor.show.url({ vendor: row.id })"
                     class="group flex flex-col rounded-lg border bg-card p-4 transition hover:border-primary/40 hover:shadow-sm"
@@ -94,6 +148,20 @@ const vendorCount = computed<number>(() => props.vendors.length);
             </div>
 
             <div
+                v-else-if="hasActiveFilters"
+                class="flex flex-col items-center justify-center rounded-lg border border-dashed bg-muted/20 px-6 py-12 text-center"
+            >
+                <p class="text-sm font-semibold text-foreground">No matches</p>
+                <p class="mt-1 max-w-sm text-xs text-muted-foreground">
+                    No vendors match your search.
+                </p>
+                <Button class="mt-4" variant="outline" size="sm" @click="resetSearch">
+                    <RotateCcw class="size-3.5" />
+                    Reset search
+                </Button>
+            </div>
+
+            <div
                 v-else
                 class="flex flex-col items-center justify-center rounded-lg border border-dashed bg-muted/20 px-6 py-16 text-center"
             >
@@ -111,6 +179,8 @@ const vendorCount = computed<number>(() => props.vendors.length);
                     Add your first vendor
                 </Button>
             </div>
+
+            <AppPagination v-if="hasResults" :pagination="props.vendors" :only="['vendors', 'filters']" />
         </div>
 
         <AddVendorDialog

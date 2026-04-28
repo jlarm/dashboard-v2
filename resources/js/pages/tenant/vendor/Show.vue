@@ -7,7 +7,6 @@ import {
     Clock,
     Download,
     Loader2,
-    Mail,
     Send,
     Trash2,
 } from 'lucide-vue-next';
@@ -269,30 +268,6 @@ const sortedForms = computed<VendorFormRow[]>(() => props.forms);
                 </div>
 
                 <div class="space-y-6">
-                    <section class="rounded-lg border bg-card p-5">
-                        <h2 class="flex items-center gap-2 text-sm font-semibold">
-                            <Mail class="size-4 text-muted-foreground" />
-                            Contact
-                        </h2>
-                        <Separator class="my-3" />
-                        <dl class="space-y-2 text-sm">
-                            <div>
-                                <dt class="text-xs uppercase tracking-wide text-muted-foreground">Name</dt>
-                                <dd class="font-medium text-foreground">{{ props.vendor.contact_name }}</dd>
-                            </div>
-                            <div>
-                                <dt class="text-xs uppercase tracking-wide text-muted-foreground">Email</dt>
-                                <dd class="break-all text-foreground">{{ props.vendor.contact_email.toLowerCase() }}</dd>
-                            </div>
-                            <div v-if="props.multipleStoresExist">
-                                <dt class="text-xs uppercase tracking-wide text-muted-foreground">Location</dt>
-                                <dd class="text-foreground">
-                                    {{ props.vendor.store ? props.vendor.store.name : 'All Locations' }}
-                                </dd>
-                            </div>
-                        </dl>
-                    </section>
-
                     <section v-if="props.can.update" class="rounded-lg border bg-card p-5">
                         <h2 class="text-sm font-semibold">Send a new request</h2>
                         <p class="mt-1 text-xs text-muted-foreground">
