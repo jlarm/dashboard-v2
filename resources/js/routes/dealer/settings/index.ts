@@ -3,7 +3,7 @@ import global6b02c0 from './global'
 import automatedReports from './automated-reports'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::global
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings'
 */
 export const global = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -18,7 +18,7 @@ global.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::global
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings'
 */
 global.url = (options?: RouteQueryOptions) => {
@@ -27,7 +27,7 @@ global.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::global
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings'
 */
 global.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -37,7 +37,7 @@ global.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::global
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings'
 */
 global.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -47,7 +47,7 @@ global.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::global
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings'
 */
 const globalForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -57,7 +57,7 @@ const globalForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::global
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings'
 */
 globalForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -67,7 +67,7 @@ globalForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::global
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings'
 */
 globalForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

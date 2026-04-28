@@ -5,7 +5,7 @@ import stores from './stores'
 import courses from './courses'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/course-management'
 */
 export const courseManagement = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -20,7 +20,7 @@ courseManagement.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/course-management'
 */
 courseManagement.url = (options?: RouteQueryOptions) => {
@@ -29,7 +29,7 @@ courseManagement.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/course-management'
 */
 courseManagement.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -39,7 +39,7 @@ courseManagement.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/course-management'
 */
 courseManagement.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -49,7 +49,7 @@ courseManagement.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/course-management'
 */
 const courseManagementForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -59,7 +59,7 @@ const courseManagementForm = (options?: RouteQueryOptions): RouteFormDefinition<
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/course-management'
 */
 courseManagementForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -69,7 +69,7 @@ courseManagementForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'g
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::courseManagement
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/course-management'
 */
 courseManagementForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -86,7 +86,7 @@ courseManagement.form = courseManagementForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/reset-courses'
 */
 export const resetCourses = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -101,7 +101,7 @@ resetCourses.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/reset-courses'
 */
 resetCourses.url = (options?: RouteQueryOptions) => {
@@ -110,7 +110,7 @@ resetCourses.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/reset-courses'
 */
 resetCourses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -120,7 +120,7 @@ resetCourses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/reset-courses'
 */
 resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -130,7 +130,7 @@ resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/reset-courses'
 */
 const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -140,7 +140,7 @@ const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/reset-courses'
 */
 resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -150,7 +150,7 @@ resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/reset-courses'
 */
 resetCoursesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -167,7 +167,7 @@ resetCourses.form = resetCoursesForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/phishing'
 */
 export const phishing = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -182,7 +182,7 @@ phishing.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/phishing'
 */
 phishing.url = (options?: RouteQueryOptions) => {
@@ -191,7 +191,7 @@ phishing.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/phishing'
 */
 phishing.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -201,7 +201,7 @@ phishing.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/phishing'
 */
 phishing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -211,7 +211,7 @@ phishing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/phishing'
 */
 const phishingForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -221,7 +221,7 @@ const phishingForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/phishing'
 */
 phishingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -231,7 +231,7 @@ phishingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::phishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:47
 * @route '/global-settings/phishing'
 */
 phishingForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
