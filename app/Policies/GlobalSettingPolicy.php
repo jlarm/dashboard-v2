@@ -16,4 +16,9 @@ class GlobalSettingPolicy
     {
         return $user->hasAnyRole(Role::values(Role::automatedReportRoles()));
     }
+
+    public function manage(User $user): bool
+    {
+        return $user->hasRole(Role::Consultant->value);
+    }
 }

@@ -31,6 +31,7 @@ use App\Http\Controllers\Tenant\LogController;
 use App\Http\Controllers\Tenant\NotificationsController;
 use App\Http\Controllers\Tenant\SdsController;
 use App\Http\Controllers\Tenant\Settings\AutomatedReportsController;
+use App\Http\Controllers\Tenant\Settings\GlobalSettingsController;
 use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
 use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileController;
 use App\Http\Controllers\Tenant\Store\LocationController;
@@ -42,7 +43,6 @@ use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Phish\Create;
 use App\Http\Livewire\Dealer\Ridgeback\Index;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
-use App\Http\Livewire\Dealer\Settings\GlobalSettings;
 use App\Http\Livewire\Dealer\Vendor\NewForm;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
@@ -133,18 +133,25 @@ Route::name('dealer.')->middleware([
     // Roles to Super Admin
     // **************************************************
 
-    Route::middleware('role:super-admin')->group(function (): void {
-        Route::get('global-settings', GlobalSettings::class)->name('settings.global');
+    Route::middleware('role:super-admin|Consultant')->group(function (): void {
+        Route::get('global-settings', [GlobalSettingsController::class, 'index'])->name('settings.global');
+
         Route::prefix('global-settings')->name('settings.global.')->group(function (): void {
-            Route::get('course-management', GlobalSettings::class)
+            Route::get('course-management', [GlobalSettingsController::class, 'index'])
                 ->defaults('section', 'course-management')
                 ->name('course-management');
-            Route::get('reset-courses', GlobalSettings::class)
+            Route::get('reset-courses', [GlobalSettingsController::class, 'index'])
                 ->defaults('section', 'reset-courses')
                 ->name('reset-courses');
-            Route::get('phishing', GlobalSettings::class)
+            Route::get('phishing', [GlobalSettingsController::class, 'index'])
                 ->defaults('section', 'phishing')
                 ->name('phishing');
+
+            Route::patch('phishing', [GlobalSettingsController::class, 'updatePhishing'])->name('phishing.update');
+            Route::post('stores/{store}/notifications', [GlobalSettingsController::class, 'toggleStoreNotifications'])->name('stores.notifications');
+            Route::post('stores/{store}/remediations', [GlobalSettingsController::class, 'toggleStoreRemediations'])->name('stores.remediations');
+            Route::patch('courses/{course}/optional', [GlobalSettingsController::class, 'toggleOptionalCourse'])->name('courses.optional');
+            Route::post('reset-courses', [GlobalSettingsController::class, 'resetCourses'])->name('reset-courses.run');
         });
     });
 

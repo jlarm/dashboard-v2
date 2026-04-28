@@ -1,7 +1,51 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @route '/global-settings'
+*/
+export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index.url(options),
+    method: 'get',
+})
+
+index.definition = {
+    methods: ["get","head"],
+    url: '/global-settings',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @route '/global-settings'
+*/
+index.url = (options?: RouteQueryOptions) => {
+    return index.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @route '/global-settings'
+*/
+index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
+* @route '/global-settings'
+*/
+index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: index.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
 export const courseManagement = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +59,8 @@ courseManagement.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
 courseManagement.url = (options?: RouteQueryOptions) => {
@@ -24,8 +68,8 @@ courseManagement.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
 courseManagement.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,8 +78,8 @@ courseManagement.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
 courseManagement.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,8 +88,8 @@ courseManagement.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
 const courseManagementForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,8 +98,8 @@ const courseManagementForm = (options?: RouteQueryOptions): RouteFormDefinition<
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
 courseManagementForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -64,8 +108,8 @@ courseManagementForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'g
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
 courseManagementForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -81,8 +125,8 @@ courseManagementForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'
 courseManagement.form = courseManagementForm
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
 export const resetCourses = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -96,8 +140,8 @@ resetCourses.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
 resetCourses.url = (options?: RouteQueryOptions) => {
@@ -105,8 +149,8 @@ resetCourses.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
 resetCourses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -115,8 +159,8 @@ resetCourses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
 resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -125,8 +169,8 @@ resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
 const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -135,8 +179,8 @@ const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
 resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -145,8 +189,8 @@ resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
 resetCoursesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -162,8 +206,8 @@ resetCoursesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'
 resetCourses.form = resetCoursesForm
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
 export const phishing = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -177,8 +221,8 @@ phishing.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
 phishing.url = (options?: RouteQueryOptions) => {
@@ -186,8 +230,8 @@ phishing.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
 phishing.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -196,8 +240,8 @@ phishing.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
 phishing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -206,8 +250,8 @@ phishing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
 const phishingForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -216,8 +260,8 @@ const phishingForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
 phishingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -226,8 +270,8 @@ phishingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\GlobalSettings::__invoke
-* @see app/Http/Livewire/Dealer/Settings/GlobalSettings.php:7
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/phishing'
 */
 phishingForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -242,10 +286,11 @@ phishingForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 phishing.form = phishingForm
 
-const global = {
+const global = Object.assign(index, {
+    index: Object.assign(index, index),
     courseManagement: Object.assign(courseManagement, courseManagement),
     resetCourses: Object.assign(resetCourses, resetCourses),
     phishing: Object.assign(phishing, phishing),
-}
+})
 
 export default global
