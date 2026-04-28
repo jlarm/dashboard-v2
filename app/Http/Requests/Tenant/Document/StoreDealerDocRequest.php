@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Tenant\Document;
 
+use App\Domain\Tenant\Document\Data\CreateDealerDocData;
 use App\Models\DealerDoc;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Validator;
 use Override;
 
@@ -51,5 +53,16 @@ class StoreDealerDocRequest extends FormRequest
                 }
             },
         ];
+    }
+
+    public function toData(): CreateDealerDocData
+    {
+        $file = $this->file('file');
+
+        return new CreateDealerDocData(
+            title: (string) $this->validated('title'),
+            url: $this->validated('url') ?: null,
+            file: $file instanceof UploadedFile ? $file : null,
+        );
     }
 }
