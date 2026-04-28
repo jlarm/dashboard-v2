@@ -75,7 +75,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const sections: { key: Section; label: string; href: string }[] = [
-    { key: 'general', label: 'General', href: globalSettings() },
+    { key: 'general', label: 'General', href: globalSettings.url() },
     { key: 'course-management', label: 'Course Management', href: globalSettings.courseManagement.url() },
     { key: 'reset-courses', label: 'Reset Courses', href: globalSettings.resetCourses.url() },
     { key: 'phishing', label: 'Phishing', href: globalSettings.phishing.url() },
@@ -398,7 +398,7 @@ const confirmMessage = computed<string>(() =>
                             </div>
                         </div>
 
-                        <div class="max-h-[420px] overflow-y-auto">
+                        <div class="max-h-105 overflow-y-auto">
                             <Table>
                                 <TableHeader class="sticky top-0 bg-muted/50 [&_tr]:border-b">
                                     <TableRow>
