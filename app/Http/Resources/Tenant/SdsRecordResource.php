@@ -16,10 +16,9 @@ class SdsRecordResource extends JsonResource
     #[Override]
     public function toArray(Request $request): array
     {
-        return [
-            'uuid' => $this->uuid,
-            'name' => $this->name,
-            'manufacturer' => $this->manufacturer,
-        ];
+        /** @var array<string, mixed> $row */
+        $row = $this->resource;
+
+        return $row;
     }
 }
