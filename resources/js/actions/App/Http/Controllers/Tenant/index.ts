@@ -7,6 +7,7 @@ import Audit from './Audit'
 import UserController from './UserController'
 import CyrismaController from './CyrismaController'
 import CyrismaReportController from './CyrismaReportController'
+import DealerDocController from './DealerDocController'
 
 const Tenant = {
     Auth: Object.assign(Auth, Auth),
@@ -18,6 +19,7 @@ const Tenant = {
     UserController: Object.assign(UserController, UserController),
     CyrismaController: Object.assign(CyrismaController, CyrismaController),
     CyrismaReportController: Object.assign(CyrismaReportController, CyrismaReportController),
+    DealerDocController: Object.assign(DealerDocController, DealerDocController),
 }
 
 export default Tenant

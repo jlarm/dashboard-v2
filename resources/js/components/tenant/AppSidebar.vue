@@ -8,12 +8,13 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
-import { EMPLOYEE_SECTION_VIEWERS } from '@/constants/roles';
+import { DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS } from '@/constants/roles';
+import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
 import sds from '@/routes/dealer/sds';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { FlaskConical, LayoutGrid, Users } from 'lucide-vue-next';
+import { FileText, FlaskConical, LayoutGrid, Users } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -26,6 +27,12 @@ const mainNavItems: NavItem[] = [
         href: employees.index.url(),
         icon: Users,
         roles: EMPLOYEE_SECTION_VIEWERS,
+    },
+    {
+        title: 'Documents',
+        href: doc.index.url(),
+        icon: FileText,
+        roles: DOCUMENT_VIEWERS,
     },
     {
         title: 'SDS Sheets',

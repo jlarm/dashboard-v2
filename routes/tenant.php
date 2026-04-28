@@ -26,6 +26,8 @@ use App\Http\Controllers\Tenant\Auth\NewPasswordController;
 use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Tenant\CyrismaController;
 use App\Http\Controllers\Tenant\CyrismaReportController;
+use App\Http\Controllers\Tenant\DealerDocController;
+use App\Http\Controllers\Tenant\NotificationsController;
 use App\Http\Controllers\Tenant\SdsController;
 use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
 use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileController;
@@ -35,9 +37,9 @@ use App\Http\Controllers\WebhookController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
 use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
 use App\Http\Livewire\Dealer\Audit\Osha\Single;
-use App\Http\Livewire\Dealer\Docs\Index;
 use App\Http\Livewire\Dealer\Log\Show;
 use App\Http\Livewire\Dealer\Phish\Create;
+use App\Http\Livewire\Dealer\Ridgeback\Index;
 use App\Http\Livewire\Dealer\Settings\AutomatedReports;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use App\Http\Livewire\Dealer\Settings\GlobalSettings;
@@ -115,9 +117,9 @@ Route::name('dealer.')->middleware([
         Route::inertia('/appearance', 'tenant/settings/Appearance')->name('appearance.edit');
 
         Route::prefix('notifications')->name('notifications.')->group(function (): void {
-            Route::post('mark-all-read', [App\Http\Controllers\Tenant\NotificationsController::class, 'markAllAsRead'])->name('mark-all-read');
-            Route::post('{notification}/read', [App\Http\Controllers\Tenant\NotificationsController::class, 'markAsRead'])->name('mark-read');
-            Route::delete('{notification}', [App\Http\Controllers\Tenant\NotificationsController::class, 'destroy'])->name('destroy');
+            Route::post('mark-all-read', [NotificationsController::class, 'markAllAsRead'])->name('mark-all-read');
+            Route::post('{notification}/read', [NotificationsController::class, 'markAsRead'])->name('mark-read');
+            Route::delete('{notification}', [NotificationsController::class, 'destroy'])->name('destroy');
         });
     });
 
@@ -173,7 +175,7 @@ Route::name('dealer.')->middleware([
 
         Route::get('phishing/create', Create::class)->name('phishing.create');
 
-        Route::get('ridgeback', App\Http\Livewire\Dealer\Ridgeback\Index::class)
+        Route::get('ridgeback', Index::class)
             ->middleware(['auth', 'single.store'])
             ->name('ridgeback.index');
 
@@ -297,8 +299,12 @@ Route::name('dealer.')->middleware([
 
         Route::get('vendors', App\Http\Livewire\Dealer\Vendor\Index::class)->middleware('auth')->name('vendor.index');
 
-        Route::prefix('documents/')->name('doc.')->middleware('auth')->group(function (): void {
-            Route::get('/', Index::class)->name('index');
+        Route::prefix('documents')->name('doc.')->middleware('auth')->group(function (): void {
+            Route::get('/', [DealerDocController::class, 'index'])->name('index');
+            Route::post('/', [DealerDocController::class, 'store'])->name('store');
+            Route::get('{dealerDoc}/download', [DealerDocController::class, 'download'])->name('download');
+            Route::get('shared/{sharedDocument}/download', [DealerDocController::class, 'downloadShared'])->whereNumber('sharedDocument')->name('shared.download');
+            Route::delete('{dealerDoc}', [DealerDocController::class, 'destroy'])->name('destroy');
         });
 
         Route::get('fit-tests', App\Http\Livewire\Tenant\Audit\Fit\Index::class)->name('fit-tests.index');

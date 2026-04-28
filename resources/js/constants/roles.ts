@@ -36,3 +36,18 @@ export const EMPLOYEE_SECTION_VIEWERS: RoleName[] = [
     Role.QualifiedIndividual,
     Role.Manager,
 ];
+
+/**
+ * Roles allowed to view the Documents section. Employees and
+ * Porter/Drivers are excluded.
+ */
+export const DOCUMENT_VIEWERS: RoleName[] = [
+    Role.SuperAdmin,
+    Role.Consultant,
+    Role.Owner,
+    Role.CFO,
+    Role.GM,
+    Role.GSM,
+    Role.QualifiedIndividual,
+    Role.Manager,
+];

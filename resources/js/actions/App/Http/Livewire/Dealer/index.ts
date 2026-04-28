@@ -5,7 +5,6 @@ import Phish from './Phish'
 import Ridgeback from './Ridgeback'
 import Log from './Log'
 import Manual from './Manual'
-import Docs from './Docs'
 
 const Dealer = {
     Vendor: Object.assign(Vendor, Vendor),
@@ -15,7 +14,6 @@ const Dealer = {
     Ridgeback: Object.assign(Ridgeback, Ridgeback),
     Log: Object.assign(Log, Log),
     Manual: Object.assign(Manual, Manual),
-    Docs: Object.assign(Docs, Docs),
 }
 
 export default Dealer

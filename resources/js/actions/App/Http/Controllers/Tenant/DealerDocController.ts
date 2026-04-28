@@ -1,5 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
-import shared from './shared'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::index
 * @see app/Http/Controllers/Tenant/DealerDocController.php:29
@@ -243,6 +242,105 @@ downloadForm.head = (args: { dealerDoc: string | number | { id: string | number 
 download.form = downloadForm
 
 /**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:115
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+export const downloadShared = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: downloadShared.url(args, options),
+    method: 'get',
+})
+
+downloadShared.definition = {
+    methods: ["get","head"],
+    url: '/documents/shared/{sharedDocument}/download',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:115
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadShared.url = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { sharedDocument: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            sharedDocument: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        sharedDocument: args.sharedDocument,
+    }
+
+    return downloadShared.definition.url
+            .replace('{sharedDocument}', parsedArgs.sharedDocument.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:115
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadShared.get = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: downloadShared.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:115
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadShared.head = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: downloadShared.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:115
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+const downloadSharedForm = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadShared.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:115
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadSharedForm.get = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadShared.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:115
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadSharedForm.head = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadShared.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+downloadShared.form = downloadSharedForm
+
+/**
 * @see \App\Http\Controllers\Tenant\DealerDocController::destroy
 * @see app/Http/Controllers/Tenant/DealerDocController.php:89
 * @route '/documents/{dealerDoc}'
@@ -332,12 +430,6 @@ destroyForm.delete = (args: { dealerDoc: string | number | { id: string | number
 
 destroy.form = destroyForm
 
-const doc = {
-    index: Object.assign(index, index),
-    store: Object.assign(store, store),
-    download: Object.assign(download, download),
-    shared: Object.assign(shared, shared),
-    destroy: Object.assign(destroy, destroy),
-}
+const DealerDocController = { index, store, download, downloadShared, destroy }
 
-export default doc
+export default DealerDocController
