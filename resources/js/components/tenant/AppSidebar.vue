@@ -11,11 +11,12 @@ import {
 import { DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role } from '@/constants/roles';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
+import locations from '@/routes/dealer/locations';
 import logs from '@/routes/dealer/logs';
 import sds from '@/routes/dealer/sds';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { FileText, FlaskConical, LayoutGrid, ScrollText, Users } from 'lucide-vue-next';
+import { Building2, FileText, FlaskConical, LayoutGrid, ScrollText, Users } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -43,6 +44,12 @@ const mainNavItems: NavItem[] = [
 ];
 
 const footerNavItems: NavItem[] = [
+    {
+        title: 'Locations',
+        href: locations.index.url(),
+        icon: Building2,
+        roles: [Role.SuperAdmin, Role.Consultant],
+    },
     {
         title: 'Activity Logs',
         href: logs.index.url(),

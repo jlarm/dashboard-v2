@@ -1,9 +1,9 @@
 import SwitchStoreController from './SwitchStoreController'
-import CreateStoreController from './CreateStoreController'
+import LocationController from './LocationController'
 
 const Store = {
     SwitchStoreController: Object.assign(SwitchStoreController, SwitchStoreController),
-    CreateStoreController: Object.assign(CreateStoreController, CreateStoreController),
+    LocationController: Object.assign(LocationController, LocationController),
 }
 
 export default Store

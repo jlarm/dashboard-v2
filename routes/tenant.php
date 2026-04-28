@@ -32,7 +32,7 @@ use App\Http\Controllers\Tenant\NotificationsController;
 use App\Http\Controllers\Tenant\SdsController;
 use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
 use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileController;
-use App\Http\Controllers\Tenant\Store\CreateStoreController;
+use App\Http\Controllers\Tenant\Store\LocationController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Livewire\Dealer\Audit\Osha\Edit;
@@ -179,8 +179,9 @@ Route::name('dealer.')->middleware([
             ->middleware(['auth', 'single.store'])
             ->name('ridgeback.index');
 
-        Route::view('locations', 'tenant.store.index')->name('locations.index');
-        Route::post('locations', CreateStoreController::class)->name('locations.store');
+        Route::get('locations', [LocationController::class, 'index'])->name('locations.index');
+        Route::post('locations', [LocationController::class, 'store'])->name('locations.store');
+        Route::patch('locations/{store}', [LocationController::class, 'update'])->name('locations.update');
 
     });
 

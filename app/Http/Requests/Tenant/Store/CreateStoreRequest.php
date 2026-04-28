@@ -6,6 +6,7 @@ namespace App\Http\Requests\Tenant\Store;
 
 use App\Domain\Tenant\Store\Data\CreateStoreData;
 use App\Enums\State;
+use App\Models\Dealer\Store;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,7 +30,7 @@ class CreateStoreRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return $this->user()?->hasAnyRole(['super-admin', 'Consultant']) ?? false;
+        return $this->user()?->can('create', Store::class) ?? false;
     }
 
     public function toData(): CreateStoreData

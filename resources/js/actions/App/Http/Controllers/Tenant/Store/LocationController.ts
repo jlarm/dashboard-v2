@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::index
 * @see app/Http/Controllers/Tenant/Store/LocationController.php:20
@@ -226,10 +226,6 @@ updateForm.patch = (args: { store: string | number | { id: string | number } } |
 
 update.form = updateForm
 
-const locations = {
-    index: Object.assign(index, index),
-    store: Object.assign(store, store),
-    update: Object.assign(update, update),
-}
+const LocationController = { index, store, update }
 
-export default locations
+export default LocationController
