@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::recordResult
-* @see app/Http/Controllers/Tenant/UserController.php:314
+* @see app/Http/Controllers/Tenant/UserController.php:313
 * @route '/employees/{user}/courses/{course}/result'
 */
 export const recordResult = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ recordResult.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::recordResult
-* @see app/Http/Controllers/Tenant/UserController.php:314
+* @see app/Http/Controllers/Tenant/UserController.php:313
 * @route '/employees/{user}/courses/{course}/result'
 */
 recordResult.url = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -46,7 +46,7 @@ recordResult.url = (args: { user: string | { slug: string }, course: number | { 
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::recordResult
-* @see app/Http/Controllers/Tenant/UserController.php:314
+* @see app/Http/Controllers/Tenant/UserController.php:313
 * @route '/employees/{user}/courses/{course}/result'
 */
 recordResult.post = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -56,7 +56,7 @@ recordResult.post = (args: { user: string | { slug: string }, course: number | {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::recordResult
-* @see app/Http/Controllers/Tenant/UserController.php:314
+* @see app/Http/Controllers/Tenant/UserController.php:313
 * @route '/employees/{user}/courses/{course}/result'
 */
 const recordResultForm = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -66,7 +66,7 @@ const recordResultForm = (args: { user: string | { slug: string }, course: numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::recordResult
-* @see app/Http/Controllers/Tenant/UserController.php:314
+* @see app/Http/Controllers/Tenant/UserController.php:313
 * @route '/employees/{user}/courses/{course}/result'
 */
 recordResultForm.post = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

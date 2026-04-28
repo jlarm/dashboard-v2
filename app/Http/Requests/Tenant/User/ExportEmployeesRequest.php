@@ -50,7 +50,7 @@ class ExportEmployeesRequest extends FormRequest
         /** @var list<int|string> $ids */
         $ids = $this->validated('user_ids') ?? [];
 
-        return array_map(static fn ($id): int => (int) $id, $ids);
+        return array_map(static fn (int|string $id): int => (int) $id, $ids);
     }
 
     public function filters(): EmployeeFiltersData
@@ -79,6 +79,6 @@ class ExportEmployeesRequest extends FormRequest
             return [];
         }
 
-        return array_values(array_map(static fn ($value): int => (int) $value, $values));
+        return array_values(array_map(static fn (int|string $value): int => (int) $value, $values));
     }
 }

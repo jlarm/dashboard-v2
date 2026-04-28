@@ -130,10 +130,6 @@ const hasSearch = computed(() => (props.filters.search ?? '').trim() !== '');
     <Head title="SDS Sheets" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <template #actions>
-            <RequestSdsDialog />
-        </template>
-
         <div class="space-y-5">
             <div class="flex flex-wrap items-center gap-2">
                 <div class="relative w-full max-w-md">
@@ -148,6 +144,9 @@ const hasSearch = computed(() => (props.filters.search ?? '').trim() !== '');
                 <Button v-if="hasSearch" variant="ghost" size="sm" @click="clearSearch">
                     Clear search
                 </Button>
+                <div class="ml-auto">
+                    <RequestSdsDialog />
+                </div>
             </div>
 
             <div v-if="!hasSearch" class="rounded-lg border bg-card py-16 text-center">

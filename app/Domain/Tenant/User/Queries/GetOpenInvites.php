@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 
 class GetOpenInvites
 {
-    private const PER_PAGE = 25;
+    private const int PER_PAGE = 25;
 
     /**
      * @param  array{search?: string, department_id?: int|null}  $filters
@@ -64,8 +64,7 @@ class GetOpenInvites
     private function baseQuery(User $viewer, array $filters): Builder
     {
         $query = Invite::query()
-            ->whereNull('registered_at')
-            ->orderByDesc('created_at');
+            ->whereNull('registered_at')->latest();
 
         $this->applyStoreFilter($query);
         $this->applyDepartmentScope($query, $viewer);
@@ -124,7 +123,7 @@ class GetOpenInvites
         if (app()->bound('scopedStoreIds')) {
             /** @var Collection<int, int> $scoped */
             $scoped = resolve('scopedStoreIds');
-            $normalized = $scoped->map(static fn ($id): int => (int) $id)->values();
+            $normalized = $scoped->map(static fn ($id): int => $id)->values();
 
             if ($normalized->isNotEmpty()) {
                 return $normalized;

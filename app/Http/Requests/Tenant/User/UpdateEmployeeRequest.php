@@ -9,6 +9,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Override;
 
 class UpdateEmployeeRequest extends FormRequest
 {
@@ -23,6 +24,7 @@ class UpdateEmployeeRequest extends FormRequest
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function messages(): array
     {
         return [

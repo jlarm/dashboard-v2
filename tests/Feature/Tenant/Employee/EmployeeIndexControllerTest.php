@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Domain\Tenant\User\Data\EmployeeFiltersData;
+use App\Domain\Tenant\User\Queries\GetEmployees;
 use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
@@ -102,9 +105,9 @@ describe('index page payload', function (): void {
     });
 
     it('computes trainingCounts on demand', function (): void {
-        $counts = app(\App\Domain\Tenant\User\Queries\GetEmployees::class)->trainingCounts(
+        $counts = resolve(GetEmployees::class)->trainingCounts(
             $this->consultant,
-            \App\Domain\Tenant\User\Data\EmployeeFiltersData::empty(),
+            EmployeeFiltersData::empty(),
         );
 
         expect($counts->employees)->toBeGreaterThanOrEqual(0)
@@ -121,11 +124,11 @@ describe('index page payload', function (): void {
             ->assertOk()
             ->assertInertia(fn ($page) => $page->where(
                 'employees.data',
-                fn ($rows) => collect($rows)
+                fn ($rows): bool => collect($rows)
                     ->pluck('id')
                     ->contains($employee->id)
-                    && ! collect($rows)->pluck('id')->contains($superAdmin->id)
-                    && ! collect($rows)->pluck('id')->contains($hiddenConsultant->id),
+                    && collect($rows)->pluck('id')->doesntContain($superAdmin->id)
+                    && collect($rows)->pluck('id')->doesntContain($hiddenConsultant->id),
             ));
     });
 
@@ -180,8 +183,8 @@ describe('index page scoping', function (): void {
             ->get(route('dealer.employees.index'))
             ->assertInertia(fn ($page) => $page->where(
                 'employees.data',
-                fn ($rows) => collect($rows)->pluck('id')->contains($visible->id)
-                    && ! collect($rows)->pluck('id')->contains($hidden->id),
+                fn ($rows): bool => collect($rows)->pluck('id')->contains($visible->id)
+                    && collect($rows)->pluck('id')->doesntContain($hidden->id),
             ));
     });
 });
@@ -206,7 +209,7 @@ describe('index page filtering', function (): void {
             ->assertOk()
             ->assertInertia(fn ($page) => $page->where(
                 'employees.data',
-                fn ($rows) => $ids = collect($rows)->pluck('id')->all() and
+                fn ($rows): bool => $ids = collect($rows)->pluck('id')->all() and
                     in_array($targetName->id, $ids, true)
                     && in_array($targetEmail->id, $ids, true)
                     && ! in_array($other->id, $ids, true),
@@ -239,14 +242,14 @@ describe('index page filtering', function (): void {
             ->assertOk()
             ->assertInertia(fn ($page) => $page->where(
                 'employees.data',
-                fn ($rows) => $ids = collect($rows)->pluck('id')->all() and
+                fn ($rows): bool => $ids = collect($rows)->pluck('id')->all() and
                     in_array($financeEmployee->id, $ids, true)
                     && ! in_array($itEmployee->id, $ids, true),
             ));
     });
 
     it('filters employees by role_ids', function (): void {
-        $ownerRoleId = Spatie\Permission\Models\Role::query()
+        $ownerRoleId = Role::query()
             ->where('name', 'Owner')
             ->value('id');
 
@@ -260,7 +263,7 @@ describe('index page filtering', function (): void {
             ->assertOk()
             ->assertInertia(fn ($page) => $page->where(
                 'employees.data',
-                fn ($rows) => $ids = collect($rows)->pluck('id')->all() and
+                fn ($rows): bool => $ids = collect($rows)->pluck('id')->all() and
                     in_array($owner->id, $ids, true)
                     && ! in_array($regularEmployee->id, $ids, true),
             ));

@@ -18,11 +18,13 @@ class SendCustomEmployeeMessage
         $sent = 0;
 
         foreach ($users as $user) {
-            if ($user->email === null || $user->email === '') {
+            if ($user->email === null) {
                 continue;
             }
-
-            SendCustomEmployeeMessageJob::dispatch($user, $subject, $messageBody);
+            if ($user->email === '') {
+                continue;
+            }
+            dispatch(new SendCustomEmployeeMessageJob($user, $subject, $messageBody));
             $sent++;
         }
 

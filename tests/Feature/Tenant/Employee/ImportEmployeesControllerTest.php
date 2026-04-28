@@ -113,8 +113,8 @@ describe('ImportEmployeesJob', function (): void {
         $payloadPath = 'imports/test/'.uniqid().'.json';
         Storage::disk('local')->put($payloadPath, (string) $payload);
 
-        (new ImportEmployeesJob($this->consultant, $payloadPath))
-            ->handle(app(ImportEmployees::class));
+        new ImportEmployeesJob($this->consultant, $payloadPath)
+            ->handle(resolve(ImportEmployees::class));
 
         expect(Storage::disk('local')->exists($payloadPath))->toBeFalse();
         expect(Invite::query()->where('email', 'imported@example.com')->exists())->toBeTrue();

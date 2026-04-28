@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Models\CourseUser;
+use App\Models\Dealer\Course;
+use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Store;
 use App\Models\Department;
 use App\Models\User;
@@ -378,7 +381,7 @@ describe('update action', function (): void {
 
 describe('course override action', function (): void {
     it('adds an override pivot when state is "add"', function (): void {
-        $course = App\Models\Dealer\Course::query()->create([
+        $course = Course::query()->create([
             'name' => 'Override Add Course',
             'slug' => 'override-add-course-'.uniqid(),
             'slides' => [],
@@ -396,14 +399,14 @@ describe('course override action', function (): void {
             )
             ->assertRedirect();
 
-        expect(App\Models\CourseUser::query()
+        expect(CourseUser::query()
             ->where('user_id', $this->target->id)
             ->where('course_id', $course->id)
             ->value('type'))->toBe('add');
     });
 
     it('removes the override when state is "default"', function (): void {
-        $course = App\Models\Dealer\Course::query()->create([
+        $course = Course::query()->create([
             'name' => 'Override Default Course',
             'slug' => 'override-default-course-'.uniqid(),
             'slides' => [],
@@ -426,14 +429,14 @@ describe('course override action', function (): void {
             )
             ->assertRedirect();
 
-        expect(App\Models\CourseUser::query()
+        expect(CourseUser::query()
             ->where('user_id', $this->target->id)
             ->where('course_id', $course->id)
             ->exists())->toBeFalse();
     });
 
     it('rejects unknown state values', function (): void {
-        $course = App\Models\Dealer\Course::query()->create([
+        $course = Course::query()->create([
             'name' => 'Override Bad Course',
             'slug' => 'override-bad-course-'.uniqid(),
             'slides' => [],
@@ -453,7 +456,7 @@ describe('course override action', function (): void {
     });
 
     it('forbids actors without manage-courses role', function (): void {
-        $course = App\Models\Dealer\Course::query()->create([
+        $course = Course::query()->create([
             'name' => 'Override Forbidden Course',
             'slug' => 'override-forbidden-course-'.uniqid(),
             'slides' => [],
@@ -483,7 +486,7 @@ describe('generate DOT certificate action', function (): void {
 
 describe('record course result action', function (): void {
     it('creates a passing course result with the submitted date', function (): void {
-        $course = App\Models\Dealer\Course::query()->create([
+        $course = Course::query()->create([
             'name' => 'Record Test Course',
             'slug' => 'record-test-course-'.uniqid(),
             'slides' => [],
@@ -503,7 +506,7 @@ describe('record course result action', function (): void {
             )
             ->assertRedirect();
 
-        $result = App\Models\Dealer\CourseResults::query()
+        $result = CourseResults::query()
             ->where('user_id', $this->target->id)
             ->where('course_id', $course->id)
             ->firstOrFail();
@@ -514,7 +517,7 @@ describe('record course result action', function (): void {
     });
 
     it('rejects future dates', function (): void {
-        $course = App\Models\Dealer\Course::query()->create([
+        $course = Course::query()->create([
             'name' => 'Future Date Course',
             'slug' => 'future-date-course-'.uniqid(),
             'slides' => [],
@@ -534,7 +537,7 @@ describe('record course result action', function (): void {
     });
 
     it('forbids actors without the create-dealerships permission', function (): void {
-        $course = App\Models\Dealer\Course::query()->create([
+        $course = Course::query()->create([
             'name' => 'Unauthorized Course',
             'slug' => 'unauthorized-course-'.uniqid(),
             'slides' => [],

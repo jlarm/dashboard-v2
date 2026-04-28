@@ -8,6 +8,7 @@ use App\Models\CourseUser;
 use App\Models\Dealer\Course;
 use App\Models\User;
 use App\Services\UserCourseService;
+use Illuminate\Support\Collection;
 
 class GetManageCoursesOptions
 {
@@ -45,7 +46,7 @@ class GetManageCoursesOptions
     }
 
     /**
-     * @param  \Illuminate\Support\Collection<int, string>  $overrides
+     * @param  Collection<int, string>  $overrides
      * @return 'default'|'add'|'exclude'
      */
     private function stateFor($overrides, int $courseId): string

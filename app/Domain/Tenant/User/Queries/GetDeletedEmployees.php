@@ -12,14 +12,14 @@ use Illuminate\Support\Collection;
 
 class GetDeletedEmployees
 {
-    private const PER_PAGE = 15;
+    private const int PER_PAGE = 15;
 
     /**
      * @param  array{search?: string}  $filters
      */
     public function handle(User $viewer, array $filters, int $page = 1): LengthAwarePaginator
     {
-        $paginator = $this->baseQuery($viewer, $filters)
+        $paginator = $this->baseQuery($filters)
             ->with('department:id,name')
             ->paginate(perPage: self::PER_PAGE, page: $page);
 
@@ -36,7 +36,7 @@ class GetDeletedEmployees
     /**
      * @param  array{search?: string}  $filters
      */
-    private function baseQuery(User $viewer, array $filters): Builder
+    private function baseQuery(array $filters): Builder
     {
         $query = User::query()
             ->onlyTrashed()

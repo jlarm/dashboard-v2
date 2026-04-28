@@ -30,9 +30,7 @@ class UpdateEmployee
     ): void {
         $role = Role::query()->findOrFail($roleId);
 
-        if (in_array($role->name, [RoleEnum::SuperAdmin->value, RoleEnum::Consultant->value], true)) {
-            throw new RuntimeException('Cannot assign privileged roles to an employee.');
-        }
+        throw_if(in_array($role->name, [RoleEnum::SuperAdmin->value, RoleEnum::Consultant->value], true), RuntimeException::class, 'Cannot assign privileged roles to an employee.');
 
         DB::transaction(function () use ($user, $departmentId, $role, $qualifiedIndividual, $storeIds, $auditTypes): void {
             $user->update(['department_id' => $departmentId]);

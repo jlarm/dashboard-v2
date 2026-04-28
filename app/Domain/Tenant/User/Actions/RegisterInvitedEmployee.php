@@ -22,7 +22,7 @@ use Spatie\Permission\PermissionRegistrar;
 
 class RegisterInvitedEmployee
 {
-    private const DOT_COURSE_SLUG = 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding';
+    private const string DOT_COURSE_SLUG = 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding';
 
     public function __construct(private readonly PermissionRegistrar $permissionRegistrar) {}
 

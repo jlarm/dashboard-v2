@@ -89,7 +89,8 @@
         "lint": [
             "rector",
             "pint"
-        ]
+        ],
+        "test:types": "phpstan analyse"
     },
     "extra": {
         "laravel": {

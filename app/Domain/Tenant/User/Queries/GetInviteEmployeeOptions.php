@@ -14,7 +14,7 @@ use Spatie\Permission\Models\Role;
 
 class GetInviteEmployeeOptions
 {
-    private const EXCLUDED_ROLE_VALUES = [
+    private const array EXCLUDED_ROLE_VALUES = [
         'super-admin',
         'Admin',
         'Consultant',

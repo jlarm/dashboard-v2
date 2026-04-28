@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 
 class GetEmployees
 {
-    private const SELECT_COLUMNS = [
+    private const array SELECT_COLUMNS = [
         'users.id',
         'users.name',
         'users.slug',

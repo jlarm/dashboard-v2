@@ -7,6 +7,7 @@ namespace App\Http\Requests\Tenant\User;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 class RecordCourseResultRequest extends FormRequest
 {
@@ -30,6 +31,6 @@ class RecordCourseResultRequest extends FormRequest
 
     public function takenOn(): Carbon
     {
-        return Carbon::parse((string) $this->validated('taken_on'))->startOfDay();
+        return Date::parse((string) $this->validated('taken_on'))->startOfDay();
     }
 }

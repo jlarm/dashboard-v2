@@ -9,6 +9,7 @@ use App\Enums\Role;
 use App\Jobs\SendQueueEmailJob;
 use App\Models\Dealer\Invite;
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -25,9 +26,7 @@ class ImportEmployees
         /** @var array{employees?: array<int, array<string, mixed>>}|null $payload */
         $payload = json_decode($jsonContent, true);
 
-        if (! is_array($payload) || ! isset($payload['employees']) || ! is_array($payload['employees'])) {
-            throw new RuntimeException('The file must be a JSON object containing an "employees" array.');
-        }
+        throw_if(! is_array($payload) || ! isset($payload['employees']) || ! is_array($payload['employees']), RuntimeException::class, 'The file must be a JSON object containing an "employees" array.');
 
         $existingEmails = $this->existingEmails($payload['employees']);
 
@@ -115,7 +114,7 @@ class ImportEmployees
         }
 
         foreach ($created as $invite) {
-            SendQueueEmailJob::dispatch($invite);
+            dispatch(new SendQueueEmailJob($invite));
         }
 
         return new ImportEmployeesResult(
@@ -127,9 +126,9 @@ class ImportEmployees
 
     /**
      * @param  array<int, array<string, mixed>>  $rows
-     * @return \Illuminate\Support\Collection<int, string>
+     * @return Collection<int, string>
      */
-    private function existingEmails(array $rows): \Illuminate\Support\Collection
+    private function existingEmails(array $rows): Collection
     {
         $emails = collect($rows)
             ->map(static fn ($row): ?string => is_array($row) && is_string($row['Email'] ?? null)
@@ -164,10 +163,12 @@ class ImportEmployees
 
         $courses = [];
         foreach ($training as $entry) {
-            if (! is_array($entry) || ! isset($entry['Course'], $entry['Training Date'])) {
+            if (! is_array($entry)) {
                 continue;
             }
-
+            if (! isset($entry['Course'], $entry['Training Date'])) {
+                continue;
+            }
             $courses[(string) $entry['Course']] = (string) $entry['Training Date'];
         }
 

@@ -113,8 +113,8 @@ describe('employees invite endpoint', function (): void {
                 ->where('options.departments', [
                     ['id' => $this->department->id, 'name' => $this->department->name],
                 ])
-                ->where('options.stores', fn ($stores) => collect($stores)->pluck('id')->all() === [$store->id])
-                ->where('options.roles', fn ($roles) => collect($roles)->pluck('name')->sort()->values()->all() === ['Employee', 'Manager', 'Porter/Driver'])
+                ->where('options.stores', fn ($stores): bool => collect($stores)->pluck('id')->all() === [$store->id])
+                ->where('options.roles', fn ($roles): bool => collect($roles)->pluck('name')->sort()->values()->all() === ['Employee', 'Manager', 'Porter/Driver'])
                 ->where('defaults.department_id', $this->department->id)
                 ->where('defaults.store_ids', [$store->id]),
             );

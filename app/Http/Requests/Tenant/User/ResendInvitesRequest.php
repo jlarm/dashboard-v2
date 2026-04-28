@@ -33,6 +33,6 @@ class ResendInvitesRequest extends FormRequest
         /** @var list<int|string> $ids */
         $ids = $this->validated('invite_ids', []);
 
-        return array_values(array_unique(array_map(static fn ($id): int => (int) $id, $ids)));
+        return array_values(array_unique(array_map(static fn (int|string $id): int => (int) $id, $ids)));
     }
 }

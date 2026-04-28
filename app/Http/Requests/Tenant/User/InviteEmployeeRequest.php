@@ -9,6 +9,7 @@ use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Override;
 
 class InviteEmployeeRequest extends FormRequest
 {
@@ -65,6 +66,7 @@ class InviteEmployeeRequest extends FormRequest
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function messages(): array
     {
         return [
@@ -147,10 +149,12 @@ class InviteEmployeeRequest extends FormRequest
 
         $result = [];
         foreach ($values as $courseId => $date) {
-            if ($date === null || $date === '') {
+            if ($date === null) {
                 continue;
             }
-
+            if ($date === '') {
+                continue;
+            }
             $result[(string) $courseId] = (string) $date;
         }
 
@@ -206,7 +210,7 @@ class InviteEmployeeRequest extends FormRequest
             return ['departments' => [], 'roles' => [], 'courses' => [], 'stores' => []];
         }
 
-        return $this->cachedOptions ??= app(GetInviteEmployeeOptions::class)->handle($user);
+        return $this->cachedOptions ??= resolve(GetInviteEmployeeOptions::class)->handle($user);
     }
 
     /**

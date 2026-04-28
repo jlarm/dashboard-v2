@@ -20,9 +20,7 @@ class GenerateDotCertificate
 
     public function handle(User $user, string $storeName): string
     {
-        if (! $this->certificates->canGenerateDotCertificate($user)) {
-            throw new RuntimeException('Employee is not eligible for a DOT certificate.');
-        }
+        throw_unless($this->certificates->canGenerateDotCertificate($user), RuntimeException::class, 'Employee is not eligible for a DOT certificate.');
 
         $passedOn = $this->certificates->dotCourseResult($user)
             ?->created_at

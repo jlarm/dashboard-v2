@@ -6,6 +6,7 @@ namespace App\Http\Middleware;
 
 use App\Domain\Tenant\Store\Queries\GetAccessibleStoreOptions;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 use Inertia\Middleware;
@@ -94,7 +95,7 @@ class HandleInertiaRequests extends Middleware
             return ['items' => [], 'unread_count' => 0];
         }
 
-        /** @var \Illuminate\Database\Eloquent\Collection<int, DatabaseNotification> $notifications */
+        /** @var Collection<int, DatabaseNotification> $notifications */
         $notifications = $user->notifications()
             ->latest()
             ->limit(20)

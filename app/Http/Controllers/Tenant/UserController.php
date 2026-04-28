@@ -73,7 +73,7 @@ class UserController extends Controller
         return Inertia::render('tenant/user/Index', [
             'employees' => EmployeeResource::collection($paginator),
             'trainingCounts' => Inertia::defer(
-                fn () => $getEmployees->trainingCounts($viewer, $filters)->toArray(),
+                fn (): array => $getEmployees->trainingCounts($viewer, $filters)->toArray(),
             ),
             'filters' => $filters->toArray(),
             'filterOptions' => $getFilterOptions->handle(),
@@ -128,8 +128,7 @@ class UserController extends Controller
             courses: $request->courses(),
         );
 
-        return redirect()
-            ->route('employees.index')
+        return to_route('employees.index')
             ->with('success', "{$invite->name} has been invited.");
     }
 
@@ -235,7 +234,7 @@ class UserController extends Controller
             ['disk' => 'local'],
         );
 
-        ImportEmployeesJob::dispatch($request->user(), $payloadPath);
+        dispatch(new ImportEmployeesJob($request->user(), $payloadPath));
 
         return back()->with('success', 'Import started — you will receive an email when it completes.');
     }
@@ -405,8 +404,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()
-            ->route('employees.index')
+        return to_route('employees.index')
             ->with('success', "{$user->name} removed.");
     }
 
