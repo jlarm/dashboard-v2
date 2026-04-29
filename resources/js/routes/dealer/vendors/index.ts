@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::thankyou
 * @see app/Http/Controllers/Dealer/VendorController.php:139
@@ -42,43 +42,6 @@ thankyou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: thankyou.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
-* @route '/vendors/thankyou'
-*/
-const thankyouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: thankyou.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
-* @route '/vendors/thankyou'
-*/
-thankyouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: thankyou.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
-* @route '/vendors/thankyou'
-*/
-thankyouForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: thankyou.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-thankyou.form = thankyouForm
 
 const vendors = {
     thankyou: Object.assign(thankyou, thankyou),

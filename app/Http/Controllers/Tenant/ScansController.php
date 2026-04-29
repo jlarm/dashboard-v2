@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\Scans\Queries\GetCveList;
 use App\Domain\Tenant\Scans\Queries\GetCveRiskChart;
+use App\Domain\Tenant\Scans\Queries\GetExternalFindingDetails;
+use App\Domain\Tenant\Scans\Queries\GetExternalIpExposure;
 use App\Domain\Tenant\Scans\Queries\GetOpenPortsList;
 use App\Domain\Tenant\Scans\Queries\GetScanDashboard;
 use App\Domain\Tenant\Scans\Queries\GetScanOverview;
@@ -13,6 +15,7 @@ use App\Domain\Tenant\Scans\Queries\ResolveScannableStores;
 use App\Http\Controllers\Controller;
 use App\Models\Dealer\Store;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -28,6 +31,7 @@ class ScansController extends Controller
         GetCveList $getCveList,
         GetOpenPortsList $getOpenPortsList,
         GetCveRiskChart $getCveRiskChart,
+        GetExternalIpExposure $getExternalIpExposure,
     ): InertiaResponse {
         $scopedStoreIds = $resolveScannableStores->handle($request->user());
 
@@ -113,7 +117,51 @@ class ScansController extends Controller
                     return ['categories' => [], 'series' => ['critical' => [], 'high' => [], 'medium' => [], 'low' => []]];
                 }
             }, 'cve-chart'),
+            'externalIp' => Inertia::defer(static function () use ($store, $getExternalIpExposure): array {
+                try {
+                    return $getExternalIpExposure->handle($store)->toArray();
+                } catch (Exception $e) {
+                    Log::error('Failed to load external IP exposure', ['store_id' => $store->id, 'message' => $e->getMessage()]);
+
+                    return ['last_scan_finished' => null, 'assets' => []];
+                }
+            }, 'external-ip'),
         ]);
+    }
+
+    public function externalFinding(
+        Request $request,
+        ResolveScannableStores $resolveScannableStores,
+        GetExternalFindingDetails $getExternalFindingDetails,
+    ): JsonResponse {
+        $assetIp = (string) $request->query('asset_ip', '');
+        $findingName = (string) $request->query('finding_name', '');
+
+        if ($assetIp === '' || $findingName === '') {
+            return new JsonResponse(['finding' => null], 422);
+        }
+
+        $scopedStoreIds = $resolveScannableStores->handle($request->user());
+        $store = $scopedStoreIds->count() === 1 ? Store::query()->find($scopedStoreIds->first()) : null;
+
+        if (! $store instanceof Store) {
+            return new JsonResponse(['finding' => null], 404);
+        }
+
+        try {
+            $finding = $getExternalFindingDetails->handle($store, $assetIp, $findingName);
+        } catch (Exception $e) {
+            Log::error('Failed to load external finding details', [
+                'store_id' => $store->id,
+                'asset_ip' => $assetIp,
+                'finding_name' => $findingName,
+                'message' => $e->getMessage(),
+            ]);
+
+            return new JsonResponse(['finding' => null], 500);
+        }
+
+        return new JsonResponse(['finding' => $finding?->toArray()]);
     }
 
     /**

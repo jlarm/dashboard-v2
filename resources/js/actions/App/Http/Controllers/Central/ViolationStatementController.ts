@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::index
 * @see app/Http/Controllers/Central/ViolationStatementController.php:26
@@ -44,43 +44,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:26
-* @route '//dashboard.test/violation-statements'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:26
-* @route '//dashboard.test/violation-statements'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:26
-* @route '//dashboard.test/violation-statements'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-/**
 * @see \App\Http\Controllers\Central\ViolationStatementController::store
 * @see app/Http/Controllers/Central/ViolationStatementController.php:55
 * @route '//dashboard.test/violation-statements'
@@ -113,28 +76,6 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Central\ViolationStatementController::store
-* @see app/Http/Controllers/Central/ViolationStatementController.php:55
-* @route '//dashboard.test/violation-statements'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\ViolationStatementController::store
-* @see app/Http/Controllers/Central/ViolationStatementController.php:55
-* @route '//dashboard.test/violation-statements'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::update
@@ -195,38 +136,6 @@ update.patch = (args: { violationStatement: number | { id: number } } | [violati
 })
 
 /**
-* @see \App\Http\Controllers\Central\ViolationStatementController::update
-* @see app/Http/Controllers/Central/ViolationStatementController.php:67
-* @route '//dashboard.test/violation-statements/{violationStatement}'
-*/
-const updateForm = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\ViolationStatementController::update
-* @see app/Http/Controllers/Central/ViolationStatementController.php:67
-* @route '//dashboard.test/violation-statements/{violationStatement}'
-*/
-updateForm.patch = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-update.form = updateForm
-
-/**
 * @see \App\Http\Controllers\Central\ViolationStatementController::destroy
 * @see app/Http/Controllers/Central/ViolationStatementController.php:83
 * @route '//dashboard.test/violation-statements/{violationStatement}'
@@ -283,38 +192,6 @@ destroy.delete = (args: { violationStatement: number | { id: number } } | [viola
     url: destroy.url(args, options),
     method: 'delete',
 })
-
-/**
-* @see \App\Http\Controllers\Central\ViolationStatementController::destroy
-* @see app/Http/Controllers/Central/ViolationStatementController.php:83
-* @route '//dashboard.test/violation-statements/{violationStatement}'
-*/
-const destroyForm = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\ViolationStatementController::destroy
-* @see app/Http/Controllers/Central/ViolationStatementController.php:83
-* @route '//dashboard.test/violation-statements/{violationStatement}'
-*/
-destroyForm.delete = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
 
 const ViolationStatementController = { index, store, update, destroy }
 

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::recordResult
 * @see app/Http/Controllers/Tenant/UserController.php:313
@@ -53,28 +53,6 @@ recordResult.post = (args: { user: string | { slug: string }, course: number | {
     url: recordResult.url(args, options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\UserController::recordResult
-* @see app/Http/Controllers/Tenant/UserController.php:313
-* @route '/employees/{user}/courses/{course}/result'
-*/
-const recordResultForm = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: recordResult.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\UserController::recordResult
-* @see app/Http/Controllers/Tenant/UserController.php:313
-* @route '/employees/{user}/courses/{course}/result'
-*/
-recordResultForm.post = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: recordResult.url(args, options),
-    method: 'post',
-})
-
-recordResult.form = recordResultForm
 
 const courses = {
     recordResult: Object.assign(recordResult, recordResult),

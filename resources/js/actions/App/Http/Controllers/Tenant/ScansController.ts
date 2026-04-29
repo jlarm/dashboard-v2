@@ -1,7 +1,7 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:23
+* @see app/Http/Controllers/Tenant/ScansController.php:26
 * @route '/scans'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:23
+* @see app/Http/Controllers/Tenant/ScansController.php:26
 * @route '/scans'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:23
+* @see app/Http/Controllers/Tenant/ScansController.php:26
 * @route '/scans'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:23
+* @see app/Http/Controllers/Tenant/ScansController.php:26
 * @route '/scans'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,42 +44,49 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:23
-* @route '/scans'
+* @see \App\Http\Controllers\Tenant\ScansController::externalFinding
+* @see app/Http/Controllers/Tenant/ScansController.php:132
+* @route '/scans/external-finding'
 */
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
+export const externalFinding = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: externalFinding.url(options),
+    method: 'get',
+})
+
+externalFinding.definition = {
+    methods: ["get","head"],
+    url: '/scans/external-finding',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::externalFinding
+* @see app/Http/Controllers/Tenant/ScansController.php:132
+* @route '/scans/external-finding'
+*/
+externalFinding.url = (options?: RouteQueryOptions) => {
+    return externalFinding.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::externalFinding
+* @see app/Http/Controllers/Tenant/ScansController.php:132
+* @route '/scans/external-finding'
+*/
+externalFinding.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: externalFinding.url(options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:23
-* @route '/scans'
+* @see \App\Http\Controllers\Tenant\ScansController::externalFinding
+* @see app/Http/Controllers/Tenant/ScansController.php:132
+* @route '/scans/external-finding'
 */
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
+externalFinding.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: externalFinding.url(options),
+    method: 'head',
 })
 
-/**
-* @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:23
-* @route '/scans'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-const ScansController = { index }
+const ScansController = { index, externalFinding }
 
 export default ScansController

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\UserController::create
 * @see app/Http/Controllers/Dealer/UserController.php:21
@@ -68,43 +68,6 @@ create.head = (args: { invite: string | number | { invitation_token: string | nu
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:21
-* @route '/invite_registration/{invite}'
-*/
-const createForm = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:21
-* @route '/invite_registration/{invite}'
-*/
-createForm.get = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::create
-* @see app/Http/Controllers/Dealer/UserController.php:21
-* @route '/invite_registration/{invite}'
-*/
-createForm.head = (args: { invite: string | number | { invitation_token: string | number } } | [invite: string | number | { invitation_token: string | number } ] | string | number | { invitation_token: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
 * @see \App\Http\Controllers\Dealer\UserController::store
 * @see app/Http/Controllers/Dealer/UserController.php:34
 * @route '/employees/dealer/store'
@@ -137,28 +100,6 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:34
-* @route '/employees/dealer/store'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\UserController::store
-* @see app/Http/Controllers/Dealer/UserController.php:34
-* @route '/employees/dealer/store'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
 
 const UserController = { create, store }
 

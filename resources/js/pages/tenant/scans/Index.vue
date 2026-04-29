@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import CveListPanel from '@/pages/tenant/scans/components/CveListPanel.vue';
 import CveRiskChart from '@/pages/tenant/scans/components/CveRiskChart.vue';
+import ExternalIpExposurePanel from '@/pages/tenant/scans/components/ExternalIpExposurePanel.vue';
 import IssueStatCards from '@/pages/tenant/scans/components/IssueStatCards.vue';
 import OpenPortsPanel from '@/pages/tenant/scans/components/OpenPortsPanel.vue';
 import OverallRiskCards from '@/pages/tenant/scans/components/OverallRiskCards.vue';
@@ -78,6 +79,30 @@ type Filters = {
     port_asset_type: string | null;
 };
 
+type ExternalIpFinding = {
+    name: string;
+    risk_level: string;
+    affected_urls: number;
+    description: string;
+    solution: string;
+    references: string[];
+    instances: { url: string; method: string; parameters: string; attack: string; evidence: string }[];
+};
+
+type ExternalIpAsset = {
+    name: string;
+    ip_address: string | null;
+    open_ports: { port_number: string; port_description: string | null; risk_level: string }[];
+    findings: ExternalIpFinding[];
+    counts: { critical: number; high: number; medium: number; low: number; total: number };
+    tone: 'critical' | 'high' | 'medium' | 'low' | 'clean';
+};
+
+type ExternalIpPayload = {
+    last_scan_finished: string | null;
+    assets: ExternalIpAsset[];
+};
+
 type StoreOverviewItem = {
     id: number;
     name: string;
@@ -100,6 +125,7 @@ const props = defineProps<{
     cveList?: Cve[];
     openPorts?: Port[];
     cveChart?: ChartPayload;
+    externalIp?: ExternalIpPayload;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Scans', href: scan.index.url() }];
@@ -257,10 +283,15 @@ const canAccessSettings = computed(() => {
 
                                 <IssueStatCards :counts="dashboard.data.issue_counts" />
 
-                                <!-- External IP exposure — ported in 2c -->
-                                <section v-if="dashboard.data.has_external_scans" class="rounded-2xl border bg-card p-6 text-sm text-muted-foreground">
-                                    External IP exposure widget — coming in the next commit.
-                                </section>
+                                <Deferred v-if="dashboard.data.has_external_scans" data="externalIp">
+                                    <template #fallback>
+                                        <div class="h-48 animate-pulse rounded-2xl border bg-muted/40" />
+                                    </template>
+                                    <ExternalIpExposurePanel
+                                        :last-scan-finished="externalIp?.last_scan_finished ?? null"
+                                        :assets="externalIp?.assets ?? []"
+                                    />
+                                </Deferred>
 
                                 <Deferred v-if="dashboard.data.has_internal_scans" :data="['cveList', 'openPorts', 'cveChart']">
                                     <template #fallback>

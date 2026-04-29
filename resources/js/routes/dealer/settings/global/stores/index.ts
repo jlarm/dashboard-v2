@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::notifications
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:89
@@ -58,28 +58,6 @@ notifications.post = (args: { store: string | number | { id: string | number } }
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::notifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:89
-* @route '/global-settings/stores/{store}/notifications'
-*/
-const notificationsForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: notifications.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::notifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:89
-* @route '/global-settings/stores/{store}/notifications'
-*/
-notificationsForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: notifications.url(args, options),
-    method: 'post',
-})
-
-notifications.form = notificationsForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::remediations
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:98
 * @route '/global-settings/stores/{store}/remediations'
@@ -136,28 +114,6 @@ remediations.post = (args: { store: string | number | { id: string | number } } 
     url: remediations.url(args, options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::remediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:98
-* @route '/global-settings/stores/{store}/remediations'
-*/
-const remediationsForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: remediations.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::remediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:98
-* @route '/global-settings/stores/{store}/remediations'
-*/
-remediationsForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: remediations.url(args, options),
-    method: 'post',
-})
-
-remediations.form = remediationsForm
 
 const stores = {
     notifications: Object.assign(notifications, notifications),

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Store\CreateFirstStoreController::__invoke
 * @see app/Http/Controllers/Dealer/Store/CreateFirstStoreController.php:15
@@ -32,27 +32,5 @@ CreateFirstStoreController.post = (options?: RouteQueryOptions): RouteDefinition
     url: CreateFirstStoreController.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\Store\CreateFirstStoreController::__invoke
-* @see app/Http/Controllers/Dealer/Store/CreateFirstStoreController.php:15
-* @route '/dashboard/first-store'
-*/
-const CreateFirstStoreControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: CreateFirstStoreController.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\Store\CreateFirstStoreController::__invoke
-* @see app/Http/Controllers/Dealer/Store/CreateFirstStoreController.php:15
-* @route '/dashboard/first-store'
-*/
-CreateFirstStoreControllerForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: CreateFirstStoreController.url(options),
-    method: 'post',
-})
-
-CreateFirstStoreController.form = CreateFirstStoreControllerForm
 
 export default CreateFirstStoreController
