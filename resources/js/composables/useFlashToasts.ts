@@ -11,12 +11,27 @@ type FlashShape = {
 };
 
 export function useFlashToasts(): void {
+    let lastFlashSignature: string | null = null;
+
     const stop = router.on('success', (event) => {
         const flash = (event.detail.page.props as { flash?: FlashShape }).flash;
 
         if (!flash) {
             return;
         }
+
+        const signature = JSON.stringify([
+            flash.success ?? null,
+            flash.error ?? null,
+            flash.warning ?? null,
+            flash.info ?? null,
+            flash.message ?? null,
+        ]);
+
+        if (signature === lastFlashSignature) {
+            return;
+        }
+        lastFlashSignature = signature;
 
         if (flash.success) {
             toast.success(flash.success);

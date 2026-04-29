@@ -15,7 +15,7 @@ import {
     CheckCheck,
     Trash2,
 } from 'lucide-vue-next';
-import { computed, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 type NotificationLevel = 'success' | 'error' | 'info' | 'warning';
 
@@ -57,13 +57,32 @@ const open = ref(false);
 const busyId = ref<string | null>(null);
 const markingAll = ref(false);
 
+const POLL_INTERVAL_MS = 15_000;
+let pollTimer: ReturnType<typeof setInterval> | null = null;
+
+onMounted(() => {
+    pollTimer = setInterval(() => {
+        if (document.hidden) {
+            return;
+        }
+        router.reload({ only: ['notifications'] });
+    }, POLL_INTERVAL_MS);
+});
+
+onBeforeUnmount(() => {
+    if (pollTimer !== null) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+    }
+});
+
 const visitAction = (notification: NotificationItem, action: NotificationAction) => {
     if (!notification.read_at) {
         markRead(notification);
     }
 
     open.value = false;
-    router.visit(action.url);
+    window.open(action.url, '_blank', 'noopener');
 };
 
 const markRead = (notification: NotificationItem) => {
@@ -76,6 +95,7 @@ const markRead = (notification: NotificationItem) => {
         notificationRoutes.markRead.url({ notification: notification.id }),
         {},
         {
+            only: ['notifications'],
             preserveScroll: true,
             preserveState: true,
             onFinish: () => {
@@ -88,6 +108,7 @@ const markRead = (notification: NotificationItem) => {
 const destroy = (notification: NotificationItem) => {
     busyId.value = notification.id;
     router.delete(notificationRoutes.destroy.url({ notification: notification.id }), {
+        only: ['notifications'],
         preserveScroll: true,
         preserveState: true,
         onFinish: () => {
@@ -106,6 +127,7 @@ const markAllRead = () => {
         notificationRoutes.markAllRead.url(),
         {},
         {
+            only: ['notifications'],
             preserveScroll: true,
             preserveState: true,
             onFinish: () => {
