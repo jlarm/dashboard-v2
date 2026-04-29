@@ -10,9 +10,17 @@ import OpenPortsPanel from '@/pages/tenant/scans/components/OpenPortsPanel.vue';
 import OverallRiskCards from '@/pages/tenant/scans/components/OverallRiskCards.vue';
 import scan from '@/routes/dealer/scan';
 import type { BreadcrumbItem } from '@/types';
-import { Deferred, Head, Link, usePage } from '@inertiajs/vue3';
-import { AlertTriangle, FileSearch, Settings as SettingsIcon, ShieldAlert } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
+import {
+    AlertTriangle,
+    Download,
+    FileSearch,
+    Loader2,
+    RefreshCw,
+    Settings as SettingsIcon,
+    ShieldAlert,
+} from 'lucide-vue-next';
+import { computed, ref } from 'vue';
 
 type RiskGrade = {
     current: string | null;
@@ -134,6 +142,41 @@ const canAccessSettings = computed(() => {
     const roles = usePage().props.auth.roles;
     return roles.includes('super-admin') || roles.includes('Consultant');
 });
+
+const refreshing = ref(false);
+const generatingReport = ref<'executive' | 'technical' | null>(null);
+
+const refresh = (): void => {
+    refreshing.value = true;
+    router.post(
+        scan.refreshCache.url(),
+        {},
+        {
+            preserveScroll: true,
+            onFinish: () => {
+                refreshing.value = false;
+            },
+            onSuccess: () => {
+                router.reload({ preserveScroll: true });
+            },
+        },
+    );
+};
+
+const queueReport = (type: 'executive' | 'technical'): void => {
+    generatingReport.value = type;
+    router.post(
+        scan.queueReport.url(),
+        { type },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            onFinish: () => {
+                generatingReport.value = null;
+            },
+        },
+    );
+};
 </script>
 
 <template>
@@ -152,8 +195,39 @@ const canAccessSettings = computed(() => {
                               : 'Vulnerability and exposure findings.'
                     "
                 />
-                <div v-if="mode === 'dashboard' && canAccessSettings" class="flex items-center gap-2">
-                    <Button as-child variant="outline" size="sm">
+                <div v-if="mode === 'dashboard'" class="flex flex-wrap items-center gap-2">
+                    <template v-if="dashboard?.data?.has_short_name">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            :disabled="generatingReport !== null"
+                            @click="queueReport('executive')"
+                        >
+                            <Loader2 v-if="generatingReport === 'executive'" class="size-3.5 animate-spin" />
+                            <Download v-else class="size-3.5" />
+                            Executive Report
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            :disabled="generatingReport !== null"
+                            @click="queueReport('technical')"
+                        >
+                            <Loader2 v-if="generatingReport === 'technical'" class="size-3.5 animate-spin" />
+                            <Download v-else class="size-3.5" />
+                            Technical Report
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            :disabled="refreshing"
+                            @click="refresh"
+                        >
+                            <RefreshCw class="size-3.5" :class="{ 'animate-spin': refreshing }" />
+                            Refresh
+                        </Button>
+                    </template>
+                    <Button v-if="canAccessSettings" as-child variant="outline" size="sm">
                         <Link :href="scan.settings.url()">
                             <SettingsIcon class="size-3.5" />
                             Settings

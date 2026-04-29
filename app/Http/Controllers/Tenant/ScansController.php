@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Domain\Tenant\Scans\Actions\QueueScanReport;
+use App\Domain\Tenant\Scans\Actions\RefreshScanCache;
 use App\Domain\Tenant\Scans\Queries\GetCveList;
 use App\Domain\Tenant\Scans\Queries\GetCveRiskChart;
 use App\Domain\Tenant\Scans\Queries\GetExternalFindingDetails;
@@ -13,13 +15,17 @@ use App\Domain\Tenant\Scans\Queries\GetScanDashboard;
 use App\Domain\Tenant\Scans\Queries\GetScanOverview;
 use App\Domain\Tenant\Scans\Queries\ResolveScannableStores;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenant\Scans\QueueScanReportRequest;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use RuntimeException;
 
 class ScansController extends Controller
 {
@@ -129,6 +135,45 @@ class ScansController extends Controller
         ]);
     }
 
+    public function queueReport(
+        QueueScanReportRequest $request,
+        ResolveScannableStores $resolveScannableStores,
+        QueueScanReport $queueScanReport,
+    ): RedirectResponse {
+        $store = $this->resolveSingleStore($request, $resolveScannableStores);
+        $user = $request->user();
+
+        throw_unless($user instanceof User, RuntimeException::class, 'Authenticated user required.');
+
+        $type = $request->reportType();
+
+        $status = $queueScanReport->handle($store, $user, $type);
+
+        return match ($status) {
+            QueueScanReport::STATUS_READY => back()->with('flash.success', ucfirst($type).' report is ready to download.'),
+            QueueScanReport::STATUS_ALREADY_RUNNING => back()->with(
+                'flash.warning',
+                'Your '.ucfirst($type).' report is already being generated. You\'ll receive a notification when it\'s ready.',
+            ),
+            default => back()->with(
+                'flash.success',
+                ucfirst($type).' report queued — you\'ll get a notification when it\'s ready to download.',
+            ),
+        };
+    }
+
+    public function refreshCache(
+        Request $request,
+        ResolveScannableStores $resolveScannableStores,
+        RefreshScanCache $refreshScanCache,
+    ): RedirectResponse {
+        $store = $this->resolveSingleStore($request, $resolveScannableStores);
+
+        $refreshScanCache->handle($store);
+
+        return back()->with('flash.success', 'Scan cache refreshed.');
+    }
+
     public function externalFinding(
         Request $request,
         ResolveScannableStores $resolveScannableStores,
@@ -162,6 +207,19 @@ class ScansController extends Controller
         }
 
         return new JsonResponse(['finding' => $finding?->toArray()]);
+    }
+
+    private function resolveSingleStore(Request $request, ResolveScannableStores $resolveScannableStores): Store
+    {
+        $scopedStoreIds = $resolveScannableStores->handle($request->user());
+
+        abort_unless($scopedStoreIds->count() === 1, 404);
+
+        $store = Store::query()->find($scopedStoreIds->first());
+
+        abort_unless($store instanceof Store, 404);
+
+        return $store;
     }
 
     /**

@@ -294,6 +294,8 @@ Route::name('dealer.')->middleware([
 
         Route::get('scans', [App\Http\Controllers\Tenant\ScansController::class, 'index'])->middleware(['single.store'])->name('scan.index');
         Route::get('scans/external-finding', [App\Http\Controllers\Tenant\ScansController::class, 'externalFinding'])->middleware(['single.store'])->name('scan.external-finding');
+        Route::post('scans/queue-report', [App\Http\Controllers\Tenant\ScansController::class, 'queueReport'])->middleware(['single.store'])->name('scan.queue-report');
+        Route::post('scans/refresh-cache', [App\Http\Controllers\Tenant\ScansController::class, 'refreshCache'])->middleware(['single.store'])->name('scan.refresh-cache');
 
         Route::middleware(['single.store'])->group(function (): void {
             Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');

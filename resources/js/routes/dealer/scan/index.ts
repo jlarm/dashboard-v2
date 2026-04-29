@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
 import settings69f00b from './settings'
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:26
+* @see app/Http/Controllers/Tenant/ScansController.php:32
 * @route '/scans'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:26
+* @see app/Http/Controllers/Tenant/ScansController.php:32
 * @route '/scans'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -26,7 +26,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:26
+* @see app/Http/Controllers/Tenant/ScansController.php:32
 * @route '/scans'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,7 +36,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:26
+* @see app/Http/Controllers/Tenant/ScansController.php:32
 * @route '/scans'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -46,7 +46,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:132
+* @see app/Http/Controllers/Tenant/ScansController.php:177
 * @route '/scans/external-finding'
 */
 export const externalFinding = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -61,7 +61,7 @@ externalFinding.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:132
+* @see app/Http/Controllers/Tenant/ScansController.php:177
 * @route '/scans/external-finding'
 */
 externalFinding.url = (options?: RouteQueryOptions) => {
@@ -70,7 +70,7 @@ externalFinding.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:132
+* @see app/Http/Controllers/Tenant/ScansController.php:177
 * @route '/scans/external-finding'
 */
 externalFinding.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -80,12 +80,80 @@ externalFinding.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:132
+* @see app/Http/Controllers/Tenant/ScansController.php:177
 * @route '/scans/external-finding'
 */
 externalFinding.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: externalFinding.url(options),
     method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::queueReport
+* @see app/Http/Controllers/Tenant/ScansController.php:138
+* @route '/scans/queue-report'
+*/
+export const queueReport = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: queueReport.url(options),
+    method: 'post',
+})
+
+queueReport.definition = {
+    methods: ["post"],
+    url: '/scans/queue-report',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::queueReport
+* @see app/Http/Controllers/Tenant/ScansController.php:138
+* @route '/scans/queue-report'
+*/
+queueReport.url = (options?: RouteQueryOptions) => {
+    return queueReport.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::queueReport
+* @see app/Http/Controllers/Tenant/ScansController.php:138
+* @route '/scans/queue-report'
+*/
+queueReport.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: queueReport.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::refreshCache
+* @see app/Http/Controllers/Tenant/ScansController.php:165
+* @route '/scans/refresh-cache'
+*/
+export const refreshCache = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: refreshCache.url(options),
+    method: 'post',
+})
+
+refreshCache.definition = {
+    methods: ["post"],
+    url: '/scans/refresh-cache',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::refreshCache
+* @see app/Http/Controllers/Tenant/ScansController.php:165
+* @route '/scans/refresh-cache'
+*/
+refreshCache.url = (options?: RouteQueryOptions) => {
+    return refreshCache.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::refreshCache
+* @see app/Http/Controllers/Tenant/ScansController.php:165
+* @route '/scans/refresh-cache'
+*/
+refreshCache.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: refreshCache.url(options),
+    method: 'post',
 })
 
 /**
@@ -241,6 +309,8 @@ archive.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 const scan = {
     index: Object.assign(index, index),
     externalFinding: Object.assign(externalFinding, externalFinding),
+    queueReport: Object.assign(queueReport, queueReport),
+    refreshCache: Object.assign(refreshCache, refreshCache),
     settings: Object.assign(settings, settings69f00b),
     report: Object.assign(report, report),
     archive: Object.assign(archive, archive),
