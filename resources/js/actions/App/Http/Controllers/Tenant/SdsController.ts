@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::index
 * @see app/Http/Controllers/Tenant/SdsController.php:22
@@ -44,43 +44,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
-* @route '/sds-sheets'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
-* @route '/sds-sheets'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
-* @route '/sds-sheets'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-/**
 * @see \App\Http\Controllers\Tenant\SdsController::storeRequest
 * @see app/Http/Controllers/Tenant/SdsController.php:58
 * @route '/sds-sheets/request'
@@ -113,28 +76,6 @@ storeRequest.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: storeRequest.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::storeRequest
-* @see app/Http/Controllers/Tenant/SdsController.php:58
-* @route '/sds-sheets/request'
-*/
-const storeRequestForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: storeRequest.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::storeRequest
-* @see app/Http/Controllers/Tenant/SdsController.php:58
-* @route '/sds-sheets/request'
-*/
-storeRequestForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: storeRequest.url(options),
-    method: 'post',
-})
-
-storeRequest.form = storeRequestForm
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
@@ -197,43 +138,6 @@ view.head = (args: { uuid: string | number } | [uuid: string | number ] | string
     url: view.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
-* @route '/sds-sheets/{uuid}/view'
-*/
-const viewForm = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: view.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
-* @route '/sds-sheets/{uuid}/view'
-*/
-viewForm.get = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: view.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
-* @route '/sds-sheets/{uuid}/view'
-*/
-viewForm.head = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: view.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-view.form = viewForm
 
 const SdsController = { index, storeRequest, view }
 

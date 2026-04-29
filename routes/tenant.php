@@ -292,7 +292,7 @@ Route::name('dealer.')->middleware([
             });
         });
 
-        Route::get('scans', App\Http\Livewire\Tenant\Scans\Index::class)->middleware(['single.store'])->name('scan.index');
+        Route::get('scans', [App\Http\Controllers\Tenant\ScansController::class, 'index'])->middleware(['single.store'])->name('scan.index');
 
         Route::middleware(['single.store'])->group(function (): void {
             Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');

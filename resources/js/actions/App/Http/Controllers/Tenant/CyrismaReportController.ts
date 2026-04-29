@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::download
 * @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
@@ -60,43 +60,6 @@ download.head = (args: { type: string | number } | [type: string | number ] | st
     url: download.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
-* @route '/scans/report/{type}'
-*/
-const downloadForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
-* @route '/scans/report/{type}'
-*/
-downloadForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
-* @route '/scans/report/{type}'
-*/
-downloadForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-download.form = downloadForm
 
 const CyrismaReportController = { download }
 

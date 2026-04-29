@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::run
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:116
@@ -32,28 +32,6 @@ run.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: run.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::run
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:116
-* @route '/global-settings/reset-courses'
-*/
-const runForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: run.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::run
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:116
-* @route '/global-settings/reset-courses'
-*/
-runForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: run.url(options),
-    method: 'post',
-})
-
-run.form = runForm
 
 const resetCourses = {
     run: Object.assign(run, run),
