@@ -9,8 +9,8 @@ import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import CyrismaController from '@/actions/App/Http/Controllers/Tenant/CyrismaController';
 import scan from '@/routes/dealer/scan';
 import type { BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/vue3';
-import { CheckCircle2, Loader2, ShieldCheck } from 'lucide-vue-next';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ArrowLeft, CheckCircle2, Loader2 } from 'lucide-vue-next';
 
 type ScanSettings = {
     store_id: number;
@@ -44,16 +44,22 @@ const submit = (): void => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
-            <Heading
-                title="Scan Instance Settings"
-                :description="`Connect ${settings.store_name} to a Cyrisma instance to enable vulnerability scans.`"
-            />
+            <div class="flex items-start gap-3">
+                <Link
+                    :href="scan.index.url()"
+                    class="inline-flex size-8 shrink-0 items-center justify-center rounded-md border text-muted-foreground hover:bg-muted hover:text-foreground"
+                    aria-label="Back to scans"
+                >
+                    <ArrowLeft class="size-4" />
+                </Link>
+                <Heading
+                    title="Scan Instance Settings"
+                    :description="`Connect ${settings.store_name} to a Cyrisma instance to enable vulnerability scans.`"
+                />
+            </div>
 
             <section class="rounded-2xl border bg-card">
                 <header class="flex items-center gap-3 px-6 pt-6">
-                    <div class="grid size-10 place-items-center rounded-lg bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-400">
-                        <ShieldCheck class="size-5" />
-                    </div>
                     <div class="min-w-0">
                         <h2 class="text-base font-semibold tracking-tight text-foreground">Cyrisma Instance</h2>
                         <p class="mt-0.5 text-sm text-muted-foreground">
