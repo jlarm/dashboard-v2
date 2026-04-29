@@ -150,13 +150,13 @@ class ScansController extends Controller
         $status = $queueScanReport->handle($store, $user, $type);
 
         return match ($status) {
-            QueueScanReport::STATUS_READY => back()->with('flash.success', ucfirst($type).' report is ready to download.'),
+            QueueScanReport::STATUS_READY => back()->with('success', ucfirst($type).' report is ready to download.'),
             QueueScanReport::STATUS_ALREADY_RUNNING => back()->with(
-                'flash.warning',
+                'warning',
                 'Your '.ucfirst($type).' report is already being generated. You\'ll receive a notification when it\'s ready.',
             ),
             default => back()->with(
-                'flash.success',
+                'success',
                 ucfirst($type).' report queued — you\'ll get a notification when it\'s ready to download.',
             ),
         };
@@ -171,7 +171,7 @@ class ScansController extends Controller
 
         $refreshScanCache->handle($store);
 
-        return back()->with('flash.success', 'Scan cache refreshed.');
+        return back()->with('success', 'Scan cache refreshed.');
     }
 
     public function externalFinding(

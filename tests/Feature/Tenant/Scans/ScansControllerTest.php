@@ -53,7 +53,7 @@ describe('POST scans/queue-report', function (): void {
             ->from(route('dealer.scan.index'))
             ->post(route('dealer.scan.queue-report'), ['type' => 'executive'])
             ->assertRedirect(route('dealer.scan.index'))
-            ->assertSessionHas('flash.success');
+            ->assertSessionHas('success');
 
         Queue::assertPushed(GenerateCyrismaReportJob::class);
     });
@@ -80,7 +80,7 @@ describe('POST scans/queue-report', function (): void {
             ->from(route('dealer.scan.index'))
             ->post(route('dealer.scan.queue-report'), ['type' => 'executive'])
             ->assertRedirect(route('dealer.scan.index'))
-            ->assertSessionHas('flash.warning');
+            ->assertSessionHas('warning');
 
         Queue::assertNothingPushed();
     });
@@ -107,6 +107,6 @@ describe('POST scans/refresh-cache', function (): void {
             ->from(route('dealer.scan.index'))
             ->post(route('dealer.scan.refresh-cache'))
             ->assertRedirect(route('dealer.scan.index'))
-            ->assertSessionHas('flash.success');
+            ->assertSessionHas('success');
     });
 });

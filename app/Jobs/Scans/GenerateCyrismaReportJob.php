@@ -6,11 +6,9 @@ namespace App\Jobs\Scans;
 
 use App\Models\Dealer\Store;
 use App\Models\User;
+use App\Notifications\Scans\ScanReportFailedNotification;
+use App\Notifications\Scans\ScanReportReadyNotification;
 use App\Services\CyrismaService;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\DomPDF\PDF as DomPdfWrapper;
-use Filament\Notifications\Actions\Action;
-use Filament\Notifications\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -19,6 +17,8 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
+use Spatie\LaravelPdf\Enums\Format;
+use Spatie\LaravelPdf\Facades\Pdf as SpatiePdf;
 use Throwable;
 
 class GenerateCyrismaReportJob implements ShouldQueue
@@ -59,16 +59,24 @@ class GenerateCyrismaReportJob implements ShouldQueue
             ? 'tenant.scans.reports.executive'
             : 'tenant.scans.reports.technical';
 
-        $pdf = Pdf::loadView($view, $data)->setPaper('letter');
+        $pdf = SpatiePdf::view($view, $data)
+            ->driver('cloudflare')
+            ->format(Format::Letter);
 
         if ($this->type === 'technical') {
-            $this->addTechnicalPageNumbers($pdf);
+            $pdf
+                ->headerHtml('<span></span>')
+                ->footerHtml(
+                    '<div style="font-family: Arial, sans-serif; font-size: 9px; color: #6b7280; width: 100%; text-align: center;">'
+                    .'Page <span class="pageNumber"></span> of <span class="totalPages"></span>'
+                    .'</div>'
+                );
         }
 
-        $pdfBinary = $pdf->output();
+        $pdfBinary = base64_decode($pdf->base64(), true) ?: '';
 
         $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $this->storeId, $this->type);
-        Cache::put($cacheKey, $pdfBinary, now()->addMinutes(30));
+        Cache::put($cacheKey, $pdfBinary, now()->addHours(4));
 
         Log::info('GenerateCyrismaReportJob complete', ['store_id' => $this->storeId, 'type' => $this->type]);
 
@@ -87,12 +95,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
         $storeName = Store::query()->find($this->storeId)?->name ?? 'your store';
 
         if ($user instanceof User) {
-            Notification::make()
-                ->title('Report Generation Failed')
-                ->body('We were unable to generate the '.ucfirst($this->type).' report for '.$storeName.'. Please try again.')
-                ->danger()
-                ->sendToDatabase($user)
-                ->send();
+            $user->notify(new ScanReportFailedNotification($this->type, $storeName));
         }
     }
 
@@ -140,30 +143,6 @@ class GenerateCyrismaReportJob implements ShouldQueue
             'cveItems' => $cveItems,
             'openPorts' => $openPorts,
         ];
-    }
-
-    private function addTechnicalPageNumbers(DomPdfWrapper $pdf): void
-    {
-        $pdf->render();
-
-        $dompdf = $pdf->getDomPDF();
-        $canvas = $dompdf->getCanvas();
-        $fontMetrics = $dompdf->getFontMetrics();
-        $font = $fontMetrics->getFont('DejaVu Sans', 'normal');
-
-        $canvas->page_script(function (int $pageNumber, int $pageCount, $canvas) use ($font, $fontMetrics): void {
-            if ($pageNumber <= 1) {
-                return;
-            }
-
-            $text = sprintf('Page %d of %d', $pageNumber - 1, max($pageCount - 1, 1));
-            $fontSize = 9;
-            $textWidth = $fontMetrics->getTextWidth($text, $font, $fontSize);
-            $x = ($canvas->get_width() - $textWidth) / 2;
-            $y = $canvas->get_height() - 24;
-
-            $canvas->text($x, $y, $text, $font, $fontSize, [0.42, 0.45, 0.5]);
-        });
     }
 
     /**
@@ -633,20 +612,6 @@ class GenerateCyrismaReportJob implements ShouldQueue
             return;
         }
 
-        $downloadUrl = route('dealer.scan.report', ['type' => $this->type]);
-
-        Notification::make()
-            ->title(ucfirst($this->type).' Report Ready')
-            ->body('Your '.ucfirst($this->type).' scan report for '.$store->name.' has been generated and is ready to download.')
-            ->success()
-            ->actions([
-                Action::make('download')
-                    ->label('Download Report')
-                    ->url($downloadUrl)
-                    ->openUrlInNewTab()
-                    ->button(),
-            ])
-            ->sendToDatabase($user)
-            ->send();
+        $user->notify(new ScanReportReadyNotification($this->type, $store->name));
     }
 }
