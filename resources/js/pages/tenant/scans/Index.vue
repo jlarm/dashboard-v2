@@ -13,6 +13,7 @@ import type { BreadcrumbItem } from '@/types';
 import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
 import {
     AlertTriangle,
+    ArrowRight,
     Download,
     FileSearch,
     Loader2,
@@ -157,7 +158,7 @@ const refresh = (): void => {
                 refreshing.value = false;
             },
             onSuccess: () => {
-                router.reload({ preserveScroll: true });
+                router.reload();
             },
         },
     );
@@ -341,10 +342,28 @@ const queueReport = (type: 'executive' | 'technical'): void => {
                             </div>
                         </section>
 
-                        <section v-else-if="!dashboard.data.has_short_name" class="rounded-2xl border bg-card py-16 text-center">
-                            <p class="text-2xl font-semibold tracking-tight italic text-foreground">
-                                Contact your consultant today to get started.
-                            </p>
+                        <section v-else-if="!dashboard.data.has_short_name" class="rounded-2xl border bg-card">
+                            <div class="mx-auto flex max-w-xl flex-col items-center px-6 py-16 text-center">
+                                <h2 class="text-lg font-semibold tracking-tight text-foreground">
+                                    Scans aren't set up for {{ store?.name ?? 'this store' }}
+                                </h2>
+                                <p class="mt-2 text-sm text-muted-foreground">
+                                    This store hasn't been linked to an instance yet, so there's no
+                                    vulnerability data to show. Contact your consultant to get scans running.
+                                </p>
+                                <div class="mt-6 flex flex-wrap justify-center gap-2">
+                                    <Button v-if="canAccessSettings" as-child size="sm">
+                                        <Link :href="scan.settings.url()">
+                                            <SettingsIcon class="size-3.5" />
+                                            Configure instance
+                                            <ArrowRight class="size-3.5" />
+                                        </Link>
+                                    </Button>
+                                    <Button as-child variant="outline" size="sm">
+                                        <a href="mailto:support@autorisknow.com">Contact your consultant</a>
+                                    </Button>
+                                </div>
+                            </div>
                         </section>
 
                         <template v-else>
