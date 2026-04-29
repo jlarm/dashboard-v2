@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\ContractPdfController::generate
 * @see app/Http/Controllers/Central/ContractPdfController.php:16
@@ -56,6 +56,28 @@ generate.post = (args: { contract: string | { uuid: string } } | [contract: stri
     url: generate.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::generate
+* @see app/Http/Controllers/Central/ContractPdfController.php:16
+* @route '//dashboard.test/contracts/{contract}/pdf'
+*/
+const generateForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::generate
+* @see app/Http/Controllers/Central/ContractPdfController.php:16
+* @route '//dashboard.test/contracts/{contract}/pdf'
+*/
+generateForm.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+generate.form = generateForm
 
 /**
 * @see \App\Http\Controllers\Central\ContractPdfController::download
@@ -124,6 +146,43 @@ download.head = (args: { contract: string | { uuid: string } } | [contract: stri
     url: download.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::download
+* @see app/Http/Controllers/Central/ContractPdfController.php:25
+* @route '//dashboard.test/contracts/{contract}/pdf'
+*/
+const downloadForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::download
+* @see app/Http/Controllers/Central/ContractPdfController.php:25
+* @route '//dashboard.test/contracts/{contract}/pdf'
+*/
+downloadForm.get = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::download
+* @see app/Http/Controllers/Central/ContractPdfController.php:25
+* @route '//dashboard.test/contracts/{contract}/pdf'
+*/
+downloadForm.head = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
 
 const ContractPdfController = { generate, download }
 

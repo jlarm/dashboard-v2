@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults, validateParameters } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults, validateParameters } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\IndividualCreateController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/IndividualCreateController.php:15
@@ -72,6 +72,43 @@ create.head = (args?: { individualAudit?: string | number | { id: string | numbe
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualCreateController.php:15
+* @route '/audits/deal-jackets-archived/create/{individualAudit?}'
+*/
+const createForm = (args?: { individualAudit?: string | number | { id: string | number } } | [individualAudit: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualCreateController.php:15
+* @route '/audits/deal-jackets-archived/create/{individualAudit?}'
+*/
+createForm.get = (args?: { individualAudit?: string | number | { id: string | number } } | [individualAudit: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualCreateController.php:15
+* @route '/audits/deal-jackets-archived/create/{individualAudit?}'
+*/
+createForm.head = (args?: { individualAudit?: string | number | { id: string | number } } | [individualAudit: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+create.form = createForm
+
+/**
 * @see \App\Http\Controllers\Dealer\Audit\IndividualController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/IndividualController.php:16
 * @route '/audits/deal-jackets-archived/{individualAudit}'
@@ -138,6 +175,43 @@ show.head = (args: { individualAudit: string | number | { uuid: string | number 
     url: show.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualController.php:16
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+const showForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualController.php:16
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+showForm.get = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualController.php:16
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+showForm.head = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
 
 /**
 * @see \App\Http\Controllers\Dealer\Audit\SingleIndividualController::__invoke
@@ -208,6 +282,43 @@ edit.head = (args: { individualAudit: string | number | { uuid: string | number 
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\Audit\SingleIndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/SingleIndividualController.php:17
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+const editForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\SingleIndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/SingleIndividualController.php:17
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+editForm.get = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\SingleIndividualController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/SingleIndividualController.php:17
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+editForm.head = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+edit.form = editForm
+
+/**
 * @see \App\Http\Controllers\Dealer\Audit\IndividualIndexController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/IndividualIndexController.php:13
 * @route '/audits/deal-jackets-archived'
@@ -250,6 +361,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualIndexController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualIndexController.php:13
+* @route '/audits/deal-jackets-archived'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualIndexController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualIndexController.php:13
+* @route '/audits/deal-jackets-archived'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualIndexController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualIndexController.php:13
+* @route '/audits/deal-jackets-archived'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
 
 const individual = {
     create: Object.assign(create, create),

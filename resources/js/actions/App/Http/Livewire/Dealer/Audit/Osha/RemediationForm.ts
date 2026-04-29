@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Osha/RemediationForm.php:7
@@ -66,5 +66,42 @@ RemediationForm.head = (args: { oshaViolationAudit: string | number | { uuid: st
     url: RemediationForm.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/RemediationForm.php:7
+* @route '/audits/osha/{oshaViolationAudit}/remediation'
+*/
+const RemediationFormForm = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RemediationForm.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/RemediationForm.php:7
+* @route '/audits/osha/{oshaViolationAudit}/remediation'
+*/
+RemediationFormForm.get = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RemediationForm.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/RemediationForm.php:7
+* @route '/audits/osha/{oshaViolationAudit}/remediation'
+*/
+RemediationFormForm.head = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RemediationForm.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+RemediationForm.form = RemediationFormForm
 
 export default RemediationForm
