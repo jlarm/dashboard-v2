@@ -20,7 +20,6 @@ use App\Models\SharedDocument;
 use App\Models\User;
 use App\Models\ViolationStatement;
 use App\Observers\CourseResultsObserver;
-use App\Observers\UserObserver;
 use App\Policies\Central\ContractPolicy;
 use App\Policies\Central\DealershipPolicy;
 use App\Policies\Central\DocumentPolicy;
@@ -178,7 +177,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function bootEvent(): void
     {
-        User::observe(UserObserver::class);
         CourseResults::observe(CourseResultsObserver::class);
     }
 }

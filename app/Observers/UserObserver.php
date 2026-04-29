@@ -5,46 +5,38 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class UserObserver
 {
-    /**
-     * Handle the User "created" event.
-     */
-    public function created(User $user): void
+    public function saving(User $user): void
     {
-        //
-    }
+        if ($user->isDirty('slug')) {
+            return;
+        }
 
-    /**
-     * Handle the User "updated" event.
-     */
-    public function updated(User $user): void
-    {
-        //
-    }
+        if ($user->exists && ! $user->isDirty('name')) {
+            return;
+        }
 
-    /**
-     * Handle the User "deleted" event.
-     */
-    public function deleted(User $user): void
-    {
-        //
-    }
+        if (empty($user->name)) {
+            return;
+        }
 
-    /**
-     * Handle the User "restored" event.
-     */
-    public function restored(User $user): void
-    {
-        //
-    }
+        $base = Str::slug($user->name);
+        $slug = $base;
+        $counter = 1;
 
-    /**
-     * Handle the User "force deleted" event.
-     */
-    public function forceDeleted(User $user): void
-    {
-        //
+        while (User::query()
+            ->where('slug', $slug)
+            ->when($user->exists, fn ($query) => $query->where($user->getKeyName(), '!=', $user->getKey()))
+            ->withTrashed()
+            ->exists()
+        ) {
+            $slug = "{$base}-{$counter}";
+            $counter++;
+        }
+
+        $user->slug = $slug;
     }
 }

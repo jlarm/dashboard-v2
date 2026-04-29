@@ -11,10 +11,12 @@ use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
 use App\Notifications\ResetPassword;
+use App\Observers\UserObserver;
 use App\Traits\HasAudits;
 use App\Traits\HasCourses;
 use App\Traits\HasManuals;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,8 +32,6 @@ use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property int $id
@@ -41,6 +41,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int $total_completed_courses
  * @property-read bool $user_has_not_completed_courses
  */
+#[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens,
@@ -49,7 +50,6 @@ class User extends Authenticatable implements MustVerifyEmail
         HasFactory,
         HasManuals,
         HasRoles,
-        HasSlug,
         LogsActivity,
         Notifiable,
         SoftDeletes;
@@ -73,13 +73,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
 
     /**
      * @return BelongsTo<Store, User>

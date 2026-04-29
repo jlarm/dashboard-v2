@@ -5,29 +5,21 @@ declare(strict_types=1);
 namespace App\Models\Dealer;
 
 use App\Models\User;
+use App\Observers\Dealer\DepartmentObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Override;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
+#[ObservedBy(DepartmentObserver::class)]
 class Department extends Model
 {
-    use HasSlug;
-
     #[Override]
     protected $fillable = [
         'name',
         'slug',
     ];
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
 
     public function users(): HasMany
     {

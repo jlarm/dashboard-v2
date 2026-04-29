@@ -22,7 +22,9 @@ use App\Models\DealerDoc;
 use App\Models\FitTestDoc;
 use App\Models\RemediationSetting;
 use App\Models\User;
+use App\Observers\Dealer\StoreObserver;
 use App\Traits\HasGrade;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -32,15 +34,14 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property-read RemediationSetting|null $remediationSettings
  */
+#[ObservedBy(StoreObserver::class)]
 class Store extends Model implements HasMedia
 {
-    use HasGrade, HasSlug, InteractsWithMedia, LogsActivity;
+    use HasGrade, InteractsWithMedia, LogsActivity;
 
     private const GRADE_CACHE_TTL = 300;
 
@@ -110,13 +111,6 @@ class Store extends Model implements HasMedia
     protected $hidden = [
         'fi_password',
     ];
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
 
     public function users(): BelongsToMany
     {
