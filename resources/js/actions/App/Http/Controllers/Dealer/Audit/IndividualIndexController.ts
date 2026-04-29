@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\IndividualIndexController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/IndividualIndexController.php:13
@@ -42,5 +42,42 @@ IndividualIndexController.head = (options?: RouteQueryOptions): RouteDefinition<
     url: IndividualIndexController.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualIndexController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualIndexController.php:13
+* @route '/audits/deal-jackets-archived'
+*/
+const IndividualIndexControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: IndividualIndexController.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualIndexController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualIndexController.php:13
+* @route '/audits/deal-jackets-archived'
+*/
+IndividualIndexControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: IndividualIndexController.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\IndividualIndexController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/IndividualIndexController.php:13
+* @route '/audits/deal-jackets-archived'
+*/
+IndividualIndexControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: IndividualIndexController.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+IndividualIndexController.form = IndividualIndexControllerForm
 
 export default IndividualIndexController

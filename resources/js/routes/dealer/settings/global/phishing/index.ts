@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::update
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
@@ -32,6 +32,38 @@ update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(options),
     method: 'patch',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::update
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @route '/global-settings/phishing'
+*/
+const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::update
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @route '/global-settings/phishing'
+*/
+updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
 
 const phishing = {
     update: Object.assign(update, update),

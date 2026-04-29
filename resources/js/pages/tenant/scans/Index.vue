@@ -2,7 +2,10 @@
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
+import CveListPanel from '@/pages/tenant/scans/components/CveListPanel.vue';
+import CveRiskChart from '@/pages/tenant/scans/components/CveRiskChart.vue';
 import IssueStatCards from '@/pages/tenant/scans/components/IssueStatCards.vue';
+import OpenPortsPanel from '@/pages/tenant/scans/components/OpenPortsPanel.vue';
 import OverallRiskCards from '@/pages/tenant/scans/components/OverallRiskCards.vue';
 import scan from '@/routes/dealer/scan';
 import type { BreadcrumbItem } from '@/types';
@@ -42,6 +45,39 @@ type DeferredDashboard = {
     error: string | null;
 };
 
+type Cve = {
+    id: string;
+    title: string;
+    risk: string;
+    score: number | null;
+    published_date: string | null;
+    affected_targets: string | null;
+    num_affected_targets: number | null;
+    type: string;
+};
+
+type Port = {
+    port_number: string;
+    port_description: string | null;
+    risk_level: string;
+    machine_count: number;
+};
+
+type ChartPayload = {
+    categories: string[];
+    series: {
+        critical: number[];
+        high: number[];
+        medium: number[];
+        low: number[];
+    };
+};
+
+type Filters = {
+    cve_asset_type: string | null;
+    port_asset_type: string | null;
+};
+
 type StoreOverviewItem = {
     id: number;
     name: string;
@@ -60,6 +96,10 @@ const props = defineProps<{
     dashboard: DeferredDashboard | null;
     store: StoreSummary | null;
     error: string | null;
+    filters?: Filters;
+    cveList?: Cve[];
+    openPorts?: Port[];
+    cveChart?: ChartPayload;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Scans', href: scan.index.url() }];
@@ -217,19 +257,36 @@ const canAccessSettings = computed(() => {
 
                                 <IssueStatCards :counts="dashboard.data.issue_counts" />
 
-                                <!-- Placeholder cards for widgets ported in next commit -->
+                                <!-- External IP exposure — ported in 2c -->
                                 <section v-if="dashboard.data.has_external_scans" class="rounded-2xl border bg-card p-6 text-sm text-muted-foreground">
                                     External IP exposure widget — coming in the next commit.
                                 </section>
 
-                                <section v-if="dashboard.data.has_internal_scans" class="grid grid-cols-1 gap-5 md:grid-cols-3">
-                                    <div class="rounded-2xl border bg-card p-6 text-sm text-muted-foreground md:col-span-2">
-                                        CVE list + open ports widgets — coming in the next commit.
-                                    </div>
-                                    <div class="rounded-2xl border bg-card p-6 text-sm text-muted-foreground">
-                                        CVE risk chart — coming in the next commit.
-                                    </div>
-                                </section>
+                                <Deferred v-if="dashboard.data.has_internal_scans" :data="['cveList', 'openPorts', 'cveChart']">
+                                    <template #fallback>
+                                        <section class="grid grid-cols-1 gap-5 md:grid-cols-3">
+                                            <div class="h-72 animate-pulse rounded-2xl border bg-muted/40 md:col-span-2" />
+                                            <div class="h-72 animate-pulse rounded-2xl border bg-muted/40" />
+                                        </section>
+                                    </template>
+
+                                    <section class="grid grid-cols-1 gap-5 md:grid-cols-3">
+                                        <div class="space-y-5 md:col-span-2">
+                                            <CveListPanel
+                                                :cves="cveList ?? []"
+                                                :initial-asset-type="filters?.cve_asset_type ?? null"
+                                            />
+                                            <OpenPortsPanel
+                                                :ports="openPorts ?? []"
+                                                :initial-asset-type="filters?.port_asset_type ?? null"
+                                            />
+                                        </div>
+                                        <CveRiskChart
+                                            :categories="cveChart?.categories ?? []"
+                                            :series="cveChart?.series ?? { critical: [], high: [], medium: [], low: [] }"
+                                        />
+                                    </section>
+                                </Deferred>
 
                                 <section
                                     v-if="!dashboard.data.has_external_scans && !dashboard.data.has_internal_scans"

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\ContractSendController::review
 * @see app/Http/Controllers/Central/ContractSendController.php:18
@@ -58,6 +58,28 @@ review.post = (args: { contract: string | { uuid: string } } | [contract: string
 })
 
 /**
+* @see \App\Http\Controllers\Central\ContractSendController::review
+* @see app/Http/Controllers/Central/ContractSendController.php:18
+* @route '//dashboard.test/contracts/{contract}/send'
+*/
+const reviewForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: review.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractSendController::review
+* @see app/Http/Controllers/Central/ContractSendController.php:18
+* @route '//dashboard.test/contracts/{contract}/send'
+*/
+reviewForm.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: review.url(args, options),
+    method: 'post',
+})
+
+review.form = reviewForm
+
+/**
 * @see \App\Http\Controllers\Central\ContractSendController::pdf
 * @see app/Http/Controllers/Central/ContractSendController.php:28
 * @route '//dashboard.test/contracts/{contract}/pdf/send'
@@ -114,6 +136,28 @@ pdf.post = (args: { contract: string | { uuid: string } } | [contract: string | 
     url: pdf.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Central\ContractSendController::pdf
+* @see app/Http/Controllers/Central/ContractSendController.php:28
+* @route '//dashboard.test/contracts/{contract}/pdf/send'
+*/
+const pdfForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: pdf.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractSendController::pdf
+* @see app/Http/Controllers/Central/ContractSendController.php:28
+* @route '//dashboard.test/contracts/{contract}/pdf/send'
+*/
+pdfForm.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: pdf.url(args, options),
+    method: 'post',
+})
+
+pdf.form = pdfForm
 
 const ContractSendController = { review, pdf }
 

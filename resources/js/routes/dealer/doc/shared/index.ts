@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
 * @see app/Http/Controllers/Tenant/DealerDocController.php:74
@@ -60,6 +60,43 @@ download.head = (args: { sharedDocument: string | number } | [sharedDocument: st
     url: download.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::download
+* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+const downloadForm = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::download
+* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadForm.get = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::download
+* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadForm.head = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
 
 const shared = {
     download: Object.assign(download, download),

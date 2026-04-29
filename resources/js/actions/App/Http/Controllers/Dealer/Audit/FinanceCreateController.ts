@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\FinanceCreateController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/FinanceCreateController.php:14
@@ -60,5 +60,42 @@ FinanceCreateController.head = (args: { store: string | number } | [store: strin
     url: FinanceCreateController.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\FinanceCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/FinanceCreateController.php:14
+* @route '/audits/finance/create/{store}'
+*/
+const FinanceCreateControllerForm = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: FinanceCreateController.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\FinanceCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/FinanceCreateController.php:14
+* @route '/audits/finance/create/{store}'
+*/
+FinanceCreateControllerForm.get = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: FinanceCreateController.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\FinanceCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/FinanceCreateController.php:14
+* @route '/audits/finance/create/{store}'
+*/
+FinanceCreateControllerForm.head = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: FinanceCreateController.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+FinanceCreateController.form = FinanceCreateControllerForm
 
 export default FinanceCreateController

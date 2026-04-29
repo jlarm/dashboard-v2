@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\Audit\OshaCreateController::__invoke
 * @see app/Http/Controllers/Dealer/Audit/OshaCreateController.php:14
@@ -60,6 +60,43 @@ create.head = (args: { store: string | number } | [store: string | number ] | st
     url: create.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\OshaCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/OshaCreateController.php:14
+* @route '/audits/osha/create/{store}'
+*/
+const createForm = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\OshaCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/OshaCreateController.php:14
+* @route '/audits/osha/create/{store}'
+*/
+createForm.get = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\Audit\OshaCreateController::__invoke
+* @see app/Http/Controllers/Dealer/Audit/OshaCreateController.php:14
+* @route '/audits/osha/create/{store}'
+*/
+createForm.head = (args: { store: string | number } | [store: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: create.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+create.form = createForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Osha\Edit::__invoke
@@ -130,6 +167,43 @@ edit.head = (args: { oshaViolationAudit: string | number | { uuid: string | numb
 })
 
 /**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Edit::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Edit.php:7
+* @route '/audits/osha/{oshaViolationAudit}/edit'
+*/
+const editForm = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Edit::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Edit.php:7
+* @route '/audits/osha/{oshaViolationAudit}/edit'
+*/
+editForm.get = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Edit::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Edit.php:7
+* @route '/audits/osha/{oshaViolationAudit}/edit'
+*/
+editForm.head = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+edit.form = editForm
+
+/**
 * @see \App\Http\Livewire\Dealer\Audit\Osha\Index::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Osha/Index.php:7
 * @route '/audits/osha'
@@ -172,6 +246,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Index::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Index.php:7
+* @route '/audits/osha'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Index::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Index.php:7
+* @route '/audits/osha'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Index::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Index.php:7
+* @route '/audits/osha'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
 
 /**
 * @see \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::__invoke
@@ -242,6 +353,43 @@ remediation.head = (args: { oshaViolationAudit: string | number | { uuid: string
 })
 
 /**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/RemediationForm.php:7
+* @route '/audits/osha/{oshaViolationAudit}/remediation'
+*/
+const remediationForm = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: remediation.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/RemediationForm.php:7
+* @route '/audits/osha/{oshaViolationAudit}/remediation'
+*/
+remediationForm.get = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: remediation.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\RemediationForm::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/RemediationForm.php:7
+* @route '/audits/osha/{oshaViolationAudit}/remediation'
+*/
+remediationForm.head = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: remediation.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+remediation.form = remediationForm
+
+/**
 * @see \App\Http\Livewire\Dealer\Audit\Osha\Single::__invoke
 * @see app/Http/Livewire/Dealer/Audit/Osha/Single.php:7
 * @route '/audits/osha/{oshaViolationAudit}'
@@ -308,6 +456,43 @@ show.head = (args: { oshaViolationAudit: string | number | { uuid: string | numb
     url: show.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Single::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Single.php:7
+* @route '/audits/osha/{oshaViolationAudit}'
+*/
+const showForm = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Single::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Single.php:7
+* @route '/audits/osha/{oshaViolationAudit}'
+*/
+showForm.get = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Livewire\Dealer\Audit\Osha\Single::__invoke
+* @see app/Http/Livewire/Dealer/Audit/Osha/Single.php:7
+* @route '/audits/osha/{oshaViolationAudit}'
+*/
+showForm.head = (args: { oshaViolationAudit: string | number | { uuid: string | number } } | [oshaViolationAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
 
 const osha = {
     create: Object.assign(create, create),

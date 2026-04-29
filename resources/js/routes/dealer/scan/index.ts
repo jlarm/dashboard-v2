@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 import settings69f00b from './settings'
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:20
+* @see app/Http/Controllers/Tenant/ScansController.php:23
 * @route '/scans'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:20
+* @see app/Http/Controllers/Tenant/ScansController.php:23
 * @route '/scans'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -26,7 +26,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:20
+* @see app/Http/Controllers/Tenant/ScansController.php:23
 * @route '/scans'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,13 +36,50 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:20
+* @see app/Http/Controllers/Tenant/ScansController.php:23
 * @route '/scans'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::index
+* @see app/Http/Controllers/Tenant/ScansController.php:23
+* @route '/scans'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::index
+* @see app/Http/Controllers/Tenant/ScansController.php:23
+* @route '/scans'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::index
+* @see app/Http/Controllers/Tenant/ScansController.php:23
+* @route '/scans'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
@@ -87,6 +124,43 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: settings.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @route '/scans/settings'
+*/
+const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @route '/scans/settings'
+*/
+settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @route '/scans/settings'
+*/
+settingsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+settings.form = settingsForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
@@ -151,6 +225,43 @@ report.head = (args: { type: string | number } | [type: string | number ] | stri
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\CyrismaReportController::report
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
+* @route '/scans/report/{type}'
+*/
+const reportForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: report.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaReportController::report
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
+* @route '/scans/report/{type}'
+*/
+reportForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: report.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaReportController::report
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
+* @route '/scans/report/{type}'
+*/
+reportForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: report.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+report.form = reportForm
+
+/**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
 * @route '/scans-archive'
@@ -193,6 +304,43 @@ archive.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: archive.url(options),
     method: 'head',
 })
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/scans-archive'
+*/
+const archiveForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: archive.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/scans-archive'
+*/
+archiveForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: archive.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\ViewController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @route '/scans-archive'
+*/
+archiveForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: archive.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+archive.form = archiveForm
 
 const scan = {
     index: Object.assign(index, index),

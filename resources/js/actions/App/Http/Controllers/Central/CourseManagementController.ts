@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\CourseManagementController::index
 * @see app/Http/Controllers/Central/CourseManagementController.php:30
@@ -44,6 +44,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Central\CourseManagementController::index
+* @see app/Http/Controllers/Central/CourseManagementController.php:30
+* @route '//dashboard.test/course-management'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::index
+* @see app/Http/Controllers/Central/CourseManagementController.php:30
+* @route '//dashboard.test/course-management'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::index
+* @see app/Http/Controllers/Central/CourseManagementController.php:30
+* @route '//dashboard.test/course-management'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+/**
 * @see \App\Http\Controllers\Central\CourseManagementController::importMethod
 * @see app/Http/Controllers/Central/CourseManagementController.php:91
 * @route '//dashboard.test/course-management/import'
@@ -76,6 +113,28 @@ importMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: importMethod.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::importMethod
+* @see app/Http/Controllers/Central/CourseManagementController.php:91
+* @route '//dashboard.test/course-management/import'
+*/
+const importMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: importMethod.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::importMethod
+* @see app/Http/Controllers/Central/CourseManagementController.php:91
+* @route '//dashboard.test/course-management/import'
+*/
+importMethodForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: importMethod.url(options),
+    method: 'post',
+})
+
+importMethod.form = importMethodForm
 
 /**
 * @see \App\Http\Controllers\Central\CourseManagementController::edit
@@ -146,6 +205,43 @@ edit.head = (args: { course: string | { slug: string } } | [course: string | { s
 })
 
 /**
+* @see \App\Http\Controllers\Central\CourseManagementController::edit
+* @see app/Http/Controllers/Central/CourseManagementController.php:42
+* @route '//dashboard.test/course-management/{course}'
+*/
+const editForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::edit
+* @see app/Http/Controllers/Central/CourseManagementController.php:42
+* @route '//dashboard.test/course-management/{course}'
+*/
+editForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::edit
+* @see app/Http/Controllers/Central/CourseManagementController.php:42
+* @route '//dashboard.test/course-management/{course}'
+*/
+editForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+edit.form = editForm
+
+/**
 * @see \App\Http\Controllers\Central\CourseManagementController::update
 * @see app/Http/Controllers/Central/CourseManagementController.php:49
 * @route '//dashboard.test/course-management/{course}'
@@ -202,6 +298,38 @@ update.patch = (args: { course: string | { slug: string } } | [course: string | 
     url: update.url(args, options),
     method: 'patch',
 })
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::update
+* @see app/Http/Controllers/Central/CourseManagementController.php:49
+* @route '//dashboard.test/course-management/{course}'
+*/
+const updateForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::update
+* @see app/Http/Controllers/Central/CourseManagementController.php:49
+* @route '//dashboard.test/course-management/{course}'
+*/
+updateForm.patch = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Central\CourseManagementController::updateQuiz
@@ -262,6 +390,38 @@ updateQuiz.patch = (args: { course: string | { slug: string } } | [course: strin
 })
 
 /**
+* @see \App\Http\Controllers\Central\CourseManagementController::updateQuiz
+* @see app/Http/Controllers/Central/CourseManagementController.php:64
+* @route '//dashboard.test/course-management/{course}/quiz'
+*/
+const updateQuizForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateQuiz.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::updateQuiz
+* @see app/Http/Controllers/Central/CourseManagementController.php:64
+* @route '//dashboard.test/course-management/{course}/quiz'
+*/
+updateQuizForm.patch = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateQuiz.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+updateQuiz.form = updateQuizForm
+
+/**
 * @see \App\Http\Controllers\Central\CourseManagementController::updateSettings
 * @see app/Http/Controllers/Central/CourseManagementController.php:75
 * @route '//dashboard.test/course-management/{course}/settings'
@@ -318,6 +478,38 @@ updateSettings.patch = (args: { course: string | { slug: string } } | [course: s
     url: updateSettings.url(args, options),
     method: 'patch',
 })
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::updateSettings
+* @see app/Http/Controllers/Central/CourseManagementController.php:75
+* @route '//dashboard.test/course-management/{course}/settings'
+*/
+const updateSettingsForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateSettings.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseManagementController::updateSettings
+* @see app/Http/Controllers/Central/CourseManagementController.php:75
+* @route '//dashboard.test/course-management/{course}/settings'
+*/
+updateSettingsForm.patch = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateSettings.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+updateSettings.form = updateSettingsForm
 
 const CourseManagementController = { index, importMethod, edit, update, updateQuiz, updateSettings, import: importMethod }
 
