@@ -1,7 +1,7 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Index.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::index
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:28
 * @route '/manuals/isp'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +15,8 @@ index.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Index.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::index
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:28
 * @route '/manuals/isp'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -24,8 +24,8 @@ index.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Index.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::index
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:28
 * @route '/manuals/isp'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,8 +34,8 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Index.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::index
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:28
 * @route '/manuals/isp'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,8 +44,8 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Index.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::index
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:28
 * @route '/manuals/isp'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,8 +54,8 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Index.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::index
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:28
 * @route '/manuals/isp'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -64,8 +64,8 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Index::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Index.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::index
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:28
 * @route '/manuals/isp'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -81,8 +81,8 @@ indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 index.form = indexForm
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Create.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::create
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:47
 * @route '/manuals/isp/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -96,8 +96,8 @@ create.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Create.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::create
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:47
 * @route '/manuals/isp/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -105,8 +105,8 @@ create.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Create.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::create
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:47
 * @route '/manuals/isp/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -115,8 +115,8 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Create.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::create
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:47
 * @route '/manuals/isp/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -125,8 +125,8 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Create.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::create
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:47
 * @route '/manuals/isp/create'
 */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -135,8 +135,8 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Create.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::create
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:47
 * @route '/manuals/isp/create'
 */
 createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -145,8 +145,8 @@ createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Manual\Isp\Create::__invoke
-* @see app/Http/Livewire/Dealer/Manual/Isp/Create.php:7
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::create
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:47
 * @route '/manuals/isp/create'
 */
 createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -161,9 +161,157 @@ createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 create.form = createForm
 
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::store
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:56
+* @route '/manuals/isp'
+*/
+export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
+    method: 'post',
+})
+
+store.definition = {
+    methods: ["post"],
+    url: '/manuals/isp',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::store
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:56
+* @route '/manuals/isp'
+*/
+store.url = (options?: RouteQueryOptions) => {
+    return store.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::store
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:56
+* @route '/manuals/isp'
+*/
+store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::store
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:56
+* @route '/manuals/isp'
+*/
+const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::store
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:56
+* @route '/manuals/isp'
+*/
+storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+store.form = storeForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:71
+* @route '/manuals/isp/{manual}'
+*/
+export const destroy = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(args, options),
+    method: 'delete',
+})
+
+destroy.definition = {
+    methods: ["delete"],
+    url: '/manuals/isp/{manual}',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:71
+* @route '/manuals/isp/{manual}'
+*/
+destroy.url = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { manual: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { manual: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            manual: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        manual: typeof args.manual === 'object'
+        ? args.manual.id
+        : args.manual,
+    }
+
+    return destroy.definition.url
+            .replace('{manual}', parsedArgs.manual.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:71
+* @route '/manuals/isp/{manual}'
+*/
+destroy.delete = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(args, options),
+    method: 'delete',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:71
+* @route '/manuals/isp/{manual}'
+*/
+const destroyForm = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:71
+* @route '/manuals/isp/{manual}'
+*/
+destroyForm.delete = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
+
 const isp = {
     index: Object.assign(index, index),
     create: Object.assign(create, create),
+    store: Object.assign(store, store),
+    destroy: Object.assign(destroy, destroy),
 }
 
 export default isp

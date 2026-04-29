@@ -13,4 +13,5 @@ export type NavItem = {
     isActive?: boolean;
     roles?: string[];
     external?: boolean;
+    children?: NavItem[];
 };

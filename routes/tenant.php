@@ -221,17 +221,6 @@ Route::name('dealer.')->middleware([
             ->name('employees.deleted.restore')
             ->withTrashed();
 
-        Route::prefix('manuals/')->name('manual.')->middleware(['auth', 'single.store'])->group(function (): void {
-            Route::get('/isp', App\Http\Livewire\Dealer\Manual\Isp\Index::class)->name('isp.index');
-            Route::get('/isp/create', App\Http\Livewire\Dealer\Manual\Isp\Create::class)->middleware(['single.store'])->name('isp.create');
-            Route::get('/osha', App\Http\Livewire\Dealer\Manual\Osha\Index::class)->name('osha.index');
-            Route::get('/osha/create', App\Http\Livewire\Dealer\Manual\Osha\Create::class)->middleware(['single.store'])->name('osha.create');
-            Route::get('/red-flag', App\Http\Livewire\Dealer\Manual\RedFlag\Index::class)->name('red-flag.index');
-            Route::get('/red-flag/create', App\Http\Livewire\Dealer\Manual\RedFlag\Create::class)->middleware(['single.store'])->name('red-flag.create');
-            Route::get('cms', App\Http\Livewire\Dealer\Manual\Cms\Index::class)->name('cms.index');
-            Route::get('cms/create', App\Http\Livewire\Dealer\Manual\Cms\Create::class)->middleware(['single.store'])->name('cms.create');
-        });
-
         Route::get('settings', SettingsController::class)->middleware(['auth'])->name('dealer.settings');
         Route::prefix('settings')->middleware(['auth'])->name('dealer.settings.')->group(function (): void {
             Route::get('managers', [SettingsController::class, 'show'])
@@ -254,6 +243,39 @@ Route::name('dealer.')->middleware([
         Route::get('phishing', App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
         Route::get('phishing/{phishingCampaign}', App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
     });
+
+    // **************************************************
+    // Manuals — every role except Manager, Employee, Porter/Driver
+    // **************************************************
+
+    Route::middleware([
+        'auth',
+        'single.store',
+        'role:super-admin|Admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual',
+    ])
+        ->prefix('manuals/')
+        ->name('manual.')
+        ->group(function (): void {
+            Route::get('isp', [App\Http\Controllers\Tenant\Manuals\IspController::class, 'index'])->name('isp.index');
+            Route::get('isp/create', [App\Http\Controllers\Tenant\Manuals\IspController::class, 'create'])->name('isp.create');
+            Route::post('isp', [App\Http\Controllers\Tenant\Manuals\IspController::class, 'store'])->name('isp.store');
+            Route::delete('isp/{manual}', [App\Http\Controllers\Tenant\Manuals\IspController::class, 'destroy'])->name('isp.destroy');
+
+            Route::get('osha', [App\Http\Controllers\Tenant\Manuals\OshaController::class, 'index'])->name('osha.index');
+            Route::get('osha/create', [App\Http\Controllers\Tenant\Manuals\OshaController::class, 'create'])->name('osha.create');
+            Route::post('osha', [App\Http\Controllers\Tenant\Manuals\OshaController::class, 'store'])->name('osha.store');
+            Route::delete('osha/{manual}', [App\Http\Controllers\Tenant\Manuals\OshaController::class, 'destroy'])->name('osha.destroy');
+
+            Route::get('red-flag', [App\Http\Controllers\Tenant\Manuals\RedFlagController::class, 'index'])->name('red-flag.index');
+            Route::get('red-flag/create', [App\Http\Controllers\Tenant\Manuals\RedFlagController::class, 'create'])->name('red-flag.create');
+            Route::post('red-flag', [App\Http\Controllers\Tenant\Manuals\RedFlagController::class, 'store'])->name('red-flag.store');
+            Route::delete('red-flag/{manual}', [App\Http\Controllers\Tenant\Manuals\RedFlagController::class, 'destroy'])->name('red-flag.destroy');
+
+            Route::get('cms', [App\Http\Controllers\Tenant\Manuals\CmsController::class, 'index'])->name('cms.index');
+            Route::get('cms/create', [App\Http\Controllers\Tenant\Manuals\CmsController::class, 'create'])->name('cms.create');
+            Route::post('cms', [App\Http\Controllers\Tenant\Manuals\CmsController::class, 'store'])->name('cms.store');
+            Route::delete('cms/{manual}', [App\Http\Controllers\Tenant\Manuals\CmsController::class, 'destroy'])->name('cms.destroy');
+        });
 
     // **************************************************
     // Roles to Manager

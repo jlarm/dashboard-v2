@@ -85,6 +85,22 @@ export const VENDOR_VIEWERS: RoleName[] = [
 ];
 
 /**
+ * Roles allowed to view, sign, and delete compliance manuals.
+ * Mirrors App\Enums\Role::manualEditors() — every role except
+ * Manager, Employee, and Porter/Driver.
+ */
+export const MANUAL_EDITORS: RoleName[] = [
+    Role.SuperAdmin,
+    Role.Admin,
+    Role.Consultant,
+    Role.Owner,
+    Role.CFO,
+    Role.GM,
+    Role.GSM,
+    Role.QualifiedIndividual,
+];
+
+/**
  * Roles allowed to view the IT Scans dashboard and report archive.
  * Mirrors App\Enums\Role::scanViewers() — every role except Employee
  * and Porter/Driver.

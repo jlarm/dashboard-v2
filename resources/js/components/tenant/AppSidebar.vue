@@ -10,11 +10,15 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
-import { AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role, SCAN_VIEWERS, VENDOR_VIEWERS } from '@/constants/roles';
+import { AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, MANUAL_EDITORS, Role, SCAN_VIEWERS, VENDOR_VIEWERS } from '@/constants/roles';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
 import locations from '@/routes/dealer/locations';
 import logs from '@/routes/dealer/logs';
+import isp from '@/routes/dealer/manual/isp';
+import osha from '@/routes/dealer/manual/osha';
+import redFlag from '@/routes/dealer/manual/red-flag';
+import cms from '@/routes/dealer/manual/cms';
 import scan from '@/routes/dealer/scan';
 import sds from '@/routes/dealer/sds';
 import vendor from '@/routes/dealer/vendor';
@@ -22,7 +26,7 @@ import settings from '@/routes/dealer/settings';
 import automatedReports from '@/routes/dealer/settings/automated-reports';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { Building2, FileText, FileBarChart2, FlaskConical, Handshake, HardHat, LayoutGrid, ScrollText, Settings, ShieldCheck, Users } from 'lucide-vue-next';
+import { Building2, FileSignature, FileText, FileBarChart2, FlaskConical, Handshake, HardHat, LayoutGrid, ScrollText, Settings, ShieldCheck, Users } from 'lucide-vue-next';
 
 const page = usePage<{ auth: { current_store_id: number | null } }>();
 
@@ -41,6 +45,18 @@ const mainNavItems = computed<NavItem[]>(() => {
             href: employees.index.url(),
             icon: Users,
             roles: EMPLOYEE_SECTION_VIEWERS,
+        },
+        {
+            title: 'Manuals',
+            href: isp.index.url(),
+            icon: FileSignature,
+            roles: MANUAL_EDITORS,
+            children: [
+                { title: 'ISP', href: isp.index.url() },
+                { title: 'OSHA', href: osha.index.url() },
+                { title: 'Red Flag', href: redFlag.index.url() },
+                { title: 'CMS', href: cms.index.url() },
+            ],
         },
         {
             title: 'Documents',

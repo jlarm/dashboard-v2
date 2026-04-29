@@ -85,13 +85,20 @@ describe('manual route access', function (): void {
         'employee OSHA create' => ['employee', 'dealer.manual.osha.create'],
         'employee Red Flag index' => ['employee', 'dealer.manual.red-flag.index'],
         'employee Red Flag create' => ['employee', 'dealer.manual.red-flag.create'],
-        'admin CMS index' => ['admin', 'dealer.manual.cms.index'],
-        'admin CMS create' => ['admin', 'dealer.manual.cms.create'],
-        'admin ISP index' => ['admin', 'dealer.manual.isp.index'],
-        'admin ISP create' => ['admin', 'dealer.manual.isp.create'],
-        'admin OSHA index' => ['admin', 'dealer.manual.osha.index'],
-        'admin OSHA create' => ['admin', 'dealer.manual.osha.create'],
-        'admin Red Flag index' => ['admin', 'dealer.manual.red-flag.index'],
-        'admin Red Flag create' => ['admin', 'dealer.manual.red-flag.create'],
+    ]);
+
+    it('allows Admin users to access migrated manual routes', function (string $routeName): void {
+        $this->actingAs($this->admin)
+            ->get(route($routeName))
+            ->assertOk();
+    })->with([
+        'ISP index' => 'dealer.manual.isp.index',
+        'ISP create' => 'dealer.manual.isp.create',
+        'OSHA index' => 'dealer.manual.osha.index',
+        'OSHA create' => 'dealer.manual.osha.create',
+        'Red Flag index' => 'dealer.manual.red-flag.index',
+        'Red Flag create' => 'dealer.manual.red-flag.create',
+        'CMS index' => 'dealer.manual.cms.index',
+        'CMS create' => 'dealer.manual.cms.create',
     ]);
 });
