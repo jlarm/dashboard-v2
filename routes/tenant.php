@@ -296,6 +296,7 @@ Route::name('dealer.')->middleware([
 
         Route::middleware(['single.store'])->group(function (): void {
             Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');
+            Route::put('scans/settings', [CyrismaController::class, 'update'])->name('scan.settings.update');
             Route::get('scans/report/{type}', [CyrismaReportController::class, 'download'])->name('scan.report');
         });
 

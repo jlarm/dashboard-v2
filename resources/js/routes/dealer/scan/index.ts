@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import settings69f00b from './settings'
 /**
 * @see \App\Http\Livewire\Tenant\Scans\Index::__invoke
 * @see app/Http/Livewire/Tenant/Scans/Index.php:7
@@ -82,7 +83,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
 * @route '/scans/settings'
 */
 export const settings = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +98,7 @@ settings.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
 * @route '/scans/settings'
 */
 settings.url = (options?: RouteQueryOptions) => {
@@ -106,7 +107,7 @@ settings.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
 * @route '/scans/settings'
 */
 settings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +117,7 @@ settings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
 * @route '/scans/settings'
 */
 settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +127,7 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
 * @route '/scans/settings'
 */
 const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +137,7 @@ const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
 * @route '/scans/settings'
 */
 settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +147,7 @@ settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:18
+* @see app/Http/Controllers/Tenant/CyrismaController.php:19
 * @route '/scans/settings'
 */
 settingsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +164,7 @@ settings.form = settingsForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 export const report = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -178,7 +179,7 @@ report.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 report.url = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -205,7 +206,7 @@ report.url = (args: { type: string | number } | [type: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 report.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -215,7 +216,7 @@ report.get = (args: { type: string | number } | [type: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 report.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -225,7 +226,7 @@ report.head = (args: { type: string | number } | [type: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 const reportForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -235,7 +236,7 @@ const reportForm = (args: { type: string | number } | [type: string | number ] |
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 reportForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -245,7 +246,7 @@ reportForm.get = (args: { type: string | number } | [type: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 reportForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -343,7 +344,7 @@ archive.form = archiveForm
 
 const scan = {
     index: Object.assign(index, index),
-    settings: Object.assign(settings, settings),
+    settings: Object.assign(settings, settings69f00b),
     report: Object.assign(report, report),
     archive: Object.assign(archive, archive),
 }

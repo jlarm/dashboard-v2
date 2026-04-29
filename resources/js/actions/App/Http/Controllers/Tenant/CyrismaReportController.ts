@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 export const download = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ download.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 download.url = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ download.url = (args: { type: string | number } | [type: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 download.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ download.get = (args: { type: string | number } | [type: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 download.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -63,7 +63,7 @@ download.head = (args: { type: string | number } | [type: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 const downloadForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -73,7 +73,7 @@ const downloadForm = (args: { type: string | number } | [type: string | number ]
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 downloadForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -83,7 +83,7 @@ downloadForm.get = (args: { type: string | number } | [type: string | number ] |
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::download
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:16
 * @route '/scans/report/{type}'
 */
 downloadForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

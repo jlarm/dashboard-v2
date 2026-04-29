@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Domain\Tenant\Scans\Queries\GetCachedScanReport;
 use App\Models\Dealer\Store;
-use App\Services\CyrismaService;
-use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -14,7 +13,7 @@ class CyrismaReportController
 {
     private const array REPORT_TYPES = ['executive', 'technical'];
 
-    public function download(): Response|StreamedResponse
+    public function download(GetCachedScanReport $getCachedScanReport): Response|StreamedResponse
     {
         $type = (string) request()->route('type');
 
@@ -24,22 +23,12 @@ class CyrismaReportController
 
         abort_unless($store instanceof Store, 404);
 
-        $cyrisma = resolve(CyrismaService::class)->forStore($store);
+        $report = $getCachedScanReport->handle($store, $type);
 
-        abort_if(! $cyrisma->isConfigured() || ! $cyrisma->hasShortName(), 404);
+        abort_unless($report !== null, 404, 'Report not yet generated. Please request it from the scan details page.');
 
-        $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $store->id, $type);
-
-        $pdfBinary = Cache::get($cacheKey);
-
-        abort_unless($pdfBinary !== null, 404, 'Report not yet generated. Please request it from the scan details page.');
-
-        $fileName = sprintf(
-            '%s-%s-%s-report.pdf',
-            str_replace(' ', '-', $store->name),
-            $type,
-            now()->format('Ymd-His')
-        );
+        $pdfBinary = $report->pdfBinary;
+        $fileName = $report->fileName;
 
         return response()->stream(function () use ($pdfBinary): void {
             echo $pdfBinary;
