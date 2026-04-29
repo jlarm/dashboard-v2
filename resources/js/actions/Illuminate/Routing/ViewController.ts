@@ -90,50 +90,6 @@ ViewController39cf50c98836c20d29fa0dfb7a7064d0.head = (options?: RouteQueryOptio
 /**
 * @see \Illuminate\Routing\ViewController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/scans-archive'
-*/
-const ViewController00b8255e77f8b9a60ccb93668a7a17ae = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController00b8255e77f8b9a60ccb93668a7a17ae.url(options),
-    method: 'get',
-})
-
-ViewController00b8255e77f8b9a60ccb93668a7a17ae.definition = {
-    methods: ["get","head"],
-    url: '/scans-archive',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/scans-archive'
-*/
-ViewController00b8255e77f8b9a60ccb93668a7a17ae.url = (options?: RouteQueryOptions) => {
-    return ViewController00b8255e77f8b9a60ccb93668a7a17ae.definition.url + queryParams(options)
-}
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/scans-archive'
-*/
-ViewController00b8255e77f8b9a60ccb93668a7a17ae.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController00b8255e77f8b9a60ccb93668a7a17ae.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/scans-archive'
-*/
-ViewController00b8255e77f8b9a60ccb93668a7a17ae.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: ViewController00b8255e77f8b9a60ccb93668a7a17ae.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
 * @route '/audits/deal-jackets'
 */
 const ViewController86a0d0e665572eead9d650bb21337c56 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -178,7 +134,6 @@ ViewController86a0d0e665572eead9d650bb21337c56.head = (options?: RouteQueryOptio
 const ViewController = {
     '/courses': ViewControllerae0d8013bc7dd1aeb7c9b49bac5f9e3b,
     '/courses/all': ViewController39cf50c98836c20d29fa0dfb7a7064d0,
-    '/scans-archive': ViewController00b8255e77f8b9a60ccb93668a7a17ae,
     '/audits/deal-jackets': ViewController86a0d0e665572eead9d650bb21337c56,
 }
 

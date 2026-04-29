@@ -9,6 +9,7 @@ import UserController from './UserController'
 import ScansController from './ScansController'
 import CyrismaController from './CyrismaController'
 import CyrismaReportController from './CyrismaReportController'
+import ScanArchiveController from './ScanArchiveController'
 import DealerDocController from './DealerDocController'
 
 const Tenant = {
@@ -23,6 +24,7 @@ const Tenant = {
     ScansController: Object.assign(ScansController, ScansController),
     CyrismaController: Object.assign(CyrismaController, CyrismaController),
     CyrismaReportController: Object.assign(CyrismaReportController, CyrismaReportController),
+    ScanArchiveController: Object.assign(ScanArchiveController, ScanArchiveController),
     DealerDocController: Object.assign(DealerDocController, DealerDocController),
 }
 

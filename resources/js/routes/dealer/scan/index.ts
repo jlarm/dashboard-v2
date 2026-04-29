@@ -1,5 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 import settings69f00b from './settings'
+import archiveBc62fe from './archive'
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
 * @see app/Http/Controllers/Tenant/ScansController.php:32
@@ -263,8 +264,8 @@ report.head = (args: { type: string | number } | [type: string | number ] | stri
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Tenant\ScanArchiveController::archive
+* @see app/Http/Controllers/Tenant/ScanArchiveController.php:25
 * @route '/scans-archive'
 */
 export const archive = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -278,8 +279,8 @@ archive.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Tenant\ScanArchiveController::archive
+* @see app/Http/Controllers/Tenant/ScanArchiveController.php:25
 * @route '/scans-archive'
 */
 archive.url = (options?: RouteQueryOptions) => {
@@ -287,8 +288,8 @@ archive.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Tenant\ScanArchiveController::archive
+* @see app/Http/Controllers/Tenant/ScanArchiveController.php:25
 * @route '/scans-archive'
 */
 archive.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -297,8 +298,8 @@ archive.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
+* @see \App\Http\Controllers\Tenant\ScanArchiveController::archive
+* @see app/Http/Controllers/Tenant/ScanArchiveController.php:25
 * @route '/scans-archive'
 */
 archive.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -313,7 +314,7 @@ const scan = {
     refreshCache: Object.assign(refreshCache, refreshCache),
     settings: Object.assign(settings, settings69f00b),
     report: Object.assign(report, report),
-    archive: Object.assign(archive, archive),
+    archive: Object.assign(archive, archiveBc62fe),
 }
 
 export default scan

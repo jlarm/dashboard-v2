@@ -303,7 +303,10 @@ Route::name('dealer.')->middleware([
             Route::get('scans/report/{type}', [CyrismaReportController::class, 'download'])->name('scan.report');
         });
 
-        Route::view('scans-archive', 'dealer.scan.index')->middleware(['auth', 'single.store'])->name('scan.archive');
+        Route::middleware(['auth', 'single.store'])->group(function (): void {
+            Route::get('scans-archive', [App\Http\Controllers\Tenant\ScanArchiveController::class, 'index'])->name('scan.archive');
+            Route::post('scans-archive/upload', [App\Http\Controllers\Tenant\ScanArchiveController::class, 'upload'])->name('scan.archive.upload');
+        });
 
         Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
             Route::get('osha', App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('osha.index');
