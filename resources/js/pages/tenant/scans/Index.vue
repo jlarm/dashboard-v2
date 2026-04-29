@@ -185,7 +185,18 @@ const queueReport = (type: 'executive' | 'technical'): void => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-5">
             <header class="flex flex-wrap items-start justify-between gap-3">
+                <div v-if="mode === 'dashboard' && dashboard?.data?.is_configured && dashboard?.data?.has_short_name">
+                    <h1 class="font-semibold tracking-tight text-foreground">Overall Risk Assessment</h1>
+                    <p class="mt-1 text-sm text-muted-foreground">
+                        Current security posture across all scan types
+                        <template v-if="dashboard.data.last_scan_date">
+                            · Last scan:
+                            <span class="font-medium text-foreground">{{ dashboard.data.last_scan_date }}</span>
+                        </template>
+                    </p>
+                </div>
                 <Heading
+                    v-else
                     title="Scans"
                     :description="
                         mode === 'overview'
@@ -338,18 +349,6 @@ const queueReport = (type: 'executive' | 'technical'): void => {
 
                         <template v-else>
                             <div class="space-y-5">
-                                <div class="flex flex-wrap items-center justify-between gap-3">
-                                    <div>
-                                        <h2 class="text-base font-semibold text-foreground">Overall Risk Assessment</h2>
-                                        <p class="text-sm text-muted-foreground">
-                                            Current security posture across all scan types
-                                            <template v-if="dashboard.data.last_scan_date">
-                                                · Last scan: <span class="font-medium text-foreground">{{ dashboard.data.last_scan_date }}</span>
-                                            </template>
-                                        </p>
-                                    </div>
-                                </div>
-
                                 <OverallRiskCards
                                     :overall="dashboard.data.overall_risk"
                                     :vulnerability="dashboard.data.vulnerability_risk"
@@ -369,14 +368,21 @@ const queueReport = (type: 'executive' | 'technical'): void => {
 
                                 <Deferred v-if="dashboard.data.has_internal_scans" :data="['cveList', 'openPorts', 'cveChart']">
                                     <template #fallback>
-                                        <section class="grid grid-cols-1 gap-5 md:grid-cols-3">
-                                            <div class="h-72 animate-pulse rounded-2xl border bg-muted/40 md:col-span-2" />
+                                        <section class="space-y-5">
                                             <div class="h-72 animate-pulse rounded-2xl border bg-muted/40" />
+                                            <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                                                <div class="h-80 animate-pulse rounded-2xl border bg-muted/40" />
+                                                <div class="h-80 animate-pulse rounded-2xl border bg-muted/40" />
+                                            </div>
                                         </section>
                                     </template>
 
-                                    <section class="grid grid-cols-1 gap-5 md:grid-cols-3">
-                                        <div class="space-y-5 md:col-span-2">
+                                    <section class="space-y-5">
+                                        <CveRiskChart
+                                            :categories="cveChart?.categories ?? []"
+                                            :series="cveChart?.series ?? { critical: [], high: [], medium: [], low: [] }"
+                                        />
+                                        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                                             <CveListPanel
                                                 :cves="cveList ?? []"
                                                 :initial-asset-type="filters?.cve_asset_type ?? null"
@@ -386,10 +392,6 @@ const queueReport = (type: 'executive' | 'technical'): void => {
                                                 :initial-asset-type="filters?.port_asset_type ?? null"
                                             />
                                         </div>
-                                        <CveRiskChart
-                                            :categories="cveChart?.categories ?? []"
-                                            :series="cveChart?.series ?? { critical: [], high: [], medium: [], low: [] }"
-                                        />
                                     </section>
                                 </Deferred>
 
