@@ -45,10 +45,10 @@ dataset('managerGroupReadOnlyRoles', [
     'Manager',
 ]);
 
-it('allows manager-group roles to view cyrisma settings but not mutate them', function (string $role): void {
+it('denies manager-group roles all access to cyrisma settings', function (string $role): void {
     $user = makeCyrismaPolicyUser($role, $this->store);
 
-    expect($this->policy->viewAny($user))->toBeTrue()
+    expect($this->policy->viewAny($user))->toBeFalse()
         ->and($this->policy->create($user))->toBeFalse()
         ->and($this->policy->update($user, $this->cyrisma))->toBeFalse()
         ->and($this->policy->delete($user, $this->cyrisma))->toBeFalse();

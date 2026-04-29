@@ -104,6 +104,27 @@ enum Role: string
     }
 
     /**
+     * Roles allowed to access the IT Scans dashboard and report archive.
+     * Every role except Employee and Porter/Driver.
+     *
+     * @return list<self>
+     */
+    public static function scanViewers(): array
+    {
+        return [
+            self::SuperAdmin,
+            self::Admin,
+            self::Consultant,
+            self::Owner,
+            self::CFO,
+            self::GM,
+            self::GSM,
+            self::QualifiedIndividual,
+            self::Manager,
+        ];
+    }
+
+    /**
      * @param  list<self>  $roles
      * @return list<string>
      */

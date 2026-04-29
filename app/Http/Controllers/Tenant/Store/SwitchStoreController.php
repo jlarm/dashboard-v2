@@ -16,9 +16,33 @@ class SwitchStoreController extends Controller
     {
         /** @var User $user */
         $user = $request->user();
+        $storeId = $request->storeId();
 
-        $action->handle($user, $request->storeId());
+        $action->handle($user, $storeId);
+
+        // The scans pages require a single-store context. When a user
+        // switches to overview while on /scans, send them to the dashboard.
+        if ($storeId === null && $this->isOnScansArea($request)) {
+            return to_route('dealer.dashboard');
+        }
 
         return back();
+    }
+
+    private function isOnScansArea(SwitchStoreRequest $request): bool
+    {
+        $referer = (string) $request->headers->get('referer');
+
+        if ($referer === '') {
+            return false;
+        }
+
+        $path = parse_url($referer, PHP_URL_PATH);
+
+        if (! is_string($path)) {
+            return false;
+        }
+
+        return str_starts_with($path, '/scans');
     }
 }

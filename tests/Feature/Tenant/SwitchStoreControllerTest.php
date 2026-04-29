@@ -70,6 +70,35 @@ describe('switch store controller', function (): void {
         expect($this->manager->fresh()->current_store_id)->toBeNull();
     });
 
+    it('redirects to dashboard when switching to overview from a scans page', function (): void {
+        $store = Store::query()->firstOrFail();
+
+        $this->manager->stores()->attach($store->id);
+        $this->manager->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->manager)
+            ->withHeader('Referer', url('/scans'))
+            ->post(route('dealer.store.switch'), ['store_id' => null])
+            ->assertRedirect(route('dealer.dashboard'));
+    });
+
+    it('falls back to back() when switching to overview from any other page', function (): void {
+        $store = Store::query()->firstOrFail();
+
+        $this->manager->stores()->attach($store->id);
+        $this->manager->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->manager)
+            ->from(route('dealer.dashboard'))
+            ->post(route('dealer.store.switch'), ['store_id' => null])
+            ->assertRedirect(route('dealer.dashboard'));
+
+        $this->actingAs($this->manager)
+            ->withHeader('Referer', url('/employees'))
+            ->post(route('dealer.store.switch'), ['store_id' => null])
+            ->assertRedirect(url('/employees'));
+    });
+
     it('validates that store_id exists', function (): void {
         $this->actingAs($this->manager)
             ->post(route('dealer.store.switch'), ['store_id' => 99999])

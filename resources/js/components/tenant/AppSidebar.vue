@@ -10,59 +10,75 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
-import { AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role, VENDOR_VIEWERS } from '@/constants/roles';
+import { AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, Role, SCAN_VIEWERS, VENDOR_VIEWERS } from '@/constants/roles';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
 import locations from '@/routes/dealer/locations';
 import logs from '@/routes/dealer/logs';
+import scan from '@/routes/dealer/scan';
 import sds from '@/routes/dealer/sds';
 import vendor from '@/routes/dealer/vendor';
 import settings from '@/routes/dealer/settings';
 import automatedReports from '@/routes/dealer/settings/automated-reports';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { Building2, FileText, FileBarChart2, FlaskConical, Handshake, HardHat, LayoutGrid, ScrollText, Settings, Users } from 'lucide-vue-next';
+import { Building2, FileText, FileBarChart2, FlaskConical, Handshake, HardHat, LayoutGrid, ScrollText, Settings, ShieldCheck, Users } from 'lucide-vue-next';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Employees',
-        href: employees.index.url(),
-        icon: Users,
-        roles: EMPLOYEE_SECTION_VIEWERS,
-    },
-    {
-        title: 'Documents',
-        href: doc.index.url(),
-        icon: FileText,
-        roles: DOCUMENT_VIEWERS,
-    },
-    {
-        title: 'SDS Sheets',
-        href: sds.index.url(),
-        icon: FlaskConical,
-    },
-    {
-        title: 'Vendors',
-        href: vendor.index.url(),
-        icon: Handshake,
-        roles: VENDOR_VIEWERS,
-    },
-    {
+const page = usePage<{ auth: { current_store_id: number | null } }>();
+
+const hasCurrentStore = computed<boolean>(() => page.props.auth?.current_store_id !== null);
+const showGlobalSettings = computed<boolean>(() => page.props.auth?.current_store_id === null);
+
+const mainNavItems = computed<NavItem[]>(() => {
+    const items: NavItem[] = [
+        {
+            title: 'Dashboard',
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+        {
+            title: 'Employees',
+            href: employees.index.url(),
+            icon: Users,
+            roles: EMPLOYEE_SECTION_VIEWERS,
+        },
+        {
+            title: 'Documents',
+            href: doc.index.url(),
+            icon: FileText,
+            roles: DOCUMENT_VIEWERS,
+        },
+        {
+            title: 'SDS Sheets',
+            href: sds.index.url(),
+            icon: FlaskConical,
+        },
+        {
+            title: 'Vendors',
+            href: vendor.index.url(),
+            icon: Handshake,
+            roles: VENDOR_VIEWERS,
+        },
+    ];
+
+    if (hasCurrentStore.value) {
+        items.push({
+            title: 'IT Scans',
+            href: scan.index.url(),
+            icon: ShieldCheck,
+            roles: SCAN_VIEWERS,
+        });
+    }
+
+    items.push({
         title: 'OSHA 300 Form',
         href: '/docs/osha-300.pdf',
         icon: HardHat,
         external: true,
-    },
-];
+    });
 
-const page = usePage<{ auth: { current_store_id: number | null } }>();
-
-const showGlobalSettings = computed<boolean>(() => page.props.auth?.current_store_id === null);
+    return items;
+});
 
 const footerNavItems = computed<NavItem[]>(() => {
     const items: NavItem[] = [];

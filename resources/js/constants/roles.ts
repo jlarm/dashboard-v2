@@ -83,3 +83,20 @@ export const VENDOR_VIEWERS: RoleName[] = [
     Role.QualifiedIndividual,
     Role.Manager,
 ];
+
+/**
+ * Roles allowed to view the IT Scans dashboard and report archive.
+ * Mirrors App\Enums\Role::scanViewers() — every role except Employee
+ * and Porter/Driver.
+ */
+export const SCAN_VIEWERS: RoleName[] = [
+    Role.SuperAdmin,
+    Role.Admin,
+    Role.Consultant,
+    Role.Owner,
+    Role.CFO,
+    Role.GM,
+    Role.GSM,
+    Role.QualifiedIndividual,
+    Role.Manager,
+];

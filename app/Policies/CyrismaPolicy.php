@@ -9,39 +9,28 @@ use App\Models\User;
 
 class CyrismaPolicy
 {
-    private const array VIEW_ROLES = [
-        'super-admin',
-        'Consultant',
-        'Owner',
-        'CFO',
-        'GM',
-        'GSM',
-        'Qualified Individual',
-        'Manager',
-    ];
-
-    private const array MUTATION_ROLES = [
+    private const array SETTINGS_ROLES = [
         'super-admin',
         'Consultant',
     ];
 
     public function viewAny(User $user): bool
     {
-        return $user->hasAnyRole(self::VIEW_ROLES);
+        return $user->hasAnyRole(self::SETTINGS_ROLES);
     }
 
     public function create(User $user): bool
     {
-        return $user->hasAnyRole(self::MUTATION_ROLES);
+        return $user->hasAnyRole(self::SETTINGS_ROLES);
     }
 
     public function update(User $user, Cyrisma $cyrisma): bool
     {
-        return $user->hasAnyRole(self::MUTATION_ROLES);
+        return $user->hasAnyRole(self::SETTINGS_ROLES);
     }
 
     public function delete(User $user, Cyrisma $cyrisma): bool
     {
-        return $user->hasAnyRole(self::MUTATION_ROLES);
+        return $user->hasAnyRole(self::SETTINGS_ROLES);
     }
 }
