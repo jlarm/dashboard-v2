@@ -3,7 +3,6 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { Loader2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import SignaturePad from '@/components/manuals/SignaturePad.vue';
 import osha from '@/routes/dealer/manual/osha';
@@ -156,12 +155,7 @@ const storeName = computed(() => props.defaults.store_name);
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-5">
-            <Heading
-                title="OSHA Safety Manual"
-                :description="`Review the policy below, then sign at the bottom for ${storeName}.`"
-            />
-
-            <div
+<div
                 class="relative grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:h-[calc(100vh-12rem)] lg:overflow-hidden"
             >
                 <aside class="hidden lg:block lg:overflow-y-auto pr-4">

@@ -3,7 +3,6 @@ import { computed } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { Loader2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import SignaturePad from '@/components/manuals/SignaturePad.vue';
 import redFlag from '@/routes/dealer/manual/red-flag';
@@ -82,12 +81,7 @@ const storeName = computed(() => props.defaults.store_name);
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-5">
-            <Heading
-                title="Red Flag Identity Theft Prevention"
-                :description="`Review the policy below, then sign at the bottom for ${storeName}.`"
-            />
-
-            <div class="prose prose-sm dark:prose-invert max-w-none space-y-10">
+<div class="prose prose-sm dark:prose-invert max-w-none space-y-10">
                 <!-- Contact summary -->
                 <section class="not-prose grid gap-4 rounded-lg border bg-card p-5 sm:grid-cols-2 lg:grid-cols-3">
                     <div>

@@ -3,7 +3,6 @@ import { computed } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { AlertTriangle, Loader2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -80,12 +79,7 @@ const submit = (): void => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-5">
-            <Heading
-                title="Compliance Management System"
-                :description="`Review the policy below, then sign at the bottom for ${defaults.store_name}.`"
-            />
-
-            <div v-if="blocked" class="rounded-lg border border-destructive/50 bg-destructive/5 p-4">
+<div v-if="blocked" class="rounded-lg border border-destructive/50 bg-destructive/5 p-4">
                 <div class="flex gap-3">
                     <AlertTriangle class="mt-0.5 size-5 shrink-0 text-destructive" />
                     <div class="space-y-2">

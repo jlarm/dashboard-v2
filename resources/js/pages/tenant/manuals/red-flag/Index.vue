@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { AlertOctagon, Download, FileSignature, Loader2, Trash2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -65,15 +64,7 @@ const remove = (manual: Manual): void => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-5">
-            <header class="flex flex-wrap items-start justify-between gap-3">
-                <Heading
-                    title="Red Flag Manuals"
-                    :description="
-                        store
-                            ? `Signed Red Flag identity-theft prevention manuals for ${store.name}.`
-                            : 'Signed Red Flag identity-theft prevention manuals across your stores.'
-                    "
-                />
+            <header class="flex justify-end gap-3">
                 <Button v-if="store" as-child size="sm">
                     <Link :href="redFlag.create.url()">
                         <FileSignature class="size-3.5" />
