@@ -67,7 +67,7 @@ let observer: IntersectionObserver | null = null;
 
 onMounted(() => {
     const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-    const root = isDesktop ? contentRef.value : null;
+    const root = (isDesktop ? contentRef.value : null) as Element | null;
 
     observer = new IntersectionObserver(
         (entries) => {
