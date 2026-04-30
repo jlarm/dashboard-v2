@@ -1,6 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
-import violations from './violations'
-import remediation065e42 from './remediation'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:148
@@ -374,26 +372,26 @@ destroyForm.delete = (args: { audit: string | number } | [audit: string | number
 destroy.form = destroyForm
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::grade
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
 * @route '/audits/osha/{audit}/grade'
 */
-export const grade = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
-    url: grade.url(args, options),
+export const updateGrade = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateGrade.url(args, options),
     method: 'patch',
 })
 
-grade.definition = {
+updateGrade.definition = {
     methods: ["patch"],
     url: '/audits/osha/{audit}/grade',
 } satisfies RouteDefinition<["patch"]>
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::grade
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
 * @route '/audits/osha/{audit}/grade'
 */
-grade.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+updateGrade.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { audit: args }
     }
@@ -410,28 +408,28 @@ grade.url = (args: { audit: string | number } | [audit: string | number ] | stri
         audit: args.audit,
     }
 
-    return grade.definition.url
+    return updateGrade.definition.url
             .replace('{audit}', parsedArgs.audit.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::grade
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
 * @route '/audits/osha/{audit}/grade'
 */
-grade.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
-    url: grade.url(args, options),
+updateGrade.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateGrade.url(args, options),
     method: 'patch',
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::grade
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
 * @route '/audits/osha/{audit}/grade'
 */
-const gradeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: grade.url(args, {
+const updateGradeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateGrade.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -441,12 +439,12 @@ const gradeForm = (args: { audit: string | number } | [audit: string | number ] 
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::grade
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
 * @route '/audits/osha/{audit}/grade'
 */
-gradeForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: grade.url(args, {
+updateGradeForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateGrade.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -455,7 +453,254 @@ gradeForm.patch = (args: { audit: string | number } | [audit: string | number ] 
     method: 'post',
 })
 
-grade.form = gradeForm
+updateGrade.form = updateGradeForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @route '/audits/osha/{audit}/violations'
+*/
+export const addViolation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: addViolation.url(args, options),
+    method: 'post',
+})
+
+addViolation.definition = {
+    methods: ["post"],
+    url: '/audits/osha/{audit}/violations',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @route '/audits/osha/{audit}/violations'
+*/
+addViolation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { audit: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+    }
+
+    return addViolation.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @route '/audits/osha/{audit}/violations'
+*/
+addViolation.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: addViolation.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @route '/audits/osha/{audit}/violations'
+*/
+const addViolationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: addViolation.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @route '/audits/osha/{audit}/violations'
+*/
+addViolationForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: addViolation.url(args, options),
+    method: 'post',
+})
+
+addViolation.form = addViolationForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @route '/audits/osha/{audit}/violations/{violation}'
+*/
+export const deleteViolation = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: deleteViolation.url(args, options),
+    method: 'delete',
+})
+
+deleteViolation.definition = {
+    methods: ["delete"],
+    url: '/audits/osha/{audit}/violations/{violation}',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @route '/audits/osha/{audit}/violations/{violation}'
+*/
+deleteViolation.url = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+            violation: args[1],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+        violation: typeof args.violation === 'object'
+        ? args.violation.id
+        : args.violation,
+    }
+
+    return deleteViolation.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace('{violation}', parsedArgs.violation.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @route '/audits/osha/{audit}/violations/{violation}'
+*/
+deleteViolation.delete = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: deleteViolation.url(args, options),
+    method: 'delete',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @route '/audits/osha/{audit}/violations/{violation}'
+*/
+const deleteViolationForm = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: deleteViolation.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @route '/audits/osha/{audit}/violations/{violation}'
+*/
+deleteViolationForm.delete = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: deleteViolation.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+deleteViolation.form = deleteViolationForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
+*/
+export const deleteViolationPhoto = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: deleteViolationPhoto.url(args, options),
+    method: 'delete',
+})
+
+deleteViolationPhoto.definition = {
+    methods: ["delete"],
+    url: '/audits/osha/{audit}/violations/{violation}/photos/{photoId}',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
+*/
+deleteViolationPhoto.url = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+            violation: args[1],
+            photoId: args[2],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+        violation: typeof args.violation === 'object'
+        ? args.violation.id
+        : args.violation,
+        photoId: args.photoId,
+    }
+
+    return deleteViolationPhoto.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace('{violation}', parsedArgs.violation.toString())
+            .replace('{photoId}', parsedArgs.photoId.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
+*/
+deleteViolationPhoto.delete = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: deleteViolationPhoto.url(args, options),
+    method: 'delete',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
+*/
+const deleteViolationPhotoForm = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: deleteViolationPhoto.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
+*/
+deleteViolationPhotoForm.delete = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: deleteViolationPhoto.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+deleteViolationPhoto.form = deleteViolationPhotoForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
@@ -530,6 +775,179 @@ generateForm.post = (args: { audit: string | number } | [audit: string | number 
 })
 
 generate.form = generateForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @route '/audits/osha/{audit}/remediation/generate'
+*/
+export const generateRemediation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: generateRemediation.url(args, options),
+    method: 'post',
+})
+
+generateRemediation.definition = {
+    methods: ["post"],
+    url: '/audits/osha/{audit}/remediation/generate',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @route '/audits/osha/{audit}/remediation/generate'
+*/
+generateRemediation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { audit: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+    }
+
+    return generateRemediation.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @route '/audits/osha/{audit}/remediation/generate'
+*/
+generateRemediation.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: generateRemediation.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @route '/audits/osha/{audit}/remediation/generate'
+*/
+const generateRemediationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generateRemediation.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @route '/audits/osha/{audit}/remediation/generate'
+*/
+generateRemediationForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generateRemediation.url(args, options),
+    method: 'post',
+})
+
+generateRemediation.form = generateRemediationForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @route '/audits/osha/{audit}/violations/search'
+*/
+export const searchStatements = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: searchStatements.url(args, options),
+    method: 'get',
+})
+
+searchStatements.definition = {
+    methods: ["get","head"],
+    url: '/audits/osha/{audit}/violations/search',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @route '/audits/osha/{audit}/violations/search'
+*/
+searchStatements.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { audit: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+    }
+
+    return searchStatements.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @route '/audits/osha/{audit}/violations/search'
+*/
+searchStatements.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: searchStatements.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @route '/audits/osha/{audit}/violations/search'
+*/
+searchStatements.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: searchStatements.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @route '/audits/osha/{audit}/violations/search'
+*/
+const searchStatementsForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: searchStatements.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @route '/audits/osha/{audit}/violations/search'
+*/
+searchStatementsForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: searchStatements.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @route '/audits/osha/{audit}/violations/search'
+*/
+searchStatementsForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: searchStatements.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+searchStatements.form = searchStatementsForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
@@ -712,6 +1130,90 @@ remediationForm.head = (args: { audit: string | number } | [audit: string | numb
 remediation.form = remediationForm
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @route '/audits/osha/{audit}/remediation'
+*/
+export const updateRemediation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateRemediation.url(args, options),
+    method: 'patch',
+})
+
+updateRemediation.definition = {
+    methods: ["patch"],
+    url: '/audits/osha/{audit}/remediation',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @route '/audits/osha/{audit}/remediation'
+*/
+updateRemediation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { audit: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+    }
+
+    return updateRemediation.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @route '/audits/osha/{audit}/remediation'
+*/
+updateRemediation.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateRemediation.url(args, options),
+    method: 'patch',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @route '/audits/osha/{audit}/remediation'
+*/
+const updateRemediationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateRemediation.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @route '/audits/osha/{audit}/remediation'
+*/
+updateRemediationForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateRemediation.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+updateRemediation.form = updateRemediationForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:258
 * @route '/audits/osha/{audit}/download'
@@ -809,6 +1311,105 @@ downloadForm.head = (args: { audit: string | number } | [audit: string | number 
 })
 
 download.form = downloadForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+export const downloadRemediation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: downloadRemediation.url(args, options),
+    method: 'get',
+})
+
+downloadRemediation.definition = {
+    methods: ["get","head"],
+    url: '/audits/osha/{audit}/remediation/download',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+downloadRemediation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { audit: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+    }
+
+    return downloadRemediation.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+downloadRemediation.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: downloadRemediation.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+downloadRemediation.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: downloadRemediation.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+const downloadRemediationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadRemediation.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+downloadRemediationForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadRemediation.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+downloadRemediationForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadRemediation.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+downloadRemediation.form = downloadRemediationForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
@@ -909,18 +1510,6 @@ showForm.head = (args: { audit: string | number } | [audit: string | number ] | 
 
 show.form = showForm
 
-const osha = {
-    create: Object.assign(create, create),
-    edit: Object.assign(edit, edit),
-    update: Object.assign(update, update),
-    destroy: Object.assign(destroy, destroy),
-    grade: Object.assign(grade, grade),
-    violations: Object.assign(violations, violations),
-    generate: Object.assign(generate, generate),
-    remediation: Object.assign(remediation, remediation065e42),
-    index: Object.assign(index, index),
-    download: Object.assign(download, download),
-    show: Object.assign(show, show),
-}
+const ViolationAuditController = { create, edit, update, destroy, updateGrade, addViolation, deleteViolation, deleteViolationPhoto, generate, generateRemediation, searchStatements, index, remediation, updateRemediation, download, downloadRemediation, show }
 
-export default osha
+export default ViolationAuditController

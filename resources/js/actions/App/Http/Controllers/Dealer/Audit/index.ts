@@ -1,4 +1,3 @@
-import OshaCreateController from './OshaCreateController'
 import BodyShopCreateController from './BodyShopCreateController'
 import FinanceCreateController from './FinanceCreateController'
 import IndividualCreateController from './IndividualCreateController'
@@ -7,7 +6,6 @@ import SingleIndividualController from './SingleIndividualController'
 import IndividualIndexController from './IndividualIndexController'
 
 const Audit = {
-    OshaCreateController: Object.assign(OshaCreateController, OshaCreateController),
     BodyShopCreateController: Object.assign(BodyShopCreateController, BodyShopCreateController),
     FinanceCreateController: Object.assign(FinanceCreateController, FinanceCreateController),
     IndividualCreateController: Object.assign(IndividualCreateController, IndividualCreateController),

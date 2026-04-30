@@ -68,4 +68,40 @@ enum ViolationAuditType: string
             self::Glba => ViolationStatementCategory::Glba,
         };
     }
+
+    /**
+     * @return class-string
+     */
+    public function generatePdfJobClass(): string
+    {
+        return match ($this) {
+            self::Osha => \App\Jobs\Audit\GenerateOshaPdfJob::class,
+            self::BodyShop => \App\Jobs\Audit\GenerateBodyShopPdfJob::class,
+            self::Glba => \App\Jobs\Audit\GenerateGlbaPdfJob::class,
+        };
+    }
+
+    /**
+     * @return class-string
+     */
+    public function uploadPdfJobClass(): string
+    {
+        return match ($this) {
+            self::Osha => \App\Jobs\Audit\UploadOshaPdfJob::class,
+            self::BodyShop => \App\Jobs\Audit\UploadBodyShopPdfJob::class,
+            self::Glba => \App\Jobs\Audit\UploadGlbaPdfJob::class,
+        };
+    }
+
+    /**
+     * @return class-string
+     */
+    public function generateRemediationPdfJobClass(): string
+    {
+        return match ($this) {
+            self::Osha => \App\Jobs\Audit\GenerateOshaRemediationPdfJob::class,
+            self::BodyShop => \App\Jobs\Audit\GenerateBodyShopRemediationPdfJob::class,
+            self::Glba => \App\Jobs\Audit\GenerateGlbaRemediationPdfJob::class,
+        };
+    }
 }

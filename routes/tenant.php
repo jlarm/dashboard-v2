@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Enums\ViolationAuditType;
 use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
 use App\Http\Controllers\Dealer\Audit\FinanceCreateController;
 use App\Http\Controllers\Dealer\Audit\IndividualController;
 use App\Http\Controllers\Dealer\Audit\IndividualCreateController;
 use App\Http\Controllers\Dealer\Audit\IndividualIndexController;
-use App\Http\Controllers\Dealer\Audit\OshaCreateController;
 use App\Http\Controllers\Dealer\Audit\SingleIndividualController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Dealer\CourseController;
@@ -21,6 +21,7 @@ use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Controllers\Tenant\Audit\DealJacketController;
 use App\Http\Controllers\Tenant\Audit\DealJacketGroupController;
 use App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController;
+use App\Http\Controllers\Tenant\Audit\ViolationAuditController;
 use App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Tenant\Auth\NewPasswordController;
 use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
@@ -37,9 +38,6 @@ use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileCon
 use App\Http\Controllers\Tenant\Store\LocationController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\WebhookController;
-use App\Http\Livewire\Dealer\Audit\Osha\Edit;
-use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
-use App\Http\Livewire\Dealer\Audit\Osha\Single;
 use App\Http\Livewire\Dealer\Phish\Create;
 use App\Http\Livewire\Dealer\Ridgeback\Index;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
@@ -179,8 +177,40 @@ Route::name('dealer.')->middleware([
     Route::middleware('role:super-admin|Consultant')->group(function (): void {
 
         Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
-            Route::get('osha/create/{store}', OshaCreateController::class)->name('osha.create');
-            Route::get('osha/{oshaViolationAudit:uuid}/edit', Edit::class)->name('osha.edit');
+            Route::get('osha/create/{store}', [ViolationAuditController::class, 'create'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.create');
+            Route::get('osha/{audit}/edit', [ViolationAuditController::class, 'edit'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.edit');
+            Route::patch('osha/{audit}', [ViolationAuditController::class, 'update'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.update');
+            Route::delete('osha/{audit}', [ViolationAuditController::class, 'destroy'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.destroy');
+            Route::patch('osha/{audit}/grade', [ViolationAuditController::class, 'updateGrade'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.grade');
+            Route::post('osha/{audit}/violations', [ViolationAuditController::class, 'addViolation'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.violations.store');
+            Route::delete('osha/{audit}/violations/{violation}', [ViolationAuditController::class, 'deleteViolation'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.violations.destroy');
+            Route::delete('osha/{audit}/violations/{violation}/photos/{photoId}', [ViolationAuditController::class, 'deleteViolationPhoto'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->whereNumber('photoId')
+                ->name('osha.violations.photos.destroy');
+            Route::post('osha/{audit}/generate', [ViolationAuditController::class, 'generate'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.generate');
+            Route::post('osha/{audit}/remediation/generate', [ViolationAuditController::class, 'generateRemediation'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.remediation.generate');
+            Route::get('osha/{audit}/violations/search', [ViolationAuditController::class, 'searchStatements'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.violations.search');
             Route::get('body-shop/create/{store}', BodyShopCreateController::class)->name('body-shop.create');
             Route::get('body-shop/{bodyShopViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\BodyShop\Edit::class)->name('body-shop.edit');
             Route::get('finance/create/{store}', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
@@ -331,9 +361,24 @@ Route::name('dealer.')->middleware([
         });
 
         Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
-            Route::get('osha', App\Http\Livewire\Dealer\Audit\Osha\Index::class)->name('osha.index');
-            Route::get('osha/{oshaViolationAudit:uuid}/remediation', RemediationForm::class)->name('osha.remediation');
-            Route::get('osha/{oshaViolationAudit:uuid}', Single::class)->name('osha.show');
+            Route::get('osha', [ViolationAuditController::class, 'index'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.index');
+            Route::get('osha/{audit}/remediation', [ViolationAuditController::class, 'remediation'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.remediation');
+            Route::patch('osha/{audit}/remediation', [ViolationAuditController::class, 'updateRemediation'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.remediation.update');
+            Route::get('osha/{audit}/download', [ViolationAuditController::class, 'download'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.download');
+            Route::get('osha/{audit}/remediation/download', [ViolationAuditController::class, 'downloadRemediation'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.remediation.download');
+            Route::get('osha/{audit}', [ViolationAuditController::class, 'show'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.show');
             Route::get('body-shop', App\Http\Livewire\Dealer\Audit\BodyShop\Index::class)->name('body-shop.index');
             Route::get('body-shop/{bodyShopViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::class)->name('body-shop.remediation');
             Route::get('body-shop/{bodyShopViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('body-shop.show');

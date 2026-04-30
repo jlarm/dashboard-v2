@@ -2,23 +2,18 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Dealer\Audit\Osha\RemediationForm;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\Remediation;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Livewire\Livewire;
 
 beforeEach(function (): void {
     $this->store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $this->store->id]);
     $this->actingAs($this->consultant);
 });
 
-it('persists a new remediation photo upload', function (): void {
-    Storage::fake('armpaudits');
-
+it('persists a remediation comment and completion flag via the controller', function (): void {
     $audit = OshaViolationAudit::query()->create([
         'uuid' => (string) Str::uuid(),
         'user_id' => $this->consultant->id,
@@ -36,47 +31,54 @@ it('persists a new remediation photo upload', function (): void {
         'risk' => true,
     ]);
 
-    Livewire::test(RemediationForm::class, ['oshaViolationAudit' => $audit])
-        ->set("violationRemediations.{$violation->id}.comment", 'Obstruction removed and area marked.')
-        ->set("violationRemediations.{$violation->id}.photo", UploadedFile::fake()->image('remediation.jpg'))
-        ->call('editRemediations')
-        ->assertHasNoErrors();
+    $this->patch(route('dealer.audit.osha.remediation.update', $audit->uuid), [
+        'remediations' => [
+            $violation->id => [
+                'comment' => 'Obstruction removed and area marked.',
+                'completed' => 1,
+            ],
+        ],
+    ])->assertRedirect();
 
     $remediation = Remediation::query()->where('violation_id', $violation->id)->first();
 
-    expect($remediation)->not->toBeNull();
-    expect($remediation->comment)->toBe('Obstruction removed and area marked.');
-    expect($remediation->user_id)->toBe($this->consultant->id);
-    expect($remediation->getMedia('remediations'))->toHaveCount(1);
+    expect($remediation)->not->toBeNull()
+        ->and($remediation->comment)->toBe('Obstruction removed and area marked.')
+        ->and($remediation->completed)->toBeTrue()
+        ->and($remediation->user_id)->toBe($this->consultant->id);
 });
 
-it('returns null when temporary upload preview generation fails', function (): void {
+it('removes a remediation entirely when comment, completion, and photo are all empty', function (): void {
     $audit = OshaViolationAudit::query()->create([
         'uuid' => (string) Str::uuid(),
         'user_id' => $this->consultant->id,
         'store_id' => $this->store->id,
         'date' => '2026-03-10',
-        'grade' => 'B',
     ]);
 
     $violation = $audit->violations()->create([
         'uuid' => (string) Str::uuid(),
         'statement_id' => 1,
-        'statement' => 'Fire extinguisher blocked.',
-        'comment' => 'Cabinet moved.',
-        'violation_date' => '2026-03-09',
-        'risk' => true,
+        'statement' => 'Aisle blocked.',
+        'comment' => 'Pallet in walkway.',
+        'risk' => false,
     ]);
 
-    $component = Livewire::test(RemediationForm::class, ['oshaViolationAudit' => $audit]);
+    $remediation = Remediation::query()->create([
+        'violation_id' => $violation->id,
+        'user_id' => $this->consultant->id,
+        'comment' => 'Cleared.',
+        'completed' => true,
+    ]);
 
-    $previewUrl = $component->instance()->temporaryPhotoPreviewUrl(new class
-    {
-        public function temporaryUrl(): string
-        {
-            throw new RuntimeException('This driver does not support creating temporary URLs.');
-        }
-    });
+    $this->patch(route('dealer.audit.osha.remediation.update', $audit->uuid), [
+        'remediations' => [
+            $violation->id => [
+                'comment' => '',
+                'completed' => 0,
+            ],
+        ],
+    ])->assertRedirect();
 
-    expect($previewUrl)->toBeNull();
+    expect(Remediation::query()->find($remediation->id))->toBeNull();
 });
