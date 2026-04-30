@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Dealer\Audit;
 
 use App\Models\AuditComment;
+use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Violation;
 use App\Models\RemediationReminders;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Override;
 
-class GlbaViolationAudit extends Model
+class GlbaViolationAudit extends Model implements ViolationAudit
 {
     use SoftDeletes;
 
