@@ -271,13 +271,13 @@ foreach (['osha', 'body-shop', 'finance'] as $slug) {
 
 Each phase is an independently-mergeable PR.
 
-### Phase 1 — Shared abstractions, no behaviour change
-- `App\Enums\ViolationAuditType`
-- `App\Models\Dealer\Audit\Contracts\ViolationAudit` interface; three models `implements` it.
-- `App\Domain\Tenant\Audits\Queries\ResolveAuditScopedStores`
-- `App\Domain\Tenant\Audits\Queries\BuildAuditChartData` (Osha-canonical chart logic)
-- `App\Domain\Tenant\Audits\Strategies\{Osha,BodyShop,Glba}ViolationStrategy`
-- Unit tests for enum, chart builder, strategies.
+### Phase 1 — Shared abstractions, no behaviour change ✅
+- ~~`App\Enums\ViolationAuditType`~~
+- ~~`App\Models\Dealer\Audit\Contracts\ViolationAudit` interface; three models `implements` it.~~
+- ~~`App\Domain\Tenant\Audits\Queries\ResolveAuditScopedStores`~~
+- ~~`App\Domain\Tenant\Audits\Queries\BuildAuditChartData` (Osha-canonical chart logic)~~
+- ~~`App\Domain\Tenant\Audits\Strategies\{Osha,BodyShop,Glba}ViolationStrategy`~~ — deferred; per-type config consolidated on the enum, mutation logic moves to Phase 2 Actions.
+- ~~Unit tests for enum, chart builder, strategies.~~ (31 tests, 43 assertions, passing)
 
 **Run**: `php artisan test tests/Unit/Enums tests/Unit/Domain/Tenant/Audits`
 
@@ -397,12 +397,12 @@ Never run the full suite from this branch.
 
 Each phase ends with: tests green → commit → push → merge → only then start the next phase. No phase-stacking.
 
-### Phase 1 — Shared abstractions (no behaviour change)
-- Add `ViolationAuditType` enum, `ViolationAudit` interface (three models implement).
-- Add `ResolveAuditScopedStores`, `BuildAuditChartData`, three `*ViolationStrategy` classes.
-- Add unit tests.
-- **Run**: `php artisan test tests/Unit/Enums tests/Unit/Domain/Tenant/Audits`
-- **Push & merge before Phase 2.**
+### Phase 1 — Shared abstractions (no behaviour change) ✅ pushed `f561f7b8`
+- ~~Add `ViolationAuditType` enum, `ViolationAudit` interface (three models implement).~~
+- ~~Add `ResolveAuditScopedStores`, `BuildAuditChartData`, three `*ViolationStrategy` classes.~~ (strategies deferred — per-type config lives on the enum)
+- ~~Add unit tests.~~
+- ~~**Run**: `php artisan test tests/Unit/Enums tests/Unit/Domain/Tenant/Audits`~~
+- ~~**Push & merge before Phase 2.**~~
 
 ### Phase 2 — OSHA pilot (Inertia + Vue)
 - Add `ViolationAuditController` (OSHA slug only).
