@@ -47,18 +47,6 @@ const mainNavItems = computed<NavItem[]>(() => {
             roles: EMPLOYEE_SECTION_VIEWERS,
         },
         {
-            title: 'Manuals',
-            href: isp.index.url(),
-            icon: FileSignature,
-            roles: MANUAL_EDITORS,
-            children: [
-                { title: 'ISP', href: isp.index.url() },
-                { title: 'OSHA', href: osha.index.url() },
-                { title: 'Red Flag', href: redFlag.index.url() },
-                { title: 'CMS', href: cms.index.url() },
-            ],
-        },
-        {
             title: 'Documents',
             href: doc.index.url(),
             icon: FileText,
@@ -78,6 +66,19 @@ const mainNavItems = computed<NavItem[]>(() => {
     ];
 
     if (hasCurrentStore.value) {
+        items.splice(2, 0, {
+            title: 'Manuals',
+            href: isp.index.url(),
+            icon: FileSignature,
+            roles: MANUAL_EDITORS,
+            children: [
+                { title: 'ISP', href: isp.index.url() },
+                { title: 'OSHA', href: osha.index.url() },
+                { title: 'Red Flag', href: redFlag.index.url() },
+                { title: 'CMS', href: cms.index.url() },
+            ],
+        });
+
         items.push({
             title: 'IT Scans',
             href: scan.index.url(),
