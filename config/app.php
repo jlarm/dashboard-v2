@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Facade;
-use Maatwebsite\Excel\Facades\Excel;
 use Webklex\PDFMerger\Facades\PDFMergerFacade;
 
 return [
@@ -17,7 +16,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Excel' => Excel::class,
         'PDFMerger' => PDFMergerFacade::class,
     ])->toArray(),
 

@@ -17,6 +17,7 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
+use Spatie\LaravelPdf\Facades\Pdf;
 use Throwable;
 
 class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
@@ -145,17 +146,6 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
             }
         }
 
-        $html = view('dealer.audit.deal-jacket.pdf-report', [
-            'dealJacketGroup' => $this->dealJacketGroup,
-            'user' => $this->user,
-            'issuesByUser' => $issuesByUser,
-            'dealJacketDetails' => $dealJacketDetails,
-            'dealJacketsByUser' => $dealJacketsByUser,
-            'totalIssues' => $this->dealJacketGroup->total_failed,
-            'issuesByStatementAndUser' => $issuesByStatementAndUser,
-            'allUsers' => $allUsers,
-        ])->render();
-
         $footerHtml = '
              <div style="width: 100%; font-size: 10px;">
                  <script>
@@ -167,19 +157,28 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
              </div>
          ';
 
-        $browsershot = Browsershot::html($html)
-            // Avoid relying on `npm root -g` in daemonized queue workers.
-            ->setNodeModulePath(base_path('node_modules'))
-            ->setNodeBinary($this->resolveNodeBinary());
+        $nodeBinary = $this->resolveNodeBinary();
 
-        $browsershot
-            ->showBackground()
-            ->margins(10, 10, 10, 10)
-            ->scale(0.75)
-            ->waitUntilNetworkIdle()
-            ->showBrowserHeaderAndFooter()
-            ->hideHeader()
+        Pdf::view('dealer.audit.deal-jacket.pdf-report', [
+            'dealJacketGroup' => $this->dealJacketGroup,
+            'user' => $this->user,
+            'issuesByUser' => $issuesByUser,
+            'dealJacketDetails' => $dealJacketDetails,
+            'dealJacketsByUser' => $dealJacketsByUser,
+            'totalIssues' => $this->dealJacketGroup->total_failed,
+            'issuesByStatementAndUser' => $issuesByStatementAndUser,
+            'allUsers' => $allUsers,
+        ])
+            ->driver('browsershot')
+            ->margins(top: 10, right: 10, bottom: 10, left: 10)
             ->footerHtml($footerHtml)
+            ->withBrowsershot(static fn (Browsershot $browsershot) => $browsershot
+                ->setNodeModulePath(base_path('node_modules'))
+                ->setNodeBinary($nodeBinary)
+                ->showBackground()
+                ->scale(0.75)
+                ->waitUntilNetworkIdle()
+            )
             ->save("{$path}/{$fileName}");
     }
 

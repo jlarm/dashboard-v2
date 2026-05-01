@@ -7,6 +7,14 @@ import {
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
     SidebarGroup,
     SidebarMenu,
     SidebarMenuButton,
@@ -14,6 +22,7 @@ import {
     SidebarMenuSub,
     SidebarMenuSubButton,
     SidebarMenuSubItem,
+    useSidebar,
 } from '@/components/ui/sidebar';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import type { NavItem } from '@/types';
@@ -61,14 +70,66 @@ const visibleItems = computed<DisplayItem[]>(() =>
 
 const isGroupOpen = (item: DisplayItem): boolean =>
     item.visibleChildren.some((child) => !child.external && isCurrentOrParentUrl(child.href));
+
+const { state, isMobile } = useSidebar();
+const useFlyout = computed(() => state.value === 'collapsed' && !isMobile.value);
 </script>
 
 <template>
     <SidebarGroup class="px-2 py-0">
         <SidebarMenu>
             <template v-for="item in visibleItems" :key="item.title">
+                <SidebarMenuItem v-if="item.hasChildren && useFlyout">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger as-child>
+                            <SidebarMenuButton
+                                :tooltip="item.title"
+                                :is-active="isGroupOpen(item)"
+                                class="data-[active=true]:bg-primary/10 data-[active=true]:font-normal data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary"
+                            >
+                                <component :is="item.icon" />
+                                <span>{{ item.title }}</span>
+                            </SidebarMenuButton>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                            side="right"
+                            align="start"
+                            :side-offset="4"
+                            class="min-w-48"
+                        >
+                            <DropdownMenuLabel>{{ item.title }}</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                v-for="child in item.visibleChildren"
+                                :key="child.title"
+                                as-child
+                                :data-active="!child.external && isCurrentOrParentUrl(child.href)"
+                                class="data-[active=true]:bg-primary/10 data-[active=true]:font-medium data-[active=true]:text-primary data-[active=true]:[&_svg]:text-primary"
+                            >
+                                <a
+                                    v-if="child.external"
+                                    :href="typeof child.href === 'string' ? child.href : child.href.url"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="flex w-full items-center gap-2"
+                                >
+                                    <component v-if="child.icon" :is="child.icon" class="size-4" />
+                                    <span>{{ child.title }}</span>
+                                </a>
+                                <Link
+                                    v-else
+                                    :href="child.href"
+                                    class="flex w-full items-center gap-2"
+                                >
+                                    <component v-if="child.icon" :is="child.icon" class="size-4" />
+                                    <span>{{ child.title }}</span>
+                                </Link>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </SidebarMenuItem>
                 <Collapsible
-                    v-if="item.hasChildren"
+                    v-else-if="item.hasChildren"
                     as-child
                     :default-open="isGroupOpen(item)"
                     class="group/collapsible"

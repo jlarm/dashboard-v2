@@ -7,7 +7,9 @@ namespace App\Http\Controllers\Tenant\Audit\Concerns;
 use App\Domain\Tenant\Audits\Queries\ResolveAuditScopedStores;
 use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 trait ResolvesAuditScope
@@ -44,5 +46,23 @@ trait ResolvesAuditScope
         $storeIds = $this->scopedStoreIds();
 
         abort_unless($storeIds->contains((int) $audit->store_id), 404);
+    }
+
+    /**
+     * Non-privileged roles only ever see completed audits — hide in-progress
+     * ones with a 404 to mirror the listing behaviour.
+     */
+    protected function authorizeAuditVisibility(Request $request, ViolationAudit&Model $audit): void
+    {
+        if ($audit->completed_date !== null) {
+            return;
+        }
+
+        $user = $request->user();
+
+        abort_unless(
+            $user instanceof User && $user->hasAnyRole(['super-admin', 'Consultant']),
+            404,
+        );
     }
 }

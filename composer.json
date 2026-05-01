@@ -26,8 +26,6 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/flux-pro": "^2.13",
         "livewire/livewire": "^4.2",
-        "maatwebsite/excel": "^3.1",
-        "phpoffice/phpspreadsheet": "^1.27",
         "predis/predis": "^2.3",
         "sentry/sentry-laravel": "^4.3",
         "spatie/browsershot": "^5.0",

@@ -37,20 +37,26 @@ class UpdateViolationAudit
                 continue;
             }
 
-            $position = $this->nextEmptyPhotoSlot($violation);
             foreach ($images as $image) {
                 if (! $image instanceof UploadedFile) {
                     continue;
                 }
+
+                $position = $this->nextEmptyPhotoSlot($violation);
+                if ($position === null) {
+                    break;
+                }
+
                 $violation->addMedia($image->getRealPath())
                     ->usingFileName($image->getClientOriginalName())
                     ->toMediaCollection('violation_files_'.$position, 'armpaudits');
-                $position = ($position + 1) % 3;
+
+                $violation->load('media');
             }
         }
     }
 
-    private function nextEmptyPhotoSlot(\App\Models\Dealer\Violation $violation): int
+    private function nextEmptyPhotoSlot(\App\Models\Dealer\Violation $violation): ?int
     {
         foreach ([0, 1, 2] as $position) {
             if ($violation->getMedia('violation_files_'.$position)->isEmpty()) {
@@ -58,6 +64,6 @@ class UpdateViolationAudit
             }
         }
 
-        return 0;
+        return null;
     }
 }

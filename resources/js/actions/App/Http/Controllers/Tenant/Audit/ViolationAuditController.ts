@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:148
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:163
 * @route '/audits/osha/create/{store}'
 */
 export const create = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:148
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:163
 * @route '/audits/osha/create/{store}'
 */
 create.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ create.url = (args: { store: string | number | { id: string | number } } | [stor
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:148
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:163
 * @route '/audits/osha/create/{store}'
 */
 create.get = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ create.get = (args: { store: string | number | { id: string | number } } | [stor
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:148
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:163
 * @route '/audits/osha/create/{store}'
 */
 create.head = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ create.head = (args: { store: string | number | { id: string | number } } | [sto
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:148
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:163
 * @route '/audits/osha/create/{store}'
 */
 const createForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ const createForm = (args: { store: string | number | { id: string | number } } |
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:148
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:163
 * @route '/audits/osha/create/{store}'
 */
 createForm.get = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +89,7 @@ createForm.get = (args: { store: string | number | { id: string | number } } | [
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:148
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:163
 * @route '/audits/osha/create/{store}'
 */
 createForm.head = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -106,7 +106,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:103
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:118
 * @route '/audits/osha/{audit}/edit'
 */
 export const edit = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -121,7 +121,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:103
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:118
 * @route '/audits/osha/{audit}/edit'
 */
 edit.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -148,7 +148,7 @@ edit.url = (args: { audit: string | number } | [audit: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:103
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:118
 * @route '/audits/osha/{audit}/edit'
 */
 edit.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -158,7 +158,7 @@ edit.get = (args: { audit: string | number } | [audit: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:103
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:118
 * @route '/audits/osha/{audit}/edit'
 */
 edit.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -168,7 +168,7 @@ edit.head = (args: { audit: string | number } | [audit: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:103
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:118
 * @route '/audits/osha/{audit}/edit'
 */
 const editForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -178,7 +178,7 @@ const editForm = (args: { audit: string | number } | [audit: string | number ] |
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:103
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:118
 * @route '/audits/osha/{audit}/edit'
 */
 editForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -188,7 +188,7 @@ editForm.get = (args: { audit: string | number } | [audit: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:103
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:118
 * @route '/audits/osha/{audit}/edit'
 */
 editForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -205,7 +205,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:120
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:135
 * @route '/audits/osha/{audit}'
 */
 export const update = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -220,7 +220,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:120
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:135
 * @route '/audits/osha/{audit}'
 */
 update.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -247,7 +247,7 @@ update.url = (args: { audit: string | number } | [audit: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:120
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:135
 * @route '/audits/osha/{audit}'
 */
 update.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -257,7 +257,7 @@ update.patch = (args: { audit: string | number } | [audit: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:120
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:135
 * @route '/audits/osha/{audit}'
 */
 const updateForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -272,7 +272,7 @@ const updateForm = (args: { audit: string | number } | [audit: string | number ]
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:120
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:135
 * @route '/audits/osha/{audit}'
 */
 updateForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -289,7 +289,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:134
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:149
 * @route '/audits/osha/{audit}'
 */
 export const destroy = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -304,7 +304,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:134
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:149
 * @route '/audits/osha/{audit}'
 */
 destroy.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -331,7 +331,7 @@ destroy.url = (args: { audit: string | number } | [audit: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:134
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:149
 * @route '/audits/osha/{audit}'
 */
 destroy.delete = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -341,7 +341,7 @@ destroy.delete = (args: { audit: string | number } | [audit: string | number ] |
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:134
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:149
 * @route '/audits/osha/{audit}'
 */
 const destroyForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -356,7 +356,7 @@ const destroyForm = (args: { audit: string | number } | [audit: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:134
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:149
 * @route '/audits/osha/{audit}'
 */
 destroyForm.delete = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -373,7 +373,7 @@ destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:402
 * @route '/audits/osha/{audit}/grade'
 */
 export const updateGrade = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -388,7 +388,7 @@ updateGrade.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:402
 * @route '/audits/osha/{audit}/grade'
 */
 updateGrade.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -415,7 +415,7 @@ updateGrade.url = (args: { audit: string | number } | [audit: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:402
 * @route '/audits/osha/{audit}/grade'
 */
 updateGrade.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -425,7 +425,7 @@ updateGrade.patch = (args: { audit: string | number } | [audit: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:402
 * @route '/audits/osha/{audit}/grade'
 */
 const updateGradeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -440,7 +440,7 @@ const updateGradeForm = (args: { audit: string | number } | [audit: string | num
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateGrade
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:306
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:402
 * @route '/audits/osha/{audit}/grade'
 */
 updateGradeForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -456,8 +456,166 @@ updateGradeForm.patch = (args: { audit: string | number } | [audit: string | num
 updateGrade.form = updateGradeForm
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::complete
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:376
+* @route '/audits/osha/{audit}/complete'
+*/
+export const complete = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: complete.url(args, options),
+    method: 'post',
+})
+
+complete.definition = {
+    methods: ["post"],
+    url: '/audits/osha/{audit}/complete',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::complete
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:376
+* @route '/audits/osha/{audit}/complete'
+*/
+complete.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { audit: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+    }
+
+    return complete.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::complete
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:376
+* @route '/audits/osha/{audit}/complete'
+*/
+complete.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: complete.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::complete
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:376
+* @route '/audits/osha/{audit}/complete'
+*/
+const completeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: complete.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::complete
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:376
+* @route '/audits/osha/{audit}/complete'
+*/
+completeForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: complete.url(args, options),
+    method: 'post',
+})
+
+complete.form = completeForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::reopen
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:389
+* @route '/audits/osha/{audit}/complete'
+*/
+export const reopen = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: reopen.url(args, options),
+    method: 'delete',
+})
+
+reopen.definition = {
+    methods: ["delete"],
+    url: '/audits/osha/{audit}/complete',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::reopen
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:389
+* @route '/audits/osha/{audit}/complete'
+*/
+reopen.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { audit: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+    }
+
+    return reopen.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::reopen
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:389
+* @route '/audits/osha/{audit}/complete'
+*/
+reopen.delete = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: reopen.url(args, options),
+    method: 'delete',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::reopen
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:389
+* @route '/audits/osha/{audit}/complete'
+*/
+const reopenForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: reopen.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::reopen
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:389
+* @route '/audits/osha/{audit}/complete'
+*/
+reopenForm.delete = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: reopen.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+reopen.form = reopenForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:213
 * @route '/audits/osha/{audit}/violations'
 */
 export const addViolation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -472,7 +630,7 @@ addViolation.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:213
 * @route '/audits/osha/{audit}/violations'
 */
 addViolation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -499,7 +657,7 @@ addViolation.url = (args: { audit: string | number } | [audit: string | number ]
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:213
 * @route '/audits/osha/{audit}/violations'
 */
 addViolation.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -509,7 +667,7 @@ addViolation.post = (args: { audit: string | number } | [audit: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:213
 * @route '/audits/osha/{audit}/violations'
 */
 const addViolationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -519,7 +677,7 @@ const addViolationForm = (args: { audit: string | number } | [audit: string | nu
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::addViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:213
 * @route '/audits/osha/{audit}/violations'
 */
 addViolationForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -531,7 +689,7 @@ addViolation.form = addViolationForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:227
 * @route '/audits/osha/{audit}/violations/{violation}'
 */
 export const deleteViolation = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -546,7 +704,7 @@ deleteViolation.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:227
 * @route '/audits/osha/{audit}/violations/{violation}'
 */
 deleteViolation.url = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
@@ -574,7 +732,7 @@ deleteViolation.url = (args: { audit: string | number, violation: string | numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:227
 * @route '/audits/osha/{audit}/violations/{violation}'
 */
 deleteViolation.delete = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -584,7 +742,7 @@ deleteViolation.delete = (args: { audit: string | number, violation: string | nu
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:227
 * @route '/audits/osha/{audit}/violations/{violation}'
 */
 const deleteViolationForm = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -599,7 +757,7 @@ const deleteViolationForm = (args: { audit: string | number, violation: string |
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:210
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:227
 * @route '/audits/osha/{audit}/violations/{violation}'
 */
 deleteViolationForm.delete = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -616,7 +774,7 @@ deleteViolation.form = deleteViolationForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
 * @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
 */
 export const deleteViolationPhoto = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -631,7 +789,7 @@ deleteViolationPhoto.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
 * @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
 */
 deleteViolationPhoto.url = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions) => {
@@ -662,7 +820,7 @@ deleteViolationPhoto.url = (args: { audit: string | number, violation: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
 * @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
 */
 deleteViolationPhoto.delete = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -672,7 +830,7 @@ deleteViolationPhoto.delete = (args: { audit: string | number, violation: string
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
 * @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
 */
 const deleteViolationPhotoForm = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -687,7 +845,7 @@ const deleteViolationPhotoForm = (args: { audit: string | number, violation: str
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::deleteViolationPhoto
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:226
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
 * @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
 */
 deleteViolationPhotoForm.delete = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -704,7 +862,7 @@ deleteViolationPhoto.form = deleteViolationPhotoForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:280
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:301
 * @route '/audits/osha/{audit}/generate'
 */
 export const generate = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -719,7 +877,7 @@ generate.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:280
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:301
 * @route '/audits/osha/{audit}/generate'
 */
 generate.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -746,7 +904,7 @@ generate.url = (args: { audit: string | number } | [audit: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:280
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:301
 * @route '/audits/osha/{audit}/generate'
 */
 generate.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -756,7 +914,7 @@ generate.post = (args: { audit: string | number } | [audit: string | number ] | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:280
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:301
 * @route '/audits/osha/{audit}/generate'
 */
 const generateForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -766,7 +924,7 @@ const generateForm = (args: { audit: string | number } | [audit: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:280
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:301
 * @route '/audits/osha/{audit}/generate'
 */
 generateForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -778,7 +936,7 @@ generate.form = generateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:314
 * @route '/audits/osha/{audit}/remediation/generate'
 */
 export const generateRemediation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -793,7 +951,7 @@ generateRemediation.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:314
 * @route '/audits/osha/{audit}/remediation/generate'
 */
 generateRemediation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -820,7 +978,7 @@ generateRemediation.url = (args: { audit: string | number } | [audit: string | n
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:314
 * @route '/audits/osha/{audit}/remediation/generate'
 */
 generateRemediation.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -830,7 +988,7 @@ generateRemediation.post = (args: { audit: string | number } | [audit: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:314
 * @route '/audits/osha/{audit}/remediation/generate'
 */
 const generateRemediationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -840,7 +998,7 @@ const generateRemediationForm = (args: { audit: string | number } | [audit: stri
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:293
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:314
 * @route '/audits/osha/{audit}/remediation/generate'
 */
 generateRemediationForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -852,7 +1010,7 @@ generateRemediation.form = generateRemediationForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:260
 * @route '/audits/osha/{audit}/violations/search'
 */
 export const searchStatements = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -867,7 +1025,7 @@ searchStatements.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:260
 * @route '/audits/osha/{audit}/violations/search'
 */
 searchStatements.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -894,7 +1052,7 @@ searchStatements.url = (args: { audit: string | number } | [audit: string | numb
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:260
 * @route '/audits/osha/{audit}/violations/search'
 */
 searchStatements.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -904,7 +1062,7 @@ searchStatements.get = (args: { audit: string | number } | [audit: string | numb
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:260
 * @route '/audits/osha/{audit}/violations/search'
 */
 searchStatements.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -914,7 +1072,7 @@ searchStatements.head = (args: { audit: string | number } | [audit: string | num
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:260
 * @route '/audits/osha/{audit}/violations/search'
 */
 const searchStatementsForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -924,7 +1082,7 @@ const searchStatementsForm = (args: { audit: string | number } | [audit: string 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:260
 * @route '/audits/osha/{audit}/violations/search'
 */
 searchStatementsForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -934,7 +1092,7 @@ searchStatementsForm.get = (args: { audit: string | number } | [audit: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::searchStatements
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:260
 * @route '/audits/osha/{audit}/violations/search'
 */
 searchStatementsForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -951,7 +1109,7 @@ searchStatements.form = searchStatementsForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:47
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:55
 * @route '/audits/osha'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -966,7 +1124,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:47
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:55
 * @route '/audits/osha'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -975,7 +1133,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:47
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:55
 * @route '/audits/osha'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -985,7 +1143,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:47
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:55
 * @route '/audits/osha'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -995,7 +1153,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:47
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:55
 * @route '/audits/osha'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1005,7 +1163,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:47
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:55
 * @route '/audits/osha'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1015,7 +1173,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:47
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:55
 * @route '/audits/osha'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1032,7 +1190,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:162
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:177
 * @route '/audits/osha/{audit}/remediation'
 */
 export const remediation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1047,7 +1205,7 @@ remediation.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:162
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:177
 * @route '/audits/osha/{audit}/remediation'
 */
 remediation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -1074,7 +1232,7 @@ remediation.url = (args: { audit: string | number } | [audit: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:162
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:177
 * @route '/audits/osha/{audit}/remediation'
 */
 remediation.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1084,7 +1242,7 @@ remediation.get = (args: { audit: string | number } | [audit: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:162
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:177
 * @route '/audits/osha/{audit}/remediation'
 */
 remediation.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1094,7 +1252,7 @@ remediation.head = (args: { audit: string | number } | [audit: string | number ]
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:162
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:177
 * @route '/audits/osha/{audit}/remediation'
 */
 const remediationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1104,7 +1262,7 @@ const remediationForm = (args: { audit: string | number } | [audit: string | num
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:162
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:177
 * @route '/audits/osha/{audit}/remediation'
 */
 remediationForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1114,7 +1272,7 @@ remediationForm.get = (args: { audit: string | number } | [audit: string | numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:162
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:177
 * @route '/audits/osha/{audit}/remediation'
 */
 remediationForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1131,7 +1289,7 @@ remediation.form = remediationForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
 * @route '/audits/osha/{audit}/remediation'
 */
 export const updateRemediation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -1146,7 +1304,7 @@ updateRemediation.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
 * @route '/audits/osha/{audit}/remediation'
 */
 updateRemediation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -1173,7 +1331,7 @@ updateRemediation.url = (args: { audit: string | number } | [audit: string | num
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
 * @route '/audits/osha/{audit}/remediation'
 */
 updateRemediation.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -1183,7 +1341,7 @@ updateRemediation.patch = (args: { audit: string | number } | [audit: string | n
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
 * @route '/audits/osha/{audit}/remediation'
 */
 const updateRemediationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -1198,7 +1356,7 @@ const updateRemediationForm = (args: { audit: string | number } | [audit: string
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:179
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:196
 * @route '/audits/osha/{audit}/remediation'
 */
 updateRemediationForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -1215,7 +1373,7 @@ updateRemediation.form = updateRemediationForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:258
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:275
 * @route '/audits/osha/{audit}/download'
 */
 export const download = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1230,7 +1388,7 @@ download.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:258
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:275
 * @route '/audits/osha/{audit}/download'
 */
 download.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -1257,7 +1415,7 @@ download.url = (args: { audit: string | number } | [audit: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:258
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:275
 * @route '/audits/osha/{audit}/download'
 */
 download.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1267,7 +1425,7 @@ download.get = (args: { audit: string | number } | [audit: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:258
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:275
 * @route '/audits/osha/{audit}/download'
 */
 download.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1277,7 +1435,7 @@ download.head = (args: { audit: string | number } | [audit: string | number ] | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:258
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:275
 * @route '/audits/osha/{audit}/download'
 */
 const downloadForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1287,7 +1445,7 @@ const downloadForm = (args: { audit: string | number } | [audit: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:258
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:275
 * @route '/audits/osha/{audit}/download'
 */
 downloadForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1297,7 +1455,7 @@ downloadForm.get = (args: { audit: string | number } | [audit: string | number ]
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:258
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:275
 * @route '/audits/osha/{audit}/download'
 */
 downloadForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1314,7 +1472,7 @@ download.form = downloadForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:288
 * @route '/audits/osha/{audit}/remediation/download'
 */
 export const downloadRemediation = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1329,7 +1487,7 @@ downloadRemediation.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:288
 * @route '/audits/osha/{audit}/remediation/download'
 */
 downloadRemediation.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -1356,7 +1514,7 @@ downloadRemediation.url = (args: { audit: string | number } | [audit: string | n
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:288
 * @route '/audits/osha/{audit}/remediation/download'
 */
 downloadRemediation.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1366,7 +1524,7 @@ downloadRemediation.get = (args: { audit: string | number } | [audit: string | n
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:288
 * @route '/audits/osha/{audit}/remediation/download'
 */
 downloadRemediation.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1376,7 +1534,7 @@ downloadRemediation.head = (args: { audit: string | number } | [audit: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:288
 * @route '/audits/osha/{audit}/remediation/download'
 */
 const downloadRemediationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1386,7 +1544,7 @@ const downloadRemediationForm = (args: { audit: string | number } | [audit: stri
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:288
 * @route '/audits/osha/{audit}/remediation/download'
 */
 downloadRemediationForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1396,7 +1554,7 @@ downloadRemediationForm.get = (args: { audit: string | number } | [audit: string
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::downloadRemediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:269
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:288
 * @route '/audits/osha/{audit}/remediation/download'
 */
 downloadRemediationForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1413,7 +1571,7 @@ downloadRemediation.form = downloadRemediationForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:86
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:99
 * @route '/audits/osha/{audit}'
 */
 export const show = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1428,7 +1586,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:86
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:99
 * @route '/audits/osha/{audit}'
 */
 show.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -1455,7 +1613,7 @@ show.url = (args: { audit: string | number } | [audit: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:86
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:99
 * @route '/audits/osha/{audit}'
 */
 show.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1465,7 +1623,7 @@ show.get = (args: { audit: string | number } | [audit: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:86
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:99
 * @route '/audits/osha/{audit}'
 */
 show.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1475,7 +1633,7 @@ show.head = (args: { audit: string | number } | [audit: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:86
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:99
 * @route '/audits/osha/{audit}'
 */
 const showForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1485,7 +1643,7 @@ const showForm = (args: { audit: string | number } | [audit: string | number ] |
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:86
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:99
 * @route '/audits/osha/{audit}'
 */
 showForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1495,7 +1653,7 @@ showForm.get = (args: { audit: string | number } | [audit: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:86
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:99
 * @route '/audits/osha/{audit}'
 */
 showForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1510,6 +1668,250 @@ showForm.head = (args: { audit: string | number } | [audit: string | number ] | 
 
 show.form = showForm
 
-const ViolationAuditController = { create, edit, update, destroy, updateGrade, addViolation, deleteViolation, deleteViolationPhoto, generate, generateRemediation, searchStatements, index, remediation, updateRemediation, download, downloadRemediation, show }
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::storeComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:327
+* @route '/audits/osha/{audit}/comments'
+*/
+export const storeComment = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: storeComment.url(args, options),
+    method: 'post',
+})
+
+storeComment.definition = {
+    methods: ["post"],
+    url: '/audits/osha/{audit}/comments',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::storeComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:327
+* @route '/audits/osha/{audit}/comments'
+*/
+storeComment.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { audit: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+    }
+
+    return storeComment.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::storeComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:327
+* @route '/audits/osha/{audit}/comments'
+*/
+storeComment.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: storeComment.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::storeComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:327
+* @route '/audits/osha/{audit}/comments'
+*/
+const storeCommentForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: storeComment.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::storeComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:327
+* @route '/audits/osha/{audit}/comments'
+*/
+storeCommentForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: storeComment.url(args, options),
+    method: 'post',
+})
+
+storeComment.form = storeCommentForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:344
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+export const updateComment = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateComment.url(args, options),
+    method: 'patch',
+})
+
+updateComment.definition = {
+    methods: ["patch"],
+    url: '/audits/osha/{audit}/comments/{comment}',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:344
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+updateComment.url = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+            comment: args[1],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+        comment: typeof args.comment === 'object'
+        ? args.comment.id
+        : args.comment,
+    }
+
+    return updateComment.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace('{comment}', parsedArgs.comment.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:344
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+updateComment.patch = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateComment.url(args, options),
+    method: 'patch',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:344
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+const updateCommentForm = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateComment.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::updateComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:344
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+updateCommentForm.patch = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateComment.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+updateComment.form = updateCommentForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroyComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:360
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+export const destroyComment = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroyComment.url(args, options),
+    method: 'delete',
+})
+
+destroyComment.definition = {
+    methods: ["delete"],
+    url: '/audits/osha/{audit}/comments/{comment}',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroyComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:360
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+destroyComment.url = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+            audit: args[0],
+            comment: args[1],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        audit: args.audit,
+        comment: typeof args.comment === 'object'
+        ? args.comment.id
+        : args.comment,
+    }
+
+    return destroyComment.definition.url
+            .replace('{audit}', parsedArgs.audit.toString())
+            .replace('{comment}', parsedArgs.comment.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroyComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:360
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+destroyComment.delete = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroyComment.url(args, options),
+    method: 'delete',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroyComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:360
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+const destroyCommentForm = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroyComment.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroyComment
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:360
+* @route '/audits/osha/{audit}/comments/{comment}'
+*/
+destroyCommentForm.delete = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroyComment.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroyComment.form = destroyCommentForm
+
+const ViolationAuditController = { create, edit, update, destroy, updateGrade, complete, reopen, addViolation, deleteViolation, deleteViolationPhoto, generate, generateRemediation, searchStatements, index, remediation, updateRemediation, download, downloadRemediation, show, storeComment, updateComment, destroyComment }
 
 export default ViolationAuditController

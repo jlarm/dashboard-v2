@@ -17,7 +17,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\ExcelServiceProvider;
 use Sentry\Laravel\Integration;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Spatie\Permission\Middleware\PermissionMiddleware;
@@ -29,7 +28,6 @@ use Webklex\PDFMerger\Providers\PDFMergerServiceProvider;
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
         PDFMergerServiceProvider::class,
-        ExcelServiceProvider::class,
     ])
     ->withRouting(
         commands: __DIR__.'/../routes/console.php',

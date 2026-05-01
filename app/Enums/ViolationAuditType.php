@@ -69,6 +69,24 @@ enum ViolationAuditType: string
         };
     }
 
+    public function pdfViewName(): string
+    {
+        return match ($this) {
+            self::Osha => 'dealer.audit.osha.pdf-view',
+            self::BodyShop => 'dealer.audit.body-shop.pdf-view',
+            self::Glba => 'dealer.audit.finance.pdf-view',
+        };
+    }
+
+    public function pdfFilenameSuffix(): string
+    {
+        return match ($this) {
+            self::Osha => 'osha-violation-audit',
+            self::BodyShop => 'body-shop-violation-audit',
+            self::Glba => 'glba-violation-audit',
+        };
+    }
+
     /**
      * @return class-string
      */

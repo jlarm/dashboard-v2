@@ -27,8 +27,8 @@ it('renders the index page with audits scoped to the current store', function ()
             ->component('tenant/audits/Index')
             ->where('type', 'osha')
             ->where('label', 'OSHA')
-            ->where('audits.0.id', $audit->id)
-            ->where('audits.0.grade', 'A'));
+            ->where('audits.data.0.id', $audit->id)
+            ->where('audits.data.0.grade', 'A'));
 });
 
 it('returns an empty index when no audits exist', function (): void {
@@ -37,6 +37,6 @@ it('returns an empty index when no audits exist', function (): void {
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->component('tenant/audits/Index')
-            ->where('audits', [])
+            ->where('audits.data', [])
             ->where('legacy_audits', []));
 });

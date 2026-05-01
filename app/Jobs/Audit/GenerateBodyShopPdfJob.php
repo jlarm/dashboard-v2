@@ -19,6 +19,8 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
+use Spatie\LaravelPdf\Enums\Format;
+use Spatie\LaravelPdf\Facades\Pdf;
 use Throwable;
 
 class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
@@ -109,22 +111,19 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
     {
         $audit = $this->bodyShopViolationAudit->load(['violations', 'auditComments']);
 
-        $html = view('dealer.audit.body-shop.pdf-view', [
+        Pdf::view('dealer.audit.body-shop.pdf-view', [
             'fileName' => $fileName,
             'audit' => $audit,
             'referenceImagesByStatementId' => $this->resolveReferenceImages($audit->violations),
-        ])->render();
-
-        $footer = view('pdf.audit-footer')->render();
-
-        Browsershot::html($html)
-            ->showBackground()
-            ->format('A4')
-            ->scale(0.75)
-            ->waitUntilNetworkIdle()
-            ->showBrowserHeaderAndFooter()
-            ->hideHeader()
-            ->footerHtml($footer)
+        ])
+            ->driver('browsershot')
+            ->format(Format::A4)
+            ->footerView('pdf.audit-footer')
+            ->withBrowsershot(static fn (Browsershot $browsershot) => $browsershot
+                ->showBackground()
+                ->scale(0.75)
+                ->waitUntilNetworkIdle()
+            )
             ->save(storage_path('app/bodyshop/'.$fileName));
     }
 

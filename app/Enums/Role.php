@@ -124,6 +124,25 @@ enum Role: string
     }
 
     /**
+     * Roles allowed to view OSHA / Body Shop / GLBA audits — mirrors the
+     * broader role group on the audit read routes in routes/tenant.php.
+     *
+     * @return list<self>
+     */
+    public static function auditViewers(): array
+    {
+        return [
+            self::SuperAdmin,
+            self::Consultant,
+            self::Owner,
+            self::CFO,
+            self::GM,
+            self::GSM,
+            self::QualifiedIndividual,
+        ];
+    }
+
+    /**
      * Roles allowed to access the IT Scans dashboard and report archive.
      * Every role except Employee and Porter/Driver.
      *

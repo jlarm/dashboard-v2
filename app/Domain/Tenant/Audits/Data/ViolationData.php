@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Tenant\Audits\Data;
 
 use App\Models\Dealer\Violation;
+use Throwable;
 
 class ViolationData
 {
@@ -32,10 +33,21 @@ class ViolationData
         $photos = [];
         foreach ([0, 1, 2] as $position) {
             foreach ($violation->getMedia('violation_files_'.$position) as $media) {
+                if ($media->file_name === '') {
+                    continue;
+                }
+                try {
+                    $url = $media->getTemporaryUrl(now()->addMinutes(45));
+                } catch (Throwable) {
+                    continue;
+                }
+                if ($url === '') {
+                    continue;
+                }
                 $photos[] = new ViolationPhotoData(
                     id: (int) $media->getKey(),
                     position: $position,
-                    url: $media->getFullUrl(),
+                    url: $url,
                 );
             }
         }
@@ -54,7 +66,7 @@ class ViolationData
                 ? ($referenceImagesByStatementId[$violation->statement_id] ?? null)
                 : null,
             photos: $photos,
-            remediation: $violation->remediation
+            remediation: $violation->relationLoaded('remediation') && $violation->remediation
                 ? RemediationData::fromModel($violation->remediation)
                 : null,
         );

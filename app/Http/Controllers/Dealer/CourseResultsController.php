@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dealer;
 
-use App\Exports\UserCourseResultsExport;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use App\Models\Dealer\Course;
@@ -13,16 +12,41 @@ use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Browsershot\Browsershot;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CourseResultsController extends Controller
 {
-    public function export()
+    public function export(): StreamedResponse
     {
-        return Excel::download(new UserCourseResultsExport, 'users.csv', \Maatwebsite\Excel\Excel::CSV, [
+        $user = auth()->user();
+
+        return Response::streamDownload(function () use ($user): void {
+            $handle = fopen('php://output', 'w');
+
+            fputcsv($handle, ['id', 'name', 'latest_result_id']);
+
+            Course::query()
+                ->where('department_id', $user->department_id)
+                ->select('id', 'name')
+                ->with(['results' => function ($query) use ($user): void {
+                    $query->where('user_id', $user->id)->select('id')->latest();
+                }])
+                ->chunk(500, function ($courses) use ($handle): void {
+                    foreach ($courses as $course) {
+                        fputcsv($handle, [
+                            $course->id,
+                            $course->name,
+                            $course->results->first()?->id,
+                        ]);
+                    }
+                });
+
+            fclose($handle);
+        }, 'users.csv', [
             'Content-Type' => 'text/csv',
         ]);
     }

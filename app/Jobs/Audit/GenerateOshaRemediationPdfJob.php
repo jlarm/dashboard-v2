@@ -17,6 +17,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
+use Spatie\LaravelPdf\Enums\Format;
+use Spatie\LaravelPdf\Facades\Pdf;
 use Throwable;
 
 class GenerateOshaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
@@ -84,19 +86,20 @@ class GenerateOshaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
 
         $localPath = $tempDirectory.'/'.$fileName;
 
-        $html = view('dealer.audit.osha.pdf-view', [
+        Pdf::view('dealer.audit.osha.pdf-view', [
             'fileName' => $fileName,
             'audit' => $this->oshaViolationAudit,
             'remediation' => true,
-        ])->render();
-
-        Browsershot::html($html)
-            ->showBackground()
-            ->format('A4')
-            ->scale(0.75)
-            ->waitUntilNetworkIdle()
-            ->hideHeader()
-            ->hideFooter()
+        ])
+            ->driver('browsershot')
+            ->format(Format::A4)
+            ->withBrowsershot(static fn (Browsershot $browsershot) => $browsershot
+                ->showBackground()
+                ->scale(0.75)
+                ->waitUntilNetworkIdle()
+                ->hideHeader()
+                ->hideFooter()
+            )
             ->save($localPath);
 
         return $localPath;

@@ -10,7 +10,10 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
-import { AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, MANUAL_EDITORS, Role, SCAN_VIEWERS, VENDOR_VIEWERS } from '@/constants/roles';
+import { AUDIT_VIEWERS, AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, MANUAL_EDITORS, Role, SCAN_VIEWERS, VENDOR_VIEWERS } from '@/constants/roles';
+import bodyShopAudit from '@/routes/dealer/audit/body-shop';
+import financeAudit from '@/routes/dealer/audit/finance';
+import oshaAudit from '@/routes/dealer/audit/osha';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
 import locations from '@/routes/dealer/locations';
@@ -26,7 +29,7 @@ import settings from '@/routes/dealer/settings';
 import automatedReports from '@/routes/dealer/settings/automated-reports';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { Building2, FileSignature, FileText, FileBarChart2, FlaskConical, Handshake, HardHat, LayoutGrid, ScrollText, Settings, ShieldCheck, Users } from 'lucide-vue-next';
+import { Building2, ClipboardCheck, FileSignature, FileText, FileBarChart2, FlaskConical, Handshake, HardHat, LayoutGrid, ScrollText, Settings, ShieldCheck, Users } from 'lucide-vue-next';
 
 const page = usePage<{ auth: { current_store_id: number | null } }>();
 
@@ -76,6 +79,18 @@ const mainNavItems = computed<NavItem[]>(() => {
                 { title: 'OSHA', href: osha.index.url() },
                 { title: 'Red Flag', href: redFlag.index.url() },
                 { title: 'CMS', href: cms.index.url() },
+            ],
+        });
+
+        items.splice(3, 0, {
+            title: 'Audits',
+            href: oshaAudit.index.url(),
+            icon: ClipboardCheck,
+            roles: AUDIT_VIEWERS,
+            children: [
+                { title: 'OSHA', href: oshaAudit.index.url() },
+                { title: 'Body Shop', href: bodyShopAudit.index.url() },
+                { title: 'GLBA', href: financeAudit.index.url() },
             ],
         });
 

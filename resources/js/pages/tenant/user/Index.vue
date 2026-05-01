@@ -46,7 +46,7 @@ type TrainingCounts = {
 
 const props = defineProps<{
     employees: PaginatedResponse<Employee>;
-    trainingCounts: TrainingCounts | null;
+    trainingCounts?: TrainingCounts | null;
     filters: Filters;
     filterOptions: { departments: Option[]; roles: Option[] };
     permissions: { manage_filters: boolean; email_report: boolean; send_message: boolean };

@@ -192,6 +192,12 @@ Route::name('dealer.')->middleware([
             Route::patch('osha/{audit}/grade', [ViolationAuditController::class, 'updateGrade'])
                 ->defaults('type', ViolationAuditType::Osha)
                 ->name('osha.grade');
+            Route::post('osha/{audit}/complete', [ViolationAuditController::class, 'complete'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.complete');
+            Route::delete('osha/{audit}/complete', [ViolationAuditController::class, 'reopen'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.reopen');
             Route::post('osha/{audit}/violations', [ViolationAuditController::class, 'addViolation'])
                 ->defaults('type', ViolationAuditType::Osha)
                 ->name('osha.violations.store');
@@ -379,6 +385,15 @@ Route::name('dealer.')->middleware([
             Route::get('osha/{audit}', [ViolationAuditController::class, 'show'])
                 ->defaults('type', ViolationAuditType::Osha)
                 ->name('osha.show');
+            Route::post('osha/{audit}/comments', [ViolationAuditController::class, 'storeComment'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.comments.store');
+            Route::patch('osha/{audit}/comments/{comment}', [ViolationAuditController::class, 'updateComment'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.comments.update');
+            Route::delete('osha/{audit}/comments/{comment}', [ViolationAuditController::class, 'destroyComment'])
+                ->defaults('type', ViolationAuditType::Osha)
+                ->name('osha.comments.destroy');
             Route::get('body-shop', App\Http\Livewire\Dealer\Audit\BodyShop\Index::class)->name('body-shop.index');
             Route::get('body-shop/{bodyShopViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::class)->name('body-shop.remediation');
             Route::get('body-shop/{bodyShopViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('body-shop.show');

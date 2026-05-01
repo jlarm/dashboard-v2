@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Tenant\Audit;
 
 use App\Domain\Tenant\Audits\Actions\AddViolationFromStatement;
+use App\Domain\Tenant\Audits\Actions\CreateAuditComment;
 use App\Domain\Tenant\Audits\Actions\CreateViolationAudit;
+use App\Domain\Tenant\Audits\Actions\DeleteAuditComment;
 use App\Domain\Tenant\Audits\Actions\DeleteViolation;
 use App\Domain\Tenant\Audits\Actions\DeleteViolationAudit;
 use App\Domain\Tenant\Audits\Actions\DeleteViolationPhoto;
 use App\Domain\Tenant\Audits\Actions\DispatchAuditPdfGeneration;
 use App\Domain\Tenant\Audits\Actions\DispatchRemediationPdfGeneration;
-use App\Domain\Tenant\Audits\Actions\SignAuditDownloadUrl;
+use App\Domain\Tenant\Audits\Actions\StreamAuditPdf;
+use App\Domain\Tenant\Audits\Actions\ToggleAuditCompletion;
+use App\Domain\Tenant\Audits\Actions\UpdateAuditComment;
 use App\Domain\Tenant\Audits\Actions\UpdateAuditGrade;
 use App\Domain\Tenant\Audits\Actions\UpdateRemediations;
 use App\Domain\Tenant\Audits\Actions\UpdateViolationAudit;
@@ -24,9 +28,13 @@ use App\Enums\ViolationAuditType;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Tenant\Audit\Concerns\ResolvesAuditScope;
 use App\Http\Requests\Tenant\Audits\AddViolationRequest;
+use App\Http\Requests\Tenant\Audits\StoreAuditCommentRequest;
+use App\Http\Requests\Tenant\Audits\UpdateAuditCommentRequest;
 use App\Http\Requests\Tenant\Audits\UpdateAuditGradeRequest;
 use App\Http\Requests\Tenant\Audits\UpdateRemediationsRequest;
 use App\Http\Requests\Tenant\Audits\UpdateViolationAuditRequest;
+use App\Http\Resources\Tenant\Audits\ViolationAuditListItemResource;
+use App\Models\AuditComment;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
@@ -38,13 +46,14 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use RuntimeException;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Spatie\LaravelPdf\PdfBuilder;
 
 class ViolationAuditController extends Controller
 {
     use ResolvesAuditScope;
 
     public function index(
+        Request $request,
         ViolationAuditType $type,
         ListViolationAudits $listAudits,
         ListLegacyAudits $listLegacy,
@@ -53,7 +62,10 @@ class ViolationAuditController extends Controller
         $storeIds = $this->scopedStoreIds();
         $store = $this->resolveCurrentStore();
 
-        $audits = $listAudits->handle($type, $storeIds);
+        $user = $request->user();
+        $canSeeIncomplete = $user instanceof User && $user->hasAnyRole(['super-admin', 'Consultant']);
+
+        $audits = $listAudits->handle($type, $storeIds, includeIncomplete: $canSeeIncomplete);
         $legacyData = $listLegacy->handle($type, $storeIds);
         $legacyRaw = $listLegacy->raw($type, $storeIds);
 
@@ -62,6 +74,7 @@ class ViolationAuditController extends Controller
             ? collect()
             : $modelClass::query()
                 ->whereIn('store_id', $storeIds->all())
+                ->when(! $canSeeIncomplete, fn ($query) => $query->whereNotNull('completed_date'))
                 ->withCount([
                     'violations as violation_count',
                     'violations as remediation_count' => fn ($q) => $q->whereHas('remediation', fn ($q) => $q->where('completed', true)),
@@ -77,7 +90,7 @@ class ViolationAuditController extends Controller
             'store' => $store instanceof Store
                 ? ['id' => $store->id, 'name' => $store->name]
                 : null,
-            'audits' => $audits->map(static fn ($item): array => $item->toArray())->all(),
+            'audits' => ViolationAuditListItemResource::collection($audits),
             'legacy_audits' => $legacyData->map(static fn ($item): array => $item->toArray())->all(),
             'chart' => $chart,
         ]);
@@ -85,11 +98,13 @@ class ViolationAuditController extends Controller
 
     public function show(
         string $audit,
+        Request $request,
         ViolationAuditType $type,
         LoadViolationAuditWithRelations $loadAudit,
     ): InertiaResponse {
         $model = $this->findAudit($type, $audit);
         $this->authorizeAuditScope($model);
+        $this->authorizeAuditVisibility($request, $model);
 
         $detail = $loadAudit->handle($model, withRemediation: true);
 
@@ -161,11 +176,13 @@ class ViolationAuditController extends Controller
 
     public function remediation(
         string $audit,
+        Request $request,
         ViolationAuditType $type,
         LoadViolationAuditWithRelations $loadAudit,
     ): InertiaResponse {
         $model = $this->findAudit($type, $audit);
         $this->authorizeAuditScope($model);
+        $this->authorizeAuditVisibility($request, $model);
 
         $detail = $loadAudit->handle($model, withRemediation: true);
 
@@ -257,24 +274,28 @@ class ViolationAuditController extends Controller
 
     public function download(
         string $audit,
+        Request $request,
         ViolationAuditType $type,
-        SignAuditDownloadUrl $signUrl,
-    ): StreamedResponse {
+        StreamAuditPdf $streamPdf,
+    ): PdfBuilder {
         $model = $this->findAudit($type, $audit);
         $this->authorizeAuditScope($model);
+        $this->authorizeAuditVisibility($request, $model);
 
-        return $signUrl->downloadAuditPdf($model);
+        return $streamPdf->handle($type, $model);
     }
 
     public function downloadRemediation(
         string $audit,
+        Request $request,
         ViolationAuditType $type,
-        SignAuditDownloadUrl $signUrl,
-    ): StreamedResponse {
+        StreamAuditPdf $streamPdf,
+    ): PdfBuilder {
         $model = $this->findAudit($type, $audit);
         $this->authorizeAuditScope($model);
+        $this->authorizeAuditVisibility($request, $model);
 
-        return $signUrl->downloadRemediationPdf($model);
+        return $streamPdf->handle($type, $model, remediation: true);
     }
 
     public function generate(
@@ -303,6 +324,81 @@ class ViolationAuditController extends Controller
         return back()->with('success', 'Remediation PDF is being generated.');
     }
 
+    public function storeComment(
+        string $audit,
+        ViolationAuditType $type,
+        StoreAuditCommentRequest $request,
+        CreateAuditComment $createComment,
+    ): RedirectResponse {
+        $model = $this->findAudit($type, $audit);
+        $this->authorizeAuditScope($model);
+
+        $user = $request->user();
+        throw_unless($user instanceof User, RuntimeException::class, 'Authenticated user required.');
+
+        $createComment->handle($model, $user, $request->commentBody(), $request->photo());
+
+        return back()->with('success', 'Comment added.');
+    }
+
+    public function updateComment(
+        string $audit,
+        AuditComment $comment,
+        ViolationAuditType $type,
+        UpdateAuditCommentRequest $request,
+        UpdateAuditComment $updateComment,
+    ): RedirectResponse {
+        $model = $this->findAudit($type, $audit);
+        $this->authorizeAuditScope($model);
+        $this->authorizeCommentOwnership($request, $comment, $model);
+
+        $updateComment->handle($comment, $request->commentBody(), $request->photo(), $request->removePhoto());
+
+        return back()->with('success', 'Comment updated.');
+    }
+
+    public function destroyComment(
+        string $audit,
+        AuditComment $comment,
+        ViolationAuditType $type,
+        Request $request,
+        DeleteAuditComment $deleteComment,
+    ): RedirectResponse {
+        $model = $this->findAudit($type, $audit);
+        $this->authorizeAuditScope($model);
+        $this->authorizeCommentOwnership($request, $comment, $model);
+
+        $deleteComment->handle($comment);
+
+        return back()->with('success', 'Comment deleted.');
+    }
+
+    public function complete(
+        string $audit,
+        ViolationAuditType $type,
+        ToggleAuditCompletion $toggle,
+    ): RedirectResponse {
+        $model = $this->findAudit($type, $audit);
+        $this->authorizeAuditScope($model);
+
+        $toggle->complete($model);
+
+        return back()->with('success', $type->label().' audit marked complete.');
+    }
+
+    public function reopen(
+        string $audit,
+        ViolationAuditType $type,
+        ToggleAuditCompletion $toggle,
+    ): RedirectResponse {
+        $model = $this->findAudit($type, $audit);
+        $this->authorizeAuditScope($model);
+
+        $toggle->reopen($model);
+
+        return back()->with('success', $type->label().' audit reopened.');
+    }
+
     public function updateGrade(
         string $audit,
         ViolationAuditType $type,
@@ -311,6 +407,8 @@ class ViolationAuditController extends Controller
     ): RedirectResponse {
         $model = $this->findAudit($type, $audit);
         $this->authorizeAuditScope($model);
+
+        abort_if($model->completed_date === null, 422, 'Mark the audit complete before assigning a grade.');
 
         $user = $request->user();
         throw_unless($user instanceof User, RuntimeException::class, 'Authenticated user required.');
@@ -328,5 +426,11 @@ class ViolationAuditController extends Controller
         $model = $modelClass::query()->where('uuid', $uuid)->firstOrFail();
 
         return $model;
+    }
+
+    private function authorizeCommentOwnership(Request $request, AuditComment $comment, OshaViolationAudit|BodyShopViolationAudit|GlbaViolationAudit $audit): void
+    {
+        abort_unless((int) $comment->auditable_id === (int) $audit->getKey(), 404);
+        abort_unless((int) $comment->user_id === (int) $request->user()?->id, 403);
     }
 }

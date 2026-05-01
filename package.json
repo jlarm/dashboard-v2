@@ -37,6 +37,7 @@
         "alpinejs": "^3.14.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
+        "heic2any": "^0.0.4",
         "lucide-vue-next": "^1.0.0",
         "puppeteer": "^24.36.0",
         "reka-ui": "^2.9.6",

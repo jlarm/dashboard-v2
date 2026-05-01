@@ -101,6 +101,21 @@ export const MANUAL_EDITORS: RoleName[] = [
 ];
 
 /**
+ * Roles allowed to view OSHA / Body Shop / GLBA audits.
+ * Mirrors App\Enums\Role::auditViewers() — broader role group on the
+ * audit read routes.
+ */
+export const AUDIT_VIEWERS: RoleName[] = [
+    Role.SuperAdmin,
+    Role.Consultant,
+    Role.Owner,
+    Role.CFO,
+    Role.GM,
+    Role.GSM,
+    Role.QualifiedIndividual,
+];
+
+/**
  * Roles allowed to view the IT Scans dashboard and report archive.
  * Mirrors App\Enums\Role::scanViewers() — every role except Employee
  * and Porter/Driver.
