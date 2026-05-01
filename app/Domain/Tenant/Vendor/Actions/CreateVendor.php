@@ -22,6 +22,7 @@ class CreateVendor
         $vendorForm = $vendor->forms()->create([
             'name' => $vendor->contact_name,
             'email' => $vendor->contact_email,
+            'last_notification_sent_at' => now(),
         ]);
 
         dispatch(new SendVendorEmailJob($vendorForm));

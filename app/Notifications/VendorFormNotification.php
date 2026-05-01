@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\URL;
 
 class VendorFormNotification extends Notification
 {
+    public const SUBJECT = 'Vendor Form Notification';
+
     public function __construct(public VendorForm $vendor) {}
 
     public function via($notifiable): array

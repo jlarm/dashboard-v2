@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Vendor;
+use App\Models\Dealer\VendorForm;
 use App\Models\User;
 use App\Notifications\VendorSignedNotification;
 use Illuminate\Http\UploadedFile;
@@ -130,6 +131,49 @@ describe('vendor store', function (): void {
 
         expect(Vendor::query()->where('name', 'Email Validation Co')->exists())->toBeFalse();
     })->with(['', 'not-an-email', 'jane@', '@example.com', 'jane example.com']);
+
+    it('stamps last_notification_sent_at on the new form so the daily reminder skips it', function (): void {
+        Bus::fake();
+
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.vendor.store'), [
+                'name' => 'Stamped Co',
+                'contact_name' => 'Jane Doe',
+                'contact_email' => 'jane@stamped.test',
+            ])
+            ->assertRedirect();
+
+        $form = VendorForm::query()->where('email', 'jane@stamped.test')->firstOrFail();
+
+        expect($form->last_notification_sent_at)->not->toBeNull();
+        expect($form->last_notification_sent_at->greaterThan(now()->subMinute()))->toBeTrue();
+    });
+});
+
+describe('vendor sendForm', function (): void {
+    it('creates a vendor form, dispatches the email job, and stamps last_notification_sent_at', function (): void {
+        Bus::fake();
+
+        $vendor = Vendor::query()->create([
+            'name' => 'Existing Vendor',
+            'contact_name' => 'Original',
+            'contact_email' => 'original@vendor.test',
+        ]);
+
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.vendor.forms.send', ['vendor' => $vendor->id]), [
+                'name' => 'New Contact',
+                'email' => 'new@vendor.test',
+            ])
+            ->assertRedirect();
+
+        $form = VendorForm::query()->where('email', 'new@vendor.test')->firstOrFail();
+
+        expect($form->vendor_id)->toBe($vendor->id);
+        expect($form->last_notification_sent_at)->not->toBeNull();
+        expect($form->last_notification_sent_at->greaterThan(now()->subMinute()))->toBeTrue();
+        Bus::assertDispatched(SendVendorEmailJob::class);
+    });
 });
 
 describe('vendor show', function (): void {

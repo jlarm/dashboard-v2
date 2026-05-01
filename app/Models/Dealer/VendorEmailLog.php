@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Dealer;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
@@ -28,6 +29,14 @@ class VendorEmailLog extends Model
     public function vendorForm(): BelongsTo
     {
         return $this->belongsTo(VendorForm::class);
+    }
+
+    protected function scopeRecentSuccessfulFor(Builder $query, int $vendorFormId, int $minutes): Builder
+    {
+        return $query
+            ->where('vendor_form_id', $vendorFormId)
+            ->whereNotNull('message_id')
+            ->where('sent_at', '>=', now()->subMinutes($minutes));
     }
 
     #[Override]

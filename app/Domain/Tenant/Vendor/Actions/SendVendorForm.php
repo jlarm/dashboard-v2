@@ -16,6 +16,7 @@ class SendVendorForm
         $vendorForm = $vendor->forms()->create([
             'name' => $data->name,
             'email' => $data->email,
+            'last_notification_sent_at' => now(),
         ]);
 
         dispatch(new SendVendorEmailJob($vendorForm));
