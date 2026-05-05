@@ -18,6 +18,8 @@ class ComplianceScoreSnapshot extends Model
         'score',
         'pillars',
         'weights',
+        'overdue_count',
+        'overdue_high_severity_count',
     ];
 
     public function store(): BelongsTo
@@ -33,6 +35,8 @@ class ComplianceScoreSnapshot extends Model
             'score' => 'float',
             'pillars' => 'array',
             'weights' => 'array',
+            'overdue_count' => 'integer',
+            'overdue_high_severity_count' => 'integer',
         ];
     }
 }

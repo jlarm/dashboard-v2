@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
+use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
 use App\Http\Controllers\Controller;
 use App\Models\ComplianceScoreSnapshot;
 use App\Models\Dealer\Store;
@@ -17,16 +18,24 @@ use Inertia\Response as InertiaResponse;
 
 class DashboardController extends Controller
 {
-    public function show(Request $request, CalculateComplianceScore $calculator): InertiaResponse
-    {
+    public function show(
+        Request $request,
+        CalculateComplianceScore $calculator,
+        CalculateOverdueRemediations $overdueQuery,
+    ): InertiaResponse {
         $stores = $this->resolveScopedStores();
 
         $compliance = $stores->isEmpty()
             ? $this->emptyComplianceProps()
             : $this->buildComplianceProps($stores, $calculator);
 
+        $overdueRemediations = $stores->isEmpty()
+            ? $this->emptyOverdueProps()
+            : $this->buildOverdueProps($stores, $overdueQuery);
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
+            'overdue_remediations' => $overdueRemediations,
         ]);
     }
 
@@ -194,5 +203,82 @@ class DashboardController extends Controller
         }
 
         return 'Unchanged vs last month';
+    }
+
+    /**
+     * @return array{count:?int, high_severity_count:?int, previous_count:?int, delta_pct:?float}
+     */
+    private function emptyOverdueProps(): array
+    {
+        return [
+            'count' => null,
+            'high_severity_count' => null,
+            'previous_count' => null,
+            'delta_pct' => null,
+        ];
+    }
+
+    /**
+     * @param  EloquentCollection<int, Store>  $stores
+     * @return array{count:int, high_severity_count:int, previous_count:?int, delta_pct:?float}
+     */
+    private function buildOverdueProps(EloquentCollection $stores, CalculateOverdueRemediations $overdueQuery): array
+    {
+        $now = CarbonImmutable::now();
+
+        $count = 0;
+        $highSeverityCount = 0;
+
+        foreach ($stores as $store) {
+            $result = $overdueQuery->handle($store, $now);
+            $count += $result['count'];
+            $highSeverityCount += $result['high_severity_count'];
+        }
+
+        $previousCount = $this->previousOverdueCount($stores->pluck('id')->all(), $now);
+        $deltaPct = $this->deltaPercentage($count, $previousCount);
+
+        return [
+            'count' => $count,
+            'high_severity_count' => $highSeverityCount,
+            'previous_count' => $previousCount,
+            'delta_pct' => $deltaPct,
+        ];
+    }
+
+    /**
+     * @param  list<int>  $storeIds
+     */
+    private function previousOverdueCount(array $storeIds, CarbonImmutable $now): ?int
+    {
+        if ($storeIds === []) {
+            return null;
+        }
+
+        $cutoff = $now->subMonth()->toDateString();
+
+        $rows = ComplianceScoreSnapshot::query()
+            ->whereIn('store_id', $storeIds)
+            ->whereNotNull('overdue_count')
+            ->whereDate('scored_on', '<=', $cutoff)
+            ->orderByDesc('scored_on')
+            ->get(['store_id', 'scored_on', 'overdue_count'])
+            ->groupBy('store_id')
+            ->map(static fn ($group) => (int) $group->first()->overdue_count);
+
+        if ($rows->isEmpty()) {
+            return null;
+        }
+
+        return (int) $rows->sum();
+    }
+
+    private function deltaPercentage(int $current, ?int $previous): ?float
+    {
+        if ($previous === null || $previous === 0) {
+            return null;
+        }
+
+        return round((($current - $previous) / $previous) * 100, 1);
     }
 }

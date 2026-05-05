@@ -51,6 +51,13 @@ type ComplianceProps = {
     caption: string;
 };
 
+type OverdueRemediationsProps = {
+    count: number | null;
+    high_severity_count: number | null;
+    previous_count: number | null;
+    delta_pct: number | null;
+};
+
 const compliance = computed<ComplianceProps>(() => {
     const fallback: ComplianceProps = {
         score: null,
@@ -61,6 +68,16 @@ const compliance = computed<ComplianceProps>(() => {
         caption: '',
     };
     return ((page.props as Record<string, unknown>).compliance as ComplianceProps | undefined) ?? fallback;
+});
+
+const overdueRemediations = computed<OverdueRemediationsProps>(() => {
+    const fallback: OverdueRemediationsProps = {
+        count: null,
+        high_severity_count: null,
+        previous_count: null,
+        delta_pct: null,
+    };
+    return ((page.props as Record<string, unknown>).overdue_remediations as OverdueRemediationsProps | undefined) ?? fallback;
 });
 
 const complianceKpi = computed(() => {
@@ -78,9 +95,29 @@ const complianceKpi = computed(() => {
     };
 });
 
+const overdueRemediationsKpi = computed(() => {
+    const { count, high_severity_count: high, delta_pct: deltaPct } = overdueRemediations.value;
+    // Fewer overdue items = improvement, so a negative delta is positive in tone.
+    const tone: PillTone = deltaPct === null ? 'neutral' : deltaPct < 0 ? 'positive' : deltaPct > 0 ? 'negative' : 'neutral';
+    const deltaLabel = deltaPct === null
+        ? '—'
+        : `${deltaPct > 0 ? '↗' : deltaPct < 0 ? '↘' : ''} ${Math.abs(deltaPct).toFixed(0)}%`;
+    const caption = high === null
+        ? 'No prior period to compare.'
+        : `${high} high severity still open`;
+
+    return {
+        label: 'Overdue Remediations',
+        value: count === null ? '—' : count.toString(),
+        delta: deltaLabel,
+        tone,
+        caption,
+    };
+});
+
 const kpis = computed<{ label: string; value: string; delta: string; tone: PillTone; caption: string }[]>(() => [
     complianceKpi.value,
-    { label: 'Overdue Remediations', value: '12', delta: '↘ 18%', tone: 'positive', caption: '4 high severity still open' },
+    overdueRemediationsKpi.value,
     { label: 'Expired Training', value: '27', delta: '↗ 8%', tone: 'negative', caption: '18 more expire in 30 days' },
     { label: 'Critical Vulnerabilities', value: '5', delta: '9d', tone: 'warning', caption: 'Days since last scan' },
 ]);
