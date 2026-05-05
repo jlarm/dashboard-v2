@@ -5,7 +5,7 @@ import { dashboard } from '@/routes/dealer';
 import type { BreadcrumbItem } from '@/types';
 import type { StoreOption } from '@/types/global';
 import { Head, usePage } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const page = usePage();
 
@@ -203,34 +203,50 @@ const pillClass = (tone: PillTone) =>
             ? 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400'
             : 'bg-muted text-muted-foreground';
 
-// Row 2 — Violations opened vs closed, 6 months trailing
-const months = [
-    { label: 'Nov', opened: 8, closed: 6 },
-    { label: 'Dec', opened: 5, closed: 7 },
-    { label: 'Jan', opened: 11, closed: 9 },
-    { label: 'Feb', opened: 6, closed: 8 },
-    { label: 'Mar', opened: 9, closed: 12 },
-    { label: 'Apr', opened: 4, closed: 7 },
-];
+// Row 2 — Violations opened vs closed, last 6 periods
+type ViolationsBucket = { label: string; opened: number; closed: number };
+type ViolationsOverviewProps = {
+    monthly: ViolationsBucket[];
+    quarterly: ViolationsBucket[];
+    yearly: ViolationsBucket[];
+};
 
-const focusedIdx = ref(4);
+const period = ref<'Monthly' | 'Quarterly' | 'Yearly'>('Monthly');
+
+const violationsOverview = computed<ViolationsOverviewProps>(() => {
+    const fallback: ViolationsOverviewProps = { monthly: [], quarterly: [], yearly: [] };
+    return ((page.props as Record<string, unknown>).violations_overview as ViolationsOverviewProps | undefined) ?? fallback;
+});
+
+const months = computed<ViolationsBucket[]>(() => {
+    const key = period.value === 'Monthly' ? 'monthly' : period.value === 'Quarterly' ? 'quarterly' : 'yearly';
+    return violationsOverview.value[key];
+});
+
+const focusedIdx = ref(0);
+
+watch(months, (next) => {
+    focusedIdx.value = Math.max(0, next.length - 1);
+}, { immediate: true });
 
 const chart = computed(() => {
+    const buckets = months.value;
     const w = 1000;
     const h = 280;
     const pad = { top: 24, right: 24, bottom: 34, left: 48 };
     const innerW = w - pad.left - pad.right;
     const innerH = h - pad.top - pad.bottom;
-    const yMax = Math.max(...months.flatMap((m) => [m.opened, m.closed])) + 2;
+    const dataMax = buckets.length > 0 ? Math.max(0, ...buckets.flatMap((m) => [m.opened, m.closed])) : 0;
+    const yMax = Math.max(2, dataMax + 1);
     const lineArea = innerH * 0.78;
     const barArea = innerH * 0.22;
-    const stepX = innerW / (months.length - 1);
+    const stepX = buckets.length > 1 ? innerW / (buckets.length - 1) : innerW;
 
     const toX = (i: number) => pad.left + i * stepX;
     const toY = (v: number) => pad.top + lineArea - (v / yMax) * lineArea;
 
     const path = (key: 'opened' | 'closed') =>
-        months
+        buckets
             .map((m, i) => {
                 const x = toX(i);
                 const y = toY(m[key]);
@@ -238,21 +254,21 @@ const chart = computed(() => {
             })
             .join(' ');
 
-    // Background micro-bars — 8 per month, pseudo-random variance around total violations
+    // Background micro-bars — 8 per period, pseudo-random variance around total violations
     const bars: { x: number; y: number; height: number; width: number }[] = [];
-    const perMonth = 8;
+    const perPeriod = 8;
     const barWidth = 3;
-    const barMax = Math.max(...months.map((m) => m.opened + m.closed));
-    for (let m = 0; m < months.length; m++) {
-        for (let b = 0; b < perMonth; b++) {
+    const barMax = Math.max(1, ...buckets.map((m) => m.opened + m.closed));
+    for (let m = 0; m < buckets.length; m++) {
+        for (let b = 0; b < perPeriod; b++) {
             const seed = (m * 19 + b * 37) % 100;
             const variance = 0.4 + (seed / 100) * 1.0;
-            const value = (months[m].opened + months[m].closed) * variance;
+            const value = (buckets[m].opened + buckets[m].closed) * variance;
             const heightPct = Math.min(1, value / (barMax * 1.3));
             const height = Math.max(2, heightPct * barArea);
             const clusterStart = m === 0 ? toX(0) + 6 : toX(m) - stepX / 2 + 6;
             const clusterWidth = stepX - 12;
-            const baseX = clusterStart + (b / (perMonth - 1)) * clusterWidth;
+            const baseX = clusterStart + (b / (perPeriod - 1)) * clusterWidth;
             bars.push({
                 x: baseX - barWidth / 2,
                 y: pad.top + innerH - height,
@@ -270,24 +286,48 @@ const chart = computed(() => {
         pad,
         openedPath: path('opened'),
         closedPath: path('closed'),
-        openedPoint: (i: number) => ({ x: toX(i), y: toY(months[i].opened) }),
-        closedPoint: (i: number) => ({ x: toX(i), y: toY(months[i].closed) }),
-        xLabels: months.map((m, i) => ({ x: toX(i), label: m.label })),
+        openedPoint: (i: number) => ({ x: toX(i), y: toY(buckets[i]?.opened ?? 0) }),
+        closedPoint: (i: number) => ({ x: toX(i), y: toY(buckets[i]?.closed ?? 0) }),
+        xLabels: buckets.map((m, i) => ({ x: toX(i), label: m.label })),
         yLabels,
         bars,
     };
 });
 
 const focusedData = computed(() => {
-    const i = focusedIdx.value;
+    const i = Math.min(focusedIdx.value, months.value.length - 1);
+    const safeI = Math.max(0, i);
     return {
-        m: months[i],
-        p1: chart.value.openedPoint(i),
-        p2: chart.value.closedPoint(i),
+        m: months.value[safeI] ?? { label: '—', opened: 0, closed: 0 },
+        p1: chart.value.openedPoint(safeI),
+        p2: chart.value.closedPoint(safeI),
     };
 });
 const tooltipLeftPct = computed(() => (focusedData.value.p1.x / chart.value.w) * 100);
 const tooltipTopPct = computed(() => (Math.min(focusedData.value.p1.y, focusedData.value.p2.y) / chart.value.h) * 100);
+
+// Anchor the tooltip to the left/center/right edge of the focused point
+// based on horizontal position, so it never overflows the chart container.
+const tooltipTranslateClass = computed<string>(() => {
+    const pct = tooltipLeftPct.value;
+    if (pct < 15) return 'translate-x-0';
+    if (pct > 85) return '-translate-x-full';
+    return '-translate-x-1/2';
+});
+
+const onChartHover = (event: MouseEvent): void => {
+    const target = event.currentTarget as HTMLElement | null;
+    if (target === null || months.value.length === 0) return;
+    const rect = target.getBoundingClientRect();
+    if (rect.width === 0) return;
+    const ratio = (event.clientX - rect.left) / rect.width;
+    const idx = Math.round(ratio * (months.value.length - 1));
+    focusedIdx.value = Math.max(0, Math.min(months.value.length - 1, idx));
+};
+
+const onChartLeave = (): void => {
+    focusedIdx.value = Math.max(0, months.value.length - 1);
+};
 
 // Row 3a — Audit tracker table
 type AuditStatus = 'Passing' | 'Action Required' | 'Overdue';
@@ -405,8 +445,6 @@ const outstandingVendors = [
     { name: 'RouteOne', lastContacted: '6d ago' },
     { name: 'CDK Global', lastContacted: '3d ago' },
 ];
-
-const period = ref<'Monthly' | 'Quarterly' | 'Yearly'>('Monthly');
 </script>
 
 <template>
@@ -460,7 +498,7 @@ const period = ref<'Monthly' | 'Quarterly' | 'Yearly'>('Monthly');
                     </div>
                 </div>
 
-                <div class="relative px-4 pt-4 pb-2">
+                <div class="relative px-4 pt-4 pb-2" @mousemove="onChartHover" @mouseleave="onChartLeave">
                     <svg :viewBox="`0 0 ${chart.w} ${chart.h}`" class="h-72 w-full" preserveAspectRatio="none">
                         <g>
                             <line
@@ -562,7 +600,8 @@ const period = ref<'Monthly' | 'Quarterly' | 'Yearly'>('Monthly');
                     </svg>
 
                     <div
-                        class="pointer-events-none absolute flex -translate-x-1/2 -translate-y-[calc(100%+14px)] items-stretch gap-0 rounded-xl bg-[#0B0F1E] px-3 py-2.5 text-white shadow-lg ring-1 ring-white/5"
+                        class="pointer-events-none absolute flex -translate-y-[calc(100%+14px)] items-stretch gap-0 rounded-xl bg-[#0B0F1E] px-3 py-2.5 text-white shadow-lg ring-1 ring-white/5"
+                        :class="tooltipTranslateClass"
                         :style="{ left: `${tooltipLeftPct}%`, top: `${tooltipTopPct}%` }"
                     >
                         <div class="flex items-center gap-2 pr-3">

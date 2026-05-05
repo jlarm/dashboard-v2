@@ -40,6 +40,11 @@ it('passes a compliance prop with score, delta, pillars, and caption to the dash
                 ->has('delta_pct')
             )
             ->has('critical_vulnerabilities')
+            ->has('violations_overview', fn (AssertableInertia $overview) => $overview
+                ->has('monthly', 6)
+                ->has('quarterly', 6)
+                ->has('yearly', 6)
+            )
         );
 });
 

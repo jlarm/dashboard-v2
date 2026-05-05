@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
 use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
 use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
+use App\Domain\Tenant\Compliance\Queries\CalculateViolationsOverview;
 use App\Domain\Tenant\Compliance\Queries\GetCriticalVulnerabilities;
 use App\Http\Controllers\Controller;
 use App\Models\ComplianceScoreSnapshot;
@@ -27,6 +28,7 @@ class DashboardController extends Controller
         CalculateOverdueRemediations $overdueQuery,
         CalculateExpiredTraining $trainingQuery,
         GetCriticalVulnerabilities $vulnerabilitiesQuery,
+        CalculateViolationsOverview $violationsOverviewQuery,
     ): InertiaResponse {
         $stores = $this->resolveScopedStores();
 
@@ -46,11 +48,16 @@ class DashboardController extends Controller
             ? null
             : $this->buildCriticalVulnerabilitiesProps($stores, $vulnerabilitiesQuery);
 
+        $violationsOverview = $violationsOverviewQuery
+            ->handleForStores($stores->pluck('id')->all())
+            ->toArray();
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
             'expired_training' => $expiredTraining,
             'critical_vulnerabilities' => $criticalVulnerabilities,
+            'violations_overview' => $violationsOverview,
         ]);
     }
 
