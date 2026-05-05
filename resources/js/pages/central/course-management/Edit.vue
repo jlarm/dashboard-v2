@@ -24,6 +24,7 @@ type Course = {
     role_ids: number[];
     states_required: string[];
     replaces_course_slugs: string[];
+    tenant_ids: string[];
 };
 
 type Options = {
@@ -31,6 +32,7 @@ type Options = {
     roles: { value: number; label: string }[];
     states: { value: string; label: string }[];
     courses: { value: string; label: string }[];
+    tenants: { value: string; label: string }[];
 };
 
 const props = defineProps<{
@@ -103,6 +105,7 @@ const breadcrumbItems = computed<BreadcrumbItem[]>(() => [
                         :role-ids="course.role_ids"
                         :states-required="course.states_required"
                         :replaces-course-slugs="course.replaces_course_slugs"
+                        :tenant-ids="course.tenant_ids"
                         :options="options"
                     />
                 </TabsContent>

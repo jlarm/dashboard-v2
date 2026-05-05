@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Central\Courses\Actions;
 
+use App\Http\Livewire\Dealer\Employee\DepartmentCompletionStats;
 use App\Models\Course;
 use App\Models\Dealer\Course as TenantCourse;
 use App\Models\Dealership;
@@ -28,8 +29,13 @@ class ImportCourses
             Dealership::query()->chunkById(50, function (Collection $tenants) use ($courses): void {
                 foreach ($tenants as $tenant) {
                     /** @var Dealership $tenant */
+                    $assignedCourses = $this->coursesAssignedToTenant($courses, $tenant->id);
+                    $unassignedSlugs = $this->slugsUnassignedFromTenant($courses, $tenant->id);
+
                     tenancy()->initialize($tenant);
-                    $this->upsertTenantCourses($courses);
+                    $this->upsertTenantCourses($assignedCourses);
+                    $this->softDeleteUnassignedTenantCourses($unassignedSlugs);
+                    DepartmentCompletionStats::flushCacheForCurrentTenant();
                     tenancy()->end();
                 }
             });
@@ -69,6 +75,8 @@ class ImportCourses
                 'states_required.*' => ['string'],
                 'replaces_course_slugs' => ['nullable', 'array'],
                 'replaces_course_slugs.*' => ['string'],
+                'tenants_required' => ['nullable', 'array'],
+                'tenants_required.*' => ['string', 'exists:tenants,id'],
             ]);
 
             throw_if($validator->fails(), ValidationException::withMessages([
@@ -85,6 +93,11 @@ class ImportCourses
                 ->values()
                 ->all();
 
+            $tenantsRequired = collect($course['tenants_required'] ?? [])
+                ->filter(fn ($id): bool => is_string($id) && $id !== '')
+                ->values()
+                ->all();
+
             $courses[] = [
                 'slug' => $course['slug'],
                 'name' => $course['name'],
@@ -97,6 +110,7 @@ class ImportCourses
                 'roles' => array_values($course['roles'] ?? []),
                 'states_required' => $states === [] ? null : $states,
                 'replaces_course_slugs' => $replaces === [] ? null : $replaces,
+                'tenants_required' => $tenantsRequired,
             ];
         }
 
@@ -157,6 +171,7 @@ class ImportCourses
             );
 
             $central->departments()->sync($course['department']);
+            $central->tenants()->sync($course['tenants_required']);
 
             $central->wasRecentlyCreated ? $created++ : $updated++;
         }
@@ -170,19 +185,27 @@ class ImportCourses
     private function upsertTenantCourses(array $courses): void
     {
         foreach ($courses as $course) {
-            $tenantCourse = TenantCourse::query()->updateOrCreate(
-                ['slug' => $course['slug']],
-                [
-                    'name' => $course['name'],
-                    'slides' => $course['slides'],
-                    'questions' => $course['questions'],
-                    'optional' => $course['optional'],
-                    'video_id' => $course['video_id'],
-                    'years_expires' => $course['years_expires'],
-                    'states_required' => $course['states_required'],
-                    'replaces_course_slugs' => $course['replaces_course_slugs'],
-                ]
-            );
+            $tenantCourse = TenantCourse::withTrashed()->where('slug', $course['slug'])->first();
+
+            $attributes = [
+                'name' => $course['name'],
+                'slides' => $course['slides'],
+                'questions' => $course['questions'],
+                'optional' => $course['optional'],
+                'video_id' => $course['video_id'],
+                'years_expires' => $course['years_expires'],
+                'states_required' => $course['states_required'],
+                'replaces_course_slugs' => $course['replaces_course_slugs'],
+            ];
+
+            if ($tenantCourse === null) {
+                $tenantCourse = TenantCourse::query()->create(['slug' => $course['slug']] + $attributes);
+            } else {
+                if ($tenantCourse->trashed()) {
+                    $tenantCourse->restore();
+                }
+                $tenantCourse->fill($attributes)->save();
+            }
 
             $tenantCourse->departments()->sync($course['department']);
 
@@ -193,5 +216,58 @@ class ImportCourses
 
             $tenantCourse->roles()->sync($tenantRoleIds);
         }
+    }
+
+    /**
+     * Filter courses down to those assigned to the given tenant.
+     * A course with empty tenants_required is available to every tenant.
+     *
+     * @param  array<int, array<string, mixed>>  $courses
+     * @return array<int, array<string, mixed>>
+     */
+    private function coursesAssignedToTenant(array $courses, string $tenantId): array
+    {
+        return array_values(array_filter($courses, function (array $course) use ($tenantId): bool {
+            $assignments = $course['tenants_required'] ?? [];
+
+            return $assignments === [] || in_array($tenantId, $assignments, true);
+        }));
+    }
+
+    /**
+     * Slugs in the import payload that explicitly exclude this tenant.
+     *
+     * @param  array<int, array<string, mixed>>  $courses
+     * @return array<int, string>
+     */
+    private function slugsUnassignedFromTenant(array $courses, string $tenantId): array
+    {
+        return collect($courses)
+            ->filter(function (array $course) use ($tenantId): bool {
+                $assignments = $course['tenants_required'] ?? [];
+
+                return $assignments !== [] && ! in_array($tenantId, $assignments, true);
+            })
+            ->pluck('slug')
+            ->values()
+            ->all();
+    }
+
+    /**
+     * Soft-delete tenant course copies whose slugs were excluded from this tenant by the import.
+     * Limited to slugs in the payload to avoid touching unrelated courses.
+     *
+     * @param  array<int, string>  $unassignedSlugs
+     */
+    private function softDeleteUnassignedTenantCourses(array $unassignedSlugs): void
+    {
+        if ($unassignedSlugs === []) {
+            return;
+        }
+
+        TenantCourse::query()
+            ->whereIn('slug', $unassignedSlugs)
+            ->get()
+            ->each(static fn (TenantCourse $course) => $course->delete());
     }
 }

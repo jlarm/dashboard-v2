@@ -33,6 +33,12 @@ class Course extends AbstractCourse
         return $this->belongsToMany(Role::class, 'course_role');
     }
 
+    public function tenants(): BelongsToMany
+    {
+        return $this->belongsToMany(Dealership::class, 'course_tenant', 'course_id', 'tenant_id')
+            ->withTimestamps();
+    }
+
     #[Override]
     protected function casts(): array
     {

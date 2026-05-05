@@ -28,6 +28,8 @@ class UpdateCourseSettingsRequest extends FormRequest
             'states_required.*' => ['string', Rule::in($stateLabels)],
             'replaces_course_slugs' => ['present', 'array'],
             'replaces_course_slugs.*' => ['string', 'exists:courses,slug'],
+            'tenant_ids' => ['present', 'array'],
+            'tenant_ids.*' => ['string', 'exists:tenants,id'],
         ];
     }
 }

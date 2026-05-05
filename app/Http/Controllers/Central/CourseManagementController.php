@@ -83,6 +83,7 @@ class CourseManagementController extends Controller
             role_ids: $validated['role_ids'] ?? [],
             states_required: array_values($validated['states_required'] ?? []),
             replaces_course_slugs: array_values($validated['replaces_course_slugs'] ?? []),
+            tenant_ids: array_values($validated['tenant_ids'] ?? []),
         ));
 
         return back()->with('flash.success', 'Course settings updated.');

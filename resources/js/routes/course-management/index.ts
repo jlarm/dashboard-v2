@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Central\CourseManagementController::importMethod
-* @see app/Http/Controllers/Central/CourseManagementController.php:91
+* @see app/Http/Controllers/Central/CourseManagementController.php:92
 * @route '//dashboard.test/course-management/import'
 */
 export const importMethod = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ importMethod.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\CourseManagementController::importMethod
-* @see app/Http/Controllers/Central/CourseManagementController.php:91
+* @see app/Http/Controllers/Central/CourseManagementController.php:92
 * @route '//dashboard.test/course-management/import'
 */
 importMethod.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ importMethod.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Central\CourseManagementController::importMethod
-* @see app/Http/Controllers/Central/CourseManagementController.php:91
+* @see app/Http/Controllers/Central/CourseManagementController.php:92
 * @route '//dashboard.test/course-management/import'
 */
 importMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ importMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\CourseManagementController::importMethod
-* @see app/Http/Controllers/Central/CourseManagementController.php:91
+* @see app/Http/Controllers/Central/CourseManagementController.php:92
 * @route '//dashboard.test/course-management/import'
 */
 const importMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const importMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'pos
 
 /**
 * @see \App\Http\Controllers\Central\CourseManagementController::importMethod
-* @see app/Http/Controllers/Central/CourseManagementController.php:91
+* @see app/Http/Controllers/Central/CourseManagementController.php:92
 * @route '//dashboard.test/course-management/import'
 */
 importMethodForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -16,11 +16,13 @@ const props = defineProps<{
     roleIds: number[];
     statesRequired: string[];
     replacesCourseSlugs: string[];
+    tenantIds: string[];
     options: {
         departments: IntOption[];
         roles: IntOption[];
         states: StringOption[];
         courses: StringOption[];
+        tenants: StringOption[];
     };
 }>();
 
@@ -29,6 +31,7 @@ const form = useForm({
     role_ids: [...props.roleIds],
     states_required: [...props.statesRequired],
     replaces_course_slugs: [...props.replacesCourseSlugs],
+    tenant_ids: [...props.tenantIds],
 });
 
 const hasStatesSelected = computed(() => form.states_required.length > 0);
@@ -98,6 +101,20 @@ const submit = (): void => {
                 Employees in the selected states will complete this course instead of the replaced one(s).
             </FieldDescription>
             <FieldError v-if="form.errors.replaces_course_slugs">{{ form.errors.replaces_course_slugs }}</FieldError>
+        </Field>
+
+        <Field>
+            <FieldLabel>Assigned tenants</FieldLabel>
+            <MultiSelect
+                v-model="form.tenant_ids"
+                :options="options.tenants"
+                placeholder="Select tenants..."
+                search-placeholder="Search tenants..."
+            />
+            <FieldDescription>
+                Restrict this course to specific tenants. Leave empty to make it available to all tenants.
+            </FieldDescription>
+            <FieldError v-if="form.errors.tenant_ids">{{ form.errors.tenant_ids }}</FieldError>
         </Field>
 
         <div class="flex justify-end">

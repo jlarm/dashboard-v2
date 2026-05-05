@@ -129,6 +129,186 @@ describe('central course management import', function (): void {
         teardownTenants();
     });
 
+    it('imports a course only into tenants listed in tenants_required', function (): void {
+        asSuperAdmin();
+
+        [$tenantA] = createDealershipTenant();
+        [$tenantB] = createDealershipTenant();
+
+        $json = json_encode([
+            [
+                'name' => 'Tenant A Only Course',
+                'slug' => 'tenant-a-only-course',
+                'department' => [],
+                'roles' => [],
+                'tenants_required' => [$tenantA->id],
+                'slides' => [],
+                'questions' => [],
+            ],
+        ], JSON_THROW_ON_ERROR);
+
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('tenant-restricted.json', $json)],
+        )->assertRedirect(route('course-management.index'));
+
+        $centralCourse = Course::query()->where('slug', 'tenant-a-only-course')->firstOrFail();
+        expect($centralCourse->tenants()->pluck('tenants.id')->all())->toBe([$tenantA->id]);
+
+        $tenantA->run(function (): void {
+            expect(TenantCourse::query()->where('slug', 'tenant-a-only-course')->exists())->toBeTrue();
+        });
+
+        $tenantB->run(function (): void {
+            expect(TenantCourse::withTrashed()->where('slug', 'tenant-a-only-course')->exists())->toBeFalse();
+        });
+
+        teardownTenants();
+    });
+
+    it('imports an unrestricted course into every tenant', function (): void {
+        asSuperAdmin();
+
+        [$tenantA] = createDealershipTenant();
+        [$tenantB] = createDealershipTenant();
+
+        $json = json_encode([
+            [
+                'name' => 'Available To All Course',
+                'slug' => 'available-to-all-course',
+                'department' => [],
+                'roles' => [],
+                'slides' => [],
+                'questions' => [],
+            ],
+        ], JSON_THROW_ON_ERROR);
+
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('unrestricted.json', $json)],
+        )->assertRedirect(route('course-management.index'));
+
+        $tenantA->run(function (): void {
+            expect(TenantCourse::query()->where('slug', 'available-to-all-course')->exists())->toBeTrue();
+        });
+
+        $tenantB->run(function (): void {
+            expect(TenantCourse::query()->where('slug', 'available-to-all-course')->exists())->toBeTrue();
+        });
+
+        teardownTenants();
+    });
+
+    it('soft-deletes the tenant copy when re-importing with the tenant removed from tenants_required', function (): void {
+        asSuperAdmin();
+
+        [$tenantA] = createDealershipTenant();
+        [$tenantB] = createDealershipTenant();
+
+        $unrestrictedPayload = json_encode([
+            [
+                'name' => 'Soon-To-Be Restricted',
+                'slug' => 'soon-restricted-course',
+                'department' => [],
+                'roles' => [],
+                'slides' => [],
+                'questions' => [],
+            ],
+        ], JSON_THROW_ON_ERROR);
+
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('first.json', $unrestrictedPayload)],
+        )->assertRedirect(route('course-management.index'));
+
+        $tenantB->run(function (): void {
+            expect(TenantCourse::query()->where('slug', 'soon-restricted-course')->exists())->toBeTrue();
+        });
+
+        $restrictedPayload = json_encode([
+            [
+                'name' => 'Soon-To-Be Restricted',
+                'slug' => 'soon-restricted-course',
+                'department' => [],
+                'roles' => [],
+                'tenants_required' => [$tenantA->id],
+                'slides' => [],
+                'questions' => [],
+            ],
+        ], JSON_THROW_ON_ERROR);
+
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('second.json', $restrictedPayload)],
+        )->assertRedirect(route('course-management.index'));
+
+        $tenantB->run(function (): void {
+            expect(TenantCourse::query()->where('slug', 'soon-restricted-course')->exists())->toBeFalse();
+            expect(TenantCourse::withTrashed()->where('slug', 'soon-restricted-course')->whereNotNull('deleted_at')->exists())->toBeTrue();
+        });
+
+        teardownTenants();
+    });
+
+    it('restores a soft-deleted tenant copy when the tenant is re-added to tenants_required', function (): void {
+        asSuperAdmin();
+
+        [$tenantA] = createDealershipTenant();
+        [$tenantB] = createDealershipTenant();
+
+        $restrictedPayload = json_encode([
+            [
+                'name' => 'Reassign Test Course',
+                'slug' => 'reassign-course',
+                'department' => [],
+                'roles' => [],
+                'tenants_required' => [$tenantA->id],
+                'slides' => [],
+                'questions' => [],
+            ],
+        ], JSON_THROW_ON_ERROR);
+
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('first.json', $restrictedPayload)],
+        )->assertRedirect(route('course-management.index'));
+
+        $tenantB->run(function (): void {
+            $course = TenantCourse::query()->create([
+                'slug' => 'reassign-course',
+                'name' => 'Reassign Test Course',
+                'slides' => [],
+                'questions' => [],
+            ]);
+            $course->delete();
+        });
+
+        $reassignedPayload = json_encode([
+            [
+                'name' => 'Reassign Test Course',
+                'slug' => 'reassign-course',
+                'department' => [],
+                'roles' => [],
+                'tenants_required' => [$tenantA->id, $tenantB->id],
+                'slides' => [],
+                'questions' => [],
+            ],
+        ], JSON_THROW_ON_ERROR);
+
+        $this->post(
+            route('course-management.import'),
+            ['file' => UploadedFile::fake()->createWithContent('second.json', $reassignedPayload)],
+        )->assertRedirect(route('course-management.index'));
+
+        $tenantB->run(function (): void {
+            $course = TenantCourse::query()->where('slug', 'reassign-course')->first();
+            expect($course)->not->toBeNull();
+            expect($course->trashed())->toBeFalse();
+        });
+
+        teardownTenants();
+    });
+
     it('updates an existing course when the imported slug already exists', function (): void {
         asSuperAdmin();
 

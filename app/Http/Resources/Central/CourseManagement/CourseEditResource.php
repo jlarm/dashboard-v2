@@ -35,6 +35,11 @@ class CourseEditResource extends JsonResource
                 fn () => $this->roles->pluck('id')->all(),
                 fn () => $this->resource->roles()->pluck('roles.id')->all(),
             ),
+            'tenant_ids' => $this->whenLoaded(
+                'tenants',
+                fn () => $this->tenants->pluck('id')->all(),
+                fn () => $this->resource->tenants()->pluck('tenants.id')->all(),
+            ),
         ];
     }
 }

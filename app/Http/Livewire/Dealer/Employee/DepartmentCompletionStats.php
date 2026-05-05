@@ -35,6 +35,49 @@ class DepartmentCompletionStats extends Component
     #[Override]
     protected $listeners = ['refreshEmployeeDetails' => 'clearCacheAndRefresh'];
 
+    /**
+     * Forget every department-completion-stats cache key for the currently-initialized tenant.
+     * Safe to call from any tenant context (Import, Edit, Reconcile, etc.).
+     */
+    public static function flushCacheForCurrentTenant(?int $storeId = null): void
+    {
+        $tenantId = tenant('id') ?? 'no-tenant';
+        $storeIds = [];
+
+        try {
+            $storeIds = $storeId !== null
+                ? [$storeId]
+                : Store::query()->pluck('id')->toArray();
+        } catch (Exception $e) {
+            Log::warning('Failed to fetch store IDs for cache clearing', [
+                'error' => $e->getMessage(),
+                'tenant_id' => $tenantId,
+            ]);
+            $storeIds = [];
+        }
+
+        foreach ($storeIds as $sid) {
+            Cache::forget("department_completion_stats_{$sid}_{$tenantId}");
+        }
+
+        Cache::forget("department_completion_stats_all_{$tenantId}_admin");
+
+        try {
+            $allUsers = User::with('stores')->get();
+            foreach ($allUsers as $user) {
+                if (! $user->hasAnyRole(['super-admin', 'Consultant'])) {
+                    $userStoreIds = $user->stores->pluck('id')->sort()->implode('_');
+                    Cache::forget("department_completion_stats_all_{$tenantId}_user_{$userStoreIds}");
+                }
+            }
+        } catch (Exception $e) {
+            Log::warning('Failed to clear user-specific department completion caches', [
+                'error' => $e->getMessage(),
+                'tenant_id' => $tenantId,
+            ]);
+        }
+    }
+
     public function loadStats(): void
     {
         $this->readyToLoad = true;
@@ -59,43 +102,7 @@ class DepartmentCompletionStats extends Component
 
     protected function clearAllCachesForTenantAndStore(): void
     {
-        $tenantId = tenant('id') ?? 'no-tenant';
-        $storeIds = [];
-
-        try {
-            if ($this->store instanceof Store) {
-                $storeIds[] = $this->store->id;
-            } else {
-                $storeIds = Store::query()->pluck('id')->toArray();
-            }
-        } catch (Exception $e) {
-            Log::warning('Failed to fetch store IDs for cache clearing', [
-                'error' => $e->getMessage(),
-                'tenant_id' => $tenantId,
-            ]);
-            $storeIds = [];
-        }
-
-        foreach ($storeIds as $storeId) {
-            Cache::forget("department_completion_stats_{$storeId}_{$tenantId}");
-        }
-
-        Cache::forget("department_completion_stats_all_{$tenantId}_admin");
-
-        try {
-            $allUsers = User::with('stores')->get();
-            foreach ($allUsers as $user) {
-                if (! $user->hasAnyRole(['super-admin', 'Consultant'])) {
-                    $userStoreIds = $user->stores->pluck('id')->sort()->implode('_');
-                    Cache::forget("department_completion_stats_all_{$tenantId}_user_{$userStoreIds}");
-                }
-            }
-        } catch (Exception $e) {
-            Log::warning('Failed to clear user-specific department completion caches', [
-                'error' => $e->getMessage(),
-                'tenant_id' => $tenantId,
-            ]);
-        }
+        self::flushCacheForCurrentTenant($this->store?->id);
     }
 
     protected function calculateAllStats(): array

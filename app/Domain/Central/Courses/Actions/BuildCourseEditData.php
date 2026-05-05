@@ -7,6 +7,7 @@ namespace App\Domain\Central\Courses\Actions;
 use App\Enums\State;
 use App\Http\Resources\Central\CourseManagement\CourseEditResource;
 use App\Models\Course;
+use App\Models\Dealership;
 use App\Models\Department;
 use Spatie\Permission\Models\Role;
 
@@ -19,7 +20,7 @@ class BuildCourseEditData
      */
     public function execute(Course $course): array
     {
-        $course->load(['departments:id', 'roles:id']);
+        $course->load(['departments:id', 'roles:id', 'tenants:id']);
 
         return [
             'course' => new CourseEditResource($course)->resolve(),
@@ -41,6 +42,11 @@ class BuildCourseEditData
                     ->orderBy('name')
                     ->get(['slug', 'name'])
                     ->map(fn (Course $c): array => ['value' => $c->slug, 'label' => $c->name]),
+                'tenants' => Dealership::query()
+                    ->orderBy('name')
+                    ->get(['id', 'name'])
+                    ->map(fn (Dealership $d): array => ['value' => $d->id, 'label' => $d->name])
+                    ->values(),
             ],
         ];
     }
