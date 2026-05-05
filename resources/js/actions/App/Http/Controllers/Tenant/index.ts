@@ -1,4 +1,5 @@
 import Auth from './Auth'
+import DashboardController from './DashboardController'
 import Store from './Store'
 import SdsController from './SdsController'
 import Settings from './Settings'
@@ -15,6 +16,7 @@ import DealerDocController from './DealerDocController'
 
 const Tenant = {
     Auth: Object.assign(Auth, Auth),
+    DashboardController: Object.assign(DashboardController, DashboardController),
     Store: Object.assign(Store, Store),
     SdsController: Object.assign(SdsController, SdsController),
     Settings: Object.assign(Settings, Settings),

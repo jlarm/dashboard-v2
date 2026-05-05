@@ -32,12 +32,58 @@ const breadcrumbs = computed<BreadcrumbItem[]>(() => [
 
 // Row 1 — KPI cards
 type PillTone = 'positive' | 'negative' | 'warning' | 'neutral';
-const kpis: { label: string; value: string; delta: string; tone: PillTone; caption: string }[] = [
-    { label: 'Compliance Score', value: '82', delta: '↗ 3%', tone: 'positive', caption: 'Compared to the previous month' },
+
+type CompliancePillar = {
+    key: string;
+    label: string;
+    applicable: boolean;
+    score: number | null;
+    applicable_stores: number;
+    inapplicable_stores: number;
+};
+
+type ComplianceProps = {
+    score: number | null;
+    previous_score: number | null;
+    delta: number | null;
+    pillars: CompliancePillar[];
+    computed_at: string | null;
+    caption: string;
+};
+
+const compliance = computed<ComplianceProps>(() => {
+    const fallback: ComplianceProps = {
+        score: null,
+        previous_score: null,
+        delta: null,
+        pillars: [],
+        computed_at: null,
+        caption: '',
+    };
+    return ((page.props as Record<string, unknown>).compliance as ComplianceProps | undefined) ?? fallback;
+});
+
+const complianceKpi = computed(() => {
+    const score = compliance.value.score;
+    const delta = compliance.value.delta;
+    const tone: PillTone = delta === null ? 'neutral' : delta > 0 ? 'positive' : delta < 0 ? 'negative' : 'neutral';
+    const deltaLabel = delta === null ? '—' : `${delta > 0 ? '↗' : delta < 0 ? '↘' : ''} ${Math.abs(delta).toFixed(1)} pts`;
+
+    return {
+        label: 'Compliance Score',
+        value: score === null ? '—' : Math.round(score).toString(),
+        delta: deltaLabel,
+        tone,
+        caption: compliance.value.caption || 'Compared to the previous month',
+    };
+});
+
+const kpis = computed<{ label: string; value: string; delta: string; tone: PillTone; caption: string }[]>(() => [
+    complianceKpi.value,
     { label: 'Overdue Remediations', value: '12', delta: '↘ 18%', tone: 'positive', caption: '4 high severity still open' },
     { label: 'Expired Training', value: '27', delta: '↗ 8%', tone: 'negative', caption: '18 more expire in 30 days' },
     { label: 'Critical Vulnerabilities', value: '5', delta: '9d', tone: 'warning', caption: 'Days since last scan' },
-];
+]);
 
 const pillClass = (tone: PillTone) =>
     tone === 'positive'

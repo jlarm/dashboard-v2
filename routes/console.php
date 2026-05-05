@@ -121,6 +121,13 @@ Schedule::command('compliance-summary:send')
     ->onOneServer()
     ->emailOutputOnFailure(config('app.admin_email'));
 
+Schedule::command('compliance:snapshot-scores')
+    ->dailyAt('06:30')
+    ->runInBackground()
+    ->withoutOverlapping()
+    ->onOneServer()
+    ->emailOutputOnFailure(config('app.admin_email'));
+
 // Clean up old deal jacket reports
 Schedule::command('deal-jacket-reports:clean')
     ->dailyAt('02:00')

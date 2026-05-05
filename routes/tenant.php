@@ -27,6 +27,7 @@ use App\Http\Controllers\Tenant\Auth\NewPasswordController;
 use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Tenant\CyrismaController;
 use App\Http\Controllers\Tenant\CyrismaReportController;
+use App\Http\Controllers\Tenant\DashboardController;
 use App\Http\Controllers\Tenant\DealerDocController;
 use App\Http\Controllers\Tenant\LogController;
 use App\Http\Controllers\Tenant\NotificationsController;
@@ -68,7 +69,7 @@ Route::name('dealer.')->middleware([
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 
-    Route::inertia('/dashboard', 'tenant/Dashboard')->middleware('auth')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth')->name('dashboard');
     Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
     Route::post('/current-store', SwitchStoreController::class)->middleware('auth')->name('store.switch');
 
