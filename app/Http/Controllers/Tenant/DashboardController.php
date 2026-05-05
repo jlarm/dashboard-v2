@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Tenant;
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
 use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
 use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
+use App\Domain\Tenant\Compliance\Queries\GetCriticalVulnerabilities;
 use App\Http\Controllers\Controller;
 use App\Models\ComplianceScoreSnapshot;
 use App\Models\Dealer\Store;
@@ -25,6 +26,7 @@ class DashboardController extends Controller
         CalculateComplianceScore $calculator,
         CalculateOverdueRemediations $overdueQuery,
         CalculateExpiredTraining $trainingQuery,
+        GetCriticalVulnerabilities $vulnerabilitiesQuery,
     ): InertiaResponse {
         $stores = $this->resolveScopedStores();
 
@@ -40,10 +42,15 @@ class DashboardController extends Controller
             ? $this->emptyExpiredTrainingProps()
             : $this->buildExpiredTrainingProps($stores, $trainingQuery);
 
+        $criticalVulnerabilities = $stores->isEmpty()
+            ? null
+            : $this->buildCriticalVulnerabilitiesProps($stores, $vulnerabilitiesQuery);
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
             'expired_training' => $expiredTraining,
+            'critical_vulnerabilities' => $criticalVulnerabilities,
         ]);
     }
 
@@ -357,5 +364,23 @@ class DashboardController extends Controller
             ->first(['expired_training_count']);
 
         return $row === null ? null : (int) $row->expired_training_count;
+    }
+
+    /**
+     * Returns null when none of the scoped stores have a Cyrisma instance —
+     * the dashboard hides the card in that case.
+     *
+     * @param  EloquentCollection<int, Store>  $stores
+     * @return array{critical_count:int, days_since_last_scan:?int}|null
+     */
+    private function buildCriticalVulnerabilitiesProps(EloquentCollection $stores, GetCriticalVulnerabilities $vulnerabilitiesQuery): ?array
+    {
+        $now = CarbonImmutable::now();
+
+        $data = $stores->count() === 1
+            ? $vulnerabilitiesQuery->handleForStore($stores->first(), $now)
+            : $vulnerabilitiesQuery->handleForStores($stores, $now);
+
+        return $data?->toArray();
     }
 }

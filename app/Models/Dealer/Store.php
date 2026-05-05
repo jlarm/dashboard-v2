@@ -247,6 +247,11 @@ class Store extends Model implements HasMedia
         return $this->cyrisma()->exists() && ! empty($this->cyrisma->short_name);
     }
 
+    public function hasCyrismaInstanceId(): bool
+    {
+        return $this->cyrisma()->exists() && ! empty($this->cyrisma->instance_id);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

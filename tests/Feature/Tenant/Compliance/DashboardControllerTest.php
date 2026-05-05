@@ -36,6 +36,19 @@ it('passes a compliance prop with score, delta, pillars, and caption to the dash
                 ->has('previous_count')
                 ->has('delta_pct')
             )
+            ->has('critical_vulnerabilities')
+        );
+});
+
+it('passes critical_vulnerabilities as null when no scoped store has a Cyrisma instance_id', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('critical_vulnerabilities', null)
         );
 });
 

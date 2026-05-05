@@ -65,6 +65,11 @@ type ExpiredTrainingProps = {
     delta_pct: number | null;
 };
 
+type CriticalVulnerabilitiesProps = {
+    critical_count: number;
+    days_since_last_scan: number | null;
+};
+
 const compliance = computed<ComplianceProps>(() => {
     const fallback: ComplianceProps = {
         score: null,
@@ -95,6 +100,10 @@ const expiredTraining = computed<ExpiredTrainingProps>(() => {
         delta_pct: null,
     };
     return ((page.props as Record<string, unknown>).expired_training as ExpiredTrainingProps | undefined) ?? fallback;
+});
+
+const criticalVulnerabilities = computed<CriticalVulnerabilitiesProps | null>(() => {
+    return ((page.props as Record<string, unknown>).critical_vulnerabilities as CriticalVulnerabilitiesProps | null | undefined) ?? null;
 });
 
 const complianceKpi = computed(() => {
@@ -152,12 +161,33 @@ const expiredTrainingKpi = computed(() => {
     };
 });
 
-const kpis = computed<{ label: string; value: string; delta: string; tone: PillTone; caption: string }[]>(() => [
-    complianceKpi.value,
-    overdueRemediationsKpi.value,
-    expiredTrainingKpi.value,
-    { label: 'Critical Vulnerabilities', value: '5', delta: '9d', tone: 'warning', caption: 'Days since last scan' },
-]);
+type Kpi = { label: string; value: string; delta: string; tone: PillTone; caption: string };
+
+const criticalVulnerabilitiesKpi = computed<Kpi | null>(() => {
+    if (criticalVulnerabilities.value === null) {
+        return null;
+    }
+
+    const { critical_count: count, days_since_last_scan: days } = criticalVulnerabilities.value;
+    const tone: PillTone = days === null ? 'neutral' : days <= 30 ? 'warning' : 'negative';
+    const delta = days === null ? '—' : `${days}d`;
+
+    return {
+        label: 'Critical Vulnerabilities',
+        value: count.toString(),
+        delta,
+        tone,
+        caption: 'Days since last scan',
+    };
+});
+
+const kpis = computed<Kpi[]>(() => {
+    const list: Kpi[] = [complianceKpi.value, overdueRemediationsKpi.value, expiredTrainingKpi.value];
+    if (criticalVulnerabilitiesKpi.value !== null) {
+        list.push(criticalVulnerabilitiesKpi.value);
+    }
+    return list;
+});
 
 const pillClass = (tone: PillTone) =>
     tone === 'positive'
