@@ -34,6 +34,17 @@ it('returns zero counts when the store has no remediation setting', function ():
     expect($result)->toBe(['count' => 0, 'high_severity_count' => 0]);
 });
 
+it('returns zero counts when the remediation setting exists but is inactive', function (): void {
+    RemediationSetting::query()->where('store_id', $this->store->id)->update(['active' => false]);
+    $this->store->unsetRelation('remediationSettings');
+
+    createAudit($this->store, $this->consultant, completedDaysAgo: 30, severities: [9, 5]);
+
+    $result = (new CalculateOverdueRemediations())->handle($this->store, CarbonImmutable::now());
+
+    expect($result)->toBe(['count' => 0, 'high_severity_count' => 0]);
+});
+
 it('does not count audits whose grace window has not yet passed', function (): void {
     // Frequency is WEEKLY (7 days). Audit completed 5 days ago is still inside the window.
     createAudit($this->store, $this->consultant, completedDaysAgo: 5, severities: [9, 9]);

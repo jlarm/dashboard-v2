@@ -35,7 +35,7 @@ class DashboardController extends Controller
             : $this->buildComplianceProps($stores, $calculator);
 
         $overdueRemediations = $stores->isEmpty()
-            ? $this->emptyOverdueProps()
+            ? null
             : $this->buildOverdueProps($stores, $overdueQuery);
 
         $expiredTraining = $stores->isEmpty()
@@ -221,36 +221,36 @@ class DashboardController extends Controller
     }
 
     /**
-     * @return array{count:?int, high_severity_count:?int, previous_count:?int, delta_pct:?float}
-     */
-    private function emptyOverdueProps(): array
-    {
-        return [
-            'count' => null,
-            'high_severity_count' => null,
-            'previous_count' => null,
-            'delta_pct' => null,
-        ];
-    }
-
-    /**
+     * Returns null when none of the scoped stores have an active
+     * RemediationSetting — the dashboard then hides the card.
+     *
      * @param  EloquentCollection<int, Store>  $stores
-     * @return array{count:int, high_severity_count:int, previous_count:?int, delta_pct:?float}
+     * @return array{count:int, high_severity_count:int, previous_count:?int, delta_pct:?float}|null
      */
-    private function buildOverdueProps(EloquentCollection $stores, CalculateOverdueRemediations $overdueQuery): array
+    private function buildOverdueProps(EloquentCollection $stores, CalculateOverdueRemediations $overdueQuery): ?array
     {
+        $eligible = $stores->filter(static function (Store $store): bool {
+            $store->loadMissing('remediationSettings');
+
+            return $store->remediationSettings !== null && $store->remediationSettings->active;
+        });
+
+        if ($eligible->isEmpty()) {
+            return null;
+        }
+
         $now = CarbonImmutable::now();
 
         $count = 0;
         $highSeverityCount = 0;
 
-        foreach ($stores as $store) {
+        foreach ($eligible as $store) {
             $result = $overdueQuery->handle($store, $now);
             $count += $result['count'];
             $highSeverityCount += $result['high_severity_count'];
         }
 
-        $previousCount = $this->previousOverdueCount($stores->pluck('id')->all(), $now);
+        $previousCount = $this->previousOverdueCount($eligible->pluck('id')->all(), $now);
         $deltaPct = $this->deltaPercentage($count, $previousCount);
 
         return [

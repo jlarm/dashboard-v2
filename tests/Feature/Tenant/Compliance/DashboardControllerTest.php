@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+use App\Enums\Frequency;
 use App\Models\ComplianceScoreSnapshot;
 use App\Models\Dealer\Store;
+use App\Models\RemediationSetting;
 use Carbon\CarbonImmutable;
 use Inertia\Testing\AssertableInertia;
 
 it('passes a compliance prop with score, delta, pillars, and caption to the dashboard', function (): void {
     $store = Store::query()->firstOrFail();
     $this->consultant->update(['current_store_id' => $store->id]);
+    seedActiveRemediationSetting($store);
 
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
@@ -37,6 +40,31 @@ it('passes a compliance prop with score, delta, pillars, and caption to the dash
                 ->has('delta_pct')
             )
             ->has('critical_vulnerabilities')
+        );
+});
+
+it('passes overdue_remediations as null when no scoped store has an active RemediationSetting', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('overdue_remediations', null)
+        );
+});
+
+it('passes overdue_remediations as null when the RemediationSetting exists but is inactive', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+    seedActiveRemediationSetting($store, active: false);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('overdue_remediations', null)
         );
 });
 
@@ -76,6 +104,7 @@ it('reads the expired_training previous_count from the per-store snapshot when o
 it('computes overdue_remediations.delta_pct from the prior month snapshot', function (): void {
     $store = Store::query()->firstOrFail();
     $this->consultant->update(['current_store_id' => $store->id]);
+    seedActiveRemediationSetting($store);
 
     ComplianceScoreSnapshot::query()->create([
         'store_id' => $store->id,
@@ -110,3 +139,14 @@ it('returns an empty compliance payload when no stores are scoped', function ():
             ->where('compliance.pillars', [])
         );
 })->skip('requires-store middleware blocks empty-store sessions; cover via unit-level controller test if needed.');
+
+function seedActiveRemediationSetting(Store $store, bool $active = true): RemediationSetting
+{
+    return RemediationSetting::query()->create([
+        'store_id' => $store->id,
+        'active' => $active,
+        'notifications' => true,
+        'frequency' => Frequency::WEEKLY->value,
+        'managers' => [],
+    ]);
+}

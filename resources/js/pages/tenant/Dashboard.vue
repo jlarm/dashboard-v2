@@ -82,14 +82,8 @@ const compliance = computed<ComplianceProps>(() => {
     return ((page.props as Record<string, unknown>).compliance as ComplianceProps | undefined) ?? fallback;
 });
 
-const overdueRemediations = computed<OverdueRemediationsProps>(() => {
-    const fallback: OverdueRemediationsProps = {
-        count: null,
-        high_severity_count: null,
-        previous_count: null,
-        delta_pct: null,
-    };
-    return ((page.props as Record<string, unknown>).overdue_remediations as OverdueRemediationsProps | undefined) ?? fallback;
+const overdueRemediations = computed<OverdueRemediationsProps | null>(() => {
+    return ((page.props as Record<string, unknown>).overdue_remediations as OverdueRemediationsProps | null | undefined) ?? null;
 });
 
 const expiredTraining = computed<ExpiredTrainingProps>(() => {
@@ -106,7 +100,9 @@ const criticalVulnerabilities = computed<CriticalVulnerabilitiesProps | null>(()
     return ((page.props as Record<string, unknown>).critical_vulnerabilities as CriticalVulnerabilitiesProps | null | undefined) ?? null;
 });
 
-const complianceKpi = computed(() => {
+type Kpi = { label: string; value: string; delta: string; tone: PillTone; caption: string };
+
+const complianceKpi = computed<Kpi>(() => {
     const score = compliance.value.score;
     const delta = compliance.value.delta;
     const tone: PillTone = delta === null ? 'neutral' : delta > 0 ? 'positive' : delta < 0 ? 'negative' : 'neutral';
@@ -121,7 +117,11 @@ const complianceKpi = computed(() => {
     };
 });
 
-const overdueRemediationsKpi = computed(() => {
+const overdueRemediationsKpi = computed<Kpi | null>(() => {
+    if (overdueRemediations.value === null) {
+        return null;
+    }
+
     const { count, high_severity_count: high, delta_pct: deltaPct } = overdueRemediations.value;
     // Fewer overdue items = improvement, so a negative delta is positive in tone.
     const tone: PillTone = deltaPct === null ? 'neutral' : deltaPct < 0 ? 'positive' : deltaPct > 0 ? 'negative' : 'neutral';
@@ -141,7 +141,7 @@ const overdueRemediationsKpi = computed(() => {
     };
 });
 
-const expiredTrainingKpi = computed(() => {
+const expiredTrainingKpi = computed<Kpi>(() => {
     const { count, expiring_soon_count: expiringSoon, delta_pct: deltaPct } = expiredTraining.value;
     // Rising expired count is bad, so positive delta = negative tone.
     const tone: PillTone = deltaPct === null ? 'neutral' : deltaPct > 0 ? 'negative' : deltaPct < 0 ? 'positive' : 'neutral';
@@ -160,8 +160,6 @@ const expiredTrainingKpi = computed(() => {
         caption,
     };
 });
-
-type Kpi = { label: string; value: string; delta: string; tone: PillTone; caption: string };
 
 const criticalVulnerabilitiesKpi = computed<Kpi | null>(() => {
     if (criticalVulnerabilities.value === null) {
@@ -182,11 +180,18 @@ const criticalVulnerabilitiesKpi = computed<Kpi | null>(() => {
 });
 
 const kpis = computed<Kpi[]>(() => {
-    const list: Kpi[] = [complianceKpi.value, overdueRemediationsKpi.value, expiredTrainingKpi.value];
-    if (criticalVulnerabilitiesKpi.value !== null) {
-        list.push(criticalVulnerabilitiesKpi.value);
+    return [complianceKpi.value, overdueRemediationsKpi.value, expiredTrainingKpi.value, criticalVulnerabilitiesKpi.value]
+        .filter((kpi): kpi is Kpi => kpi !== null);
+});
+
+const kpiGridClass = computed<string>(() => {
+    switch (kpis.value.length) {
+        case 1: return 'grid-cols-1';
+        case 2: return 'grid-cols-1 sm:grid-cols-2';
+        case 3: return 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-3';
+        case 4: return 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-4';
+        default: return 'grid-cols-1';
     }
-    return list;
 });
 
 const pillClass = (tone: PillTone) =>
@@ -410,7 +415,7 @@ const period = ref<'Monthly' | 'Quarterly' | 'Yearly'>('Monthly');
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-4">
             <!-- Row 1 — KPI cards -->
-            <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <section class="grid gap-4" :class="kpiGridClass">
                 <StatCard
                     v-for="kpi in kpis"
                     :key="kpi.label"

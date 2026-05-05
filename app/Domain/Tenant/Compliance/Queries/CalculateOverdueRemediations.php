@@ -31,7 +31,7 @@ class CalculateOverdueRemediations
      *
      * Overdue = audit has completed_date, no remediation_pdf_path, and the
      * grace window (completed_date + RemediationSetting.frequency days) has
-     * already passed. Stores without a RemediationSetting are skipped.
+     * already passed. Stores without an active RemediationSetting are skipped.
      *
      * @return array{count:int, high_severity_count:int}
      */
@@ -42,7 +42,7 @@ class CalculateOverdueRemediations
         $store->loadMissing('remediationSettings');
         $setting = $store->remediationSettings;
 
-        if ($setting === null) {
+        if ($setting === null || ! $setting->active) {
             return ['count' => 0, 'high_severity_count' => 0];
         }
 
