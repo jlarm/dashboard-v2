@@ -20,6 +20,8 @@ class ComplianceScoreSnapshot extends Model
         'weights',
         'overdue_count',
         'overdue_high_severity_count',
+        'expired_training_count',
+        'expiring_soon_training_count',
     ];
 
     public function store(): BelongsTo
@@ -37,6 +39,8 @@ class ComplianceScoreSnapshot extends Model
             'weights' => 'array',
             'overdue_count' => 'integer',
             'overdue_high_severity_count' => 'integer',
+            'expired_training_count' => 'integer',
+            'expiring_soon_training_count' => 'integer',
         ];
     }
 }

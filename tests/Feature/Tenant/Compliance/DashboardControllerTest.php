@@ -30,6 +30,33 @@ it('passes a compliance prop with score, delta, pillars, and caption to the dash
                 ->has('previous_count')
                 ->has('delta_pct')
             )
+            ->has('expired_training', fn (AssertableInertia $training) => $training
+                ->has('count')
+                ->has('expiring_soon_count')
+                ->has('previous_count')
+                ->has('delta_pct')
+            )
+        );
+});
+
+it('reads the expired_training previous_count from the per-store snapshot when one store is in scope', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    ComplianceScoreSnapshot::query()->create([
+        'store_id' => $store->id,
+        'scored_on' => CarbonImmutable::now()->subMonth()->subDays(2)->toDateString(),
+        'score' => 80.0,
+        'pillars' => [],
+        'weights' => [],
+        'expired_training_count' => 5,
+    ]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('expired_training.previous_count', 5)
         );
 });
 

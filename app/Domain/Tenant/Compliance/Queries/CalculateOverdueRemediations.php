@@ -39,6 +39,7 @@ class CalculateOverdueRemediations
     {
         $now ??= CarbonImmutable::now();
 
+        $store->loadMissing('remediationSettings');
         $setting = $store->remediationSettings;
 
         if ($setting === null) {

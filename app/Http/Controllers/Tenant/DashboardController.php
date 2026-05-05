@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
+use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
 use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
 use App\Http\Controllers\Controller;
 use App\Models\ComplianceScoreSnapshot;
 use App\Models\Dealer\Store;
+use App\Models\TenantComplianceSnapshot;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\Request;
@@ -22,6 +24,7 @@ class DashboardController extends Controller
         Request $request,
         CalculateComplianceScore $calculator,
         CalculateOverdueRemediations $overdueQuery,
+        CalculateExpiredTraining $trainingQuery,
     ): InertiaResponse {
         $stores = $this->resolveScopedStores();
 
@@ -33,9 +36,14 @@ class DashboardController extends Controller
             ? $this->emptyOverdueProps()
             : $this->buildOverdueProps($stores, $overdueQuery);
 
+        $expiredTraining = $stores->isEmpty()
+            ? $this->emptyExpiredTrainingProps()
+            : $this->buildExpiredTrainingProps($stores, $trainingQuery);
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
+            'expired_training' => $expiredTraining,
         ]);
     }
 
@@ -280,5 +288,74 @@ class DashboardController extends Controller
         }
 
         return round((($current - $previous) / $previous) * 100, 1);
+    }
+
+    /**
+     * @return array{count:?int, expiring_soon_count:?int, previous_count:?int, delta_pct:?float}
+     */
+    private function emptyExpiredTrainingProps(): array
+    {
+        return [
+            'count' => null,
+            'expiring_soon_count' => null,
+            'previous_count' => null,
+            'delta_pct' => null,
+        ];
+    }
+
+    /**
+     * Single-store scope reads from per-store snapshots; multi-store scope reads
+     * from the tenant-wide deduped snapshot so multi-store users count once.
+     *
+     * @param  EloquentCollection<int, Store>  $stores
+     * @return array{count:int, expiring_soon_count:int, previous_count:?int, delta_pct:?float}
+     */
+    private function buildExpiredTrainingProps(EloquentCollection $stores, CalculateExpiredTraining $trainingQuery): array
+    {
+        $now = CarbonImmutable::now();
+
+        if ($stores->count() === 1) {
+            /** @var Store $store */
+            $store = $stores->first();
+            $current = $trainingQuery->handleForStore($store);
+            $previousCount = $this->previousStoreTrainingCount($store->id, $now);
+        } else {
+            $current = $trainingQuery->handleForStores($stores->pluck('id')->all());
+            $previousCount = $this->previousTenantTrainingCount($now);
+        }
+
+        return [
+            'count' => $current['count'],
+            'expiring_soon_count' => $current['expiring_soon_count'],
+            'previous_count' => $previousCount,
+            'delta_pct' => $this->deltaPercentage($current['count'], $previousCount),
+        ];
+    }
+
+    private function previousStoreTrainingCount(int $storeId, CarbonImmutable $now): ?int
+    {
+        $cutoff = $now->subMonth()->toDateString();
+
+        $row = ComplianceScoreSnapshot::query()
+            ->where('store_id', $storeId)
+            ->whereNotNull('expired_training_count')
+            ->whereDate('scored_on', '<=', $cutoff)
+            ->orderByDesc('scored_on')
+            ->first(['expired_training_count']);
+
+        return $row === null ? null : (int) $row->expired_training_count;
+    }
+
+    private function previousTenantTrainingCount(CarbonImmutable $now): ?int
+    {
+        $cutoff = $now->subMonth()->toDateString();
+
+        $row = TenantComplianceSnapshot::query()
+            ->whereNotNull('expired_training_count')
+            ->whereDate('scored_on', '<=', $cutoff)
+            ->orderByDesc('scored_on')
+            ->first(['expired_training_count']);
+
+        return $row === null ? null : (int) $row->expired_training_count;
     }
 }

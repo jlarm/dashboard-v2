@@ -6,9 +6,11 @@ namespace App\Console\Commands;
 
 use App\Domain\Tenant\Compliance\Data\PillarScoreData;
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
+use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
 use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
 use App\Models\ComplianceScoreSnapshot;
 use App\Models\Dealer\Store;
+use App\Models\TenantComplianceSnapshot;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -22,25 +24,32 @@ class SnapshotComplianceScoresCommand extends Command
     #[Override]
     protected $description = 'Compute and persist a daily compliance score snapshot per store.';
 
-    public function handle(CalculateComplianceScore $calculator, CalculateOverdueRemediations $overdueQuery): void
-    {
+    public function handle(
+        CalculateComplianceScore $calculator,
+        CalculateOverdueRemediations $overdueQuery,
+        CalculateExpiredTraining $trainingQuery,
+    ): void {
         /** @var Collection<int, string> $tenants */
         $tenants = collect($this->option('tenants'))
             ->filter(static fn (mixed $t): bool => is_string($t) && $t !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function () use ($calculator, $overdueQuery): void {
-            $this->snapshotForCurrentTenant($calculator, $overdueQuery);
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function () use ($calculator, $overdueQuery, $trainingQuery): void {
+            $this->snapshotForCurrentTenant($calculator, $overdueQuery, $trainingQuery);
         });
     }
 
-    private function snapshotForCurrentTenant(CalculateComplianceScore $calculator, CalculateOverdueRemediations $overdueQuery): void
-    {
+    private function snapshotForCurrentTenant(
+        CalculateComplianceScore $calculator,
+        CalculateOverdueRemediations $overdueQuery,
+        CalculateExpiredTraining $trainingQuery,
+    ): void {
         $today = CarbonImmutable::now();
 
-        Store::query()->each(function (Store $store) use ($calculator, $overdueQuery, $today): void {
+        Store::query()->each(function (Store $store) use ($calculator, $overdueQuery, $trainingQuery, $today): void {
             $score = $calculator->handle($store, $today);
             $overdue = $overdueQuery->handle($store, $today);
+            $expiredTraining = $trainingQuery->handleForStore($store);
 
             $weights = collect($score->pillars)
                 ->mapWithKeys(static fn (PillarScoreData $pillar): array => [$pillar->key => round($pillar->weight, 4)])
@@ -60,8 +69,20 @@ class SnapshotComplianceScoresCommand extends Command
                     'weights' => $weights,
                     'overdue_count' => $overdue['count'],
                     'overdue_high_severity_count' => $overdue['high_severity_count'],
+                    'expired_training_count' => $expiredTraining['count'],
+                    'expiring_soon_training_count' => $expiredTraining['expiring_soon_count'],
                 ],
             );
         });
+
+        $tenantTotals = $trainingQuery->handleForTenant();
+
+        TenantComplianceSnapshot::query()->updateOrCreate(
+            ['scored_on' => $today->toDateString()],
+            [
+                'expired_training_count' => $tenantTotals['count'],
+                'expiring_soon_training_count' => $tenantTotals['expiring_soon_count'],
+            ],
+        );
     }
 }

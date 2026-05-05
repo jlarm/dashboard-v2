@@ -58,6 +58,13 @@ type OverdueRemediationsProps = {
     delta_pct: number | null;
 };
 
+type ExpiredTrainingProps = {
+    count: number | null;
+    expiring_soon_count: number | null;
+    previous_count: number | null;
+    delta_pct: number | null;
+};
+
 const compliance = computed<ComplianceProps>(() => {
     const fallback: ComplianceProps = {
         score: null,
@@ -78,6 +85,16 @@ const overdueRemediations = computed<OverdueRemediationsProps>(() => {
         delta_pct: null,
     };
     return ((page.props as Record<string, unknown>).overdue_remediations as OverdueRemediationsProps | undefined) ?? fallback;
+});
+
+const expiredTraining = computed<ExpiredTrainingProps>(() => {
+    const fallback: ExpiredTrainingProps = {
+        count: null,
+        expiring_soon_count: null,
+        previous_count: null,
+        delta_pct: null,
+    };
+    return ((page.props as Record<string, unknown>).expired_training as ExpiredTrainingProps | undefined) ?? fallback;
 });
 
 const complianceKpi = computed(() => {
@@ -115,10 +132,30 @@ const overdueRemediationsKpi = computed(() => {
     };
 });
 
+const expiredTrainingKpi = computed(() => {
+    const { count, expiring_soon_count: expiringSoon, delta_pct: deltaPct } = expiredTraining.value;
+    // Rising expired count is bad, so positive delta = negative tone.
+    const tone: PillTone = deltaPct === null ? 'neutral' : deltaPct > 0 ? 'negative' : deltaPct < 0 ? 'positive' : 'neutral';
+    const deltaLabel = deltaPct === null
+        ? '—'
+        : `${deltaPct > 0 ? '↗' : deltaPct < 0 ? '↘' : ''} ${Math.abs(deltaPct).toFixed(0)}%`;
+    const caption = expiringSoon === null
+        ? 'No prior period to compare.'
+        : `${expiringSoon} more expire in 30 days`;
+
+    return {
+        label: 'Expired Training',
+        value: count === null ? '—' : count.toString(),
+        delta: deltaLabel,
+        tone,
+        caption,
+    };
+});
+
 const kpis = computed<{ label: string; value: string; delta: string; tone: PillTone; caption: string }[]>(() => [
     complianceKpi.value,
     overdueRemediationsKpi.value,
-    { label: 'Expired Training', value: '27', delta: '↗ 8%', tone: 'negative', caption: '18 more expire in 30 days' },
+    expiredTrainingKpi.value,
     { label: 'Critical Vulnerabilities', value: '5', delta: '9d', tone: 'warning', caption: 'Days since last scan' },
 ]);
 
