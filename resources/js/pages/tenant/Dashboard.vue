@@ -2,6 +2,7 @@
 import StatCard from '@/components/StatCard.vue';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import { dashboard } from '@/routes/dealer';
+import { auditReport as dashboardAuditReportRoute, auditTypeReport as dashboardAuditTypeReportRoute } from '@/routes/dealer/dashboard';
 import type { BreadcrumbItem } from '@/types';
 import type { StoreOption } from '@/types/global';
 import { Head, usePage } from '@inertiajs/vue3';
@@ -330,70 +331,48 @@ const onChartLeave = (): void => {
 };
 
 // Row 3a — Audit tracker table
-type AuditStatus = 'Passing' | 'Action Required' | 'Overdue';
-const auditRows: {
-    id: string;
-    type: string;
-    shortCode: string;
-    tileClass: string;
-    lastAudit: string;
-    grade: string;
-    gradeClass: string;
-    delta: string;
+type AuditStatus = 'passing' | 'action_required' | 'overdue';
+type AuditTrackerRow = {
+    type_key: string;
+    type_label: string;
+    last_audit_date: string | null;
+    grade: string | null;
+    delta_label: string | null;
     status: AuditStatus;
-}[] = [
-    {
-        id: 'AUD-1042',
-        type: 'OSHA',
-        shortCode: 'OS',
-        tileClass: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400',
-        lastAudit: 'Mar 14, 2026',
-        grade: 'A',
-        gradeClass: 'text-emerald-700 dark:text-emerald-400',
-        delta: '+1 vs prior',
-        status: 'Passing',
-    },
-    {
-        id: 'AUD-0938',
-        type: 'Body Shop',
-        shortCode: 'BS',
-        tileClass: 'bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400',
-        lastAudit: 'Feb 28, 2026',
-        grade: 'B',
-        gradeClass: 'text-sky-700 dark:text-sky-400',
-        delta: 'No change',
-        status: 'Passing',
-    },
-    {
-        id: 'AUD-0871',
-        type: 'GLBA',
-        shortCode: 'GL',
-        tileClass: 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400',
-        lastAudit: 'Jan 22, 2026',
-        grade: 'C',
-        gradeClass: 'text-amber-700 dark:text-amber-400',
-        delta: '−1 vs prior',
-        status: 'Action Required',
-    },
-    {
-        id: 'AUD-0820',
-        type: 'Deal Jacket',
-        shortCode: 'DJ',
-        tileClass: 'bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400',
-        lastAudit: 'Jan 09, 2026',
-        grade: 'D',
-        gradeClass: 'text-rose-700 dark:text-rose-400',
-        delta: '−1 vs prior',
-        status: 'Overdue',
-    },
-];
+    has_report: boolean;
+};
 
-const statusPill = (s: AuditStatus) =>
-    s === 'Passing'
+const auditTracker = computed<AuditTrackerRow[] | null>(() => {
+    return ((page.props as Record<string, unknown>).audit_tracker as AuditTrackerRow[] | null | undefined) ?? null;
+});
+
+const statusLabels: Record<AuditStatus, string> = {
+    passing: 'Passing',
+    action_required: 'Action Required',
+    overdue: 'Overdue',
+};
+
+const statusPill = (s: AuditStatus): string =>
+    s === 'passing'
         ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400'
-        : s === 'Action Required'
+        : s === 'action_required'
           ? 'bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400'
           : 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400';
+
+const gradeClass = (grade: string | null): string => {
+    switch (grade) {
+        case 'A': return 'text-emerald-700 dark:text-emerald-400';
+        case 'B': return 'text-sky-700 dark:text-sky-400';
+        case 'C': return 'text-amber-700 dark:text-amber-400';
+        case 'D':
+        case 'F': return 'text-rose-700 dark:text-rose-400';
+        default: return 'text-muted-foreground';
+    }
+};
+
+const auditReportUrl = dashboardAuditReportRoute.url();
+
+const auditTypeReportUrl = (typeKey: string): string => dashboardAuditTypeReportRoute.url({ type: typeKey });
 
 // Row 3b — Training currency by dept
 const departmentCompletion = [
@@ -639,14 +618,14 @@ const outstandingVendors = [
 
             <!-- Row 3 — Audit tracker + Training currency -->
             <section class="grid gap-4 xl:grid-cols-12">
-                <article class="overflow-hidden rounded-2xl border bg-card xl:col-span-8">
+                <article v-if="auditTracker !== null" class="overflow-hidden rounded-2xl border bg-card xl:col-span-8">
                     <div class="flex flex-wrap items-start justify-between gap-4 px-6 pt-6 pb-5">
                         <div>
                             <h2 class="text-xl font-semibold tracking-tight text-foreground">Audit & Violation Tracker</h2>
                             <p class="mt-1 text-sm text-muted-foreground">Latest grade and status per audit category.</p>
                         </div>
                         <a
-                            href="#"
+                            :href="auditReportUrl"
                             class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted/60"
                         >
                             Download report
@@ -654,50 +633,46 @@ const outstandingVendors = [
                         </a>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full min-w-[640px] border-t text-sm">
+                        <table class="w-full min-w-[480px] border-t text-sm">
                             <thead>
                                 <tr class="bg-muted/40 text-left text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                                    <th class="w-10 py-3 pl-6">
-                                        <input type="checkbox" class="size-3.5 rounded border-border" />
-                                    </th>
-                                    <th class="py-3 font-medium">ID</th>
-                                    <th class="py-3 font-medium">Audit Type</th>
+                                    <th class="py-3 pl-6 font-medium">Audit Type</th>
                                     <th class="py-3 font-medium">Last Audit</th>
                                     <th class="py-3 font-medium">Grade</th>
-                                    <th class="py-3 pr-6 font-medium">Status</th>
+                                    <th class="py-3 font-medium">Status</th>
+                                    <th class="py-3 pr-6 font-medium text-right">Report</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y">
-                                <tr v-for="row in auditRows" :key="row.id" class="hover:bg-muted/20">
-                                    <td class="py-4 pl-6">
-                                        <input type="checkbox" class="size-3.5 rounded border-border" />
-                                    </td>
-                                    <td class="py-4 text-xs tabular-nums text-muted-foreground">{{ row.id }}</td>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <span
-                                                class="grid size-9 shrink-0 place-items-center rounded-lg text-xs font-semibold"
-                                                :class="row.tileClass"
-                                            >
-                                                {{ row.shortCode }}
-                                            </span>
-                                            <span class="font-medium text-foreground">{{ row.type }}</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-4 text-muted-foreground">{{ row.lastAudit }}</td>
+                                <tr v-for="row in auditTracker" :key="row.type_key" class="hover:bg-muted/20">
+                                    <td class="py-4 pl-6 font-medium text-foreground">{{ row.type_label }}</td>
+                                    <td class="py-4 text-muted-foreground">{{ row.last_audit_date }}</td>
                                     <td class="py-4">
                                         <div class="flex items-baseline gap-2">
-                                            <span class="text-lg font-semibold" :class="row.gradeClass">{{ row.grade }}</span>
-                                            <span class="text-xs text-muted-foreground">{{ row.delta }}</span>
+                                            <span class="text-lg font-semibold" :class="gradeClass(row.grade)">
+                                                {{ row.grade ?? '—' }}
+                                            </span>
+                                            <span v-if="row.delta_label" class="text-xs text-muted-foreground">{{ row.delta_label }}</span>
                                         </div>
                                     </td>
-                                    <td class="py-4 pr-6">
+                                    <td class="py-4">
                                         <span
                                             class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium"
                                             :class="statusPill(row.status)"
                                         >
-                                            {{ row.status }}
+                                            {{ statusLabels[row.status] }}
                                         </span>
+                                    </td>
+                                    <td class="py-4 pr-6 text-right">
+                                        <a
+                                            v-if="row.has_report"
+                                            :href="auditTypeReportUrl(row.type_key)"
+                                            class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted/60"
+                                        >
+                                            Download
+                                            <span aria-hidden>↗</span>
+                                        </a>
+                                        <span v-else class="text-xs text-muted-foreground">—</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -705,7 +680,7 @@ const outstandingVendors = [
                     </div>
                 </article>
 
-                <article class="overflow-hidden rounded-2xl border bg-card xl:col-span-4">
+                <article class="overflow-hidden rounded-2xl border bg-card" :class="auditTracker === null ? 'xl:col-span-12' : 'xl:col-span-4'">
                     <header class="flex items-center justify-between bg-muted/40 px-5 py-3">
                         <h3 class="text-sm font-medium text-foreground">Training Currency</h3>
                         <span class="text-xs text-muted-foreground">By department</span>

@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 use App\Enums\Frequency;
 use App\Models\ComplianceScoreSnapshot;
+use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\RemediationSetting;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Str;
 use Inertia\Testing\AssertableInertia;
 
 it('passes a compliance prop with score, delta, pillars, and caption to the dashboard', function (): void {
     $store = Store::query()->firstOrFail();
     $this->consultant->update(['current_store_id' => $store->id]);
     seedActiveRemediationSetting($store);
+    seedCompletedAudit($store, $this->consultant);
 
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
@@ -45,6 +48,15 @@ it('passes a compliance prop with score, delta, pillars, and caption to the dash
                 ->has('quarterly', 6)
                 ->has('yearly', 6)
             )
+            ->has('audit_tracker', 1, fn (AssertableInertia $row) => $row
+                ->has('type_key')
+                ->has('type_label')
+                ->has('last_audit_date')
+                ->has('grade')
+                ->has('delta_label')
+                ->has('status')
+                ->has('has_report')
+            )
         );
 });
 
@@ -70,6 +82,18 @@ it('passes overdue_remediations as null when the RemediationSetting exists but i
         ->assertOk()
         ->assertInertia(fn (AssertableInertia $page) => $page
             ->where('overdue_remediations', null)
+        );
+});
+
+it('passes audit_tracker as null when no scoped store has a completed audit of any type', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page) => $page
+            ->where('audit_tracker', null)
         );
 });
 
@@ -153,5 +177,16 @@ function seedActiveRemediationSetting(Store $store, bool $active = true): Remedi
         'notifications' => true,
         'frequency' => Frequency::WEEKLY->value,
         'managers' => [],
+    ]);
+}
+
+function seedCompletedAudit(Store $store, App\Models\User $user): OshaViolationAudit
+{
+    return OshaViolationAudit::query()->create([
+        'uuid' => (string) Str::uuid(),
+        'user_id' => $user->id,
+        'store_id' => $store->id,
+        'date' => CarbonImmutable::now()->subMonth(),
+        'grade' => 'A',
     ]);
 }

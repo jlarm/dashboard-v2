@@ -4,24 +4,40 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Domain\Tenant\Compliance\Data\AuditTrackerRowData;
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
 use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
 use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
 use App\Domain\Tenant\Compliance\Queries\CalculateViolationsOverview;
+use App\Domain\Tenant\Compliance\Queries\GetAuditTracker;
 use App\Domain\Tenant\Compliance\Queries\GetCriticalVulnerabilities;
 use App\Http\Controllers\Controller;
+use App\Jobs\Audit\GenerateDealJacketReportJob;
 use App\Models\ComplianceScoreSnapshot;
+use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\DealJacketGroup;
+use App\Models\Dealer\Audit\GlbaViolationAudit;
+use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\TenantComplianceSnapshot;
+use App\Models\User;
+use App\Services\ComplianceSummaryPdfService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DashboardController extends Controller
 {
+    private const array DOWNLOAD_AUTHORIZED_ROLES = ['super-admin', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
+
+    private const array DOWNLOAD_UNRESTRICTED_ROLES = ['super-admin', 'Consultant'];
+
     public function show(
         Request $request,
         CalculateComplianceScore $calculator,
@@ -29,6 +45,7 @@ class DashboardController extends Controller
         CalculateExpiredTraining $trainingQuery,
         GetCriticalVulnerabilities $vulnerabilitiesQuery,
         CalculateViolationsOverview $violationsOverviewQuery,
+        GetAuditTracker $auditTrackerQuery,
     ): InertiaResponse {
         $stores = $this->resolveScopedStores();
 
@@ -52,13 +69,126 @@ class DashboardController extends Controller
             ->handleForStores($stores->pluck('id')->all())
             ->toArray();
 
+        $auditTrackerRows = collect($auditTrackerQuery->handleForStores($stores->pluck('id')->all()))
+            ->filter(static fn (AuditTrackerRowData $row): bool => $row->last_audit_date !== null)
+            ->values();
+
+        $auditTracker = $auditTrackerRows->isEmpty()
+            ? null
+            : $auditTrackerRows->map(static fn (AuditTrackerRowData $row): array => $row->toArray())->all();
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
             'expired_training' => $expiredTraining,
             'critical_vulnerabilities' => $criticalVulnerabilities,
             'violations_overview' => $violationsOverview,
+            'audit_tracker' => $auditTracker,
         ]);
+    }
+
+    /**
+     * Stream the executive-summary PDF for the user's scoped stores. Mirrors
+     * the legacy Livewire ExecutiveSummary::download flow so the dashboard
+     * can keep producing the same artefact tenants are used to.
+     */
+    public function downloadAuditReport(ComplianceSummaryPdfService $pdfService): BinaryFileResponse
+    {
+        $user = auth()->user();
+
+        abort_unless($user?->hasAnyRole(self::DOWNLOAD_AUTHORIZED_ROLES), 403);
+
+        $stores = $this->resolveScopedStores();
+
+        abort_if($stores->isEmpty(), 404);
+
+        if (! $user->hasAnyRole(self::DOWNLOAD_UNRESTRICTED_ROLES)) {
+            $userStoreIds = $user->stores()->pluck('stores.id')->all();
+            abort_if($stores->pluck('id')->diff($userStoreIds)->isNotEmpty(), 403);
+        }
+
+        $pdfPath = $pdfService->generate($stores, CarbonImmutable::now()->format('F Y'));
+
+        $fileName = implode('-', [
+            CarbonImmutable::now()->format('Ymd'),
+            $stores->count() === 1
+                ? str($stores->first()->name)->slug()->toString()
+                : 'overview',
+            'audit-report.pdf',
+        ]);
+
+        return response()
+            ->download($pdfPath, $fileName, ['Content-Type' => 'application/pdf'])
+            ->deleteFileAfterSend(true);
+    }
+
+    /**
+     * Stream the latest completed report for a single audit type, scoped to
+     * the user's stores. Mirrors the legacy Livewire per-audit download
+     * (AbstractAuditStats::downloadPdf and DealJacketStats::download).
+     */
+    public function downloadAuditTypeReport(string $type): StreamedResponse
+    {
+        $stores = $this->resolveScopedStores();
+
+        abort_if($stores->isEmpty(), 404);
+
+        $storeIds = $stores->pluck('id')->all();
+
+        return match ($type) {
+            'osha' => $this->streamViolationAuditPdf(OshaViolationAudit::class, $storeIds),
+            'body_shop' => $this->streamViolationAuditPdf(BodyShopViolationAudit::class, $storeIds),
+            'glba' => $this->streamViolationAuditPdf(GlbaViolationAudit::class, $storeIds),
+            'deal_jacket' => $this->streamDealJacketReport($storeIds),
+            default => abort(404),
+        };
+    }
+
+    /**
+     * @param  class-string<\Illuminate\Database\Eloquent\Model>  $auditClass
+     * @param  list<int>  $storeIds
+     */
+    private function streamViolationAuditPdf(string $auditClass, array $storeIds): StreamedResponse
+    {
+        $latest = $auditClass::query()
+            ->whereIn('store_id', $storeIds)
+            ->whereNotNull('grade')
+            ->where('grade', '!=', 'N/A')
+            ->whereNotNull('pdf_path')
+            ->orderByDesc('date')
+            ->orderByDesc('id')
+            ->first(['pdf_path']);
+
+        abort_if($latest === null || empty($latest->pdf_path), 404, 'No report available.');
+
+        return Storage::disk('armpaudits')->download($latest->pdf_path);
+    }
+
+    /**
+     * @param  list<int>  $storeIds
+     */
+    private function streamDealJacketReport(array $storeIds): StreamedResponse
+    {
+        $group = DealJacketGroup::query()
+            ->whereIn('store_id', $storeIds)
+            ->where('completed', true)
+            ->latest('id')
+            ->first();
+
+        abort_if($group === null, 404, 'No completed deal jacket report.');
+
+        $user = auth()->user();
+        abort_unless($user instanceof User, 403);
+
+        dispatch_sync(new GenerateDealJacketReportJob($group, $user));
+
+        $storeName = str_replace(' ', '-', (string) $group->store->name);
+        $fileName = $group->created_at->format('Ymd-His')."-{$storeName}-deal-jacket-report.pdf";
+        $filePath = "deal-jacket-reports/{$fileName}";
+
+        abort_unless(Storage::exists($filePath), 404, 'Report not found or has expired.');
+
+        return Storage::download($filePath, $fileName, ['Content-Type' => 'application/pdf']);
     }
 
     /**

@@ -70,6 +70,11 @@ Route::name('dealer.')->middleware([
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 
     Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth')->name('dashboard');
+    Route::get('/dashboard/audit-report', [DashboardController::class, 'downloadAuditReport'])->middleware('auth')->name('dashboard.audit-report');
+    Route::get('/dashboard/audit-report/{type}', [DashboardController::class, 'downloadAuditTypeReport'])
+        ->whereIn('type', ['osha', 'body_shop', 'glba', 'deal_jacket'])
+        ->middleware('auth')
+        ->name('dashboard.audit-type-report');
     Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
     Route::post('/current-store', SwitchStoreController::class)->middleware('auth')->name('store.switch');
 
