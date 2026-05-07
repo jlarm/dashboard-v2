@@ -30,7 +30,13 @@ use App\Http\Controllers\Tenant\CyrismaReportController;
 use App\Http\Controllers\Tenant\DashboardController;
 use App\Http\Controllers\Tenant\DealerDocController;
 use App\Http\Controllers\Tenant\LogController;
+use App\Http\Controllers\Tenant\Manuals\CmsController;
+use App\Http\Controllers\Tenant\Manuals\IspController;
+use App\Http\Controllers\Tenant\Manuals\OshaController;
+use App\Http\Controllers\Tenant\Manuals\RedFlagController;
 use App\Http\Controllers\Tenant\NotificationsController;
+use App\Http\Controllers\Tenant\ScanArchiveController;
+use App\Http\Controllers\Tenant\ScansController;
 use App\Http\Controllers\Tenant\SdsController;
 use App\Http\Controllers\Tenant\Settings\AutomatedReportsController;
 use App\Http\Controllers\Tenant\Settings\GlobalSettingsController;
@@ -38,8 +44,13 @@ use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordC
 use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileController;
 use App\Http\Controllers\Tenant\Store\LocationController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
+use App\Http\Controllers\Tenant\UserController as TenantUserController;
 use App\Http\Controllers\WebhookController;
+use App\Http\Livewire\Dealer\Audit\BodyShop\Edit;
+use App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm;
+use App\Http\Livewire\Dealer\Audit\BodyShop\Single;
 use App\Http\Livewire\Dealer\Phish\Create;
+use App\Http\Livewire\Dealer\Phish\Show;
 use App\Http\Livewire\Dealer\Ridgeback\Index;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use Illuminate\Http\RedirectResponse;
@@ -224,7 +235,7 @@ Route::name('dealer.')->middleware([
                 ->defaults('type', ViolationAuditType::Osha)
                 ->name('osha.violations.search');
             Route::get('body-shop/create/{store}', BodyShopCreateController::class)->name('body-shop.create');
-            Route::get('body-shop/{bodyShopViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\BodyShop\Edit::class)->name('body-shop.edit');
+            Route::get('body-shop/{bodyShopViolationAudit:uuid}/edit', Edit::class)->name('body-shop.edit');
             Route::get('finance/create/{store}', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
             Route::get('finance/{glbaViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\Finance\Edit::class)->name('finance.edit');
             Route::get('deal-jackets-archived/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
@@ -258,8 +269,8 @@ Route::name('dealer.')->middleware([
 
     Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')->group(function (): void {
 
-        Route::get('employees/deleted', [App\Http\Controllers\Tenant\UserController::class, 'deleted'])->name('employees.deleted');
-        Route::post('employees/deleted/{user}/restore', [App\Http\Controllers\Tenant\UserController::class, 'restoreEmployee'])
+        Route::get('employees/deleted', [TenantUserController::class, 'deleted'])->name('employees.deleted');
+        Route::post('employees/deleted/{user}/restore', [TenantUserController::class, 'restoreEmployee'])
             ->name('employees.deleted.restore')
             ->withTrashed();
 
@@ -283,7 +294,7 @@ Route::name('dealer.')->middleware([
         Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth'])->name('store.edit');
 
         Route::get('phishing', App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
-        Route::get('phishing/{phishingCampaign}', App\Http\Livewire\Dealer\Phish\Show::class)->name('phishing.show');
+        Route::get('phishing/{phishingCampaign}', Show::class)->name('phishing.show');
     });
 
     // **************************************************
@@ -298,25 +309,25 @@ Route::name('dealer.')->middleware([
         ->prefix('manuals/')
         ->name('manual.')
         ->group(function (): void {
-            Route::get('isp', [App\Http\Controllers\Tenant\Manuals\IspController::class, 'index'])->name('isp.index');
-            Route::get('isp/create', [App\Http\Controllers\Tenant\Manuals\IspController::class, 'create'])->name('isp.create');
-            Route::post('isp', [App\Http\Controllers\Tenant\Manuals\IspController::class, 'store'])->name('isp.store');
-            Route::delete('isp/{manual}', [App\Http\Controllers\Tenant\Manuals\IspController::class, 'destroy'])->name('isp.destroy');
+            Route::get('isp', [IspController::class, 'index'])->name('isp.index');
+            Route::get('isp/create', [IspController::class, 'create'])->name('isp.create');
+            Route::post('isp', [IspController::class, 'store'])->name('isp.store');
+            Route::delete('isp/{manual}', [IspController::class, 'destroy'])->name('isp.destroy');
 
-            Route::get('osha', [App\Http\Controllers\Tenant\Manuals\OshaController::class, 'index'])->name('osha.index');
-            Route::get('osha/create', [App\Http\Controllers\Tenant\Manuals\OshaController::class, 'create'])->name('osha.create');
-            Route::post('osha', [App\Http\Controllers\Tenant\Manuals\OshaController::class, 'store'])->name('osha.store');
-            Route::delete('osha/{manual}', [App\Http\Controllers\Tenant\Manuals\OshaController::class, 'destroy'])->name('osha.destroy');
+            Route::get('osha', [OshaController::class, 'index'])->name('osha.index');
+            Route::get('osha/create', [OshaController::class, 'create'])->name('osha.create');
+            Route::post('osha', [OshaController::class, 'store'])->name('osha.store');
+            Route::delete('osha/{manual}', [OshaController::class, 'destroy'])->name('osha.destroy');
 
-            Route::get('red-flag', [App\Http\Controllers\Tenant\Manuals\RedFlagController::class, 'index'])->name('red-flag.index');
-            Route::get('red-flag/create', [App\Http\Controllers\Tenant\Manuals\RedFlagController::class, 'create'])->name('red-flag.create');
-            Route::post('red-flag', [App\Http\Controllers\Tenant\Manuals\RedFlagController::class, 'store'])->name('red-flag.store');
-            Route::delete('red-flag/{manual}', [App\Http\Controllers\Tenant\Manuals\RedFlagController::class, 'destroy'])->name('red-flag.destroy');
+            Route::get('red-flag', [RedFlagController::class, 'index'])->name('red-flag.index');
+            Route::get('red-flag/create', [RedFlagController::class, 'create'])->name('red-flag.create');
+            Route::post('red-flag', [RedFlagController::class, 'store'])->name('red-flag.store');
+            Route::delete('red-flag/{manual}', [RedFlagController::class, 'destroy'])->name('red-flag.destroy');
 
-            Route::get('cms', [App\Http\Controllers\Tenant\Manuals\CmsController::class, 'index'])->name('cms.index');
-            Route::get('cms/create', [App\Http\Controllers\Tenant\Manuals\CmsController::class, 'create'])->name('cms.create');
-            Route::post('cms', [App\Http\Controllers\Tenant\Manuals\CmsController::class, 'store'])->name('cms.store');
-            Route::delete('cms/{manual}', [App\Http\Controllers\Tenant\Manuals\CmsController::class, 'destroy'])->name('cms.destroy');
+            Route::get('cms', [CmsController::class, 'index'])->name('cms.index');
+            Route::get('cms/create', [CmsController::class, 'create'])->name('cms.create');
+            Route::post('cms', [CmsController::class, 'store'])->name('cms.store');
+            Route::delete('cms/{manual}', [CmsController::class, 'destroy'])->name('cms.destroy');
         });
 
     // **************************************************
@@ -326,40 +337,40 @@ Route::name('dealer.')->middleware([
     Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual|Manager')->group(function (): void {
 
         Route::prefix('employees')->name('employees.')->group(function (): void {
-            Route::get('/', [App\Http\Controllers\Tenant\UserController::class, 'index'])->name('index');
-            Route::get('/invite', [App\Http\Controllers\Tenant\UserController::class, 'invite'])->name('invite');
-            Route::post('/invite', [App\Http\Controllers\Tenant\UserController::class, 'storeInvite'])->name('invite.store');
-            Route::get('/open-invites', [App\Http\Controllers\Tenant\UserController::class, 'openInvites'])->name('open-invites');
-            Route::post('/open-invites/resend', [App\Http\Controllers\Tenant\UserController::class, 'resendInvites'])->name('open-invites.resend');
-            Route::post('/open-invites/{invite}/resend', [App\Http\Controllers\Tenant\UserController::class, 'resendInvite'])->name('open-invites.resend-one');
-            Route::delete('/open-invites/{invite}', [App\Http\Controllers\Tenant\UserController::class, 'destroyInvite'])->name('open-invites.destroy');
-            Route::post('/import', [App\Http\Controllers\Tenant\UserController::class, 'import'])->name('import');
-            Route::post('/export', [App\Http\Controllers\Tenant\UserController::class, 'export'])->name('export');
-            Route::post('/email-report', [App\Http\Controllers\Tenant\UserController::class, 'emailReport'])->name('email-report');
-            Route::post('/send-message', [App\Http\Controllers\Tenant\UserController::class, 'sendMessage'])->name('send-message');
+            Route::get('/', [TenantUserController::class, 'index'])->name('index');
+            Route::get('/invite', [TenantUserController::class, 'invite'])->name('invite');
+            Route::post('/invite', [TenantUserController::class, 'storeInvite'])->name('invite.store');
+            Route::get('/open-invites', [TenantUserController::class, 'openInvites'])->name('open-invites');
+            Route::post('/open-invites/resend', [TenantUserController::class, 'resendInvites'])->name('open-invites.resend');
+            Route::post('/open-invites/{invite}/resend', [TenantUserController::class, 'resendInvite'])->name('open-invites.resend-one');
+            Route::delete('/open-invites/{invite}', [TenantUserController::class, 'destroyInvite'])->name('open-invites.destroy');
+            Route::post('/import', [TenantUserController::class, 'import'])->name('import');
+            Route::post('/export', [TenantUserController::class, 'export'])->name('export');
+            Route::post('/email-report', [TenantUserController::class, 'emailReport'])->name('email-report');
+            Route::post('/send-message', [TenantUserController::class, 'sendMessage'])->name('send-message');
 
             Route::prefix('{user:slug}')->group(function (): void {
-                Route::get('/', [App\Http\Controllers\Tenant\UserController::class, 'show'])->name('show');
-                Route::get('courses', [App\Http\Controllers\Tenant\UserController::class, 'courses'])->name('show.courses');
-                Route::post('courses/{course}/result', [App\Http\Controllers\Tenant\UserController::class, 'recordCourseResult'])->name('courses.record-result');
-                Route::get('manage-courses', [App\Http\Controllers\Tenant\UserController::class, 'manageCourses'])
+                Route::get('/', [TenantUserController::class, 'show'])->name('show');
+                Route::get('courses', [TenantUserController::class, 'courses'])->name('show.courses');
+                Route::post('courses/{course}/result', [TenantUserController::class, 'recordCourseResult'])->name('courses.record-result');
+                Route::get('manage-courses', [TenantUserController::class, 'manageCourses'])
                     ->middleware('role:super-admin|Consultant|Qualified Individual')
                     ->name('show.manage-courses');
-                Route::patch('course-overrides/{course}', [App\Http\Controllers\Tenant\UserController::class, 'updateCourseOverride'])
+                Route::patch('course-overrides/{course}', [TenantUserController::class, 'updateCourseOverride'])
                     ->middleware('role:super-admin|Consultant|Qualified Individual')
                     ->name('course-overrides.update');
-                Route::get('dot-certificates', [App\Http\Controllers\Tenant\UserController::class, 'dotCertificates'])->name('show.dot-certificates');
-                Route::post('dot-certificates', [App\Http\Controllers\Tenant\UserController::class, 'generateDotCertificate'])->name('dot-certificates.generate');
-                Route::patch('/', [App\Http\Controllers\Tenant\UserController::class, 'update'])->name('update');
-                Route::delete('/', [App\Http\Controllers\Tenant\UserController::class, 'destroy'])->name('destroy');
-                Route::post('impersonate', [App\Http\Controllers\Tenant\UserController::class, 'impersonate'])->name('impersonate');
+                Route::get('dot-certificates', [TenantUserController::class, 'dotCertificates'])->name('show.dot-certificates');
+                Route::post('dot-certificates', [TenantUserController::class, 'generateDotCertificate'])->name('dot-certificates.generate');
+                Route::patch('/', [TenantUserController::class, 'update'])->name('update');
+                Route::delete('/', [TenantUserController::class, 'destroy'])->name('destroy');
+                Route::post('impersonate', [TenantUserController::class, 'impersonate'])->name('impersonate');
             });
         });
 
-        Route::get('scans', [App\Http\Controllers\Tenant\ScansController::class, 'index'])->middleware(['single.store'])->name('scan.index');
-        Route::get('scans/external-finding', [App\Http\Controllers\Tenant\ScansController::class, 'externalFinding'])->middleware(['single.store'])->name('scan.external-finding');
-        Route::post('scans/queue-report', [App\Http\Controllers\Tenant\ScansController::class, 'queueReport'])->middleware(['single.store'])->name('scan.queue-report');
-        Route::post('scans/refresh-cache', [App\Http\Controllers\Tenant\ScansController::class, 'refreshCache'])->middleware(['single.store'])->name('scan.refresh-cache');
+        Route::get('scans', [ScansController::class, 'index'])->middleware(['single.store'])->name('scan.index');
+        Route::get('scans/external-finding', [ScansController::class, 'externalFinding'])->middleware(['single.store'])->name('scan.external-finding');
+        Route::post('scans/queue-report', [ScansController::class, 'queueReport'])->middleware(['single.store'])->name('scan.queue-report');
+        Route::post('scans/refresh-cache', [ScansController::class, 'refreshCache'])->middleware(['single.store'])->name('scan.refresh-cache');
 
         Route::middleware(['single.store'])->group(function (): void {
             Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');
@@ -368,8 +379,8 @@ Route::name('dealer.')->middleware([
         });
 
         Route::middleware(['auth', 'single.store'])->group(function (): void {
-            Route::get('scans-archive', [App\Http\Controllers\Tenant\ScanArchiveController::class, 'index'])->name('scan.archive');
-            Route::post('scans-archive/upload', [App\Http\Controllers\Tenant\ScanArchiveController::class, 'upload'])->name('scan.archive.upload');
+            Route::get('scans-archive', [ScanArchiveController::class, 'index'])->name('scan.archive');
+            Route::post('scans-archive/upload', [ScanArchiveController::class, 'upload'])->name('scan.archive.upload');
         });
 
         Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
@@ -401,8 +412,8 @@ Route::name('dealer.')->middleware([
                 ->defaults('type', ViolationAuditType::Osha)
                 ->name('osha.comments.destroy');
             Route::get('body-shop', App\Http\Livewire\Dealer\Audit\BodyShop\Index::class)->name('body-shop.index');
-            Route::get('body-shop/{bodyShopViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm::class)->name('body-shop.remediation');
-            Route::get('body-shop/{bodyShopViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\BodyShop\Single::class)->name('body-shop.show');
+            Route::get('body-shop/{bodyShopViolationAudit:uuid}/remediation', RemediationForm::class)->name('body-shop.remediation');
+            Route::get('body-shop/{bodyShopViolationAudit:uuid}', Single::class)->name('body-shop.show');
             Route::get('finance', App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('finance.index');
             Route::get('/finance/{glbaViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::class)->name('finance.remediation');
             Route::get('/finance/{glbaViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\Finance\Single::class)->name('finance.show');

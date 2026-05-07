@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Tenant\User;
 
 use App\Enums\AuditTypes;
+use App\Enums\Role as RoleEnum;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -30,6 +31,7 @@ class UpdateEmployeeRequest extends FormRequest
         return [
             'store_ids.required' => 'A location is required.',
             'store_ids.array' => 'A location is required.',
+            'role_id.exists' => 'Cannot assign privileged roles to an employee.',
         ];
     }
 
@@ -43,7 +45,14 @@ class UpdateEmployeeRequest extends FormRequest
 
         return [
             'department_id' => ['required', 'integer', 'exists:departments,id'],
-            'role_id' => ['required', 'integer', 'exists:roles,id'],
+            'role_id' => [
+                'required',
+                'integer',
+                Rule::exists('roles', 'id')->whereNotIn('name', [
+                    RoleEnum::SuperAdmin->value,
+                    RoleEnum::Consultant->value,
+                ]),
+            ],
             'qualified_individual' => ['required', 'boolean'],
             'store_ids' => [Rule::requiredIf($multipleStores), 'array'],
             'store_ids.*' => ['integer', 'exists:stores,id'],

@@ -375,7 +375,7 @@ describe('update action', function (): void {
                 'role_id' => $consultantRoleId,
                 'qualified_individual' => false,
             ])
-            ->assertServerError();
+            ->assertSessionHasErrors('role_id');
     });
 });
 

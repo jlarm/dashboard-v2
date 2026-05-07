@@ -17,6 +17,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Session\TokenMismatchException;
 use Sentry\Laravel\Integration;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Spatie\Permission\Middleware\PermissionMiddleware;
@@ -75,6 +76,19 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->renderable(function (TenantCouldNotBeIdentifiedException $e): never {
             abort(404);
+        });
+
+        $exceptions->renderable(function (TokenMismatchException $e, Request $request) {
+            if ($request->expectsJson() || $request->header('X-Inertia')) {
+                return back()
+                    ->withInput($request->except(['password', 'password_confirmation', '_token']))
+                    ->with('error', 'Your session expired. Please try again.');
+            }
+
+            return redirect()
+                ->back()
+                ->withInput($request->except(['password', 'password_confirmation', '_token']))
+                ->with('error', 'Your session expired. Please try again.');
         });
 
         Integration::handles($exceptions);

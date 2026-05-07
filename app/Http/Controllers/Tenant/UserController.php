@@ -116,17 +116,23 @@ class UserController extends Controller
         /** @var User $inviter */
         $inviter = $request->user();
 
-        $invite = $action->handle(
-            inviter: $inviter,
-            name: $request->name(),
-            email: $request->email(),
-            departmentId: $request->departmentId(),
-            role: $request->role(),
-            qualifiedIndividual: $request->qualifiedIndividual(),
-            storeIds: $request->storeIds(),
-            primaryStoreId: $request->primaryStoreId(),
-            courses: $request->courses(),
-        );
+        try {
+            $invite = $action->handle(
+                inviter: $inviter,
+                name: $request->name(),
+                email: $request->email(),
+                departmentId: $request->departmentId(),
+                role: $request->role(),
+                qualifiedIndividual: $request->qualifiedIndividual(),
+                storeIds: $request->storeIds(),
+                primaryStoreId: $request->primaryStoreId(),
+                courses: $request->courses(),
+            );
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->withInput()->with('error', 'We could not send the invite. Please try again.');
+        }
 
         return to_route('employees.index')
             ->with('success', "{$invite->name} has been invited.");
@@ -154,7 +160,13 @@ class UserController extends Controller
 
         abort_unless($query->buildScopedQuery($viewer)->whereKey($invite->id)->exists(), 403);
 
-        $action->handle($invite);
+        try {
+            $action->handle($invite);
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', "We could not resend the invite to {$invite->name}. Please try again.");
+        }
 
         return back()->with('success', "Invite to {$invite->name} resent.");
     }
@@ -170,14 +182,29 @@ class UserController extends Controller
             ->get();
 
         $skipped = count($requestedIds) - $invites->count();
+        $failed = 0;
 
         foreach ($invites as $invite) {
-            $action->handle($invite);
+            try {
+                $action->handle($invite);
+            } catch (Throwable $e) {
+                $failed++;
+                report($e);
+            }
         }
 
-        $message = "{$invites->count()} invite(s) resent.";
+        $resent = $invites->count() - $failed;
+
+        if ($resent === 0 && $invites->count() > 0) {
+            return back()->with('error', 'We could not resend any of the invites. Please try again.');
+        }
+
+        $message = "{$resent} invite(s) resent.";
         if ($skipped > 0) {
             $message .= " {$skipped} were skipped because they're outside your scope.";
+        }
+        if ($failed > 0) {
+            $message .= " {$failed} could not be resent.";
         }
 
         return back()->with('success', $message);
@@ -191,7 +218,14 @@ class UserController extends Controller
         abort_unless($query->buildScopedQuery($viewer)->whereKey($invite->id)->exists(), 403);
 
         $name = $invite->name;
-        $invite->delete();
+
+        try {
+            $invite->delete();
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', "We could not delete the invite to {$name}. Please try again.");
+        }
 
         return back()->with('success', "Invite to {$name} deleted.");
     }
@@ -218,7 +252,13 @@ class UserController extends Controller
 
         abort_unless($user->trashed(), 404);
 
-        $action->handle($user);
+        try {
+            $action->handle($user);
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', "We could not restore {$user->name}. Please try again.");
+        }
 
         return back()->with('success', "{$user->name} restored.");
     }
@@ -228,13 +268,19 @@ class UserController extends Controller
         $tenantId = (string) (tenant('id') ?? 'central');
         $payloadPath = "imports/employees/{$tenantId}/".str()->ulid().'.json';
 
-        $request->spreadsheet()->storeAs(
-            dirname($payloadPath),
-            basename($payloadPath),
-            ['disk' => 'local'],
-        );
+        try {
+            $request->spreadsheet()->storeAs(
+                dirname($payloadPath),
+                basename($payloadPath),
+                ['disk' => 'local'],
+            );
 
-        dispatch(new ImportEmployeesJob($request->user(), $payloadPath));
+            dispatch(new ImportEmployeesJob($request->user(), $payloadPath));
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', 'We could not start the import. Please try again.');
+        }
 
         return back()->with('success', 'Import started — you will receive an email when it completes.');
     }
@@ -316,7 +362,13 @@ class UserController extends Controller
         Course $course,
         RecordEmployeeCourseResult $action,
     ): RedirectResponse {
-        $action->handle($user, $course, $request->takenOn());
+        try {
+            $action->handle($user, $course, $request->takenOn());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', "We could not record {$course->name} for {$user->name}. Please try again.");
+        }
 
         return back()->with('success', "Recorded {$course->name} for {$user->name}.");
     }
@@ -344,7 +396,13 @@ class UserController extends Controller
         /** @var User $actor */
         $actor = $request->user();
 
-        $action->handle($actor, $user, $course, $request->state());
+        try {
+            $action->handle($actor, $user, $course, $request->state());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', "We could not update {$course->name} for {$user->name}. Please try again.");
+        }
 
         return back()->with('success', "{$course->name} updated for {$user->name}.");
     }
@@ -379,21 +437,33 @@ class UserController extends Controller
             ? (string) resolve('currentStoreModel')->name
             : (string) tenant('name');
 
-        $url = $action->handle($user, $storeName);
+        try {
+            $url = $action->handle($user, $storeName);
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', 'We could not generate the DOT certificate. Please try again.');
+        }
 
         return back()->with('success', 'DOT certificate generated.')->with('dot_certificate_url', $url);
     }
 
     public function update(UpdateEmployeeRequest $request, User $user, UpdateEmployee $action): RedirectResponse
     {
-        $action->handle(
-            user: $user,
-            departmentId: $request->departmentId(),
-            roleId: $request->roleId(),
-            qualifiedIndividual: $request->qualifiedIndividual(),
-            storeIds: $request->storeIds(),
-            auditTypes: $request->auditTypes(),
-        );
+        try {
+            $action->handle(
+                user: $user,
+                departmentId: $request->departmentId(),
+                roleId: $request->roleId(),
+                qualifiedIndividual: $request->qualifiedIndividual(),
+                storeIds: $request->storeIds(),
+                auditTypes: $request->auditTypes(),
+            );
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', "We could not update {$user->name}. Please try again.");
+        }
 
         return back()->with('success', "{$user->name} updated.");
     }
@@ -402,7 +472,13 @@ class UserController extends Controller
     {
         $this->authorize('delete', $user);
 
-        $user->delete();
+        try {
+            $user->delete();
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', "We could not remove {$user->name}. Please try again.");
+        }
 
         return to_route('employees.index')
             ->with('success', "{$user->name} removed.");
@@ -412,13 +488,19 @@ class UserController extends Controller
     {
         $this->authorize('impersonate', $user);
 
-        /** @phpstan-ignore-next-line -- macro provided by stancl/tenancy UserImpersonation feature */
-        $token = tenancy()->impersonate(
-            tenant(),
-            $user->id,
-            '/dashboard',
-            'web',
-        );
+        try {
+            /** @phpstan-ignore-next-line -- macro provided by stancl/tenancy UserImpersonation feature */
+            $token = tenancy()->impersonate(
+                tenant(),
+                $user->id,
+                '/dashboard',
+                'web',
+            );
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', "We could not start an impersonation session for {$user->name}.");
+        }
 
         return redirect("https://{$request->getHost()}/impersonate/{$token->token}");
     }
@@ -465,11 +547,17 @@ class UserController extends Controller
         /** @var EloquentCollection<int, User> $users */
         $users = $scopedQuery->get(['users.id', 'users.name', 'users.email']);
 
-        $sent = $sendMessage->handle(
-            users: $users,
-            subject: $request->subjectLine(),
-            messageBody: $request->messageBody(),
-        );
+        try {
+            $sent = $sendMessage->handle(
+                users: $users,
+                subject: $request->subjectLine(),
+                messageBody: $request->messageBody(),
+            );
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('error', 'We could not send the message. Please try again.');
+        }
 
         if ($sent === 0) {
             return back()->with('error', 'No employees with valid email addresses were selected.');
