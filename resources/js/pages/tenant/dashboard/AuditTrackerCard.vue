@@ -41,16 +41,9 @@ const auditTypeReportUrl = (typeKey: string): string => auditTypeReport.url({ ty
     <article v-if="auditTracker !== null" class="overflow-hidden rounded-2xl border bg-card">
         <div class="flex flex-wrap items-start justify-between gap-4 px-6 pt-6 pb-5">
             <div>
-                <h2 class="text-xl font-semibold tracking-tight text-foreground">Audit & Violation Tracker</h2>
+                <h2 class="text-xl font-semibold tracking-tight text-foreground">Audit Tracker</h2>
                 <p class="mt-1 text-sm text-muted-foreground">Latest grade and status per audit category.</p>
             </div>
-            <a
-                :href="auditReportUrl"
-                class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted/60"
-            >
-                Download report
-                <span aria-hidden>↗</span>
-            </a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full min-w-[480px] border-t text-sm">
