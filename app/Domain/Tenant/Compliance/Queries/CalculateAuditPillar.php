@@ -17,20 +17,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class CalculateAuditPillar
 {
-    private const GRADE_TO_SCORE = ['A' => 100, 'B' => 85, 'C' => 70, 'D' => 55, 'F' => 40];
+    private const array GRADE_TO_SCORE = ['A' => 100, 'B' => 85, 'C' => 70, 'D' => 55, 'F' => 40];
 
-    private const STALE_AFTER_MONTHS = 12;
+    private const int STALE_AFTER_MONTHS = 12;
 
-    private const STALE_PILLAR_FALLBACK = 50.0;
+    private const float STALE_PILLAR_FALLBACK = 50.0;
 
-    private const REMEDIATION_PENALTY_PER_SEVERITY = 4.0;
+    private const float REMEDIATION_PENALTY_PER_SEVERITY = 4.0;
 
-    private const REMEDIATION_PENALTY_CAP = 30.0;
+    private const float REMEDIATION_PENALTY_CAP = 30.0;
 
     /**
      * @var array<string, array{label: string, class: class-string<Model>}>
      */
-    private const AUDIT_TYPES = [
+    private const array AUDIT_TYPES = [
         'osha' => ['label' => 'OSHA', 'class' => OshaViolationAudit::class],
         'body_shop' => ['label' => 'Body Shop', 'class' => BodyShopViolationAudit::class],
         'glba' => ['label' => 'GLBA', 'class' => GlbaViolationAudit::class],
@@ -60,7 +60,7 @@ class CalculateAuditPillar
             }
 
             $auditDate = $latest->date instanceof DateTimeInterface ? CarbonImmutable::parse($latest->date) : null;
-            $stale = $auditDate === null || $auditDate->lt($staleCutoff);
+            $stale = ! $auditDate instanceof CarbonImmutable || $auditDate->lt($staleCutoff);
 
             $gradeScore = self::GRADE_TO_SCORE[mb_strtoupper((string) $latest->grade)] ?? self::STALE_PILLAR_FALLBACK;
             $penalty = $this->outstandingRemediationPenalty($latest);

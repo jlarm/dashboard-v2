@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Tenant\Audits\Data;
 
 use App\Models\Remediation;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Throwable;
 
 class RemediationData
@@ -22,7 +23,7 @@ class RemediationData
     {
         $photo = $remediation->getFirstMedia('remediations');
         $photoUrl = null;
-        if ($photo !== null) {
+        if ($photo instanceof Media) {
             try {
                 $photoUrl = $photo->getTemporaryUrl(now()->addMinutes(45));
             } catch (Throwable) {

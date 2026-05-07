@@ -6,6 +6,7 @@ use App\Jobs\Manuals\GenerateIspManualJob;
 use App\Jobs\Manuals\UploadIspToDigitaloceanJob;
 use App\Models\Dealer\Manual\Isp;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
 
@@ -106,7 +107,7 @@ describe('DELETE manuals/isp/{manual}', function (): void {
             'signature' => 'sig.png',
         ]);
 
-        $scopedUser = App\Models\User::query()->create([
+        $scopedUser = User::query()->create([
             'name' => 'Scoped Owner',
             'email' => 'scoped-isp@test.com',
             'password' => bcrypt('password'),

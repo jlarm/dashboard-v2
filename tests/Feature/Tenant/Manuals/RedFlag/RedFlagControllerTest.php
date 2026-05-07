@@ -43,7 +43,7 @@ describe('GET manuals/red-flag/create', function (): void {
             ->assertInertia(fn ($page) => $page
                 ->component('tenant/manuals/red-flag/Create')
                 ->where('defaults.store_id', $this->store->id)
-                ->where('policyHtml', fn (string $html) => str_contains($html, 'Red Flag Rule')));
+                ->where('policyHtml', fn (string $html): bool => str_contains($html, 'Red Flag Rule')));
     });
 });
 

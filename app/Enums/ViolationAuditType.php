@@ -4,8 +4,18 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Jobs\Audit\GenerateBodyShopPdfJob;
+use App\Jobs\Audit\GenerateBodyShopRemediationPdfJob;
+use App\Jobs\Audit\GenerateGlbaPdfJob;
+use App\Jobs\Audit\GenerateGlbaRemediationPdfJob;
+use App\Jobs\Audit\GenerateOshaPdfJob;
+use App\Jobs\Audit\GenerateOshaRemediationPdfJob;
+use App\Jobs\Audit\UploadBodyShopPdfJob;
+use App\Jobs\Audit\UploadGlbaPdfJob;
+use App\Jobs\Audit\UploadOshaPdfJob;
 use App\Models\Dealer\Audit\BodyShopAudit;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaAudit;
@@ -37,7 +47,7 @@ enum ViolationAuditType: string
     }
 
     /**
-     * @return class-string<\App\Models\Dealer\Audit\Contracts\ViolationAudit>
+     * @return class-string<ViolationAudit>
      */
     public function modelClass(): string
     {
@@ -93,9 +103,9 @@ enum ViolationAuditType: string
     public function generatePdfJobClass(): string
     {
         return match ($this) {
-            self::Osha => \App\Jobs\Audit\GenerateOshaPdfJob::class,
-            self::BodyShop => \App\Jobs\Audit\GenerateBodyShopPdfJob::class,
-            self::Glba => \App\Jobs\Audit\GenerateGlbaPdfJob::class,
+            self::Osha => GenerateOshaPdfJob::class,
+            self::BodyShop => GenerateBodyShopPdfJob::class,
+            self::Glba => GenerateGlbaPdfJob::class,
         };
     }
 
@@ -105,9 +115,9 @@ enum ViolationAuditType: string
     public function uploadPdfJobClass(): string
     {
         return match ($this) {
-            self::Osha => \App\Jobs\Audit\UploadOshaPdfJob::class,
-            self::BodyShop => \App\Jobs\Audit\UploadBodyShopPdfJob::class,
-            self::Glba => \App\Jobs\Audit\UploadGlbaPdfJob::class,
+            self::Osha => UploadOshaPdfJob::class,
+            self::BodyShop => UploadBodyShopPdfJob::class,
+            self::Glba => UploadGlbaPdfJob::class,
         };
     }
 
@@ -117,9 +127,9 @@ enum ViolationAuditType: string
     public function generateRemediationPdfJobClass(): string
     {
         return match ($this) {
-            self::Osha => \App\Jobs\Audit\GenerateOshaRemediationPdfJob::class,
-            self::BodyShop => \App\Jobs\Audit\GenerateBodyShopRemediationPdfJob::class,
-            self::Glba => \App\Jobs\Audit\GenerateGlbaRemediationPdfJob::class,
+            self::Osha => GenerateOshaRemediationPdfJob::class,
+            self::BodyShop => GenerateBodyShopRemediationPdfJob::class,
+            self::Glba => GenerateGlbaRemediationPdfJob::class,
         };
     }
 }

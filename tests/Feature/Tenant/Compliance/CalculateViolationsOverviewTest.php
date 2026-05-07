@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 it('returns six empty buckets for every granularity when no stores are scoped', function (): void {
     $now = CarbonImmutable::create(2026, 5, 15);
 
-    $result = (new CalculateViolationsOverview())->handleForStores([], $now);
+    $result = new CalculateViolationsOverview()->handleForStores([], $now);
 
     expect($result->monthly)->toHaveCount(6);
     expect($result->quarterly)->toHaveCount(6);
@@ -57,7 +57,7 @@ it('attributes opens to the audit completed_date bucket and closes to the remedi
         'completed_date' => $now->setDay(2), // May (closed two months later)
     ]);
 
-    $result = (new CalculateViolationsOverview())->handleForStores([$store->id], $now);
+    $result = new CalculateViolationsOverview()->handleForStores([$store->id], $now);
 
     $byLabel = collect($result->monthly)->keyBy('label');
 
@@ -108,7 +108,7 @@ it('aggregates across audit types', function (): void {
         'severity' => 5,
     ]);
 
-    $result = (new CalculateViolationsOverview())->handleForStores([$store->id], $now);
+    $result = new CalculateViolationsOverview()->handleForStores([$store->id], $now);
 
     $may = collect($result->monthly)->firstWhere('label', 'May');
     expect($may['opened'])->toBe(3);
@@ -136,8 +136,8 @@ it('only includes audits owned by stores in the scope', function (): void {
         ]);
     }
 
-    $resultA = (new CalculateViolationsOverview())->handleForStores([$storeA->id], $now);
-    $resultBoth = (new CalculateViolationsOverview())->handleForStores([$storeA->id, $storeB->id], $now);
+    $resultA = new CalculateViolationsOverview()->handleForStores([$storeA->id], $now);
+    $resultBoth = new CalculateViolationsOverview()->handleForStores([$storeA->id, $storeB->id], $now);
 
     expect(collect($resultA->monthly)->firstWhere('label', 'May')['opened'])->toBe(1);
     expect(collect($resultBoth->monthly)->firstWhere('label', 'May')['opened'])->toBe(2);
@@ -146,7 +146,7 @@ it('only includes audits owned by stores in the scope', function (): void {
 it('emits six period rows for each granularity', function (): void {
     $now = CarbonImmutable::create(2026, 5, 15);
 
-    $result = (new CalculateViolationsOverview())->handleForStores([Store::query()->firstOrFail()->id], $now);
+    $result = new CalculateViolationsOverview()->handleForStores([Store::query()->firstOrFail()->id], $now);
 
     expect($result->monthly)->toHaveCount(6);
     expect($result->monthly[5]['label'])->toBe('May');

@@ -51,7 +51,7 @@ describe('Activity log redaction', function (): void {
 
         expect($log)->not->toBeNull();
 
-        $properties = collect($log->properties->toArray())->flatMap(fn ($attrs) => is_array($attrs) ? $attrs : [])->keys();
+        $properties = collect($log->properties->toArray())->flatMap(fn ($attrs): array => is_array($attrs) ? $attrs : [])->keys();
 
         expect($properties)->not->toContain('phishing_token')
             ->and($properties)->not->toContain('phishing_ip')
@@ -74,7 +74,7 @@ describe('Activity log redaction', function (): void {
 
         expect($log)->not->toBeNull();
 
-        $properties = collect($log->properties->toArray())->flatMap(fn ($attrs) => is_array($attrs) ? $attrs : [])->keys();
+        $properties = collect($log->properties->toArray())->flatMap(fn ($attrs): array => is_array($attrs) ? $attrs : [])->keys();
 
         expect($properties)->not->toContain('ip_addresses');
     });
@@ -108,8 +108,8 @@ describe('Activity log redaction', function (): void {
             ->latest('id')
             ->first();
 
-        $vendorProps = collect($vendorLog?->properties->toArray() ?? [])->flatMap(fn ($a) => is_array($a) ? $a : [])->keys();
-        $formProps = collect($vendorFormLog?->properties->toArray() ?? [])->flatMap(fn ($a) => is_array($a) ? $a : [])->keys();
+        $vendorProps = collect($vendorLog?->properties->toArray() ?? [])->flatMap(fn ($a): array => is_array($a) ? $a : [])->keys();
+        $formProps = collect($vendorFormLog?->properties->toArray() ?? [])->flatMap(fn ($a): array => is_array($a) ? $a : [])->keys();
 
         expect($vendorProps)->not->toContain('signature')
             ->and($formProps)->not->toContain('signature')
@@ -132,7 +132,7 @@ describe('Activity log redaction', function (): void {
                 ->latest('id')
                 ->first();
 
-            $properties = collect($log?->properties->toArray() ?? [])->flatMap(fn ($a) => is_array($a) ? $a : [])->keys();
+            $properties = collect($log?->properties->toArray() ?? [])->flatMap(fn ($a): array => is_array($a) ? $a : [])->keys();
 
             expect($properties)->not->toContain('signature');
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Domain\Tenant\Scans\Data\ScanReportData;
 use App\Domain\Tenant\Scans\Queries\GetCachedScanReport;
 use App\Models\Dealer\Store;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class CyrismaReportController
 
         $report = $getCachedScanReport->handle($store, $type);
 
-        abort_unless($report !== null, 404, 'Report not yet generated. Please request it from the scan details page.');
+        abort_unless($report instanceof ScanReportData, 404, 'Report not yet generated. Please request it from the scan details page.');
 
         $pdfBinary = $report->pdfBinary;
         $fileName = $report->fileName;

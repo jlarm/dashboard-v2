@@ -26,7 +26,7 @@ it('returns null lastScanFinished and no assets when the service returns null', 
     $mock->shouldReceive('forStore')->andReturn($mock);
     $mock->shouldReceive('getExternalIpScanData')->andReturn(null);
 
-    $result = app(GetExternalIpExposure::class)->handle($this->store);
+    $result = resolve(GetExternalIpExposure::class)->handle($this->store);
 
     expect($result->toArray())->toMatchArray([
         'last_scan_finished' => null,
@@ -45,7 +45,7 @@ it('exposes the last scan finished timestamp and the asset list', function (): v
         ],
     ]);
 
-    $result = app(GetExternalIpExposure::class)->handle($this->store)->toArray();
+    $result = resolve(GetExternalIpExposure::class)->handle($this->store)->toArray();
 
     expect($result['last_scan_finished'])->toBe('2026-02-27 09:29:42');
     expect($result['assets'])->toHaveCount(1);
@@ -66,7 +66,7 @@ it('sorts findings by severity then affected url count', function (): void {
         ],
     ]);
 
-    $assets = app(GetExternalIpExposure::class)->handle($this->store)->toArray()['assets'];
+    $assets = resolve(GetExternalIpExposure::class)->handle($this->store)->toArray()['assets'];
 
     expect($assets[0]['findings'])->toHaveCount(3);
     expect(array_column($assets[0]['findings'], 'name'))->toBe([
@@ -103,7 +103,7 @@ it('strips HTML and decodes entities in description, solution, and references', 
         ],
     ]);
 
-    $finding = app(GetExternalIpExposure::class)->handle($this->store)->toArray()['assets'][0]['findings'][0];
+    $finding = resolve(GetExternalIpExposure::class)->handle($this->store)->toArray()['assets'][0]['findings'][0];
 
     expect($finding['description'])->toBe('A sensitive file was identified as accessible or available.');
     expect($finding['solution'])->toBe('Disable access to the sensitive file in production.');
@@ -131,7 +131,7 @@ it('leaves description and solution empty when the upstream payload omits them',
         ],
     ]);
 
-    $finding = app(GetExternalIpExposure::class)->handle($this->store)->toArray()['assets'][0]['findings'][0];
+    $finding = resolve(GetExternalIpExposure::class)->handle($this->store)->toArray()['assets'][0]['findings'][0];
 
     expect($finding['description'])->toBe('');
     expect($finding['solution'])->toBe('');
@@ -142,7 +142,7 @@ it('produces a clean tone when an asset has no findings or open ports', function
         ['name' => 'clean.example.com', 'ipAddress' => '203.0.113.99', 'flaws' => [], 'vulnerabilities' => []],
     ]);
 
-    $asset = app(GetExternalIpExposure::class)->handle($this->store)->toArray()['assets'][0];
+    $asset = resolve(GetExternalIpExposure::class)->handle($this->store)->toArray()['assets'][0];
 
     expect($asset['tone'])->toBe('clean');
     expect($asset['counts']['total'])->toBe(0);
@@ -180,7 +180,7 @@ describe('GetExternalFindingDetails', function (): void {
                 ],
             ]);
 
-        $result = app(GetExternalFindingDetails::class)->handle($this->store, '203.0.113.10', 'Hidden File Found');
+        $result = resolve(GetExternalFindingDetails::class)->handle($this->store, '203.0.113.10', 'Hidden File Found');
 
         expect($result)->not->toBeNull();
         expect($result->description)->toBe('A sensitive file was identified as accessible.');
@@ -220,7 +220,7 @@ describe('GetExternalFindingDetails', function (): void {
                 ],
             ]);
 
-        $result = app(GetExternalFindingDetails::class)->handle($this->store, '203.0.113.10', 'Cross-Domain JavaScript Source File Inclusion');
+        $result = resolve(GetExternalFindingDetails::class)->handle($this->store, '203.0.113.10', 'Cross-Domain JavaScript Source File Inclusion');
 
         expect($result)->not->toBeNull();
         expect(array_column($result->instances, 'parameters'))->toContain(
@@ -237,7 +237,7 @@ describe('GetExternalFindingDetails', function (): void {
             'assets' => [['name' => 'other', 'ipAddress' => '198.51.100.1', 'flaws' => []]],
         ]);
 
-        $result = app(GetExternalFindingDetails::class)->handle($this->store, '203.0.113.10', 'anything');
+        $result = resolve(GetExternalFindingDetails::class)->handle($this->store, '203.0.113.10', 'anything');
 
         expect($result)->toBeNull();
     });

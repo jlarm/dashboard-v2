@@ -31,9 +31,7 @@ class BuildCmsFormDefaults
 
     private function resolveQualifiedIndividualName(Store $store): ?string
     {
-        $multipleStoresExist = app()->bound('multipleStoresExist')
-            ? (bool) resolve('multipleStoresExist')
-            : false;
+        $multipleStoresExist = app()->bound('multipleStoresExist') && (bool) resolve('multipleStoresExist');
 
         if ($multipleStoresExist) {
             return User::query()

@@ -172,7 +172,7 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
             ->driver('browsershot')
             ->margins(top: 10, right: 10, bottom: 10, left: 10)
             ->footerHtml($footerHtml)
-            ->withBrowsershot(static fn (Browsershot $browsershot) => $browsershot
+            ->withBrowsershot(static fn (Browsershot $browsershot): Browsershot => $browsershot
                 ->setNodeModulePath(base_path('node_modules'))
                 ->setNodeBinary($nodeBinary)
                 ->showBackground()

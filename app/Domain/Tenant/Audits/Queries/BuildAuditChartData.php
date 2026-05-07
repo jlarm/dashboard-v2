@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class BuildAuditChartData
 {
-    private const GRADE_MAP = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
+    private const array GRADE_MAP = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
 
     /**
      * @param  iterable<object>  $violationAudits  Models exposing date, grade, violation_count, remediation_count
@@ -44,11 +44,11 @@ class BuildAuditChartData
         $sorted = $points->sortByDesc('date')->take(4)->sortBy('date')->values();
 
         return [
-            'labels' => $sorted->map(fn (array $point): string => $point['date']->format('M \'y'))->toArray(),
+            'labels' => $sorted->map(fn (array $point): string => $point['date']->format('M \'y'))->all(),
             'gradesNumeric' => $sorted->map(fn (array $point): int => self::GRADE_MAP[mb_strtoupper((string) $point['grade'])] ?? 0)->all(),
             'gradesLetters' => $sorted->map(fn (array $point): string => mb_strtoupper((string) $point['grade']))->all(),
-            'violations' => $sorted->map(fn (array $point): int => (int) $point['violations'])->toArray(),
-            'remediations' => $sorted->map(fn (array $point): int => (int) $point['remediations'])->toArray(),
+            'violations' => $sorted->map(fn (array $point): int => (int) $point['violations'])->all(),
+            'remediations' => $sorted->map(fn (array $point): int => (int) $point['remediations'])->all(),
         ];
     }
 
@@ -61,7 +61,7 @@ class BuildAuditChartData
         if (method_exists($audit, 'relationLoaded') && $audit->relationLoaded('violations')) {
             $loaded = $audit->violations;
 
-            return $loaded instanceof Collection ? $loaded->count() : (int) (is_countable($loaded) ? count($loaded) : 0);
+            return ($loaded instanceof Collection ? $loaded->count() : is_countable($loaded)) ? count($loaded) : 0;
         }
 
         return $audit->violations()->count();

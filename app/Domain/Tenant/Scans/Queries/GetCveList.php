@@ -33,7 +33,7 @@ class GetCveList
             ? [$assetType]
             : self::ALLOWED_ASSET_TYPES;
 
-        $items = collect($assetTypes)
+        return collect($assetTypes)
             ->flatMap(static function (string $type) use ($service): array {
                 $data = $service->getVulnerabilitiesByAssetType($type);
 
@@ -46,8 +46,6 @@ class GetCveList
             ->values()
             ->map(static fn (array $item): array => CveItemData::fromPayload($item)->toArray())
             ->all();
-
-        return $items;
     }
 
     private static function riskRank(string $risk): int

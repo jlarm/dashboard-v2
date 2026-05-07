@@ -4,33 +4,34 @@ declare(strict_types=1);
 
 use App\Domain\Tenant\Audits\Queries\BuildAuditChartData;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Collection;
 
 function violationAudit(string $date, string $grade, int $violations, int $remediations): object
 {
-    return new class(CarbonImmutable::parse($date), $grade, $violations, $remediations)
+    return new readonly class(CarbonImmutable::parse($date), $grade, $violations, $remediations)
     {
         public function __construct(
-            public readonly CarbonImmutable $date,
-            public readonly string $grade,
-            public readonly int $violation_count,
-            public readonly int $remediation_count,
+            public CarbonImmutable $date,
+            public string $grade,
+            public int $violation_count,
+            public int $remediation_count,
         ) {}
     };
 }
 
 function legacyAuditWithoutViolations(string $date, ?string $grade): object
 {
-    return new class(CarbonImmutable::parse($date), $grade)
+    return new readonly class(CarbonImmutable::parse($date), $grade)
     {
         public function __construct(
-            public readonly CarbonImmutable $audit_date,
-            public readonly ?string $grade,
+            public CarbonImmutable $audit_date,
+            public ?string $grade,
         ) {}
     };
 }
 
 it('formats violation audits into chart points sorted ascending', function (): void {
-    $result = (new BuildAuditChartData())->handle(
+    $result = new BuildAuditChartData()->handle(
         violationAudits: [
             violationAudit('2024-01-15', 'A', 3, 2),
             violationAudit('2024-04-10', 'B', 5, 1),
@@ -46,7 +47,7 @@ it('formats violation audits into chart points sorted ascending', function (): v
 });
 
 it('keeps only the four most recent audits but sorts them ascending', function (): void {
-    $result = (new BuildAuditChartData())->handle(
+    $result = new BuildAuditChartData()->handle(
         violationAudits: [
             violationAudit('2024-01-01', 'A', 1, 0),
             violationAudit('2024-02-01', 'B', 2, 0),
@@ -86,14 +87,14 @@ it('skips audits missing a date or grade', function (): void {
         },
     ];
 
-    $result = (new BuildAuditChartData())->handle($audits, []);
+    $result = new BuildAuditChartData()->handle($audits, []);
 
     expect($result['labels'])->toBe(["Jan '24"])
         ->and($result['gradesLetters'])->toBe(['A']);
 });
 
 it('treats legacy audits without a violations relation as zero violations', function (): void {
-    $result = (new BuildAuditChartData())->handle(
+    $result = new BuildAuditChartData()->handle(
         violationAudits: [],
         legacyAudits: [
             legacyAuditWithoutViolations('2024-03-01', 'B'),
@@ -111,7 +112,7 @@ it('counts pre-loaded legacy violations when the relation is loaded', function (
     {
         public CarbonImmutable $audit_date;
         public string $grade = 'A';
-        public Illuminate\Support\Collection $violations;
+        public Collection $violations;
 
         public function __construct()
         {
@@ -119,7 +120,7 @@ it('counts pre-loaded legacy violations when the relation is loaded', function (
             $this->violations = collect([(object) [], (object) [], (object) []]);
         }
 
-        public function violations()
+        public function violations(): Collection
         {
             return $this->violations;
         }
@@ -130,13 +131,13 @@ it('counts pre-loaded legacy violations when the relation is loaded', function (
         }
     };
 
-    $result = (new BuildAuditChartData())->handle([], [$audit]);
+    $result = new BuildAuditChartData()->handle([], [$audit]);
 
     expect($result['violations'])->toBe([3]);
 });
 
 it('lower-cases grades safely and falls back to zero on unknown letters', function (): void {
-    $result = (new BuildAuditChartData())->handle(
+    $result = new BuildAuditChartData()->handle(
         violationAudits: [
             violationAudit('2024-01-01', 'a', 0, 0),
             violationAudit('2024-02-01', 'Z', 0, 0),

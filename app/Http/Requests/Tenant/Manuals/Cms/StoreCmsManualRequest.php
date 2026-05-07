@@ -6,6 +6,7 @@ namespace App\Http\Requests\Tenant\Manuals\Cms;
 
 use App\Domain\Tenant\Manuals\Cms\Data\CmsManualFormData;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class StoreCmsManualRequest extends FormRequest
 {
@@ -40,6 +41,7 @@ class StoreCmsManualRequest extends FormRequest
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function messages(): array
     {
         return [

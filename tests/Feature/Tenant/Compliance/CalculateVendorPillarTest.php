@@ -11,7 +11,7 @@ use Carbon\CarbonImmutable;
 it('marks the pillar as not applicable when the store has no vendors', function (): void {
     $store = Store::query()->firstOrFail();
 
-    $pillar = (new CalculateVendorPillar())->handle($store, CarbonImmutable::now());
+    $pillar = new CalculateVendorPillar()->handle($store, CarbonImmutable::now());
 
     expect($pillar->applicable)->toBeFalse();
 });
@@ -22,7 +22,7 @@ it('scores 100 when every vendor has a fresh signed form', function (): void {
     $vendor = makeVendor($store);
     makeForm($vendor, signedAt: CarbonImmutable::now()->subMonths(3));
 
-    $pillar = (new CalculateVendorPillar())->handle($store, CarbonImmutable::now());
+    $pillar = new CalculateVendorPillar()->handle($store, CarbonImmutable::now());
 
     expect($pillar->score)->toBe(100.0);
     expect($pillar->breakdown['fresh_completed'])->toBe(1);
@@ -38,7 +38,7 @@ it('treats forms older than 12 months as half-credit', function (): void {
     $stale = makeVendor($store, 'Stale Vendor');
     makeForm($stale, signedAt: CarbonImmutable::now()->subMonths(18));
 
-    $pillar = (new CalculateVendorPillar())->handle($store, CarbonImmutable::now());
+    $pillar = new CalculateVendorPillar()->handle($store, CarbonImmutable::now());
 
     // 1.0 + 0.5 = 1.5 effective / 2 vendors = 75%
     expect($pillar->score)->toBe(75.0);
@@ -59,7 +59,7 @@ it('counts vendors with no completed form as outstanding', function (): void {
         'email' => $unsigned->contact_email,
     ]);
 
-    $pillar = (new CalculateVendorPillar())->handle($store, CarbonImmutable::now());
+    $pillar = new CalculateVendorPillar()->handle($store, CarbonImmutable::now());
 
     // 1 fresh / 2 vendors = 50%
     expect($pillar->score)->toBe(50.0);

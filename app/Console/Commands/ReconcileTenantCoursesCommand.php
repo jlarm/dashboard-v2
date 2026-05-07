@@ -6,10 +6,14 @@ namespace App\Console\Commands;
 
 use App\Domain\Central\Courses\Actions\ReconcileTenantCourses;
 use Illuminate\Console\Command;
+use Override;
 
 class ReconcileTenantCoursesCommand extends Command
 {
+    #[Override]
     protected $signature = 'courses:reconcile-tenants {--force : Apply changes. Without this flag the command runs in dry-run mode.}';
+
+    #[Override]
     protected $description = 'Sync per-tenant course copies to match the central course_tenant assignments. Soft-deletes tenant copies that fall out of scope; restores ones that come back into scope.';
 
     public function handle(ReconcileTenantCourses $action): int

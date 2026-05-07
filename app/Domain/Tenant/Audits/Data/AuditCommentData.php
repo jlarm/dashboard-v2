@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Tenant\Audits\Data;
 
 use App\Models\AuditComment;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Throwable;
 
 class AuditCommentData
@@ -22,7 +23,7 @@ class AuditCommentData
     {
         $photo = $comment->getFirstMedia('comment-photos');
         $photoUrl = null;
-        if ($photo !== null) {
+        if ($photo instanceof Media) {
             try {
                 $photoUrl = $photo->getTemporaryUrl(now()->addMinutes(45));
             } catch (Throwable) {

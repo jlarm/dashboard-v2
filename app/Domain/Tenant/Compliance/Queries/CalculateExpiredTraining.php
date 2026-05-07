@@ -53,7 +53,7 @@ class CalculateExpiredTraining
     public function handleForStores(Collection|array $storeIds): array
     {
         $ids = collect($storeIds)
-            ->map(static fn ($id): int => (int) $id)
+            ->map(static fn ($id): int => $id)
             ->filter()
             ->values();
 

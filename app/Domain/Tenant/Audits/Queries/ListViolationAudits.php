@@ -6,7 +6,9 @@ namespace App\Domain\Tenant\Audits\Queries;
 
 use App\Domain\Tenant\Audits\Data\ViolationAuditListItemData;
 use App\Enums\ViolationAuditType;
+use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator as PaginatorInstance;
 use Illuminate\Support\Collection;
 
@@ -39,7 +41,7 @@ class ListViolationAudits
             ])
             ->latest('date')
             ->paginate(self::PER_PAGE)
-            ->through(static fn ($audit): array => ViolationAuditListItemData::fromModel($audit)->toArray())
+            ->through(static fn (ViolationAudit&Model $audit): array => ViolationAuditListItemData::fromModel($audit)->toArray())
             ->withQueryString();
     }
 }

@@ -48,13 +48,13 @@ class GetDealerDocs
             ->map(static fn (DealerDocListItemData $item): array => $item->toArray())
             ->values();
 
-        return (new PaginatorImpl(
+        return new PaginatorImpl(
             items: $items,
             total: $merged->count(),
             perPage: self::PER_PAGE,
             currentPage: $page,
             options: ['path' => Paginator::resolveCurrentPath()],
-        ))->withQueryString();
+        )->withQueryString();
     }
 
     /**

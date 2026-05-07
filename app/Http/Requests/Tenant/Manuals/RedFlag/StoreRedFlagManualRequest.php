@@ -6,6 +6,7 @@ namespace App\Http\Requests\Tenant\Manuals\RedFlag;
 
 use App\Domain\Tenant\Manuals\RedFlag\Data\RedFlagManualFormData;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class StoreRedFlagManualRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class StoreRedFlagManualRequest extends FormRequest
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function messages(): array
     {
         return [

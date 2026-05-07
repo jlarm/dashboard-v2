@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::generate
-* @see app/Http/Controllers/Tenant/UserController.php:371
+* @see app/Http/Controllers/Tenant/UserController.php:429
 * @route '/employees/{user}/dot-certificates'
 */
 export const generate = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ generate.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::generate
-* @see app/Http/Controllers/Tenant/UserController.php:371
+* @see app/Http/Controllers/Tenant/UserController.php:429
 * @route '/employees/{user}/dot-certificates'
 */
 generate.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ generate.url = (args: { user: string | { slug: string } } | [user: string | { sl
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::generate
-* @see app/Http/Controllers/Tenant/UserController.php:371
+* @see app/Http/Controllers/Tenant/UserController.php:429
 * @route '/employees/{user}/dot-certificates'
 */
 generate.post = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ generate.post = (args: { user: string | { slug: string } } | [user: string | { s
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::generate
-* @see app/Http/Controllers/Tenant/UserController.php:371
+* @see app/Http/Controllers/Tenant/UserController.php:429
 * @route '/employees/{user}/dot-certificates'
 */
 const generateForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ const generateForm = (args: { user: string | { slug: string } } | [user: string 
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::generate
-* @see app/Http/Controllers/Tenant/UserController.php:371
+* @see app/Http/Controllers/Tenant/UserController.php:429
 * @route '/employees/{user}/dot-certificates'
 */
 generateForm.post = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

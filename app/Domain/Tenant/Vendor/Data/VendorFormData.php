@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\Vendor\Data;
 
+use App\Models\Dealer\VendorEmailLog;
 use App\Models\Dealer\VendorForm;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -28,7 +29,7 @@ final readonly class VendorFormData implements Arrayable
     {
         $emailLogs = $form->relationLoaded('emailLogs')
             ? $form->emailLogs
-                ->map(static fn ($log): VendorEmailLogData => VendorEmailLogData::fromModel($log))
+                ->map(static fn (VendorEmailLog $log): VendorEmailLogData => VendorEmailLogData::fromModel($log))
                 ->values()
                 ->all()
             : [];

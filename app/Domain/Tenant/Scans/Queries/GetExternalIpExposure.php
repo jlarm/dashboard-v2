@@ -63,7 +63,7 @@ class GetExternalIpExposure
             }
         }
 
-        return (new ExternalIpAssetData(
+        return new ExternalIpAssetData(
             name: (string) ($asset['name'] ?? $asset['ipAddress'] ?? 'Unknown Asset'),
             ipAddress: isset($asset['ipAddress']) && is_string($asset['ipAddress']) && $asset['ipAddress'] !== ''
                 ? $asset['ipAddress']
@@ -74,7 +74,7 @@ class GetExternalIpExposure
             highCount: $counts['high'],
             mediumCount: $counts['medium'],
             lowCount: $counts['low'],
-        ))->toArray();
+        )->toArray();
     }
 
     /**

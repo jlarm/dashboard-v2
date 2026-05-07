@@ -12,7 +12,7 @@ afterEach(function (): void {
 });
 
 it('returns an empty collection when scopedStoreIds is not bound', function (): void {
-    expect((new ResolveAuditScopedStores())->handle())
+    expect(new ResolveAuditScopedStores()->handle())
         ->toBeInstanceOf(Collection::class)
         ->toBeEmpty();
 });
@@ -20,7 +20,7 @@ it('returns an empty collection when scopedStoreIds is not bound', function (): 
 it('returns the bound store ids cast to ints', function (): void {
     app()->instance('scopedStoreIds', collect(['7', 12, '3']));
 
-    $resolved = (new ResolveAuditScopedStores())->handle();
+    $resolved = new ResolveAuditScopedStores()->handle();
 
     expect($resolved->all())->toBe([7, 12, 3]);
 });
@@ -28,5 +28,5 @@ it('returns the bound store ids cast to ints', function (): void {
 it('preserves an empty bound collection', function (): void {
     app()->instance('scopedStoreIds', collect());
 
-    expect((new ResolveAuditScopedStores())->handle())->toBeEmpty();
+    expect(new ResolveAuditScopedStores()->handle())->toBeEmpty();
 });

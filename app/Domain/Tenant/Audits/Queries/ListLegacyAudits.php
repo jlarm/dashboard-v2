@@ -7,6 +7,7 @@ namespace App\Domain\Tenant\Audits\Queries;
 use App\Domain\Tenant\Audits\Data\LegacyAuditListItemData;
 use App\Enums\ViolationAuditType;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class ListLegacyAudits
@@ -33,7 +34,7 @@ class ListLegacyAudits
         $rows = $query->latest('audit_date')->get();
 
         return $rows
-            ->map(fn ($legacy): LegacyAuditListItemData => LegacyAuditListItemData::fromModel($legacy))
+            ->map(fn (Model $legacy): LegacyAuditListItemData => LegacyAuditListItemData::fromModel($legacy))
             ->values();
     }
 
@@ -46,10 +47,7 @@ class ListLegacyAudits
     public function raw(ViolationAuditType $type, Collection $storeIds): EloquentCollection
     {
         if ($storeIds->isEmpty()) {
-            /** @var EloquentCollection $empty */
-            $empty = new EloquentCollection();
-
-            return $empty;
+            return new EloquentCollection();
         }
 
         $legacyClass = $type->legacyModelClass();

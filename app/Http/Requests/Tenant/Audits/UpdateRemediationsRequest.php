@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Tenant\Audits;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 
 class UpdateRemediationsRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class UpdateRemediationsRequest extends FormRequest
     }
 
     /**
-     * @return array<int, array{comment: string, completed: bool, photo: ?\Illuminate\Http\UploadedFile, remove_photo: bool}>
+     * @return array<int, array{comment: string, completed: bool, photo: ?UploadedFile, remove_photo: bool}>
      */
     public function toData(): array
     {

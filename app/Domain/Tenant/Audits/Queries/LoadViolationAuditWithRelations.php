@@ -7,7 +7,9 @@ namespace App\Domain\Tenant\Audits\Queries;
 use App\Domain\Tenant\Audits\Data\AuditCommentData;
 use App\Domain\Tenant\Audits\Data\ViolationAuditDetailData;
 use App\Domain\Tenant\Audits\Data\ViolationData;
+use App\Models\AuditComment;
 use App\Models\Dealer\Audit\Contracts\ViolationAudit;
+use App\Models\Dealer\Violation;
 use App\Models\ViolationStatement;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +33,7 @@ class LoadViolationAuditWithRelations
             );
 
         $violationsData = $violations
-            ->map(fn ($violation): ViolationData => ViolationData::fromModel($violation, $referenceImages))
+            ->map(fn (Violation $violation): ViolationData => ViolationData::fromModel($violation, $referenceImages))
             ->values()
             ->all();
 
@@ -39,7 +41,7 @@ class LoadViolationAuditWithRelations
             ->with('user:id,name')
             ->latest()
             ->get()
-            ->map(fn ($comment): AuditCommentData => AuditCommentData::fromModel($comment))
+            ->map(fn (AuditComment $comment): AuditCommentData => AuditCommentData::fromModel($comment))
             ->values()
             ->all();
 

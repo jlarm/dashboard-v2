@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Tenant\Audits\Actions;
 
 use App\Models\Dealer\Audit\Contracts\ViolationAudit;
+use App\Models\Dealer\Violation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
@@ -18,7 +19,7 @@ class UpdateViolationAudit
         $audit->update(['date' => $data['date']]);
 
         foreach ($data['violations'] as $violationData) {
-            /** @var \App\Models\Dealer\Violation|null $violation */
+            /** @var Violation|null $violation */
             $violation = $audit->violations()->whereKey($violationData['id'])->first();
             if ($violation === null) {
                 continue;
@@ -56,7 +57,7 @@ class UpdateViolationAudit
         }
     }
 
-    private function nextEmptyPhotoSlot(\App\Models\Dealer\Violation $violation): ?int
+    private function nextEmptyPhotoSlot(Violation $violation): ?int
     {
         foreach ([0, 1, 2] as $position) {
             if ($violation->getMedia('violation_files_'.$position)->isEmpty()) {

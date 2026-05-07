@@ -7,6 +7,7 @@ use App\Models\ComplianceScoreSnapshot;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\RemediationSetting;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 use Inertia\Testing\AssertableInertia;
@@ -20,9 +21,9 @@ it('passes a compliance prop with score, delta, pillars, and caption to the dash
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page) => $page
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
             ->component('tenant/Dashboard')
-            ->has('compliance', fn (AssertableInertia $compliance) => $compliance
+            ->has('compliance', fn (AssertableInertia $compliance): AssertableInertia => $compliance
                 ->has('score')
                 ->has('previous_score')
                 ->has('delta')
@@ -30,25 +31,25 @@ it('passes a compliance prop with score, delta, pillars, and caption to the dash
                 ->has('computed_at')
                 ->has('caption')
             )
-            ->has('overdue_remediations', fn (AssertableInertia $overdue) => $overdue
+            ->has('overdue_remediations', fn (AssertableInertia $overdue): AssertableInertia => $overdue
                 ->has('count')
                 ->has('high_severity_count')
                 ->has('previous_count')
                 ->has('delta_pct')
             )
-            ->has('expired_training', fn (AssertableInertia $training) => $training
+            ->has('expired_training', fn (AssertableInertia $training): AssertableInertia => $training
                 ->has('count')
                 ->has('expiring_soon_count')
                 ->has('previous_count')
                 ->has('delta_pct')
             )
             ->has('critical_vulnerabilities')
-            ->has('violations_overview', fn (AssertableInertia $overview) => $overview
+            ->has('violations_overview', fn (AssertableInertia $overview): AssertableInertia => $overview
                 ->has('monthly', 6)
                 ->has('quarterly', 6)
                 ->has('yearly', 6)
             )
-            ->has('audit_tracker', 1, fn (AssertableInertia $row) => $row
+            ->has('audit_tracker', 1, fn (AssertableInertia $row): AssertableInertia => $row
                 ->has('type_key')
                 ->has('type_label')
                 ->has('last_audit_date')
@@ -67,7 +68,7 @@ it('passes overdue_remediations as null when no scoped store has an active Remed
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page) => $page
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
             ->where('overdue_remediations', null)
         );
 });
@@ -80,7 +81,7 @@ it('passes overdue_remediations as null when the RemediationSetting exists but i
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page) => $page
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
             ->where('overdue_remediations', null)
         );
 });
@@ -92,7 +93,7 @@ it('passes audit_tracker as null when no scoped store has a completed audit of a
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page) => $page
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
             ->where('audit_tracker', null)
         );
 });
@@ -104,7 +105,7 @@ it('passes critical_vulnerabilities as null when no scoped store has a Cyrisma i
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page) => $page
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
             ->where('critical_vulnerabilities', null)
         );
 });
@@ -125,7 +126,7 @@ it('reads the expired_training previous_count from the per-store snapshot when o
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page) => $page
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
             ->where('expired_training.previous_count', 5)
         );
 });
@@ -148,7 +149,7 @@ it('computes overdue_remediations.delta_pct from the prior month snapshot', func
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page) => $page
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
             ->where('overdue_remediations.previous_count', 10)
             ->where('overdue_remediations.count', 0)
             ->where('overdue_remediations.delta_pct', -100)
@@ -162,7 +163,7 @@ it('returns an empty compliance payload when no stores are scoped', function ():
     $this->actingAs($this->consultant)
         ->get(route('dealer.dashboard'))
         ->assertOk()
-        ->assertInertia(fn (AssertableInertia $page) => $page
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
             ->component('tenant/Dashboard')
             ->where('compliance.score', null)
             ->where('compliance.pillars', [])
@@ -180,7 +181,7 @@ function seedActiveRemediationSetting(Store $store, bool $active = true): Remedi
     ]);
 }
 
-function seedCompletedAudit(Store $store, App\Models\User $user): OshaViolationAudit
+function seedCompletedAudit(Store $store, User $user): OshaViolationAudit
 {
     return OshaViolationAudit::query()->create([
         'uuid' => (string) Str::uuid(),

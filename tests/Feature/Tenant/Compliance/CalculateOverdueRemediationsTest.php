@@ -8,6 +8,7 @@ use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\Remediation;
 use App\Models\RemediationSetting;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 
@@ -29,7 +30,7 @@ it('returns zero counts when the store has no remediation setting', function ():
 
     createAudit($this->store, $this->consultant, completedDaysAgo: 30, severities: [9, 5]);
 
-    $result = (new CalculateOverdueRemediations())->handle($this->store, CarbonImmutable::now());
+    $result = new CalculateOverdueRemediations()->handle($this->store, CarbonImmutable::now());
 
     expect($result)->toBe(['count' => 0, 'high_severity_count' => 0]);
 });
@@ -40,7 +41,7 @@ it('returns zero counts when the remediation setting exists but is inactive', fu
 
     createAudit($this->store, $this->consultant, completedDaysAgo: 30, severities: [9, 5]);
 
-    $result = (new CalculateOverdueRemediations())->handle($this->store, CarbonImmutable::now());
+    $result = new CalculateOverdueRemediations()->handle($this->store, CarbonImmutable::now());
 
     expect($result)->toBe(['count' => 0, 'high_severity_count' => 0]);
 });
@@ -49,7 +50,7 @@ it('does not count audits whose grace window has not yet passed', function (): v
     // Frequency is WEEKLY (7 days). Audit completed 5 days ago is still inside the window.
     createAudit($this->store, $this->consultant, completedDaysAgo: 5, severities: [9, 9]);
 
-    $result = (new CalculateOverdueRemediations())->handle($this->store, CarbonImmutable::now());
+    $result = new CalculateOverdueRemediations()->handle($this->store, CarbonImmutable::now());
 
     expect($result)->toBe(['count' => 0, 'high_severity_count' => 0]);
 });
@@ -57,7 +58,7 @@ it('does not count audits whose grace window has not yet passed', function (): v
 it('counts violations on audits past the grace window', function (): void {
     createAudit($this->store, $this->consultant, completedDaysAgo: 30, severities: [9, 5, 8]);
 
-    $result = (new CalculateOverdueRemediations())->handle($this->store, CarbonImmutable::now());
+    $result = new CalculateOverdueRemediations()->handle($this->store, CarbonImmutable::now());
 
     expect($result)->toBe(['count' => 3, 'high_severity_count' => 2]);
 });
@@ -65,7 +66,7 @@ it('counts violations on audits past the grace window', function (): void {
 it('treats severity 8 as high but severity 7 as not high', function (): void {
     createAudit($this->store, $this->consultant, completedDaysAgo: 30, severities: [7, 8]);
 
-    $result = (new CalculateOverdueRemediations())->handle($this->store, CarbonImmutable::now());
+    $result = new CalculateOverdueRemediations()->handle($this->store, CarbonImmutable::now());
 
     expect($result)->toBe(['count' => 2, 'high_severity_count' => 1]);
 });
@@ -85,7 +86,7 @@ it('skips violations whose remediation is already completed', function (): void 
         ]);
     });
 
-    $result = (new CalculateOverdueRemediations())->handle($this->store, CarbonImmutable::now());
+    $result = new CalculateOverdueRemediations()->handle($this->store, CarbonImmutable::now());
 
     expect($result)->toBe(['count' => 1, 'high_severity_count' => 1]);
 });
@@ -94,7 +95,7 @@ it('skips audits whose remediation pdf has been generated', function (): void {
     $audit = createAudit($this->store, $this->consultant, completedDaysAgo: 30, severities: [9, 9]);
     $audit->update(['remediation_pdf_path' => 'remediations/done.pdf']);
 
-    $result = (new CalculateOverdueRemediations())->handle($this->store, CarbonImmutable::now());
+    $result = new CalculateOverdueRemediations()->handle($this->store, CarbonImmutable::now());
 
     expect($result)->toBe(['count' => 0, 'high_severity_count' => 0]);
 });
@@ -102,7 +103,7 @@ it('skips audits whose remediation pdf has been generated', function (): void {
 /**
  * @param  list<int>  $severities
  */
-function createAudit(Store $store, App\Models\User $user, int $completedDaysAgo, array $severities): OshaViolationAudit
+function createAudit(Store $store, User $user, int $completedDaysAgo, array $severities): OshaViolationAudit
 {
     $completedAt = CarbonImmutable::now()->subDays($completedDaysAgo);
 

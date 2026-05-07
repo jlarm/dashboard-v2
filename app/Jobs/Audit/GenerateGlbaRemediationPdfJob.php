@@ -93,7 +93,7 @@ class GenerateGlbaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
         ])
             ->driver('browsershot')
             ->format(Format::A4)
-            ->withBrowsershot(static fn (Browsershot $browsershot) => $browsershot
+            ->withBrowsershot(static fn (Browsershot $browsershot): Browsershot => $browsershot
                 ->showBackground()
                 ->scale(0.75)
                 ->waitUntilNetworkIdle()

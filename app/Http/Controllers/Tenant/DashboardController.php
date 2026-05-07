@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\Compliance\Data\AuditTrackerRowData;
+use App\Domain\Tenant\Compliance\Data\ComplianceScoreData;
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
 use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
 use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
@@ -24,6 +25,7 @@ use App\Models\User;
 use App\Services\ComplianceSummaryPdfService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -145,7 +147,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * @param  class-string<\Illuminate\Database\Eloquent\Model>  $auditClass
+     * @param  class-string<Model>  $auditClass
      * @param  list<int>  $storeIds
      */
     private function streamViolationAuditPdf(string $auditClass, array $storeIds): StreamedResponse
@@ -259,7 +261,7 @@ class DashboardController extends Controller
      * had its weights normalized internally, so an unweighted average is
      * correct for the rollup.
      *
-     * @param  Collection<int, array{store: Store, score: \App\Domain\Tenant\Compliance\Data\ComplianceScoreData}>  $scores
+     * @param  Collection<int, array{store: Store, score: ComplianceScoreData}>  $scores
      */
     private function aggregate(Collection $scores): ?float
     {
@@ -271,7 +273,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * @param  Collection<int, array{store: Store, score: \App\Domain\Tenant\Compliance\Data\ComplianceScoreData}>  $scores
+     * @param  Collection<int, array{store: Store, score: ComplianceScoreData}>  $scores
      * @return list<array<string, mixed>>
      */
     private function aggregatedPillars(Collection $scores): array
@@ -328,7 +330,7 @@ class DashboardController extends Controller
         $rows = ComplianceScoreSnapshot::query()
             ->whereIn('store_id', $storeIds)
             ->whereDate('scored_on', '<=', $cutoff)
-            ->orderByDesc('scored_on')
+            ->latest('scored_on')
             ->get(['store_id', 'scored_on', 'score'])
             ->groupBy('store_id')
             ->map(static fn ($group) => $group->first()->score);
@@ -413,10 +415,10 @@ class DashboardController extends Controller
             ->whereIn('store_id', $storeIds)
             ->whereNotNull('overdue_count')
             ->whereDate('scored_on', '<=', $cutoff)
-            ->orderByDesc('scored_on')
+            ->latest('scored_on')
             ->get(['store_id', 'scored_on', 'overdue_count'])
             ->groupBy('store_id')
-            ->map(static fn ($group) => (int) $group->first()->overdue_count);
+            ->map(static fn ($group): int => (int) $group->first()->overdue_count);
 
         if ($rows->isEmpty()) {
             return null;
@@ -484,7 +486,7 @@ class DashboardController extends Controller
             ->where('store_id', $storeId)
             ->whereNotNull('expired_training_count')
             ->whereDate('scored_on', '<=', $cutoff)
-            ->orderByDesc('scored_on')
+            ->latest('scored_on')
             ->first(['expired_training_count']);
 
         return $row === null ? null : (int) $row->expired_training_count;
@@ -497,7 +499,7 @@ class DashboardController extends Controller
         $row = TenantComplianceSnapshot::query()
             ->whereNotNull('expired_training_count')
             ->whereDate('scored_on', '<=', $cutoff)
-            ->orderByDesc('scored_on')
+            ->latest('scored_on')
             ->first(['expired_training_count']);
 
         return $row === null ? null : (int) $row->expired_training_count;

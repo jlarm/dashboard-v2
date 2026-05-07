@@ -95,7 +95,7 @@ class GetCriticalVulnerabilities
         }
 
         return new CriticalVulnerabilitiesData(
-            critical_count: (int) ($dashboard->issueCounts->critical ?? 0),
+            critical_count: $dashboard->issueCounts->critical ?? 0,
             days_since_last_scan: $this->daysSinceLastScan($dashboard, $now),
         );
     }

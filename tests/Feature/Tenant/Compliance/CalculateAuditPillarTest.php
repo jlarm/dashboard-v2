@@ -7,6 +7,7 @@ use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 
@@ -24,7 +25,7 @@ it('scores a recent A-grade audit with no outstanding remediations at 100', func
     BodyShopViolationAuditFactoryHelper($store, $this->consultant);
     GlbaViolationAuditFactoryHelper($store, $this->consultant);
 
-    $pillar = (new CalculateAuditPillar())->handle($store, CarbonImmutable::now());
+    $pillar = new CalculateAuditPillar()->handle($store, CarbonImmutable::now());
 
     expect($pillar->applicable)->toBeTrue();
     expect($pillar->score)->toBe(100.0);
@@ -55,7 +56,7 @@ it('penalizes outstanding remediations weighted by severity', function (): void 
     BodyShopViolationAuditFactoryHelper($store, $this->consultant);
     GlbaViolationAuditFactoryHelper($store, $this->consultant);
 
-    $pillar = (new CalculateAuditPillar())->handle($store, CarbonImmutable::now());
+    $pillar = new CalculateAuditPillar()->handle($store, CarbonImmutable::now());
 
     // OSHA pillar: 100 - (3*4 + 2*4) = 80; averaged with two A-100 audits → (80+100+100)/3 ≈ 93.3
     expect($pillar->breakdown['types']['osha']['outstanding_remediations'])->toBe(2);
@@ -77,7 +78,7 @@ it('caps a stale audit at the staleness fallback', function (): void {
     BodyShopViolationAuditFactoryHelper($store, $this->consultant);
     GlbaViolationAuditFactoryHelper($store, $this->consultant);
 
-    $pillar = (new CalculateAuditPillar())->handle($store, CarbonImmutable::now());
+    $pillar = new CalculateAuditPillar()->handle($store, CarbonImmutable::now());
 
     expect($pillar->breakdown['types']['osha']['stale'])->toBeTrue();
     expect($pillar->breakdown['types']['osha']['score'])->toBe(50.0);
@@ -86,7 +87,7 @@ it('caps a stale audit at the staleness fallback', function (): void {
 it('treats a store with no audits as fully stale', function (): void {
     $store = Store::query()->firstOrFail();
 
-    $pillar = (new CalculateAuditPillar())->handle($store, CarbonImmutable::now());
+    $pillar = new CalculateAuditPillar()->handle($store, CarbonImmutable::now());
 
     expect($pillar->score)->toBe(50.0);
     foreach (['osha', 'body_shop', 'glba'] as $key) {
@@ -94,7 +95,7 @@ it('treats a store with no audits as fully stale', function (): void {
     }
 });
 
-function BodyShopViolationAuditFactoryHelper(Store $store, App\Models\User $user): void
+function BodyShopViolationAuditFactoryHelper(Store $store, User $user): void
 {
     BodyShopViolationAudit::query()->create([
         'uuid' => (string) Str::uuid(),
@@ -105,7 +106,7 @@ function BodyShopViolationAuditFactoryHelper(Store $store, App\Models\User $user
     ]);
 }
 
-function GlbaViolationAuditFactoryHelper(Store $store, App\Models\User $user): void
+function GlbaViolationAuditFactoryHelper(Store $store, User $user): void
 {
     GlbaViolationAudit::query()->create([
         'uuid' => (string) Str::uuid(),

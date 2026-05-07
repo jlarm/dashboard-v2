@@ -43,7 +43,7 @@ describe('GET manuals/osha/create', function (): void {
             ->assertInertia(fn ($page) => $page
                 ->component('tenant/manuals/osha/Create')
                 ->where('defaults.store_id', $this->store->id)
-                ->where('policyHtml', fn (string $html) => str_contains($html, 'Emergency Action Plan')));
+                ->where('policyHtml', fn (string $html): bool => str_contains($html, 'Emergency Action Plan')));
     });
 });
 

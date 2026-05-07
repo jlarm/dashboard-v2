@@ -121,7 +121,7 @@ class GetAuditTracker
             ->whereIn('store_id', $storeIds)
             ->whereNotNull('rating')
             ->whereNotNull('audit_date')
-            ->orderByDesc('audit_date')
+            ->latest('audit_date')
             ->orderByDesc('id')
             ->limit(2)
             ->get(['id', 'audit_date', 'rating']);
@@ -240,7 +240,7 @@ class GetAuditTracker
      */
     private function resolveStatus(?string $grade, ?CarbonImmutable $auditDate, CarbonImmutable $now): string
     {
-        if ($auditDate === null || $auditDate->lt($now->subMonths(self::STALE_AFTER_MONTHS))) {
+        if (! $auditDate instanceof CarbonImmutable || $auditDate->lt($now->subMonths(self::STALE_AFTER_MONTHS))) {
             return 'overdue';
         }
 

@@ -59,9 +59,9 @@ describe('GET manuals/cms/create', function (): void {
                 ->where('defaults.store_id', $this->store->id)
                 ->where('defaults.qualified_individual_name', 'CMS QI User')
                 ->where('defaults.standard_dpp_rate', '3.50')
-                ->where('introHtml', fn (string $html) => str_contains($html, 'Compliance Management System Program'))
-                ->where('dppHtml', fn (string $html) => str_contains($html, 'Dealer Participation Program'))
-                ->where('formExampleHtml', fn (string $html) => str_contains($html, 'Acknowledgement')));
+                ->where('introHtml', fn (string $html): bool => str_contains($html, 'Compliance Management System Program'))
+                ->where('dppHtml', fn (string $html): bool => str_contains($html, 'Dealer Participation Program'))
+                ->where('formExampleHtml', fn (string $html): bool => str_contains($html, 'Acknowledgement')));
     });
 });
 

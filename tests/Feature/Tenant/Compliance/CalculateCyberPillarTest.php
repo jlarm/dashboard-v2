@@ -29,7 +29,6 @@ it('scores 100 with no issues and a recent scan', function (): void {
     mockScanDashboard(
         hasScanData: true,
         issueCounts: new IssueCountsData(0, 0, 0, 0, 0, 'A'),
-        lastScanDate: 'Apr 25, 2026',
     );
 
     $pillar = resolve(CalculateCyberPillar::class)->handle($store, $now);
@@ -45,7 +44,6 @@ it('penalizes critical and high CVEs with the configured weights', function (): 
     mockScanDashboard(
         hasScanData: true,
         issueCounts: new IssueCountsData(10, 2, 1, 5, 2, 'C'),
-        lastScanDate: 'Apr 25, 2026',
     );
 
     $pillar = resolve(CalculateCyberPillar::class)->handle($store, $now);
@@ -62,7 +60,6 @@ it('caps the issue penalty at 60 points', function (): void {
     mockScanDashboard(
         hasScanData: true,
         issueCounts: new IssueCountsData(100, 50, 0, 0, 0, 'F'),
-        lastScanDate: 'Apr 25, 2026',
     );
 
     $pillar = resolve(CalculateCyberPillar::class)->handle($store, $now);
@@ -77,8 +74,7 @@ it('penalizes staleness when the last scan is older than 30 days', function (): 
 
     mockScanDashboard(
         hasScanData: true,
-        issueCounts: new IssueCountsData(0, 0, 0, 0, 0, 'A'),
-        lastScanDate: 'Mar 1, 2026', // 61 days before now → 31 days over threshold → ~31 pts (capped at 30)
+        issueCounts: new IssueCountsData(0, 0, 0, 0, 0, 'A'), // 61 days before now → 31 days over threshold → ~31 pts (capped at 30)
     );
 
     $pillar = resolve(CalculateCyberPillar::class)->handle($store, $now);
@@ -94,7 +90,6 @@ it('returns a low baseline when Cyrisma is configured but has no scan data', fun
     mockScanDashboard(
         hasScanData: false,
         issueCounts: IssueCountsData::empty(),
-        lastScanDate: null,
     );
 
     $pillar = resolve(CalculateCyberPillar::class)->handle($store, CarbonImmutable::now());

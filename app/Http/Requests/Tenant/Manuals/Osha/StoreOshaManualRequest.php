@@ -6,6 +6,7 @@ namespace App\Http\Requests\Tenant\Manuals\Osha;
 
 use App\Domain\Tenant\Manuals\Osha\Data\OshaManualFormData;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class StoreOshaManualRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class StoreOshaManualRequest extends FormRequest
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function messages(): array
     {
         return [

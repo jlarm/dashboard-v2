@@ -15,14 +15,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class CalculateDocsPillar
 {
-    private const STALE_AFTER_MONTHS = 12;
+    private const int STALE_AFTER_MONTHS = 12;
 
-    private const STALE_CONTRIBUTION = 0.5;
+    private const float STALE_CONTRIBUTION = 0.5;
 
     /**
      * @var array<string, array{label: string, class: class-string<Model>, signature_field: string}>
      */
-    private const MANUAL_TYPES = [
+    private const array MANUAL_TYPES = [
         'isp' => ['label' => 'ISP', 'class' => Isp::class, 'signature_field' => 'signature'],
         'osha' => ['label' => 'OSHA', 'class' => Osha::class, 'signature_field' => 'signature'],
         'red_flag' => ['label' => 'Red Flag', 'class' => RedFlag::class, 'signature_field' => 'signature'],
@@ -81,7 +81,7 @@ class CalculateDocsPillar
     {
         return $modelClass::query()
             ->where('store_id', $storeId)
-            ->orderByDesc('updated_at')
+            ->latest('updated_at')
             ->first();
     }
 }

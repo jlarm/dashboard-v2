@@ -6,6 +6,7 @@ namespace App\Http\Requests\Tenant\Manuals\Isp;
 
 use App\Domain\Tenant\Manuals\Isp\Data\IspManualFormData;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class StoreIspManualRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class StoreIspManualRequest extends FormRequest
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function messages(): array
     {
         return [

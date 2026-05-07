@@ -12,7 +12,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 
 it('returns four rows with overdue status when no stores are scoped', function (): void {
-    $rows = (new GetAuditTracker())->handleForStores([]);
+    $rows = new GetAuditTracker()->handleForStores([]);
 
     expect($rows)->toHaveCount(4);
     expect(collect($rows)->pluck('type_key')->all())
@@ -39,7 +39,7 @@ it('flags has_report when the latest violation audit has a pdf_path', function (
         'pdf_path' => 'audits/osha/store-1.pdf',
     ]);
 
-    $row = collect((new GetAuditTracker())->handleForStores([$store->id], $now))
+    $row = collect(new GetAuditTracker()->handleForStores([$store->id], $now))
         ->firstWhere('type_key', 'osha');
 
     expect($row->has_report)->toBeTrue();
@@ -58,7 +58,7 @@ it('does not flag has_report when the latest violation audit lacks a pdf_path', 
         'pdf_path' => null,
     ]);
 
-    $row = collect((new GetAuditTracker())->handleForStores([$store->id], $now))
+    $row = collect(new GetAuditTracker()->handleForStores([$store->id], $now))
         ->firstWhere('type_key', 'osha');
 
     expect($row->has_report)->toBeFalse();
@@ -76,7 +76,7 @@ it('returns the latest audit per type with grade, formatted date, and passing st
         'grade' => 'A',
     ]);
 
-    $rows = (new GetAuditTracker())->handleForStores([$store->id], $now);
+    $rows = new GetAuditTracker()->handleForStores([$store->id], $now);
 
     $osha = collect($rows)->firstWhere('type_key', 'osha');
     expect($osha->grade)->toBe('A');
@@ -104,7 +104,7 @@ it('computes a delta_label vs the prior completed audit', function (): void {
         'grade' => 'A',
     ]);
 
-    $osha = collect((new GetAuditTracker())->handleForStores([$store->id], $now))
+    $osha = collect(new GetAuditTracker()->handleForStores([$store->id], $now))
         ->firstWhere('type_key', 'osha');
 
     expect($osha->grade)->toBe('A');
@@ -125,7 +125,7 @@ it('reports No change when grades match', function (): void {
         ]);
     }
 
-    $row = collect((new GetAuditTracker())->handleForStores([$store->id], $now))
+    $row = collect(new GetAuditTracker()->handleForStores([$store->id], $now))
         ->firstWhere('type_key', 'body_shop');
 
     expect($row->delta_label)->toBe('No change');
@@ -143,7 +143,7 @@ it('marks an audit older than 12 months as overdue regardless of grade', functio
         'grade' => 'A',
     ]);
 
-    $glba = collect((new GetAuditTracker())->handleForStores([$store->id], $now))
+    $glba = collect(new GetAuditTracker()->handleForStores([$store->id], $now))
         ->firstWhere('type_key', 'glba');
 
     expect($glba->status)->toBe('overdue');
@@ -159,7 +159,7 @@ it('grades the deal_jacket row from the latest IndividualAudit rating', function
         'rating' => 95.0,
     ]);
 
-    $row = collect((new GetAuditTracker())->handleForStores([$store->id], $now))
+    $row = collect(new GetAuditTracker()->handleForStores([$store->id], $now))
         ->firstWhere('type_key', 'deal_jacket');
 
     expect($row->grade)->toBe('A');
@@ -183,7 +183,7 @@ it('computes a deal_jacket delta_label from successive ratings', function (): vo
         'rating' => 92.0, // Grade A
     ]);
 
-    $row = collect((new GetAuditTracker())->handleForStores([$store->id], $now))
+    $row = collect(new GetAuditTracker()->handleForStores([$store->id], $now))
         ->firstWhere('type_key', 'deal_jacket');
 
     expect($row->grade)->toBe('A');
@@ -210,7 +210,7 @@ it('maps grade C to action_required and grade D to overdue', function (): void {
         'grade' => 'D',
     ]);
 
-    $rows = collect((new GetAuditTracker())->handleForStores([$store->id], $now));
+    $rows = collect(new GetAuditTracker()->handleForStores([$store->id], $now));
 
     expect($rows->firstWhere('type_key', 'osha')->status)->toBe('action_required');
     expect($rows->firstWhere('type_key', 'body_shop')->status)->toBe('overdue');

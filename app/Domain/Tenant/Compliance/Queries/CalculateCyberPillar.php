@@ -15,23 +15,23 @@ use Throwable;
 
 class CalculateCyberPillar
 {
-    private const CRITICAL_PENALTY = 8.0;
+    private const float CRITICAL_PENALTY = 8.0;
 
-    private const HIGH_PENALTY = 3.0;
+    private const float HIGH_PENALTY = 3.0;
 
-    private const MEDIUM_PENALTY = 1.0;
+    private const float MEDIUM_PENALTY = 1.0;
 
-    private const ISSUE_PENALTY_CAP = 60.0;
+    private const float ISSUE_PENALTY_CAP = 60.0;
 
-    private const FRESH_SCAN_DAYS = 30;
+    private const int FRESH_SCAN_DAYS = 30;
 
-    private const STALENESS_PENALTY_PER_WEEK = 7.0;
+    private const float STALENESS_PENALTY_PER_WEEK = 7.0;
 
-    private const STALENESS_PENALTY_CAP = 30.0;
+    private const float STALENESS_PENALTY_CAP = 30.0;
 
-    private const NO_SCAN_DATA_SCORE = 40.0;
+    private const float NO_SCAN_DATA_SCORE = 40.0;
 
-    private const DEGRADED_SCORE = 50.0;
+    private const float DEGRADED_SCORE = 50.0;
 
     public function __construct(
         private readonly GetScanDashboard $getScanDashboard,
@@ -108,7 +108,7 @@ class CalculateCyberPillar
             + ($counts->high ?? 0) * self::HIGH_PENALTY
             + ($counts->medium ?? 0) * self::MEDIUM_PENALTY;
 
-        return min(self::ISSUE_PENALTY_CAP, (float) $penalty);
+        return min(self::ISSUE_PENALTY_CAP, $penalty);
     }
 
     private function stalenessPenalty(ScanDashboardData $dashboard, CarbonImmutable $now): float

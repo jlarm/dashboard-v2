@@ -6,7 +6,7 @@ namespace App\Domain\Tenant\Vendor\Data;
 
 use App\Models\Dealer\Vendor;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 /**
  * @implements Arrayable<string, mixed>
@@ -46,7 +46,7 @@ final readonly class VendorDetailData implements Arrayable
             createdAt: $vendor->created_at?->toIso8601String(),
             hasLegacySignature: $vendor->signature !== null,
             isLegacy: $vendor->created_at !== null
-                && $vendor->created_at->lessThan(Carbon::parse(self::LEGACY_CUTOFF)),
+                && $vendor->created_at->lessThan(Date::parse(self::LEGACY_CUTOFF)),
         );
     }
 

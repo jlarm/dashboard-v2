@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 
 class CalculateTrainingPillar
 {
-    private const EXPIRED_PENALTY_CAP = 25.0;
+    private const float EXPIRED_PENALTY_CAP = 25.0;
 
     public function __construct(
         private readonly TrainingComplianceService $trainingComplianceService,

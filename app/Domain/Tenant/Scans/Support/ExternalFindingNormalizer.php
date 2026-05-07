@@ -35,17 +35,17 @@ final class ExternalFindingNormalizer
                     ->map(static fn (array $entry): array => self::normalize($entry, 'flaw')->toArray()),
             )
             ->sort(static function (array $a, array $b): int {
-                $byRisk = self::severityWeight((string) $b['risk_level']) <=> self::severityWeight((string) $a['risk_level']);
+                $byRisk = self::severityWeight($b['risk_level']) <=> self::severityWeight($a['risk_level']);
                 if ($byRisk !== 0) {
                     return $byRisk;
                 }
 
-                $byAffected = ((int) $b['affected_urls']) <=> ((int) $a['affected_urls']);
+                $byAffected = ($b['affected_urls']) <=> ($a['affected_urls']);
                 if ($byAffected !== 0) {
                     return $byAffected;
                 }
 
-                return strcmp((string) $a['name'], (string) $b['name']);
+                return strcmp($a['name'], $b['name']);
             })
             ->values()
             ->all();

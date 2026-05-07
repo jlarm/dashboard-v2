@@ -267,7 +267,7 @@ class ViolationAuditController extends Controller
 
         return response()->json(
             $search->handle($type, $query)
-                ->map(static fn ($item) => $item->toArray())
+                ->map(static fn ($item): array => $item->toArray())
                 ->all(),
         );
     }

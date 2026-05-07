@@ -10,6 +10,7 @@ use App\Models\Dealer\Store;
 use App\Models\ViolationStatement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Request;
 use Spatie\Browsershot\Browsershot;
 use Spatie\LaravelPdf\Enums\Format;
 use Spatie\LaravelPdf\PdfBuilder;
@@ -44,7 +45,7 @@ class StreamAuditPdf
             ])
             ->format(Format::A4)
             ->name($filename)
-            ->withBrowsershot(static fn (Browsershot $browsershot) => $browsershot
+            ->withBrowsershot(static fn (Browsershot $browsershot): Browsershot => $browsershot
                 ->setNodeModulePath(base_path('node_modules'))
                 ->setNodeBinary($nodeBinary)
                 ->showBackground()
@@ -73,7 +74,7 @@ class StreamAuditPdf
             }
         }
 
-        $home = $_SERVER['HOME'] ?? getenv('HOME') ?? '';
+        $home = Request::server('HOME') ?? getenv('HOME') ?? '';
         if ($home !== '') {
             $herdNvm = $home.'/Library/Application Support/Herd/config/nvm/versions/node';
             if (is_dir($herdNvm)) {

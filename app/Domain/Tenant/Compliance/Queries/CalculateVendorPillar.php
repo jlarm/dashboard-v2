@@ -13,9 +13,9 @@ use Illuminate\Support\Collection;
 
 class CalculateVendorPillar
 {
-    private const STALE_AFTER_MONTHS = 12;
+    private const int STALE_AFTER_MONTHS = 12;
 
-    private const STALE_CONTRIBUTION = 0.5;
+    private const float STALE_CONTRIBUTION = 0.5;
 
     public function handle(Store $store, ?CarbonImmutable $now = null): PillarScoreData
     {

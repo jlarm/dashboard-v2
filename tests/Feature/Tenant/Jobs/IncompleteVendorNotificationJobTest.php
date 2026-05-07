@@ -7,6 +7,7 @@ use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorEmailLog;
 use App\Models\Dealer\VendorForm;
 use App\Notifications\VendorFormNotification;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\Mailer\Exception\TransportException;
 
@@ -27,7 +28,7 @@ beforeEach(function (): void {
 it('locks duplicate dispatches per vendor form within the retry window', function (): void {
     $job = new IncompleteVendorNotificationJob($this->vendorForm);
 
-    expect($job)->toBeInstanceOf(Illuminate\Contracts\Queue\ShouldBeUnique::class);
+    expect($job)->toBeInstanceOf(ShouldBeUnique::class);
     expect($job->uniqueId())->toBe((string) $this->vendorForm->id);
     expect($job->uniqueFor())->toBeGreaterThan(0);
 });
@@ -37,7 +38,7 @@ it('skips sending when an email is invalid', function (): void {
 
     $this->vendorForm->update(['email' => 'not-an-email']);
 
-    (new IncompleteVendorNotificationJob($this->vendorForm))->handle();
+    new IncompleteVendorNotificationJob($this->vendorForm)->handle();
 
     Notification::assertNothingSent();
 });
@@ -53,7 +54,7 @@ it('skips sending when a successful email log already exists within the retry wi
         'sent_at' => now()->subMinute(),
     ]);
 
-    (new IncompleteVendorNotificationJob($this->vendorForm))->handle();
+    new IncompleteVendorNotificationJob($this->vendorForm)->handle();
 
     Notification::assertNothingSent();
 });
@@ -69,7 +70,7 @@ it('still sends when prior log entry is older than the retry window', function (
         'sent_at' => now()->subHour(),
     ]);
 
-    (new IncompleteVendorNotificationJob($this->vendorForm))->handle();
+    new IncompleteVendorNotificationJob($this->vendorForm)->handle();
 
     Notification::assertSentOnDemand(VendorFormNotification::class);
 });
@@ -79,7 +80,7 @@ it('records a failed vendor email log when the job fails', function (): void {
 
     $exception = new TransportException('Connection to "smtp.mailgun.org:587" has been closed unexpectedly.');
 
-    (new IncompleteVendorNotificationJob($this->vendorForm))->failed($exception);
+    new IncompleteVendorNotificationJob($this->vendorForm)->failed($exception);
 
     expect(VendorEmailLog::query()->count())->toBe(1);
 

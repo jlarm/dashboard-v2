@@ -99,7 +99,10 @@ class CalculateViolationsOverview
 
             foreach ($audits as $audit) {
                 $count = (int) ($audit->violations_count ?? 0);
-                if ($count === 0 || ! $audit->completed_date instanceof DateTimeInterface) {
+                if ($count === 0) {
+                    continue;
+                }
+                if (! $audit->completed_date instanceof DateTimeInterface) {
                     continue;
                 }
 

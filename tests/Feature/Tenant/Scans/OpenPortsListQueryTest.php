@@ -21,7 +21,7 @@ it('returns open ports normalized to the snake_case Inertia shape', function ():
             ['portNumber' => '80', 'portDescription' => 'HTTP', 'riskLevel' => 'High', 'machineCount' => 3],
         ]);
 
-    $result = app(GetOpenPortsList::class)->handle($this->store, null);
+    $result = resolve(GetOpenPortsList::class)->handle($this->store, null);
 
     expect($result)->toHaveCount(2);
     expect($result[0])->toMatchArray([
@@ -43,7 +43,7 @@ it('passes the asset type through to the Cyrisma service', function (): void {
             ['portNumber' => '445', 'portDescription' => 'Microsoft-DS', 'riskLevel' => 'Medium', 'machineCount' => 1],
         ]);
 
-    $result = app(GetOpenPortsList::class)->handle($this->store, 'internal');
+    $result = resolve(GetOpenPortsList::class)->handle($this->store, 'internal');
 
     expect($result)->toHaveCount(1);
     expect($result[0]['port_number'])->toBe('445');
@@ -54,7 +54,7 @@ it('returns an empty array when the service returns no ports', function (): void
     $mock->shouldReceive('forStore')->andReturn($mock);
     $mock->shouldReceive('getOpenPortsByAssetType')->andReturn([]);
 
-    $result = app(GetOpenPortsList::class)->handle($this->store, null);
+    $result = resolve(GetOpenPortsList::class)->handle($this->store, null);
 
     expect($result)->toBe([]);
 });
@@ -66,7 +66,7 @@ it('treats empty descriptions as null', function (): void {
         ['portNumber' => '12345', 'portDescription' => '', 'riskLevel' => 'Low', 'machineCount' => 1],
     ]);
 
-    $result = app(GetOpenPortsList::class)->handle($this->store, null);
+    $result = resolve(GetOpenPortsList::class)->handle($this->store, null);
 
     expect($result[0]['port_description'])->toBeNull();
 });

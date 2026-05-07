@@ -7,6 +7,7 @@ namespace App\Domain\Tenant\Document\Actions;
 use App\Domain\Tenant\Document\Data\CreateDealerDocData;
 use App\Models\Dealer\Store;
 use App\Models\DealerDoc;
+use Illuminate\Http\UploadedFile;
 use RuntimeException;
 
 class CreateDealerDoc
@@ -31,7 +32,7 @@ class CreateDealerDoc
      */
     private function storeFile(CreateDealerDocData $data): array
     {
-        if ($data->file === null) {
+        if (! $data->file instanceof UploadedFile) {
             return ['', ''];
         }
 
@@ -39,6 +40,6 @@ class CreateDealerDoc
 
         throw_unless($stored, RuntimeException::class, 'Unable to store the uploaded file.');
 
-        return [(string) $stored, (string) $data->file->getClientOriginalName()];
+        return [(string) $stored, $data->file->getClientOriginalName()];
     }
 }

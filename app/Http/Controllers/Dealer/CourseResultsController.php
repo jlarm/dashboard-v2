@@ -27,7 +27,7 @@ class CourseResultsController extends Controller
         return Response::streamDownload(function () use ($user): void {
             $handle = fopen('php://output', 'w');
 
-            fputcsv($handle, ['id', 'name', 'latest_result_id']);
+            fputcsv($handle, ['id', 'name', 'latest_result_id'], escape: '\\');
 
             Course::query()
                 ->where('department_id', $user->department_id)
@@ -41,7 +41,8 @@ class CourseResultsController extends Controller
                             $course->id,
                             $course->name,
                             $course->results->first()?->id,
-                        ]);
+                        ],
+                            escape: '\\');
                     }
                 });
 
