@@ -281,6 +281,8 @@ Route::name('dealer.')->middleware([
         Route::prefix('settings')->middleware(['auth'])->name('dealer.settings.')->group(function (): void {
             Route::patch('general/{store}', [StoreSettingsController::class, 'updateGeneral'])->name('general.update');
             Route::patch('managers/{store}', [StoreSettingsController::class, 'updateManagers'])->name('managers.update');
+            Route::patch('compliance/{store}', [StoreSettingsController::class, 'updateCompliance'])->name('compliance.update');
+            Route::get('compliance/{store}/download', [StoreSettingsController::class, 'downloadCompliance'])->name('compliance.download');
             Route::get('managers', [StoreSettingsController::class, 'index'])
                 ->defaults('section', 'managers')
                 ->name('managers');

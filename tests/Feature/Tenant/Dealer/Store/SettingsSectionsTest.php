@@ -196,3 +196,75 @@ describe('managers section update', function (): void {
             ->assertForbidden();
     });
 });
+
+describe('compliance section update', function (): void {
+    it('saves compliance fields including array entries', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->patch(route('dealer.dealer.settings.compliance.update', $store), [
+                'police_emergency_phone' => '911',
+                'fire_emergency_phone' => '911',
+                'firewall_company' => 'Acme Firewall',
+                'ip_addresses' => ['192.168.1.1', '10.0.0.1'],
+                'website_urls' => ['https://example.test'],
+                'service_contracts' => ['Warranty Plus'],
+                'tire_wheel' => ['T&W Premium'],
+                'other_fi' => ['Other Plan'],
+                'reinsurance' => true,
+                'standard_dpp_rate' => '12.5',
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('flash.success');
+
+        $store->refresh();
+        expect($store->police_emergency_phone)->toBe('911')
+            ->and($store->firewall_company)->toBe('Acme Firewall')
+            ->and($store->ip_addresses)->toBe(['192.168.1.1', '10.0.0.1'])
+            ->and($store->website_urls)->toBe(['https://example.test'])
+            ->and($store->service_contracts)->toBe(['Warranty Plus'])
+            ->and($store->tire_wheel)->toBe(['T&W Premium'])
+            ->and($store->other_fi)->toBe(['Other Plan'])
+            ->and((bool) $store->reinsurance)->toBeTrue()
+            ->and((float) $store->standard_dpp_rate)->toBe(12.5);
+    });
+
+    it('rejects an out-of-range standard_dpp_rate', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->patch(route('dealer.dealer.settings.compliance.update', $store), [
+                'reinsurance' => false,
+                'standard_dpp_rate' => '500',
+            ])
+            ->assertSessionHasErrors('standard_dpp_rate');
+    });
+
+    it('strips empty array entries from list fields', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->patch(route('dealer.dealer.settings.compliance.update', $store), [
+                'reinsurance' => false,
+                'ip_addresses' => ['', '10.0.0.1', ''],
+            ])
+            ->assertRedirect();
+
+        $store->refresh();
+        expect($store->ip_addresses)->toBe(['10.0.0.1']);
+    });
+
+    it('forbids managers from saving compliance info', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->manager->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->manager)
+            ->patch(route('dealer.dealer.settings.compliance.update', $store), [
+                'reinsurance' => false,
+            ])
+            ->assertForbidden();
+    });
+});

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings'
 */
 const index4b87d2df7e3aa853f6720faea796e36c = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index4b87d2df7e3aa853f6720faea796e36c.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings'
 */
 index4b87d2df7e3aa853f6720faea796e36c.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index4b87d2df7e3aa853f6720faea796e36c.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings'
 */
 index4b87d2df7e3aa853f6720faea796e36c.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index4b87d2df7e3aa853f6720faea796e36c.get = (options?: RouteQueryOptions): Route
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings'
 */
 index4b87d2df7e3aa853f6720faea796e36c.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index4b87d2df7e3aa853f6720faea796e36c.head = (options?: RouteQueryOptions): Rout
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings'
 */
 const index4b87d2df7e3aa853f6720faea796e36cForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const index4b87d2df7e3aa853f6720faea796e36cForm = (options?: RouteQueryOptions):
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings'
 */
 index4b87d2df7e3aa853f6720faea796e36cForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ index4b87d2df7e3aa853f6720faea796e36cForm.get = (options?: RouteQueryOptions): R
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings'
 */
 index4b87d2df7e3aa853f6720faea796e36cForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -81,7 +81,7 @@ index4b87d2df7e3aa853f6720faea796e36cForm.head = (options?: RouteQueryOptions): 
 index4b87d2df7e3aa853f6720faea796e36c.form = index4b87d2df7e3aa853f6720faea796e36cForm
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/managers'
 */
 const index54d96389de2c26c8aa47568d826bdc1a = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -96,7 +96,7 @@ index54d96389de2c26c8aa47568d826bdc1a.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/managers'
 */
 index54d96389de2c26c8aa47568d826bdc1a.url = (options?: RouteQueryOptions) => {
@@ -105,7 +105,7 @@ index54d96389de2c26c8aa47568d826bdc1a.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/managers'
 */
 index54d96389de2c26c8aa47568d826bdc1a.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -115,7 +115,7 @@ index54d96389de2c26c8aa47568d826bdc1a.get = (options?: RouteQueryOptions): Route
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/managers'
 */
 index54d96389de2c26c8aa47568d826bdc1a.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -125,7 +125,7 @@ index54d96389de2c26c8aa47568d826bdc1a.head = (options?: RouteQueryOptions): Rout
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/managers'
 */
 const index54d96389de2c26c8aa47568d826bdc1aForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -135,7 +135,7 @@ const index54d96389de2c26c8aa47568d826bdc1aForm = (options?: RouteQueryOptions):
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/managers'
 */
 index54d96389de2c26c8aa47568d826bdc1aForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -145,7 +145,7 @@ index54d96389de2c26c8aa47568d826bdc1aForm.get = (options?: RouteQueryOptions): R
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/managers'
 */
 index54d96389de2c26c8aa47568d826bdc1aForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -161,7 +161,7 @@ index54d96389de2c26c8aa47568d826bdc1aForm.head = (options?: RouteQueryOptions): 
 index54d96389de2c26c8aa47568d826bdc1a.form = index54d96389de2c26c8aa47568d826bdc1aForm
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/compliance'
 */
 const index07e4b1e71f7ca89ae125207430bfcbc5 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -176,7 +176,7 @@ index07e4b1e71f7ca89ae125207430bfcbc5.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/compliance'
 */
 index07e4b1e71f7ca89ae125207430bfcbc5.url = (options?: RouteQueryOptions) => {
@@ -185,7 +185,7 @@ index07e4b1e71f7ca89ae125207430bfcbc5.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/compliance'
 */
 index07e4b1e71f7ca89ae125207430bfcbc5.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -195,7 +195,7 @@ index07e4b1e71f7ca89ae125207430bfcbc5.get = (options?: RouteQueryOptions): Route
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/compliance'
 */
 index07e4b1e71f7ca89ae125207430bfcbc5.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -205,7 +205,7 @@ index07e4b1e71f7ca89ae125207430bfcbc5.head = (options?: RouteQueryOptions): Rout
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/compliance'
 */
 const index07e4b1e71f7ca89ae125207430bfcbc5Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -215,7 +215,7 @@ const index07e4b1e71f7ca89ae125207430bfcbc5Form = (options?: RouteQueryOptions):
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/compliance'
 */
 index07e4b1e71f7ca89ae125207430bfcbc5Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -225,7 +225,7 @@ index07e4b1e71f7ca89ae125207430bfcbc5Form.get = (options?: RouteQueryOptions): R
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/compliance'
 */
 index07e4b1e71f7ca89ae125207430bfcbc5Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -241,7 +241,7 @@ index07e4b1e71f7ca89ae125207430bfcbc5Form.head = (options?: RouteQueryOptions): 
 index07e4b1e71f7ca89ae125207430bfcbc5.form = index07e4b1e71f7ca89ae125207430bfcbc5Form
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/reset-courses'
 */
 const index9b68a843959ff354cb034cafed1e1a3b = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -256,7 +256,7 @@ index9b68a843959ff354cb034cafed1e1a3b.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/reset-courses'
 */
 index9b68a843959ff354cb034cafed1e1a3b.url = (options?: RouteQueryOptions) => {
@@ -265,7 +265,7 @@ index9b68a843959ff354cb034cafed1e1a3b.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/reset-courses'
 */
 index9b68a843959ff354cb034cafed1e1a3b.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -275,7 +275,7 @@ index9b68a843959ff354cb034cafed1e1a3b.get = (options?: RouteQueryOptions): Route
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/reset-courses'
 */
 index9b68a843959ff354cb034cafed1e1a3b.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -285,7 +285,7 @@ index9b68a843959ff354cb034cafed1e1a3b.head = (options?: RouteQueryOptions): Rout
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/reset-courses'
 */
 const index9b68a843959ff354cb034cafed1e1a3bForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -295,7 +295,7 @@ const index9b68a843959ff354cb034cafed1e1a3bForm = (options?: RouteQueryOptions):
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/reset-courses'
 */
 index9b68a843959ff354cb034cafed1e1a3bForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -305,7 +305,7 @@ index9b68a843959ff354cb034cafed1e1a3bForm.get = (options?: RouteQueryOptions): R
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:43
 * @route '/settings/reset-courses'
 */
 index9b68a843959ff354cb034cafed1e1a3bForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -329,7 +329,7 @@ export const index = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:69
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:76
 * @route '/settings/general/{store}'
 */
 export const updateGeneral = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -344,7 +344,7 @@ updateGeneral.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:69
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:76
 * @route '/settings/general/{store}'
 */
 updateGeneral.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -377,7 +377,7 @@ updateGeneral.url = (args: { store: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:69
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:76
 * @route '/settings/general/{store}'
 */
 updateGeneral.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -387,7 +387,7 @@ updateGeneral.patch = (args: { store: string | number | { id: string | number } 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:69
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:76
 * @route '/settings/general/{store}'
 */
 const updateGeneralForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -402,7 +402,7 @@ const updateGeneralForm = (args: { store: string | number | { id: string | numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:69
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:76
 * @route '/settings/general/{store}'
 */
 updateGeneralForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -419,7 +419,7 @@ updateGeneral.form = updateGeneralForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:87
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
 * @route '/settings/managers/{store}'
 */
 export const updateManagers = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -434,7 +434,7 @@ updateManagers.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:87
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
 * @route '/settings/managers/{store}'
 */
 updateManagers.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -467,7 +467,7 @@ updateManagers.url = (args: { store: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:87
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
 * @route '/settings/managers/{store}'
 */
 updateManagers.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -477,7 +477,7 @@ updateManagers.patch = (args: { store: string | number | { id: string | number }
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:87
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
 * @route '/settings/managers/{store}'
 */
 const updateManagersForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -492,7 +492,7 @@ const updateManagersForm = (args: { store: string | number | { id: string | numb
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:87
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
 * @route '/settings/managers/{store}'
 */
 updateManagersForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -507,6 +507,201 @@ updateManagersForm.patch = (args: { store: string | number | { id: string | numb
 
 updateManagers.form = updateManagersForm
 
-const StoreSettingsController = { index, updateGeneral, updateManagers }
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:112
+* @route '/settings/compliance/{store}'
+*/
+export const updateCompliance = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateCompliance.url(args, options),
+    method: 'patch',
+})
+
+updateCompliance.definition = {
+    methods: ["patch"],
+    url: '/settings/compliance/{store}',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:112
+* @route '/settings/compliance/{store}'
+*/
+updateCompliance.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { store: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { store: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            store: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        store: typeof args.store === 'object'
+        ? args.store.id
+        : args.store,
+    }
+
+    return updateCompliance.definition.url
+            .replace('{store}', parsedArgs.store.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:112
+* @route '/settings/compliance/{store}'
+*/
+updateCompliance.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateCompliance.url(args, options),
+    method: 'patch',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:112
+* @route '/settings/compliance/{store}'
+*/
+const updateComplianceForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateCompliance.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:112
+* @route '/settings/compliance/{store}'
+*/
+updateComplianceForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateCompliance.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+updateCompliance.form = updateComplianceForm
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:130
+* @route '/settings/compliance/{store}/download'
+*/
+export const downloadCompliance = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: downloadCompliance.url(args, options),
+    method: 'get',
+})
+
+downloadCompliance.definition = {
+    methods: ["get","head"],
+    url: '/settings/compliance/{store}/download',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:130
+* @route '/settings/compliance/{store}/download'
+*/
+downloadCompliance.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { store: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { store: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            store: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        store: typeof args.store === 'object'
+        ? args.store.id
+        : args.store,
+    }
+
+    return downloadCompliance.definition.url
+            .replace('{store}', parsedArgs.store.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:130
+* @route '/settings/compliance/{store}/download'
+*/
+downloadCompliance.get = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: downloadCompliance.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:130
+* @route '/settings/compliance/{store}/download'
+*/
+downloadCompliance.head = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: downloadCompliance.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:130
+* @route '/settings/compliance/{store}/download'
+*/
+const downloadComplianceForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadCompliance.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:130
+* @route '/settings/compliance/{store}/download'
+*/
+downloadComplianceForm.get = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadCompliance.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:130
+* @route '/settings/compliance/{store}/download'
+*/
+downloadComplianceForm.head = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadCompliance.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+downloadCompliance.form = downloadComplianceForm
+
+const StoreSettingsController = { index, updateGeneral, updateManagers, updateCompliance, downloadCompliance }
 
 export default StoreSettingsController

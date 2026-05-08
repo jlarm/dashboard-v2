@@ -76,12 +76,53 @@ type ManagersPayload = {
     owner_phone: string | null;
 };
 
+type CompliancePayload = {
+    police_emergency_phone: string | null;
+    police_non_emergency_phone: string | null;
+    fire_emergency_phone: string | null;
+    fire_non_emergency_phone: string | null;
+    fire_alarm_type: string | null;
+    burglar_alarm_type: string | null;
+    firewall_company: string | null;
+    ip_addresses: string[];
+    mfa: string | null;
+    vulnerability: string | null;
+    currently_monitoring: string | null;
+    antivirus_software: string | null;
+    antivirus_computers: string | null;
+    antivirus_minutes: string | null;
+    screensaver_minutes: string | null;
+    dms_provider: string | null;
+    backups: string | null;
+    website_urls: string[];
+    designated_red_flag_coordinator: string | null;
+    document_shredding: string | null;
+    service_provider_agreements: string | null;
+    offsite_storage: string | null;
+    other_business: string | null;
+    vendor_access: string | null;
+    personal_devices: string | null;
+    compliance_issues: string | null;
+    fi_products_sold: string | null;
+    service_contracts: string[];
+    tire_wheel: string[];
+    other_fi: string[];
+    fi_system: string | null;
+    appearance_protection_sold: string | null;
+    reinsurance: boolean;
+    admin_name: string | null;
+    fi_username: string | null;
+    fi_password: string | null;
+    standard_dpp_rate: number | null;
+};
+
 const props = defineProps<{
     section: Section;
     store: StoreSummary;
     can: { update: boolean; manage_dealerships: boolean };
     general?: GeneralPayload | null;
     managers?: ManagersPayload | null;
+    compliance?: CompliancePayload | null;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -96,6 +137,24 @@ const sections: { key: Section; label: string; href: string; gated?: boolean }[]
 ];
 
 const visibleSections = sections.filter((item) => !item.gated || props.can.manage_dealerships);
+
+// ---------- Phone formatting ----------
+
+const formatPhoneNumber = (value: string | null | undefined): string => {
+    if (value === null || value === undefined) {
+        return '';
+    }
+
+    const digits = value.replace(/\D/g, '').slice(0, 10);
+
+    if (digits.length <= 3) {
+        return digits;
+    }
+    if (digits.length <= 6) {
+        return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    }
+    return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+};
 
 // ---------- General section ----------
 
@@ -125,7 +184,7 @@ const hydrateGeneralForm = (payload: GeneralPayload): void => {
     form.city = payload.store.city ?? '';
     form.state = payload.store.state ?? '';
     form.postal_code = payload.store.postal_code ?? '';
-    form.phone = payload.store.phone ?? '';
+    form.phone = formatPhoneNumber(payload.store.phone);
     form.website = payload.store.website ?? '';
     form.active_monitoring = payload.store.active_monitoring;
     form.monitoring_start_date = payload.store.monitoring_start_date ?? '';
@@ -179,17 +238,17 @@ const managersForm = useForm({
 
 const hydrateManagersForm = (payload: ManagersPayload): void => {
     managersForm.qualified_individual_name = payload.qualified_individual_name ?? '';
-    managersForm.qualified_individual_phone = payload.qualified_individual_phone ?? '';
+    managersForm.qualified_individual_phone = formatPhoneNumber(payload.qualified_individual_phone);
     managersForm.service_manager_name = payload.service_manager_name ?? '';
-    managersForm.service_manager_phone = payload.service_manager_phone ?? '';
+    managersForm.service_manager_phone = formatPhoneNumber(payload.service_manager_phone);
     managersForm.parts_manager_name = payload.parts_manager_name ?? '';
-    managersForm.parts_manager_phone = payload.parts_manager_phone ?? '';
+    managersForm.parts_manager_phone = formatPhoneNumber(payload.parts_manager_phone);
     managersForm.body_shop_manager_name = payload.body_shop_manager_name ?? '';
-    managersForm.body_shop_manager_phone = payload.body_shop_manager_phone ?? '';
+    managersForm.body_shop_manager_phone = formatPhoneNumber(payload.body_shop_manager_phone);
     managersForm.general_manager_name = payload.general_manager_name ?? '';
-    managersForm.general_manager_phone = payload.general_manager_phone ?? '';
+    managersForm.general_manager_phone = formatPhoneNumber(payload.general_manager_phone);
     managersForm.owner_name = payload.owner_name ?? '';
-    managersForm.owner_phone = payload.owner_phone ?? '';
+    managersForm.owner_phone = formatPhoneNumber(payload.owner_phone);
 };
 
 watch(
@@ -216,6 +275,126 @@ const submitManagers = (): void => {
         preserveScroll: true,
     });
 };
+
+// ---------- Compliance section ----------
+
+type ComplianceFormShape = Omit<CompliancePayload, 'standard_dpp_rate'> & { standard_dpp_rate: string };
+
+const blankCompliance = (): ComplianceFormShape => ({
+    police_emergency_phone: '',
+    police_non_emergency_phone: '',
+    fire_emergency_phone: '',
+    fire_non_emergency_phone: '',
+    fire_alarm_type: '',
+    burglar_alarm_type: '',
+    firewall_company: '',
+    ip_addresses: [],
+    mfa: '',
+    vulnerability: '',
+    currently_monitoring: '',
+    antivirus_software: '',
+    antivirus_computers: '',
+    antivirus_minutes: '',
+    screensaver_minutes: '',
+    dms_provider: '',
+    backups: '',
+    website_urls: [],
+    designated_red_flag_coordinator: '',
+    document_shredding: '',
+    service_provider_agreements: '',
+    offsite_storage: '',
+    other_business: '',
+    vendor_access: '',
+    personal_devices: '',
+    compliance_issues: '',
+    fi_products_sold: '',
+    service_contracts: [],
+    tire_wheel: [],
+    other_fi: [],
+    fi_system: '',
+    appearance_protection_sold: '',
+    reinsurance: false,
+    admin_name: '',
+    fi_username: '',
+    fi_password: '',
+    standard_dpp_rate: '',
+});
+
+const complianceForm = useForm<ComplianceFormShape>(blankCompliance());
+
+const hydrateComplianceForm = (payload: CompliancePayload): void => {
+    complianceForm.police_emergency_phone = formatPhoneNumber(payload.police_emergency_phone);
+    complianceForm.police_non_emergency_phone = formatPhoneNumber(payload.police_non_emergency_phone);
+    complianceForm.fire_emergency_phone = formatPhoneNumber(payload.fire_emergency_phone);
+    complianceForm.fire_non_emergency_phone = formatPhoneNumber(payload.fire_non_emergency_phone);
+    complianceForm.fire_alarm_type = payload.fire_alarm_type ?? '';
+    complianceForm.burglar_alarm_type = payload.burglar_alarm_type ?? '';
+    complianceForm.firewall_company = payload.firewall_company ?? '';
+    complianceForm.ip_addresses = [...payload.ip_addresses];
+    complianceForm.mfa = payload.mfa ?? '';
+    complianceForm.vulnerability = payload.vulnerability ?? '';
+    complianceForm.currently_monitoring = payload.currently_monitoring ?? '';
+    complianceForm.antivirus_software = payload.antivirus_software ?? '';
+    complianceForm.antivirus_computers = payload.antivirus_computers ?? '';
+    complianceForm.antivirus_minutes = payload.antivirus_minutes ?? '';
+    complianceForm.screensaver_minutes = payload.screensaver_minutes ?? '';
+    complianceForm.dms_provider = payload.dms_provider ?? '';
+    complianceForm.backups = payload.backups ?? '';
+    complianceForm.website_urls = [...payload.website_urls];
+    complianceForm.designated_red_flag_coordinator = payload.designated_red_flag_coordinator ?? '';
+    complianceForm.document_shredding = payload.document_shredding ?? '';
+    complianceForm.service_provider_agreements = payload.service_provider_agreements ?? '';
+    complianceForm.offsite_storage = payload.offsite_storage ?? '';
+    complianceForm.other_business = payload.other_business ?? '';
+    complianceForm.vendor_access = payload.vendor_access ?? '';
+    complianceForm.personal_devices = payload.personal_devices ?? '';
+    complianceForm.compliance_issues = payload.compliance_issues ?? '';
+    complianceForm.fi_products_sold = payload.fi_products_sold ?? '';
+    complianceForm.service_contracts = [...payload.service_contracts];
+    complianceForm.tire_wheel = [...payload.tire_wheel];
+    complianceForm.other_fi = [...payload.other_fi];
+    complianceForm.fi_system = payload.fi_system ?? '';
+    complianceForm.appearance_protection_sold = payload.appearance_protection_sold ?? '';
+    complianceForm.reinsurance = payload.reinsurance;
+    complianceForm.admin_name = payload.admin_name ?? '';
+    complianceForm.fi_username = payload.fi_username ?? '';
+    complianceForm.fi_password = payload.fi_password ?? '';
+    complianceForm.standard_dpp_rate = payload.standard_dpp_rate === null ? '' : String(payload.standard_dpp_rate);
+};
+
+watch(
+    () => props.compliance,
+    (next) => {
+        if (next) {
+            hydrateComplianceForm(next);
+        }
+    },
+    { immediate: true },
+);
+
+type ComplianceListKey = 'ip_addresses' | 'website_urls' | 'service_contracts' | 'tire_wheel' | 'other_fi';
+
+const addComplianceRow = (key: ComplianceListKey): void => {
+    complianceForm[key] = [...complianceForm[key], ''];
+};
+
+const removeComplianceRow = (key: ComplianceListKey, index: number): void => {
+    complianceForm[key] = complianceForm[key].filter((_, i) => i !== index);
+};
+
+const submitCompliance = (): void => {
+    complianceForm
+        .transform((data) => ({
+            ...data,
+            standard_dpp_rate: data.standard_dpp_rate === '' ? null : data.standard_dpp_rate,
+        }))
+        .patch(StoreSettingsController.updateCompliance.url({ store: props.store.id }), {
+            preserveScroll: true,
+        });
+};
+
+const downloadComplianceUrl = (): string =>
+    StoreSettingsController.downloadCompliance.url({ store: props.store.id });
 </script>
 
 <template>
@@ -267,7 +446,7 @@ const submitManagers = (): void => {
                                 </div>
                                 <div class="space-y-2">
                                     <Label for="phone">Phone</Label>
-                                    <Input id="phone" v-model="form.phone" />
+                                    <Input id="phone" v-model="form.phone" @input="form.phone = formatPhoneNumber(form.phone)" />
                                     <InputError :message="form.errors.phone" />
                                 </div>
                                 <div class="md:col-span-2 space-y-2">
@@ -422,7 +601,11 @@ const submitManagers = (): void => {
                                 </div>
                                 <div class="space-y-2">
                                     <Label :for="role.phoneKey">{{ role.label }} Phone</Label>
-                                    <Input :id="role.phoneKey" v-model="managersForm[role.phoneKey] as string" />
+                                    <Input
+                                        :id="role.phoneKey"
+                                        :model-value="managersForm[role.phoneKey] as string"
+                                        @update:model-value="(value) => (managersForm[role.phoneKey] = formatPhoneNumber(value as string))"
+                                    />
                                     <InputError :message="managersForm.errors[role.phoneKey]" />
                                 </div>
                             </div>
@@ -438,7 +621,236 @@ const submitManagers = (): void => {
                 </form>
             </div>
 
-            <!-- Compliance / Reset / Ridgeback placeholders -->
+            <!-- Compliance -->
+            <div v-else-if="section === 'compliance'" class="mx-auto max-w-5xl space-y-6">
+                <div v-if="!compliance" class="flex h-32 items-center justify-center rounded-md border bg-card text-sm text-muted-foreground">
+                    <Loader2 class="mr-2 size-4 animate-spin" />
+                    Loading compliance information...
+                </div>
+
+                <form v-else class="space-y-6" @submit.prevent="submitCompliance">
+                    <div class="flex justify-end">
+                        <Button as="a" :href="downloadComplianceUrl()" target="_blank" variant="outline">
+                            Download PDF
+                        </Button>
+                    </div>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Emergency Contacts</CardTitle>
+                        </CardHeader>
+                        <CardContent class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="space-y-2">
+                                <Label for="police_emergency_phone">Police Emergency Phone Number</Label>
+                                <Input id="police_emergency_phone" v-model="complianceForm.police_emergency_phone" @input="complianceForm.police_emergency_phone = formatPhoneNumber(complianceForm.police_emergency_phone)" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="police_non_emergency_phone">Police Non-Emergency Phone Number</Label>
+                                <Input id="police_non_emergency_phone" v-model="complianceForm.police_non_emergency_phone" @input="complianceForm.police_non_emergency_phone = formatPhoneNumber(complianceForm.police_non_emergency_phone)" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="fire_emergency_phone">Fire Emergency Phone Number</Label>
+                                <Input id="fire_emergency_phone" v-model="complianceForm.fire_emergency_phone" @input="complianceForm.fire_emergency_phone = formatPhoneNumber(complianceForm.fire_emergency_phone)" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="fire_non_emergency_phone">Fire Non-Emergency Phone Number</Label>
+                                <Input id="fire_non_emergency_phone" v-model="complianceForm.fire_non_emergency_phone" @input="complianceForm.fire_non_emergency_phone = formatPhoneNumber(complianceForm.fire_non_emergency_phone)" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="fire_alarm_type">Fire Alarm Type</Label>
+                                <Input id="fire_alarm_type" v-model="complianceForm.fire_alarm_type" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="burglar_alarm_type">Burglar Alarm Type</Label>
+                                <Input id="burglar_alarm_type" v-model="complianceForm.burglar_alarm_type" />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>IT &amp; Security</CardTitle>
+                        </CardHeader>
+                        <CardContent class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="space-y-2">
+                                <Label for="firewall_company">Firewall Company</Label>
+                                <Input id="firewall_company" v-model="complianceForm.firewall_company" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="mfa">Multi-Factor Authentication</Label>
+                                <Input id="mfa" v-model="complianceForm.mfa" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="vulnerability">Vulnerability</Label>
+                                <Input id="vulnerability" v-model="complianceForm.vulnerability" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="currently_monitoring">Currently Monitoring</Label>
+                                <Input id="currently_monitoring" v-model="complianceForm.currently_monitoring" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="antivirus_software">Antivirus Software</Label>
+                                <Input id="antivirus_software" v-model="complianceForm.antivirus_software" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="antivirus_computers">Antivirus Computers</Label>
+                                <Input id="antivirus_computers" v-model="complianceForm.antivirus_computers" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="antivirus_minutes">Antivirus Lock Minutes</Label>
+                                <Input id="antivirus_minutes" v-model="complianceForm.antivirus_minutes" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="screensaver_minutes">Screensaver Minutes</Label>
+                                <Input id="screensaver_minutes" v-model="complianceForm.screensaver_minutes" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="dms_provider">DMS Provider</Label>
+                                <Input id="dms_provider" v-model="complianceForm.dms_provider" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="backups">Backups</Label>
+                                <Input id="backups" v-model="complianceForm.backups" />
+                            </div>
+
+                            <div class="md:col-span-2 space-y-2">
+                                <Label>IP Addresses</Label>
+                                <div v-for="(_, index) in complianceForm.ip_addresses" :key="`ip-${index}`" class="flex gap-2">
+                                    <Input v-model="complianceForm.ip_addresses[index]" />
+                                    <Button type="button" variant="outline" size="sm" @click="removeComplianceRow('ip_addresses', index)">Remove</Button>
+                                </div>
+                                <Button type="button" variant="outline" size="sm" @click="addComplianceRow('ip_addresses')">Add IP Address</Button>
+                            </div>
+
+                            <div class="md:col-span-2 space-y-2">
+                                <Label>Website URLs</Label>
+                                <div v-for="(_, index) in complianceForm.website_urls" :key="`url-${index}`" class="flex gap-2">
+                                    <Input v-model="complianceForm.website_urls[index]" />
+                                    <Button type="button" variant="outline" size="sm" @click="removeComplianceRow('website_urls', index)">Remove</Button>
+                                </div>
+                                <Button type="button" variant="outline" size="sm" @click="addComplianceRow('website_urls')">Add URL</Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Compliance &amp; Operations</CardTitle>
+                        </CardHeader>
+                        <CardContent class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="space-y-2">
+                                <Label for="designated_red_flag_coordinator">Designated Red Flag Coordinator</Label>
+                                <Input id="designated_red_flag_coordinator" v-model="complianceForm.designated_red_flag_coordinator" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="document_shredding">Document Shredding</Label>
+                                <Input id="document_shredding" v-model="complianceForm.document_shredding" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="service_provider_agreements">Service Provider Agreements</Label>
+                                <Input id="service_provider_agreements" v-model="complianceForm.service_provider_agreements" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="offsite_storage">Offsite Storage</Label>
+                                <Input id="offsite_storage" v-model="complianceForm.offsite_storage" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="other_business">Other Business</Label>
+                                <Input id="other_business" v-model="complianceForm.other_business" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="vendor_access">Vendor Access</Label>
+                                <Input id="vendor_access" v-model="complianceForm.vendor_access" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="personal_devices">Personal Devices</Label>
+                                <Input id="personal_devices" v-model="complianceForm.personal_devices" />
+                            </div>
+                            <div class="md:col-span-2 space-y-2">
+                                <Label for="compliance_issues">Compliance Issues</Label>
+                                <Input id="compliance_issues" v-model="complianceForm.compliance_issues" />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Finance &amp; Insurance</CardTitle>
+                        </CardHeader>
+                        <CardContent class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="space-y-2">
+                                <Label for="fi_products_sold">F&amp;I Products Sold</Label>
+                                <Input id="fi_products_sold" v-model="complianceForm.fi_products_sold" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="fi_system">F&amp;I System</Label>
+                                <Input id="fi_system" v-model="complianceForm.fi_system" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="appearance_protection_sold">Appearance Protection Sold</Label>
+                                <Input id="appearance_protection_sold" v-model="complianceForm.appearance_protection_sold" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="admin_name">Admin Name</Label>
+                                <Input id="admin_name" v-model="complianceForm.admin_name" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="fi_username">F&amp;I Username</Label>
+                                <Input id="fi_username" v-model="complianceForm.fi_username" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="fi_password">F&amp;I Password</Label>
+                                <Input id="fi_password" v-model="complianceForm.fi_password" type="password" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label for="standard_dpp_rate">Standard DPP Rate (%)</Label>
+                                <Input id="standard_dpp_rate" v-model="complianceForm.standard_dpp_rate" type="number" step="0.01" min="0" max="100" />
+                                <InputError :message="complianceForm.errors.standard_dpp_rate" />
+                            </div>
+                            <div class="flex items-center justify-between md:col-span-2 pt-2">
+                                <Label for="reinsurance" class="cursor-pointer">Reinsurance</Label>
+                                <Checkbox id="reinsurance" v-model="complianceForm.reinsurance" />
+                            </div>
+
+                            <div class="md:col-span-2 space-y-2">
+                                <Label>Service Contracts</Label>
+                                <div v-for="(_, index) in complianceForm.service_contracts" :key="`sc-${index}`" class="flex gap-2">
+                                    <Input v-model="complianceForm.service_contracts[index]" />
+                                    <Button type="button" variant="outline" size="sm" @click="removeComplianceRow('service_contracts', index)">Remove</Button>
+                                </div>
+                                <Button type="button" variant="outline" size="sm" @click="addComplianceRow('service_contracts')">Add Service Contract</Button>
+                            </div>
+
+                            <div class="md:col-span-2 space-y-2">
+                                <Label>Tire &amp; Wheel</Label>
+                                <div v-for="(_, index) in complianceForm.tire_wheel" :key="`tw-${index}`" class="flex gap-2">
+                                    <Input v-model="complianceForm.tire_wheel[index]" />
+                                    <Button type="button" variant="outline" size="sm" @click="removeComplianceRow('tire_wheel', index)">Remove</Button>
+                                </div>
+                                <Button type="button" variant="outline" size="sm" @click="addComplianceRow('tire_wheel')">Add Tire &amp; Wheel</Button>
+                            </div>
+
+                            <div class="md:col-span-2 space-y-2">
+                                <Label>Other F&amp;I</Label>
+                                <div v-for="(_, index) in complianceForm.other_fi" :key="`ofi-${index}`" class="flex gap-2">
+                                    <Input v-model="complianceForm.other_fi[index]" />
+                                    <Button type="button" variant="outline" size="sm" @click="removeComplianceRow('other_fi', index)">Remove</Button>
+                                </div>
+                                <Button type="button" variant="outline" size="sm" @click="addComplianceRow('other_fi')">Add Other F&amp;I</Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <div v-if="can.update" class="flex justify-end">
+                        <Button type="submit" :disabled="complianceForm.processing">
+                            <Loader2 v-if="complianceForm.processing" class="mr-2 size-4 animate-spin" />
+                            Save Compliance Info
+                        </Button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Reset Courses placeholder -->
             <div v-else class="mx-auto max-w-4xl">
                 <Card>
                     <CardHeader>
