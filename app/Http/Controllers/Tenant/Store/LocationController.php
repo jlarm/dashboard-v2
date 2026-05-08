@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Throwable;
 
 class LocationController extends Controller
 {
@@ -42,14 +43,30 @@ class LocationController extends Controller
 
     public function store(CreateStoreRequest $request, StoreCreator $storeCreator): RedirectResponse
     {
-        $storeCreator->create($request->toData()->toStoreCreatorPayload());
+        try {
+            $storeCreator->create($request->toData()->toStoreCreatorPayload());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not create the location. Please try again.');
+        }
 
         return back()->with('flash.success', 'Location created successfully.');
     }
 
     public function update(UpdateStoreRequest $request, Store $store, UpdateStore $updateStore): RedirectResponse
     {
-        $updateStore->handle($store, $request->toData());
+        try {
+            $updateStore->handle($store, $request->toData());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not update the location. Please try again.');
+        }
 
         return back()->with('flash.success', 'Location updated successfully.');
     }

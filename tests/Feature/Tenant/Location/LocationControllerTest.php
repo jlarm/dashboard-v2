@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Domain\Tenant\Store\Actions\UpdateStore;
 use App\Enums\State;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use App\Services\StoreCreator;
+use RuntimeException;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
@@ -123,6 +126,19 @@ describe('locations store', function (): void {
             ->post(route('dealer.locations.store'), validLocationPayload(['state' => 'ZZ']))
             ->assertSessionHasErrors('state');
     });
+
+    it('surfaces a friendly flash error when the StoreCreator throws', function (): void {
+        $this->mock(StoreCreator::class, function ($mock): void {
+            $mock->shouldReceive('create')->andThrow(new RuntimeException('db down'));
+        });
+
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.locations.store'), validLocationPayload(['name' => 'Failing Store']))
+            ->assertRedirect()
+            ->assertSessionHas('flash.error');
+
+        expect(Store::query()->where('name', 'Failing Store')->exists())->toBeFalse();
+    });
 });
 
 describe('locations update', function (): void {
@@ -164,6 +180,21 @@ describe('locations update', function (): void {
             ->assertRedirect();
 
         expect($store->fresh()->address)->toBe('999 Updated Way');
+    });
+
+    it('surfaces a friendly flash error when the UpdateStore action throws', function (): void {
+        $store = Store::query()->firstOrFail();
+
+        $this->mock(UpdateStore::class, function ($mock): void {
+            $mock->shouldReceive('handle')->andThrow(new RuntimeException('db down'));
+        });
+
+        $this->actingAs($this->consultant)
+            ->patch(route('dealer.locations.update', $store), validLocationPayload(['name' => 'Failing Update']))
+            ->assertRedirect()
+            ->assertSessionHas('flash.error');
+
+        expect($store->fresh()->name)->not->toBe('Failing Update');
     });
 
     it('rejects a duplicate name from another store', function (): void {

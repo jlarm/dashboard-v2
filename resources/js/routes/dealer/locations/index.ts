@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::index
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:23
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:24
 * @route '/locations'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::index
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:23
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:24
 * @route '/locations'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::index
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:23
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:24
 * @route '/locations'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::index
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:23
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:24
 * @route '/locations'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::index
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:23
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:24
 * @route '/locations'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::index
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:23
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:24
 * @route '/locations'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::index
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:23
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:24
 * @route '/locations'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::store
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:43
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:44
 * @route '/locations'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::store
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:43
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:44
 * @route '/locations'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::store
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:43
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:44
 * @route '/locations'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::store
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:43
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:44
 * @route '/locations'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::store
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:43
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:44
 * @route '/locations'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::update
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:50
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:59
 * @route '/locations/{store}'
 */
 export const update = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -153,7 +153,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::update
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:50
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:59
 * @route '/locations/{store}'
 */
 update.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -186,7 +186,7 @@ update.url = (args: { store: string | number | { id: string | number } } | [stor
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::update
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:50
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:59
 * @route '/locations/{store}'
 */
 update.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -196,7 +196,7 @@ update.patch = (args: { store: string | number | { id: string | number } } | [st
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::update
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:50
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:59
 * @route '/locations/{store}'
 */
 const updateForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -211,7 +211,7 @@ const updateForm = (args: { store: string | number | { id: string | number } } |
 
 /**
 * @see \App\Http\Controllers\Tenant\Store\LocationController::update
-* @see app/Http/Controllers/Tenant/Store/LocationController.php:50
+* @see app/Http/Controllers/Tenant/Store/LocationController.php:59
 * @route '/locations/{store}'
 */
 updateForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
