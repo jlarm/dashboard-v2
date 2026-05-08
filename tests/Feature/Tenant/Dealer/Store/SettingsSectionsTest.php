@@ -273,7 +273,7 @@ describe('compliance section update', function (): void {
 });
 
 describe('reset courses', function (): void {
-    it('lists users at the current store who have course results', function (): void {
+    it('renders the reset-courses page when users at the store have course results', function (): void {
         $store = Store::query()->firstOrFail();
 
         $employee = User::factory()->create(['name' => 'Eddie Employee', 'current_store_id' => $store->id]);
@@ -296,8 +296,7 @@ describe('reset courses', function (): void {
             ->assertOk()
             ->assertInertia(fn ($page) => $page
                 ->component('tenant/settings/StoreSettings')
-                ->where('section', 'reset-courses')
-                ->has('resettableUsers', fn ($users) => $users->etc()));
+                ->where('section', 'reset-courses'));
     });
 
     it('resets selected users at the current store', function (): void {

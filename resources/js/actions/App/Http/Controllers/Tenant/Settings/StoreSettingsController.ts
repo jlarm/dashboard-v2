@@ -329,7 +329,7 @@ export const index = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:102
 * @route '/settings/general/{store}'
 */
 export const updateGeneral = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -344,7 +344,7 @@ updateGeneral.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:102
 * @route '/settings/general/{store}'
 */
 updateGeneral.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -377,7 +377,7 @@ updateGeneral.url = (args: { store: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:102
 * @route '/settings/general/{store}'
 */
 updateGeneral.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -387,7 +387,7 @@ updateGeneral.patch = (args: { store: string | number | { id: string | number } 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:102
 * @route '/settings/general/{store}'
 */
 const updateGeneralForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -402,7 +402,7 @@ const updateGeneralForm = (args: { store: string | number | { id: string | numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:102
 * @route '/settings/general/{store}'
 */
 updateGeneralForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -419,7 +419,7 @@ updateGeneral.form = updateGeneralForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:120
 * @route '/settings/managers/{store}'
 */
 export const updateManagers = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -434,7 +434,7 @@ updateManagers.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:120
 * @route '/settings/managers/{store}'
 */
 updateManagers.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -467,7 +467,7 @@ updateManagers.url = (args: { store: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:120
 * @route '/settings/managers/{store}'
 */
 updateManagers.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -477,7 +477,7 @@ updateManagers.patch = (args: { store: string | number | { id: string | number }
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:120
 * @route '/settings/managers/{store}'
 */
 const updateManagersForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -492,7 +492,7 @@ const updateManagersForm = (args: { store: string | number | { id: string | numb
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateManagers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:120
 * @route '/settings/managers/{store}'
 */
 updateManagersForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -509,7 +509,7 @@ updateManagers.form = updateManagersForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:125
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:138
 * @route '/settings/compliance/{store}'
 */
 export const updateCompliance = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -524,7 +524,7 @@ updateCompliance.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:125
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:138
 * @route '/settings/compliance/{store}'
 */
 updateCompliance.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -557,7 +557,7 @@ updateCompliance.url = (args: { store: string | number | { id: string | number }
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:125
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:138
 * @route '/settings/compliance/{store}'
 */
 updateCompliance.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -567,7 +567,7 @@ updateCompliance.patch = (args: { store: string | number | { id: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:125
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:138
 * @route '/settings/compliance/{store}'
 */
 const updateComplianceForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -582,7 +582,7 @@ const updateComplianceForm = (args: { store: string | number | { id: string | nu
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:125
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:138
 * @route '/settings/compliance/{store}'
 */
 updateComplianceForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -599,7 +599,7 @@ updateCompliance.form = updateComplianceForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:163
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:176
 * @route '/settings/compliance/{store}/download'
 */
 export const downloadCompliance = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -614,7 +614,7 @@ downloadCompliance.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:163
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:176
 * @route '/settings/compliance/{store}/download'
 */
 downloadCompliance.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -647,7 +647,7 @@ downloadCompliance.url = (args: { store: string | number | { id: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:163
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:176
 * @route '/settings/compliance/{store}/download'
 */
 downloadCompliance.get = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -657,7 +657,7 @@ downloadCompliance.get = (args: { store: string | number | { id: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:163
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:176
 * @route '/settings/compliance/{store}/download'
 */
 downloadCompliance.head = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -667,7 +667,7 @@ downloadCompliance.head = (args: { store: string | number | { id: string | numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:163
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:176
 * @route '/settings/compliance/{store}/download'
 */
 const downloadComplianceForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -677,7 +677,7 @@ const downloadComplianceForm = (args: { store: string | number | { id: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:163
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:176
 * @route '/settings/compliance/{store}/download'
 */
 downloadComplianceForm.get = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -687,7 +687,7 @@ downloadComplianceForm.get = (args: { store: string | number | { id: string | nu
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::downloadCompliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:163
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:176
 * @route '/settings/compliance/{store}/download'
 */
 downloadComplianceForm.head = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -704,7 +704,7 @@ downloadCompliance.form = downloadComplianceForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:143
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:156
 * @route '/settings/reset-courses/{store}'
 */
 export const resetCourses = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -719,7 +719,7 @@ resetCourses.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:143
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:156
 * @route '/settings/reset-courses/{store}'
 */
 resetCourses.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -752,7 +752,7 @@ resetCourses.url = (args: { store: string | number | { id: string | number } } |
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:143
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:156
 * @route '/settings/reset-courses/{store}'
 */
 resetCourses.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -762,7 +762,7 @@ resetCourses.post = (args: { store: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:143
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:156
 * @route '/settings/reset-courses/{store}'
 */
 const resetCoursesForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -772,7 +772,7 @@ const resetCoursesForm = (args: { store: string | number | { id: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:143
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:156
 * @route '/settings/reset-courses/{store}'
 */
 resetCoursesForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

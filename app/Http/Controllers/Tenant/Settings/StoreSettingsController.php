@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Tenant\Settings;
 
-use App\Domain\Tenant\GlobalSettings\Data\ResettableUserData;
 use App\Domain\Tenant\StoreSettings\Actions\ResetStoreCourses;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateComplianceSection;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateGeneralSection;
@@ -21,6 +20,7 @@ use App\Http\Requests\Tenant\StoreSettings\UpdateManagersRequest;
 use App\Models\Dealer\Store;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Spatie\Browsershot\Browsershot;
@@ -77,12 +77,25 @@ class StoreSettingsController extends Controller
             'general' => Inertia::defer(static fn (): array => $getGeneralSection->handle($store)->toArray()),
             'managers' => Inertia::defer(static fn (): array => $getManagersSection->handle($store)->toArray()),
             'compliance' => Inertia::defer(static fn (): array => $getComplianceSection->handle($store)->toArray()),
-            'resettableUsers' => $section === self::SECTION_RESET_COURSES
-                ? array_map(
-                    static fn (ResettableUserData $u): array => $u->toArray(),
-                    $getStoreResettableUsers->handle($store, $search),
-                )
-                : [],
+            'resettableUsers' => Inertia::defer(static function () use ($section, $getStoreResettableUsers, $store, $search): array {
+                if ($section !== self::SECTION_RESET_COURSES) {
+                    return [];
+                }
+
+                try {
+                    return array_map(
+                        static fn ($u): array => $u->toArray(),
+                        $getStoreResettableUsers->handle($store, $search),
+                    );
+                } catch (Throwable $e) {
+                    Log::error('Failed to load resettable users', [
+                        'store_id' => $store->id,
+                        'message' => $e->getMessage(),
+                    ]);
+
+                    return [];
+                }
+            }),
         ]);
     }
 

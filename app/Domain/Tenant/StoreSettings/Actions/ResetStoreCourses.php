@@ -11,6 +11,8 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Services\CourseResetService;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ResetStoreCourses
 {
@@ -32,10 +34,27 @@ class ResetStoreCourses
             selectedUserIds: $userIdsForReset,
         );
 
-        $this->logCourseReset($store, $data, $selectedUserIds, $affectedUserIds, $causer);
+        // Logging and notifications are bookkeeping after the destructive reset has
+        // already committed. Don't let a logging or queue failure surface as if the
+        // reset itself failed — report and continue.
+        try {
+            $this->logCourseReset($store, $data, $selectedUserIds, $affectedUserIds, $causer);
+        } catch (Throwable $e) {
+            Log::warning('Failed to log course-reset activity', [
+                'store_id' => $store->id,
+                'message' => $e->getMessage(),
+            ]);
+        }
 
         if ($affectedUserIds->isNotEmpty()) {
-            dispatch(new SendCoursesResetNotifications($affectedUserIds, tenant()->name));
+            try {
+                dispatch(new SendCoursesResetNotifications($affectedUserIds, tenant()->name));
+            } catch (Throwable $e) {
+                Log::warning('Failed to dispatch course-reset notifications', [
+                    'store_id' => $store->id,
+                    'message' => $e->getMessage(),
+                ]);
+            }
         }
     }
 

@@ -142,7 +142,7 @@ const props = defineProps<{
     general?: GeneralPayload | null;
     managers?: ManagersPayload | null;
     compliance?: CompliancePayload | null;
-    resettableUsers: ResettableUser[];
+    resettableUsers?: ResettableUser[] | null;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -447,7 +447,9 @@ watch(
     },
 );
 
-const visibleUserIds = computed<number[]>(() => props.resettableUsers.map((user) => user.id));
+const resettableUsersList = computed<ResettableUser[]>(() => props.resettableUsers ?? []);
+
+const visibleUserIds = computed<number[]>(() => resettableUsersList.value.map((user) => user.id));
 
 const allVisibleSelected = computed<boolean>(
     () => visibleUserIds.value.length > 0 && visibleUserIds.value.every((id) => selectedUserIds.value.includes(id)),
@@ -1025,12 +1027,18 @@ const confirmMessage = computed<string>(() =>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        <TableRow v-if="resettableUsers.length === 0">
+                                        <TableRow v-if="resettableUsers === undefined || resettableUsers === null">
+                                            <TableCell colspan="4" class="py-6 text-center text-sm text-muted-foreground">
+                                                <Loader2 class="mr-2 inline-block size-4 animate-spin" />
+                                                Loading users...
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow v-else-if="resettableUsersList.length === 0">
                                             <TableCell colspan="4" class="py-6 text-center text-sm text-muted-foreground">
                                                 No users at this location have course results yet.
                                             </TableCell>
                                         </TableRow>
-                                        <TableRow v-for="user in resettableUsers" :key="user.id">
+                                        <TableRow v-for="user in resettableUsersList" :key="user.id">
                                             <TableCell>
                                                 <Checkbox
                                                     :model-value="isUserSelected(user.id)"
