@@ -16,6 +16,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Throwable;
 
 class SdsController extends Controller
 {
@@ -43,10 +44,11 @@ class SdsController extends Controller
     {
         return tenancy()->central(function () use ($uuid): Response {
             $sds = Sds::query()->where('uuid', $uuid)->firstOrFail();
+            $disk = Storage::disk('sds-sheets');
 
-            $fileContents = Storage::disk('sds-sheets')->get($sds->file_name);
+            abort_unless(is_string($sds->file_name) && $sds->file_name !== '' && $disk->exists($sds->file_name), 404);
 
-            return response($fileContents, 200, [
+            return response($disk->get($sds->file_name), 200, [
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'inline; filename="'.$sds->name.'.pdf"',
                 'Cache-Control' => 'public, max-age=31536000',
@@ -57,7 +59,15 @@ class SdsController extends Controller
 
     public function storeRequest(RequestSdsSheetRequest $request, RequestSdsSheet $requestSdsSheet): RedirectResponse
     {
-        $requestSdsSheet->handle($request->toData());
+        try {
+            $requestSdsSheet->handle($request->toData());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not send your SDS request. Please try again.');
+        }
 
         return back()->with('flash.success', 'Request successfully sent.');
     }

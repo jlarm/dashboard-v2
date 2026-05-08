@@ -7,6 +7,7 @@ use App\Models\Sds;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
@@ -87,6 +88,29 @@ describe('SDS view', function (): void {
         expect($response->headers->get('Content-Type'))->toBe('application/pdf')
             ->and($response->headers->get('Cache-Control'))->toContain('max-age=31536000');
     });
+
+    it('returns a 404 when the SDS file is missing on disk', function (): void {
+        [$uuid] = tenancy()->central(function (): array {
+            $sds = Sds::query()->create([
+                'name' => 'Missing Sheet',
+                'manufacturer' => 'Acme',
+                'keywords' => [],
+                'file_name' => 'nope.pdf',
+            ]);
+
+            return [$sds->uuid];
+        });
+
+        $this->actingAs($this->employee)
+            ->get(route('dealer.sds.view', ['uuid' => $uuid]))
+            ->assertNotFound();
+    });
+
+    it('returns a 404 when the uuid does not match an SDS record', function (): void {
+        $this->actingAs($this->employee)
+            ->get(route('dealer.sds.view', ['uuid' => 'unknown-uuid']))
+            ->assertNotFound();
+    });
 });
 
 describe('SDS request', function (): void {
@@ -118,5 +142,22 @@ describe('SDS request', function (): void {
             ->assertSessionHasErrors('name');
 
         Mail::assertNothingQueued();
+    });
+
+    it('surfaces a friendly flash error when the mail queue fails', function (): void {
+        $superAdmin = User::factory()->create();
+        $superAdmin->assignRole('super-admin');
+
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        Mail::shouldReceive('to')->andThrow(new RuntimeException('queue offline'));
+
+        $this->actingAs($this->employee)
+            ->post(route('dealer.sds.request'), [
+                'name' => 'Mystery Solvent',
+                'manufacturer' => 'Acme',
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('flash.error');
     });
 });

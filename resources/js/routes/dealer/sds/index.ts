@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:23
 * @route '/sds-sheets'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:23
 * @route '/sds-sheets'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:23
 * @route '/sds-sheets'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:23
 * @route '/sds-sheets'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:23
 * @route '/sds-sheets'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:23
 * @route '/sds-sheets'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::index
-* @see app/Http/Controllers/Tenant/SdsController.php:22
+* @see app/Http/Controllers/Tenant/SdsController.php:23
 * @route '/sds-sheets'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::request
-* @see app/Http/Controllers/Tenant/SdsController.php:58
+* @see app/Http/Controllers/Tenant/SdsController.php:60
 * @route '/sds-sheets/request'
 */
 export const request = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ request.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::request
-* @see app/Http/Controllers/Tenant/SdsController.php:58
+* @see app/Http/Controllers/Tenant/SdsController.php:60
 * @route '/sds-sheets/request'
 */
 request.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ request.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::request
-* @see app/Http/Controllers/Tenant/SdsController.php:58
+* @see app/Http/Controllers/Tenant/SdsController.php:60
 * @route '/sds-sheets/request'
 */
 request.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ request.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::request
-* @see app/Http/Controllers/Tenant/SdsController.php:58
+* @see app/Http/Controllers/Tenant/SdsController.php:60
 * @route '/sds-sheets/request'
 */
 const requestForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const requestForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::request
-* @see app/Http/Controllers/Tenant/SdsController.php:58
+* @see app/Http/Controllers/Tenant/SdsController.php:60
 * @route '/sds-sheets/request'
 */
 requestForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ request.form = requestForm
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
+* @see app/Http/Controllers/Tenant/SdsController.php:43
 * @route '/sds-sheets/{uuid}/view'
 */
 export const view = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -153,7 +153,7 @@ view.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
+* @see app/Http/Controllers/Tenant/SdsController.php:43
 * @route '/sds-sheets/{uuid}/view'
 */
 view.url = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -180,7 +180,7 @@ view.url = (args: { uuid: string | number } | [uuid: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
+* @see app/Http/Controllers/Tenant/SdsController.php:43
 * @route '/sds-sheets/{uuid}/view'
 */
 view.get = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -190,7 +190,7 @@ view.get = (args: { uuid: string | number } | [uuid: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
+* @see app/Http/Controllers/Tenant/SdsController.php:43
 * @route '/sds-sheets/{uuid}/view'
 */
 view.head = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -200,7 +200,7 @@ view.head = (args: { uuid: string | number } | [uuid: string | number ] | string
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
+* @see app/Http/Controllers/Tenant/SdsController.php:43
 * @route '/sds-sheets/{uuid}/view'
 */
 const viewForm = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -210,7 +210,7 @@ const viewForm = (args: { uuid: string | number } | [uuid: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
+* @see app/Http/Controllers/Tenant/SdsController.php:43
 * @route '/sds-sheets/{uuid}/view'
 */
 viewForm.get = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -220,7 +220,7 @@ viewForm.get = (args: { uuid: string | number } | [uuid: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Tenant\SdsController::view
-* @see app/Http/Controllers/Tenant/SdsController.php:42
+* @see app/Http/Controllers/Tenant/SdsController.php:43
 * @route '/sds-sheets/{uuid}/view'
 */
 viewForm.head = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
