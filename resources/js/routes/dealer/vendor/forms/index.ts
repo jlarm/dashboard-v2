@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:97
+* @see app/Http/Controllers/Dealer/VendorController.php:120
 * @route '/vendors/forms/{vendorForm}/download'
 */
 export const download = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ download.definition = {
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:97
+* @see app/Http/Controllers/Dealer/VendorController.php:120
 * @route '/vendors/forms/{vendorForm}/download'
 */
 download.url = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ download.url = (args: { vendorForm: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:97
+* @see app/Http/Controllers/Dealer/VendorController.php:120
 * @route '/vendors/forms/{vendorForm}/download'
 */
 download.get = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ download.get = (args: { vendorForm: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:97
+* @see app/Http/Controllers/Dealer/VendorController.php:120
 * @route '/vendors/forms/{vendorForm}/download'
 */
 download.head = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ download.head = (args: { vendorForm: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:97
+* @see app/Http/Controllers/Dealer/VendorController.php:120
 * @route '/vendors/forms/{vendorForm}/download'
 */
 const downloadForm = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ const downloadForm = (args: { vendorForm: string | number | { id: string | numbe
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:97
+* @see app/Http/Controllers/Dealer/VendorController.php:120
 * @route '/vendors/forms/{vendorForm}/download'
 */
 downloadForm.get = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +89,7 @@ downloadForm.get = (args: { vendorForm: string | number | { id: string | number 
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:97
+* @see app/Http/Controllers/Dealer/VendorController.php:120
 * @route '/vendors/forms/{vendorForm}/download'
 */
 downloadForm.head = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -106,7 +106,7 @@ download.form = downloadForm
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::send
-* @see app/Http/Controllers/Dealer/VendorController.php:81
+* @see app/Http/Controllers/Dealer/VendorController.php:90
 * @route '/vendors/{vendor}/forms'
 */
 export const send = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -121,7 +121,7 @@ send.definition = {
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::send
-* @see app/Http/Controllers/Dealer/VendorController.php:81
+* @see app/Http/Controllers/Dealer/VendorController.php:90
 * @route '/vendors/{vendor}/forms'
 */
 send.url = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -154,7 +154,7 @@ send.url = (args: { vendor: string | number | { id: string | number } } | [vendo
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::send
-* @see app/Http/Controllers/Dealer/VendorController.php:81
+* @see app/Http/Controllers/Dealer/VendorController.php:90
 * @route '/vendors/{vendor}/forms'
 */
 send.post = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -164,7 +164,7 @@ send.post = (args: { vendor: string | number | { id: string | number } } | [vend
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::send
-* @see app/Http/Controllers/Dealer/VendorController.php:81
+* @see app/Http/Controllers/Dealer/VendorController.php:90
 * @route '/vendors/{vendor}/forms'
 */
 const sendForm = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -174,7 +174,7 @@ const sendForm = (args: { vendor: string | number | { id: string | number } } | 
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::send
-* @see app/Http/Controllers/Dealer/VendorController.php:81
+* @see app/Http/Controllers/Dealer/VendorController.php:90
 * @route '/vendors/{vendor}/forms'
 */
 sendForm.post = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

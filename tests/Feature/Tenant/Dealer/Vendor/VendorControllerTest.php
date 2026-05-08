@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Domain\Tenant\Vendor\Actions\CreateVendor;
 use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorForm;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use RuntimeException;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
@@ -131,6 +133,23 @@ describe('vendor store', function (): void {
 
         expect(Vendor::query()->where('name', 'Email Validation Co')->exists())->toBeFalse();
     })->with(['', 'not-an-email', 'jane@', '@example.com', 'jane example.com']);
+
+    it('surfaces a friendly flash error when the create action throws', function (): void {
+        $this->mock(CreateVendor::class, function ($mock): void {
+            $mock->shouldReceive('handle')->andThrow(new RuntimeException('db down'));
+        });
+
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.vendor.store'), [
+                'name' => 'Boom Co',
+                'contact_name' => 'Jane',
+                'contact_email' => 'jane@boom.test',
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('flash.error');
+
+        expect(Vendor::query()->where('name', 'Boom Co')->exists())->toBeFalse();
+    });
 
     it('stamps last_notification_sent_at on the new form so the daily reminder skips it', function (): void {
         Bus::fake();
@@ -358,5 +377,23 @@ describe('download vendor form', function (): void {
 
         $response->assertOk();
         expect($response->headers->get('content-type'))->toContain('application/pdf');
+    });
+
+    it('returns a 404 when the uploaded document is missing on disk', function (): void {
+        $vendor = Vendor::query()->create([
+            'name' => 'Missing DL Vendor',
+            'contact_name' => 'D',
+            'contact_email' => 'd@v.test',
+        ]);
+
+        $vendorForm = $vendor->forms()->create([
+            'name' => 'D',
+            'email' => 'd@v.test',
+            'document_path' => tenant('id').'/vendor-documents/missing.pdf',
+        ]);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.vendor.forms.download', ['vendorForm' => $vendorForm->id]))
+            ->assertNotFound();
     });
 });

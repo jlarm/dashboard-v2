@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
+* @see app/Http/Controllers/Dealer/VendorController.php:179
 * @route '/vendors/thankyou'
 */
 export const thankyou = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ thankyou.definition = {
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
+* @see app/Http/Controllers/Dealer/VendorController.php:179
 * @route '/vendors/thankyou'
 */
 thankyou.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ thankyou.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
+* @see app/Http/Controllers/Dealer/VendorController.php:179
 * @route '/vendors/thankyou'
 */
 thankyou.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ thankyou.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
+* @see app/Http/Controllers/Dealer/VendorController.php:179
 * @route '/vendors/thankyou'
 */
 thankyou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ thankyou.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
+* @see app/Http/Controllers/Dealer/VendorController.php:179
 * @route '/vendors/thankyou'
 */
 const thankyouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const thankyouForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
+* @see app/Http/Controllers/Dealer/VendorController.php:179
 * @route '/vendors/thankyou'
 */
 thankyouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ thankyouForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::thankyou
-* @see app/Http/Controllers/Dealer/VendorController.php:139
+* @see app/Http/Controllers/Dealer/VendorController.php:179
 * @route '/vendors/thankyou'
 */
 thankyouForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -29,6 +29,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
 
 class VendorController extends Controller
 {
@@ -73,14 +74,30 @@ class VendorController extends Controller
 
     public function store(StoreVendorRequest $request, CreateVendor $createVendor): RedirectResponse
     {
-        $createVendor->handle($request->toData());
+        try {
+            $createVendor->handle($request->toData());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not create the vendor. Please try again.');
+        }
 
         return back()->with('flash.success', 'Vendor created successfully.');
     }
 
     public function sendForm(SendVendorFormRequest $request, Vendor $vendor, SendVendorForm $sendVendorForm): RedirectResponse
     {
-        $sendVendorForm->handle($vendor, $request->toData());
+        try {
+            $sendVendorForm->handle($vendor, $request->toData());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not send the vendor form. Please try again.');
+        }
 
         return back()->with('flash.success', 'Form sent successfully.');
     }
@@ -89,16 +106,31 @@ class VendorController extends Controller
     {
         $this->authorize('delete', $vendor);
 
-        $deleteVendor->handle($vendor);
+        try {
+            $deleteVendor->handle($vendor);
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('flash.error', 'We could not delete the vendor. Please try again.');
+        }
 
         return to_route('dealer.vendor.index')->with('flash.success', 'Vendor deleted successfully.');
     }
 
-    public function downloadForm(VendorForm $vendorForm, DownloadVendorForm $download): ?StreamedResponse
+    public function downloadForm(VendorForm $vendorForm, DownloadVendorForm $download): StreamedResponse
     {
         $this->authorize('view', $vendorForm->vendor);
 
-        return $download->handle($vendorForm);
+        try {
+            $response = $download->handle($vendorForm);
+        } catch (Throwable $e) {
+            report($e);
+            abort(500, 'We could not generate the vendor form download.');
+        }
+
+        abort_if($response === null, 404);
+
+        return $response;
     }
 
     public function form(Request $request): InertiaResponse|RedirectResponse
@@ -131,7 +163,15 @@ class VendorController extends Controller
             return to_route('dealer.vendors.thankyou');
         }
 
-        $submitVendorForm->handle($vendorForm, $request->toData());
+        try {
+            $submitVendorForm->handle($vendorForm, $request->toData());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not save your submission. Please try again.');
+        }
 
         return to_route('dealer.vendors.thankyou');
     }
