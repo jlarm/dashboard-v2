@@ -372,9 +372,12 @@ Route::name('dealer.')->middleware([
         Route::post('scans/queue-report', [ScansController::class, 'queueReport'])->middleware(['single.store'])->name('scan.queue-report');
         Route::post('scans/refresh-cache', [ScansController::class, 'refreshCache'])->middleware(['single.store'])->name('scan.refresh-cache');
 
-        Route::middleware(['single.store'])->group(function (): void {
+        Route::middleware(['single.store', 'role:super-admin|Consultant'])->group(function (): void {
             Route::get('scans/settings', [CyrismaController::class, 'settings'])->name('scan.settings');
             Route::put('scans/settings', [CyrismaController::class, 'update'])->name('scan.settings.update');
+        });
+
+        Route::middleware(['single.store'])->group(function (): void {
             Route::get('scans/report/{type}', [CyrismaReportController::class, 'download'])->name('scan.report');
         });
 

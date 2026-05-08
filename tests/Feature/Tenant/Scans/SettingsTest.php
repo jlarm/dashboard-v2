@@ -4,13 +4,55 @@ declare(strict_types=1);
 
 use App\Models\Dealer\Cyrisma;
 use App\Models\Dealer\Store;
+use App\Models\User;
 use App\Services\CyrismaService;
 use RuntimeException;
+use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
     $this->store = Store::query()->first();
     app()->instance('currentStore', $this->store->id);
     app()->instance('currentStoreModel', $this->store);
+});
+
+describe('access control', function (): void {
+    it('forbids non-Consultant roles from viewing settings', function (string $role): void {
+        $user = User::query()->create([
+            'name' => $role.' user',
+            'email' => str()->slug($role).'@v.test',
+            'password' => bcrypt('x'),
+        ]);
+        $user->assignRole($role);
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $this->actingAs($user)
+            ->get(route('dealer.scan.settings'))
+            ->assertForbidden();
+    })->with(['Owner', 'CFO', 'GM', 'GSM', 'Qualified Individual', 'Manager', 'Employee', 'Porter/Driver']);
+
+    it('forbids non-Consultant roles from updating settings', function (string $role): void {
+        $user = User::query()->create([
+            'name' => $role.' user',
+            'email' => str()->slug($role).'@v.test',
+            'password' => bcrypt('x'),
+        ]);
+        $user->assignRole($role);
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $this->actingAs($user)
+            ->put(route('dealer.scan.settings.update'), ['instance_id' => 'acme'])
+            ->assertForbidden();
+    })->with(['Owner', 'CFO', 'GM', 'GSM', 'Qualified Individual', 'Manager', 'Employee', 'Porter/Driver']);
+
+    it('allows super-admin to view settings', function (): void {
+        $admin = User::query()->create(['name' => 'A', 'email' => 'sa@v.test', 'password' => bcrypt('x')]);
+        $admin->assignRole('super-admin');
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $this->actingAs($admin)
+            ->get(route('dealer.scan.settings'))
+            ->assertOk();
+    });
 });
 
 describe('GET scans/settings', function (): void {
