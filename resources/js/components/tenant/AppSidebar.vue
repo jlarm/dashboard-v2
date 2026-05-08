@@ -26,6 +26,7 @@ import scan from '@/routes/dealer/scan';
 import sds from '@/routes/dealer/sds';
 import vendor from '@/routes/dealer/vendor';
 import settings from '@/routes/dealer/settings';
+import dealer from '@/routes/dealer/dealer';
 import automatedReports from '@/routes/dealer/settings/automated-reports';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
@@ -119,6 +120,13 @@ const footerNavItems = computed<NavItem[]>(() => {
         items.push({
             title: 'Global Settings',
             href: settings.global.url(),
+            icon: Settings,
+            roles: [Role.SuperAdmin, Role.Consultant],
+        });
+    } else {
+        items.push({
+            title: 'Settings',
+            href: dealer.settings.url(),
             icon: Settings,
             roles: [Role.SuperAdmin, Role.Consultant],
         });
