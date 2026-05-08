@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
 * @route '/documents/shared/{sharedDocument}/download'
 */
 export const download = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ download.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
 * @route '/documents/shared/{sharedDocument}/download'
 */
 download.url = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ download.url = (args: { sharedDocument: string | number } | [sharedDocument: str
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
 * @route '/documents/shared/{sharedDocument}/download'
 */
 download.get = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ download.get = (args: { sharedDocument: string | number } | [sharedDocument: str
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
 * @route '/documents/shared/{sharedDocument}/download'
 */
 download.head = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -63,7 +63,7 @@ download.head = (args: { sharedDocument: string | number } | [sharedDocument: st
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
 * @route '/documents/shared/{sharedDocument}/download'
 */
 const downloadForm = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -73,7 +73,7 @@ const downloadForm = (args: { sharedDocument: string | number } | [sharedDocumen
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
 * @route '/documents/shared/{sharedDocument}/download'
 */
 downloadForm.get = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -83,7 +83,7 @@ downloadForm.get = (args: { sharedDocument: string | number } | [sharedDocument:
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:74
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
 * @route '/documents/shared/{sharedDocument}/download'
 */
 downloadForm.head = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

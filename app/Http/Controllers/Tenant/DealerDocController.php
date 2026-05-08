@@ -44,7 +44,15 @@ class DealerDocController extends Controller
 
     public function store(StoreDealerDocRequest $request, CreateDealerDoc $createDealerDoc): RedirectResponse
     {
-        $createDealerDoc->handle($request->toData());
+        try {
+            $createDealerDoc->handle($request->toData());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not save the document. Please try again.');
+        }
 
         return back()->with('flash.success', 'Document added successfully.');
     }
@@ -53,20 +61,26 @@ class DealerDocController extends Controller
     {
         $this->authorize('delete', $dealerDoc);
 
-        $deleteDealerDoc->handle($dealerDoc);
+        try {
+            $deleteDealerDoc->handle($dealerDoc);
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('flash.error', 'We could not delete the document. Please try again.');
+        }
 
         return back()->with('flash.success', 'Document deleted successfully.');
     }
 
-    /**
-     * @throws Throwable
-     */
     public function download(DealerDoc $dealerDoc): StreamedResponse
     {
-        abort_unless(is_string($dealerDoc->file_path) && $dealerDoc->file_path !== '', 404);
+        $disk = Storage::disk('dealer-docs');
+        $filePath = $dealerDoc->file_path;
 
-        return Storage::disk('dealer-docs')->response(
-            $dealerDoc->file_path,
+        abort_unless(is_string($filePath) && $filePath !== '' && $disk->exists($filePath), 404);
+
+        return $disk->response(
+            $filePath,
             $dealerDoc->file_name !== '' ? $dealerDoc->file_name : null,
         );
     }
@@ -75,10 +89,11 @@ class DealerDocController extends Controller
     {
         return tenancy()->central(function () use ($sharedDocument): StreamedResponse {
             $doc = SharedDocument::query()->findOrFail($sharedDocument);
+            $disk = Storage::disk('central-docs');
 
-            abort_unless(is_string($doc->file_name) && $doc->file_name !== '', 404);
+            abort_unless(is_string($doc->file_name) && $doc->file_name !== '' && $disk->exists($doc->file_name), 404);
 
-            return Storage::disk('central-docs')->response($doc->file_name);
+            return $disk->response($doc->file_name);
         });
     }
 }

@@ -258,4 +258,35 @@ describe('DealerDoc download', function (): void {
             ->get(route('dealer.doc.download', $doc))
             ->assertOk();
     });
+
+    it('returns a 404 when the file is missing on disk', function (): void {
+        $store = Store::query()->firstOrFail();
+
+        $doc = DealerDoc::query()->create([
+            'store_id' => $store->id,
+            'title' => 'Handbook',
+            'file_name' => 'handbook.pdf',
+            'file_path' => 'tenant/handbook.pdf',
+        ]);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.doc.download', $doc))
+            ->assertNotFound();
+    });
+
+    it('returns a 404 when the doc has no file', function (): void {
+        $store = Store::query()->firstOrFail();
+
+        $doc = DealerDoc::query()->create([
+            'store_id' => $store->id,
+            'title' => 'Url only',
+            'file_name' => '',
+            'file_path' => '',
+            'url' => 'https://example.com',
+        ]);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.doc.download', $doc))
+            ->assertNotFound();
+    });
 });

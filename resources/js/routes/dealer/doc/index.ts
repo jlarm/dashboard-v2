@@ -139,7 +139,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:64
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
 * @route '/documents/{dealerDoc}/download'
 */
 export const download = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -154,7 +154,7 @@ download.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:64
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
 * @route '/documents/{dealerDoc}/download'
 */
 download.url = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ download.url = (args: { dealerDoc: string | number | { id: string | number } } |
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:64
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
 * @route '/documents/{dealerDoc}/download'
 */
 download.get = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -197,7 +197,7 @@ download.get = (args: { dealerDoc: string | number | { id: string | number } } |
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:64
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
 * @route '/documents/{dealerDoc}/download'
 */
 download.head = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -207,7 +207,7 @@ download.head = (args: { dealerDoc: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:64
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
 * @route '/documents/{dealerDoc}/download'
 */
 const downloadForm = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -217,7 +217,7 @@ const downloadForm = (args: { dealerDoc: string | number | { id: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:64
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
 * @route '/documents/{dealerDoc}/download'
 */
 downloadForm.get = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -227,7 +227,7 @@ downloadForm.get = (args: { dealerDoc: string | number | { id: string | number }
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
-* @see app/Http/Controllers/Tenant/DealerDocController.php:64
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
 * @route '/documents/{dealerDoc}/download'
 */
 downloadForm.head = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -244,7 +244,7 @@ download.form = downloadForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::destroy
-* @see app/Http/Controllers/Tenant/DealerDocController.php:52
+* @see app/Http/Controllers/Tenant/DealerDocController.php:60
 * @route '/documents/{dealerDoc}'
 */
 export const destroy = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -259,7 +259,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::destroy
-* @see app/Http/Controllers/Tenant/DealerDocController.php:52
+* @see app/Http/Controllers/Tenant/DealerDocController.php:60
 * @route '/documents/{dealerDoc}'
 */
 destroy.url = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -292,7 +292,7 @@ destroy.url = (args: { dealerDoc: string | number | { id: string | number } } | 
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::destroy
-* @see app/Http/Controllers/Tenant/DealerDocController.php:52
+* @see app/Http/Controllers/Tenant/DealerDocController.php:60
 * @route '/documents/{dealerDoc}'
 */
 destroy.delete = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -302,7 +302,7 @@ destroy.delete = (args: { dealerDoc: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::destroy
-* @see app/Http/Controllers/Tenant/DealerDocController.php:52
+* @see app/Http/Controllers/Tenant/DealerDocController.php:60
 * @route '/documents/{dealerDoc}'
 */
 const destroyForm = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -317,7 +317,7 @@ const destroyForm = (args: { dealerDoc: string | number | { id: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::destroy
-* @see app/Http/Controllers/Tenant/DealerDocController.php:52
+* @see app/Http/Controllers/Tenant/DealerDocController.php:60
 * @route '/documents/{dealerDoc}'
 */
 destroyForm.delete = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
