@@ -14,11 +14,17 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $audit_date
+ * @property string|null $name
+ * @property-read Store|null $store
+ */
 class OshaAudit extends Model implements HasMedia
 {
     use InteractsWithMedia, LogsActivity;
@@ -26,11 +32,17 @@ class OshaAudit extends Model implements HasMedia
     #[Override]
     protected $guarded = [];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -48,11 +60,9 @@ class OshaAudit extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
-        /** @phpstan-ignore-next-line */
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
+        $this->addMediaConversion('preview')
+            ->nonQueued()
+            ->fit(Fit::Crop, 300, 300);
     }
 
     public function getPathToMedia(Media $media): string

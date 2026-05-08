@@ -13,6 +13,12 @@ use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property string|null $name
+ * @property string|null $contact_name
+ * @property string|null $contact_email
+ */
 class Vendor extends Model
 {
     use LogsActivity;
@@ -71,6 +77,9 @@ class Vendor extends Model
         'q22c',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
@@ -83,11 +92,17 @@ class Vendor extends Model
             ->logExcept(['signature']);
     }
 
+    /**
+     * @return HasMany<VendorForm, $this>
+     */
     public function forms(): HasMany
     {
         return $this->hasMany(VendorForm::class);
     }
 
+    /**
+     * @return HasOne<VendorForm, $this>
+     */
     public function latestForm(): HasOne
     {
         return $this->hasOne(VendorForm::class)->latestOfMany();

@@ -23,6 +23,7 @@ class CheckMultiStateUsersCommand extends Command
     {
         $tenantId = $this->option('tenant');
 
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Dealership> $tenants */
         $tenants = Dealership::query()
             ->when(
                 is_string($tenantId) && $tenantId !== '',

@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Override;
+use Spatie\Image\Enums\CropPosition;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string|null $comment
+ * @property-read User|null $user
+ * @property \Illuminate\Support\Carbon|null $created_at
+ */
 class AuditComment extends Model implements HasMedia
 {
     use InteractsWithMedia;
@@ -38,7 +46,7 @@ class AuditComment extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->crop('crop-center', 400, 400)
+            ->crop(400, 400, CropPosition::Center)
             ->quality(80);
 
         $this->addMediaConversion('compressed')

@@ -62,7 +62,7 @@ class StreamAuditPdf
 
     private function resolveNodeBinary(): string
     {
-        $configured = env('BROWSERSHOT_NODE_BINARY');
+        $configured = config('services.browsershot.node_binary');
 
         if (is_string($configured) && $configured !== '' && File::exists($configured)) {
             return $configured;
@@ -74,7 +74,7 @@ class StreamAuditPdf
             }
         }
 
-        $home = Request::server('HOME') ?? getenv('HOME') ?? '';
+        $home = (string) (Request::server('HOME') ?: getenv('HOME') ?: '');
         if ($home !== '') {
             $herdNvm = $home.'/Library/Application Support/Herd/config/nvm/versions/node';
             if (is_dir($herdNvm)) {

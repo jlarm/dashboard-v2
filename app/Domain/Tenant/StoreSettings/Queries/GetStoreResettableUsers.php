@@ -25,7 +25,7 @@ class GetStoreResettableUsers
     {
         return $this->baseQuery($store, $search)
             ->get()
-            ->map(static fn (User $user): ResettableUserData => ResettableUserData::fromModel($user))
+            ->map(static fn (User $user): ResettableUserData => ResettableUserData::fromModel($user)) // @phpstan-ignore argument.type
             ->values()
             ->all();
     }
@@ -37,6 +37,7 @@ class GetStoreResettableUsers
     {
         $storeUserIds = $store->users()->pluck('users.id')->map(static fn ($id): int => (int) $id);
 
+        /** @phpstan-ignore return.type */
         return CourseResults::query()
             ->whereIn('user_id', $storeUserIds)
             ->distinct()

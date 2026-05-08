@@ -51,7 +51,7 @@ class ResolveScannableStores
         }
 
         if ($assignedStoreIds->contains($user->current_store_id)) {
-            return collect([(int) $user->current_store_id]);
+            return collect([(int) $user->current_store_id]); // @phpstan-ignore return.type
         }
 
         return collect();

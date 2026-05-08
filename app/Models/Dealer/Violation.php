@@ -13,10 +13,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Override;
+use Spatie\Image\Enums\CropPosition;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @property int $id
+ * @property string|null $uuid
+ * @property int|null $statement_id
+ * @property string|null $statement
+ * @property string|null $comment
+ * @property \Illuminate\Support\Carbon|null $violation_date
+ * @property bool $risk
+ * @property int|null $severity
+ * @property bool $show_reference_image
+ * @property-read Remediation|null $remediation
+ */
 class Violation extends Model implements HasMedia
 {
     use InteractsWithMedia;
@@ -38,15 +52,14 @@ class Violation extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->crop('crop-center', 400, 400)
+            ->crop(400, 400, CropPosition::Center)
             ->quality(80)
             ->width(202)
             ->height(150);
 
         $this->addMediaConversion('audit-view')
-            ->fit('max', 1500, 1500)
+            ->fit(Fit::Max, 1500, 1500)
             ->quality(80);
-
     }
 
     public function auditable(): MorphTo

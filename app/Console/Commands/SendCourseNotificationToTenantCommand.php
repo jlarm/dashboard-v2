@@ -23,13 +23,7 @@ class SendCourseNotificationToTenantCommand extends Command
 
     public function handle(): void
     {
-        $courseLink = $this->argument('courseLink');
-
-        if (! is_string($courseLink)) {
-            $this->error('Invalid course link provided');
-
-            return;
-        }
+        $courseLink = (string) $this->argument('courseLink');
 
         /** @var Collection<int, string> $tenants */
         $tenants = collect($this->option('tenants'))

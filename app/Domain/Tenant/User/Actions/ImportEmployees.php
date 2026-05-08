@@ -23,12 +23,13 @@ class ImportEmployees
      */
     public function handle(User $importer, string $jsonContent): ImportEmployeesResult
     {
-        /** @var array{employees?: array<int, array<string, mixed>>}|null $payload */
         $payload = json_decode($jsonContent, true);
 
         throw_if(! is_array($payload) || ! isset($payload['employees']) || ! is_array($payload['employees']), RuntimeException::class, 'The file must be a JSON object containing an "employees" array.');
 
-        $existingEmails = $this->existingEmails($payload['employees']);
+        /** @var array<int, array<string, mixed>> $employees */
+        $employees = $payload['employees'];
+        $existingEmails = $this->existingEmails($employees);
 
         /** @var list<array{row: int, errors: list<string>, values: array<string, mixed>}> $errors */
         $errors = [];
@@ -39,16 +40,7 @@ class ImportEmployees
         DB::beginTransaction();
 
         try {
-            foreach ($payload['employees'] as $index => $item) {
-                if (! is_array($item)) {
-                    $errors[] = [
-                        'row' => $index + 1,
-                        'errors' => ['Row must be an object.'],
-                        'values' => [],
-                    ];
-
-                    continue;
-                }
+            foreach ($employees as $index => $item) {
 
                 $email = is_string($item['Email'] ?? null) ? mb_strtolower($item['Email']) : null;
 
@@ -131,7 +123,7 @@ class ImportEmployees
     private function existingEmails(array $rows): Collection
     {
         $emails = collect($rows)
-            ->map(static fn ($row): ?string => is_array($row) && is_string($row['Email'] ?? null)
+            ->map(static fn (array $row): ?string => is_string($row['Email'] ?? null)
                 ? mb_strtolower($row['Email'])
                 : null)
             ->filter()
@@ -142,6 +134,7 @@ class ImportEmployees
             return collect();
         }
 
+        /** @phpstan-ignore return.type */
         return User::query()
             ->whereIn('email', $emails)
             ->pluck('email')

@@ -37,8 +37,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $id
  * @property string $name
  * @property string|null $email
+ * @property string|null $slug
+ * @property \Illuminate\Support\Carbon|null $last_sent_course_reminder
+ * @property \Illuminate\Support\Carbon|null $last_login_at
  * @property-read int $total_user_courses
  * @property-read int $total_completed_courses
+ * @property-read int|null $completed_courses_count
  * @property-read bool $user_has_not_completed_courses
  */
 #[ObservedBy(UserObserver::class)]
@@ -75,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * @return BelongsTo<Store, User>
+     * @return BelongsTo<Store, $this>
      */
     public function currentStore(): BelongsTo
     {
@@ -83,7 +87,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return BelongsTo<Store, User>
+     * @return BelongsTo<Store, $this>
      */
     public function primaryStore(): BelongsTo
     {
@@ -96,7 +100,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Contract>
+     * @return HasMany<Contract, $this>
      */
     public function contracts(): HasMany
     {
@@ -104,7 +108,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return BelongsToMany<Dealership>
+     * @return BelongsToMany<Dealership, $this>
      */
     public function dealerships(): BelongsToMany
     {
@@ -112,7 +116,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return BelongsToMany<Store>
+     * @return BelongsToMany<Store, $this>
      */
     public function stores(): BelongsToMany
     {
@@ -120,7 +124,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return BelongsTo<Department, User>
+     * @return BelongsTo<Department, $this>
      */
     public function department(): BelongsTo
     {
@@ -128,7 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Invite>
+     * @return HasMany<Invite, $this>
      */
     public function invites(): HasMany
     {
@@ -136,7 +140,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Certificate>
+     * @return HasMany<Certificate, $this>
      */
     public function certificates(): HasMany
     {
@@ -144,7 +148,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<PhishingCampaign>
+     * @return HasMany<PhishingCampaign, $this>
      */
     public function phishingCampaigns(): HasMany
     {
@@ -152,7 +156,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Timeline>
+     * @return HasMany<Timeline, $this>
      */
     public function timelines(): HasMany
     {
@@ -160,7 +164,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<FitTestDoc>
+     * @return HasMany<FitTestDoc, $this>
      */
     public function fitTests(): HasMany
     {
@@ -168,7 +172,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<VideoProgress>
+     * @return HasMany<VideoProgress, $this>
      */
     public function videoProgress(): HasMany
     {
@@ -176,7 +180,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<RemediationReminderPreference>
+     * @return HasMany<RemediationReminderPreference, $this>
      */
     public function remediationReminderPreferences(): HasMany
     {
@@ -268,14 +272,15 @@ class User extends Authenticatable implements MustVerifyEmail
             get: function (mixed $value, array $attributes): string {
                 $name = $attributes['name'] ?? '';
 
-                return (string) Str::of($name)
-                    ->trim()
-                    ->explode(' ')
-                    ->filter()
-                    ->take(2)
-                    ->map(fn (string $word) => Str::substr($word, 0, 1))
-                    ->implode('')
-                    ->upper();
+                return Str::upper(
+                    Str::of($name)
+                        ->trim()
+                        ->explode(' ')
+                        ->filter()
+                        ->take(2)
+                        ->map(fn (string $word) => Str::substr($word, 0, 1))
+                        ->implode('')
+                );
             }
         );
     }

@@ -12,6 +12,15 @@ use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property int $id
+ * @property int $vendor_id
+ * @property string|null $name
+ * @property string|null $email
+ * @property string|null $signature
+ * @property string|null $document_path
+ * @property-read Vendor|null $vendor
+ */
 class VendorForm extends Model
 {
     use LogsActivity, SoftDeletes;
@@ -27,11 +36,17 @@ class VendorForm extends Model
         'document_path',
     ];
 
+    /**
+     * @return BelongsTo<Vendor, $this>
+     */
     public function vendor(): BelongsTo
     {
         return $this->belongsTo(Vendor::class);
     }
 
+    /**
+     * @return HasMany<VendorEmailLog, $this>
+     */
     public function emailLogs(): HasMany
     {
         return $this->hasMany(VendorEmailLog::class);

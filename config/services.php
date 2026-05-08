@@ -30,4 +30,8 @@ return [
         'notification_email' => env('DEALERSHIP_NOTIFICATION_EMAIL', 'jlohr@autorisknow.com'),
     ],
 
+    'browsershot' => [
+        'node_binary' => env('BROWSERSHOT_NODE_BINARY'),
+    ],
+
 ];

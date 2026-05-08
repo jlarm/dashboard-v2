@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Override;
 use Spatie\Permission\Models\Role;
 
+/**
+ * @property array<int, string>|null $states_required
+ * @property array<int, string>|null $replaces_course_slugs
+ * @property array<int, mixed>|null $answers
+ */
 class Course extends AbstractCourse
 {
     protected string $guard_name = 'web';

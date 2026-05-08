@@ -6,6 +6,7 @@ namespace App\Domain\Tenant\Compliance\Queries;
 
 use App\Domain\Tenant\Compliance\Data\PillarScoreData;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
@@ -28,7 +29,7 @@ class CalculateAuditPillar
     private const float REMEDIATION_PENALTY_CAP = 30.0;
 
     /**
-     * @var array<string, array{label: string, class: class-string<Model>}>
+     * @var array<string, array{label: string, class: class-string<ViolationAudit&Model>}>
      */
     private const array AUDIT_TYPES = [
         'osha' => ['label' => 'OSHA', 'class' => OshaViolationAudit::class],
@@ -82,9 +83,7 @@ class CalculateAuditPillar
             $appliedScores[] = $score;
         }
 
-        $score = $appliedScores === []
-            ? self::STALE_PILLAR_FALLBACK
-            : array_sum($appliedScores) / count($appliedScores);
+        $score = array_sum($appliedScores) / count($appliedScores);
 
         return new PillarScoreData(
             key: 'audit',
@@ -97,11 +96,12 @@ class CalculateAuditPillar
     }
 
     /**
-     * @param  class-string<Model>  $modelClass
+     * @param  class-string<ViolationAudit&Model>  $modelClass
+     * @return (ViolationAudit&Model)|null
      */
     private function latestAudit(string $modelClass, int $storeId): ?Model
     {
-        /** @var Builder<Model> $query */
+        /** @var Builder<ViolationAudit&Model> $query */
         $query = $modelClass::query();
 
         return $query

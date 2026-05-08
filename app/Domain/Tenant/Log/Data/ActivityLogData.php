@@ -36,7 +36,7 @@ final readonly class ActivityLogData implements Arrayable
             description: $activity->description,
             subjectType: $activity->subject_type !== null ? class_basename($activity->subject_type) : null,
             subjectId: $activity->subject_id,
-            causerName: $activity->causer?->name,
+            causerName: $activity->causer === null ? null : (string) $activity->causer->getAttribute('name'),
             createdAt: $activity->created_at?->toIso8601String(),
             createdAtDiff: $activity->created_at?->diffForHumans(),
             createdAtHuman: $activity->created_at?->format('F j, Y \a\t g:i A'),

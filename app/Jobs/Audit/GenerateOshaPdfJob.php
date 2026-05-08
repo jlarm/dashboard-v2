@@ -58,9 +58,9 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
         $statementIds = $violations->pluck('statement_id')->filter()->unique();
         $statements = tenancy()->central(fn () => OshaViolationStatements::query()->whereIn('id', $statementIds)->get()->keyBy('id'));
 
-        $totalPotentialWeight = $violations->sum(fn ($v) => $statements->get($v->statement_id)?->weight ?? 1);
-        $totalPenalty = $violations->sum(function ($v) use ($statements): int|float {
-            $weight = $statements->get($v->statement_id)?->weight ?? 1;
+        $totalPotentialWeight = $violations->sum(fn (Violation $v) => $statements->get($v->statement_id)->weight ?? 1);
+        $totalPenalty = $violations->sum(function (Violation $v) use ($statements): int|float {
+            $weight = $statements->get($v->statement_id)->weight ?? 1;
             $effectiveWeight = ($v->risk ?? false) ? ($weight * 3) : $weight;
 
             return $effectiveWeight * (($v->severity ?? 1) / 10);

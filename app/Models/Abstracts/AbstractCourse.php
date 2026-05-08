@@ -25,7 +25,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property array $slides
  * @property array $questions
  * @property bool $optional
- * @property string $video_id
+ * @property string|null $video_id
  * @property CarbonInterface $created_at
  * @property CarbonInterface $updated_at
  */
@@ -43,6 +43,9 @@ abstract class AbstractCourse extends Model
         return $this->hasMany(CourseResults::class);
     }
 
+    /**
+     * @return HasOne<CourseResults, $this>
+     */
     final public function latestUserResult(): HasOne
     {
         return $this->hasOne(CourseResults::class)->ofMany(

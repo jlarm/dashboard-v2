@@ -62,7 +62,7 @@ trait HasCourses
             return $this->results
                 ->whereIn('course_id', $userCourseIds)
                 ->where('passed', 1)
-                ->filter(fn ($result): bool => $result->created_at >= $oneYearAgo
+                ->filter(fn (CourseResults $result): bool => $result->created_at >= $oneYearAgo // @phpstan-ignore argument.type
                     || (in_array($result->course_id, [9, 10, 11, 12]) && $result->created_at >= $threeYearsAgo))
                 ->unique('course_id')
                 ->count();

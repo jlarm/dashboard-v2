@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Central;
 
+use App\Models\Central\UserInvite;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
 
+/**
+ * @mixin UserInvite
+ */
 class UserInviteResource extends JsonResource
 {
     #[Override]

@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
 
+/**
+ * @property int $id
+ * @property string|null $event_type
+ * @property string|null $delivery_message
+ * @property \Illuminate\Support\Carbon|null $sent_at
+ * @property \Illuminate\Support\Carbon|null $delivered_at
+ */
 class VendorEmailLog extends Model
 {
     #[Override]

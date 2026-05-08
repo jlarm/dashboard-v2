@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Central;
 
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
 
+/**
+ * @mixin Contract
+ */
 class ContractResource extends JsonResource
 {
     #[Override]

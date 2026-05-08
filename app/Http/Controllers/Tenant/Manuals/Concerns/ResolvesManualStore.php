@@ -42,6 +42,6 @@ trait ResolvesManualStore
         /** @var Collection<int, int> $storeIds */
         $storeIds = resolve(ResolveManualStores::class)->handle($user);
 
-        abort_unless($storeIds->contains((int) $manual->store_id), 404);
+        abort_unless($storeIds->contains((int) $manual->getAttribute('store_id')), 404);
     }
 }

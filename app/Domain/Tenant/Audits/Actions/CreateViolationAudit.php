@@ -17,11 +17,14 @@ class CreateViolationAudit
     {
         $modelClass = $type->modelClass();
 
-        return $modelClass::query()->create([
+        /** @var ViolationAudit&Model $audit */
+        $audit = $modelClass::query()->create([
             'uuid' => (string) Str::uuid(),
             'user_id' => $user->id,
             'store_id' => $store->id,
             'date' => now()->format('Y-m-d'),
         ]);
+
+        return $audit;
     }
 }

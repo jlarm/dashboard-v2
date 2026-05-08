@@ -143,7 +143,7 @@ class VendorController extends Controller
             return to_route('dealer.vendors.thankyou');
         }
 
-        $storeName = $vendorForm->vendor->store?->name
+        $storeName = $vendorForm->vendor->store->name
             ?? Store::query()->orderBy('id')->value('name')
             ?? '';
 

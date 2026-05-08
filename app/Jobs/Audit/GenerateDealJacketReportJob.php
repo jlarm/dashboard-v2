@@ -6,8 +6,6 @@ namespace App\Jobs\Audit;
 
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\User;
-use Filament\Notifications\Actions\Action;
-use Filament\Notifications\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -41,7 +39,6 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         $fileNameStoreName = str_replace(' ', '-', $storeName);
         $fileName = $this->createFileName($fileNameStoreName);
         $this->createPdf($path, $fileName, $storeName);
-        $this->sendNotification($fileName);
     }
 
     public function failed(?Throwable $exception): void
@@ -83,7 +80,7 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         $allUsers = [];
 
         foreach ($dealJackets as $dealJacket) {
-            $userName = $dealJacket->user?->name ?? 'House';
+            $userName = $dealJacket->user->name ?? 'House';
             $issueCount = 0;
 
             if (! isset($issuesByUser[$userName])) {
@@ -184,7 +181,7 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 
     private function resolveNodeBinary(): string
     {
-        $configured = env('BROWSERSHOT_NODE_BINARY');
+        $configured = config('services.browsershot.node_binary');
 
         if (is_string($configured) && $configured !== '' && File::exists($configured)) {
             return $configured;
@@ -202,23 +199,5 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         }
 
         return 'node';
-    }
-
-    private function sendNotification(string $fileName): void
-    {
-        $notification = Notification::make()
-            ->title('Deal Jacket Report Ready')
-            ->body('Your deal jacket report has been generated successfully. Click the button below to view it. This report will expire in 24 hours.')
-            ->success()
-            ->actions([
-                Action::make('download')
-                    ->label('View Report')
-                    ->url(route('dealer.audit.deal-jacket-reports.download', ['fileName' => $fileName]))
-                    ->openUrlInNewTab()
-                    ->button(),
-            ]);
-
-        $notification->sendToDatabase($this->user);
-        $notification->send();
     }
 }

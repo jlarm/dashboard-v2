@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Central;
 
+use App\Models\Sds;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
 
+/**
+ * @mixin Sds
+ */
 class SdsResource extends JsonResource
 {
     #[Override]
@@ -20,7 +24,7 @@ class SdsResource extends JsonResource
             'manufacturer' => $this->manufacturer,
             'keywords' => $this->keywords ?? [],
             'file_name' => $this->file_name,
-            'download_url' => $this->file_name !== null
+            'download_url' => $this->file_name !== ''
                 ? route('sds.download', $this->resource)
                 : null,
         ];

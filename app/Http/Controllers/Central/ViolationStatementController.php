@@ -92,7 +92,7 @@ class ViolationStatementController extends Controller
             ->with('flash.success', 'Violation statement deleted.');
     }
 
-    private function violationStatementData(Request $request): ViolationStatementData
+    private function violationStatementData(\Illuminate\Foundation\Http\FormRequest $request): ViolationStatementData
     {
         /** @var array{statement: string, weight: int, categories: list<string>, keywords?: list<string>|null} $validated */
         $validated = $request->validated();

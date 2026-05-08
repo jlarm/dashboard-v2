@@ -18,7 +18,8 @@ class LegacyAuditListItemData
 
     public static function fromModel(Model $legacy): self
     {
-        $date = $legacy->audit_date;
+        /** @var \Illuminate\Support\Carbon $date */
+        $date = $legacy->audit_date; // @phpstan-ignore property.notFound
         $rating = (int) ($legacy->rating ?? 0);
 
         return new self(

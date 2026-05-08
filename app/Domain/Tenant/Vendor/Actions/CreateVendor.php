@@ -7,6 +7,7 @@ namespace App\Domain\Tenant\Vendor\Actions;
 use App\Domain\Tenant\Vendor\Data\CreateVendorData;
 use App\Jobs\SendVendorEmailJob;
 use App\Models\Dealer\Vendor;
+use App\Models\Dealer\VendorForm;
 
 class CreateVendor
 {
@@ -19,6 +20,7 @@ class CreateVendor
             'store_id' => $data->storeId,
         ]);
 
+        /** @var VendorForm $vendorForm */
         $vendorForm = $vendor->forms()->create([
             'name' => $vendor->contact_name,
             'email' => $vendor->contact_email,

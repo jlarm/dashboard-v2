@@ -17,6 +17,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Role;
 
 /**
+ * @property int $id
+ * @property string $slug
+ * @property string $name
+ * @property bool $optional
+ * @property string|null $video_id
+ * @property array<int, mixed>|null $slides
+ * @property array<int, mixed>|null $questions
+ * @property array<int, string>|null $states_required
+ * @property array<int, string>|null $replaces_course_slugs
  * @property-read Pivot|null $pivot
  * @property-read CourseResults|null $lastResult
  */

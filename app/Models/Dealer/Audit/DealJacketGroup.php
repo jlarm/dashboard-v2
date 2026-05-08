@@ -30,11 +30,17 @@ class DealJacketGroup extends Model
         'completed',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
     }
 
+    /**
+     * @return HasMany<DealJacket, $this>
+     */
     public function dealJackets(): HasMany
     {
         return $this->hasMany(DealJacket::class);

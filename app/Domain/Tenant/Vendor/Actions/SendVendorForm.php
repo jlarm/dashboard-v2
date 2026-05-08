@@ -13,6 +13,7 @@ class SendVendorForm
 {
     public function handle(Vendor $vendor, SendVendorFormData $data): VendorForm
     {
+        /** @var VendorForm $vendorForm */
         $vendorForm = $vendor->forms()->create([
             'name' => $data->name,
             'email' => $data->email,

@@ -39,10 +39,6 @@ class UpdateViolationAudit
             }
 
             foreach ($images as $image) {
-                if (! $image instanceof UploadedFile) {
-                    continue;
-                }
-
                 $position = $this->nextEmptyPhotoSlot($violation);
                 if ($position === null) {
                     break;

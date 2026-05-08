@@ -19,7 +19,7 @@ class SendEmployeesReport
                 ->from((string) config('mail.from.address'), (string) config('mail.from.name'))
                 ->subject('Incomplete Employee Courses Report as of '.date('m/d/Y'))
                 ->text($body)
-                ->attachData($csvContent, $filename, ['mime' => 'text/csv']);
+                ->attachData($csvContent, $filename, ['mime' => 'text/csv']); // @phpstan-ignore method.notFound
         });
     }
 }

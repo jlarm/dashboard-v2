@@ -47,10 +47,10 @@ class AutomatedReportsController extends Controller
 
         return Inertia::render('tenant/settings/AutomatedReports', [
             'settings' => [
-                'compliance_summary_active' => (bool) ($settings?->compliance_summary_active ?? false),
-                'compliance_summary_frequency' => $settings?->compliance_summary_frequency?->value
+                'compliance_summary_active' => (bool) ($settings->compliance_summary_active ?? false),
+                'compliance_summary_frequency' => $settings?->compliance_summary_frequency->value
                     ?? ComplianceSummaryFrequency::Monthly->value,
-                'compliance_summary_recipients' => $settings?->compliance_summary_recipients ?? [],
+                'compliance_summary_recipients' => $settings->compliance_summary_recipients ?? [],
             ],
             'availableRecipients' => $availableRecipients,
             'frequencies' => array_map(

@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Central;
 
+use App\Models\SharedDocument;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 use Override;
 
+/**
+ * @mixin SharedDocument
+ */
 class SharedDocumentResource extends JsonResource
 {
     #[Override]

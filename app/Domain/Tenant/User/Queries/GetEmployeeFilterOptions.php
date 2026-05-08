@@ -49,7 +49,9 @@ class GetEmployeeFilterOptions
     }
 
     /**
-     * @param  Collection<int, Department|Role>  $models
+     * @template TModel of Department|Role
+     *
+     * @param  Collection<int, TModel>  $models
      * @return list<array{id: int, name: string}>
      */
     private function mapOptions(Collection $models): array

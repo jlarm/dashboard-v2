@@ -46,7 +46,7 @@ class ViolationAuditListItemData
             completedDate: $audit->completed_date?->format('Y-m-d'),
             hasPdf: ! empty($audit->pdf_path),
             hasRemediationPdf: ! empty($audit->remediation_pdf_path),
-            storeName: (string) ($audit->store?->name ?? ''),
+            storeName: (string) ($audit->store->name ?? ''),
         );
     }
 

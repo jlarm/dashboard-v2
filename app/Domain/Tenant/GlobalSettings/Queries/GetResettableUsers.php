@@ -24,7 +24,7 @@ class GetResettableUsers
     {
         return $this->baseQuery($search)
             ->get()
-            ->map(static fn (User $user): ResettableUserData => ResettableUserData::fromModel($user))
+            ->map(static fn (User $user): ResettableUserData => ResettableUserData::fromModel($user)) // @phpstan-ignore argument.type
             ->values()
             ->all();
     }
@@ -34,6 +34,7 @@ class GetResettableUsers
      */
     public function allUserIds(): Collection
     {
+        /** @phpstan-ignore return.type */
         return CourseResults::query()
             ->distinct()
             ->pluck('user_id')

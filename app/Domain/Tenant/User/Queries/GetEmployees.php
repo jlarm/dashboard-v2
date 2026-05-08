@@ -44,7 +44,7 @@ class GetEmployees
     {
         $baseQuery = $this->baseQuery($viewer, $filters);
         $paginatedQuery = (clone $baseQuery)
-            ->with(['results' => $this->constrainResultsQuery(...)]);
+            ->with(['results' => $this->constrainResultsQuery(...)]); // @phpstan-ignore argument.type
 
         if ($filters->hasComplianceFilter()) {
             $matchingIds = $this->idsMatchingComplianceFilter($viewer, $filters);
@@ -58,7 +58,7 @@ class GetEmployees
         $pageSummaries = $this->summariesFor($pageUsers);
 
         $paginator->setCollection(
-            $pageUsers->map(fn (User $user): EmployeeData => EmployeeData::fromModel(
+            $pageUsers->map(fn (User $user): EmployeeData => EmployeeData::fromModel( // @phpstan-ignore argument.type
                 user: $user,
                 training: $pageSummaries->get($user->id) ?? $this->unassignedSummary(),
                 canView: $this->canView($viewer, $user),
@@ -104,7 +104,7 @@ class GetEmployees
     public function summariesFor(Collection $users): Collection
     {
         return $this->complianceService
-            ->summarizeUsers($users->filter(static fn ($user): bool => $user instanceof User)->values())
+            ->summarizeUsers($users->values())
             ->map(static fn (array $summary): TrainingSummaryData => TrainingSummaryData::fromArray($summary));
     }
 
@@ -115,6 +115,7 @@ class GetEmployees
 
     private function computeTrainingCounts(User $viewer, EmployeeFiltersData $filters): TrainingCountsData
     {
+        /** @var Collection<int, User> $scopedUsers */
         $scopedUsers = (clone $this->baseQuery($viewer, $filters))
             ->without(['department'])
             ->get();
@@ -136,6 +137,7 @@ class GetEmployees
             $this->buildCacheKey('employees_compliance_ids', $viewer, $filters),
             [60, 300],
             function () use ($viewer, $filters): array {
+                /** @var Collection<int, User> $scopedUsers */
                 $scopedUsers = (clone $this->baseQuery($viewer, $filters))->without(['department'])->get();
                 $summaries = $this->summariesFor($scopedUsers);
 

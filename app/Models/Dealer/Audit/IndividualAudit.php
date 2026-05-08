@@ -12,12 +12,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Concerns\HasUuid;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $audit_date
+ * @property int|null $rating
+ */
 class IndividualAudit extends Model implements HasMedia
 {
     use HasUuid, InteractsWithMedia, LogsActivity;
@@ -25,6 +30,9 @@ class IndividualAudit extends Model implements HasMedia
     #[Override]
     protected $guarded = [];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
@@ -32,11 +40,9 @@ class IndividualAudit extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
-        /** @phpstan-ignore-next-line */
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
+        $this->addMediaConversion('preview')
+            ->nonQueued()
+            ->fit(Fit::Crop, 300, 300);
     }
 
     public function getPathToMedia(Media $media): string
@@ -54,11 +60,17 @@ class IndividualAudit extends Model implements HasMedia
         return $this->belongsTo(self::class, 'parent_id')->with('parent');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function manager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'manager_id');

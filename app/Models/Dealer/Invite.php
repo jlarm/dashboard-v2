@@ -14,6 +14,14 @@ use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property string|null $email
+ * @property string|null $name
+ * @property array<int, mixed>|null $stores
+ * @property array<int, mixed>|null $roles
+ * @property array<int, mixed>|null $courses
+ * @property \Illuminate\Support\Carbon $created_at
+ */
 class Invite extends Model
 {
     use LogsActivity;
@@ -32,11 +40,17 @@ class Invite extends Model
         'courses',
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

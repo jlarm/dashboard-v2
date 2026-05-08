@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
-use Filament\Notifications\Actions\Action;
-use Filament\Notifications\Notification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -37,10 +35,11 @@ class CourseResultsController extends Controller
                 }])
                 ->chunk(500, function ($courses) use ($handle): void {
                     foreach ($courses as $course) {
+                        /** @var Course $course */
                         fputcsv($handle, [
                             $course->id,
                             $course->name,
-                            $course->results->first()?->id,
+                            $course->results->first()?->getKey(),
                         ],
                             escape: '\\');
                     }
@@ -96,7 +95,7 @@ class CourseResultsController extends Controller
 
             $html = view('dealer.course.CertDownloadView', [
                 'user' => auth()->user(),
-                'store' => $request->get('store')?->name ?? tenant('name'),
+                'store' => $request->get('store')->name ?? tenant('name'),
                 'passed_on' => $results->created_at->format('F d, Y'),
             ])->render();
 
@@ -118,20 +117,8 @@ class CourseResultsController extends Controller
                 'file_name' => $fileName,
             ]);
 
-            Notification::make()
-                ->title('Certificate Created Successfully!')
-                ->body('You can find your certificate in the Certificates section of your profile.')
-                ->icon('heroicon-o-document-text')
-                ->iconColor('success')
-                ->success()
-                ->actions([
-                    Action::make('view-profile')
-                        ->button()
-                        ->color('primary')
-                        ->url(route('dealer.profile.edit')),
-                ])
-                ->send();
-
+            session()->flash('flash.banner', 'Certificate Created Successfully! You can find it in the Certificates section of your profile.');
+            session()->flash('flash.bannerStyle', 'success');
         }
 
         session()->flash('flash.quizPercentage', round($score));

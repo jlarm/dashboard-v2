@@ -177,6 +177,7 @@ class UserController extends Controller
         $viewer = $request->user();
 
         $requestedIds = $request->inviteIds();
+        /** @var EloquentCollection<int, Invite> $invites */
         $invites = $query->buildScopedQuery($viewer)
             ->whereIn('id', $requestedIds)
             ->get();
@@ -515,6 +516,7 @@ class UserController extends Controller
         $viewer = $request->user();
 
         try {
+            /** @var EloquentCollection<int, User> $users */
             $users = $getEmployees
                 ->buildScopedQuery($viewer, $request->filters())
                 ->get();

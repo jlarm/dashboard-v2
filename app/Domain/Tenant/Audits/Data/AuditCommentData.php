@@ -34,7 +34,7 @@ class AuditCommentData
         return new self(
             id: (int) $comment->getKey(),
             userId: (int) $comment->user_id,
-            userName: (string) ($comment->user?->name ?? 'Unknown'),
+            userName: (string) ($comment->user->name ?? 'Unknown'),
             comment: (string) $comment->comment,
             createdAt: $comment->created_at?->toIso8601String() ?? '',
             photoUrl: $photoUrl,

@@ -31,7 +31,7 @@ class ExpiredCourseNotification extends Notification implements ShouldQueue
         if (! empty($this->coursesGrouped['expiring_soon'])) {
             $mail->line('**The following courses will expire in 30 days:**');
             foreach ($this->coursesGrouped['expiring_soon'] as $courseId) {
-                $courseName = Course::query()->find($courseId)?->name ?? 'Unknown Course';
+                $courseName = Course::query()->find($courseId)->name ?? 'Unknown Course';
                 $mail->line('• '.$courseName);
             }
             $mail->line('');
@@ -41,7 +41,7 @@ class ExpiredCourseNotification extends Notification implements ShouldQueue
         if (! empty($this->coursesGrouped['expired_today'])) {
             $mail->line('**The following courses expire today:**');
             foreach ($this->coursesGrouped['expired_today'] as $courseId) {
-                $courseName = Course::query()->find($courseId)?->name ?? 'Unknown Course';
+                $courseName = Course::query()->find($courseId)->name ?? 'Unknown Course';
                 $mail->line('• '.$courseName);
             }
             $mail->line('');
@@ -51,7 +51,7 @@ class ExpiredCourseNotification extends Notification implements ShouldQueue
         if (! empty($this->coursesGrouped['expired_30_days'])) {
             $mail->line('**The following courses expired 30 days ago and need renewal:**');
             foreach ($this->coursesGrouped['expired_30_days'] as $courseId) {
-                $courseName = Course::query()->find($courseId)?->name ?? 'Unknown Course';
+                $courseName = Course::query()->find($courseId)->name ?? 'Unknown Course';
                 $mail->line('• '.$courseName);
             }
             $mail->line('');

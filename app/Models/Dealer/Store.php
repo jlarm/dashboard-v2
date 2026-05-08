@@ -36,6 +36,11 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
+ * @property int $id
+ * @property string|null $name
+ * @property string|null $state
+ * @property bool $courses_not_taken_notification
+ * @property int|null $scan_reports_count
  * @property-read RemediationSetting|null $remediationSettings
  */
 #[ObservedBy(StoreObserver::class)]
@@ -172,16 +177,25 @@ class Store extends Model implements HasMedia
         return $this->hasMany(Osha::class);
     }
 
+    /**
+     * @return HasMany<OshaViolationAudit, $this>
+     */
     public function oshaViolationAudits(): HasMany
     {
         return $this->hasMany(OshaViolationAudit::class);
     }
 
+    /**
+     * @return HasMany<BodyShopViolationAudit, $this>
+     */
     public function bodyShopViolationAudits(): HasMany
     {
         return $this->hasMany(BodyShopViolationAudit::class);
     }
 
+    /**
+     * @return HasMany<GlbaViolationAudit, $this>
+     */
     public function glbaViolationAudits(): HasMany
     {
         return $this->hasMany(GlbaViolationAudit::class);
@@ -202,6 +216,9 @@ class Store extends Model implements HasMedia
         return $this->hasMany(ScanReport::class);
     }
 
+    /**
+     * @return HasOne<ScanReport, $this>
+     */
     public function latestScanReportDate(): HasOne
     {
         return $this->hasOne(ScanReport::class)->latest('last_scan');
@@ -237,6 +254,9 @@ class Store extends Model implements HasMedia
         return $this->hasOne(RemediationSetting::class);
     }
 
+    /**
+     * @return HasOne<Cyrisma, $this>
+     */
     public function cyrisma(): HasOne
     {
         return $this->hasOne(Cyrisma::class);

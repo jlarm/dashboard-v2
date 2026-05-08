@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
 
+/**
+ * @property int $user_id
+ * @property AuditTypes $audit_type
+ * @property bool $enabled
+ */
 class RemediationReminderPreference extends Model
 {
     #[Override]

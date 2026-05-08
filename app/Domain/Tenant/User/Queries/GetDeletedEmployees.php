@@ -27,7 +27,7 @@ class GetDeletedEmployees
         $users = collect($paginator->items());
 
         $paginator->setCollection(
-            $users->map(fn (User $user): array => $this->present($user))->values(),
+            $users->map(fn (User $user): array => $this->present($user))->values(), // @phpstan-ignore argument.type
         );
 
         return $paginator;

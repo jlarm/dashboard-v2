@@ -137,7 +137,7 @@ resendOne.form = resendOneForm
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
-* @see app/Http/Controllers/Tenant/UserController.php:213
+* @see app/Http/Controllers/Tenant/UserController.php:214
 * @route '/employees/open-invites/{invite}'
 */
 export const destroy = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -152,7 +152,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
-* @see app/Http/Controllers/Tenant/UserController.php:213
+* @see app/Http/Controllers/Tenant/UserController.php:214
 * @route '/employees/open-invites/{invite}'
 */
 destroy.url = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -185,7 +185,7 @@ destroy.url = (args: { invite: string | number | { id: string | number } } | [in
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
-* @see app/Http/Controllers/Tenant/UserController.php:213
+* @see app/Http/Controllers/Tenant/UserController.php:214
 * @route '/employees/open-invites/{invite}'
 */
 destroy.delete = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -195,7 +195,7 @@ destroy.delete = (args: { invite: string | number | { id: string | number } } | 
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
-* @see app/Http/Controllers/Tenant/UserController.php:213
+* @see app/Http/Controllers/Tenant/UserController.php:214
 * @route '/employees/open-invites/{invite}'
 */
 const destroyForm = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -210,7 +210,7 @@ const destroyForm = (args: { invite: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
-* @see app/Http/Controllers/Tenant/UserController.php:213
+* @see app/Http/Controllers/Tenant/UserController.php:214
 * @route '/employees/open-invites/{invite}'
 */
 destroyForm.delete = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

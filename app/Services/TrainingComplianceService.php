@@ -39,9 +39,7 @@ class TrainingComplianceService
      */
     public function summarizeUsers(Collection $users): Collection
     {
-        $normalizedUsers = $users
-            ->filter(static fn ($user): bool => $user instanceof User)
-            ->values();
+        $normalizedUsers = $users->values();
 
         if ($normalizedUsers->isEmpty()) {
             return collect();
@@ -105,7 +103,7 @@ class TrainingComplianceService
                     continue;
                 }
 
-                $yearsExpires = (int) ($coursesById->get($courseId)?->years_expires ?? 1);
+                $yearsExpires = (int) ($coursesById->get($courseId)->years_expires ?? 1);
                 $yearsExpires = $yearsExpires > 0 ? $yearsExpires : 1;
 
                 $expiresAt = $passedAt->copy()->addYears($yearsExpires)->endOfDay();

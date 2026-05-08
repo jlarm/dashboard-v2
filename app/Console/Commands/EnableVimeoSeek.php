@@ -47,6 +47,7 @@ class EnableVimeoSeek extends Command
 
     private function enableForAllCourses(VimeoService $vimeoService, ?string $presetId): int
     {
+        /** @var Collection<int, string> $videoIds */
         $videoIds = new Collection();
 
         /** @var Collection<int, string> $tenants */

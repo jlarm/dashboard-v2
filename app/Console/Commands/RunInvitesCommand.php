@@ -34,12 +34,12 @@ class RunInvitesCommand extends Command
             $invites = Invite::all();
 
             foreach ($invites as $invite) {
-                if ($invite->created_at->diffInDays(now()) === 10) {
-                    // Send 10 day reminder
+                $daysOld = (int) $invite->created_at->diffInDays(now());
+
+                if ($daysOld === 10) {
                     Mail::to($invite->email)->send(new TenDayOpenInviteReminderMail($invite));
                     Log::info('Ten day reminder sent for invite '.$invite->email);
-                } elseif ($invite->created_at->diffInDays(now()) === 20) {
-                    // Send 20 day reminder
+                } elseif ($daysOld === 20) {
                     Mail::to($invite->email)->send(new TwentyDayOpenInviteReminderMail($invite));
                     Log::info('Twenty day reminder sent for invite '.$invite->email);
                 }

@@ -39,7 +39,7 @@ final readonly class EmployeeData implements Arrayable
         bool $canView,
     ): self {
         $roles = $user->roles
-            ->map(static fn ($role): array => [
+            ->map(static fn (\Spatie\Permission\Models\Role $role): array => [
                 'id' => (int) $role->id,
                 'name' => (string) $role->name,
             ])
@@ -48,7 +48,7 @@ final readonly class EmployeeData implements Arrayable
 
         $stores = $user->stores
             ->sortBy('name')
-            ->map(static fn ($store): array => [
+            ->map(static fn (\App\Models\Dealer\Store $store): array => [
                 'id' => (int) $store->id,
                 'name' => (string) $store->name,
             ])

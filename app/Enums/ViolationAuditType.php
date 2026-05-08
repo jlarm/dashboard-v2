@@ -20,6 +20,7 @@ use App\Models\Dealer\Audit\FinanceAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
+use Illuminate\Database\Eloquent\Model;
 
 enum ViolationAuditType: string
 {
@@ -47,7 +48,7 @@ enum ViolationAuditType: string
     }
 
     /**
-     * @return class-string<ViolationAudit>
+     * @return class-string<ViolationAudit&Model>
      */
     public function modelClass(): string
     {

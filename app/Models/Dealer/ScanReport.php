@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
 
+/**
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $last_scan
+ * @property \Illuminate\Support\Carbon|null $next_scan
+ */
 class ScanReport extends Model
 {
     #[Override]

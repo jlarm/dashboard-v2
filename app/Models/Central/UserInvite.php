@@ -12,6 +12,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
 
+/**
+ * @property int $id
+ * @property string|null $name
+ * @property string|null $email
+ * @property string|null $role
+ * @property \Illuminate\Support\Carbon $expires_at
+ * @property \Illuminate\Support\Carbon $created_at
+ */
 class UserInvite extends Model
 {
     /** @use HasFactory<UserInviteFactory> */
@@ -31,7 +39,7 @@ class UserInvite extends Model
     ];
 
     /**
-     * @return BelongsTo<User, UserInvite>
+     * @return BelongsTo<User, $this>
      */
     public function inviter(): BelongsTo
     {

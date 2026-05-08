@@ -6,6 +6,7 @@ namespace App\Domain\Tenant\Compliance\Queries;
 
 use App\Domain\Tenant\Compliance\Data\AuditTrackerRowData;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
@@ -33,7 +34,7 @@ class GetAuditTracker
     ];
 
     /**
-     * @var array<int, array{key:string, label:string, class:class-string<Model>}>
+     * @var array<int, array{key:string, label:string, class:class-string<ViolationAudit&Model>}>
      */
     private const array VIOLATION_AUDIT_TYPES = [
         ['key' => 'osha', 'label' => 'OSHA', 'class' => OshaViolationAudit::class],
@@ -66,7 +67,7 @@ class GetAuditTracker
     }
 
     /**
-     * @param  array{key:string, label:string, class:class-string<Model>}  $type
+     * @param  array{key:string, label:string, class:class-string<ViolationAudit&Model>}  $type
      * @param  list<int>  $storeIds
      */
     private function buildViolationAuditRow(array $type, array $storeIds, CarbonImmutable $now): AuditTrackerRowData
@@ -183,13 +184,13 @@ class GetAuditTracker
     }
 
     /**
-     * @param  class-string<Model>  $auditClass
+     * @param  class-string<ViolationAudit&Model>  $auditClass
      * @param  list<int>  $storeIds
-     * @return array{0:?Model,1:?Model}
+     * @return array{0:(ViolationAudit&Model)|null,1:(ViolationAudit&Model)|null}
      */
     private function latestAndPrevious(string $auditClass, array $storeIds): array
     {
-        /** @var Builder<Model> $query */
+        /** @var Builder<ViolationAudit&Model> $query */
         $query = $auditClass::query();
 
         $audits = $query

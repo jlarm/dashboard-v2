@@ -92,7 +92,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
         ]);
 
         $user = User::query()->find($this->userId);
-        $storeName = Store::query()->find($this->storeId)?->name ?? 'your store';
+        $storeName = Store::query()->find($this->storeId)->name ?? 'your store';
 
         if ($user instanceof User) {
             $user->notify(new ScanReportFailedNotification($this->type, $storeName));

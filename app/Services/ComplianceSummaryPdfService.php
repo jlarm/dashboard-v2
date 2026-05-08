@@ -227,7 +227,7 @@ class ComplianceSummaryPdfService
 
     private function resolveNodeBinary(): string
     {
-        $configured = env('BROWSERSHOT_NODE_BINARY');
+        $configured = config('services.browsershot.node_binary');
 
         if (is_string($configured) && $configured !== '' && File::exists($configured)) {
             return $configured;

@@ -10,6 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
 
+/**
+ * @property bool $active
+ * @property bool $notifications
+ * @property Frequency $frequency
+ * @property array<int, mixed>|null $managers
+ */
 class RemediationSetting extends Model
 {
     #[Override]

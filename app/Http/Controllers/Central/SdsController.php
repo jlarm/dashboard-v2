@@ -75,7 +75,7 @@ class SdsController extends Controller
     {
         $this->authorize('view', $sds);
 
-        abort_unless(is_string($sds->file_name) && $sds->file_name !== '', 404);
+        abort_unless($sds->file_name !== '', 404);
 
         return $storage->download($sds->file_name, $sds->name.'.pdf');
     }

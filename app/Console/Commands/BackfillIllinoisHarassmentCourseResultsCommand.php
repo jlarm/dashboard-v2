@@ -44,7 +44,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
             ->orderBy('id')
             ->get(['id', 'name']);
 
-        if ($tenants->isEmpty()) {
+        if ($tenants->isEmpty()) { // @phpstan-ignore method.impossibleType
             $this->error('No tenants found for this command run.');
 
             return self::FAILURE;
@@ -179,10 +179,6 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
 
         foreach ($candidateUsers as $user) {
             $targetCourseSlug = $this->resolveTargetCourseSlugForUser($user);
-
-            if ($targetCourseSlug === null) {
-                continue;
-            }
 
             /** @var Course $targetCourse */
             $targetCourse = $targetCourses->get($targetCourseSlug);

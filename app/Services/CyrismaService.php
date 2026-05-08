@@ -435,9 +435,6 @@ class CyrismaService
             if (! $assets) {
                 continue;
             }
-            if (! is_array($assets)) {
-                continue;
-            }
 
             foreach ($assets as $asset) {
                 $scanType = $asset['scanType'] ?? '';

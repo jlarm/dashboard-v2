@@ -84,7 +84,7 @@ class CourseReminderCommand extends Command
         foreach ($stores as $store) {
             $this->info("Processing store: {$store->name} (ID: {$store->id})");
 
-            // Get all users associated with this store
+            /** @var \Illuminate\Database\Eloquent\Collection<int, User> $users */
             $users = $store->users()
                 ->whereDoesntHave('roles', function ($query): void {
                     $query->where('name', 'super-admin')

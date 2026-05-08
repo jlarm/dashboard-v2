@@ -31,9 +31,7 @@ class LogSentMessage
         $emails = [];
 
         foreach ($toAddresses as $address) {
-            if ($address instanceof Address) {
-                $emails[] = $address->getAddress();
-            }
+            $emails[] = $address->getAddress();
         }
         $toEmails = implode(', ', $emails);
 
@@ -57,7 +55,7 @@ class LogSentMessage
         // Method 1: Try to get from headers
         if ($headers->has('Message-ID')) {
             $messageIdHeader = $headers->get('Message-ID');
-            if ($messageIdHeader && method_exists($messageIdHeader, 'getBodyAsString')) {
+            if ($messageIdHeader !== null) {
                 $messageId = $messageIdHeader->getBodyAsString();
             }
         }

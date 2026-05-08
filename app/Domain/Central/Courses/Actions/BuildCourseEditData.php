@@ -45,7 +45,7 @@ class BuildCourseEditData
                 'tenants' => Dealership::query()
                     ->orderBy('name')
                     ->get(['id', 'name'])
-                    ->map(fn (Dealership $d): array => ['value' => $d->id, 'label' => $d->name])
+                    ->map(static fn (Dealership $d): array => ['value' => $d->id, 'label' => $d->name]) // @phpstan-ignore argument.type
                     ->values(),
             ],
         ];

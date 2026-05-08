@@ -15,6 +15,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Override;
 
+/**
+ * @property \Illuminate\Support\Carbon|null $agreement_date
+ * @property \Illuminate\Support\Carbon|null $commence_date
+ * @property \Illuminate\Support\Carbon|null $armp_date_signed
+ * @property \Illuminate\Support\Carbon|null $dealer_date_signed
+ */
 class Contract extends Model
 {
     use HasFactory, SoftDeletes;
@@ -57,7 +63,7 @@ class Contract extends Model
     ];
 
     /**
-     * @return BelongsTo<User, Contract>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -65,7 +71,7 @@ class Contract extends Model
     }
 
     /**
-     * @return HasMany<ContractStatus>
+     * @return HasMany<ContractStatus, $this>
      */
     public function status(): HasMany
     {

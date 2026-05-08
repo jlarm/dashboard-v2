@@ -24,7 +24,7 @@ class ViolationStatementResource extends JsonResource
             'weight' => $this->weight,
             'categories' => $this->categories,
             'category_labels' => array_map(
-                fn (string $value): string => ViolationStatementCategory::from($value)->label(),
+                fn (ViolationStatementCategory $category): string => $category->label(),
                 $this->categories,
             ),
             'reference_image_url' => $this->reference_image_url,

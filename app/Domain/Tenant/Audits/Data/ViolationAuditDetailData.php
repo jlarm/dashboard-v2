@@ -61,7 +61,7 @@ class ViolationAuditDetailData
             },
             hasPdf: ! empty($audit->pdf_path),
             hasRemediationPdf: ! empty($audit->remediation_pdf_path),
-            storeName: (string) ($audit->store?->name ?? ''),
+            storeName: (string) ($audit->store->name ?? ''),
             violations: $violations,
             comments: $comments,
         );

@@ -16,6 +16,18 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Override;
 
+/**
+ * @property int $id
+ * @property string $uuid
+ * @property \Illuminate\Support\Carbon|null $date
+ * @property \Illuminate\Support\Carbon|null $completed_date
+ * @property string|null $grade
+ * @property int|null $outstanding_remediation_count
+ * @property string|null $remediation_pdf_path
+ * @property array<int, string>|null $reminder_logs
+ * @property-read Store|null $store
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Violation> $violations
+ */
 class BodyShopViolationAudit extends Model implements ViolationAudit
 {
     use SoftDeletes;
@@ -45,21 +57,33 @@ class BodyShopViolationAudit extends Model implements ViolationAudit
         return $this->belongsTo(User::class, 'grade_updated_by');
     }
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
     }
 
+    /**
+     * @return MorphMany<Violation, $this>
+     */
     public function violations(): MorphMany
     {
         return $this->morphMany(Violation::class, 'violationable');
     }
 
+    /**
+     * @return MorphMany<RemediationReminders, $this>
+     */
     public function reminders(): MorphMany
     {
         return $this->morphMany(RemediationReminders::class, 'remindable');
     }
 
+    /**
+     * @return MorphMany<AuditComment, $this>
+     */
     public function auditComments(): MorphMany
     {
         return $this->morphMany(AuditComment::class, 'auditable');

@@ -40,7 +40,7 @@ class CalculateDocsPillar
         foreach (self::MANUAL_TYPES as $key => $config) {
             $latest = $this->latestManual($config['class'], $store->id);
 
-            if (! $latest instanceof Model || $latest->{$config['signature_field']} === null) {
+            if (! $latest instanceof Model || $latest->getAttribute($config['signature_field']) === null) {
                 $perType[$key] = [
                     'label' => $config['label'],
                     'state' => 'missing',
@@ -50,7 +50,7 @@ class CalculateDocsPillar
                 continue;
             }
 
-            $signedAt = CarbonImmutable::parse($latest->updated_at);
+            $signedAt = CarbonImmutable::parse($latest->getAttribute('updated_at'));
             $stale = $signedAt->lt($staleCutoff);
 
             $perType[$key] = [

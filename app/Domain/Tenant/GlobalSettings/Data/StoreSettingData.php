@@ -25,7 +25,7 @@ final readonly class StoreSettingData implements Arrayable
             id: (int) $store->id,
             name: (string) $store->name,
             coursesNotTakenNotification: (bool) $store->courses_not_taken_notification,
-            remediationsActive: (bool) ($store->remediationSettings?->active ?? false),
+            remediationsActive: (bool) ($store->remediationSettings->active ?? false),
         );
     }
 

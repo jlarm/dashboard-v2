@@ -186,10 +186,10 @@ final class ExternalFindingNormalizer
             ->flatMap(static fn (mixed $source): array => self::normalizeInstanceSource($source))
             ->map(static fn (mixed $instance): ?array => self::normalizeInstanceRow($instance))
             ->filter(static fn (?array $instance): bool => $instance !== null)
-            ->filter(static fn (array $instance): bool => ($instance['url'] ?? '-') !== '-'
-                || ($instance['parameters'] ?? '-') !== '-'
-                || ($instance['attack'] ?? '-') !== '-'
-                || ($instance['evidence'] ?? '-') !== '-')
+            ->filter(static fn (array $instance): bool => $instance['url'] !== '-'
+                || $instance['parameters'] !== '-'
+                || $instance['attack'] !== '-'
+                || $instance['evidence'] !== '-')
             ->values()
             ->all();
     }

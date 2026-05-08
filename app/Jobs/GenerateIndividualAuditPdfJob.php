@@ -33,7 +33,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     public $results = [];
     public $totals = [];
     public $grandTotal;
-    public $managerIssueCount = [];
+    public $managerIssueCount;
     protected $sum;
     protected IndividualAudit $parent;
 
@@ -120,7 +120,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
             });
 
         foreach ($this->managerIssueCount as $name => $answers) {
-            foreach ($answers as $question => $answer) {
+            foreach ($answers as $question => $answer) { // @phpstan-ignore foreach.emptyArray
                 if (! isset($this->results[$question])) {
                     $this->results[$question] = [];
                 }

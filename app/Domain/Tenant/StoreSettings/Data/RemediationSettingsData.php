@@ -29,7 +29,7 @@ class RemediationSettingsData
         return new self(
             active: $settings instanceof RemediationSetting ? (bool) $settings->active : false,
             notifications: $settings instanceof RemediationSetting ? (bool) $settings->notifications : false,
-            frequency: $settings instanceof RemediationSetting ? $settings->frequency?->value : null,
+            frequency: $settings instanceof RemediationSetting ? $settings->frequency->value : null,
             reminder_groups: self::reminderGroupsForStore($store),
         );
     }
@@ -59,7 +59,7 @@ class RemediationSettingsData
         $multipleStores = (bool) (app()->bound('multipleStoresExist') ? resolve('multipleStoresExist') : false);
 
         $relevantUsers = ($multipleStores
-            ? $store->users()->permission('create-users')
+            ? $store->users()->permission('create-users') // @phpstan-ignore method.notFound
             : User::query()->permission('create-users'))
             ->get(['id', 'name', 'slug'])
             ->keyBy('id');

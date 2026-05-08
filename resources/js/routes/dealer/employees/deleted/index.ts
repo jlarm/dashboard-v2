@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::restore
-* @see app/Http/Controllers/Tenant/UserController.php:246
+* @see app/Http/Controllers/Tenant/UserController.php:247
 * @route '/employees/deleted/{user}/restore'
 */
 export const restore = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ restore.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::restore
-* @see app/Http/Controllers/Tenant/UserController.php:246
+* @see app/Http/Controllers/Tenant/UserController.php:247
 * @route '/employees/deleted/{user}/restore'
 */
 restore.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ restore.url = (args: { user: number | { id: number } } | [user: number | { id: n
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::restore
-* @see app/Http/Controllers/Tenant/UserController.php:246
+* @see app/Http/Controllers/Tenant/UserController.php:247
 * @route '/employees/deleted/{user}/restore'
 */
 restore.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ restore.post = (args: { user: number | { id: number } } | [user: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::restore
-* @see app/Http/Controllers/Tenant/UserController.php:246
+* @see app/Http/Controllers/Tenant/UserController.php:247
 * @route '/employees/deleted/{user}/restore'
 */
 const restoreForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ const restoreForm = (args: { user: number | { id: number } } | [user: number | {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::restore
-* @see app/Http/Controllers/Tenant/UserController.php:246
+* @see app/Http/Controllers/Tenant/UserController.php:247
 * @route '/employees/deleted/{user}/restore'
 */
 restoreForm.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

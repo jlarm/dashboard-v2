@@ -79,6 +79,6 @@ class ExportEmployeesRequest extends FormRequest
             return [];
         }
 
-        return array_values(array_map(static fn (int|string $value): int => (int) $value, $values));
+        return array_map(static fn (int|string $value): int => (int) $value, $values);
     }
 }

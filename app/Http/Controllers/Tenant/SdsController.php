@@ -46,7 +46,7 @@ class SdsController extends Controller
             $sds = Sds::query()->where('uuid', $uuid)->firstOrFail();
             $disk = Storage::disk('sds-sheets');
 
-            abort_unless(is_string($sds->file_name) && $sds->file_name !== '' && $disk->exists($sds->file_name), 404);
+            abort_unless($sds->file_name !== '' && $disk->exists($sds->file_name), 404);
 
             return response($disk->get($sds->file_name), 200, [
                 'Content-Type' => 'application/pdf',

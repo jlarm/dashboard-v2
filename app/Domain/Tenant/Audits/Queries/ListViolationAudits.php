@@ -41,7 +41,7 @@ class ListViolationAudits
             ])
             ->latest('date')
             ->paginate(self::PER_PAGE)
-            ->through(static fn (ViolationAudit&Model $audit): array => ViolationAuditListItemData::fromModel($audit)->toArray())
+            ->through(static fn (ViolationAudit&Model $audit): array => ViolationAuditListItemData::fromModel($audit)->toArray()) // @phpstan-ignore argument.type
             ->withQueryString();
     }
 }

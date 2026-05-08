@@ -143,7 +143,7 @@ class RegisterInvitedEmployee
 
     private function generateDotCertificate(User $user, string $takenOn): void
     {
-        $storeName = (string) ($user->currentStore?->name ?? tenant('name'));
+        $storeName = (string) ($user->currentStore->name ?? tenant('name'));
 
         $html = view('dealer.course.CertDownloadView', [
             'user' => $user,

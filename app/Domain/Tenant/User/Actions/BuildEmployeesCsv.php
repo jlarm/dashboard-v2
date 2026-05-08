@@ -26,18 +26,19 @@ class BuildEmployeesCsv
 
         $rows = $users->map(function (User $user) use ($summaries): string {
             $summary = $summaries->get($user->id);
+            $hasSummary = $summary instanceof TrainingSummaryData;
 
             return implode(',', [
                 $this->escape((string) $user->name),
                 $this->escape((string) $user->email),
                 $this->escape($user->stores->pluck('name')->join(', ')),
-                $this->escape($user->department?->name ?? 'N/A'),
+                $this->escape($user->department->name ?? 'N/A'),
                 $this->escape($this->statusLabel($summary)),
-                (string) ($summary?->validCompleted ?? 0),
-                (string) ($summary?->totalRequired ?? 0),
-                (string) ($summary?->notCompleted ?? 0),
-                (string) ($summary?->expired ?? 0),
-                (string) ($summary?->expiringSoon ?? 0),
+                (string) ($hasSummary ? $summary->validCompleted : 0),
+                (string) ($hasSummary ? $summary->totalRequired : 0),
+                (string) ($hasSummary ? $summary->notCompleted : 0),
+                (string) ($hasSummary ? $summary->expired : 0),
+                (string) ($hasSummary ? $summary->expiringSoon : 0),
             ]);
         });
 
@@ -58,17 +59,18 @@ class BuildEmployeesCsv
             ->filter(fn (User $user): bool => $this->shouldIncludeInReport($summaries, $user))
             ->map(function (User $user) use ($summaries): string {
                 $summary = $summaries->get($user->id);
+                $hasSummary = $summary instanceof TrainingSummaryData;
 
                 return implode(',', [
                     $this->escape((string) $user->name),
                     $this->escape((string) $user->email),
-                    $this->escape($user->department?->name ?? 'N/A'),
+                    $this->escape($user->department->name ?? 'N/A'),
                     $this->escape($this->statusLabel($summary)),
-                    (string) ($summary?->validCompleted ?? 0),
-                    (string) ($summary?->totalRequired ?? 0),
-                    (string) ($summary?->notCompleted ?? 0),
-                    (string) ($summary?->expired ?? 0),
-                    (string) ($summary?->expiringSoon ?? 0),
+                    (string) ($hasSummary ? $summary->validCompleted : 0),
+                    (string) ($hasSummary ? $summary->totalRequired : 0),
+                    (string) ($hasSummary ? $summary->notCompleted : 0),
+                    (string) ($hasSummary ? $summary->expired : 0),
+                    (string) ($hasSummary ? $summary->expiringSoon : 0),
                 ]);
             });
 

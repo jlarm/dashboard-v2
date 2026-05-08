@@ -187,10 +187,10 @@ class InviteEmployeeRequest extends FormRequest
      */
     private function availableStoreIds(): array
     {
-        return array_values(array_map(
+        return array_map(
             static fn (array $store): int => $store['id'],
             $this->options()['stores'],
-        ));
+        );
     }
 
     /**

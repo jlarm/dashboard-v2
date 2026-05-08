@@ -8,11 +8,18 @@ use App\Models\Dealer\Violation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
-use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @property int $id
+ * @property string|null $comment
+ * @property bool $completed
+ * @property \Illuminate\Support\Carbon|null $completed_date
+ * @property-read User|null $user
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ */
 class Remediation extends Model implements HasMedia
 {
     use InteractsWithMedia;
@@ -26,11 +33,17 @@ class Remediation extends Model implements HasMedia
         'completed_date',
     ];
 
+    /**
+     * @return BelongsTo<Violation, $this>
+     */
     public function violation(): BelongsTo
     {
         return $this->belongsTo(Violation::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -39,7 +52,7 @@ class Remediation extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->format(Manipulations::FORMAT_WEBP)
+            ->format('webp')
             ->width(400)
             ->height(400);
     }

@@ -6,6 +6,7 @@ namespace App\Domain\Tenant\Compliance\Queries;
 
 use App\Domain\Tenant\Compliance\Data\ViolationsOverviewData;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Remediation;
@@ -19,7 +20,7 @@ class CalculateViolationsOverview
     private const int PERIODS = 6;
 
     /**
-     * @var array<int, class-string<Model>>
+     * @var array<int, class-string<ViolationAudit&Model>>
      */
     private const array AUDIT_CLASSES = [
         OshaViolationAudit::class,
@@ -87,7 +88,7 @@ class CalculateViolationsOverview
         $rows = [];
 
         foreach (self::AUDIT_CLASSES as $auditClass) {
-            /** @var Builder<Model> $query */
+            /** @var Builder<ViolationAudit&Model> $query */
             $query = $auditClass::query();
 
             $audits = $query
@@ -128,7 +129,7 @@ class CalculateViolationsOverview
         $rows = [];
 
         foreach (self::AUDIT_CLASSES as $auditClass) {
-            /** @var Builder<Model> $query */
+            /** @var Builder<ViolationAudit&Model> $query */
             $query = $auditClass::query();
 
             $auditIds = $query
