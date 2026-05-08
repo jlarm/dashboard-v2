@@ -50,8 +50,12 @@ class GlobalSettingsController extends Controller
         GetCourses $getCourses,
         GetPhishingSettings $getPhishingSettings,
         GetResettableUsers $getResettableUsers,
-    ): InertiaResponse {
+    ): InertiaResponse|RedirectResponse {
         $this->authorize('manage', GlobalSetting::class);
+
+        if ($request->user()?->current_store_id !== null) {
+            return to_route('dealer.dealer.settings');
+        }
 
         $section = $request->route()->defaults['section'] ?? self::SECTION_GENERAL;
         abort_unless(is_string($section) && in_array($section, self::SECTIONS, true), 404);

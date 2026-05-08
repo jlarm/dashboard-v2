@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -16,7 +16,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -35,7 +35,7 @@ update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -50,7 +50,7 @@ const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

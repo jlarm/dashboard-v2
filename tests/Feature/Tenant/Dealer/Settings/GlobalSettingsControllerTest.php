@@ -13,6 +13,15 @@ use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
     app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+    // Ensure multi-store mode so StoreIdentifierMiddleware doesn't auto-assign
+    // current_store_id and trigger the /global-settings -> /settings redirect.
+    Store::query()->create([
+        'name' => 'Second Store',
+        'slug' => 'second-store',
+    ]);
+
+    $this->consultant->update(['current_store_id' => null]);
 });
 
 describe('global settings index', function (): void {
@@ -50,6 +59,24 @@ describe('global settings index', function (): void {
     it('redirects guests to login', function (): void {
         $this->get(route('dealer.settings.global'))
             ->assertRedirect(route('dealer.login'));
+    });
+
+    it('redirects to /settings when the user has a current_store_id', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.settings.global'))
+            ->assertRedirect(route('dealer.dealer.settings'));
+    });
+
+    it('still renders global settings when the user has no current_store_id', function (): void {
+        $this->consultant->update(['current_store_id' => null]);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.settings.global'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page->component('tenant/settings/GlobalSettings'));
     });
 
     it('renders the course-management section', function (): void {

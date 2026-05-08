@@ -329,7 +329,7 @@ export const index = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::updatePhishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 export const updatePhishing = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -344,7 +344,7 @@ updatePhishing.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::updatePhishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 updatePhishing.url = (options?: RouteQueryOptions) => {
@@ -353,7 +353,7 @@ updatePhishing.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::updatePhishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 updatePhishing.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -363,7 +363,7 @@ updatePhishing.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::updatePhishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 const updatePhishingForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -378,7 +378,7 @@ const updatePhishingForm = (options?: RouteQueryOptions): RouteFormDefinition<'p
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::updatePhishing
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:86
 * @route '/global-settings/phishing'
 */
 updatePhishingForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -395,7 +395,7 @@ updatePhishing.form = updatePhishingForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreNotifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:93
 * @route '/global-settings/stores/{store}/notifications'
 */
 export const toggleStoreNotifications = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -410,7 +410,7 @@ toggleStoreNotifications.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreNotifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:93
 * @route '/global-settings/stores/{store}/notifications'
 */
 toggleStoreNotifications.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -443,7 +443,7 @@ toggleStoreNotifications.url = (args: { store: string | number | { id: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreNotifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:93
 * @route '/global-settings/stores/{store}/notifications'
 */
 toggleStoreNotifications.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -453,7 +453,7 @@ toggleStoreNotifications.post = (args: { store: string | number | { id: string |
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreNotifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:93
 * @route '/global-settings/stores/{store}/notifications'
 */
 const toggleStoreNotificationsForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -463,7 +463,7 @@ const toggleStoreNotificationsForm = (args: { store: string | number | { id: str
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreNotifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:89
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:93
 * @route '/global-settings/stores/{store}/notifications'
 */
 toggleStoreNotificationsForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -475,7 +475,7 @@ toggleStoreNotifications.form = toggleStoreNotificationsForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreRemediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:98
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:102
 * @route '/global-settings/stores/{store}/remediations'
 */
 export const toggleStoreRemediations = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -490,7 +490,7 @@ toggleStoreRemediations.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreRemediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:98
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:102
 * @route '/global-settings/stores/{store}/remediations'
 */
 toggleStoreRemediations.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -523,7 +523,7 @@ toggleStoreRemediations.url = (args: { store: string | number | { id: string | n
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreRemediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:98
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:102
 * @route '/global-settings/stores/{store}/remediations'
 */
 toggleStoreRemediations.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -533,7 +533,7 @@ toggleStoreRemediations.post = (args: { store: string | number | { id: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreRemediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:98
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:102
 * @route '/global-settings/stores/{store}/remediations'
 */
 const toggleStoreRemediationsForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -543,7 +543,7 @@ const toggleStoreRemediationsForm = (args: { store: string | number | { id: stri
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreRemediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:98
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:102
 * @route '/global-settings/stores/{store}/remediations'
 */
 toggleStoreRemediationsForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -555,7 +555,7 @@ toggleStoreRemediations.form = toggleStoreRemediationsForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleOptionalCourse
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 export const toggleOptionalCourse = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -570,7 +570,7 @@ toggleOptionalCourse.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleOptionalCourse
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 toggleOptionalCourse.url = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -603,7 +603,7 @@ toggleOptionalCourse.url = (args: { course: number | { id: number } } | [course:
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleOptionalCourse
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 toggleOptionalCourse.patch = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -613,7 +613,7 @@ toggleOptionalCourse.patch = (args: { course: number | { id: number } } | [cours
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleOptionalCourse
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 const toggleOptionalCourseForm = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -628,7 +628,7 @@ const toggleOptionalCourseForm = (args: { course: number | { id: number } } | [c
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleOptionalCourse
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 toggleOptionalCourseForm.patch = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -645,7 +645,7 @@ toggleOptionalCourse.form = toggleOptionalCourseForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:116
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
 * @route '/global-settings/reset-courses'
 */
 export const resetCourses = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -660,7 +660,7 @@ resetCourses.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:116
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
 * @route '/global-settings/reset-courses'
 */
 resetCourses.url = (options?: RouteQueryOptions) => {
@@ -669,7 +669,7 @@ resetCourses.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:116
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
 * @route '/global-settings/reset-courses'
 */
 resetCourses.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -679,7 +679,7 @@ resetCourses.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:116
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
 * @route '/global-settings/reset-courses'
 */
 const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -689,7 +689,7 @@ const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'pos
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:116
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
 * @route '/global-settings/reset-courses'
 */
 resetCoursesForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

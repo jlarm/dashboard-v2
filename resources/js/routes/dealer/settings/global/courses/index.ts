@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::optional
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 export const optional = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -16,7 +16,7 @@ optional.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::optional
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 optional.url = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ optional.url = (args: { course: number | { id: number } } | [course: number | { 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::optional
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 optional.patch = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -59,7 +59,7 @@ optional.patch = (args: { course: number | { id: number } } | [course: number | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::optional
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 const optionalForm = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -74,7 +74,7 @@ const optionalForm = (args: { course: number | { id: number } } | [course: numbe
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::optional
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:107
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:111
 * @route '/global-settings/courses/{course}/optional'
 */
 optionalForm.patch = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
