@@ -280,6 +280,7 @@ Route::name('dealer.')->middleware([
             ->name('dealer.settings');
         Route::prefix('settings')->middleware(['auth'])->name('dealer.settings.')->group(function (): void {
             Route::patch('general/{store}', [StoreSettingsController::class, 'updateGeneral'])->name('general.update');
+            Route::patch('managers/{store}', [StoreSettingsController::class, 'updateManagers'])->name('managers.update');
             Route::get('managers', [StoreSettingsController::class, 'index'])
                 ->defaults('section', 'managers')
                 ->name('managers');

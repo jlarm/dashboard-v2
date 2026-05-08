@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Tenant\Settings;
 
 use App\Domain\Tenant\StoreSettings\Actions\UpdateGeneralSection;
+use App\Domain\Tenant\StoreSettings\Actions\UpdateManagersSection;
 use App\Domain\Tenant\StoreSettings\Queries\GetGeneralSection;
+use App\Domain\Tenant\StoreSettings\Queries\GetManagersSection;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\StoreSettings\UpdateGeneralRequest;
+use App\Http\Requests\Tenant\StoreSettings\UpdateManagersRequest;
 use App\Models\Dealer\Store;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,8 +38,11 @@ class StoreSettingsController extends Controller
         self::SECTION_RIDGEBACK,
     ];
 
-    public function index(Request $request, GetGeneralSection $getGeneralSection): InertiaResponse|RedirectResponse
-    {
+    public function index(
+        Request $request,
+        GetGeneralSection $getGeneralSection,
+        GetManagersSection $getManagersSection,
+    ): InertiaResponse|RedirectResponse {
         $section = $request->route()->defaults['section'] ?? self::SECTION_GENERAL;
         abort_unless(is_string($section) && in_array($section, self::SECTIONS, true), 404);
 
@@ -59,6 +65,7 @@ class StoreSettingsController extends Controller
                 'manage_dealerships' => $user?->can('create-dealerships') ?? false,
             ],
             'general' => Inertia::defer(static fn (): array => $getGeneralSection->handle($store)->toArray()),
+            'managers' => Inertia::defer(static fn (): array => $getManagersSection->handle($store)->toArray()),
         ]);
     }
 
@@ -78,6 +85,24 @@ class StoreSettingsController extends Controller
         }
 
         return back()->with('flash.success', 'Settings saved.');
+    }
+
+    public function updateManagers(
+        UpdateManagersRequest $request,
+        Store $store,
+        UpdateManagersSection $updateManagersSection,
+    ): RedirectResponse {
+        try {
+            $updateManagersSection->handle($store, $request->toData());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not save the manager list. Please try again.');
+        }
+
+        return back()->with('flash.success', 'Manager list saved.');
     }
 
     private function resolveStore(): ?Store

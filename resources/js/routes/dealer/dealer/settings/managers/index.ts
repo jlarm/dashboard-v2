@@ -1,8 +1,8 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:72
-* @route '/settings/general/{store}'
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:90
+* @route '/settings/managers/{store}'
 */
 export const update = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
@@ -11,13 +11,13 @@ export const update = (args: { store: string | number | { id: string | number } 
 
 update.definition = {
     methods: ["patch"],
-    url: '/settings/general/{store}',
+    url: '/settings/managers/{store}',
 } satisfies RouteDefinition<["patch"]>
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:72
-* @route '/settings/general/{store}'
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:90
+* @route '/settings/managers/{store}'
 */
 update.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -49,8 +49,8 @@ update.url = (args: { store: string | number | { id: string | number } } | [stor
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:72
-* @route '/settings/general/{store}'
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:90
+* @route '/settings/managers/{store}'
 */
 update.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
@@ -59,8 +59,8 @@ update.patch = (args: { store: string | number | { id: string | number } } | [st
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:72
-* @route '/settings/general/{store}'
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:90
+* @route '/settings/managers/{store}'
 */
 const updateForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
@@ -74,8 +74,8 @@ const updateForm = (args: { store: string | number | { id: string | number } } |
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:72
-* @route '/settings/general/{store}'
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:90
+* @route '/settings/managers/{store}'
 */
 updateForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
@@ -88,9 +88,3 @@ updateForm.patch = (args: { store: string | number | { id: string | number } } |
 })
 
 update.form = updateForm
-
-const general = {
-    update: Object.assign(update, update),
-}
-
-export default general

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Dealer\GlobalSetting;
+use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
@@ -148,6 +149,63 @@ describe('general section update', function (): void {
                 'remediations_active' => false,
                 'remediation_notifications' => false,
                 'phishing_active' => false,
+            ])
+            ->assertForbidden();
+    });
+});
+
+describe('managers section update', function (): void {
+    it('creates the employee list when none exists', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->patch(route('dealer.dealer.settings.managers.update', $store), [
+                'qualified_individual_name' => 'Quincy Q',
+                'qualified_individual_phone' => '555-1234',
+                'owner_name' => 'Olivia O',
+                'owner_phone' => '555-9999',
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('flash.success');
+
+        $list = EmployeeList::query()->where('store_id', $store->id)->firstOrFail();
+        expect($list->qualified_individual_name)->toBe('Quincy Q')
+            ->and($list->qualified_individual_phone)->toBe('555-1234')
+            ->and($list->owner_name)->toBe('Olivia O')
+            ->and($list->owner_phone)->toBe('555-9999')
+            ->and($list->service_manager_name)->toBeNull();
+    });
+
+    it('updates an existing employee list', function (): void {
+        $store = Store::query()->firstOrFail();
+        EmployeeList::query()->create([
+            'store_id' => $store->id,
+            'general_manager_name' => 'Old GM',
+            'general_manager_phone' => '111-1111',
+        ]);
+
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->patch(route('dealer.dealer.settings.managers.update', $store), [
+                'general_manager_name' => 'New GM',
+                'general_manager_phone' => '222-2222',
+            ])
+            ->assertRedirect();
+
+        $list = EmployeeList::query()->where('store_id', $store->id)->firstOrFail();
+        expect($list->general_manager_name)->toBe('New GM')
+            ->and($list->general_manager_phone)->toBe('222-2222');
+    });
+
+    it('forbids managers from saving the employee list', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->manager->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->manager)
+            ->patch(route('dealer.dealer.settings.managers.update', $store), [
+                'owner_name' => 'Hijacked',
             ])
             ->assertForbidden();
     });

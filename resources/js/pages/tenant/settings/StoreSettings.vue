@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watch } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Loader2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
@@ -60,11 +61,27 @@ type GeneralPayload = {
     frequencies: Frequency[];
 };
 
+type ManagersPayload = {
+    qualified_individual_name: string | null;
+    qualified_individual_phone: string | null;
+    service_manager_name: string | null;
+    service_manager_phone: string | null;
+    parts_manager_name: string | null;
+    parts_manager_phone: string | null;
+    body_shop_manager_name: string | null;
+    body_shop_manager_phone: string | null;
+    general_manager_name: string | null;
+    general_manager_phone: string | null;
+    owner_name: string | null;
+    owner_phone: string | null;
+};
+
 const props = defineProps<{
     section: Section;
     store: StoreSummary;
     can: { update: boolean; manage_dealerships: boolean };
     general?: GeneralPayload | null;
+    managers?: ManagersPayload | null;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -123,9 +140,15 @@ const hydrateGeneralForm = (payload: GeneralPayload): void => {
     form.phishing_ip = payload.phishing.ip ?? '';
 };
 
-if (props.general) {
-    hydrateGeneralForm(props.general);
-}
+watch(
+    () => props.general,
+    (next) => {
+        if (next) {
+            hydrateGeneralForm(next);
+        }
+    },
+    { immediate: true },
+);
 
 const submitGeneral = (): void => {
     form
@@ -136,6 +159,63 @@ const submitGeneral = (): void => {
         .patch(StoreSettingsController.updateGeneral.url({ store: props.store.id }), {
             preserveScroll: true,
         });
+};
+
+// ---------- Managers section ----------
+
+const managersForm = useForm({
+    qualified_individual_name: '',
+    qualified_individual_phone: '',
+    service_manager_name: '',
+    service_manager_phone: '',
+    parts_manager_name: '',
+    parts_manager_phone: '',
+    body_shop_manager_name: '',
+    body_shop_manager_phone: '',
+    general_manager_name: '',
+    general_manager_phone: '',
+    owner_name: '',
+    owner_phone: '',
+});
+
+const hydrateManagersForm = (payload: ManagersPayload): void => {
+    managersForm.qualified_individual_name = payload.qualified_individual_name ?? '';
+    managersForm.qualified_individual_phone = payload.qualified_individual_phone ?? '';
+    managersForm.service_manager_name = payload.service_manager_name ?? '';
+    managersForm.service_manager_phone = payload.service_manager_phone ?? '';
+    managersForm.parts_manager_name = payload.parts_manager_name ?? '';
+    managersForm.parts_manager_phone = payload.parts_manager_phone ?? '';
+    managersForm.body_shop_manager_name = payload.body_shop_manager_name ?? '';
+    managersForm.body_shop_manager_phone = payload.body_shop_manager_phone ?? '';
+    managersForm.general_manager_name = payload.general_manager_name ?? '';
+    managersForm.general_manager_phone = payload.general_manager_phone ?? '';
+    managersForm.owner_name = payload.owner_name ?? '';
+    managersForm.owner_phone = payload.owner_phone ?? '';
+};
+
+watch(
+    () => props.managers,
+    (next) => {
+        if (next) {
+            hydrateManagersForm(next);
+        }
+    },
+    { immediate: true },
+);
+
+const managerRoles: { key: keyof ManagersPayload; phoneKey: keyof ManagersPayload; label: string }[] = [
+    { key: 'qualified_individual_name', phoneKey: 'qualified_individual_phone', label: 'Qualified Individual' },
+    { key: 'owner_name', phoneKey: 'owner_phone', label: 'Owner' },
+    { key: 'general_manager_name', phoneKey: 'general_manager_phone', label: 'General Manager' },
+    { key: 'service_manager_name', phoneKey: 'service_manager_phone', label: 'Service Manager' },
+    { key: 'parts_manager_name', phoneKey: 'parts_manager_phone', label: 'Parts Manager' },
+    { key: 'body_shop_manager_name', phoneKey: 'body_shop_manager_phone', label: 'Body Shop Manager' },
+];
+
+const submitManagers = (): void => {
+    managersForm.patch(StoreSettingsController.updateManagers.url({ store: props.store.id }), {
+        preserveScroll: true,
+    });
 };
 </script>
 
@@ -317,7 +397,49 @@ const submitGeneral = (): void => {
                 </form>
             </div>
 
-            <!-- Managers / Compliance / Reset / Ridgeback placeholders -->
+            <!-- Managers -->
+            <div v-else-if="section === 'managers'" class="mx-auto max-w-4xl space-y-6">
+                <div v-if="!managers" class="flex h-32 items-center justify-center rounded-md border bg-card text-sm text-muted-foreground">
+                    <Loader2 class="mr-2 size-4 animate-spin" />
+                    Loading managers...
+                </div>
+
+                <form v-else class="space-y-6" @submit.prevent="submitManagers">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Manager Contacts</CardTitle>
+                            <CardDescription>Names and phone numbers for the people responsible for each role.</CardDescription>
+                        </CardHeader>
+                        <CardContent class="space-y-6">
+                            <div
+                                v-for="role in managerRoles"
+                                :key="role.key"
+                                class="grid grid-cols-1 gap-4 md:grid-cols-2"
+                            >
+                                <div class="space-y-2">
+                                    <Label :for="role.key">{{ role.label }}</Label>
+                                    <Input :id="role.key" v-model="managersForm[role.key] as string" />
+                                    <InputError :message="managersForm.errors[role.key]" />
+                                </div>
+                                <div class="space-y-2">
+                                    <Label :for="role.phoneKey">{{ role.label }} Phone</Label>
+                                    <Input :id="role.phoneKey" v-model="managersForm[role.phoneKey] as string" />
+                                    <InputError :message="managersForm.errors[role.phoneKey]" />
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <div v-if="can.update" class="flex justify-end">
+                        <Button type="submit" :disabled="managersForm.processing">
+                            <Loader2 v-if="managersForm.processing" class="mr-2 size-4 animate-spin" />
+                            Save Managers
+                        </Button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Compliance / Reset / Ridgeback placeholders -->
             <div v-else class="mx-auto max-w-4xl">
                 <Card>
                     <CardHeader>
