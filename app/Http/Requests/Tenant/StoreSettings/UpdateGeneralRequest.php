@@ -34,7 +34,6 @@ class UpdateGeneralRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:50'],
             'website' => ['nullable', 'string', 'max:255'],
             'courses_not_taken_notification' => ['required', 'boolean'],
-            'videos' => ['required', 'boolean'],
             'remediations_active' => ['required', 'boolean'],
             'remediation_notifications' => ['required', 'boolean'],
             'remediation_frequency' => [
@@ -69,7 +68,6 @@ class UpdateGeneralRequest extends FormRequest
             phone: $this->stringOrNull('phone'),
             website: $this->stringOrNull('website'),
             courses_not_taken_notification: $this->boolean('courses_not_taken_notification'),
-            videos: $this->boolean('videos'),
             remediations_active: $this->boolean('remediations_active'),
             remediation_notifications: $this->boolean('remediation_notifications'),
             remediation_frequency: $frequency === null ? null : Frequency::from((string) $frequency),

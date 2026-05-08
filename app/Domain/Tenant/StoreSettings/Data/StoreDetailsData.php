@@ -18,7 +18,6 @@ class StoreDetailsData
         public readonly ?string $phone,
         public readonly ?string $website,
         public readonly bool $courses_not_taken_notification,
-        public readonly bool $videos,
     ) {}
 
     public static function fromStore(Store $store): self
@@ -33,7 +32,6 @@ class StoreDetailsData
             phone: $store->phone,
             website: $store->website,
             courses_not_taken_notification: (bool) $store->courses_not_taken_notification,
-            videos: (bool) $store->videos,
         );
     }
 
@@ -52,7 +50,6 @@ class StoreDetailsData
             'phone' => $this->phone,
             'website' => $this->website,
             'courses_not_taken_notification' => $this->courses_not_taken_notification,
-            'videos' => $this->videos,
         ];
     }
 }

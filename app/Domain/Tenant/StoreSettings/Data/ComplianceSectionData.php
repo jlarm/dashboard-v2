@@ -58,42 +58,42 @@ class ComplianceSectionData
     public static function fromStore(Store $store): self
     {
         return new self(
-            police_emergency_phone: $store->police_emergency_phone,
-            police_non_emergency_phone: $store->police_non_emergency_phone,
-            fire_emergency_phone: $store->fire_emergency_phone,
-            fire_non_emergency_phone: $store->fire_non_emergency_phone,
-            fire_alarm_type: $store->fire_alarm_type,
-            burglar_alarm_type: $store->burglar_alarm_type,
-            firewall_company: $store->firewall_company,
+            police_emergency_phone: self::stringOrNull($store->police_emergency_phone),
+            police_non_emergency_phone: self::stringOrNull($store->police_non_emergency_phone),
+            fire_emergency_phone: self::stringOrNull($store->fire_emergency_phone),
+            fire_non_emergency_phone: self::stringOrNull($store->fire_non_emergency_phone),
+            fire_alarm_type: self::stringOrNull($store->fire_alarm_type),
+            burglar_alarm_type: self::stringOrNull($store->burglar_alarm_type),
+            firewall_company: self::stringOrNull($store->firewall_company),
             ip_addresses: self::stringList($store->ip_addresses),
-            mfa: $store->mfa,
-            vulnerability: $store->vulnerability,
-            currently_monitoring: $store->currently_monitoring === null ? null : (string) $store->currently_monitoring,
-            antivirus_software: $store->antivirus_software,
-            antivirus_computers: $store->antivirus_computers,
-            antivirus_minutes: $store->antivirus_minutes,
-            screensaver_minutes: $store->screensaver_minutes,
-            dms_provider: $store->dms_provider,
-            backups: $store->backups,
+            mfa: self::stringOrNull($store->mfa),
+            vulnerability: self::stringOrNull($store->vulnerability),
+            currently_monitoring: self::stringOrNull($store->currently_monitoring),
+            antivirus_software: self::stringOrNull($store->antivirus_software),
+            antivirus_computers: self::stringOrNull($store->antivirus_computers),
+            antivirus_minutes: self::stringOrNull($store->antivirus_minutes),
+            screensaver_minutes: self::stringOrNull($store->screensaver_minutes),
+            dms_provider: self::stringOrNull($store->dms_provider),
+            backups: self::stringOrNull($store->backups),
             website_urls: self::stringList($store->website_urls),
-            designated_red_flag_coordinator: $store->designated_red_flag_coordinator,
-            document_shredding: $store->document_shredding,
-            service_provider_agreements: $store->service_provider_agreements,
-            offsite_storage: $store->offsite_storage,
-            other_business: $store->other_business,
-            vendor_access: $store->vendor_access,
-            personal_devices: $store->personal_devices,
-            compliance_issues: $store->compliance_issues,
-            fi_products_sold: $store->fi_products_sold,
+            designated_red_flag_coordinator: self::stringOrNull($store->designated_red_flag_coordinator),
+            document_shredding: self::stringOrNull($store->document_shredding),
+            service_provider_agreements: self::stringOrNull($store->service_provider_agreements),
+            offsite_storage: self::stringOrNull($store->offsite_storage),
+            other_business: self::stringOrNull($store->other_business),
+            vendor_access: self::stringOrNull($store->vendor_access),
+            personal_devices: self::stringOrNull($store->personal_devices),
+            compliance_issues: self::stringOrNull($store->compliance_issues),
+            fi_products_sold: self::stringOrNull($store->fi_products_sold),
             service_contracts: self::stringList($store->service_contracts),
             tire_wheel: self::stringList($store->tire_wheel),
             other_fi: self::stringList($store->other_fi),
-            fi_system: $store->fi_system,
-            appearance_protection_sold: $store->appearance_protection_sold,
+            fi_system: self::stringOrNull($store->fi_system),
+            appearance_protection_sold: self::stringOrNull($store->appearance_protection_sold),
             reinsurance: (bool) $store->reinsurance,
-            admin_name: $store->admin_name,
-            fi_username: $store->fi_username,
-            fi_password: $store->fi_password,
+            admin_name: self::stringOrNull($store->admin_name),
+            fi_username: self::stringOrNull($store->fi_username),
+            fi_password: self::stringOrNull($store->fi_password),
             standard_dpp_rate: $store->standard_dpp_rate === null ? null : (float) $store->standard_dpp_rate,
         );
     }
@@ -142,6 +142,15 @@ class ComplianceSectionData
             'fi_password' => $this->fi_password,
             'standard_dpp_rate' => $this->standard_dpp_rate,
         ];
+    }
+
+    private static function stringOrNull(mixed $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return (string) $value;
     }
 
     /**

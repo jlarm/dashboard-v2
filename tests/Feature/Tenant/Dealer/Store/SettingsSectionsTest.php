@@ -76,7 +76,6 @@ describe('general section update', function (): void {
                 'phone' => '313-555-1234',
                 'website' => 'https://renamed.test',
                 'courses_not_taken_notification' => true,
-                'videos' => false,
                 'remediations_active' => true,
                 'remediation_notifications' => true,
                 'remediation_frequency' => 'weekly',
@@ -86,8 +85,7 @@ describe('general section update', function (): void {
 
         $store->refresh();
         expect($store->name)->toBe('Renamed Dealership')
-            ->and($store->city)->toBe('Detroit')
-            ->and($store->videos)->toBeFalse();
+            ->and($store->city)->toBe('Detroit');
 
         $store->loadMissing('remediationSettings');
         expect($store->remediationSettings->active)->toBeTrue()
@@ -103,7 +101,6 @@ describe('general section update', function (): void {
             ->patch(route('dealer.dealer.settings.general.update', $store), [
                 'name' => $store->name,
                 'courses_not_taken_notification' => false,
-                'videos' => false,
                 'remediations_active' => true,
                 'remediation_notifications' => true,
                 'remediation_frequency' => null,
@@ -119,7 +116,6 @@ describe('general section update', function (): void {
             ->patch(route('dealer.dealer.settings.general.update', $store), [
                 'name' => 'Hijacked Name',
                 'courses_not_taken_notification' => false,
-                'videos' => false,
                 'remediations_active' => false,
                 'remediation_notifications' => false,
             ])

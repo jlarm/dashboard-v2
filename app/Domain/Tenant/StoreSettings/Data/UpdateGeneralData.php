@@ -17,7 +17,6 @@ class UpdateGeneralData
         public readonly ?string $phone,
         public readonly ?string $website,
         public readonly bool $courses_not_taken_notification,
-        public readonly bool $videos,
         public readonly bool $remediations_active,
         public readonly bool $remediation_notifications,
         public readonly ?Frequency $remediation_frequency,
@@ -37,7 +36,6 @@ class UpdateGeneralData
             'phone' => $this->phone,
             'website' => $this->website,
             'courses_not_taken_notification' => $this->courses_not_taken_notification,
-            'videos' => $this->videos,
         ];
     }
 

@@ -45,13 +45,17 @@ type StoreDetails = {
     phone: string | null;
     website: string | null;
     courses_not_taken_notification: boolean;
-    videos: boolean;
 };
+
+type ReminderUser = { id: number; name: string; slug: string | null };
+type AuditType = { value: string; label: string };
 
 type RemediationSettings = {
     active: boolean;
     notifications: boolean;
     frequency: string | null;
+    reminder_groups: Record<string, ReminderUser[]>;
+    audit_types: AuditType[];
 };
 
 type Frequency = { value: string; label: string };
@@ -178,7 +182,6 @@ const form = useForm({
     phone: '',
     website: '',
     courses_not_taken_notification: false,
-    videos: false,
     remediations_active: false,
     remediation_notifications: false,
     remediation_frequency: '' as string,
@@ -193,7 +196,6 @@ const hydrateGeneralForm = (payload: GeneralPayload): void => {
     form.phone = formatPhoneNumber(payload.store.phone);
     form.website = payload.store.website ?? '';
     form.courses_not_taken_notification = payload.store.courses_not_taken_notification;
-    form.videos = payload.store.videos;
     form.remediations_active = payload.remediation.active;
     form.remediation_notifications = payload.remediation.notifications;
     form.remediation_frequency = payload.remediation.frequency ?? '';
@@ -587,47 +589,76 @@ const confirmMessage = computed<string>(() =>
 
                     <Card>
                         <CardHeader>
-                            <CardTitle>Audit Remediations</CardTitle>
-                            <CardDescription>Allow this store to remediate audits and optionally notify managers.</CardDescription>
+                            <CardTitle>Course Notifications</CardTitle>
                         </CardHeader>
-                        <CardContent class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <Label for="remediations_active" class="cursor-pointer">Remediations enabled</Label>
-                                <Checkbox id="remediations_active" v-model="form.remediations_active" />
+                        <CardContent>
+                            <div class="flex items-center gap-2">
+                                <Checkbox id="courses_not_taken_notification" v-model="form.courses_not_taken_notification" />
+                                <Label for="courses_not_taken_notification" class="cursor-pointer">Active</Label>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <Label for="remediation_notifications" class="cursor-pointer">Send remediation reminders</Label>
-                                <Checkbox id="remediation_notifications" v-model="form.remediation_notifications" />
-                            </div>
-                            <div class="space-y-2">
-                                <Label for="remediation_frequency">Reminder frequency</Label>
-                                <Select v-model="form.remediation_frequency">
-                                    <SelectTrigger id="remediation_frequency">
-                                        <SelectValue placeholder="Choose a frequency" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem v-for="frequency in general.frequencies" :key="frequency.value" :value="frequency.value">
-                                            {{ frequency.label }}
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <InputError :message="form.errors.remediation_frequency" />
-                            </div>
+                            <p v-if="form.courses_not_taken_notification" class="mt-3 text-sm text-muted-foreground">
+                                Notifications will be sent every 30 days for every course an employee has not made an attempt to take.
+                                For every course taken, a reminder will be sent 30 days prior to the course expiring and an additional
+                                reminder the day the course has expired as well as 30 days after.
+                            </p>
                         </CardContent>
                     </Card>
 
                     <Card>
                         <CardHeader>
-                            <CardTitle>Other</CardTitle>
+                            <CardTitle>Remediations</CardTitle>
                         </CardHeader>
-                        <CardContent class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <Label for="courses_not_taken_notification" class="cursor-pointer">Send "courses not taken" notifications</Label>
-                                <Checkbox id="courses_not_taken_notification" v-model="form.courses_not_taken_notification" />
+                        <CardContent class="space-y-3">
+                            <div class="flex items-center gap-2">
+                                <Checkbox id="remediations_active" v-model="form.remediations_active" />
+                                <Label for="remediations_active" class="cursor-pointer">Active</Label>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <Label for="videos" class="cursor-pointer">Allow course videos</Label>
-                                <Checkbox id="videos" v-model="form.videos" />
+
+                            <div v-if="form.remediations_active" class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <Checkbox id="remediation_notifications" v-model="form.remediation_notifications" />
+                                    <Label for="remediation_notifications" class="cursor-pointer">Enable Notifications</Label>
+                                </div>
+
+                                <div v-if="form.remediation_notifications" class="space-y-2">
+                                    <Select v-model="form.remediation_frequency">
+                                        <SelectTrigger id="remediation_frequency">
+                                            <SelectValue placeholder="Choose a frequency" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem v-for="frequency in general.frequencies" :key="frequency.value" :value="frequency.value">
+                                                {{ frequency.label }}
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <InputError :message="form.errors.remediation_frequency" />
+
+                                    <p class="pt-2 text-sm text-muted-foreground">
+                                        The following employees are configured to receive reminders based on audit types. When the audit
+                                        has been completed, the employee will receive a notification. The employee will then receive two
+                                        more notifications based on the frequency selected if all violations have not been remediated.
+                                    </p>
+
+                                    <div class="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3">
+                                        <div v-for="auditType in general.remediation.audit_types" :key="auditType.value">
+                                            <h4 class="text-sm font-semibold">{{ auditType.label }}</h4>
+                                            <ul class="mt-2 space-y-1 text-sm text-muted-foreground">
+                                                <li
+                                                    v-for="user in (general.remediation.reminder_groups[auditType.value] ?? [])"
+                                                    :key="`${auditType.value}-${user.id}`"
+                                                >
+                                                    {{ user.name }}
+                                                </li>
+                                                <li
+                                                    v-if="(general.remediation.reminder_groups[auditType.value] ?? []).length === 0"
+                                                    class="italic"
+                                                >
+                                                    No employees configured.
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>
