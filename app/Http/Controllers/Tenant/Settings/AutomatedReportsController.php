@@ -7,15 +7,16 @@ namespace App\Http\Controllers\Tenant\Settings;
 use App\Enums\ComplianceSummaryFrequency;
 use App\Enums\Role;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenant\Settings\SendComplianceSummaryRequest;
 use App\Http\Requests\Tenant\Settings\UpdateAutomatedReportsRequest;
 use App\Jobs\SendComplianceSummaryJob;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Throwable;
 
 class AutomatedReportsController extends Controller
 {
@@ -61,26 +62,26 @@ class AutomatedReportsController extends Controller
 
     public function update(UpdateAutomatedReportsRequest $request): RedirectResponse
     {
-        GlobalSetting::query()->updateOrCreate([], [
-            'compliance_summary_active' => $request->boolean('compliance_summary_active'),
-            'compliance_summary_frequency' => $request->validated('compliance_summary_frequency'),
-            'compliance_summary_recipients' => $request->validated('compliance_summary_recipients', []),
-        ]);
+        try {
+            GlobalSetting::query()->updateOrCreate([], [
+                'compliance_summary_active' => $request->boolean('compliance_summary_active'),
+                'compliance_summary_frequency' => $request->validated('compliance_summary_frequency'),
+                'compliance_summary_recipients' => $request->validated('compliance_summary_recipients', []),
+            ]);
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not save the compliance summary settings. Please try again.');
+        }
 
         return back()->with('flash.success', 'Compliance Summary settings saved.');
     }
 
-    public function sendNow(Request $request): RedirectResponse
+    public function sendNow(SendComplianceSummaryRequest $request): RedirectResponse
     {
-        $this->authorize('manageReports', GlobalSetting::class);
-
-        $validated = $request->validate([
-            'compliance_summary_frequency' => ['required', 'string'],
-            'compliance_summary_recipients' => ['array'],
-            'compliance_summary_recipients.*' => ['integer'],
-        ]);
-
-        $recipientIds = $validated['compliance_summary_recipients'] ?? [];
+        $recipientIds = $request->recipientIds();
 
         if ($recipientIds === []) {
             return back()->with('flash.error', 'Select at least one recipient before sending.');
@@ -95,14 +96,17 @@ class AutomatedReportsController extends Controller
             return back()->with('flash.error', 'No valid recipients found.');
         }
 
-        $frequency = ComplianceSummaryFrequency::tryFrom($validated['compliance_summary_frequency'])
-            ?? ComplianceSummaryFrequency::Monthly;
+        try {
+            dispatch(new SendComplianceSummaryJob(
+                Store::query()->pluck('id')->all(),
+                $recipientEmails,
+                $request->frequency()->periodLabel(),
+            ));
+        } catch (Throwable $e) {
+            report($e);
 
-        dispatch(new SendComplianceSummaryJob(
-            Store::query()->pluck('id')->all(),
-            $recipientEmails,
-            $frequency->periodLabel(),
-        ));
+            return back()->with('flash.error', 'We could not queue the compliance summary. Please try again.');
+        }
 
         return back()->with('flash.success', 'Compliance summary queued — reports will be emailed shortly.');
     }

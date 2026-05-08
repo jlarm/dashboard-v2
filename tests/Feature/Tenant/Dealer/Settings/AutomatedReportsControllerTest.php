@@ -7,6 +7,7 @@ use App\Jobs\SendComplianceSummaryJob;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\User;
 use Illuminate\Support\Facades\Bus;
+use RuntimeException;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
@@ -198,5 +199,29 @@ describe('automated reports send now', function (): void {
             ->assertForbidden();
 
         Bus::assertNotDispatched(SendComplianceSummaryJob::class);
+    });
+
+    it('surfaces a friendly flash error when the queue dispatch fails', function (): void {
+        $owner = User::factory()->create(['email' => 'owner.queue-fail@test.com']);
+        $owner->assignRole('Owner');
+
+        Bus::shouldReceive('dispatch')->andThrow(new RuntimeException('queue offline'));
+
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.settings.automated-reports.send'), [
+                'compliance_summary_frequency' => 'monthly',
+                'compliance_summary_recipients' => [$owner->id],
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('flash.error');
+    });
+
+    it('rejects unknown recipient ids via FormRequest validation', function (): void {
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.settings.automated-reports.send'), [
+                'compliance_summary_frequency' => 'monthly',
+                'compliance_summary_recipients' => [99999],
+            ])
+            ->assertSessionHasErrors('compliance_summary_recipients.0');
     });
 });
