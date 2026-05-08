@@ -11,8 +11,10 @@ use App\Http\Requests\Tenant\Scans\UpdateScanSettingsRequest;
 use App\Models\Dealer\Cyrisma;
 use App\Models\Dealer\Store;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Throwable;
 
 class CyrismaController extends Controller
 {
@@ -32,7 +34,17 @@ class CyrismaController extends Controller
         UpdateScanSettingsRequest $request,
         UpdateScanSettings $updateScanSettings,
     ): RedirectResponse {
-        $updateScanSettings->handle($request->toData());
+        try {
+            $updateScanSettings->handle($request->toData());
+        } catch (ValidationException $e) {
+            throw $e;
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()
+                ->withInput()
+                ->with('flash.error', 'We could not save the instance configuration. Please try again.');
+        }
 
         return back()->with('flash.success', 'Instance configuration saved successfully.');
     }

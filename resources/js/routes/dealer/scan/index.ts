@@ -3,7 +3,7 @@ import settings69f00b from './settings'
 import archiveBc62fe from './archive'
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:32
+* @see app/Http/Controllers/Tenant/ScansController.php:33
 * @route '/scans'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -18,7 +18,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:32
+* @see app/Http/Controllers/Tenant/ScansController.php:33
 * @route '/scans'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -27,7 +27,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:32
+* @see app/Http/Controllers/Tenant/ScansController.php:33
 * @route '/scans'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -37,7 +37,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:32
+* @see app/Http/Controllers/Tenant/ScansController.php:33
 * @route '/scans'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -47,7 +47,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:32
+* @see app/Http/Controllers/Tenant/ScansController.php:33
 * @route '/scans'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -57,7 +57,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:32
+* @see app/Http/Controllers/Tenant/ScansController.php:33
 * @route '/scans'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -67,7 +67,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:32
+* @see app/Http/Controllers/Tenant/ScansController.php:33
 * @route '/scans'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -84,7 +84,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:177
+* @see app/Http/Controllers/Tenant/ScansController.php:187
 * @route '/scans/external-finding'
 */
 export const externalFinding = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -99,7 +99,7 @@ externalFinding.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:177
+* @see app/Http/Controllers/Tenant/ScansController.php:187
 * @route '/scans/external-finding'
 */
 externalFinding.url = (options?: RouteQueryOptions) => {
@@ -108,7 +108,7 @@ externalFinding.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:177
+* @see app/Http/Controllers/Tenant/ScansController.php:187
 * @route '/scans/external-finding'
 */
 externalFinding.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -118,7 +118,7 @@ externalFinding.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:177
+* @see app/Http/Controllers/Tenant/ScansController.php:187
 * @route '/scans/external-finding'
 */
 externalFinding.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -128,7 +128,7 @@ externalFinding.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =>
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:177
+* @see app/Http/Controllers/Tenant/ScansController.php:187
 * @route '/scans/external-finding'
 */
 const externalFindingForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -138,7 +138,7 @@ const externalFindingForm = (options?: RouteQueryOptions): RouteFormDefinition<'
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:177
+* @see app/Http/Controllers/Tenant/ScansController.php:187
 * @route '/scans/external-finding'
 */
 externalFindingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -148,7 +148,7 @@ externalFindingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'ge
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:177
+* @see app/Http/Controllers/Tenant/ScansController.php:187
 * @route '/scans/external-finding'
 */
 externalFindingForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -165,7 +165,7 @@ externalFinding.form = externalFindingForm
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:138
+* @see app/Http/Controllers/Tenant/ScansController.php:139
 * @route '/scans/queue-report'
 */
 export const queueReport = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -180,7 +180,7 @@ queueReport.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:138
+* @see app/Http/Controllers/Tenant/ScansController.php:139
 * @route '/scans/queue-report'
 */
 queueReport.url = (options?: RouteQueryOptions) => {
@@ -189,7 +189,7 @@ queueReport.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:138
+* @see app/Http/Controllers/Tenant/ScansController.php:139
 * @route '/scans/queue-report'
 */
 queueReport.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -199,7 +199,7 @@ queueReport.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:138
+* @see app/Http/Controllers/Tenant/ScansController.php:139
 * @route '/scans/queue-report'
 */
 const queueReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -209,7 +209,7 @@ const queueReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'post
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:138
+* @see app/Http/Controllers/Tenant/ScansController.php:139
 * @route '/scans/queue-report'
 */
 queueReportForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -221,7 +221,7 @@ queueReport.form = queueReportForm
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:165
+* @see app/Http/Controllers/Tenant/ScansController.php:175
 * @route '/scans/refresh-cache'
 */
 export const refreshCache = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -236,7 +236,7 @@ refreshCache.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:165
+* @see app/Http/Controllers/Tenant/ScansController.php:175
 * @route '/scans/refresh-cache'
 */
 refreshCache.url = (options?: RouteQueryOptions) => {
@@ -245,7 +245,7 @@ refreshCache.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:165
+* @see app/Http/Controllers/Tenant/ScansController.php:175
 * @route '/scans/refresh-cache'
 */
 refreshCache.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -255,7 +255,7 @@ refreshCache.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:165
+* @see app/Http/Controllers/Tenant/ScansController.php:175
 * @route '/scans/refresh-cache'
 */
 const refreshCacheForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -265,7 +265,7 @@ const refreshCacheForm = (options?: RouteQueryOptions): RouteFormDefinition<'pos
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:165
+* @see app/Http/Controllers/Tenant/ScansController.php:175
 * @route '/scans/refresh-cache'
 */
 refreshCacheForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -277,7 +277,7 @@ refreshCache.form = refreshCacheForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
 * @route '/scans/settings'
 */
 export const settings = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -292,7 +292,7 @@ settings.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
 * @route '/scans/settings'
 */
 settings.url = (options?: RouteQueryOptions) => {
@@ -301,7 +301,7 @@ settings.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
 * @route '/scans/settings'
 */
 settings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -311,7 +311,7 @@ settings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
 * @route '/scans/settings'
 */
 settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -321,7 +321,7 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
 * @route '/scans/settings'
 */
 const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -331,7 +331,7 @@ const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
 * @route '/scans/settings'
 */
 settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -341,7 +341,7 @@ settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
-* @see app/Http/Controllers/Tenant/CyrismaController.php:19
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
 * @route '/scans/settings'
 */
 settingsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -358,7 +358,7 @@ settings.form = settingsForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:18
 * @route '/scans/report/{type}'
 */
 export const report = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -373,7 +373,7 @@ report.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:18
 * @route '/scans/report/{type}'
 */
 report.url = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -400,7 +400,7 @@ report.url = (args: { type: string | number } | [type: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:18
 * @route '/scans/report/{type}'
 */
 report.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -410,7 +410,7 @@ report.get = (args: { type: string | number } | [type: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:18
 * @route '/scans/report/{type}'
 */
 report.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -420,7 +420,7 @@ report.head = (args: { type: string | number } | [type: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:18
 * @route '/scans/report/{type}'
 */
 const reportForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -430,7 +430,7 @@ const reportForm = (args: { type: string | number } | [type: string | number ] |
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:18
 * @route '/scans/report/{type}'
 */
 reportForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -440,7 +440,7 @@ reportForm.get = (args: { type: string | number } | [type: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaReportController::report
-* @see app/Http/Controllers/Tenant/CyrismaReportController.php:17
+* @see app/Http/Controllers/Tenant/CyrismaReportController.php:18
 * @route '/scans/report/{type}'
 */
 reportForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

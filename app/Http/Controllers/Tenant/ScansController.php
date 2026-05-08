@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use RuntimeException;
+use Throwable;
 
 class ScansController extends Controller
 {
@@ -147,7 +148,16 @@ class ScansController extends Controller
 
         $type = $request->reportType();
 
-        $status = $queueScanReport->handle($store, $user, $type);
+        try {
+            $status = $queueScanReport->handle($store, $user, $type);
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with(
+                'flash.error',
+                'We could not queue the '.$type.' report. Please try again.',
+            );
+        }
 
         return match ($status) {
             QueueScanReport::STATUS_READY => back()->with('success', ucfirst($type).' report is ready to download.'),

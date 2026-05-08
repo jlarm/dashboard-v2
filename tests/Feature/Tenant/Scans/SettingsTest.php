@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Dealer\Cyrisma;
 use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
+use RuntimeException;
 
 beforeEach(function (): void {
     $this->store = Store::query()->first();
@@ -101,5 +102,18 @@ describe('PUT scans/settings', function (): void {
             ->from(route('dealer.scan.settings'))
             ->put(route('dealer.scan.settings.update'), [])
             ->assertSessionHasErrors('instance_id');
+    });
+
+    it('surfaces a friendly flash error when the Cyrisma service throws', function (): void {
+        $cyrisma = test()->mock(CyrismaService::class);
+        $cyrisma->shouldReceive('getAllInstances')->andThrow(new RuntimeException('cyrisma offline'));
+
+        $this->actingAs($this->consultant)
+            ->from(route('dealer.scan.settings'))
+            ->put(route('dealer.scan.settings.update'), ['instance_id' => 'acme'])
+            ->assertRedirect()
+            ->assertSessionHas('flash.error');
+
+        expect(Cyrisma::query()->where('store_id', $this->store->id)->exists())->toBeFalse();
     });
 });

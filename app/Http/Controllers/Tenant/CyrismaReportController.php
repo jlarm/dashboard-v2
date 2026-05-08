@@ -9,6 +9,7 @@ use App\Domain\Tenant\Scans\Queries\GetCachedScanReport;
 use App\Models\Dealer\Store;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
 
 class CyrismaReportController
 {
@@ -24,7 +25,12 @@ class CyrismaReportController
 
         abort_unless($store instanceof Store, 404);
 
-        $report = $getCachedScanReport->handle($store, $type);
+        try {
+            $report = $getCachedScanReport->handle($store, $type);
+        } catch (Throwable $e) {
+            report($e);
+            abort(503, 'The scanning service is temporarily unavailable. Please try again later.');
+        }
 
         abort_unless($report instanceof ScanReportData, 404, 'Report not yet generated. Please request it from the scan details page.');
 

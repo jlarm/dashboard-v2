@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Domain\Tenant\Scans\Actions\QueueScanReport;
 use App\Jobs\Scans\GenerateCyrismaReportJob;
 use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Queue;
+use RuntimeException;
 
 beforeEach(function (): void {
     Cache::flush();
@@ -90,6 +92,18 @@ describe('POST scans/queue-report', function (): void {
             ->from(route('dealer.scan.index'))
             ->post(route('dealer.scan.queue-report'), ['type' => 'invalid'])
             ->assertSessionHasErrors('type');
+    });
+
+    it('surfaces a friendly flash error when the queue action throws', function (): void {
+        test()->mock(QueueScanReport::class, function ($mock): void {
+            $mock->shouldReceive('handle')->andThrow(new RuntimeException('redis offline'));
+        });
+
+        $this->actingAs($this->consultant)
+            ->from(route('dealer.scan.index'))
+            ->post(route('dealer.scan.queue-report'), ['type' => 'executive'])
+            ->assertRedirect(route('dealer.scan.index'))
+            ->assertSessionHas('flash.error');
     });
 });
 

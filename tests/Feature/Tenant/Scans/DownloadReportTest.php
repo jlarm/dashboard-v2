@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Dealer\Store;
 use App\Services\CyrismaService;
 use Illuminate\Support\Facades\Cache;
+use RuntimeException;
 
 beforeEach(function (): void {
     Cache::flush();
@@ -115,5 +116,14 @@ describe('download', function (): void {
 
         $response->assertOk();
         expect($response->headers->get('Cache-Control'))->toContain('private');
+    });
+
+    it('returns a 503 when the Cyrisma service throws', function (): void {
+        $cyrisma = $this->mock(CyrismaService::class);
+        $cyrisma->shouldReceive('forStore')->andThrow(new RuntimeException('cyrisma offline'));
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.scan.report', ['type' => 'executive']))
+            ->assertStatus(503);
     });
 });
