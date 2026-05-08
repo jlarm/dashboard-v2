@@ -28,14 +28,11 @@ class StoreSettingsController extends Controller
 
     private const string SECTION_RESET_COURSES = 'reset-courses';
 
-    private const string SECTION_RIDGEBACK = 'ridgeback';
-
     private const array SECTIONS = [
         self::SECTION_GENERAL,
         self::SECTION_MANAGERS,
         self::SECTION_COMPLIANCE,
         self::SECTION_RESET_COURSES,
-        self::SECTION_RIDGEBACK,
     ];
 
     public function index(

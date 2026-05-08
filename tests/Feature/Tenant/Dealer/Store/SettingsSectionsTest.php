@@ -44,21 +44,7 @@ it('renders each section route with the correct section prop', function (string 
     'managers' => ['dealer.dealer.settings.managers', 'managers'],
     'compliance' => ['dealer.dealer.settings.compliance', 'compliance'],
     'reset-courses' => ['dealer.dealer.settings.reset-courses', 'reset-courses'],
-    'ridgeback' => ['dealer.dealer.settings.ridgeback', 'ridgeback'],
 ]);
-
-it('forbids the ridgeback settings page for users without dealership creation access', function (): void {
-    $store = Store::query()->firstOrFail();
-
-    $qualifiedIndividual = User::factory()->create(['current_store_id' => $store->id]);
-    $qualifiedIndividual->assignRole('Qualified Individual');
-    $qualifiedIndividual->stores()->sync([$store->id]);
-    app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
-
-    $this->actingAs($qualifiedIndividual)
-        ->get(route('dealer.dealer.settings.ridgeback'))
-        ->assertForbidden();
-});
 
 it('forbids the reset courses settings page for users without dealership creation access', function (): void {
     $store = Store::query()->firstOrFail();

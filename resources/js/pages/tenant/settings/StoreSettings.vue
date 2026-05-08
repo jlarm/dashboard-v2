@@ -18,7 +18,7 @@ import dealer from '@/routes/dealer/dealer';
 const settings = dealer.settings;
 import type { BreadcrumbItem } from '@/types';
 
-type Section = 'general' | 'managers' | 'compliance' | 'reset-courses' | 'ridgeback';
+type Section = 'general' | 'managers' | 'compliance' | 'reset-courses';
 
 type StoreSummary = {
     id: number;
@@ -93,7 +93,6 @@ const sections: { key: Section; label: string; href: string; gated?: boolean }[]
     { key: 'managers', label: 'Managers', href: settings.managers.url() },
     { key: 'compliance', label: 'Compliance', href: settings.compliance.url() },
     { key: 'reset-courses', label: 'Reset Courses', href: settings.resetCourses.url(), gated: true },
-    { key: 'ridgeback', label: 'Ridgeback', href: settings.ridgeback.url(), gated: true },
 ];
 
 const visibleSections = sections.filter((item) => !item.gated || props.can.manage_dealerships);

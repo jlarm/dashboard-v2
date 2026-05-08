@@ -291,10 +291,6 @@ Route::name('dealer.')->middleware([
                 ->defaults('section', 'reset-courses')
                 ->middleware('can:create-dealerships')
                 ->name('reset-courses');
-            Route::get('ridgeback', [StoreSettingsController::class, 'index'])
-                ->defaults('section', 'ridgeback')
-                ->middleware('can:create-dealerships')
-                ->name('ridgeback');
         });
         Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth'])->name('store.edit');
 
