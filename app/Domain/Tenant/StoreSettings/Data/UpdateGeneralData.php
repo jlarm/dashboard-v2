@@ -16,16 +16,11 @@ class UpdateGeneralData
         public readonly ?string $postal_code,
         public readonly ?string $phone,
         public readonly ?string $website,
-        public readonly bool $active_monitoring,
-        public readonly ?string $monitoring_start_date,
         public readonly bool $courses_not_taken_notification,
         public readonly bool $videos,
         public readonly bool $remediations_active,
         public readonly bool $remediation_notifications,
         public readonly ?Frequency $remediation_frequency,
-        public readonly bool $phishing_active,
-        public readonly ?string $phishing_token,
-        public readonly ?string $phishing_ip,
     ) {}
 
     /**
@@ -41,8 +36,6 @@ class UpdateGeneralData
             'postal_code' => $this->postal_code,
             'phone' => $this->phone,
             'website' => $this->website,
-            'active_monitoring' => $this->active_monitoring,
-            'monitoring_start_date' => $this->monitoring_start_date,
             'courses_not_taken_notification' => $this->courses_not_taken_notification,
             'videos' => $this->videos,
         ];
@@ -57,18 +50,6 @@ class UpdateGeneralData
             'active' => $this->remediations_active,
             'notifications' => $this->remediation_notifications,
             'frequency' => $this->remediation_frequency?->value,
-        ];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function phishingAttributes(): array
-    {
-        return [
-            'phishing_active' => $this->phishing_active,
-            'phishing_token' => $this->phishing_token,
-            'phishing_ip' => $this->phishing_ip,
         ];
     }
 }

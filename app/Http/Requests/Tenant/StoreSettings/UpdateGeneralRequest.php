@@ -33,8 +33,6 @@ class UpdateGeneralRequest extends FormRequest
             'postal_code' => ['nullable', 'string', 'max:20'],
             'phone' => ['nullable', 'string', 'max:50'],
             'website' => ['nullable', 'string', 'max:255'],
-            'active_monitoring' => ['required', 'boolean'],
-            'monitoring_start_date' => ['nullable', 'date'],
             'courses_not_taken_notification' => ['required', 'boolean'],
             'videos' => ['required', 'boolean'],
             'remediations_active' => ['required', 'boolean'],
@@ -44,9 +42,6 @@ class UpdateGeneralRequest extends FormRequest
                 Rule::enum(Frequency::class),
                 'required_if:remediation_notifications,true',
             ],
-            'phishing_active' => ['required', 'boolean'],
-            'phishing_token' => ['nullable', 'string', 'max:255'],
-            'phishing_ip' => ['nullable', 'string', 'max:255'],
         ];
     }
 
@@ -73,16 +68,11 @@ class UpdateGeneralRequest extends FormRequest
             postal_code: $this->stringOrNull('postal_code'),
             phone: $this->stringOrNull('phone'),
             website: $this->stringOrNull('website'),
-            active_monitoring: $this->boolean('active_monitoring'),
-            monitoring_start_date: $this->stringOrNull('monitoring_start_date'),
             courses_not_taken_notification: $this->boolean('courses_not_taken_notification'),
             videos: $this->boolean('videos'),
             remediations_active: $this->boolean('remediations_active'),
             remediation_notifications: $this->boolean('remediation_notifications'),
             remediation_frequency: $frequency === null ? null : Frequency::from((string) $frequency),
-            phishing_active: $this->boolean('phishing_active'),
-            phishing_token: $this->stringOrNull('phishing_token'),
-            phishing_ip: $this->stringOrNull('phishing_ip'),
         );
     }
 

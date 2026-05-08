@@ -44,8 +44,6 @@ type StoreDetails = {
     postal_code: string | null;
     phone: string | null;
     website: string | null;
-    active_monitoring: boolean;
-    monitoring_start_date: string | null;
     courses_not_taken_notification: boolean;
     videos: boolean;
 };
@@ -56,18 +54,11 @@ type RemediationSettings = {
     frequency: string | null;
 };
 
-type PhishingSettings = {
-    active: boolean;
-    token: string | null;
-    ip: string | null;
-};
-
 type Frequency = { value: string; label: string };
 
 type GeneralPayload = {
     store: StoreDetails;
     remediation: RemediationSettings;
-    phishing: PhishingSettings;
     frequencies: Frequency[];
 };
 
@@ -186,16 +177,11 @@ const form = useForm({
     postal_code: '',
     phone: '',
     website: '',
-    active_monitoring: false,
-    monitoring_start_date: '',
     courses_not_taken_notification: false,
     videos: false,
     remediations_active: false,
     remediation_notifications: false,
     remediation_frequency: '' as string,
-    phishing_active: false,
-    phishing_token: '',
-    phishing_ip: '',
 });
 
 const hydrateGeneralForm = (payload: GeneralPayload): void => {
@@ -206,16 +192,11 @@ const hydrateGeneralForm = (payload: GeneralPayload): void => {
     form.postal_code = payload.store.postal_code ?? '';
     form.phone = formatPhoneNumber(payload.store.phone);
     form.website = payload.store.website ?? '';
-    form.active_monitoring = payload.store.active_monitoring;
-    form.monitoring_start_date = payload.store.monitoring_start_date ?? '';
     form.courses_not_taken_notification = payload.store.courses_not_taken_notification;
     form.videos = payload.store.videos;
     form.remediations_active = payload.remediation.active;
     form.remediation_notifications = payload.remediation.notifications;
     form.remediation_frequency = payload.remediation.frequency ?? '';
-    form.phishing_active = payload.phishing.active;
-    form.phishing_token = payload.phishing.token ?? '';
-    form.phishing_ip = payload.phishing.ip ?? '';
 };
 
 watch(
@@ -606,24 +587,6 @@ const confirmMessage = computed<string>(() =>
 
                     <Card>
                         <CardHeader>
-                            <CardTitle>Monitoring</CardTitle>
-                            <CardDescription>Active monitoring tracks security activity for this dealership.</CardDescription>
-                        </CardHeader>
-                        <CardContent class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <Label for="active_monitoring" class="cursor-pointer">Active monitoring</Label>
-                                <Checkbox id="active_monitoring" v-model="form.active_monitoring" />
-                            </div>
-                            <div class="space-y-2">
-                                <Label for="monitoring_start_date">Monitoring start date</Label>
-                                <Input id="monitoring_start_date" v-model="form.monitoring_start_date" type="date" />
-                                <InputError :message="form.errors.monitoring_start_date" />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
                             <CardTitle>Audit Remediations</CardTitle>
                             <CardDescription>Allow this store to remediate audits and optionally notify managers.</CardDescription>
                         </CardHeader>
@@ -649,29 +612,6 @@ const confirmMessage = computed<string>(() =>
                                     </SelectContent>
                                 </Select>
                                 <InputError :message="form.errors.remediation_frequency" />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Phishing Simulations</CardTitle>
-                            <CardDescription>These settings apply across the whole tenant.</CardDescription>
-                        </CardHeader>
-                        <CardContent class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <Label for="phishing_active" class="cursor-pointer">Phishing active</Label>
-                                <Checkbox id="phishing_active" v-model="form.phishing_active" />
-                            </div>
-                            <div class="space-y-2">
-                                <Label for="phishing_token">Phishing token</Label>
-                                <Input id="phishing_token" v-model="form.phishing_token" />
-                                <InputError :message="form.errors.phishing_token" />
-                            </div>
-                            <div class="space-y-2">
-                                <Label for="phishing_ip">Phishing IP</Label>
-                                <Input id="phishing_ip" v-model="form.phishing_ip" />
-                                <InputError :message="form.errors.phishing_ip" />
                             </div>
                         </CardContent>
                     </Card>

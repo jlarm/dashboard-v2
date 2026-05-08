@@ -17,8 +17,6 @@ class StoreDetailsData
         public readonly ?string $postal_code,
         public readonly ?string $phone,
         public readonly ?string $website,
-        public readonly bool $active_monitoring,
-        public readonly ?string $monitoring_start_date,
         public readonly bool $courses_not_taken_notification,
         public readonly bool $videos,
     ) {}
@@ -34,8 +32,6 @@ class StoreDetailsData
             postal_code: $store->postal_code,
             phone: $store->phone,
             website: $store->website,
-            active_monitoring: (bool) $store->active_monitoring,
-            monitoring_start_date: $store->monitoring_start_date?->format('Y-m-d'),
             courses_not_taken_notification: (bool) $store->courses_not_taken_notification,
             videos: (bool) $store->videos,
         );
@@ -55,8 +51,6 @@ class StoreDetailsData
             'postal_code' => $this->postal_code,
             'phone' => $this->phone,
             'website' => $this->website,
-            'active_monitoring' => $this->active_monitoring,
-            'monitoring_start_date' => $this->monitoring_start_date,
             'courses_not_taken_notification' => $this->courses_not_taken_notification,
             'videos' => $this->videos,
         ];

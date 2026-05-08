@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Tenant\StoreSettings\Actions;
 
 use App\Domain\Tenant\StoreSettings\Data\UpdateGeneralData;
-use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
 use Illuminate\Support\Facades\DB;
 
@@ -17,8 +16,6 @@ class UpdateGeneralSection
             $store->update($data->storeAttributes());
 
             $store->remediationSettings()->updateOrCreate([], $data->remediationAttributes());
-
-            GlobalSetting::query()->updateOrCreate([], $data->phishingAttributes());
         });
     }
 }
