@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Models\Dealer\Course;
+use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Support\Facades\Bus;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
@@ -264,6 +267,92 @@ describe('compliance section update', function (): void {
         $this->actingAs($this->manager)
             ->patch(route('dealer.dealer.settings.compliance.update', $store), [
                 'reinsurance' => false,
+            ])
+            ->assertForbidden();
+    });
+});
+
+describe('reset courses', function (): void {
+    it('lists users at the current store who have course results', function (): void {
+        $store = Store::query()->firstOrFail();
+
+        $employee = User::factory()->create(['name' => 'Eddie Employee', 'current_store_id' => $store->id]);
+        $employee->assignRole('Employee');
+        $employee->stores()->sync([$store->id]);
+
+        $course = Course::query()->firstOrFail();
+
+        CourseResults::query()->create([
+            'user_id' => $employee->id,
+            'course_id' => $course->id,
+            'passed' => true,
+            'percentage' => 100,
+        ]);
+
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.dealer.settings.reset-courses'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page
+                ->component('tenant/settings/StoreSettings')
+                ->where('section', 'reset-courses')
+                ->has('resettableUsers', fn ($users) => $users->etc()));
+    });
+
+    it('resets selected users at the current store', function (): void {
+        Bus::fake();
+        $store = Store::query()->firstOrFail();
+
+        $employee = User::factory()->create(['current_store_id' => $store->id]);
+        $employee->assignRole('Employee');
+        $employee->stores()->sync([$store->id]);
+
+        $course = Course::query()->firstOrFail();
+
+        CourseResults::query()->create([
+            'user_id' => $employee->id,
+            'course_id' => $course->id,
+            'passed' => true,
+            'percentage' => 100,
+        ]);
+
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.dealer.settings.reset-courses.run', $store), [
+                'mode' => 'selected-users',
+                'user_ids' => [$employee->id],
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('flash.success');
+
+        expect(CourseResults::query()->where('user_id', $employee->id)->count())->toBe(0);
+    });
+
+    it('rejects selected-users mode with no user_ids', function (): void {
+        $store = Store::query()->firstOrFail();
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.dealer.settings.reset-courses.run', $store), [
+                'mode' => 'selected-users',
+                'user_ids' => [],
+            ])
+            ->assertSessionHasErrors('user_ids');
+    });
+
+    it('forbids users without create-dealerships from resetting courses', function (): void {
+        $store = Store::query()->firstOrFail();
+
+        $qi = User::factory()->create(['current_store_id' => $store->id]);
+        $qi->assignRole('Qualified Individual');
+        $qi->stores()->sync([$store->id]);
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $this->actingAs($qi)
+            ->post(route('dealer.dealer.settings.reset-courses.run', $store), [
+                'mode' => 'everyone',
             ])
             ->assertForbidden();
     });

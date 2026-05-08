@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { watch } from 'vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { Loader2 } from 'lucide-vue-next';
+import { computed, ref, watch } from 'vue';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
+import { useDebounceFn } from '@vueuse/core';
+import { Loader2, Search } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
@@ -12,6 +13,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import StoreSettingsController from '@/actions/App/Http/Controllers/Tenant/Settings/StoreSettingsController';
 import dealer from '@/routes/dealer/dealer';
 
@@ -116,13 +126,23 @@ type CompliancePayload = {
     standard_dpp_rate: number | null;
 };
 
+type ResettableUser = {
+    id: number;
+    name: string;
+    email: string;
+    stores: string[];
+    status: 'completed' | 'in-progress' | 'not-started';
+};
+
 const props = defineProps<{
     section: Section;
     store: StoreSummary;
     can: { update: boolean; manage_dealerships: boolean };
+    search: string;
     general?: GeneralPayload | null;
     managers?: ManagersPayload | null;
     compliance?: CompliancePayload | null;
+    resettableUsers: ResettableUser[];
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -395,6 +415,110 @@ const submitCompliance = (): void => {
 
 const downloadComplianceUrl = (): string =>
     StoreSettingsController.downloadCompliance.url({ store: props.store.id });
+
+// ---------- Reset Courses section ----------
+
+const resetMode = ref<'everyone' | 'selected-users'>('everyone');
+const search = ref(props.search ?? '');
+const selectedUserIds = ref<number[]>([]);
+const confirmOpen = ref(false);
+const resetting = ref(false);
+
+const reloadResettableUsers = (): void => {
+    router.get(
+        settings.resetCourses.url(),
+        search.value.trim() === '' ? {} : { search: search.value.trim() },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+            only: ['resettableUsers', 'search'],
+        },
+    );
+};
+
+const debouncedReload = useDebounceFn(reloadResettableUsers, 300);
+watch(search, debouncedReload);
+
+watch(
+    () => props.search,
+    (next) => {
+        search.value = next ?? '';
+    },
+);
+
+const visibleUserIds = computed<number[]>(() => props.resettableUsers.map((user) => user.id));
+
+const allVisibleSelected = computed<boolean>(
+    () => visibleUserIds.value.length > 0 && visibleUserIds.value.every((id) => selectedUserIds.value.includes(id)),
+);
+
+const isUserSelected = (id: number): boolean => selectedUserIds.value.includes(id);
+
+const toggleUser = (id: number): void => {
+    selectedUserIds.value = isUserSelected(id)
+        ? selectedUserIds.value.filter((existing) => existing !== id)
+        : [...selectedUserIds.value, id];
+};
+
+const toggleSelectAllVisible = (checked: boolean): void => {
+    if (checked) {
+        const merged = new Set([...selectedUserIds.value, ...visibleUserIds.value]);
+        selectedUserIds.value = [...merged];
+        return;
+    }
+    selectedUserIds.value = selectedUserIds.value.filter((id) => !visibleUserIds.value.includes(id));
+};
+
+const requestReset = (): void => {
+    if (resetMode.value === 'selected-users' && selectedUserIds.value.length === 0) {
+        return;
+    }
+    confirmOpen.value = true;
+};
+
+const cancelReset = (): void => {
+    confirmOpen.value = false;
+};
+
+const confirmReset = (): void => {
+    resetting.value = true;
+    router.post(
+        StoreSettingsController.resetCourses.url({ store: props.store.id }),
+        {
+            mode: resetMode.value,
+            user_ids: resetMode.value === 'selected-users' ? selectedUserIds.value : [],
+        },
+        {
+            preserveScroll: true,
+            onFinish: () => {
+                resetting.value = false;
+                confirmOpen.value = false;
+                if (resetMode.value === 'selected-users') {
+                    selectedUserIds.value = [];
+                }
+            },
+        },
+    );
+};
+
+const statusLabel: Record<ResettableUser['status'], string> = {
+    completed: 'Completed',
+    'in-progress': 'In Progress',
+    'not-started': 'Not Started',
+};
+
+const statusClass: Record<ResettableUser['status'], string> = {
+    completed: 'bg-green-100 text-green-700',
+    'in-progress': 'bg-amber-100 text-amber-700',
+    'not-started': 'bg-muted text-muted-foreground',
+};
+
+const confirmMessage = computed<string>(() =>
+    resetMode.value === 'selected-users'
+        ? 'Are you sure you want to reset courses for the selected users?'
+        : `Are you sure you want to reset all course results for ${props.store.name}?`,
+);
 </script>
 
 <template>
@@ -850,18 +974,129 @@ const downloadComplianceUrl = (): string =>
                 </form>
             </div>
 
-            <!-- Reset Courses placeholder -->
+            <!-- Reset Courses -->
+            <div v-else-if="section === 'reset-courses'" class="mx-auto max-w-5xl space-y-6">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Reset Courses</CardTitle>
+                        <CardDescription>
+                            Clear course results for {{ store.name }}. Choose to reset everyone at this location or pick individual users.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent class="space-y-6">
+                        <div class="flex flex-wrap gap-2">
+                            <Button
+                                type="button"
+                                :variant="resetMode === 'everyone' ? 'default' : 'outline'"
+                                size="sm"
+                                @click="resetMode = 'everyone'"
+                            >
+                                Everyone at this location
+                            </Button>
+                            <Button
+                                type="button"
+                                :variant="resetMode === 'selected-users' ? 'default' : 'outline'"
+                                size="sm"
+                                @click="resetMode = 'selected-users'"
+                            >
+                                Selected users
+                            </Button>
+                        </div>
+
+                        <div v-if="resetMode === 'selected-users'" class="space-y-4">
+                            <div class="relative">
+                                <Search class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                                <Input v-model="search" placeholder="Search by name or email" class="pl-9" />
+                            </div>
+
+                            <div class="overflow-hidden rounded-md border">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead class="w-12">
+                                                <Checkbox
+                                                    :model-value="allVisibleSelected"
+                                                    @update:model-value="(value) => toggleSelectAllVisible(Boolean(value))"
+                                                />
+                                            </TableHead>
+                                            <TableHead>Name</TableHead>
+                                            <TableHead>Email</TableHead>
+                                            <TableHead>Status</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow v-if="resettableUsers.length === 0">
+                                            <TableCell colspan="4" class="py-6 text-center text-sm text-muted-foreground">
+                                                No users at this location have course results yet.
+                                            </TableCell>
+                                        </TableRow>
+                                        <TableRow v-for="user in resettableUsers" :key="user.id">
+                                            <TableCell>
+                                                <Checkbox
+                                                    :model-value="isUserSelected(user.id)"
+                                                    @update:model-value="() => toggleUser(user.id)"
+                                                />
+                                            </TableCell>
+                                            <TableCell class="font-medium">{{ user.name }}</TableCell>
+                                            <TableCell class="text-sm text-muted-foreground">{{ user.email }}</TableCell>
+                                            <TableCell>
+                                                <span
+                                                    class="inline-flex rounded-full px-2 py-0.5 text-xs font-medium"
+                                                    :class="statusClass[user.status]"
+                                                >
+                                                    {{ statusLabel[user.status] }}
+                                                </span>
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </div>
+
+                            <p class="text-xs text-muted-foreground">
+                                {{ selectedUserIds.length }} user(s) selected.
+                            </p>
+                        </div>
+
+                        <Separator />
+
+                        <div class="flex justify-end">
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                :disabled="resetMode === 'selected-users' && selectedUserIds.length === 0"
+                                @click="requestReset"
+                            >
+                                Reset Courses
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Dialog v-model:open="confirmOpen">
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Reset courses</DialogTitle>
+                            <DialogDescription>{{ confirmMessage }}</DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <Button variant="outline" :disabled="resetting" @click="cancelReset">Cancel</Button>
+                            <Button variant="destructive" :disabled="resetting" @click="confirmReset">
+                                <Loader2 v-if="resetting" class="mr-2 size-4 animate-spin" />
+                                Confirm Reset
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+            </div>
+
+            <!-- Fallback (unexpected section) -->
             <div v-else class="mx-auto max-w-4xl">
                 <Card>
                     <CardHeader>
                         <CardTitle class="capitalize">{{ section.replace('-', ' ') }}</CardTitle>
-                        <CardDescription>This section is being rebuilt.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Separator class="mb-4" />
-                        <p class="text-sm text-muted-foreground">
-                            The {{ section.replace('-', ' ') }} settings will move here in a follow-up commit.
-                        </p>
+                        <p class="text-sm text-muted-foreground">Unknown section.</p>
                     </CardContent>
                 </Card>
             </div>

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
 * @route '/settings/managers/{store}'
 */
 export const update = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -16,7 +16,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
 * @route '/settings/managers/{store}'
 */
 update.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ update.url = (args: { store: string | number | { id: string | number } } | [stor
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
 * @route '/settings/managers/{store}'
 */
 update.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -59,7 +59,7 @@ update.patch = (args: { store: string | number | { id: string | number } } | [st
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
 * @route '/settings/managers/{store}'
 */
 const updateForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -74,7 +74,7 @@ const updateForm = (args: { store: string | number | { id: string | number } } |
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:94
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:107
 * @route '/settings/managers/{store}'
 */
 updateForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

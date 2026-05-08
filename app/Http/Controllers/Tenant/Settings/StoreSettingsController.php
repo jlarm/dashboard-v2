@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Tenant\Settings;
 
+use App\Domain\Tenant\GlobalSettings\Data\ResettableUserData;
+use App\Domain\Tenant\StoreSettings\Actions\ResetStoreCourses;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateComplianceSection;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateGeneralSection;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateManagersSection;
 use App\Domain\Tenant\StoreSettings\Queries\GetComplianceSection;
 use App\Domain\Tenant\StoreSettings\Queries\GetGeneralSection;
 use App\Domain\Tenant\StoreSettings\Queries\GetManagersSection;
+use App\Domain\Tenant\StoreSettings\Queries\GetStoreResettableUsers;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenant\StoreSettings\ResetStoreCoursesRequest;
 use App\Http\Requests\Tenant\StoreSettings\UpdateComplianceRequest;
 use App\Http\Requests\Tenant\StoreSettings\UpdateGeneralRequest;
 use App\Http\Requests\Tenant\StoreSettings\UpdateManagersRequest;
@@ -45,6 +49,7 @@ class StoreSettingsController extends Controller
         GetGeneralSection $getGeneralSection,
         GetManagersSection $getManagersSection,
         GetComplianceSection $getComplianceSection,
+        GetStoreResettableUsers $getStoreResettableUsers,
     ): InertiaResponse|RedirectResponse {
         $section = $request->route()->defaults['section'] ?? self::SECTION_GENERAL;
         abort_unless(is_string($section) && in_array($section, self::SECTIONS, true), 404);
@@ -56,6 +61,7 @@ class StoreSettingsController extends Controller
         }
 
         $user = $request->user();
+        $search = (string) $request->string('search');
 
         return Inertia::render('tenant/settings/StoreSettings', [
             'section' => $section,
@@ -67,9 +73,16 @@ class StoreSettingsController extends Controller
                 'update' => $user?->can('update', $store) ?? false,
                 'manage_dealerships' => $user?->can('create-dealerships') ?? false,
             ],
+            'search' => $search,
             'general' => Inertia::defer(static fn (): array => $getGeneralSection->handle($store)->toArray()),
             'managers' => Inertia::defer(static fn (): array => $getManagersSection->handle($store)->toArray()),
             'compliance' => Inertia::defer(static fn (): array => $getComplianceSection->handle($store)->toArray()),
+            'resettableUsers' => $section === self::SECTION_RESET_COURSES
+                ? array_map(
+                    static fn (ResettableUserData $u): array => $u->toArray(),
+                    $getStoreResettableUsers->handle($store, $search),
+                )
+                : [],
         ]);
     }
 
@@ -125,6 +138,26 @@ class StoreSettingsController extends Controller
         }
 
         return back()->with('flash.success', 'Compliance information saved.');
+    }
+
+    public function resetCourses(
+        ResetStoreCoursesRequest $request,
+        Store $store,
+        ResetStoreCourses $resetStoreCourses,
+    ): RedirectResponse {
+        try {
+            $resetStoreCourses->handle($store, $request->toData(), $request->user());
+        } catch (Throwable $e) {
+            report($e);
+
+            return back()->with('flash.error', 'We could not reset courses. Please try again.');
+        }
+
+        $message = $request->toData()->isSelectedUsers()
+            ? 'Selected courses reset successfully.'
+            : 'Courses reset successfully.';
+
+        return back()->with('flash.success', $message);
     }
 
     public function downloadCompliance(Store $store): StreamedResponse

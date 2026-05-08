@@ -293,6 +293,9 @@ Route::name('dealer.')->middleware([
                 ->defaults('section', 'reset-courses')
                 ->middleware('can:create-dealerships')
                 ->name('reset-courses');
+            Route::post('reset-courses/{store}', [StoreSettingsController::class, 'resetCourses'])
+                ->middleware('can:create-dealerships')
+                ->name('reset-courses.run');
         });
         Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth'])->name('store.edit');
 
