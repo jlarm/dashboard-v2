@@ -14,7 +14,6 @@ use App\Http\Controllers\Dealer\CourseController;
 use App\Http\Controllers\Dealer\CourseResultsController;
 use App\Http\Controllers\Dealer\ImpersonationController;
 use App\Http\Controllers\Dealer\Store\CreateFirstStoreController;
-use App\Http\Controllers\Dealer\Store\SettingsController;
 use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
@@ -42,6 +41,7 @@ use App\Http\Controllers\Tenant\Settings\AutomatedReportsController;
 use App\Http\Controllers\Tenant\Settings\GlobalSettingsController;
 use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
 use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileController;
+use App\Http\Controllers\Tenant\Settings\StoreSettingsController;
 use App\Http\Controllers\Tenant\Store\LocationController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\Tenant\UserController as TenantUserController;
@@ -274,19 +274,23 @@ Route::name('dealer.')->middleware([
             ->name('employees.deleted.restore')
             ->withTrashed();
 
-        Route::get('settings', SettingsController::class)->middleware(['auth'])->name('dealer.settings');
+        Route::get('settings', [StoreSettingsController::class, 'index'])
+            ->defaults('section', 'general')
+            ->middleware(['auth'])
+            ->name('dealer.settings');
         Route::prefix('settings')->middleware(['auth'])->name('dealer.settings.')->group(function (): void {
-            Route::get('managers', [SettingsController::class, 'show'])
+            Route::patch('general/{store}', [StoreSettingsController::class, 'updateGeneral'])->name('general.update');
+            Route::get('managers', [StoreSettingsController::class, 'index'])
                 ->defaults('section', 'managers')
                 ->name('managers');
-            Route::get('compliance', [SettingsController::class, 'show'])
+            Route::get('compliance', [StoreSettingsController::class, 'index'])
                 ->defaults('section', 'compliance')
                 ->name('compliance');
-            Route::get('reset-courses', [SettingsController::class, 'show'])
+            Route::get('reset-courses', [StoreSettingsController::class, 'index'])
                 ->defaults('section', 'reset-courses')
                 ->middleware('can:create-dealerships')
                 ->name('reset-courses');
-            Route::get('ridgeback', [SettingsController::class, 'show'])
+            Route::get('ridgeback', [StoreSettingsController::class, 'index'])
                 ->defaults('section', 'ridgeback')
                 ->middleware('can:create-dealerships')
                 ->name('ridgeback');

@@ -1,0 +1,503 @@
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings'
+*/
+const index4b87d2df7e3aa853f6720faea796e36c = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index4b87d2df7e3aa853f6720faea796e36c.url(options),
+    method: 'get',
+})
+
+index4b87d2df7e3aa853f6720faea796e36c.definition = {
+    methods: ["get","head"],
+    url: '/settings',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings'
+*/
+index4b87d2df7e3aa853f6720faea796e36c.url = (options?: RouteQueryOptions) => {
+    return index4b87d2df7e3aa853f6720faea796e36c.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings'
+*/
+index4b87d2df7e3aa853f6720faea796e36c.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index4b87d2df7e3aa853f6720faea796e36c.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings'
+*/
+index4b87d2df7e3aa853f6720faea796e36c.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: index4b87d2df7e3aa853f6720faea796e36c.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings'
+*/
+const index4b87d2df7e3aa853f6720faea796e36cForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index4b87d2df7e3aa853f6720faea796e36c.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings'
+*/
+index4b87d2df7e3aa853f6720faea796e36cForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index4b87d2df7e3aa853f6720faea796e36c.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings'
+*/
+index4b87d2df7e3aa853f6720faea796e36cForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index4b87d2df7e3aa853f6720faea796e36c.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index4b87d2df7e3aa853f6720faea796e36c.form = index4b87d2df7e3aa853f6720faea796e36cForm
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/managers'
+*/
+const index54d96389de2c26c8aa47568d826bdc1a = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index54d96389de2c26c8aa47568d826bdc1a.url(options),
+    method: 'get',
+})
+
+index54d96389de2c26c8aa47568d826bdc1a.definition = {
+    methods: ["get","head"],
+    url: '/settings/managers',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/managers'
+*/
+index54d96389de2c26c8aa47568d826bdc1a.url = (options?: RouteQueryOptions) => {
+    return index54d96389de2c26c8aa47568d826bdc1a.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/managers'
+*/
+index54d96389de2c26c8aa47568d826bdc1a.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index54d96389de2c26c8aa47568d826bdc1a.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/managers'
+*/
+index54d96389de2c26c8aa47568d826bdc1a.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: index54d96389de2c26c8aa47568d826bdc1a.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/managers'
+*/
+const index54d96389de2c26c8aa47568d826bdc1aForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index54d96389de2c26c8aa47568d826bdc1a.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/managers'
+*/
+index54d96389de2c26c8aa47568d826bdc1aForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index54d96389de2c26c8aa47568d826bdc1a.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/managers'
+*/
+index54d96389de2c26c8aa47568d826bdc1aForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index54d96389de2c26c8aa47568d826bdc1a.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index54d96389de2c26c8aa47568d826bdc1a.form = index54d96389de2c26c8aa47568d826bdc1aForm
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/compliance'
+*/
+const index07e4b1e71f7ca89ae125207430bfcbc5 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index07e4b1e71f7ca89ae125207430bfcbc5.url(options),
+    method: 'get',
+})
+
+index07e4b1e71f7ca89ae125207430bfcbc5.definition = {
+    methods: ["get","head"],
+    url: '/settings/compliance',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/compliance'
+*/
+index07e4b1e71f7ca89ae125207430bfcbc5.url = (options?: RouteQueryOptions) => {
+    return index07e4b1e71f7ca89ae125207430bfcbc5.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/compliance'
+*/
+index07e4b1e71f7ca89ae125207430bfcbc5.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index07e4b1e71f7ca89ae125207430bfcbc5.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/compliance'
+*/
+index07e4b1e71f7ca89ae125207430bfcbc5.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: index07e4b1e71f7ca89ae125207430bfcbc5.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/compliance'
+*/
+const index07e4b1e71f7ca89ae125207430bfcbc5Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index07e4b1e71f7ca89ae125207430bfcbc5.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/compliance'
+*/
+index07e4b1e71f7ca89ae125207430bfcbc5Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index07e4b1e71f7ca89ae125207430bfcbc5.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/compliance'
+*/
+index07e4b1e71f7ca89ae125207430bfcbc5Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index07e4b1e71f7ca89ae125207430bfcbc5.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index07e4b1e71f7ca89ae125207430bfcbc5.form = index07e4b1e71f7ca89ae125207430bfcbc5Form
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/reset-courses'
+*/
+const index9b68a843959ff354cb034cafed1e1a3b = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index9b68a843959ff354cb034cafed1e1a3b.url(options),
+    method: 'get',
+})
+
+index9b68a843959ff354cb034cafed1e1a3b.definition = {
+    methods: ["get","head"],
+    url: '/settings/reset-courses',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/reset-courses'
+*/
+index9b68a843959ff354cb034cafed1e1a3b.url = (options?: RouteQueryOptions) => {
+    return index9b68a843959ff354cb034cafed1e1a3b.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/reset-courses'
+*/
+index9b68a843959ff354cb034cafed1e1a3b.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index9b68a843959ff354cb034cafed1e1a3b.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/reset-courses'
+*/
+index9b68a843959ff354cb034cafed1e1a3b.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: index9b68a843959ff354cb034cafed1e1a3b.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/reset-courses'
+*/
+const index9b68a843959ff354cb034cafed1e1a3bForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index9b68a843959ff354cb034cafed1e1a3b.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/reset-courses'
+*/
+index9b68a843959ff354cb034cafed1e1a3bForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index9b68a843959ff354cb034cafed1e1a3b.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/reset-courses'
+*/
+index9b68a843959ff354cb034cafed1e1a3bForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index9b68a843959ff354cb034cafed1e1a3b.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index9b68a843959ff354cb034cafed1e1a3b.form = index9b68a843959ff354cb034cafed1e1a3bForm
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/ridgeback'
+*/
+const index3780fa24ae844edb658a5dff4f3fa048 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index3780fa24ae844edb658a5dff4f3fa048.url(options),
+    method: 'get',
+})
+
+index3780fa24ae844edb658a5dff4f3fa048.definition = {
+    methods: ["get","head"],
+    url: '/settings/ridgeback',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/ridgeback'
+*/
+index3780fa24ae844edb658a5dff4f3fa048.url = (options?: RouteQueryOptions) => {
+    return index3780fa24ae844edb658a5dff4f3fa048.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/ridgeback'
+*/
+index3780fa24ae844edb658a5dff4f3fa048.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: index3780fa24ae844edb658a5dff4f3fa048.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/ridgeback'
+*/
+index3780fa24ae844edb658a5dff4f3fa048.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: index3780fa24ae844edb658a5dff4f3fa048.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/ridgeback'
+*/
+const index3780fa24ae844edb658a5dff4f3fa048Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index3780fa24ae844edb658a5dff4f3fa048.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/ridgeback'
+*/
+index3780fa24ae844edb658a5dff4f3fa048Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index3780fa24ae844edb658a5dff4f3fa048.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::index
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:38
+* @route '/settings/ridgeback'
+*/
+index3780fa24ae844edb658a5dff4f3fa048Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index3780fa24ae844edb658a5dff4f3fa048.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index3780fa24ae844edb658a5dff4f3fa048.form = index3780fa24ae844edb658a5dff4f3fa048Form
+
+export const index = {
+    '/settings': index4b87d2df7e3aa853f6720faea796e36c,
+    '/settings/managers': index54d96389de2c26c8aa47568d826bdc1a,
+    '/settings/compliance': index07e4b1e71f7ca89ae125207430bfcbc5,
+    '/settings/reset-courses': index9b68a843959ff354cb034cafed1e1a3b,
+    '/settings/ridgeback': index3780fa24ae844edb658a5dff4f3fa048,
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:65
+* @route '/settings/general/{store}'
+*/
+export const updateGeneral = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateGeneral.url(args, options),
+    method: 'patch',
+})
+
+updateGeneral.definition = {
+    methods: ["patch"],
+    url: '/settings/general/{store}',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:65
+* @route '/settings/general/{store}'
+*/
+updateGeneral.url = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { store: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { store: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            store: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        store: typeof args.store === 'object'
+        ? args.store.id
+        : args.store,
+    }
+
+    return updateGeneral.definition.url
+            .replace('{store}', parsedArgs.store.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:65
+* @route '/settings/general/{store}'
+*/
+updateGeneral.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateGeneral.url(args, options),
+    method: 'patch',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:65
+* @route '/settings/general/{store}'
+*/
+const updateGeneralForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateGeneral.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::updateGeneral
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:65
+* @route '/settings/general/{store}'
+*/
+updateGeneralForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateGeneral.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+updateGeneral.form = updateGeneralForm
+
+const StoreSettingsController = { index, updateGeneral }
+
+export default StoreSettingsController
