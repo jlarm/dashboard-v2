@@ -29,9 +29,9 @@ import {
 } from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import osha from '@/routes/dealer/audit/osha';
+import { useAuditRoutes } from '@/composables/useAuditRoutes';
 import type { BreadcrumbItem } from '@/types';
-import type { AuditTypeSlug } from '@/components/audits/audit-types';
+import type { SharedAuditType } from '@/composables/useAuditRoutes';
 
 type Photo = { id: number; position: number; url: string };
 type Violation = {
@@ -64,14 +64,16 @@ type AuditDetail = {
 };
 
 const props = defineProps<{
-    type: AuditTypeSlug;
+    type: SharedAuditType;
     label: string;
     audit: AuditDetail;
 }>();
 
+const routes = useAuditRoutes(props.type);
+
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: `${props.label} Audits`, href: osha.index.url() },
-    { title: 'Edit', href: osha.edit.url({ audit: props.audit.uuid }) },
+    { title: `${props.label} Audits`, href: routes.index.url() },
+    { title: 'Edit', href: routes.edit.url({ audit: props.audit.uuid }) },
 ];
 
 type EditableViolation = Violation & { newPhotos: File[] };
@@ -139,7 +141,7 @@ const submitNewComment = (): void => {
     submittingComment.value = true;
     const data: Record<string, unknown> = { comment: newCommentBody.value };
     if (newCommentPhoto.value) data.photo = newCommentPhoto.value;
-    router.post(osha.comments.store.url({ audit: props.audit.uuid }), data as never, {
+    router.post(routes.comments.store.url({ audit: props.audit.uuid }), data as never, {
         forceFormData: true,
         preserveScroll: true,
         onSuccess: () => {
@@ -174,7 +176,7 @@ const submitEditComment = (comment: AuditComment): void => {
     if (editingCommentPhoto.value) data.photo = editingCommentPhoto.value;
     if (editingRemovePhoto.value) data.remove_photo = 1;
     router.post(
-        osha.comments.update.url({ audit: props.audit.uuid, comment: comment.id }),
+        routes.comments.update.url({ audit: props.audit.uuid, comment: comment.id }),
         data as never,
         {
             forceFormData: true,
@@ -188,7 +190,7 @@ const submitEditComment = (comment: AuditComment): void => {
 const removeComment = (comment: AuditComment): void => {
     if (!confirm('Delete this comment?')) return;
     router.delete(
-        osha.comments.destroy.url({ audit: props.audit.uuid, comment: comment.id }),
+        routes.comments.destroy.url({ audit: props.audit.uuid, comment: comment.id }),
         { preserveScroll: true },
     );
 };
@@ -308,7 +310,7 @@ const objectUrl = (file: File): string => URL.createObjectURL(file);
 const removeExistingPhoto = (violation: Violation, photo: Photo): void => {
     if (!confirm('Remove this photo?')) return;
     router.delete(
-        osha.violations.photos.destroy.url({
+        routes.violations.photos.destroy.url({
             audit: props.audit.uuid,
             violation: violation.id,
             photoId: photo.id,
@@ -331,7 +333,7 @@ const submit = (): void => {
             data[`violations[${index}][images][${fileIndex}]`] = file;
         });
     });
-    router.post(osha.update.url({ audit: props.audit.uuid }), data as never, {
+    router.post(routes.update.url({ audit: props.audit.uuid }), data as never, {
         forceFormData: true,
         headers: { 'X-HTTP-Method-Override': 'PATCH' },
         preserveScroll: true,
@@ -343,7 +345,7 @@ const submit = (): void => {
 
 const removeViolation = (violation: Violation): void => {
     if (!confirm('Delete this violation?')) return;
-    router.delete(osha.violations.destroy.url({ audit: props.audit.uuid, violation: violation.id }), {
+    router.delete(routes.violations.destroy.url({ audit: props.audit.uuid, violation: violation.id }), {
         preserveScroll: true,
     });
 };
@@ -361,7 +363,7 @@ const runSearch = async (): Promise<void> => {
     searching.value = true;
     try {
         const response = await fetch(
-            `${osha.violations.search.url({ audit: props.audit.uuid })}?q=${encodeURIComponent(search.value)}`,
+            `${routes.violations.search.url({ audit: props.audit.uuid })}?q=${encodeURIComponent(search.value)}`,
             { headers: { Accept: 'application/json' } },
         );
         searchResults.value = await response.json();
@@ -372,7 +374,7 @@ const runSearch = async (): Promise<void> => {
 
 const addViolation = (statementId: number): void => {
     router.post(
-        osha.violations.store.url({ audit: props.audit.uuid }),
+        routes.violations.store.url({ audit: props.audit.uuid }),
         { statement_id: statementId },
         {
             preserveScroll: true,
@@ -725,7 +727,7 @@ const addViolation = (statementId: number): void => {
                     {{ violationCount }} violation{{ violationCount === 1 ? '' : 's' }}
                 </p>
                 <div class="flex items-center gap-2">
-                    <Link :href="osha.index.url()">
+                    <Link :href="routes.index.url()">
                         <Button type="button" variant="outline" size="sm">Exit</Button>
                     </Link>
                     <Button

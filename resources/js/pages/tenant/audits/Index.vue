@@ -21,10 +21,10 @@ import AppPagination from '@/components/AppPagination.vue';
 import GradesOverTimeChart from './components/GradesOverTimeChart.vue';
 import ViolationsRemediationsChart from './components/ViolationsRemediationsChart.vue';
 import { Role } from '@/constants/roles';
-import osha from '@/routes/dealer/audit/osha';
+import { useAuditRoutes } from '@/composables/useAuditRoutes';
 import type { BreadcrumbItem } from '@/types';
 import type { PaginatedResponse } from '@/types/paginator';
-import type { AuditTypeSlug } from '@/components/audits/audit-types';
+import type { SharedAuditType } from '@/composables/useAuditRoutes';
 
 type Audit = {
     id: number;
@@ -52,7 +52,7 @@ type LegacyAudit = {
 };
 
 const props = defineProps<{
-    type: AuditTypeSlug;
+    type: SharedAuditType;
     label: string;
     store: { id: number; name: string } | null;
     audits: PaginatedResponse<Audit>;
@@ -66,8 +66,10 @@ const props = defineProps<{
     };
 }>();
 
+const routes = useAuditRoutes(props.type);
+
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: `${props.label} Audits`, href: osha.index.url() },
+    { title: `${props.label} Audits`, href: routes.index.url() },
 ];
 
 const page = usePage<{ auth: { roles: string[] } }>();
@@ -83,7 +85,7 @@ const savingGradeFor = ref<number | null>(null);
 const setGrade = (audit: Audit, grade: string): void => {
     savingGradeFor.value = audit.id;
     router.patch(
-        osha.grade.url({ audit: audit.uuid }),
+        routes.grade.url({ audit: audit.uuid }),
         { grade },
         {
             preserveScroll: true,
@@ -99,16 +101,16 @@ const setGrade = (audit: Audit, grade: string): void => {
 
 const deleteAudit = (audit: Audit): void => {
     if (!confirm(`Delete the audit from ${audit.date}? This cannot be undone.`)) return;
-    router.delete(osha.destroy.url({ audit: audit.uuid }), { preserveScroll: true });
+    router.delete(routes.destroy.url({ audit: audit.uuid }), { preserveScroll: true });
 };
 
 const markComplete = (audit: Audit): void => {
-    router.post(osha.complete.url({ audit: audit.uuid }), {}, { preserveScroll: true });
+    router.post(routes.complete.url({ audit: audit.uuid }), {}, { preserveScroll: true });
 };
 
 const reopenAudit = (audit: Audit): void => {
     if (!confirm(`Reopen the audit from ${audit.date}?`)) return;
-    router.delete(osha.reopen.url({ audit: audit.uuid }), { preserveScroll: true });
+    router.delete(routes.reopen.url({ audit: audit.uuid }), { preserveScroll: true });
 };
 
 const gradeBadgeClass = (grade: string | null): string => {
@@ -133,7 +135,7 @@ const gradeBadgeClass = (grade: string | null): string => {
     <Head :title="`${label} Audits`" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #actions>
-            <Link v-if="store && canManageAudits" :href="osha.create.url({ store: store.id })">
+            <Link v-if="store && canManageAudits" :href="routes.create.url({ store: store.id })">
                 <Button>
                     <Plus class="size-4" />
                     New {{ label }} audit
@@ -236,7 +238,7 @@ const gradeBadgeClass = (grade: string | null): string => {
                                         >
                                             <Link
                                                 v-if="audit.is_completed"
-                                                :href="osha.show.url({ audit: audit.uuid })"
+                                                :href="routes.show.url({ audit: audit.uuid })"
                                                 class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
                                             >
                                                 <Eye class="size-4" />
@@ -244,7 +246,7 @@ const gradeBadgeClass = (grade: string | null): string => {
                                             </Link>
                                             <Link
                                                 v-if="canManageAudits && !audit.is_completed"
-                                                :href="osha.edit.url({ audit: audit.uuid })"
+                                                :href="routes.edit.url({ audit: audit.uuid })"
                                                 class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
                                             >
                                                 <Pencil class="size-4" />
@@ -270,7 +272,7 @@ const gradeBadgeClass = (grade: string | null): string => {
                                             </button>
                                             <Link
                                                 v-if="audit.is_completed"
-                                                :href="osha.remediation.url({ audit: audit.uuid })"
+                                                :href="routes.remediation.url({ audit: audit.uuid })"
                                                 class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
                                             >
                                                 <ClipboardList class="size-4" />
@@ -278,7 +280,7 @@ const gradeBadgeClass = (grade: string | null): string => {
                                             </Link>
                                             <a
                                                 v-if="audit.is_completed"
-                                                :href="osha.download.url({ audit: audit.uuid })"
+                                                :href="routes.download.url({ audit: audit.uuid })"
                                                 target="_blank"
                                                 rel="noopener"
                                                 class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
@@ -308,7 +310,7 @@ const gradeBadgeClass = (grade: string | null): string => {
                                 <p class="mt-3 text-sm text-foreground">No audits yet.</p>
                                 <div v-if="store && canManageAudits" class="mt-4">
                                     <Button as-child size="sm">
-                                        <Link :href="osha.create.url({ store: store.id })">
+                                        <Link :href="routes.create.url({ store: store.id })">
                                             <Plus class="size-3.5" />
                                             New {{ label }} audit
                                         </Link>

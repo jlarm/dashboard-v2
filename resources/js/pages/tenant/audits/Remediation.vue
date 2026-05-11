@@ -18,10 +18,9 @@ import {
 import { FileUpload } from '@/components/ui/file-upload';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import osha from '@/routes/dealer/audit/osha';
-import { generate as generateRemediationRoute } from '@/routes/dealer/audit/osha/remediation';
+import { useAuditRoutes, useGenerateRemediationRoute } from '@/composables/useAuditRoutes';
 import type { BreadcrumbItem } from '@/types';
-import type { AuditTypeSlug } from '@/components/audits/audit-types';
+import type { SharedAuditType } from '@/composables/useAuditRoutes';
 
 type Remediation = {
     id: number;
@@ -47,14 +46,17 @@ type AuditDetail = {
 };
 
 const props = defineProps<{
-    type: AuditTypeSlug;
+    type: SharedAuditType;
     label: string;
     audit: AuditDetail;
 }>();
 
+const routes = useAuditRoutes(props.type);
+const generateRemediationRoute = useGenerateRemediationRoute(props.type);
+
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: `${props.label} Audits`, href: osha.index.url() },
-    { title: 'Remediation', href: osha.remediation.url({ audit: props.audit.uuid }) },
+    { title: `${props.label} Audits`, href: routes.index.url() },
+    { title: 'Remediation', href: routes.remediation.url({ audit: props.audit.uuid }) },
 ];
 
 type RemediationDraft = {
@@ -125,7 +127,7 @@ const submit = (): void => {
     });
 
     router.post(
-        osha.remediation.update.url({ audit: props.audit.uuid }),
+        routes.remediation.update.url({ audit: props.audit.uuid }),
         data as never,
         {
             forceFormData: true,
@@ -164,7 +166,7 @@ const generateRemediationPdf = (): void => {
     <Head :title="`${label} remediation`" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #actions>
-            <Link :href="osha.index.url()">
+            <Link :href="routes.index.url()">
                 <Button variant="ghost" size="sm">
                     <span class="hidden sm:inline">Audits</span>
                 </Button>
@@ -179,7 +181,7 @@ const generateRemediationPdf = (): void => {
                 <Sparkles class="size-4" />
                 <span class="hidden sm:inline">{{ generating ? 'Generating…' : 'Generate report' }}</span>
             </Button>
-            <a v-if="audit.has_remediation_pdf" :href="osha.remediation.download.url({ audit: audit.uuid })">
+            <a v-if="audit.has_remediation_pdf" :href="routes.remediation.download.url({ audit: audit.uuid })">
                 <Button variant="outline" size="sm">
                     <FileDown class="size-4" />
                     <span class="hidden sm:inline">PDF</span>
@@ -357,7 +359,7 @@ const generateRemediationPdf = (): void => {
                     {{ completedCount }} / {{ totalCount }} remediated
                 </p>
                 <div class="flex items-center gap-2">
-                    <Link :href="osha.index.url()">
+                    <Link :href="routes.index.url()">
                         <Button type="button" variant="outline" class="h-11">Exit</Button>
                     </Link>
                     <Button type="button" :disabled="submitting" class="h-11 px-6" @click="submit">

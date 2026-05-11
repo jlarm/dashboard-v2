@@ -5,13 +5,14 @@ declare(strict_types=1);
 use App\Jobs\Audit\GenerateBodyShopPdfJob;
 use App\Models\BodyShopViolationStatement;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Violation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Stancl\Tenancy\Tenancy;
 
-function createBodyShopViolation(int $statementId, int $severity): object
+function createBodyShopViolation(int $statementId, int $severity): Violation
 {
-    $violation = new stdClass();
+    $violation = new Violation();
     $violation->statement_id = $statementId;
     $violation->severity = $severity;
 

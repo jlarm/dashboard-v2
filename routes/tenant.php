@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Enums\ViolationAuditType;
-use App\Http\Controllers\Dealer\Audit\BodyShopCreateController;
 use App\Http\Controllers\Dealer\Audit\FinanceCreateController;
 use App\Http\Controllers\Dealer\Audit\IndividualController;
 use App\Http\Controllers\Dealer\Audit\IndividualCreateController;
@@ -46,9 +45,6 @@ use App\Http\Controllers\Tenant\Store\LocationController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\Tenant\UserController as TenantUserController;
 use App\Http\Controllers\WebhookController;
-use App\Http\Livewire\Dealer\Audit\BodyShop\Edit;
-use App\Http\Livewire\Dealer\Audit\BodyShop\RemediationForm;
-use App\Http\Livewire\Dealer\Audit\BodyShop\Single;
 use App\Http\Livewire\Dealer\Phish\Create;
 use App\Http\Livewire\Dealer\Phish\Show;
 use App\Http\Livewire\Dealer\Ridgeback\Index;
@@ -59,13 +55,86 @@ use Stancl\Tenancy\Features\UserImpersonation;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
+$registerViolationAuditWriteRoutes = static function (string $prefix, string $namePrefix, ViolationAuditType $type): void {
+    Route::get("{$prefix}/create/{store}", [ViolationAuditController::class, 'create'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.create");
+    Route::get("{$prefix}/{audit}/edit", [ViolationAuditController::class, 'edit'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.edit");
+    Route::patch("{$prefix}/{audit}", [ViolationAuditController::class, 'update'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.update");
+    Route::delete("{$prefix}/{audit}", [ViolationAuditController::class, 'destroy'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.destroy");
+    Route::patch("{$prefix}/{audit}/grade", [ViolationAuditController::class, 'updateGrade'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.grade");
+    Route::post("{$prefix}/{audit}/complete", [ViolationAuditController::class, 'complete'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.complete");
+    Route::delete("{$prefix}/{audit}/complete", [ViolationAuditController::class, 'reopen'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.reopen");
+    Route::post("{$prefix}/{audit}/violations", [ViolationAuditController::class, 'addViolation'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.violations.store");
+    Route::delete("{$prefix}/{audit}/violations/{violation}", [ViolationAuditController::class, 'deleteViolation'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.violations.destroy");
+    Route::delete("{$prefix}/{audit}/violations/{violation}/photos/{photoId}", [ViolationAuditController::class, 'deleteViolationPhoto'])
+        ->defaults('type', $type)
+        ->whereNumber('photoId')
+        ->name("{$namePrefix}.violations.photos.destroy");
+    Route::post("{$prefix}/{audit}/generate", [ViolationAuditController::class, 'generate'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.generate");
+    Route::post("{$prefix}/{audit}/remediation/generate", [ViolationAuditController::class, 'generateRemediation'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.remediation.generate");
+    Route::get("{$prefix}/{audit}/violations/search", [ViolationAuditController::class, 'searchStatements'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.violations.search");
+};
+
+$registerViolationAuditReadRoutes = static function (string $prefix, string $namePrefix, ViolationAuditType $type): void {
+    Route::get($prefix, [ViolationAuditController::class, 'index'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.index");
+    Route::get("{$prefix}/{audit}/remediation", [ViolationAuditController::class, 'remediation'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.remediation");
+    Route::patch("{$prefix}/{audit}/remediation", [ViolationAuditController::class, 'updateRemediation'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.remediation.update");
+    Route::get("{$prefix}/{audit}/download", [ViolationAuditController::class, 'download'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.download");
+    Route::get("{$prefix}/{audit}/remediation/download", [ViolationAuditController::class, 'downloadRemediation'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.remediation.download");
+    Route::get("{$prefix}/{audit}", [ViolationAuditController::class, 'show'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.show");
+    Route::post("{$prefix}/{audit}/comments", [ViolationAuditController::class, 'storeComment'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.comments.store");
+    Route::patch("{$prefix}/{audit}/comments/{comment}", [ViolationAuditController::class, 'updateComment'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.comments.update");
+    Route::delete("{$prefix}/{audit}/comments/{comment}", [ViolationAuditController::class, 'destroyComment'])
+        ->defaults('type', $type)
+        ->name("{$namePrefix}.comments.destroy");
+};
+
 Route::name('dealer.')->middleware([
     'web',
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
     'tenant.not-suspended',
     'tenant.requires-store',
-])->group(function (): void {
+])->group(function () use ($registerViolationAuditWriteRoutes, $registerViolationAuditReadRoutes): void {
 
     // **************************************************
     // All Access
@@ -191,51 +260,11 @@ Route::name('dealer.')->middleware([
     // Roles to Consultant
     // **************************************************
 
-    Route::middleware('role:super-admin|Consultant')->group(function (): void {
+    Route::middleware('role:super-admin|Consultant')->group(function () use ($registerViolationAuditWriteRoutes): void {
 
-        Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
-            Route::get('osha/create/{store}', [ViolationAuditController::class, 'create'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.create');
-            Route::get('osha/{audit}/edit', [ViolationAuditController::class, 'edit'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.edit');
-            Route::patch('osha/{audit}', [ViolationAuditController::class, 'update'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.update');
-            Route::delete('osha/{audit}', [ViolationAuditController::class, 'destroy'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.destroy');
-            Route::patch('osha/{audit}/grade', [ViolationAuditController::class, 'updateGrade'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.grade');
-            Route::post('osha/{audit}/complete', [ViolationAuditController::class, 'complete'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.complete');
-            Route::delete('osha/{audit}/complete', [ViolationAuditController::class, 'reopen'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.reopen');
-            Route::post('osha/{audit}/violations', [ViolationAuditController::class, 'addViolation'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.violations.store');
-            Route::delete('osha/{audit}/violations/{violation}', [ViolationAuditController::class, 'deleteViolation'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.violations.destroy');
-            Route::delete('osha/{audit}/violations/{violation}/photos/{photoId}', [ViolationAuditController::class, 'deleteViolationPhoto'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->whereNumber('photoId')
-                ->name('osha.violations.photos.destroy');
-            Route::post('osha/{audit}/generate', [ViolationAuditController::class, 'generate'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.generate');
-            Route::post('osha/{audit}/remediation/generate', [ViolationAuditController::class, 'generateRemediation'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.remediation.generate');
-            Route::get('osha/{audit}/violations/search', [ViolationAuditController::class, 'searchStatements'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.violations.search');
-            Route::get('body-shop/create/{store}', BodyShopCreateController::class)->name('body-shop.create');
-            Route::get('body-shop/{bodyShopViolationAudit:uuid}/edit', Edit::class)->name('body-shop.edit');
+        Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function () use ($registerViolationAuditWriteRoutes): void {
+            $registerViolationAuditWriteRoutes('osha', 'osha', ViolationAuditType::Osha);
+            $registerViolationAuditWriteRoutes('body-shop', 'body-shop', ViolationAuditType::BodyShop);
             Route::get('finance/create/{store}', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
             Route::get('finance/{glbaViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\Finance\Edit::class)->name('finance.edit');
             Route::get('deal-jackets-archived/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
@@ -340,7 +369,7 @@ Route::name('dealer.')->middleware([
     // Roles to Manager
     // **************************************************
 
-    Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual|Manager')->group(function (): void {
+    Route::middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual|Manager')->group(function () use ($registerViolationAuditReadRoutes): void {
 
         Route::prefix('employees')->name('employees.')->group(function (): void {
             Route::get('/', [TenantUserController::class, 'index'])->name('index');
@@ -392,37 +421,9 @@ Route::name('dealer.')->middleware([
             Route::post('scans-archive/upload', [ScanArchiveController::class, 'upload'])->name('scan.archive.upload');
         });
 
-        Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function (): void {
-            Route::get('osha', [ViolationAuditController::class, 'index'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.index');
-            Route::get('osha/{audit}/remediation', [ViolationAuditController::class, 'remediation'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.remediation');
-            Route::patch('osha/{audit}/remediation', [ViolationAuditController::class, 'updateRemediation'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.remediation.update');
-            Route::get('osha/{audit}/download', [ViolationAuditController::class, 'download'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.download');
-            Route::get('osha/{audit}/remediation/download', [ViolationAuditController::class, 'downloadRemediation'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.remediation.download');
-            Route::get('osha/{audit}', [ViolationAuditController::class, 'show'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.show');
-            Route::post('osha/{audit}/comments', [ViolationAuditController::class, 'storeComment'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.comments.store');
-            Route::patch('osha/{audit}/comments/{comment}', [ViolationAuditController::class, 'updateComment'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.comments.update');
-            Route::delete('osha/{audit}/comments/{comment}', [ViolationAuditController::class, 'destroyComment'])
-                ->defaults('type', ViolationAuditType::Osha)
-                ->name('osha.comments.destroy');
-            Route::get('body-shop', App\Http\Livewire\Dealer\Audit\BodyShop\Index::class)->name('body-shop.index');
-            Route::get('body-shop/{bodyShopViolationAudit:uuid}/remediation', RemediationForm::class)->name('body-shop.remediation');
-            Route::get('body-shop/{bodyShopViolationAudit:uuid}', Single::class)->name('body-shop.show');
+        Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function () use ($registerViolationAuditReadRoutes): void {
+            $registerViolationAuditReadRoutes('osha', 'osha', ViolationAuditType::Osha);
+            $registerViolationAuditReadRoutes('body-shop', 'body-shop', ViolationAuditType::BodyShop);
             Route::get('finance', App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('finance.index');
             Route::get('/finance/{glbaViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::class)->name('finance.remediation');
             Route::get('/finance/{glbaViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\Finance\Single::class)->name('finance.show');

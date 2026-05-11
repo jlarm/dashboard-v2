@@ -13,9 +13,9 @@ import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Role } from '@/constants/roles';
-import osha from '@/routes/dealer/audit/osha';
+import { useAuditRoutes } from '@/composables/useAuditRoutes';
 import type { BreadcrumbItem } from '@/types';
-import type { AuditTypeSlug } from '@/components/audits/audit-types';
+import type { SharedAuditType } from '@/composables/useAuditRoutes';
 
 type Photo = { id: number; position: number; url: string };
 type Remediation = {
@@ -63,14 +63,16 @@ type AuditDetail = {
 };
 
 const props = defineProps<{
-    type: AuditTypeSlug;
+    type: SharedAuditType;
     label: string;
     audit: AuditDetail;
 }>();
 
+const routes = useAuditRoutes(props.type);
+
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: `${props.label} Audits`, href: osha.index.url() },
-    { title: props.audit.date, href: osha.show.url({ audit: props.audit.uuid }) },
+    { title: `${props.label} Audits`, href: routes.index.url() },
+    { title: props.audit.date, href: routes.show.url({ audit: props.audit.uuid }) },
 ];
 
 const page = usePage<{ auth: { roles: string[] } }>();
@@ -132,19 +134,19 @@ const severityBadgeClass = (value: number): string => {
     <Head :title="`${label} audit ${audit.date}`" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #actions>
-            <Link :href="osha.remediation.url({ audit: audit.uuid })">
+            <Link :href="routes.remediation.url({ audit: audit.uuid })">
                 <Button variant="outline" size="sm">
                     <ClipboardList class="size-4" />
                     <span class="hidden sm:inline">Remediate</span>
                 </Button>
             </Link>
-            <Link v-if="canManageAudits" :href="osha.edit.url({ audit: audit.uuid })">
+            <Link v-if="canManageAudits" :href="routes.edit.url({ audit: audit.uuid })">
                 <Button variant="outline" size="sm">
                     <Pencil class="size-4" />
                     <span class="hidden sm:inline">Edit</span>
                 </Button>
             </Link>
-            <a v-if="audit.has_pdf" :href="osha.download.url({ audit: audit.uuid })">
+            <a v-if="audit.has_pdf" :href="routes.download.url({ audit: audit.uuid })">
                 <Button variant="outline" size="sm">
                     <FileDown class="size-4" />
                     <span class="hidden sm:inline">PDF</span>
