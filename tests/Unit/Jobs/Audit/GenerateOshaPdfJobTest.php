@@ -42,27 +42,27 @@ function makeJobForAudit(OshaViolationAudit $audit): GenerateOshaPdfJob
     return new GenerateOshaPdfJob($audit);
 }
 
-function createViolationWithStatementId(int $statementId, int $severity): object
+function createViolationWithStatementId(int $statementId, int $severity): Violation
 {
-    $violation = new stdClass();
+    $violation = new Violation();
     $violation->statement_id = $statementId;
     $violation->severity = $severity;
 
     return $violation;
 }
 
-function createViolationWithMissingStatementId(int $severity): object
+function createViolationWithMissingStatementId(int $severity): Violation
 {
-    $violation = new stdClass();
+    $violation = new Violation();
     $violation->statement_id = null;
     $violation->severity = $severity;
 
     return $violation;
 }
 
-function createViolationWithMissingSeverity(int $statementId): object
+function createViolationWithMissingSeverity(int $statementId): Violation
 {
-    $violation = new stdClass();
+    $violation = new Violation();
     $violation->statement_id = $statementId;
     $violation->severity = null;
 
