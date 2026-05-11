@@ -13,6 +13,7 @@ import {
 import { AUDIT_VIEWERS, AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, MANUAL_EDITORS, Role, SCAN_VIEWERS, VENDOR_VIEWERS } from '@/constants/roles';
 import bodyShopAudit from '@/routes/dealer/audit/body-shop';
 import financeAudit from '@/routes/dealer/audit/finance';
+import individualAudit from '@/routes/dealer/audit/individual';
 import oshaAudit from '@/routes/dealer/audit/osha';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
@@ -92,6 +93,7 @@ const mainNavItems = computed<NavItem[]>(() => {
                 { title: 'OSHA', href: oshaAudit.index.url() },
                 { title: 'Body Shop', href: bodyShopAudit.index.url() },
                 { title: 'GLBA', href: financeAudit.index.url() },
+                { title: 'Deal Jackets Archived', href: individualAudit.index.url() },
             ],
         });
 

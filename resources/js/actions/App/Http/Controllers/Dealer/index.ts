@@ -4,7 +4,6 @@ import CourseController from './CourseController'
 import CourseResultsController from './CourseResultsController'
 import VendorController from './VendorController'
 import Auth from './Auth'
-import Audit from './Audit'
 import StoreController from './StoreController'
 import ImpersonationController from './ImpersonationController'
 
@@ -15,7 +14,6 @@ const Dealer = {
     CourseResultsController: Object.assign(CourseResultsController, CourseResultsController),
     VendorController: Object.assign(VendorController, VendorController),
     Auth: Object.assign(Auth, Auth),
-    Audit: Object.assign(Audit, Audit),
     StoreController: Object.assign(StoreController, StoreController),
     ImpersonationController: Object.assign(ImpersonationController, ImpersonationController),
 }

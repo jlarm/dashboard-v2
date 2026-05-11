@@ -3,10 +3,6 @@
 declare(strict_types=1);
 
 use App\Enums\ViolationAuditType;
-use App\Http\Controllers\Dealer\Audit\IndividualController;
-use App\Http\Controllers\Dealer\Audit\IndividualCreateController;
-use App\Http\Controllers\Dealer\Audit\IndividualIndexController;
-use App\Http\Controllers\Dealer\Audit\SingleIndividualController;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Dealer\CourseController;
 use App\Http\Controllers\Dealer\CourseResultsController;
@@ -18,6 +14,7 @@ use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Controllers\Tenant\Audit\DealJacketController;
 use App\Http\Controllers\Tenant\Audit\DealJacketGroupController;
 use App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController;
+use App\Http\Controllers\Tenant\Audit\IndividualAuditController;
 use App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Tenant\Auth\NewPasswordController;
 use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
@@ -192,9 +189,15 @@ Route::name('dealer.')->middleware([
             ViolationAuditRoutes::registerWrites('osha', 'osha', ViolationAuditType::Osha);
             ViolationAuditRoutes::registerWrites('body-shop', 'body-shop', ViolationAuditType::BodyShop);
             ViolationAuditRoutes::registerWrites('finance', 'finance', ViolationAuditType::Glba);
-            Route::get('deal-jackets-archived/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
-            Route::get('deal-jackets-archived/{individualAudit:uuid}', IndividualController::class)->name('individual.show');
-            Route::get('deal-jackets-archived/{individualAudit:uuid}/edit', SingleIndividualController::class)->name('individual.edit');
+            Route::post('deal-jackets-archived', [IndividualAuditController::class, 'create'])
+                ->defaults('individualAudit', null)
+                ->name('individual.create');
+            Route::post('deal-jackets-archived/{individualAudit:uuid}/children', [IndividualAuditController::class, 'create'])
+                ->name('individual.create-child');
+            Route::get('deal-jackets-archived/{individualAudit:uuid}/edit', [IndividualAuditController::class, 'edit'])->name('individual.edit');
+            Route::patch('deal-jackets-archived/{individualAudit:uuid}', [IndividualAuditController::class, 'update'])->name('individual.update');
+            Route::delete('deal-jackets-archived/{individualAudit:uuid}', [IndividualAuditController::class, 'destroy'])->name('individual.destroy');
+            Route::post('deal-jackets-archived/{individualAudit:uuid}/generate', [IndividualAuditController::class, 'generate'])->name('individual.generate');
 
             Route::get('deal-jackets/{dealJacketGroup:uuid}/create', [DealJacketController::class, 'create'])->name('deal-jackets.create');
             Route::get('deal-jackets/{dealJacketGroup:uuid}/edit/{dealJacket:uuid}', [DealJacketController::class, 'edit'])->name('deal-jackets.edit');
@@ -350,7 +353,9 @@ Route::name('dealer.')->middleware([
             ViolationAuditRoutes::registerReads('osha', 'osha', ViolationAuditType::Osha);
             ViolationAuditRoutes::registerReads('body-shop', 'body-shop', ViolationAuditType::BodyShop);
             ViolationAuditRoutes::registerReads('finance', 'finance', ViolationAuditType::Glba);
-            Route::get('deal-jackets-archived', IndividualIndexController::class)->name('individual.index');
+            Route::get('deal-jackets-archived', [IndividualAuditController::class, 'index'])->name('individual.index');
+            Route::get('deal-jackets-archived/{individualAudit:uuid}', [IndividualAuditController::class, 'show'])->name('individual.show');
+            Route::get('deal-jackets-archived/{individualAudit:uuid}/download', [IndividualAuditController::class, 'download'])->name('individual.download');
             Route::view('deal-jackets', 'tenant.audit.deal-jacket.index')->middleware(['auth', 'single.store'])->name('deal-jackets.index');
             Route::get('deal-jackets/{dealJacketGroup:uuid}', [DealJacketGroupController::class, 'show'])->middleware(['auth', 'single.store'])->name('deal-jackets.show');
             Route::get('deal-jackets/{dealJacketGroup:uuid}/{dealJacket:uuid}', [DealJacketController::class, 'show'])->name('deal-jackets.single');

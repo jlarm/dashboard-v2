@@ -1,15 +1,15 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived'
 */
-export const create = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: create.url(options),
+const createe695fe70ff5de8e12d4c1a58d8b29494 = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: createe695fe70ff5de8e12d4c1a58d8b29494.url(options),
     method: 'post',
 })
 
-create.definition = {
+createe695fe70ff5de8e12d4c1a58d8b29494.definition = {
     methods: ["post"],
     url: '/audits/deal-jackets-archived',
 } satisfies RouteDefinition<["post"]>
@@ -19,8 +19,8 @@ create.definition = {
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived'
 */
-create.url = (options?: RouteQueryOptions) => {
-    return create.definition.url + queryParams(options)
+createe695fe70ff5de8e12d4c1a58d8b29494.url = (options?: RouteQueryOptions) => {
+    return createe695fe70ff5de8e12d4c1a58d8b29494.definition.url + queryParams(options)
 }
 
 /**
@@ -28,8 +28,8 @@ create.url = (options?: RouteQueryOptions) => {
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived'
 */
-create.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: create.url(options),
+createe695fe70ff5de8e12d4c1a58d8b29494.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: createe695fe70ff5de8e12d4c1a58d8b29494.url(options),
     method: 'post',
 })
 
@@ -38,8 +38,8 @@ create.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived'
 */
-const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: create.url(options),
+const createe695fe70ff5de8e12d4c1a58d8b29494Form = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: createe695fe70ff5de8e12d4c1a58d8b29494.url(options),
     method: 'post',
 })
 
@@ -48,34 +48,33 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived'
 */
-createForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: create.url(options),
+createe695fe70ff5de8e12d4c1a58d8b29494Form.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: createe695fe70ff5de8e12d4c1a58d8b29494.url(options),
     method: 'post',
 })
 
-create.form = createForm
-
+createe695fe70ff5de8e12d4c1a58d8b29494.form = createe695fe70ff5de8e12d4c1a58d8b29494Form
 /**
-* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::createChild
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived/{individualAudit}/children'
 */
-export const createChild = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: createChild.url(args, options),
+const create582a795d9d809cdf0da2fd23f265ce7c = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: create582a795d9d809cdf0da2fd23f265ce7c.url(args, options),
     method: 'post',
 })
 
-createChild.definition = {
+create582a795d9d809cdf0da2fd23f265ce7c.definition = {
     methods: ["post"],
     url: '/audits/deal-jackets-archived/{individualAudit}/children',
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::createChild
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived/{individualAudit}/children'
 */
-createChild.url = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions) => {
+create582a795d9d809cdf0da2fd23f265ce7c.url = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { individualAudit: args }
     }
@@ -98,42 +97,47 @@ createChild.url = (args: { individualAudit: string | number | { uuid: string | n
         : args.individualAudit,
     }
 
-    return createChild.definition.url
+    return create582a795d9d809cdf0da2fd23f265ce7c.definition.url
             .replace('{individualAudit}', parsedArgs.individualAudit.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::createChild
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived/{individualAudit}/children'
 */
-createChild.post = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: createChild.url(args, options),
+create582a795d9d809cdf0da2fd23f265ce7c.post = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: create582a795d9d809cdf0da2fd23f265ce7c.url(args, options),
     method: 'post',
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::createChild
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived/{individualAudit}/children'
 */
-const createChildForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: createChild.url(args, options),
+const create582a795d9d809cdf0da2fd23f265ce7cForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: create582a795d9d809cdf0da2fd23f265ce7c.url(args, options),
     method: 'post',
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::createChild
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:51
 * @route '/audits/deal-jackets-archived/{individualAudit}/children'
 */
-createChildForm.post = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: createChild.url(args, options),
+create582a795d9d809cdf0da2fd23f265ce7cForm.post = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: create582a795d9d809cdf0da2fd23f265ce7c.url(args, options),
     method: 'post',
 })
 
-createChild.form = createChildForm
+create582a795d9d809cdf0da2fd23f265ce7c.form = create582a795d9d809cdf0da2fd23f265ce7cForm
+
+export const create = {
+    '/audits/deal-jackets-archived': createe695fe70ff5de8e12d4c1a58d8b29494,
+    '/audits/deal-jackets-archived/{individualAudit}/children': create582a795d9d809cdf0da2fd23f265ce7c,
+}
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::edit
@@ -791,16 +795,6 @@ downloadForm.head = (args: { individualAudit: string | number | { uuid: string |
 
 download.form = downloadForm
 
-const individual = {
-    create: Object.assign(create, create),
-    createChild: Object.assign(createChild, createChild),
-    edit: Object.assign(edit, edit),
-    update: Object.assign(update, update),
-    destroy: Object.assign(destroy, destroy),
-    generate: Object.assign(generate, generate),
-    index: Object.assign(index, index),
-    show: Object.assign(show, show),
-    download: Object.assign(download, download),
-}
+const IndividualAuditController = { create, edit, update, destroy, generate, index, show, download }
 
-export default individual
+export default IndividualAuditController
