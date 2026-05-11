@@ -18,15 +18,18 @@ class ViolationStatementResource extends JsonResource
     #[Override]
     public function toArray(Request $request): array
     {
+        $categories = collect($this->categories);
+
         return [
             'id' => $this->id,
             'statement' => $this->statement,
             'weight' => $this->weight,
-            'categories' => $this->categories,
-            'category_labels' => array_map(
-                fn (ViolationStatementCategory $category): string => $category->label(),
-                $this->categories,
-            ),
+            'categories' => $categories
+                ->map(static fn (ViolationStatementCategory $category): string => $category->value)
+                ->all(),
+            'category_labels' => $categories
+                ->map(static fn (ViolationStatementCategory $category): string => $category->label())
+                ->all(),
             'reference_image_url' => $this->reference_image_url,
             'keywords' => $this->keywords ?? [],
         ];

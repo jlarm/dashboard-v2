@@ -19,6 +19,7 @@ import { FileUpload } from '@/components/ui/file-upload';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import osha from '@/routes/dealer/audit/osha';
+import { generate as generateRemediationRoute } from '@/routes/dealer/audit/osha/remediation';
 import type { BreadcrumbItem } from '@/types';
 import type { AuditTypeSlug } from '@/components/audits/audit-types';
 
@@ -147,7 +148,7 @@ const submit = (): void => {
 const generateRemediationPdf = (): void => {
     generating.value = true;
     router.post(
-        `/audits/osha/${props.audit.uuid}/remediation/generate`,
+        generateRemediationRoute.url({ audit: props.audit.uuid }),
         {},
         {
             preserveScroll: true,
@@ -178,7 +179,7 @@ const generateRemediationPdf = (): void => {
                 <Sparkles class="size-4" />
                 <span class="hidden sm:inline">{{ generating ? 'Generating…' : 'Generate report' }}</span>
             </Button>
-            <a v-if="audit.has_remediation_pdf" :href="`/audits/osha/${audit.uuid}/remediation/download`">
+            <a v-if="audit.has_remediation_pdf" :href="osha.remediation.download.url({ audit: audit.uuid })">
                 <Button variant="outline" size="sm">
                     <FileDown class="size-4" />
                     <span class="hidden sm:inline">PDF</span>
@@ -235,10 +236,7 @@ const generateRemediationPdf = (): void => {
                     v-for="violation in audit.violations"
                     :key="violation.id"
                     :value="`r-${violation.id}`"
-                    class="overflow-hidden rounded-lg border bg-card data-[state=open]:bg-card data-[state=open]:shadow-sm"
-                    :class="drafts[violation.id].completed
-                        ? 'border-emerald-300 dark:border-emerald-900/60'
-                        : 'border-border'"
+                    class="overflow-hidden rounded-lg border border-border bg-card data-[state=open]:bg-card data-[state=open]:shadow-sm"
                 >
                     <AccordionTrigger class="px-4 py-4 text-left text-sm font-semibold leading-snug hover:no-underline">
                         <span class="flex items-start gap-2">

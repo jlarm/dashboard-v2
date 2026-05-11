@@ -60,7 +60,7 @@ describe('updates', function (): void {
 
         expect($statement->statement)->toBe('Updated');
         expect($statement->weight)->toBe(9);
-        expect($statement->categories)->toBe([ViolationStatementCategory::Glba->value]);
+        expect($statement->categories->all())->toBe([ViolationStatementCategory::Glba]);
         expect($statement->keywords)->toBe(['a', 'b']);
     });
 
@@ -77,7 +77,7 @@ describe('updates', function (): void {
             ->patch(route('violation-statements.update', $statement), [
                 'statement' => $statement->statement,
                 'weight' => $statement->weight,
-                'categories' => $statement->categories,
+                'categories' => $statement->categories->map->value->all(),
                 'image' => UploadedFile::fake()->image('new-image.jpg'),
             ]);
 
@@ -98,7 +98,7 @@ describe('updates', function (): void {
             ->patch(route('violation-statements.update', $statement), [
                 'statement' => $statement->statement,
                 'weight' => $statement->weight,
-                'categories' => $statement->categories,
+                'categories' => $statement->categories->map->value->all(),
                 'remove_image' => '1',
             ]);
 

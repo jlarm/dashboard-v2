@@ -101,9 +101,9 @@ describe('creation', function (): void {
 
         expect($statement->statement)->toBe('Unlabeled container');
         expect($statement->weight)->toBe(7);
-        expect($statement->categories)->toBe([
-            ViolationStatementCategory::Osha->value,
-            ViolationStatementCategory::BodyShop->value,
+        expect($statement->categories->all())->toBe([
+            ViolationStatementCategory::Osha,
+            ViolationStatementCategory::BodyShop,
         ]);
         expect($statement->keywords)->toBe(['label', 'chemical']);
         expect($statement->reference_image_url)->toBeNull();

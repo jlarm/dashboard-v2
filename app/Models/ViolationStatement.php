@@ -6,8 +6,10 @@ namespace App\Models;
 
 use App\Enums\ViolationStatementCategory;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Override;
 
 /**
@@ -15,7 +17,7 @@ use Override;
  * @property-read string $statement
  * @property-read array|null $keywords
  * @property-read int $weight
- * @property-read ViolationStatementCategory[] $categories
+ * @property-read Collection<int, ViolationStatementCategory> $categories
  * @property-read string|null $reference_image_url
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
@@ -41,7 +43,7 @@ class ViolationStatement extends Model
             'statement' => 'string',
             'keywords' => 'array',
             'weight' => 'integer',
-            'categories' => 'array',
+            'categories' => AsEnumCollection::of(ViolationStatementCategory::class),
             'reference_image_url' => 'string',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
