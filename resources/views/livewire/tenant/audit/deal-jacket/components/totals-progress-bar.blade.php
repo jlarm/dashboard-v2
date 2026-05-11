@@ -2,7 +2,7 @@
     <div>
         <h3 class="text-lg font-medium text-gray-900">Totals</h3>
     </div>
-    <div id="gaugeChart-{{ $this->id }}"></div>
+    <div id="gaugeChart-{{ $this->getId() }}"></div>
     <div class="flex justify-evenly items-center">
         <div class="flex items-center gap-2">
             <span class="shrink-0  size-2 inline-block bg-red-500 rounded-full"></span>
@@ -23,7 +23,7 @@
     <script>
         (function() {
             let chart = null;
-            const componentId = '{{ $this->id }}';
+            const componentId = '{{ $this->getId() }}';
             const chartElementId = 'gaugeChart-' + componentId;
 
             function initChart() {

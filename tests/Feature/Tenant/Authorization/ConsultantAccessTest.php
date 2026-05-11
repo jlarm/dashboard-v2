@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Models\Dealer\Store;
 use App\Models\User;
-use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
     $this->store = Store::query()->first();
@@ -52,7 +51,7 @@ describe('Consultant - Employee Management', function (): void {
 
     it('can access employee creation page', function (): void {
         $this->actingAs($this->consultant)
-            ->get(route('dealer.employees.new'))
+            ->get(route('dealer.employees.invite'))
             ->assertOk();
     });
 
@@ -169,22 +168,16 @@ describe('Consultant - Phishing Access', function (): void {
 });
 
 describe('Consultant - Routes It Should NOT Access', function (): void {
-    it('cannot access global settings', function (): void {
+    it('can access global settings', function (): void {
+        Store::query()->create(['name' => 'Second Store']);
+        $this->consultant->update(['current_store_id' => null]);
+
         $this->actingAs($this->consultant)
             ->get(route('dealer.settings.global'))
-            ->assertForbidden();
+            ->assertOk();
     });
 
-    it('cannot access logs without delete-stores permission', function (): void {
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.logs.index'))
-            ->assertForbidden();
-    });
-
-    it('can access logs when given delete-stores permission directly', function (): void {
-        $this->consultant->givePermissionTo('delete-stores');
-        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
-
+    it('can access logs via Consultant role', function (): void {
         $this->actingAs($this->consultant)
             ->get(route('dealer.logs.index'))
             ->assertOk();

@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Tenant\Audit\DealJacket;
 
 use App\Models\Dealer\Audit\DealJacketGroup;
-use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use WireElements\Pro\Components\Modal\Modal;
+use Livewire\Component;
 
-class DealJacketGroupDeleteModal extends Modal
+class DealJacketGroupDeleteModal extends Component
 {
     public int $dealJacketGroup;
     public DealJacketGroup $group;
@@ -27,15 +26,10 @@ class DealJacketGroupDeleteModal extends Modal
         $this->group->delete();
 
         $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.group-index');
-        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.pass-rate-trend-chart');
-        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.common-issues-chart');
+        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.components.pass-rate-trend-chart');
+        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.components.common-issues-chart');
 
-        $this->close();
-
-        Notification::make()
-            ->title('Deal Jacket Group Deleted')
-            ->success()
-            ->send();
+        session()->flash('success', 'Deal Jacket Group Deleted');
     }
 
     public function render(): View

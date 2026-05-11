@@ -132,7 +132,7 @@ describe('Employee - Forbidden Routes (Manager+ Only)', function (): void {
 
     it('cannot access employee creation page', function (): void {
         $this->actingAs($this->employee)
-            ->get(route('dealer.employees.new'))
+            ->get(route('dealer.employees.invite'))
             ->assertForbidden();
     });
 

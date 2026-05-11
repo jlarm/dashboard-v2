@@ -28,6 +28,9 @@ describe('Super Admin - Central Route Access', function (): void {
     });
 
     it('can access global settings', function (): void {
+        Store::query()->create(['name' => 'Second Store']);
+        $this->superAdmin->update(['current_store_id' => null]);
+
         $this->actingAs($this->superAdmin)
             ->get(route('dealer.settings.global'))
             ->assertOk();
@@ -43,7 +46,7 @@ describe('Super Admin - Employee Management', function (): void {
 
     it('can access employee creation page', function (): void {
         $this->actingAs($this->superAdmin)
-            ->get(route('dealer.employees.new'))
+            ->get(route('dealer.employees.invite'))
             ->assertOk();
     });
 

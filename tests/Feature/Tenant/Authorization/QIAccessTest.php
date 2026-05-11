@@ -196,9 +196,14 @@ describe('QI - Manager Group Access', function (): void {
             ->assertOk();
     })->with([
         'scan index' => 'dealer.scan.index',
-        'scan settings' => 'dealer.scan.settings',
         'scan archive' => 'dealer.scan.archive',
     ]);
+
+    it('cannot access scan settings (super-admin|Consultant only)', function (): void {
+        $this->actingAs($this->qi)
+            ->get(route('dealer.scan.settings'))
+            ->assertForbidden();
+    });
 
     it('can access fit tests', function (): void {
         $this->actingAs($this->qi)

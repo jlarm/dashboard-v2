@@ -50,7 +50,7 @@ describe('Manager - Employee Management', function (): void {
 
     it('can access employee creation page', function (): void {
         $this->actingAs($this->manager)
-            ->get(route('dealer.employees.new'))
+            ->get(route('dealer.employees.invite'))
             ->assertOk();
     });
 
@@ -148,9 +148,14 @@ describe('Manager - Scan Access', function (): void {
             ->assertOk();
     })->with([
         'scan index' => 'dealer.scan.index',
-        'scan settings' => 'dealer.scan.settings',
         'scan archive' => 'dealer.scan.archive',
     ]);
+
+    it('cannot access scan settings (super-admin|Consultant only)', function (): void {
+        $this->actingAs($this->manager)
+            ->get(route('dealer.scan.settings'))
+            ->assertForbidden();
+    });
 });
 
 describe('Manager - Vendor Access', function (): void {

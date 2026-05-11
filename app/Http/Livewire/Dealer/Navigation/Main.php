@@ -217,8 +217,8 @@ class Main extends Component
             [
                 'label' => 'Automated Reports',
                 'icon' => 'settings',
-                'route' => 'dealer.settings.automated-reports',
-                'active_routes' => ['dealer.settings.automated-reports*'],
+                'route' => 'dealer.settings.automated-reports.index',
+                'active_routes' => ['dealer.settings.automated-reports.*'],
                 'roles_any' => ['super-admin', 'Consultant', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'],
             ],
             [

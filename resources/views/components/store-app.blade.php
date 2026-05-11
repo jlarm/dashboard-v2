@@ -43,7 +43,6 @@
         </main>
     </div>
 </div>
-@livewire('notifications')
 @livewireScripts
 @fluxScripts
 </body>

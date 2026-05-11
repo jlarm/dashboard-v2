@@ -26,7 +26,7 @@
                         <p class="text-xs text-gray-500">Historical audit grades</p>
                     </div>
                     <div class="relative h-64">
-                        <div id="oshaGradeChart-{{ $this->id }}"></div>
+                        <div id="oshaGradeChart-{{ $this->getId() }}"></div>
                     </div>
                 </div>
             @endif
@@ -38,7 +38,7 @@
                         <p class="text-xs text-gray-500">Total violations and completed remediations per audit</p>
                     </div>
                     <div class="relative h-64">
-                        <div id="oshaViolationsChart-{{ $this->id }}"></div>
+                        <div id="oshaViolationsChart-{{ $this->getId() }}"></div>
                     </div>
                 </div>
             @endif
@@ -107,7 +107,7 @@
 <script>
     (function() {
         let chart = null;
-        const componentId = '{{ $this->id }}';
+        const componentId = '{{ $this->getId() }}';
         const chartElementId = 'oshaGradeChart-' + componentId;
         const gradeLetters = @json($chartGradesLetters);
 
@@ -251,7 +251,7 @@
     // Violations and Remediations Chart
     (function() {
         let violationsChart = null;
-        const componentId = '{{ $this->id }}';
+        const componentId = '{{ $this->getId() }}';
         const chartElementId = 'oshaViolationsChart-' + componentId;
 
         function initViolationsChart() {

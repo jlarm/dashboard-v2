@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Tenant\Audit\DealJacket\Components;
 
 use App\Models\Dealer\Audit\DealJacketGroup;
-use Filament\Notifications\Notification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use WireElements\Pro\Components\Modal\Modal;
+use Livewire\Component;
 
-class MarkCompleteModal extends Modal
+class MarkCompleteModal extends Component
 {
     use AuthorizesRequests;
 
@@ -30,15 +29,10 @@ class MarkCompleteModal extends Modal
         $this->dealJacketGroup->update(['completed' => true]);
 
         $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.group-index');
-        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.pass-rate-trend-chart');
-        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.common-issues-chart');
+        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.components.pass-rate-trend-chart');
+        $this->dispatch('refreshDealJacketGroups')->to('tenant.audit.deal-jacket.components.common-issues-chart');
 
-        $this->close();
-
-        Notification::make()
-            ->title('Deal Jacket Group Completed')
-            ->success()
-            ->send();
+        session()->flash('success', 'Deal Jacket Group Completed');
     }
 
     public function render(): View

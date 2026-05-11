@@ -4,7 +4,7 @@
         <p class="text-xs text-gray-500">Based on the previous 2 years</p>
     </div>
     <div class="relative h-64">
-        <div id="passRateChart-{{ $this->id }}"></div>
+        <div id="passRateChart-{{ $this->getId() }}"></div>
     </div>
 </div>
 
@@ -12,7 +12,7 @@
 <script>
     (function() {
         let chart = null;
-        const componentId = '{{ $this->id }}';
+        const componentId = '{{ $this->getId() }}';
         const chartElementId = 'passRateChart-' + componentId;
 
         function initChart() {

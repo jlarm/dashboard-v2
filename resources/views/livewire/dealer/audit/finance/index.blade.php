@@ -26,7 +26,7 @@
                         <p class="text-xs text-gray-500">Historical audit grades</p>
                     </div>
                     <div class="relative h-64">
-                        <div id="financeGradeChart-{{ $this->id }}"></div>
+                        <div id="financeGradeChart-{{ $this->getId() }}"></div>
                     </div>
                 </div>
             @endif
@@ -38,7 +38,7 @@
                         <p class="text-xs text-gray-500">Total violations and completed remediations per audit</p>
                     </div>
                     <div class="relative h-64">
-                        <div id="financeViolationsChart-{{ $this->id }}"></div>
+                        <div id="financeViolationsChart-{{ $this->getId() }}"></div>
                     </div>
                 </div>
             @endif
@@ -107,7 +107,7 @@
 <script>
     (function() {
         let chart = null;
-        const componentId = '{{ $this->id }}';
+        const componentId = '{{ $this->getId() }}';
         const chartElementId = 'financeGradeChart-' + componentId;
         const gradeLetters = @json($chartGradesLetters);
 
@@ -251,7 +251,7 @@
     // Violations and Remediations Chart
     (function() {
         let violationsChart = null;
-        const componentId = '{{ $this->id }}';
+        const componentId = '{{ $this->getId() }}';
         const chartElementId = 'financeViolationsChart-' + componentId;
 
         function initViolationsChart() {

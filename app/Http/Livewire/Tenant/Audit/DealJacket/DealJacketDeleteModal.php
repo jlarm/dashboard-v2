@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Livewire\Tenant\Audit\DealJacket;
 
 use App\Models\Dealer\Audit\DealJacket;
-use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use WireElements\Pro\Components\Modal\Modal;
+use Livewire\Component;
 
-class DealJacketDeleteModal extends Modal
+class DealJacketDeleteModal extends Component
 {
     public $dealJacket;
 
@@ -27,12 +26,7 @@ class DealJacketDeleteModal extends Modal
 
         $this->dispatch('refreshDealJackets');
 
-        $this->close();
-
-        Notification::make()
-            ->title('Deal Jacket Deleted')
-            ->success()
-            ->send();
+        session()->flash('success', 'Deal Jacket Deleted');
     }
 
     public function render(): View

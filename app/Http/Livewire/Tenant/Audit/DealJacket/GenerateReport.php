@@ -7,9 +7,9 @@ namespace App\Http\Livewire\Tenant\Audit\DealJacket;
 use App\Jobs\Audit\GenerateDealJacketReportJob;
 use App\Models\Dealer\Audit\DealJacketGroup;
 use Illuminate\View\View;
-use WireElements\Pro\Components\Modal\Modal;
+use Livewire\Component;
 
-class GenerateReport extends Modal
+class GenerateReport extends Component
 {
     public int $dealJacketGroupId;
     public DealJacketGroup $dealJacketGroup;
@@ -36,7 +36,6 @@ class GenerateReport extends Modal
 
         dispatch(new GenerateDealJacketReportJob($this->dealJacketGroup, auth()->user()));
 
-        $this->close();
     }
 
     public function render(): View

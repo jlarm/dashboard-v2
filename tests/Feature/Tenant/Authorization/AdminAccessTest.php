@@ -48,11 +48,11 @@ describe('Admin - General Access', function (): void {
     });
 });
 
-describe('Admin - Logs Access (via delete-stores permission)', function (): void {
-    it('can access logs because Admin role has delete-stores permission', function (): void {
+describe('Admin - Logs Access', function (): void {
+    it('cannot access logs (super-admin|Consultant only)', function (): void {
         $this->actingAs($this->admin)
             ->get(route('dealer.logs.index'))
-            ->assertOk();
+            ->assertForbidden();
     });
 });
 
@@ -99,10 +99,10 @@ describe('Admin - Routes It Should NOT Access', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access vendor index (not in manager+ role group)', function (): void {
+    it('can access vendor index (auth-only route)', function (): void {
         $this->actingAs($this->admin)
             ->get(route('dealer.vendor.index'))
-            ->assertForbidden();
+            ->assertOk();
     });
 
     it('cannot access scan routes (not in manager+ role group)', function (string $routeName): void {

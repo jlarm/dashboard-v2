@@ -64,7 +64,6 @@
         </main>
     </div>
 </div>
-@livewire('notifications')
 @auth
     @livewire('notification-poller')
 @endauth
