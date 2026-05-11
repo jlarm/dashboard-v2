@@ -237,13 +237,9 @@ function namedRouteParameters(object $test, string $routeName): array
         'dealer.audit.deal-jackets.create' => ['dealJacketGroup' => $test->dealJacketGroup->uuid],
         'dealer.audit.deal-jackets.edit' => [
             'dealJacketGroup' => $test->dealJacketGroup->uuid,
-            'dealJacket' => $test->dealJacket->uuid,
+            'dealJacket' => $test->dealJacket->id,
         ],
         'dealer.audit.deal-jackets.show' => ['dealJacketGroup' => $test->dealJacketGroup->uuid],
-        'dealer.audit.deal-jackets.single' => [
-            'dealJacketGroup' => $test->dealJacketGroup->uuid,
-            'dealJacket' => $test->dealJacket->uuid,
-        ],
 
         'dealer.audit.finance.create' => ['store' => $test->store->id],
         'dealer.audit.finance.edit' => ['glbaViolationAudit' => $test->glbaAudit->uuid],

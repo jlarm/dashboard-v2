@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
-* @see routes/tenant.php:378
+* @see routes/tenant.php:382
 * @route '/impersonate/{token}'
 */
 export const token = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ token.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/tenant.php:378
+* @see routes/tenant.php:382
 * @route '/impersonate/{token}'
 */
 token.url = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -40,7 +40,7 @@ token.url = (args: { token: string | number } | [token: string | number ] | stri
 }
 
 /**
-* @see routes/tenant.php:378
+* @see routes/tenant.php:382
 * @route '/impersonate/{token}'
 */
 token.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -49,7 +49,7 @@ token.get = (args: { token: string | number } | [token: string | number ] | stri
 })
 
 /**
-* @see routes/tenant.php:378
+* @see routes/tenant.php:382
 * @route '/impersonate/{token}'
 */
 token.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -58,7 +58,7 @@ token.head = (args: { token: string | number } | [token: string | number ] | str
 })
 
 /**
-* @see routes/tenant.php:378
+* @see routes/tenant.php:382
 * @route '/impersonate/{token}'
 */
 const tokenForm = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -67,7 +67,7 @@ const tokenForm = (args: { token: string | number } | [token: string | number ] 
 })
 
 /**
-* @see routes/tenant.php:378
+* @see routes/tenant.php:382
 * @route '/impersonate/{token}'
 */
 tokenForm.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -76,7 +76,7 @@ tokenForm.get = (args: { token: string | number } | [token: string | number ] | 
 })
 
 /**
-* @see routes/tenant.php:378
+* @see routes/tenant.php:382
 * @route '/impersonate/{token}'
 */
 tokenForm.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

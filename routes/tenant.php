@@ -12,7 +12,6 @@ use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Controllers\Tenant\Audit\DealJacketController;
-use App\Http\Controllers\Tenant\Audit\DealJacketGroupController;
 use App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController;
 use App\Http\Controllers\Tenant\Audit\IndividualAuditController;
 use App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController;
@@ -200,7 +199,13 @@ Route::name('dealer.')->middleware([
             Route::post('deal-jackets-archived/{individualAudit:uuid}/generate', [IndividualAuditController::class, 'generate'])->name('individual.generate');
 
             Route::get('deal-jackets/{dealJacketGroup:uuid}/create', [DealJacketController::class, 'create'])->name('deal-jackets.create');
-            Route::get('deal-jackets/{dealJacketGroup:uuid}/edit/{dealJacket:uuid}', [DealJacketController::class, 'edit'])->name('deal-jackets.edit');
+            Route::post('deal-jackets/{dealJacketGroup:uuid}/jackets', [DealJacketController::class, 'store'])->name('deal-jackets.store');
+            Route::get('deal-jackets/{dealJacketGroup:uuid}/edit/{dealJacket}', [DealJacketController::class, 'edit'])->name('deal-jackets.edit');
+            Route::patch('deal-jackets/{dealJacketGroup:uuid}/jackets/{dealJacket}', [DealJacketController::class, 'update'])->name('deal-jackets.update');
+            Route::delete('deal-jackets/{dealJacketGroup:uuid}/jackets/{dealJacket}', [DealJacketController::class, 'destroy'])->name('deal-jackets.destroy');
+            Route::post('deal-jackets', [DealJacketController::class, 'startGroup'])->name('deal-jackets.start');
+            Route::post('deal-jackets/{dealJacketGroup:uuid}/complete', [DealJacketController::class, 'complete'])->name('deal-jackets.complete');
+            Route::delete('deal-jackets/{dealJacketGroup:uuid}', [DealJacketController::class, 'destroyGroup'])->name('deal-jackets.destroy-group');
         });
 
         Route::get('phishing/create', Create::class)->name('phishing.create');
@@ -356,9 +361,8 @@ Route::name('dealer.')->middleware([
             Route::get('deal-jackets-archived', [IndividualAuditController::class, 'index'])->name('individual.index');
             Route::get('deal-jackets-archived/{individualAudit:uuid}', [IndividualAuditController::class, 'show'])->name('individual.show');
             Route::get('deal-jackets-archived/{individualAudit:uuid}/download', [IndividualAuditController::class, 'download'])->name('individual.download');
-            Route::view('deal-jackets', 'tenant.audit.deal-jacket.index')->middleware(['auth', 'single.store'])->name('deal-jackets.index');
-            Route::get('deal-jackets/{dealJacketGroup:uuid}', [DealJacketGroupController::class, 'show'])->middleware(['auth', 'single.store'])->name('deal-jackets.show');
-            Route::get('deal-jackets/{dealJacketGroup:uuid}/{dealJacket:uuid}', [DealJacketController::class, 'show'])->name('deal-jackets.single');
+            Route::get('deal-jackets', [DealJacketController::class, 'index'])->name('deal-jackets.index');
+            Route::get('deal-jackets/{dealJacketGroup:uuid}', [DealJacketController::class, 'show'])->name('deal-jackets.show');
             Route::get('deal-jacket-reports/{fileName}/download', [DealJacketReportDownloadController::class, 'download'])->name('deal-jacket-reports.download');
         });
 

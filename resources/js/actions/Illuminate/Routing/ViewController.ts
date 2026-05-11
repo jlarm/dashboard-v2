@@ -159,91 +159,10 @@ ViewController39cf50c98836c20d29fa0dfb7a7064d0Form.head = (options?: RouteQueryO
 })
 
 ViewController39cf50c98836c20d29fa0dfb7a7064d0.form = ViewController39cf50c98836c20d29fa0dfb7a7064d0Form
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/audits/deal-jackets'
-*/
-const ViewController86a0d0e665572eead9d650bb21337c56 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController86a0d0e665572eead9d650bb21337c56.url(options),
-    method: 'get',
-})
-
-ViewController86a0d0e665572eead9d650bb21337c56.definition = {
-    methods: ["get","head"],
-    url: '/audits/deal-jackets',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/audits/deal-jackets'
-*/
-ViewController86a0d0e665572eead9d650bb21337c56.url = (options?: RouteQueryOptions) => {
-    return ViewController86a0d0e665572eead9d650bb21337c56.definition.url + queryParams(options)
-}
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/audits/deal-jackets'
-*/
-ViewController86a0d0e665572eead9d650bb21337c56.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: ViewController86a0d0e665572eead9d650bb21337c56.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/audits/deal-jackets'
-*/
-ViewController86a0d0e665572eead9d650bb21337c56.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: ViewController86a0d0e665572eead9d650bb21337c56.url(options),
-    method: 'head',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/audits/deal-jackets'
-*/
-const ViewController86a0d0e665572eead9d650bb21337c56Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController86a0d0e665572eead9d650bb21337c56.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/audits/deal-jackets'
-*/
-ViewController86a0d0e665572eead9d650bb21337c56Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController86a0d0e665572eead9d650bb21337c56.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\ViewController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/ViewController.php:32
-* @route '/audits/deal-jackets'
-*/
-ViewController86a0d0e665572eead9d650bb21337c56Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: ViewController86a0d0e665572eead9d650bb21337c56.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-ViewController86a0d0e665572eead9d650bb21337c56.form = ViewController86a0d0e665572eead9d650bb21337c56Form
 
 const ViewController = {
     '/courses': ViewControllerae0d8013bc7dd1aeb7c9b49bac5f9e3b,
     '/courses/all': ViewController39cf50c98836c20d29fa0dfb7a7064d0,
-    '/audits/deal-jackets': ViewController86a0d0e665572eead9d650bb21337c56,
 }
 
 export default ViewController
