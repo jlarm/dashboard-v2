@@ -1017,7 +1017,6 @@
             <p>Electric and Hybrid vehicle run in excess of 300 plus volts</p>
             <p>Equipment needed, High Voltage Gloves and a 12 Volt meter</p>
             <h3>Battery Basics</h3>
-            <img src="{{ global_asset('storage/battery-pack.jpeg') }}" alt="Battery Pack">
             <ul>
                 <li>Equipment needed, High Voltage Gloves and a 12 Volt meter</li>
                 <li>Battery Packs that are inside of case</li>
