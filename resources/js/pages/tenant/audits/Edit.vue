@@ -423,7 +423,7 @@ const addViolation = (statementId: number): void => {
                         : 'border-border'"
                 >
                     <AccordionTrigger
-                        class="px-4 py-4 text-left text-sm font-semibold leading-snug hover:no-underline"
+                        class="px-3 py-3 text-left text-sm font-semibold leading-snug hover:no-underline"
                     >
                         <span class="flex items-start gap-2">
                             <AlertCircle
@@ -438,7 +438,7 @@ const addViolation = (statementId: number): void => {
                             <Minus class="size-4 shrink-0 text-muted-foreground hidden group-aria-expanded/accordion-trigger:inline" />
                         </template>
                     </AccordionTrigger>
-                    <AccordionContent class="space-y-5 px-4 pb-5 pt-1">
+                    <AccordionContent class="space-y-3 px-3 pb-3 pt-1">
                         <Field>
                             <FieldLabel :for="`comment-${violation.id}`" class="text-xs uppercase tracking-wider text-muted-foreground">
                                 Comment <span class="text-destructive">*</span>
@@ -726,12 +726,12 @@ const addViolation = (statementId: number): void => {
                 </p>
                 <div class="flex items-center gap-2">
                     <Link :href="osha.index.url()">
-                        <Button type="button" variant="outline" class="h-11">Exit</Button>
+                        <Button type="button" variant="outline" size="sm">Exit</Button>
                     </Link>
                     <Button
                         type="button"
+                        size="sm"
                         :disabled="submitting || missingComments"
-                        class="h-11 px-6"
                         @click="submit"
                     >
                         {{ submitting ? 'Saving…' : 'Update' }}
