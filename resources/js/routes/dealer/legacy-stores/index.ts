@@ -1,6 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults, validateParameters } from './../../../wayfinder'
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 export const redirect = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +15,8 @@ redirect.definition = {
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirect.url = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -44,7 +46,8 @@ redirect.url = (args?: { path?: string | number } | [path: string | number ] | s
 }
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirect.get = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +56,8 @@ redirect.get = (args?: { path?: string | number } | [path: string | number ] | s
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirect.head = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -62,7 +66,8 @@ redirect.head = (args?: { path?: string | number } | [path: string | number ] | 
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirect.post = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -71,7 +76,8 @@ redirect.post = (args?: { path?: string | number } | [path: string | number ] | 
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirect.put = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -80,7 +86,8 @@ redirect.put = (args?: { path?: string | number } | [path: string | number ] | s
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirect.patch = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -89,7 +96,8 @@ redirect.patch = (args?: { path?: string | number } | [path: string | number ] |
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirect.delete = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -98,7 +106,8 @@ redirect.delete = (args?: { path?: string | number } | [path: string | number ] 
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirect.options = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'options'> => ({
@@ -107,7 +116,8 @@ redirect.options = (args?: { path?: string | number } | [path: string | number ]
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 const redirectForm = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -116,7 +126,8 @@ const redirectForm = (args?: { path?: string | number } | [path: string | number
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirectForm.get = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -125,7 +136,8 @@ redirectForm.get = (args?: { path?: string | number } | [path: string | number ]
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirectForm.head = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -139,7 +151,8 @@ redirectForm.head = (args?: { path?: string | number } | [path: string | number 
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirectForm.post = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -148,7 +161,8 @@ redirectForm.post = (args?: { path?: string | number } | [path: string | number 
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirectForm.put = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -162,7 +176,8 @@ redirectForm.put = (args?: { path?: string | number } | [path: string | number ]
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirectForm.patch = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -176,7 +191,8 @@ redirectForm.patch = (args?: { path?: string | number } | [path: string | number
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirectForm.delete = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -190,7 +206,8 @@ redirectForm.delete = (args?: { path?: string | number } | [path: string | numbe
 })
 
 /**
-* @see routes/tenant.php:160
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
 * @route '/stores/{path?}'
 */
 redirectForm.options = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
