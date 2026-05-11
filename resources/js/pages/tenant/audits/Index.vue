@@ -24,7 +24,7 @@ import { Role } from '@/constants/roles';
 import { useAuditRoutes } from '@/composables/useAuditRoutes';
 import type { BreadcrumbItem } from '@/types';
 import type { PaginatedResponse } from '@/types/paginator';
-import type { SharedAuditType } from '@/composables/useAuditRoutes';
+import type { AuditTypeSlug } from '@/components/audits/audit-types';
 
 type Audit = {
     id: number;
@@ -52,7 +52,7 @@ type LegacyAudit = {
 };
 
 const props = defineProps<{
-    type: SharedAuditType;
+    type: AuditTypeSlug;
     label: string;
     store: { id: number; name: string } | null;
     audits: PaginatedResponse<Audit>;

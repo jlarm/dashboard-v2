@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Enums\ViolationAuditType;
-use App\Http\Controllers\Dealer\Audit\FinanceCreateController;
 use App\Http\Controllers\Dealer\Audit\IndividualController;
 use App\Http\Controllers\Dealer\Audit\IndividualCreateController;
 use App\Http\Controllers\Dealer\Audit\IndividualIndexController;
@@ -265,8 +264,7 @@ Route::name('dealer.')->middleware([
         Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function () use ($registerViolationAuditWriteRoutes): void {
             $registerViolationAuditWriteRoutes('osha', 'osha', ViolationAuditType::Osha);
             $registerViolationAuditWriteRoutes('body-shop', 'body-shop', ViolationAuditType::BodyShop);
-            Route::get('finance/create/{store}', FinanceCreateController::class)->middleware('can:create-audits')->name('finance.create');
-            Route::get('finance/{glbaViolationAudit:uuid}/edit', App\Http\Livewire\Dealer\Audit\Finance\Edit::class)->name('finance.edit');
+            $registerViolationAuditWriteRoutes('finance', 'finance', ViolationAuditType::Glba);
             Route::get('deal-jackets-archived/create/{individualAudit:id?}', IndividualCreateController::class)->name('individual.create');
             Route::get('deal-jackets-archived/{individualAudit:uuid}', IndividualController::class)->name('individual.show');
             Route::get('deal-jackets-archived/{individualAudit:uuid}/edit', SingleIndividualController::class)->name('individual.edit');
@@ -424,9 +422,7 @@ Route::name('dealer.')->middleware([
         Route::prefix('audits/')->name('audit.')->middleware(['auth', 'single.store'])->group(function () use ($registerViolationAuditReadRoutes): void {
             $registerViolationAuditReadRoutes('osha', 'osha', ViolationAuditType::Osha);
             $registerViolationAuditReadRoutes('body-shop', 'body-shop', ViolationAuditType::BodyShop);
-            Route::get('finance', App\Http\Livewire\Dealer\Audit\Finance\Index::class)->name('finance.index');
-            Route::get('/finance/{glbaViolationAudit:uuid}/remediation', App\Http\Livewire\Dealer\Audit\Finance\RemediationForm::class)->name('finance.remediation');
-            Route::get('/finance/{glbaViolationAudit:uuid}', App\Http\Livewire\Dealer\Audit\Finance\Single::class)->name('finance.show');
+            $registerViolationAuditReadRoutes('finance', 'finance', ViolationAuditType::Glba);
             Route::get('deal-jackets-archived', IndividualIndexController::class)->name('individual.index');
             Route::view('deal-jackets', 'tenant.audit.deal-jacket.index')->middleware(['auth', 'single.store'])->name('deal-jackets.index');
             Route::get('deal-jackets/{dealJacketGroup:uuid}', [DealJacketGroupController::class, 'show'])->middleware(['auth', 'single.store'])->name('deal-jackets.show');

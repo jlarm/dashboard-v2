@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Role } from '@/constants/roles';
 import { useAuditRoutes } from '@/composables/useAuditRoutes';
 import type { BreadcrumbItem } from '@/types';
-import type { SharedAuditType } from '@/composables/useAuditRoutes';
+import type { AuditTypeSlug } from '@/components/audits/audit-types';
 
 type Photo = { id: number; position: number; url: string };
 type Remediation = {
@@ -63,7 +63,7 @@ type AuditDetail = {
 };
 
 const props = defineProps<{
-    type: SharedAuditType;
+    type: AuditTypeSlug;
     label: string;
     audit: AuditDetail;
 }>();

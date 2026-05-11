@@ -31,7 +31,7 @@ import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { useAuditRoutes } from '@/composables/useAuditRoutes';
 import type { BreadcrumbItem } from '@/types';
-import type { SharedAuditType } from '@/composables/useAuditRoutes';
+import type { AuditTypeSlug } from '@/components/audits/audit-types';
 
 type Photo = { id: number; position: number; url: string };
 type Violation = {
@@ -64,7 +64,7 @@ type AuditDetail = {
 };
 
 const props = defineProps<{
-    type: SharedAuditType;
+    type: AuditTypeSlug;
     label: string;
     audit: AuditDetail;
 }>();
