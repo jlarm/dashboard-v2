@@ -81,10 +81,10 @@ class VendorController extends Controller
 
             return back()
                 ->withInput()
-                ->with('flash.error', 'We could not create the vendor. Please try again.');
+                ->with('error', 'We could not create the vendor. Please try again.');
         }
 
-        return back()->with('flash.success', 'Vendor created successfully.');
+        return back()->with('success', 'Vendor created successfully.');
     }
 
     public function sendForm(SendVendorFormRequest $request, Vendor $vendor, SendVendorForm $sendVendorForm): RedirectResponse
@@ -96,10 +96,10 @@ class VendorController extends Controller
 
             return back()
                 ->withInput()
-                ->with('flash.error', 'We could not send the vendor form. Please try again.');
+                ->with('error', 'We could not send the vendor form. Please try again.');
         }
 
-        return back()->with('flash.success', 'Form sent successfully.');
+        return back()->with('success', 'Form sent successfully.');
     }
 
     public function destroy(Vendor $vendor, DeleteVendor $deleteVendor): RedirectResponse
@@ -111,10 +111,10 @@ class VendorController extends Controller
         } catch (Throwable $e) {
             report($e);
 
-            return back()->with('flash.error', 'We could not delete the vendor. Please try again.');
+            return back()->with('error', 'We could not delete the vendor. Please try again.');
         }
 
-        return to_route('dealer.vendor.index')->with('flash.success', 'Vendor deleted successfully.');
+        return to_route('dealer.vendor.index')->with('success', 'Vendor deleted successfully.');
     }
 
     public function downloadForm(VendorForm $vendorForm, DownloadVendorForm $download): StreamedResponse
@@ -170,7 +170,7 @@ class VendorController extends Controller
 
             return back()
                 ->withInput()
-                ->with('flash.error', 'We could not save your submission. Please try again.');
+                ->with('error', 'We could not save your submission. Please try again.');
         }
 
         return to_route('dealer.vendors.thankyou');

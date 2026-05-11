@@ -24,7 +24,6 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import vendor from '@/routes/dealer/vendor';
 import type { BreadcrumbItem } from '@/types';
 
@@ -67,6 +66,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: props.vendor.name, href: vendor.show.url({ vendor: props.vendor.id }) },
 ];
 
+const sendOpen = ref(false);
+
 const sendForm = useForm({
     name: '',
     email: '',
@@ -75,8 +76,17 @@ const sendForm = useForm({
 const submitSend = (): void => {
     sendForm.post(VendorController.sendForm.url({ vendor: props.vendor.id }), {
         preserveScroll: true,
-        onSuccess: () => sendForm.reset(),
+        onSuccess: () => {
+            sendForm.reset();
+            sendOpen.value = false;
+        },
     });
+};
+
+const cancelSend = (): void => {
+    sendForm.reset();
+    sendForm.clearErrors();
+    sendOpen.value = false;
 };
 
 const expandedFormId = ref<number | null>(null);
@@ -154,21 +164,30 @@ const sortedForms = computed<VendorFormRow[]>(() => props.forms);
                         </p>
                     </div>
                 </div>
-                <Button
-                    v-if="props.can.delete"
-                    variant="outline"
-                    size="sm"
-                    class="text-red-600 hover:bg-red-50 hover:text-red-700"
-                    @click="deleteOpen = true"
-                >
-                    <Trash2 class="size-3.5" />
-                    Delete
-                </Button>
+                <div class="flex items-center gap-2">
+                    <Button
+                        v-if="props.can.update"
+                        size="sm"
+                        @click="sendOpen = true"
+                    >
+                        <Send class="size-3.5" />
+                        Send a new request
+                    </Button>
+                    <Button
+                        v-if="props.can.delete"
+                        variant="outline"
+                        size="sm"
+                        class="text-red-600 hover:bg-red-50 hover:text-red-700"
+                        @click="deleteOpen = true"
+                    >
+                        <Trash2 class="size-3.5" />
+                        Delete
+                    </Button>
+                </div>
             </div>
 
-            <div class="grid gap-6 lg:grid-cols-3">
-                <div class="lg:col-span-2 space-y-6">
-                    <section class="rounded-lg border bg-card">
+            <div class="space-y-6">
+                <section class="rounded-lg border bg-card">
                         <header class="flex items-center justify-between border-b px-5 py-3">
                             <h2 class="text-sm font-semibold">Activity</h2>
                             <span class="text-xs text-muted-foreground">{{ sortedForms.length }} requests</span>
@@ -265,38 +284,41 @@ const sortedForms = computed<VendorFormRow[]>(() => props.forms);
                             </li>
                         </ul>
                     </section>
-                </div>
-
-                <div class="space-y-6">
-                    <section v-if="props.can.update" class="rounded-lg border bg-card p-5">
-                        <h2 class="text-sm font-semibold">Send a new request</h2>
-                        <p class="mt-1 text-xs text-muted-foreground">
-                            Email the Risk Assessment form to a new contact at this vendor.
-                        </p>
-                        <Separator class="my-3" />
-                        <form class="space-y-3" @submit.prevent="submitSend">
-                            <div class="grid gap-1.5">
-                                <Label for="send-name">Name</Label>
-                                <Input id="send-name" v-model="sendForm.name" type="text" required />
-                                <InputError :message="sendForm.errors.name" />
-                            </div>
-                            <div class="grid gap-1.5">
-                                <Label for="send-email">Email</Label>
-                                <Input id="send-email" v-model="sendForm.email" type="email" required />
-                                <InputError :message="sendForm.errors.email" />
-                            </div>
-                            <div class="flex justify-end">
-                                <Button type="submit" size="sm" :disabled="sendForm.processing">
-                                    <Loader2 v-if="sendForm.processing" class="size-3.5 animate-spin" />
-                                    <Send v-else class="size-3.5" />
-                                    Send
-                                </Button>
-                            </div>
-                        </form>
-                    </section>
-                </div>
             </div>
         </div>
+
+        <Dialog v-model:open="sendOpen">
+            <DialogContent class="sm:max-w-lg">
+                <DialogHeader>
+                    <DialogTitle>Send a new request</DialogTitle>
+                    <DialogDescription>
+                        Email the Risk Assessment form to a new contact at this vendor.
+                    </DialogDescription>
+                </DialogHeader>
+                <form class="grid gap-4" @submit.prevent="submitSend">
+                    <div class="grid gap-2">
+                        <Label for="send-name">Name</Label>
+                        <Input id="send-name" v-model="sendForm.name" type="text" required autofocus />
+                        <InputError :message="sendForm.errors.name" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="send-email">Email</Label>
+                        <Input id="send-email" v-model="sendForm.email" type="email" required />
+                        <InputError :message="sendForm.errors.email" />
+                    </div>
+                    <DialogFooter class="gap-2">
+                        <Button type="button" variant="outline" :disabled="sendForm.processing" @click="cancelSend">
+                            Cancel
+                        </Button>
+                        <Button type="submit" :disabled="sendForm.processing">
+                            <Loader2 v-if="sendForm.processing" class="size-3.5 animate-spin" />
+                            <Send v-else class="size-3.5" />
+                            Send
+                        </Button>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
+        </Dialog>
 
         <Dialog v-model:open="deleteOpen">
             <DialogContent>
