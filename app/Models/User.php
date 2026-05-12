@@ -12,9 +12,7 @@ use App\Models\Dealer\Store;
 use App\Models\Dealer\Timeline;
 use App\Notifications\ResetPassword;
 use App\Observers\UserObserver;
-use App\Traits\HasAudits;
 use App\Traits\HasCourses;
-use App\Traits\HasManuals;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
@@ -49,10 +47,8 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens,
-        HasAudits,
         HasCourses,
         HasFactory,
-        HasManuals,
         HasRoles,
         LogsActivity,
         Notifiable,
