@@ -4,45 +4,43 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\User\Actions;
 
-use App\Domain\Tenant\User\Queries\GetEmployeeCertificates;
-use App\Models\Certificate;
+use App\Domain\Tenant\Course\Actions\RenderDotCertificatePdf;
+use App\Domain\Tenant\Course\DotCertificate;
+use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use RuntimeException;
-use Spatie\Browsershot\Browsershot;
 
 class GenerateDotCertificate
 {
-    private const string COURSE_NAME = 'DOT Hazardous Materials Transportation';
+    public function __construct(
+        private readonly CanIssueDotCertificate $eligibility,
+        private readonly RenderDotCertificatePdf $render,
+    ) {}
 
-    public function __construct(private readonly GetEmployeeCertificates $certificates) {}
-
-    public function handle(User $user, string $storeName): string
+    public function handle(User $user): string
     {
-        throw_unless($this->certificates->canGenerateDotCertificate($user), RuntimeException::class, 'Employee is not eligible for a DOT certificate.');
+        throw_unless(
+            $this->eligibility->handle($user),
+            RuntimeException::class,
+            'Employee is not eligible for a DOT certificate.',
+        );
 
-        $passedOn = $this->certificates->dotCourseResult($user)
+        $passedOn = $this->eligibility->latestPassedResult($user)
             ?->created_at
             ?->format('F d, Y') ?? now()->format('F d, Y');
 
-        $html = view('dealer.course.CertDownloadView', [
-            'user' => $user,
-            'store' => $storeName,
-            'passed_on' => $passedOn,
-        ])->render();
+        $filePath = $this->render->handle($user, $this->resolveStoreName(), $passedOn);
 
-        $fileName = Str::slug($user->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
-        $filePath = tenant('id').'/'.$user->id.'/'.$fileName;
+        return Storage::disk(DotCertificate::STORAGE_DISK)->temporaryUrl($filePath, now()->addHour());
+    }
 
-        Storage::disk('armp-certs')->put($filePath, Browsershot::html($html)->landscape()->pdf());
+    private function resolveStoreName(): string
+    {
+        if (app()->bound('currentStoreModel')) {
+            return (string) resolve('currentStoreModel')->name;
+        }
 
-        Certificate::query()->create([
-            'user_id' => $user->id,
-            'course_name' => self::COURSE_NAME,
-            'file_name' => $fileName,
-        ]);
-
-        return Storage::disk('armp-certs')->temporaryUrl($filePath, now()->addHour());
+        return (string) tenant('name');
     }
 }

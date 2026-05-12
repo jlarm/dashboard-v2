@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issue
-* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @see app/Http/Controllers/Tenant/CourseController.php:123
 * @route '/courses/dot-certificate'
 */
 export const issue = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ issue.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issue
-* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @see app/Http/Controllers/Tenant/CourseController.php:123
 * @route '/courses/dot-certificate'
 */
 issue.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ issue.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issue
-* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @see app/Http/Controllers/Tenant/CourseController.php:123
 * @route '/courses/dot-certificate'
 */
 issue.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ issue.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issue
-* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @see app/Http/Controllers/Tenant/CourseController.php:123
 * @route '/courses/dot-certificate'
 */
 const issueForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const issueForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issue
-* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @see app/Http/Controllers/Tenant/CourseController.php:123
 * @route '/courses/dot-certificate'
 */
 issueForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

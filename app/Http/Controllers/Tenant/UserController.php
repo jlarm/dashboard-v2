@@ -434,12 +434,8 @@ class UserController extends Controller
     ): RedirectResponse {
         $this->authorize('generateDotCertificate', $user);
 
-        $storeName = app()->bound('currentStoreModel')
-            ? (string) resolve('currentStoreModel')->name
-            : (string) tenant('name');
-
         try {
-            $url = $action->handle($user, $storeName);
+            $url = $action->handle($user);
         } catch (Throwable $e) {
             report($e);
 

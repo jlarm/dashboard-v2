@@ -27,7 +27,7 @@ it('skips when the user already has a certificate', function (): void {
         'file_name' => 'existing.pdf',
     ]);
 
-    (new IssueDotCertificate($this->user->id, 'Test Store', '2025-12-31'))->handle();
+    app()->call([new IssueDotCertificate($this->user->id, 'Test Store', '2025-12-31'), 'handle']);
 
     expect(Certificate::query()->where('user_id', $this->user->id)->count())->toBe(1);
 });
@@ -48,7 +48,7 @@ it('records a certificate when one does not already exist', function (): void {
     // Browsershot::html() must be stubbed because real Browsershot requires Node/Chromium.
     Browsershot::fake();
 
-    (new IssueDotCertificate($this->user->id, 'Test Store', '2025-12-31'))->handle();
+    app()->call([new IssueDotCertificate($this->user->id, 'Test Store', '2025-12-31'), 'handle']);
 
     expect(Certificate::query()
         ->where('user_id', $this->user->id)

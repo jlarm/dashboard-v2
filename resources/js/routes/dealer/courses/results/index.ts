@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::store
-* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @see app/Http/Controllers/Tenant/CourseController.php:90
 * @route '/courses/{course}/quiz'
 */
 export const store = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::store
-* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @see app/Http/Controllers/Tenant/CourseController.php:90
 * @route '/courses/{course}/quiz'
 */
 store.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ store.url = (args: { course: string | { slug: string } } | [course: string | { s
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::store
-* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @see app/Http/Controllers/Tenant/CourseController.php:90
 * @route '/courses/{course}/quiz'
 */
 store.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ store.post = (args: { course: string | { slug: string } } | [course: string | { 
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::store
-* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @see app/Http/Controllers/Tenant/CourseController.php:90
 * @route '/courses/{course}/quiz'
 */
 const storeForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ const storeForm = (args: { course: string | { slug: string } } | [course: string
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::store
-* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @see app/Http/Controllers/Tenant/CourseController.php:90
 * @route '/courses/{course}/quiz'
 */
 storeForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

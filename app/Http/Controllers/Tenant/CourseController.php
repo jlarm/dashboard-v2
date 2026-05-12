@@ -8,6 +8,7 @@ use App\Domain\Tenant\Course\Actions\DispatchDotCertificate;
 use App\Domain\Tenant\Course\Actions\MarkCourseVideoComplete;
 use App\Domain\Tenant\Course\Actions\ResolveReplacementCourse;
 use App\Domain\Tenant\Course\Actions\SubmitCourseQuiz;
+use App\Domain\Tenant\Course\DotCertificate;
 use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Domain\Tenant\Course\Queries\GetUserCourseList;
 use App\Domain\Tenant\Course\Queries\ListAllCoursesForAdmin;
@@ -24,8 +25,6 @@ use RuntimeException;
 
 class CourseController extends Controller
 {
-    private const string DOT_SHIPPING_SLUG = 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding';
-
     public function index(
         Request $request,
         GetUserCourseList $listCourses,
@@ -97,7 +96,7 @@ class CourseController extends Controller
         $user = $this->requireUser($request);
         $result = $submit->handle($course, $user, $request->answers());
 
-        $dotCertDispatched = $result->passed && $course->slug === self::DOT_SHIPPING_SLUG
+        $dotCertDispatched = $result->passed && $course->slug === DotCertificate::COURSE_SLUG
             ? $dispatchCert->handle($user, (string) tenant('name'), now()->format('F d, Y'))
             : false;
 
@@ -125,7 +124,9 @@ class CourseController extends Controller
         Request $request,
         DispatchDotCertificate $dispatch,
     ): RedirectResponse {
-        $dispatched = $dispatch->handle($this->requireUser($request), tenant('name'), now()->format('F d, Y'));
+        $this->authorize('selfIssueDotCertificate', User::class);
+
+        $dispatched = $dispatch->handle($this->requireUser($request), (string) tenant('name'), now()->format('F d, Y'));
 
         return back()->with(
             $dispatched ? 'success' : 'error',

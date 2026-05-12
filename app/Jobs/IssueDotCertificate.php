@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Domain\Tenant\Course\Actions\DispatchDotCertificate;
-use App\Models\Certificate;
+use App\Domain\Tenant\Course\Actions\RenderDotCertificatePdf;
+use App\Domain\Tenant\Course\DotCertificate;
 use App\Models\User;
 use App\Notifications\DotCertificateReadyNotification;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Spatie\Browsershot\Browsershot;
 use Throwable;
 
-class IssueDotCertificate implements ShouldQueue
+class IssueDotCertificate implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -39,38 +37,26 @@ class IssueDotCertificate implements ShouldQueue
         return [10, 60, 300];
     }
 
-    public function handle(): void
+    public function uniqueId(): string
+    {
+        return (string) $this->userId;
+    }
+
+    public function handle(RenderDotCertificatePdf $render): void
     {
         $user = User::query()->find($this->userId);
         if (! $user instanceof User) {
             return;
         }
 
-        if (Certificate::query()
-            ->where('user_id', $user->id)
-            ->where('course_name', DispatchDotCertificate::COURSE_NAME)
+        if ($user->certificates()
+            ->where('course_name', DotCertificate::COURSE_NAME)
             ->exists()
         ) {
             return;
         }
 
-        $html = view('dealer.course.CertDownloadView', [
-            'user' => $user,
-            'store' => $this->storeName,
-            'passed_on' => $this->passedOn,
-        ])->render();
-
-        $pdf = Browsershot::html($html)->landscape()->pdf();
-
-        $fileName = Str::slug($user->name).'-'.now()->format('m-d-Y').'-dot-certificate.pdf';
-
-        Storage::disk('armp-certs')->put(tenant('id').'/'.$user->id.'/'.$fileName, $pdf);
-
-        Certificate::query()->create([
-            'user_id' => $user->id,
-            'course_name' => DispatchDotCertificate::COURSE_NAME,
-            'file_name' => $fileName,
-        ]);
+        $render->handle($user, $this->storeName, $this->passedOn);
 
         $user->notify(new DotCertificateReadyNotification);
     }

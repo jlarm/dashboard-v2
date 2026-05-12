@@ -77,6 +77,11 @@ class UserPolicy
         return $user->can('create-dealerships') && $user->id !== $model->id;
     }
 
+    public function selfIssueDotCertificate(User $user): bool
+    {
+        return $user->exists;
+    }
+
     public function restore(User $user, User $model): bool
     {
         return false;
