@@ -13,11 +13,18 @@ use Illuminate\Support\Facades\Log;
 
 class CyrismaService
 {
+    private const int HTTP_TIMEOUT_SECONDS = 30;
+
+    private const int HTTP_CONNECT_TIMEOUT_SECONDS = 10;
+
+    private const int HTTP_RETRY_TIMES = 2;
+
+    private const int HTTP_RETRY_SLEEP_MS = 200;
+
     protected ?string $baseUrl;
     protected ?string $apiKey;
     protected ?string $apiSecret;
     protected ?string $accessToken = null;
-    protected ?string $shortName = null;
     protected ?Store $store = null;
 
     public function __construct()
@@ -37,7 +44,6 @@ class CyrismaService
     public function forStore(Store $store): self
     {
         $this->store = $store;
-        $this->shortName = $store->cyrisma->short_name ?? null;
 
         return $this;
     }
@@ -75,56 +81,6 @@ class CyrismaService
         // Increment the cache version to invalidate all cached data for this store
         $versionKey = "cyrisma_cache_version_{$this->store->id}";
         Cache::increment($versionKey);
-    }
-
-    public function authenticate(): ?string
-    {
-        if (! $this->isConfigured()) {
-            Log::warning('Cyrisma API credentials are not configured');
-
-            return null;
-        }
-
-        $cacheKey = 'cyrisma_access_token';
-
-        // Try to get token from cache (expires in 9 minutes, token lasts 10)
-        $token = Cache::get($cacheKey);
-
-        if ($token) {
-            $this->accessToken = $token;
-
-            return $token;
-        }
-
-        try {
-            $response = Http::asForm()->post("{$this->baseUrl}/partner/login/", [
-                'grant_type' => 'password',
-                'username' => $this->apiKey,
-                'password' => $this->apiSecret,
-            ]);
-
-            if ($response->successful()) {
-                $data = $response->json();
-                $this->accessToken = $data['access_token'];
-
-                Cache::put($cacheKey, $this->accessToken, now()->addMinutes(9));
-
-                return $this->accessToken;
-            }
-
-            Log::error('Cyrisma authentication failed', [
-                'status' => $response->status(),
-                'body' => $response->body(),
-            ]);
-
-            return null;
-        } catch (Exception $e) {
-            Log::error('Cyrisma authentication error', [
-                'message' => $e->getMessage(),
-            ]);
-
-            return null;
-        }
     }
 
     public function authenticateInstance(?string $instanceId = null): bool
@@ -169,97 +125,9 @@ class CyrismaService
         }
     }
 
-    public function getAllInstances(): ?array
-    {
-        if (! $this->ensureAuthenticated()) {
-            return null;
-        }
-
-        try {
-            $response = $this->authorizedRequest()
-                ->get("{$this->baseUrl}/partner/instances/info/");
-
-            return $response->successful() ? $response->json() : null;
-        } catch (Exception $e) {
-            Log::error('Failed to get Cyrisma instances', [
-                'message' => $e->getMessage(),
-            ]);
-
-            return null;
-        }
-    }
-
-    public function getInstance(string $instanceId): ?array
-    {
-        if (! $this->ensureAuthenticated()) {
-            return null;
-        }
-
-        try {
-            $response = $this->authorizedRequest()
-                ->get("{$this->baseUrl}/partner/instances/info/{$instanceId}");
-
-            if ($response->successful()) {
-                $data = $response->json();
-
-                return $data[0] ?? null;
-            }
-
-            return null;
-        } catch (Exception $e) {
-            Log::error('Failed to get Cyrisma instance', [
-                'message' => $e->getMessage(),
-                'instance_id' => $instanceId,
-            ]);
-
-            return null;
-        }
-    }
-
-    public function findInstanceByShortName(string $shortName): ?array
-    {
-        $instances = $this->getAllInstances();
-
-        if (! $instances) {
-            return null;
-        }
-
-        return collect($instances)->firstWhere('short_name', $shortName);
-    }
-
-    public function getDataScans(): ?array
-    {
-        return $this->getStoreReport('scans/data');
-    }
-
     public function getVulnerabilityScans(): ?array
     {
         return $this->getStoreReport('scans/vulnerability');
-    }
-
-    public function getBaselineScans(): ?array
-    {
-        return $this->getStoreReport('scans/baseline');
-    }
-
-    public function getOverallDashboard(): ?array
-    {
-        return $this->getStoreReport('dashboards/overall');
-    }
-
-    public function getDataDashboard(): ?array
-    {
-        return $this->getStoreReport('dashboards/data');
-    }
-
-    public function getVulnerabilityDashboard(): ?array
-    {
-        return $this->getStoreReport('dashboards/vulnerability');
-    }
-
-    public function getBaselineDashboard(): ?array
-    {
-        return $this->getStoreReport('dashboards/baseline');
     }
 
     public function getCveDetails(?string $cveId = null): ?array
@@ -392,24 +260,6 @@ class CyrismaService
         }
 
         return ['vulnerabilities' => $vulnerabilities];
-    }
-
-    public function getOpenPorts(?string $cveId = null): ?array
-    {
-        $vulnerabilityScans = $this->getStoreReport('scans/vulnerability');
-
-        if (! $vulnerabilityScans || ! isset($vulnerabilityScans['vulnerability_scans'][0]['scan_id'])) {
-            return null;
-        }
-
-        $scanId = $vulnerabilityScans['vulnerability_scans'][0]['scan_id'];
-        $scanDetails = $this->getStoreReport('scans/vulnerability/'.$scanId);
-
-        if (! $scanDetails || ! isset($scanDetails['assets'][0]['openPorts'])) {
-            return null;
-        }
-
-        return $scanDetails['assets'][0]['openPorts'];
     }
 
     public function getOpenPortsByAssetType(string $assetType = ''): array
@@ -646,6 +496,60 @@ class CyrismaService
         });
     }
 
+    protected function authenticate(): ?string
+    {
+        if (! $this->isConfigured()) {
+            Log::warning('Cyrisma API credentials are not configured');
+
+            return null;
+        }
+
+        $cacheKey = 'cyrisma_access_token';
+
+        // Try to get token from cache (expires in 9 minutes, token lasts 10)
+        $token = Cache::get($cacheKey);
+
+        if ($token) {
+            $this->accessToken = $token;
+
+            return $token;
+        }
+
+        try {
+            $response = Http::timeout(self::HTTP_TIMEOUT_SECONDS)
+                ->connectTimeout(self::HTTP_CONNECT_TIMEOUT_SECONDS)
+                ->retry(self::HTTP_RETRY_TIMES, self::HTTP_RETRY_SLEEP_MS, throw: false)
+                ->asForm()
+                ->post("{$this->baseUrl}/partner/login/", [
+                    'grant_type' => 'password',
+                    'username' => $this->apiKey,
+                    'password' => $this->apiSecret,
+                ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                $this->accessToken = $data['access_token'];
+
+                Cache::put($cacheKey, $this->accessToken, now()->addMinutes(9));
+
+                return $this->accessToken;
+            }
+
+            Log::error('Cyrisma authentication failed', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
+            return null;
+        } catch (Exception $e) {
+            Log::error('Cyrisma authentication error', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return null;
+        }
+    }
+
     /**
      * @return array<int, array{portNumber: string, portDescription: string, riskLevel: string}>
      */
@@ -783,21 +687,6 @@ class CyrismaService
         };
     }
 
-    protected function isPublicIp(string $ip): bool
-    {
-        if ($ip === '' || $ip === '0') {
-            return false;
-        }
-
-        // Check if it's a valid IP
-        if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            return false;
-        }
-
-        // Check if it's a private IP range
-        return (bool) filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
-    }
-
     protected function ensureAuthenticated(): bool
     {
         if (! $this->accessToken) {
@@ -811,6 +700,9 @@ class CyrismaService
     {
         return Http::withHeaders([
             'Authorization' => "access_token {$this->accessToken}",
-        ]);
+        ])
+            ->timeout(self::HTTP_TIMEOUT_SECONDS)
+            ->connectTimeout(self::HTTP_CONNECT_TIMEOUT_SECONDS)
+            ->retry(self::HTTP_RETRY_TIMES, self::HTTP_RETRY_SLEEP_MS, throw: false);
     }
 }
