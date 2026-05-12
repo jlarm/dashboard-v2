@@ -2,265 +2,135 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Dealer\Course\Index;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
-use App\Models\Dealer\Store;
 use App\Models\User;
-use Livewire\Livewire;
+use Spatie\Permission\Models\Role;
 
-describe('Course IndexItem Component - DOT Module Tracking', function (): void {
-    it('tracks dot module 1 completion status', function (): void {
-        $course = Course::query()->create([
-            'name' => 'DOT Hazardous Materials Transportation',
-            'slug' => 'dot-hazardous-materials-transportation',
-            'slides' => [],
-            'questions' => [],
-            'optional' => false,
-        ]);
+beforeEach(function (): void {
+    $this->employeeRole = Role::query()->where('name', 'Employee')->first();
 
-        $user = User::query()->create([
-            'name' => 'Test User',
-            'email' => 'dot-module1@test.com',
-            'password' => bcrypt('password'),
-        ]);
-        $user->assignRole('Employee');
+    $this->user = User::query()->create([
+        'name' => 'DOT Test User',
+        'email' => 'dot-prop-shape@test.com',
+        'password' => bcrypt('password'),
+    ]);
+    $this->user->assignRole('Employee');
 
-        Store::query()->create([
-            'name' => 'Test Store',
-            'slug' => 'test-store',
-            'state' => 'Texas',
-        ]);
+    $this->module1 = Course::query()->create([
+        'name' => 'DOT Module 1',
+        'slug' => 'dot-hazardous-materials-transportation',
+        'slides' => [],
+        'questions' => [['question' => 'q', 'correctAnswer' => 'a', 'answers' => [['a' => 'A']]]],
+        'optional' => false,
+    ]);
+    $this->module1->roles()->attach($this->employeeRole->id);
 
-        // Create a passing result
+    $this->module2 = Course::query()->create([
+        'name' => 'DOT Module 2',
+        'slug' => 'dot-hazardous-materials-transportation-identifying-hazardous-materials',
+        'slides' => [],
+        'questions' => [['question' => 'q', 'correctAnswer' => 'a', 'answers' => [['a' => 'A']]]],
+        'optional' => false,
+    ]);
+    $this->module2->roles()->attach($this->employeeRole->id);
+});
+
+describe('Course Index page - row props', function (): void {
+    it('marks module 2 as locked until module 1 is passed', function (): void {
+        $this->actingAs($this->user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page
+                ->where('courses', function ($courses): bool {
+                    $bySlug = collect($courses)->keyBy('slug');
+
+                    return $bySlug['dot-hazardous-materials-transportation']['is_locked'] === false
+                        && $bySlug['dot-hazardous-materials-transportation-identifying-hazardous-materials']['is_locked'] === true;
+                }));
+    });
+
+    it('unlocks module 2 once module 1 is passed', function (): void {
         CourseResults::query()->create([
-            'user_id' => $user->id,
-            'course_id' => $course->id,
+            'user_id' => $this->user->id,
+            'course_id' => $this->module1->id,
             'passed' => true,
-            'score' => 90,
             'percentage' => 90,
         ]);
 
-        $this->actingAs($user);
+        $this->actingAs($this->user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page
+                ->where('courses', function ($courses): bool {
+                    $bySlug = collect($courses)->keyBy('slug');
 
-        Livewire::test(Index::class)
-            ->assertSet('module1', true);
+                    return $bySlug['dot-hazardous-materials-transportation-identifying-hazardous-materials']['is_locked'] === false;
+                }));
     });
 
-    it('tracks dot module 2 completion status', function (): void {
-        $course = Course::query()->create([
-            'name' => 'DOT Identifying Hazardous Materials',
-            'slug' => 'dot-hazardous-materials-transportation-identifying-hazardous-materials',
-            'slides' => [],
-            'questions' => [],
-            'optional' => false,
-        ]);
-
-        $user = User::query()->create([
-            'name' => 'Test User',
-            'email' => 'dot-module2@test.com',
-            'password' => bcrypt('password'),
-        ]);
-        $user->assignRole('Employee');
-
-        Store::query()->create([
-            'name' => 'Test Store 2',
-            'slug' => 'test-store-2',
-            'state' => 'Texas',
-        ]);
-
-        // Create a passing result
+    it('keeps module 2 locked when module 1 was failed', function (): void {
         CourseResults::query()->create([
-            'user_id' => $user->id,
-            'course_id' => $course->id,
-            'passed' => true,
-            'score' => 85,
-            'percentage' => 85,
+            'user_id' => $this->user->id,
+            'course_id' => $this->module1->id,
+            'passed' => false,
+            'percentage' => 30,
         ]);
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertSet('module2', true);
+        $this->actingAs($this->user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page
+                ->where('courses', fn ($c) => collect($c)->keyBy('slug')->get('dot-hazardous-materials-transportation-identifying-hazardous-materials')['is_locked'] === true));
     });
 
-    it('tracks dot module 3 completion status', function (): void {
-        $course = Course::query()->create([
-            'name' => 'DOT Preparing Hazardous Materials for Shipment',
-            'slug' => 'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment',
+    it('uses years_expires when computing expiration (not the hardcoded 365 days)', function (): void {
+        // A 2-year course passed 18 months ago should still be "passed", not "expired".
+        $longCourse = Course::query()->create([
+            'name' => 'Long-cycle Training',
+            'slug' => 'long-cycle-training',
             'slides' => [],
-            'questions' => [],
+            'questions' => [['question' => 'q', 'correctAnswer' => 'a', 'answers' => [['a' => 'A']]]],
             'optional' => false,
+            'years_expires' => 2,
         ]);
+        $longCourse->roles()->attach($this->employeeRole->id);
 
-        $user = User::query()->create([
-            'name' => 'Test User',
-            'email' => 'dot-module3@test.com',
-            'password' => bcrypt('password'),
-        ]);
-        $user->assignRole('Employee');
-
-        Store::query()->create([
-            'name' => 'Test Store 3',
-            'slug' => 'test-store-3',
-            'state' => 'Texas',
-        ]);
-
-        // Create a passing result
         CourseResults::query()->create([
-            'user_id' => $user->id,
-            'course_id' => $course->id,
+            'user_id' => $this->user->id,
+            'course_id' => $longCourse->id,
             'passed' => true,
-            'score' => 95,
             'percentage' => 95,
+            'created_at' => now()->subMonths(18),
+            'updated_at' => now()->subMonths(18),
         ]);
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertSet('module3', true);
+        $this->actingAs($this->user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page
+                ->where('courses', fn ($c) => collect($c)->keyBy('slug')->get('long-cycle-training')['status'] === 'passed'));
     });
 
-    it('shows null for incomplete dot modules', function (): void {
-        $course = Course::query()->create([
-            'name' => 'DOT Hazardous Materials Transportation',
-            'slug' => 'dot-hazardous-materials-transportation',
+    it('marks course as expired once years_expires has elapsed', function (): void {
+        $longCourse = Course::query()->create([
+            'name' => 'Long-cycle Training',
+            'slug' => 'long-cycle-training-expired',
             'slides' => [],
-            'questions' => [],
+            'questions' => [['question' => 'q', 'correctAnswer' => 'a', 'answers' => [['a' => 'A']]]],
             'optional' => false,
+            'years_expires' => 1,
         ]);
+        $longCourse->roles()->attach($this->employeeRole->id);
 
-        $user = User::query()->create([
-            'name' => 'Test User',
-            'email' => 'dot-incomplete@test.com',
-            'password' => bcrypt('password'),
-        ]);
-        $user->assignRole('Employee');
-
-        Store::query()->create([
-            'name' => 'Test Store 4',
-            'slug' => 'test-store-4',
-            'state' => 'Texas',
-        ]);
-
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertSet('module1', null)
-            ->assertSet('module2', null)
-            ->assertSet('module3', null);
-    });
-
-    it('shows false for failed dot module attempts', function (): void {
-        $course = Course::query()->create([
-            'name' => 'DOT Hazardous Materials Transportation',
-            'slug' => 'dot-hazardous-materials-transportation',
-            'slides' => [],
-            'questions' => [],
-            'optional' => false,
-        ]);
-
-        $user = User::query()->create([
-            'name' => 'Test User',
-            'email' => 'dot-failed@test.com',
-            'password' => bcrypt('password'),
-        ]);
-        $user->assignRole('Employee');
-
-        Store::query()->create([
-            'name' => 'Test Store 5',
-            'slug' => 'test-store-5',
-            'state' => 'Texas',
-        ]);
-
-        // Create a failing result
         CourseResults::query()->create([
-            'user_id' => $user->id,
-            'course_id' => $course->id,
-            'passed' => false,
-            'score' => 50,
-            'percentage' => 50,
-        ]);
-
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertSet('module1', false);
-    });
-
-    it('uses latest result for dot module status', function (): void {
-        $course = Course::query()->create([
-            'name' => 'DOT Hazardous Materials Transportation',
-            'slug' => 'dot-hazardous-materials-transportation',
-            'slides' => [],
-            'questions' => [],
-            'optional' => false,
-        ]);
-
-        $user = User::query()->create([
-            'name' => 'Test User',
-            'email' => 'dot-retake@test.com',
-            'password' => bcrypt('password'),
-        ]);
-        $user->assignRole('Employee');
-
-        Store::query()->create([
-            'name' => 'Test Store 6',
-            'slug' => 'test-store-6',
-            'state' => 'Texas',
-        ]);
-
-        // Create failing result first
-        CourseResults::query()->create([
-            'user_id' => $user->id,
-            'course_id' => $course->id,
-            'passed' => false,
-            'score' => 50,
-            'percentage' => 50,
-            'created_at' => now()->subDays(2),
-        ]);
-
-        // Create passing result later
-        CourseResults::query()->create([
-            'user_id' => $user->id,
-            'course_id' => $course->id,
+            'user_id' => $this->user->id,
+            'course_id' => $longCourse->id,
             'passed' => true,
-            'score' => 90,
-            'percentage' => 90,
-            'created_at' => now()->subDay(),
+            'percentage' => 95,
+            'created_at' => now()->subYears(2),
+            'updated_at' => now()->subYears(2),
         ]);
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertSet('module1', true);
-    });
-
-    it('renders when user has no stores', function (): void {
-        $course = Course::query()->create([
-            'name' => 'Test Course',
-            'slug' => 'test-course-store',
-            'slides' => [],
-            'questions' => [],
-            'optional' => false,
-        ]);
-
-        $store = Store::query()->create([
-            'name' => 'Default Store',
-            'slug' => 'default-store',
-            'state' => 'Texas',
-        ]);
-
-        $user = User::query()->create([
-            'name' => 'Test User',
-            'email' => 'dot-default-store@test.com',
-            'password' => bcrypt('password'),
-        ]);
-        $user->assignRole('Employee');
-
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertStatus(200);
+        $this->actingAs($this->user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page
+                ->where('courses', fn ($c) => collect($c)->keyBy('slug')->get('long-cycle-training-expired')['status'] === 'expired'));
     });
 });

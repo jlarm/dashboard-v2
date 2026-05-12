@@ -172,6 +172,16 @@ class UserCourseService
             ->get();
     }
 
+    public function normalizeState(string $state): string
+    {
+        $normalized = mb_strtolower(mb_trim($state));
+        if ($normalized === '') {
+            return '';
+        }
+
+        return self::STATE_ALIASES[$normalized] ?? $normalized;
+    }
+
     /**
      * @return array<int>
      */
@@ -267,16 +277,6 @@ class UserCourseService
             ->all();
 
         return array_intersect($userStates, $normalizedRequiredStates) !== [];
-    }
-
-    private function normalizeState(string $state): string
-    {
-        $normalized = mb_strtolower(mb_trim($state));
-        if ($normalized === '') {
-            return '';
-        }
-
-        return self::STATE_ALIASES[$normalized] ?? $normalized;
     }
 
     private function getOverrideCourseIds(User $user, string $type): array

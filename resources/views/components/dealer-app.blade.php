@@ -25,7 +25,6 @@
 </head>
 <body class="font-sans antialiased bg-gray-50">
 <x-notification />
-<x-course-completion-modal />
 @if(session()->has('impersonated_by'))
     <div class="w-full bg-red-600 text-white">
         <div class="lg:pl-64">

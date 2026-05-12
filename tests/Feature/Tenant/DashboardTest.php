@@ -39,8 +39,7 @@ it('manager access dashboard when logged in', function (): void {
         ->assertDontSeeLivewire('dealer.home.deal-jacket-stats')
         ->assertDontSeeLivewire('dealer.employee.completed-courses-stat')
         ->assertDontSeeLivewire('dealer.home.note')
-        ->assertSeeLivewire('dealer.home.training-compliance')
-        ->assertSeeLivewire('dealer.course.index');
+        ->assertSeeLivewire('dealer.home.training-compliance');
 });
 
 it('consultant sees single-store widgets when current_store_id is null and only one store exists', function (): void {

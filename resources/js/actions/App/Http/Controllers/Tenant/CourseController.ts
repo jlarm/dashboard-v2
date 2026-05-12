@@ -1,6 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
-import dotCertificate from './dot-certificate'
-import results from './results'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
 * @see app/Http/Controllers/Tenant/CourseController.php:29
@@ -162,6 +160,62 @@ allForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 all.form = allForm
+
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
+* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @route '/courses/dot-certificate'
+*/
+export const issueDotCertificate = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: issueDotCertificate.url(options),
+    method: 'post',
+})
+
+issueDotCertificate.definition = {
+    methods: ["post"],
+    url: '/courses/dot-certificate',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
+* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @route '/courses/dot-certificate'
+*/
+issueDotCertificate.url = (options?: RouteQueryOptions) => {
+    return issueDotCertificate.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
+* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @route '/courses/dot-certificate'
+*/
+issueDotCertificate.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: issueDotCertificate.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
+* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @route '/courses/dot-certificate'
+*/
+const issueDotCertificateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: issueDotCertificate.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
+* @see app/Http/Controllers/Tenant/CourseController.php:124
+* @route '/courses/dot-certificate'
+*/
+issueDotCertificateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: issueDotCertificate.url(options),
+    method: 'post',
+})
+
+issueDotCertificate.form = issueDotCertificateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
@@ -374,26 +428,26 @@ quizForm.head = (args: { course: string | { slug: string } } | [course: string |
 quiz.form = quizForm
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:114
-* @route '/courses/{course}/video-complete'
+* @see \App\Http\Controllers\Tenant\CourseController::submitQuiz
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
-export const videoComplete = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: videoComplete.url(args, options),
+export const submitQuiz = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: submitQuiz.url(args, options),
     method: 'post',
 })
 
-videoComplete.definition = {
+submitQuiz.definition = {
     methods: ["post"],
-    url: '/courses/{course}/video-complete',
+    url: '/courses/{course}/quiz',
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:114
-* @route '/courses/{course}/video-complete'
+* @see \App\Http\Controllers\Tenant\CourseController::submitQuiz
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
-videoComplete.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
+submitQuiz.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { course: args }
     }
@@ -416,51 +470,123 @@ videoComplete.url = (args: { course: string | { slug: string } } | [course: stri
         : args.course,
     }
 
-    return videoComplete.definition.url
+    return submitQuiz.definition.url
             .replace('{course}', parsedArgs.course.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:114
-* @route '/courses/{course}/video-complete'
+* @see \App\Http\Controllers\Tenant\CourseController::submitQuiz
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
-videoComplete.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: videoComplete.url(args, options),
+submitQuiz.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: submitQuiz.url(args, options),
     method: 'post',
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:114
-* @route '/courses/{course}/video-complete'
+* @see \App\Http\Controllers\Tenant\CourseController::submitQuiz
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
-const videoCompleteForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: videoComplete.url(args, options),
+const submitQuizForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: submitQuiz.url(args, options),
     method: 'post',
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:114
-* @route '/courses/{course}/video-complete'
+* @see \App\Http\Controllers\Tenant\CourseController::submitQuiz
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
-videoCompleteForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: videoComplete.url(args, options),
+submitQuizForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: submitQuiz.url(args, options),
     method: 'post',
 })
 
-videoComplete.form = videoCompleteForm
+submitQuiz.form = submitQuizForm
 
-const courses = {
-    index: Object.assign(index, index),
-    all: Object.assign(all, all),
-    dotCertificate: Object.assign(dotCertificate, dotCertificate),
-    show: Object.assign(show, show),
-    quiz: Object.assign(quiz, quiz),
-    results: Object.assign(results, results),
-    videoComplete: Object.assign(videoComplete, videoComplete),
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
+* @see app/Http/Controllers/Tenant/CourseController.php:114
+* @route '/courses/{course}/video-complete'
+*/
+export const markVideoComplete = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: markVideoComplete.url(args, options),
+    method: 'post',
+})
+
+markVideoComplete.definition = {
+    methods: ["post"],
+    url: '/courses/{course}/video-complete',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
+* @see app/Http/Controllers/Tenant/CourseController.php:114
+* @route '/courses/{course}/video-complete'
+*/
+markVideoComplete.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { course: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'slug' in args) {
+        args = { course: args.slug }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            course: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        course: typeof args.course === 'object'
+        ? args.course.slug
+        : args.course,
+    }
+
+    return markVideoComplete.definition.url
+            .replace('{course}', parsedArgs.course.toString())
+            .replace(/\/+$/, '') + queryParams(options)
 }
 
-export default courses
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
+* @see app/Http/Controllers/Tenant/CourseController.php:114
+* @route '/courses/{course}/video-complete'
+*/
+markVideoComplete.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: markVideoComplete.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
+* @see app/Http/Controllers/Tenant/CourseController.php:114
+* @route '/courses/{course}/video-complete'
+*/
+const markVideoCompleteForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: markVideoComplete.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
+* @see app/Http/Controllers/Tenant/CourseController.php:114
+* @route '/courses/{course}/video-complete'
+*/
+markVideoCompleteForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: markVideoComplete.url(args, options),
+    method: 'post',
+})
+
+markVideoComplete.form = markVideoCompleteForm
+
+const CourseController = { index, all, issueDotCertificate, show, quiz, submitQuiz, markVideoComplete }
+
+export default CourseController

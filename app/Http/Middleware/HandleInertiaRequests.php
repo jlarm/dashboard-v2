@@ -64,6 +64,7 @@ class HandleInertiaRequests extends Middleware
                 'warning' => fn () => $request->session()->get('warning'),
                 'info' => fn () => $request->session()->get('info'),
                 'message' => fn () => $request->session()->get('message'),
+                'quiz' => fn () => $request->session()->get('quiz'),
             ],
         ];
     }

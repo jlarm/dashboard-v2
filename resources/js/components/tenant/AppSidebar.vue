@@ -30,9 +30,10 @@ import vendor from '@/routes/dealer/vendor';
 import settings from '@/routes/dealer/settings';
 import dealer from '@/routes/dealer/dealer';
 import automatedReports from '@/routes/dealer/settings/automated-reports';
+import courses from '@/routes/dealer/courses';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { Building2, ClipboardCheck, FileSignature, FileText, FileBarChart2, FlaskConical, Handshake, HardHat, LayoutGrid, ScrollText, Settings, ShieldCheck, Users } from 'lucide-vue-next';
+import { Building2, ClipboardCheck, FileSignature, FileText, FileBarChart2, FlaskConical, GraduationCap, Handshake, HardHat, LayoutGrid, ScrollText, Settings, ShieldCheck, Users } from 'lucide-vue-next';
 
 const page = usePage<{ auth: { current_store_id: number | null } }>();
 
@@ -45,6 +46,11 @@ const mainNavItems = computed<NavItem[]>(() => {
             title: 'Dashboard',
             href: dashboard(),
             icon: LayoutGrid,
+        },
+        {
+            title: 'Courses',
+            href: courses.index.url(),
+            icon: GraduationCap,
         },
         {
             title: 'Employees',
@@ -72,7 +78,7 @@ const mainNavItems = computed<NavItem[]>(() => {
     ];
 
     if (hasCurrentStore.value) {
-        items.splice(2, 0, {
+        items.splice(3, 0, {
             title: 'Manuals',
             href: isp.index.url(),
             icon: FileSignature,
@@ -85,7 +91,7 @@ const mainNavItems = computed<NavItem[]>(() => {
             ],
         });
 
-        items.splice(3, 0, {
+        items.splice(4, 0, {
             title: 'Audits',
             href: oshaAudit.index.url(),
             icon: ClipboardCheck,

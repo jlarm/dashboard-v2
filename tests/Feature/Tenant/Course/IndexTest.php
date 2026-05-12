@@ -2,20 +2,17 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Dealer\Course\Index;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Store;
 use App\Models\User;
-use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 
-describe('Course Index Component - Course Display', function (): void {
+describe('Course Index Inertia page - course visibility', function (): void {
     it('displays only assigned courses for sales employee', function (): void {
         $salesDept = Department::query()->create(['name' => 'Sales Dept', 'slug' => 'sales-dept']);
         $employeeRole = Role::query()->where('name', 'Employee')->first();
 
-        // Create universal course
         $universalCourse = Course::query()->create([
             'name' => 'Universal Safety Training',
             'slug' => 'universal-safety-training',
@@ -24,7 +21,6 @@ describe('Course Index Component - Course Display', function (): void {
             'optional' => false,
         ]);
 
-        // Create sales-specific course
         $salesCourse = Course::query()->create([
             'name' => 'Sales Techniques',
             'slug' => 'sales-techniques',
@@ -35,7 +31,6 @@ describe('Course Index Component - Course Display', function (): void {
         $salesCourse->departments()->attach($salesDept->id);
         $salesCourse->roles()->attach($employeeRole->id);
 
-        // Create service-specific course
         $serviceDept = Department::query()->create(['name' => 'Service Dept', 'slug' => 'service-dept']);
         $serviceCourse = Course::query()->create([
             'name' => 'Service Protocol',
@@ -55,16 +50,17 @@ describe('Course Index Component - Course Display', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $this->actingAs($user);
+        $this->actingAs($user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page
+                ->component('dealer/courses/Index')
+                ->where('courses', function ($courses) use ($universalCourse, $salesCourse, $serviceCourse): bool {
+                    $ids = collect($courses)->pluck('id')->all();
 
-        Livewire::test(Index::class)
-            ->assertViewHas('courses', function ($courses) use ($universalCourse, $salesCourse, $serviceCourse): bool {
-                $courseIds = $courses->pluck('id')->toArray();
-
-                return in_array($universalCourse->id, $courseIds) &&
-                       in_array($salesCourse->id, $courseIds) &&
-                       ! in_array($serviceCourse->id, $courseIds);
-            });
+                    return in_array($universalCourse->id, $ids, true)
+                        && in_array($salesCourse->id, $ids, true)
+                        && ! in_array($serviceCourse->id, $ids, true);
+                }));
     });
 
     it('displays sexual harassment employee course for employees', function (): void {
@@ -86,10 +82,11 @@ describe('Course Index Component - Course Display', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses) => $courses->pluck('id')->contains($course->id));
+        $this->actingAs($user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page
+                ->component('dealer/courses/Index')
+                ->where('courses', fn ($courses) => collect($courses)->pluck('id')->contains($course->id)));
     });
 
     it('displays sexual harassment manager course for managers', function (): void {
@@ -111,10 +108,9 @@ describe('Course Index Component - Course Display', function (): void {
         ]);
         $user->assignRole('Manager');
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses) => $courses->pluck('id')->contains($course->id));
+        $this->actingAs($user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => collect($c)->pluck('id')->contains($course->id)));
     });
 
     it('excludes california course for users without california stores', function (): void {
@@ -122,10 +118,11 @@ describe('Course Index Component - Course Display', function (): void {
 
         $course = Course::query()->create([
             'name' => 'CA Sexual Harassment',
-            'slug' => 'sexual-harassment-training-in-california',
+            'slug' => 'sexual-harassment-training-in-california-test',
             'slides' => [],
             'questions' => [],
             'optional' => false,
+            'states_required' => ['California'],
         ]);
         $course->roles()->attach($employeeRole->id);
 
@@ -143,10 +140,9 @@ describe('Course Index Component - Course Display', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach($store->id);
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses): bool => ! $courses->pluck('id')->contains($course->id));
+        $this->actingAs($user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => ! collect($c)->pluck('id')->contains($course->id)));
     });
 
     it('includes california course for users with california stores', function (): void {
@@ -154,10 +150,11 @@ describe('Course Index Component - Course Display', function (): void {
 
         $course = Course::query()->create([
             'name' => 'CA Sexual Harassment',
-            'slug' => 'sexual-harassment-training-in-california',
+            'slug' => 'sexual-harassment-training-in-california-test-ca',
             'slides' => [],
             'questions' => [],
             'optional' => false,
+            'states_required' => ['California'],
         ]);
         $course->roles()->attach($employeeRole->id);
 
@@ -175,10 +172,9 @@ describe('Course Index Component - Course Display', function (): void {
         $user->assignRole('Employee');
         $user->stores()->attach($store->id);
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses) => $courses->pluck('id')->contains($course->id));
+        $this->actingAs($user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => collect($c)->pluck('id')->contains($course->id)));
     });
 
     it('does not display optional courses', function (): void {
@@ -200,10 +196,9 @@ describe('Course Index Component - Course Display', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses): bool => ! $courses->pluck('id')->contains($optionalCourse->id));
+        $this->actingAs($user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => ! collect($c)->pluck('id')->contains($optionalCourse->id)));
     });
 
     it('displays manually added courses for consultants', function (): void {
@@ -229,16 +224,14 @@ describe('Course Index Component - Course Display', function (): void {
         ]);
         $user->assignRole('Consultant');
 
-        // Manually add course
         $user->courses()->attach($course->id, [
             'type' => 'add',
             'assigned_by' => $admin->id,
         ]);
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses) => $courses->pluck('id')->contains($course->id));
+        $this->actingAs($user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => collect($c)->pluck('id')->contains($course->id)));
     });
 
     it('does not display courses for admin roles without manual assignment', function (): void {
@@ -260,9 +253,8 @@ describe('Course Index Component - Course Display', function (): void {
         ]);
         $user->assignRole('Admin');
 
-        $this->actingAs($user);
-
-        Livewire::test(Index::class)
-            ->assertViewHas('courses', fn ($courses): bool => ! $courses->pluck('id')->contains($course->id));
+        $this->actingAs($user)
+            ->get(route('dealer.courses.index'))
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => ! collect($c)->pluck('id')->contains($course->id)));
     });
 });

@@ -40,4 +40,12 @@ class CourseResults extends Model
     {
         return LogOptions::defaults()->logFillable();
     }
+
+    #[Override]
+    protected function casts(): array
+    {
+        return [
+            'passed' => 'bool',
+        ];
+    }
 }

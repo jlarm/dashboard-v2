@@ -2,52 +2,58 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Dealer\Course\Show;
 use App\Models\Dealer\Course;
 use App\Services\VimeoService;
-use Livewire\Livewire;
 
 use function Pest\Laravel\mock;
 
+function makeShowCourse(array $attrs = []): Course
+{
+    return Course::query()->create(array_merge([
+        'name' => 'Show Course',
+        'slug' => 'show-course-'.uniqid(),
+        'slides' => [],
+        'questions' => [],
+        'optional' => false,
+    ], $attrs));
+}
+
 it('renders slides when course has no video', function (): void {
-    $course = Course::factory()->create([
-        'slides' => json_encode([
+    $course = makeShowCourse([
+        'slides' => [
             ['title' => 'Slide One', 'description' => 'First slide content.'],
             ['title' => 'Slide Two', 'description' => 'Second slide content.'],
-        ]),
+        ],
     ]);
 
-    $this->actingAs($this->consultant);
-
-    Livewire::test(Show::class, ['course' => $course])
-        ->assertStatus(200)
-        ->assertSee('Slide One');
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.courses.show', $course))
+        ->assertInertia(fn ($page) => $page
+            ->component('dealer/courses/Show')
+            ->where('video', null)
+            ->has('slides', 2));
 });
 
 it('renders slides when course has a video_id but vimeo returns null', function (): void {
-    $course = Course::factory()->create([
+    $course = makeShowCourse([
         'video_id' => '123456789',
-        'slides' => json_encode([
-            ['title' => 'Fallback Slide', 'description' => 'Fallback content.'],
-        ]),
+        'slides' => [['title' => 'Fallback Slide', 'description' => 'Fallback content.']],
     ]);
 
     mock(VimeoService::class)
         ->shouldReceive('getVideo')
         ->andReturn(null);
 
-    $this->actingAs($this->consultant);
-
-    Livewire::test(Show::class, ['course' => $course])
-        ->assertStatus(200)
-        ->assertSee('Fallback Slide');
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.courses.show', $course))
+        ->assertInertia(fn ($page) => $page
+            ->component('dealer/courses/Show')
+            ->where('video', null)
+            ->has('slides', 1));
 });
 
 it('renders video when vimeo returns video data', function (): void {
-    $course = Course::factory()->create([
-        'video_id' => '123456789',
-        'slides' => json_encode([]),
-    ]);
+    $course = makeShowCourse(['video_id' => '123456789']);
 
     mock(VimeoService::class)
         ->shouldReceive('getVideo')
@@ -56,8 +62,18 @@ it('renders video when vimeo returns video data', function (): void {
             'title' => 'Test Video',
         ]);
 
-    $this->actingAs($this->consultant);
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.courses.show', $course))
+        ->assertInertia(fn ($page) => $page
+            ->component('dealer/courses/Show')
+            ->where('video.title', 'Test Video')
+            ->where('video.player_embed_url', fn ($url) => str_contains((string) $url, 'player.vimeo.com/video/123456789')));
+});
 
-    Livewire::test(Show::class, ['course' => $course])
-        ->assertStatus(200);
+it('includes a signed quiz url in props', function (): void {
+    $course = makeShowCourse();
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.courses.show', $course))
+        ->assertInertia(fn ($page) => $page->where('quiz_url', fn ($url) => str_contains((string) $url, 'signature=')));
 });

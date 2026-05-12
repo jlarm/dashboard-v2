@@ -4,6 +4,7 @@ import AppShell from '@/components/AppShell.vue';
 import AppSidebar from '@/components/tenant/AppSidebar.vue';
 import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
 import NotificationBell from '@/components/tenant/NotificationBell.vue';
+import CourseCompletionModal from '@/components/courses/CourseCompletionModal.vue';
 import ImpersonationBanner from '@/components/ImpersonationBanner.vue';
 import { Toaster } from '@/components/ui/sonner';
 import { useFlashToasts } from '@/composables/useFlashToasts';
@@ -36,5 +37,6 @@ useFlashToasts();
             </div>
         </AppContent>
         <Toaster position="top-right" />
+        <CourseCompletionModal />
     </AppShell>
 </template>

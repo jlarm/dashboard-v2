@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 use App\Enums\ViolationAuditType;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Dealer\CourseController;
-use App\Http\Controllers\Dealer\CourseResultsController;
 use App\Http\Controllers\Dealer\ImpersonationController;
 use App\Http\Controllers\Dealer\Store\CreateFirstStoreController;
 use App\Http\Controllers\Dealer\StoreController;
@@ -17,6 +15,7 @@ use App\Http\Controllers\Tenant\Audit\IndividualAuditController;
 use App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Tenant\Auth\NewPasswordController;
 use App\Http\Controllers\Tenant\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Tenant\CourseController;
 use App\Http\Controllers\Tenant\CyrismaController;
 use App\Http\Controllers\Tenant\CyrismaReportController;
 use App\Http\Controllers\Tenant\DashboardController;
@@ -95,13 +94,18 @@ Route::name('dealer.')->middleware([
         Route::get('{uuid}/view', [SdsController::class, 'view'])->name('view');
     });
 
-    Route::prefix('courses/')->name('courses.')->group(function (): void {
-        Route::view('/', 'dealer.course.index')->middleware('auth')->name('index');
-        Route::view('all', 'dealer.course.all')->middleware(['auth', 'role:super-admin|Consultant'])->name('all');
-        Route::get('{course:slug}', [CourseController::class, 'show'])->middleware('auth')->name('show');
-        Route::post('{course:slug}', [CourseResultsController::class, 'store'])->middleware('auth')->name('results.store');
-        //        Route::get('{course:slug}/edit', [CourseController::class, 'edit'])->middleware('auth')->name('edit');
-        Route::get('{course:slug}/quiz', [CourseController::class, 'quiz'])->middleware('auth')->name('quiz');
+    Route::middleware('auth')->prefix('courses/')->name('courses.')->group(function (): void {
+        Route::get('/', [CourseController::class, 'index'])->name('index');
+        Route::get('all', [CourseController::class, 'all'])
+            ->middleware('role:super-admin|Consultant')
+            ->name('all');
+        Route::post('dot-certificate', [CourseController::class, 'issueDotCertificate'])
+            ->name('dot-certificate.issue');
+        Route::get('{course:slug}', [CourseController::class, 'show'])->name('show');
+        Route::get('{course:slug}/quiz', [CourseController::class, 'quiz'])->name('quiz');
+        Route::post('{course:slug}/quiz', [CourseController::class, 'submitQuiz'])->name('results.store');
+        Route::post('{course:slug}/video-complete', [CourseController::class, 'markVideoComplete'])
+            ->name('video-complete');
     });
 
     Route::get('form', [VendorController::class, 'form'])->middleware('signed')->name('vendor.form');

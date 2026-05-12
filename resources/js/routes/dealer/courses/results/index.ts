@@ -1,8 +1,8 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
-* @see \App\Http\Controllers\Dealer\CourseResultsController::store
-* @see app/Http/Controllers/Dealer/CourseResultsController.php:54
-* @route '/courses/{course}'
+* @see \App\Http\Controllers\Tenant\CourseController::store
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
 export const store = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
@@ -11,13 +11,13 @@ export const store = (args: { course: string | { slug: string } } | [course: str
 
 store.definition = {
     methods: ["post"],
-    url: '/courses/{course}',
+    url: '/courses/{course}/quiz',
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\Dealer\CourseResultsController::store
-* @see app/Http/Controllers/Dealer/CourseResultsController.php:54
-* @route '/courses/{course}'
+* @see \App\Http\Controllers\Tenant\CourseController::store
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
 store.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -48,9 +48,9 @@ store.url = (args: { course: string | { slug: string } } | [course: string | { s
 }
 
 /**
-* @see \App\Http\Controllers\Dealer\CourseResultsController::store
-* @see app/Http/Controllers/Dealer/CourseResultsController.php:54
-* @route '/courses/{course}'
+* @see \App\Http\Controllers\Tenant\CourseController::store
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
 store.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
@@ -58,9 +58,9 @@ store.post = (args: { course: string | { slug: string } } | [course: string | { 
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\CourseResultsController::store
-* @see app/Http/Controllers/Dealer/CourseResultsController.php:54
-* @route '/courses/{course}'
+* @see \App\Http\Controllers\Tenant\CourseController::store
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
 const storeForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: store.url(args, options),
@@ -68,9 +68,9 @@ const storeForm = (args: { course: string | { slug: string } } | [course: string
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\CourseResultsController::store
-* @see app/Http/Controllers/Dealer/CourseResultsController.php:54
-* @route '/courses/{course}'
+* @see \App\Http\Controllers\Tenant\CourseController::store
+* @see app/Http/Controllers/Tenant/CourseController.php:91
+* @route '/courses/{course}/quiz'
 */
 storeForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: store.url(args, options),
