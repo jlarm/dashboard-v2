@@ -23,6 +23,10 @@ class BuildDealJacketCharts
     }
 
     /**
+     * Average of each quarter's per-deal-jacket weighted percentage. Matches
+     * the avg shown on the Index list rows + the score on each deal-jacket
+     * row so every percentage on the dashboard agrees.
+     *
      * @return array{labels: array<int, string>, data: array<int, float>}
      */
     private function buildPassRateTrend(int $storeId): array
@@ -30,8 +34,7 @@ class BuildDealJacketCharts
         $groups = DealJacketGroup::query()
             ->where('store_id', $storeId)
             ->where('completed', true)
-            ->withSum('dealJackets as total_passed', 'total_passed')
-            ->withSum('dealJackets as total_failed', 'total_failed')
+            ->withAveragePercentage()
             ->latest()
             ->limit(8)
             ->get()
@@ -43,7 +46,7 @@ class BuildDealJacketCharts
             ->all();
 
         $data = $groups
-            ->map(static fn (DealJacketGroup $g): float => (float) ($g->pass_rate ?? 0))
+            ->map(static fn (DealJacketGroup $g): float => (float) ($g->average_percentage ?? 0))
             ->values()
             ->all();
 

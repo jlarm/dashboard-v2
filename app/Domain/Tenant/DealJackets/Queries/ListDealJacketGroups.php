@@ -26,7 +26,7 @@ class ListDealJacketGroups
             ->withSum('dealJackets as total_high_risk', 'total_high_risk')
             ->withSum('dealJackets as total_passed', 'total_passed')
             ->withSum('dealJackets as total_failed', 'total_failed')
-            ->withAvg('dealJackets as average_percentage', 'percentage')
+            ->withAveragePercentage()
             ->latest()
             ->get()
             ->map(static fn (DealJacketGroup $group): DealJacketGroupListItem => DealJacketGroupListItem::fromModel($group));

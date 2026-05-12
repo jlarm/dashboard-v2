@@ -46,6 +46,7 @@ type Group = {
     total_passed: number;
     total_failed: number;
     total_high_risk: number;
+    average_percentage: number | null;
 };
 
 const props = defineProps<{
@@ -66,10 +67,9 @@ const canManage = computed(() => {
     return roles.includes(Role.SuperAdmin) || roles.includes(Role.Consultant);
 });
 
-const passRate = computed(() => {
-    const total = props.group.total_passed + props.group.total_failed;
-    if (total === 0) return null;
-    return Math.round((props.group.total_passed / total) * 100);
+const passRate = computed<number | null>(() => {
+    if (props.group.average_percentage === null) return null;
+    return Math.round(props.group.average_percentage);
 });
 
 const deleteJacket = (jacket: DealJacketRow): void => {

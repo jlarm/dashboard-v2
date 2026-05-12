@@ -20,11 +20,13 @@ class LoadDealJacketGroup
      *   total_passed: int,
      *   total_failed: int,
      *   total_high_risk: int,
+     *   average_percentage: ?float,
      * }
      */
     public function handle(DealJacketGroup $group): array
     {
         $group->loadMissing(['store', 'dealJackets.user']);
+        $group->loadAggregate('dealJackets as average_percentage', 'percentage', 'avg');
 
         $jackets = $group->dealJackets->map(static fn (DealJacket $jacket): array => [
             'id' => (int) $jacket->id,
@@ -49,6 +51,7 @@ class LoadDealJacketGroup
             'total_passed' => array_sum(array_column($jackets, 'total_passed')),
             'total_failed' => array_sum(array_column($jackets, 'total_failed')),
             'total_high_risk' => array_sum(array_column($jackets, 'total_high_risk')),
+            'average_percentage' => $group->average_percentage !== null ? (float) $group->average_percentage : null,
         ];
     }
 }
