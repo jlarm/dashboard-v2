@@ -10,7 +10,7 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from '@/components/ui/sidebar';
-import { AUDIT_VIEWERS, AUTOMATED_REPORT_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, MANUAL_EDITORS, Role, SCAN_VIEWERS, VENDOR_VIEWERS } from '@/constants/roles';
+import { AUDIT_VIEWERS, AUTOMATED_REPORT_VIEWERS, COURSES_NAV_VIEWERS, DOCUMENT_VIEWERS, EMPLOYEE_SECTION_VIEWERS, MANUAL_EDITORS, Role, SCAN_VIEWERS, VENDOR_VIEWERS } from '@/constants/roles';
 import bodyShopAudit from '@/routes/dealer/audit/body-shop';
 import dealJacketsAudit from '@/routes/dealer/audit/deal-jackets';
 import financeAudit from '@/routes/dealer/audit/finance';
@@ -51,6 +51,7 @@ const mainNavItems = computed<NavItem[]>(() => {
             title: 'Courses',
             href: courses.index.url(),
             icon: GraduationCap,
+            roles: COURSES_NAV_VIEWERS,
         },
         {
             title: 'Employees',

@@ -12,6 +12,8 @@ use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
 use App\Domain\Tenant\Compliance\Queries\CalculateViolationsOverview;
 use App\Domain\Tenant\Compliance\Queries\GetAuditTracker;
 use App\Domain\Tenant\Compliance\Queries\GetCriticalVulnerabilities;
+use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
+use App\Domain\Tenant\Course\Queries\GetUserCourseList;
 use App\Http\Controllers\Controller;
 use App\Jobs\Audit\GenerateDealJacketReportJob;
 use App\Models\ComplianceScoreSnapshot;
@@ -40,6 +42,8 @@ class DashboardController extends Controller
 
     private const array DOWNLOAD_UNRESTRICTED_ROLES = ['super-admin', 'Consultant'];
 
+    private const array COURSE_DASHBOARD_ROLES = ['Employee', 'Porter/Driver'];
+
     public function show(
         Request $request,
         CalculateComplianceScore $calculator,
@@ -48,7 +52,20 @@ class DashboardController extends Controller
         GetCriticalVulnerabilities $vulnerabilitiesQuery,
         CalculateViolationsOverview $violationsOverviewQuery,
         GetAuditTracker $auditTrackerQuery,
+        GetUserCourseList $courseList,
+        CanIssueDotCertificate $canIssueDotCert,
     ): InertiaResponse {
+        $user = $request->user();
+
+        if ($user instanceof User && $this->shouldSeeCourseDashboard($user)) {
+            return Inertia::render('tenant/EmployeeDashboard', [
+                'courses' => $courseList->handle($user)
+                    ->map(static fn ($item): array => $item->toArray())
+                    ->all(),
+                'can_issue_dot_certificate' => $canIssueDotCert->handle($user),
+            ]);
+        }
+
         $stores = $this->resolveScopedStores();
 
         $compliance = $stores->isEmpty()
@@ -191,6 +208,22 @@ class DashboardController extends Controller
         abort_unless(Storage::exists($filePath), 404, 'Report not found or has expired.');
 
         return Storage::download($filePath, $fileName, ['Content-Type' => 'application/pdf']);
+    }
+
+    /**
+     * Users whose only roles are Employee or Porter/Driver get the
+     * courses-focused dashboard instead of the compliance stats view.
+     * If they also carry a higher-tier role, the stats view wins.
+     */
+    private function shouldSeeCourseDashboard(User $user): bool
+    {
+        $roleNames = $user->roles->pluck('name')->all();
+
+        if ($roleNames === []) {
+            return false;
+        }
+
+        return array_diff($roleNames, self::COURSE_DASHBOARD_ROLES) === [];
     }
 
     /**

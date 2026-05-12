@@ -101,6 +101,24 @@ export const MANUAL_EDITORS: RoleName[] = [
 ];
 
 /**
+ * Roles that see the "Courses" entry in the main sidebar.
+ *
+ * super-admins and Consultants don't take training courses themselves
+ * (they administer the system), and Employees / Porter/Drivers consume
+ * their courses inline on the Dashboard instead. Everyone in between
+ * gets the dedicated sidebar shortcut.
+ */
+export const COURSES_NAV_VIEWERS: RoleName[] = [
+    Role.Admin,
+    Role.Owner,
+    Role.CFO,
+    Role.GM,
+    Role.GSM,
+    Role.QualifiedIndividual,
+    Role.Manager,
+];
+
+/**
  * Roles allowed to view OSHA / Body Shop / GLBA audits.
  * Mirrors App\Enums\Role::auditViewers() — broader role group on the
  * audit read routes.

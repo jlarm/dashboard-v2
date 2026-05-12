@@ -128,6 +128,50 @@ From `database/seeders/RoleAndPermissionSeeder.php`:
 
 ---
 
+## Courses Section
+
+The dealer-facing course pages (an employee's own training, not the admin-side view at `/employees/{slug}/courses`).
+
+### Index — `/courses` (`Index.vue`)
+
+| Element | Roles |
+| --- | --- |
+| View page | Any authenticated user |
+| Course list contents | Scoped per viewer by `UserCourseService::getCourseIds` — role assignments (`course_role`) filtered by department, store state, `optional`, and `course_user` add/exclude overrides. Admin-only users (super-admin, Admin, Consultant, QI) see only manual overrides — nothing role-based. |
+| Card click-through to `courses.show` | Visible when the course has questions and (for DOT modules 2–4) the preceding module is passed |
+| "Generate DOT Certificate" button | Gated by `CanIssueDotCertificate` — viewer has a passing `CourseResults` row for the DOT shipping slug within `years_expires` and no existing `Certificate` |
+
+### All Courses — `/courses/all` (`All.vue`)
+
+| Element | Roles |
+| --- | --- |
+| View page | super-admin, Consultant *(route middleware `role:super-admin|Consultant`)* |
+| Card click-through | Same gating as Index (must have questions) |
+
+### Show — `/courses/{course:slug}` (`Show.vue`)
+
+| Element | Roles |
+| --- | --- |
+| View page | Any authenticated user — `ResolveReplacementCourse` redirects to a state- or assignment-specific replacement when one applies to the viewer |
+| Video / slides playback | Same as view |
+| "Take Quiz" button | Visible only after `VideoProgress` exists for the course's video within `years_expires` (skipped entirely when the course has no video) |
+| Mark video complete (`courses.video-complete`) | Any authenticated user — no-op when the course has no `video_id` |
+
+### Quiz — `/courses/{course:slug}/quiz` (`Quiz.vue`)
+
+| Element | Roles |
+| --- | --- |
+| View page | Any authenticated user — `ResolveReplacementCourse` runs the same replacement redirect as Show |
+| Submit quiz (`courses.results.store`) | Any authenticated user — `SubmitQuizRequest` requires every question to be answered. Score ≥ 70% → `passed=true`; for the DOT shipping slug a passing result also queues `IssueDotCertificate` (gated by `CanIssueDotCertificate`). |
+
+### DOT Certificate Generation — `POST /courses/dot-certificate`
+
+| Element | Roles |
+| --- | --- |
+| Trigger (`courses.dot-certificate.issue`) | Any authenticated user — `DispatchDotCertificate` consults `CanIssueDotCertificate` and returns false with an error flash for ineligible viewers, so the queued job only runs for users who actually passed the DOT shipping course. |
+
+---
+
 ## Where these gates live
 
 - **Route group middleware** — `routes/tenant.php` (`role:...` middleware on each `Route::group`)
