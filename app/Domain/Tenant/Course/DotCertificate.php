@@ -18,4 +18,14 @@ final class DotCertificate
     public const string STORAGE_DISK = 'armp-certs';
 
     public const int DEFAULT_YEARS_EXPIRES = 3;
+
+    /**
+     * IDs of the four DOT Hazardous Materials Transportation courses. The
+     * series carries a 3-year expiration window (longer than the default
+     * 1-year refresh used for other courses) and is referenced when
+     * computing course-completion counts.
+     *
+     * @var list<int>
+     */
+    public const array HAZMAT_COURSE_IDS = [9, 10, 11, 12];
 }

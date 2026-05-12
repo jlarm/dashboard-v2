@@ -48,8 +48,6 @@ class Store extends Model implements HasMedia
 {
     use HasGrade, InteractsWithMedia, LogsActivity;
 
-    private const GRADE_CACHE_TTL = 300;
-
     #[Override]
     protected $fillable = [
         'name',

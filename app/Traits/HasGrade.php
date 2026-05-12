@@ -4,19 +4,27 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use Illuminate\Support\Arr;
+use App\Models\Dealer\Store;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @mixin Store
+ */
 trait HasGrade
 {
-    private const GRADE_CACHE_TTL = 300;
-    private const NULL_GRADE_CACHE_VALUE = '__null_grade__';
+    private const int GRADE_CACHE_TTL = 300;
 
+    private const string NULL_GRADE_CACHE_VALUE = '__null_grade__';
+
+    /**
+     * @var array<string, string|null>
+     */
     private array $resolvedGradeValues = [];
 
     public function clearGradeCache(?string $type = null): void
     {
-        $types = $type ? [$type] : ['osha', 'glba', 'body_shop', 'deal_jacket', 'overall'];
+        $types = $type !== null ? [$type] : ['osha', 'glba', 'body_shop', 'deal_jacket', 'overall'];
 
         foreach ($types as $gradeType) {
             Cache::forget($this->getGradeCacheKey($gradeType));
@@ -24,75 +32,32 @@ trait HasGrade
         }
     }
 
-    public function rating($old, $new): string
-    {
-        if (empty($old) && empty($new)) {
-            return 'N/A';
-        }
-
-        $old = Arr::flatten($old);
-        $new = Arr::flatten($new);
-
-        $grades = $this->grades($old, $new);
-        $gradesCount = count($grades);
-        $gradeValues = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
-        $total = array_reduce(Arr::flatten($grades), fn ($carry, $rating): float|int => $carry + $gradeValues[$rating], 0);
-
-        if ($gradesCount === 0) {
-            return 'N/A';
-        }
-
-        $avg = $total / $gradesCount;
-
-        return match (true) {
-            $avg >= 3.5 && $avg <= 4 => 'A',
-            $avg >= 2.5 && $avg < 3.5 => 'B',
-            $avg >= 1.5 && $avg < 2.5 => 'C',
-            $avg >= 0.5 && $avg < 1.5 => 'D',
-            $avg >= 0 && $avg < 0.5 => 'F',
-            default => 'N/A',
-        };
-    }
-
     protected function getOshaGradeAttribute(): ?string
     {
-        return $this->rememberGradeValue(
-            'osha',
-            fn () => $this->oshaViolationAudits()
-                ->whereNotNull('grade')
-                ->where('grade', '!=', 'N/A')
-                ->orderByDesc('date')
-                ->orderByDesc('id')
-                ->first()
-                ?->grade
-        );
+        return $this->latestAuditGrade('osha', $this->oshaViolationAudits());
     }
 
     protected function getGlbaGradeAttribute(): ?string
     {
-        return $this->rememberGradeValue(
-            'glba',
-            fn () => $this->glbaViolationAudits()
-                ->whereNotNull('grade')
-                ->where('grade', '!=', 'N/A')
-                ->orderByDesc('date')
-                ->orderByDesc('id')
-                ->first()
-                ?->grade
-        );
+        return $this->latestAuditGrade('glba', $this->glbaViolationAudits());
     }
 
     protected function getBodyShopGradeAttribute(): ?string
     {
+        return $this->latestAuditGrade('body_shop', $this->bodyShopViolationAudits());
+    }
+
+    private function latestAuditGrade(string $type, HasMany $audits): ?string
+    {
         return $this->rememberGradeValue(
-            'body_shop',
-            fn () => $this->bodyShopViolationAudits()
+            $type,
+            fn (): ?string => $audits
                 ->whereNotNull('grade')
                 ->where('grade', '!=', 'N/A')
                 ->orderByDesc('date')
                 ->orderByDesc('id')
                 ->first()
-                ?->grade
+                ?->grade,
         );
     }
 
@@ -112,38 +77,9 @@ trait HasGrade
         $value = Cache::remember(
             $this->getGradeCacheKey($type),
             self::GRADE_CACHE_TTL,
-            fn (): string => $resolver() ?? self::NULL_GRADE_CACHE_VALUE
+            fn (): string => $resolver() ?? self::NULL_GRADE_CACHE_VALUE,
         );
 
         return $this->resolvedGradeValues[$type] = $value === self::NULL_GRADE_CACHE_VALUE ? null : $value;
-    }
-
-    private function convertRatingToGrade($avg): ?string
-    {
-        if ($avg === null) {
-            return null;
-        }
-
-        return match (true) {
-            $avg >= 90 && $avg <= 100 => 'A',
-            $avg >= 80 && $avg < 90 => 'B',
-            $avg >= 70 && $avg < 80 => 'C',
-            $avg >= 60 && $avg < 70 => 'D',
-            default => 'F',
-        };
-    }
-
-    private function grades($old, $new): array
-    {
-        $grades = [$new];
-
-        if (! empty($old)) {
-            $oldGrade = $this->convertRatingToGrade(array_sum($old) / count($old));
-            if ($oldGrade !== null) {
-                $grades[] = $oldGrade;
-            }
-        }
-
-        return $grades;
     }
 }

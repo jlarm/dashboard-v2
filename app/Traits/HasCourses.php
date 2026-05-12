@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\Domain\Tenant\Course\DotCertificate;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
 use App\Models\User;
@@ -18,7 +19,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 trait HasCourses
 {
-    private $userCourses;
+    /**
+     * @var list<int>|null
+     */
+    private ?array $userCourses = null;
 
     /**
      * Clear the cached user courses data.
@@ -28,10 +32,8 @@ trait HasCourses
     {
         $this->userCourses = null;
 
-        // Clear service-level caches for this user
         resolve(UserCourseService::class)->clearCacheForUser($this->id);
 
-        // Clear Laravel's attribute cache for computed attributes
         if (isset($this->attributes['total_completed_courses'])) {
             unset($this->attributes['total_completed_courses']);
         }
@@ -53,17 +55,17 @@ trait HasCourses
 
     protected function getTotalCompletedCoursesAttribute(): int
     {
-        // If results are already loaded, use them to avoid additional query
-        if ($this->relationLoaded('results')) {
-            $oneYearAgo = now()->subYear();
-            $threeYearsAgo = now()->subYears(3);
-            $userCourseIds = $this->totalUserCourses();
+        $userCourseIds = $this->totalUserCourses();
+        $oneYearAgo = now()->subYear();
+        $threeYearsAgo = now()->subYears(3);
+        $hazmatCourseIds = DotCertificate::HAZMAT_COURSE_IDS;
 
+        if ($this->relationLoaded('results')) {
             return $this->results
                 ->whereIn('course_id', $userCourseIds)
-                ->where('passed', 1)
+                ->where('passed', true)
                 ->filter(fn (CourseResults $result): bool => $result->created_at >= $oneYearAgo // @phpstan-ignore argument.type
-                    || (in_array($result->course_id, [9, 10, 11, 12]) && $result->created_at >= $threeYearsAgo))
+                    || (in_array($result->course_id, $hazmatCourseIds, true) && $result->created_at >= $threeYearsAgo))
                 ->unique('course_id')
                 ->count();
         }
@@ -71,15 +73,15 @@ trait HasCourses
         return CourseResults::query()
             ->distinct()
             ->where('user_id', $this->id)
-            ->whereIn('course_id', $this->totalUserCourses())
-            ->where(function ($query): void {
-                $query->where('created_at', '>=', now()->subYear())
-                    ->orWhere(function ($query): void {
-                        $query->whereIn('course_id', [9, 10, 11, 12])
-                            ->where('created_at', '>=', now()->subYears(3));
+            ->whereIn('course_id', $userCourseIds)
+            ->where(function ($query) use ($oneYearAgo, $threeYearsAgo, $hazmatCourseIds): void {
+                $query->where('created_at', '>=', $oneYearAgo)
+                    ->orWhere(function ($query) use ($threeYearsAgo, $hazmatCourseIds): void {
+                        $query->whereIn('course_id', $hazmatCourseIds)
+                            ->where('created_at', '>=', $threeYearsAgo);
                     });
             })
-            ->where('passed', 1)
+            ->where('passed', true)
             ->select('course_id')
             ->count('course_id');
     }
@@ -94,15 +96,17 @@ trait HasCourses
         return $this->total_completed_courses !== $this->total_user_courses;
     }
 
+    /**
+     * @return list<int>
+     */
     private function totalUserCourses(): array
     {
-        if (is_null($this->userCourses)) {
+        if ($this->userCourses === null) {
             if (! $this->relationLoaded('roles')) {
                 $this->load('roles');
             }
 
-            $service = resolve(UserCourseService::class);
-            $this->userCourses = $service->getCourseIds($this);
+            $this->userCourses = resolve(UserCourseService::class)->getCourseIds($this);
         }
 
         return $this->userCourses;
