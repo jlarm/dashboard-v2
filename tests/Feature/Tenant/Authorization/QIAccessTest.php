@@ -182,11 +182,6 @@ describe('QI - Store And Manual Access', function (): void {
             ->assertOk();
     });
 
-    it('can access store edit', function (): void {
-        $this->actingAs($this->qi)
-            ->get(route('dealer.store.edit'))
-            ->assertOk();
-    });
 });
 
 describe('QI - Manager Group Access', function (): void {

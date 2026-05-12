@@ -238,12 +238,6 @@ describe('Manager - Routes It Should NOT Access', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access store edit (QI+ only)', function (): void {
-        $this->actingAs($this->manager)
-            ->get(route('dealer.store.edit'))
-            ->assertForbidden();
-    });
-
     it('cannot access consultant-only location management', function (): void {
         $this->actingAs($this->manager)
             ->get(route('dealer.locations.index'))

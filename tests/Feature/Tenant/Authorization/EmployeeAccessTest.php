@@ -101,12 +101,6 @@ describe('Employee - Forbidden Routes (QI+ Only)', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access store edit', function (): void {
-        $this->actingAs($this->employee)
-            ->get(route('dealer.store.edit'))
-            ->assertForbidden();
-    });
-
     it('cannot access phishing campaign details', function (): void {
         $campaign = PhishingCampaign::query()->create([
             'campaign_id' => 'employee-campaign-1',

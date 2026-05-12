@@ -6,7 +6,6 @@ use App\Enums\ViolationAuditType;
 use App\Http\Controllers\Dealer\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Dealer\ImpersonationController;
 use App\Http\Controllers\Dealer\Store\CreateFirstStoreController;
-use App\Http\Controllers\Dealer\StoreController;
 use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Controllers\Tenant\Audit\DealJacketController;
@@ -263,7 +262,6 @@ Route::name('dealer.')->middleware([
                 ->middleware('can:create-dealerships')
                 ->name('reset-courses.run');
         });
-        Route::get('edit', [StoreController::class, 'edit'])->middleware(['auth'])->name('store.edit');
 
         Route::get('phishing', App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
         Route::get('phishing/{phishingCampaign}', Show::class)->name('phishing.show');

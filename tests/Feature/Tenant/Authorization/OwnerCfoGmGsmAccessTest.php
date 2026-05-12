@@ -56,10 +56,6 @@ describe('owner, cfo, gm, and gsm access', function (): void {
             ->assertOk();
 
         $this->actingAs($user)
-            ->get(route('dealer.store.edit'))
-            ->assertOk();
-
-        $this->actingAs($user)
             ->get(route('dealer.phishing.index'))
             ->assertOk();
 
