@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Domain\Tenant\Course\DotCertificate;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -16,7 +17,7 @@ readonly class AlertCenterService
     {
         $generalCourseCutoffDate = now()->subYear();
         $specialCourseCutoffDate = now()->subYears(3);
-        $specialCourseIds = [9, 10, 11, 12];
+        $specialCourseIds = DotCertificate::HAZMAT_COURSE_IDS;
 
         $query = User::query()
             ->whereDoesntHave('roles', function ($query): void {

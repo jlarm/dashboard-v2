@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire\Dealer\Employee;
 
+use App\Domain\Tenant\Course\DotCertificate;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Exception;
@@ -127,7 +128,7 @@ class DepartmentCompletionStats extends Component
                             ->where(function ($query) use ($oneYearAgo, $threeYearsAgo): void {
                                 $query->where('created_at', '>=', $oneYearAgo)
                                     ->orWhere(function ($query) use ($threeYearsAgo): void {
-                                        $query->whereIn('course_id', [9, 10, 11, 12])
+                                        $query->whereIn('course_id', DotCertificate::HAZMAT_COURSE_IDS)
                                             ->where('created_at', '>=', $threeYearsAgo);
                                     });
                             })
