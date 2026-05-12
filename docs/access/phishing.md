@@ -1,0 +1,19 @@
+### Phishing
+- /phishing
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /phishing/{phishingCampaign}
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /phishing/create
+- - Consultant
+- /webhooks/gophish (api webhook)
+- - Public — no auth, no role check

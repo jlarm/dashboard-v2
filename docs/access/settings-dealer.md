@@ -1,0 +1,61 @@
+### Dealer / Store Settings
+- /settings (general)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /settings/managers
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /settings/compliance
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /settings/general/{store} (update)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /settings/managers/{store} (update)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /settings/compliance/{store} (update)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /settings/compliance/{store}/download
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /settings/reset-courses (requires can:create-dealerships)
+- - Consultant
+- /settings/reset-courses/{store} (run, requires can:create-dealerships)
+- - Consultant
+- /edit (store edit)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM

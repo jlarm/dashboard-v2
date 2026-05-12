@@ -1,0 +1,25 @@
+### Automated Reports
+- /automated-reports
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /automated-reports (update)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /automated-reports/send
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM

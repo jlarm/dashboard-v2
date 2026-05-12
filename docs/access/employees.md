@@ -1,0 +1,133 @@
+### Employees
+- /employees
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- Import
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- Export
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- Email report
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- Send message
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/invite
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/open-invites
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/deleted
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /employees/deleted/{user}/restore
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /employees/{slug}
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/{slug} (update / delete)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/{slug}/impersonate
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/{slug}/courses
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/{slug}/courses/{course}/result
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/{slug}/manage-courses
+- - Consultant
+- - Qualified Individual
+- /employees/{slug}/course-overrides/{course}
+- - Consultant
+- - Qualified Individual
+- /employees/{slug}/dot-certificates
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /employees/{slug}/dot-certificates (generate)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager

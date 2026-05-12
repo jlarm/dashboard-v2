@@ -1,0 +1,61 @@
+### Scans
+- /scans
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /scans/external-finding
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /scans/queue-report
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /scans/refresh-cache
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /scans/report/{type}
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /scans/settings
+- - Consultant
+- /scans/settings (update)
+- - Consultant
+- /scans-archive
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /scans-archive/upload
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager

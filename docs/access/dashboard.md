@@ -1,0 +1,51 @@
+### Dashboard
+- /dashboard
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /dashboard/audit-report (controller restricts via DOWNLOAD_AUTHORIZED_ROLES)
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- /dashboard/audit-report/{type} (type ∈ osha|body_shop|glba|deal_jacket; route-level auth only)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /dashboard/first-store
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /current-store (switch store)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver

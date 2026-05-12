@@ -1,0 +1,65 @@
+### Vendors
+
+#### Internal (auth + VendorPolicy — every role except Employee and Porter/Driver)
+- /vendors
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /vendors (store)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /vendors/{vendor}
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /vendors/{vendor}/forms (send)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /vendors/{vendor} (destroy)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /vendors/forms/{vendorForm}/download
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+
+#### External (signed URL, no auth)
+- /form (vendor-facing form)
+- - Signed URL — no role check
+- /form (submit)
+- - Signed URL — no role check
+- /vendors/thankyou
+- - Public — no role check

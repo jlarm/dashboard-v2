@@ -1,0 +1,57 @@
+### Password
+
+#### Authenticated
+- /password
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /password (update; throttle 6/min)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /confirm-password
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /confirm-password (submit)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+
+#### Guest (no auth)
+- /forgot-password
+- - Public — no auth, no role check
+- /forgot-password (submit)
+- - Public — no auth, no role check
+- /reset-password/{token}
+- - Public (token-gated) — no auth, no role check
+- /reset-password (submit)
+- - Public (token-gated) — no auth, no role check

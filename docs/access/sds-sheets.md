@@ -1,0 +1,34 @@
+### SDS Sheets
+- /sds-sheets
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /sds-sheets/request
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /sds-sheets/{uuid}/view
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver

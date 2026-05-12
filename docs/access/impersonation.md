@@ -1,0 +1,18 @@
+### Impersonation
+- /employee/{user}/impersonate (auth + UserPolicy@impersonate)
+- - Consultant
+- /employees/{user:slug}/impersonate (POST; Manager+ group + UserPolicy@impersonate)
+- - Consultant
+- /impersonate/{token} (token-based redirect, no auth)
+- - Token-gated — no role check
+- /stop-impersonation (auth)
+- - Admin
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver

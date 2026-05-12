@@ -1,0 +1,157 @@
+### Audits
+
+#### Reads (OSHA / Body Shop / Finance)
+- /audits/{osha|body-shop|finance}
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/{osha|body-shop|finance}/{audit}
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/{osha|body-shop|finance}/{audit}/remediation
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/{osha|body-shop|finance}/{audit}/remediation (update)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/{osha|body-shop|finance}/{audit}/download
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/{osha|body-shop|finance}/{audit}/remediation/download
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/{osha|body-shop|finance}/{audit}/comments (store / update / destroy)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+
+#### Writes (OSHA / Body Shop / Finance)
+- /audits/{osha|body-shop|finance}/create/{store}
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit}/edit
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit} (update / destroy)
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit}/grade
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit}/complete (complete / reopen)
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit}/violations (store / destroy)
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit}/violations/{violation}/photos/{photoId}
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit}/violations/search
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit}/generate
+- - Consultant
+- /audits/{osha|body-shop|finance}/{audit}/remediation/generate
+- - Consultant
+
+#### Deal Jackets (Archived / Individual Audits)
+- /audits/deal-jackets-archived
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/deal-jackets-archived/{individualAudit}
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/deal-jackets-archived/{individualAudit}/download
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/deal-jackets-archived (create)
+- - Consultant
+- /audits/deal-jackets-archived/{individualAudit}/children (create)
+- - Consultant
+- /audits/deal-jackets-archived/{individualAudit}/edit
+- - Consultant
+- /audits/deal-jackets-archived/{individualAudit} (update / destroy)
+- - Consultant
+- /audits/deal-jackets-archived/{individualAudit}/generate
+- - Consultant
+
+#### Deal Jacket Groups
+- /audits/deal-jackets
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/deal-jackets/{dealJacketGroup}
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/deal-jacket-reports/{fileName}/download
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- /audits/deal-jackets (start group)
+- - Consultant
+- /audits/deal-jackets/{dealJacketGroup}/create
+- - Consultant
+- /audits/deal-jackets/{dealJacketGroup}/jackets (store)
+- - Consultant
+- /audits/deal-jackets/{dealJacketGroup}/edit/{dealJacket}
+- - Consultant
+- /audits/deal-jackets/{dealJacketGroup}/jackets/{dealJacket} (update / destroy)
+- - Consultant
+- /audits/deal-jackets/{dealJacketGroup}/complete
+- - Consultant
+- /audits/deal-jackets/{dealJacketGroup} (destroy group)
+- - Consultant

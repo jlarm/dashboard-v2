@@ -1,0 +1,63 @@
+### Courses
+- /courses
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /courses/all
+- - Consultant
+- /courses/dot-certificate (issue)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /courses/{slug}
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /courses/{slug}/quiz
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /courses/{slug}/quiz (submit)
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver
+- /courses/{slug}/video-complete
+- - Consultant
+- - Owner
+- - Qualified Individual
+- - CFO
+- - GM
+- - GSM
+- - Manager
+- - Employee
+- - Porter/Driver

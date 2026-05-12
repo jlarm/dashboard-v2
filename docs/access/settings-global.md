@@ -1,0 +1,19 @@
+### Global Settings
+- /global-settings
+- - Consultant
+- /global-settings/course-management
+- - Consultant
+- /global-settings/reset-courses
+- - Consultant
+- /global-settings/reset-courses (run)
+- - Consultant
+- /global-settings/phishing
+- - Consultant
+- /global-settings/phishing (update)
+- - Consultant
+- /global-settings/stores/{store}/notifications
+- - Consultant
+- /global-settings/stores/{store}/remediations
+- - Consultant
+- /global-settings/courses/{course}/optional
+- - Consultant
