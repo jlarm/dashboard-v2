@@ -125,9 +125,34 @@ class CyrismaService
         }
     }
 
+    public function getAllInstances(): ?array
+    {
+        if (! $this->ensureAuthenticated()) {
+            return null;
+        }
+
+        try {
+            $response = $this->authorizedRequest()
+                ->get("{$this->baseUrl}/partner/instances/info/");
+
+            return $response->successful() ? $response->json() : null;
+        } catch (Exception $e) {
+            Log::error('Failed to get Cyrisma instances', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return null;
+        }
+    }
+
     public function getVulnerabilityScans(): ?array
     {
         return $this->getStoreReport('scans/vulnerability');
+    }
+
+    public function getOverallDashboard(): ?array
+    {
+        return $this->getStoreReport('dashboards/overall');
     }
 
     public function getCveDetails(?string $cveId = null): ?array
