@@ -88,3 +88,13 @@ export type DepartmentCompletion = {
     value: number;
     headcount: number;
 };
+
+export type LocationGradeRow = {
+    store_id: number;
+    store_name: string;
+    overall: string | null;
+    deal_jacket: string | null;
+    osha: string | null;
+    glba: string | null;
+    body_shop: string | null;
+};

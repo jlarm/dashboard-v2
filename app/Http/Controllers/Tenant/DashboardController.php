@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\Compliance\Data\AuditTrackerRowData;
 use App\Domain\Tenant\Compliance\Data\ComplianceScoreData;
+use App\Domain\Tenant\Compliance\Data\LocationGradeRowData;
 use App\Domain\Tenant\Compliance\Data\TrainingCompletionRowData;
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
 use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
@@ -13,6 +14,7 @@ use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
 use App\Domain\Tenant\Compliance\Queries\CalculateViolationsOverview;
 use App\Domain\Tenant\Compliance\Queries\GetAuditTracker;
 use App\Domain\Tenant\Compliance\Queries\GetCriticalVulnerabilities;
+use App\Domain\Tenant\Compliance\Queries\GetLocationGrades;
 use App\Domain\Tenant\Compliance\Queries\GetTrainingCompletionByDepartment;
 use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Domain\Tenant\Course\Queries\GetUserCourseList;
@@ -54,6 +56,7 @@ class DashboardController extends Controller
         GetCriticalVulnerabilities $vulnerabilitiesQuery,
         CalculateViolationsOverview $violationsOverviewQuery,
         GetAuditTracker $auditTrackerQuery,
+        GetLocationGrades $locationGradesQuery,
         GetTrainingCompletionByDepartment $trainingCompletionQuery,
         GetUserCourseList $courseList,
         CanIssueDotCertificate $canIssueDotCert,
@@ -106,6 +109,13 @@ class DashboardController extends Controller
                 $trainingCompletionQuery->handleForStores($stores->pluck('id')->all()),
             );
 
+        $locationGrades = $stores->count() > 1
+            ? array_map(
+                static fn (LocationGradeRowData $row): array => $row->toArray(),
+                $locationGradesQuery->handleForStores($stores->pluck('id')->all()),
+            )
+            : null;
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
@@ -114,6 +124,7 @@ class DashboardController extends Controller
             'violations_overview' => $violationsOverview,
             'audit_tracker' => $auditTracker,
             'training_completion' => $trainingCompletion,
+            'location_grades' => $locationGrades,
         ]);
     }
 
