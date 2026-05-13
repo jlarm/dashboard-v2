@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Override;
 
 /**
@@ -17,8 +18,8 @@ use Override;
  * @property string|null $name
  * @property string|null $email
  * @property string|null $role
- * @property \Illuminate\Support\Carbon $expires_at
- * @property \Illuminate\Support\Carbon $created_at
+ * @property Carbon $expires_at
+ * @property Carbon $created_at
  */
 class UserInvite extends Model
 {

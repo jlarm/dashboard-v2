@@ -375,7 +375,7 @@ quiz.form = quizForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 export const videoComplete = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -390,7 +390,7 @@ videoComplete.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 videoComplete.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -423,7 +423,7 @@ videoComplete.url = (args: { course: string | { slug: string } } | [course: stri
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 videoComplete.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -433,7 +433,7 @@ videoComplete.post = (args: { course: string | { slug: string } } | [course: str
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 const videoCompleteForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -443,7 +443,7 @@ const videoCompleteForm = (args: { course: string | { slug: string } } | [course
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 videoCompleteForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

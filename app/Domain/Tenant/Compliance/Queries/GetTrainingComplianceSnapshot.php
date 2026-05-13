@@ -84,7 +84,7 @@ class GetTrainingComplianceSnapshot
 
     /**
      * @param  Collection<int, User>  $users
-     * @param  Collection<int, array{total_required:int, valid_completed:int, not_completed:int, expired:int, expiring_soon:int, status:string}>  $summaries
+     * @param  Collection<int, array{total_required:int, valid_completed:int, not_completed:int, expired:int, expiring_soon:int, status:'compliant'|'at_risk'|'overdue'|'unassigned'}>  $summaries
      * @return list<TrainingComplianceAlertData>
      */
     private function buildAlerts(Collection $users, Collection $summaries): array
@@ -99,7 +99,7 @@ class GetTrainingComplianceSnapshot
 
                 $status = $summary['status'];
 
-                if ($status !== 'overdue' && $status !== 'at_risk' && $status !== 'unassigned') {
+                if (! in_array($status, ['overdue', 'at_risk', 'unassigned'], true)) {
                     return null;
                 }
 
@@ -130,9 +130,9 @@ class GetTrainingComplianceSnapshot
             ->map(static fn (array $row): TrainingComplianceAlertData => new TrainingComplianceAlertData(
                 user_slug: (string) $row['user']->slug,
                 name: (string) $row['user']->name,
-                valid_completed: (int) $row['summary']['valid_completed'],
-                total_required: (int) $row['summary']['total_required'],
-                status: (string) $row['summary']['status'],
+                valid_completed: $row['summary']['valid_completed'],
+                total_required: $row['summary']['total_required'],
+                status: $row['summary']['status'],
             ))
             ->values()
             ->all();

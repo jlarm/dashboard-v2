@@ -20,7 +20,7 @@ final readonly class PhishingSettingsData implements Arrayable
 
     public static function fromModel(?GlobalSetting $settings): self
     {
-        if ($settings === null) {
+        if (! $settings instanceof GlobalSetting) {
             return new self(active: false, token: null, ip: null);
         }
 

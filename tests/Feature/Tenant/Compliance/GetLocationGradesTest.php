@@ -9,6 +9,7 @@ use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 
 beforeEach(function (): void {
@@ -93,7 +94,7 @@ it('maps deal jacket ratings to letter grades', function (): void {
     expect($rows[0]->overall)->toBe('C');
 });
 
-function seedOshaGrade(Store $store, string $grade, ?Carbon\CarbonInterface $date = null): void
+function seedOshaGrade(Store $store, string $grade, ?CarbonInterface $date = null): void
 {
     OshaViolationAudit::query()->create([
         'uuid' => (string) Str::uuid(),
@@ -104,7 +105,7 @@ function seedOshaGrade(Store $store, string $grade, ?Carbon\CarbonInterface $dat
     ]);
 }
 
-function seedGlbaGrade(Store $store, string $grade, ?Carbon\CarbonInterface $date = null): void
+function seedGlbaGrade(Store $store, string $grade, ?CarbonInterface $date = null): void
 {
     GlbaViolationAudit::query()->create([
         'uuid' => (string) Str::uuid(),
@@ -115,7 +116,7 @@ function seedGlbaGrade(Store $store, string $grade, ?Carbon\CarbonInterface $dat
     ]);
 }
 
-function seedBodyShopGrade(Store $store, string $grade, ?Carbon\CarbonInterface $date = null): void
+function seedBodyShopGrade(Store $store, string $grade, ?CarbonInterface $date = null): void
 {
     BodyShopViolationAudit::query()->create([
         'uuid' => (string) Str::uuid(),
@@ -126,7 +127,7 @@ function seedBodyShopGrade(Store $store, string $grade, ?Carbon\CarbonInterface 
     ]);
 }
 
-function seedDealJacketRating(Store $store, float $rating, ?Carbon\CarbonInterface $date = null): void
+function seedDealJacketRating(Store $store, float $rating, ?CarbonInterface $date = null): void
 {
     IndividualAudit::query()->create([
         'uuid' => (string) Str::uuid(),

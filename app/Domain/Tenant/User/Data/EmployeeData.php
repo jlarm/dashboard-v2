@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Tenant\User\Data;
 
 use App\Enums\Role;
+use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -48,7 +49,7 @@ final readonly class EmployeeData implements Arrayable
 
         $stores = $user->stores
             ->sortBy('name')
-            ->map(static fn (\App\Models\Dealer\Store $store): array => [
+            ->map(static fn (Store $store): array => [
                 'id' => (int) $store->id,
                 'name' => (string) $store->name,
             ])

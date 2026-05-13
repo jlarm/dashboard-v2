@@ -85,7 +85,7 @@ class UpdateIndividualAuditRequest extends FormRequest
             'mileage' => isset($validated['mileage']) ? (string) $validated['mileage'] : null,
             'answers' => $answers,
             'new_images' => $newImages,
-            'remove_image_ids' => array_map('intval', $validated['remove_image_ids'] ?? []),
+            'remove_image_ids' => array_map(intval(...), $validated['remove_image_ids'] ?? []),
         ];
     }
 }

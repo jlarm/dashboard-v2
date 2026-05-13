@@ -74,7 +74,7 @@ class ViolationAuditController extends Controller
             ? collect()
             : $modelClass::query()
                 ->whereIn('store_id', $storeIds->all())
-                ->when(! $canSeeIncomplete, fn ($query) => $query->whereNotNull('completed_date'))
+                ->unless($canSeeIncomplete, fn ($query) => $query->whereNotNull('completed_date'))
                 ->withCount([
                     'violations as violation_count',
                     'violations as remediation_count' => fn ($q) => $q->whereHas('remediation', fn ($q) => $q->where('completed', true)),

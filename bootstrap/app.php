@@ -85,8 +85,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     ->with('error', 'Your session expired. Please try again.');
             }
 
-            return redirect()
-                ->back()
+            return back()
                 ->withInput($request->except(['password', 'password_confirmation', '_token']))
                 ->with('error', 'Your session expired. Please try again.');
         });

@@ -47,6 +47,11 @@ class DealJacketGroup extends Model
         return $this->hasMany(DealJacket::class);
     }
 
+    protected static function newFactory(): DealJacketGroupFactory
+    {
+        return DealJacketGroupFactory::new();
+    }
+
     /**
      * Eager-aggregates each group's average per-deal-jacket weighted
      * percentage (DealJacket.percentage, populated by SaveDealJacket).
@@ -56,14 +61,9 @@ class DealJacketGroup extends Model
      * @param  Builder<self>  $query
      * @return Builder<self>
      */
-    public function scopeWithAveragePercentage(Builder $query): Builder
+    protected function scopeWithAveragePercentage(Builder $query): Builder
     {
         return $query->withAvg('dealJackets as average_percentage', 'percentage');
-    }
-
-    protected static function newFactory(): DealJacketGroupFactory
-    {
-        return DealJacketGroupFactory::new();
     }
 
     #[Override]

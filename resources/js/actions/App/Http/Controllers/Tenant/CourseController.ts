@@ -163,7 +163,7 @@ all.form = allForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
-* @see app/Http/Controllers/Tenant/CourseController.php:123
+* @see app/Http/Controllers/Tenant/CourseController.php:121
 * @route '/courses/dot-certificate'
 */
 export const issueDotCertificate = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +178,7 @@ issueDotCertificate.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
-* @see app/Http/Controllers/Tenant/CourseController.php:123
+* @see app/Http/Controllers/Tenant/CourseController.php:121
 * @route '/courses/dot-certificate'
 */
 issueDotCertificate.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ issueDotCertificate.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
-* @see app/Http/Controllers/Tenant/CourseController.php:123
+* @see app/Http/Controllers/Tenant/CourseController.php:121
 * @route '/courses/dot-certificate'
 */
 issueDotCertificate.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ issueDotCertificate.post = (options?: RouteQueryOptions): RouteDefinition<'post'
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
-* @see app/Http/Controllers/Tenant/CourseController.php:123
+* @see app/Http/Controllers/Tenant/CourseController.php:121
 * @route '/courses/dot-certificate'
 */
 const issueDotCertificateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ const issueDotCertificateForm = (options?: RouteQueryOptions): RouteFormDefiniti
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
-* @see app/Http/Controllers/Tenant/CourseController.php:123
+* @see app/Http/Controllers/Tenant/CourseController.php:121
 * @route '/courses/dot-certificate'
 */
 issueDotCertificateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -509,7 +509,7 @@ submitQuiz.form = submitQuizForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 export const markVideoComplete = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -524,7 +524,7 @@ markVideoComplete.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 markVideoComplete.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -557,7 +557,7 @@ markVideoComplete.url = (args: { course: string | { slug: string } } | [course: 
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 markVideoComplete.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -567,7 +567,7 @@ markVideoComplete.post = (args: { course: string | { slug: string } } | [course:
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 const markVideoCompleteForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -577,7 +577,7 @@ const markVideoCompleteForm = (args: { course: string | { slug: string } } | [co
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:113
+* @see app/Http/Controllers/Tenant/CourseController.php:111
 * @route '/courses/{course}/video-complete'
 */
 markVideoCompleteForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

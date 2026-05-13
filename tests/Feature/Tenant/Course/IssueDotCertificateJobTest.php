@@ -39,7 +39,7 @@ it('is gated by DispatchDotCertificate idempotency', function (): void {
         'file_name' => 'existing.pdf',
     ]);
 
-    $dispatched = app(DispatchDotCertificate::class)->handle($this->user, 'Test Store', '2025-12-31');
+    $dispatched = resolve(DispatchDotCertificate::class)->handle($this->user, 'Test Store', '2025-12-31');
 
     expect($dispatched)->toBeFalse();
 });

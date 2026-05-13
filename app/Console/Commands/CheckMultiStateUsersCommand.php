@@ -8,6 +8,7 @@ use App\Models\Dealership;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Override;
 
 class CheckMultiStateUsersCommand extends Command
@@ -23,7 +24,7 @@ class CheckMultiStateUsersCommand extends Command
     {
         $tenantId = $this->option('tenant');
 
-        /** @var \Illuminate\Database\Eloquent\Collection<int, Dealership> $tenants */
+        /** @var Collection<int, Dealership> $tenants */
         $tenants = Dealership::query()
             ->when(
                 is_string($tenantId) && $tenantId !== '',

@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 use Inertia\Testing\AssertableInertia;
+use Spatie\Permission\Models\Role;
 
 it('passes a compliance prop with score, delta, pillars, and caption to the dashboard', function (): void {
     $store = Store::query()->firstOrFail();
@@ -191,7 +192,7 @@ it('hides the KPI cards from Managers', function (): void {
         'email' => 'kpi-manager-'.uniqid().'@test.com',
         'password' => bcrypt('password'),
     ]);
-    $manager->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Manager')->firstOrFail());
+    $manager->assignRole(Role::query()->where('name', 'Manager')->firstOrFail());
     $manager->stores()->attach($store->id);
     $manager->update(['current_store_id' => $store->id]);
 
@@ -211,8 +212,8 @@ it('still shows the KPI cards to a Manager who also holds an executive role', fu
         'email' => 'kpi-manager-owner-'.uniqid().'@test.com',
         'password' => bcrypt('password'),
     ]);
-    $managerOwner->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Manager')->firstOrFail());
-    $managerOwner->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Owner')->firstOrFail());
+    $managerOwner->assignRole(Role::query()->where('name', 'Manager')->firstOrFail());
+    $managerOwner->assignRole(Role::query()->where('name', 'Owner')->firstOrFail());
     $managerOwner->stores()->attach($store->id);
     $managerOwner->update(['current_store_id' => $store->id]);
 
@@ -232,7 +233,7 @@ it('renders the employee dashboard for users whose only role is Employee', funct
         'email' => 'employee-only-'.uniqid().'@test.com',
         'password' => bcrypt('password'),
     ]);
-    $employee->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Employee')->firstOrFail());
+    $employee->assignRole(Role::query()->where('name', 'Employee')->firstOrFail());
     $employee->stores()->attach($store->id);
 
     $this->actingAs($employee)
@@ -253,7 +254,7 @@ it('renders the employee dashboard for users whose only role is Porter/Driver', 
         'email' => 'porter-only-'.uniqid().'@test.com',
         'password' => bcrypt('password'),
     ]);
-    $porter->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Porter/Driver')->firstOrFail());
+    $porter->assignRole(Role::query()->where('name', 'Porter/Driver')->firstOrFail());
     $porter->stores()->attach($store->id);
 
     $this->actingAs($porter)

@@ -9,7 +9,6 @@ use App\Models\VendorEmailLogIndex;
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Symfony\Component\Mime\Address;
 
 class LogSentMessage
 {

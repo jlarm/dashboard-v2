@@ -8,6 +8,7 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Override;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -18,7 +19,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @property int $id
- * @property \Illuminate\Support\Carbon|null $audit_date
+ * @property Carbon|null $audit_date
  * @property string|null $name
  * @property-read Store|null $store
  */

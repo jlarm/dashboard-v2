@@ -13,8 +13,6 @@ parameters:
 
     excludePaths:
         - app/Http/Livewire
-        - app/Http/Controllers/DealJacketPdfTestController.php
-        - app/Http/Controllers/DealJacketReportPdfTestController.php
         # Job depends on MediaLibrary Pro which was removed in this migration; only callers were Livewire
         - app/Jobs/UploadFinanceAuditImagesJob.php
 

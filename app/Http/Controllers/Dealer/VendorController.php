@@ -128,7 +128,7 @@ class VendorController extends Controller
             abort(500, 'We could not generate the vendor form download.');
         }
 
-        abort_if($response === null, 404);
+        abort_if(! $response instanceof StreamedResponse, 404);
 
         return $response;
     }

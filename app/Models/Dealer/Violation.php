@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use Override;
 use Spatie\Image\Enums\CropPosition;
 use Spatie\Image\Enums\Fit;
@@ -25,7 +26,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property int|null $statement_id
  * @property string|null $statement
  * @property string|null $comment
- * @property \Illuminate\Support\Carbon|null $violation_date
+ * @property Carbon|null $violation_date
  * @property bool $risk
  * @property int|null $severity
  * @property bool $show_reference_image

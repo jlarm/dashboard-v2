@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Tenant\Audits\Data;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class LegacyAuditListItemData
 {
@@ -18,7 +19,7 @@ class LegacyAuditListItemData
 
     public static function fromModel(Model $legacy): self
     {
-        /** @var \Illuminate\Support\Carbon $date */
+        /** @var Carbon $date */
         $date = $legacy->audit_date; // @phpstan-ignore property.notFound
         $rating = (int) ($legacy->rating ?? 0);
 

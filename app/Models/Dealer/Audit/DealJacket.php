@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Override;
 
 /**
@@ -20,7 +21,7 @@ use Override;
  * @property string|null $purchase_type
  * @property string|null $vehicle_type
  * @property int|null $mileage
- * @property \Illuminate\Support\Carbon|null $date_of_deal_jacket
+ * @property Carbon|null $date_of_deal_jacket
  * @property array<int, array<string, mixed>>|null $responses
  * @property-read User|null $user
  */

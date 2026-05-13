@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Domain\Tenant\Compliance\Data\TrainingComplianceAlertData;
 use App\Domain\Tenant\Compliance\Queries\GetTrainingComplianceSnapshot;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
@@ -86,7 +87,7 @@ it('buckets users by status and surfaces non-compliant employees in priority ale
     expect($snapshot->priority_alerts)->not->toBeEmpty();
     expect($snapshot->priority_alerts[0]->status)->toBe('overdue');
 
-    $alertSlugs = array_map(static fn ($alert): string => $alert->user_slug, $snapshot->priority_alerts);
+    $alertSlugs = array_map(static fn (TrainingComplianceAlertData $alert): string => $alert->user_slug, $snapshot->priority_alerts);
     expect($alertSlugs)->toContain($overdueEmployee->slug);
     expect($alertSlugs)->not->toContain($compliantEmployee->slug);
 });

@@ -67,7 +67,7 @@ it('renders video when vimeo returns video data', function (): void {
         ->assertInertia(fn ($page) => $page
             ->component('dealer/courses/Show')
             ->where('video.title', 'Test Video')
-            ->where('video.player_embed_url', fn ($url) => str_contains((string) $url, 'player.vimeo.com/video/123456789')));
+            ->where('video.player_embed_url', fn ($url): bool => str_contains((string) $url, 'player.vimeo.com/video/123456789')));
 });
 
 it('includes a signed quiz url in props', function (): void {
@@ -75,5 +75,5 @@ it('includes a signed quiz url in props', function (): void {
 
     $this->actingAs($this->consultant)
         ->get(route('dealer.courses.show', $course))
-        ->assertInertia(fn ($page) => $page->where('quiz_url', fn ($url) => str_contains((string) $url, 'signature=')));
+        ->assertInertia(fn ($page) => $page->where('quiz_url', fn ($url): bool => str_contains((string) $url, 'signature=')));
 });

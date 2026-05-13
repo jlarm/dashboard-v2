@@ -142,7 +142,7 @@ describe('Course Index Inertia page - course visibility', function (): void {
 
         $this->actingAs($user)
             ->get(route('dealer.courses.index'))
-            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => ! collect($c)->pluck('id')->contains($course->id)));
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c): bool => collect($c)->pluck('id')->doesntContain($course->id)));
     });
 
     it('includes california course for users with california stores', function (): void {
@@ -198,7 +198,7 @@ describe('Course Index Inertia page - course visibility', function (): void {
 
         $this->actingAs($user)
             ->get(route('dealer.courses.index'))
-            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => ! collect($c)->pluck('id')->contains($optionalCourse->id)));
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c): bool => collect($c)->pluck('id')->doesntContain($optionalCourse->id)));
     });
 
     it('displays manually added courses for consultants', function (): void {
@@ -255,6 +255,6 @@ describe('Course Index Inertia page - course visibility', function (): void {
 
         $this->actingAs($user)
             ->get(route('dealer.courses.index'))
-            ->assertInertia(fn ($page) => $page->where('courses', fn ($c) => ! collect($c)->pluck('id')->contains($course->id)));
+            ->assertInertia(fn ($page) => $page->where('courses', fn ($c): bool => collect($c)->pluck('id')->doesntContain($course->id)));
     });
 });

@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Override;
@@ -36,8 +37,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $name
  * @property string|null $email
  * @property string|null $slug
- * @property \Illuminate\Support\Carbon|null $last_sent_course_reminder
- * @property \Illuminate\Support\Carbon|null $last_login_at
+ * @property Carbon|null $last_sent_course_reminder
+ * @property Carbon|null $last_login_at
  * @property-read int $total_user_courses
  * @property-read int $total_completed_courses
  * @property-read int|null $completed_courses_count

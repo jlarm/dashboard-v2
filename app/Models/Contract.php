@@ -12,14 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Override;
 
 /**
- * @property \Illuminate\Support\Carbon|null $agreement_date
- * @property \Illuminate\Support\Carbon|null $commence_date
- * @property \Illuminate\Support\Carbon|null $armp_date_signed
- * @property \Illuminate\Support\Carbon|null $dealer_date_signed
+ * @property Carbon|null $agreement_date
+ * @property Carbon|null $commence_date
+ * @property Carbon|null $armp_date_signed
+ * @property Carbon|null $dealer_date_signed
  */
 class Contract extends Model
 {

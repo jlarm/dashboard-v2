@@ -88,7 +88,7 @@ class BuildDealJacketCharts
 
         return [
             'labels' => $labels,
-            'data' => array_values(array_map(static fn ($v): int => (int) $v, $top)),
+            'data' => array_values(array_map(static fn (int $v): int => $v, $top)),
         ];
     }
 

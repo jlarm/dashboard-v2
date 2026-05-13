@@ -16,6 +16,7 @@ use App\Http\Requests\Central\ViolationStatement\UpdateViolationStatementRequest
 use App\Http\Resources\Central\ViolationStatementResource;
 use App\Models\User;
 use App\Models\ViolationStatement;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -92,7 +93,7 @@ class ViolationStatementController extends Controller
             ->with('flash.success', 'Violation statement deleted.');
     }
 
-    private function violationStatementData(\Illuminate\Foundation\Http\FormRequest $request): ViolationStatementData
+    private function violationStatementData(FormRequest $request): ViolationStatementData
     {
         /** @var array{statement: string, weight: int, categories: list<string>, keywords?: list<string>|null} $validated */
         $validated = $request->validated();

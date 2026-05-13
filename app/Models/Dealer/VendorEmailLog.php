@@ -7,14 +7,15 @@ namespace App\Models\Dealer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Override;
 
 /**
  * @property int $id
  * @property string|null $event_type
  * @property string|null $delivery_message
- * @property \Illuminate\Support\Carbon|null $sent_at
- * @property \Illuminate\Support\Carbon|null $delivered_at
+ * @property Carbon|null $sent_at
+ * @property Carbon|null $delivered_at
  */
 class VendorEmailLog extends Model
 {

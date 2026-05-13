@@ -10,6 +10,7 @@ use App\Models\Dealer\Audit\GlbaViolationAudit;
 use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
+use Illuminate\Database\Eloquent\Builder;
 
 class GetLocationGrades
 {
@@ -54,7 +55,7 @@ class GetLocationGrades
                     ->whereColumn('store_id', 'stores.id')
                     ->whereNotNull('rating')
                     ->whereNotNull('audit_date')
-                    ->orderByDesc('audit_date')
+                    ->latest('audit_date')
                     ->orderByDesc('id')
                     ->limit(1),
             ])
@@ -81,7 +82,7 @@ class GetLocationGrades
     /**
      * @param  class-string  $auditClass
      */
-    private function latestGradeSubquery(string $auditClass): \Illuminate\Database\Eloquent\Builder
+    private function latestGradeSubquery(string $auditClass): Builder
     {
         return $auditClass::query()
             ->select('grade')

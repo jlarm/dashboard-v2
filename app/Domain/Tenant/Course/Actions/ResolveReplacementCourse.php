@@ -50,7 +50,7 @@ class ResolveReplacementCourse
             ->get(['id', 'slug', 'states_required'])
             ->first(function (Course $candidate) use ($userStates): bool {
                 $required = collect($candidate->states_required ?? [])
-                    ->map(fn (mixed $state): string => $this->courseService->normalizeState((string) $state))
+                    ->map(fn (mixed $state): string => $this->courseService->normalizeState($state))
                     ->filter()
                     ->unique()
                     ->values();

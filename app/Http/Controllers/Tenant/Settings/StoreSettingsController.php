@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Tenant\Settings;
 
+use App\Domain\Tenant\GlobalSettings\Data\ResettableUserData;
 use App\Domain\Tenant\StoreSettings\Actions\ResetStoreCourses;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateComplianceSection;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateGeneralSection;
@@ -84,7 +85,7 @@ class StoreSettingsController extends Controller
 
                 try {
                     return array_map(
-                        static fn ($u): array => $u->toArray(),
+                        static fn (ResettableUserData $u): array => $u->toArray(),
                         $getStoreResettableUsers->handle($store, $search),
                     );
                 } catch (Throwable $e) {

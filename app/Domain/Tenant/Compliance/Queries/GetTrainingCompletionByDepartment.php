@@ -6,6 +6,7 @@ namespace App\Domain\Tenant\Compliance\Queries;
 
 use App\Domain\Tenant\Compliance\Data\TrainingCompletionRowData;
 use App\Enums\Role;
+use App\Models\Dealer\Department;
 use App\Models\User;
 use App\Services\TrainingComplianceService;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,7 +29,7 @@ class GetTrainingCompletionByDepartment
     public function handleForStores(Collection|array $storeIds): array
     {
         $ids = collect($storeIds)
-            ->map(static fn ($id): int => (int) $id)
+            ->map(static fn ($id): int => $id)
             ->filter()
             ->values()
             ->all();
@@ -60,7 +61,11 @@ class GetTrainingCompletionByDepartment
         $allRow = $this->buildRow('All', $users, $summaries);
 
         $departmentRows = $users
-            ->groupBy(fn (User $user): string => $user->department?->name ?? 'Unassigned')
+            ->groupBy(function (User $user): string {
+                $department = $user->department;
+
+                return $department instanceof Department ? $department->name : 'Unassigned';
+            })
             ->sortKeys()
             ->map(fn (Collection $group, string $name): TrainingCompletionRowData => $this->buildRow($name, $group, $summaries))
             ->values()
@@ -71,7 +76,7 @@ class GetTrainingCompletionByDepartment
 
     /**
      * @param  Collection<int, User>  $users
-     * @param  Collection<int, array{total_required:int, valid_completed:int, not_completed:int, expired:int, expiring_soon:int, status:string}>  $summaries
+     * @param  Collection<int, array{total_required:int, valid_completed:int, not_completed:int, expired:int, expiring_soon:int, status:'compliant'|'at_risk'|'overdue'|'unassigned'}>  $summaries
      */
     private function buildRow(string $label, Collection $users, Collection $summaries): TrainingCompletionRowData
     {

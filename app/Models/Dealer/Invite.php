@@ -9,6 +9,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Override;
 use Spatie\Activitylog\LogOptions;
@@ -20,7 +21,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property array<int, mixed>|null $stores
  * @property array<int, mixed>|null $roles
  * @property array<int, mixed>|null $courses
- * @property \Illuminate\Support\Carbon $created_at
+ * @property Carbon $created_at
  */
 class Invite extends Model
 {

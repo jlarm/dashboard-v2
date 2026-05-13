@@ -48,7 +48,7 @@ it('is a no-op for courses without a video', function (): void {
     ]);
     $user->assignRole('Employee');
 
-    $course = makeCourse(null);
+    $course = makeCourse();
 
     $this->actingAs($user)
         ->post(route('dealer.courses.video-complete', $course));

@@ -11,6 +11,7 @@ use App\Models\VendorEmailLogIndex;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use stdClass;
 
 class MailgunWebhookController extends Controller
 {
@@ -71,7 +72,7 @@ class MailgunWebhookController extends Controller
             }
         }
 
-        if ($emailLog === null) {
+        if (! $emailLog instanceof stdClass) {
             Log::warning('Mailgun webhook — index miss, falling back to full tenant scan', [
                 'message_id' => $messageId,
                 'event' => $event,
@@ -82,7 +83,7 @@ class MailgunWebhookController extends Controller
                     $emailLog = VendorEmailLog::query()->whereIn('message_id', $messageIdVariants)->first();
                 });
 
-                if ($emailLog !== null) {
+                if ($emailLog instanceof stdClass) {
                     $foundTenant = $tenant;
                     break;
                 }

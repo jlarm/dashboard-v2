@@ -84,7 +84,7 @@ form.form = formForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::managers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/managers'
 */
 export const managers = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -99,7 +99,7 @@ managers.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::managers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/managers'
 */
 managers.url = (options?: RouteQueryOptions) => {
@@ -108,7 +108,7 @@ managers.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::managers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/managers'
 */
 managers.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -118,7 +118,7 @@ managers.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::managers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/managers'
 */
 managers.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -128,7 +128,7 @@ managers.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::managers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/managers'
 */
 const managersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -138,7 +138,7 @@ const managersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::managers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/managers'
 */
 managersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -148,7 +148,7 @@ managersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::managers
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/managers'
 */
 managersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -165,7 +165,7 @@ managers.form = managersForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::compliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/compliance'
 */
 export const compliance = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -180,7 +180,7 @@ compliance.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::compliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/compliance'
 */
 compliance.url = (options?: RouteQueryOptions) => {
@@ -189,7 +189,7 @@ compliance.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::compliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/compliance'
 */
 compliance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -199,7 +199,7 @@ compliance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::compliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/compliance'
 */
 compliance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -209,7 +209,7 @@ compliance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::compliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/compliance'
 */
 const complianceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -219,7 +219,7 @@ const complianceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::compliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/compliance'
 */
 complianceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -229,7 +229,7 @@ complianceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::compliance
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/compliance'
 */
 complianceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -246,7 +246,7 @@ compliance.form = complianceForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/reset-courses'
 */
 export const resetCourses = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -261,7 +261,7 @@ resetCourses.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/reset-courses'
 */
 resetCourses.url = (options?: RouteQueryOptions) => {
@@ -270,7 +270,7 @@ resetCourses.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/reset-courses'
 */
 resetCourses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -280,7 +280,7 @@ resetCourses.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/reset-courses'
 */
 resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -290,7 +290,7 @@ resetCourses.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/reset-courses'
 */
 const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -300,7 +300,7 @@ const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/reset-courses'
 */
 resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -310,7 +310,7 @@ resetCoursesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'>
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:47
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:48
 * @route '/settings/reset-courses'
 */
 resetCoursesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

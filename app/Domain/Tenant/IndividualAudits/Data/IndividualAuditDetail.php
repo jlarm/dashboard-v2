@@ -55,8 +55,8 @@ class IndividualAuditDetail
 
         $images = $audit->getMedia('individual_audit_images')->map(static fn ($media): array => [
             'id' => (int) $media->id,
-            'url' => (string) $media->getUrl(),
-            'preview_url' => $media->hasGeneratedConversion('preview') ? (string) $media->getUrl('preview') : null,
+            'url' => $media->getUrl(),
+            'preview_url' => $media->hasGeneratedConversion('preview') ? $media->getUrl('preview') : null,
         ])->all();
 
         $children = $audit->children?->map(static fn (IndividualAudit $child): array => [

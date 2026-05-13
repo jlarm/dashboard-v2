@@ -8,13 +8,14 @@ use App\Domain\Tenant\Course\DotCertificate;
 use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Jobs\IssueDotCertificate;
 use App\Models\User;
+use Deprecated;
 
 class DispatchDotCertificate
 {
-    /**
-     * @deprecated Use App\Domain\Tenant\Course\DotCertificate::COURSE_NAME.
-     *             Retained for backwards compatibility while callers migrate.
-     */
+    #[Deprecated(message: <<<'TXT'
+    Use App\Domain\Tenant\Course\DotCertificate::COURSE_NAME.
+                 Retained for backwards compatibility while callers migrate.
+    TXT)]
     public const string COURSE_NAME = DotCertificate::COURSE_NAME;
 
     public function __construct(private readonly CanIssueDotCertificate $canIssue) {}
@@ -25,7 +26,7 @@ class DispatchDotCertificate
             return false;
         }
 
-        IssueDotCertificate::dispatch($user->id, $storeName, $passedOn);
+        dispatch(new IssueDotCertificate($user->id, $storeName, $passedOn));
 
         return true;
     }

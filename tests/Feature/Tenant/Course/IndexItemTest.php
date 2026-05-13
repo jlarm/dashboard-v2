@@ -78,7 +78,7 @@ describe('Course Index page - row props', function (): void {
         $this->actingAs($this->user)
             ->get(route('dealer.courses.index'))
             ->assertInertia(fn ($page) => $page
-                ->where('courses', fn ($c) => collect($c)->keyBy('slug')->get('dot-hazardous-materials-transportation-identifying-hazardous-materials')['is_locked'] === true));
+                ->where('courses', fn ($c): bool => collect($c)->keyBy('slug')->get('dot-hazardous-materials-transportation-identifying-hazardous-materials')['is_locked'] === true));
     });
 
     it('uses years_expires when computing expiration (not the hardcoded 365 days)', function (): void {
@@ -105,7 +105,7 @@ describe('Course Index page - row props', function (): void {
         $this->actingAs($this->user)
             ->get(route('dealer.courses.index'))
             ->assertInertia(fn ($page) => $page
-                ->where('courses', fn ($c) => collect($c)->keyBy('slug')->get('long-cycle-training')['status'] === 'passed'));
+                ->where('courses', fn ($c): bool => collect($c)->keyBy('slug')->get('long-cycle-training')['status'] === 'passed'));
     });
 
     it('marks course as expired once years_expires has elapsed', function (): void {
@@ -131,6 +131,6 @@ describe('Course Index page - row props', function (): void {
         $this->actingAs($this->user)
             ->get(route('dealer.courses.index'))
             ->assertInertia(fn ($page) => $page
-                ->where('courses', fn ($c) => collect($c)->keyBy('slug')->get('long-cycle-training-expired')['status'] === 'expired'));
+                ->where('courses', fn ($c): bool => collect($c)->keyBy('slug')->get('long-cycle-training-expired')['status'] === 'expired'));
     });
 });

@@ -150,13 +150,13 @@ class DashboardController extends Controller
 
         $selectedStore = $this->resolveSelectedStore($user, $stores);
 
-        $consultantNote = $selectedStore !== null
+        $consultantNote = $selectedStore instanceof Store
             && $user instanceof User
             && $user->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value])
             ? ['note' => $selectedStore->note]
             : null;
 
-        $manualsSummary = $selectedStore !== null
+        $manualsSummary = $selectedStore instanceof Store
             && $user instanceof User
             && ! $user->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value])
             ? $manualsSummaryQuery->handleForStore($selectedStore)->toArray()
@@ -195,7 +195,7 @@ class DashboardController extends Controller
             ? $this->resolveSelectedStore($user, $this->resolveScopedStores())
             : null;
 
-        abort_if($store === null, 404);
+        abort_if(! $store instanceof Store, 404);
 
         $updateConsultantNote->handle($store, $request->note());
 
@@ -266,7 +266,7 @@ class DashboardController extends Controller
             ->orderByDesc('id')
             ->first();
 
-        abort_if($latest === null, 404, 'No report available.');
+        abort_unless($latest instanceof ViolationAudit, 404, 'No report available.');
 
         return $streamAuditPdf->handle($type, $latest);
     }

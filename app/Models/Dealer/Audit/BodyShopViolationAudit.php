@@ -10,23 +10,25 @@ use App\Models\Dealer\Store;
 use App\Models\Dealer\Violation;
 use App\Models\RemediationReminders;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Override;
 
 /**
  * @property int $id
  * @property string $uuid
- * @property \Illuminate\Support\Carbon|null $date
- * @property \Illuminate\Support\Carbon|null $completed_date
+ * @property Carbon|null $date
+ * @property Carbon|null $completed_date
  * @property string|null $grade
  * @property int|null $outstanding_remediation_count
  * @property string|null $remediation_pdf_path
  * @property array<int, string>|null $reminder_logs
  * @property-read Store|null $store
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Violation> $violations
+ * @property-read Collection<int, Violation> $violations
  */
 class BodyShopViolationAudit extends Model implements ViolationAudit
 {

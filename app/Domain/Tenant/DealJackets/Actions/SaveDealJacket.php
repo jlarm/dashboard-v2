@@ -77,8 +77,10 @@ class SaveDealJacket
             if (($row['high_risk'] ?? false) === true) {
                 $highRisk++;
             }
-
-            if ($answer === 'na' || $answer === null) {
+            if ($answer === 'na') {
+                continue;
+            }
+            if ($answer === null) {
                 continue;
             }
 
@@ -88,7 +90,7 @@ class SaveDealJacket
             if ($answer === 'yes') {
                 $earnedWeight += $weight;
             }
-            if (($row['high_risk'] ?? false) === true) {
+            if ($row['high_risk'] ?? false) {
                 $earnedWeight -= $weight * 0.5;
             }
         }

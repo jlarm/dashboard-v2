@@ -6,13 +6,14 @@ namespace App\Models\Dealer;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Override;
 
 /**
  * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $last_scan
- * @property \Illuminate\Support\Carbon|null $next_scan
+ * @property Carbon|null $created_at
+ * @property Carbon|null $last_scan
+ * @property Carbon|null $next_scan
  */
 class ScanReport extends Model
 {

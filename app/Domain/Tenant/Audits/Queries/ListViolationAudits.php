@@ -32,7 +32,7 @@ class ListViolationAudits
 
         return $modelClass::query()
             ->whereIn('store_id', $storeIds->all())
-            ->when(! $includeIncomplete, fn ($query) => $query->whereNotNull('completed_date'))
+            ->unless($includeIncomplete, fn ($query) => $query->whereNotNull('completed_date'))
             ->with(['store:id,name'])
             ->withCount([
                 'violations as violation_count',

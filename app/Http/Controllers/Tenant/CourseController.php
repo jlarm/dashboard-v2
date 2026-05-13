@@ -96,9 +96,7 @@ class CourseController extends Controller
         $user = $this->requireUser($request);
         $result = $submit->handle($course, $user, $request->answers());
 
-        $dotCertDispatched = $result->passed && $course->slug === DotCertificate::COURSE_SLUG
-            ? $dispatchCert->handle($user, (string) tenant('name'), now()->format('F d, Y'))
-            : false;
+        $dotCertDispatched = $result->passed && $course->slug === DotCertificate::COURSE_SLUG && $dispatchCert->handle($user, (string) tenant('name'), now()->format('F d, Y'));
 
         return to_route('dealer.courses.index')->with('quiz', [
             'percentage' => round($result->score),

@@ -27,8 +27,8 @@ class RemediationSettingsData
         $settings = $store->remediationSettings;
 
         return new self(
-            active: $settings instanceof RemediationSetting ? (bool) $settings->active : false,
-            notifications: $settings instanceof RemediationSetting ? (bool) $settings->notifications : false,
+            active: $settings instanceof RemediationSetting && (bool) $settings->active,
+            notifications: $settings instanceof RemediationSetting && (bool) $settings->notifications,
             frequency: $settings instanceof RemediationSetting ? $settings->frequency->value : null,
             reminder_groups: self::reminderGroupsForStore($store),
         );
