@@ -6,6 +6,7 @@ import KpiCardsRow from '@/pages/tenant/dashboard/KpiCardsRow.vue';
 import LocationsCard from '@/pages/tenant/dashboard/LocationsCard.vue';
 import OutstandingVendorsCard from '@/pages/tenant/dashboard/OutstandingVendorsCard.vue';
 import { useNullablePageProp } from '@/pages/tenant/dashboard/props';
+import TrainingComplianceSnapshotCard from '@/pages/tenant/dashboard/TrainingComplianceSnapshotCard.vue';
 import TrainingCompletionCard from '@/pages/tenant/dashboard/TrainingCompletionCard.vue';
 import type { AuditTrackerRow, LocationGradeRow } from '@/pages/tenant/dashboard/types';
 import UpcomingRemindersCard from '@/pages/tenant/dashboard/UpcomingRemindersCard.vue';
@@ -50,6 +51,8 @@ const primaryCard = computed<'locations' | 'audit_tracker' | null>(() => {
                 <AuditTrackerCard v-else-if="primaryCard === 'audit_tracker'" class="xl:col-span-8" />
                 <TrainingCompletionCard :class="primaryCard !== null ? 'xl:col-span-4' : 'xl:col-span-12'" />
             </section>
+
+            <TrainingComplianceSnapshotCard />
 
             <section class="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <UpcomingRemindersCard />

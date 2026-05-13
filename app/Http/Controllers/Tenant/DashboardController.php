@@ -16,6 +16,7 @@ use App\Domain\Tenant\Compliance\Queries\GetAuditTracker;
 use App\Domain\Tenant\Compliance\Queries\GetCriticalVulnerabilities;
 use App\Domain\Tenant\Compliance\Queries\GetLocationGrades;
 use App\Domain\Tenant\Compliance\Queries\GetTrainingCompletionByDepartment;
+use App\Domain\Tenant\Compliance\Queries\GetTrainingComplianceSnapshot;
 use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Domain\Tenant\Course\Queries\GetUserCourseList;
 use App\Http\Controllers\Controller;
@@ -57,6 +58,7 @@ class DashboardController extends Controller
         CalculateViolationsOverview $violationsOverviewQuery,
         GetAuditTracker $auditTrackerQuery,
         GetLocationGrades $locationGradesQuery,
+        GetTrainingComplianceSnapshot $trainingComplianceSnapshotQuery,
         GetTrainingCompletionByDepartment $trainingCompletionQuery,
         GetUserCourseList $courseList,
         CanIssueDotCertificate $canIssueDotCert,
@@ -116,6 +118,10 @@ class DashboardController extends Controller
             )
             : null;
 
+        $trainingComplianceSnapshot = $trainingComplianceSnapshotQuery
+            ->handleForStores($stores->pluck('id')->all())
+            ->toArray();
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
@@ -125,6 +131,7 @@ class DashboardController extends Controller
             'audit_tracker' => $auditTracker,
             'training_completion' => $trainingCompletion,
             'location_grades' => $locationGrades,
+            'training_compliance_snapshot' => $trainingComplianceSnapshot,
         ]);
     }
 

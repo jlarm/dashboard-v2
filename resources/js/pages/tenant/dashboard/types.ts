@@ -98,3 +98,22 @@ export type LocationGradeRow = {
     glba: string | null;
     body_shop: string | null;
 };
+
+export type TrainingComplianceStatus = 'overdue' | 'at_risk' | 'compliant' | 'unassigned';
+
+export type TrainingComplianceAlert = {
+    user_slug: string;
+    name: string;
+    valid_completed: number;
+    total_required: number;
+    status: TrainingComplianceStatus;
+};
+
+export type TrainingComplianceSnapshot = {
+    overdue: number;
+    at_risk: number;
+    compliant: number;
+    unassigned: number;
+    employees: number;
+    priority_alerts: TrainingComplianceAlert[];
+};
