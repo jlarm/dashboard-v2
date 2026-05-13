@@ -224,6 +224,187 @@ it('still shows the KPI cards to a Manager who also holds an executive role', fu
         );
 });
 
+it('renders the employee dashboard for users whose only role is Employee', function (): void {
+    $store = Store::query()->firstOrFail();
+
+    $employee = User::query()->create([
+        'name' => 'Just An Employee '.uniqid(),
+        'email' => 'employee-only-'.uniqid().'@test.com',
+        'password' => bcrypt('password'),
+    ]);
+    $employee->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Employee')->firstOrFail());
+    $employee->stores()->attach($store->id);
+
+    $this->actingAs($employee)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->component('tenant/EmployeeDashboard')
+            ->has('courses')
+            ->has('can_issue_dot_certificate')
+        );
+});
+
+it('renders the employee dashboard for users whose only role is Porter/Driver', function (): void {
+    $store = Store::query()->firstOrFail();
+
+    $porter = User::query()->create([
+        'name' => 'Porter Only '.uniqid(),
+        'email' => 'porter-only-'.uniqid().'@test.com',
+        'password' => bcrypt('password'),
+    ]);
+    $porter->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Porter/Driver')->firstOrFail());
+    $porter->stores()->attach($store->id);
+
+    $this->actingAs($porter)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->component('tenant/EmployeeDashboard')
+        );
+});
+
+it('passes consultant_note when a Consultant has a current_store_id', function (): void {
+    $store = Store::query()->firstOrFail();
+    $store->update(['note' => 'Follow up with GM about OSHA findings.']);
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('consultant_note.note', 'Follow up with GM about OSHA findings.')
+            ->where('manuals_summary', null)
+        );
+});
+
+it('passes manuals_summary for non-Consultant users with a current_store_id', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->manager->stores()->attach($store->id);
+    $this->manager->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->manager)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->has('manuals_summary', fn (AssertableInertia $manuals): AssertableInertia => $manuals
+                ->has('isp')
+                ->has('osha')
+                ->has('red_flag')
+                ->has('cms')
+            )
+            ->where('consultant_note', null)
+        );
+});
+
+it('flags is_overview when more than one store is in scope', function (): void {
+    Store::query()->create(['name' => 'Second Store '.uniqid(), 'slug' => 'second-'.uniqid()]);
+    $this->consultant->update(['current_store_id' => null]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('is_overview', true)
+        );
+});
+
+it('clears is_overview when only one store is in scope', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('is_overview', false)
+        );
+});
+
+it('allows authorized users to download the audit report', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('can_download_audit_report', true)
+        );
+});
+
+it('forbids the audit-report download for users without an authorized role', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->manager->stores()->attach($store->id);
+    $this->manager->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->manager)
+        ->get(route('dealer.dashboard.audit-report'))
+        ->assertForbidden();
+});
+
+it('returns 404 from audit-type-report when no completed audit exists', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard.audit-type-report', ['type' => 'osha']))
+        ->assertNotFound();
+});
+
+it('returns 404 from audit-type-report for deal_jacket when no completed group exists', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard.audit-type-report', ['type' => 'deal_jacket']))
+        ->assertNotFound();
+});
+
+it('rejects audit-type-report requests for unknown types via the route constraint', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get('/dashboard/audit-report/bogus-type')
+        ->assertNotFound();
+});
+
+it('emits a caption when the score moved relative to last month', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    ComplianceScoreSnapshot::query()->create([
+        'store_id' => $store->id,
+        'scored_on' => CarbonImmutable::now()->subMonth()->subDays(2)->toDateString(),
+        'score' => 50.0,
+        'pillars' => [],
+        'weights' => [],
+    ]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('compliance.previous_score', 50)
+            ->where('compliance.caption', fn (string $caption): bool => preg_match('/^(Up |Down |Unchanged)/', $caption) === 1)
+        );
+});
+
+it('omits training_completion, training_compliance_snapshot, and location_grades from the initial render — they are deferred', function (): void {
+    Store::query()->create(['name' => 'Second '.uniqid(), 'slug' => 'second-'.uniqid()]);
+    $this->consultant->update(['current_store_id' => null]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->missing('training_completion')
+            ->missing('training_compliance_snapshot')
+            ->missing('location_grades')
+        );
+});
+
 function seedActiveRemediationSetting(Store $store, bool $active = true): RemediationSetting
 {
     return RemediationSetting::query()->create([
