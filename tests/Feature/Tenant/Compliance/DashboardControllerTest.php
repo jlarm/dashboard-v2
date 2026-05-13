@@ -170,6 +170,59 @@ it('returns an empty compliance payload when no stores are scoped', function ():
         );
 })->skip('requires-store middleware blocks empty-store sessions; cover via unit-level controller test if needed.');
 
+it('passes show_kpi_cards=true for users with executive roles', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('show_kpi_cards', true)
+        );
+});
+
+it('hides the KPI cards from Managers', function (): void {
+    $store = Store::query()->firstOrFail();
+
+    $manager = User::query()->create([
+        'name' => 'KPI Manager '.uniqid(),
+        'email' => 'kpi-manager-'.uniqid().'@test.com',
+        'password' => bcrypt('password'),
+    ]);
+    $manager->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Manager')->firstOrFail());
+    $manager->stores()->attach($store->id);
+    $manager->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($manager)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('show_kpi_cards', false)
+        );
+});
+
+it('still shows the KPI cards to a Manager who also holds an executive role', function (): void {
+    $store = Store::query()->firstOrFail();
+
+    $managerOwner = User::query()->create([
+        'name' => 'KPI Manager Owner '.uniqid(),
+        'email' => 'kpi-manager-owner-'.uniqid().'@test.com',
+        'password' => bcrypt('password'),
+    ]);
+    $managerOwner->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Manager')->firstOrFail());
+    $managerOwner->assignRole(Spatie\Permission\Models\Role::query()->where('name', 'Owner')->firstOrFail());
+    $managerOwner->stores()->attach($store->id);
+    $managerOwner->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($managerOwner)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('show_kpi_cards', true)
+        );
+});
+
 function seedActiveRemediationSetting(Store $store, bool $active = true): RemediationSetting
 {
     return RemediationSetting::query()->create([

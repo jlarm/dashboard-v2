@@ -54,6 +54,8 @@ class DashboardController extends Controller
 
     private const array COURSE_DASHBOARD_ROLES = ['Employee', 'Porter/Driver'];
 
+    private const array KPI_RESTRICTED_ROLES = ['Manager', 'Employee', 'Porter/Driver'];
+
     public function show(
         Request $request,
         CalculateComplianceScore $calculator,
@@ -142,6 +144,8 @@ class DashboardController extends Controller
             ? $manualsSummaryQuery->handleForStore($selectedStore)->toArray()
             : null;
 
+        $showKpiCards = ! $user instanceof User || ! $this->isRestrictedFromKpis($user);
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
@@ -154,6 +158,7 @@ class DashboardController extends Controller
             'training_compliance_snapshot' => $trainingComplianceSnapshot,
             'consultant_note' => $consultantNote,
             'manuals_summary' => $manualsSummary,
+            'show_kpi_cards' => $showKpiCards,
         ]);
     }
 
@@ -292,6 +297,22 @@ class DashboardController extends Controller
         }
 
         return array_diff($roleNames, self::COURSE_DASHBOARD_ROLES) === [];
+    }
+
+    /**
+     * Managers and lower-tier roles (Employee, Porter/Driver) don't see
+     * the executive KPI tiles. A user with any role outside that set —
+     * for example a Manager who is also an Owner — still sees them.
+     */
+    private function isRestrictedFromKpis(User $user): bool
+    {
+        $roleNames = $user->roles->pluck('name')->all();
+
+        if ($roleNames === []) {
+            return true;
+        }
+
+        return array_diff($roleNames, self::KPI_RESTRICTED_ROLES) === [];
     }
 
     /**

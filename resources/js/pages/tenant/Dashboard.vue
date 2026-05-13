@@ -5,7 +5,7 @@ import ConsultantNotesCard from '@/pages/tenant/dashboard/ConsultantNotesCard.vu
 import KpiCardsRow from '@/pages/tenant/dashboard/KpiCardsRow.vue';
 import LocationsCard from '@/pages/tenant/dashboard/LocationsCard.vue';
 import ManualsCard from '@/pages/tenant/dashboard/ManualsCard.vue';
-import { useNullablePageProp } from '@/pages/tenant/dashboard/props';
+import { useNullablePageProp, usePageProp } from '@/pages/tenant/dashboard/props';
 import TrainingComplianceSnapshotCard from '@/pages/tenant/dashboard/TrainingComplianceSnapshotCard.vue';
 import TrainingCompletionCard from '@/pages/tenant/dashboard/TrainingCompletionCard.vue';
 import type { AuditTrackerRow, ConsultantNote, LocationGradeRow, ManualsSummary } from '@/pages/tenant/dashboard/types';
@@ -42,6 +42,10 @@ const manualsSummary = useNullablePageProp<ManualsSummary>('manuals_summary');
 const hasSingleStoreCard = computed<boolean>(
     () => consultantNote.value !== null || manualsSummary.value !== null,
 );
+
+// Hidden for Managers / Employees / Porter-Drivers — they don't get
+// the executive KPI roll-up.
+const showKpiCards = usePageProp<boolean>('show_kpi_cards', true);
 </script>
 
 <template>
@@ -49,7 +53,7 @@ const hasSingleStoreCard = computed<boolean>(
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-4">
-            <KpiCardsRow />
+            <KpiCardsRow v-if="showKpiCards" />
 
             <section class="grid gap-4 xl:grid-cols-12">
                 <LocationsCard v-if="primaryCard === 'locations'" class="xl:col-span-8" />

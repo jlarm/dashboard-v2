@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::show
-* @see app/Http/Controllers/Tenant/DashboardController.php:57
+* @see app/Http/Controllers/Tenant/DashboardController.php:59
 * @route '/dashboard'
 */
 export const show = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::show
-* @see app/Http/Controllers/Tenant/DashboardController.php:57
+* @see app/Http/Controllers/Tenant/DashboardController.php:59
 * @route '/dashboard'
 */
 show.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ show.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::show
-* @see app/Http/Controllers/Tenant/DashboardController.php:57
+* @see app/Http/Controllers/Tenant/DashboardController.php:59
 * @route '/dashboard'
 */
 show.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ show.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::show
-* @see app/Http/Controllers/Tenant/DashboardController.php:57
+* @see app/Http/Controllers/Tenant/DashboardController.php:59
 * @route '/dashboard'
 */
 show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::show
-* @see app/Http/Controllers/Tenant/DashboardController.php:57
+* @see app/Http/Controllers/Tenant/DashboardController.php:59
 * @route '/dashboard'
 */
 const showForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const showForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::show
-* @see app/Http/Controllers/Tenant/DashboardController.php:57
+* @see app/Http/Controllers/Tenant/DashboardController.php:59
 * @route '/dashboard'
 */
 showForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ showForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::show
-* @see app/Http/Controllers/Tenant/DashboardController.php:57
+* @see app/Http/Controllers/Tenant/DashboardController.php:59
 * @route '/dashboard'
 */
 showForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:182
+* @see app/Http/Controllers/Tenant/DashboardController.php:187
 * @route '/dashboard/audit-report'
 */
 export const downloadAuditReport = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ downloadAuditReport.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:182
+* @see app/Http/Controllers/Tenant/DashboardController.php:187
 * @route '/dashboard/audit-report'
 */
 downloadAuditReport.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ downloadAuditReport.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:182
+* @see app/Http/Controllers/Tenant/DashboardController.php:187
 * @route '/dashboard/audit-report'
 */
 downloadAuditReport.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ downloadAuditReport.get = (options?: RouteQueryOptions): RouteDefinition<'get'> 
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:182
+* @see app/Http/Controllers/Tenant/DashboardController.php:187
 * @route '/dashboard/audit-report'
 */
 downloadAuditReport.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +126,7 @@ downloadAuditReport.head = (options?: RouteQueryOptions): RouteDefinition<'head'
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:182
+* @see app/Http/Controllers/Tenant/DashboardController.php:187
 * @route '/dashboard/audit-report'
 */
 const downloadAuditReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +136,7 @@ const downloadAuditReportForm = (options?: RouteQueryOptions): RouteFormDefiniti
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:182
+* @see app/Http/Controllers/Tenant/DashboardController.php:187
 * @route '/dashboard/audit-report'
 */
 downloadAuditReportForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +146,7 @@ downloadAuditReportForm.get = (options?: RouteQueryOptions): RouteFormDefinition
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:182
+* @see app/Http/Controllers/Tenant/DashboardController.php:187
 * @route '/dashboard/audit-report'
 */
 downloadAuditReportForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ downloadAuditReport.form = downloadAuditReportForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:217
+* @see app/Http/Controllers/Tenant/DashboardController.php:222
 * @route '/dashboard/audit-report/{type}'
 */
 export const downloadAuditTypeReport = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -178,7 +178,7 @@ downloadAuditTypeReport.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:217
+* @see app/Http/Controllers/Tenant/DashboardController.php:222
 * @route '/dashboard/audit-report/{type}'
 */
 downloadAuditTypeReport.url = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -205,7 +205,7 @@ downloadAuditTypeReport.url = (args: { type: string | number } | [type: string |
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:217
+* @see app/Http/Controllers/Tenant/DashboardController.php:222
 * @route '/dashboard/audit-report/{type}'
 */
 downloadAuditTypeReport.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -215,7 +215,7 @@ downloadAuditTypeReport.get = (args: { type: string | number } | [type: string |
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:217
+* @see app/Http/Controllers/Tenant/DashboardController.php:222
 * @route '/dashboard/audit-report/{type}'
 */
 downloadAuditTypeReport.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -225,7 +225,7 @@ downloadAuditTypeReport.head = (args: { type: string | number } | [type: string 
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:217
+* @see app/Http/Controllers/Tenant/DashboardController.php:222
 * @route '/dashboard/audit-report/{type}'
 */
 const downloadAuditTypeReportForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -235,7 +235,7 @@ const downloadAuditTypeReportForm = (args: { type: string | number } | [type: st
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:217
+* @see app/Http/Controllers/Tenant/DashboardController.php:222
 * @route '/dashboard/audit-report/{type}'
 */
 downloadAuditTypeReportForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -245,7 +245,7 @@ downloadAuditTypeReportForm.get = (args: { type: string | number } | [type: stri
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:217
+* @see app/Http/Controllers/Tenant/DashboardController.php:222
 * @route '/dashboard/audit-report/{type}'
 */
 downloadAuditTypeReportForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -262,7 +262,7 @@ downloadAuditTypeReport.form = downloadAuditTypeReportForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::updateConsultantNote
-* @see app/Http/Controllers/Tenant/DashboardController.php:160
+* @see app/Http/Controllers/Tenant/DashboardController.php:165
 * @route '/dashboard/consultant-note'
 */
 export const updateConsultantNote = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -277,7 +277,7 @@ updateConsultantNote.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::updateConsultantNote
-* @see app/Http/Controllers/Tenant/DashboardController.php:160
+* @see app/Http/Controllers/Tenant/DashboardController.php:165
 * @route '/dashboard/consultant-note'
 */
 updateConsultantNote.url = (options?: RouteQueryOptions) => {
@@ -286,7 +286,7 @@ updateConsultantNote.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::updateConsultantNote
-* @see app/Http/Controllers/Tenant/DashboardController.php:160
+* @see app/Http/Controllers/Tenant/DashboardController.php:165
 * @route '/dashboard/consultant-note'
 */
 updateConsultantNote.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -296,7 +296,7 @@ updateConsultantNote.post = (options?: RouteQueryOptions): RouteDefinition<'post
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::updateConsultantNote
-* @see app/Http/Controllers/Tenant/DashboardController.php:160
+* @see app/Http/Controllers/Tenant/DashboardController.php:165
 * @route '/dashboard/consultant-note'
 */
 const updateConsultantNoteForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -306,7 +306,7 @@ const updateConsultantNoteForm = (options?: RouteQueryOptions): RouteFormDefinit
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::updateConsultantNote
-* @see app/Http/Controllers/Tenant/DashboardController.php:160
+* @see app/Http/Controllers/Tenant/DashboardController.php:165
 * @route '/dashboard/consultant-note'
 */
 updateConsultantNoteForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
