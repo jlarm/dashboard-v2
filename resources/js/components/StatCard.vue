@@ -1,7 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
+import { Info } from 'lucide-vue-next';
+import { computed, ref } from 'vue';
 
 type Tone = 'positive' | 'negative' | 'warning' | 'neutral';
+
+type InfoContent = {
+    title: string;
+    description: string;
+};
 
 type Props = {
     label: string;
@@ -9,11 +23,14 @@ type Props = {
     caption?: string;
     delta?: string;
     tone?: Tone;
+    info?: InfoContent;
 };
 
 const props = withDefaults(defineProps<Props>(), {
     tone: 'neutral',
 });
+
+const infoOpen = ref<boolean>(false);
 
 const valueClass = computed(() => {
     switch (props.tone) {
@@ -48,7 +65,23 @@ const pillClass = computed(() => {
             <h3 class="text-[11px] font-medium tracking-[0.14em] text-muted-foreground uppercase">
                 {{ label }}
             </h3>
-            <slot name="action" />
+            <Dialog v-if="info" v-model:open="infoOpen">
+                <DialogTrigger
+                    class="grid size-5 cursor-pointer place-items-center rounded-md text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                    :aria-label="`About ${label}`"
+                >
+                    <Info class="size-3.5" />
+                </DialogTrigger>
+                <DialogContent class="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>{{ info.title }}</DialogTitle>
+                        <DialogDescription class="pt-1 text-sm leading-relaxed text-muted-foreground">
+                            {{ info.description }}
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+            <slot v-else name="action" />
         </header>
         <div class="rounded-lg border bg-card px-4 py-3">
             <div class="flex items-baseline justify-between gap-2">

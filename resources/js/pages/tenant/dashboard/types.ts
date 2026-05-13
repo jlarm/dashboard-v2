@@ -6,6 +6,10 @@ export type Kpi = {
     delta: string;
     tone: PillTone;
     caption: string;
+    info: {
+        title: string;
+        description: string;
+    };
 };
 
 export type CompliancePillar = {

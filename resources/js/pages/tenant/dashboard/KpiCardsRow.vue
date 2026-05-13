@@ -49,6 +49,11 @@ const complianceKpi = computed<Kpi>(() => {
         delta: deltaLabel,
         tone,
         caption: compliance.value.caption || 'Compared to the previous month',
+        info: {
+            title: 'Compliance Grade',
+            description:
+                'An A–F letter that blends audit grades (60%), training completion (25%), and vendor compliance (15%) across your scoped locations. Open audit remediations cap the grade — 1–2 opens cap at B, 3+ opens cap at C.',
+        },
     };
 });
 
@@ -69,6 +74,11 @@ const overdueRemediationsKpi = computed<Kpi | null>(() => {
         delta: deltaLabel,
         tone,
         caption,
+        info: {
+            title: 'Overdue Remediations',
+            description:
+                'Open audit findings (OSHA, GLBA, Body Shop) past their remediation due date based on each store\'s active Remediation Settings. The high-severity sub-count flags items that materially threaten your grade. The trend pill compares against the prior month\'s snapshot.',
+        },
     };
 });
 
@@ -87,6 +97,11 @@ const expiredTrainingKpi = computed<Kpi>(() => {
         delta: deltaLabel,
         tone,
         caption,
+        info: {
+            title: 'Expired Training',
+            description:
+                'Employees in scope with at least one required course past its expiration date. "More expire in 30 days" warns of upcoming lapses so you can renew before they tip into expired.',
+        },
     };
 });
 
@@ -103,6 +118,11 @@ const criticalVulnerabilitiesKpi = computed<Kpi | null>(() => {
         delta,
         tone,
         caption: 'Days since last scan',
+        info: {
+            title: 'Critical Vulnerabilities',
+            description:
+                'Critical-severity findings currently open across your scoped locations. The pill shows the number of days since the most recent scan — older than 30 days means the count may be stale.',
+        },
     };
 });
 
@@ -132,6 +152,7 @@ const gridClass = computed<string>(() => {
             :delta="kpi.delta"
             :tone="kpi.tone"
             :caption="kpi.caption"
+            :info="kpi.info"
         >
             <template v-if="kpi.label === 'Compliance Grade' && canDownloadAuditReport" #valueAction>
                 <a
