@@ -19,6 +19,7 @@ export type CompliancePillar = {
 
 export type ComplianceProps = {
     score: number | null;
+    grade: string | null;
     previous_score: number | null;
     delta: number | null;
     pillars: CompliancePillar[];

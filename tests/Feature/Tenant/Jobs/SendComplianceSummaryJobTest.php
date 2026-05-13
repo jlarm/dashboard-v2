@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Domain\Tenant\Compliance\Queries\BuildComplianceSummary;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorForm;
-use App\Services\ComplianceSummaryPdfService;
 
 describe('SendComplianceSummaryJob vendor stats', function (): void {
 
     beforeEach(function (): void {
-        $this->service = resolve(ComplianceSummaryPdfService::class);
+        $this->service = resolve(BuildComplianceSummary::class);
         $this->store = Store::query()->first();
     });
 

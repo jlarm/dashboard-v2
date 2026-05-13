@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import StatCard from '@/components/StatCard.vue';
+import { auditReport } from '@/routes/dealer/dashboard';
+import { Download } from 'lucide-vue-next';
 import { computed } from 'vue';
 import { useNullablePageProp, usePageProp } from './props';
 import type {
@@ -11,8 +13,12 @@ import type {
     PillTone,
 } from './types';
 
+const canDownloadAuditReport = usePageProp<boolean>('can_download_audit_report', false);
+const auditReportUrl = auditReport.url();
+
 const compliance = usePageProp<ComplianceProps>('compliance', {
     score: null,
+    grade: null,
     previous_score: null,
     delta: null,
     pillars: [],
@@ -32,14 +38,14 @@ const expiredTraining = usePageProp<ExpiredTrainingProps>('expired_training', {
 const criticalVulnerabilities = useNullablePageProp<CriticalVulnerabilitiesProps>('critical_vulnerabilities');
 
 const complianceKpi = computed<Kpi>(() => {
-    const score = compliance.value.score;
+    const grade = compliance.value.grade;
     const delta = compliance.value.delta;
     const tone: PillTone = delta === null ? 'neutral' : delta > 0 ? 'positive' : delta < 0 ? 'negative' : 'neutral';
     const deltaLabel = delta === null ? '—' : `${delta > 0 ? '↗' : delta < 0 ? '↘' : ''} ${Math.abs(delta).toFixed(1)} pts`;
 
     return {
-        label: 'Compliance Score',
-        value: score === null ? '—' : Math.round(score).toString(),
+        label: 'Compliance Grade',
+        value: grade ?? '—',
         delta: deltaLabel,
         tone,
         caption: compliance.value.caption || 'Compared to the previous month',
@@ -126,6 +132,18 @@ const gridClass = computed<string>(() => {
             :delta="kpi.delta"
             :tone="kpi.tone"
             :caption="kpi.caption"
-        />
+        >
+            <template v-if="kpi.label === 'Compliance Grade' && canDownloadAuditReport" #valueAction>
+                <a
+                    :href="auditReportUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 text-xs font-medium text-sky-700 hover:underline dark:text-sky-400"
+                >
+                    <Download class="size-3" aria-hidden="true" />
+                    Download Summary
+                </a>
+            </template>
+        </StatCard>
     </section>
 </template>

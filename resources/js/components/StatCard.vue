@@ -51,20 +51,23 @@ const pillClass = computed(() => {
             <slot name="action" />
         </header>
         <div class="rounded-lg border bg-card px-4 py-3">
-            <div class="flex items-baseline gap-2">
-                <span
-                    class="text-2xl font-semibold leading-none tracking-tight tabular-nums"
-                    :class="valueClass"
-                >
-                    {{ value }}
-                </span>
-                <span
-                    v-if="delta"
-                    class="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs font-semibold"
-                    :class="pillClass"
-                >
-                    {{ delta }}
-                </span>
+            <div class="flex items-baseline justify-between gap-2">
+                <div class="flex items-baseline gap-2">
+                    <span
+                        class="text-2xl font-semibold leading-none tracking-tight tabular-nums"
+                        :class="valueClass"
+                    >
+                        {{ value }}
+                    </span>
+                    <span
+                        v-if="delta"
+                        class="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs font-semibold"
+                        :class="pillClass"
+                    >
+                        {{ delta }}
+                    </span>
+                </div>
+                <slot name="valueAction" />
             </div>
             <p v-if="caption" class="mt-2 text-xs text-muted-foreground">
                 {{ caption }}

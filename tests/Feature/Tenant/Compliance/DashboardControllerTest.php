@@ -25,6 +25,7 @@ it('passes a compliance prop with score, delta, pillars, and caption to the dash
             ->component('tenant/Dashboard')
             ->has('compliance', fn (AssertableInertia $compliance): AssertableInertia => $compliance
                 ->has('score')
+                ->has('grade')
                 ->has('previous_score')
                 ->has('delta')
                 ->has('pillars')

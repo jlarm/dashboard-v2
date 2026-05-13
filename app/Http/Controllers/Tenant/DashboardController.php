@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\Audits\Actions\StreamAuditPdf;
+use App\Domain\Tenant\Compliance\Actions\StreamComplianceSummaryPdf;
 use App\Domain\Tenant\Compliance\Data\AuditTrackerRowData;
 use App\Domain\Tenant\Compliance\Data\ComplianceScoreData;
 use App\Domain\Tenant\Compliance\Data\LocationGradeRowData;
 use App\Domain\Tenant\Compliance\Data\TrainingCompletionRowData;
+use App\Domain\Tenant\Compliance\Queries\BuildComplianceSummary;
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
 use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
 use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
@@ -33,7 +35,6 @@ use App\Models\Dealer\Audit\DealJacketGroup;
 use App\Models\Dealer\Store;
 use App\Models\TenantComplianceSnapshot;
 use App\Models\User;
-use App\Services\ComplianceSummaryPdfService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
@@ -44,12 +45,11 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Spatie\LaravelPdf\PdfBuilder;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DashboardController extends Controller
 {
-    private const array DOWNLOAD_AUTHORIZED_ROLES = ['super-admin', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
+    private const array DOWNLOAD_AUTHORIZED_ROLES = ['super-admin', 'Consultant', 'Owner', 'GM', 'CFO', 'GSM', 'Qualified Individual'];
 
     private const array DOWNLOAD_UNRESTRICTED_ROLES = ['super-admin', 'Consultant'];
 
@@ -87,7 +87,7 @@ class DashboardController extends Controller
 
         $compliance = $stores->isEmpty()
             ? $this->emptyComplianceProps()
-            : $this->buildComplianceProps($stores, $calculator);
+            : $this->buildComplianceProps($stores, $calculator, resolve(BuildComplianceSummary::class));
 
         $overdueRemediations = $stores->isEmpty()
             ? null
@@ -146,6 +146,9 @@ class DashboardController extends Controller
             : null;
 
         $showKpiCards = ! $user instanceof User || ! $this->isRestrictedFromKpis($user);
+        $canDownloadAuditReport = $user instanceof User
+            && $user->hasAnyRole(self::DOWNLOAD_AUTHORIZED_ROLES)
+            && $stores->isNotEmpty();
 
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
@@ -160,6 +163,7 @@ class DashboardController extends Controller
             'consultant_note' => $consultantNote,
             'manuals_summary' => $manualsSummary,
             'show_kpi_cards' => $showKpiCards,
+            'can_download_audit_report' => $canDownloadAuditReport,
         ]);
     }
 
@@ -185,7 +189,7 @@ class DashboardController extends Controller
      * the legacy Livewire ExecutiveSummary::download flow so the dashboard
      * can keep producing the same artefact tenants are used to.
      */
-    public function downloadAuditReport(ComplianceSummaryPdfService $pdfService): BinaryFileResponse
+    public function downloadAuditReport(StreamComplianceSummaryPdf $streamSummary): PdfBuilder
     {
         $user = auth()->user();
 
@@ -200,19 +204,7 @@ class DashboardController extends Controller
             abort_if($stores->pluck('id')->diff($userStoreIds)->isNotEmpty(), 403);
         }
 
-        $pdfPath = $pdfService->generate($stores, CarbonImmutable::now()->format('F Y'));
-
-        $fileName = implode('-', [
-            CarbonImmutable::now()->format('Ymd'),
-            $stores->count() === 1
-                ? str($stores->first()->name)->slug()->toString()
-                : 'overview',
-            'audit-report.pdf',
-        ]);
-
-        return response()
-            ->download($pdfPath, $fileName, ['Content-Type' => 'application/pdf'])
-            ->deleteFileAfterSend(true);
+        return $streamSummary->handle($stores, CarbonImmutable::now()->format('F Y'));
     }
 
     /**
@@ -366,6 +358,7 @@ class DashboardController extends Controller
     {
         return [
             'score' => null,
+            'grade' => null,
             'previous_score' => null,
             'delta' => null,
             'pillars' => [],
@@ -378,8 +371,11 @@ class DashboardController extends Controller
      * @param  EloquentCollection<int, Store>  $stores
      * @return array<string, mixed>
      */
-    private function buildComplianceProps(EloquentCollection $stores, CalculateComplianceScore $calculator): array
-    {
+    private function buildComplianceProps(
+        EloquentCollection $stores,
+        CalculateComplianceScore $calculator,
+        BuildComplianceSummary $summary,
+    ): array {
         $now = CarbonImmutable::now();
 
         $scores = $stores->map(static fn (Store $store): array => [
@@ -392,8 +388,11 @@ class DashboardController extends Controller
 
         $delta = $current === null || $previous === null ? null : round($current - $previous, 1);
 
+        $grade = $summary->gradeForStores($stores);
+
         return [
             'score' => $current,
+            'grade' => $grade,
             'previous_score' => $previous,
             'delta' => $delta,
             'pillars' => $this->aggregatedPillars($scores),

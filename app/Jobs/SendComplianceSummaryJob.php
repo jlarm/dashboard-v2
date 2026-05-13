@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Domain\Tenant\Compliance\Actions\StreamComplianceSummaryPdf;
 use App\Mail\ComplianceSummaryMail;
 use App\Models\Dealer\Store;
-use App\Services\ComplianceSummaryPdfService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -31,11 +31,23 @@ class SendComplianceSummaryJob implements ShouldQueue
         private readonly string $reportPeriod,
     ) {}
 
-    public function handle(ComplianceSummaryPdfService $service): void
+    public function handle(StreamComplianceSummaryPdf $streamSummary): void
     {
         $stores = Store::query()->whereIn('id', $this->storeIds)->get();
 
-        $pdfPath = $service->generate($stores, $this->reportPeriod);
+        $directory = storage_path('app/compliance-summary');
+
+        if (! File::isDirectory($directory)) {
+            File::makeDirectory($directory, 0777, true, true);
+        }
+
+        $pdfPath = $directory.'/'.implode('-', array_filter([
+            tenant('id'),
+            now()->format('Ymd-His'),
+            'compliance-summary',
+        ])).'.pdf';
+
+        $streamSummary->handle($stores, $this->reportPeriod)->save($pdfPath);
 
         try {
             $tenantName = (string) tenant('name');
