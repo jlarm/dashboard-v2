@@ -126,19 +126,6 @@ const gridClass = computed<string>(() => {
             :delta="kpi.delta"
             :tone="kpi.tone"
             :caption="kpi.caption"
-        >
-            <template #action>
-                <button
-                    class="grid size-6 place-items-center rounded-md text-muted-foreground hover:bg-muted/60 hover:text-foreground"
-                    aria-label="Options"
-                >
-                    <svg viewBox="0 0 16 16" class="size-3.5" fill="currentColor">
-                        <circle cx="3" cy="8" r="1.25" />
-                        <circle cx="8" cy="8" r="1.25" />
-                        <circle cx="13" cy="8" r="1.25" />
-                    </svg>
-                </button>
-            </template>
-        </StatCard>
+        />
     </section>
 </template>
