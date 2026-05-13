@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import AuditTrackerCard from '@/pages/tenant/dashboard/AuditTrackerCard.vue';
-import ExpiringCertificatesCard from '@/pages/tenant/dashboard/ExpiringCertificatesCard.vue';
 import KpiCardsRow from '@/pages/tenant/dashboard/KpiCardsRow.vue';
 import LocationsCard from '@/pages/tenant/dashboard/LocationsCard.vue';
-import OutstandingVendorsCard from '@/pages/tenant/dashboard/OutstandingVendorsCard.vue';
 import { useNullablePageProp } from '@/pages/tenant/dashboard/props';
 import TrainingComplianceSnapshotCard from '@/pages/tenant/dashboard/TrainingComplianceSnapshotCard.vue';
 import TrainingCompletionCard from '@/pages/tenant/dashboard/TrainingCompletionCard.vue';
 import type { AuditTrackerRow, LocationGradeRow } from '@/pages/tenant/dashboard/types';
-import UpcomingRemindersCard from '@/pages/tenant/dashboard/UpcomingRemindersCard.vue';
-import ViolationsOverviewCard from '@/pages/tenant/dashboard/ViolationsOverviewCard.vue';
 import { dashboard } from '@/routes/dealer';
 import type { BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
@@ -29,7 +25,6 @@ const locationGrades = useNullablePageProp<LocationGradeRow[]>('location_grades'
 const isOverview = computed<boolean>(() => locationGrades.value !== null);
 
 const auditTracker = useNullablePageProp<AuditTrackerRow[]>('audit_tracker');
-const auditTrackerVisible = computed<boolean>(() => !isOverview.value && auditTracker.value !== null);
 const primaryCard = computed<'locations' | 'audit_tracker' | null>(() => {
     if (isOverview.value) return 'locations';
     if (auditTracker.value !== null) return 'audit_tracker';
@@ -44,8 +39,6 @@ const primaryCard = computed<'locations' | 'audit_tracker' | null>(() => {
         <div class="space-y-4">
             <KpiCardsRow />
 
-<!--            <ViolationsOverviewCard />-->
-
             <section class="grid gap-4 xl:grid-cols-12">
                 <LocationsCard v-if="primaryCard === 'locations'" class="xl:col-span-8" />
                 <AuditTrackerCard v-else-if="primaryCard === 'audit_tracker'" class="xl:col-span-8" />
@@ -53,12 +46,6 @@ const primaryCard = computed<'locations' | 'audit_tracker' | null>(() => {
             </section>
 
             <TrainingComplianceSnapshotCard />
-
-            <section class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <UpcomingRemindersCard />
-                <ExpiringCertificatesCard />
-                <OutstandingVendorsCard />
-            </section>
         </div>
     </AppLayout>
 </template>

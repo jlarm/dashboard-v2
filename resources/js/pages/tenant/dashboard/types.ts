@@ -65,24 +65,6 @@ export type AuditTrackerRow = {
     has_report: boolean;
 };
 
-export type ReminderItem = {
-    title: string;
-    assignee: string;
-    due: string;
-    tone: PillTone;
-};
-
-export type ExpiringCert = {
-    name: string;
-    type: string;
-    expires: string;
-};
-
-export type OutstandingVendor = {
-    name: string;
-    lastContacted: string;
-};
-
 export type DepartmentCompletion = {
     label: string;
     value: number;
