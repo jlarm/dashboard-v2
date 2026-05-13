@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -7,7 +14,8 @@ import {
 } from '@/components/ui/navigation-menu';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import employees from '@/routes/dealer/employees';
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { ChevronDown } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 type NavKey = 'import';
@@ -63,13 +71,62 @@ const isActiveLink = (href: string): boolean => {
         .some((prefix) => currentUrl.value.startsWith(prefix));
 };
 
+const activeItemLabel = computed(() => {
+    const activeLink = navItems.value.find(
+        (item): item is { kind: 'link'; name: string; href: string } =>
+            item.kind === 'link' && isActiveLink(item.href),
+    );
+    return activeLink?.name ?? 'Employees';
+});
+
+const handleSelect = (item: NavItem) => {
+    if (item.kind === 'link') {
+        router.visit(item.href);
+    } else if (item.kind === 'action') {
+        emit(item.key);
+    }
+};
+
 const activeClasses =
     'hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary data-active:bg-primary/10 data-active:text-primary data-active:focus:bg-primary/10 data-active:hover:bg-primary/10';
 const disabledClasses = 'cursor-not-allowed text-muted-foreground opacity-60';
 </script>
 
 <template>
-    <NavigationMenu>
+    <DropdownMenu>
+        <DropdownMenuTrigger as-child class="lg:hidden">
+            <Button variant="outline" size="sm" class="gap-1">
+                {{ activeItemLabel }}
+                <ChevronDown class="size-4" />
+            </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" class="w-48">
+            <template v-for="item in navItems" :key="item.name">
+                <DropdownMenuItem
+                    v-if="item.kind === 'link'"
+                    :data-active="isActiveLink(item.href) ? '' : undefined"
+                    class="data-[active]:bg-primary/10 data-[active]:text-primary"
+                    @select="handleSelect(item)"
+                >
+                    {{ item.name }}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    v-else-if="item.kind === 'action'"
+                    @select="handleSelect(item)"
+                >
+                    {{ item.name }}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    v-else
+                    disabled
+                >
+                    {{ item.name }}
+                </DropdownMenuItem>
+            </template>
+        </DropdownMenuContent>
+    </DropdownMenu>
+
+    <NavigationMenu class="hidden lg:flex">
         <NavigationMenuList>
             <NavigationMenuItem v-for="item in navItems" :key="item.name">
                 <template v-if="item.kind === 'link'">
