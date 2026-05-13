@@ -6,12 +6,14 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Domain\Tenant\Compliance\Data\AuditTrackerRowData;
 use App\Domain\Tenant\Compliance\Data\ComplianceScoreData;
+use App\Domain\Tenant\Compliance\Data\TrainingCompletionRowData;
 use App\Domain\Tenant\Compliance\Queries\CalculateComplianceScore;
 use App\Domain\Tenant\Compliance\Queries\CalculateExpiredTraining;
 use App\Domain\Tenant\Compliance\Queries\CalculateOverdueRemediations;
 use App\Domain\Tenant\Compliance\Queries\CalculateViolationsOverview;
 use App\Domain\Tenant\Compliance\Queries\GetAuditTracker;
 use App\Domain\Tenant\Compliance\Queries\GetCriticalVulnerabilities;
+use App\Domain\Tenant\Compliance\Queries\GetTrainingCompletionByDepartment;
 use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Domain\Tenant\Course\Queries\GetUserCourseList;
 use App\Http\Controllers\Controller;
@@ -52,6 +54,7 @@ class DashboardController extends Controller
         GetCriticalVulnerabilities $vulnerabilitiesQuery,
         CalculateViolationsOverview $violationsOverviewQuery,
         GetAuditTracker $auditTrackerQuery,
+        GetTrainingCompletionByDepartment $trainingCompletionQuery,
         GetUserCourseList $courseList,
         CanIssueDotCertificate $canIssueDotCert,
     ): InertiaResponse {
@@ -96,6 +99,13 @@ class DashboardController extends Controller
             ? null
             : $auditTrackerRows->map(static fn (AuditTrackerRowData $row): array => $row->toArray())->all();
 
+        $trainingCompletion = $stores->isEmpty()
+            ? []
+            : array_map(
+                static fn (TrainingCompletionRowData $row): array => $row->toArray(),
+                $trainingCompletionQuery->handleForStores($stores->pluck('id')->all()),
+            );
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
@@ -103,6 +113,7 @@ class DashboardController extends Controller
             'critical_vulnerabilities' => $criticalVulnerabilities,
             'violations_overview' => $violationsOverview,
             'audit_tracker' => $auditTracker,
+            'training_completion' => $trainingCompletion,
         ]);
     }
 

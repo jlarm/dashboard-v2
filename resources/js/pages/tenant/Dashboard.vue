@@ -5,7 +5,7 @@ import ExpiringCertificatesCard from '@/pages/tenant/dashboard/ExpiringCertifica
 import KpiCardsRow from '@/pages/tenant/dashboard/KpiCardsRow.vue';
 import OutstandingVendorsCard from '@/pages/tenant/dashboard/OutstandingVendorsCard.vue';
 import { useNullablePageProp } from '@/pages/tenant/dashboard/props';
-import TrainingCurrencyCard from '@/pages/tenant/dashboard/TrainingCurrencyCard.vue';
+import TrainingCompletionCard from '@/pages/tenant/dashboard/TrainingCompletionCard.vue';
 import type { AuditTrackerRow } from '@/pages/tenant/dashboard/types';
 import UpcomingRemindersCard from '@/pages/tenant/dashboard/UpcomingRemindersCard.vue';
 import ViolationsOverviewCard from '@/pages/tenant/dashboard/ViolationsOverviewCard.vue';
@@ -38,7 +38,7 @@ const auditTrackerVisible = computed<boolean>(() => auditTracker.value !== null)
 
             <section class="grid gap-4 xl:grid-cols-12">
                 <AuditTrackerCard v-if="auditTrackerVisible" class="xl:col-span-8" />
-                <TrainingCurrencyCard :class="auditTrackerVisible ? 'xl:col-span-4' : 'xl:col-span-12'" />
+                <TrainingCompletionCard :class="auditTrackerVisible ? 'xl:col-span-4' : 'xl:col-span-12'" />
             </section>
 
             <section class="grid grid-cols-1 gap-4 md:grid-cols-3">
