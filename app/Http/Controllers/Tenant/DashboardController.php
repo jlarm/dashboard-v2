@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Domain\Tenant\Audits\Actions\StreamAuditPdf;
 use App\Domain\Tenant\Compliance\Data\AuditTrackerRowData;
 use App\Domain\Tenant\Compliance\Data\ComplianceScoreData;
 use App\Domain\Tenant\Compliance\Data\LocationGradeRowData;
@@ -22,14 +23,13 @@ use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Domain\Tenant\Course\Queries\GetUserCourseList;
 use App\Domain\Tenant\Store\Actions\UpdateConsultantNote;
 use App\Enums\Role;
+use App\Enums\ViolationAuditType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\Dashboard\UpdateConsultantNoteRequest;
 use App\Jobs\Audit\GenerateDealJacketReportJob;
 use App\Models\ComplianceScoreSnapshot;
-use App\Models\Dealer\Audit\BodyShopViolationAudit;
+use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use App\Models\Dealer\Audit\DealJacketGroup;
-use App\Models\Dealer\Audit\GlbaViolationAudit;
-use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\TenantComplianceSnapshot;
 use App\Models\User;
@@ -43,6 +43,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Spatie\LaravelPdf\PdfBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -216,10 +217,12 @@ class DashboardController extends Controller
 
     /**
      * Stream the latest completed report for a single audit type, scoped to
-     * the user's stores. Mirrors the legacy Livewire per-audit download
-     * (AbstractAuditStats::downloadPdf and DealJacketStats::download).
+     * the user's stores. For violation audits (OSHA / Body Shop / GLBA) the
+     * PDF is regenerated on-the-fly via the same StreamAuditPdf action used
+     * by /audits/{type}/{audit}/download. Deal-jacket reports are streamed
+     * from local storage like before.
      */
-    public function downloadAuditTypeReport(string $type): StreamedResponse
+    public function downloadAuditTypeReport(string $type, StreamAuditPdf $streamAuditPdf): PdfBuilder|StreamedResponse
     {
         $stores = $this->resolveScopedStores();
 
@@ -228,32 +231,34 @@ class DashboardController extends Controller
         $storeIds = $stores->pluck('id')->all();
 
         return match ($type) {
-            'osha' => $this->streamViolationAuditPdf(OshaViolationAudit::class, $storeIds),
-            'body_shop' => $this->streamViolationAuditPdf(BodyShopViolationAudit::class, $storeIds),
-            'glba' => $this->streamViolationAuditPdf(GlbaViolationAudit::class, $storeIds),
+            'osha' => $this->streamViolationAuditPdf(ViolationAuditType::Osha, $storeIds, $streamAuditPdf),
+            'body_shop' => $this->streamViolationAuditPdf(ViolationAuditType::BodyShop, $storeIds, $streamAuditPdf),
+            'glba' => $this->streamViolationAuditPdf(ViolationAuditType::Glba, $storeIds, $streamAuditPdf),
             'deal_jacket' => $this->streamDealJacketReport($storeIds),
             default => abort(404),
         };
     }
 
     /**
-     * @param  class-string<Model>  $auditClass
      * @param  list<int>  $storeIds
      */
-    private function streamViolationAuditPdf(string $auditClass, array $storeIds): StreamedResponse
+    private function streamViolationAuditPdf(ViolationAuditType $type, array $storeIds, StreamAuditPdf $streamAuditPdf): PdfBuilder
     {
-        $latest = $auditClass::query()
+        /** @var class-string<ViolationAudit&Model> $modelClass */
+        $modelClass = $type->modelClass();
+
+        $latest = $modelClass::query()
             ->whereIn('store_id', $storeIds)
             ->whereNotNull('grade')
             ->where('grade', '!=', 'N/A')
-            ->whereNotNull('pdf_path')
+            ->whereNotNull('date')
             ->orderByDesc('date')
             ->orderByDesc('id')
-            ->first(['pdf_path']);
+            ->first();
 
-        abort_if($latest === null || empty($latest->pdf_path), 404, 'No report available.');
+        abort_if($latest === null, 404, 'No report available.');
 
-        return Storage::disk('armpaudits')->download($latest->pdf_path);
+        return $streamAuditPdf->handle($type, $latest);
     }
 
     /**

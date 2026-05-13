@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { auditReport, auditTypeReport } from '@/routes/dealer/dashboard';
+import { auditTypeReport } from '@/routes/dealer/dashboard';
+import { Download } from 'lucide-vue-next';
 import { useNullablePageProp } from './props';
 import type { AuditStatus, AuditTrackerRow } from './types';
 
@@ -33,32 +34,28 @@ const gradeClass = (grade: string | null): string => {
     }
 };
 
-const auditReportUrl = auditReport.url();
 const auditTypeReportUrl = (typeKey: string): string => auditTypeReport.url({ type: typeKey });
 </script>
 
 <template>
     <article v-if="auditTracker !== null" class="overflow-hidden rounded-2xl border bg-card">
-        <div class="flex flex-wrap items-start justify-between gap-4 px-6 pt-6 pb-5">
-            <div>
-                <h2 class="text-xl font-semibold tracking-tight text-foreground">Audit Tracker</h2>
-                <p class="mt-1 text-sm text-muted-foreground">Latest grade and status per audit category.</p>
-            </div>
-        </div>
+        <header class="bg-muted/40 px-5 py-3">
+            <h3 class="text-sm font-medium text-foreground">Audit Tracker</h3>
+        </header>
         <div class="overflow-x-auto">
-            <table class="w-full min-w-[480px] border-t text-sm">
+            <table class="w-full min-w-120 text-sm">
                 <thead>
-                    <tr class="bg-muted/40 text-left text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                        <th class="py-3 pl-6 font-medium">Audit Type</th>
+                    <tr class="border-b text-left text-xs font-medium text-muted-foreground">
+                        <th class="py-3 pl-5 font-medium"></th>
                         <th class="py-3 font-medium">Last Audit</th>
                         <th class="py-3 font-medium">Grade</th>
                         <th class="py-3 font-medium">Status</th>
-                        <th class="py-3 pr-6 font-medium text-right">Report</th>
+                        <th class="py-3 pr-5 font-medium text-right"></th>
                     </tr>
                 </thead>
                 <tbody class="divide-y">
                     <tr v-for="row in auditTracker" :key="row.type_key" class="hover:bg-muted/20">
-                        <td class="py-4 pl-6 font-medium text-foreground">{{ row.type_label }}</td>
+                        <td class="py-4 pl-5 font-medium text-foreground">{{ row.type_label }}</td>
                         <td class="py-4 text-muted-foreground">{{ row.last_audit_date }}</td>
                         <td class="py-4">
                             <div class="flex items-baseline gap-2">
@@ -76,14 +73,16 @@ const auditTypeReportUrl = (typeKey: string): string => auditTypeReport.url({ ty
                                 {{ statusLabels[row.status] }}
                             </span>
                         </td>
-                        <td class="py-4 pr-6 text-right">
+                        <td class="py-4 pr-5 text-right">
                             <a
                                 v-if="row.has_report"
                                 :href="auditTypeReportUrl(row.type_key)"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted/60"
                             >
+                                <Download class="size-3.5" aria-hidden="true" />
                                 Download
-                                <span aria-hidden>↗</span>
                             </a>
                             <span v-else class="text-xs text-muted-foreground">—</span>
                         </td>
