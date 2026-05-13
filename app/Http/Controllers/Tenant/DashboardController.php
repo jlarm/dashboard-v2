@@ -113,23 +113,40 @@ class DashboardController extends Controller
             ? null
             : $auditTrackerRows->map(static fn (AuditTrackerRowData $row): array => $row->toArray())->all();
 
-        $trainingCompletion = $stores->isEmpty()
-            ? []
-            : array_map(
-                static fn (TrainingCompletionRowData $row): array => $row->toArray(),
-                $trainingCompletionQuery->handleForStores($stores->pluck('id')->all()),
-            );
+        // Defer the three below-the-fold heavy props under a shared group
+        // so Inertia fetches them in a single follow-up request after the
+        // initial paint. The synchronous is_overview flag lets the Vue
+        // layout pick the right card (Locations vs Audit Tracker) without
+        // waiting on the deferred data.
+        $storeIds = $stores->pluck('id')->all();
+        $isOverview = $stores->count() > 1;
 
-        $locationGrades = $stores->count() > 1
-            ? array_map(
-                static fn (LocationGradeRowData $row): array => $row->toArray(),
-                $locationGradesQuery->handleForStores($stores->pluck('id')->all()),
+        $trainingCompletion = Inertia::defer(
+            static fn (): array => $stores->isEmpty()
+                ? []
+                : array_map(
+                    static fn (TrainingCompletionRowData $row): array => $row->toArray(),
+                    $trainingCompletionQuery->handleForStores($storeIds),
+                ),
+            'dashboard_heavy',
+        );
+
+        $trainingComplianceSnapshot = Inertia::defer(
+            static fn (): array => $trainingComplianceSnapshotQuery
+                ->handleForStores($storeIds)
+                ->toArray(),
+            'dashboard_heavy',
+        );
+
+        $locationGrades = $isOverview
+            ? Inertia::defer(
+                static fn (): array => array_map(
+                    static fn (LocationGradeRowData $row): array => $row->toArray(),
+                    $locationGradesQuery->handleForStores($storeIds),
+                ),
+                'dashboard_heavy',
             )
             : null;
-
-        $trainingComplianceSnapshot = $trainingComplianceSnapshotQuery
-            ->handleForStores($stores->pluck('id')->all())
-            ->toArray();
 
         $selectedStore = $this->resolveSelectedStore($user, $stores);
 
@@ -164,6 +181,7 @@ class DashboardController extends Controller
             'manuals_summary' => $manualsSummary,
             'show_kpi_cards' => $showKpiCards,
             'can_download_audit_report' => $canDownloadAuditReport,
+            'is_overview' => $isOverview,
         ]);
     }
 
