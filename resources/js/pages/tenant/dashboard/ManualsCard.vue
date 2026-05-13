@@ -4,7 +4,7 @@ import { index as ispIndex } from '@/routes/dealer/manual/isp';
 import { index as oshaIndex } from '@/routes/dealer/manual/osha';
 import { index as redFlagIndex } from '@/routes/dealer/manual/red-flag';
 import { Link } from '@inertiajs/vue3';
-import { Flag, Globe, HandHelping, ShieldCheck } from 'lucide-vue-next';
+import { ChevronRight, Flag, Globe, HandHelping, ShieldCheck } from 'lucide-vue-next';
 import { type Component, computed } from 'vue';
 import { useNullablePageProp } from './props';
 import type { ManualsSummary } from './types';
@@ -34,38 +34,27 @@ const tiles = computed<ManualTile[]>(() => [
             <h3 class="text-sm font-medium text-foreground">Manuals</h3>
         </header>
 
-        <div class="grid gap-3 px-5 py-5">
-            <Link
-                v-for="tile in tiles"
-                :key="tile.key"
-                :href="tile.href"
-                class="block rounded-xl border bg-muted/40 p-2 transition hover:bg-muted/60"
-            >
-                <header class="flex items-center justify-between px-2 py-1.5">
-                    <h4 class="text-[11px] font-medium tracking-[0.14em] text-muted-foreground uppercase">
-                        {{ tile.label }}
-                    </h4>
+        <ul class="divide-y">
+            <li v-for="tile in tiles" :key="tile.key">
+                <Link
+                    :href="tile.href"
+                    class="flex items-center gap-3 px-5 py-3 hover:bg-muted/20"
+                >
                     <component
                         :is="tile.icon"
-                        class="size-4 text-muted-foreground"
+                        class="size-4 shrink-0 text-muted-foreground"
                         aria-hidden="true"
                     />
-                </header>
-                <div class="flex items-center justify-between rounded-lg border bg-card px-4 py-3">
+                    <span class="flex-1 text-sm font-medium text-foreground">{{ tile.label }}</span>
                     <span
-                        class="text-sm font-semibold"
+                        class="text-xs font-medium"
                         :class="manuals[tile.key] ? 'text-emerald-600 dark:text-emerald-400' : 'text-muted-foreground'"
                     >
                         {{ manuals[tile.key] ? 'Active' : 'Inactive' }}
                     </span>
-                    <span
-                        class="text-muted-foreground"
-                        aria-hidden="true"
-                    >
-                        ›
-                    </span>
-                </div>
-            </Link>
-        </div>
+                    <ChevronRight class="size-4 text-muted-foreground" aria-hidden="true" />
+                </Link>
+            </li>
+        </ul>
     </article>
 </template>

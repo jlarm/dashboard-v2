@@ -44,15 +44,6 @@ const auditTypeReportUrl = (typeKey: string): string => auditTypeReport.url({ ty
         </header>
         <div class="overflow-x-auto">
             <table class="w-full min-w-120 text-sm">
-                <thead>
-                    <tr class="border-b text-left text-xs font-medium text-muted-foreground">
-                        <th class="py-3 pl-5 font-medium"></th>
-                        <th class="py-3 font-medium">Last Audit</th>
-                        <th class="py-3 font-medium">Grade</th>
-                        <th class="py-3 font-medium">Status</th>
-                        <th class="py-3 pr-5 font-medium text-right"></th>
-                    </tr>
-                </thead>
                 <tbody class="divide-y">
                     <tr v-for="row in auditTracker" :key="row.type_key" class="hover:bg-muted/20">
                         <td class="py-4 pl-5 font-medium text-foreground">{{ row.type_label }}</td>

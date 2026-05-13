@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SwitchStoreController from '@/actions/App/Http/Controllers/Tenant/Store/SwitchStoreController';
 import { router } from '@inertiajs/vue3';
+import { ChevronRight } from 'lucide-vue-next';
 import { useNullablePageProp } from './props';
 import type { LocationGradeRow } from './types';
 
@@ -50,7 +51,17 @@ function viewStore(storeId: number): void {
                     </tr>
                 </thead>
                 <tbody class="divide-y">
-                    <tr v-for="row in locations" :key="row.store_id" class="hover:bg-muted/20">
+                    <tr
+                        v-for="row in locations"
+                        :key="row.store_id"
+                        tabindex="0"
+                        role="button"
+                        :aria-label="`Switch to ${row.store_name}`"
+                        class="cursor-pointer hover:bg-muted/20 focus:bg-muted/20 focus:outline-none"
+                        @click="viewStore(row.store_id)"
+                        @keydown.enter.prevent="viewStore(row.store_id)"
+                        @keydown.space.prevent="viewStore(row.store_id)"
+                    >
                         <td class="max-w-[16rem] truncate py-4 pl-5 font-medium text-foreground" :title="row.store_name">
                             {{ row.store_name }}
                         </td>
@@ -65,13 +76,7 @@ function viewStore(storeId: number): void {
                             <span v-else class="text-muted-foreground">-</span>
                         </td>
                         <td class="py-4 pr-5 text-right">
-                            <button
-                                type="button"
-                                class="text-sm font-medium text-sky-700 hover:underline dark:text-sky-400"
-                                @click="viewStore(row.store_id)"
-                            >
-                                View
-                            </button>
+                            <ChevronRight class="ml-auto size-4 text-muted-foreground" aria-hidden="true" />
                         </td>
                     </tr>
                 </tbody>
