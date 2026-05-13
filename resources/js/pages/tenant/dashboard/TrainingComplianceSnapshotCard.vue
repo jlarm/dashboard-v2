@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { show as employeesShow } from '@/routes/dealer/employees';
+import { index as employeesIndex, show as employeesShow } from '@/routes/dealer/employees';
+import { Link } from '@inertiajs/vue3';
+import { ChevronRight } from 'lucide-vue-next';
 import { computed } from 'vue';
 import { usePageProp } from './props';
 import type { TrainingComplianceSnapshot, TrainingComplianceStatus } from './types';
@@ -91,6 +93,7 @@ const statusLabel = (status: TrainingComplianceStatus): string => {
 };
 
 const employeeShowUrl = (slug: string): string => employeesShow.url({ user: slug });
+const employeesIndexUrl = employeesIndex.url();
 </script>
 
 <template>
@@ -123,41 +126,47 @@ const employeeShowUrl = (slug: string): string => employeesShow.url({ user: slug
             </div>
 
             <ul class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
-                <li v-for="segment in segments" :key="segment.tone" class="flex items-center gap-2">
-                    <span class="size-2 rounded-full" :class="segmentDot(segment.tone)" />
-                    <span class="text-muted-foreground">{{ segment.label }}</span>
-                    <span class="font-semibold tabular-nums text-foreground">{{ segment.value }}</span>
-                </li>
+                <template v-for="segment in segments" :key="segment.tone">
+                    <li v-if="segment.value > 0" class="flex items-center gap-2">
+                        <span class="size-2 rounded-full" :class="segmentDot(segment.tone)" />
+                        <span class="text-muted-foreground">{{ segment.label }}</span>
+                        <span class="font-semibold tabular-nums text-foreground">{{ segment.value }}</span>
+                    </li>
+                </template>
             </ul>
         </div>
 
-        <ul v-if="snapshot.priority_alerts.length > 0" class="divide-y border-t">
-            <li
-                v-for="alert in snapshot.priority_alerts"
-                :key="alert.user_slug"
-                class="flex items-center justify-between gap-4 px-5 py-3"
-            >
-                <div class="min-w-0">
-                    <p class="truncate text-sm font-medium text-foreground">{{ alert.name }}</p>
-                    <p class="mt-0.5 text-xs text-muted-foreground">
-                        {{ alert.valid_completed }} / {{ alert.total_required }} current
-                    </p>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span
-                        class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium"
-                        :class="statusPill(alert.status)"
-                    >
-                        {{ statusLabel(alert.status) }}
-                    </span>
-                    <a
+        <div v-if="snapshot.priority_alerts.length > 0" class="border-t">
+            <ul class="divide-y">
+                <li v-for="alert in snapshot.priority_alerts" :key="alert.user_slug">
+                    <Link
                         :href="employeeShowUrl(alert.user_slug)"
-                        class="text-sm font-medium text-sky-700 hover:underline dark:text-sky-400"
+                        class="flex items-center justify-between gap-4 px-5 py-3 hover:bg-muted/30"
                     >
-                        View
-                    </a>
-                </div>
-            </li>
-        </ul>
+                        <div class="min-w-0">
+                            <p class="truncate text-sm font-medium text-foreground">{{ alert.name }}</p>
+                            <p class="mt-0.5 text-xs text-muted-foreground">
+                                {{ alert.valid_completed }} / {{ alert.total_required }} current
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium"
+                                :class="statusPill(alert.status)"
+                            >
+                                {{ statusLabel(alert.status) }}
+                            </span>
+                            <ChevronRight class="size-4 text-muted-foreground" aria-hidden="true" />
+                        </div>
+                    </Link>
+                </li>
+            </ul>
+            <Link
+                :href="employeesIndexUrl"
+                class="flex items-center justify-center border-t bg-muted/20 px-5 py-3 text-sm font-medium text-sky-700 hover:bg-muted/40 dark:text-sky-400"
+            >
+                View all employees
+            </Link>
+        </div>
     </article>
 </template>

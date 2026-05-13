@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 
 class GetTrainingComplianceSnapshot
 {
-    private const int PRIORITY_ALERT_LIMIT = 10;
+    private const int PRIORITY_ALERT_LIMIT = 5;
 
     /**
      * Status sort order. Unassigned employees rise to the top so admins

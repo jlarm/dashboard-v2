@@ -75,6 +75,9 @@ Route::name('dealer.')->middleware([
         ->whereIn('type', ['osha', 'body_shop', 'glba', 'deal_jacket'])
         ->middleware('auth')
         ->name('dashboard.audit-type-report');
+    Route::post('/dashboard/consultant-note', [DashboardController::class, 'updateConsultantNote'])
+        ->middleware('auth')
+        ->name('dashboard.consultant-note.update');
     Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
     Route::post('/current-store', SwitchStoreController::class)->middleware('auth')->name('store.switch');
 

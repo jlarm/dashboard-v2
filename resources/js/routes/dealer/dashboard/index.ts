@@ -1,7 +1,8 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import consultantNote from './consultant-note'
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:143
+* @see app/Http/Controllers/Tenant/DashboardController.php:182
 * @route '/dashboard/audit-report'
 */
 export const auditReport = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +17,7 @@ auditReport.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:143
+* @see app/Http/Controllers/Tenant/DashboardController.php:182
 * @route '/dashboard/audit-report'
 */
 auditReport.url = (options?: RouteQueryOptions) => {
@@ -25,7 +26,7 @@ auditReport.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:143
+* @see app/Http/Controllers/Tenant/DashboardController.php:182
 * @route '/dashboard/audit-report'
 */
 auditReport.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +36,7 @@ auditReport.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:143
+* @see app/Http/Controllers/Tenant/DashboardController.php:182
 * @route '/dashboard/audit-report'
 */
 auditReport.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +46,7 @@ auditReport.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:143
+* @see app/Http/Controllers/Tenant/DashboardController.php:182
 * @route '/dashboard/audit-report'
 */
 const auditReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +56,7 @@ const auditReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:143
+* @see app/Http/Controllers/Tenant/DashboardController.php:182
 * @route '/dashboard/audit-report'
 */
 auditReportForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +66,7 @@ auditReportForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:143
+* @see app/Http/Controllers/Tenant/DashboardController.php:182
 * @route '/dashboard/audit-report'
 */
 auditReportForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +83,7 @@ auditReport.form = auditReportForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:178
+* @see app/Http/Controllers/Tenant/DashboardController.php:217
 * @route '/dashboard/audit-report/{type}'
 */
 export const auditTypeReport = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +98,7 @@ auditTypeReport.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:178
+* @see app/Http/Controllers/Tenant/DashboardController.php:217
 * @route '/dashboard/audit-report/{type}'
 */
 auditTypeReport.url = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -124,7 +125,7 @@ auditTypeReport.url = (args: { type: string | number } | [type: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:178
+* @see app/Http/Controllers/Tenant/DashboardController.php:217
 * @route '/dashboard/audit-report/{type}'
 */
 auditTypeReport.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -134,7 +135,7 @@ auditTypeReport.get = (args: { type: string | number } | [type: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:178
+* @see app/Http/Controllers/Tenant/DashboardController.php:217
 * @route '/dashboard/audit-report/{type}'
 */
 auditTypeReport.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -144,7 +145,7 @@ auditTypeReport.head = (args: { type: string | number } | [type: string | number
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:178
+* @see app/Http/Controllers/Tenant/DashboardController.php:217
 * @route '/dashboard/audit-report/{type}'
 */
 const auditTypeReportForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -154,7 +155,7 @@ const auditTypeReportForm = (args: { type: string | number } | [type: string | n
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:178
+* @see app/Http/Controllers/Tenant/DashboardController.php:217
 * @route '/dashboard/audit-report/{type}'
 */
 auditTypeReportForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -164,7 +165,7 @@ auditTypeReportForm.get = (args: { type: string | number } | [type: string | num
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:178
+* @see app/Http/Controllers/Tenant/DashboardController.php:217
 * @route '/dashboard/audit-report/{type}'
 */
 auditTypeReportForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -182,6 +183,7 @@ auditTypeReport.form = auditTypeReportForm
 const dashboard = {
     auditReport: Object.assign(auditReport, auditReport),
     auditTypeReport: Object.assign(auditTypeReport, auditTypeReport),
+    consultantNote: Object.assign(consultantNote, consultantNote),
 }
 
 export default dashboard

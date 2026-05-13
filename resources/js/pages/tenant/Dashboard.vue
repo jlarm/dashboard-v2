@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import AuditTrackerCard from '@/pages/tenant/dashboard/AuditTrackerCard.vue';
+import ConsultantNotesCard from '@/pages/tenant/dashboard/ConsultantNotesCard.vue';
 import KpiCardsRow from '@/pages/tenant/dashboard/KpiCardsRow.vue';
 import LocationsCard from '@/pages/tenant/dashboard/LocationsCard.vue';
+import ManualsCard from '@/pages/tenant/dashboard/ManualsCard.vue';
 import { useNullablePageProp } from '@/pages/tenant/dashboard/props';
 import TrainingComplianceSnapshotCard from '@/pages/tenant/dashboard/TrainingComplianceSnapshotCard.vue';
 import TrainingCompletionCard from '@/pages/tenant/dashboard/TrainingCompletionCard.vue';
-import type { AuditTrackerRow, LocationGradeRow } from '@/pages/tenant/dashboard/types';
+import type { AuditTrackerRow, ConsultantNote, LocationGradeRow, ManualsSummary } from '@/pages/tenant/dashboard/types';
 import { dashboard } from '@/routes/dealer';
 import type { BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
@@ -30,6 +32,16 @@ const primaryCard = computed<'locations' | 'audit_tracker' | null>(() => {
     if (auditTracker.value !== null) return 'audit_tracker';
     return null;
 });
+
+// Single-store context shows either Consultant Notes (super-admin / Consultant)
+// or the Manuals adoption summary (everyone else). The controller emits
+// exactly one of these props based on the viewer's role.
+const consultantNote = useNullablePageProp<ConsultantNote>('consultant_note');
+const manualsSummary = useNullablePageProp<ManualsSummary>('manuals_summary');
+
+const hasSingleStoreCard = computed<boolean>(
+    () => consultantNote.value !== null || manualsSummary.value !== null,
+);
 </script>
 
 <template>
@@ -45,7 +57,12 @@ const primaryCard = computed<'locations' | 'audit_tracker' | null>(() => {
                 <TrainingCompletionCard :class="primaryCard !== null ? 'xl:col-span-4' : 'xl:col-span-12'" />
             </section>
 
-            <TrainingComplianceSnapshotCard />
+            <section v-if="hasSingleStoreCard" class="grid gap-4 xl:grid-cols-12">
+                <ConsultantNotesCard v-if="consultantNote !== null" class="xl:col-span-4" />
+                <ManualsCard v-else-if="manualsSummary !== null" class="xl:col-span-4" />
+                <TrainingComplianceSnapshotCard class="xl:col-span-8" />
+            </section>
+            <TrainingComplianceSnapshotCard v-else />
         </div>
     </AppLayout>
 </template>

@@ -99,3 +99,14 @@ export type TrainingComplianceSnapshot = {
     employees: number;
     priority_alerts: TrainingComplianceAlert[];
 };
+
+export type ConsultantNote = {
+    note: string | null;
+};
+
+export type ManualsSummary = {
+    isp: boolean;
+    osha: boolean;
+    red_flag: boolean;
+    cms: boolean;
+};

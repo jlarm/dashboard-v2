@@ -15,11 +15,15 @@ use App\Domain\Tenant\Compliance\Queries\CalculateViolationsOverview;
 use App\Domain\Tenant\Compliance\Queries\GetAuditTracker;
 use App\Domain\Tenant\Compliance\Queries\GetCriticalVulnerabilities;
 use App\Domain\Tenant\Compliance\Queries\GetLocationGrades;
+use App\Domain\Tenant\Compliance\Queries\GetManualsSummary;
 use App\Domain\Tenant\Compliance\Queries\GetTrainingCompletionByDepartment;
 use App\Domain\Tenant\Compliance\Queries\GetTrainingComplianceSnapshot;
 use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Domain\Tenant\Course\Queries\GetUserCourseList;
+use App\Domain\Tenant\Store\Actions\UpdateConsultantNote;
+use App\Enums\Role;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenant\Dashboard\UpdateConsultantNoteRequest;
 use App\Jobs\Audit\GenerateDealJacketReportJob;
 use App\Models\ComplianceScoreSnapshot;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
@@ -33,6 +37,7 @@ use App\Services\ComplianceSummaryPdfService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +63,7 @@ class DashboardController extends Controller
         CalculateViolationsOverview $violationsOverviewQuery,
         GetAuditTracker $auditTrackerQuery,
         GetLocationGrades $locationGradesQuery,
+        GetManualsSummary $manualsSummaryQuery,
         GetTrainingComplianceSnapshot $trainingComplianceSnapshotQuery,
         GetTrainingCompletionByDepartment $trainingCompletionQuery,
         GetUserCourseList $courseList,
@@ -122,6 +128,20 @@ class DashboardController extends Controller
             ->handleForStores($stores->pluck('id')->all())
             ->toArray();
 
+        $selectedStore = $this->resolveSelectedStore($user, $stores);
+
+        $consultantNote = $selectedStore !== null
+            && $user instanceof User
+            && $user->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value])
+            ? ['note' => $selectedStore->note]
+            : null;
+
+        $manualsSummary = $selectedStore !== null
+            && $user instanceof User
+            && ! $user->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value])
+            ? $manualsSummaryQuery->handleForStore($selectedStore)->toArray()
+            : null;
+
         return Inertia::render('tenant/Dashboard', [
             'compliance' => $compliance,
             'overdue_remediations' => $overdueRemediations,
@@ -132,7 +152,26 @@ class DashboardController extends Controller
             'training_completion' => $trainingCompletion,
             'location_grades' => $locationGrades,
             'training_compliance_snapshot' => $trainingComplianceSnapshot,
+            'consultant_note' => $consultantNote,
+            'manuals_summary' => $manualsSummary,
         ]);
+    }
+
+    public function updateConsultantNote(
+        UpdateConsultantNoteRequest $request,
+        UpdateConsultantNote $updateConsultantNote,
+    ): RedirectResponse {
+        $user = $request->user();
+
+        $store = $user instanceof User
+            ? $this->resolveSelectedStore($user, $this->resolveScopedStores())
+            : null;
+
+        abort_if($store === null, 404);
+
+        $updateConsultantNote->handle($store, $request->note());
+
+        return back();
     }
 
     /**
@@ -253,6 +292,25 @@ class DashboardController extends Controller
         }
 
         return array_diff($roleNames, self::COURSE_DASHBOARD_ROLES) === [];
+    }
+
+    /**
+     * Returns the single store the user is currently viewing, if any.
+     * Falls back to null when the user is in overview mode or the
+     * current_store_id is no longer in their scoped store set.
+     *
+     * @param  EloquentCollection<int, Store>  $stores
+     */
+    private function resolveSelectedStore(?User $user, EloquentCollection $stores): ?Store
+    {
+        if (! $user instanceof User || $user->current_store_id === null) {
+            return null;
+        }
+
+        /** @var Store|null $match */
+        $match = $stores->firstWhere('id', (int) $user->current_store_id);
+
+        return $match;
     }
 
     /**
