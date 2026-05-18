@@ -22,6 +22,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 /**
  * @property int $id
  * @property Carbon|null $audit_date
+ * @property Carbon|null $deal_jacket_date
  * @property int|null $rating
  */
 class IndividualAudit extends Model implements HasMedia

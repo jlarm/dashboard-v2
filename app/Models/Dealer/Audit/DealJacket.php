@@ -21,6 +21,7 @@ use Override;
  * @property string|null $purchase_type
  * @property string|null $vehicle_type
  * @property int|null $mileage
+ * @property Carbon|null $audit_date
  * @property Carbon|null $date_of_deal_jacket
  * @property array<int, array<string, mixed>>|null $responses
  * @property-read User|null $user

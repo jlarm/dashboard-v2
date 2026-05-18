@@ -18,6 +18,7 @@ use Override;
 /**
  * @property int $total_passed
  * @property int $total_failed
+ * @property float|null $average_percentage
  */
 #[ObservedBy(DealJacketGroupObserver::class)]
 class DealJacketGroup extends Model
