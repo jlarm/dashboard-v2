@@ -21,7 +21,7 @@ class IndividualAuditListItem
 
     public static function fromModel(IndividualAudit $audit): self
     {
-        $month = $audit->audit_date?->month ?? 1;
+        $month = $audit->audit_date->month ?? 1;
         $quarter = match (true) {
             $month <= 3 => 'Q1',
             $month <= 6 => 'Q2',
@@ -34,9 +34,9 @@ class IndividualAuditListItem
             uuid: (string) $audit->uuid,
             auditDate: $audit->audit_date?->toDateString() ?? '',
             quarter: $quarter,
-            year: (int) ($audit->audit_date?->year ?? now()->year),
+            year: (int) ($audit->audit_date->year ?? now()->year),
             hasPdf: (bool) ($audit->pdf_path ?? false),
-            childCount: (int) ($audit->children_count ?? $audit->children?->count() ?? 0),
+            childCount: (int) ($audit->children_count ?? $audit->children->count()),
             draftCount: (int) ($audit->draft_count ?? 0),
         );
     }

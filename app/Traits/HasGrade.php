@@ -51,13 +51,16 @@ trait HasGrade
     {
         return $this->rememberGradeValue(
             $type,
-            fn (): ?string => $audits
-                ->whereNotNull('grade')
-                ->where('grade', '!=', 'N/A')
-                ->orderByDesc('date')
-                ->orderByDesc('id')
-                ->first()
-                ?->grade,
+            function () use ($audits): ?string {
+                $grade = $audits
+                    ->whereNotNull('grade')
+                    ->where('grade', '!=', 'N/A')
+                    ->orderByDesc('date')
+                    ->orderByDesc('id')
+                    ->value('grade');
+
+                return $grade !== null ? (string) $grade : null;
+            },
         );
     }
 

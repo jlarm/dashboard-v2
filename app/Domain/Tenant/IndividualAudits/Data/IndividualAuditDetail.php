@@ -36,7 +36,7 @@ class IndividualAuditDetail
 
     public static function fromModel(IndividualAudit $audit): self
     {
-        $month = $audit->audit_date?->month ?? 1;
+        $month = $audit->audit_date->month ?? 1;
         $quarter = match (true) {
             $month <= 3 => 'Q1',
             $month <= 6 => 'Q2',
@@ -59,7 +59,7 @@ class IndividualAuditDetail
             'preview_url' => $media->hasGeneratedConversion('preview') ? $media->getUrl('preview') : null,
         ])->all();
 
-        $children = $audit->children?->map(static fn (IndividualAudit $child): array => [
+        $children = $audit->children->map(static fn (IndividualAudit $child): array => [
             'id' => (int) $child->id,
             'uuid' => (string) $child->uuid,
             'audit_date' => $child->audit_date?->toDateString() ?? '',
@@ -67,7 +67,7 @@ class IndividualAuditDetail
             'customer_number' => $child->customer_number,
             'manager_name' => $child->manager?->name,
             'draft' => (bool) $child->draft,
-        ])->all() ?? [];
+        ])->all();
 
         return new self(
             id: (int) $audit->id,
@@ -82,9 +82,9 @@ class IndividualAuditDetail
             mileage: $audit->mileage !== null ? (string) $audit->mileage : null,
             draft: (bool) $audit->draft,
             hasPdf: (bool) ($audit->pdf_path ?? false),
-            storeName: (string) ($audit->store?->name ?? ''),
+            storeName: (string) ($audit->store->name ?? ''),
             quarter: $quarter,
-            year: (int) ($audit->audit_date?->year ?? now()->year),
+            year: (int) ($audit->audit_date->year ?? now()->year),
             children: $children,
             answers: $answers,
             images: $images,

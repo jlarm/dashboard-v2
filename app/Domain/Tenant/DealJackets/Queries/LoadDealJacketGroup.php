@@ -46,7 +46,7 @@ class LoadDealJacketGroup
             'uuid' => (string) $group->uuid,
             'completed' => (bool) $group->completed,
             'created_at' => $group->created_at?->toIso8601String(),
-            'store_name' => (string) ($group->store?->name ?? ''),
+            'store_name' => (string) ($group->store->name ?? ''),
             'deal_jackets' => $jackets,
             'total_passed' => array_sum(array_column($jackets, 'total_passed')),
             'total_failed' => array_sum(array_column($jackets, 'total_failed')),
