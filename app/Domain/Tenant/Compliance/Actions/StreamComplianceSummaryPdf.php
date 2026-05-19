@@ -34,10 +34,17 @@ class StreamComplianceSummaryPdf
         $filename = $downloadName ?? $this->buildFilename($stores);
         $nodeBinary = $this->resolveNodeBinary();
 
+        $footerHtml = '<div style="font-family: Arial, sans-serif; font-size: 9px; color: #9ca3af; width: 100%; padding: 0 14.82mm; box-sizing: border-box; display: flex; justify-content: space-between;">'
+            .'<span>Automotive Risk Management Partners</span>'
+            .'<span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>'
+            .'</div>';
+
         return Pdf::view('dealer.reports.compliance-summary-pdf', $payload)
             ->format(Format::A4)
-            ->margins(10.58, 14.82, 10.58, 14.82)
+            ->margins(10.58, 14.82, 19, 14.82)
             ->name($filename)
+            ->headerHtml('<span></span>')
+            ->footerHtml($footerHtml)
             ->withBrowsershot(static fn (Browsershot $browsershot): Browsershot => $browsershot
                 ->setNodeModulePath(base_path('node_modules'))
                 ->setNodeBinary($nodeBinary)

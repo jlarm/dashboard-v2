@@ -165,14 +165,6 @@
         /* ─── Divider between stores ────────────────────────────────── */
         .store-divider { margin: 36px 0; border: none; border-top: 2px solid #e2e8f0; }
 
-        /* ─── Footer ────────────────────────────────────────────────── */
-        .footer {
-            margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .footer-brand { font-size: 11px; font-weight: 400; color: #94a3b8; letter-spacing: 0.04em; }
-        .footer-date { font-size: 11px; color: #94a3b8; }
-
         /* ─── Grade colour helpers ──────────────────────────────────── */
         .grade-a { background: #10b981; }
         .grade-b { background: #3b82f6; }
@@ -417,12 +409,6 @@
         </div>
 
     @endforeach
-
-    {{-- ── Footer ──────────────────────────────────────────────────── --}}
-    <div class="footer no-break">
-        <span class="footer-brand">Automotive Risk Management Partners</span>
-        <span class="footer-date">Generated {{ $generatedAt->format('F j, Y') }}</span>
-    </div>
 
 </div>
 </body>
