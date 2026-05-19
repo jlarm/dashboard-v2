@@ -373,10 +373,14 @@ Route::name('dealer.')->middleware([
 
         Route::prefix('documents')->name('doc.')->middleware('auth')->group(function (): void {
             Route::get('/', [DealerDocController::class, 'index'])->name('index');
-            Route::post('/', [DealerDocController::class, 'store'])->name('store');
+            Route::post('/', [DealerDocController::class, 'store'])
+                ->middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')
+                ->name('store');
             Route::get('{dealerDoc}/download', [DealerDocController::class, 'download'])->name('download');
             Route::get('shared/{sharedDocument}/download', [DealerDocController::class, 'downloadShared'])->whereNumber('sharedDocument')->name('shared.download');
-            Route::delete('{dealerDoc}', [DealerDocController::class, 'destroy'])->name('destroy');
+            Route::delete('{dealerDoc}', [DealerDocController::class, 'destroy'])
+                ->middleware('role:super-admin|Consultant|Owner|CFO|GM|GSM|Qualified Individual')
+                ->name('destroy');
         });
 
         Route::get('fit-tests', App\Http\Livewire\Tenant\Audit\Fit\Index::class)->name('fit-tests.index');

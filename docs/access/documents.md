@@ -14,7 +14,6 @@
 - - CFO
 - - GM
 - - GSM
-- - Manager
 - /documents/{dealerDoc}/download
 - - Consultant
 - - Owner
@@ -38,4 +37,3 @@
 - - CFO
 - - GM
 - - GSM
-- - Manager

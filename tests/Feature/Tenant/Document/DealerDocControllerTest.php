@@ -164,6 +164,21 @@ describe('DealerDoc store', function (): void {
         expect(DealerDoc::query()->count())->toBe(0);
     });
 
+    it('rejects managers at the route level', function (): void {
+        $manager = User::factory()->create();
+        $manager->assignRole('Manager');
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $this->actingAs($manager)
+            ->post(route('dealer.doc.store'), [
+                'title' => 'Forbidden',
+                'file' => UploadedFile::fake()->create('forbidden.pdf', 10, 'application/pdf'),
+            ])
+            ->assertForbidden();
+
+        expect(DealerDoc::query()->count())->toBe(0);
+    });
+
     it('uploads a PDF and creates a dealer doc', function (): void {
         $file = UploadedFile::fake()->create('handbook.pdf', 100, 'application/pdf');
 
@@ -235,6 +250,27 @@ describe('DealerDoc destroy', function (): void {
         ]);
 
         $this->actingAs($owner)
+            ->delete(route('dealer.doc.destroy', $doc))
+            ->assertForbidden();
+
+        expect(DealerDoc::query()->find($doc->id))->not->toBeNull();
+    });
+
+    it('rejects managers at the route level', function (): void {
+        $store = Store::query()->firstOrFail();
+        $manager = User::factory()->create();
+        $manager->assignRole('Manager');
+        app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $doc = DealerDoc::query()->create([
+            'store_id' => $store->id,
+            'title' => 'Handbook',
+            'file_name' => '',
+            'file_path' => '',
+            'url' => 'https://example.com',
+        ]);
+
+        $this->actingAs($manager)
             ->delete(route('dealer.doc.destroy', $doc))
             ->assertForbidden();
 
