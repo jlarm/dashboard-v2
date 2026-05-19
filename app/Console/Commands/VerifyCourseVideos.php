@@ -78,7 +78,10 @@ class VerifyCourseVideos extends Command
         return $issues === [] ? self::SUCCESS : self::FAILURE;
     }
 
-    protected function verifyCourse($course): array
+    /**
+     * @return array<string, mixed>
+     */
+    protected function verifyCourse(Course|DealerCourse $course): array
     {
         $videoId = $course->video_id;
         $courseName = $course->name ?? $course->slug;

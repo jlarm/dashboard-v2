@@ -76,6 +76,6 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     #[Override]
     protected function gate(): void
     {
-        Gate::define('viewTelescope', fn ($user): bool => $user->email === 'jlohr@autorisknow.com');
+        Gate::define('viewTelescope', fn (\App\Models\User $user): bool => $user->email === 'jlohr@autorisknow.com');
     }
 }

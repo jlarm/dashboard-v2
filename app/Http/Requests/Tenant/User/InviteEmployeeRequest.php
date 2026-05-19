@@ -225,6 +225,6 @@ class InviteEmployeeRequest extends FormRequest
             return [];
         }
 
-        return array_values(array_unique(array_map(static fn ($value): int => (int) $value, $raw)));
+        return array_values(array_unique(array_map(static fn (mixed $value): int => (int) $value, $raw)));
     }
 }

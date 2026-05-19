@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Tenant\Manuals;
 use App\Domain\Tenant\Manuals\Osha\Actions\CreateOshaManual;
 use App\Domain\Tenant\Manuals\Osha\Actions\DeleteOshaManual;
 use App\Domain\Tenant\Manuals\Osha\Data\OshaFormDefaultsData;
+use App\Domain\Tenant\Manuals\Osha\Data\OshaManualListItemData;
 use App\Domain\Tenant\Manuals\Osha\Queries\BuildOshaFormDefaults;
 use App\Domain\Tenant\Manuals\Osha\Queries\ListOshaManuals;
 use App\Domain\Tenant\Manuals\Queries\ResolveManualStores;
@@ -41,7 +42,7 @@ class OshaController extends Controller
                 ? ['id' => $store->id, 'name' => $store->name]
                 : null,
             'manuals' => $listOshaManuals->handle($storeIds)
-                ->map(static fn ($item): array => $item->toArray())
+                ->map(static fn (OshaManualListItemData $item): array => $item->toArray())
                 ->all(),
         ]);
     }

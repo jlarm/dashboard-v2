@@ -12,7 +12,7 @@ class SearchCoursesForManagement
     public function handle(?string $search): LengthAwarePaginator
     {
         return Course::query()
-            ->when($search, fn ($query, string $value) => $query->where('name', 'like', "%{$value}%"))
+            ->when($search, fn (\Illuminate\Database\Eloquent\Builder $query, string $value) => $query->where('name', 'like', "%{$value}%"))
             ->orderBy('name')
             ->paginate(15)
             ->withQueryString();

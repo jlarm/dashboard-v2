@@ -12,7 +12,7 @@ class SearchDocuments
     public function handle(?string $search): LengthAwarePaginator
     {
         return Document::query()
-            ->when($search, fn ($query, $value) => $query->where('title', 'like', "%{$value}%"))
+            ->when($search, fn (\Illuminate\Database\Eloquent\Builder $query, string $value) => $query->where('title', 'like', "%{$value}%"))
             ->orderBy('title')
             ->paginate(15)
             ->withQueryString();

@@ -35,7 +35,7 @@ class AutomatedReportsController extends Controller
         $settings = GlobalSetting::query()->first();
 
         $availableRecipients = User::query()
-            ->whereHas('roles', fn ($query) => $query->whereIn('name', self::RECIPIENT_ROLES))
+            ->whereHas('roles', fn (\Illuminate\Database\Eloquent\Builder $query) => $query->whereIn('name', self::RECIPIENT_ROLES))
             ->orderBy('name')
             ->get(['id', 'name', 'email'])
             ->map(fn (User $user): array => [

@@ -33,7 +33,7 @@ class EmployeeCourseReminderCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
             resolve(UserCourseService::class)->clearAllCaches();
 
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
@@ -63,7 +63,7 @@ class EmployeeCourseReminderCommand extends Command
             ->orderBy('id', 'desc')
             ->get()
             ->groupBy('course_id')
-            ->map(fn ($result) => $result->first());
+            ->map(fn (Collection $result) => $result->first());
 
         // Group courses by their expiration status
         $coursesToNotify = [
@@ -72,7 +72,7 @@ class EmployeeCourseReminderCommand extends Command
             'expired_30_days' => [],
         ];
 
-        $results->each(function ($result) use (&$coursesToNotify, $user): void {
+        $results->each(function (\App\Models\CourseResults $result) use (&$coursesToNotify, $user): void {
             // Course expires 1 year (365 days) after completion
             $expirationDate = Date::parse($result->created_at)->addYear();
             $now = Date::now();
@@ -108,7 +108,7 @@ class EmployeeCourseReminderCommand extends Command
         });
 
         // If there are courses to notify about, send a single notification with all courses
-        $hasCourses = array_filter($coursesToNotify, fn ($courses): bool => $courses !== []);
+        $hasCourses = array_filter($coursesToNotify, fn (array $courses): bool => $courses !== []);
 
         if ($hasCourses !== []) {
             $user->notify(new ExpiredCourseNotification($coursesToNotify, $user->name));

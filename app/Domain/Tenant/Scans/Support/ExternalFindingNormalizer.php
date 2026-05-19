@@ -27,11 +27,11 @@ final class ExternalFindingNormalizer
         $flaws = is_array($asset['flaws'] ?? null) ? $asset['flaws'] : [];
 
         return collect($vulnerabilities)
-            ->filter(static fn ($entry): bool => is_array($entry))
+            ->filter(static fn (mixed $entry): bool => is_array($entry))
             ->map(static fn (array $entry): array => self::normalize($entry, 'vulnerability')->toArray())
             ->merge(
                 collect($flaws)
-                    ->filter(static fn ($entry): bool => is_array($entry))
+                    ->filter(static fn (mixed $entry): bool => is_array($entry))
                     ->map(static fn (array $entry): array => self::normalize($entry, 'flaw')->toArray()),
             )
             ->sort(static function (array $a, array $b): int {

@@ -29,7 +29,7 @@ class GetTrainingCompletionByDepartment
     public function handleForStores(Collection|array $storeIds): array
     {
         $ids = collect($storeIds)
-            ->map(static fn ($id): int => $id)
+            ->map(static fn (int $id): int => $id)
             ->filter()
             ->values()
             ->all();

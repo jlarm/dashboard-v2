@@ -157,7 +157,7 @@ class GetEmployees
             ? 'all'
             : "dept-{$viewer->department_id}";
         $storeKey = app()->bound('scopedStoreIds')
-            ? resolve('scopedStoreIds')->map(static fn ($id): int => (int) $id)->sort()->implode('_')
+            ? resolve('scopedStoreIds')->map(static fn (mixed $id): int => (int) $id)->sort()->implode('_')
             : '';
         $filtersHash = md5(serialize($filters->toArray()));
 

@@ -16,12 +16,12 @@ class SendContractPdfNotification extends Notification implements ShouldQueue
 
     public function __construct(protected Contract $contract) {}
 
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->line('The introduction to the notification.')
@@ -29,7 +29,7 @@ class SendContractPdfNotification extends Notification implements ShouldQueue
             ->line('Thank you for using our application!');
     }
 
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }

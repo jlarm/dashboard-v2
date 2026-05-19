@@ -87,7 +87,7 @@ class GetExternalIpExposure
         }
 
         return collect($rawPorts)
-            ->filter(static fn ($port): bool => is_array($port))
+            ->filter(static fn (mixed $port): bool => is_array($port))
             ->map(static fn (array $port): array => [
                 'port_number' => (string) ($port['portNumber'] ?? '-'),
                 'port_description' => isset($port['portDescription']) && $port['portDescription'] !== ''

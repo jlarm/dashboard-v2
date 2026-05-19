@@ -184,8 +184,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(RemediationReminderPreference::class);
     }
 
+    /**
+     * @param  string  $token
+     */
     #[Override]
-    public function sendPasswordResetNotification($token): void
+    public function sendPasswordResetNotification($token): void // @pest-ignore-type
     {
         $this->notify(new ResetPassword($token));
     }
@@ -213,7 +216,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected function scopeWithoutSuperAdminsAndConsultants(Builder $query): Builder
     {
-        return $query->whereDoesntHave('roles', function ($q): void {
+        return $query->whereDoesntHave('roles', function (Builder $q): void {
             $q->whereIn('name', [Role::SuperAdmin->value, Role::Consultant->value]);
         });
     }
@@ -239,7 +242,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function scopeUserStore(Builder $query, ?Store $store): void
     {
         if ($store instanceof Store) {
-            $query->whereHas('stores', function ($q) use ($store): void {
+            $query->whereHas('stores', function (Builder $q) use ($store): void {
                 $q->where('store_id', $store->id);
             });
         }
@@ -260,7 +263,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected function scopeUsersNotCompletedCourses(Builder $query, bool $showNotCompleted): void
     {
-        $query->when($showNotCompleted, fn ($query) => $query->where('user_has_not_completed_courses', true));
+        $query->when($showNotCompleted, fn (Builder $query) => $query->where('user_has_not_completed_courses', true));
     }
 
     protected function initials(): Attribute

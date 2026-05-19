@@ -40,7 +40,7 @@ final readonly class CoursesFeed
         $courses = $this->builder()->get();
 
         $totalCount = $courses->count();
-        $completedCount = $courses->filter(fn ($course): bool => $course instanceof Course && $course->lastResult !== null)->count();
+        $completedCount = $courses->filter(fn (mixed $course): bool => $course instanceof Course && $course->lastResult !== null)->count();
         $incompleteCount = $totalCount - $completedCount;
 
         return [
@@ -68,7 +68,7 @@ final readonly class CoursesFeed
 
         // Correctly query for completed courses by checking course_results table directly
         $completedCount = $completedQuery
-            ->whereExists(function ($query): void {
+            ->whereExists(function (\Illuminate\Database\Query\Builder $query): void {
                 $query->select(DB::raw(1))
                     ->from('course_results')
                     ->whereColumn('course_results.course_id', 'courses.id')

@@ -139,7 +139,7 @@ class ImportEmployees
             ->whereIn('email', $emails)
             ->pluck('email')
             ->merge(Invite::query()->whereIn('email', $emails)->pluck('email'))
-            ->map(static fn ($email): string => mb_strtolower((string) $email))
+            ->map(static fn (mixed $email): string => mb_strtolower((string) $email))
             ->unique()
             ->values();
     }

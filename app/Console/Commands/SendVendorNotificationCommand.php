@@ -38,10 +38,10 @@ class SendVendorNotificationCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
             $incompleteVendors = VendorForm::query()
                 ->whereNull('signature')
-                ->where(function ($query): void {
+                ->where(function (\Illuminate\Database\Eloquent\Builder $query): void {
                     $query->whereNull('last_notification_sent_at')
                         ->orWhere('last_notification_sent_at', '<', now()->subMonth());
                 })

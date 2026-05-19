@@ -74,7 +74,7 @@ class RegisterInvitedEmployee
     private function resolveAssignedStoreIds(Invite $invite): Collection
     {
         $storeIds = collect(Arr::wrap($invite->stores))
-            ->map(static fn ($storeId): int => (int) $storeId)
+            ->map(static fn (mixed $storeId): int => (int) $storeId)
             ->filter()
             ->unique()
             ->values();

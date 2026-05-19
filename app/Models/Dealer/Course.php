@@ -82,7 +82,7 @@ class Course extends Model
         return $this->belongsTo(CourseResults::class);
     }
 
-    protected function scopeWithLastResult($query, $userId): void
+    protected function scopeWithLastResult(\Illuminate\Database\Eloquent\Builder $query, int $userId): void
     {
         $query->addSelect(['last_result_id' => CourseResults::query()->select('id')
             ->whereColumn('course_id', 'courses.id')

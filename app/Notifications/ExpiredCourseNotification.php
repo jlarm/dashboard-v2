@@ -16,12 +16,12 @@ class ExpiredCourseNotification extends Notification implements ShouldQueue
 
     public function __construct(public array $coursesGrouped, public string $userName) {}
 
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail', 'database'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         $mail = (new MailMessage)
             ->subject('Course Expiration Reminder')
@@ -62,7 +62,7 @@ class ExpiredCourseNotification extends Notification implements ShouldQueue
         return $mail;
     }
 
-    public function toDatabase($notifiable): array
+    public function toDatabase(mixed $notifiable): array
     {
         $messages = [];
 

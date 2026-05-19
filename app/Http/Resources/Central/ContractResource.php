@@ -19,7 +19,7 @@ class ContractResource extends JsonResource
     {
         $progress = $this->status
             ->pluck('step')
-            ->filter(fn ($step): bool => $step !== null)
+            ->filter(fn (mixed $step): bool => $step !== null)
             ->unique()
             ->values();
 

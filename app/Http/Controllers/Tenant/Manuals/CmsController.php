@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Tenant\Manuals;
 use App\Domain\Tenant\Manuals\Cms\Actions\CreateCmsManual;
 use App\Domain\Tenant\Manuals\Cms\Actions\DeleteCmsManual;
 use App\Domain\Tenant\Manuals\Cms\Data\CmsFormDefaultsData;
+use App\Domain\Tenant\Manuals\Cms\Data\CmsManualListItemData;
 use App\Domain\Tenant\Manuals\Cms\Queries\BuildCmsFormDefaults;
 use App\Domain\Tenant\Manuals\Cms\Queries\ListCmsManuals;
 use App\Domain\Tenant\Manuals\Queries\ResolveManualStores;
@@ -41,7 +42,7 @@ class CmsController extends Controller
                 ? ['id' => $store->id, 'name' => $store->name]
                 : null,
             'manuals' => $listCmsManuals->handle($storeIds)
-                ->map(static fn ($item): array => $item->toArray())
+                ->map(static fn (CmsManualListItemData $item): array => $item->toArray())
                 ->all(),
         ]);
     }

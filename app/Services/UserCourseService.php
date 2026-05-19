@@ -105,7 +105,7 @@ class UserCourseService
         $excludedCourseIds = $this->getOverrideCourseIds($user, 'exclude');
         $addedCourseIds = $this->getOverrideCourseIds($user, 'add');
         $userRoleIds = $user->roles
-            ->reject(fn ($role): bool => $role instanceof Role
+            ->reject(fn (mixed $role): bool => $role instanceof Role
                 && ($role->id === self::QUALIFIED_INDIVIDUAL_ROLE_ID || in_array($role->name, self::ADMIN_ROLES, true)))
             ->pluck('id');
 
@@ -116,7 +116,7 @@ class UserCourseService
         $roleKey = $userRoleIds->sort()->implode('_');
 
         $courseWithRole = $this->courseRoleCache[$roleKey] ??= Course::query()
-            ->whereHas('roles', fn ($query) => $query->whereIn('roles.id', $userRoleIds))
+            ->whereHas('roles', fn (\Illuminate\Database\Eloquent\Builder $query) => $query->whereIn('roles.id', $userRoleIds))
             ->pluck('id')
             ->toArray();
 
@@ -154,7 +154,7 @@ class UserCourseService
 
         return Course::query()
             ->whereIn('id', $courseIds)
-            ->with(['results' => fn ($query) => $query->where('user_id', $user->id)->latest()])
+            ->with(['results' => fn (\Illuminate\Database\Eloquent\Relations\Relation $query) => $query->where('user_id', $user->id)->latest()])
             ->select(['id', 'name', 'slug'])
             ->orderBy('name')
             ->get();
@@ -166,7 +166,7 @@ class UserCourseService
 
         return Course::query()
             ->whereIn('id', $courseIds)
-            ->when($with, fn ($query) => $query->with($with))
+            ->when($with, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->with($with))
             ->select($select)
             ->orderBy('name')
             ->get();
@@ -189,13 +189,13 @@ class UserCourseService
     {
         $candidates = Course::query()
             ->where('optional', false)
-            ->where(function ($query) use ($departmentId, $courseWithRole): void {
-                $query->where(function ($q) use ($departmentId, $courseWithRole): void {
-                    $q->whereHas('departments', fn ($q) => $q->where('id', $departmentId))
+            ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($departmentId, $courseWithRole): void {
+                $query->where(function (\Illuminate\Database\Eloquent\Builder $q) use ($departmentId, $courseWithRole): void {
+                    $q->whereHas('departments', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('id', $departmentId))
                         ->whereIn('id', $courseWithRole);
-                })->orWhere(function ($q) use ($courseWithRole): void {
+                })->orWhere(function (\Illuminate\Database\Eloquent\Builder $q) use ($courseWithRole): void {
                     $q->whereDoesntHave('departments')
-                        ->where(function ($subQuery) use ($courseWithRole): void {
+                        ->where(function (\Illuminate\Database\Eloquent\Builder $subQuery) use ($courseWithRole): void {
                             $subQuery->whereIn('id', $courseWithRole)
                                 ->orWhereDoesntHave('roles');
                         });
@@ -205,17 +205,17 @@ class UserCourseService
 
         // State-specific courses that match at least one of the user's states
         $applicableStateCourses = $candidates->filter(
-            fn ($course): bool => $this->statesOverlap($userStates, $course->states_required)
+            fn (Course $course): bool => $this->statesOverlap($userStates, $course->states_required)
         );
 
         // Slugs of general courses that applicable state courses replace
         $replacedSlugs = $applicableStateCourses
-            ->flatMap(fn ($course): array => $course->replaces_course_slugs ?? [])
+            ->flatMap(fn (Course $course): array => $course->replaces_course_slugs ?? [])
             ->unique()
             ->all();
 
         return $candidates
-            ->filter(function ($course) use ($userStates, $replacedSlugs): bool {
+            ->filter(function (Course $course) use ($userStates, $replacedSlugs): bool {
                 // Exclude state-specific courses that don't apply to this user's states
                 if ($course->states_required !== null && ! $this->statesOverlap($userStates, $course->states_required)) {
                     return false;

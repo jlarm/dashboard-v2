@@ -49,7 +49,7 @@ class GetManageCoursesOptions
      * @param  Collection<int, string>  $overrides
      * @return 'default'|'add'|'exclude'
      */
-    private function stateFor($overrides, int $courseId): string
+    private function stateFor(Collection $overrides, int $courseId): string
     {
         $type = $overrides->get($courseId);
 

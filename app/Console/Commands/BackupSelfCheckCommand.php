@@ -34,7 +34,7 @@ class BackupSelfCheckCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($disk, $cutoff, &$failures, &$checked): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use ($disk, $cutoff, &$failures, &$checked): void {
             $checked++;
             $tenantSlug = Str::slug($tenant->name) ?: 'tenant';
             $directory = "tenant-{$tenant->id}-{$tenantSlug}";

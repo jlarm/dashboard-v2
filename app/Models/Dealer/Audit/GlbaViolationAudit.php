@@ -106,7 +106,7 @@ class GlbaViolationAudit extends Model implements ViolationAudit
             return (int) $this->attributes['remediation_count'];
         }
 
-        return $this->violations()->whereHas('remediation', function ($query): void {
+        return $this->violations()->whereHas('remediation', function (\Illuminate\Database\Eloquent\Builder $query): void {
             $query->where('completed', true);
         })->count();
     }

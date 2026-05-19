@@ -55,7 +55,7 @@ class EnableVimeoSeek extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($videoIds): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use ($videoIds): void {
             $tenantVideoIds = DealerCourse::query()->whereNotNull('video_id')->pluck('video_id');
             $this->line("Tenant {$tenant->id}: found {$tenantVideoIds->count()} video(s)");
             $videoIds->push(...$tenantVideoIds);

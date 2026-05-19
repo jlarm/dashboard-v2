@@ -50,7 +50,7 @@ class UserController extends Controller
     private function inviteStoreNames(Invite $invite): array
     {
         $storeIds = collect($invite->stores ?? [])
-            ->map(static fn ($id): int => (int) $id)
+            ->map(static fn (mixed $id): int => (int) $id)
             ->filter()
             ->unique()
             ->values();
@@ -63,7 +63,7 @@ class UserController extends Controller
             ->whereIn('id', $storeIds)
             ->orderBy('name')
             ->pluck('name')
-            ->map(static fn ($name): string => (string) $name)
+            ->map(static fn (mixed $name): string => (string) $name)
             ->all();
     }
 }

@@ -50,8 +50,8 @@ class StoreIdentifierMiddleware
     private function setCurrentStoreContext(?Store $store, Collection $accessibleStoreIds, Collection $scopedStoreIds): void
     {
         app()->instance('currentStore', $store?->id);
-        app()->instance('accessibleStoreIds', $accessibleStoreIds->map(static fn ($id): int => (int) $id)->values());
-        app()->instance('scopedStoreIds', $scopedStoreIds->map(static fn ($id): int => (int) $id)->values());
+        app()->instance('accessibleStoreIds', $accessibleStoreIds->map(static fn (mixed $id): int => (int) $id)->values());
+        app()->instance('scopedStoreIds', $scopedStoreIds->map(static fn (mixed $id): int => (int) $id)->values());
 
         if ($store instanceof Store) {
             app()->instance('currentStoreModel', $store);

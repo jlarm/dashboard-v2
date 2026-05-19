@@ -29,7 +29,7 @@ class UserObserver
 
         while (User::query()
             ->where('slug', $slug)
-            ->when($user->exists, fn ($query) => $query->where($user->getKeyName(), '!=', $user->getKey()))
+            ->when($user->exists, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where($user->getKeyName(), '!=', $user->getKey()))
             ->withTrashed()
             ->exists()
         ) {

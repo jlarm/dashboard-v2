@@ -17,12 +17,12 @@ class IncompleteCoursesNotification extends Notification implements ShouldQueue
         private readonly string $userName,
     ) {}
 
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject('Reminder: You have incomplete courses')

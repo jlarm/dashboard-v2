@@ -597,7 +597,7 @@ class UserController extends Controller
             'employee' => $employee->toArray(),
             'remediationReminders' => $user->remediationReminderPreferences
                 ->pluck('audit_type')
-                ->map(static fn ($type): string => $type instanceof AuditTypes ? $type->value : (string) $type)
+                ->map(static fn (mixed $type): string => $type instanceof AuditTypes ? $type->value : (string) $type)
                 ->values()
                 ->all(),
             'permissions' => [

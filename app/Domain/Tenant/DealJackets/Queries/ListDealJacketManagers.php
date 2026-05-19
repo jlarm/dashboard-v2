@@ -18,7 +18,7 @@ class ListDealJacketManagers
         return User::query()
             ->where('department_id', 6)
             ->role('Manager')
-            ->whereHas('stores', static fn ($query) => $query->where('stores.id', $storeId))
+            ->whereHas('stores', static fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('stores.id', $storeId))
             ->orderBy('name')
             ->get(['users.id', 'users.name'])
             ->map(static fn (User $user): array => [

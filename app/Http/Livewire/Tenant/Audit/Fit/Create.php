@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Tenant\Audit\Fit;
 use App\Models\Dealer\Store;
 use App\Models\FitTestDoc;
 use App\Models\User;
+use Closure;
 use Filament\Notifications\Notification;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -18,10 +19,13 @@ class Create extends Component
     use WithFileUploads;
 
     public Store $store;
-    public $search = '';
-    public $selectedUser;
-    public $date;
-    public $file;
+    public string $search = '';
+
+    /** @var array{id: int, name: string}|null */
+    public ?array $selectedUser = null;
+
+    public ?string $date = null;
+    public mixed $file = null;
 
     public function mount(): void
     {
@@ -33,7 +37,7 @@ class Create extends Component
     {
         if (mb_strlen((string) $this->search) >= 2) {
             $users = $this->baseQuery()
-                ->whereDoesntHave('roles', function ($query): void {
+                ->whereDoesntHave('roles', function (\Illuminate\Database\Eloquent\Builder $query): void {
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })
@@ -49,11 +53,11 @@ class Create extends Component
         }
     }
 
-    public function selectUser($userId): void
+    public function selectUser(int $userId): void
     {
         $this->selectedUser = [
             'id' => $userId,
-            'name' => User::query()->where('id', $userId)->value('name'),
+            'name' => (string) User::query()->where('id', $userId)->value('name'),
         ];
         $this->search = $this->selectedUser['name'];
 
@@ -67,7 +71,7 @@ class Create extends Component
             $this->validate([
                 'selectedUser' => [
                     'required',
-                    function ($attribute, $value, $fail): void {
+                    function (string $attribute, mixed $value, Closure $fail): void {
                         if (! is_array($value) || ! isset($value['id'])) {
                             $fail('Please select a valid employee from the dropdown.');
                         }
@@ -116,7 +120,7 @@ class Create extends Component
         return view('livewire.tenant.audit.fit.create');
     }
 
-    private function baseQuery()
+    private function baseQuery(): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return resolve('multipleStoresExist') ? $this->store->users() : User::query();
     }

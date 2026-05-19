@@ -17,10 +17,10 @@ class RemediationReminderNotification extends Notification
      */
     public function __construct(
         protected bool $tenants,
-        protected $user,
-        protected $store,
-        protected $auditType,
-        protected $audit,
+        protected \App\Models\User $user,
+        protected \App\Models\Dealer\Store $store,
+        protected \App\Enums\AuditTypes $auditType,
+        protected \App\Models\Dealer\Audit\Contracts\ViolationAudit&\Illuminate\Database\Eloquent\Model $audit,
     ) {}
 
     /**

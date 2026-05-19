@@ -8,6 +8,7 @@ use App\Domain\Tenant\Manuals\Queries\ResolveManualStores;
 use App\Domain\Tenant\Manuals\RedFlag\Actions\CreateRedFlagManual;
 use App\Domain\Tenant\Manuals\RedFlag\Actions\DeleteRedFlagManual;
 use App\Domain\Tenant\Manuals\RedFlag\Data\RedFlagFormDefaultsData;
+use App\Domain\Tenant\Manuals\RedFlag\Data\RedFlagManualListItemData;
 use App\Domain\Tenant\Manuals\RedFlag\Queries\BuildRedFlagFormDefaults;
 use App\Domain\Tenant\Manuals\RedFlag\Queries\ListRedFlagManuals;
 use App\Http\Controllers\Controller;
@@ -41,7 +42,7 @@ class RedFlagController extends Controller
                 ? ['id' => $store->id, 'name' => $store->name]
                 : null,
             'manuals' => $listRedFlagManuals->handle($storeIds)
-                ->map(static fn ($item): array => $item->toArray())
+                ->map(static fn (RedFlagManualListItemData $item): array => $item->toArray())
                 ->all(),
         ]);
     }

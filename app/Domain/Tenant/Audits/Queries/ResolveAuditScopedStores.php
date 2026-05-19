@@ -20,6 +20,6 @@ class ResolveAuditScopedStores
         /** @var Collection<int, mixed> $storeIds */
         $storeIds = resolve('scopedStoreIds');
 
-        return $storeIds->map(static fn ($id): int => (int) $id)->values();
+        return $storeIds->map(static fn (mixed $id): int => (int) $id)->values();
     }
 }

@@ -12,8 +12,8 @@ class SearchSds
     public function handle(?string $search): LengthAwarePaginator
     {
         return Sds::query()
-            ->when($search, function ($query, string $value): void {
-                $query->where(function ($query) use ($value): void {
+            ->when($search, function (\Illuminate\Database\Eloquent\Builder $query, string $value): void {
+                $query->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($value): void {
                     $query->where('name', 'like', "%{$value}%")
                         ->orWhere('manufacturer', 'like', "%{$value}%")
                         ->orWhere('file_name', 'like', "%{$value}%");

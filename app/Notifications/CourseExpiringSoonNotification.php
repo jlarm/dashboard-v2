@@ -7,31 +7,27 @@ namespace App\Notifications;
 use App\Models\Dealer\Course;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Carbon;
 
 class CourseExpiringSoonNotification extends Notification
 {
-    public $course;
+    public ?Course $course;
+    public string $domain;
+    public string $expireDate;
 
-    /**
-     * @var string
-     */
-    public $domain;
-
-    public $expireDate;
-
-    public function __construct(string $tenantDomain, public $userName, protected int $courseId, $expireDate)
+    public function __construct(string $tenantDomain, public string $userName, protected int $courseId, Carbon $expireDate)
     {
         $this->course = Course::query()->where('id', $this->courseId)->first();
         $this->domain = 'https://'.$tenantDomain.'/courses/'.$this->course->slug;
         $this->expireDate = $expireDate->format('F d, Y');
     }
 
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->greeting($this->userName)
@@ -39,7 +35,7 @@ class CourseExpiringSoonNotification extends Notification
             ->action('Take the Course', url($this->domain));
     }
 
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }

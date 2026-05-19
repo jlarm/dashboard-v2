@@ -20,8 +20,8 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
     #[Override]
     protected $description = 'Create/Update User Groups for GoPhish';
 
-    protected $token;
-    protected $ip;
+    protected ?string $token = null;
+    protected ?string $ip = null;
 
     public function __construct(protected GoPhishService $goPhishService)
     {
@@ -35,7 +35,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
 
             $globalSetting = GlobalSetting::query()->first();
 
@@ -80,6 +80,9 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
         });
     }
 
+    /**
+     * @return array<int, array{email: string, first_name: string, last_name: string, position: null}>
+     */
     public function getUsers(Store $store): array
     {
         if (Store::query()->count() > 1) {
@@ -93,7 +96,7 @@ class CreateUpdateGoPhishUserGroupsCommand extends Command
                 ->get();
         }
 
-        return $users->map(function ($user): array {
+        return $users->map(function (User $user): array {
             $splitName = preg_split('/\s+/', mb_trim((string) $user->name), 2) ?: [];
             $firstName = $splitName[0] ?? '';
             $lastName = $splitName[1] ?? '';

@@ -49,7 +49,7 @@ class SyncCaliforniaHarassmentReplacementCommand extends Command
         $updatedTenantCount = 0;
         $missingTenantCount = 0;
 
-        tenancy()->runForMultiple($tenants, function ($tenant) use ($dryRun, &$updatedTenantCount, &$missingTenantCount): void {
+        tenancy()->runForMultiple($tenants, function (Dealership $tenant) use ($dryRun, &$updatedTenantCount, &$missingTenantCount): void {
             /** @var Dealership $tenant */
             $course = TenantCourse::query()
                 ->where('slug', self::CALIFORNIA_COURSE_SLUG)

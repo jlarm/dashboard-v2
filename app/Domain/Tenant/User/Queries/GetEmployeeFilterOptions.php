@@ -57,7 +57,7 @@ class GetEmployeeFilterOptions
     private function mapOptions(Collection $models): array
     {
         return $models
-            ->map(static fn ($model): array => [
+            ->map(static fn (Department|Role $model): array => [
                 'id' => (int) $model->id,
                 'name' => (string) $model->name,
             ])

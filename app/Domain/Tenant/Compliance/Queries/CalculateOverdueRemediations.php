@@ -92,7 +92,7 @@ class CalculateOverdueRemediations
             ->whereNull('remediation_pdf_path')
             ->whereDate('completed_date', '<', $cutoffDate)
             ->pluck('id')
-            ->map(static fn ($id): int => (int) $id)
+            ->map(static fn (mixed $id): int => (int) $id)
             ->all();
     }
 }

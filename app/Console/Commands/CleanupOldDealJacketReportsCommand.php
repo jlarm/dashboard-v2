@@ -24,7 +24,7 @@ class CleanupOldDealJacketReportsCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
             $path = storage_path('app/deal-jacket-reports');
 
             if (! File::isDirectory($path)) {

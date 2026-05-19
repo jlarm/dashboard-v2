@@ -56,7 +56,7 @@ class BackfillIllinoisHarassmentCourseResultsCommand extends Command
         $overallCandidateUsers = 0;
         $tenantIds = $tenants->pluck('id');
 
-        tenancy()->runForMultiple($tenantIds->isEmpty() ? null : $tenantIds, function ($tenant) use (
+        tenancy()->runForMultiple($tenantIds->isEmpty() ? null : $tenantIds, function (Dealership $tenant) use (
             $dryRun,
             $emailFilter,
             &$overallCreated,

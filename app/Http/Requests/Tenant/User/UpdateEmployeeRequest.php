@@ -89,7 +89,7 @@ class UpdateEmployeeRequest extends FormRequest
             return null;
         }
 
-        return array_values(array_map(static fn ($value): int => (int) $value, $values));
+        return array_values(array_map(static fn (mixed $value): int => (int) $value, $values));
     }
 
     /**
@@ -99,6 +99,6 @@ class UpdateEmployeeRequest extends FormRequest
     {
         $values = $this->validated('audit_types') ?? [];
 
-        return array_values(array_map(static fn ($value): string => (string) $value, $values));
+        return array_values(array_map(static fn (mixed $value): string => (string) $value, $values));
     }
 }

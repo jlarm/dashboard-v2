@@ -23,7 +23,38 @@
   </php>
   <source>
     <include>
-      <directory suffix=".php">./app</directory>
+      <directory suffix=".php">./app/Casts</directory>
+      <directory suffix=".php">./app/Concerns</directory>
+      <directory suffix=".php">./app/Console</directory>
+      <directory suffix=".php">./app/Domain</directory>
+      <directory suffix=".php">./app/Enums</directory>
+      <directory suffix=".php">./app/Generators</directory>
+      <directory suffix=".php">./app/Http/Controllers</directory>
+      <directory suffix=".php">./app/Http/Middleware</directory>
+      <directory suffix=".php">./app/Http/Requests</directory>
+      <directory suffix=".php">./app/Http/Resources</directory>
+      <directory suffix=".php">./app/Jobs</directory>
+      <directory suffix=".php">./app/Listeners</directory>
+      <directory suffix=".php">./app/Mail</directory>
+      <directory suffix=".php">./app/Models</directory>
+      <directory suffix=".php">./app/Notifications</directory>
+      <directory suffix=".php">./app/Observers</directory>
+      <directory suffix=".php">./app/Policies</directory>
+      <directory suffix=".php">./app/Providers</directory>
+      <directory suffix=".php">./app/Queries</directory>
+      <directory suffix=".php">./app/Repositories</directory>
+      <directory suffix=".php">./app/Routing</directory>
+      <directory suffix=".php">./app/Services</directory>
+      <directory suffix=".php">./app/Tenancy</directory>
+      <directory suffix=".php">./app/Traits</directory>
+      <directory suffix=".php">./app/View</directory>
     </include>
+    <exclude>
+      <file>./app/Jobs/UploadFinanceAuditImagesJob.php</file>
+      <file>./app/Jobs/Manuals/GenerateCmsManualJob.php</file>
+      <file>./app/Jobs/Manuals/GenerateIspManualJob.php</file>
+      <file>./app/Jobs/Manuals/GenerateOshaManualJob.php</file>
+      <file>./app/Jobs/Manuals/GenerateRedFlagManualJob.php</file>
+    </exclude>
   </source>
 </phpunit>

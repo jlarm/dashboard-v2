@@ -4,20 +4,30 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Dealer\Store;
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Stancl\Tenancy\Contracts\Tenant;
 
 class GoPhishService
 {
-    public function getGroups(string $token, string $ip)
+    /**
+     * @return Collection<string, int|string>
+     */
+    public function getGroups(string $token, string $ip): Collection
     {
         $groups = Http::withoutVerifying()->get('https://'.$ip.':3333/api/groups/?api_key='.$token.'');
 
         return collect($groups->json())->pluck('id', 'name');
     }
 
-    public function createOrUpdateGroup($groups, $userData, $tenant, $store, $token, string $ip): void
+    /**
+     * @param  Collection<string, int|string>  $groups
+     * @param  array<int, array<string, mixed>>  $userData
+     */
+    public function createOrUpdateGroup(Collection $groups, array $userData, Tenant $tenant, Store $store, string $token, string $ip): void
     {
         if (! array_key_exists('All '.$store->name.' Employees', $groups->toArray())) {
             $this->createGroup($groups, $userData, $tenant, $store, $token, $ip);
@@ -26,7 +36,11 @@ class GoPhishService
         }
     }
 
-    public function createGroup($groups, $userData, $tenant, $store, $token, string $ip): void
+    /**
+     * @param  Collection<string, int|string>  $groups
+     * @param  array<int, array<string, mixed>>  $userData
+     */
+    public function createGroup(Collection $groups, array $userData, Tenant $tenant, Store $store, string $token, string $ip): void
     {
         try {
             $requestBody = [
@@ -51,7 +65,10 @@ class GoPhishService
         }
     }
 
-    public function updateGroup(int|string $groupId, $userData, string $ip, $token, $store = null): void
+    /**
+     * @param  array<int, array<string, mixed>>  $userData
+     */
+    public function updateGroup(int|string $groupId, array $userData, string $ip, string $token, ?Store $store = null): void
     {
         try {
             $groupId = (string) $groupId;

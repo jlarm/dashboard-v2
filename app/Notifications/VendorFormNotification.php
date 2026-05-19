@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\URL;
 
 class VendorFormNotification extends Notification
 {
-    public const SUBJECT = 'Vendor Form Notification';
+    public const string SUBJECT = 'Vendor Form Notification';
 
     public function __construct(public VendorForm $vendor) {}
 
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function generateUrl(string $email)
+    public function generateUrl(string $email): string
     {
         return URL::temporarySignedRoute('dealer.vendor.form', now()->addYear(), [
             'vid' => $this->vendor->id,
@@ -29,7 +29,7 @@ class VendorFormNotification extends Notification
         ]);
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
 
         $url = $this->generateUrl($notifiable->routes['mail']);
@@ -42,7 +42,7 @@ class VendorFormNotification extends Notification
             ->line('If you have any questions, please contact '.$user->name.' at '.$user->email)
             ->line('Thank you for your time!')
             ->salutation(tenant('name'))
-            ->withSymfonyMessage(function ($message): void {
+            ->withSymfonyMessage(function (\Symfony\Component\Mime\Email $message): void {
                 $message->getHeaders()->addTextHeader('X-Vendor-Notification', 'true');
                 $message->getHeaders()->addTextHeader('X-Vendor-ID', (string) $this->vendor->id);
 
@@ -55,7 +55,7 @@ class VendorFormNotification extends Notification
             });
     }
 
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }

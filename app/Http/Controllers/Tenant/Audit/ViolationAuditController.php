@@ -74,10 +74,10 @@ class ViolationAuditController extends Controller
             ? collect()
             : $modelClass::query()
                 ->whereIn('store_id', $storeIds->all())
-                ->unless($canSeeIncomplete, fn ($query) => $query->whereNotNull('completed_date'))
+                ->unless($canSeeIncomplete, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->whereNotNull('completed_date'))
                 ->withCount([
                     'violations as violation_count',
-                    'violations as remediation_count' => fn ($q) => $q->whereHas('remediation', fn ($q) => $q->where('completed', true)),
+                    'violations as remediation_count' => fn (\Illuminate\Database\Eloquent\Builder $q) => $q->whereHas('remediation', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('completed', true)),
                 ])
                 ->latest('date')
                 ->get();
@@ -91,7 +91,7 @@ class ViolationAuditController extends Controller
                 ? ['id' => $store->id, 'name' => $store->name]
                 : null,
             'audits' => ViolationAuditListItemResource::collection($audits),
-            'legacy_audits' => $legacyData->map(static fn ($item): array => $item->toArray())->all(),
+            'legacy_audits' => $legacyData->map(static fn (\App\Domain\Tenant\Audits\Data\LegacyAuditListItemData $item): array => $item->toArray())->all(),
             'chart' => $chart,
         ]);
     }
@@ -262,12 +262,12 @@ class ViolationAuditController extends Controller
         ViolationAuditType $type,
         Request $request,
         SearchViolationStatements $search,
-    ) {
+    ): \Illuminate\Http\JsonResponse {
         $query = (string) $request->query('q', '');
 
         return response()->json(
             $search->handle($type, $query)
-                ->map(static fn ($item): array => $item->toArray())
+                ->map(static fn (\App\Domain\Tenant\Audits\Data\ViolationStatementSearchResultData $item): array => $item->toArray())
                 ->all(),
         );
     }

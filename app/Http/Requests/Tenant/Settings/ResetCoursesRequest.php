@@ -45,7 +45,7 @@ class ResetCoursesRequest extends FormRequest
         $validated = $this->validated();
 
         $userIds = collect($validated['user_ids'] ?? [])
-            ->map(static fn ($userId): int => (int) $userId)
+            ->map(static fn (mixed $userId): int => (int) $userId)
             ->filter()
             ->unique()
             ->values()

@@ -19,8 +19,11 @@ class CourseUser extends Pivot
     #[Override]
     protected $fillable = ['user_id', 'course_id', 'type', 'assigned_by'];
 
+    /**
+     * @param  Builder  $query
+     */
     #[Override]
-    protected function setKeysForSaveQuery($query): Builder
+    protected function setKeysForSaveQuery($query): Builder // @pest-ignore-type
     {
         foreach (['user_id', 'course_id'] as $keyName) {
             $query->where($keyName, '=', $this->resolveCompositeKeyForSaveQuery($keyName));

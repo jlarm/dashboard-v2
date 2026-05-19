@@ -35,8 +35,8 @@ class BuildCmsFormDefaults
 
         if ($multipleStoresExist) {
             return User::query()
-                ->whereHas('roles', static fn ($query) => $query->where('name', 'Qualified Individual'))
-                ->whereHas('stores', static fn ($query) => $query->where('store_id', $store->id))
+                ->whereHas('roles', static fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('name', 'Qualified Individual'))
+                ->whereHas('stores', static fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('store_id', $store->id))
                 ->value('name');
         }
 

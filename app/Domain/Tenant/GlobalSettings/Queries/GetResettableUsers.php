@@ -38,7 +38,7 @@ class GetResettableUsers
         return CourseResults::query()
             ->distinct()
             ->pluck('user_id')
-            ->map(static fn ($userId): int => (int) $userId)
+            ->map(static fn (mixed $userId): int => (int) $userId)
             ->filter()
             ->unique()
             ->values();

@@ -23,7 +23,7 @@ class GetExternalFindingDetails
         }
 
         $asset = collect($payload['assets'])
-            ->first(static fn ($candidate): bool => is_array($candidate)
+            ->first(static fn (mixed $candidate): bool => is_array($candidate)
                 && ($candidate['ipAddress'] ?? null) === $assetIp);
 
         if (! is_array($asset)) {

@@ -80,7 +80,7 @@ class HandleInertiaRequests extends Middleware
 
         return resolve(GetAccessibleStoreOptions::class)
             ->handle($user)
-            ->map(fn ($option): array => $option->toArray())
+            ->map(fn (\App\Domain\Tenant\Store\Data\StoreOptionData $option): array => $option->toArray())
             ->all();
     }
 

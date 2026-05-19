@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Tenant\Manuals;
 
 use App\Domain\Tenant\Manuals\Isp\Actions\CreateIspManual;
 use App\Domain\Tenant\Manuals\Isp\Actions\DeleteIspManual;
+use App\Domain\Tenant\Manuals\Isp\Data\IspManualListItemData;
 use App\Domain\Tenant\Manuals\Isp\Queries\BuildIspFormDefaults;
 use App\Domain\Tenant\Manuals\Isp\Queries\ListIspManuals;
 use App\Domain\Tenant\Manuals\Queries\ResolveManualStores;
@@ -39,7 +40,7 @@ class IspController extends Controller
                 ? ['id' => $store->id, 'name' => $store->name]
                 : null,
             'manuals' => $listIspManuals->handle($storeIds)
-                ->map(static fn ($item): array => $item->toArray())
+                ->map(static fn (IspManualListItemData $item): array => $item->toArray())
                 ->all(),
         ]);
     }

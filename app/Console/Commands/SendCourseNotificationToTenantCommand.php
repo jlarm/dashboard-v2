@@ -30,11 +30,11 @@ class SendCourseNotificationToTenantCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($courseLink): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use ($courseLink): void {
             $this->info("Running command for tenant: {$tenant->id} ({$tenant->name})");
 
             $users = User::query()
-                ->whereDoesntHave('roles', function ($query): void {
+                ->whereDoesntHave('roles', function (\Illuminate\Database\Eloquent\Builder $query): void {
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })

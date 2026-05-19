@@ -758,7 +758,7 @@ class CyrismaService
             ->flatten(1)
             ->filter(fn (mixed $item): bool => is_array($item))
             ->map(fn (mixed $item): array => $item)
-            ->filter(fn (array $finding): bool => array_any(['alertName', 'alertRef', 'title', 'name', 'riskLevel', 'severity', 'description', 'alertDesc', 'solution', 'alertSolution', 'instances', 'alertInstances', 'details', 'urls', 'targets', 'referenceURLs'], fn ($key): bool => array_key_exists((string) $key, $finding)))
+            ->filter(fn (array $finding): bool => array_any(['alertName', 'alertRef', 'title', 'name', 'riskLevel', 'severity', 'description', 'alertDesc', 'solution', 'alertSolution', 'instances', 'alertInstances', 'details', 'urls', 'targets', 'referenceURLs'], fn (mixed $key): bool => array_key_exists((string) $key, $finding)))
             ->values()
             ->all();
     }

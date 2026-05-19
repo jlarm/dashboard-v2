@@ -66,7 +66,7 @@ class SaveDealJacketRequest extends FormRequest
             'comment' => isset($r['comment']) ? (string) $r['comment'] : null,
         ], (array) $validated['responses']));
 
-        $weights = array_map(static fn ($w): int => (int) $w, (array) $validated['question_weights']);
+        $weights = array_map(static fn (mixed $w): int => (int) $w, (array) $validated['question_weights']);
 
         return [
             'audit_date' => (string) $validated['audit_date'],

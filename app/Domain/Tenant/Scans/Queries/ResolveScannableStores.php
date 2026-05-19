@@ -25,7 +25,7 @@ class ResolveScannableStores
             /** @var Collection<int, mixed> $storeIds */
             $storeIds = resolve('scopedStoreIds');
 
-            $normalized = $storeIds->map(static fn ($id): int => (int) $id)->values();
+            $normalized = $storeIds->map(static fn (mixed $id): int => (int) $id)->values();
 
             if ($normalized->isNotEmpty()) {
                 return $normalized;
@@ -39,12 +39,12 @@ class ResolveScannableStores
         if ($user->hasAnyRole(['super-admin', 'Consultant'])) {
             return $user->current_store_id !== null
                 ? collect([(int) $user->current_store_id])
-                : Store::query()->pluck('id')->map(static fn ($id): int => (int) $id)->values();
+                : Store::query()->pluck('id')->map(static fn (mixed $id): int => (int) $id)->values();
         }
 
         $assignedStoreIds = $user->stores()
             ->pluck('stores.id')
-            ->map(static fn ($id): int => (int) $id);
+            ->map(static fn (mixed $id): int => (int) $id);
 
         if ($user->current_store_id === null) {
             return $assignedStoreIds->values();

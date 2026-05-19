@@ -34,7 +34,7 @@ class CourseController extends Controller
 
         return Inertia::render('dealer/courses/Index', [
             'courses' => $listCourses->handle($user)
-                ->map(static fn ($item): array => $item->toArray())
+                ->map(static fn (\App\Domain\Tenant\Course\Data\UserCourseListItem $item): array => $item->toArray())
                 ->all(),
             'can_issue_dot_certificate' => $canIssueDotCert->handle($user),
         ]);
@@ -44,7 +44,7 @@ class CourseController extends Controller
     {
         return Inertia::render('dealer/courses/All', [
             'courses' => $listAll->handle($this->requireUser($request))
-                ->map(static fn ($item): array => $item->toArray())
+                ->map(static fn (\App\Domain\Tenant\Course\Data\UserCourseListItem $item): array => $item->toArray())
                 ->all(),
         ]);
     }

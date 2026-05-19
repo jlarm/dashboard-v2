@@ -16,12 +16,12 @@ class ContractSignedNotification extends Notification implements ShouldQueue
 
     public function __construct(private Contract $contract) {}
 
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject('Contract Signed by '.$this->contract->dealer_name.'.')
@@ -29,7 +29,7 @@ class ContractSignedNotification extends Notification implements ShouldQueue
             ->action('View Contract', route('contracts.edit', $this->contract));
     }
 
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }

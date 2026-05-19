@@ -67,7 +67,7 @@ class CheckMultiStateUsersCommand extends Command
 
                 foreach ($multiStateUsers as $user) {
                     $storeList = $user->stores
-                        ->map(fn ($store): string => "{$store->name} ({$store->state})")
+                        ->map(fn (\App\Models\Dealer\Store $store): string => "{$store->name} ({$store->state})")
                         ->implode(', ');
 
                     $this->line("  {$user->name} <{$user->email}> — {$storeList}");

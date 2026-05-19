@@ -10,14 +10,20 @@ use Illuminate\Support\Facades\URL;
 
 class UserInviteNotification extends Notification
 {
-    public function __construct(protected $validated) {}
+    /**
+     * @param  array<string, mixed>  $validated
+     */
+    public function __construct(protected array $validated) {}
 
-    public function via($notifiable): array
+    /**
+     * @return array<int, string>
+     */
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         $url = $this->generateInvitationUrl($notifiable->routes['mail']);
 
@@ -27,12 +33,15 @@ class UserInviteNotification extends Notification
             ->action('Register', url($url));
     }
 
-    public function toArray($notifiable): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }
 
-    protected function generateInvitationUrl(string $email)
+    protected function generateInvitationUrl(string $email): string
     {
         return URL::temporarySignedRoute('employees.create', now()->addDay(), [
             'email' => $email,

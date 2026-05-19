@@ -50,7 +50,7 @@ class TrainingComplianceService
 
         foreach ($normalizedUsers as $user) {
             $courseIds = collect($this->userCourseService->getCourseIds($user))
-                ->map(static fn ($id): int => (int) $id)
+                ->map(static fn (mixed $id): int => (int) $id)
                 ->filter()
                 ->unique()
                 ->values();
@@ -66,7 +66,7 @@ class TrainingComplianceService
             ->keyBy('id');
 
         $latestPassedResultsByUserAndCourse = $this->latestPassedResultsByUserAndCourse(
-            $normalizedUsers->pluck('id')->map(static fn ($id): int => (int) $id)->values(),
+            $normalizedUsers->pluck('id')->map(static fn (mixed $id): int => (int) $id)->values(),
             $allCourseIds
         );
 

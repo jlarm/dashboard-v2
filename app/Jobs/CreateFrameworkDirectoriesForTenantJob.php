@@ -13,7 +13,7 @@ class CreateFrameworkDirectoriesForTenantJob
 
     public function handle(): void
     {
-        $this->tenant->run(function ($tenant): void {
+        $this->tenant->run(function (Tenant $tenant): void {
             $storage_path = storage_path();
             $cachePath = "{$storage_path}/framework/cache";
 

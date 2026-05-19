@@ -88,7 +88,7 @@ class SdsController extends Controller
         return new SdsData(
             name: $validated['name'],
             manufacturer: $validated['manufacturer'] ?? '',
-            keywords: array_values(array_filter($validated['keywords'] ?? [], fn ($keyword): bool => is_string($keyword) && $keyword !== '')),
+            keywords: array_values(array_filter($validated['keywords'] ?? [], fn (mixed $keyword): bool => is_string($keyword) && $keyword !== '')),
             file: $file ?: null,
         );
     }

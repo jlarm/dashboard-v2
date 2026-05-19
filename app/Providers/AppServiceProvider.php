@@ -54,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashboard';
+    public const string HOME = '/dashboard';
 
     /**
      * Register any application services.
@@ -75,19 +75,19 @@ class AppServiceProvider extends ServiceProvider
 
         Request::macro('store', fn () => $this->user()?->currentStore());
 
-        view()->composer('components.language-switcher', function ($view): void {
+        view()->composer('components.language-switcher', function (\Illuminate\View\View $view): void {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
         });
 
-        view()->composer('layouts.top-bar', function ($view): void {
+        view()->composer('layouts.top-bar', function (\Illuminate\View\View $view): void {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
         });
 
-        Builder::macro('search', fn ($field, $string) => $string ? $this->where($field, 'like', '%'.$string.'%') : $this);
+        Builder::macro('search', fn (string $field, ?string $string) => $string ? $this->where($field, 'like', '%'.$string.'%') : $this);
 
-        Collection::macro('incomplete_courses', fn () => $this->map(fn ($user): bool => $user instanceof User && $user->user_has_not_completed_courses));
+        Collection::macro('incomplete_courses', fn () => $this->map(fn (mixed $user): bool => $user instanceof User && $user->user_has_not_completed_courses));
 
         Builder::macro('toCsv', function () {
             $results = $this->get();
@@ -106,10 +106,10 @@ class AppServiceProvider extends ServiceProvider
 
             $titles = implode(',', array_keys($firstAttributes));
 
-            $values = $results->map(function ($result): string {
+            $values = $results->map(function (mixed $result): string {
                 $attributes = (array) $result;
 
-                return implode(',', collect($attributes)->map(fn ($value): string => '"'.$value.'"')->all());
+                return implode(',', collect($attributes)->map(fn (mixed $value): string => '"'.$value.'"')->all());
             });
 
             $values->prepend($titles);
@@ -156,7 +156,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function bootAuth(): void
     {
-        Gate::before(fn ($user, $ability): ?true => $user->hasRole(Role::SuperAdmin->value) ? true : null);
+        Gate::before(fn (User $user, string $ability): ?true => $user->hasRole(Role::SuperAdmin->value) ? true : null);
 
         Gate::policy(Contract::class, ContractPolicy::class);
         Gate::policy(Course::class, CoursePolicy::class);

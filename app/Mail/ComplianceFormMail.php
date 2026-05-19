@@ -16,7 +16,7 @@ class ComplianceFormMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public $signedUrl, public $storeName) {}
+    public function __construct(public string $signedUrl, public string $storeName) {}
 
     public function envelope(): Envelope
     {

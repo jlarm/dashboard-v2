@@ -33,7 +33,7 @@ class CourseExpiringEmailCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
             resolve(UserCourseService::class)->clearAllCaches();
 
             User::query()->select(['id', 'name', 'email', 'department_id'])
@@ -44,11 +44,11 @@ class CourseExpiringEmailCommand extends Command
         });
     }
 
-    private function processUserResults($tenant, User $user): void
+    private function processUserResults(\App\Models\Dealership $tenant, User $user): void
     {
         $results = $this->getExpiringCourses($user);
 
-        $this->info($results);
+        $this->info($results->toJson());
 
         foreach ($results as $result) {
             if ($result->created_at->addYear()->subDays(15)->isSameDay(Date::now())) {
@@ -61,7 +61,7 @@ class CourseExpiringEmailCommand extends Command
         }
     }
 
-    private function getExpiringCourses(User $user)
+    private function getExpiringCourses(User $user): Collection
     {
         $lastYear = Date::now()->subYear()->addDays(15)->format('Y-m-d');
         $fifteenDays = Date::now()->subYear()->subDays(15)->format('Y-m-d');
@@ -73,7 +73,7 @@ class CourseExpiringEmailCommand extends Command
         return $user->results()
             ->whereIn('course_id', $courseIds)
             ->where('passed', 1)
-            ->where(function ($query) use ($lastYear, $fifteenDays, $thirtyDays): void {
+            ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($lastYear, $fifteenDays, $thirtyDays): void {
                 $query->whereDate('created_at', $lastYear)
                     ->orWhereDate('created_at', $fifteenDays)
                     ->orWhereDate('created_at', $thirtyDays);

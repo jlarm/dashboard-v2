@@ -38,7 +38,7 @@ class AuditFinanceManagerCoursesCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($courseService, &$stats): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use ($courseService, &$stats): void {
             resolve(UserCourseService::class)->clearAllCaches();
 
             $this->info("Checking tenant: {$tenant->name} (ID: {$tenant->id})");
@@ -129,13 +129,16 @@ class AuditFinanceManagerCoursesCommand extends Command
         }
     }
 
+    /**
+     * @return array<int, int>
+     */
     private function getExpectedFinanceManagerCourses(User $user): array
     {
         $financeDeptId = $user->department_id;
         $managerRoleId = Role::query()->where('name', 'Manager')->first()->id;
 
         $courseWithRole = Course::query()
-            ->whereHas('roles', fn ($q) => $q->where('id', $managerRoleId))
+            ->whereHas('roles', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('id', $managerRoleId))
             ->pluck('id')
             ->toArray();
 
@@ -145,13 +148,13 @@ class AuditFinanceManagerCoursesCommand extends Command
 
         $candidates = Course::query()
             ->where('optional', false)
-            ->where(function ($query) use ($financeDeptId, $courseWithRole): void {
-                $query->where(function ($q) use ($financeDeptId, $courseWithRole): void {
-                    $q->whereHas('departments', fn ($q) => $q->where('id', $financeDeptId))
+            ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($financeDeptId, $courseWithRole): void {
+                $query->where(function (\Illuminate\Database\Eloquent\Builder $q) use ($financeDeptId, $courseWithRole): void {
+                    $q->whereHas('departments', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('id', $financeDeptId))
                         ->whereIn('id', $courseWithRole);
-                })->orWhere(function ($q) use ($courseWithRole): void {
+                })->orWhere(function (\Illuminate\Database\Eloquent\Builder $q) use ($courseWithRole): void {
                     $q->whereDoesntHave('departments')
-                        ->where(function ($subQuery) use ($courseWithRole): void {
+                        ->where(function (\Illuminate\Database\Eloquent\Builder $subQuery) use ($courseWithRole): void {
                             $subQuery->whereIn('id', $courseWithRole)
                                 ->orWhereDoesntHave('roles');
                         });
@@ -160,17 +163,17 @@ class AuditFinanceManagerCoursesCommand extends Command
             ->get(['id', 'slug', 'states_required', 'replaces_course_slugs']);
 
         $applicableStateCourses = $candidates->filter(
-            fn ($course): bool => $course->states_required !== null
+            fn (Course $course): bool => $course->states_required !== null
                 && array_intersect($userStates, $course->states_required) !== []
         );
 
         $replacedSlugs = $applicableStateCourses
-            ->flatMap(fn ($course): array => $course->replaces_course_slugs ?? [])
+            ->flatMap(fn (Course $course): array => $course->replaces_course_slugs ?? [])
             ->unique()
             ->all();
 
         return $candidates
-            ->filter(function ($course) use ($userStates, $replacedSlugs): bool {
+            ->filter(function (Course $course) use ($userStates, $replacedSlugs): bool {
                 if ($course->states_required !== null
                     && array_intersect($userStates, $course->states_required) === []) {
                     return false;
@@ -193,7 +196,7 @@ class AuditFinanceManagerCoursesCommand extends Command
 
         return User::query()
             ->where('department_id', $financeDept->id)
-            ->whereHas('roles', fn ($q) => $q->where('id', $managerRole->id))
+            ->whereHas('roles', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('id', $managerRole->id))
             ->with(['roles', 'courseOverrides', 'stores'])
             ->select(['id', 'name', 'email', 'department_id'])
             ->get();

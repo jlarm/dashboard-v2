@@ -61,7 +61,7 @@ class GeneratePdfJob implements ShouldQueue
         report_if($exception instanceof Throwable, $exception);
     }
 
-    protected function reviewLabel($service): string
+    protected function reviewLabel(string $service): string
     {
         return match ($service) {
             'glba' => 'GLBA - Safeguards Rule, Sales & Finance',

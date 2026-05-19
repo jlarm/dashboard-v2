@@ -22,9 +22,9 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
     #[Override]
     protected $description = 'Command description';
 
-    protected $token;
-    protected $ip;
-    protected $groups;
+    protected ?string $token = null;
+    protected ?string $ip = null;
+    protected ?Collection $groups = null;
 
     public function handle(): void
     {
@@ -33,7 +33,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
 
             $globalSetting = GlobalSetting::query()->first();
 
@@ -51,7 +51,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
             $stores = Store::all();
             $this->groups = $this->getGroups();
 
-            if ($this->groups) {
+            if ($this->groups->isNotEmpty()) {
                 $this->deleteGroups();
             }
 
@@ -68,16 +68,19 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
         });
     }
 
-    private function getGroups()
+    private function getGroups(): Collection
     {
         $groups = Http::withoutVerifying()->get('https://'.$this->ip.':3333/api/groups/?api_key='.$this->token.'');
 
         return collect($groups->json())
             ->pluck('id', 'name')
-            ->reject(fn ($value, $name): bool => str_contains((string) $name, 'All'));
+            ->reject(fn (mixed $value, mixed $name): bool => str_contains((string) $name, 'All'));
     }
 
-    private function getUsers($store): array
+    /**
+     * @return array<string, array<string, array<int, array{email: string, first_name: string, last_name: ?string, position: null}>>>
+     */
+    private function getUsers(Store $store): array
     {
         if (Store::query()->count() > 1) {
             $users = $store->users()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])->get();
@@ -85,7 +88,10 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
             $users = User::query()->whereNotIn('name', ['Joe Lohr', 'Terry Dortch', 'Mike Backer'])->get();
         }
 
-        $usersByDepartment = $users->groupBy('department.name')->map(fn ($departmentUsers) => $departmentUsers->map(function ($user): array {
+        /** @var Collection<string, \Illuminate\Database\Eloquent\Collection<int, User>> $grouped */
+        $grouped = $users->groupBy('department.name');
+
+        $usersByDepartment = $grouped->map(fn (\Illuminate\Database\Eloquent\Collection $departmentUsers): array => $departmentUsers->map(function (User $user): array {
             $splitName = explode(' ', (string) $user->name);
             $firstName = $splitName[0];
             $lastName = $splitName[1] ?? null;
@@ -96,13 +102,16 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
                 'last_name' => $lastName,
                 'position' => null,
             ];
-        }))->toArray();
+        })->toArray())->toArray();
 
         // Return the array with the store name as the first index
         return [$store->name => $usersByDepartment];
     }
 
-    private function createGroup(string $department, $userData): void
+    /**
+     * @param  array<int, array{email: string, first_name: string, last_name: ?string, position: null}>  $userData
+     */
+    private function createGroup(string $department, array $userData): void
     {
         try {
             $requestBody = [

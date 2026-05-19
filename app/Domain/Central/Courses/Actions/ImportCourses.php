@@ -84,17 +84,17 @@ class ImportCourses
             ]));
 
             $states = collect($course['states_required'] ?? [])
-                ->filter(fn ($state): bool => is_string($state) && $state !== '')
+                ->filter(fn (mixed $state): bool => is_string($state) && $state !== '')
                 ->values()
                 ->all();
 
             $replaces = collect($course['replaces_course_slugs'] ?? [])
-                ->filter(fn ($slug): bool => is_string($slug) && $slug !== '')
+                ->filter(fn (mixed $slug): bool => is_string($slug) && $slug !== '')
                 ->values()
                 ->all();
 
             $tenantsRequired = collect($course['tenants_required'] ?? [])
-                ->filter(fn ($id): bool => is_string($id) && $id !== '')
+                ->filter(fn (mixed $id): bool => is_string($id) && $id !== '')
                 ->values()
                 ->all();
 

@@ -32,9 +32,10 @@ class GetArchivedScanReports
 
         return $query->get()
             ->groupBy(static fn (ScanReport $report): string => $report->created_at?->format('F d, Y') ?? 'Unknown')
-            ->map(static fn ($reports) => $reports
+            ->map(static fn (\Illuminate\Support\Collection $reports): array => $reports
                 ->groupBy('type')
-                ->map(static fn ($byType): array => ArchivedScanReportData::fromModel($byType->first())->toArray())
+                ->map(static fn (\Illuminate\Support\Collection $byType): array => ArchivedScanReportData::fromModel($byType->first())->toArray())
+                ->all()
             )
             ->all();
     }

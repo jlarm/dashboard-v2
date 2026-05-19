@@ -48,7 +48,7 @@ class SyncIllinoisHarassmentRolesCommand extends Command
         $updatedCount = 0;
         $missingCount = 0;
 
-        tenancy()->runForMultiple($tenants, function ($tenant) use ($dryRun, &$updatedCount, &$missingCount): void {
+        tenancy()->runForMultiple($tenants, function (Dealership $tenant) use ($dryRun, &$updatedCount, &$missingCount): void {
             /** @var Dealership $tenant */
             $employeeCourse = Course::query()->where('slug', self::EMPLOYEE_COURSE_SLUG)->first();
             $managerCourse = Course::query()->where('slug', self::MANAGER_COURSE_SLUG)->first();

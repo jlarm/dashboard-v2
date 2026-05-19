@@ -37,11 +37,11 @@ class UpdateOptionalCourses extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             Course::query()
-                ->where('slug', function ($query): void {
+                ->where('slug', function (\Illuminate\Database\Eloquent\Builder $query): void {
                     $query->select('slug')
                         ->where('slug', '6h-national-emission-standards')
                         ->orWhere('slug', 'tractor-safety')

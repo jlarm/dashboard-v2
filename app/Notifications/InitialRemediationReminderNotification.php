@@ -15,18 +15,18 @@ class InitialRemediationReminderNotification extends Notification implements Sho
 
     public function __construct(
         protected bool $tenants,
-        protected $user,
-        protected $store,
-        protected $auditType,
-        protected $audit
+        protected \App\Models\User $user,
+        protected \App\Models\Dealer\Store $store,
+        protected \App\Enums\AuditTypes $auditType,
+        protected \App\Models\Dealer\Audit\Contracts\ViolationAudit&\Illuminate\Database\Eloquent\Model $audit
     ) {}
 
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject($this->auditType->label().' audit has been completed')
@@ -37,7 +37,7 @@ class InitialRemediationReminderNotification extends Notification implements Sho
             ->line('');
     }
 
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }

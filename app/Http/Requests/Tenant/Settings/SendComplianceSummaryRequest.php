@@ -40,6 +40,6 @@ class SendComplianceSummaryRequest extends FormRequest
     {
         $values = $this->validated('compliance_summary_recipients') ?? [];
 
-        return array_values(array_map(static fn ($value): int => (int) $value, $values));
+        return array_values(array_map(static fn (mixed $value): int => (int) $value, $values));
     }
 }

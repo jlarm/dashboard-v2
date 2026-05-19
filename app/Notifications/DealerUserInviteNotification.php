@@ -10,14 +10,20 @@ use Illuminate\Support\Facades\URL;
 
 class DealerUserInviteNotification extends Notification
 {
-    public function __construct(protected $validated) {}
+    /**
+     * @param  array<string, mixed>  $validated
+     */
+    public function __construct(protected array $validated) {}
 
-    public function via($notifiable): array
+    /**
+     * @return array<int, string>
+     */
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function generateInvitationUrl(string $email)
+    public function generateInvitationUrl(string $email): string
     {
         return URL::temporarySignedRoute('employees.create', now()->addDay(), [
             'email' => $email,
@@ -28,17 +34,20 @@ class DealerUserInviteNotification extends Notification
         ]);
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         $url = $this->generateInvitationUrl($notifiable->routes['mail']);
 
         return (new MailMessage)
-            ->line('You have been invited to join the '.$this->validated->store.' compliance dashboard. Please click the link below to finish your registration.')
+            ->line('You have been invited to join the '.$this->validated['store'].' compliance dashboard. Please click the link below to finish your registration.')
             ->action('Notification Action', url($url))
             ->line('Thank you for using our application!');
     }
 
-    public function toArray($notifiable): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }

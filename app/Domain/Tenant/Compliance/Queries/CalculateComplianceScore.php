@@ -18,7 +18,7 @@ class CalculateComplianceScore
      *
      * @var array<string, float>
      */
-    public const RAW_WEIGHTS = [
+    public const array RAW_WEIGHTS = [
         'audit' => 0.35,
         'training' => 0.25,
         'cyber' => 0.15,

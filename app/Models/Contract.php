@@ -90,7 +90,7 @@ class Contract extends Model
     #[Override]
     protected static function booted(): void
     {
-        static::creating(static function ($contract): void {
+        static::creating(static function (self $contract): void {
             if (! $contract->user_id) {
                 $contract->user_id = auth()->id();
             }

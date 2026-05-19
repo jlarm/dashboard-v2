@@ -37,7 +37,7 @@ class RemediationReminderCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
             $hasMultipleStores = Store::query()->count() > 1;
             $this->processStores(Store::all(), $hasMultipleStores);
         });
@@ -67,6 +67,7 @@ class RemediationReminderCommand extends Command
         $audits = $oshaAudits->merge($bodyShopAudits)->merge($glbaAudits);
 
         foreach ($audits as $audit) {
+            /** @var \App\Models\Dealer\Audit\Contracts\ViolationAudit&Model $audit */
             if ($audit->outstanding_remediation_count === 0) {
                 continue;
             }
@@ -74,7 +75,7 @@ class RemediationReminderCommand extends Command
         }
     }
 
-    private function getAuditsDueForReminder(HasMany $auditQuery, int $frequency)
+    private function getAuditsDueForReminder(HasMany $auditQuery, int $frequency): Collection
     {
         return $auditQuery
             ->whereNotNull('completed_date')
@@ -111,6 +112,7 @@ class RemediationReminderCommand extends Command
         $users = GetRemediationReminderUsers::execute($store, $auditType);
 
         foreach ($users as $user) {
+            /** @var \App\Models\Dealer\Audit\Contracts\ViolationAudit&Model $audit */
             $user->notify(new RemediationReminderNotification($hasMultipleStores, $user, $store, $auditType, $audit));
         }
     }

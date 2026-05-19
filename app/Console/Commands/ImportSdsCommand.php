@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Override;
+use stdClass;
 
 class ImportSdsCommand extends Command
 {
@@ -213,7 +214,7 @@ class ImportSdsCommand extends Command
             ->whereIn('name', $names)
             ->whereIn('manufacturer', $manufacturers)
             ->get(['name', 'manufacturer'])
-            ->map(fn ($record): string => $record->name.'|'.$record->manufacturer)
+            ->map(fn (stdClass $record): string => $record->name.'|'.$record->manufacturer)
             ->all();
     }
 

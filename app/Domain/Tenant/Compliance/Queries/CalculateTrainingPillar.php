@@ -84,10 +84,10 @@ class CalculateTrainingPillar
     private function scopedUsers(Store $store): Collection
     {
         return User::query()
-            ->whereDoesntHave('roles', function ($query): void {
+            ->whereDoesntHave('roles', function (\Illuminate\Database\Eloquent\Builder $query): void {
                 $query->whereIn('name', [Role::SuperAdmin->value, Role::Consultant->value]);
             })
-            ->whereHas('stores', function ($query) use ($store): void {
+            ->whereHas('stores', function (\Illuminate\Database\Eloquent\Builder $query) use ($store): void {
                 $query->where('stores.id', $store->id);
             })
             ->with(['roles:id,name', 'courseOverrides:user_id,course_id,type'])

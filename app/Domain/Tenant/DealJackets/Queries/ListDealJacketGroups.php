@@ -20,7 +20,7 @@ class ListDealJacketGroups
             ->where('store_id', $storeId)
             ->unless(
                 $user->hasAnyRole(['super-admin', 'Consultant']),
-                static fn ($query) => $query->where('completed', true),
+                static fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('completed', true),
             )
             ->withCount('dealJackets')
             ->withSum('dealJackets as total_high_risk', 'total_high_risk')

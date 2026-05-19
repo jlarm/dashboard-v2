@@ -34,7 +34,7 @@ class IndividualAuditController extends Controller
         return Inertia::render('tenant/audits/individual/Index', [
             'store' => ['id' => $store->id, 'name' => $store->name],
             'audits' => $listAudits->handle($store->id)
-                ->map(static fn ($item): array => $item->toArray())
+                ->map(static fn (\App\Domain\Tenant\IndividualAudits\Data\IndividualAuditListItem $item): array => $item->toArray())
                 ->all(),
         ]);
     }

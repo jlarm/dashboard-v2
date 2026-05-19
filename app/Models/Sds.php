@@ -36,7 +36,7 @@ class Sds extends Model
     {
         parent::boot();
 
-        static::creating(static function ($model): void {
+        static::creating(static function (self $model): void {
             $model->uuid = (string) Str::uuid();
         });
     }

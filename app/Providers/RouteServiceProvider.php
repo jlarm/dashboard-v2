@@ -20,7 +20,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashboard';
+    public const string HOME = '/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -36,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    protected function mapWebRoutes()
+    protected function mapWebRoutes(): void
     {
         foreach ($this->centralDomains() as $domain) {
             Route::middleware('web')
@@ -45,7 +45,7 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-    protected function mapApiRoutes()
+    protected function mapApiRoutes(): void
     {
         foreach ($this->centralDomains() as $domain) {
             Route::prefix('api')
@@ -55,6 +55,9 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * @return array<int, string>
+     */
     protected function centralDomains(): array
     {
         return config('tenancy.central_domains');

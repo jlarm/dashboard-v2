@@ -29,7 +29,7 @@ class DepartmentObserver
 
         while (Department::query()
             ->where('slug', $slug)
-            ->when($department->exists, fn ($query) => $query->where($department->getKeyName(), '!=', $department->getKey()))
+            ->when($department->exists, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where($department->getKeyName(), '!=', $department->getKey()))
             ->exists()
         ) {
             $slug = "{$base}-{$counter}";

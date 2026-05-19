@@ -20,7 +20,7 @@ class DealershipResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'users' => $this->whenLoaded('users', fn () => $this->users->map(fn ($user): array => [
+            'users' => $this->whenLoaded('users', fn () => $this->users->map(fn (\App\Models\User $user): array => [
                 'id' => $user->id,
                 'name' => $user->name,
             ])),

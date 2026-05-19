@@ -52,7 +52,7 @@ class CourseReminderCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use ($debugEnabled, $isTestMode): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use ($debugEnabled, $isTestMode): void {
             resolve(UserCourseService::class)->clearAllCaches();
 
             $this->info("Running command for tenant: {$tenant->id}");
@@ -67,7 +67,7 @@ class CourseReminderCommand extends Command
     /**
      * Process tenants that have locations/stores feature enabled
      */
-    private function processTenantsWithLocations($tenant, bool $debugEnabled, bool $isTestMode): void
+    private function processTenantsWithLocations(\App\Models\Dealership $tenant, bool $debugEnabled, bool $isTestMode): void
     {
         // Get all stores where courses_not_taken_notification is enabled
         $stores = Store::query()->where('courses_not_taken_notification', true)->get();
@@ -86,7 +86,7 @@ class CourseReminderCommand extends Command
 
             /** @var \Illuminate\Database\Eloquent\Collection<int, User> $users */
             $users = $store->users()
-                ->whereDoesntHave('roles', function ($query): void {
+                ->whereDoesntHave('roles', function (\Illuminate\Database\Eloquent\Builder $query): void {
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })
@@ -106,7 +106,7 @@ class CourseReminderCommand extends Command
     /**
      * Process tenants that don't have locations/stores feature enabled
      */
-    private function processTenantsWithoutLocations($tenant, bool $debugEnabled, bool $isTestMode): void
+    private function processTenantsWithoutLocations(\App\Models\Dealership $tenant, bool $debugEnabled, bool $isTestMode): void
     {
         $this->info("Tenant {$tenant->id} doesn't have locations enabled, processing all users");
 
@@ -115,7 +115,7 @@ class CourseReminderCommand extends Command
         }
 
         User::query()
-            ->whereDoesntHave('roles', function ($query): void {
+            ->whereDoesntHave('roles', function (\Illuminate\Database\Eloquent\Builder $query): void {
                 $query->where('name', 'super-admin')
                     ->orWhere('name', 'Consultant');
             })
@@ -190,7 +190,7 @@ class CourseReminderCommand extends Command
 
         return Course::query()
             ->whereIn('id', $assignedCourseIds)
-            ->whereDoesntHave('results', fn ($query) => $query->where('user_id', $user->id))
+            ->whereDoesntHave('results', fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('user_id', $user->id))
             ->count();
     }
 }

@@ -8,9 +8,11 @@ use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Store;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Spatie\Browsershot\Browsershot;
 use Throwable;
@@ -20,21 +22,35 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $timeout = 240;
-    public $audits;
+
+    /** @var EloquentCollection<int, IndividualAudit> */
+    public EloquentCollection $audits;
+
     public int $count = 0;
-    public $issueCountByManager;
-    public $issuesByManager;
+
+    /** @var Collection<int|string, mixed> */
+    public Collection $issueCountByManager;
+
+    /** @var Collection<int|string, mixed> */
+    public Collection $issuesByManager;
 
     /**
      * @var array<int, mixed>
      */
     public array $array = [];
 
-    public $results = [];
-    public $totals = [];
-    public $grandTotal;
-    public $managerIssueCount;
-    protected $sum;
+    /** @var array<string, array<string, int>> */
+    public array $results = [];
+
+    /** @var array<int|string, int> */
+    public array $totals = [];
+
+    public int $grandTotal = 0;
+
+    /** @var Collection<int|string, mixed> */
+    public Collection $managerIssueCount;
+
+    protected int $sum = 0;
     protected IndividualAudit $parent;
 
     public function __construct(protected IndividualAudit $individualAudit)
@@ -50,10 +66,10 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->issueCountByManager = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(fn ($item) => $item->manager->name)
-            ->map(function ($item): int {
+            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager->name)
+            ->map(function (Collection $item): int {
                 $this->array = [];
-                $item->each(function ($item, $key): void {
+                $item->each(function (IndividualAudit $item, int|string $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (in_array($key, ['id', 'parent_id', 'user_id', 'store_id', 'manager_id', 'mileage', 'customer_number', 'rating', 'individual_q1_answer'], true)) {
                             continue;
@@ -73,10 +89,10 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->issuesByManager = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(fn ($item) => $item->manager->name)
-            ->map(function ($item) {
+            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager->name)
+            ->map(function (Collection $item): Collection {
                 $this->array = [];
-                $item->each(function ($item, $key): void {
+                $item->each(function (IndividualAudit $item, int|string $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (in_array($key, ['id', 'parent_id', 'user_id', 'store_id', 'manager_id', 'mileage', 'customer_number', 'rating', 'individual_q1_answer'], true)) {
                             continue;
@@ -93,15 +109,15 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                     }
                 });
 
-                return collect($this->array)->groupBy(fn ($item) => $item[0]);
+                return collect($this->array)->groupBy(fn (array $item): string => (string) $item[0]);
             });
 
         $this->managerIssueCount = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(fn ($item) => $item->manager->name)
-            ->map(function ($item): array {
+            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager->name)
+            ->map(function (Collection $item): array {
                 $this->array = [];
-                $item->each(function ($item, $key): void {
+                $item->each(function (IndividualAudit $item, int|string $key): void {
                     foreach ($item->getAttributes() as $key => $value) {
                         if (in_array($key, ['id', 'parent_id', 'user_id', 'store_id', 'manager_id', 'mileage', 'customer_number', 'rating', 'individual_q1_answer'], true)) {
                             continue;

@@ -15,21 +15,24 @@ class ContractNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $name;
-    protected $email;
+    protected string $name;
+    protected string $email;
 
     public function __construct(protected Contract $contract)
     {
-        $this->name = $this->contract->user->name;
-        $this->email = $this->contract->user->email;
+        $this->name = (string) $this->contract->user->name;
+        $this->email = (string) $this->contract->user->email;
     }
 
-    public function via($notifiable): array
+    /**
+     * @return array<int, string>
+     */
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         $url = $this->generateUrl();
 
@@ -43,12 +46,15 @@ class ContractNotification extends Notification implements ShouldQueue
             ->line('Your contact: '.$this->name.' - '.$this->email);
     }
 
-    public function toArray($notifiable): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }
 
-    protected function generateUrl()
+    protected function generateUrl(): string
     {
         return URL::temporarySignedRoute('contracts.show', now()->addDays(7), [
             'contract' => $this->contract->uuid,

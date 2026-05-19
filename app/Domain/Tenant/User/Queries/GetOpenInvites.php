@@ -123,7 +123,7 @@ class GetOpenInvites
         if (app()->bound('scopedStoreIds')) {
             /** @var Collection<int, int> $scoped */
             $scoped = resolve('scopedStoreIds');
-            $normalized = $scoped->map(static fn ($id): int => $id)->values();
+            $normalized = $scoped->map(static fn (int $id): int => $id)->values();
 
             if ($normalized->isNotEmpty()) {
                 return $normalized;
@@ -171,7 +171,7 @@ class GetOpenInvites
         return Store::query()
             ->whereIn('id', $ids)
             ->pluck('name', 'id')
-            ->map(static fn ($name): string => (string) $name);
+            ->map(static fn (mixed $name): string => (string) $name);
     }
 
     /**

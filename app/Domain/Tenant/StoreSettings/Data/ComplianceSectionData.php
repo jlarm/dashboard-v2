@@ -162,6 +162,6 @@ class ComplianceSectionData
             return [];
         }
 
-        return array_values(array_map(static fn ($item): string => (string) $item, $value));
+        return array_values(array_map(static fn (mixed $item): string => (string) $item, $value));
     }
 }

@@ -15,7 +15,10 @@ class Course extends AbstractCourse
 
     public const string CALIFORNIA_TRAINING_SLUG = 'sexual-harassment-training-in-california';
 
-    public function getDepartments()
+    /**
+     * @return array<int, int>
+     */
+    public function getDepartments(): array
     {
         return $this->departments->pluck('id')->toArray();
     }
@@ -30,7 +33,7 @@ class Course extends AbstractCourse
         return $this->belongsTo(CourseResults::class);
     }
 
-    protected function scopeWithLastResult($query, $userId): void
+    protected function scopeWithLastResult(\Illuminate\Database\Eloquent\Builder $query, int $userId): void
     {
         $query->addSelect(['last_result_id' => CourseResults::query()->select('id')
             ->whereColumn('course_id', 'courses.id')

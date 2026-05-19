@@ -33,7 +33,7 @@ class SearchViolationStatements
 
         return $all
             ->filter(fn (ViolationStatement $statement): bool => mb_stripos($statement->statement, $query) !== false
-                || collect($statement->keywords)->contains(fn ($keyword): bool => mb_stripos((string) $keyword, $query) !== false)
+                || collect($statement->keywords)->contains(fn (mixed $keyword): bool => mb_stripos((string) $keyword, $query) !== false)
             )
             ->map(fn (ViolationStatement $statement): ViolationStatementSearchResultData => ViolationStatementSearchResultData::fromModel($statement))
             ->values();

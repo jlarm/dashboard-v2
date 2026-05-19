@@ -17,12 +17,12 @@ class ContractPdfNotification extends Notification implements ShouldQueue
 
     public function __construct(protected Contract $contract) {}
 
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject($this->contract->dealer_name.' ARMP Contract PDF')
@@ -34,7 +34,7 @@ class ContractPdfNotification extends Notification implements ShouldQueue
             ]);
     }
 
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }

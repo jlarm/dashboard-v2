@@ -35,14 +35,14 @@ class GetStoreResettableUsers
      */
     public function userIdsForStore(Store $store): Collection
     {
-        $storeUserIds = $store->users()->pluck('users.id')->map(static fn ($id): int => (int) $id);
+        $storeUserIds = $store->users()->pluck('users.id')->map(static fn (mixed $id): int => (int) $id);
 
         /** @phpstan-ignore return.type */
         return CourseResults::query()
             ->whereIn('user_id', $storeUserIds)
             ->distinct()
             ->pluck('user_id')
-            ->map(static fn ($userId): int => (int) $userId)
+            ->map(static fn (mixed $userId): int => (int) $userId)
             ->filter()
             ->unique()
             ->values();

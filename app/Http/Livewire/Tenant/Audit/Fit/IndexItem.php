@@ -13,7 +13,7 @@ class IndexItem extends Component
 {
     public FitTestDoc $fitTestDoc;
 
-    public function download()
+    public function download(): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         return response()->streamDownload(function (): void {
             echo Storage::disk('dealer-docs')->get($this->fitTestDoc->file_path);

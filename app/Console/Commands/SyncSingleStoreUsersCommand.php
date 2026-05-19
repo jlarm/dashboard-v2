@@ -29,7 +29,7 @@ class SyncSingleStoreUsersCommand extends Command
 
         $hadFailure = false;
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function ($tenant) use (&$hadFailure): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use (&$hadFailure): void {
             $storeCount = Store::query()->count();
 
             if ($storeCount !== 1) {

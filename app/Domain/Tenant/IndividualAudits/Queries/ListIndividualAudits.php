@@ -19,7 +19,7 @@ class ListIndividualAudits
             ->where('store_id', $storeId)
             ->whereNull('parent_id')
             ->withCount(['children'])
-            ->withCount(['children as draft_count' => fn ($query) => $query->where('draft', true)])
+            ->withCount(['children as draft_count' => fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('draft', true)])
             ->latest('audit_date')
             ->get()
             ->map(static fn (IndividualAudit $audit): IndividualAuditListItem => IndividualAuditListItem::fromModel($audit));

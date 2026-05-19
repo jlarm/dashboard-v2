@@ -26,7 +26,7 @@ class StoreInviteRequest extends FormRequest
                 'max:255',
                 'unique:users,email',
                 Rule::unique(UserInvite::class, 'email')
-                    ->where(fn ($query) => $query
+                    ->where(fn (\Illuminate\Database\Query\Builder $query) => $query
                         ->whereNull('accepted_at')
                         ->whereNull('revoked_at')
                         ->where('expires_at', '>', now())),

@@ -40,7 +40,7 @@ class CheckMissingSdsFiles extends Command
         $progressBar = $this->output->createProgressBar(Sds::query()->count());
         $progressBar->start();
 
-        Sds::query()->chunk(100, function ($sdsRecord) use (&$missingFiles, &$progressBar): void {
+        Sds::query()->chunk(100, function (\Illuminate\Database\Eloquent\Collection $sdsRecord) use (&$missingFiles, &$progressBar): void {
             foreach ($sdsRecord as $sds) {
                 if ($sds->file_name && ! Storage::disk('sds-sheets')->exists($sds->file_name)) {
                     $missingFiles[] = $sds->file_name;

@@ -16,7 +16,7 @@ class ListContractsForUser
             ->with(['user', 'status'])
             ->unless(
                 $user->hasRole('super-admin'),
-                fn ($query) => $query->where('user_id', $user->id),
+                fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('user_id', $user->id),
             )
             ->orderByDesc('id')
             ->paginate(25)

@@ -53,7 +53,7 @@ class IndividualAuditDetail
             ];
         }
 
-        $images = $audit->getMedia('individual_audit_images')->map(static fn ($media): array => [
+        $images = $audit->getMedia('individual_audit_images')->map(static fn (\Spatie\MediaLibrary\MediaCollections\Models\Media $media): array => [
             'id' => (int) $media->id,
             'url' => $media->getUrl(),
             'preview_url' => $media->hasGeneratedConversion('preview') ? $media->getUrl('preview') : null,

@@ -77,7 +77,7 @@ class DashboardController extends Controller
         if ($user instanceof User && $this->shouldSeeCourseDashboard($user)) {
             return Inertia::render('tenant/EmployeeDashboard', [
                 'courses' => $courseList->handle($user)
-                    ->map(static fn ($item): array => $item->toArray())
+                    ->map(static fn (\App\Domain\Tenant\Course\Data\UserCourseListItem $item): array => $item->toArray())
                     ->all(),
                 'can_issue_dot_certificate' => $canIssueDotCert->handle($user),
             ]);
@@ -360,7 +360,7 @@ class DashboardController extends Controller
 
         /** @var Collection<int, mixed> $storeIds */
         $storeIds = resolve('scopedStoreIds');
-        $ids = $storeIds->map(static fn ($id): int => (int) $id)->filter()->values();
+        $ids = $storeIds->map(static fn (mixed $id): int => (int) $id)->filter()->values();
 
         if ($ids->isEmpty()) {
             return new EloquentCollection;
@@ -496,7 +496,7 @@ class DashboardController extends Controller
             ->latest('scored_on')
             ->get(['store_id', 'scored_on', 'score'])
             ->groupBy('store_id')
-            ->map(static fn ($group) => $group->first()->score);
+            ->map(static fn (Collection $group) => $group->first()->score);
 
         if ($rows->isEmpty()) {
             return null;
@@ -581,7 +581,7 @@ class DashboardController extends Controller
             ->latest('scored_on')
             ->get(['store_id', 'scored_on', 'overdue_count'])
             ->groupBy('store_id')
-            ->map(static fn ($group): int => (int) $group->first()->overdue_count);
+            ->map(static fn (Collection $group): int => (int) $group->first()->overdue_count);
 
         if ($rows->isEmpty()) {
             return null;
