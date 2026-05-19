@@ -132,8 +132,8 @@ const props = defineProps<{
     store: StoreSummary | null;
     error: string | null;
     filters?: Filters;
-    cveList?: Cve[];
-    openPorts?: Port[];
+    cveList?: { items: Cve[]; available_asset_types: string[] };
+    openPorts?: { items: Port[]; available_asset_types: string[] };
     cveChart?: ChartPayload;
     externalIp?: ExternalIpPayload;
 }>();
@@ -470,11 +470,13 @@ const pollForReady = (type: 'executive' | 'technical', label: string, toastId: s
                                         />
                                         <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                                             <CveListPanel
-                                                :cves="cveList ?? []"
+                                                :cves="cveList?.items ?? []"
+                                                :available-asset-types="cveList?.available_asset_types ?? []"
                                                 :initial-asset-type="filters?.cve_asset_type ?? null"
                                             />
                                             <OpenPortsPanel
-                                                :ports="openPorts ?? []"
+                                                :ports="openPorts?.items ?? []"
+                                                :available-asset-types="openPorts?.available_asset_types ?? []"
                                                 :initial-asset-type="filters?.port_asset_type ?? null"
                                             />
                                         </div>

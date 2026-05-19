@@ -13,10 +13,22 @@ type Port = {
 
 type PortAssetType = 'all' | 'internal' | 'external_ip';
 
+const ASSET_TYPE_LABELS: Record<Exclude<PortAssetType, 'all'>, string> = {
+    internal: 'Internal authenticated',
+    external_ip: 'External — IP addresses',
+};
+
 const props = defineProps<{
     ports: Port[];
+    availableAssetTypes: string[];
     initialAssetType: string | null;
 }>();
+
+const assetTypeOptions = computed(() =>
+    (Object.keys(ASSET_TYPE_LABELS) as Array<keyof typeof ASSET_TYPE_LABELS>)
+        .filter((key) => props.availableAssetTypes.includes(key))
+        .map((key) => ({ value: key, label: ASSET_TYPE_LABELS[key] })),
+);
 
 const PAGE_SIZE = 5;
 
@@ -101,14 +113,15 @@ const riskBadgeClass = (risk: string): string => {
                 <h3 class="text-sm font-semibold tracking-tight text-foreground">Open Port Vulnerabilities</h3>
                 <p class="text-xs text-muted-foreground">Listening ports across scanned assets</p>
             </div>
-            <Select v-model="assetType">
+            <Select v-if="assetTypeOptions.length > 1" v-model="assetType">
                 <SelectTrigger class="w-56">
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="all">All asset types</SelectItem>
-                    <SelectItem value="internal">Internal authenticated</SelectItem>
-                    <SelectItem value="external_ip">External — IP addresses</SelectItem>
+                    <SelectItem v-for="option in assetTypeOptions" :key="option.value" :value="option.value">
+                        {{ option.label }}
+                    </SelectItem>
                 </SelectContent>
             </Select>
         </header>

@@ -23,22 +23,29 @@ class GetCveList
     public function __construct(private readonly CyrismaService $cyrisma) {}
 
     /**
-     * @return list<array{id: string, title: string, risk: string, score: ?float, published_date: ?string, affected_targets: ?string, num_affected_targets: ?int, type: string}>
+     * @return array{items: list<array<string, mixed>>, available_asset_types: list<string>}
      */
     public function handle(Store $store, ?string $assetType): array
     {
         $service = $this->cyrisma->forStore($store);
 
-        $assetTypes = $assetType !== null && $assetType !== ''
-            ? [$assetType]
-            : self::ALLOWED_ASSET_TYPES;
+        $vulnsByType = collect(self::ALLOWED_ASSET_TYPES)
+            ->mapWithKeys(static fn (string $type): array => [
+                $type => $service->getVulnerabilitiesByAssetType($type)['vulnerabilities'] ?? [],
+            ])
+            ->all();
 
-        return collect($assetTypes)
-            ->flatMap(static function (string $type) use ($service): array {
-                $data = $service->getVulnerabilitiesByAssetType($type);
+        $availableAssetTypes = collect($vulnsByType)
+            ->filter(static fn (array $vulns): bool => count($vulns) > 0)
+            ->keys()
+            ->values()
+            ->all();
 
-                return $data['vulnerabilities'] ?? [];
-            })
+        $selectedVulns = $assetType !== null && $assetType !== ''
+            ? ($vulnsByType[$assetType] ?? [])
+            : array_merge(...array_values($vulnsByType));
+
+        $items = collect($selectedVulns)
             ->sortByDesc(static fn (array $item): array => [
                 self::riskRank((string) ($item['cve_risk'] ?? '')),
                 (float) ($item['cve_score'] ?? 0),
@@ -46,6 +53,11 @@ class GetCveList
             ->values()
             ->map(static fn (array $item): array => CveItemData::fromPayload($item)->toArray())
             ->all();
+
+        return [
+            'items' => $items,
+            'available_asset_types' => $availableAssetTypes,
+        ];
     }
 
     private static function riskRank(string $risk): int

@@ -21,18 +21,36 @@ class GetOpenPortsList
     public function __construct(private readonly CyrismaService $cyrisma) {}
 
     /**
-     * @return list<array{port_number: string, port_description: ?string, risk_level: string, machine_count: int}>
+     * @return array{items: list<array<string, mixed>>, available_asset_types: list<string>}
      */
     public function handle(Store $store, ?string $assetType): array
     {
         $service = $this->cyrisma->forStore($store);
-        $resolvedAssetType = $assetType ?? '';
 
-        $ports = $service->getOpenPortsByAssetType($resolvedAssetType);
+        $portsByType = collect(self::ALLOWED_ASSET_TYPES)
+            ->mapWithKeys(static fn (string $type): array => [
+                $type => $service->getOpenPortsByAssetType($type),
+            ])
+            ->all();
 
-        return collect($ports)
+        $availableAssetTypes = collect($portsByType)
+            ->filter(static fn (array $ports): bool => count($ports) > 0)
+            ->keys()
+            ->values()
+            ->all();
+
+        $selectedPorts = $assetType !== null && $assetType !== ''
+            ? ($portsByType[$assetType] ?? [])
+            : $service->getOpenPortsByAssetType('');
+
+        $items = collect($selectedPorts)
             ->map(static fn (array $port): array => OpenPortData::fromPayload($port)->toArray())
             ->values()
             ->all();
+
+        return [
+            'items' => $items,
+            'available_asset_types' => $availableAssetTypes,
+        ];
     }
 }
