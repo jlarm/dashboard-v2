@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Course as CentralCourse;
 use App\Models\Dealer\Course;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -72,6 +73,9 @@ class UserCourseService
     private array $courseIdsCache = [];
     private array $courseRoleCache = [];
     private array $baseCourseCache = [];
+    private ?array $tenantAssignedSlugsCache = null;
+    private int|string|null $tenantSlugsCachedFor = null;
+    private int|string|null $currentTenantId = null;
 
     public function clearCacheForUser(?int $userId): void
     {
@@ -82,6 +86,8 @@ class UserCourseService
         unset($this->courseIdsCache[$userId]);
         $this->courseRoleCache = [];
         $this->baseCourseCache = [];
+        $this->tenantAssignedSlugsCache = null;
+        $this->tenantSlugsCachedFor = null;
     }
 
     public function clearAllCaches(): void
@@ -89,10 +95,14 @@ class UserCourseService
         $this->courseIdsCache = [];
         $this->courseRoleCache = [];
         $this->baseCourseCache = [];
+        $this->tenantAssignedSlugsCache = null;
+        $this->tenantSlugsCachedFor = null;
     }
 
     public function getCourseIds(User $user): array
     {
+        $this->resetCachesIfTenantChanged();
+
         if (isset($this->courseIdsCache[$user->id])) {
             return $this->courseIdsCache[$user->id];
         }
@@ -101,7 +111,9 @@ class UserCourseService
         $hasOnlyAdminRoles = ! empty($userRoleNames) && array_diff($userRoleNames, self::ADMIN_ROLES) === [];
 
         if ($hasOnlyAdminRoles) {
-            return $this->courseIdsCache[$user->id] = $this->getOverrideCourseIds($user, 'add');
+            return $this->courseIdsCache[$user->id] = $this->applyTenantScope(
+                $this->getOverrideCourseIds($user, 'add')
+            );
         }
 
         $excludedCourseIds = $this->getOverrideCourseIds($user, 'exclude');
@@ -131,12 +143,14 @@ class UserCourseService
             $userStates
         );
 
-        return $this->courseIdsCache[$user->id] = collect($baseCourseIds)
-            ->merge($addedCourseIds)
-            ->unique()
-            ->diff($excludedCourseIds)
-            ->values()
-            ->toArray();
+        return $this->courseIdsCache[$user->id] = $this->applyTenantScope(
+            collect($baseCourseIds)
+                ->merge($addedCourseIds)
+                ->unique()
+                ->diff($excludedCourseIds)
+                ->values()
+                ->toArray()
+        );
     }
 
     public function getCoursesSimple(User $user): Collection
@@ -189,8 +203,11 @@ class UserCourseService
      */
     private function resolveBaseCourseIds(mixed $departmentId, array $courseWithRole, array $userStates): array
     {
+        $assignedSlugs = $this->getTenantAssignedCourseSlugs();
+
         $candidates = Course::query()
             ->where('optional', false)
+            ->when($assignedSlugs !== null, fn (Builder $query) => $query->whereIn('slug', $assignedSlugs))
             ->where(function (Builder $query) use ($departmentId, $courseWithRole): void {
                 $query->where(function (Builder $q) use ($departmentId, $courseWithRole): void {
                     $q->whereHas('departments', fn (Builder $q) => $q->where('id', $departmentId))
@@ -279,6 +296,95 @@ class UserCourseService
             ->all();
 
         return array_intersect($userStates, $normalizedRequiredStates) !== [];
+    }
+
+    /**
+     * Detect a tenant switch (or end of tenancy) and flush any caches keyed
+     * implicitly to the previous tenant. The role/base/per-user caches don't
+     * include tenant in their keys because in normal request flow the service
+     * lives inside a single tenant context — but a worker reused across
+     * tenants (queue jobs, console commands) can change that.
+     */
+    private function resetCachesIfTenantChanged(): void
+    {
+        $tenantId = tenancy()->initialized ? tenant()?->id : null;
+
+        if ($tenantId === $this->currentTenantId) {
+            return;
+        }
+
+        $this->courseIdsCache = [];
+        $this->courseRoleCache = [];
+        $this->baseCourseCache = [];
+        $this->tenantAssignedSlugsCache = null;
+        $this->tenantSlugsCachedFor = null;
+        $this->currentTenantId = $tenantId;
+    }
+
+    /**
+     * Return slugs of central courses assigned to the current tenant, or null
+     * when no tenant context is active (skip filtering — e.g. central calls).
+     * Empty pivot on a central course = available to all tenants.
+     *
+     * @return array<int, string>|null
+     */
+    private function getTenantAssignedCourseSlugs(): ?array
+    {
+        if (! tenancy()->initialized) {
+            return null;
+        }
+
+        $tenantId = tenant()?->id;
+
+        if ($tenantId === null) {
+            return null;
+        }
+
+        if ($this->tenantSlugsCachedFor === $tenantId && $this->tenantAssignedSlugsCache !== null) {
+            return $this->tenantAssignedSlugsCache;
+        }
+
+        $slugs = CentralCourse::query()
+            ->with('tenants:id')
+            ->get(['id', 'slug'])
+            ->filter(function (CentralCourse $course) use ($tenantId): bool {
+                $assignedIds = $course->tenants->pluck('id')->all();
+
+                return $assignedIds === [] || in_array($tenantId, $assignedIds, true);
+            })
+            ->pluck('slug')
+            ->values()
+            ->all();
+
+        $this->tenantSlugsCachedFor = $tenantId;
+
+        return $this->tenantAssignedSlugsCache = $slugs;
+    }
+
+    /**
+     * Intersect a list of tenant course IDs with the slugs assigned to the
+     * current tenant. Returns the input unchanged when no tenant context.
+     *
+     * @param  array<int, int>  $courseIds
+     * @return array<int, int>
+     */
+    private function applyTenantScope(array $courseIds): array
+    {
+        if ($courseIds === []) {
+            return [];
+        }
+
+        $assignedSlugs = $this->getTenantAssignedCourseSlugs();
+
+        if ($assignedSlugs === null) {
+            return $courseIds;
+        }
+
+        return Course::query()
+            ->whereIn('id', $courseIds)
+            ->whereIn('slug', $assignedSlugs)
+            ->pluck('id')
+            ->all();
     }
 
     private function getOverrideCourseIds(User $user, string $type): array
