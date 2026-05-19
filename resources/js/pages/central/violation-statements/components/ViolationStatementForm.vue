@@ -133,6 +133,7 @@ const toggleCategory = (value: string): void => {
             </div>
             <input v-if="removeImage" type="hidden" name="remove_image" value="1" />
             <Input
+                v-if="!initial.reference_image_url || removeImage"
                 id="image"
                 name="image"
                 type="file"
