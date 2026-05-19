@@ -1,7 +1,7 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:33
+* @see app/Http/Controllers/Tenant/ScansController.php:35
 * @route '/scans'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:33
+* @see app/Http/Controllers/Tenant/ScansController.php:35
 * @route '/scans'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:33
+* @see app/Http/Controllers/Tenant/ScansController.php:35
 * @route '/scans'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:33
+* @see app/Http/Controllers/Tenant/ScansController.php:35
 * @route '/scans'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:33
+* @see app/Http/Controllers/Tenant/ScansController.php:35
 * @route '/scans'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:33
+* @see app/Http/Controllers/Tenant/ScansController.php:35
 * @route '/scans'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::index
-* @see app/Http/Controllers/Tenant/ScansController.php:33
+* @see app/Http/Controllers/Tenant/ScansController.php:35
 * @route '/scans'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:187
+* @see app/Http/Controllers/Tenant/ScansController.php:217
 * @route '/scans/external-finding'
 */
 export const externalFinding = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ externalFinding.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:187
+* @see app/Http/Controllers/Tenant/ScansController.php:217
 * @route '/scans/external-finding'
 */
 externalFinding.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ externalFinding.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:187
+* @see app/Http/Controllers/Tenant/ScansController.php:217
 * @route '/scans/external-finding'
 */
 externalFinding.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ externalFinding.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:187
+* @see app/Http/Controllers/Tenant/ScansController.php:217
 * @route '/scans/external-finding'
 */
 externalFinding.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +126,7 @@ externalFinding.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =>
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:187
+* @see app/Http/Controllers/Tenant/ScansController.php:217
 * @route '/scans/external-finding'
 */
 const externalFindingForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +136,7 @@ const externalFindingForm = (options?: RouteQueryOptions): RouteFormDefinition<'
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:187
+* @see app/Http/Controllers/Tenant/ScansController.php:217
 * @route '/scans/external-finding'
 */
 externalFindingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +146,7 @@ externalFindingForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'ge
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::externalFinding
-* @see app/Http/Controllers/Tenant/ScansController.php:187
+* @see app/Http/Controllers/Tenant/ScansController.php:217
 * @route '/scans/external-finding'
 */
 externalFindingForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ externalFinding.form = externalFindingForm
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:139
+* @see app/Http/Controllers/Tenant/ScansController.php:141
 * @route '/scans/queue-report'
 */
 export const queueReport = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +178,7 @@ queueReport.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:139
+* @see app/Http/Controllers/Tenant/ScansController.php:141
 * @route '/scans/queue-report'
 */
 queueReport.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ queueReport.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:139
+* @see app/Http/Controllers/Tenant/ScansController.php:141
 * @route '/scans/queue-report'
 */
 queueReport.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ queueReport.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:139
+* @see app/Http/Controllers/Tenant/ScansController.php:141
 * @route '/scans/queue-report'
 */
 const queueReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ const queueReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'post
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::queueReport
-* @see app/Http/Controllers/Tenant/ScansController.php:139
+* @see app/Http/Controllers/Tenant/ScansController.php:141
 * @route '/scans/queue-report'
 */
 queueReportForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -218,8 +218,107 @@ queueReportForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'
 queueReport.form = queueReportForm
 
 /**
+* @see \App\Http\Controllers\Tenant\ScansController::reportStatus
+* @see app/Http/Controllers/Tenant/ScansController.php:176
+* @route '/scans/report-status/{type}'
+*/
+export const reportStatus = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: reportStatus.url(args, options),
+    method: 'get',
+})
+
+reportStatus.definition = {
+    methods: ["get","head"],
+    url: '/scans/report-status/{type}',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::reportStatus
+* @see app/Http/Controllers/Tenant/ScansController.php:176
+* @route '/scans/report-status/{type}'
+*/
+reportStatus.url = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { type: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            type: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        type: args.type,
+    }
+
+    return reportStatus.definition.url
+            .replace('{type}', parsedArgs.type.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::reportStatus
+* @see app/Http/Controllers/Tenant/ScansController.php:176
+* @route '/scans/report-status/{type}'
+*/
+reportStatus.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: reportStatus.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::reportStatus
+* @see app/Http/Controllers/Tenant/ScansController.php:176
+* @route '/scans/report-status/{type}'
+*/
+reportStatus.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: reportStatus.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::reportStatus
+* @see app/Http/Controllers/Tenant/ScansController.php:176
+* @route '/scans/report-status/{type}'
+*/
+const reportStatusForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: reportStatus.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::reportStatus
+* @see app/Http/Controllers/Tenant/ScansController.php:176
+* @route '/scans/report-status/{type}'
+*/
+reportStatusForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: reportStatus.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\ScansController::reportStatus
+* @see app/Http/Controllers/Tenant/ScansController.php:176
+* @route '/scans/report-status/{type}'
+*/
+reportStatusForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: reportStatus.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+reportStatus.form = reportStatusForm
+
+/**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:175
+* @see app/Http/Controllers/Tenant/ScansController.php:205
 * @route '/scans/refresh-cache'
 */
 export const refreshCache = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -234,7 +333,7 @@ refreshCache.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:175
+* @see app/Http/Controllers/Tenant/ScansController.php:205
 * @route '/scans/refresh-cache'
 */
 refreshCache.url = (options?: RouteQueryOptions) => {
@@ -243,7 +342,7 @@ refreshCache.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:175
+* @see app/Http/Controllers/Tenant/ScansController.php:205
 * @route '/scans/refresh-cache'
 */
 refreshCache.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -253,7 +352,7 @@ refreshCache.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:175
+* @see app/Http/Controllers/Tenant/ScansController.php:205
 * @route '/scans/refresh-cache'
 */
 const refreshCacheForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -263,7 +362,7 @@ const refreshCacheForm = (options?: RouteQueryOptions): RouteFormDefinition<'pos
 
 /**
 * @see \App\Http\Controllers\Tenant\ScansController::refreshCache
-* @see app/Http/Controllers/Tenant/ScansController.php:175
+* @see app/Http/Controllers/Tenant/ScansController.php:205
 * @route '/scans/refresh-cache'
 */
 refreshCacheForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -273,6 +372,6 @@ refreshCacheForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post
 
 refreshCache.form = refreshCacheForm
 
-const ScansController = { index, externalFinding, queueReport, refreshCache }
+const ScansController = { index, externalFinding, queueReport, reportStatus, refreshCache }
 
 export default ScansController

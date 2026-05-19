@@ -11,6 +11,7 @@ import OverallRiskCards from '@/pages/tenant/scans/components/OverallRiskCards.v
 import scan from '@/routes/dealer/scan';
 import type { BreadcrumbItem } from '@/types';
 import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
+import { toast } from 'vue-sonner';
 import {
     AlertTriangle,
     ArrowRight,
@@ -164,19 +165,85 @@ const refresh = (): void => {
     );
 };
 
-const queueReport = (type: 'executive' | 'technical'): void => {
+const queueReport = async (type: 'executive' | 'technical'): Promise<void> => {
     generatingReport.value = type;
-    router.post(
-        scan.queueReport.url(),
-        { type },
-        {
-            preserveScroll: true,
-            preserveState: true,
-            onFinish: () => {
-                generatingReport.value = null;
+    const label = type === 'executive' ? 'Executive' : 'Technical';
+    const toastId = toast.loading(`Generating ${label} report…`, { duration: Infinity });
+
+    const csrfToken = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content ?? '';
+
+    try {
+        const response = await fetch(scan.queueReport.url(), {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest',
             },
-        },
-    );
+            body: JSON.stringify({ type }),
+        });
+
+        const payload = (await response.json()) as {
+            status: 'queued' | 'already-running' | 'error';
+            message?: string;
+        };
+
+        if (!response.ok || payload.status === 'error') {
+            toast.dismiss(toastId);
+            toast.error(payload.message ?? 'Failed to queue report.');
+            generatingReport.value = null;
+            return;
+        }
+
+        pollForReady(type, label, toastId);
+    } catch {
+        toast.dismiss(toastId);
+        toast.error('Failed to queue report.');
+        generatingReport.value = null;
+    }
+};
+
+const pollForReady = (type: 'executive' | 'technical', label: string, toastId: string | number): void => {
+    const maxAttempts = 60;
+    let attempts = 0;
+
+    const tick = async (): Promise<void> => {
+        attempts++;
+        if (attempts > maxAttempts) {
+            toast.dismiss(toastId);
+            toast.warning(`${label} report is taking longer than usual. We'll send a notification when it's ready.`);
+            generatingReport.value = null;
+            return;
+        }
+
+        try {
+            const response = await fetch(scan.reportStatus.url({ type }), {
+                credentials: 'same-origin',
+                headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            });
+            const status = (await response.json()) as { status: string; url?: string };
+
+            if (status.status === 'ready' && status.url) {
+                const downloadUrl = status.url;
+                toast.dismiss(toastId);
+                toast.success(`${label} report ready`, {
+                    action: { label: 'Download', onClick: () => window.open(downloadUrl, '_blank', 'noopener') },
+                    actionButtonStyle: { background: 'var(--color-arm-blue-500)', color: '#ffffff' },
+                    duration: 20000,
+                });
+                generatingReport.value = null;
+                return;
+            }
+        } catch {
+            // Ignore transient network errors; keep polling.
+        }
+
+        setTimeout(tick, 2000);
+    };
+
+    setTimeout(tick, 1500);
 };
 </script>
 

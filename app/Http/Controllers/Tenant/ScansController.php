@@ -16,12 +16,14 @@ use App\Domain\Tenant\Scans\Queries\GetScanOverview;
 use App\Domain\Tenant\Scans\Queries\ResolveScannableStores;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\Scans\QueueScanReportRequest;
+use App\Jobs\Scans\GenerateCyrismaReportJob;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
@@ -140,7 +142,7 @@ class ScansController extends Controller
         QueueScanReportRequest $request,
         ResolveScannableStores $resolveScannableStores,
         QueueScanReport $queueScanReport,
-    ): RedirectResponse {
+    ): JsonResponse {
         $store = $this->resolveSingleStore($request, $resolveScannableStores);
         $user = $request->user();
 
@@ -153,23 +155,51 @@ class ScansController extends Controller
         } catch (Throwable $e) {
             report($e);
 
-            return back()->with(
-                'flash.error',
-                'We could not queue the '.$type.' report. Please try again.',
-            );
+            return response()->json([
+                'status' => 'error',
+                'message' => 'We could not queue the '.$type.' report. Please try again.',
+            ], 500);
         }
 
-        return match ($status) {
-            QueueScanReport::STATUS_READY => back()->with('success', ucfirst($type).' report is ready to download.'),
-            QueueScanReport::STATUS_ALREADY_RUNNING => back()->with(
-                'warning',
-                'Your '.ucfirst($type).' report is already being generated. You\'ll receive a notification when it\'s ready.',
-            ),
-            default => back()->with(
-                'success',
-                ucfirst($type).' report queued — you\'ll get a notification when it\'s ready to download.',
-            ),
-        };
+        return response()->json(match ($status) {
+            QueueScanReport::STATUS_ALREADY_RUNNING => [
+                'status' => 'already-running',
+                'message' => 'Your '.ucfirst($type).' report is already being generated. You\'ll receive a notification when it\'s ready.',
+            ],
+            default => [
+                'status' => 'queued',
+                'message' => ucfirst($type).' report queued — you\'ll get a notification when it\'s ready to download.',
+            ],
+        });
+    }
+
+    public function reportStatus(
+        Request $request,
+        ResolveScannableStores $resolveScannableStores,
+        string $type,
+    ): JsonResponse {
+        if (! in_array($type, QueueScanReport::ALLOWED_TYPES, true)) {
+            return response()->json(['status' => 'invalid'], 422);
+        }
+
+        $store = $this->resolveSingleStore($request, $resolveScannableStores);
+
+        $pdfCacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $store->id, $type);
+
+        if (Cache::has($pdfCacheKey)) {
+            return response()->json([
+                'status' => 'ready',
+                'url' => route('dealer.scan.report', ['type' => $type]),
+            ]);
+        }
+
+        $lockKey = 'laravel_unique_job:'.GenerateCyrismaReportJob::class.'-'.$store->id.'-'.$type;
+
+        if (Cache::has($lockKey)) {
+            return response()->json(['status' => 'pending']);
+        }
+
+        return response()->json(['status' => 'not-queued']);
     }
 
     public function refreshCache(

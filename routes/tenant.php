@@ -343,6 +343,7 @@ Route::name('dealer.')->middleware([
         Route::get('scans', [ScansController::class, 'index'])->middleware(['single.store'])->name('scan.index');
         Route::get('scans/external-finding', [ScansController::class, 'externalFinding'])->middleware(['single.store'])->name('scan.external-finding');
         Route::post('scans/queue-report', [ScansController::class, 'queueReport'])->middleware(['single.store'])->name('scan.queue-report');
+        Route::get('scans/report-status/{type}', [ScansController::class, 'reportStatus'])->middleware(['single.store'])->name('scan.report-status');
         Route::post('scans/refresh-cache', [ScansController::class, 'refreshCache'])->middleware(['single.store'])->name('scan.refresh-cache');
 
         Route::middleware(['single.store', 'role:super-admin|Consultant'])->group(function (): void {

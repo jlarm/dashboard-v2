@@ -42,7 +42,8 @@ class CyrismaReportController
         }, 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="'.$fileName.'"',
-            'Cache-Control' => 'private, max-age=1800',
+            'Cache-Control' => 'private, no-store, max-age=0, must-revalidate',
+            'Pragma' => 'no-cache',
         ]);
     }
 

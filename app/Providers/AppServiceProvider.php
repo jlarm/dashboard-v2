@@ -63,6 +63,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(UserCourseService::class);
         $this->app->singleton(StoreScopeService::class);
+
+        $this->app->singleton('laravel-pdf.driver.cloudflare', fn (): \App\Pdf\CloudflareDriver => new \App\Pdf\CloudflareDriver(config('laravel-pdf.cloudflare', [])));
     }
 
     /**

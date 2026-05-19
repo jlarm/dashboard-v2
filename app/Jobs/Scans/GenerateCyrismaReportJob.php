@@ -17,6 +17,7 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
+use setasign\Fpdi\Fpdi;
 use Spatie\LaravelPdf\Enums\Format;
 use Spatie\LaravelPdf\Facades\Pdf as SpatiePdf;
 use Throwable;
@@ -59,24 +60,26 @@ class GenerateCyrismaReportJob implements ShouldQueue
             ? 'tenant.scans.reports.executive'
             : 'tenant.scans.reports.technical';
 
-        $pdf = SpatiePdf::view($view, $data)
-            ->driver('cloudflare')
-            ->format(Format::Letter);
+        $footerHtml = '<div style="font-family: Arial, sans-serif; font-size: 9px; color: #9ca3af; width: 100%; padding: 0 56px; box-sizing: border-box; display: flex; justify-content: space-between;">'
+            .'<span>Automotive Risk Management Partners</span>'
+            .'<span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>'
+            .'</div>';
 
-        if ($this->type === 'technical') {
-            $pdf
+        $renderedPdfBinary = base64_decode(
+            SpatiePdf::view($view, $data)
+                ->driver('cloudflare')
+                ->format(Format::Letter)
+                ->margins(48, 56, 72, 56, 'px')
                 ->headerHtml('<span></span>')
-                ->footerHtml(
-                    '<div style="font-family: Arial, sans-serif; font-size: 9px; color: #6b7280; width: 100%; text-align: center;">'
-                    .'Page <span class="pageNumber"></span> of <span class="totalPages"></span>'
-                    .'</div>'
-                );
-        }
+                ->footerHtml($footerHtml)
+                ->base64(),
+            true,
+        ) ?: '';
 
-        $pdfBinary = base64_decode($pdf->base64(), true) ?: '';
+        $pdfBinary = $this->maskFirstPageFooter($renderedPdfBinary);
 
         $cacheKey = sprintf('cyrisma_report_pdf_v2_%d_%s', $this->storeId, $this->type);
-        Cache::put($cacheKey, $pdfBinary, now()->addHours(4));
+        Cache::put($cacheKey, $pdfBinary, now()->addMinutes(30));
 
         Log::info('GenerateCyrismaReportJob complete', ['store_id' => $this->storeId, 'type' => $this->type]);
 
@@ -96,6 +99,43 @@ class GenerateCyrismaReportJob implements ShouldQueue
 
         if ($user instanceof User) {
             $user->notify(new ScanReportFailedNotification($this->type, $storeName));
+        }
+    }
+
+    /**
+     * Overlay a white rectangle on the bottom margin of page 1 to hide the
+     * Chrome-rendered footer template on the cover page only.
+     */
+    private function maskFirstPageFooter(string $pdfBinary): string
+    {
+        $tmpDir = storage_path('tmp');
+        if (! is_dir($tmpDir)) {
+            mkdir($tmpDir, 0775, true);
+        }
+        $sourcePath = $tmpDir.'/scan-report-'.uniqid('', true).'.pdf';
+        file_put_contents($sourcePath, $pdfBinary);
+
+        try {
+            $fpdi = new Fpdi('P', 'mm', 'Letter');
+            $pageCount = $fpdi->setSourceFile($sourcePath);
+
+            for ($i = 1; $i <= $pageCount; $i++) {
+                $template = $fpdi->importPage($i);
+                $size = $fpdi->getTemplateSize($template);
+                $orientation = $size['orientation'] ?? ($size['width'] > $size['height'] ? 'L' : 'P');
+                $fpdi->AddPage($orientation, [$size['width'], $size['height']]);
+                $fpdi->useTemplate($template);
+
+                if ($i === 1) {
+                    $maskHeight = 26;
+                    $fpdi->SetFillColor(255, 255, 255);
+                    $fpdi->Rect(0, $size['height'] - $maskHeight, $size['width'], $maskHeight, 'F');
+                }
+            }
+
+            return $fpdi->Output('S');
+        } finally {
+            @unlink($sourcePath);
         }
     }
 

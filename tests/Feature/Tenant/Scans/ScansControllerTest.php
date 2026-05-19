@@ -52,26 +52,25 @@ describe('POST scans/queue-report', function (): void {
 
     it('dispatches the GenerateCyrismaReportJob with a queued status', function (): void {
         $this->actingAs($this->consultant)
-            ->from(route('dealer.scan.index'))
-            ->post(route('dealer.scan.queue-report'), ['type' => 'executive'])
-            ->assertRedirect(route('dealer.scan.index'))
-            ->assertSessionHas('success');
+            ->postJson(route('dealer.scan.queue-report'), ['type' => 'executive'])
+            ->assertOk()
+            ->assertJson(['status' => 'queued']);
 
         Queue::assertPushed(GenerateCyrismaReportJob::class);
     });
 
-    it('flashes a "ready" message when the report is already cached', function (): void {
+    it('always queues a fresh job even when a previous PDF is still cached', function (): void {
         Cache::put(sprintf('cyrisma_report_pdf_v2_%d_executive', $this->store->id), 'fake-pdf', now()->addMinutes(30));
 
         $this->actingAs($this->consultant)
-            ->from(route('dealer.scan.index'))
-            ->post(route('dealer.scan.queue-report'), ['type' => 'executive'])
-            ->assertRedirect(route('dealer.scan.index'));
+            ->postJson(route('dealer.scan.queue-report'), ['type' => 'executive'])
+            ->assertOk()
+            ->assertJson(['status' => 'queued']);
 
-        Queue::assertNothingPushed();
+        Queue::assertPushed(GenerateCyrismaReportJob::class);
     });
 
-    it('flashes a warning when a job is already running', function (): void {
+    it('returns an already-running response when a job is already running', function (): void {
         Cache::put(
             'laravel_unique_job:'.GenerateCyrismaReportJob::class.'-'.$this->store->id.'-executive',
             true,
@@ -79,31 +78,60 @@ describe('POST scans/queue-report', function (): void {
         );
 
         $this->actingAs($this->consultant)
-            ->from(route('dealer.scan.index'))
-            ->post(route('dealer.scan.queue-report'), ['type' => 'executive'])
-            ->assertRedirect(route('dealer.scan.index'))
-            ->assertSessionHas('warning');
+            ->postJson(route('dealer.scan.queue-report'), ['type' => 'executive'])
+            ->assertOk()
+            ->assertJson(['status' => 'already-running']);
 
         Queue::assertNothingPushed();
     });
 
     it('rejects unknown report types', function (): void {
         $this->actingAs($this->consultant)
-            ->from(route('dealer.scan.index'))
-            ->post(route('dealer.scan.queue-report'), ['type' => 'invalid'])
-            ->assertSessionHasErrors('type');
+            ->postJson(route('dealer.scan.queue-report'), ['type' => 'invalid'])
+            ->assertStatus(422);
     });
 
-    it('surfaces a friendly flash error when the queue action throws', function (): void {
+    it('reports status pending when a job lock exists', function (): void {
+        Cache::put(
+            'laravel_unique_job:'.GenerateCyrismaReportJob::class.'-'.$this->store->id.'-executive',
+            true,
+            now()->addMinutes(5),
+        );
+
+        $this->actingAs($this->consultant)
+            ->getJson(route('dealer.scan.report-status', ['type' => 'executive']))
+            ->assertOk()
+            ->assertJson(['status' => 'pending']);
+    });
+
+    it('reports status ready with a download URL when the PDF is cached', function (): void {
+        Cache::put(sprintf('cyrisma_report_pdf_v2_%d_executive', $this->store->id), 'fake-pdf', now()->addMinutes(30));
+
+        $this->actingAs($this->consultant)
+            ->getJson(route('dealer.scan.report-status', ['type' => 'executive']))
+            ->assertOk()
+            ->assertJson([
+                'status' => 'ready',
+                'url' => route('dealer.scan.report', ['type' => 'executive']),
+            ]);
+    });
+
+    it('reports status not-queued when there is no cached PDF or lock', function (): void {
+        $this->actingAs($this->consultant)
+            ->getJson(route('dealer.scan.report-status', ['type' => 'executive']))
+            ->assertOk()
+            ->assertJson(['status' => 'not-queued']);
+    });
+
+    it('returns a 500 error when the queue action throws', function (): void {
         test()->mock(QueueScanReport::class, function ($mock): void {
             $mock->shouldReceive('handle')->andThrow(new RuntimeException('redis offline'));
         });
 
         $this->actingAs($this->consultant)
-            ->from(route('dealer.scan.index'))
-            ->post(route('dealer.scan.queue-report'), ['type' => 'executive'])
-            ->assertRedirect(route('dealer.scan.index'))
-            ->assertSessionHas('flash.error');
+            ->postJson(route('dealer.scan.queue-report'), ['type' => 'executive'])
+            ->assertStatus(500)
+            ->assertJson(['status' => 'error']);
     });
 });
 
