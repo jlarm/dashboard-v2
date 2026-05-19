@@ -39,7 +39,7 @@
             </p>
         </div>
         <div class="footer">
-            <p>This is an automated message from ARMP Compliance Dashboard. Please do not reply to this email.</p>
+            <p>This is an automated message from Automotive Risk Management Partners. Please do not reply to this email.</p>
         </div>
     </div>
 </body>
