@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, useTemplateRef } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import { ArrowRight, CheckCircle, PlayCircle } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
@@ -26,7 +26,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: props.course.name, href: courses.show.url({ course: props.course.slug }) },
 ];
 
-const iframeRef = ref<HTMLIFrameElement | null>(null);
+const iframeRef = useTemplateRef<HTMLIFrameElement>('iframeRef');
 const showSlides = ref(props.video === null);
 const activeSlide = ref(0);
 
@@ -55,6 +55,10 @@ const { loading, error } = useVimeoPlayer({
 
 const goToQuiz = (): void => {
     window.location.href = props.quiz_url;
+};
+
+const reloadPage = (): void => {
+    window.location.reload();
 };
 </script>
 
@@ -85,7 +89,7 @@ const goToQuiz = (): void => {
                     <div v-if="error" class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 rounded-lg bg-red-50 p-6 text-center">
                         <p class="text-sm text-red-700">{{ error }}</p>
                         <div class="flex gap-3">
-                            <Button variant="destructive" @click="() => window.location.reload()">Refresh page</Button>
+                            <Button variant="destructive" @click="reloadPage">Refresh page</Button>
                             <Button v-if="slides && slides.length > 0" variant="default" @click="showSlides = true">
                                 View slides instead
                             </Button>
@@ -98,13 +102,13 @@ const goToQuiz = (): void => {
                         oncontextmenu="return false"
                         allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
                         allowfullscreen
-                        class="h-[500px] w-full rounded-xl border"
+                        class="h-125 w-full rounded-xl border"
                     />
                 </div>
             </div>
 
             <div v-else-if="slides && slides.length > 0" class="mx-auto max-w-4xl space-y-4">
-                <div class="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
+                <div class="rounded-xl border border-zinc-200 bg-white p-6">
                     <h2 class="mb-3 text-lg font-semibold">{{ slides[activeSlide].title }}</h2>
                     <div class="prose prose-sm max-w-none" v-html="slides[activeSlide].description" />
                 </div>
