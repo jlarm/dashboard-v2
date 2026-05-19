@@ -56,7 +56,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'created_at' => Date::now()->subDays(335),
         ]);
 
-        artisan('run:course-reminder')
+        artisan('courses:expiration-reminder')
             ->assertSuccessful();
 
         Notification::assertSentTo(
@@ -94,7 +94,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'created_at' => Date::now()->subDays(365),
         ]);
 
-        artisan('run:course-reminder')
+        artisan('courses:expiration-reminder')
             ->assertSuccessful();
 
         Notification::assertSentTo(
@@ -132,7 +132,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'created_at' => Date::now()->subDays(395),
         ]);
 
-        artisan('run:course-reminder')
+        artisan('courses:expiration-reminder')
             ->assertSuccessful();
 
         Notification::assertSentTo(
@@ -174,7 +174,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'created_at' => Date::now()->subDays(335),
         ]);
 
-        artisan('run:course-reminder')
+        artisan('courses:expiration-reminder')
             ->assertSuccessful();
 
         // Should NOT receive notification because manager course is not assigned to employee
@@ -215,7 +215,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
             'sent' => Date::now()->subDays(5),
         ]);
 
-        artisan('run:course-reminder')
+        artisan('courses:expiration-reminder')
             ->assertSuccessful();
 
         // Should NOT receive notification because one was sent within last 7 days
@@ -245,7 +245,7 @@ describe('EmployeeCourseReminderCommand', function (): void {
 
         expect(CourseUserNotificationSent::query()->count())->toBe(1);
 
-        artisan('run:course-reminder')
+        artisan('courses:expiration-reminder')
             ->assertSuccessful();
 
         // Old notification should be deleted
@@ -277,7 +277,7 @@ describe('CourseReminderCommand', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        artisan('course:reminder')
+        artisan('courses:incomplete-reminder')
             ->assertSuccessful();
 
         Notification::assertSentTo($user, IncompleteCoursesNotification::class);
@@ -305,7 +305,7 @@ describe('CourseReminderCommand', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        artisan('course:reminder')
+        artisan('courses:incomplete-reminder')
             ->assertSuccessful();
 
         Notification::assertNothingSentTo($user);
@@ -348,7 +348,7 @@ describe('CourseReminderCommand', function (): void {
             'created_at' => Date::now(),
         ]);
 
-        artisan('course:reminder')
+        artisan('courses:incomplete-reminder')
             ->assertSuccessful();
 
         // Should NOT send notification because course was attempted (incomplete means not attempted at all)
@@ -378,7 +378,7 @@ describe('CourseReminderCommand', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        artisan('course:reminder')
+        artisan('courses:incomplete-reminder')
             ->assertSuccessful();
 
         // Should NOT receive notification because last reminder was sent 10 days ago
@@ -408,7 +408,7 @@ describe('CourseReminderCommand', function (): void {
         ]);
         $user->assignRole('Employee');
 
-        artisan('course:reminder')
+        artisan('courses:incomplete-reminder')
             ->assertSuccessful();
 
         Notification::assertSentTo($user, IncompleteCoursesNotification::class);
@@ -434,7 +434,7 @@ describe('CourseReminderCommand', function (): void {
         ]);
         $consultant->assignRole('Consultant');
 
-        artisan('course:reminder')
+        artisan('courses:incomplete-reminder')
             ->assertSuccessful();
 
         Notification::assertNothingSentTo($consultant);
@@ -475,7 +475,7 @@ describe('CourseExpiringEmailCommand', function (): void {
             'created_at' => Date::now()->subYear()->addDays(15),
         ]);
 
-        artisan('course:check-reminders')
+        artisan('courses:check-reminders')
             ->assertSuccessful();
 
         // Should NOT receive notification because manager course is not assigned to employee

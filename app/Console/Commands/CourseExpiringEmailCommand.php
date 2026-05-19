@@ -18,7 +18,7 @@ use Override;
 class CourseExpiringEmailCommand extends Command
 {
     #[Override]
-    protected $signature = 'course:check-reminders {--tenants=* : The tenant(s) to run the command for. Default all.}';
+    protected $signature = 'courses:check-reminders {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     #[Override]
     protected $description = 'Send notifications for courses expiring soon.';

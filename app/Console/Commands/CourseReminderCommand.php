@@ -19,7 +19,7 @@ use Override;
 class CourseReminderCommand extends Command
 {
     #[Override]
-    protected $signature = 'course:reminder {--tenants=* : The tenant(s) to run the command for. Default all.}
+    protected $signature = 'courses:incomplete-reminder {--tenants=* : The tenant(s) to run the command for. Default all.}
                                            {--debug : Enable detailed debugging output}
                                            {--test : Run in test mode without sending notifications}';
 

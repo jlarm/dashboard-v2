@@ -12,7 +12,7 @@ use Override;
 class RevertCourseResetCommand extends Command
 {
     #[Override]
-    protected $signature = 'revert:course-reset {tenant : The tenant UUID}';
+    protected $signature = 'courses:revert-reset {tenant : The tenant UUID}';
 
     #[Override]
     protected $description = 'Restore soft-deleted course results for a specific tenant';

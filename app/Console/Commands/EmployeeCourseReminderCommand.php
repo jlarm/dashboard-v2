@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Models\CourseResults;
+use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\CourseUserNotificationSent;
 use App\Models\Dealership;
 use App\Models\User;
@@ -18,7 +18,7 @@ use Override;
 class EmployeeCourseReminderCommand extends Command
 {
     #[Override]
-    protected $signature = 'run:course-reminder  {--tenants=* : The tenant(s) to run the command for. Default all.}';
+    protected $signature = 'courses:expiration-reminder {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     #[Override]
     protected $description = 'Reminder employee that course expires soon or expired.';

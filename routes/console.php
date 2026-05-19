@@ -93,7 +93,7 @@ Schedule::command('run:go-phish-user-group-departments')
     ->onOneServer()
     ->emailOutputOnFailure(config('app.admin_email'));
 
-Schedule::command('course:reminder')
+Schedule::command('courses:incomplete-reminder')
     ->dailyAt('05:00')
     ->runInBackground()
     ->withoutOverlapping()
@@ -107,7 +107,7 @@ Schedule::command('remediation:reminder')
     ->onOneServer()
     ->emailOutputOnFailure(config('app.admin_email'));
 
-Schedule::command('run:course-reminder')
+Schedule::command('courses:expiration-reminder')
     ->dailyAt('06:00')
     ->runInBackground()
     ->withoutOverlapping()
@@ -137,5 +137,5 @@ Schedule::command('deal-jacket-reports:clean')
     ->emailOutputOnFailure(config('app.admin_email'));
 
 // Commented out commands - preserved for reference or future use
-// Schedule::command('course:check-reminders')->dailyAt('05:00')->runInBackground();
-// Schedule::command('run:course-reminder')->dailyAt('05:30')->runInBackground();
+// Schedule::command('courses:check-reminders')->dailyAt('05:00')->runInBackground();
+// Schedule::command('courses:expiration-reminder')->dailyAt('05:30')->runInBackground();

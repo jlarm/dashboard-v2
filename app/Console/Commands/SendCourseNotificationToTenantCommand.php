@@ -16,7 +16,7 @@ use Override;
 class SendCourseNotificationToTenantCommand extends Command
 {
     #[Override]
-    protected $signature = 'course:send-notification
+    protected $signature = 'courses:send-notification
                             {courseLink : The URL link to the course}
                             {--tenants=* : The tenant(s) to run the command for. Default all.}';
 

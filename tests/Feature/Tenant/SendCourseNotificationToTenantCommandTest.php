@@ -25,7 +25,7 @@ it('sends course notification email to all registered users', function (): void 
 
     $courseLink = 'https://example.com/course/safety-training';
 
-    artisan('course:send-notification', ['courseLink' => $courseLink])
+    artisan('courses:send-notification', ['courseLink' => $courseLink])
         ->assertSuccessful();
 
     Mail::assertSent(CourseNotificationMail::class, fn ($mail): bool => $mail->hasTo($user1->email) && $mail->courseLink === $courseLink);
@@ -51,7 +51,7 @@ it('does not send to soft-deleted users', function (): void {
 
     $courseLink = 'https://example.com/course/safety-training';
 
-    artisan('course:send-notification', ['courseLink' => $courseLink])
+    artisan('courses:send-notification', ['courseLink' => $courseLink])
         ->assertSuccessful();
 
     Mail::assertSent(CourseNotificationMail::class, fn ($mail) => $mail->hasTo($activeUser->email));
@@ -70,7 +70,7 @@ it('sends correct course link in email', function (): void {
 
     $courseLink = 'https://example.com/course/specific-course-123';
 
-    artisan('course:send-notification', ['courseLink' => $courseLink])
+    artisan('courses:send-notification', ['courseLink' => $courseLink])
         ->assertSuccessful();
 
     Mail::assertSent(CourseNotificationMail::class, fn ($mail): bool => $mail->courseLink === $courseLink);
@@ -101,7 +101,7 @@ it('excludes super-admin and Consultant users', function (): void {
 
     $courseLink = 'https://example.com/course/safety-training';
 
-    artisan('course:send-notification', ['courseLink' => $courseLink])
+    artisan('courses:send-notification', ['courseLink' => $courseLink])
         ->assertSuccessful();
 
     Mail::assertSent(CourseNotificationMail::class, fn ($mail) => $mail->hasTo($regularUser->email));

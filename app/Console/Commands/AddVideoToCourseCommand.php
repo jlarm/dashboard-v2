@@ -13,7 +13,7 @@ use Override;
 class AddVideoToCourseCommand extends Command
 {
     #[Override]
-    protected $signature = 'video:to-course {slug : The course slug} {video_id : The video ID} {--tenants=* : The tenant(s) to run the command for. Default all.}';
+    protected $signature = 'courses:add-video {slug : The course slug} {video_id : The video ID} {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     #[Override]
     protected $description = 'Add video id to course';

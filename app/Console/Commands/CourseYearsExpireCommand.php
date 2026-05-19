@@ -13,7 +13,7 @@ use Override;
 class CourseYearsExpireCommand extends Command
 {
     #[Override]
-    protected $signature = 'course:years-expire {--tenants=* : The tenant(s) to run the command for. Default all.}';
+    protected $signature = 'courses:years-expire {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     #[Override]
     protected $description = 'Add the years before course expires';

@@ -15,7 +15,7 @@ use Override;
 class NewCourseNotificationCommand extends Command
 {
     #[Override]
-    protected $signature = 'new:course-notification {--tenants=* : The tenant(s) to run the command for. Default all.}';
+    protected $signature = 'courses:new-notification {--tenants=* : The tenant(s) to run the command for. Default all.}';
 
     #[Override]
     protected $description = 'Send new course notification to all users.';
