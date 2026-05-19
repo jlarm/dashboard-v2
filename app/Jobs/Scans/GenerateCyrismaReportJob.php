@@ -172,7 +172,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
 
         return [
             'storeName' => $store->name,
-            'generatedAt' => now()->format('M j, Y g:i A'),
+            'generatedAt' => now()->format('M j, Y'),
             'lastScanDate' => $lastScanDate,
             'overall' => $overall,
             'issueCounts' => $issueCounts,
