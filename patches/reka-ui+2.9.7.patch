@@ -1,0 +1,42 @@
+diff --git a/node_modules/reka-ui/package.json b/node_modules/reka-ui/package.json
+index 0000000..0000001 100644
+--- a/node_modules/reka-ui/package.json
++++ b/node_modules/reka-ui/package.json
+@@ -31,30 +31,37 @@
+   "sideEffects": false,
+   "exports": {
+     ".": {
++      "types": "./dist/index.d.ts",
+       "import": "./dist/index.js",
+       "require": "./dist/index.cjs"
+     },
+     "./internal": {
++      "types": "./dist/internal.d.ts",
+       "import": "./dist/internal.js",
+       "require": "./dist/internal.cjs"
+     },
+     "./constant": {
++      "types": "./dist/constant.d.ts",
+       "import": "./dist/constant.js",
+       "require": "./dist/constant.cjs"
+     },
+     "./date": {
++      "types": "./dist/date.d.ts",
+       "import": "./dist/date.js",
+       "require": "./dist/date.cjs"
+     },
+     "./namespaced": {
++      "types": "./dist/namespaced/index.d.mts",
+       "import": "./dist/namespaced/index.mjs",
+       "require": "./dist/namespaced/index.cjs"
+     },
+     "./nuxt": {
++      "types": "./dist/nuxt/index.d.mts",
+       "import": "./dist/nuxt/index.mjs",
+       "require": "./dist/nuxt/index.cjs"
+     },
+     "./resolver": {
++      "types": "./dist/resolver/index.d.mts",
+       "import": "./dist/resolver/index.mjs",
+       "require": "./dist/resolver/index.cjs"
+     },
