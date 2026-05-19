@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::index
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:30
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:31
 * @route '/manuals/red-flag'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::index
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:30
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:31
 * @route '/manuals/red-flag'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::index
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:30
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:31
 * @route '/manuals/red-flag'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::index
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:30
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:31
 * @route '/manuals/red-flag'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::index
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:30
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:31
 * @route '/manuals/red-flag'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::index
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:30
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:31
 * @route '/manuals/red-flag'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::index
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:30
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:31
 * @route '/manuals/red-flag'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::create
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:49
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:50
 * @route '/manuals/red-flag/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::create
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:49
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:50
 * @route '/manuals/red-flag/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::create
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:49
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:50
 * @route '/manuals/red-flag/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::create
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:49
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:50
 * @route '/manuals/red-flag/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +126,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::create
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:49
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:50
 * @route '/manuals/red-flag/create'
 */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +136,7 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::create
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:49
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:50
 * @route '/manuals/red-flag/create'
 */
 createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +146,7 @@ createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::create
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:49
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:50
 * @route '/manuals/red-flag/create'
 */
 createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::store
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:61
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:62
 * @route '/manuals/red-flag'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +178,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::store
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:61
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:62
 * @route '/manuals/red-flag'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::store
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:61
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:62
 * @route '/manuals/red-flag'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::store
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:61
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:62
 * @route '/manuals/red-flag'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::store
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:61
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:62
 * @route '/manuals/red-flag'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -219,7 +219,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:76
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:77
 * @route '/manuals/red-flag/{manual}'
 */
 export const destroy = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -234,7 +234,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:76
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:77
 * @route '/manuals/red-flag/{manual}'
 */
 destroy.url = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -267,7 +267,7 @@ destroy.url = (args: { manual: string | number | { id: string | number } } | [ma
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:76
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:77
 * @route '/manuals/red-flag/{manual}'
 */
 destroy.delete = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -277,7 +277,7 @@ destroy.delete = (args: { manual: string | number | { id: string | number } } | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:76
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:77
 * @route '/manuals/red-flag/{manual}'
 */
 const destroyForm = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -292,7 +292,7 @@ const destroyForm = (args: { manual: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\RedFlagController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:76
+* @see app/Http/Controllers/Tenant/Manuals/RedFlagController.php:77
 * @route '/manuals/red-flag/{manual}'
 */
 destroyForm.delete = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

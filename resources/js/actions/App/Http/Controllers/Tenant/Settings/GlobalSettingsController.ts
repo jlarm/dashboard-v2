@@ -320,6 +320,11 @@ indexfdc1627b9e2da467884f33613f26ccc3Form.head = (options?: RouteQueryOptions): 
 
 indexfdc1627b9e2da467884f33613f26ccc3.form = indexfdc1627b9e2da467884f33613f26ccc3Form
 
+/**
+* Multiple routes resolve to \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index, so this export is a
+* dictionary keyed by URI rather than a callable. Call a specific route with `index['<uri>'](...)`,
+* or import the route by name from your generated `routes/` directory.
+*/
 export const index = {
     '/global-settings': index84eaef77ed484e45d931ed7337b74dfe,
     '/global-settings/course-management': indexce0eb901513cf042a12cae43acdd20b9,

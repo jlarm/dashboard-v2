@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::index
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:31
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:32
 * @route '/automated-reports'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::index
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:31
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:32
 * @route '/automated-reports'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::index
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:31
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:32
 * @route '/automated-reports'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::index
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:31
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:32
 * @route '/automated-reports'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::index
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:31
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:32
 * @route '/automated-reports'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::index
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:31
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:32
 * @route '/automated-reports'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::index
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:31
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:32
 * @route '/automated-reports'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::update
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:63
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:64
 * @route '/automated-reports'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -97,7 +97,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::update
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:63
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:64
 * @route '/automated-reports'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::update
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:63
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:64
 * @route '/automated-reports'
 */
 update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -116,7 +116,7 @@ update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::update
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:63
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:64
 * @route '/automated-reports'
 */
 const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -131,7 +131,7 @@ const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::update
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:63
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:64
 * @route '/automated-reports'
 */
 updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -148,7 +148,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::sendNow
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:83
 * @route '/automated-reports/send'
 */
 export const sendNow = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -163,7 +163,7 @@ sendNow.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::sendNow
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:83
 * @route '/automated-reports/send'
 */
 sendNow.url = (options?: RouteQueryOptions) => {
@@ -172,7 +172,7 @@ sendNow.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::sendNow
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:83
 * @route '/automated-reports/send'
 */
 sendNow.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -182,7 +182,7 @@ sendNow.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::sendNow
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:83
 * @route '/automated-reports/send'
 */
 const sendNowForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -192,7 +192,7 @@ const sendNowForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\AutomatedReportsController::sendNow
-* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:82
+* @see app/Http/Controllers/Tenant/Settings/AutomatedReportsController.php:83
 * @route '/automated-reports/send'
 */
 sendNowForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

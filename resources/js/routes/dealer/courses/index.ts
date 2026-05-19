@@ -3,7 +3,7 @@ import dotCertificate from './dot-certificate'
 import results from './results'
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:28
+* @see app/Http/Controllers/Tenant/CourseController.php:29
 * @route '/courses'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -18,7 +18,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:28
+* @see app/Http/Controllers/Tenant/CourseController.php:29
 * @route '/courses'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -27,7 +27,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:28
+* @see app/Http/Controllers/Tenant/CourseController.php:29
 * @route '/courses'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -37,7 +37,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:28
+* @see app/Http/Controllers/Tenant/CourseController.php:29
 * @route '/courses'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -47,7 +47,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:28
+* @see app/Http/Controllers/Tenant/CourseController.php:29
 * @route '/courses'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -57,7 +57,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:28
+* @see app/Http/Controllers/Tenant/CourseController.php:29
 * @route '/courses'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -67,7 +67,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:28
+* @see app/Http/Controllers/Tenant/CourseController.php:29
 * @route '/courses'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -84,7 +84,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:43
+* @see app/Http/Controllers/Tenant/CourseController.php:44
 * @route '/courses/all'
 */
 export const all = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -99,7 +99,7 @@ all.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:43
+* @see app/Http/Controllers/Tenant/CourseController.php:44
 * @route '/courses/all'
 */
 all.url = (options?: RouteQueryOptions) => {
@@ -108,7 +108,7 @@ all.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:43
+* @see app/Http/Controllers/Tenant/CourseController.php:44
 * @route '/courses/all'
 */
 all.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -118,7 +118,7 @@ all.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:43
+* @see app/Http/Controllers/Tenant/CourseController.php:44
 * @route '/courses/all'
 */
 all.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -128,7 +128,7 @@ all.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:43
+* @see app/Http/Controllers/Tenant/CourseController.php:44
 * @route '/courses/all'
 */
 const allForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -138,7 +138,7 @@ const allForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:43
+* @see app/Http/Controllers/Tenant/CourseController.php:44
 * @route '/courses/all'
 */
 allForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -148,7 +148,7 @@ allForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:43
+* @see app/Http/Controllers/Tenant/CourseController.php:44
 * @route '/courses/all'
 */
 allForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -165,7 +165,7 @@ all.form = allForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:52
+* @see app/Http/Controllers/Tenant/CourseController.php:53
 * @route '/courses/{course}'
 */
 export const show = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -180,7 +180,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:52
+* @see app/Http/Controllers/Tenant/CourseController.php:53
 * @route '/courses/{course}'
 */
 show.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -213,7 +213,7 @@ show.url = (args: { course: string | { slug: string } } | [course: string | { sl
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:52
+* @see app/Http/Controllers/Tenant/CourseController.php:53
 * @route '/courses/{course}'
 */
 show.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -223,7 +223,7 @@ show.get = (args: { course: string | { slug: string } } | [course: string | { sl
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:52
+* @see app/Http/Controllers/Tenant/CourseController.php:53
 * @route '/courses/{course}'
 */
 show.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -233,7 +233,7 @@ show.head = (args: { course: string | { slug: string } } | [course: string | { s
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:52
+* @see app/Http/Controllers/Tenant/CourseController.php:53
 * @route '/courses/{course}'
 */
 const showForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -243,7 +243,7 @@ const showForm = (args: { course: string | { slug: string } } | [course: string 
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:52
+* @see app/Http/Controllers/Tenant/CourseController.php:53
 * @route '/courses/{course}'
 */
 showForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -253,7 +253,7 @@ showForm.get = (args: { course: string | { slug: string } } | [course: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:52
+* @see app/Http/Controllers/Tenant/CourseController.php:53
 * @route '/courses/{course}'
 */
 showForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -270,7 +270,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:68
+* @see app/Http/Controllers/Tenant/CourseController.php:69
 * @route '/courses/{course}/quiz'
 */
 export const quiz = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -285,7 +285,7 @@ quiz.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:68
+* @see app/Http/Controllers/Tenant/CourseController.php:69
 * @route '/courses/{course}/quiz'
 */
 quiz.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -318,7 +318,7 @@ quiz.url = (args: { course: string | { slug: string } } | [course: string | { sl
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:68
+* @see app/Http/Controllers/Tenant/CourseController.php:69
 * @route '/courses/{course}/quiz'
 */
 quiz.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -328,7 +328,7 @@ quiz.get = (args: { course: string | { slug: string } } | [course: string | { sl
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:68
+* @see app/Http/Controllers/Tenant/CourseController.php:69
 * @route '/courses/{course}/quiz'
 */
 quiz.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -338,7 +338,7 @@ quiz.head = (args: { course: string | { slug: string } } | [course: string | { s
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:68
+* @see app/Http/Controllers/Tenant/CourseController.php:69
 * @route '/courses/{course}/quiz'
 */
 const quizForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -348,7 +348,7 @@ const quizForm = (args: { course: string | { slug: string } } | [course: string 
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:68
+* @see app/Http/Controllers/Tenant/CourseController.php:69
 * @route '/courses/{course}/quiz'
 */
 quizForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -358,7 +358,7 @@ quizForm.get = (args: { course: string | { slug: string } } | [course: string | 
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:68
+* @see app/Http/Controllers/Tenant/CourseController.php:69
 * @route '/courses/{course}/quiz'
 */
 quizForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -375,7 +375,7 @@ quiz.form = quizForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:111
+* @see app/Http/Controllers/Tenant/CourseController.php:112
 * @route '/courses/{course}/video-complete'
 */
 export const videoComplete = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -390,7 +390,7 @@ videoComplete.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:111
+* @see app/Http/Controllers/Tenant/CourseController.php:112
 * @route '/courses/{course}/video-complete'
 */
 videoComplete.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
@@ -423,7 +423,7 @@ videoComplete.url = (args: { course: string | { slug: string } } | [course: stri
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:111
+* @see app/Http/Controllers/Tenant/CourseController.php:112
 * @route '/courses/{course}/video-complete'
 */
 videoComplete.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -433,7 +433,7 @@ videoComplete.post = (args: { course: string | { slug: string } } | [course: str
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:111
+* @see app/Http/Controllers/Tenant/CourseController.php:112
 * @route '/courses/{course}/video-complete'
 */
 const videoCompleteForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -443,7 +443,7 @@ const videoCompleteForm = (args: { course: string | { slug: string } } | [course
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::videoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:111
+* @see app/Http/Controllers/Tenant/CourseController.php:112
 * @route '/courses/{course}/video-complete'
 */
 videoCompleteForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:247
 * @route '/audits/finance/{audit}/violations/{violation}/photos/{photoId}'
 */
 export const destroy = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -16,7 +16,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:247
 * @route '/audits/finance/{audit}/violations/{violation}/photos/{photoId}'
 */
 destroy.url = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions) => {
@@ -47,7 +47,7 @@ destroy.url = (args: { audit: string | number, violation: string | number | { id
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:247
 * @route '/audits/finance/{audit}/violations/{violation}/photos/{photoId}'
 */
 destroy.delete = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -57,7 +57,7 @@ destroy.delete = (args: { audit: string | number, violation: string | number | {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:247
 * @route '/audits/finance/{audit}/violations/{violation}/photos/{photoId}'
 */
 const destroyForm = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -72,7 +72,7 @@ const destroyForm = (args: { audit: string | number, violation: string | number 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:243
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:247
 * @route '/audits/finance/{audit}/violations/{violation}/photos/{photoId}'
 */
 destroyForm.delete = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

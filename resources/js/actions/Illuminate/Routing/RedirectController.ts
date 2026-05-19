@@ -422,6 +422,11 @@ RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm.options = (args?: { path?
 
 RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.form = RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm
 
+/**
+* Multiple routes resolve to \Illuminate\Routing\RedirectController::RedirectController, so this export is a
+* dictionary keyed by URI rather than a callable. Call a specific route with `RedirectController['<uri>'](...)`,
+* or import the route by name from your generated `routes/` directory.
+*/
 const RedirectController = {
     '//dashboard.test/settings': RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92,
     '/stores/{path?}': RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca,

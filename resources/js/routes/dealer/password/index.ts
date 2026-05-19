@@ -138,7 +138,7 @@ email.form = emailForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::reset
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:24
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:25
 * @route '/reset-password/{token}'
 */
 export const reset = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -153,7 +153,7 @@ reset.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::reset
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:24
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:25
 * @route '/reset-password/{token}'
 */
 reset.url = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -180,7 +180,7 @@ reset.url = (args: { token: string | number } | [token: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::reset
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:24
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:25
 * @route '/reset-password/{token}'
 */
 reset.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -190,7 +190,7 @@ reset.get = (args: { token: string | number } | [token: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::reset
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:24
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:25
 * @route '/reset-password/{token}'
 */
 reset.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -200,7 +200,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::reset
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:24
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:25
 * @route '/reset-password/{token}'
 */
 const resetForm = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -210,7 +210,7 @@ const resetForm = (args: { token: string | number } | [token: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::reset
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:24
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:25
 * @route '/reset-password/{token}'
 */
 resetForm.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -220,7 +220,7 @@ resetForm.get = (args: { token: string | number } | [token: string | number ] | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::reset
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:24
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:25
 * @route '/reset-password/{token}'
 */
 resetForm.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -237,7 +237,7 @@ reset.form = resetForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::store
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:37
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:38
 * @route '/reset-password'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -252,7 +252,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::store
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:37
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:38
 * @route '/reset-password'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -261,7 +261,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::store
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:37
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:38
 * @route '/reset-password'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -271,7 +271,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::store
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:37
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:38
 * @route '/reset-password'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -281,7 +281,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Auth\NewPasswordController::store
-* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:37
+* @see app/Http/Controllers/Tenant/Auth/NewPasswordController.php:38
 * @route '/reset-password'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
