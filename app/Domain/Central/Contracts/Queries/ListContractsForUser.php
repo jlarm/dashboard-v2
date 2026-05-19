@@ -7,6 +7,7 @@ namespace App\Domain\Central\Contracts\Queries;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListContractsForUser
 {
@@ -16,7 +17,7 @@ class ListContractsForUser
             ->with(['user', 'status'])
             ->unless(
                 $user->hasRole('super-admin'),
-                fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('user_id', $user->id),
+                fn (Builder $query) => $query->where('user_id', $user->id),
             )
             ->orderByDesc('id')
             ->paginate(25)

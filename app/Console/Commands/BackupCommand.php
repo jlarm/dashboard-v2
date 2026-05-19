@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Dealership;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Mail\Message;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -33,7 +35,7 @@ class BackupCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use (&$total, &$successes, &$failures): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant) use (&$total, &$successes, &$failures): void {
             $total++;
             $this->info("Running backup command for tenant {$tenant->id} ({$tenant->name})");
 
@@ -69,12 +71,12 @@ class BackupCommand extends Command
                 foreach ($failures as $failure) {
                     $lines[] = "Tenant {$failure['id']} ({$failure['name']}): {$failure['error']}";
                 }
-                Mail::raw(implode(PHP_EOL, $lines), function (\Illuminate\Mail\Message $message) use ($recipient, $subject): void {
+                Mail::raw(implode(PHP_EOL, $lines), function (Message $message) use ($recipient, $subject): void {
                     $message->to($recipient)->subject($subject);
                 });
             } else {
                 $subject = "Tenant backups successful: {$successes} of {$total}";
-                Mail::raw("All tenant backups completed successfully. Total: {$successes}", function (\Illuminate\Mail\Message $message) use ($recipient, $subject): void {
+                Mail::raw("All tenant backups completed successfully. Total: {$successes}", function (Message $message) use ($recipient, $subject): void {
                     $message->to($recipient)->subject($subject);
                 });
             }

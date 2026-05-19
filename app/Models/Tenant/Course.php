@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Tenant;
 
 use App\Models\Abstracts\AbstractCourse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -33,7 +34,7 @@ class Course extends AbstractCourse
         return $this->belongsTo(CourseResults::class);
     }
 
-    protected function scopeWithLastResult(\Illuminate\Database\Eloquent\Builder $query, int $userId): void
+    protected function scopeWithLastResult(Builder $query, int $userId): void
     {
         $query->addSelect(['last_result_id' => CourseResults::query()->select('id')
             ->whereColumn('course_id', 'courses.id')

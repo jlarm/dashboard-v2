@@ -13,6 +13,7 @@ use App\Jobs\SendComplianceSummaryJob;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
@@ -35,7 +36,7 @@ class AutomatedReportsController extends Controller
         $settings = GlobalSetting::query()->first();
 
         $availableRecipients = User::query()
-            ->whereHas('roles', fn (\Illuminate\Database\Eloquent\Builder $query) => $query->whereIn('name', self::RECIPIENT_ROLES))
+            ->whereHas('roles', fn (Builder $query) => $query->whereIn('name', self::RECIPIENT_ROLES))
             ->orderBy('name')
             ->get(['id', 'name', 'email'])
             ->map(fn (User $user): array => [

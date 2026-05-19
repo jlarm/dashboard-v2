@@ -7,6 +7,7 @@ namespace App\Domain\Tenant\Manuals\Cms\Queries;
 use App\Domain\Tenant\Manuals\Cms\Data\CmsFormDefaultsData;
 use App\Models\Dealer\Store;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 class BuildCmsFormDefaults
 {
@@ -35,8 +36,8 @@ class BuildCmsFormDefaults
 
         if ($multipleStoresExist) {
             return User::query()
-                ->whereHas('roles', static fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('name', 'Qualified Individual'))
-                ->whereHas('stores', static fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('store_id', $store->id))
+                ->whereHas('roles', static fn (Builder $query) => $query->where('name', 'Qualified Individual'))
+                ->whereHas('stores', static fn (Builder $query) => $query->where('store_id', $store->id))
                 ->value('name');
         }
 

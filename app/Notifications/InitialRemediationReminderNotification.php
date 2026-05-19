@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
+use App\Enums\AuditTypes;
+use App\Models\Dealer\Audit\Contracts\ViolationAudit;
+use App\Models\Dealer\Store;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -15,10 +20,10 @@ class InitialRemediationReminderNotification extends Notification implements Sho
 
     public function __construct(
         protected bool $tenants,
-        protected \App\Models\User $user,
-        protected \App\Models\Dealer\Store $store,
-        protected \App\Enums\AuditTypes $auditType,
-        protected \App\Models\Dealer\Audit\Contracts\ViolationAudit&\Illuminate\Database\Eloquent\Model $audit
+        protected User $user,
+        protected Store $store,
+        protected AuditTypes $auditType,
+        protected ViolationAudit&Model $audit
     ) {}
 
     public function via(mixed $notifiable): array

@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Mail\CourseNotificationMail;
+use App\Models\Dealership;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Override;
@@ -30,11 +32,11 @@ class SendCourseNotificationToTenantCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use ($courseLink): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant) use ($courseLink): void {
             $this->info("Running command for tenant: {$tenant->id} ({$tenant->name})");
 
             $users = User::query()
-                ->whereDoesntHave('roles', function (\Illuminate\Database\Eloquent\Builder $query): void {
+                ->whereDoesntHave('roles', function (Builder $query): void {
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })

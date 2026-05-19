@@ -9,6 +9,7 @@ use App\Enums\Role;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Services\TrainingComplianceService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class CalculateTrainingPillar
@@ -84,10 +85,10 @@ class CalculateTrainingPillar
     private function scopedUsers(Store $store): Collection
     {
         return User::query()
-            ->whereDoesntHave('roles', function (\Illuminate\Database\Eloquent\Builder $query): void {
+            ->whereDoesntHave('roles', function (Builder $query): void {
                 $query->whereIn('name', [Role::SuperAdmin->value, Role::Consultant->value]);
             })
-            ->whereHas('stores', function (\Illuminate\Database\Eloquent\Builder $query) use ($store): void {
+            ->whereHas('stores', function (Builder $query) use ($store): void {
                 $query->where('stores.id', $store->id);
             })
             ->with(['roles:id,name', 'courseOverrides:user_id,course_id,type'])

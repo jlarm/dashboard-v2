@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Course;
+use App\Models\Dealership;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Override;
 
@@ -37,11 +39,11 @@ class UpdateOptionalCourses extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant): void {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             Course::query()
-                ->where('slug', function (\Illuminate\Database\Eloquent\Builder $query): void {
+                ->where('slug', function (Builder $query): void {
                     $query->select('slug')
                         ->where('slug', '6h-national-emission-standards')
                         ->orWhere('slug', 'tractor-safety')

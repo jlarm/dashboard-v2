@@ -29,7 +29,7 @@ class GoPhishService
      */
     public function createOrUpdateGroup(Collection $groups, array $userData, Tenant $tenant, Store $store, string $token, string $ip): void
     {
-        if (! array_key_exists('All '.$store->name.' Employees', $groups->toArray())) {
+        if (! array_key_exists('All '.$store->name.' Employees', $groups->all())) {
             $this->createGroup($groups, $userData, $tenant, $store, $token, $ip);
         } else {
             $this->updateGroup($groups->get('All '.$store->name.' Employees'), $userData, $ip, $token, $store);

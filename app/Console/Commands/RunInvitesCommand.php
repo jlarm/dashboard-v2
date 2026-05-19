@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Mail\TenDayOpenInviteReminderMail;
 use App\Mail\TwentyDayOpenInviteReminderMail;
 use App\Models\Dealer\Invite;
+use App\Models\Dealership;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -28,7 +29,7 @@ class RunInvitesCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant): void {
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             $invites = Invite::all();

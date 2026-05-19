@@ -70,29 +70,24 @@ class MailgunWebhookController extends Controller
                 });
             }
         }
+        Log::warning('Mailgun webhook — index miss, falling back to full tenant scan', [
+            'message_id' => $messageId,
+            'event' => $event,
+        ]);
+        foreach (Dealership::query()->with('domains')->lazy() as $tenant) {
+            $tenant->run(function () use ($messageIdVariants, &$emailLog): void {
+                $emailLog = VendorEmailLog::query()->whereIn('message_id', $messageIdVariants)->first();
+            });
 
-        if (! $emailLog instanceof VendorEmailLog) {
-            Log::warning('Mailgun webhook — index miss, falling back to full tenant scan', [
-                'message_id' => $messageId,
-                'event' => $event,
-            ]);
-
-            foreach (Dealership::query()->with('domains')->lazy() as $tenant) {
-                $tenant->run(function () use ($messageIdVariants, &$emailLog): void {
-                    $emailLog = VendorEmailLog::query()->whereIn('message_id', $messageIdVariants)->first();
-                });
-
-                if ($emailLog instanceof VendorEmailLog) {
-                    $foundTenant = $tenant;
-                    break;
-                }
+            if ($emailLog instanceof VendorEmailLog) {
+                $foundTenant = $tenant;
+                break;
             }
-
-            if ($emailLog && $foundTenant) {
-                tenancy()->central(function () use ($normalizedMessageId, $foundTenant): void {
-                    VendorEmailLogIndex::query()->updateOrCreate(['message_id' => $normalizedMessageId], ['tenant_id' => $foundTenant->id]);
-                });
-            }
+        }
+        if ($emailLog && $foundTenant) {
+            tenancy()->central(function () use ($normalizedMessageId, $foundTenant): void {
+                VendorEmailLogIndex::query()->updateOrCreate(['message_id' => $normalizedMessageId], ['tenant_id' => $foundTenant->id]);
+            });
         }
 
         if (! $emailLog || ! $foundTenant) {

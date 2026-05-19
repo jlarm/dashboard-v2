@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class UserObserver
@@ -29,7 +30,7 @@ class UserObserver
 
         while (User::query()
             ->where('slug', $slug)
-            ->when($user->exists, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where($user->getKeyName(), '!=', $user->getKey()))
+            ->when($user->exists, fn (Builder $query) => $query->where($user->getKeyName(), '!=', $user->getKey()))
             ->withTrashed()
             ->exists()
         ) {

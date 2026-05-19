@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
+use App\Models\Dealership;
 use App\Models\User;
 use Exception;
 use Illuminate\Console\Command;
@@ -33,7 +34,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant): void {
 
             $globalSetting = GlobalSetting::query()->first();
 
@@ -102,7 +103,7 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
                 'last_name' => $lastName,
                 'position' => null,
             ];
-        })->toArray())->toArray();
+        })->all())->all();
 
         // Return the array with the store name as the first index
         return [$store->name => $usersByDepartment];

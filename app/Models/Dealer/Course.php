@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Dealer;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -82,7 +83,7 @@ class Course extends Model
         return $this->belongsTo(CourseResults::class);
     }
 
-    protected function scopeWithLastResult(\Illuminate\Database\Eloquent\Builder $query, int $userId): void
+    protected function scopeWithLastResult(Builder $query, int $userId): void
     {
         $query->addSelect(['last_result_id' => CourseResults::query()->select('id')
             ->whereColumn('course_id', 'courses.id')

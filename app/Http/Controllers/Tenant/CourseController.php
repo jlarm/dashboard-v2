@@ -8,6 +8,7 @@ use App\Domain\Tenant\Course\Actions\DispatchDotCertificate;
 use App\Domain\Tenant\Course\Actions\MarkCourseVideoComplete;
 use App\Domain\Tenant\Course\Actions\ResolveReplacementCourse;
 use App\Domain\Tenant\Course\Actions\SubmitCourseQuiz;
+use App\Domain\Tenant\Course\Data\UserCourseListItem;
 use App\Domain\Tenant\Course\DotCertificate;
 use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Domain\Tenant\Course\Queries\GetUserCourseList;
@@ -34,7 +35,7 @@ class CourseController extends Controller
 
         return Inertia::render('dealer/courses/Index', [
             'courses' => $listCourses->handle($user)
-                ->map(static fn (\App\Domain\Tenant\Course\Data\UserCourseListItem $item): array => $item->toArray())
+                ->map(static fn (UserCourseListItem $item): array => $item->toArray())
                 ->all(),
             'can_issue_dot_certificate' => $canIssueDotCert->handle($user),
         ]);
@@ -44,7 +45,7 @@ class CourseController extends Controller
     {
         return Inertia::render('dealer/courses/All', [
             'courses' => $listAll->handle($this->requireUser($request))
-                ->map(static fn (\App\Domain\Tenant\Course\Data\UserCourseListItem $item): array => $item->toArray())
+                ->map(static fn (UserCourseListItem $item): array => $item->toArray())
                 ->all(),
         ]);
     }

@@ -9,6 +9,7 @@ use App\Models\Dealer\CourseResults;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use App\Services\UserCourseService;
+use Illuminate\Database\Query\Builder;
 
 class GetEmployeeCourses
 {
@@ -43,7 +44,7 @@ class GetEmployeeCourses
             ->select(['id', 'user_id', 'course_id', 'passed', 'percentage', 'created_at'])
             ->where('user_id', $user->id)
             ->whereIn('course_id', $courses->pluck('id'))
-            ->whereIn('id', function (\Illuminate\Database\Query\Builder $query) use ($courses, $user): void {
+            ->whereIn('id', function (Builder $query) use ($courses, $user): void {
                 $query->selectRaw('MAX(id)')
                     ->from((new CourseResults)->getTable())
                     ->where('user_id', $user->id)

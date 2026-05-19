@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Observers\Dealer;
 
 use App\Models\Dealer\Store;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class StoreObserver
@@ -29,7 +30,7 @@ class StoreObserver
 
         while (Store::query()
             ->where('slug', $slug)
-            ->when($store->exists, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where($store->getKeyName(), '!=', $store->getKey()))
+            ->when($store->exists, fn (Builder $query) => $query->where($store->getKeyName(), '!=', $store->getKey()))
             ->exists()
         ) {
             $slug = "{$base}-{$counter}";

@@ -10,6 +10,7 @@ use App\Models\Dealer\Store;
 use App\Models\Dealer\Violation;
 use App\Models\RemediationReminders;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -106,7 +107,7 @@ class GlbaViolationAudit extends Model implements ViolationAudit
             return (int) $this->attributes['remediation_count'];
         }
 
-        return $this->violations()->whereHas('remediation', function (\Illuminate\Database\Eloquent\Builder $query): void {
+        return $this->violations()->whereHas('remediation', function (Builder $query): void {
             $query->where('completed', true);
         })->count();
     }

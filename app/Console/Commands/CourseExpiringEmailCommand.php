@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Dealership;
 use App\Models\User;
 use App\Notifications\CourseExpiredNotification;
 use App\Notifications\CourseExpiringSoonNotification;
 use App\Services\UserCourseService;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Override;
@@ -33,7 +35,7 @@ class CourseExpiringEmailCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant): void {
             resolve(UserCourseService::class)->clearAllCaches();
 
             User::query()->select(['id', 'name', 'email', 'department_id'])
@@ -44,7 +46,7 @@ class CourseExpiringEmailCommand extends Command
         });
     }
 
-    private function processUserResults(\App\Models\Dealership $tenant, User $user): void
+    private function processUserResults(Dealership $tenant, User $user): void
     {
         $results = $this->getExpiringCourses($user);
 
@@ -73,7 +75,7 @@ class CourseExpiringEmailCommand extends Command
         return $user->results()
             ->whereIn('course_id', $courseIds)
             ->where('passed', 1)
-            ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($lastYear, $fifteenDays, $thirtyDays): void {
+            ->where(function (Builder $query) use ($lastYear, $fifteenDays, $thirtyDays): void {
                 $query->whereDate('created_at', $lastYear)
                     ->orWhereDate('created_at', $fifteenDays)
                     ->orWhereDate('created_at', $thirtyDays);

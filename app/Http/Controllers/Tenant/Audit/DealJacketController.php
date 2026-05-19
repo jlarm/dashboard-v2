@@ -10,6 +10,7 @@ use App\Domain\Tenant\DealJackets\Actions\DeleteDealJacket;
 use App\Domain\Tenant\DealJackets\Actions\DeleteDealJacketGroup;
 use App\Domain\Tenant\DealJackets\Actions\SaveDealJacket;
 use App\Domain\Tenant\DealJackets\Data\DealJacketDetail;
+use App\Domain\Tenant\DealJackets\Data\DealJacketGroupListItem;
 use App\Domain\Tenant\DealJackets\Queries\BuildDealJacketCharts;
 use App\Domain\Tenant\DealJackets\Queries\ListDealJacketGroups;
 use App\Domain\Tenant\DealJackets\Queries\ListDealJacketManagers;
@@ -42,7 +43,7 @@ class DealJacketController extends Controller
         return Inertia::render('tenant/audits/deal-jackets/Index', [
             'store' => ['id' => $store->id, 'name' => $store->name],
             'groups' => $listGroups->handle($store->id, $user)
-                ->map(static fn (\App\Domain\Tenant\DealJackets\Data\DealJacketGroupListItem $item): array => $item->toArray())
+                ->map(static fn (DealJacketGroupListItem $item): array => $item->toArray())
                 ->all(),
             'charts' => $buildCharts->handle($store->id),
             'flash_group_uuid' => session('dealJacketGroupUuid'),

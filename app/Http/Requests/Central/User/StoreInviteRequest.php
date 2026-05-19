@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Central\User;
 
 use App\Models\Central\UserInvite;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Override;
@@ -26,7 +27,7 @@ class StoreInviteRequest extends FormRequest
                 'max:255',
                 'unique:users,email',
                 Rule::unique(UserInvite::class, 'email')
-                    ->where(fn (\Illuminate\Database\Query\Builder $query) => $query
+                    ->where(fn (Builder $query) => $query
                         ->whereNull('accepted_at')
                         ->whereNull('revoked_at')
                         ->where('expires_at', '>', now())),

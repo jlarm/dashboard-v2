@@ -6,13 +6,14 @@ namespace App\Domain\Central\Documents\Queries;
 
 use App\Models\Document;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class SearchDocuments
 {
     public function handle(?string $search): LengthAwarePaginator
     {
         return Document::query()
-            ->when($search, fn (\Illuminate\Database\Eloquent\Builder $query, string $value) => $query->where('title', 'like', "%{$value}%"))
+            ->when($search, fn (Builder $query, string $value) => $query->where('title', 'like', "%{$value}%"))
             ->orderBy('title')
             ->paginate(15)
             ->withQueryString();

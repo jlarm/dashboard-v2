@@ -9,6 +9,8 @@ use App\Models\FitTestDoc;
 use App\Models\User;
 use Closure;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -35,9 +37,9 @@ class Create extends Component
 
     public function searchUsers(): void
     {
-        if (mb_strlen((string) $this->search) >= 2) {
+        if (mb_strlen($this->search) >= 2) {
             $users = $this->baseQuery()
-                ->whereDoesntHave('roles', function (\Illuminate\Database\Eloquent\Builder $query): void {
+                ->whereDoesntHave('roles', function (Builder $query): void {
                     $query->where('name', 'super-admin')
                         ->orWhere('name', 'Consultant');
                 })
@@ -120,7 +122,7 @@ class Create extends Component
         return view('livewire.tenant.audit.fit.create');
     }
 
-    private function baseQuery(): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+    private function baseQuery(): Builder|BelongsToMany
     {
         return resolve('multipleStoresExist') ? $this->store->users() : User::query();
     }

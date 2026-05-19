@@ -9,7 +9,9 @@ use App\Enums\Role;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Carbon;
 
 /**
@@ -145,18 +147,18 @@ class BuildComplianceSummary
         $threeYearsAgo = now()->subYears(3);
 
         $users = User::query()
-            ->whereHas('stores', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('stores.id', $store->id))
-            ->whereHas('roles', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('name', '!=', Role::QualifiedIndividual->value))
+            ->whereHas('stores', fn (Builder $q) => $q->where('stores.id', $store->id))
+            ->whereHas('roles', fn (Builder $q) => $q->where('name', '!=', Role::QualifiedIndividual->value))
             ->with([
                 'roles:id,name',
                 'stores:id,state',
                 'courseOverrides:user_id,course_id,type',
-                'results' => function (\Illuminate\Database\Eloquent\Relations\Relation $q) use ($oneYearAgo, $threeYearsAgo): void {
+                'results' => function (Relation $q) use ($oneYearAgo, $threeYearsAgo): void {
                     $q->select('id', 'user_id', 'course_id', 'passed', 'created_at')
                         ->where('passed', 1)
-                        ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($oneYearAgo, $threeYearsAgo): void {
+                        ->where(function (Builder $query) use ($oneYearAgo, $threeYearsAgo): void {
                             $query->where('created_at', '>=', $oneYearAgo)
-                                ->orWhere(function (\Illuminate\Database\Eloquent\Builder $query) use ($threeYearsAgo): void {
+                                ->orWhere(function (Builder $query) use ($threeYearsAgo): void {
                                     $query->whereIn('course_id', DotCertificate::HAZMAT_COURSE_IDS)
                                         ->where('created_at', '>=', $threeYearsAgo);
                                 });
@@ -196,14 +198,14 @@ class BuildComplianceSummary
     private function vendorStats(Store $store): array
     {
         $vendorQuery = Vendor::query()
-            ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($store): void {
+            ->where(function (Builder $query) use ($store): void {
                 $query->where('store_id', $store->id)
                     ->orWhereNull('store_id');
             });
 
         $total = $vendorQuery->count();
         $completed = (clone $vendorQuery)
-            ->whereHas('latestForm', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where(fn (\Illuminate\Database\Eloquent\Builder $q) => $q->whereNotNull('signature')->orWhereNotNull('document_path')))
+            ->whereHas('latestForm', fn (Builder $q) => $q->where(fn (Builder $q) => $q->whereNotNull('signature')->orWhereNotNull('document_path')))
             ->count();
 
         $percentage = $total > 0

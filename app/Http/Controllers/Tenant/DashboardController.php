@@ -21,6 +21,7 @@ use App\Domain\Tenant\Compliance\Queries\GetLocationGrades;
 use App\Domain\Tenant\Compliance\Queries\GetManualsSummary;
 use App\Domain\Tenant\Compliance\Queries\GetTrainingCompletionByDepartment;
 use App\Domain\Tenant\Compliance\Queries\GetTrainingComplianceSnapshot;
+use App\Domain\Tenant\Course\Data\UserCourseListItem;
 use App\Domain\Tenant\Course\Queries\CanIssueDotCertificate;
 use App\Domain\Tenant\Course\Queries\GetUserCourseList;
 use App\Domain\Tenant\Store\Actions\UpdateConsultantNote;
@@ -77,7 +78,7 @@ class DashboardController extends Controller
         if ($user instanceof User && $this->shouldSeeCourseDashboard($user)) {
             return Inertia::render('tenant/EmployeeDashboard', [
                 'courses' => $courseList->handle($user)
-                    ->map(static fn (\App\Domain\Tenant\Course\Data\UserCourseListItem $item): array => $item->toArray())
+                    ->map(static fn (UserCourseListItem $item): array => $item->toArray())
                     ->all(),
                 'can_issue_dot_certificate' => $canIssueDotCert->handle($user),
             ]);

@@ -6,6 +6,8 @@ namespace App\Services;
 
 use App\Models\Dealer\Course;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Role;
 
@@ -116,7 +118,7 @@ class UserCourseService
         $roleKey = $userRoleIds->sort()->implode('_');
 
         $courseWithRole = $this->courseRoleCache[$roleKey] ??= Course::query()
-            ->whereHas('roles', fn (\Illuminate\Database\Eloquent\Builder $query) => $query->whereIn('roles.id', $userRoleIds))
+            ->whereHas('roles', fn (Builder $query) => $query->whereIn('roles.id', $userRoleIds))
             ->pluck('id')
             ->toArray();
 
@@ -154,7 +156,7 @@ class UserCourseService
 
         return Course::query()
             ->whereIn('id', $courseIds)
-            ->with(['results' => fn (\Illuminate\Database\Eloquent\Relations\Relation $query) => $query->where('user_id', $user->id)->latest()])
+            ->with(['results' => fn (Relation $query) => $query->where('user_id', $user->id)->latest()])
             ->select(['id', 'name', 'slug'])
             ->orderBy('name')
             ->get();
@@ -166,7 +168,7 @@ class UserCourseService
 
         return Course::query()
             ->whereIn('id', $courseIds)
-            ->when($with, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->with($with))
+            ->when($with, fn (Builder $query) => $query->with($with))
             ->select($select)
             ->orderBy('name')
             ->get();
@@ -189,13 +191,13 @@ class UserCourseService
     {
         $candidates = Course::query()
             ->where('optional', false)
-            ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($departmentId, $courseWithRole): void {
-                $query->where(function (\Illuminate\Database\Eloquent\Builder $q) use ($departmentId, $courseWithRole): void {
-                    $q->whereHas('departments', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('id', $departmentId))
+            ->where(function (Builder $query) use ($departmentId, $courseWithRole): void {
+                $query->where(function (Builder $q) use ($departmentId, $courseWithRole): void {
+                    $q->whereHas('departments', fn (Builder $q) => $q->where('id', $departmentId))
                         ->whereIn('id', $courseWithRole);
-                })->orWhere(function (\Illuminate\Database\Eloquent\Builder $q) use ($courseWithRole): void {
+                })->orWhere(function (Builder $q) use ($courseWithRole): void {
                     $q->whereDoesntHave('departments')
-                        ->where(function (\Illuminate\Database\Eloquent\Builder $subQuery) use ($courseWithRole): void {
+                        ->where(function (Builder $subQuery) use ($courseWithRole): void {
                             $subQuery->whereIn('id', $courseWithRole)
                                 ->orWhereDoesntHave('roles');
                         });

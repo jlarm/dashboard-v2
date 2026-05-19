@@ -8,6 +8,7 @@ use App\Domain\Tenant\IndividualAudits\Actions\CreateIndividualAudit;
 use App\Domain\Tenant\IndividualAudits\Actions\DeleteIndividualAudit;
 use App\Domain\Tenant\IndividualAudits\Actions\DispatchIndividualAuditPdfGeneration;
 use App\Domain\Tenant\IndividualAudits\Actions\UpdateIndividualAudit;
+use App\Domain\Tenant\IndividualAudits\Data\IndividualAuditListItem;
 use App\Domain\Tenant\IndividualAudits\Queries\ListIndividualAudits;
 use App\Domain\Tenant\IndividualAudits\Queries\ListIndividualQuestions;
 use App\Domain\Tenant\IndividualAudits\Queries\ListManagers;
@@ -34,7 +35,7 @@ class IndividualAuditController extends Controller
         return Inertia::render('tenant/audits/individual/Index', [
             'store' => ['id' => $store->id, 'name' => $store->name],
             'audits' => $listAudits->handle($store->id)
-                ->map(static fn (\App\Domain\Tenant\IndividualAudits\Data\IndividualAuditListItem $item): array => $item->toArray())
+                ->map(static fn (IndividualAuditListItem $item): array => $item->toArray())
                 ->all(),
         ]);
     }

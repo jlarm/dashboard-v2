@@ -6,7 +6,9 @@ namespace App\Console\Commands;
 
 use App\Jobs\IncompleteVendorNotificationJob;
 use App\Models\Dealer\VendorForm;
+use App\Models\Dealership;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Override;
 
@@ -38,10 +40,10 @@ class SendVendorNotificationCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant): void {
             $incompleteVendors = VendorForm::query()
                 ->whereNull('signature')
-                ->where(function (\Illuminate\Database\Eloquent\Builder $query): void {
+                ->where(function (Builder $query): void {
                     $query->whereNull('last_notification_sent_at')
                         ->orWhere('last_notification_sent_at', '<', now()->subMonth());
                 })

@@ -8,12 +8,13 @@ use App\Models\FitTestDoc;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class IndexItem extends Component
 {
     public FitTestDoc $fitTestDoc;
 
-    public function download(): \Symfony\Component\HttpFoundation\StreamedResponse
+    public function download(): StreamedResponse
     {
         return response()->streamDownload(function (): void {
             echo Storage::disk('dealer-docs')->get($this->fitTestDoc->file_path);

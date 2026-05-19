@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Dealership;
 use App\Models\User;
 use Exception;
 use Illuminate\Console\Command;
@@ -26,7 +27,7 @@ class SetCurrentStoreCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant): void {
             DB::beginTransaction();
             try {
                 if (! $tenant->locations) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Dealership;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Override;
@@ -23,7 +24,7 @@ class DeleteTemporaryUploadsCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant): void {
             $this->info('Start removing old temporary uploads...');
 
             $temporaryUploadModelClass = config('media-library.temporary_upload_model');

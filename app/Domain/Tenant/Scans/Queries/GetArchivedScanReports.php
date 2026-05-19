@@ -7,6 +7,7 @@ namespace App\Domain\Tenant\Scans\Queries;
 use App\Domain\Tenant\Scans\Data\ArchivedScanReportData;
 use App\Models\Dealer\ScanReport;
 use App\Models\Dealer\Store;
+use Illuminate\Support\Collection;
 
 class GetArchivedScanReports
 {
@@ -32,9 +33,9 @@ class GetArchivedScanReports
 
         return $query->get()
             ->groupBy(static fn (ScanReport $report): string => $report->created_at?->format('F d, Y') ?? 'Unknown')
-            ->map(static fn (\Illuminate\Support\Collection $reports): array => $reports
+            ->map(static fn (Collection $reports): array => $reports
                 ->groupBy('type')
-                ->map(static fn (\Illuminate\Support\Collection $byType): array => ArchivedScanReportData::fromModel($byType->first())->toArray())
+                ->map(static fn (Collection $byType): array => ArchivedScanReportData::fromModel($byType->first())->toArray())
                 ->all()
             )
             ->all();

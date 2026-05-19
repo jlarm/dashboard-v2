@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Dealer\Store;
 use App\Models\Dealership;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -67,7 +68,7 @@ class CheckMultiStateUsersCommand extends Command
 
                 foreach ($multiStateUsers as $user) {
                     $storeList = $user->stores
-                        ->map(fn (\App\Models\Dealer\Store $store): string => "{$store->name} ({$store->state})")
+                        ->map(fn (Store $store): string => "{$store->name} ({$store->state})")
                         ->implode(', ');
 
                     $this->line("  {$user->name} <{$user->email}> — {$storeList}");

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Dealer\Course;
+use App\Models\Dealership;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Override;
@@ -29,7 +30,7 @@ class AddVideoToCourseCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use ($slug, $videoId): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant) use ($slug, $videoId): void {
             $this->info("Processing tenant: {$tenant->id}");
 
             $course = Course::query()->where('slug', $slug)->first();

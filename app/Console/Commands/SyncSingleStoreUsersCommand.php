@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Dealer\Store;
+use App\Models\Dealership;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -29,7 +30,7 @@ class SyncSingleStoreUsersCommand extends Command
 
         $hadFailure = false;
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant) use (&$hadFailure): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant) use (&$hadFailure): void {
             $storeCount = Store::query()->count();
 
             if ($storeCount !== 1) {

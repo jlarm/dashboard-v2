@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Domain\Tenant\Store\Data\StoreOptionData;
 use App\Domain\Tenant\Store\Queries\GetAccessibleStoreOptions;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -80,7 +81,7 @@ class HandleInertiaRequests extends Middleware
 
         return resolve(GetAccessibleStoreOptions::class)
             ->handle($user)
-            ->map(fn (\App\Domain\Tenant\Store\Data\StoreOptionData $option): array => $option->toArray())
+            ->map(fn (StoreOptionData $option): array => $option->toArray())
             ->all();
     }
 

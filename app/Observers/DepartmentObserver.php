@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\Department;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class DepartmentObserver
@@ -29,7 +30,7 @@ class DepartmentObserver
 
         while (Department::query()
             ->where('slug', $slug)
-            ->when($department->exists, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where($department->getKeyName(), '!=', $department->getKey()))
+            ->when($department->exists, fn (Builder $query) => $query->where($department->getKeyName(), '!=', $department->getKey()))
             ->exists()
         ) {
             $slug = "{$base}-{$counter}";

@@ -19,6 +19,8 @@ use App\Domain\Tenant\Audits\Actions\UpdateAuditComment;
 use App\Domain\Tenant\Audits\Actions\UpdateAuditGrade;
 use App\Domain\Tenant\Audits\Actions\UpdateRemediations;
 use App\Domain\Tenant\Audits\Actions\UpdateViolationAudit;
+use App\Domain\Tenant\Audits\Data\LegacyAuditListItemData;
+use App\Domain\Tenant\Audits\Data\ViolationStatementSearchResultData;
 use App\Domain\Tenant\Audits\Queries\BuildAuditChartData;
 use App\Domain\Tenant\Audits\Queries\ListLegacyAudits;
 use App\Domain\Tenant\Audits\Queries\ListViolationAudits;
@@ -41,6 +43,8 @@ use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Violation;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -74,10 +78,10 @@ class ViolationAuditController extends Controller
             ? collect()
             : $modelClass::query()
                 ->whereIn('store_id', $storeIds->all())
-                ->unless($canSeeIncomplete, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->whereNotNull('completed_date'))
+                ->unless($canSeeIncomplete, fn (Builder $query) => $query->whereNotNull('completed_date'))
                 ->withCount([
                     'violations as violation_count',
-                    'violations as remediation_count' => fn (\Illuminate\Database\Eloquent\Builder $q) => $q->whereHas('remediation', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('completed', true)),
+                    'violations as remediation_count' => fn (Builder $q) => $q->whereHas('remediation', fn (Builder $q) => $q->where('completed', true)),
                 ])
                 ->latest('date')
                 ->get();
@@ -91,7 +95,7 @@ class ViolationAuditController extends Controller
                 ? ['id' => $store->id, 'name' => $store->name]
                 : null,
             'audits' => ViolationAuditListItemResource::collection($audits),
-            'legacy_audits' => $legacyData->map(static fn (\App\Domain\Tenant\Audits\Data\LegacyAuditListItemData $item): array => $item->toArray())->all(),
+            'legacy_audits' => $legacyData->map(static fn (LegacyAuditListItemData $item): array => $item->toArray())->all(),
             'chart' => $chart,
         ]);
     }
@@ -262,12 +266,12 @@ class ViolationAuditController extends Controller
         ViolationAuditType $type,
         Request $request,
         SearchViolationStatements $search,
-    ): \Illuminate\Http\JsonResponse {
+    ): JsonResponse {
         $query = (string) $request->query('q', '');
 
         return response()->json(
             $search->handle($type, $query)
-                ->map(static fn (\App\Domain\Tenant\Audits\Data\ViolationStatementSearchResultData $item): array => $item->toArray())
+                ->map(static fn (ViolationStatementSearchResultData $item): array => $item->toArray())
                 ->all(),
         );
     }

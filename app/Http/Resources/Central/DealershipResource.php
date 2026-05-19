@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources\Central;
 
 use App\Models\Dealership;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
@@ -20,7 +21,7 @@ class DealershipResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'users' => $this->whenLoaded('users', fn () => $this->users->map(fn (\App\Models\User $user): array => [
+            'users' => $this->whenLoaded('users', fn () => $this->users->map(fn (User $user): array => [
                 'id' => $user->id,
                 'name' => $user->name,
             ])),

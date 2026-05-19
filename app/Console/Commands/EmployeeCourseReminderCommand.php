@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\CourseResults;
 use App\Models\Dealer\CourseUserNotificationSent;
+use App\Models\Dealership;
 use App\Models\User;
 use App\Notifications\ExpiredCourseNotification;
 use App\Services\UserCourseService;
@@ -33,7 +35,7 @@ class EmployeeCourseReminderCommand extends Command
             ->filter(static fn (mixed $tenant): bool => is_string($tenant) && $tenant !== '')
             ->values();
 
-        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (\App\Models\Dealership $tenant): void {
+        tenancy()->runForMultiple($tenants->isEmpty() ? null : $tenants, function (Dealership $tenant): void {
             resolve(UserCourseService::class)->clearAllCaches();
 
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
@@ -72,7 +74,7 @@ class EmployeeCourseReminderCommand extends Command
             'expired_30_days' => [],
         ];
 
-        $results->each(function (\App\Models\CourseResults $result) use (&$coursesToNotify, $user): void {
+        $results->each(function (CourseResults $result) use (&$coursesToNotify, $user): void {
             // Course expires 1 year (365 days) after completion
             $expirationDate = Date::parse($result->created_at)->addYear();
             $now = Date::now();

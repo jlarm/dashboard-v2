@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 use Override;
 
 class AppServiceProvider extends ServiceProvider
@@ -51,8 +52,6 @@ class AppServiceProvider extends ServiceProvider
      * The path to your application's "home" route.
      *
      * Typically, users are redirected here after authentication.
-     *
-     * @var string
      */
     public const string HOME = '/dashboard';
 
@@ -75,12 +74,12 @@ class AppServiceProvider extends ServiceProvider
 
         Request::macro('store', fn () => $this->user()?->currentStore());
 
-        view()->composer('components.language-switcher', function (\Illuminate\View\View $view): void {
+        view()->composer('components.language-switcher', function (View $view): void {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
         });
 
-        view()->composer('layouts.top-bar', function (\Illuminate\View\View $view): void {
+        view()->composer('layouts.top-bar', function (View $view): void {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
         });

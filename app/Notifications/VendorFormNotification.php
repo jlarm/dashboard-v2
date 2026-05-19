@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\URL;
+use Symfony\Component\Mime\Email;
 
 class VendorFormNotification extends Notification
 {
@@ -42,7 +43,7 @@ class VendorFormNotification extends Notification
             ->line('If you have any questions, please contact '.$user->name.' at '.$user->email)
             ->line('Thank you for your time!')
             ->salutation(tenant('name'))
-            ->withSymfonyMessage(function (\Symfony\Component\Mime\Email $message): void {
+            ->withSymfonyMessage(function (Email $message): void {
                 $message->getHeaders()->addTextHeader('X-Vendor-Notification', 'true');
                 $message->getHeaders()->addTextHeader('X-Vendor-ID', (string) $this->vendor->id);
 

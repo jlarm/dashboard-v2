@@ -16,12 +16,7 @@ class SendInviteMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Invite $invite;
-
-    public function __construct(Invite $invite)
-    {
-        $this->invite = $invite;
-    }
+    public function __construct(public Invite $invite) {}
 
     public function envelope(): Envelope
     {

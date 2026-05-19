@@ -8,6 +8,7 @@ use App\Domain\Tenant\Audits\Data\ViolationAuditListItemData;
 use App\Enums\ViolationAuditType;
 use App\Models\Dealer\Audit\Contracts\ViolationAudit;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator as PaginatorInstance;
 use Illuminate\Support\Collection;
@@ -32,11 +33,11 @@ class ListViolationAudits
 
         return $modelClass::query()
             ->whereIn('store_id', $storeIds->all())
-            ->unless($includeIncomplete, fn (\Illuminate\Database\Eloquent\Builder $query) => $query->whereNotNull('completed_date'))
+            ->unless($includeIncomplete, fn (Builder $query) => $query->whereNotNull('completed_date'))
             ->with(['store:id,name'])
             ->withCount([
                 'violations as violation_count',
-                'violations as remediation_count' => fn (\Illuminate\Database\Eloquent\Builder $q) => $q->whereHas('remediation', fn (\Illuminate\Database\Eloquent\Builder $q) => $q->where('completed', true)),
+                'violations as remediation_count' => fn (Builder $q) => $q->whereHas('remediation', fn (Builder $q) => $q->where('completed', true)),
                 'auditComments as audit_comments_count',
             ])
             ->latest('date')

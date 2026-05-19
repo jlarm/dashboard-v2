@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Models\Sds;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 use Override;
 
@@ -40,7 +41,7 @@ class CheckMissingSdsFiles extends Command
         $progressBar = $this->output->createProgressBar(Sds::query()->count());
         $progressBar->start();
 
-        Sds::query()->chunk(100, function (\Illuminate\Database\Eloquent\Collection $sdsRecord) use (&$missingFiles, &$progressBar): void {
+        Sds::query()->chunk(100, function (Collection $sdsRecord) use (&$missingFiles, &$progressBar): void {
             foreach ($sdsRecord as $sds) {
                 if ($sds->file_name && ! Storage::disk('sds-sheets')->exists($sds->file_name)) {
                     $missingFiles[] = $sds->file_name;
