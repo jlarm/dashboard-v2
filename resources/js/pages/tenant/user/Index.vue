@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import DataTable from '@/pages/tenant/user/components/DataTable.vue';
+import EmployeeCardList from '@/pages/tenant/user/components/EmployeeCardList.vue';
 import ImportEmployeesDialog from '@/pages/tenant/user/components/ImportEmployeesDialog.vue';
 import SendMessageDialog from '@/pages/tenant/user/components/SendMessageDialog.vue';
 import SubNavigation from '@/pages/tenant/user/components/SubNavigation.vue';
@@ -521,10 +522,21 @@ const submitEmailReport = () => {
 
             <DataTable
                 v-model:row-selection="rowSelection"
+                class="hidden md:block"
                 :columns="columns"
                 :data="employees.data"
                 :get-row-id="(employee) => String(employee.id)"
                 :meta="tableMeta"
+                :on-row-click="navigateToEmployee"
+                :is-row-clickable="(employee: Employee) => employee.can_view"
+                empty-message="No employees match the current filters."
+            />
+
+            <EmployeeCardList
+                v-model:row-selection="rowSelection"
+                class="md:hidden"
+                :data="employees.data"
+                :show-store-column="storeContext.multiple_stores"
                 :on-row-click="navigateToEmployee"
                 :is-row-clickable="(employee: Employee) => employee.can_view"
                 empty-message="No employees match the current filters."

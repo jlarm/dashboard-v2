@@ -55,7 +55,7 @@ const sortableHeader = (label: string, field: SortField) => ({ table }: { table:
     );
 };
 
-const roleBadgeClass = (roleName: string) => {
+export const roleBadgeClass = (roleName: string) => {
     switch (roleName) {
         case 'Manager':
             return 'bg-indigo-50 text-indigo-700 ring-indigo-700/10';
@@ -66,7 +66,7 @@ const roleBadgeClass = (roleName: string) => {
     }
 };
 
-const statusBadgeClass = (status: ComplianceStatus) => {
+export const statusBadgeClass = (status: ComplianceStatus) => {
     switch (status) {
         case 'compliant':
             return 'bg-green-100 text-green-700';
