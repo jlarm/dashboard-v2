@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import ImportEmployeesDialog from '@/pages/tenant/user/components/ImportEmployeesDialog.vue';
+import OpenInviteCardList, { type Department, type OpenInvite } from '@/pages/tenant/user/components/OpenInviteCardList.vue';
 import SubNavigation from '@/pages/tenant/user/components/SubNavigation.vue';
 import employees from '@/routes/dealer/employees';
 import type { BreadcrumbItem } from '@/types';
@@ -37,19 +38,6 @@ import { Head, router } from '@inertiajs/vue3';
 import { useDebounceFn } from '@vueuse/core';
 import { RotateCcw, Send, Trash2 } from 'lucide-vue-next';
 import { computed, reactive, ref, watch } from 'vue';
-
-type Department = { id: number; name: string };
-
-type OpenInvite = {
-    id: number;
-    name: string;
-    email: string;
-    department_id: number | null;
-    store_names: string[];
-    last_sent_at: string | null;
-    last_sent_at_formatted: string | null;
-    sent_by: string | null;
-};
 
 type Filters = {
     search: string;
@@ -293,7 +281,7 @@ const performDelete = () => {
                 </div>
             </div>
 
-            <div class="overflow-x-auto rounded-md border">
+            <div class="hidden overflow-x-auto rounded-md border md:block">
                 <Table>
                     <TableHeader class="bg-muted">
                         <TableRow>
@@ -378,6 +366,17 @@ const performDelete = () => {
                     </TableBody>
                 </Table>
             </div>
+
+            <OpenInviteCardList
+                v-model:selected="selected"
+                class="md:hidden"
+                :invites="invites.data"
+                :departments="departments"
+                :multiple-stores="multipleStores"
+                :resending-ids="resendingIds"
+                @resend="confirmResend"
+                @delete="confirmDelete"
+            />
 
             <AppPagination :pagination="invites" />
         </div>
