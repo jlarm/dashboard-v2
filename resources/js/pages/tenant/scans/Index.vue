@@ -259,7 +259,7 @@ const pollForReady = (type: 'executive' | 'technical', label: string, toastId: s
                         Current security posture across all scan types
                         <template v-if="dashboard.data.last_scan_date">
                             · Last scan:
-                            <span class="font-medium text-foreground">{{ dashboard.data.last_scan_date }}</span>
+                            <span class="font-medium whitespace-nowrap text-foreground">{{ dashboard.data.last_scan_date }}</span>
                         </template>
                     </p>
                 </div>
@@ -274,7 +274,7 @@ const pollForReady = (type: 'executive' | 'technical', label: string, toastId: s
                               : 'Vulnerability and exposure findings.'
                     "
                 />
-                <div v-if="mode === 'dashboard'" class="flex flex-wrap items-center gap-2">
+                <div v-if="mode === 'dashboard'" class="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
                     <template v-if="dashboard?.data?.has_short_name">
                         <Button
                             variant="outline"
