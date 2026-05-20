@@ -27,7 +27,7 @@ const handleSuccess = (): void => {
 <template>
     <Dialog v-model:open="open">
         <DialogTrigger as-child>
-            <Button size="sm">Upload Document</Button>
+            <Button size="sm" class="w-full sm:w-auto">Upload Document</Button>
         </DialogTrigger>
         <DialogContent>
             <DialogHeader>

@@ -38,7 +38,7 @@ const submit = (): void => {
 <template>
     <Dialog v-model:open="open">
         <DialogTrigger as-child>
-            <Button size="sm">Request SDS Sheet</Button>
+            <Button size="sm" class="w-full sm:w-auto">Request SDS Sheet</Button>
         </DialogTrigger>
         <DialogContent class="sm:max-w-md">
             <DialogHeader>
