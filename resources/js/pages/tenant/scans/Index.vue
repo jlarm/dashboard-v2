@@ -128,7 +128,7 @@ type StoreSummary = {
 const props = defineProps<{
     mode: 'overview' | 'dashboard' | 'error';
     overview: StoreOverviewItem[];
-    dashboard: DeferredDashboard | null;
+    dashboard?: DeferredDashboard | null;
     store: StoreSummary | null;
     error: string | null;
     filters?: Filters;
