@@ -82,8 +82,8 @@ const hasResults = computed<boolean>(() => props.vendors.data.length > 0);
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-5">
-            <div class="flex flex-wrap items-center gap-2">
-                <div class="relative w-full max-w-sm">
+            <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+                <div class="relative w-full sm:max-w-sm">
                     <Search class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                         v-model="search"
@@ -98,12 +98,15 @@ const hasResults = computed<boolean>(() => props.vendors.data.length > 0);
                     size="sm"
                     @click="resetSearch"
                 >
-                    <RotateCcw class="size-3.5" />
-                    Reset
+                    Clear search
                 </Button>
-                <div class="ml-auto">
-                    <Button v-if="props.can.create" size="sm" @click="createOpen = true">
-                        <Plus class="size-3.5" />
+                <div class="sm:ml-auto">
+                    <Button
+                        v-if="props.can.create"
+                        size="sm"
+                        class="w-full sm:w-auto"
+                        @click="createOpen = true"
+                    >
                         Add Vendor
                     </Button>
                 </div>

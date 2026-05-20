@@ -146,7 +146,7 @@ const sortedForms = computed<VendorFormRow[]>(() => props.forms);
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6 px-4 py-6">
-            <div class="flex items-center justify-between gap-4">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div class="flex items-center gap-3">
                     <Link
                         :href="vendor.index.url()"
@@ -164,7 +164,7 @@ const sortedForms = computed<VendorFormRow[]>(() => props.forms);
                         </p>
                     </div>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex flex-wrap items-center gap-2">
                     <Button
                         v-if="props.can.update"
                         size="sm"

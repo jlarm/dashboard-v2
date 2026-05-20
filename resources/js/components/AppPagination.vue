@@ -35,7 +35,7 @@ const controls: { key: NavKey; label: string }[] = [
 
 const linkClass = cn(
     buttonVariants({ variant: "outline", size: "icon" }),
-    "rounded-md",
+    "rounded-md flex-1 sm:flex-none",
 );
 const disabledClass = cn(linkClass, "pointer-events-none opacity-50");
 </script>
@@ -63,7 +63,7 @@ const disabledClass = cn(linkClass, "pointer-events-none opacity-50");
         <nav
             v-if="pagination.meta.last_page > 1"
             aria-label="Pagination"
-            class="flex items-center gap-1"
+            class="flex items-center gap-1 sm:shrink-0"
         >
             <template v-for="control in controls" :key="control.key">
                 <Link
