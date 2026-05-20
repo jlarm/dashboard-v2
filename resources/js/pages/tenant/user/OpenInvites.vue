@@ -234,11 +234,11 @@ const performDelete = () => {
 
         <div class="space-y-5">
             <div class="flex flex-wrap items-center gap-2">
-                <div class="w-64">
+                <div class="w-full sm:w-64">
                     <Input v-model="search" type="search" placeholder="Search by name or email" />
                 </div>
 
-                <div v-if="departments.length > 1" class="w-56">
+                <div v-if="departments.length > 1" class="w-full sm:w-56">
                     <Select
                         :model-value="localFilters.department_id === null ? '' : String(localFilters.department_id)"
                         @update:model-value="(value) => (localFilters.department_id = value ? Number(value) : null)"
