@@ -66,9 +66,9 @@ const cardClass = computed(() => [
                 </span>
             </div>
 
-            <div class="flex items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
                 <span class="text-xs text-zinc-600">Status:</span>
-                <Badge :class="['px-1.5 py-0.5 text-xs font-medium', badgeClass]">
+                <Badge :class="['max-w-full px-1.5 py-0.5 text-xs font-medium', badgeClass]">
                     {{ course.status_label }}
                 </Badge>
             </div>

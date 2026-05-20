@@ -45,7 +45,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             <div v-if="courses.length === 0" class="rounded-xl border border-dashed border-zinc-300 p-12 text-center text-sm text-muted-foreground">
                 No courses are assigned to you yet.
             </div>
-            <div v-else class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
+            <div v-else class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-4">
                 <CourseCard
                     v-for="course in courses"
                     :key="course.id"

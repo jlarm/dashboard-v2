@@ -67,7 +67,7 @@ const reloadPage = (): void => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-5">
             <div v-if="video && !showSlides" class="mx-auto max-w-4xl space-y-6">
-                <div class="flex items-center justify-between rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
+                <div class="flex items-center justify-between rounded-lg border border-zinc-200 bg-white p-4">
                     <div v-if="video_completed" class="flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
                         <CheckCircle class="size-4" />
                         Video Completed
@@ -102,7 +102,7 @@ const reloadPage = (): void => {
                         oncontextmenu="return false"
                         allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
                         allowfullscreen
-                        class="h-125 w-full rounded-xl border"
+                        class="aspect-video w-full rounded-xl"
                     />
                 </div>
             </div>

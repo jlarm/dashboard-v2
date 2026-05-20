@@ -49,12 +49,12 @@ const breadcrumbs: BreadcrumbItem[] = [
                 :key="i"
                 class="rounded-lg border border-zinc-200 bg-zinc-50 p-6"
             >
-                <p class="mb-5 font-semibold">{{ i + 1 }}. {{ question.question }}</p>
+                <p class="mb-5 text-sm font-semibold">{{ i + 1 }}. {{ question.question }}</p>
                 <div class="space-y-2">
                     <label
                         v-for="(value, key) in question.answers[0]"
                         :key="key"
-                        class="flex items-center gap-3"
+                        class="flex items-center gap-3 text-sm"
                     >
                         <input
                             v-model="form.question[String(i + 1)]"
