@@ -20,6 +20,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
+import DeletedEmployeeCardList, { type DeletedEmployee } from '@/pages/tenant/user/components/DeletedEmployeeCardList.vue';
 import ImportEmployeesDialog from '@/pages/tenant/user/components/ImportEmployeesDialog.vue';
 import SubNavigation from '@/pages/tenant/user/components/SubNavigation.vue';
 import employeeRoutes from '@/routes/dealer/employees';
@@ -29,15 +30,6 @@ import { Head, router } from '@inertiajs/vue3';
 import { useDebounceFn } from '@vueuse/core';
 import { RotateCcw, Undo2 } from 'lucide-vue-next';
 import { computed, ref, watch } from 'vue';
-
-type DeletedEmployee = {
-    id: number;
-    name: string;
-    email: string;
-    department_name: string | null;
-    deleted_at: string | null;
-    deleted_at_formatted: string | null;
-};
 
 type Filters = { search: string };
 
@@ -123,7 +115,7 @@ const performRestore = () => {
 
         <div class="space-y-5">
             <div class="flex flex-wrap items-center gap-2">
-                <div class="w-64">
+                <div class="w-full sm:w-64">
                     <Input v-model="search" type="search" placeholder="Search by name or email" />
                 </div>
 
@@ -133,7 +125,7 @@ const performRestore = () => {
                 </Button>
             </div>
 
-            <div class="overflow-x-auto rounded-md border">
+            <div class="hidden overflow-x-auto rounded-md border md:block">
                 <Table>
                     <TableHeader class="bg-muted">
                         <TableRow>
@@ -176,6 +168,12 @@ const performRestore = () => {
                     </TableBody>
                 </Table>
             </div>
+
+            <DeletedEmployeeCardList
+                class="md:hidden"
+                :employees="employees.data"
+                @restore="confirmRestore"
+            />
 
             <AppPagination :pagination="employees" />
         </div>
