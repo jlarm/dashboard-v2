@@ -298,6 +298,43 @@ it('passes manuals_summary for non-Consultant users with a current_store_id', fu
         );
 });
 
+it('passes audit_quick_start_store_id when a Consultant has a current_store_id', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->consultant->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('audit_quick_start_store_id', $store->id)
+        );
+});
+
+it('passes audit_quick_start_store_id as null when the Consultant is in multi-store overview mode', function (): void {
+    Store::query()->create(['name' => 'Second Store '.uniqid(), 'slug' => 'second-'.uniqid()]);
+    $this->consultant->update(['current_store_id' => null]);
+
+    $this->actingAs($this->consultant)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('audit_quick_start_store_id', null)
+        );
+});
+
+it('passes audit_quick_start_store_id as null for non-Consultant users with a current_store_id', function (): void {
+    $store = Store::query()->firstOrFail();
+    $this->manager->stores()->attach($store->id);
+    $this->manager->update(['current_store_id' => $store->id]);
+
+    $this->actingAs($this->manager)
+        ->get(route('dealer.dashboard'))
+        ->assertOk()
+        ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
+            ->where('audit_quick_start_store_id', null)
+        );
+});
+
 it('flags is_overview when more than one store is in scope', function (): void {
     Store::query()->create(['name' => 'Second Store '.uniqid(), 'slug' => 'second-'.uniqid()]);
     $this->consultant->update(['current_store_id' => null]);

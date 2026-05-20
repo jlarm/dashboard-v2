@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Skeleton } from '@/components/ui/skeleton';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
+import AuditQuickStartLinks from '@/pages/tenant/dashboard/AuditQuickStartLinks.vue';
 import { useNullablePageProp, usePageProp } from '@/pages/tenant/dashboard/props';
 import type { AuditTrackerRow, ConsultantNote, ManualsSummary } from '@/pages/tenant/dashboard/types';
 import { dashboard } from '@/routes/dealer';
@@ -55,6 +56,10 @@ const hasSingleStoreCard = computed<boolean>(
 // since the role set is identical.
 const showKpiCards = usePageProp<boolean>('show_kpi_cards', true);
 const showFullDashboard = computed<boolean>(() => showKpiCards.value);
+
+// Super-admins / Consultants viewing a single store get a row of links to
+// kick off a new audit for that store, sitting above the KPI cards.
+const auditQuickStartStoreId = useNullablePageProp<number>('audit_quick_start_store_id');
 </script>
 
 <template>
@@ -63,6 +68,11 @@ const showFullDashboard = computed<boolean>(() => showKpiCards.value);
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-4">
             <template v-if="showFullDashboard">
+                <AuditQuickStartLinks
+                    v-if="auditQuickStartStoreId !== null"
+                    :store-id="auditQuickStartStoreId"
+                />
+
                 <KpiCardsRow />
 
                 <section class="grid gap-4 xl:grid-cols-12">

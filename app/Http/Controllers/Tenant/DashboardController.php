@@ -163,6 +163,15 @@ class DashboardController extends Controller
             ? $manualsSummaryQuery->handleForStore($selectedStore)->toArray()
             : null;
 
+        // Super-admins and Consultants viewing a single store get quick-start
+        // links to kick off an audit for that store. The id feeds the Vue
+        // create-route helpers (OSHA / Body Shop / GLBA); null hides the row.
+        $auditQuickStartStoreId = $selectedStore instanceof Store
+            && $user instanceof User
+            && $user->hasAnyRole([Role::SuperAdmin->value, Role::Consultant->value])
+            ? $selectedStore->id
+            : null;
+
         $showKpiCards = ! $user instanceof User || ! $this->isRestrictedFromKpis($user);
         $canDownloadAuditReport = $user instanceof User
             && $user->hasAnyRole(self::DOWNLOAD_AUTHORIZED_ROLES)
@@ -180,6 +189,7 @@ class DashboardController extends Controller
             'training_compliance_snapshot' => $trainingComplianceSnapshot,
             'consultant_note' => $consultantNote,
             'manuals_summary' => $manualsSummary,
+            'audit_quick_start_store_id' => $auditQuickStartStoreId,
             'show_kpi_cards' => $showKpiCards,
             'can_download_audit_report' => $canDownloadAuditReport,
             'is_overview' => $isOverview,
