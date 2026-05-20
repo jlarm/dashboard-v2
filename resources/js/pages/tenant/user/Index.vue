@@ -412,7 +412,7 @@ const submitEmailReport = () => {
             </Deferred>
 
             <div class="flex flex-wrap items-center gap-2">
-                <div class="relative flex-1 min-w-[16rem] max-w-md">
+                <div class="relative w-full sm:w-auto sm:flex-1 sm:min-w-[16rem] sm:max-w-md">
                     <Search class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                         v-model="search"
@@ -423,7 +423,7 @@ const submitEmailReport = () => {
                 </div>
 
                 <template v-if="permissions.manage_filters">
-                    <div class="w-[12rem]">
+                    <div class="w-full sm:w-[12rem]">
                         <MultiSelect
                             v-model="localFilters.department_ids"
                             :options="departmentOptions"
@@ -433,7 +433,7 @@ const submitEmailReport = () => {
                         />
                     </div>
 
-                    <div class="w-[10rem]">
+                    <div class="w-full sm:w-[10rem]">
                         <MultiSelect
                             v-model="localFilters.role_ids"
                             :options="roleOptions"
@@ -445,7 +445,7 @@ const submitEmailReport = () => {
                 </template>
 
                 <div
-                    class="flex items-center gap-1 rounded-md border bg-background p-1"
+                    class="flex w-full items-center gap-1 rounded-md border bg-background p-1 sm:w-auto"
                     role="group"
                     aria-label="Filter by compliance status"
                 >
@@ -453,7 +453,7 @@ const submitEmailReport = () => {
                         v-for="pill in compliancePills"
                         :key="pill.key"
                         type="button"
-                        class="rounded px-2.5 py-1 text-xs font-medium border border-transparent transition-colors"
+                        class="flex-1 rounded px-2.5 py-1 text-xs font-medium border border-transparent transition-colors sm:flex-none"
                         :class="localFilters[pill.key] ? pill.toneActive : pill.toneInactive"
                         :aria-pressed="localFilters[pill.key]"
                         @click="toggleCompliance(pill.key)"
