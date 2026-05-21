@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { AlertCircle, AlertTriangle, ImagePlus, MessageSquarePlus, Minus, Pencil, Plus, Search, Trash2, X } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
@@ -27,6 +27,14 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+} from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { useAuditRoutes } from '@/composables/useAuditRoutes';
@@ -63,10 +71,26 @@ type AuditDetail = {
     comments: AuditComment[];
 };
 
+type PreviousAuditIssue = {
+    statement: string;
+    severity: number | null;
+    risk: boolean;
+    remediation_resolved: boolean;
+};
+type PreviousAudit = {
+    uuid: string;
+    date: string;
+    grade: string | null;
+    violation_count: number;
+    open_remediation_count: number;
+    issues: PreviousAuditIssue[];
+};
+
 const props = defineProps<{
     type: AuditTypeSlug;
     label: string;
     audit: AuditDetail;
+    previous_audit: PreviousAudit | null;
 }>();
 
 const routes = useAuditRoutes(props.type);
@@ -84,6 +108,16 @@ const violations = reactive<EditableViolation[]>(
 const date = ref(props.audit.date);
 const submitting = ref(false);
 const openItem = ref<string>('');
+
+const priorOpen = ref(false);
+
+onMounted(() => {
+    // A freshly created audit has no violations yet — surface the previous
+    // audit's issues automatically as a starting briefing.
+    if (props.previous_audit && props.audit.violations.length === 0) {
+        priorOpen.value = true;
+    }
+});
 
 watch(
     () => props.audit.violations,
@@ -392,6 +426,19 @@ const addViolation = (statementId: number): void => {
     <Head :title="`Edit ${label} audit`" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #actions>
+            <button
+                v-if="previous_audit"
+                type="button"
+                aria-label="Issues from the last audit"
+                class="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-xs font-medium text-amber-800 transition hover:bg-amber-100 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300 dark:hover:bg-amber-950/70"
+                @click="priorOpen = true"
+            >
+                <AlertTriangle class="size-3.5 shrink-0" />
+                <span class="hidden sm:inline">Last audit</span>
+                <span class="rounded-full bg-amber-200 px-1.5 py-0.5 text-[11px] font-semibold leading-none dark:bg-amber-900/70">
+                    {{ previous_audit.violation_count }}
+                </span>
+            </button>
             <Button type="button" variant="outline" size="sm" @click="searchOpen = true">
                 <Plus class="size-4" />
                 <span class="hidden sm:inline">Add violation</span>
@@ -785,5 +832,76 @@ const addViolation = (statementId: number): void => {
                 </div>
             </DialogContent>
         </Dialog>
+
+        <!-- Previous-audit briefing -->
+        <Sheet v-if="previous_audit" v-model:open="priorOpen">
+            <SheetContent side="bottom" class="max-h-[85vh] gap-0 p-0">
+                <SheetHeader class="border-b px-4 py-3 pr-10 text-left">
+                    <SheetTitle class="text-base">
+                        Issues from the last {{ label }} audit
+                    </SheetTitle>
+                    <SheetDescription class="text-xs">
+                        {{ formatDate(previous_audit.date) }}
+                        · {{ previous_audit.violation_count }} violation{{ previous_audit.violation_count === 1 ? '' : 's' }}
+                        <template v-if="previous_audit.grade"> · Grade {{ previous_audit.grade }}</template>
+                        <template v-if="previous_audit.open_remediation_count > 0">
+                            · {{ previous_audit.open_remediation_count }} unresolved
+                        </template>
+                    </SheetDescription>
+                </SheetHeader>
+
+                <div class="flex-1 divide-y overflow-y-auto overscroll-contain">
+                    <div
+                        v-for="(issue, index) in previous_audit.issues"
+                        :key="index"
+                        class="px-4 py-3"
+                    >
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span
+                                v-if="issue.risk"
+                                class="inline-flex items-center gap-1 rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-red-700 dark:bg-red-950/50 dark:text-red-300"
+                            >
+                                <AlertTriangle class="size-3" />
+                                High risk
+                            </span>
+                            <span
+                                v-if="issue.severity"
+                                class="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground"
+                            >
+                                Severity {{ issue.severity }}
+                            </span>
+                            <span
+                                v-if="!issue.remediation_resolved"
+                                class="inline-flex items-center gap-1 text-[11px] font-semibold text-red-600 dark:text-red-400"
+                            >
+                                <span class="size-1.5 rounded-full bg-red-500" />
+                                Remediation still open
+                            </span>
+                            <span
+                                v-else
+                                class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400"
+                            >
+                                ✓ Resolved last cycle
+                            </span>
+                        </div>
+                        <p class="mt-1.5 text-sm leading-snug">{{ issue.statement }}</p>
+                    </div>
+                    <p
+                        v-if="!previous_audit.issues.length"
+                        class="px-4 py-6 text-center text-sm text-muted-foreground"
+                    >
+                        The last audit had no recorded violations.
+                    </p>
+                </div>
+
+                <SheetFooter class="border-t px-4 py-3">
+                    <Link :href="routes.show.url({ audit: previous_audit.uuid })" class="w-full">
+                        <Button type="button" variant="outline" size="sm" class="w-full">
+                            View full last audit
+                        </Button>
+                    </Link>
+                </SheetFooter>
+            </SheetContent>
+        </Sheet>
     </AppLayout>
 </template>

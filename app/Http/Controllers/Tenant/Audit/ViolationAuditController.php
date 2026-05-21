@@ -22,6 +22,7 @@ use App\Domain\Tenant\Audits\Actions\UpdateViolationAudit;
 use App\Domain\Tenant\Audits\Data\LegacyAuditListItemData;
 use App\Domain\Tenant\Audits\Data\ViolationStatementSearchResultData;
 use App\Domain\Tenant\Audits\Queries\BuildAuditChartData;
+use App\Domain\Tenant\Audits\Queries\GetPreviousAuditSummary;
 use App\Domain\Tenant\Audits\Queries\ListLegacyAudits;
 use App\Domain\Tenant\Audits\Queries\ListViolationAudits;
 use App\Domain\Tenant\Audits\Queries\LoadViolationAuditWithRelations;
@@ -123,16 +124,19 @@ class ViolationAuditController extends Controller
         string $audit,
         ViolationAuditType $type,
         LoadViolationAuditWithRelations $loadAudit,
+        GetPreviousAuditSummary $previousAuditSummary,
     ): InertiaResponse {
         $model = $this->findAudit($type, $audit);
         $this->authorizeAuditScope($model);
 
         $detail = $loadAudit->handle($model, withRemediation: false);
+        $previousAudit = $previousAuditSummary->handle($model);
 
         return Inertia::render('tenant/audits/Edit', [
             'type' => $type->slug(),
             'label' => $type->label(),
             'audit' => $detail->toArray(),
+            'previous_audit' => $previousAudit?->toArray(),
         ]);
     }
 
