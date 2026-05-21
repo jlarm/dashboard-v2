@@ -10,6 +10,7 @@ use App\Domain\Tenant\User\Data\TrainingCountsData;
 use App\Domain\Tenant\User\Data\TrainingSummaryData;
 use App\Enums\Role;
 use App\Models\Dealer\Course;
+use App\Models\Dealer\CourseResults;
 use App\Models\User;
 use App\Services\TrainingComplianceService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -298,7 +299,7 @@ class GetEmployees
     }
 
     /**
-     * @param  HasMany<\App\Models\Dealer\CourseResults, User>  $query
+     * @param  HasMany<CourseResults, User>  $query
      */
     private function constrainResultsQuery(HasMany $query): void
     {

@@ -9,6 +9,7 @@ use App\Models\CourseResults;
 use App\Models\Department;
 use App\Models\User;
 use Carbon\CarbonInterface;
+use Database\Factories\CourseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +33,7 @@ use Spatie\Permission\Traits\HasRoles;
 abstract class AbstractCourse extends Model
 {
     /**
-     * @use HasFactory<\Database\Factories\CourseFactory>
+     * @use HasFactory<CourseFactory>
      */
     use HasFactory, HasRoles;
 

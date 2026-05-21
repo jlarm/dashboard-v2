@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Models\Dealer\Store;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
 
@@ -48,7 +49,7 @@ trait HasGrade
     }
 
     /**
-     * @param  HasMany<covariant \Illuminate\Database\Eloquent\Model, covariant \Illuminate\Database\Eloquent\Model>  $audits
+     * @param  HasMany<covariant Model, covariant Model>  $audits
      */
     private function latestAuditGrade(string $type, HasMany $audits): ?string
     {

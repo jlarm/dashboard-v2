@@ -30,7 +30,7 @@ use Override;
 class DealJacket extends Model
 {
     /**
-     * @use HasFactory<\Database\Factories\Tenant\DealJacketFactory>
+     * @use HasFactory<DealJacketFactory>
      */
     use HasFactory;
 

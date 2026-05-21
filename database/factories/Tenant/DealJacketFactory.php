@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Override;
 
 /**
- * @extends Factory<\App\Models\Dealer\Audit\DealJacket>
+ * @extends Factory<DealJacket>
  */
 class DealJacketFactory extends Factory
 {

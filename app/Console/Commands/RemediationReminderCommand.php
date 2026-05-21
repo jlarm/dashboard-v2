@@ -84,7 +84,7 @@ class RemediationReminderCommand extends Command
     }
 
     /**
-     * @param  HasMany<covariant \Illuminate\Database\Eloquent\Model, covariant \Illuminate\Database\Eloquent\Model>  $auditQuery
+     * @param  HasMany<covariant Model, covariant Model>  $auditQuery
      * @return Collection<int, Model>
      */
     private function getAuditsDueForReminder(HasMany $auditQuery, int $frequency): Collection

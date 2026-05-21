@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\SdsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ use Override;
 class Sds extends Model
 {
     /**
-     * @use HasFactory<\Database\Factories\SdsFactory>
+     * @use HasFactory<SdsFactory>
      */
     use HasFactory;
 

@@ -51,7 +51,7 @@ class CourseResetService
     private function resolveUserIds(?Store $store = null, ?Collection $selectedUserIds = null): Collection
     {
         $normalizedSelectedUserIds = ($selectedUserIds ?? collect())
-            ->map(static fn (mixed $userId): int => (int) $userId)
+            ->map(static fn (mixed $userId): int => $userId)
             ->filter()
             ->unique()
             ->values();

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\OshaQuestions;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Date;
 
 /**
- * @extends Factory<\App\Models\OshaQuestions>
+ * @extends Factory<OshaQuestions>
  */
 class OshaQuestionsFactory extends Factory
 {

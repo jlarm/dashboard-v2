@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Override;
 
 /**
- * @extends Factory<\App\Models\Dealer\Audit\DealJacketGroup>
+ * @extends Factory<DealJacketGroup>
  */
 class DealJacketGroupFactory extends Factory
 {

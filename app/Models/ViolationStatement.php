@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\ViolationStatementCategory;
 use Carbon\CarbonInterface;
+use Database\Factories\ViolationStatementFactory;
 use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +26,7 @@ use Override;
 class ViolationStatement extends Model
 {
     /**
-     * @use HasFactory<\Database\Factories\ViolationStatementFactory>
+     * @use HasFactory<ViolationStatementFactory>
      */
     use HasFactory;
 

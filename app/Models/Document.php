@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\CarbonInterface;
+use Database\Factories\DocumentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Override;
@@ -22,7 +23,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Document extends Model
 {
     /**
-     * @use HasFactory<\Database\Factories\DocumentFactory>
+     * @use HasFactory<DocumentFactory>
      */
     use HasFactory, LogsActivity;
 

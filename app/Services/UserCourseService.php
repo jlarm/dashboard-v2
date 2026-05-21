@@ -168,7 +168,7 @@ class UserCourseService
                 ->unique()
                 ->diff($excludedCourseIds)
                 ->values()
-                ->toArray()
+                ->all()
         );
     }
 

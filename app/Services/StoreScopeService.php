@@ -85,7 +85,7 @@ class StoreScopeService
 
     public function normalizeSelectedStore(User $user): ?Store
     {
-        $accessibleStoreIds = $this->accessibleStoreIds($user)->map(static fn (mixed $id): int => (int) $id)->values();
+        $accessibleStoreIds = $this->accessibleStoreIds($user)->map(static fn (mixed $id): int => $id)->values();
 
         if ($user->current_store_id === null) {
             return $this->autoSelectSingleAccessibleStore($user, $accessibleStoreIds);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Dealer\CourseResults;
 use App\Models\Dealership;
 use App\Models\User;
 use App\Notifications\CourseExpiredNotification;
@@ -64,7 +65,7 @@ class CourseExpiringEmailCommand extends Command
     }
 
     /**
-     * @return Collection<int, \App\Models\Dealer\CourseResults>
+     * @return Collection<int, CourseResults>
      */
     private function getExpiringCourses(User $user): Collection
     {
