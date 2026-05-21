@@ -35,6 +35,9 @@ class Dealership extends BaseTenant implements TenantWithDatabase
 
     protected ?string $cachedDomain = null;
 
+    /**
+     * @return array<int, string>
+     */
     public static function getCustomColumns(): array
     {
         return [
@@ -50,11 +53,17 @@ class Dealership extends BaseTenant implements TenantWithDatabase
         return $this->suspended_at !== null;
     }
 
+    /**
+     * @return HasMany<Domain, $this>
+     */
     public function domains(): HasMany
     {
         return $this->hasMany(Domain::class, 'tenant_id');
     }
 
+    /**
+     * @return BelongsToMany<Role, $this, TenantPivot, 'pivot'>
+     */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'dealership_roles', 'tenant_id', 'global_role_id', 'id', 'global_id')

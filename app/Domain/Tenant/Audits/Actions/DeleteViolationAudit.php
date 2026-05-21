@@ -12,7 +12,7 @@ class DeleteViolationAudit
 {
     public function handle(ViolationAudit&Model $audit): void
     {
-        $audit->violations()->each(function (Violation $violation): void { // @phpstan-ignore argument.type
+        $audit->violations()->each(function (Violation $violation): void {
             foreach ([0, 1, 2] as $position) {
                 $violation->clearMediaCollection('violation_files_'.$position);
                 $violation->clearMediaCollection('violations_files_'.$position);

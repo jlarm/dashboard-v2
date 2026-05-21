@@ -20,6 +20,7 @@ use App\Models\SharedDocument;
 use App\Models\User;
 use App\Models\ViolationStatement;
 use App\Observers\CourseResultsObserver;
+use App\Pdf\CloudflareDriver;
 use App\Policies\Central\ContractPolicy;
 use App\Policies\Central\DealershipPolicy;
 use App\Policies\Central\DocumentPolicy;
@@ -64,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(UserCourseService::class);
         $this->app->singleton(StoreScopeService::class);
 
-        $this->app->singleton('laravel-pdf.driver.cloudflare', fn (): \App\Pdf\CloudflareDriver => new \App\Pdf\CloudflareDriver(config('laravel-pdf.cloudflare', [])));
+        $this->app->singleton('laravel-pdf.driver.cloudflare', fn (): CloudflareDriver => new CloudflareDriver(config('laravel-pdf.cloudflare', [])));
     }
 
     /**

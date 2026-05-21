@@ -187,6 +187,9 @@ class AuditFinanceManagerCoursesCommand extends Command
             ->toArray();
     }
 
+    /**
+     * @return Collection<int, User>
+     */
     private function getFinanceManagerUsers(): Collection
     {
         $financeDept = Department::query()->where('name', 'Finance')->first();

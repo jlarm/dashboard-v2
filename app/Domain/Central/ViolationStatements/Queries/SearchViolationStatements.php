@@ -11,6 +11,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchViolationStatements
 {
+    /**
+     * @return LengthAwarePaginator<int, ViolationStatement>
+     */
     public function handle(?string $search, ?ViolationStatementCategory $category = null): LengthAwarePaginator
     {
         return ViolationStatement::query()

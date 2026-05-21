@@ -20,6 +20,9 @@ class UploadAuditToDigitalOceanJob implements ShouldQueue
 
     public function __construct(protected FinanceAudit $financeAudit) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->financeAudit->getKey())];

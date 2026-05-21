@@ -9,6 +9,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class GetUserInvites
 {
+    /**
+     * @return LengthAwarePaginator<int, UserInvite>
+     */
     public function handle(): LengthAwarePaginator
     {
         return UserInvite::query()

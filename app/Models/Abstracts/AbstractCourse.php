@@ -22,8 +22,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $id
  * @property string $slug
  * @property string $name
- * @property array $slides
- * @property array $questions
+ * @property array<int, mixed> $slides
+ * @property array<int, mixed> $questions
  * @property bool $optional
  * @property string|null $video_id
  * @property CarbonInterface $created_at
@@ -31,13 +31,22 @@ use Spatie\Permission\Traits\HasRoles;
  */
 abstract class AbstractCourse extends Model
 {
+    /**
+     * @use HasFactory<\Database\Factories\CourseFactory>
+     */
     use HasFactory, HasRoles;
 
+    /**
+     * @return BelongsToMany<User, $this>
+     */
     final public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * @return HasMany<CourseResults, $this>
+     */
     final public function results(): HasMany
     {
         return $this->hasMany(CourseResults::class);
@@ -54,6 +63,9 @@ abstract class AbstractCourse extends Model
         );
     }
 
+    /**
+     * @return BelongsToMany<Department, $this>
+     */
     final public function departments(): BelongsToMany
     {
         return $this->belongsToMany(Department::class);

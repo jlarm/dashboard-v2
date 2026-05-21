@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Override;
 
+/**
+ * @extends Factory<\App\Models\Dealer\Audit\DealJacketGroup>
+ */
 class DealJacketGroupFactory extends Factory
 {
     #[Override]

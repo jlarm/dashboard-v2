@@ -9,6 +9,9 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class GetDeletedUsers
 {
+    /**
+     * @return LengthAwarePaginator<int, User>
+     */
     public function handle(): LengthAwarePaginator
     {
         return User::query()

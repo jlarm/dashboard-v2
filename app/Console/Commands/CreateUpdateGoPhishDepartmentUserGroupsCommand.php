@@ -25,6 +25,10 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
 
     protected ?string $token = null;
     protected ?string $ip = null;
+
+    /**
+     * @var Collection<array-key, mixed>|null
+     */
     protected ?Collection $groups = null;
 
     public function handle(): void
@@ -69,11 +73,14 @@ class CreateUpdateGoPhishDepartmentUserGroupsCommand extends Command
         });
     }
 
+    /**
+     * @return Collection<array-key, mixed>
+     */
     private function getGroups(): Collection
     {
         $groups = Http::withoutVerifying()->get('https://'.$this->ip.':3333/api/groups/?api_key='.$this->token.'');
 
-        return collect($groups->json())
+        return collect((array) $groups->json())
             ->pluck('id', 'name')
             ->reject(fn (mixed $value, mixed $name): bool => str_contains((string) $name, 'All'));
     }

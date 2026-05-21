@@ -37,6 +37,9 @@ class ComplianceSummaryMail extends Mailable
         );
     }
 
+    /**
+     * @return array<int, Attachment>
+     */
     public function attachments(): array
     {
         $fileName = 'compliance-summary-'.str_replace(' ', '-', mb_strtolower($this->reportPeriod)).'.pdf';

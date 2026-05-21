@@ -30,7 +30,7 @@ class MigrateViolationStatementsCommand extends Command
             $this->warn('DRY RUN — no data will be written.');
         }
 
-        /** @var Collection<string, array{statement: string, keywords: array|null, weight: int, categories: list<string>}> $merged */
+        /** @var Collection<string, array{statement: string, keywords: array<int, string>|null, weight: int, categories: list<string>}> $merged */
         $merged = collect();
 
         $sources = [

@@ -33,7 +33,7 @@ class LoadViolationAuditWithRelations
             );
 
         $violationsData = $violations
-            ->map(fn (Violation $violation): ViolationData => ViolationData::fromModel($violation, $referenceImages)) // @phpstan-ignore argument.type
+            ->map(fn (Violation $violation): ViolationData => ViolationData::fromModel($violation, $referenceImages))
             ->values()
             ->all();
 
@@ -41,7 +41,7 @@ class LoadViolationAuditWithRelations
             ->with('user:id,name')
             ->latest()
             ->get()
-            ->map(fn (AuditComment $comment): AuditCommentData => AuditCommentData::fromModel($comment)) // @phpstan-ignore argument.type
+            ->map(fn (AuditComment $comment): AuditCommentData => AuditCommentData::fromModel($comment))
             ->values()
             ->all();
 

@@ -32,12 +32,18 @@ class Course extends AbstractCourse
         'replaces_course_slugs',
     ];
 
+    /**
+     * @return BelongsToMany<Role, $this>
+     */
     #[Override]
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'course_role');
     }
 
+    /**
+     * @return BelongsToMany<Dealership, $this>
+     */
     public function tenants(): BelongsToMany
     {
         return $this->belongsToMany(Dealership::class, 'course_tenant', 'course_id', 'tenant_id')

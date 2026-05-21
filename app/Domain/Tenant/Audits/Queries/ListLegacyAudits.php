@@ -30,7 +30,7 @@ class ListLegacyAudits
             $query->with('violations');
         }
 
-        /** @var EloquentCollection $rows */
+        /** @var EloquentCollection<int, Model> $rows */
         $rows = $query->latest('audit_date')->get();
 
         return $rows
@@ -43,6 +43,7 @@ class ListLegacyAudits
      * Eloquent objects so it can read the violations relation when present.
      *
      * @param  Collection<int, int>  $storeIds
+     * @return EloquentCollection<int, Model>
      */
     public function raw(ViolationAuditType $type, Collection $storeIds): EloquentCollection
     {

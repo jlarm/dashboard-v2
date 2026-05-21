@@ -33,6 +33,9 @@ class CourseNotificationMail extends Mailable
         );
     }
 
+    /**
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
     public function attachments(): array
     {
         return [];

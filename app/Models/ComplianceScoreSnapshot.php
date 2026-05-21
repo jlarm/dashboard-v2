@@ -24,6 +24,9 @@ class ComplianceScoreSnapshot extends Model
         'expiring_soon_training_count',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

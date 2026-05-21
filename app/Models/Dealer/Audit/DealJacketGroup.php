@@ -23,6 +23,9 @@ use Override;
 #[ObservedBy(DealJacketGroupObserver::class)]
 class DealJacketGroup extends Model
 {
+    /**
+     * @use HasFactory<\Database\Factories\Tenant\DealJacketGroupFactory>
+     */
     use HasFactory;
 
     #[Override]

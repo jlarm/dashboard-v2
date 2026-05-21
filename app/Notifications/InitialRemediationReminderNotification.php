@@ -26,6 +26,9 @@ class InitialRemediationReminderNotification extends Notification implements Sho
         protected ViolationAudit&Model $audit
     ) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(mixed $notifiable): array
     {
         return ['mail'];
@@ -42,6 +45,9 @@ class InitialRemediationReminderNotification extends Notification implements Sho
             ->line('');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(mixed $notifiable): array
     {
         return [];

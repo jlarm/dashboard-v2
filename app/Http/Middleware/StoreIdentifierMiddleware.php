@@ -47,6 +47,10 @@ class StoreIdentifierMiddleware
         return $next($request);
     }
 
+    /**
+     * @param  Collection<int, int>  $accessibleStoreIds
+     * @param  Collection<int, int>  $scopedStoreIds
+     */
     private function setCurrentStoreContext(?Store $store, Collection $accessibleStoreIds, Collection $scopedStoreIds): void
     {
         app()->instance('currentStore', $store?->id);

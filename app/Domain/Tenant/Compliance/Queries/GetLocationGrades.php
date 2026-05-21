@@ -11,6 +11,7 @@ use App\Models\Dealer\Audit\IndividualAudit;
 use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Store;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class GetLocationGrades
 {
@@ -81,6 +82,7 @@ class GetLocationGrades
 
     /**
      * @param  class-string  $auditClass
+     * @return Builder<Model>
      */
     private function latestGradeSubquery(string $auditClass): Builder
     {

@@ -83,17 +83,17 @@ class ImportCourses
                 'file' => "Course entry #{$index} is invalid: ".$validator->errors()->first(),
             ]));
 
-            $states = collect($course['states_required'] ?? [])
+            $states = collect((array) ($course['states_required'] ?? []))
                 ->filter(fn (mixed $state): bool => is_string($state) && $state !== '')
                 ->values()
                 ->all();
 
-            $replaces = collect($course['replaces_course_slugs'] ?? [])
+            $replaces = collect((array) ($course['replaces_course_slugs'] ?? []))
                 ->filter(fn (mixed $slug): bool => is_string($slug) && $slug !== '')
                 ->values()
                 ->all();
 
-            $tenantsRequired = collect($course['tenants_required'] ?? [])
+            $tenantsRequired = collect((array) ($course['tenants_required'] ?? []))
                 ->filter(fn (mixed $id): bool => is_string($id) && $id !== '')
                 ->values()
                 ->all();
@@ -138,7 +138,7 @@ class ImportCourses
             ->pluck('name', 'id');
 
         foreach ($courses as &$course) {
-            $course['role_names'] = collect($course['roles'])
+            $course['role_names'] = collect((array) $course['roles'])
                 ->map(fn (int $id): ?string => $roleNamesById->get($id))
                 ->filter()
                 ->values()

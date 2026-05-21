@@ -52,11 +52,17 @@ class IndividualAudit extends Model implements HasMedia
         return tenant('id').'/'.$media->collection_name.'/'.$media->id.'/';
     }
 
+    /**
+     * @return HasMany<self, $this>
+     */
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id')->with('children');
     }
 
+    /**
+     * @return BelongsTo<self, $this>
+     */
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id')->with('parent');

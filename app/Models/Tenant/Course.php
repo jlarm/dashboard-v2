@@ -29,11 +29,17 @@ class Course extends AbstractCourse
         return LogOptions::defaults()->logFillable();
     }
 
+    /**
+     * @return BelongsTo<CourseResults, $this>
+     */
     public function lastResult(): BelongsTo
     {
         return $this->belongsTo(CourseResults::class);
     }
 
+    /**
+     * @param  Builder<Course>  $query
+     */
     protected function scopeWithLastResult(Builder $query, int $userId): void
     {
         $query->addSelect(['last_result_id' => CourseResults::query()->select('id')

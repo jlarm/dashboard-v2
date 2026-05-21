@@ -20,11 +20,17 @@ class Timeline extends Model
         'details',
     ];
 
+    /**
+     * @return BelongsTo<PhishingCampaign, $this>
+     */
     public function campaign(): BelongsTo
     {
         return $this->belongsTo(PhishingCampaign::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'email', 'email');

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Notifications;
 
 use App\Models\Dealer\Course;
+use Carbon\CarbonInterface;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Carbon;
 
 class CourseExpiredNotification extends Notification
 {
@@ -15,7 +15,7 @@ class CourseExpiredNotification extends Notification
     public string $domain;
     public string $expireDate;
 
-    public function __construct(string $tenantDomain, public string $userName, protected int $courseId, Carbon $expireDate)
+    public function __construct(string $tenantDomain, public string $userName, protected int $courseId, CarbonInterface $expireDate)
     {
         $this->course = Course::query()->where('id', $this->courseId)->first();
         $this->domain = 'https://'.$tenantDomain.'/courses/'.$this->course->slug;

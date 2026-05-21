@@ -15,11 +15,17 @@ class VendorSignedNotification extends Notification implements ShouldQueue
 
     public function __construct(public VendorForm $vendor) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(mixed $notifiable): array
     {
         return ['database'];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toDatabase(mixed $notifiable): array
     {
         return [
@@ -27,6 +33,9 @@ class VendorSignedNotification extends Notification implements ShouldQueue
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(mixed $notifiable): array
     {
         return [];

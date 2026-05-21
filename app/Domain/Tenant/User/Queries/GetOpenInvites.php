@@ -20,7 +20,7 @@ class GetOpenInvites
     /**
      * @param  array{search?: string, department_id?: int|null}  $filters
      * @return array{
-     *     paginator: LengthAwarePaginator,
+     *     paginator: LengthAwarePaginator<int, Invite>,
      *     departments: list<array{id: int, name: string}>,
      *     multiple_stores: bool
      * }
@@ -53,6 +53,9 @@ class GetOpenInvites
         ];
     }
 
+    /**
+     * @return Builder<Invite>
+     */
     public function buildScopedQuery(User $viewer): Builder
     {
         return $this->baseQuery($viewer, []);
@@ -60,6 +63,7 @@ class GetOpenInvites
 
     /**
      * @param  array{search?: string, department_id?: int|null}  $filters
+     * @return Builder<Invite>
      */
     private function baseQuery(User $viewer, array $filters): Builder
     {
@@ -84,6 +88,9 @@ class GetOpenInvites
         return $query;
     }
 
+    /**
+     * @param  Builder<Invite>  $query
+     */
     private function applyStoreFilter(Builder $query): void
     {
         if (! app()->bound('multipleStoresExist') || ! resolve('multipleStoresExist')) {
@@ -106,6 +113,9 @@ class GetOpenInvites
         });
     }
 
+    /**
+     * @param  Builder<Invite>  $query
+     */
     private function applyDepartmentScope(Builder $query, User $viewer): void
     {
         if ($viewer->can('create-stores') || $viewer->department_id === null) {

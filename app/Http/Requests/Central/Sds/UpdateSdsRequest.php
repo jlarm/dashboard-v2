@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Central\Sds;
 
 use App\Models\Sds;
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Validator;
@@ -12,6 +13,9 @@ use Override;
 
 class UpdateSdsRequest extends FormRequest
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -31,6 +35,9 @@ class UpdateSdsRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<int, Closure>
+     */
     public function after(): array
     {
         return [

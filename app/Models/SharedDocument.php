@@ -21,6 +21,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class SharedDocument extends Model
 {
+    /**
+     * @use HasFactory<\Database\Factories\SharedDocumentFactory>
+     */
     use HasFactory, LogsActivity;
 
     #[Override]

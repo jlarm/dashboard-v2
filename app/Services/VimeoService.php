@@ -30,6 +30,9 @@ class VimeoService
         $this->userId = config('services.vimeo.user_id');
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getVideos(bool $debug = false): array
     {
         if ($debug) {
@@ -39,11 +42,17 @@ class VimeoService
         return $this->fetchAndTransformVideos() ?? [];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getCategories(): array
     {
         return $this->fetchCategories();
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getVideo(string $videoId, bool $fresh = false): ?array
     {
         $cacheKey = "vimeo_video_{$videoId}";
@@ -115,6 +124,9 @@ class VimeoService
         return count($this->getVideos());
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getVideoPrivacySettings(string $videoId): ?array
     {
         try {
@@ -147,6 +159,9 @@ class VimeoService
         }
     }
 
+    /**
+     * @return array<int, array<string, mixed>>|null
+     */
     private function fetchAndTransformVideos(): ?array
     {
         try {
@@ -171,6 +186,10 @@ class VimeoService
         }
     }
 
+    /**
+     * @param  array<string, mixed>  $video
+     * @return array<string, mixed>
+     */
     private function transformVideoData(array $video): array
     {
         $parts = explode('/', (string) $video['uri']);
@@ -184,6 +203,9 @@ class VimeoService
         ];
     }
 
+    /**
+     * @param  array<string, mixed>  $video
+     */
     private function extractThumbnailUrl(array $video): ?string
     {
         if (empty($video['pictures']['sizes'])) {
@@ -193,6 +215,9 @@ class VimeoService
         return end($video['pictures']['sizes'])['link'];
     }
 
+    /**
+     * @return array<int, string>
+     */
     private function fetchCategories(): array
     {
         try {
@@ -219,6 +244,9 @@ class VimeoService
         }
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     private function fetchVideo(string $videoId): ?array
     {
         try {
@@ -251,6 +279,10 @@ class VimeoService
         }
     }
 
+    /**
+     * @param  array<string, mixed>  $params
+     * @return array<string, mixed>
+     */
     private function makeRequest(string $endpoint, array $params = []): array
     {
         $attempt = 0;
@@ -286,6 +318,9 @@ class VimeoService
         throw $lastException;
     }
 
+    /**
+     * @param  array<string, mixed>  $response
+     */
     private function isValidResponse(array $response): bool
     {
         return isset($response['body']['data']) && ! isset($response['body']['error']);

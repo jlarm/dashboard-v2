@@ -34,11 +34,18 @@ class VendorEmailLog extends Model
         'event_type',
     ];
 
+    /**
+     * @return BelongsTo<VendorForm, $this>
+     */
     public function vendorForm(): BelongsTo
     {
         return $this->belongsTo(VendorForm::class);
     }
 
+    /**
+     * @param  Builder<VendorEmailLog>  $query
+     * @return Builder<VendorEmailLog>
+     */
     protected function scopeRecentSuccessfulFor(Builder $query, int $vendorFormId, int $minutes): Builder
     {
         return $query

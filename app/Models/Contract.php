@@ -24,6 +24,9 @@ use Override;
  */
 class Contract extends Model
 {
+    /**
+     * @use HasFactory<\Database\Factories\Central\ContractFactory>
+     */
     use HasFactory, SoftDeletes;
 
     #[Override]

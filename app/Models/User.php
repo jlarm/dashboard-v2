@@ -47,6 +47,9 @@ use Spatie\Permission\Traits\HasRoles;
 #[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements MustVerifyEmail
 {
+    /**
+     * @use HasFactory<\Database\Factories\UserFactory>
+     */
     use HasApiTokens,
         HasCourses,
         HasFactory,
@@ -200,6 +203,9 @@ class User extends Authenticatable implements MustVerifyEmail
             ->logExcept(['password', 'remember_token']);
     }
 
+    /**
+     * @return HasMany<CourseUser, $this>
+     */
     public function courseOverrides(): HasMany
     {
         return $this->hasMany(CourseUser::class, 'user_id');
@@ -266,6 +272,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $query->when($showNotCompleted, fn (Builder $query) => $query->where('user_has_not_completed_courses', true));
     }
 
+    /**
+     * @return Attribute<string, never>
+     */
     protected function initials(): Attribute
     {
         return Attribute::make(
@@ -285,6 +294,9 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    /**
+     * @return Attribute<string|null, string|null>
+     */
     protected function email(): Attribute
     {
         return Attribute::make(
@@ -313,6 +325,10 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    /**
+     * @param  Builder<User>  $query
+     * @return Builder<User>
+     */
     protected function scopeWithCompletedCoursesCount(Builder $query): Builder
     {
         return $query

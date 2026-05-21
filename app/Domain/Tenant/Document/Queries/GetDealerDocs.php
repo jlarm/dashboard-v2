@@ -35,6 +35,9 @@ class GetDealerDocs
      */
     private const array SHARED_DOCUMENT_COLUMNS = ['id', 'title', 'url', 'file_name'];
 
+    /**
+     * @return LengthAwarePaginator<int, mixed>
+     */
     public function handle(string $search = '', int $page = 1): LengthAwarePaginator
     {
         $search = mb_trim($search);

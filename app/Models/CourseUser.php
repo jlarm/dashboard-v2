@@ -20,7 +20,8 @@ class CourseUser extends Pivot
     protected $fillable = ['user_id', 'course_id', 'type', 'assigned_by'];
 
     /**
-     * @param  Builder  $query
+     * @param  Builder<static>  $query
+     * @return Builder<static>
      */
     #[Override]
     protected function setKeysForSaveQuery($query): Builder // @pest-ignore-type

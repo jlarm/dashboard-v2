@@ -11,7 +11,7 @@ use Override;
 /**
  * @property-read int $id
  * @property-read string $statement
- * @property-read array $keywords
+ * @property-read array<int, string> $keywords
  * @property-read int $weight
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at

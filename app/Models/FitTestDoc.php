@@ -19,6 +19,9 @@ class FitTestDoc extends Model
         'file_path',
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -40,11 +40,14 @@ class GetEmployees
         Cache::increment(self::trainingCountsVersionKey($tenantId));
     }
 
+    /**
+     * @return LengthAwarePaginator<int, User>
+     */
     public function handle(User $viewer, EmployeeFiltersData $filters, int $page = 1): LengthAwarePaginator
     {
         $baseQuery = $this->baseQuery($viewer, $filters);
         $paginatedQuery = (clone $baseQuery)
-            ->with(['results' => $this->constrainResultsQuery(...)]); // @phpstan-ignore argument.type
+            ->with(['results' => $this->constrainResultsQuery(...)]);
 
         if ($filters->hasComplianceFilter()) {
             $matchingIds = $this->idsMatchingComplianceFilter($viewer, $filters);
@@ -85,6 +88,9 @@ class GetEmployees
         );
     }
 
+    /**
+     * @return Builder<User>
+     */
     public function buildScopedQuery(User $viewer, EmployeeFiltersData $filters): Builder
     {
         return $this->baseQuery($viewer, $filters);
@@ -164,6 +170,9 @@ class GetEmployees
         return "{$namespace}:v{$version}:{$tenantId}:{$scopeKey}:{$storeKey}:{$filtersHash}";
     }
 
+    /**
+     * @return Builder<User>
+     */
     private function baseQuery(User $viewer, EmployeeFiltersData $filters): Builder
     {
         $query = $this->initialQuery($viewer)
@@ -187,6 +196,9 @@ class GetEmployees
         return $query;
     }
 
+    /**
+     * @return Builder<User>
+     */
     private function initialQuery(User $viewer): Builder
     {
         $query = User::query();
@@ -198,6 +210,9 @@ class GetEmployees
         return $query;
     }
 
+    /**
+     * @param  Builder<User>  $query
+     */
     private function applyDepartmentFilter(Builder $query, EmployeeFiltersData $filters): void
     {
         if ($filters->departmentIds !== []) {
@@ -205,6 +220,9 @@ class GetEmployees
         }
     }
 
+    /**
+     * @param  Builder<User>  $query
+     */
     private function applyRoleFilter(Builder $query, EmployeeFiltersData $filters): void
     {
         if ($filters->roleIds !== []) {
@@ -214,6 +232,9 @@ class GetEmployees
         }
     }
 
+    /**
+     * @param  Builder<User>  $query
+     */
     private function applySearchFilter(Builder $query, EmployeeFiltersData $filters): void
     {
         if ($filters->search === '') {
@@ -226,6 +247,9 @@ class GetEmployees
         });
     }
 
+    /**
+     * @param  Builder<User>  $query
+     */
     private function applySorting(Builder $query, EmployeeFiltersData $filters): void
     {
         match ($filters->sortField) {
@@ -250,6 +274,9 @@ class GetEmployees
         };
     }
 
+    /**
+     * @param  Builder<User>  $query
+     */
     private function applyStoreFilter(Builder $query): void
     {
         if (! app()->bound('multipleStoresExist') || ! resolve('multipleStoresExist')) {
@@ -270,6 +297,9 @@ class GetEmployees
         });
     }
 
+    /**
+     * @param  HasMany<\App\Models\Dealer\CourseResults, User>  $query
+     */
     private function constrainResultsQuery(HasMany $query): void
     {
         $courseIdsByExpiryYears = once(fn (): array => Course::query()

@@ -45,7 +45,7 @@ class GetCveList
             ? ($vulnsByType[$assetType] ?? [])
             : array_merge(...array_values($vulnsByType));
 
-        $items = collect($selectedVulns)
+        $items = collect((array) $selectedVulns)
             ->sortByDesc(static fn (array $item): array => [
                 self::riskRank((string) ($item['cve_risk'] ?? '')),
                 (float) ($item['cve_score'] ?? 0),

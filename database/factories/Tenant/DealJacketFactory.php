@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Override;
 
+/**
+ * @extends Factory<\App\Models\Dealer\Audit\DealJacket>
+ */
 class DealJacketFactory extends Factory
 {
     #[Override]
@@ -51,6 +54,9 @@ class DealJacketFactory extends Factory
         ];
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     private function generateResponses(): array
     {
         $questions = tenancy()->central(fn () => DealJacketQuestion::query()->get());

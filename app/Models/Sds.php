@@ -10,11 +10,14 @@ use Illuminate\Support\Str;
 use Override;
 
 /**
- * @property array|null $product_identification_numbers
- * @property array|null $cas_nos
+ * @property array<int, string>|null $product_identification_numbers
+ * @property array<int, string>|null $cas_nos
  */
 class Sds extends Model
 {
+    /**
+     * @use HasFactory<\Database\Factories\SdsFactory>
+     */
     use HasFactory;
 
     #[Override]

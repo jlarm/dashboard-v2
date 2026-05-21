@@ -47,6 +47,9 @@ trait HasGrade
         return $this->latestAuditGrade('body_shop', $this->bodyShopViolationAudits());
     }
 
+    /**
+     * @param  HasMany<covariant \Illuminate\Database\Eloquent\Model, covariant \Illuminate\Database\Eloquent\Model>  $audits
+     */
     private function latestAuditGrade(string $type, HasMany $audits): ?string
     {
         return $this->rememberGradeValue(

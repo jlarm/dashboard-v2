@@ -26,6 +26,9 @@ class RemediationReminderCommand extends Command
     #[Override]
     protected $description = 'Command description';
 
+    /**
+     * @var array<string, AuditTypes>
+     */
     private array $modelTypeMap = [
         'OshaViolationAudit' => AuditTypes::OSHA,
         'BodyShopViolationAudit' => AuditTypes::BODYSHOP,
@@ -45,6 +48,9 @@ class RemediationReminderCommand extends Command
         });
     }
 
+    /**
+     * @param  Collection<int, Store>  $stores
+     */
     private function processStores(Collection $stores, bool $hasMultipleStores): void
     {
         foreach ($stores as $store) {
@@ -77,6 +83,10 @@ class RemediationReminderCommand extends Command
         }
     }
 
+    /**
+     * @param  HasMany<covariant \Illuminate\Database\Eloquent\Model, covariant \Illuminate\Database\Eloquent\Model>  $auditQuery
+     * @return Collection<int, Model>
+     */
     private function getAuditsDueForReminder(HasMany $auditQuery, int $frequency): Collection
     {
         return $auditQuery

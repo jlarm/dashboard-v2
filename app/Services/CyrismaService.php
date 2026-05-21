@@ -55,7 +55,7 @@ class CyrismaService
             return false;
         }
 
-        return collect($vulnerabilityScans['vulnerability_scans'])
+        return collect((array) $vulnerabilityScans['vulnerability_scans'])
             ->contains(function (array $scan): bool {
                 $scanType = $scan['scan_type'] ?? null;
                 $scanTypeName = mb_strtolower($scan['scan_type_name'] ?? '');
@@ -169,6 +169,9 @@ class CyrismaService
         }
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getAllInstances(): ?array
     {
         if (! $this->ensureAuthenticated()) {
@@ -189,6 +192,9 @@ class CyrismaService
         }
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getInstance(string $instanceId): ?array
     {
         if (! $this->ensureAuthenticated()) {
@@ -216,6 +222,9 @@ class CyrismaService
         }
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function findInstanceByShortName(string $shortName): ?array
     {
         $instances = $this->getAllInstances();
@@ -227,41 +236,65 @@ class CyrismaService
         return collect($instances)->firstWhere('short_name', $shortName);
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getDataScans(): ?array
     {
         return $this->getStoreReport('scans/data');
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getVulnerabilityScans(): ?array
     {
         return $this->getStoreReport('scans/vulnerability');
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getBaselineScans(): ?array
     {
         return $this->getStoreReport('scans/baseline');
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getOverallDashboard(): ?array
     {
         return $this->getStoreReport('dashboards/overall');
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getDataDashboard(): ?array
     {
         return $this->getStoreReport('dashboards/data');
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getVulnerabilityDashboard(): ?array
     {
         return $this->getStoreReport('dashboards/vulnerability');
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getBaselineDashboard(): ?array
     {
         return $this->getStoreReport('dashboards/baseline');
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getCveDetails(?string $cveId = null): ?array
     {
         return $this->getStoreReport(
@@ -270,6 +303,9 @@ class CyrismaService
         );
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getVulnerabilitiesByAssetType(?string $assetType = null): ?array
     {
         $vulnerabilityScans = $this->getStoreReport('scans/vulnerability');
@@ -278,7 +314,7 @@ class CyrismaService
             return ['vulnerabilities' => []];
         }
 
-        $scans = collect($vulnerabilityScans['vulnerability_scans']);
+        $scans = collect((array) $vulnerabilityScans['vulnerability_scans']);
 
         // Filter scans based on asset type using scan_type numeric values from API docs:
         // - scan type 5 = Internal Authenticated
@@ -394,6 +430,9 @@ class CyrismaService
         return ['vulnerabilities' => $vulnerabilities];
     }
 
+    /**
+     * @return array<array-key, mixed>|null
+     */
     public function getOpenPorts(?string $cveId = null): ?array
     {
         $vulnerabilityScans = $this->getStoreReport('scans/vulnerability');
@@ -412,6 +451,9 @@ class CyrismaService
         return $scanDetails['assets'][0]['openPorts'];
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getOpenPortsByAssetType(string $assetType = ''): array
     {
         $assetTypes = $assetType !== ''
@@ -464,6 +506,9 @@ class CyrismaService
         return $aggregatedPorts;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getExternalIpScanData(): ?array
     {
         // Try the vulnerability dashboard first - it might have aggregated external IP data
@@ -477,7 +522,7 @@ class CyrismaService
         }
 
         // Look specifically for External scan types (type 9 = External IP, type 11 = External Web)
-        $externalScans = collect($vulnerabilityScans['vulnerability_scans'])
+        $externalScans = collect((array) $vulnerabilityScans['vulnerability_scans'])
             ->filter(function (array $scan): bool {
                 $scanTypeName = mb_strtolower($scan['scan_type_name'] ?? '');
                 $scanType = $scan['scan_type'] ?? '';
@@ -536,6 +581,7 @@ class CyrismaService
     }
 
     /**
+     * @param  array<string, mixed>  $asset
      * @return array<int, array<string, mixed>>
      */
     public function getWebApplicationScanFindingsForAsset(array $asset, ?string $findingName = null): array
@@ -591,6 +637,10 @@ class CyrismaService
         return [];
     }
 
+    /**
+     * @param  array<string, mixed>  $params
+     * @return array<array-key, mixed>|null
+     */
     public function getStoreReport(string $endpoint, array $params = []): ?array
     {
         if (! $this->store || ! $this->store->cyrisma) {
@@ -657,7 +707,7 @@ class CyrismaService
             $result = $this->getStoreReport('vulnerability/assets/authenticated', ['assetId' => $assetId]);
             $data = $result[0] ?? [];
 
-            return collect($data['openPorts'] ?? [])
+            return collect((array) ($data['openPorts'] ?? []))
                 ->map(fn (array $port): array => [
                     'portNumber' => $port['port'],
                     'portDescription' => $port['portName'] ?? '',
@@ -670,7 +720,7 @@ class CyrismaService
             $result = $this->getStoreReport('vulnerability/assets/ip', ['assetIp' => $assetIp]);
             $data = is_array($result) && isset($result[0]) ? $result[0] : ($result ?? []);
 
-            return collect($data['OpenPorts'] ?? $data['openPorts'] ?? [])
+            return collect((array) ($data['OpenPorts'] ?? $data['openPorts'] ?? []))
                 ->map(fn (array $port): array => [
                     'portNumber' => $port['PortNumber'] ?? $port['portNumber'] ?? '',
                     'portDescription' => $port['PortDescription'] ?? $port['portDescription'] ?? '',
@@ -683,6 +733,7 @@ class CyrismaService
     }
 
     /**
+     * @param  array<string, mixed>  $asset
      * @return array<int, array<string, string>>
      */
     protected function buildWebAssetParamSets(array $asset): array
@@ -726,6 +777,7 @@ class CyrismaService
     }
 
     /**
+     * @param  array<array-key, mixed>  $payload
      * @return array<int, array<string, mixed>>
      */
     protected function extractWebFindingsFromPayload(array $payload): array

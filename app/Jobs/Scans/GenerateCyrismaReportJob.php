@@ -37,6 +37,9 @@ class GenerateCyrismaReportJob implements ShouldQueue
         private readonly int $userId,
     ) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->storeId.'-'.$this->type)->expireAfter(360)];
@@ -151,7 +154,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
 
         $lastScanDate = null;
         if (! empty($scanList)) {
-            $latestScan = collect($scanList)->sortByDesc('scan_finished')->first();
+            $latestScan = collect((array) $scanList)->sortByDesc('scan_finished')->first();
             if (! empty($latestScan['scan_finished'])) {
                 $lastScanDate = Date::parse($latestScan['scan_finished'])->format('M j, Y');
             }
@@ -222,10 +225,10 @@ class GenerateCyrismaReportJob implements ShouldQueue
                 ->all();
         }
 
-        return collect($asset['vulnerabilities'] ?? [])
+        return collect((array) ($asset['vulnerabilities'] ?? []))
             ->map(fn (array $finding): array => $this->normalizeReportFinding($finding, 'vulnerability'))
             ->merge(
-                collect($asset['flaws'] ?? [])
+                collect((array) ($asset['flaws'] ?? []))
                     ->map(fn (array $finding): array => $this->normalizeReportFinding($finding, 'flaw'))
             )
             ->sort($this->sortReportFindings(...))
@@ -573,6 +576,7 @@ class GenerateCyrismaReportJob implements ShouldQueue
 
     /**
      * @param  array<string, mixed>  $payload
+     * @param  array<int, string>  $keys
      */
     private function firstStringValue(array $payload, array $keys, string $default = ''): string
     {

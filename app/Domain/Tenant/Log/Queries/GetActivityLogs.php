@@ -13,6 +13,9 @@ class GetActivityLogs
 {
     private const int PER_PAGE = 25;
 
+    /**
+     * @return LengthAwarePaginator<int, mixed>
+     */
     public function handle(string $search = '', int $page = 1): LengthAwarePaginator
     {
         $search = mb_trim($search);

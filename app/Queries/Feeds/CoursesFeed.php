@@ -20,6 +20,9 @@ final readonly class CoursesFeed
         $this->userCourseService = resolve(UserCourseService::class);
     }
 
+    /**
+     * @return Builder<Course>
+     */
     public function builder(): Builder
     {
         $courseIds = $this->userCourseService->getCourseIds($this->user);
@@ -40,7 +43,7 @@ final readonly class CoursesFeed
         $courses = $this->builder()->get();
 
         $totalCount = $courses->count();
-        $completedCount = $courses->filter(fn (mixed $course): bool => $course instanceof Course && $course->lastResult !== null)->count();
+        $completedCount = $courses->filter(fn (Course $course): bool => $course->lastResult !== null)->count();
         $incompleteCount = $totalCount - $completedCount;
 
         return [

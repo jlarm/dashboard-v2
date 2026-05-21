@@ -27,6 +27,9 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
         private readonly User $user
     ) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->dealJacketGroup->getKey())];

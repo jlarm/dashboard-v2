@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchSds
 {
+    /**
+     * @return LengthAwarePaginator<int, Sds>
+     */
     public function handle(?string $search): LengthAwarePaginator
     {
         return Sds::query()

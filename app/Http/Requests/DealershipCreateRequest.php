@@ -9,6 +9,9 @@ use Override;
 
 class DealershipCreateRequest extends FormRequest
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [

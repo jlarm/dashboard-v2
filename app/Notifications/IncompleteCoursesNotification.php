@@ -17,6 +17,9 @@ class IncompleteCoursesNotification extends Notification implements ShouldQueue
         private readonly string $userName,
     ) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(mixed $notifiable): array
     {
         return ['mail'];

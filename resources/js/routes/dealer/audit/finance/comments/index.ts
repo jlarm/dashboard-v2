@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:331
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:335
 * @route '/audits/finance/{audit}/comments'
 */
 export const store = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:331
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:335
 * @route '/audits/finance/{audit}/comments'
 */
 store.url = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ store.url = (args: { audit: string | number } | [audit: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:331
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:335
 * @route '/audits/finance/{audit}/comments'
 */
 store.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -53,7 +53,7 @@ store.post = (args: { audit: string | number } | [audit: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:331
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:335
 * @route '/audits/finance/{audit}/comments'
 */
 const storeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -63,7 +63,7 @@ const storeForm = (args: { audit: string | number } | [audit: string | number ] 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:331
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:335
 * @route '/audits/finance/{audit}/comments'
 */
 storeForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -75,7 +75,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:348
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:352
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 export const update = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -90,7 +90,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:348
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:352
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 update.url = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
@@ -118,7 +118,7 @@ update.url = (args: { audit: string | number, comment: string | number | { id: s
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:348
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:352
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 update.patch = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -128,7 +128,7 @@ update.patch = (args: { audit: string | number, comment: string | number | { id:
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:348
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:352
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 const updateForm = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -143,7 +143,7 @@ const updateForm = (args: { audit: string | number, comment: string | number | {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:348
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:352
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 updateForm.patch = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -160,7 +160,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:364
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:368
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 export const destroy = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -175,7 +175,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:364
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:368
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 destroy.url = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
@@ -203,7 +203,7 @@ destroy.url = (args: { audit: string | number, comment: string | number | { id: 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:364
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:368
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 destroy.delete = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -213,7 +213,7 @@ destroy.delete = (args: { audit: string | number, comment: string | number | { i
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:364
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:368
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 const destroyForm = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -228,7 +228,7 @@ const destroyForm = (args: { audit: string | number, comment: string | number | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:364
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:368
 * @route '/audits/finance/{audit}/comments/{comment}'
 */
 destroyForm.delete = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

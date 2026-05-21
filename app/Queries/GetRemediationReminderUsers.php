@@ -14,6 +14,9 @@ class GetRemediationReminderUsers
 {
     public function __construct(protected Store $store, protected AuditTypes $auditType) {}
 
+    /**
+     * @return Collection<int, User>
+     */
     public static function execute(Store $store, AuditTypes $auditType): Collection
     {
         $userIds = RemediationReminderPreference::query()

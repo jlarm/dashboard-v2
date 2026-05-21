@@ -42,12 +42,18 @@ trait HasCourses
         }
     }
 
+    /**
+     * @return BelongsToMany<Course, $this>
+     */
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class)
             ->withPivot(['type', 'assigned_by']);
     }
 
+    /**
+     * @return HasMany<CourseResults, $this>
+     */
     public function results(): HasMany
     {
         return $this->hasMany(CourseResults::class);

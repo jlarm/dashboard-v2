@@ -20,6 +20,9 @@ class UploadBodyShopAuditToDigitalOceanJob implements ShouldQueue
 
     public function __construct(protected BodyShopAudit $bodyShopAudit) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->bodyShopAudit->getKey())];

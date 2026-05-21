@@ -9,6 +9,9 @@ use App\Models\CourseResults;
 
 class StoreCourseResult
 {
+    /**
+     * @param  array<int, mixed>  $submittedAnswers
+     */
     public function execute(Course $course, array $submittedAnswers): CourseResults
     {
         $questions = collect($course->questions);

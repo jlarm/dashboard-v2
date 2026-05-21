@@ -29,6 +29,9 @@ class GenerateGlbaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     public function __construct(private readonly GlbaViolationAudit $glbaViolationAudit) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->glbaViolationAudit->getKey())];

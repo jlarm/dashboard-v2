@@ -10,9 +10,19 @@ use Illuminate\Support\Collection;
 
 class StoreScopeService
 {
+    /**
+     * @var array<int, Collection<int, int>>
+     */
     private array $accessibleStoreIdsCache = [];
+
+    /**
+     * @var array<int, Store|null>
+     */
     private array $selectedStoreCache = [];
 
+    /**
+     * @return Collection<int, int>
+     */
     public function accessibleStoreIds(?User $user): Collection
     {
         if (! $user instanceof User) {
@@ -36,6 +46,9 @@ class StoreScopeService
         return $this->accessibleStoreIdsCache[$user->id] = $user->stores()->pluck('stores.id');
     }
 
+    /**
+     * @return Collection<int, int>
+     */
     public function scopedStoreIds(?User $user): Collection
     {
         if (! $user instanceof User) {
@@ -91,6 +104,9 @@ class StoreScopeService
         return $selectedStore;
     }
 
+    /**
+     * @param  Collection<int, int>  $accessibleStoreIds
+     */
     private function autoSelectSingleAccessibleStore(User $user, Collection $accessibleStoreIds): ?Store
     {
         if (! $this->shouldAutoSelectSingleAccessibleStore($user)) {
@@ -113,6 +129,9 @@ class StoreScopeService
         return $store;
     }
 
+    /**
+     * @param  Collection<int, int>  $accessibleStoreIds
+     */
     private function resetOrAutoSelectSingleStore(User $user, Collection $accessibleStoreIds): ?Store
     {
         $store = $this->autoSelectSingleAccessibleStore($user, $accessibleStoreIds);

@@ -11,6 +11,10 @@ use Illuminate\Support\Collection;
 
 class CourseResetService
 {
+    /**
+     * @param  Collection<int, int>|null  $selectedUserIds
+     * @return Collection<int, int>
+     */
     public function reset(?Store $store = null, ?Collection $selectedUserIds = null): Collection
     {
         $userIds = $this->resolveUserIds($store, $selectedUserIds);
@@ -40,6 +44,10 @@ class CourseResetService
         return $uniqueUserIds;
     }
 
+    /**
+     * @param  Collection<int, int>|null  $selectedUserIds
+     * @return Collection<int, int>
+     */
     private function resolveUserIds(?Store $store = null, ?Collection $selectedUserIds = null): Collection
     {
         $normalizedSelectedUserIds = ($selectedUserIds ?? collect())
@@ -78,6 +86,9 @@ class CourseResetService
             ->values();
     }
 
+    /**
+     * @param  Collection<int, int>  $userIds
+     */
     private function clearCacheForUsers(Collection $userIds): void
     {
         if ($userIds->isEmpty()) {

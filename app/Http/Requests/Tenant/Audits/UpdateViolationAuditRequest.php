@@ -33,14 +33,14 @@ class UpdateViolationAuditRequest extends FormRequest
     }
 
     /**
-     * @return array{date: string, violations: array<int, array{id: int, comment: string, violation_date: ?string, risk: bool, severity: ?int, show_reference_image: bool, images?: array}>}
+     * @return array{date: string, violations: array<int, array{id: int, comment: string, violation_date: ?string, risk: bool, severity: ?int, show_reference_image: bool, images?: array<array-key, mixed>}>}
      */
     public function toData(): array
     {
         /** @var array<string, mixed> $validated */
         $validated = $this->validated();
 
-        $violations = collect($validated['violations'] ?? [])
+        $violations = collect((array) ($validated['violations'] ?? []))
             ->map(static fn (array $violation): array => [
                 'id' => (int) $violation['id'],
                 'comment' => (string) $violation['comment'],

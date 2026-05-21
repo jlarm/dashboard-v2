@@ -24,6 +24,9 @@ class Cyrisma extends Model
         'instance_url',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

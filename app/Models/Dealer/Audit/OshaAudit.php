@@ -49,11 +49,17 @@ class OshaAudit extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return MorphMany<Violation, $this>
+     */
     public function violations(): MorphMany
     {
         return $this->morphMany(Violation::class, 'violationable');
     }
 
+    /**
+     * @return MorphMany<AuditComment, $this>
+     */
     public function auditComments(): MorphMany
     {
         return $this->morphMany(AuditComment::class, 'auditable');

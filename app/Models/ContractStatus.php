@@ -18,6 +18,9 @@ class ContractStatus extends Model
         'step',
     ];
 
+    /**
+     * @return BelongsTo<Contract, $this>
+     */
     public function contract(): BelongsTo
     {
         return $this->belongsTo(Contract::class);

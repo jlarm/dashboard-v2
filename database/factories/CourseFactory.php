@@ -7,6 +7,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Date;
 
+/**
+ * @extends Factory<\App\Models\Course>
+ */
 class CourseFactory extends Factory
 {
     public function definition(): array

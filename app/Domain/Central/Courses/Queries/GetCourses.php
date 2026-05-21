@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class GetCourses
 {
+    /**
+     * @return LengthAwarePaginator<int, Course>
+     */
     public function handle(): LengthAwarePaginator
     {
         return Course::query()

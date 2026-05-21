@@ -20,6 +20,9 @@ class UploadIndividualAuditToDigitalOceanJob implements ShouldQueue
 
     public function __construct(protected IndividualAudit $individualAudit) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->individualAudit->getKey())];

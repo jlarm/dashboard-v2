@@ -6,6 +6,9 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<\App\Models\Sds>
+ */
 class SdsFactory extends Factory
 {
     public function definition(): array

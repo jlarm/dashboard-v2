@@ -48,26 +48,41 @@ class Course extends Model
         'replaces_course_slugs',
     ];
 
+    /**
+     * @return BelongsToMany<User, $this>
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * @return HasMany<CourseResults, $this>
+     */
     public function results(): HasMany
     {
         return $this->hasMany(CourseResults::class);
     }
 
+    /**
+     * @return BelongsToMany<Department, $this>
+     */
     public function departments(): BelongsToMany
     {
         return $this->belongsToMany(Department::class);
     }
 
+    /**
+     * @return array<int, int>
+     */
     public function getDepartments(): array
     {
         return $this->departments->pluck('id')->toArray();
     }
 
+    /**
+     * @return BelongsToMany<Role, $this>
+     */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'course_role');
@@ -78,11 +93,17 @@ class Course extends Model
         return LogOptions::defaults()->logFillable();
     }
 
+    /**
+     * @return BelongsTo<CourseResults, $this>
+     */
     public function lastResult(): BelongsTo
     {
         return $this->belongsTo(CourseResults::class);
     }
 
+    /**
+     * @param  Builder<Course>  $query
+     */
     protected function scopeWithLastResult(Builder $query, int $userId): void
     {
         $query->addSelect(['last_result_id' => CourseResults::query()->select('id')

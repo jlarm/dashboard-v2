@@ -20,7 +20,7 @@ class GoPhishService
     {
         $groups = Http::withoutVerifying()->get('https://'.$ip.':3333/api/groups/?api_key='.$token.'');
 
-        return collect($groups->json())->pluck('id', 'name');
+        return collect((array) $groups->json())->pluck('id', 'name');
     }
 
     /**

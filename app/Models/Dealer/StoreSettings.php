@@ -54,6 +54,9 @@ class StoreSettings extends Model
         'compliance_issues',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

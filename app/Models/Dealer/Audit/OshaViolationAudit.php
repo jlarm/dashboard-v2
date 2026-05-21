@@ -50,11 +50,17 @@ class OshaViolationAudit extends Model implements ViolationAudit
         'reminder_logs',
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function gradeUpdatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'grade_updated_by');

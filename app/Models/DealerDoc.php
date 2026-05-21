@@ -20,6 +20,9 @@ class DealerDoc extends Model
         'file_path',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

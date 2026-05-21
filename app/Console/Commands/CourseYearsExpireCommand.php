@@ -18,6 +18,9 @@ class CourseYearsExpireCommand extends Command
     #[Override]
     protected $description = 'Add the years before course expires';
 
+    /**
+     * @var array<string, int>
+     */
     protected array $custom = [
         'dot-hazardous-materials-transportation' => 3,
         'dot-hazardous-materials-transportation-identifying-hazardous-materials' => 3,

@@ -17,6 +17,9 @@ class VendorFormNotification extends Notification
 
     public function __construct(public VendorForm $vendor) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(mixed $notifiable): array
     {
         return ['mail'];
@@ -56,6 +59,9 @@ class VendorFormNotification extends Notification
             });
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(mixed $notifiable): array
     {
         return [];

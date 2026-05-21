@@ -19,6 +19,7 @@ class ListViolationAudits
 
     /**
      * @param  Collection<int, int>  $storeIds
+     * @return LengthAwarePaginator<int, array<string, mixed>>
      */
     public function handle(
         ViolationAuditType $type,

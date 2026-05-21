@@ -34,11 +34,17 @@ class AuditComment extends Model implements HasMedia
         'image',
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function audit(): MorphTo
     {
         return $this->morphTo('audit', 'audit_type', 'audit_id');

@@ -25,6 +25,9 @@ class ScanSetting extends Model
         'internal_id',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

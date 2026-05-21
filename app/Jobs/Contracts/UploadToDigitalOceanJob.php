@@ -20,6 +20,9 @@ class UploadToDigitalOceanJob implements ShouldQueue
 
     public function __construct(protected Contract $contract) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->contract->getKey())];

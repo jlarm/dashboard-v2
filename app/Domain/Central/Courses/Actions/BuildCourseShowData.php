@@ -16,6 +16,9 @@ class BuildCourseShowData
 
     public function __construct(private readonly VimeoService $vimeoService) {}
 
+    /**
+     * @return array<string, mixed>
+     */
     public function execute(Course $course): array
     {
         $video = $course->video_id
@@ -51,6 +54,9 @@ class BuildCourseShowData
         return $latestProgress !== null;
     }
 
+    /**
+     * @param  array<string, mixed>|null  $video
+     */
     private function buildPlayerEmbedUrl(?array $video, bool $videoCompleted): ?string
     {
         $parameters = [

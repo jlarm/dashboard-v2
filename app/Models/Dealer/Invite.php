@@ -64,6 +64,9 @@ class Invite extends Model
             ->logExcept(['invitation_token']);
     }
 
+    /**
+     * @return Attribute<string|null, string|null>
+     */
     protected function email(): Attribute
     {
         return Attribute::make(

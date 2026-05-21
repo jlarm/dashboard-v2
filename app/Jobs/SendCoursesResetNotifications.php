@@ -19,6 +19,9 @@ class SendCoursesResetNotifications implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * @param  Collection<int, int>  $userIds
+     */
     public function __construct(
         public Collection $userIds,
         public string $tenantName

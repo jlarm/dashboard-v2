@@ -27,6 +27,9 @@ class SearchSdsRecords
      */
     private const array SELECT_COLUMNS = ['id', 'uuid', 'name', 'manufacturer'];
 
+    /**
+     * @return LengthAwarePaginator<int, array<string, mixed>>
+     */
     public function handle(string $search, string $sort = 'name', string $direction = 'asc'): LengthAwarePaginator
     {
         /** @phpstan-ignore return.type */

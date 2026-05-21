@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Central\Document;
 
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 use Override;
 
 class StoreDocumentRequest extends FormRequest
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -27,6 +31,9 @@ class StoreDocumentRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<int, Closure>
+     */
     public function after(): array
     {
         return [

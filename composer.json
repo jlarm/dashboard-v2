@@ -97,6 +97,10 @@
         "test:types": "phpstan analyse",
         "test:type-coverage": "pest --type-coverage --min=100",
         "test:unit": "pest --coverage --exactly=99.2",
+        "clean": [
+            "rector",
+            "pint --parallel"
+        ],
         "test": [
             "@test:lint",
             "@test:refactor",

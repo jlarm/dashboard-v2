@@ -2,7 +2,7 @@ includes:
     - vendor/larastan/larastan/extension.neon
 
 parameters:
-    level: 5
+    level: 6
 
     paths:
         - app
@@ -41,3 +41,9 @@ parameters:
         -
             identifier: return.type
             message: '#should return Illuminate\\Support\\Collection<int, int> but returns Illuminate\\Support\\Collection<int, int<#'
+        # Larastan types Eloquent relations as Relation<..., $this>; the generic ViolationAudit
+        # interface resolves TDeclaringModel to the concrete class, and $this is not invariantly
+        # equal to that class, so childReturnType is unavoidable on these audit relation methods.
+        -
+            identifier: method.childReturnType
+            message: '#App\\Models\\Dealer\\Audit\\(BodyShop|Glba|Osha)ViolationAudit::#'

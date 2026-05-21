@@ -16,6 +16,9 @@ class RemediationReminders extends Model
         'store_id',
     ];
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function remindable(): MorphTo
     {
         return $this->morphTo();

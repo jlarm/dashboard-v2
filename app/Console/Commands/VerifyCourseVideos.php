@@ -173,6 +173,9 @@ class VerifyCourseVideos extends Command
         );
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $issues
+     */
     protected function displayIssues(array $issues): void
     {
         $this->newLine();

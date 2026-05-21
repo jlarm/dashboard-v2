@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchSharedDocuments
 {
+    /**
+     * @return LengthAwarePaginator<int, SharedDocument>
+     */
     public function handle(?string $search): LengthAwarePaginator
     {
         return SharedDocument::query()

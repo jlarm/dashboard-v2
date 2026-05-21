@@ -20,6 +20,9 @@ class UploadRedFlagToDigitalOceanJob implements ShouldQueue
 
     public function __construct(protected RedFlag $manual) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->manual->getKey())];

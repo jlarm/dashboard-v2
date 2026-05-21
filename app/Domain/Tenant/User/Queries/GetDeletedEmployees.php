@@ -16,6 +16,7 @@ class GetDeletedEmployees
 
     /**
      * @param  array{search?: string}  $filters
+     * @return LengthAwarePaginator<int, User>
      */
     public function handle(User $viewer, array $filters, int $page = 1): LengthAwarePaginator
     {
@@ -35,6 +36,7 @@ class GetDeletedEmployees
 
     /**
      * @param  array{search?: string}  $filters
+     * @return Builder<User>
      */
     private function baseQuery(array $filters): Builder
     {
@@ -56,6 +58,9 @@ class GetDeletedEmployees
         return $query;
     }
 
+    /**
+     * @param  Builder<User>  $query
+     */
     private function applyStoreScope(Builder $query): void
     {
         if (! app()->bound('multipleStoresExist') || ! resolve('multipleStoresExist')) {

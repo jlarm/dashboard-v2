@@ -70,6 +70,10 @@ class ImportSdsCommand extends Command
         $this->info("Using file: {$filePath}");
     }
 
+    /**
+     * @param  array<string, mixed>  $record
+     * @return array<string, mixed>
+     */
     private function validateRecord(array $record, int $index): array
     {
         $validator = Validator::make($record, [
@@ -85,6 +89,9 @@ class ImportSdsCommand extends Command
         return $validator->validated();
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     private function loadJsonData(): array
     {
         $filePath = $this->getFilePath();
@@ -114,6 +121,9 @@ class ImportSdsCommand extends Command
         throw new InvalidArgumentException('No valid data structure found. Expected array or object with "pdfs" key');
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $data
+     */
     private function importData(array $data): void
     {
         $chunkSize = (int) $this->option('chunkSize');
@@ -135,6 +145,9 @@ class ImportSdsCommand extends Command
         $this->newLine();
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $chunk
+     */
     private function processChunk(array $chunk, int $chunkNumber, int $totalChunks): void
     {
         try {
@@ -165,6 +178,10 @@ class ImportSdsCommand extends Command
         }
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $chunk
+     * @return array<int, array<string, mixed>>
+     */
     private function transformData(array $chunk, int $chunkStartIndex): array
     {
         $now = now();
@@ -197,6 +214,10 @@ class ImportSdsCommand extends Command
         return $validRecords;
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $records
+     * @return array<int, string>
+     */
     private function checkForDuplicates(array $records): array
     {
         $combinations = [];
@@ -218,6 +239,10 @@ class ImportSdsCommand extends Command
             ->all();
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $records
+     * @return array<int, array<string, mixed>>
+     */
     private function handleDuplicates(array $records): array
     {
         $existingKeys = $this->checkForDuplicates($records);
@@ -245,6 +270,9 @@ class ImportSdsCommand extends Command
         return $newRecords;
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $records
+     */
     private function updateExistingRecords(array $records): void
     {
         foreach ($records as $record) {
@@ -259,6 +287,9 @@ class ImportSdsCommand extends Command
         }
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $data
+     */
     private function performDryRun(array $data): int
     {
         $chunkSize = (int) $this->option('chunkSize');
@@ -291,6 +322,10 @@ class ImportSdsCommand extends Command
         return Command::SUCCESS;
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $chunk
+     * @return array<string, int>
+     */
     private function analyzeChunk(array $chunk, int $chunkStartIndex): array
     {
         $stats = ['valid' => 0, 'invalid' => 0, 'duplicates' => 0, 'new' => 0, 'updates' => 0];
@@ -328,6 +363,9 @@ class ImportSdsCommand extends Command
         return $stats;
     }
 
+    /**
+     * @param  array<string, int>  $stats
+     */
     private function displayDryRunResults(array $stats): void
     {
         $this->newLine();

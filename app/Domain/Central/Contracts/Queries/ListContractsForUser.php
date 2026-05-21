@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ListContractsForUser
 {
+    /**
+     * @return LengthAwarePaginator<int, Contract>
+     */
     public function handle(User $user): LengthAwarePaginator
     {
         return Contract::query()

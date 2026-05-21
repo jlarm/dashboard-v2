@@ -13,6 +13,9 @@ class SearchDealerships
 {
     private const int PER_PAGE = 15;
 
+    /**
+     * @return LengthAwarePaginator<int, Dealership>
+     */
     public function handle(?string $search, User $user): LengthAwarePaginator
     {
         return $this->baseQuery($user)
@@ -23,6 +26,9 @@ class SearchDealerships
             ->withQueryString();
     }
 
+    /**
+     * @return Builder<Dealership>
+     */
     private function baseQuery(User $user): Builder
     {
         return Dealership::query()

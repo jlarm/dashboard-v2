@@ -115,61 +115,97 @@ class Store extends Model implements HasMedia
         'fi_password',
     ];
 
+    /**
+     * @return BelongsToMany<User, $this>
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * @return HasOne<DealerInfo, $this>
+     */
     public function dealerInfo(): HasOne
     {
         return $this->hasOne(DealerInfo::class);
     }
 
+    /**
+     * @return HasOne<StoreSettings, $this>
+     */
     public function storeSettings(): HasOne
     {
         return $this->hasOne(StoreSettings::class);
     }
 
+    /**
+     * @return HasOne<ScanSetting, $this>
+     */
     public function scanSetting(): HasOne
     {
         return $this->hasOne(ScanSetting::class);
     }
 
+    /**
+     * @return HasMany<OshaAudit, $this>
+     */
     public function oshaAudits(): HasMany
     {
         return $this->hasMany(OshaAudit::class);
     }
 
+    /**
+     * @return HasMany<BodyShopAudit, $this>
+     */
     public function bodyShopAudits(): HasMany
     {
         return $this->hasMany(BodyShopAudit::class);
     }
 
+    /**
+     * @return HasMany<FinanceAudit, $this>
+     */
     public function financeAudits(): HasMany
     {
         return $this->hasMany(FinanceAudit::class);
     }
 
+    /**
+     * @return HasMany<IndividualAudit, $this>
+     */
     public function individualAudits(): HasMany
     {
         return $this->hasMany(IndividualAudit::class);
     }
 
+    /**
+     * @return HasMany<DealJacketGroup, $this>
+     */
     public function dealJacketGroups(): HasMany
     {
         return $this->hasMany(DealJacketGroup::class);
     }
 
+    /**
+     * @return HasOne<EmployeeList, $this>
+     */
     public function employeeList(): HasOne
     {
         return $this->hasOne(EmployeeList::class);
     }
 
+    /**
+     * @return HasMany<Isp, $this>
+     */
     public function isps(): HasMany
     {
         return $this->hasMany(Isp::class);
     }
 
+    /**
+     * @return HasMany<Osha, $this>
+     */
     public function oshas(): HasMany
     {
         return $this->hasMany(Osha::class);
@@ -199,16 +235,25 @@ class Store extends Model implements HasMedia
         return $this->hasMany(GlbaViolationAudit::class);
     }
 
+    /**
+     * @return HasMany<RedFlag, $this>
+     */
     public function redflags(): HasMany
     {
         return $this->hasMany(RedFlag::class);
     }
 
+    /**
+     * @return HasMany<CmsManual, $this>
+     */
     public function cmsManuals(): HasMany
     {
         return $this->hasMany(CmsManual::class);
     }
 
+    /**
+     * @return HasMany<ScanReport, $this>
+     */
     public function scanReports(): HasMany
     {
         return $this->hasMany(ScanReport::class);
@@ -222,31 +267,49 @@ class Store extends Model implements HasMedia
         return $this->hasOne(ScanReport::class)->latest('last_scan');
     }
 
+    /**
+     * @return HasMany<DealerDoc, $this>
+     */
     public function docs(): HasMany
     {
         return $this->hasMany(DealerDoc::class);
     }
 
+    /**
+     * @return HasMany<Vendor, $this>
+     */
     public function vendors(): HasMany
     {
         return $this->hasMany(Vendor::class);
     }
 
+    /**
+     * @return HasMany<PhishingCampaign, $this>
+     */
     public function phishingCampaigns(): HasMany
     {
         return $this->hasMany(PhishingCampaign::class);
     }
 
+    /**
+     * @return HasOne<Ridgeback, $this>
+     */
     public function ridgeback(): HasOne
     {
         return $this->hasOne(Ridgeback::class);
     }
 
+    /**
+     * @return HasMany<FitTestDoc, $this>
+     */
     public function fitTests(): HasMany
     {
         return $this->hasMany(FitTestDoc::class);
     }
 
+    /**
+     * @return HasOne<RemediationSetting, $this>
+     */
     public function remediationSettings(): HasOne
     {
         return $this->hasOne(RemediationSetting::class);
@@ -361,6 +424,9 @@ class Store extends Model implements HasMedia
         ];
     }
 
+    /**
+     * @param  array<int, float|int>  $grades
+     */
     private function calculateGrade(array $grades): ?string
     {
         if ($grades === []) {

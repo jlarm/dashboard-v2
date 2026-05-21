@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class CentralUserInviteRegisterRepository
 {
+    /**
+     * @param  array<string, mixed>  $userData
+     */
     public function create(array $userData): void
     {
         $user = User::query()->create([

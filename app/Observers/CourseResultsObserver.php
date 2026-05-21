@@ -81,6 +81,8 @@ class CourseResultsObserver
 
     /**
      * Clear Redis cache keys matching patterns.
+     *
+     * @param  array<int, string>  $patterns
      */
     private function clearRedisPatternCache(array $patterns): void
     {

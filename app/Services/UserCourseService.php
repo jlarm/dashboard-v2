@@ -70,10 +70,26 @@ class UserCourseService
         'wy' => 'wyoming',
     ];
 
+    /**
+     * @var array<int, array<int, int>>
+     */
     private array $courseIdsCache = [];
+
+    /**
+     * @var array<string, array<int, int>>
+     */
     private array $courseRoleCache = [];
+
+    /**
+     * @var array<string, array<int, int>>
+     */
     private array $baseCourseCache = [];
+
+    /**
+     * @var array<int, string>|null
+     */
     private ?array $tenantAssignedSlugsCache = null;
+
     private int|string|null $tenantSlugsCachedFor = null;
     private int|string|null $currentTenantId = null;
 
@@ -99,6 +115,9 @@ class UserCourseService
         $this->tenantSlugsCachedFor = null;
     }
 
+    /**
+     * @return array<int, int>
+     */
     public function getCourseIds(User $user): array
     {
         $this->resetCachesIfTenantChanged();
@@ -153,6 +172,9 @@ class UserCourseService
         );
     }
 
+    /**
+     * @return Collection<int, Course>
+     */
     public function getCoursesSimple(User $user): Collection
     {
         $courseIds = $this->getCourseIds($user);
@@ -164,6 +186,9 @@ class UserCourseService
             ->get();
     }
 
+    /**
+     * @return Collection<int, Course>
+     */
     public function getCoursesWithResults(User $user): Collection
     {
         $courseIds = $this->getCourseIds($user);
@@ -176,6 +201,11 @@ class UserCourseService
             ->get();
     }
 
+    /**
+     * @param  array<int, string>  $select
+     * @param  array<int|string, mixed>  $with
+     * @return Collection<int, Course>
+     */
     public function getCoursesWithOptions(User $user, array $select = ['*'], array $with = []): Collection
     {
         $courseIds = $this->getCourseIds($user);
@@ -199,6 +229,8 @@ class UserCourseService
     }
 
     /**
+     * @param  array<int, int>  $courseWithRole
+     * @param  array<string>  $userStates
      * @return array<int>
      */
     private function resolveBaseCourseIds(mixed $departmentId, array $courseWithRole, array $userStates): array
@@ -387,6 +419,9 @@ class UserCourseService
             ->all();
     }
 
+    /**
+     * @return array<int, int>
+     */
     private function getOverrideCourseIds(User $user, string $type): array
     {
         if ($user->relationLoaded('courseOverrides')) {

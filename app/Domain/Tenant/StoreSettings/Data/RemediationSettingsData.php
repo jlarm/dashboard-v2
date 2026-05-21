@@ -59,7 +59,7 @@ class RemediationSettingsData
         $multipleStores = (bool) (app()->bound('multipleStoresExist') ? resolve('multipleStoresExist') : false);
 
         $relevantUsers = ($multipleStores
-            ? $store->users()->permission('create-users') // @phpstan-ignore method.notFound
+            ? $store->users()->permission('create-users')
             : User::query()->permission('create-users'))
             ->get(['id', 'name', 'slug'])
             ->keyBy('id');

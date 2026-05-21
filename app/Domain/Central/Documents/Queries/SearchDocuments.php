@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchDocuments
 {
+    /**
+     * @return LengthAwarePaginator<int, Document>
+     */
     public function handle(?string $search): LengthAwarePaginator
     {
         return Document::query()

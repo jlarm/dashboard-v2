@@ -14,8 +14,14 @@ class ExpiredCourseNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * @param  array<array-key, mixed>  $coursesGrouped
+     */
     public function __construct(public array $coursesGrouped, public string $userName) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(mixed $notifiable): array
     {
         return ['mail', 'database'];
@@ -62,6 +68,9 @@ class ExpiredCourseNotification extends Notification implements ShouldQueue
         return $mail;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toDatabase(mixed $notifiable): array
     {
         $messages = [];

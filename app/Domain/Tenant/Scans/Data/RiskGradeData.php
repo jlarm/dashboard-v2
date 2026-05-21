@@ -42,6 +42,9 @@ final readonly class RiskGradeData
         ];
     }
 
+    /**
+     * @param  array<string, mixed>  $payload
+     */
     private static function stringOrNull(array $payload, string $key): ?string
     {
         if (! isset($payload[$key]) || ! is_string($payload[$key]) || $payload[$key] === '') {

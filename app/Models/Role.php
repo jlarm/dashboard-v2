@@ -14,8 +14,11 @@ class Role extends SpatieRole
     #[Override]
     protected $guarded = [];
 
-    protected $guard_name = 'web';
+    protected string $guard_name = 'web';
 
+    /**
+     * @return BelongsToMany<Course, $this>
+     */
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class);

@@ -30,11 +30,17 @@ class CourseUserNotificationSent extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     protected function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<Course, $this>
+     */
     protected function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

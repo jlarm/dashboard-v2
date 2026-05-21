@@ -113,6 +113,9 @@ class MailgunWebhookController extends Controller
         return response()->json(['message' => 'Webhook processed'], 200);
     }
 
+    /**
+     * @param  array<string, mixed>  $eventData
+     */
     protected function updateEmailLog(VendorEmailLog $emailLog, string $event, array $eventData): void
     {
         $updates = [

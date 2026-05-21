@@ -10,6 +10,9 @@ use Override;
 
 class OshaQuestions extends Model
 {
+    /**
+     * @use HasFactory<\Database\Factories\OshaQuestionsFactory>
+     */
     use HasFactory;
 
     #[Override]

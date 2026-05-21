@@ -29,6 +29,9 @@ class GenerateOshaPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     public function __construct(private readonly OshaViolationAudit $oshaViolationAudit) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->oshaViolationAudit->getKey())];

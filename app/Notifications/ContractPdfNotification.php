@@ -17,6 +17,9 @@ class ContractPdfNotification extends Notification implements ShouldQueue
 
     public function __construct(protected Contract $contract) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(mixed $notifiable): array
     {
         return ['mail'];
@@ -34,6 +37,9 @@ class ContractPdfNotification extends Notification implements ShouldQueue
             ]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(mixed $notifiable): array
     {
         return [];

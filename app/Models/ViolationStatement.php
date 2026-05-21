@@ -15,7 +15,7 @@ use Override;
 /**
  * @property-read int $id
  * @property-read string $statement
- * @property-read array|null $keywords
+ * @property-read array<int, string>|null $keywords
  * @property-read int $weight
  * @property-read Collection<int, ViolationStatementCategory> $categories
  * @property-read string|null $reference_image_url
@@ -24,6 +24,9 @@ use Override;
  */
 class ViolationStatement extends Model
 {
+    /**
+     * @use HasFactory<\Database\Factories\ViolationStatementFactory>
+     */
     use HasFactory;
 
     #[Override]

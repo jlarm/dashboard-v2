@@ -53,6 +53,9 @@ final readonly class CveItemData
         ];
     }
 
+    /**
+     * @param  array<string, mixed>  $payload
+     */
     private static function stringOrNull(array $payload, string $key): ?string
     {
         if (! isset($payload[$key])) {

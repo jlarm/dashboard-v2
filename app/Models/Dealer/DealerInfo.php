@@ -36,6 +36,9 @@ class DealerInfo extends Model
         'compliance_issues',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function dealer(): BelongsTo
     {
         return $this->belongsTo(Store::class);

@@ -17,6 +17,9 @@ class GetVendors
 
     public function __construct(private readonly StoreScopeService $storeScopeService) {}
 
+    /**
+     * @return LengthAwarePaginator<int, Vendor>
+     */
     public function handle(?User $viewer, string $search = '', int $page = 1): LengthAwarePaginator
     {
         $scopedStoreIds = $this->storeScopeService->scopedStoreIds($viewer);

@@ -17,6 +17,9 @@ class StoreInviteRequest extends FormRequest
         return $this->user()?->can('create', UserInvite::class) ?? false;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [

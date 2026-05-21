@@ -24,7 +24,7 @@ class GetResettableUsers
     {
         return $this->baseQuery($search)
             ->get()
-            ->map(static fn (User $user): ResettableUserData => ResettableUserData::fromModel($user)) // @phpstan-ignore argument.type
+            ->map(static fn (User $user): ResettableUserData => ResettableUserData::fromModel($user))
             ->values()
             ->all();
     }
@@ -44,6 +44,9 @@ class GetResettableUsers
             ->values();
     }
 
+    /**
+     * @return Builder<User>
+     */
     private function baseQuery(string $search): Builder
     {
         $searchTerm = mb_trim($search);

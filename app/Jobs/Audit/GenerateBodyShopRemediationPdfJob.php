@@ -29,6 +29,9 @@ class GenerateBodyShopRemediationPdfJob implements ShouldBeEncrypted, ShouldQueu
         private readonly BodyShopViolationAudit $bodyShopViolationAudit,
     ) {}
 
+    /**
+     * @return array<int, object>
+     */
     public function middleware(): array
     {
         return [new WithoutOverlapping(static::class.'-'.$this->bodyShopViolationAudit->getKey())];

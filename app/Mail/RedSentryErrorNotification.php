@@ -17,6 +17,8 @@ class RedSentryErrorNotification extends Mailable
 
     /**
      * Create a new message instance.
+     *
+     * @param  array<array-key, mixed>  $errors
      */
     public function __construct(public array $errors) {}
 

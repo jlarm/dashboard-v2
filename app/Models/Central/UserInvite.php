@@ -59,6 +59,10 @@ class UserInvite extends Model
         return ! $this->isActive();
     }
 
+    /**
+     * @param  Builder<UserInvite>  $query
+     * @return Builder<UserInvite>
+     */
     protected function scopeOpen(Builder $query): Builder
     {
         return $query->whereNull('accepted_at')

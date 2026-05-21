@@ -63,26 +63,41 @@ class Violation extends Model implements HasMedia
             ->quality(80);
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function auditable(): MorphTo
     {
         return $this->morphTo();
     }
 
+    /**
+     * @return HasOne<Remediation, $this>
+     */
     public function remediation(): HasOne
     {
         return $this->hasOne(Remediation::class);
     }
 
+    /**
+     * @return BelongsTo<OshaViolationStatements, $this>
+     */
     public function oshaStatement(): BelongsTo
     {
         return $this->belongsTo(OshaViolationStatements::class, 'statement_id');
     }
 
+    /**
+     * @return BelongsTo<BodyShopViolationStatement, $this>
+     */
     public function bodyShopStatement(): BelongsTo
     {
         return $this->belongsTo(BodyShopViolationStatement::class, 'statement_id');
     }
 
+    /**
+     * @return BelongsTo<GlbaViolationStatements, $this>
+     */
     public function glbaStatement(): BelongsTo
     {
         return $this->belongsTo(GlbaViolationStatements::class, 'statement_id');

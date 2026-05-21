@@ -63,6 +63,9 @@ class CourseExpiringEmailCommand extends Command
         }
     }
 
+    /**
+     * @return Collection<int, \App\Models\Dealer\CourseResults>
+     */
     private function getExpiringCourses(User $user): Collection
     {
         $lastYear = Date::now()->subYear()->addDays(15)->format('Y-m-d');

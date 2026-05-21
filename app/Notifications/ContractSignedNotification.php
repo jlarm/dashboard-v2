@@ -16,6 +16,9 @@ class ContractSignedNotification extends Notification implements ShouldQueue
 
     public function __construct(private Contract $contract) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(mixed $notifiable): array
     {
         return ['mail'];
@@ -29,6 +32,9 @@ class ContractSignedNotification extends Notification implements ShouldQueue
             ->action('View Contract', route('contracts.edit', $this->contract));
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(mixed $notifiable): array
     {
         return [];

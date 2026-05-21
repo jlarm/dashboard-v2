@@ -29,6 +29,9 @@ class PhishingCampaign extends Model
         'emails_reported',
     ];
 
+    /**
+     * @return HasMany<Timeline, $this>
+     */
     public function timelines(): HasMany
     {
         return $this->hasMany(Timeline::class);
@@ -44,11 +47,17 @@ class PhishingCampaign extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     protected function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     protected function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

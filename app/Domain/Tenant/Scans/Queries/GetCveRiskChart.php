@@ -22,7 +22,7 @@ class GetCveRiskChart
             return CveRiskChartData::empty();
         }
 
-        $sortedScans = collect($scans)
+        $sortedScans = collect((array) $scans)
             ->sortByDesc('scan_finished')
             ->take(5)
             ->sortBy('scan_finished')

@@ -17,6 +17,9 @@ class Certificate extends Model
         'file_name',
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

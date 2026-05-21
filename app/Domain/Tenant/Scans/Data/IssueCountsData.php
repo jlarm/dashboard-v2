@@ -50,6 +50,9 @@ final readonly class IssueCountsData
         ];
     }
 
+    /**
+     * @param  array<string, mixed>  $payload
+     */
     private static function intOrNull(array $payload, string $key): ?int
     {
         if (! array_key_exists($key, $payload) || ! is_numeric($payload[$key])) {

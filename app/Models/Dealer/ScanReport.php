@@ -41,6 +41,9 @@ class ScanReport extends Model
         'updated_at',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
