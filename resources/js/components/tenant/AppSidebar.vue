@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import GlobalSearch from '@/components/GlobalSearch.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/tenant/NavUser.vue';
 import StoreSwitcher from '@/components/tenant/StoreSwitcher.vue';
@@ -33,7 +34,7 @@ import automatedReports from '@/routes/dealer/settings/automated-reports';
 import courses from '@/routes/dealer/courses';
 import { dashboard } from '@/routes/dealer';
 import type { NavItem } from '@/types';
-import { Building2, ClipboardCheck, FileSignature, FileText, FileBarChart2, FlaskConical, GraduationCap, Handshake, HardHat, LayoutGrid, ScrollText, Settings, ShieldCheck, Users } from 'lucide-vue-next';
+import { Building2, ClipboardCheck, FileSignature, FileText, FileBarChart2, FlaskConical, GraduationCap, Handshake, HardHat, LayoutGrid, ScrollText, Search, Settings, ShieldCheck, Users } from 'lucide-vue-next';
 
 const page = usePage<{ auth: { current_store_id: number | null } }>();
 
@@ -172,6 +173,33 @@ const footerNavItems = computed<NavItem[]>(() => {
     <Sidebar collapsible="icon" variant="inset">
         <SidebarHeader>
             <StoreSwitcher />
+
+            <GlobalSearch>
+                <template #trigger="{ open, shortcut }">
+                    <div
+                        class="px-1 pt-2 pb-3 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-1.5"
+                    >
+                        <button
+                            type="button"
+                            aria-label="Search"
+                            class="flex h-9 w-full cursor-pointer items-center gap-2 rounded-md border border-sidebar-border bg-background px-2.5 text-sm text-muted-foreground shadow-xs transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
+                            @click="open"
+                        >
+                            <Search class="size-4 shrink-0" />
+                            <span
+                                class="flex-1 text-left group-data-[collapsible=icon]:hidden"
+                            >
+                                Search
+                            </span>
+                            <kbd
+                                class="rounded border border-sidebar-border bg-sidebar px-1.5 py-0.5 font-mono text-[10px] font-medium group-data-[collapsible=icon]:hidden"
+                            >
+                                {{ shortcut }}
+                            </kbd>
+                        </button>
+                    </div>
+                </template>
+            </GlobalSearch>
         </SidebarHeader>
 
         <SidebarContent>

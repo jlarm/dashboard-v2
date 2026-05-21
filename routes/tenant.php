@@ -28,6 +28,7 @@ use App\Http\Controllers\Tenant\NotificationsController;
 use App\Http\Controllers\Tenant\ScanArchiveController;
 use App\Http\Controllers\Tenant\ScansController;
 use App\Http\Controllers\Tenant\SdsController;
+use App\Http\Controllers\Tenant\SearchController;
 use App\Http\Controllers\Tenant\Settings\AutomatedReportsController;
 use App\Http\Controllers\Tenant\Settings\GlobalSettingsController;
 use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
@@ -80,6 +81,8 @@ Route::name('dealer.')->middleware([
         ->name('dashboard.consultant-note.update');
     Route::post('/dashboard/first-store', CreateFirstStoreController::class)->middleware('auth')->name('store.first');
     Route::post('/current-store', SwitchStoreController::class)->middleware('auth')->name('store.switch');
+
+    Route::get('/search', SearchController::class)->middleware('auth')->name('search');
 
     Route::redirect('stores/{path?}', '/dashboard')
         ->where('path', '.*')

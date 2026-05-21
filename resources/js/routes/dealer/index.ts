@@ -270,6 +270,87 @@ dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 dashboard.form = dashboardForm
 
 /**
+* @see \App\Http\Controllers\Tenant\SearchController::__invoke
+* @see app/Http/Controllers/Tenant/SearchController.php:15
+* @route '/search'
+*/
+export const search = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: search.url(options),
+    method: 'get',
+})
+
+search.definition = {
+    methods: ["get","head"],
+    url: '/search',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\SearchController::__invoke
+* @see app/Http/Controllers/Tenant/SearchController.php:15
+* @route '/search'
+*/
+search.url = (options?: RouteQueryOptions) => {
+    return search.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\SearchController::__invoke
+* @see app/Http/Controllers/Tenant/SearchController.php:15
+* @route '/search'
+*/
+search.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: search.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\SearchController::__invoke
+* @see app/Http/Controllers/Tenant/SearchController.php:15
+* @route '/search'
+*/
+search.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: search.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\SearchController::__invoke
+* @see app/Http/Controllers/Tenant/SearchController.php:15
+* @route '/search'
+*/
+const searchForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: search.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\SearchController::__invoke
+* @see app/Http/Controllers/Tenant/SearchController.php:15
+* @route '/search'
+*/
+searchForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: search.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\SearchController::__invoke
+* @see app/Http/Controllers/Tenant/SearchController.php:15
+* @route '/search'
+*/
+searchForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: search.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+search.form = searchForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController::logout
 * @see app/Http/Controllers/Tenant/Auth/AuthenticatedSessionController.php:50
 * @route '/logout'
@@ -331,6 +412,7 @@ const dealerNamespace = {
     password: Object.assign(password, password),
     dashboard: Object.assign(dashboard, dashboard074181),
     store: Object.assign(store, store),
+    search: Object.assign(search, search),
     legacyStores: Object.assign(legacyStores, legacyStores),
     employees: Object.assign(employees, employees),
     sds: Object.assign(sds, sds),

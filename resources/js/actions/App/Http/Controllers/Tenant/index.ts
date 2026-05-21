@@ -1,6 +1,7 @@
 import Auth from './Auth'
 import DashboardController from './DashboardController'
 import Store from './Store'
+import SearchController from './SearchController'
 import SdsController from './SdsController'
 import CourseController from './CourseController'
 import Settings from './Settings'
@@ -19,6 +20,7 @@ const Tenant = {
     Auth: Object.assign(Auth, Auth),
     DashboardController: Object.assign(DashboardController, DashboardController),
     Store: Object.assign(Store, Store),
+    SearchController: Object.assign(SearchController, SearchController),
     SdsController: Object.assign(SdsController, SdsController),
     CourseController: Object.assign(CourseController, CourseController),
     Settings: Object.assign(Settings, Settings),
