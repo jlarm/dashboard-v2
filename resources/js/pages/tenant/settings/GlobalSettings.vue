@@ -5,7 +5,6 @@ import { useDebounceFn } from '@vueuse/core';
 import { AlertTriangle, Loader2, Search } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import Heading from '@/components/Heading.vue';
-import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -17,7 +16,6 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import {
     Table,
@@ -32,7 +30,7 @@ import settings from '@/routes/dealer/settings';
 import globalSettings from '@/routes/dealer/settings/global';
 import type { BreadcrumbItem } from '@/types';
 
-type Section = 'general' | 'course-management' | 'reset-courses' | 'phishing';
+type Section = 'general' | 'course-management' | 'reset-courses';
 
 type StoreItem = {
     id: number;
@@ -56,15 +54,8 @@ type ResettableUser = {
     status: 'completed' | 'in-progress' | 'not-started';
 };
 
-type Phishing = {
-    active: boolean;
-    token: string | null;
-    ip: string | null;
-};
-
 const props = defineProps<{
     section: Section;
-    phishing: Phishing;
     stores: StoreItem[];
     courses: CourseItem[];
     users: ResettableUser[];
@@ -79,7 +70,6 @@ const sections: { key: Section; label: string; href: string }[] = [
     { key: 'general', label: 'General', href: settings.global.url() },
     { key: 'course-management', label: 'Course Management', href: globalSettings.courseManagement.url() },
     { key: 'reset-courses', label: 'Reset Courses', href: globalSettings.resetCourses.url() },
-    { key: 'phishing', label: 'Phishing', href: globalSettings.phishing.url() },
 ];
 
 // ---------- General section actions ----------
@@ -108,20 +98,6 @@ const toggleOptionalCourse = (course: CourseItem): void => {
         {},
         { preserveScroll: true, preserveState: true },
     );
-};
-
-// ---------- Phishing section ----------
-
-const phishingForm = useForm({
-    phishing_active: props.phishing.active,
-    phishing_token: props.phishing.token ?? '',
-    phishing_ip: props.phishing.ip ?? '',
-});
-
-const submitPhishing = (): void => {
-    phishingForm.patch(GlobalSettingsController.updatePhishing.url(), {
-        preserveScroll: true,
-    });
 };
 
 // ---------- Reset Courses section ----------
@@ -251,7 +227,7 @@ const confirmMessage = computed<string>(() =>
         <div class="space-y-6 px-4 py-6">
             <Heading
                 title="Global Settings"
-                description="Manage dealer-wide settings, course assignments, and phishing simulations."
+                description="Manage dealer-wide settings and course assignments."
             />
 
             <div class="flex justify-center">
@@ -477,48 +453,6 @@ const confirmMessage = computed<string>(() =>
                 </div>
             </div>
 
-            <!-- Phishing -->
-            <div v-else-if="section === 'phishing'" class="mx-auto max-w-3xl">
-                <form class="rounded-md border bg-card p-6" @submit.prevent="submitPhishing">
-                    <div class="space-y-1">
-                        <h2 class="text-base font-medium">Phishing Simulations</h2>
-                        <p class="text-sm text-muted-foreground">
-                            Toggle phishing simulations and configure delivery settings.
-                        </p>
-                    </div>
-
-                    <Separator class="my-4" />
-
-                    <div class="flex items-center justify-between gap-4">
-                        <Label for="phishing_active" class="text-sm font-medium">Phishing Simulations</Label>
-                        <Checkbox
-                            id="phishing_active"
-                            :model-value="phishingForm.phishing_active"
-                            @update:model-value="(value) => (phishingForm.phishing_active = value === true)"
-                        />
-                    </div>
-
-                    <div class="mt-5 grid gap-4 sm:grid-cols-2">
-                        <div class="grid gap-2">
-                            <Label for="phishing_token">Token</Label>
-                            <Input id="phishing_token" v-model="phishingForm.phishing_token" type="text" />
-                            <InputError :message="phishingForm.errors.phishing_token" />
-                        </div>
-                        <div class="grid gap-2">
-                            <Label for="phishing_ip">IP Address</Label>
-                            <Input id="phishing_ip" v-model="phishingForm.phishing_ip" type="text" />
-                            <InputError :message="phishingForm.errors.phishing_ip" />
-                        </div>
-                    </div>
-
-                    <div class="mt-6 flex justify-end">
-                        <Button type="submit" :disabled="phishingForm.processing">
-                            <Loader2 v-if="phishingForm.processing" class="size-3.5 animate-spin" />
-                            Update
-                        </Button>
-                    </div>
-                </form>
-            </div>
         </div>
 
         <Dialog v-model:open="confirmOpen">

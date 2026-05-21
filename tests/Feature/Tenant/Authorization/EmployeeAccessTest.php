@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
@@ -75,11 +74,6 @@ describe('Employee - Forbidden Routes (Super-Admin|Consultant Only)', function (
             ->assertForbidden();
     });
 
-    it('cannot create phishing campaigns', function (): void {
-        $this->actingAs($this->employee)
-            ->get(route('dealer.phishing.create'))
-            ->assertForbidden();
-    });
 });
 
 describe('Employee - Forbidden Routes (QI+ Only)', function (): void {
@@ -89,32 +83,12 @@ describe('Employee - Forbidden Routes (QI+ Only)', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access phishing index', function (): void {
-        $this->actingAs($this->employee)
-            ->get(route('dealer.phishing.index'))
-            ->assertForbidden();
-    });
-
     it('cannot access dealer settings', function (): void {
         $this->actingAs($this->employee)
             ->get(route('dealer.dealer.settings'))
             ->assertForbidden();
     });
 
-    it('cannot access phishing campaign details', function (): void {
-        $campaign = PhishingCampaign::query()->create([
-            'campaign_id' => 'employee-campaign-1',
-            'user_id' => $this->employee->id,
-            'store_id' => $this->store->id,
-            'name' => 'Employee Forbidden Campaign',
-            'status' => 'In progress',
-            'campaign_created_at' => now(),
-        ]);
-
-        $this->actingAs($this->employee)
-            ->get(route('dealer.phishing.show', $campaign))
-            ->assertForbidden();
-    });
 });
 
 describe('Employee - Forbidden Routes (Manager+ Only)', function (): void {
@@ -196,11 +170,6 @@ describe('Employee - Forbidden Routes (Consultant Only)', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access ridgeback index', function (): void {
-        $this->actingAs($this->employee)
-            ->get(route('dealer.ridgeback.index'))
-            ->assertForbidden();
-    });
 });
 
 describe('Employee - Forbidden Routes (Logs)', function (): void {

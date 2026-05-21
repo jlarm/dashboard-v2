@@ -284,22 +284,6 @@ class Store extends Model implements HasMedia
     }
 
     /**
-     * @return HasMany<PhishingCampaign, $this>
-     */
-    public function phishingCampaigns(): HasMany
-    {
-        return $this->hasMany(PhishingCampaign::class);
-    }
-
-    /**
-     * @return HasOne<Ridgeback, $this>
-     */
-    public function ridgeback(): HasOne
-    {
-        return $this->hasOne(Ridgeback::class);
-    }
-
-    /**
      * @return HasMany<FitTestDoc, $this>
      */
     public function fitTests(): HasMany

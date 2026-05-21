@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Models\Dealer\Course;
 use App\Models\Dealer\CourseResults;
-use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Support\Facades\Bus;
@@ -35,7 +34,6 @@ describe('global settings index', function (): void {
             ->assertInertia(fn ($page) => $page
                 ->component('tenant/settings/GlobalSettings')
                 ->where('section', 'general')
-                ->has('phishing')
                 ->has('stores'));
     });
 
@@ -122,49 +120,6 @@ describe('global settings index', function (): void {
             });
     });
 
-    it('renders the phishing section with current settings', function (): void {
-        GlobalSetting::query()->create([
-            'phishing_active' => true,
-            'phishing_token' => 'tok-123',
-            'phishing_ip' => '10.0.0.1',
-        ]);
-
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.settings.global.phishing'))
-            ->assertOk()
-            ->assertInertia(fn ($page) => $page
-                ->where('section', 'phishing')
-                ->where('phishing.active', true)
-                ->where('phishing.token', 'tok-123')
-                ->where('phishing.ip', '10.0.0.1'));
-    });
-});
-
-describe('global settings phishing update', function (): void {
-    it('saves phishing settings', function (): void {
-        $this->actingAs($this->consultant)
-            ->patch(route('dealer.settings.global.phishing.update'), [
-                'phishing_active' => true,
-                'phishing_token' => 'new-token',
-                'phishing_ip' => '192.168.1.1',
-            ])
-            ->assertRedirect();
-
-        $settings = GlobalSetting::query()->firstOrFail();
-        expect($settings->phishing_active)->toBeTrue();
-        expect($settings->phishing_token)->toBe('new-token');
-        expect($settings->phishing_ip)->toBe('192.168.1.1');
-    });
-
-    it('forbids managers', function (): void {
-        $this->actingAs($this->manager)
-            ->patch(route('dealer.settings.global.phishing.update'), [
-                'phishing_active' => true,
-                'phishing_token' => 'x',
-                'phishing_ip' => '1.1.1.1',
-            ])
-            ->assertForbidden();
-    });
 });
 
 describe('global settings store toggles', function (): void {

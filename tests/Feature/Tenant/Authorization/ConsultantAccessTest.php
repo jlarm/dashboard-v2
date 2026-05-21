@@ -152,21 +152,6 @@ describe('Consultant - Documents Access', function (): void {
     });
 });
 
-describe('Consultant - Phishing Access', function (): void {
-    it('can access phishing index', function (): void {
-        $this->actingAs($this->consultant)
-            ->get(route('dealer.phishing.index'))
-            ->assertOk();
-    });
-
-    it('is not forbidden from phishing create', function (): void {
-        $response = $this->actingAs($this->consultant)
-            ->get(route('dealer.phishing.create'));
-
-        expect($response->status())->not->toBeIn([401, 403, 302]);
-    });
-});
-
 describe('Consultant - Routes It Should NOT Access', function (): void {
     it('can access global settings', function (): void {
         Store::query()->create(['name' => 'Second Store']);

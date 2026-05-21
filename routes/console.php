@@ -77,22 +77,6 @@ Schedule::command('backups:clean')
     ->onOneServer()
     ->emailOutputOnFailure(config('app.admin_email'));
 
-// Synchronize GoPhish user groups
-Schedule::command('run:go-phish-user-groups')
-    ->dailyAt('04:00')
-    ->runInBackground()
-    ->withoutOverlapping()
-    ->onOneServer()
-    ->emailOutputOnFailure(config('app.admin_email'));
-
-// Synchronize GoPhish user group departments
-Schedule::command('run:go-phish-user-group-departments')
-    ->dailyAt('04:30')
-    ->runInBackground()
-    ->withoutOverlapping()
-    ->onOneServer()
-    ->emailOutputOnFailure(config('app.admin_email'));
-
 Schedule::command('courses:incomplete-reminder')
     ->dailyAt('05:00')
     ->runInBackground()

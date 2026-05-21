@@ -37,11 +37,8 @@ use App\Http\Controllers\Tenant\Settings\StoreSettingsController;
 use App\Http\Controllers\Tenant\Store\LocationController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\Tenant\UserController as TenantUserController;
-use App\Http\Controllers\WebhookController;
-use App\Http\Livewire\Dealer\Phish\Create;
-use App\Http\Livewire\Dealer\Phish\Show;
-use App\Http\Livewire\Dealer\Ridgeback\Index;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
+use App\Http\Livewire\Tenant\Audit\Fit\Index;
 use App\Routing\ViolationAuditRoutes;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
@@ -166,11 +163,6 @@ Route::name('dealer.')->middleware([
             Route::get('reset-courses', [GlobalSettingsController::class, 'index'])
                 ->defaults('section', 'reset-courses')
                 ->name('reset-courses');
-            Route::get('phishing', [GlobalSettingsController::class, 'index'])
-                ->defaults('section', 'phishing')
-                ->name('phishing');
-
-            Route::patch('phishing', [GlobalSettingsController::class, 'updatePhishing'])->name('phishing.update');
             Route::post('stores/{store}/notifications', [GlobalSettingsController::class, 'toggleStoreNotifications'])->name('stores.notifications');
             Route::post('stores/{store}/remediations', [GlobalSettingsController::class, 'toggleStoreRemediations'])->name('stores.remediations');
             Route::patch('courses/{course}/optional', [GlobalSettingsController::class, 'toggleOptionalCourse'])->name('courses.optional');
@@ -216,12 +208,6 @@ Route::name('dealer.')->middleware([
             Route::post('deal-jackets/{dealJacketGroup:uuid}/complete', [DealJacketController::class, 'complete'])->name('deal-jackets.complete');
             Route::delete('deal-jackets/{dealJacketGroup:uuid}', [DealJacketController::class, 'destroyGroup'])->name('deal-jackets.destroy-group');
         });
-
-        Route::get('phishing/create', Create::class)->name('phishing.create');
-
-        Route::get('ridgeback', Index::class)
-            ->middleware(['auth', 'single.store'])
-            ->name('ridgeback.index');
 
         Route::get('locations', [LocationController::class, 'index'])->name('locations.index');
         Route::post('locations', [LocationController::class, 'store'])->name('locations.store');
@@ -269,8 +255,6 @@ Route::name('dealer.')->middleware([
                 ->name('reset-courses.run');
         });
 
-        Route::get('phishing', App\Http\Livewire\Dealer\Phish\Index::class)->name('phishing.index');
-        Route::get('phishing/{phishingCampaign}', Show::class)->name('phishing.show');
     });
 
     // **************************************************
@@ -387,7 +371,7 @@ Route::name('dealer.')->middleware([
                 ->name('destroy');
         });
 
-        Route::get('fit-tests', App\Http\Livewire\Tenant\Audit\Fit\Index::class)->name('fit-tests.index');
+        Route::get('fit-tests', Index::class)->name('fit-tests.index');
 
     });
 
@@ -402,12 +386,4 @@ Route::name('dealer.')->middleware([
         ->name('stop.impersonation')
         ->middleware('auth');
 
-});
-
-Route::middleware([
-    'api',
-    InitializeTenancyByDomain::class,
-    PreventAccessFromCentralDomains::class,
-])->group(function (): void {
-    Route::post('/webhooks/gophish/', [WebhookController::class, 'gophish'])->name('webhooks.gophish');
 });

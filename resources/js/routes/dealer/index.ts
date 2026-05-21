@@ -15,8 +15,6 @@ import appearance from './appearance'
 import notifications from './notifications'
 import settings from './settings'
 import audit from './audit'
-import phishing from './phishing'
-import ridgeback from './ridgeback'
 import locations from './locations'
 import logs from './logs'
 import manual from './manual'
@@ -427,8 +425,6 @@ const dealerNamespace = {
     logout: Object.assign(logout, logout),
     settings: Object.assign(settings, settings),
     audit: Object.assign(audit, audit),
-    phishing: Object.assign(phishing, phishing),
-    ridgeback: Object.assign(ridgeback, ridgeback),
     locations: Object.assign(locations, locations),
     logs: Object.assign(logs, logs),
     manual: Object.assign(manual, manual),

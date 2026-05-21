@@ -11,7 +11,6 @@ use App\Models\Dealer\Audit\OshaViolationAudit;
 use App\Models\Dealer\Course as DealerCourse;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Invite;
-use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Settings\EmployeeList;
 use App\Models\Dealer\Store;
 use App\Models\Dealer\Vendor;
@@ -46,11 +45,7 @@ beforeEach(function (): void {
         'name' => 'Route Coverage Department',
     ]);
 
-    GlobalSetting::query()->firstOrCreate([], [
-        'phishing_active' => false,
-        'phishing_token' => 'route-coverage-token',
-        'phishing_ip' => '127.0.0.1',
-    ]);
+    GlobalSetting::query()->firstOrCreate([]);
 
     $this->routeConsultant = User::factory()->create([
         'name' => 'Route Consultant',
@@ -138,15 +133,6 @@ beforeEach(function (): void {
     $this->dealJacket = DealJacket::factory()->create([
         'deal_jacket_group_id' => $this->dealJacketGroup->id,
         'user_id' => $this->routeConsultant->id,
-    ]);
-
-    $this->phishingCampaign = PhishingCampaign::query()->create([
-        'campaign_id' => 'campaign-route-1',
-        'user_id' => $this->routeConsultant->id,
-        'store_id' => $this->store->id,
-        'name' => 'Route Coverage Campaign',
-        'status' => 'In progress',
-        'campaign_created_at' => now(),
     ]);
 
     $this->vendor = Vendor::query()->create([
@@ -282,8 +268,6 @@ function namedRouteParameters(object $test, string $routeName): array
         )->token],
 
         'dealer.logs.show' => ['activity' => $test->activity->id],
-
-        'dealer.phishing.show' => ['phishingCampaign' => $test->phishingCampaign->id],
 
         'dealer.password.reset' => ['token' => 'route-coverage-token'],
 
@@ -515,8 +499,6 @@ it('enforces elevated route limitations for manager and employee roles', functio
         'dealer.audit.body-shop.create' => ['store' => $this->store->id],
         'dealer.audit.finance.create' => ['store' => $this->store->id],
         'dealer.audit.individual.create' => ['individualAudit' => $this->individualAudit->id],
-        'dealer.phishing.create' => [],
-        'dealer.ridgeback.index' => [],
     ];
 
     foreach ($restrictedRoutes as $routeName => $params) {
@@ -566,30 +548,4 @@ it('smoke tests unnamed dealer routes from tenant routes file', function (): voi
         expect($status)
             ->toBeLessThan(500);
     }
-});
-
-it('covers the tenant gophish webhook route', function (): void {
-    $campaign = PhishingCampaign::query()->create([
-        'campaign_id' => 'campaign-route-webhook',
-        'user_id' => $this->routeConsultant->id,
-        'store_id' => $this->store->id,
-        'name' => 'Webhook Campaign',
-        'status' => 'In progress',
-        'campaign_created_at' => now(),
-    ]);
-
-    $this->postJson(route('webhooks.gophish'), [
-        'campaign_id' => $campaign->campaign_id,
-        'email' => 'employee@test-tenant.localhost',
-        'time' => now()->toIso8601String(),
-        'message' => 'Email Sent',
-        'details' => 'Webhook route coverage event',
-    ])
-        ->assertOk()
-        ->assertJson(['status' => 'success']);
-
-    $this->assertDatabaseHas('timelines', [
-        'phishing_campaign_id' => $campaign->id,
-        'message' => 'Email Sent',
-    ]);
 });

@@ -7,12 +7,11 @@ namespace App\Models;
 use App\Enums\Role;
 use App\Models\Dealer\Department;
 use App\Models\Dealer\Invite;
-use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
-use App\Models\Dealer\Timeline;
 use App\Notifications\ResetPassword;
 use App\Observers\UserObserver;
 use App\Traits\HasCourses;
+use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
@@ -48,7 +47,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /**
-     * @use HasFactory<\Database\Factories\UserFactory>
+     * @use HasFactory<UserFactory>
      */
     use HasApiTokens,
         HasCourses,
@@ -145,22 +144,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function certificates(): HasMany
     {
         return $this->hasMany(Certificate::class);
-    }
-
-    /**
-     * @return HasMany<PhishingCampaign, $this>
-     */
-    public function phishingCampaigns(): HasMany
-    {
-        return $this->hasMany(PhishingCampaign::class);
-    }
-
-    /**
-     * @return HasMany<Timeline, $this>
-     */
-    public function timelines(): HasMany
-    {
-        return $this->hasMany(Timeline::class, 'email', 'email');
     }
 
     /**

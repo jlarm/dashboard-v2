@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
@@ -152,29 +151,6 @@ describe('QI - Documents Access', function (): void {
     });
 });
 
-describe('QI - Phishing Access', function (): void {
-    it('can access phishing index', function (): void {
-        $this->actingAs($this->qi)
-            ->get(route('dealer.phishing.index'))
-            ->assertOk();
-    });
-
-    it('can access phishing campaign details', function (): void {
-        $campaign = PhishingCampaign::query()->create([
-            'campaign_id' => 'qi-campaign-1',
-            'user_id' => $this->qi->id,
-            'store_id' => $this->store->id,
-            'name' => 'QI Campaign',
-            'status' => 'In progress',
-            'campaign_created_at' => now(),
-        ]);
-
-        $this->actingAs($this->qi)
-            ->get(route('dealer.phishing.show', $campaign))
-            ->assertOk();
-    });
-});
-
 describe('QI - Store And Manual Access', function (): void {
     it('can access store settings', function (): void {
         $this->actingAs($this->qi)
@@ -232,21 +208,9 @@ describe('QI - Routes It Should NOT Access', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access phishing create (super-admin|Consultant only)', function (): void {
-        $this->actingAs($this->qi)
-            ->get(route('dealer.phishing.create'))
-            ->assertForbidden();
-    });
-
     it('cannot access locations index', function (): void {
         $this->actingAs($this->qi)
             ->get(route('dealer.locations.index'))
-            ->assertForbidden();
-    });
-
-    it('cannot access ridgeback index', function (): void {
-        $this->actingAs($this->qi)
-            ->get(route('dealer.ridgeback.index'))
             ->assertForbidden();
     });
 

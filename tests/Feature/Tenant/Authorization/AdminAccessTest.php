@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
@@ -81,12 +80,6 @@ describe('Admin - Routes It Should NOT Access', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access phishing create (super-admin|Consultant only)', function (): void {
-        $this->actingAs($this->admin)
-            ->get(route('dealer.phishing.create'))
-            ->assertForbidden();
-    });
-
     it('cannot access employee index (not in manager+ role group)', function (): void {
         $this->actingAs($this->admin)
             ->get(route('dealer.employees.index'))
@@ -127,27 +120,6 @@ describe('Admin - Routes It Should NOT Access', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access phishing index (QI+ only)', function (): void {
-        $this->actingAs($this->admin)
-            ->get(route('dealer.phishing.index'))
-            ->assertForbidden();
-    });
-
-    it('cannot access phishing campaign details (QI+ only)', function (): void {
-        $campaign = PhishingCampaign::query()->create([
-            'campaign_id' => 'admin-campaign-1',
-            'user_id' => $this->admin->id,
-            'store_id' => $this->store->id,
-            'name' => 'Admin Forbidden Campaign',
-            'status' => 'In progress',
-            'campaign_created_at' => now(),
-        ]);
-
-        $this->actingAs($this->admin)
-            ->get(route('dealer.phishing.show', $campaign))
-            ->assertForbidden();
-    });
-
     it('cannot access store settings (QI+ only)', function (): void {
         $this->actingAs($this->admin)
             ->get(route('dealer.dealer.settings'))
@@ -160,9 +132,4 @@ describe('Admin - Routes It Should NOT Access', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access consultant-only ridgeback', function (): void {
-        $this->actingAs($this->admin)
-            ->get(route('dealer.ridgeback.index'))
-            ->assertForbidden();
-    });
 });

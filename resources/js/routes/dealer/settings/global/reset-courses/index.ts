@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::run
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:105
 * @route '/global-settings/reset-courses'
 */
 export const run = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ run.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::run
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:105
 * @route '/global-settings/reset-courses'
 */
 run.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ run.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::run
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:105
 * @route '/global-settings/reset-courses'
 */
 run.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ run.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::run
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:105
 * @route '/global-settings/reset-courses'
 */
 const runForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const runForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::run
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:120
+* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:105
 * @route '/global-settings/reset-courses'
 */
 runForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

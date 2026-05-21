@@ -2,22 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
     $this->store = Store::query()->firstOrFail();
-
-    $this->phishingCampaign = PhishingCampaign::query()->create([
-        'campaign_id' => 'owner-cfo-gm-gsm-campaign',
-        'user_id' => $this->consultant->id,
-        'store_id' => $this->store->id,
-        'name' => 'Role Coverage Campaign',
-        'status' => 'In progress',
-        'campaign_created_at' => now(),
-    ]);
 
     app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
 });
@@ -54,14 +44,6 @@ describe('owner, cfo, gm, and gsm access', function (): void {
         $this->actingAs($user)
             ->get(route('dealer.dealer.settings'))
             ->assertOk();
-
-        $this->actingAs($user)
-            ->get(route('dealer.phishing.index'))
-            ->assertOk();
-
-        $this->actingAs($user)
-            ->get(route('dealer.phishing.show', $this->phishingCampaign))
-            ->assertOk();
     })->with([
         'Owner' => 'Owner',
         'CFO' => 'CFO',
@@ -74,14 +56,6 @@ describe('owner, cfo, gm, and gsm access', function (): void {
 
         $this->actingAs($user)
             ->get(route('dealer.locations.index'))
-            ->assertForbidden();
-
-        $this->actingAs($user)
-            ->get(route('dealer.ridgeback.index'))
-            ->assertForbidden();
-
-        $this->actingAs($user)
-            ->get(route('dealer.phishing.create'))
             ->assertForbidden();
     })->with([
         'Owner' => 'Owner',

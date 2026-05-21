@@ -8,17 +8,14 @@ use App\Domain\Tenant\GlobalSettings\Actions\ResetCourses;
 use App\Domain\Tenant\GlobalSettings\Actions\ToggleOptionalCourse;
 use App\Domain\Tenant\GlobalSettings\Actions\ToggleStoreNotifications;
 use App\Domain\Tenant\GlobalSettings\Actions\ToggleStoreRemediations;
-use App\Domain\Tenant\GlobalSettings\Actions\UpdatePhishingSettings;
 use App\Domain\Tenant\GlobalSettings\Data\CourseSettingData;
 use App\Domain\Tenant\GlobalSettings\Data\ResettableUserData;
 use App\Domain\Tenant\GlobalSettings\Data\StoreSettingData;
 use App\Domain\Tenant\GlobalSettings\Queries\GetCourses;
-use App\Domain\Tenant\GlobalSettings\Queries\GetPhishingSettings;
 use App\Domain\Tenant\GlobalSettings\Queries\GetResettableUsers;
 use App\Domain\Tenant\GlobalSettings\Queries\GetStoreSettings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\Settings\ResetCoursesRequest;
-use App\Http\Requests\Tenant\Settings\UpdatePhishingSettingsRequest;
 use App\Models\Dealer\Course;
 use App\Models\Dealer\GlobalSetting;
 use App\Models\Dealer\Store;
@@ -35,20 +32,16 @@ class GlobalSettingsController extends Controller
 
     private const string SECTION_RESET_COURSES = 'reset-courses';
 
-    private const string SECTION_PHISHING = 'phishing';
-
     private const array SECTIONS = [
         self::SECTION_GENERAL,
         self::SECTION_COURSE_MANAGEMENT,
         self::SECTION_RESET_COURSES,
-        self::SECTION_PHISHING,
     ];
 
     public function index(
         Request $request,
         GetStoreSettings $getStoreSettings,
         GetCourses $getCourses,
-        GetPhishingSettings $getPhishingSettings,
         GetResettableUsers $getResettableUsers,
     ): InertiaResponse|RedirectResponse {
         $this->authorize('manage', GlobalSetting::class);
@@ -64,7 +57,6 @@ class GlobalSettingsController extends Controller
 
         return Inertia::render('tenant/settings/GlobalSettings', [
             'section' => $section,
-            'phishing' => $getPhishingSettings->handle()->toArray(),
             'stores' => array_map(
                 static fn (StoreSettingData $store): array => $store->toArray(),
                 $getStoreSettings->handle(),
@@ -81,13 +73,6 @@ class GlobalSettingsController extends Controller
                 )
                 : [],
         ]);
-    }
-
-    public function updatePhishing(UpdatePhishingSettingsRequest $request, UpdatePhishingSettings $updatePhishing): RedirectResponse
-    {
-        $updatePhishing->handle($request->toData());
-
-        return back()->with('flash.success', 'Phishing settings updated.');
     }
 
     public function toggleStoreNotifications(Store $store, ToggleStoreNotifications $toggle): RedirectResponse

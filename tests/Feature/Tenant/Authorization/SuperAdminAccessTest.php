@@ -154,22 +154,6 @@ describe('Super Admin - Course Access', function (): void {
     });
 });
 
-describe('Super Admin - Phishing Access', function (): void {
-    it('can access phishing index', function (): void {
-        $this->actingAs($this->superAdmin)
-            ->get(route('dealer.phishing.index'))
-            ->assertOk();
-    });
-
-    it('is not forbidden from phishing create', function (): void {
-        $response = $this->actingAs($this->superAdmin)
-            ->get(route('dealer.phishing.create'));
-
-        // Authorization passes (may 500 from missing GoPhish config in test env)
-        expect($response->status())->not->toBeIn([401, 403, 302]);
-    });
-});
-
 describe('Super Admin - Logs Access', function (): void {
     it('can access logs page with super-admin role', function (): void {
         $this->actingAs($this->superAdmin)

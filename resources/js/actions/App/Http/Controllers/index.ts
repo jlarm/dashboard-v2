@@ -4,7 +4,6 @@ import Auth from './Auth'
 import Settings from './Settings'
 import Tenant from './Tenant'
 import Dealer from './Dealer'
-import WebhookController from './WebhookController'
 
 const Controllers = {
     API: Object.assign(API, API),
@@ -13,7 +12,6 @@ const Controllers = {
     Settings: Object.assign(Settings, Settings),
     Tenant: Object.assign(Tenant, Tenant),
     Dealer: Object.assign(Dealer, Dealer),
-    WebhookController: Object.assign(WebhookController, WebhookController),
 }
 
 export default Controllers

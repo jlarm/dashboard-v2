@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Dealer\PhishingCampaign;
 use App\Models\Dealer\Store;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
@@ -199,36 +198,9 @@ describe('Manager - Routes It Should NOT Access', function (): void {
             ->assertForbidden();
     });
 
-    it('cannot access phishing create', function (): void {
-        $this->actingAs($this->manager)
-            ->get(route('dealer.phishing.create'))
-            ->assertForbidden();
-    });
-
     it('cannot access deleted employees (QI+ only)', function (): void {
         $this->actingAs($this->manager)
             ->get(route('dealer.employees.deleted'))
-            ->assertForbidden();
-    });
-
-    it('cannot access phishing index (QI+ only)', function (): void {
-        $this->actingAs($this->manager)
-            ->get(route('dealer.phishing.index'))
-            ->assertForbidden();
-    });
-
-    it('cannot access phishing campaign details (QI+ only)', function (): void {
-        $campaign = PhishingCampaign::query()->create([
-            'campaign_id' => 'manager-campaign-1',
-            'user_id' => $this->manager->id,
-            'store_id' => $this->store->id,
-            'name' => 'Manager Forbidden Campaign',
-            'status' => 'In progress',
-            'campaign_created_at' => now(),
-        ]);
-
-        $this->actingAs($this->manager)
-            ->get(route('dealer.phishing.show', $campaign))
             ->assertForbidden();
     });
 
@@ -241,12 +213,6 @@ describe('Manager - Routes It Should NOT Access', function (): void {
     it('cannot access consultant-only location management', function (): void {
         $this->actingAs($this->manager)
             ->get(route('dealer.locations.index'))
-            ->assertForbidden();
-    });
-
-    it('cannot access consultant-only ridgeback', function (): void {
-        $this->actingAs($this->manager)
-            ->get(route('dealer.ridgeback.index'))
             ->assertForbidden();
     });
 
