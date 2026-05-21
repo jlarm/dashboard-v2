@@ -5,10 +5,10 @@ import type { DepartmentCompletion } from './types';
 const departments = usePageProp<DepartmentCompletion[]>('training_completion', []);
 
 const completionBar = (v: number): string => {
-    if (v >= 95) return 'bg-emerald-500';
-    if (v >= 85) return 'bg-sky-500';
-    if (v >= 75) return 'bg-amber-500';
-    return 'bg-rose-500';
+    if (v >= 95) return 'bg-arm-green-500';
+    if (v >= 85) return 'bg-arm-blue-400';
+    if (v >= 75) return 'bg-arm-orange-400';
+    return 'bg-arm-orange-600';
 };
 </script>
 

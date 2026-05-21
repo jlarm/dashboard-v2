@@ -43,26 +43,26 @@ const segmentWidth = (value: number): string => {
 const segmentBg = (tone: SegmentTone): string => {
     switch (tone) {
         case 'overdue':
-            return 'bg-rose-500 dark:bg-rose-400';
+            return 'bg-arm-orange-600';
         case 'at_risk':
-            return 'bg-amber-500 dark:bg-amber-400';
+            return 'bg-arm-orange-400';
         case 'compliant':
-            return 'bg-emerald-500 dark:bg-emerald-400';
+            return 'bg-arm-green-500';
         case 'unassigned':
-            return 'bg-slate-400 dark:bg-slate-500';
+            return 'bg-arm-blue-200';
     }
 };
 
 const segmentDot = (tone: SegmentTone): string => {
     switch (tone) {
         case 'overdue':
-            return 'bg-rose-500';
+            return 'bg-arm-orange-600';
         case 'at_risk':
-            return 'bg-amber-500';
+            return 'bg-arm-orange-400';
         case 'compliant':
-            return 'bg-emerald-500';
+            return 'bg-arm-green-500';
         case 'unassigned':
-            return 'bg-slate-400';
+            return 'bg-arm-blue-200';
     }
 };
 
